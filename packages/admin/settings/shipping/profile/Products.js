@@ -15,7 +15,6 @@ import {
 	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
-	ScText,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../components/ModelSelector';
@@ -24,11 +23,16 @@ import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { intervalString } from '../../../util/translations';
+import PrevNextButtons from '../../../ui/PrevNextButtons';
+import usePagination from '../../../hooks/usePagination';
+
+const PRODUCTS_PER_PAGE = 10;
 
 export default ({ shippingProfileId }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [draftProducts, setDraftProducts] = useState(0);
+	const [currentPage, setCurrentPage] = useState(1);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
@@ -40,7 +44,8 @@ export default ({ shippingProfileId }) => {
 				{
 					archived: false,
 					shipping_profile_ids: [shippingProfileId],
-					per_page: 100,
+					per_page: PRODUCTS_PER_PAGE,
+					page: currentPage,
 					expand: ['prices'],
 				},
 			];
@@ -68,8 +73,14 @@ export default ({ shippingProfileId }) => {
 				loading: loading && !products?.length,
 			};
 		},
-		[shippingProfileId]
+		[shippingProfileId, currentPage]
 	);
+
+	const { hasPagination } = usePagination({
+		data: products,
+		page: currentPage,
+		perPage: PRODUCTS_PER_PAGE,
+	});
 
 	const onRemoveProduct = async (id) => {
 		if (!id) return;
@@ -207,8 +218,8 @@ export default ({ shippingProfileId }) => {
 			noButton
 		>
 			<Error error={error} setError={setError} />
-			{products?.length || !!draftProducts ? (
-				<ScCard noPadding>
+			<ScCard noPadding>
+				{products?.length || !!draftProducts || currentPage > 1 ? (
 					<ScStackedList>
 						{products.map((product) => (
 							<ScStackedListRow key={product.id}>
@@ -285,14 +296,27 @@ export default ({ shippingProfileId }) => {
 							</ScStackedListRow>
 						))}
 					</ScStackedList>
-				</ScCard>
-			) : (
-				<ScCard noPadding>
+				) : (
 					<ScEmpty icon="shopping-cart">
 						{__('No products added yet.', 'surecart')}
 					</ScEmpty>
-				</ScCard>
-			)}
+				)}
+				{hasPagination && (
+					<div
+						css={css`
+							padding: var(--sc-spacing-medium);
+						`}
+					>
+						<PrevNextButtons
+							data={products}
+							page={currentPage}
+							setPage={setCurrentPage}
+							perPage={PRODUCTS_PER_PAGE}
+							loading={loading}
+						/>
+					</div>
+				)}
+			</ScCard>
 			{busy && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
