@@ -6,30 +6,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Elementor Logged-In User Condition.
- *
- * Add a logged-in user condition to Elementor.
- *
- * @since 1.0.0
+ * Elementor SureCart Product Condition
  */
 class ProductCondition extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condition_Base {
 
+	/**
+	 * Get the type of the condition.
+	 *
+	 * @return string
+	 */
 	public static function get_type() {
 		return 'surecart-product';
 	}
 
+	/**
+	 * Get the name.
+	 *
+	 * @return string
+	 */
 	public function get_name() {
 		return 'surecart-product';
 	}
 
+	/**
+	 * Get the label.
+	 *
+	 * @return string
+	 */
 	public function get_label() {
 		return esc_html__( 'Product', 'elementor-pro' );
 	}
 
+	/**
+	 * Get the all label.
+	 *
+	 * @return string
+	 */
 	public function get_all_label() {
 		return esc_html__( 'All Products', 'elementor-pro' );
 	}
 
+	/**
+	 * Register sub conditions.
+	 *
+	 * @return void
+	 */
 	public function register_sub_conditions() {
 		$this->register_sub_condition( new ProductSingle() );
 	}
@@ -37,8 +58,8 @@ class ProductCondition extends \ElementorPro\Modules\ThemeBuilder\Conditions\Con
 	/**
 	 * Check condition.
 	 *
-	 * @since 1.0.0
-	 * @access public
+	 * @param array $args The arguments.
+	 *
 	 * @return bool
 	 */
 	public function check( $args ) {

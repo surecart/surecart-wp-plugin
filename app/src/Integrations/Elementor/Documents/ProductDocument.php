@@ -17,6 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class ProductDocument extends Single_Base {
 
+	/**
+	 * Get document properties.
+	 *
+	 * Retrieve the document properties.
+	 *
+	 * @return array Document properties.
+	 */
 	public static function get_properties() {
 		$properties = parent::get_properties();
 
@@ -27,22 +34,49 @@ class ProductDocument extends Single_Base {
 	}
 
 
+	/**
+	 * Get document name.
+	 *
+	 * @return string Document name.
+	 */
 	public static function get_type() {
 		return 'surecart-product';
 	}
 
+	/**
+	 * Get document title.
+	 *
+	 * @return string Document title.
+	 */
 	public static function get_title() {
 		return esc_html__( 'SureCart Product', 'elementor-pro' );
 	}
 
+	/**
+	 * Get document plural title.
+	 *
+	 * @return string Document plural title.
+	 */
 	public static function get_plural_title() {
 		return esc_html__( 'SureCart Products', 'elementor-pro' );
 	}
 
+	/**
+	 * Get document icon.
+	 *
+	 * @return string Document icon.
+	 */
 	protected static function get_site_editor_icon() {
 		return 'eicon-single-product';
 	}
 
+	/**
+	 * Get document tooltip data.
+	 *
+	 * Retrieve the document tooltip data.
+	 *
+	 * @return array Document tooltip data.
+	 */
 	protected static function get_site_editor_tooltip_data() {
 		return [
 			'title'     => esc_html__( 'What is a Single Product Template?', 'elementor-pro' ),

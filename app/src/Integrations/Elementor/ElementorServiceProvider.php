@@ -26,16 +26,22 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 * @param  \Pimple\Container $container Service Container.
 	 */
 	public function bootstrap( $container ) {
-		if ( ! class_exists( '\Elementor\Plugin' ) && ! class_exists( '\ElementorPro\Plugin' ) ) {
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
 			return;
 		}
+
+		// Elementor integration.
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'widget' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
-		add_action( 'elementor/documents/register', [ $this, 'register_document' ] );
-		add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
-		add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
-		add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
+
+		// Register product theme condition.
+		if ( class_exists( '\ElementorPro\Plugin' ) ) {
+			add_action( 'elementor/documents/register', [ $this, 'register_document' ] );
+			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
+			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
+			add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
+		}
 	}
 
 	/**
