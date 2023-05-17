@@ -36,6 +36,7 @@ add_filter(
 );
 
 register_uninstall_hook( SURECART_PLUGIN_FILE, 'surecart_uninstall' );
+
 /**
  * Uninstall.
  *

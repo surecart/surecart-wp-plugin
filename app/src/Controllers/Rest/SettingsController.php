@@ -18,12 +18,12 @@ class SettingsController {
 	public function find( \WP_REST_Request $request ) {
 		return rest_ensure_response(
 			[
-				'object'                  => 'settings',
-				'api_token'               => ApiToken::get(),
-				'uninstall'               => (bool) get_option( 'sc_uninstall', false ),
-				'stripe_payment_element'  => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'use_esm_loader'          => (bool) get_option( 'surecart_use_esm_loader', false ),
-				'slide_out_cart_disabled' => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
+				'object'                   			=> 'settings',
+				'api_token'                			=> ApiToken::get(),
+				'uninstall'                			=> (bool) get_option( 'sc_uninstall', false ),
+				'stripe_payment_element'   			=> (bool) get_option( 'sc_stripe_payment_element', false ),
+				'use_esm_loader'           			=> (bool) get_option( 'surecart_use_esm_loader', false ),
+				'slide_out_cart_disabled'  			=> (bool) get_option( 'sc_slide_out_cart_disabled', false ),
 			]
 		);
 	}
