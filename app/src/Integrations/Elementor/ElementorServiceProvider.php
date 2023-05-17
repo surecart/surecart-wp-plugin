@@ -35,12 +35,39 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		add_action( 'elementor/documents/register', [ $this, 'register_document' ] );
 		add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 		add_filter( 'elementor/query/get_autocomplete/', [ $this, 'get_autocomplete' ], 10, 2 );
+		add_filter( 'elementor/query/get_value_titles/', [ $this, 'get_titles' ], 10, 2 );
+	}
+
+	/**
+	 * Get the titles for the query control
+	 * This is important as it shows the previously selected items when the conditions load in.
+	 *
+	 * @param array $results The results.
+	 * @param array $request The request.
+	 *
+	 * @return array
+	 */
+	public function get_titles( $results, $request ) {
+		if ( 'surecart-product' !== $request['get_titles']['object'] || empty( $request['id'] ) ) {
+			return $results;
+		}
+
+		$products = Product::where(
+			[
+				'ids' => [ $request['id'] ],
+			]
+		)->get();
+
+		foreach ( $products as $product ) {
+			$results[ $product->id ] = $product->name;
+		}
+		return $results;
 	}
 
 	/**
 	 * Get autocomplete
 	 *
-	 * @param array $results The results
+	 * @param array $results The results.
 	 * @param array $data Request data.
 	 *
 	 * @return array
@@ -50,7 +77,12 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 			return $results;
 		}
 
-		$products = Product::where( [ 'query' => $data['q'] ] )->get();
+		$products = Product::where(
+			[
+				'query'    => $data['q'],
+				'archived' => false,
+			]
+		)->get();
 
 		foreach ( $products as $product ) {
 			$results[] = [
