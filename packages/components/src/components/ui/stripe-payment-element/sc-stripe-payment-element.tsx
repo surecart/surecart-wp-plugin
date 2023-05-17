@@ -155,7 +155,6 @@ export class ScStripePaymentElement {
 
     // create the elements if they have not yet been created.
     if (!this.elements) {
-      console.log(this.getElementsConfig());
       // we have what we need, load elements.
       this.elements = this.stripe.elements(this.getElementsConfig() as any);
 
