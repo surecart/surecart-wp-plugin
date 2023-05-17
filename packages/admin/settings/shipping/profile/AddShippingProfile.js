@@ -65,10 +65,6 @@ export default ({ open, onRequestClose }) => {
 			<ScInput
 				required
 				label={__('Name', 'surecart')}
-				help={__(
-					'A name for this bump that will be visible to customers.',
-					'surecart'
-				)}
 				onScInput={(e) => setProfileName(e.target.value)}
 				name="name"
 			/>
