@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-12T15:28:06",
+  "timestamp": "2023-05-17T21:33:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1834,8 +1834,8 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
-        "sc-product-buy-button",
         "sc-product-item-list",
+        "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
         "sc-rich-text",
@@ -1936,10 +1936,10 @@
         "sc-payment-methods-list": [
           "sc-button"
         ],
-        "sc-product-buy-button": [
+        "sc-product-item-list": [
           "sc-button"
         ],
-        "sc-product-item-list": [
+        "sc-product-price-modal": [
           "sc-button"
         ],
         "sc-product-selected-price": [
@@ -9879,7 +9879,7 @@
         "sc-login-provider",
         "sc-order-confirm-provider",
         "sc-payment-methods-list",
-        "sc-product-buy-button",
+        "sc-product-price-modal",
         "sc-subscription-details",
         "sc-upgrade-required"
       ],
@@ -9907,7 +9907,7 @@
         "sc-payment-methods-list": [
           "sc-dialog"
         ],
-        "sc-product-buy-button": [
+        "sc-product-price-modal": [
           "sc-dialog"
         ],
         "sc-subscription-details": [
@@ -11579,7 +11579,7 @@
         "sc-login-provider",
         "sc-mollie-add-method",
         "sc-password-nag",
-        "sc-product-buy-button",
+        "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-stripe-add-method",
         "sc-subscription-ad-hoc-confirm",
@@ -11613,7 +11613,7 @@
         "sc-password-nag": [
           "sc-form"
         ],
-        "sc-product-buy-button": [
+        "sc-product-price-modal": [
           "sc-form"
         ],
         "sc-product-selected-price": [
@@ -21922,14 +21922,18 @@
         },
         {
           "name": "price",
-          "type": "Price",
+          "type": "Price | string",
           "mutable": false,
+          "attr": "price",
           "reflectToAttr": false,
           "docs": "Stores the price",
           "docsTags": [],
           "values": [
             {
               "type": "Price"
+            },
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -22667,7 +22671,7 @@
       "dependents": [
         "sc-custom-order-price-input",
         "sc-donation-choices",
-        "sc-product-buy-button",
+        "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-subscription-ad-hoc-confirm"
       ],
@@ -22690,7 +22694,7 @@
         "sc-donation-choices": [
           "sc-price-input"
         ],
-        "sc-product-buy-button": [
+        "sc-product-price-modal": [
           "sc-price-input"
         ],
         "sc-product-selected-price": [
@@ -22893,194 +22897,7 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "addToCart",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "add-to-cart",
-          "reflectToAttr": false,
-          "docs": "Is this an add to cart button?",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "Is the order busy",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "full",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "full",
-          "reflectToAttr": false,
-          "docs": "Full",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "icon",
-          "type": "string",
-          "mutable": false,
-          "attr": "icon",
-          "reflectToAttr": false,
-          "docs": "Icon to show.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "outline",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "outline",
-          "reflectToAttr": false,
-          "docs": "Outline",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "showTotal",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "show-total",
-          "reflectToAttr": false,
-          "docs": "Show the total.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "size",
-          "type": "\"large\" | \"medium\" | \"small\"",
-          "mutable": false,
-          "attr": "size",
-          "reflectToAttr": true,
-          "docs": "The button's size.",
-          "docsTags": [],
-          "default": "'medium'",
-          "values": [
-            {
-              "value": "large",
-              "type": "string"
-            },
-            {
-              "value": "medium",
-              "type": "string"
-            },
-            {
-              "value": "small",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "text",
-          "type": "string",
-          "mutable": false,
-          "attr": "text",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"danger\" | \"default\" | \"info\" | \"link\" | \"primary\" | \"success\" | \"text\" | \"warning\"",
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": true,
-          "docs": "The button type.",
-          "docsTags": [],
-          "default": "'default'",
-          "values": [
-            {
-              "value": "danger",
-              "type": "string"
-            },
-            {
-              "value": "default",
-              "type": "string"
-            },
-            {
-              "value": "info",
-              "type": "string"
-            },
-            {
-              "value": "link",
-              "type": "string"
-            },
-            {
-              "value": "primary",
-              "type": "string"
-            },
-            {
-              "value": "success",
-              "type": "string"
-            },
-            {
-              "value": "text",
-              "type": "string"
-            },
-            {
-              "value": "warning",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -23088,38 +22905,8 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "sc-spinner",
-        "sc-dialog",
-        "sc-form",
-        "sc-price-input",
-        "sc-button"
-      ],
-      "dependencyGraph": {
-        "sc-product-buy-button": [
-          "sc-spinner",
-          "sc-dialog",
-          "sc-form",
-          "sc-price-input",
-          "sc-button"
-        ],
-        "sc-dialog": [
-          "sc-button",
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-price-input": [
-          "sc-input"
-        ],
-        "sc-input": [
-          "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ]
-      }
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/controllers/product/sc-product-buy-buttons/sc-product-buy-buttons.tsx",
@@ -23547,6 +23334,23 @@
           "required": false
         },
         {
+          "name": "paginationAutoScroll",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pagination-auto-scroll",
+          "reflectToAttr": false,
+          "docs": "Should we auto-scroll to the top when paginating via ajax",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "paginationEnabled",
           "type": "boolean",
           "mutable": false,
@@ -23643,6 +23447,7 @@
         "sc-button",
         "sc-menu",
         "sc-menu-item",
+        "sc-tag",
         "sc-input",
         "sc-icon",
         "sc-empty",
@@ -23657,6 +23462,7 @@
           "sc-button",
           "sc-menu",
           "sc-menu-item",
+          "sc-tag",
           "sc-input",
           "sc-icon",
           "sc-empty",
@@ -24254,6 +24060,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "saleText",
+          "type": "string",
+          "mutable": false,
+          "attr": "sale-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -24308,6 +24130,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "showPrice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -24338,6 +24176,69 @@
           "sc-format-number",
           "sc-choice-container",
           "sc-skeleton"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/product/sc-product-price-modal/sc-product-price-modal.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-price-modal",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "buttonText",
+          "type": "string",
+          "mutable": false,
+          "attr": "button-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-dialog",
+        "sc-form",
+        "sc-price-input",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-product-price-modal": [
+          "sc-dialog",
+          "sc-form",
+          "sc-price-input",
+          "sc-button"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-price-input": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ]
       }
     },
@@ -26867,7 +26768,6 @@
       "dependents": [
         "sc-block-ui",
         "sc-button",
-        "sc-product-buy-button",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -26877,9 +26777,6 @@
           "sc-spinner"
         ],
         "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-product-buy-button": [
           "sc-spinner"
         ],
         "sc-select": [
@@ -30312,6 +30209,7 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
+        "sc-product-item-list",
         "sc-product-price",
         "sc-subscription-details",
         "sc-subscription-payment-method",
@@ -30372,6 +30270,9 @@
           "sc-tag"
         ],
         "sc-premium-tag": [
+          "sc-tag"
+        ],
+        "sc-product-item-list": [
           "sc-tag"
         ],
         "sc-product-price": [
