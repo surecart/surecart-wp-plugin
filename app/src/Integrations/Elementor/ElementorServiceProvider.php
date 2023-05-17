@@ -34,8 +34,8 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 		add_action( 'elementor/documents/register', [ $this, 'register_document' ] );
 		add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
-		add_filter( 'elementor/query/get_autocomplete/', [ $this, 'get_autocomplete' ], 10, 2 );
-		add_filter( 'elementor/query/get_value_titles/', [ $this, 'get_titles' ], 10, 2 );
+		add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );
+		add_filter( 'elementor/query/get_value_titles/surecart-product', [ $this, 'get_titles' ], 10, 2 );
 	}
 
 	/**

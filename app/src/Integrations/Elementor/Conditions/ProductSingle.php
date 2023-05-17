@@ -94,7 +94,7 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 				'autocomplete'   => [
 					'object'      => 'surecart-product',
 					'display'     => 'minimal',
-					'filter_type' => '',
+					'filter_type' => 'surecart-product',
 					'query'       => [
 						'post_type' => 'sc-product',
 					],
