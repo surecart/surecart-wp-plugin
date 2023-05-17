@@ -1,8 +1,0 @@
-:host {
-  display: block;
-}
-
-.buy-buttons {
-  display: grid;
-  gap: var(--sc-form-row-spacing, 0.75em);
-}
