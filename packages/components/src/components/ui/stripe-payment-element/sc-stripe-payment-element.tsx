@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Method, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
 import { Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
@@ -51,6 +51,34 @@ export class ScStripePaymentElement {
   @Event() scPayError: EventEmitter<any>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  @State() styles: CSSStyleDeclaration;
+
+  async componentWillLoad() {
+    this.styles = (await this.getComputedStyles()) as CSSStyleDeclaration;
+  }
+
+  @Watch('styles')
+  async handleStylesChange() {
+    this.createOrUpdateElements();
+  }
+
+  /**
+   * We wait for our property value to resolve (styles have been loaded)
+   * This prevents the element appearance api being set before the styles are loaded.
+   */
+  getComputedStyles() {
+    return new Promise(resolve => {
+      let checkInterval = setInterval(() => {
+        const styles = window.getComputedStyle(document.body);
+        const color = styles.getPropertyValue('--sc-color-primary-500');
+        if (color) {
+          clearInterval(checkInterval);
+          resolve(styles);
+        }
+      }, 100);
+    });
+  }
 
   /** Maybe load the stripe element on load. */
   async componentDidLoad() {
