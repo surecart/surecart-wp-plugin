@@ -5,23 +5,10 @@
 	"category": "surecart",
 	"keywords": ["name", "customer"],
 	"textdomain": "surecart",
-	"textdomain": "surecart",
 	"parent": null,
 	"supports": {
 		"reusable": false,
 		"html": false
-	},
-	"example": {
-		"attributes": {
-			"line_items": [
-				{
-					"price_id": "test",
-					"quantity": 1
-				}
-			],
-			"price_id": "test",
-			"label": "Buy Now"
-		}
 	},
 	"attributes": {
 		"price_id": {
