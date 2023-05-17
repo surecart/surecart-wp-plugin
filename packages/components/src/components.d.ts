@@ -5,8 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1 } from "src/types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
     interface ScAddress {
         /**
@@ -2731,6 +2737,10 @@ export namespace Components {
         "limit": number;
         "paginationAlignment": string;
         /**
+          * Should we auto-scroll to the top when paginating via ajax
+         */
+        "paginationAutoScroll": boolean;
+        /**
           * Should we paginate?
          */
         "paginationEnabled": boolean;
@@ -3160,7 +3170,31 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
         "confirm": (type: any, args?: {}) => Promise<void>;
+        /**
+          * The current form state.
+         */
+        "formState": FormState;
+        /**
+          * Order to watch
+         */
+        "order": Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId": ProcessorName;
+        /**
+          * The Payment Intent
+         */
+        "stripePaymentIntent": PaymentIntent;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -8316,6 +8350,10 @@ declare namespace LocalJSX {
         "limit"?: number;
         "paginationAlignment"?: string;
         /**
+          * Should we auto-scroll to the top when paginating via ajax
+         */
+        "paginationAutoScroll"?: boolean;
+        /**
           * Should we paginate?
          */
         "paginationEnabled"?: boolean;
@@ -8809,6 +8847,14 @@ declare namespace LocalJSX {
     }
     interface ScStripePaymentElement {
         /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The current form state.
+         */
+        "formState"?: FormState;
+        /**
           * The order/invoice was paid for.
          */
         "onScPaid"?: (event: ScStripePaymentElementCustomEvent<void>) => void;
@@ -8820,6 +8866,22 @@ declare namespace LocalJSX {
           * Set the state
          */
         "onScSetState"?: (event: ScStripePaymentElementCustomEvent<FormStateSetter>) => void;
+        /**
+          * Order to watch
+         */
+        "order"?: Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId"?: ProcessorName;
+        /**
+          * The Payment Intent
+         */
+        "stripePaymentIntent"?: PaymentIntent;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl"?: string;
     }
     interface ScStripePaymentRequest {
         /**

@@ -1499,6 +1499,7 @@
     "layout-config": true,
     "limit": true,
     "pagination-alignment": true,
+    "pagination-auto-scroll": true,
     "pagination-enabled": true,
     "query": true,
     "search-enabled": true,
@@ -1776,6 +1777,12 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
+    "address": true,
+    "form-state": true,
+    "order": true,
+    "selected-processor-id": true,
+    "stripe-payment-intent": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
