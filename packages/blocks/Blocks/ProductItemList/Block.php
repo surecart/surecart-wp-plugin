@@ -214,15 +214,16 @@ class Block extends BaseBlock {
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
 			[
-				'layoutConfig'        => $layout_config,
-				'paginationAlignment' => $attributes['pagination_alignment'],
-				'limit'               => $attributes['limit'],
-				'style'               => $style,
-				'ids'                 => $attributes['ids'],
-				'paginationEnabled'   => $attributes['pagination_enabled'],
-				'ajaxPagination'      => $attributes['ajax_pagination'],
-				'searchEnabled'       => $attributes['search_enabled'],
-				'sortEnabled'         => $attributes['sort_enabled'],
+				'layoutConfig'         => $layout_config,
+				'paginationAlignment'  => $attributes['pagination_alignment'],
+				'limit'                => $attributes['limit'],
+				'style'                => $style,
+				'ids'                  => $attributes['ids'],
+				'paginationEnabled'    => $attributes['pagination_enabled'],
+				'ajaxPagination'       => $attributes['ajax_pagination'],
+				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
+				'searchEnabled'        => $attributes['search_enabled'],
+				'sortEnabled'          => $attributes['sort_enabled'],
 			]
 		);
 

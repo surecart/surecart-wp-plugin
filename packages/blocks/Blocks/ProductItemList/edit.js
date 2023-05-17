@@ -45,6 +45,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		search_enabled,
 		pagination_enabled,
 		ajax_pagination,
+		pagination_auto_scroll,
 		ids,
 	} = attributes;
 	const blockProps = useBlockProps();
@@ -215,15 +216,38 @@ export default ({ attributes, setAttributes, clientId }) => {
 						/>
 					</PanelRow>
 					{pagination_enabled && (
-						<PanelRow>
-							<ToggleControl
-								label={__('Ajax Pagination', 'surecart')}
-								checked={ajax_pagination}
-								onChange={(ajax_pagination) =>
-									setAttributes({ ajax_pagination })
-								}
-							/>
-						</PanelRow>
+						<>
+							<PanelRow>
+								<ToggleControl
+									label={__('Ajax Pagination', 'surecart')}
+									checked={ajax_pagination}
+									onChange={(ajax_pagination) =>
+										setAttributes({ ajax_pagination })
+									}
+								/>
+							</PanelRow>
+
+							{ajax_pagination && (
+								<PanelRow>
+									<ToggleControl
+										label={__(
+											'Scroll Into View',
+											'surecart'
+										)}
+										help={__(
+											'When paginating with ajax, scroll to the top of this block.',
+											'surecart'
+										)}
+										checked={pagination_auto_scroll}
+										onChange={(pagination_auto_scroll) =>
+											setAttributes({
+												pagination_auto_scroll,
+											})
+										}
+									/>
+								</PanelRow>
+							)}
+						</>
 					)}
 					<PanelRow>
 						<ToggleControl
