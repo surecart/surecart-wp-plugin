@@ -16,6 +16,8 @@ declare global {
       blocks: any;
       i18n: any;
     };
+    dataLayer: any;
+    gtag: any;
     sc?: {
       store?: {
         product?: any;
