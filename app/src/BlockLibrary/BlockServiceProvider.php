@@ -136,10 +136,5 @@ class BlockServiceProvider implements ServiceProviderInterface {
 				( new $block() )->register();
 			}
 		}
-
-		$files = glob( dirname( SURECART_PLUGIN_FILE ) . '/packages/blocks-new/build/**/block.json' );
-		foreach ( $files as $file ) {
-			register_block_type( dirname( $file ) );
-		}
 	}
 }
