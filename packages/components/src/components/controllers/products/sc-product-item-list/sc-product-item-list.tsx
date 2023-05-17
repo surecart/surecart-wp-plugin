@@ -38,6 +38,9 @@ export class ScProductItemList {
   /** Should we paginate? */
   @Prop() ajaxPagination: boolean = true;
 
+  /** Should we auto-scroll to the top when paginating via ajax */
+  @Prop() paginationAutoScroll: boolean = true;
+
   /* Layout configuration */
   @Prop() layoutConfig: LayoutConfig;
 
@@ -79,7 +82,7 @@ export class ScProductItemList {
     if (this.ajaxPagination) {
       this.currentPage = page;
       this.updateProducts();
-      this.el.scrollIntoView({ behavior: 'smooth' });
+      this.paginationAutoScroll && this.el.scrollIntoView({ behavior: 'smooth' });
       return;
     }
 
@@ -110,7 +113,6 @@ export class ScProductItemList {
   }
 
   async updateProducts() {
-    if (this.busy) return;
     try {
       this.busy = true;
       await this.fetchProducts();
@@ -119,6 +121,11 @@ export class ScProductItemList {
     } finally {
       this.busy = false;
     }
+  }
+
+  @Watch('ids')
+  handleIdsChange() {
+    this.updateProducts();
   }
 
   async fetchProducts() {
