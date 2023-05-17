@@ -16,7 +16,6 @@
 		"packages/blocks/**/*.php",
 		"packages/blocks/**/Blocks/*.php",
 		"packages/blocks/**/Blocks/**/*.json",
-		"packages/blocks/**/Controllers/**/*.php",
 		"templates/",
 		"images/",
 		"core/",
@@ -128,9 +127,9 @@
 		"postcss-loader": "^4.2.0",
 		"querystringify": "^2.2.0",
 		"react-apexcharts": "^1.4.0",
-		"react-smooth-dnd": "^0.11.1",
 		"sass-loader": "^10",
 		"svg-sprite-loader": "^4.2.5",
+		"swiper": "^9.2.2",
 		"swr": "^1.2.2",
 		"thread-loader": "^3.0.4",
 		"tmp": "^0.2.1"

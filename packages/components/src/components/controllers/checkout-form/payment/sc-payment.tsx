@@ -116,7 +116,7 @@ export class ScPayment {
             <sc-checkout-mollie-payment processor-id={mollie?.id}></sc-checkout-mollie-payment>
           ) : (
             <Tag collapsible={false} theme="container">
-              {!availableProcessors()?.length && (
+              {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
                   {__('You do not have any processors enabled for this mode and cart. Please configure your processors.', 'surecart')}
                 </sc-alert>

@@ -31,7 +31,7 @@ class Block extends BaseBlock {
 				'active' => $tab === $attributes['panel'] ? 'true' : 'false',
 				'title'  => $attributes['title'] ?? '',
 				'icon'   => $attributes['icon'] ?? 'home',
-				'href'   => esc_url( add_query_arg( [ 'tab' => $attributes['panel'] ], remove_query_arg( array_keys( $_GET ) ) ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				'href'   => esc_url( add_query_arg( [ 'tab' => sanitize_title( $attributes['panel'] ) ], remove_query_arg( array_keys( $_GET ) ) ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			]
 		);
 	}

@@ -92,6 +92,32 @@ class ScriptsService {
 
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
+		wp_localize_script(
+			'surecart-components',
+			'scData',
+			apply_filters(
+				'surecart-components/scData',
+				[
+					'root_url'            => esc_url_raw( get_rest_url() ),
+					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
+					'api_url'             => \SureCart::requests()->getBaseUrl(),
+					'currency'            => \SureCart::account()->currency,
+					'do_not_persist_cart' => is_admin(),
+					'theme'               => get_option( 'surecart_theme', 'light' ),
+					'pages'               => [
+						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
+						'checkout'  => \SureCart::pages()->url( 'checkout' ),
+					],
+					'page_id'             => get_the_ID(),
+					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+				]
+			)
+		);
+
+		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
+
 		// core-data.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/store/data.asset.php';
 		wp_register_script(
@@ -181,29 +207,6 @@ class ScriptsService {
 		$this->register();
 		// enqueue it.
 		wp_enqueue_script( 'surecart-components' );
-		wp_localize_script(
-			'surecart-components',
-			'scData',
-			apply_filters(
-				'surecart-components/scData',
-				[
-					'root_url'            => esc_url_raw( get_rest_url() ),
-					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
-					'api_url'             => \SureCart::requests()->getBaseUrl(),
-					'currency'            => \SureCart::account()->currency,
-					'do_not_persist_cart' => is_admin(),
-					'theme'               => get_option( 'surecart_theme', 'light' ),
-					'pages'               => [
-						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
-						'checkout'  => \SureCart::pages()->url( 'checkout' ),
-					],
-					'page_id'             => get_the_ID(),
-					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
-				]
-			)
-		);
 
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
@@ -216,8 +219,6 @@ class ScriptsService {
 			},
 			200
 		);
-
-		wp_localize_script( 'surecart-components', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 	}
 
 	/**
@@ -259,6 +260,14 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function registerBlocks() {
+		$enabled_payment_processors = array_values(
+			array_filter(
+				(array) Processor::get() ?? [],
+				function( $payment_method ) {
+					return $payment_method->enabled ?? false;
+				}
+			)
+		);
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
 		$deps       = $asset_file['dependencies'];
@@ -304,7 +313,7 @@ class ScriptsService {
 				'root_url'             => esc_url_raw( get_rest_url() ),
 				'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 				'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-				'processors'           => (array) Processor::get() ?? [],
+				'processors'           => $enabled_payment_processors,
 				'manualPaymentMethods' => (array) ManualPaymentMethod::get() ?? [],
 				'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 				'currency'             => \SureCart::account()->currency,

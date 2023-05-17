@@ -97,7 +97,7 @@ class BuyPageController {
 		$id = get_query_var( 'sc_checkout_product_id' );
 
 		// fetch the product by id/slug.
-		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices' ] )->find( $id );
+		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $id );
 		if ( is_wp_error( $this->product ) ) {
 			return $this->handleError( $this->product );
 		}

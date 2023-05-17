@@ -106,7 +106,7 @@ export class ScCartForm {
               return {
                 ...item,
                 ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
-                quantity: !!item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
+                quantity: !item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
               };
             }
             // return item.

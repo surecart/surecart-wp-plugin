@@ -10,7 +10,7 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 
-export default ({ media, onClick, selected }) => {
+export default ({ media, onClick, selected, disabled }) => {
 	return (
 		<ScTableRow
 			onClick={(e) => onClick && onClick(e)}
@@ -19,8 +19,13 @@ export default ({ media, onClick, selected }) => {
 				cursor: 'pointer',
 				zIndex: selected ? '2' : '1',
 				outline: selected
-					? '2px solid var(--sc-color-primary-500)'
+					? '1px solid var(--sc-color-primary-500)'
 					: 'none',
+				opacity: disabled ? '0.5' : '1',
+				outlineOffset: '-1px',
+				overflow: 'hidden',
+				pointerEvents: disabled ? 'none' : 'auto',
+				cursor: disabled ? 'not-allowed' : 'pointer',
 			}}
 		>
 			<ScTableCell
