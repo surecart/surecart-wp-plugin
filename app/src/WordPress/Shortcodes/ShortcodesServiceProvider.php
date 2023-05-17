@@ -125,34 +125,46 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'limit'              => 10,
 			]
 		);
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_description',
-		// \SureCartBlocks\Blocks\Product\Description\Block::class,
-		// );
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_title',
-		// \SureCartBlocks\Blocks\Product\Title\Block::class,
-		// );
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_price',
-		// \SureCartBlocks\Blocks\Product\Price\Block::class,
-		// );
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_price',
-		// \SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
-		// );
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_media',
-		// \SureCartBlocks\Blocks\Product\Media\Block::class,
-		// );
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_quantity',
-		// \SureCartBlocks\Blocks\Product\Quantity\Block::class,
-		// );
-		// $container['surecart.shortcodes']->registerBlockShortcode(
-		// 'sc_product_quantity',
-		// \SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
-		// );
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_description',
+			\SureCartBlocks\Blocks\Product\Description\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_title',
+			\SureCartBlocks\Blocks\Product\Title\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_price',
+			\SureCartBlocks\Blocks\Product\Price\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_price_choices',
+			\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+			[
+				'label'      => __( 'Pricing', 'surecart' ),
+				'columns'    => 2,
+				'show_price' => true,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_media',
+			\SureCartBlocks\Blocks\Product\Media\Block::class,
+			[
+				'auto_height' => true,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_quantity',
+			\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_cart_button',
+			\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
+			[
+				'add_to_cart' => true,
+				'text'        => __( 'Add To Cart', 'surecart' ),
+			]
+		);
 	}
 
 	/**
