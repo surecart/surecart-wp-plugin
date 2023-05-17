@@ -109,6 +109,7 @@ export class ScProductItemList {
 
   @Watch('sort')
   async handleSortChange() {
+    this.currentPage = 1;
     this.updateProducts();
   }
 
