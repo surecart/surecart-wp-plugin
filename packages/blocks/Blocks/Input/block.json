@@ -10,11 +10,6 @@
 		"reusable": false,
 		"html": false
 	},
-	"example": {
-		"attributes": {
-			"label": "Input"
-		}
-	},
 	"attributes": {
 		"required": {
 			"type": "boolean"
