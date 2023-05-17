@@ -6,7 +6,7 @@ return [
 	'title'      => __( 'Cart', 'surecart' ),
 	'categories' => [],
 	'blockTypes' => [],
-	'content'    => '<<!-- wp:group {"align":"wide","layout":{"inherit":true,"type":"constrained"}} -->
+	'content'    => '<!-- wp:group {"align":"wide","layout":{"inherit":true,"type":"constrained"}} -->
 	<div class="wp-block-group alignwide"><!-- wp:group {"align":"wide"} -->
 	<div class="wp-block-group alignwide"><!-- wp:surecart/product-item-list {"limit":8,"align":"wide"} -->
 	<!-- wp:surecart/product-item {"style":{"spacing":{"blockGap":"12px"}}} -->
