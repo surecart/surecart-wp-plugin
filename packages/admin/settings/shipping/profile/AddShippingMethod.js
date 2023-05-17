@@ -58,6 +58,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 				shipping_method_id: '',
 				weight_unit: WEIGHT_UNIT_TYPES[0],
 			});
+			setShowAddNew(false);
 		};
 	}, [open]);
 
@@ -74,7 +75,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 					}
 				);
 
-				shippingRate.shipping_method_id = shippingMethod.id;
+				shippingRate.shipping_method_id = shippingMethod?.id;
 			}
 
 			if (!shippingRate.shipping_method_id)
@@ -82,11 +83,15 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 					__('Failed to create shipping method', 'surecart')
 				);
 
-			await saveEntityRecord('surecart', 'shipping-rate', {
-				...shippingRate,
-				shipping_zone_id: shippingZoneId,
-			},
-      { throwOnError: true });
+			await saveEntityRecord(
+				'surecart',
+				'shipping-rate',
+				{
+					...shippingRate,
+					shipping_zone_id: shippingZoneId,
+				},
+				{ throwOnError: true }
+			);
 
 			await invalidateResolutionForStore();
 
