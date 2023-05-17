@@ -4,30 +4,65 @@ namespace SureCart\Integrations\Elementor\Conditions;
 use ElementorPro\Modules\QueryControl\Module as QueryModule;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+	exit; // Exit if accessed directly.
 }
 
+/**
+ * Single product condition.
+ */
 class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condition_Base {
+	/**
+	 * The type of the condition.
+	 *
+	 * @return string
+	 */
 	public static function get_type() {
 		return 'surecart-single-product';
 	}
 
+	/**
+	 * The priority.
+	 *
+	 * @return integer
+	 */
 	public static function get_priority() {
 		return 40;
 	}
 
+	/**
+	 * The name of the condition.
+	 *
+	 * @return string
+	 */
 	public function get_name() {
 		return 'surecart-single-product';
 	}
 
+	/**
+	 * The label of the condition.
+	 *
+	 * @return string
+	 */
 	public function get_label() {
 		return __( 'Product', 'elementor-pro' );
 	}
 
+	/**
+	 * The label of the condition.
+	 *
+	 * @return string
+	 */
 	public function get_all_label() {
 		return __( 'Products', 'elementor-pro' );
 	}
 
+	/**
+	 * Check to see if the condition is valid for the current request.
+	 *
+	 * @param array $args Condition arguments.
+	 *
+	 * @return boolean
+	 */
 	public function check( $args ) {
 		if ( isset( $args['id'] ) ) {
 			$id = $args['id'];
@@ -42,6 +77,11 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 		return false;
 	}
 
+	/**
+	 * Register controls for the condition.
+	 *
+	 * @return void
+	 */
 	protected function register_controls() {
 		$this->add_control(
 			'surecart_product_id',
