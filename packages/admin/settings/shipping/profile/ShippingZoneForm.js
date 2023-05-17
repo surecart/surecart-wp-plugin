@@ -155,6 +155,10 @@ export default ({
 						onScInput={(e) => setZoneName(e.target.value)}
 						name="zone-name"
 						value={zoneName}
+						placeholder={__(
+							'United States,  United Kingdom, Global ...',
+							'surecart'
+						)}
 					/>
 					<ScFormControl label={__('Select Countries', 'surecart')}>
 						<ScFlex
