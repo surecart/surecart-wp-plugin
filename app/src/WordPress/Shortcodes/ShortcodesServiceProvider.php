@@ -101,6 +101,15 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_cart_menu_icon',
+			\SureCartBlocks\Blocks\CartMenuButton\Block::class,
+			[
+				'cart_icon'              => 'shopping-bag',
+				'cart_menu_always_shown' => true,
+			]
+		);
+
 		// confirmation.
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_order_confirmation',

@@ -38,6 +38,9 @@ export class ScCart {
   /** Should we force show the cart, even if there's a form on the page? */
   @Prop() alwaysShow: boolean;
 
+  /** Whether the floating button should be visible */
+  @Prop() floatingIconEnabled: boolean = true;
+
   /** The current UI state. */
   @State() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
 
@@ -154,8 +157,6 @@ export class ScCart {
               onScUpdateOrderState={e => this.setOrder(e.detail)}
               onScError={e => (this.error = e.detail as ResponseError)}
             >
-              <sc-cart-icon count={this.getItemsCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
-
               <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>

@@ -9,6 +9,7 @@ import './formats';
 import * as checkout from '@blocks/CheckoutForm';
 import * as buyButton from '@blocks/BuyButton';
 import * as addToCartButton from '@blocks/AddToCartButton';
+import * as cartMenuButton from '@blocks/CartMenuButton';
 import * as logoutButton from '@blocks/LogoutButton';
 import * as card from '@blocks/Card';
 import * as confirmation from '@blocks/Confirmation';
@@ -40,6 +41,7 @@ registerBlocks([
 	checkout,
 	buyButton,
 	addToCartButton,
+  cartMenuButton,
 	logoutButton,
 	card,
 	confirmation,

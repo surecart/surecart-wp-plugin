@@ -5,14 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
-import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
-export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -263,6 +257,10 @@ export namespace Components {
          */
         "checkoutUrl": string;
         /**
+          * Whether the floating button should be visible
+         */
+        "floatingIconEnabled": boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId": string;
@@ -274,6 +272,24 @@ export namespace Components {
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
+    }
+    interface ScCartButton {
+        /**
+          * Whether the cart icon is always shown when the cart is empty
+         */
+        "cartMenuAlwaysShown": boolean;
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * Whether the cart count will be shown or not when the cart is empty
+         */
+        "showEmptyCount": boolean;
     }
     interface ScCartForm {
         /**
@@ -324,9 +340,17 @@ export namespace Components {
          */
         "count": number;
         /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
           * The icon to show.
          */
         "icon": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
     }
     interface ScCartLoader {
         /**
@@ -4066,6 +4090,12 @@ declare global {
         prototype: HTMLScCartElement;
         new (): HTMLScCartElement;
     };
+    interface HTMLScCartButtonElement extends Components.ScCartButton, HTMLStencilElement {
+    }
+    var HTMLScCartButtonElement: {
+        prototype: HTMLScCartButtonElement;
+        new (): HTMLScCartButtonElement;
+    };
     interface HTMLScCartFormElement extends Components.ScCartForm, HTMLStencilElement {
     }
     var HTMLScCartFormElement: {
@@ -5150,6 +5180,7 @@ declare global {
         "sc-cancel-survey": HTMLScCancelSurveyElement;
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
+        "sc-cart-button": HTMLScCartButtonElement;
         "sc-cart-form": HTMLScCartFormElement;
         "sc-cart-form-submit": HTMLScCartFormSubmitElement;
         "sc-cart-header": HTMLScCartHeaderElement;
@@ -5599,6 +5630,10 @@ declare namespace LocalJSX {
          */
         "checkoutUrl"?: string;
         /**
+          * Whether the floating button should be visible
+         */
+        "floatingIconEnabled"?: boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId"?: string;
@@ -5610,6 +5645,24 @@ declare namespace LocalJSX {
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
+    }
+    interface ScCartButton {
+        /**
+          * Whether the cart icon is always shown when the cart is empty
+         */
+        "cartMenuAlwaysShown"?: boolean;
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * Whether the cart count will be shown or not when the cart is empty
+         */
+        "showEmptyCount"?: boolean;
     }
     interface ScCartForm {
         /**
@@ -5661,9 +5714,17 @@ declare namespace LocalJSX {
          */
         "count"?: number;
         /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
           * The icon to show.
          */
         "icon"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
     }
     interface ScCartLoader {
         /**
@@ -9445,6 +9506,7 @@ declare namespace LocalJSX {
         "sc-cancel-survey": ScCancelSurvey;
         "sc-card": ScCard;
         "sc-cart": ScCart;
+        "sc-cart-button": ScCartButton;
         "sc-cart-form": ScCartForm;
         "sc-cart-form-submit": ScCartFormSubmit;
         "sc-cart-header": ScCartHeader;
@@ -9641,6 +9703,7 @@ declare module "@stencil/core" {
             "sc-cancel-survey": LocalJSX.ScCancelSurvey & JSXBase.HTMLAttributes<HTMLScCancelSurveyElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
+            "sc-cart-button": LocalJSX.ScCartButton & JSXBase.HTMLAttributes<HTMLScCartButtonElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;
             "sc-cart-form-submit": LocalJSX.ScCartFormSubmit & JSXBase.HTMLAttributes<HTMLScCartFormSubmitElement>;
             "sc-cart-header": LocalJSX.ScCartHeader & JSXBase.HTMLAttributes<HTMLScCartHeaderElement>;
