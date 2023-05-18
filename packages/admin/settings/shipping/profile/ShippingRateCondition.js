@@ -28,12 +28,14 @@ export default ({ shippingRate }) => {
 				value={shippingRate.min_weight}
 				type="unit"
 				unit={shippingRate.weight_unit}
+				noConvert
 			/>{' '}
 			-{' '}
 			<ScFormatNumber
 				value={shippingRate.max_weight}
 				type="unit"
 				unit={shippingRate.weight_unit}
+				noConvert
 			/>
 		</Fragment>
 	);
