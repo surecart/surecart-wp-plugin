@@ -65,6 +65,7 @@ class PermalinkSettingService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_init', [ $this, 'addSettingsSection' ] );
+		add_action( 'admin_init', [ $this, 'maybeSaveSettings' ] );
 	}
 
 	/**
@@ -78,7 +79,7 @@ class PermalinkSettingService {
 	 * Display the settings.
 	 */
 	public function settings() {
-		echo wp_kses_post( wpautop( $this->description, esc_url( home_url( '/' ) ) ) );
+		echo wp_kses_post( wpautop( $this->description ) );
 
 		$values = array_values(
 			array_map(
@@ -99,16 +100,41 @@ class PermalinkSettingService {
 				</tr>
 				<?php endforeach; ?>
 				<tr>
-					<th><label><input name="<?php echo esc_attr( $this->slug ); ?>_permalink" id="surecart_<?php echo esc_attr( $this->slug ); ?>_custom_selection" type="radio" value="custom" class="tog" <?php checked( in_array( $this->current_base, [ _x( 'products', 'product-page-slug', 'surecart' ), _x( 'shop', 'product-page-slug', 'surecart' ) ], true ), false ); ?> />
-					<?php esc_html_e( 'Custom base', 'surecart' ); ?></label></th>
+					<th>
+						<label>
+							<input
+								name="<?php echo esc_attr( $this->slug ); ?>_permalink"
+								id="surecart_<?php echo esc_attr( $this->slug ); ?>_custom_selection"
+								type="radio"
+								value="custom"
+								class="tog"
+								<?php
+									checked(
+										in_array(
+											$this->current_base,
+											array_map(
+												function( $opt ) {
+													return $opt['value'];
+												},
+												$this->options
+											),
+											true
+										),
+										false
+									);
+								?>
+							 />
+							<?php esc_html_e( 'Custom base', 'surecart' ); ?>
+						</label>
+					</th>
 					<td>
-						<input name="<?php echo esc_attr( $this->slug ); ?>_permalink_structure" id="surecart_<?php echo esc_attr( $this->slug ); ?>_permalink_structure" type="text" value="<?php echo esc_attr( ! in_array( $this->current_base, [ $values ], true ) ? trailingslashit( $this->current_base ) : '' ); ?>" class="regular-text code"> <span class="description"><?php esc_html_e( 'Enter a custom base to use. A base must be set or WordPress will use default instead.', 'surecart' ); ?></span>
+						<input name="<?php echo esc_attr( $this->slug ); ?>_permalink_structure" id="surecart_<?php echo esc_attr( $this->slug ); ?>_permalink_structure" type="text" value="<?php echo esc_attr( ! in_array( $this->current_base, [ $values ], true ) ? untrailingslashit( $this->current_base ) : '' ); ?>" class="regular-text code"> <span class="description"><?php esc_html_e( 'Enter a custom base to use. A base must be set or WordPress will use default instead.', 'surecart' ); ?></span>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 
-		<?php wp_nonce_field( "surecart-{$this->slug}-permalinks", "surecart-{$this->slug}-permalinks-nonce" ); ?>
+		<?php wp_nonce_field( 'surecart-permalinks', 'surecart-permalinks-nonce' ); ?>
 
 		<script>
 			jQuery( function() {
@@ -122,6 +148,35 @@ class PermalinkSettingService {
 			} );
 		</script>
 		<?php
+	}
+
+	/**
+	 * Save the settings.
+	 */
+	public function maybeSaveSettings() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		$structure_key = esc_attr( $this->slug ) . '_permalink_structure';
+		$permalink_key = esc_attr( $this->slug ) . '_permalink';
+
+		// we must have our permalink post data and nonce.
+		if ( ! isset( $_POST[ $structure_key ], $_POST[ $permalink_key ] ) || ! wp_verify_nonce( wp_unslash( $_POST['surecart-permalinks-nonce'] ), 'surecart-permalinks' ) ) { // WPCS: input var ok, sanitization ok.
+			return;
+		}
+
+		// get the buy base.
+		$page        = isset( $_POST[ $permalink_key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $permalink_key ] ) ) : '';
+		$page_struct = isset( $_POST[ $structure_key ] ) ? sanitize_text_field( wp_unslash( $_POST[ $structure_key ] ) ) : '';
+
+		if ( 'custom' === $page ) {
+			$page = ! empty( $_POST[ $structure_key ] ) ? preg_replace( '#/+#', '/', '/' . str_replace( '#', '', trim( wp_unslash( $_POST[ $structure_key ] ) ) ) ) : $this->options[0]['value']; // WPCS: input var ok, sanitization ok.
+		} elseif ( empty( $page ) ) {
+			$page = $this->options[0]['value'];
+		}
+
+		\SureCart::settings()->permalinks()->updatePermalinkSettings( $this->slug . '_page', sanitize_title( $page ) );
 	}
 
 }
