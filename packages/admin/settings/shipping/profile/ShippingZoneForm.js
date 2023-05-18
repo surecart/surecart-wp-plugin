@@ -188,7 +188,7 @@ export default ({
 				<ScFlex justifyContent="flex-start">
 					<ScButton type="primary" disabled={loading} submit={true}>
 						{isEdit
-							? __('Edit', 'surecart')
+							? __('Save', 'surecart')
 							: __('Add', 'surecart')}
 					</ScButton>{' '}
 					<ScButton
