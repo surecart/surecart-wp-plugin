@@ -112,7 +112,7 @@ class Product extends Model {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
-		return trailingslashit( get_home_url() ) . trailingslashit( 'products' ) . $this->slug;
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . $this->slug;
 	}
 
 	/**
