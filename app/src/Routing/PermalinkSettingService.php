@@ -94,7 +94,7 @@ class PermalinkSettingService {
 			<tbody>
 				<?php foreach ( $this->options as $permalink ) : ?>
 				<tr>
-					<th><label><input name="<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sctog" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
+					<th><label><input name="<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
 					<td><code><?php echo esc_html( home_url() ); ?>/<?php echo esc_attr( $permalink['value'] ); ?>/sample-product/</code></td>
 				</tr>
 				<?php endforeach; ?>
@@ -112,12 +112,12 @@ class PermalinkSettingService {
 
 		<script>
 			jQuery( function() {
-				jQuery('input.sctog').on( 'change', function() {
-					jQuery('#surecart_product_permalink_structure').val( jQuery( this ).val() );
+				jQuery('input.sc-tog-<?php echo esc_attr( $this->slug ); ?>').on( 'change', function() {
+					jQuery('#surecart_<?php echo esc_attr( $this->slug ); ?>_permalink_structure').val( jQuery( this ).val() );
 				});
-				jQuery('.sc-product-permalink-structure input:checked').trigger( 'change' );
-				jQuery('#surecart_product_permalink_structure').on( 'focus', function(){
-					jQuery('#surecart_product_custom_selection').trigger( 'click' );
+				jQuery('.sc-<?php echo esc_attr( $this->slug ); ?>-permalink-structure input:checked').trigger( 'change' );
+				jQuery('#surecart_<?php echo esc_attr( $this->slug ); ?>_permalink_structure').on( 'focus', function(){
+					jQuery('#surecart_<?php echo esc_attr( $this->slug ); ?>_custom_selection').trigger( 'click' );
 				} );
 			} );
 		</script>
