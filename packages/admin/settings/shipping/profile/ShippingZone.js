@@ -21,16 +21,19 @@ import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../../components/Error';
+import AddShippingMethod from './AddShippingMethod';
+import ShippingMethodForm from './ShippingMethodForm';
 
-export default ({
-	shippingZone,
-	onEditZone,
-	onAddRate,
-	parentBusy,
-	isFallback,
-}) => {
+const modals = {
+	ADD_RATE: 'add_shipping_rate',
+	EDIT_RATE: 'edit_shipping_rate',
+};
+
+export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
+	const [currentModal, setCurrentModal] = useState('');
+	const [selectedShippingRate, setSelectedShippingRate] = useState(null);
 
 	const { deleteEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
@@ -91,6 +94,17 @@ export default ({
 								</ScButton>
 								<ScMenu>
 									<ScMenuItem
+										onClick={() => {
+											setSelectedShippingRate(
+												shippingRate
+											);
+											setCurrentModal(modals.EDIT_RATE);
+										}}
+									>
+										<ScIcon slot="prefix" name="edit" />
+										{__('Edit', 'surecart')}
+									</ScMenuItem>
+									<ScMenuItem
 										onClick={() =>
 											onRemoveShippingRate(
 												shippingRate.id
@@ -137,7 +151,7 @@ export default ({
 			</ScFlex>
 			<Error error={error} setError={setError} />
 			{renderShippingRates(shippingZone?.shipping_rates)}
-			<ScButton onClick={onAddRate}>
+			<ScButton onClick={() => setCurrentModal(modals.ADD_RATE)}>
 				<ScIcon name="plus" /> {__('Add Rate', 'surecart')}
 			</ScButton>
 			{(busy || parentBusy) && (
@@ -146,6 +160,19 @@ export default ({
 					spinner
 				/>
 			)}
+
+			{currentModal === modals.ADD_RATE ||
+			currentModal === modals.EDIT_RATE ? (
+				<ShippingMethodForm
+					onRequestClose={() => {
+						setCurrentModal('');
+						setSelectedShippingRate();
+					}}
+					isEdit={currentModal === modals.EDIT_RATE}
+					shippingZoneId={shippingZone?.id}
+					selectedShippingRate={selectedShippingRate}
+				/>
+			) : null}
 		</ScCard>
 	);
 };

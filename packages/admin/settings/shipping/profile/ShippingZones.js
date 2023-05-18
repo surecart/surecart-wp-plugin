@@ -1,10 +1,9 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
 import { ScButton, ScFlex, ScIcon, ScText } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
-import AddShippingMethod from './AddShippingMethod';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import ShippingZone from './ShippingZone';
@@ -13,7 +12,6 @@ import ShippingZoneForm from './ShippingZoneForm';
 const modals = {
 	EDIT_ZONE: 'edit_shipping_zone',
 	ADD_ZONE: 'add_shipping_zone',
-	ADD_RATE: 'add_shipping_rate',
 };
 
 export default ({ shippingProfileId, fallbackZoneId }) => {
@@ -74,10 +72,6 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 								setCurrentModal(modals.EDIT_ZONE);
 								setSelectedZone(shippingZone);
 							}}
-							onAddRate={() => {
-								setCurrentModal(modals.ADD_RATE);
-								setSelectedZone(shippingZone);
-							}}
 							parentBusy={
 								busy && selectedZone?.id === shippingZone.id
 							}
@@ -98,12 +92,6 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 				shippingProfileId={shippingProfileId}
 				selectedZone={selectedZone}
 				isEdit={currentModal === modals.EDIT_ZONE}
-			/>
-
-			<AddShippingMethod
-				open={currentModal === modals.ADD_RATE}
-				onRequestClose={() => setCurrentModal('')}
-				shippingZoneId={selectedZone?.id}
 			/>
 		</SettingsBox>
 	);

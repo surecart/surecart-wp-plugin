@@ -36,7 +36,12 @@ const WEIGHT_UNIT_TYPES = [
 	__('g', 'surecart'),
 ];
 
-export default ({ open, onRequestClose, shippingZoneId }) => {
+export default ({
+	onRequestClose,
+	shippingZoneId,
+	isEdit,
+	selectedShippingRate,
+}) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [methodName, setMethodName] = useState('');
@@ -61,7 +66,45 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 			setShowAddNew(false);
 			setError();
 		};
-	}, [open]);
+	}, []);
+
+	useEffect(() => {
+		if (isEdit && selectedShippingRate?.id) {
+			setShippingRate({
+				amount: selectedShippingRate.amount,
+				rate_type: selectedShippingRate.rate_type,
+				shipping_method_id: selectedShippingRate.shipping_method?.id,
+				weight_unit: selectedShippingRate.weight_unit,
+				max_amount: selectedShippingRate.max_amount,
+				min_amount: selectedShippingRate.min_amount,
+			});
+		}
+	}, [selectedShippingRate, isEdit]);
+
+	const addShippingRate = async (rate) => {
+		await saveEntityRecord(
+			'surecart',
+			'shipping-rate',
+			{
+				...rate,
+				shipping_zone_id: shippingZoneId,
+			},
+			{ throwOnError: true }
+		);
+	};
+
+	const editShippingRate = async (rate) => {
+		await saveEntityRecord(
+			'surecart',
+			'shipping-rate',
+			{
+				...rate,
+				id: selectedShippingRate.id,
+				shipping_zone_id: shippingZoneId,
+			},
+			{ throwOnError: true }
+		);
+	};
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -84,15 +127,11 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 					__('Failed to create shipping method', 'surecart')
 				);
 
-			await saveEntityRecord(
-				'surecart',
-				'shipping-rate',
-				{
-					...shippingRate,
-					shipping_zone_id: shippingZoneId,
-				},
-				{ throwOnError: true }
-			);
+			if (isEdit) {
+				await editShippingRate(shippingRate);
+			} else {
+				await addShippingRate(shippingRate);
+			}
 
 			await invalidateResolutionForStore();
 
@@ -125,6 +164,15 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 				</ScMenu>
 			</ScDropdown>
 		);
+	};
+
+	const getSubmitText = () => {
+		if (isEdit) {
+			return __('Update', 'surecart');
+		} else if (showAddNew) {
+			return __('Add Rate', 'surecart');
+		}
+		return __('Add', 'surecart');
 	};
 
 	const renderMaxMinInputs = () => {
@@ -200,8 +248,12 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 
 	return (
 		<ScDialog
-			open={open}
-			label={__('Add New Shipping Rate')}
+			open={true}
+			label={
+				isEdit
+					? __('Edit Shipping Rate', 'surecart')
+					: __('Add New Shipping Rate', 'surecart')
+			}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}
 		>
@@ -229,6 +281,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 								name="shipping-method"
 								placeholder={__('Select', 'surecart')}
 								value={shippingRate.shipping_method_id}
+                fetchOnLoad={isEdit}
 								prefix={
 									<div slot="prefix">
 										<ScMenuItem
@@ -269,7 +322,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 						}}
 					/>
 					<ScRadioGroup
-						onScChange={(e) =>
+						onChange={(e) =>
 							updateShippingRate('rate_type', e.target.value)
 						}
 						value={shippingRate.rate_type}
@@ -298,9 +351,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 
 				<ScFlex justifyContent="flex-start">
 					<ScButton type="primary" disabled={loading} submit={true}>
-						{showAddNew
-							? __('Add Rate', 'surecart')
-							: __('Add', 'surecart')}
+						{getSubmitText()}
 					</ScButton>{' '}
 					{showAddNew ? (
 						<ScFlex justifyContent="flex-start">
