@@ -1449,41 +1449,7 @@
     "class": true,
     "slot": true
   },
-  "sc-product": {
-    "column-gap": true,
-    "form-id": true,
-    "media-position": true,
-    "media-width": true,
-    "mode": true,
-    "product": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-product-buy-button": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-product-buy-buttons": {
-    "checkout-url": true,
-    "form-id": true,
-    "mode": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-product-form": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-product-image": {
-    "product": true,
     "style": true,
     "id": true,
     "class": true,
