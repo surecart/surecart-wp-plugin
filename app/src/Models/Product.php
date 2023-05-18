@@ -116,6 +116,24 @@ class Product extends Model {
 	}
 
 	/**
+	 * Get the page title.
+	 *
+	 * @return string
+	 */
+	public function getPageTitleAttribute() {
+		return $this->metadata->page_title ?? $this->name;
+	}
+
+	/**
+	 * Get the meta description.
+	 *
+	 * @return string
+	 */
+	public function getMetaDescriptionAttribute() {
+		return $this->metadata->meta_description ?? $this->description;
+	}
+
+	/**
 	 * Return attached active prices.
 	 *
 	 * @return array
