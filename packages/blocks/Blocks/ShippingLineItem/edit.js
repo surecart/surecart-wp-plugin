@@ -6,26 +6,14 @@ import { Fragment } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 
-/**
- * Component Dependencies
- */
-import CartInspectorControls from '../../components/CartInspectorControls';
-import useCartStyles from '../../hooks/useCartStyles';
-
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
 
-	const blockProps = useBlockProps({
-		style: useCartStyles({ attributes }),
-	});
+	const blockProps = useBlockProps();
 
 	return (
 		<Fragment>
 			<InspectorControls>
-				<CartInspectorControls
-					attributes={attributes}
-					setAttributes={setAttributes}
-				/>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
