@@ -43,6 +43,10 @@ export default ({ loading, shippingProfile, onEditShippingProfile }) => {
 		};
 	});
 
+	if (!shippingZones?.length) {
+		return null;
+	}
+
 	return (
 		<div>
 			<ScFlex
