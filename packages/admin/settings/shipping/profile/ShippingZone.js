@@ -21,7 +21,6 @@ import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../../components/Error';
-import AddShippingMethod from './AddShippingMethod';
 import ShippingMethodForm from './ShippingMethodForm';
 
 const modals = {

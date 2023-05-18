@@ -77,6 +77,8 @@ export default ({
 				weight_unit: selectedShippingRate.weight_unit,
 				max_amount: selectedShippingRate.max_amount,
 				min_amount: selectedShippingRate.min_amount,
+				max_weight: selectedShippingRate.max_weight,
+				min_weight: selectedShippingRate.min_weight,
 			});
 		}
 	}, [selectedShippingRate, isEdit]);
