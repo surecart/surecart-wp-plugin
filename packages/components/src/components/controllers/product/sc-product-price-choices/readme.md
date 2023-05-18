@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `label`  | `label`   |             | `string` | `undefined` |
+| Property    | Attribute    | Description | Type      | Default     |
+| ----------- | ------------ | ----------- | --------- | ----------- |
+| `label`     | `label`      |             | `string`  | `undefined` |
+| `showPrice` | `show-price` |             | `boolean` | `undefined` |
 
 
 ## Dependencies

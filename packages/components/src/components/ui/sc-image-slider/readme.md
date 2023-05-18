@@ -27,7 +27,7 @@
 
 ### Depends on
 
-- [sc-icon](../../../ui/icon)
+- [sc-icon](../icon)
 
 ### Graph
 ```mermaid

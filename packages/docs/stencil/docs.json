@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-17T21:33:07",
+  "timestamp": "2023-05-18T21:05:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13590,7 +13590,7 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/checkout-form/sc-image-slider/sc-image-slider.tsx",
+      "filePath": "./src/components/ui/sc-image-slider/sc-image-slider.tsx",
       "encapsulation": "shadow",
       "tag": "sc-image-slider",
       "readme": "# sc-product-image-carousel\n\n\n",
@@ -22756,140 +22756,6 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/product/sc-product/sc-product.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product",
-      "readme": "# sc-product\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "columnGap",
-          "type": "string",
-          "mutable": false,
-          "attr": "column-gap",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "'2em'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "formId",
-          "type": "number",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": true,
-          "docs": "The form id to use for the cart.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mediaPosition",
-          "type": "\"left\" | \"right\"",
-          "mutable": false,
-          "attr": "media-position",
-          "reflectToAttr": false,
-          "docs": "The media position.",
-          "docsTags": [],
-          "default": "'left'",
-          "values": [
-            {
-              "value": "left",
-              "type": "string"
-            },
-            {
-              "value": "right",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mediaWidth",
-          "type": "string",
-          "mutable": false,
-          "attr": "media-width",
-          "reflectToAttr": false,
-          "docs": "The media width.",
-          "docsTags": [],
-          "default": "'65%'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Are we in test or live mode.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "product",
-          "type": "Product",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The product.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Product"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "base",
-          "docs": ""
-        }
-      ],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
       "filePath": "./src/components/controllers/product/sc-product-buy-button/sc-product-buy-button.tsx",
       "encapsulation": "none",
       "tag": "sc-product-buy-button",
@@ -22898,190 +22764,6 @@
       "docsTags": [],
       "usage": {},
       "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
-      "filePath": "./src/components/controllers/product/sc-product-buy-buttons/sc-product-buy-buttons.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product-buy-buttons",
-      "readme": "# sc-product-buy-buttons\n\n\n",
-      "docs": "",
-      "docsTags": [
-        {
-          "name": "part",
-          "text": "base - The elements base wrapper."
-        },
-        {
-          "name": "part",
-          "text": "label - The button label."
-        },
-        {
-          "name": "part",
-          "text": "prefix - The button prefix."
-        },
-        {
-          "name": "part",
-          "text": "suffix - The button suffix."
-        },
-        {
-          "name": "part",
-          "text": "caret - The button caret."
-        },
-        {
-          "name": "part",
-          "text": "spinner - The button spinner."
-        }
-      ],
-      "usage": {},
-      "props": [
-        {
-          "name": "checkoutUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "checkout-url",
-          "reflectToAttr": false,
-          "docs": "The link to the checkout",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "formId",
-          "type": "number",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Are we in test or live mode.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [],
-      "listeners": [
-        {
-          "event": "click",
-          "capture": false,
-          "passive": false
-        }
-      ],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "base",
-          "docs": "The elements base wrapper."
-        },
-        {
-          "name": "caret",
-          "docs": "The button caret."
-        },
-        {
-          "name": "label",
-          "docs": "The button label."
-        },
-        {
-          "name": "prefix",
-          "docs": "The button prefix."
-        },
-        {
-          "name": "spinner",
-          "docs": "The button spinner."
-        },
-        {
-          "name": "suffix",
-          "docs": "The button suffix."
-        }
-      ],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
-      "filePath": "./src/components/controllers/product/sc-product-form/sc-product-form.tsx",
-      "encapsulation": "none",
-      "tag": "sc-product-form",
-      "readme": "# sc-product-form\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
-    },
-    {
-      "filePath": "./src/components/controllers/product/sc-product-image/sc-product-image.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-product-image",
-      "readme": "# sc-product-image\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "product",
-          "type": "Product",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Product"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -24183,6 +23865,7 @@
       "filePath": "./src/components/controllers/product/sc-product-price-modal/sc-product-price-modal.tsx",
       "encapsulation": "shadow",
       "tag": "sc-product-price-modal",
+      "readme": "# sc-product-price-modal\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

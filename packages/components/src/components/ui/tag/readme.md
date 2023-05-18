@@ -52,6 +52,7 @@
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-premium-tag](../sc-premium-tag)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-price](../../controllers/product/sc-product-price)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
@@ -79,6 +80,7 @@ graph TD;
   sc-payment-method --> sc-tag
   sc-payment-methods-list --> sc-tag
   sc-premium-tag --> sc-tag
+  sc-product-item-list --> sc-tag
   sc-product-price --> sc-tag
   sc-subscription-details --> sc-tag
   sc-subscription-payment-method --> sc-tag

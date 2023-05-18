@@ -50,7 +50,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
  - [sc-empty](../empty)
- - [sc-image-slider](../../controllers/checkout-form/sc-image-slider)
+ - [sc-image-slider](../sc-image-slider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
