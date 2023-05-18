@@ -209,9 +209,9 @@ export default ({
 				<ScFlex>
 					<ScInput
 						label={__('Minimum weight', 'surecart')}
-						value={shippingRate.min_amount}
+						value={shippingRate.min_weight}
 						onScInput={(e) => {
-							updateShippingRate('min_amount', e.target.value);
+							updateShippingRate('min_weight', e.target.value);
 						}}
 						css={css`
 							min-width: 0;
@@ -221,10 +221,10 @@ export default ({
 					</ScInput>
 					<ScInput
 						label={__('Maximum weight', 'surecart')}
-						value={shippingRate.max_amount}
+						value={shippingRate.max_weight}
 						placeholder="No limit"
 						onScInput={(e) => {
-							updateShippingRate('max_amount', e.target.value);
+							updateShippingRate('max_weight', e.target.value);
 						}}
 						css={css`
 							min-width: 0;
@@ -281,7 +281,7 @@ export default ({
 								name="shipping-method"
 								placeholder={__('Select', 'surecart')}
 								value={shippingRate.shipping_method_id}
-                fetchOnLoad={isEdit}
+								fetchOnLoad={isEdit}
 								prefix={
 									<div slot="prefix">
 										<ScMenuItem
