@@ -146,9 +146,20 @@
     "cart-template": true,
     "checkout-link": true,
     "checkout-url": true,
+    "floating-icon-enabled": true,
     "form-id": true,
     "header": true,
     "mode": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-cart-button": {
+    "cart-menu-always-shown": true,
+    "form-id": true,
+    "mode": true,
+    "show-empty-count": true,
     "style": true,
     "id": true,
     "class": true,
@@ -184,7 +195,9 @@
   },
   "sc-cart-icon": {
     "count": true,
+    "form-id": true,
     "icon": true,
+    "mode": true,
     "style": true,
     "id": true,
     "class": true,
@@ -800,6 +813,7 @@
     "slot": true
   },
   "sc-image-slider": {
+    "has-thumbnails": true,
     "images": true,
     "thumbnails": true,
     "thumbnails-per-page": true,
@@ -987,6 +1001,7 @@
   },
   "sc-order-bump": {
     "bump": true,
+    "cdn-root": true,
     "checkout": true,
     "show-control": true,
     "style": true,
@@ -1426,6 +1441,7 @@
     "image-url": true,
     "interval": true,
     "max": true,
+    "media": true,
     "name": true,
     "quantity": true,
     "removable": true,
@@ -1626,6 +1642,12 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
+    "address": true,
+    "form-state": true,
+    "order": true,
+    "selected-processor-id": true,
+    "stripe-payment-intent": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
