@@ -14,11 +14,6 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { cleanForSlug } from '@wordpress/url';
 
-/**
- * Internal dependencies
- */
-// import { store as editPostStore } from '../../../store';
-
 const DEFAULT_TITLE = __('Custom Single Product Page', 'surecart');
 
 export default function PostTemplateCreateModal({
