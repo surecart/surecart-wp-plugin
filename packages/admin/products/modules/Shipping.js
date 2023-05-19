@@ -13,7 +13,6 @@ import {
 	ScMenuItem,
 	ScToggle,
 } from '@surecart/components-react';
-import { addQueryArgs } from '@wordpress/url';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),
@@ -93,27 +92,6 @@ export default ({ loading, product, updateProduct }) => {
 					</ScAlert>
 				</ScCard>
 			</ScToggle>
-
-			{!product?.shipping_profile && product?.shipping_enabled && (
-				<ScAlert type="warning" showIcon open>
-					{__(
-						'Product cannot shipped because it has not been added to a shipping profile.',
-						'surecart'
-					)}
-					<ScButton
-						type="primary"
-						css={css`
-							margin-top: var(--sc-spacing-medium);
-						`}
-						href={addQueryArgs('admin.php', {
-							page: 'sc-settings',
-							tab: 'shipping_protocol',
-						})}
-					>
-						{__('Add to shipping profile', 'surecart')}
-					</ScButton>
-				</ScAlert>
-			)}
 		</Box>
 	);
 };
