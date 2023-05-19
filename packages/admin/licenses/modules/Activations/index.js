@@ -8,6 +8,7 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
+import { css } from '@emotion/core';
 
 import Error from '../../../components/Error';
 import Box from '../../../ui/Box';
@@ -95,10 +96,10 @@ export default ({ id, license }) => {
 			loading={loading}
 			header_action={
 				!loading && (
-					<ScTag type="info">
+					<ScTag type="info" style={{ minWidth: 'max-content' }}>
 						{sprintf(
 							__('%1s of %2s Activations Used'),
-							parseInt(license?.activation_count || 0),
+							parseInt(license?.activations_count || 0),
 							parseInt(license?.activation_limit) || '∞'
 						)}
 					</ScTag>
