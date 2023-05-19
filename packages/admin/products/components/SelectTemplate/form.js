@@ -24,22 +24,29 @@ export default function PostTemplateForm({
 	updateProduct,
 	template,
 }) {
-	const { templates, canCreate, canEdit } = useSelect((select) => {
-		const { canUser, getEntityRecords } = select(coreStore);
-		const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
-		return {
-			templates: (getEntityRecords(...selectorArgs) || []).filter(
+	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
+		(select) => {
+			const { canUser, getEntityRecords } = select(coreStore);
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = (getEntityRecords(...selectorArgs) || []).filter(
 				(template) => {
 					return (
 						template.theme === 'surecart/surecart' ||
 						template.slug.includes('sc-products')
 					);
 				}
-			),
-			canCreate: canUser('create', 'templates'),
-			canEdit: canUser('create', 'templates'),
-		};
-	}, []);
+			);
+			return {
+				templates,
+				defaultTemplate: templates.find(
+					(template) => template.theme === 'surecart/surecart'
+				),
+				canCreate: canUser('create', 'templates'),
+				canEdit: canUser('create', 'templates'),
+			};
+		},
+		[]
+	);
 
 	const options = (templates ?? []).map((template) => ({
 		value: template?.id,
@@ -122,7 +129,7 @@ export default function PostTemplateForm({
 
 			{isCreateModalOpen && (
 				<PostTemplateCreateModal
-					template={template}
+					template={defaultTemplate}
 					product={product}
 					updateProduct={updateProduct}
 					onClose={() => setIsCreateModalOpen(false)}

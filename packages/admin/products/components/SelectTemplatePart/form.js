@@ -25,7 +25,7 @@ export default function PostTemplateForm({
 	template,
 }) {
 	// template parts.
-	const { parts, canCreate } = useSelect(
+	const { parts, defaultPart, canCreate } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const parts = (
@@ -40,6 +40,9 @@ export default function PostTemplateForm({
 			});
 			return {
 				parts,
+				defaultPart: parts.find(
+					(part) => part.theme === 'surecart/surecart'
+				),
 				canCreate: canUser('create', 'templates'),
 			};
 		},
@@ -146,7 +149,7 @@ export default function PostTemplateForm({
 
 			{isCreateModalOpen && (
 				<PostTemplateCreateModal
-					template={template}
+					template={defaultPart}
 					product={product}
 					updateProduct={updateProduct}
 					onClose={() => setIsCreateModalOpen(false)}
