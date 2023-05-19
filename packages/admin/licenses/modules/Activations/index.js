@@ -8,7 +8,6 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
-import { css } from '@emotion/core';
 
 import Error from '../../../components/Error';
 import Box from '../../../ui/Box';
