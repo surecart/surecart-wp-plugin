@@ -29,7 +29,9 @@ export default function PostTemplateForm({
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const parts = (
-				getEntityRecords('postType', 'wp_template_part') || []
+				getEntityRecords('postType', 'wp_template_part', {
+					per_page: -1,
+				}) || []
 			).filter((template) => {
 				return (
 					template.theme === 'surecart/surecart' ||

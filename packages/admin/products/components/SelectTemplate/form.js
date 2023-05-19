@@ -26,7 +26,7 @@ export default function PostTemplateForm({
 }) {
 	const { templates, canCreate, canEdit } = useSelect((select) => {
 		const { canUser, getEntityRecords } = select(coreStore);
-		const selectorArgs = ['postType', 'wp_template'];
+		const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
 		return {
 			templates: (getEntityRecords(...selectorArgs) || []).filter(
 				(template) => {
