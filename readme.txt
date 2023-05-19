@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.11.0
+Stable tag: 1.11.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,9 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 1.11.1 - May 19, 2023 =
+* Fix: Update Merchant UI to account for imported subscriptions.
 
 = 1.11.0 - May 11, 2023 =
 * New: Cart icon in menu for classic and FSE themes.
