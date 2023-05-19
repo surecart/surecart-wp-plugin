@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { ScFormatNumber } from '@surecart/components-react';
+import { ScFormatNumber, ScTag } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 export default ({ shippingRate }) => {
 	if (shippingRate.rate_type === 'amount') {
@@ -22,21 +23,28 @@ export default ({ shippingRate }) => {
 		);
 	}
 
+	if (shippingRate.rate_type === 'weight') {
+		return (
+			<Fragment>
+				<ScFormatNumber
+					value={shippingRate.min_weight}
+					type="unit"
+					unit={shippingRate.weight_unit}
+					noConvert
+				/>{' '}
+				-{' '}
+				<ScFormatNumber
+					value={shippingRate.max_weight}
+					type="unit"
+					unit={shippingRate.weight_unit}
+					noConvert
+				/>
+			</Fragment>
+		);
+	}
 	return (
 		<Fragment>
-			<ScFormatNumber
-				value={shippingRate.min_weight}
-				type="unit"
-				unit={shippingRate.weight_unit}
-				noConvert
-			/>{' '}
-			-{' '}
-			<ScFormatNumber
-				value={shippingRate.max_weight}
-				type="unit"
-				unit={shippingRate.weight_unit}
-				noConvert
-			/>
+			<ScTag type="primary">{__('Flat Rate', 'surecart')}</ScTag>
 		</Fragment>
 	);
 };

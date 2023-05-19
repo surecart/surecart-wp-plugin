@@ -27,6 +27,7 @@ import { store as coreStore } from '@wordpress/core-data';
 const rate_types = {
 	ITEM_WEIGHT: 'weight',
 	ORDER_PRICE: 'amount',
+	FLAT_RATE: 'flat',
 };
 
 const WEIGHT_UNIT_TYPES = [
@@ -47,7 +48,7 @@ export default ({
 	const [methodName, setMethodName] = useState('');
 	const [shippingRate, setShippingRate] = useState({
 		amount: 0,
-		rate_type: rate_types.ITEM_WEIGHT,
+		rate_type: rate_types.FLAT_RATE,
 		shipping_method_id: '',
 		weight_unit: WEIGHT_UNIT_TYPES[0],
 	});
@@ -59,7 +60,7 @@ export default ({
 		return () => {
 			setShippingRate({
 				amount: 0,
-				rate_type: rate_types.ITEM_WEIGHT,
+				rate_type: rate_types.FLAT_RATE,
 				shipping_method_id: '',
 				weight_unit: WEIGHT_UNIT_TYPES[0],
 			});
@@ -178,6 +179,7 @@ export default ({
 	};
 
 	const renderMaxMinInputs = () => {
+		console.log(shippingRate.rate_type, 'RENDERING THE MAX MIN INPUTS');
 		if (shippingRate.rate_type === rate_types.ORDER_PRICE) {
 			return (
 				<ScFlex>
@@ -324,11 +326,26 @@ export default ({
 						}}
 					/>
 					<ScRadioGroup
-						onChange={(e) =>
-							updateShippingRate('rate_type', e.target.value)
-						}
+						onScChange={(e) => {
+							if (
+								isEdit &&
+								shippingRate.shipping_method_id !==
+									selectedShippingRate.shipping_method?.id
+							) {
+								return;
+							}
+							updateShippingRate('rate_type', e.target.value);
+						}}
 						value={shippingRate.rate_type}
 					>
+						<ScRadio
+							value={rate_types.FLAT_RATE}
+							checked={
+								shippingRate.rate_type === rate_types.FLAT_RATE
+							}
+						>
+							{__('Flat Rate', 'surecart')}
+						</ScRadio>
 						<ScRadio
 							value={rate_types.ITEM_WEIGHT}
 							checked={
