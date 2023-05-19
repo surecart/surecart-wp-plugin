@@ -245,6 +245,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.11.1 - May 19, 2023 =
 * Fix: Update Merchant UI to account for imported subscriptions.
+* Fix: TutorLMS index pages sometimes allowing access to restricted content without purchase.
+* Fix: PHP debug notice in CartService.php.
 
 = 1.11.0 - May 11, 2023 =
 * New: Cart icon in menu for classic and FSE themes.
