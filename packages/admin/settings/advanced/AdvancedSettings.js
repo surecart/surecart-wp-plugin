@@ -107,10 +107,7 @@ export default () => {
 						});
 					}}
 				>
-					{__(
-						'Automatically attempt to sync WP users with SureCart customers.',
-						'surecart'
-					)}
+					{__('Auto Sync Customers', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'If a WordPress user does not have a customer record, attempt to find one with an existing email and link it.',
