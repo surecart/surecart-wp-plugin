@@ -100,11 +100,15 @@ class User implements ArrayAccess, JsonSerializable {
 			return $customer_ids;
 		}
 
-		if ( count( $customer_ids ) < 2 ) {
-			if ( empty( $customer_ids['test'] ) ) {
+		if ( empty( $customer_ids['test'] ) ) {
+			$test_id = $this->customerId( 'test' );
+			if ( empty( $test_id ) ) {
 				$customer_ids['test'] = $this->customerId( 'test' );
 			}
-			if ( empty( $customer_ids['live'] ) ) {
+		}
+		if ( empty( $customer_ids['live'] ) ) {
+			$live_id = $this->customerId( 'live' );
+			if ( empty( $live_id ) ) {
 				$customer_ids['live'] = $this->customerId( 'live' );
 			}
 		}
@@ -325,7 +329,7 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( ! $id ) {
 			return false;
 		}
-		return Customer::find( $this->customerId( $mode ) );
+		return Customer::find( $id );
 	}
 
 	/**
