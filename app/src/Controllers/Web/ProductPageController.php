@@ -42,12 +42,6 @@ class ProductPageController extends ProductTypePageController {
 		if ( wp_is_block_theme() ) {
 			global  $_wp_current_template_content;
 			$_wp_current_template_content = $this->product->template->content ?? '';
-
-			return \SureCart::view( 'web/product-canvas' )->with(
-				[
-					'content' => $this->product->template->content,
-				]
-			);
 		}
 
 		// include the default view.
