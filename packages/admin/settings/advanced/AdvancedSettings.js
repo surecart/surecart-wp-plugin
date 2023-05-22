@@ -89,7 +89,7 @@ export default () => {
 						});
 					}}
 				>
-					{__('Use the Stripe Payment Element', 'surecart')}
+					{__('Use The Stripe Payment Element', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							"Use Stripe's Payment Element instead of the Card Element in all forms.",

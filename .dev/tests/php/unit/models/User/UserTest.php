@@ -3,6 +3,7 @@
 namespace SureCart\Tests\Models;
 
 use SureCart\Models\User;
+use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class UserTest extends SureCartUnitTestCase {
@@ -16,6 +17,7 @@ class UserTest extends SureCartUnitTestCase {
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class,
 			]
 		], false);
 
@@ -163,5 +165,83 @@ class UserTest extends SureCartUnitTestCase {
 
 		$customer_id = $user->customerId();
 		$this->assertSame($customer_id, 'testCustomerId');
+	}
+
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
+	public function test_findsCustomerIdsIfMissing()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'test@test.com',
+		]);
+
+		$user = User::find($user->ID);
+
+		// default should be empty
+		$customer_ids = $user->customerIds();
+		$this->assertEmpty($customer_ids);
+
+		// turn on syncing.
+		update_option('surecart_auto_sync_user_to_customer', true);
+
+		$requests->shouldReceive('makeRequest')
+		->once()
+		->withArgs([
+			'customers',
+			[
+				'query' => [
+					'email' => 'test@test.com',
+					'live_mode' => true,
+					'limit' => 1
+				]
+			],
+			false,
+			''
+		])
+		->andReturn((object)['data' => [
+			(object) [
+				'id' => 'liveCustomerId',
+				'object' => 'customer',
+				'live_mode' => true,
+				'email' => 'test@test.com'
+			]
+		]]);
+
+		$requests->shouldReceive('makeRequest')
+		->once()
+		->withArgs([
+			'customers',
+			[
+				'query' => [
+					'email' => 'test@test.com',
+					'live_mode' => false,
+					'limit' => 1
+				]
+			],
+			false,
+			''
+		])
+		->andReturn((object)['data' => [
+			(object) [
+				'id' => 'testCustomerId',
+				'object' => 'customer',
+				'live_mode' => false,
+				'email' => 'test@test.com'
+			]
+		]]);
+
+		$customer_id = $user->customerIds();
+		$this->assertSame($customer_id['test'], 'testCustomerId');
+		$this->assertSame($customer_id['live'], 'liveCustomerId');
 	}
 }

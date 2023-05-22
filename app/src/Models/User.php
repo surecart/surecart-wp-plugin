@@ -72,12 +72,12 @@ class User implements ArrayAccess, JsonSerializable {
 		$customer = Customer::where(
 			[
 				'email'     => $this->user->user_email,
-				'live_mode' => $mode === 'live',
+				'live_mode' => 'live' === $mode,
 			]
 		)->first();
 
 		if ( ! is_wp_error( $customer ) && ! empty( $customer ) ) {
-			$this->setCustomerId( $customer->id, $mode );
+			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
 			return $customer->id;
 		}
 
@@ -93,7 +93,23 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( empty( $this->user->ID ) ) {
 			return [];
 		}
-		return array_filter( (array) get_user_meta( $this->user->ID, $this->customer_id_key, true ) );
+
+		$customer_ids = array_filter( (array) get_user_meta( $this->user->ID, $this->customer_id_key, true ) );
+
+		if ( ! $this->shouldSyncCustomer() ) {
+			return $customer_ids;
+		}
+
+		if ( count( $customer_ids ) < 2 ) {
+			if ( empty( $customer_ids['test'] ) ) {
+				$customer_ids['test'] = $this->customerId( 'test' );
+			}
+			if ( empty( $customer_ids['live'] ) ) {
+				$customer_ids['live'] = $this->customerId( 'live' );
+			}
+		}
+
+		return $customer_ids;
 	}
 
 	/**

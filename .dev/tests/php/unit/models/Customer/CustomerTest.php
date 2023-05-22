@@ -70,22 +70,12 @@ class CustomerTest extends SureCartUnitTestCase
 	}
 
 
-		/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_doesNotCreateUserByDefault()
 	{
 		$customer = new Customer(['id' => 'test', 'email' => 'test@test.com', 'live_mode' => true]);
 		$this->assertEmpty($customer->getUser());
 	}
 
-		/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_createsNewWPUserWithSync() {
 		$customer = new Customer(['id' => 'test', 'email' => 'test@test.com', 'live_mode' => true]);
 		// turn on syncing.
@@ -98,11 +88,6 @@ class CustomerTest extends SureCartUnitTestCase
 		$this->assertSame($user->customerId(), 'test');
 	}
 
-		/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_associatesExistingWPUserWithSync() {
 		$user = self::factory()->user->create_and_get(['user_email' => 'test1@test.com']);
 
@@ -118,11 +103,6 @@ class CustomerTest extends SureCartUnitTestCase
 		$this->assertSame($fetched->customerId(), 'test');
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_doesNotAssociatesExistingWPUserWithExistingCustomerId() {
 		$user = self::factory()->user->create_and_get(['user_email' => 'test1@test.com']);
 		$model = User::find($user->ID);
