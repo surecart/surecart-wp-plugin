@@ -124,9 +124,20 @@ export class ScProductItemList {
     }
   }
 
+  private debounce;
   @Watch('ids')
+  @Watch('limit')
   handleIdsChange() {
-    this.updateProducts();
+    if (this.debounce !== null) {
+      clearTimeout(this.debounce);
+      this.debounce = null;
+    }
+
+    this.debounce = window.setTimeout(() => {
+      // your debounced traitment
+      this.updateProducts();
+      this.debounce = null;
+    }, 200);
   }
 
   async fetchProducts() {

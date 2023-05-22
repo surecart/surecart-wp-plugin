@@ -361,6 +361,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 									...getConfigStyles(layoutConfig),
 								}}
 								ids={ids}
+								limit={limit}
 								layoutConfig={layoutConfig}
 								paginationAlignment={pagination_alignment}
 								sortEnabled={sort_enabled}
