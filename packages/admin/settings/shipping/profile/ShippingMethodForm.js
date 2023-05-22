@@ -179,7 +179,6 @@ export default ({
 	};
 
 	const renderMaxMinInputs = () => {
-		console.log(shippingRate.rate_type, 'RENDERING THE MAX MIN INPUTS');
 		if (shippingRate.rate_type === rate_types.ORDER_PRICE) {
 			return (
 				<ScFlex>
@@ -198,7 +197,7 @@ export default ({
 						label={__('Maximum Price', 'surecart')}
 						currencyCode={scData?.currency}
 						value={shippingRate.max_amount || null}
-						placeholder="No limit"
+						placeholder={__('No limit', 'surecart')}
 						onScInput={(e) => {
 							updateShippingRate('max_amount', e.target.value);
 						}}

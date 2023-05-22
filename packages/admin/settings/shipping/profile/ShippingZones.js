@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
-import { ScButton, ScFlex, ScIcon, ScText } from '@surecart/components-react';
+import { ScButton, ScFlex, ScIcon, ScEmpty } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -73,9 +73,9 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 								setSelectedZone(shippingZone);
 							}}
 							parentBusy={
-								busy && selectedZone?.id === shippingZone.id
+								busy && selectedZone.id === shippingZone.id
 							}
-							isFallback={shippingZone?.id === fallbackZoneId}
+							isFallback={shippingZone.id === fallbackZoneId}
 						/>
 					))
 				) : (

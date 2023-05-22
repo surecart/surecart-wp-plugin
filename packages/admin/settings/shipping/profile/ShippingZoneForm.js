@@ -120,12 +120,12 @@ export default ({
 		);
 		return (
 			<ScTag
-				key={`zone-country-${country?.value}`}
+				key={`zone-country-${country.value}`}
 				pill
 				clearable
-				onScClear={() => onRemoveZoneCountry(country?.value)}
+				onScClear={() => onRemoveZoneCountry(country.value)}
 			>
-				{country?.label}
+				{country.label}
 			</ScTag>
 		);
 	};
