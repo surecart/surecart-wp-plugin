@@ -3,11 +3,14 @@ namespace SureCart\Models;
 
 use ArrayAccess;
 use JsonSerializable;
+use SureCart\Models\Traits\SyncsCustomer;
 
 /**
  * User class.
  */
 class User implements ArrayAccess, JsonSerializable {
+	use SyncsCustomer;
+
 	/**
 	 * Holds the user.
 	 *
@@ -49,13 +52,35 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( empty( $this->user->ID ) ) {
 			return null;
 		}
+
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
-		if ( isset( $meta[ $mode ] ) ) {
+
+		if ( ! empty( $meta[ $mode ] ) ) {
 			return $meta[ $mode ];
 		}
-		if ( isset( $meta[0] ) ) {
+
+		if ( ! empty( $meta[0] ) ) {
 			return $meta[0];
 		}
+
+		// if we are not syncing customers.
+		if ( ! $this->shouldSyncCustomer() ) {
+			return null;
+		}
+
+		// find the first customer id.
+		$customer = Customer::where(
+			[
+				'email'     => $this->user->user_email,
+				'live_mode' => $mode === 'live',
+			]
+		)->first();
+
+		if ( ! is_wp_error( $customer ) && ! empty( $customer ) ) {
+			$this->setCustomerId( $customer->id, $mode );
+			return $customer->id;
+		}
+
 		return null;
 	}
 

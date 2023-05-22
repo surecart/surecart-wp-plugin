@@ -6,6 +6,22 @@ use SureCart\Models\User;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class UserTest extends SureCartUnitTestCase {
+
+	/**
+	 * Set up a new app instance to use for tests.
+	 */
+	public function setUp()
+	{
+		// Set up an app instance with whatever stubs and mocks we need before every test.
+		\SureCart::make()->bootstrap([
+			'providers' => [
+				\SureCart\Request\RequestServiceProvider::class,
+			]
+		], false);
+
+		parent::setUp();
+	}
+
 	public function test_getsCurrentUser()
 	{
 		$user = $this->factory->user->create_and_get();
@@ -103,5 +119,49 @@ class UserTest extends SureCartUnitTestCase {
 
 		$this->assertSame($user->first_name, 'Andre');
 		$this->assertSame($user->last_name, 'Gagnon');
+	}
+
+	/**
+	 * @group failing
+	 *
+	 * @return void
+	 */
+	public function test_findsCustomerIdIfMissing()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+
+
+		$user = self::factory()->user->create_and_get([
+			'user_email' => 'test@test.com',
+		]);
+
+		$user = User::find($user->ID);
+
+		// default should be empty
+		$customer_id = $user->customerId();
+		$this->assertEmpty($customer_id);
+
+
+		// turn on syncing.
+		update_option('surecart_auto_sync_user_to_customer', true);
+
+		$requests->shouldReceive('makeRequest')
+		->once()
+		->withSomeOfArgs('customers')
+		->andReturn((object)['data' => [
+			(object) [
+				'id' => 'testCustomerId',
+				'object' => 'customer',
+				'live_mode' => true,
+				'email' => 'test@test.com'
+			]
+		]]);
+
+		$customer_id = $user->customerId();
+		$this->assertSame($customer_id, 'testCustomerId');
 	}
 }

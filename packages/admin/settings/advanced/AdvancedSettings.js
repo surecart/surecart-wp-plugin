@@ -97,6 +97,27 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				<ScSwitch
+					checked={item?.auto_sync_user_to_customer}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							auto_sync_user_to_customer:
+								!item?.auto_sync_user_to_customer,
+						});
+					}}
+				>
+					{__(
+						'Automatically attempt to sync WP users with SureCart customers.',
+						'surecart'
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If a WordPress user does not have a customer record, attempt to find one with an existing email and link it.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
