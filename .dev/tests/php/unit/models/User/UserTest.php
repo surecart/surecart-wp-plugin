@@ -123,11 +123,6 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user->last_name, 'Gagnon');
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_findsCustomerIdIfMissing()
 	{
 		// mock the requests in the container
@@ -167,11 +162,6 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($customer_id, 'testCustomerId');
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_findsCustomerIdsIfMissing()
 	{
 		// mock the requests in the container
