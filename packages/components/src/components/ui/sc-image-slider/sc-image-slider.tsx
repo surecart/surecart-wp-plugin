@@ -96,9 +96,8 @@ export class ScImageSlider {
 
   render() {
     const thumbnails = this.thumbnailsData?.length ? this.thumbnailsData : this.imagesData;
-    console.log(this.thumbnailsData);
     return (
-      <div class="image-slider" part="base">
+      <div class={{ 'image-slider': true, 'image-slider--is-fixed-height': !this.autoHeight }} part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
             {(this.imagesData || []).map(({ src, alt, srcset, width, height, sizes }, index) => (

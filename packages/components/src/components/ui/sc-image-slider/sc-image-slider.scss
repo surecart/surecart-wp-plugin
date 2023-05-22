@@ -64,7 +64,7 @@
         display: block;
         margin: auto;
         max-width: 100%;
-        height: auto !important;
+        height: auto;
         object-fit: contain;
         border-radius: var(--sc-border-radius-medium);
       }
@@ -80,7 +80,7 @@
 
     img {
       width: 100%;
-      height: auto !important;
+      height: auto;
       display: block;
       object-fit: var(--sc-image-slideshow-thumb-object-fit, cover);
       aspect-ratio: var(--sc-image-slideshow-thumb-aspect-ratio, 4 / 3);
@@ -91,6 +91,15 @@
       img {
         outline: var(--sc-image-slideshow-thumb-active-outline, 2px solid var(--sc-focus-ring-color-primary, var(--sc-color-primary-500)));
         outline-offset: -2px;
+      }
+    }
+  }
+
+  &--is-fixed-height .image-slider__slider {
+    .swiper-slide-img {
+      background: transparent;
+      img {
+        max-height: 100%;
       }
     }
   }
