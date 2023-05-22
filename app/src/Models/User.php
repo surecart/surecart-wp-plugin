@@ -76,7 +76,7 @@ class User implements ArrayAccess, JsonSerializable {
 			]
 		)->first();
 
-		if ( ! is_wp_error( $customer ) && ! empty( $customer ) ) {
+		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
 			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
 			return $customer->id;
 		}
