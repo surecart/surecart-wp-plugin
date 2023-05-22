@@ -79,7 +79,9 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 						/>
 					))
 				) : (
-					<ScText>No shipping zones present.</ScText>
+					<ScEmpty icon="map">
+						{__('No shipping zones present.', 'surecart')}
+					</ScEmpty>
 				)}
 			</ScFlex>
 
