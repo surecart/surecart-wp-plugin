@@ -102,14 +102,14 @@ class User implements ArrayAccess, JsonSerializable {
 
 		if ( empty( $customer_ids['test'] ) ) {
 			$test_id = $this->customerId( 'test' );
-			if ( empty( $test_id ) ) {
-				$customer_ids['test'] = $this->customerId( 'test' );
+			if ( ! empty( $test_id ) ) {
+				$customer_ids['test'] = $test_id;
 			}
 		}
 		if ( empty( $customer_ids['live'] ) ) {
 			$live_id = $this->customerId( 'live' );
-			if ( empty( $live_id ) ) {
-				$customer_ids['live'] = $this->customerId( 'live' );
+			if ( ! empty( $live_id ) ) {
+				$customer_ids['live'] = $live_id;
 			}
 		}
 
