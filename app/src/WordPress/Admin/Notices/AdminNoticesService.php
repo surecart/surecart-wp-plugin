@@ -47,7 +47,7 @@ class AdminNoticesService {
 	 */
 	public function dismiss() {
 		// permissions check.
-		if ( ! current_user_can( 'install_plugins' ) ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
