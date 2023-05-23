@@ -34,12 +34,8 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 			queryArgs
 		);
 
-		const shippingZones = (
-			select(coreStore).getEntityRecords(...queryArgs) || []
-		).filter(
-			(shippingZone) =>
-				shippingZone.shipping_profile === shippingProfileId
-		);
+		const shippingZones =
+			select(coreStore).getEntityRecords(...queryArgs) || [];
 
 		return {
 			shippingZones,
@@ -73,7 +69,7 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 								setSelectedZone(shippingZone);
 							}}
 							parentBusy={
-								busy && selectedZone.id === shippingZone.id
+								busy && selectedZone?.id === shippingZone.id
 							}
 							isFallback={shippingZone.id === fallbackZoneId}
 						/>
