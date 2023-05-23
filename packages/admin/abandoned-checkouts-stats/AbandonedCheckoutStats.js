@@ -301,7 +301,7 @@ export default () => {
 					{hasAccess ? (
 						<ScFormatNumber
 							type="currency"
-							currency="usd"
+							currency={scData?.currency_code || 'usd'}
 							value={totalProperties('assisted_amount', data)}
 						/>
 					) : (
