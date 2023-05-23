@@ -8,8 +8,6 @@ use SureCart\Tests\SureCartUnitTestCase;
 
 class CustomerTest extends SureCartUnitTestCase
 {
-	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-
 	protected $requests;
 
 	/**
