@@ -67,6 +67,11 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return array Array of synced items.
 	 */
 	protected function syncCustomerIds() {
+		// syncing disabled.
+		if ( ! $this->shouldSyncCustomer() ) {
+			return false;
+		}
+
 		// get all customers by email address (live and test).
 		$customers = Customer::where(
 			[
