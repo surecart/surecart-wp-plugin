@@ -67,57 +67,68 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return array Array of synced items.
 	 */
 	protected function syncCustomerIds() {
-		return [
-			'live' => $this->syncCustomerId( 'live' ),
-			'test' => $this->syncCustomerId( 'test' ),
-		];
-	}
-
-	/**
-	 * Sync the customer.
-	 *
-	 * @param string $mode Customer mode.
-	 *
-	 * @return customer
-	 */
-	protected function syncCustomerId( $mode = 'live' ) {
-		// check to see if we already have an id.
-		$id = $this->customerId( $mode );
-		if ( ! empty( $id ) ) {
-			return $id;
-		}
-
-		if ( ! $this->shouldSyncCustomer() ) {
-			return null;
-		}
-
-		// find the first customer id.
-		$customer = Customer::where(
+		// get all customers by email address (live and test).
+		$customers = Customer::where(
 			[
-				'email'     => $this->user->user_email,
-				'live_mode' => 'live' === $mode,
+				'email' => strtolower( $this->user->user_email ),
 			]
-		)->first();
+		)->get();
 
-		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
-			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
-			return $customer->id;
+		if ( is_wp_error( $customers ) ) {
+			return $customers;
 		}
 
-		// create the customer record.
-		$customer = Customer::create(
-			[
-				'name'      => $this->user->display_name,
-				'email'     => $this->user->user_email,
-				'live_mode' => 'live' === $mode,
-			]
+		// we have customers.
+		$live_customer = current(
+			array_filter(
+				$customers,
+				function( $customer ) {
+					return $customer->live_mode;
+				}
+			)
 		);
 
-		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
-			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
+		$test_customer = current(
+			array_filter(
+				$customers,
+				function( $customer ) {
+					return ! $customer->live_mode;
+				}
+			)
+		);
+
+		if ( empty( $live_customer->id ) ) {
+			$live_customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => true,
+				],
+				false // don't create a user.
+			);
+		}
+		if ( empty( $test_customer->id ) ) {
+			$test_customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => false,
+				],
+				false // don't create a user.
+			);
 		}
 
-		return $customer->id;
+		if ( ! empty( $live_customer->id ) ) {
+			$this->setCustomerId( $live_customer->id, 'live' );
+		}
+		if ( ! empty( $test_customer->id ) ) {
+			$this->setCustomerId( $test_customer->id, 'test' );
+		}
+
+		return [
+			'live' => $this->customerId( 'live' ),
+			'test' => $this->customerId( 'test' ),
+		];
 	}
 
 	/**
