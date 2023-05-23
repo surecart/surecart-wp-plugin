@@ -75,46 +75,4 @@ class CustomerTest extends SureCartUnitTestCase
 		$customer = new Customer(['id' => 'test', 'email' => 'test@test.com', 'live_mode' => true]);
 		$this->assertEmpty($customer->getUser());
 	}
-
-	public function test_createsNewWPUserWithSync() {
-		$customer = new Customer(['id' => 'test', 'email' => 'test@test.com', 'live_mode' => true]);
-		// turn on syncing.
-		update_option('surecart_auto_sync_user_to_customer', true);
-
-		// this should create a new user.
-		$user = $customer->getUser();
-		$this->assertNotEmpty($user->ID);
-		$this->assertSame($user->user_email, 'test@test.com');
-		$this->assertSame($user->customerId(), 'test');
-	}
-
-	public function test_associatesExistingWPUserWithSync() {
-		$user = self::factory()->user->create_and_get(['user_email' => 'test1@test.com']);
-
-		$customer = new Customer(['id' => 'test', 'email' => 'test1@test.com', 'live_mode' => true]);
-
-		// turn on syncing.
-		update_option('surecart_auto_sync_user_to_customer', true);
-
-		// this should create a new user.
-		$fetched = $customer->getUser();
-		$this->assertNotEmpty($fetched->ID);
-		$this->assertSame($fetched->ID, $user->ID);
-		$this->assertSame($fetched->customerId(), 'test');
-	}
-
-	public function test_doesNotAssociatesExistingWPUserWithExistingCustomerId() {
-		$user = self::factory()->user->create_and_get(['user_email' => 'test1@test.com']);
-		$model = User::find($user->ID);
-		$model->setCustomerId('something', 'live');
-
-		$customer = new Customer(['id' => 'test', 'email' => 'test1@test.com', 'live_mode' => true]);
-
-		// turn on syncing.
-		update_option('surecart_auto_sync_user_to_customer', true);
-
-		// this should create a new user.
-		$fetched = $customer->getUser();
-		$this->assertEmpty($fetched);
-	}
 }

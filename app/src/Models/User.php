@@ -83,7 +83,7 @@ class User implements ArrayAccess, JsonSerializable {
 	protected function syncCustomerId( $mode = 'live' ) {
 		// check to see if we already have an id.
 		$id = $this->customerId( $mode );
-		if ( $id ) {
+		if ( ! empty( $id ) ) {
 			return $id;
 		}
 
@@ -101,7 +101,7 @@ class User implements ArrayAccess, JsonSerializable {
 
 		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
 			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
-			return $customer;
+			return $customer->id;
 		}
 
 		// create the customer record.
@@ -117,7 +117,7 @@ class User implements ArrayAccess, JsonSerializable {
 			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
 		}
 
-		return $customer;
+		return $customer->id;
 	}
 
 	/**

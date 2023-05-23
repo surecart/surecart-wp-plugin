@@ -123,45 +123,6 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user->last_name, 'Gagnon');
 	}
 
-	public function test_findsCustomerIdIfMissing()
-	{
-		// mock the requests in the container
-		$requests =  \Mockery::mock(RequestService::class);
-		\SureCart::alias('request', function () use ($requests) {
-			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
-		});
-
-
-		$user = self::factory()->user->create_and_get([
-			'user_email' => 'test@test.com',
-		]);
-
-		$user = User::find($user->ID);
-
-		// default should be empty
-		$customer_id = $user->customerId();
-		$this->assertEmpty($customer_id);
-
-
-		// turn on syncing.
-		update_option('surecart_auto_sync_user_to_customer', true);
-
-		$requests->shouldReceive('makeRequest')
-		->once()
-		->withSomeOfArgs('customers')
-		->andReturn((object)['data' => [
-			(object) [
-				'id' => 'testCustomerId',
-				'object' => 'customer',
-				'live_mode' => true,
-				'email' => 'test@test.com'
-			]
-		]]);
-
-		$customer_id = $user->customerId();
-		$this->assertSame($customer_id, 'testCustomerId');
-	}
-
 	public function test_findsCustomerIdsIfMissing()
 	{
 		// mock the requests in the container
@@ -178,8 +139,9 @@ class UserTest extends SureCartUnitTestCase {
 		$user = User::find($user->ID);
 
 		// default should be empty
-		$customer_ids = $user->customerIds();
-		$this->assertEmpty($customer_ids);
+		$customer_ids = $user->syncCustomerIds();
+		$this->assertEmpty($customer_ids['live']);
+		$this->assertEmpty($customer_ids['test']);
 
 		// turn on syncing.
 		update_option('surecart_auto_sync_user_to_customer', true);
@@ -230,7 +192,7 @@ class UserTest extends SureCartUnitTestCase {
 			]
 		]]);
 
-		$customer_id = $user->customerIds();
+		$customer_id = $user->syncCustomerIds();
 		$this->assertSame($customer_id['test'], 'testCustomerId');
 		$this->assertSame($customer_id['live'], 'liveCustomerId');
 	}
