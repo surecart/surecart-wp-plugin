@@ -2,14 +2,10 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Traits\SyncsCustomer;
-
 /**
  * Price model
  */
 class Customer extends Model {
-	use SyncsCustomer;
-
 	/**
 	 * Rest API endpoint
 	 *
@@ -138,49 +134,7 @@ class Customer extends Model {
 	 * @return string|null
 	 */
 	public function getUser() {
-		// find the user by customer id.
-		$user = User::findByCustomerId( $this->id );
-		if ( ! empty( $user ) ) {
-			return $user;
-		}
-
-		// we are not syncing the customer.
-		if ( ! $this->shouldSyncCustomer() ) {
-			return null;
-		}
-
-		// check if the user exists by email.
-		$wp_user = User::getUserBy( 'email', $this->email );
-		if ( ! empty( $wp_user ) ) {
-			// return early if the user already has a customer id.
-			if ( $wp_user->isCustomer() ) {
-				return null;
-			}
-
-			// associate the user with the customer.
-			$wp_user->setCustomerId( $this->id, $this->live_mode ? 'live' : 'test' );
-			// return the user.
-			return $wp_user;
-		}
-
-		// get the username from the name or email.
-		$username = $this->name ?? '';
-		if ( empty( $username ) ) {
-			$username = $this->email;
-		}
-
-		// create the user.
-		$wp_user = User::create(
-			[
-				'user_name'  => sanitize_user( $username, true ),
-				'user_email' => $this->email,
-			]
-		);
-
-		// associate the user with the customer.
-		$wp_user->setCustomerId( $this->id, $this->live_mode ? 'live' : 'test' );
-
-		return $wp_user;
+		return User::findByCustomerId( $this->id );
 	}
 
 	/**
