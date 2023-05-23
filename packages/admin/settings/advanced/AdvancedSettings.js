@@ -110,7 +110,7 @@ export default () => {
 					{__('Auto Sync Customers', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'If a WordPress user does not have a customer record, attempt to find one with an existing email and link it.',
+							'If a WordPress user does not have a customer record, find or create one when they login to their dashboard.',
 							'surecart'
 						)}
 					</span>
