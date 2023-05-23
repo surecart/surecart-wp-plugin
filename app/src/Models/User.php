@@ -81,7 +81,21 @@ class User implements ArrayAccess, JsonSerializable {
 			return $customer->id;
 		}
 
-		return null;
+		// create the customer record.
+		$customer = Customer::create(
+			[
+				'name'      => $this->user->display_name,
+				'email'     => $this->user->user_email,
+				'live_mode' => 'live' === $mode,
+			]
+		);
+
+		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
+			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
+			return $customer->id;
+		}
+
+		return $customer;
 	}
 
 	/**
