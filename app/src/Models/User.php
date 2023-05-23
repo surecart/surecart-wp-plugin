@@ -10,7 +10,6 @@ use SureCart\Models\Traits\SyncsCustomer;
  */
 class User implements ArrayAccess, JsonSerializable {
 	use SyncsCustomer;
-
 	/**
 	 * Holds the user.
 	 *
@@ -42,39 +41,6 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
-	 * Get customer ids from metadata.
-	 *
-	 * @return array
-	 */
-	protected function getCustomerIdsFromMetaData() {
-		if ( empty( $this->user->ID ) ) {
-			return null;
-		}
-		return (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
-	}
-
-	/**
-	 * Get the customer id from the user meta.
-	 *
-	 * @param string $mode Customer mode.
-	 *
-	 * @return int|null
-	 */
-	protected function getCustomerIdFromMetaData( $mode = 'live' ) {
-		$meta = $this->getCustomerIdsFromMetaData();
-
-		if ( ! empty( $meta[ $mode ] ) ) {
-			return $meta[ $mode ];
-		}
-
-		if ( ! empty( $meta[0] ) ) {
-			return $meta[0];
-		}
-
-		return null;
-	}
-
-	/**
 	 * Get the user's customer id.
 	 *
 	 * @param string $mode Customer mode.
@@ -82,17 +48,17 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return int|null
 	 */
 	protected function customerId( $mode = 'live' ) {
-		$id = $this->getCustomerIdFromMetaData( $mode );
-		if ( $id ) {
-			return $id;
-		}
-
-		// if we are not syncing customers.
-		if ( ! $this->shouldSyncCustomer() ) {
+		if ( empty( $this->user->ID ) ) {
 			return null;
 		}
-
-		return $this->syncCustomerId( $mode );
+		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+		if ( isset( $meta[ $mode ] ) ) {
+			return $meta[ $mode ];
+		}
+		if ( isset( $meta[0] ) ) {
+			return $meta[0];
+		}
+		return null;
 	}
 
 	/**
@@ -119,7 +85,8 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return customer
 	 */
 	protected function syncCustomerId( $mode = 'live' ) {
-		$id = $this->getCustomerIdFromMetaData( $mode );
+		// check to see if we already have an id.
+		$id = $this->customerId( $mode );
 		if ( $id ) {
 			return $id;
 		}
@@ -148,10 +115,9 @@ class User implements ArrayAccess, JsonSerializable {
 
 		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
 			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
-			return $customer;
 		}
 
-		return false;
+		return $customer;
 	}
 
 	/**
@@ -163,27 +129,7 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( empty( $this->user->ID ) ) {
 			return [];
 		}
-
-		$customer_ids = array_filter( (array) get_user_meta( $this->user->ID, $this->customer_id_key, true ) );
-
-		if ( ! $this->shouldSyncCustomer() ) {
-			return $customer_ids;
-		}
-
-		if ( empty( $customer_ids['test'] ) ) {
-			$test_id = $this->customerId( 'test' );
-			if ( ! empty( $test_id ) ) {
-				$customer_ids['test'] = $test_id;
-			}
-		}
-		if ( empty( $customer_ids['live'] ) ) {
-			$live_id = $this->customerId( 'live' );
-			if ( ! empty( $live_id ) ) {
-				$customer_ids['live'] = $live_id;
-			}
-		}
-
-		return $customer_ids;
+		return array_filter( (array) get_user_meta( $this->user->ID, $this->customer_id_key, true ) );
 	}
 
 	/**
@@ -399,7 +345,7 @@ class User implements ArrayAccess, JsonSerializable {
 		if ( ! $id ) {
 			return false;
 		}
-		return Customer::find( $id );
+		return Customer::find( $this->customerId( $mode ) );
 	}
 
 	/**
