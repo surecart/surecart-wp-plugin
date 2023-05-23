@@ -67,10 +67,6 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return array Array of synced items.
 	 */
 	protected function syncCustomerIds() {
-		if ( ! $this->shouldSyncCustomer() ) {
-			return [];
-		}
-
 		return [
 			'live' => $this->syncCustomerId( 'live' ),
 			'test' => $this->syncCustomerId( 'test' ),
@@ -89,6 +85,10 @@ class User implements ArrayAccess, JsonSerializable {
 		$id = $this->customerId( $mode );
 		if ( $id ) {
 			return $id;
+		}
+
+		if ( ! $this->shouldSyncCustomer() ) {
+			return null;
 		}
 
 		// find the first customer id.
