@@ -42,18 +42,26 @@ class User implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
-	 * Get the user's customer id.
+	 * Get customer ids from metadata.
+	 *
+	 * @return array
+	 */
+	protected function getCustomerIdsFromMetaData() {
+		if ( empty( $this->user->ID ) ) {
+			return null;
+		}
+		return (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+	}
+
+	/**
+	 * Get the customer id from the user meta.
 	 *
 	 * @param string $mode Customer mode.
 	 *
 	 * @return int|null
 	 */
-	protected function customerId( $mode = 'live' ) {
-		if ( empty( $this->user->ID ) ) {
-			return null;
-		}
-
-		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+	protected function getCustomerIdFromMetaData( $mode = 'live' ) {
+		$meta = $this->getCustomerIdsFromMetaData();
 
 		if ( ! empty( $meta[ $mode ] ) ) {
 			return $meta[ $mode ];
@@ -63,9 +71,57 @@ class User implements ArrayAccess, JsonSerializable {
 			return $meta[0];
 		}
 
+		return null;
+	}
+
+	/**
+	 * Get the user's customer id.
+	 *
+	 * @param string $mode Customer mode.
+	 *
+	 * @return int|null
+	 */
+	protected function customerId( $mode = 'live' ) {
+		$id = $this->getCustomerIdFromMetaData( $mode );
+		if ( $id ) {
+			return $id;
+		}
+
 		// if we are not syncing customers.
 		if ( ! $this->shouldSyncCustomer() ) {
 			return null;
+		}
+
+		return $this->syncCustomerId( $mode );
+	}
+
+	/**
+	 * Sync the customer ids.
+	 *
+	 * @return array Array of synced items.
+	 */
+	protected function syncCustomerIds() {
+		if ( ! $this->shouldSyncCustomer() ) {
+			return [];
+		}
+
+		return [
+			'live' => $this->syncCustomerId( 'live' ),
+			'test' => $this->syncCustomerId( 'test' ),
+		];
+	}
+
+	/**
+	 * Sync the customer.
+	 *
+	 * @param string $mode Customer mode.
+	 *
+	 * @return customer
+	 */
+	protected function syncCustomerId( $mode = 'live' ) {
+		$id = $this->getCustomerIdFromMetaData( $mode );
+		if ( $id ) {
+			return $id;
 		}
 
 		// find the first customer id.
@@ -78,7 +134,7 @@ class User implements ArrayAccess, JsonSerializable {
 
 		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
 			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
-			return $customer->id;
+			return $customer;
 		}
 
 		// create the customer record.
@@ -92,10 +148,10 @@ class User implements ArrayAccess, JsonSerializable {
 
 		if ( ! is_wp_error( $customer ) && ! empty( $customer->id ) ) {
 			$this->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
-			return $customer->id;
+			return $customer;
 		}
 
-		return $customer;
+		return false;
 	}
 
 	/**
