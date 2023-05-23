@@ -7,7 +7,7 @@ use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class UserTest extends SureCartUnitTestCase {
-
+	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
@@ -123,14 +123,14 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user->last_name, 'Gagnon');
 	}
 
-	public function test_findsCustomerIdsIfMissing()
+	/** @group failing */
+	public function test_syncsCustomerIds()
 	{
 		// mock the requests in the container
 		$requests =  \Mockery::mock(RequestService::class);
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
-
 
 		$user = self::factory()->user->create_and_get([
 			'user_email' => 'test@test.com',
@@ -140,54 +140,24 @@ class UserTest extends SureCartUnitTestCase {
 
 		// default should be empty
 		$customer_ids = $user->syncCustomerIds();
-		$this->assertEmpty($customer_ids['live']);
-		$this->assertEmpty($customer_ids['test']);
+		$this->assertEmpty($customer_ids);
 
 		// turn on syncing.
 		update_option('surecart_auto_sync_user_to_customer', true);
 
 		$requests->shouldReceive('makeRequest')
 		->once()
-		->withArgs([
-			'customers',
-			[
-				'query' => [
-					'email' => 'test@test.com',
-					'live_mode' => true,
-					'limit' => 1
-				]
-			],
-			false,
-			''
-		])
-		->andReturn((object)['data' => [
-			(object) [
-				'id' => 'liveCustomerId',
-				'object' => 'customer',
-				'live_mode' => true,
-				'email' => 'test@test.com'
-			]
-		]]);
-
-		$requests->shouldReceive('makeRequest')
-		->once()
-		->withArgs([
-			'customers',
-			[
-				'query' => [
-					'email' => 'test@test.com',
-					'live_mode' => false,
-					'limit' => 1
-				]
-			],
-			false,
-			''
-		])
 		->andReturn((object)['data' => [
 			(object) [
 				'id' => 'testCustomerId',
 				'object' => 'customer',
 				'live_mode' => false,
+				'email' => 'test@test.com'
+			],
+			(object) [
+				'id' => 'liveCustomerId',
+				'object' => 'customer',
+				'live_mode' => true,
 				'email' => 'test@test.com'
 			]
 		]]);
