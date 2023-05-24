@@ -47,3 +47,9 @@ dist
 
 @surecart
 cypress.env.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+undefinedadminState.json

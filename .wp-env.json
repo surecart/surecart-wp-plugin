@@ -17,7 +17,11 @@
 				"SURECART_API_URL": "https://surecart-pr-9.herokuapp.com",
 				"CE_TESTING": true
 			},
-			"port": 8009
+			"plugins": [
+				".",
+				".dev/tests/e2e/gutenberg-plugin-disables-the-css-animations"
+			],
+			"port": 8889
 		}
 	}
 }
