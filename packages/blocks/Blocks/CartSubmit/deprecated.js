@@ -36,6 +36,9 @@ export default [
 				type: 'string',
 			},
 		},
+		supports: {
+			className: false,
+		},
 		save({ attributes }) {
 			const { text, size, show_icon, className } = attributes;
 			const style = useCartStyles({ attributes });
