@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop, State } from '@stencil/core';
+import { Component, h, Host, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -7,12 +7,26 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScUpgradeRequired {
+  @Event() requestClose: EventEmitter<void>;
+
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'small';
 
   @Prop({ reflect: true }) required: boolean = true;
 
+  /** Whether to render upgrade modal by default */
+  @Prop({ reflect: true }) defaultOpen: boolean = false;
+
   @State() open: boolean = false;
+
+  @Watch('defaultOpen')
+  watchDefaultOpen() {
+    this.open = this.defaultOpen;
+  }
+
+  componentWillLoad() {
+    this.watchDefaultOpen()
+  }
 
   render() {
     if (!this.required) {
@@ -35,7 +49,11 @@ export class ScUpgradeRequired {
         <sc-dialog
           label={__('Boost Your Revenue', 'surecart')}
           open={this.open}
-          onScRequestClose={() => (this.open = false)}
+          onScRequestClose={() => {
+            this.open = false;
+            this.requestClose.emit();
+            console.log("Event emmitted")
+          }}
           style={{ '--width': '21rem', 'fontSize': '15px', '--body-spacing': '2rem' }}
         >
           <span class="dialog__title" slot="label">

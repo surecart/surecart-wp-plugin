@@ -254,17 +254,16 @@ export default () => {
 		const upgradeRequired =
 			!window.scData?.entitlements?.subscription_restore_at;
 		return (
-			<ScUpgradeRequired
-				style={{ display: 'block' }}
-				required={upgradeRequired}
+			<ScMenuItem
+				onClick={() =>
+					setModal(upgradeRequired ? 'upgrade_required' : 'pause')
+				}
 			>
-				<ScMenuItem onClick={() => setModal('pause')}>
-					{upgradeRequired
-						? __('Pause', 'surecart')
-						: __('Pause Subscription', 'surecart')}{' '}
-					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
-				</ScMenuItem>
-			</ScUpgradeRequired>
+				{upgradeRequired
+					? __('Pause', 'surecart')
+					: __('Pause Subscription', 'surecart')}{' '}
+				{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+			</ScMenuItem>
 		);
 	};
 	const renderPayOffButton = () => {
@@ -277,17 +276,16 @@ export default () => {
 			!window.scData?.entitlements?.subscription_pay_off;
 
 		return (
-			<ScUpgradeRequired
-				style={{ display: 'block' }}
-				required={upgradeRequired}
+			<ScMenuItem
+				onClick={() =>
+					setModal(upgradeRequired ? 'upgrade_required' : 'pay_off')
+				}
 			>
-				<ScMenuItem onClick={() => setModal('pay_off')}>
-					{upgradeRequired
-						? __('Pay Off', 'surecart')
-						: __('Pay Off Subscription', 'surecart')}
-					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
-				</ScMenuItem>
-			</ScUpgradeRequired>
+				{upgradeRequired
+					? __('Pay Off', 'surecart')
+					: __('Pay Off Subscription', 'surecart')}
+				{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+			</ScMenuItem>
 		);
 	};
 
@@ -488,6 +486,13 @@ export default () => {
 				open={modal === 'pay_off'}
 				onRequestClose={onRequestCloseModal}
 			/>
+			<ScUpgradeRequired
+				style={{ display: 'block' }}
+				required
+				defaultOpen={modal === 'upgrade_required'}
+				onRequestClose={onRequestCloseModal}
+			></ScUpgradeRequired>
+
 			{isSaving && <ScBlockUi spinner />}
 		</Template>
 	);
