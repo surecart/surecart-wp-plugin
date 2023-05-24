@@ -19,6 +19,11 @@ export class ScCartLoader {
   @Prop() template: string;
 
   render() {
+    // check for forms.
+    if (document.querySelector('sc-checkout')) {
+      return;
+    }
+
     // clear the order if it's already paid.
     const order = getOrder(this.formId, this.mode);
     if (order?.status === 'paid') {
