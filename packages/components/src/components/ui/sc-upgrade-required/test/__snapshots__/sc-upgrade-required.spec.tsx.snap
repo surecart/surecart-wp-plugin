@@ -33,7 +33,7 @@ exports[`sc-upgrade-required Should only render children when required is false 
 `;
 
 exports[`sc-upgrade-required Should render modal by default when defaultOpen is true 1`] = `
-<sc-upgrade-required default-open="" required="" size="small">
+<sc-upgrade-required required="" size="small">
   <mock:shadow-root>
     <span class="trigger">
       <span class="trigger__disabled">

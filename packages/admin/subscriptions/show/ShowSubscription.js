@@ -489,7 +489,7 @@ export default () => {
 			<ScUpgradeRequired
 				style={{ display: 'block' }}
 				required
-				defaultOpen={modal === 'upgrade_required'}
+				open={modal === 'upgrade_required'}
 				onRequestClose={onRequestCloseModal}
 			></ScUpgradeRequired>
 

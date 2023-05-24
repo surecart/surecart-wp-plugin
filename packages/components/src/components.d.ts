@@ -3479,7 +3479,7 @@ export namespace Components {
         /**
           * Whether to render upgrade modal by default
          */
-        "defaultOpen": boolean;
+        "open": boolean;
         "required": boolean;
         /**
           * The tag's size.
@@ -8874,11 +8874,11 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
+        "onRequestClose"?: (event: ScUpgradeRequiredCustomEvent<void>) => void;
         /**
           * Whether to render upgrade modal by default
          */
-        "defaultOpen"?: boolean;
-        "onRequestClose"?: (event: ScUpgradeRequiredCustomEvent<void>) => void;
+        "open"?: boolean;
         "required"?: boolean;
         /**
           * The tag's size.

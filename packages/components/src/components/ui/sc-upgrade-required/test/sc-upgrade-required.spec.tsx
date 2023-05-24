@@ -22,7 +22,7 @@ describe('sc-upgrade-required', () => {
   it('Should render modal by default when defaultOpen is true', async () => {
     const page = await newSpecPage({
       components: [ScUpgradeRequired],
-      template: ()=> <sc-upgrade-required default-open={true}></sc-upgrade-required>,
+      template: ()=> <sc-upgrade-required open></sc-upgrade-required>,
     });
     expect(page.root).toMatchSnapshot();
   });

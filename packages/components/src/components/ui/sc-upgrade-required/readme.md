@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                | Type                             | Default   |
-| ------------- | -------------- | ------------------------------------------ | -------------------------------- | --------- |
-| `defaultOpen` | `default-open` | Whether to render upgrade modal by default | `boolean`                        | `false`   |
-| `required`    | `required`     |                                            | `boolean`                        | `true`    |
-| `size`        | `size`         | The tag's size.                            | `"large" \| "medium" \| "small"` | `'small'` |
+| Property   | Attribute  | Description                                | Type                             | Default   |
+| ---------- | ---------- | ------------------------------------------ | -------------------------------- | --------- |
+| `open`     | `open`     | Whether to render upgrade modal by default | `boolean`                        | `false`   |
+| `required` | `required` |                                            | `boolean`                        | `true`    |
+| `size`     | `size`     | The tag's size.                            | `"large" \| "medium" \| "small"` | `'small'` |
 
 
 ## Events

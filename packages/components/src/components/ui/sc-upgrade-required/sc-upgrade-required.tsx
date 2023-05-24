@@ -15,18 +15,7 @@ export class ScUpgradeRequired {
   @Prop({ reflect: true }) required: boolean = true;
 
   /** Whether to render upgrade modal by default */
-  @Prop({ reflect: true }) defaultOpen: boolean = false;
-
-  @State() open: boolean = false;
-
-  @Watch('defaultOpen')
-  watchDefaultOpen() {
-    this.open = this.defaultOpen;
-  }
-
-  componentWillLoad() {
-    this.watchDefaultOpen()
-  }
+  @Prop({ mutable: true }) open: boolean = false;
 
   render() {
     if (!this.required) {
@@ -52,7 +41,6 @@ export class ScUpgradeRequired {
           onScRequestClose={() => {
             this.open = false;
             this.requestClose.emit();
-            console.log("Event emmitted")
           }}
           style={{ '--width': '21rem', 'fontSize': '15px', '--body-spacing': '2rem' }}
         >
