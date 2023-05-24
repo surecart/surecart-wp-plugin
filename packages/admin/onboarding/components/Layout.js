@@ -21,7 +21,7 @@ export default ({ children, currentStep }) => {
 				<Logo display="block" />
 				<a
 					href={
-						currentStep === 4
+						currentStep === 5
 							? addQueryArgs('admin.php', {
 									page: 'sc-dashboard',
 							  })

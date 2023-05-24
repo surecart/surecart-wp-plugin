@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 	function renderSteps(current) {
 		let steps = [];
-		for (let i = 0; i < 4; i++) {
+		for (let i = 0; i < 5; i++) {
 			steps.push(i);
 		}
 		return steps.map((step) => (
@@ -14,7 +14,7 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 				key={step}
 				css={css`
 					width: 8vw;
-					max-width: 98px;
+					max-width: 86px;
 					height: 7px;
 					background: ${step <= current
 						? 'var(--sc-color-brand-primary)'

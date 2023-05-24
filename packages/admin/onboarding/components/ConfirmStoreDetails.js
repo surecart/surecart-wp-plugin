@@ -3,40 +3,22 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import StepHeader from './StepHeader';
 import ProgressIndicator from './ProgressIndicator';
-import { useState } from '@wordpress/element';
 import {
 	ScAlert,
 	ScFormControl,
 	ScInput,
 	ScSelect,
 } from '@surecart/components-react';
+import ColorPopup from '../../../blocks/components/ColorPopup';
 
 export default ({
-	email,
 	currentStep,
 	handleStepChange,
-	onSubmitEmail,
 	currency,
 	onSelectCurrency,
+	brandColor,
+	onBrandColorChange,
 }) => {
-	const [userEmail, setUserEmail] = useState(email ?? '');
-	const [error, setError] = useState(null);
-
-	function onSubmit() {
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		setError(null);
-
-		if (emailRegex.test(userEmail.trim())) {
-			onSubmitEmail(userEmail.trim());
-			handleStepChange('forward');
-		} else {
-			setError('Invalid email address!');
-		}
-	}
-
-	/**
-	 * Get the symbol for the currency.
-	 */
 	const getCurrencySymbol = (code) => {
 		const [currency] = new Intl.NumberFormat(undefined, {
 			style: 'currency',
@@ -66,23 +48,45 @@ export default ({
 				/>
 				<div
 					css={css`
-						margin: 20px auto;
 						display: flex;
 						flex-direction: column;
 						gap: 20px;
+						margin: 20px auto;
 						max-width: 370px;
 					`}
 				>
-					<ScFormControl label={__('Email Address')}>
-						<ScInput
-							size="large"
-							placeholder={__('Enter email address', 'surecart')}
-							required={true}
-							autofocus={true}
-							type="email"
-							value={userEmail}
-							onScInput={(e) => setUserEmail(e.target.value)}
-						/>
+					<ScFormControl label={__('Brand Color', 'surecart')}>
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 0.5em;
+							`}
+						>
+							<ColorPopup
+								color={`#${brandColor}`}
+								setColor={(color) =>
+									onBrandColorChange(
+										color?.hex.replace('#', '')
+									)
+								}
+							/>
+							<ScInput
+								css={css`
+									flex: 1;
+								`}
+								value={brandColor}
+								onScInput={(e) =>
+									onBrandColorChange(
+										e.target.value.replace('#', '')
+									)
+								}
+							>
+								<div slot="prefix" style={{ opacity: '0.5' }}>
+									#
+								</div>
+							</ScInput>
+						</div>
 					</ScFormControl>
 					<ScFormControl label={__('Default Currency', 'surecart')}>
 						<ScSelect
@@ -109,15 +113,14 @@ export default ({
 						></ScSelect>
 					</ScFormControl>
 				</div>
-				<ScAlert open={error} type="danger">
-					{error}
-				</ScAlert>
 			</div>
 			<ProgressIndicator
 				currentStep={currentStep}
 				onBackwardClick={() => handleStepChange('backward')}
 				onForwardClick={
-					!!userEmail?.trim().length && !!currency && onSubmit
+					!!brandColor && !!currency
+						? () => handleStepChange('forward')
+						: undefined
 				}
 			/>
 		</>

@@ -30,7 +30,6 @@ export default ({
 	handleStepChange,
 	selectedTemplate,
 	onSelectTemplate,
-	createAccount,
 }) => {
 	return (
 		<div>
@@ -90,10 +89,7 @@ export default ({
 				onBackwardClick={() => handleStepChange('backward')}
 				onForwardClick={
 					selectedTemplate !== null
-						? () => {
-								handleStepChange('forward');
-								createAccount();
-						  }
+						? () => handleStepChange('forward')
 						: undefined
 				}
 			/>

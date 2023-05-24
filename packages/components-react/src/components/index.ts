@@ -134,6 +134,7 @@ export const ScProductLineItem = /*@__PURE__*/createReactComponent<JSX.ScProduct
 export const ScProductSelectedPrice = /*@__PURE__*/createReactComponent<JSX.ScProductSelectedPrice, HTMLScProductSelectedPriceElement>('sc-product-selected-price');
 export const ScProse = /*@__PURE__*/createReactComponent<JSX.ScProse, HTMLScProseElement>('sc-prose');
 export const ScProvider = /*@__PURE__*/createReactComponent<JSX.ScProvider, HTMLScProviderElement>('sc-provider');
+export const ScProvisionalBanner = /*@__PURE__*/createReactComponent<JSX.ScProvisionalBanner, HTMLScProvisionalBannerElement>('sc-provisional-banner');
 export const ScPurchaseDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScPurchaseDownloadsList, HTMLScPurchaseDownloadsListElement>('sc-purchase-downloads-list');
 export const ScQuantitySelect = /*@__PURE__*/createReactComponent<JSX.ScQuantitySelect, HTMLScQuantitySelectElement>('sc-quantity-select');
 export const ScRadio = /*@__PURE__*/createReactComponent<JSX.ScRadio, HTMLScRadioElement>('sc-radio');

@@ -21,6 +21,9 @@
 
 
 <div id="sc-admin-header">
+	<?php if ( isset( $show_provisional_banner ) && $show_provisional_banner === true ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+	<?php endif; ?>
 	<div id="sc-admin-container">
 		<?php if ( ! empty( $breadcrumbs ) ) : ?>
 			<sc-breadcrumbs style="font-size: 16px">

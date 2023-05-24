@@ -1,17 +1,19 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
-import apiFetch from '@wordpress/api-fetch';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 
 import Layout from './components/Layout';
 import InitialSetup from './components/InitialSetup';
-import ConfirmBasicDetails from './components/ConfirmBasicDetails';
+import ConfirmStoreDetails from './components/ConfirmStoreDetails';
 import SetupDone from './components/SetupDone';
 import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
+import ConfirmStoreEmail from './components/ConfirmStoreEmail';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -44,6 +46,8 @@ export default () => {
 	const refAnimationInstance = useRef(null);
 	const [confirmExit, setConfirmExit] = useState(true);
 	const [error, setError] = useState(null);
+	const [brandColor, setBrandColor] = useState('1e40af');
+	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const getInstance = useCallback((instance) => {
 		refAnimationInstance.current = instance;
@@ -63,25 +67,23 @@ export default () => {
 	}, [nextTickAnimation]);
 
 	function handleStepChange(dir) {
-		if (dir === 'forward' && currentStep < 4)
+		if (dir === 'forward' && currentStep < 5)
 			setCurrentStep((step) => step + 1);
 		if (dir === 'backward' && currentStep > 0)
 			setCurrentStep((step) => step - 1);
 	}
 
-	async function createProvisionalAccount() {
+	async function createProvisionalAccount(email) {
+		if (!email || !selectedTemplate || !accountCurrency) return;
 		try {
-			await apiFetch({
-				method: 'POST',
-				path: 'surecart/v1/public/provisional_accounts/',
-				data: {
-					account_currency: accountCurrency,
-					// account_name: "Ben's Mercantile",
-					// account_url: 'https://bartling.io',
-					email: accountEmail,
-					source_account_id: selectedTemplate,
-				},
+			await saveEntityRecord('surecart', 'provisional', {
+				account_currency: accountCurrency,
+				email,
+				source_account_id: selectedTemplate,
 			});
+
+			await saveEntityRecord('surecart', 'brand', { color: brandColor });
+
 			handleStepChange('forward');
 		} catch (error) {
 			setCurrentStep(1);
@@ -95,13 +97,13 @@ export default () => {
 				return <InitialSetup handleStepChange={handleStepChange} />;
 			case 1:
 				return (
-					<ConfirmBasicDetails
+					<ConfirmStoreDetails
 						currentStep={currentStep}
 						handleStepChange={handleStepChange}
-						email={accountEmail}
 						currency={accountCurrency}
-						onSubmitEmail={setAccountEmail}
 						onSelectCurrency={setAccountCurrency}
+						brandColor={brandColor}
+						onBrandColorChange={setBrandColor}
 					/>
 				);
 			case 2:
@@ -111,12 +113,23 @@ export default () => {
 						handleStepChange={handleStepChange}
 						selectedTemplate={selectedTemplate}
 						onSelectTemplate={setSelectedTemplate}
-						createAccount={createProvisionalAccount}
 					/>
 				);
 			case 3:
-				return <SetupProgress />;
+				return (
+					<ConfirmStoreEmail
+						currentStep={currentStep}
+						handleStepChange={handleStepChange}
+						email={accountEmail}
+						onSubmitEmail={(email) => {
+							setAccountEmail(email);
+							createProvisionalAccount(email);
+						}}
+					/>
+				);
 			case 4:
+				return <SetupProgress />;
+			case 5:
 				return <SetupDone setConfirmExit={setConfirmExit} />;
 			default:
 				break;
@@ -124,7 +137,7 @@ export default () => {
 	}
 
 	useEffect(() => {
-		if (currentStep !== 4) return;
+		if (currentStep !== 5) return;
 		startAnimation();
 
 		confettiTimerId = setTimeout(
@@ -154,7 +167,7 @@ export default () => {
 					left: 0,
 				}}
 			/>
-			{confirmExit && currentStep !== 0 && <ConfirmExit />}
+			{confirmExit && ![0, 5].includes(currentStep) && <ConfirmExit />}
 		</>
 	);
 };
