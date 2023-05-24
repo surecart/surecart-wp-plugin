@@ -61,6 +61,9 @@ class Block extends DashboardPage {
 			return \SureCart::blocks()->render( 'web/login' );
 		}
 
+		// sync customer ids (if enabled in settings).
+		User::current()->syncCustomerIds();
+
 		// get the current page tab and possible id.
 		$tab = $this->getTab();
 
