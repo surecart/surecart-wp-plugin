@@ -172,6 +172,11 @@ class CartService {
 			return '';
 		}
 
+		$blocks = parse_blocks( $cart->post_content );
+		if ( ! empty( $blocks[0] ) ) {
+			$attributes = $blocks[0]['attrs'];
+		}
+
 		ob_start();
 		?>
 
@@ -181,7 +186,7 @@ class CartService {
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-			style="font-size: 16px"
+			style="font-size: 16px; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
 			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
 		</sc-cart>
