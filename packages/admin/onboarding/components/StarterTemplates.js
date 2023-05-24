@@ -7,19 +7,31 @@ import ProgressIndicator from './ProgressIndicator';
 
 const templates = [
 	{
+		id: null,
+		name: 'Start From Scratch', // TODO: translate.
+	},
+	{
+		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
 		name: 'Donations',
 		imgUrl: 'https://source.unsplash.com/200x200?donation',
 	},
 	{
+		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
 		name: 'Clothing',
 		imgUrl: 'https://source.unsplash.com/200x200?clothing',
 	},
 	{
+		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
 		name: 'Food & Beverages',
 		imgUrl: 'https://source.unsplash.com/200x200?food',
 	},
-	{ name: 'Cosmetics', imgUrl: 'https://source.unsplash.com/200x200?beauty' },
 	{
+		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
+		name: 'Cosmetics',
+		imgUrl: 'https://source.unsplash.com/200x200?beauty',
+	},
+	{
+		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
 		name: 'Digital Products',
 		imgUrl: 'https://source.unsplash.com/200x200?computers',
 	},
@@ -68,30 +80,19 @@ export default ({
 					}
 				`}
 			>
-				<TemplateItem
-					template={{ name: 'Start From Scratch' }}
-					active={selectedTemplate === 0}
-					onItemClick={() =>
-						onSelectTemplate('fd1e9000-384e-42cd-b0a7-080fcf098aad')
-					}
-				/>
-				{templates.map((template, idx) => (
+				{templates.map((template) => (
 					<TemplateItem
-						key={idx}
-						active={selectedTemplate === idx + 1}
+						key={template.id}
+						active={selectedTemplate === template.id}
 						template={template}
-						onItemClick={() => onSelectTemplate(idx + 1)}
+						onItemClick={() => onSelectTemplate(template.id)}
 					/>
 				))}
 			</div>
 			<ProgressIndicator
 				currentStep={currentStep}
 				onBackwardClick={() => handleStepChange('backward')}
-				onForwardClick={
-					selectedTemplate !== null
-						? () => handleStepChange('forward')
-						: undefined
-				}
+				onForwardClick={() => handleStepChange('forward')}
 			/>
 		</div>
 	);
