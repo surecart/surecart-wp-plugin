@@ -1594,8 +1594,8 @@ export namespace Components {
         /**
           * Accept a string or an array of objects
          */
-        "images": string | { src: string; alt: string; srcset; width: number; sizes: string }[];
-        "thumbnails": string | { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -7080,8 +7080,8 @@ declare namespace LocalJSX {
         /**
           * Accept a string or an array of objects
          */
-        "images"?: string | { src: string; alt: string; srcset; width: number; sizes: string }[];
-        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {

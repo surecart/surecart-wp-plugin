@@ -172,6 +172,7 @@ class CartService {
 			return '';
 		}
 
+		// get cart block.
 		$blocks = parse_blocks( $cart->post_content );
 		if ( ! empty( $blocks[0] ) ) {
 			$attributes = $blocks[0]['attrs'];

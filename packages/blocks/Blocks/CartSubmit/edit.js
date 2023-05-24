@@ -1,41 +1,87 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 /**
- * Component Dependencies
+ * External dependencies
  */
-import { ScCartSubmit } from '@surecart/components-react';
+import classnames from 'classnames';
+
 import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetElementClassName,
+	PanelColorSettings,
 } from '@wordpress/block-editor';
 import {
-	Disabled,
 	PanelBody,
 	PanelRow,
-	SelectControl,
 	TextControl,
 	ToggleControl,
+	__experimentalBoxControl as BoxControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import CartInspectorControls from '../../components/CartInspectorControls';
-import useCartStyles from '../../hooks/useCartStyles';
-
 export default ({ className, attributes, setAttributes }) => {
-	const { text, size, show_icon, border } = attributes;
+	const {
+		text,
+		textAlign,
+		style,
+		padding,
+		border,
+		backgroundColor,
+		textColor,
+	} = attributes;
 
 	const blockProps = useBlockProps({
-		style: useCartStyles({ attributes }),
+		style: {
+			width: '100%',
+			'box-sizing': 'border-box',
+			...(padding?.top ? { paddingTop: padding?.top } : {}),
+			...(padding?.bottom ? { paddingBottom: padding?.bottom } : {}),
+			...(padding?.left ? { paddingLeft: padding?.left } : {}),
+			...(padding?.right ? { paddingRight: padding?.right } : {}),
+		},
 	});
+
+	const borderProps = useBorderProps(attributes);
+	const colorProps = useColorProps(attributes);
 
 	return (
 		<>
 			<InspectorControls>
-				<CartInspectorControls
-					attributes={attributes}
-					setAttributes={setAttributes}
+				<PanelColorSettings
+					title={__('Section Color', 'surecart')}
+					colorSettings={[
+						{
+							value: backgroundColor,
+							onChange: (backgroundColor) =>
+								setAttributes({ backgroundColor }),
+							label: __('Background Color', 'surecart'),
+						},
+					]}
 				/>
+				<PanelBody title={__('Spacing', 'surecart')}>
+					<BoxControl
+						label={__('Padding', 'surecart')}
+						values={padding}
+						resetValues={{
+							top: '1.25em',
+							right: '1.25em',
+							bottom: '1.25em',
+							left: '1.25em',
+						}}
+						onChange={(padding) => setAttributes({ padding })}
+					/>
+				</PanelBody>
+				<PanelBody title={__('Border', 'surecart')}>
+					<PanelRow>
+						<ToggleControl
+							label={__('Bottom Border', 'surecart')}
+							checked={border}
+							onChange={(border) => setAttributes({ border })}
+						/>
+					</PanelRow>
+				</PanelBody>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
@@ -44,66 +90,44 @@ export default ({ className, attributes, setAttributes }) => {
 							onChange={(text) => setAttributes({ text })}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Show a secure lock icon.', 'surecart')}
-							checked={show_icon}
-							onChange={(show_icon) =>
-								setAttributes({ show_icon })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label={__('Size', 'surecart')}
-							value={size}
-							onChange={(size) => {
-								setAttributes({ size });
-							}}
-							options={[
-								{
-									value: null,
-									label: 'Select a Size',
-									disabled: true,
-								},
-								{
-									value: 'small',
-									label: __('Small', 'surecart'),
-								},
-								{
-									value: 'medium',
-									label: __('Medium', 'surecart'),
-								},
-								{
-									value: 'large',
-									label: __('Large', 'surecart'),
-								},
-							]}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				<Disabled>
-					<ScCartSubmit
-						className={className}
-						full={1}
-						type="primary"
-						size={size}
-						icon={show_icon ? 'lock' : false}
-						busy={false}
-					>
-						<RichText
-							aria-label={__('Button text')}
-							placeholder={__('Add text…')}
-							value={text}
-							onChange={(value) => setAttributes({ text: value })}
-							withoutInteractiveFormatting
-							allowedFormats={['core/bold', 'core/italic']}
-						/>
-					</ScCartSubmit>
-				</Disabled>
+			<div class="wp-block-buttons">
+				<div
+					{...blockProps}
+					className={classnames(blockProps.className, {
+						'wp-block-button': true,
+						[`has-custom-font-size`]: blockProps.style.fontSize,
+					})}
+				>
+					<RichText
+						aria-label={__('Button text')}
+						placeholder={__('Add text…')}
+						className={classnames(
+							className,
+							'wp-block-button__link',
+							colorProps.className,
+							borderProps.className,
+							{
+								[`has-text-align-${textAlign}`]: textAlign,
+								// For backwards compatibility add style that isn't
+								// provided via block support.
+								'no-border-radius': style?.border?.radius === 0,
+							},
+							__experimentalGetElementClassName('button')
+						)}
+						style={{
+							...borderProps.style,
+							...colorProps.style,
+							width: '100%',
+						}}
+						value={text}
+						onChange={(value) => setAttributes({ text: value })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+				</div>
 			</div>
 		</>
 	);

@@ -6,7 +6,7 @@ import uiStore from '@store/ui';
 @Component({
   tag: 'sc-cart-loader',
   styleUrl: 'sc-cart-loader.scss',
-  shadow: true,
+  shadow: false,
 })
 export class ScCartLoader {
   /** The form id to use for the cart. */
