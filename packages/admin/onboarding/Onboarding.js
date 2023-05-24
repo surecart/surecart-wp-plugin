@@ -40,7 +40,7 @@ function getAnimationSettings(originXA, originXB) {
 
 export default () => {
 	const [currentStep, setCurrentStep] = useState(0);
-	const [accountEmail, setAccountEmail] = useState('');
+	const [accountEmail, setAccountEmail] = useState(scData?.user_email);
 	const [accountCurrency, setAccountCurrency] = useState(null);
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const refAnimationInstance = useRef(null);

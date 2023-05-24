@@ -48,6 +48,7 @@ class OnboardingScriptsController extends AdminModelEditController {
 				untrailingslashit( SURECART_APP_URL ) . '/sign_up'
 			)
 		);
+		$this->data['user_email']  = is_user_logged_in() ? wp_get_current_user()->user_email : '';
 		parent::enqueue();
 	}
 }
