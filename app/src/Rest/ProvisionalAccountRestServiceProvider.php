@@ -14,7 +14,7 @@ class ProvisionalAccountRestServiceProvider extends RestServiceProvider implemen
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'public/provisional_accounts';
+	protected $endpoint = 'provisional_accounts';
 
 	/**
 	 * Rest Controller
@@ -28,7 +28,7 @@ class ProvisionalAccountRestServiceProvider extends RestServiceProvider implemen
 	 *
 	 * @var array
 	 */
-	protected $methods = ['create' ];
+	protected $methods = [ 'create' ];
 
 
 	/**
@@ -69,6 +69,6 @@ class ProvisionalAccountRestServiceProvider extends RestServiceProvider implemen
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'manage_options' );
 	}
 }
