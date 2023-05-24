@@ -49,7 +49,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 				css={
 					open
 						? css`
-								margin-left: 20px;
+								margin-left: var(--sc-spacing-medium);
 						  `
 						: ''
 				}

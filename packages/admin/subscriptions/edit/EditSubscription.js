@@ -70,7 +70,6 @@ export default () => {
 
 	useEffect(() => {
 		if (subscription?.id) {
-			console.log('fetching');
 			fetchUpcomingPeriod();
 		}
 	}, [
