@@ -73,23 +73,26 @@ export default () => {
 			setCurrentStep((step) => step - 1);
 	}
 
-	async function createProvisionalAccount(email) {
-		if (!email || !selectedTemplate || !accountCurrency) return;
+	const createProvisionalAccount = async (email) => {
 		try {
-			await saveEntityRecord('surecart', 'provisional', {
+			await saveEntityRecord('surecart', 'provisional_account', {
 				account_currency: accountCurrency,
 				email,
 				source_account_id: selectedTemplate,
 			});
 
-			await saveEntityRecord('surecart', 'brand', { color: brandColor });
+			await saveEntityRecord('surecart', 'store', {
+				object: 'brand',
+				color: brandColor,
+			});
 
 			handleStepChange('forward');
 		} catch (error) {
+			console.error(error);
 			setCurrentStep(1);
 			setError(error);
 		}
-	}
+	};
 
 	function renderContent(step) {
 		switch (step) {
