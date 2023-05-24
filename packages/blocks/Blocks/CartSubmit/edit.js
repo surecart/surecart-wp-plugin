@@ -9,6 +9,7 @@ import {
 	useBlockProps,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetElementClassName,
 	PanelColorSettings,
 } from '@wordpress/block-editor';
@@ -45,6 +46,7 @@ export default ({ className, attributes, setAttributes }) => {
 
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
 
 	return (
 		<>
@@ -120,6 +122,7 @@ export default ({ className, attributes, setAttributes }) => {
 						style={{
 							...borderProps.style,
 							...colorProps.style,
+							...spacingProps.style,
 							width: '100%',
 						}}
 						value={text}

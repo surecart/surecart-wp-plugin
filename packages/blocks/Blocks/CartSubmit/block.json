@@ -12,7 +12,11 @@
 		"align": false,
 		"alignWide": false,
 		"multiple": false,
-		"reusable": false,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
+		},
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
@@ -29,6 +33,7 @@
 			"__experimentalFontStyle": true,
 			"__experimentalTextTransform": true
 		},
+		"reusable": false,
 		"shadow": true,
 		"__experimentalBorder": {
 			"color": true,
