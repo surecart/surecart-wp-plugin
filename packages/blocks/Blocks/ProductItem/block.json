@@ -20,9 +20,8 @@
 			}
 		},
 		"color": {
-			"__experimentalDuotone": "img",
 			"text": false,
-			"background": false
+			"background": true
 		},
 		"__experimentalBorder": {
 			"color": true,
