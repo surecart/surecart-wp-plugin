@@ -24,7 +24,7 @@ export class ScProductItemImage {
     }
 
     if ((this.productMedia?.media as Media)?.url) {
-      return sizeImage((this.productMedia?.media as Media)?.url, applyFilters('surecart/product-list/media/size', 800));
+      return sizeImage((this.productMedia?.media as Media)?.url, applyFilters('surecart/product-list/media/size', 900));
     }
 
     return '';
