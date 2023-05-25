@@ -260,7 +260,11 @@ export class ScProductItemList {
                   {this.layoutConfig?.map(layout => {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
-                        return <sc-skeleton style={{ width: '80%' }}></sc-skeleton>;
+                        return (
+                          <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
+                            <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
+                          </div>
+                        );
                       case 'surecart/product-item-image':
                         return (
                           <sc-skeleton
@@ -269,11 +273,16 @@ export class ScProductItemList {
                               'minHeight': '90%',
                               'aspectRatio': layout.attributes?.ratio ?? '1/1.4',
                               '--sc-border-radius-pill': '12px',
+                              'display': 'inline-block',
                             }}
                           ></sc-skeleton>
                         );
                       case 'surecart/product-item-price':
-                        return <sc-skeleton style={{ width: '40%' }}></sc-skeleton>;
+                        return (
+                          <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
+                            <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+                          </div>
+                        );
                       default:
                         return null;
                     }

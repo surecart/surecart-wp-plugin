@@ -52,6 +52,7 @@
     margin-right: var(--sc-product-item-margin-right);
     border: solid var(--sc-product-item-border-width) var(--sc-product-item-border-color);
     border-radius: var(--sc-product-item-border-radius);
+    line-height: 1;
   }
 
   &__pagination {
@@ -85,4 +86,8 @@
     opacity: 1;
     visibility: visible;
   }
+}
+
+sc-product-item::part(image) {
+  aspect-ratio: var(--sc-product-image-aspect-ratio);
 }
