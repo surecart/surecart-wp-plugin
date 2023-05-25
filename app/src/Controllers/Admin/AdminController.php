@@ -2,16 +2,7 @@
 
 namespace SureCart\Controllers\Admin;
 
-use SureCart\Models\Account;
-
 abstract class AdminController {
-	/**
-	 * Holds the global account model.
-	 *
-	 * @var \SureCart\Models\Account;
-	 */
-	protected $account = null;
-
 	/**
 	 * The header.
 	 *
