@@ -21,9 +21,55 @@ class TutorLMSService extends IntegrationService implements IntegrationInterface
 		add_filter( 'tutor/course/single/entry-box/free', [ $this, 'purchaseButton' ], 10, 2 );
 		add_filter( 'tutor/course/single/entry-box/purchasable', [ $this, 'purchaseButton' ], 10, 2 );
 		add_filter( 'get_tutor_course_price', [ $this, 'coursePrice' ], 11, 2 );
+		add_filter( 'tutor_course_loop_price', [ $this, 'loopPurchaseButton' ], 10, 2 );
 
 		add_action( 'surecart/models/price/updated', [ $this, 'clearPriceCache' ], 10, 2 );
 		add_action( 'surecart/models/price/created', [ $this, 'clearPriceCache' ], 10, 2 );
+	}
+
+	/**
+	 * Show our purchase button if we have an integration.
+	 *
+	 * @param string $output The button HTML.
+	 *
+	 * @return string
+	 */
+	public function loopPurchaseButton( $output ) {
+		// check first to see if we have any integrations.
+		$integrations = Integration::where( 'integration_id', get_the_ID() )->andWhere( 'model_name', 'product' )->get();
+		if ( empty( $integrations ) ) {
+			return $output;
+		}
+
+		// Get the model ids from the integrations.
+		$product_ids = array_column( $integrations, 'model_id' );
+		if ( empty( $product_ids ) ) {
+			return $output;
+		}
+
+		// get purchasable prices from cache.
+		$prices = $this->getCachedProductsPrices( $product_ids );
+		if ( empty( $prices ) ) {
+			return $output;
+		}
+
+		// add our components.
+		\SureCart::assets()->enqueueComponents();
+
+		$is_logged_in             = is_user_logged_in();
+		$enable_guest_course_cart = tutor_utils()->get_option( 'enable_guest_course_cart' );
+		$required_loggedin_class  = '';
+		if ( ! $is_logged_in && ! $enable_guest_course_cart ) {
+			$required_loggedin_class = apply_filters( 'tutor_enroll_required_login_class', 'tutor-open-login-modal' );
+		}
+
+		// template.
+		ob_start(); ?>
+
+		<div class="tutor-course-list-btn"><?php echo apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $required_loggedin_class . '">' . __( 'Enroll Course', 'tutor' ) . '</a>' ); ?></div>
+
+		<?php
+		return ob_get_clean();
 	}
 
 	/**

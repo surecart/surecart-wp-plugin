@@ -32,7 +32,7 @@ class UsersService {
 	 */
 	public function syncUserProfile( $user_id, $old_user_data, $userdata ) {
 		$customer_ids = \SureCart\Models\User::find( $user_id )->customerIds();
-		if ( empty( $customer_ids ) ) {
+		if ( is_wp_error( $customer_ids ) || empty( $customer_ids ) ) {
 			return;
 		}
 

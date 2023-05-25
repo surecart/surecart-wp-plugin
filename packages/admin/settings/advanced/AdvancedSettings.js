@@ -89,10 +89,28 @@ export default () => {
 						});
 					}}
 				>
-					{__('Use the Stripe Payment Element', 'surecart')}
+					{__('Use The Stripe Payment Element', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							"Use Stripe's Payment Element instead of the Card Element in all forms.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={item?.auto_sync_user_to_customer}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							auto_sync_user_to_customer:
+								!item?.auto_sync_user_to_customer,
+						});
+					}}
+				>
+					{__('Auto Sync Customers', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If a WordPress user does not have a customer record, find or create one when they login to their dashboard.',
 							'surecart'
 						)}
 					</span>

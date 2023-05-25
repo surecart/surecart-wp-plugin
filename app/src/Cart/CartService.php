@@ -119,9 +119,10 @@ class CartService {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		$id = is_int( $args->menu ) ? $args->menu : $args->menu->term_id;
+		$id = is_int( $args->menu ) ? $args->menu : ( $args->menu->term_id ?? false );
 
-		if ( ! $this->isMenuIconEnabled( $id ) || ! $this->isCartEnabled() ) {
+		// if there is no id, or the menu icon is not enabled, or the cart is disabled, return.
+		if ( ! $id || ! $this->isMenuIconEnabled( $id ) || ! $this->isCartEnabled() ) {
 			return $items;
 		}
 
