@@ -197,7 +197,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					<RangeControl
 						label={
 							pagination_enabled
-								? __('Per page limit', 'surecart')
+								? __('Products Per Page', 'surecart')
 								: __('Limit', 'surecart')
 						}
 						value={limit}
