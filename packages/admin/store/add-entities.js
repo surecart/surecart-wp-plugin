@@ -147,6 +147,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'provisional_account',
+		kind: 'surecart',
+		label: __('Provisional Accounts', 'surecart'),
+		baseURL: 'surecart/v1/provisional_accounts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'manual_payment_method',
 		kind: 'surecart',
 		label: __('Manual Payment Method', 'surecart'),

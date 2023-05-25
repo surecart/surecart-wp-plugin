@@ -41,7 +41,7 @@ function getAnimationSettings(originXA, originXB) {
 export default () => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [accountEmail, setAccountEmail] = useState(scData?.user_email);
-	const [accountCurrency, setAccountCurrency] = useState(null);
+	const [accountCurrency, setAccountCurrency] = useState('usd');
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const refAnimationInstance = useRef(null);
 	const [confirmExit, setConfirmExit] = useState(true);
@@ -73,23 +73,26 @@ export default () => {
 			setCurrentStep((step) => step - 1);
 	}
 
-	async function createProvisionalAccount(email) {
-		if (!email || !selectedTemplate || !accountCurrency) return;
+	const createProvisionalAccount = async (email) => {
 		try {
-			await saveEntityRecord('surecart', 'provisional', {
+			await saveEntityRecord('surecart', 'provisional_account', {
 				account_currency: accountCurrency,
 				email,
 				source_account_id: selectedTemplate,
 			});
 
-			await saveEntityRecord('surecart', 'brand', { color: brandColor });
+			await saveEntityRecord('surecart', 'store', {
+				object: 'brand',
+				color: brandColor,
+			});
 
 			handleStepChange('forward');
 		} catch (error) {
+			console.error(error);
 			setCurrentStep(1);
 			setError(error);
 		}
-	}
+	};
 
 	function renderContent(step) {
 		switch (step) {
