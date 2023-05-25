@@ -93,3 +93,7 @@
 sc-product-item::part(image) {
   aspect-ratio: var(--sc-product-image-aspect-ratio);
 }
+
+sc-pagination {
+  font-size: var(--sc-pagination-font-size);
+}

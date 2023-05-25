@@ -86,6 +86,7 @@ class Block extends BaseBlock {
 	public function getProductListStyle( $attr ) {
 		$style  = '--sc-product-item-list-column: ' . ( $attr['columns'] ?? 3 ) . ';';
 		$style .= '--sc-product-item-list-gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '40px' ) . ';';
+		$style .= '--sc-pagination-font-size: ' . ( $attr['paginationSize'] ?? '14px' ) . ';';
 		return $style;
 	}
 
