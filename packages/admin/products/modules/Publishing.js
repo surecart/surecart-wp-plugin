@@ -15,20 +15,6 @@ export default ({ product, updateProduct, loading }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
-	const copy = async (text) => {
-		try {
-			await navigator.clipboard.writeText(text);
-			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (err) {
-			console.error(err);
-			createErrorNotice(__('Error copying to clipboard.', 'surecart'), {
-				type: 'snackbar',
-			});
-		}
-	};
-
 	return (
 		<Box
 			loading={loading}
