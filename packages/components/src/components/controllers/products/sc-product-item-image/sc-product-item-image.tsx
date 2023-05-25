@@ -1,4 +1,7 @@
 import { Component, h, Host, Prop } from '@stencil/core';
+import { Media, ProductMedia } from '../../../../types';
+import { sizeImage } from '../../../../functions/media';
+import { applyFilters } from '@wordpress/hooks';
 
 @Component({
   tag: 'sc-product-item-image',
@@ -7,13 +10,25 @@ import { Component, h, Host, Prop } from '@stencil/core';
 })
 export class ScProductItemImage {
   /* Product image url */
-  @Prop() src: string;
+  @Prop() productMedia: ProductMedia;
 
   /* Product image alt */
   @Prop() alt: string;
 
   /* Product image sizing */
   @Prop() sizing: 'cover' | 'contain';
+
+  getSrc() {
+    if (this.productMedia?.url) {
+      return this.productMedia?.url;
+    }
+
+    if ((this.productMedia?.media as Media)?.url) {
+      return sizeImage((this.productMedia?.media as Media)?.url, applyFilters('surecart/product-list/media/size', 800));
+    }
+
+    return '';
+  }
 
   render() {
     return (
@@ -25,7 +40,7 @@ export class ScProductItemImage {
             'is_covered': this.sizing === 'cover',
           }}
         >
-          {!!this.src ? <img src={this.src} alt={this.alt} /> : <div class="product-img_placeholder" />}
+          {!!this.getSrc() ? <img src={this.getSrc()} alt={this.alt} /> : <div class="product-img_placeholder" />}
         </div>
       </Host>
     );

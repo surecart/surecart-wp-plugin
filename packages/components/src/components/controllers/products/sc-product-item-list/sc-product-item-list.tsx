@@ -143,7 +143,7 @@ export class ScProductItemList {
   async fetchProducts() {
     const response = (await apiFetch({
       path: addQueryArgs(`surecart/v1/products/`, {
-        expand: ['prices'],
+        expand: ['prices', 'product_medias', 'product_media.media'],
         archived: false,
         status: ['published'],
         per_page: this.limit,
