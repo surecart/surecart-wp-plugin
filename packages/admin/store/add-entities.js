@@ -245,7 +245,7 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'provisional',
+		name: 'provisional_account',
 		kind: 'surecart',
 		label: __('Provisional', 'surecart'),
 		baseURL: 'surecart/v1/public/provisional_accounts',

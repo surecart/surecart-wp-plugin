@@ -18,7 +18,7 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 			onSubmitEmail(userEmail.trim());
 			handleStepChange('forward');
 		} else {
-			setError('Invalid email address!');
+			setError(__('Invalid email address!', 'surecart'));
 		}
 	}
 

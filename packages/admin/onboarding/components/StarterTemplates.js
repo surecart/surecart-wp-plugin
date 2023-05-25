@@ -8,32 +8,27 @@ import ProgressIndicator from './ProgressIndicator';
 const templates = [
 	{
 		id: null,
-		name: 'Start From Scratch', // TODO: translate.
+		name: __('Start From Scratch', 'surecart'),
 	},
 	{
-		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
-		name: 'Donations',
-		imgUrl: 'https://source.unsplash.com/200x200?donation',
+		id: '0f681088-a74d-4aaa-9996-ef97d2ff0f32',
+		name: __('Beauty & Spa', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/beauty.jpg`,
 	},
 	{
-		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
-		name: 'Clothing',
-		imgUrl: 'https://source.unsplash.com/200x200?clothing',
+		id: '25e55247-e1e6-4e7b-955c-3d719618d594',
+		name: __('Fashion Store', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/fashion.jpg`,
 	},
 	{
-		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
-		name: 'Food & Beverages',
-		imgUrl: 'https://source.unsplash.com/200x200?food',
+		id: '874f5380-166a-4e51-9f1e-5b72519d4cd4',
+		name: __('Organic Store', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
 	},
 	{
-		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
-		name: 'Cosmetics',
-		imgUrl: 'https://source.unsplash.com/200x200?beauty',
-	},
-	{
-		id: 'fd1e9000-384e-42cd-b0a7-080fcf098aad',
-		name: 'Digital Products',
-		imgUrl: 'https://source.unsplash.com/200x200?computers',
+		id: '0784302f-2627-4c7d-96e7-2e537d9a18ec',
+		name: __('Books Store', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/books.jpg`,
 	},
 ];
 
