@@ -4,7 +4,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import {
 	InspectorControls,
 	useBlockProps,
@@ -29,7 +29,7 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Image Attribute', 'surecart')}>
+				<PanelBody>
 					<ToggleGroupControl
 						label={__('Image Cropping', 'surecart')}
 						value={sizing}
@@ -56,6 +56,12 @@ export default ({ attributes, setAttributes }) => {
 			>
 				<ResizableBox
 					minHeight={100}
+					style={{
+						marginTop: getSpacingPresetCssVar(margin?.top),
+						marginBottom: getSpacingPresetCssVar(margin?.bottom),
+						marginLeft: getSpacingPresetCssVar(margin?.left),
+						marginRight: getSpacingPresetCssVar(margin?.right),
+					}}
 					enable={{
 						top: false,
 						right: false,
@@ -87,14 +93,6 @@ export default ({ attributes, setAttributes }) => {
 								getSpacingPresetCssVar(padding?.left),
 							'--sc-product-image-padding-right':
 								getSpacingPresetCssVar(padding?.right),
-							'--sc-product-image-margin-top':
-								getSpacingPresetCssVar(margin?.top),
-							'--sc-product-image-margin-bottom':
-								getSpacingPresetCssVar(margin?.bottom),
-							'--sc-product-image-margin-left':
-								getSpacingPresetCssVar(margin?.left),
-							'--sc-product-image-margin-right':
-								getSpacingPresetCssVar(margin?.right),
 						}}
 					/>
 				</ResizableBox>
