@@ -23,15 +23,8 @@ import {
 import { __ } from '@wordpress/i18n';
 
 export default ({ className, attributes, setAttributes }) => {
-	const {
-		text,
-		textAlign,
-		style,
-		padding,
-		border,
-		backgroundColor,
-		textColor,
-	} = attributes;
+	const { text, textAlign, style, padding, border, backgroundColor } =
+		attributes;
 
 	const blockProps = useBlockProps({
 		style: {
@@ -41,6 +34,7 @@ export default ({ className, attributes, setAttributes }) => {
 			...(padding?.bottom ? { paddingBottom: padding?.bottom } : {}),
 			...(padding?.left ? { paddingLeft: padding?.left } : {}),
 			...(padding?.right ? { paddingRight: padding?.right } : {}),
+			...(backgroundColor ? { backgroundColor: backgroundColor } : {}),
 		},
 	});
 
