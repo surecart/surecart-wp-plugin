@@ -142,7 +142,7 @@ abstract class AdminModelEditController {
 			}
 		}
 		if ( in_array( 'claimed', $this->with_data ) ) {
-			$this->data['claimed'] = \SureCart::account()->claimed;
+			$this->data['claimed'] = \SureCart::account()->claimed ? '1' : '0';
 		}
 		if ( in_array( 'claim_url', $this->with_data ) ) {
 			$this->data['claim_url'] = \SureCart::account()->claim_url;
