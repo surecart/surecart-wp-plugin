@@ -5,6 +5,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property   | Attribute   | Description | Type     | Default |
+| ---------- | ----------- | ----------- | -------- | ------- |
+| `claimUrl` | `claim-url` | Claim URL.  | `string` | `''`    |
+
+
 ## Dependencies
 
 ### Depends on

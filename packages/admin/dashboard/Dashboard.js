@@ -13,6 +13,7 @@ import {
 	ScBreadcrumbs,
 	ScBreadcrumb,
 	ScSwitch,
+	ScProvisionalBanner,
 } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -21,46 +22,54 @@ import { useState } from 'react';
 export default () => {
 	const [liveMode, setLiveMode] = useState(true);
 	return (
-		<DashboardModel
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<ScBreadcrumbs>
-						<ScBreadcrumb>
-							<Logo display="block" />
-						</ScBreadcrumb>
-						<ScBreadcrumb href="admin.php?page=sc-dashboard">
-							{__('Dashboard', 'surecart')}
-						</ScBreadcrumb>
-					</ScBreadcrumbs>
-				</div>
-			}
-			end={
-				<ScSwitch
-					checked={!liveMode}
-					onScChange={(e) => {
-						setLiveMode(!e.target.checked);
-					}}
-					reversed
-				>
-					{__('Test Mode', 'surecart')}
-				</ScSwitch>
-			}
-		>
-			<Fragment>
-				<GetStarted />
-				<Overview liveMode={liveMode} setLiveMode={setLiveMode} />
-				<ScDivider style={{ '--spacing': '1em' }} />
-				<ScFlex style={{ '--sc-flex-column-gap': '2em' }} stack="tablet">
-					<RecentOrders liveMode={liveMode} />
-					<LearnMore />
-				</ScFlex>
-			</Fragment>
-		</DashboardModel>
+		<>
+			{scData?.claimed === '0' && !!scData?.claim_url && (
+				<ScProvisionalBanner claimUrl={scData?.claim_url} />
+			)}
+			<DashboardModel
+				title={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+						`}
+					>
+						<ScBreadcrumbs>
+							<ScBreadcrumb>
+								<Logo display="block" />
+							</ScBreadcrumb>
+							<ScBreadcrumb href="admin.php?page=sc-dashboard">
+								{__('Dashboard', 'surecart')}
+							</ScBreadcrumb>
+						</ScBreadcrumbs>
+					</div>
+				}
+				end={
+					<ScSwitch
+						checked={!liveMode}
+						onScChange={(e) => {
+							setLiveMode(!e.target.checked);
+						}}
+						reversed
+					>
+						{__('Test Mode', 'surecart')}
+					</ScSwitch>
+				}
+			>
+				<Fragment>
+					<GetStarted />
+					<Overview liveMode={liveMode} setLiveMode={setLiveMode} />
+					<ScDivider style={{ '--spacing': '1em' }} />
+					<ScFlex
+						style={{ '--sc-flex-column-gap': '2em' }}
+						stack="tablet"
+					>
+						<RecentOrders liveMode={liveMode} />
+						<LearnMore />
+					</ScFlex>
+				</Fragment>
+			</DashboardModel>
+		</>
 	);
 };
