@@ -172,6 +172,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'add_to_cart' => true,
 				'text'        => __( 'Add To Cart', 'surecart' ),
+				'width'       => 100,
 			]
 		);
 	}
