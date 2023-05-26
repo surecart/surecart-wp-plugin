@@ -11,7 +11,8 @@ export const availableProcessors = () =>
     .filter(processor => processor?.live_mode === (checkoutState?.mode === 'live')) // match mode.
     .filter(processor => !(state.disabled.processors || []).includes(processor.processor_type)) // make sure it's not disabled.
     .filter(processor => (!!checkoutState?.checkout?.reusable_payment_method_required ? !!processor?.recurring_enabled : true)) // recurring.
-    .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)); // only allow mollie if preset.
+    .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)) // only allow mollie if preset.
+    .filter(processor => processor.supported_currencies.includes(window?.scData?.currency)); // filter by supported currencies only.
 
 /**
  * Gets an available processor type.

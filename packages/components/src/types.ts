@@ -28,6 +28,7 @@ declare global {
         dashboard: string;
         checkout: string;
       };
+      currency: string;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
