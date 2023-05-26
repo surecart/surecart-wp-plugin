@@ -188,7 +188,9 @@ export default ({
 				<ScFlex>
 					<ScPriceInput
 						label={__('Minimum Price', 'surecart')}
-						currencyCode={scData?.currency}
+						currencyCode={
+							shippingRate?.currency || scData?.currency
+						}
 						value={shippingRate.min_amount || null}
 						onScInput={(e) => {
 							updateShippingRate('min_amount', e.target.value);
@@ -199,7 +201,9 @@ export default ({
 					/>
 					<ScPriceInput
 						label={__('Maximum Price', 'surecart')}
-						currencyCode={scData?.currency}
+						currencyCode={
+							shippingRate?.currency || scData?.currency
+						}
 						value={shippingRate.max_amount || null}
 						required
 						placeholder={__('No limit', 'surecart')}
@@ -333,7 +337,7 @@ export default ({
 					<ScPriceInput
 						label={__('Price', 'surecart')}
 						className="rate-price"
-						currencyCode={scData?.currency}
+						currencyCode={shippingRate.currency || scData?.currency}
 						value={shippingRate.amount || null}
 						onScInput={(e) => {
 							updateShippingRate('amount', e.target.value);
