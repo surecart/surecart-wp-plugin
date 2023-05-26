@@ -109,10 +109,14 @@ export default ({
 		);
 	};
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
+	const onSubmit = async () => {
 		setLoading(true);
 		try {
+			if (!showAddNew && !shippingRate.shipping_method_id) {
+				setError(__('Please select a shipping method', 'surecart'));
+				return;
+			}
+
 			if (!shippingRate.shipping_method_id) {
 				const shippingMethod = await saveEntityRecord(
 					'surecart',
@@ -125,10 +129,10 @@ export default ({
 				shippingRate.shipping_method_id = shippingMethod?.id;
 			}
 
-			if (!shippingRate.shipping_method_id)
-				throw new Error(
-					__('Failed to create shipping method', 'surecart')
-				);
+			if (!shippingRate.shipping_method_id) {
+				setError(__('Failed to create shipping method', 'surecart'));
+				return;
+			}
 
 			if (isEdit) {
 				await editShippingRate(shippingRate);
@@ -197,6 +201,7 @@ export default ({
 						label={__('Maximum Price', 'surecart')}
 						currencyCode={scData?.currency}
 						value={shippingRate.max_amount || null}
+						required
 						placeholder={__('No limit', 'surecart')}
 						onScInput={(e) => {
 							updateShippingRate('max_amount', e.target.value);
@@ -261,7 +266,17 @@ export default ({
 			style={{ '--dialog-body-overflow': 'visible' }}
 		>
 			<Error error={error} setError={setError} />
-			<ScForm onScFormSubmit={onSubmit}>
+			<ScForm
+				onScSubmit={(e) => {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					this.onSubmit();
+				}}
+				onScFormSubmit={(e) => {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+				}}
+			>
 				<ScFlex
 					flexDirection="column"
 					css={css`
@@ -323,6 +338,7 @@ export default ({
 						onScInput={(e) => {
 							updateShippingRate('amount', e.target.value);
 						}}
+						required
 					/>
 					<ScRadioGroup
 						onScChange={(e) => {
