@@ -56,20 +56,14 @@ export default ({ shippingProfileId }) => {
 				queryArgs
 			);
 
-			const products = (
-				select(coreStore).getEntityRecords(...queryArgs) || []
-			).reduce((uniqueProducts, product) => {
-				if (
-					product.shipping_profile === shippingProfileId &&
-					uniqueProducts.findIndex((p) => p.id === product.id) === -1
-				) {
-					uniqueProducts.push(product);
-				}
-				return uniqueProducts;
-			}, []);
+			const fetchedProducts =
+				select(coreStore).getEntityRecords(...queryArgs) || [];
 
 			return {
-				products,
+				products: Array.from(
+					new Set(fetchedProducts.map((item) => JSON.stringify(item))),
+					JSON.parse
+				),
 				loading: loading && !products?.length,
 			};
 		},
