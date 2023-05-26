@@ -270,7 +270,7 @@ export default ({
 				onScSubmit={(e) => {
 					e.preventDefault();
 					e.stopImmediatePropagation();
-					this.onSubmit();
+					onSubmit();
 				}}
 				onScFormSubmit={(e) => {
 					e.preventDefault();

@@ -142,7 +142,17 @@ export default ({
 			style={{ '--dialog-body-overflow': 'visible' }}
 		>
 			<Error error={error} setError={setError} />
-			<ScForm onScFormSubmit={onSubmit}>
+			<ScForm
+				onScSubmit={(e) => {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+					onSubmit();
+				}}
+				onScFormSubmit={(e) => {
+					e.preventDefault();
+					e.stopImmediatePropagation();
+				}}
+			>
 				<ScFlex
 					flexDirection="column"
 					css={css`
