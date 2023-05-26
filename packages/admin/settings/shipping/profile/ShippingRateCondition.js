@@ -14,11 +14,15 @@ export default ({ shippingRate }) => {
 					currency={shippingRate.currency}
 				/>{' '}
 				-{' '}
-				<ScFormatNumber
-					value={shippingRate.max_amount}
-					type="currency"
-					currency={shippingRate.currency}
-				/>
+				{!shippingRate.max_amount ? (
+					<span>&infin;</span>
+				) : (
+					<ScFormatNumber
+						value={shippingRate.max_amount}
+						type="currency"
+						currency={shippingRate.currency}
+					/>
+				)}
 			</Fragment>
 		);
 	}
@@ -33,12 +37,16 @@ export default ({ shippingRate }) => {
 					noConvert
 				/>{' '}
 				-{' '}
-				<ScFormatNumber
-					value={shippingRate.max_weight}
-					type="unit"
-					unit={shippingRate.weight_unit}
-					noConvert
-				/>
+				{!shippingRate.max_weight ? (
+					<span>&infin;</span>
+				) : (
+					<ScFormatNumber
+						value={shippingRate.max_weight}
+						type="unit"
+						unit={shippingRate.weight_unit}
+						noConvert
+					/>
+				)}
 			</Fragment>
 		);
 	}
