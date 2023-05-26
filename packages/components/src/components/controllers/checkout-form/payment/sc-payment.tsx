@@ -91,6 +91,25 @@ export class ScPayment {
     );
   }
 
+  renderPaystack(processor) {
+    return (
+      <Fragment>
+        <sc-payment-method-choice key={processor?.id} processor-id="paystack">
+          <span slot="summary" class="sc-payment-toggle-summary">
+            <sc-icon name="paystack"></sc-icon>
+          </span>
+
+          <sc-card>
+            <sc-payment-selected label={__('Paystack selected for check out.', 'surecart')}>
+              <sc-icon slot="icon" name="paystack"></sc-icon>
+              {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
+      </Fragment>
+    );
+  }
+
   render() {
     // payment is not required for this order.
     if (checkoutState.checkout?.payment_method_required === false) {
@@ -127,6 +146,8 @@ export class ScPayment {
                     return this.renderStripe(processor);
                   case 'paypal':
                     return this.renderPayPal(processor);
+                  case 'paystack':
+                    return this.renderPaystack(processor);
                 }
               })}
               <ManualPaymentMethods methods={availableManualPaymentMethods()} />
