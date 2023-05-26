@@ -161,19 +161,21 @@ export default ({
 						)}
 					/>
 					<ScFormControl label={__('Select Countries', 'surecart')}>
-						<ScFlex
-							columnGap="1em"
-							justifyContent="flex-start"
-							css={css`
-								padding: 0.44em 0;
-								margin-bottom: var(--sc-spacing-medium);
-							`}
-							flexWrap="wrap"
-						>
-							{zoneCountries.map((zoneCountry) =>
-								renderCountryPill(zoneCountry)
-							)}
-						</ScFlex>
+						{!!zoneCountries.length ? (
+							<ScFlex
+								columnGap="1em"
+								justifyContent="flex-start"
+								css={css`
+									padding: 0.44em 0;
+									margin-bottom: var(--sc-spacing-medium);
+								`}
+								flexWrap="wrap"
+							>
+								{zoneCountries.map((zoneCountry) =>
+									renderCountryPill(zoneCountry)
+								)}
+							</ScFlex>
+						) : null}
 						<ScSelect
 							search
 							onScChange={onCountrySelect}
