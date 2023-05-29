@@ -4,11 +4,11 @@ namespace SureCart\Tests\Feature\Rest;
 
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
-use SureCart\Rest\ShippingProfileRestServiceProvider;
+use SureCart\Rest\ShippingProtocolRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
-class ShippingProfileRestServiceProviderTest extends SureCartUnitTestCase
+class ShippingProtocolRestServiceProviderTest extends SureCartUnitTestCase
 {
     use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -22,7 +22,7 @@ class ShippingProfileRestServiceProviderTest extends SureCartUnitTestCase
         //Set up an app instance with whatever stubs and mocks we need before every test.
         \SureCart::make()->bootstrap([
             'providers' => [
-                ShippingProfileRestServiceProvider::class,
+                ShippingProtocolRestServiceProvider::class,
                 RequestServiceProvider::class,
                 ErrorsServiceProvider::class,
             ],
@@ -35,21 +35,12 @@ class ShippingProfileRestServiceProviderTest extends SureCartUnitTestCase
         $has_permissions->add_cap('manage_sc_shop_settings');
 
         return [
-            'List: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_profiles', 401],
-            'List: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_profiles', 403],
-            'List: Has Capability' => [['manage_sc_shop_settings'],'GET', '/surecart/v1/shipping_profiles', 200],
-            'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_profiles/test', 401],
-            'Find: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_profiles/test', 403],
-            'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/shipping_profiles/test', 200],
-			'Edit: Unauthenticated' => [null, 'PATCH', '/surecart/v1/shipping_profiles/test', 401],
-            'Edit: Missing Capability' => [[], 'PATCH', '/surecart/v1/shipping_profiles/test', 403],
-            'Edit: Has Capability' => [['manage_sc_shop_settings'], 'PATCH', '/surecart/v1/shipping_profiles/test', 200],
-			'Delete: Unauthenticated' => [null, 'DELETE', '/surecart/v1/shipping_profiles/test', 401],
-            'Delete: Missing Capability' => [[], 'DELETE', '/surecart/v1/shipping_profiles/test', 403],
-            'Delete: Has Capability' => [['manage_sc_shop_settings'], 'DELETE', '/surecart/v1/shipping_profiles/test', 200],
-			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/shipping_profiles', 401],
-            'Create: Missing Capability' => [[], 'POST', '/surecart/v1/shipping_profiles', 403],
-            'Create: Has Capability' => [['manage_sc_shop_settings'], 'POST', '/surecart/v1/shipping_profiles', 200],
+            'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_protocol', 401],
+            'Find: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_protocol', 403],
+            'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/shipping_protocol', 200],
+			'Edit: Unauthenticated' => [null, 'PATCH', '/surecart/v1/shipping_protocol', 401],
+            'Edit: Missing Capability' => [[], 'PATCH', '/surecart/v1/shipping_protocol', 403],
+            'Edit: Has Capability' => [['manage_sc_shop_settings'], 'PATCH', '/surecart/v1/shipping_protocol', 200],
         ];
     }
 
