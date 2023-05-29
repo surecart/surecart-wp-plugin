@@ -2,6 +2,9 @@
 
 namespace SureCart\Models;
 
+/**
+ * ShippingRate model
+ */
 class ShippingRate extends Model {
 	/**
 	 * Rest API endpoint

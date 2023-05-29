@@ -2,6 +2,9 @@
 
 namespace SureCart\Models;
 
+/**
+ * ShippingProtocol model
+ */
 class ShippingProtocol extends Model {
 	/**
 	 * Rest API endpoint

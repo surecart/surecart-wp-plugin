@@ -35,12 +35,12 @@ class ShippingProtocolRestServiceProviderTest extends SureCartUnitTestCase
         $has_permissions->add_cap('manage_sc_shop_settings');
 
         return [
-            'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_protocol/test', 401],
-            'Find: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_protocol/test', 403],
-            'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/shipping_protocol/test', 200],
-			'Edit: Unauthenticated' => [null, 'PATCH', '/surecart/v1/shipping_protocol/test', 401],
-            'Edit: Missing Capability' => [[], 'PATCH', '/surecart/v1/shipping_protocol/test', 403],
-            'Edit: Has Capability' => [['manage_sc_shop_settings'], 'PATCH', '/surecart/v1/shipping_protocol/test', 200],
+            'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/shipping_protocol', 401],
+            'Find: Missing Capability' => [[], 'GET', '/surecart/v1/shipping_protocol', 403],
+            'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/shipping_protocol', 200],
+			'Edit: Unauthenticated' => [null, 'PATCH', '/surecart/v1/shipping_protocol', 401],
+            'Edit: Missing Capability' => [[], 'PATCH', '/surecart/v1/shipping_protocol', 403],
+            'Edit: Has Capability' => [['manage_sc_shop_settings'], 'PATCH', '/surecart/v1/shipping_protocol', 200],
         ];
     }
 
