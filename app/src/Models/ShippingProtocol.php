@@ -2,18 +2,18 @@
 
 namespace SureCart\Models;
 
-class ShippingRate extends Model {
+class ShippingProtocol extends Model {
 	/**
 	 * Rest API endpoint
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'shipping_rates';
+	protected $endpoint = 'shipping_protocol';
 
 	/**
 	 * Object name
 	 *
 	 * @var string
 	 */
-	protected $object_name = 'shipping_rate';
+	protected $object_name = 'shipping_protocol';
 }
