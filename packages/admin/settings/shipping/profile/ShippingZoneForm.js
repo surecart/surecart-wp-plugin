@@ -72,8 +72,7 @@ export default ({
 		);
 	};
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
+	const onSubmit = async () => {
 		if (!zoneCountries.length) {
 			setError({
 				message: __(
