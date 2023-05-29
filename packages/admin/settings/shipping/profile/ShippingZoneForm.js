@@ -14,6 +14,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import Error from '../../../components/Error';
 import { countryChoices } from '@surecart/components';
@@ -30,6 +31,7 @@ export default ({
 	const [zoneName, setZoneName] = useState('');
 	const [zoneCountries, setZoneCountries] = useState([]);
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
 		return () => {
@@ -87,8 +89,14 @@ export default ({
 		try {
 			if (isEdit) {
 				await editShippingZone();
+				createSuccessNotice(__('Zone updated', 'surecart'), {
+					type: 'snackbar',
+				});
 			} else {
 				await addShippingZone();
+				createSuccessNotice(__('Zone added', 'surecart'), {
+					type: 'snackbar',
+				});
 			}
 
 			onRequestClose();

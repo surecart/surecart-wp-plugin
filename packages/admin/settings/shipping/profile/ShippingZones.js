@@ -68,9 +68,7 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 								setCurrentModal(modals.EDIT_ZONE);
 								setSelectedZone(shippingZone);
 							}}
-							parentBusy={
-								busy && selectedZone?.id === shippingZone.id
-							}
+							parentBusy={busy}
 							isFallback={shippingZone.id === fallbackZoneId}
 						/>
 					))

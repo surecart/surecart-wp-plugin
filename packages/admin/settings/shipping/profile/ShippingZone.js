@@ -20,6 +20,7 @@ import ShippingRateCondition from './ShippingRateCondition';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import ShippingMethodForm from './ShippingMethodForm';
 
@@ -36,6 +37,7 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 
 	const { deleteEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticeStore);
 
 	const onRemoveShippingRate = async (shippingRateId) => {
 		try {
@@ -47,6 +49,9 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 				{ throwOnError: true }
 			);
 			await invalidateResolutionForStore();
+			createSuccessNotice(__('Shipping rate deleted', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (error) {
 			setError(error);
 		} finally {

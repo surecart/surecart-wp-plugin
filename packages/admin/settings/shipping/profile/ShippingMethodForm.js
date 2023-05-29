@@ -23,6 +23,7 @@ import Error from '../../../components/Error';
 import ModelSelector from '../../../components/ModelSelector';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticeStore} from '@wordpress/notices'
 
 const rate_types = {
 	ITEM_WEIGHT: 'weight',
@@ -55,6 +56,7 @@ export default ({
 	const [showAddNew, setShowAddNew] = useState(false);
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
+    const {createSuccessNotice} = useDispatch(noticeStore)
 
 	useEffect(() => {
 		return () => {
@@ -136,8 +138,14 @@ export default ({
 
 			if (isEdit) {
 				await editShippingRate(shippingRate);
+				createSuccessNotice(__('Shipping rate updated', 'surecart'), {
+					type: 'snackbar',
+				});
 			} else {
 				await addShippingRate(shippingRate);
+				createSuccessNotice(__('Shipping rate added', 'surecart'), {
+					type: 'snackbar',
+				});
 			}
 
 			await invalidateResolutionForStore();
