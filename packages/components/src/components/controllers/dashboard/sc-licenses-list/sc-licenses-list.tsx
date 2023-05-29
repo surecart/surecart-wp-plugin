@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { License , Purchase, Product} from '../../../../types';
+import { License, Purchase, Product } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -143,7 +143,7 @@ export class ScLicensesList {
     return (
       <sc-card no-padding>
         <sc-sc-stacked-list>
-          {this.licenses?.map(({ id,purchase, status, activations, activation_limit }) => (
+          {this.licenses?.map(({ id, purchase, status, activations, activation_limit, created_at }) => (
             <sc-stacked-list-row
               key={id}
               href={addQueryArgs(window.location.href, {
@@ -151,12 +151,11 @@ export class ScLicensesList {
                 model: 'license',
                 id,
               })}
-              style={{ '--columns': '3' }}
+              style={{ '--columns': '4' }}
             >
+              <sc-format-date class="license__date" date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
               <div>{((purchase as Purchase)?.product as Product)?.name}</div>
-              <div>
-                {this.renderStatus(status)}
-              </div>
+              <div>{this.renderStatus(status)}</div>
               <div>
                 {activations?.pagination?.count} / {activation_limit || <span>&infin;</span>}
               </div>

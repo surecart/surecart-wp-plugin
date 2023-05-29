@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, Prop, State, h } from '@stencil/core';
 import { onFirstVisible } from '../../../../functions/lazy';
-import { License } from 'src/types';
+import { License, Product, Purchase } from 'src/types';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -47,7 +47,7 @@ export class ScLicense {
   async getLicense() {
     this.license = await apiFetch({
       path: addQueryArgs(`surecart/v1/licenses/${this.licenseId}`, {
-        expand: ['activations'],
+        expand: ['activations', 'purchase', 'purchase.product'],
       }),
     });
   }
@@ -69,9 +69,9 @@ export class ScLicense {
     }
   };
 
-  async copyKey() {
+  async copyKey(key: string) {
     try {
-      await navigator.clipboard.writeText(this.license?.key);
+      await navigator.clipboard.writeText(key);
       this.copied = true;
 
       setTimeout(() => {
@@ -99,16 +99,51 @@ export class ScLicense {
 
   renderLoading() {
     return (
-      <sc-flex flexDirection="column" style={{ gap: '1em' }}>
-        <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
-        <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
-        <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
-      </sc-flex>
+      <sc-dashboard-module>
+        <span slot="heading">
+          <sc-skeleton style={{ width: '120px' }}></sc-skeleton>
+        </span>
+        <sc-card>
+          <sc-stacked-list>
+            <sc-flex flexDirection="column" style={{ gap: '1em' }}>
+              <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+            </sc-flex>
+          </sc-stacked-list>
+        </sc-card>
+      </sc-dashboard-module>
     );
   }
 
   renderEmpty() {
-    return <sc-empty icon='activity'>{__('License not found.', 'surecart')}</sc-empty>;
+    return <sc-empty icon="activity">{__('License not found.', 'surecart')}</sc-empty>;
+  }
+
+  renderLicenseHeader() {
+    const purchase = this.license?.purchase as Purchase;
+    const product = purchase?.product as Product;
+    return (
+      <Fragment>
+        <span slot="heading">
+          <div class="license__heading">
+            {product?.name}
+            {!this.loading && !purchase.live_mode && (
+              <sc-tag type="warning" size="small">
+                {__('Test Mode', 'surecart')}
+              </sc-tag>
+            )}
+          </div>
+        </span>
+        <div slot="end">
+          <sc-input value={this.license?.key} readonly>
+            <sc-button type="default" size="small" slot="suffix" onClick={() => this.copyKey(this.license?.key)}>
+              {this.copied ? __('Copied!', 'surecart') : __('Copy', 'surecart')}
+            </sc-button>
+          </sc-input>
+        </div>
+      </Fragment>
+    );
   }
 
   renderContent() {
@@ -123,24 +158,22 @@ export class ScLicense {
     return (
       <Fragment>
         <sc-dashboard-module error={this.error}>
+          {this.renderLicenseHeader()}
           <sc-card noPadding>
             <sc-stacked-list>
-              <sc-stacked-list-row style={{ '--columns': '2' }}>
-                <div>{__('Status', 'surecart')}</div>
+              <sc-stacked-list-row style={{ '--columns': '2', '--sc-stacked-list-row-align-items': 'center' }}>
+                <div>{__('License Status', 'surecart')}</div>
                 {this.renderStatus()}
               </sc-stacked-list-row>
-
               <sc-stacked-list-row style={{ '--columns': '2' }}>
-                <div>{__('Activations', 'surecart')}</div>
-                {this.license?.activations?.pagination?.count} / {this.license?.activation_limit || <span>&infin;</span>}
+                <div>{__('Date', 'surecart')}</div>
+                <sc-format-date date={this.license?.created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
               </sc-stacked-list-row>
               <sc-stacked-list-row style={{ '--columns': '2' }}>
-                <div>{__('Key', 'surecart')}</div>
-                <sc-input value={this.license?.key} readonly>
-                  <sc-button type="default" size="small" slot="suffix" onClick={() => this.copyKey()}>
-                    {this.copied ? __('Copied!', 'surecart') : __('Copy', 'surecart')}
-                  </sc-button>
-                </sc-input>
+                <div>{__('Activations Count', 'surecart')}</div>
+                <span>
+                  {this.license?.activations?.pagination?.count} / {this.license?.activation_limit || <span>&infin;</span>}
+                </span>
               </sc-stacked-list-row>
             </sc-stacked-list>
           </sc-card>
@@ -150,26 +183,30 @@ export class ScLicense {
             <slot name="heading">{__('Activations', 'surecart')}</slot>
           </span>
           <sc-card noPadding>
-            {!!this.license?.activations?.data?.length ?(
+            {!!this.license?.activations?.data?.length ? (
               <sc-stacked-list>
                 {this.license?.activations.data.map(activation => (
-                  <sc-stacked-list-row style={{ '--columns': '3' }}>
+                  <sc-stacked-list-row style={{ '--columns': '4' }}>
+                    <sc-format-date class="license__date" date={activation.created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
                     <div>{activation.name}</div>
                     <div>{activation.fingerprint}</div>
                     <div>
                       <sc-button
+                        size="small"
                         onClick={() => {
                           this.selectedActivationId = activation.id;
                           this.showConfirmDelete = true;
                         }}
                       >
-                        <sc-icon name="trash"></sc-icon>
+                        Delete
                       </sc-button>
                     </div>
                   </sc-stacked-list-row>
                 ))}
               </sc-stacked-list>
-            ):<sc-empty>{__('No activations present.', 'surecart')}</sc-empty>}
+            ) : (
+              <sc-empty>{__('No activations present.', 'surecart')}</sc-empty>
+            )}
             {this.loading && <sc-block-ui style={{ '--sc-block-ui-opacity': '0.75' }} spinner />}
           </sc-card>
         </sc-dashboard-module>
@@ -187,18 +224,27 @@ export class ScLicense {
   renderConfirmDelete() {
     return (
       <sc-dialog open={this.showConfirmDelete} style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }} noHeader onScRequestClose={this.onCloseDeleteModal}>
-        <sc-dashboard-module heading={__('Confirm', 'surecart')} style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}>
+        <sc-button class="close__button" type="text" circle onClick={this.onCloseDeleteModal} disabled={this.loading}>
+          <sc-icon name="x" />
+        </sc-button>
+        <sc-dashboard-module heading={__('Delete Activation', 'surecart')} class="license-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
           <span slot="description">{__('Are you sure you want to delete activation?', 'surecart')}</span>
+          <sc-flex justifyContent="flex-start">
+            <sc-button type="primary" loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={this.deleteActivation}>
+              {__('Delete Activation', 'surecart')}
+            </sc-button>
+            <sc-button
+              style={{ color: 'var(--sc-color-gray-500' }}
+              type="text"
+              onClick={this.onCloseDeleteModal}
+              loading={this.loading || this.busy}
+              disabled={this.loading || this.busy}
+            >
+              {__('Cancel', 'surecart')}
+            </sc-button>
+          </sc-flex>
+          {this.busy && <sc-block-ui style={{ '--sc-block-ui-opacity': '0.75' }} spinner />}
         </sc-dashboard-module>
-        <div slot="footer">
-          <sc-button type="text" onClick={this.onCloseDeleteModal} disabled={this.loading}>
-            {__("Don't delete", 'surecart')}
-          </sc-button>
-          <sc-button type="primary" onClick={this.deleteActivation} disabled={this.loading}>
-            {__('Delete activation', 'surecart')}
-          </sc-button>
-        </div>
-        {this.busy && <sc-block-ui style={{ '--sc-block-ui-opacity': '0.75' }} spinner />}
       </sc-dialog>
     );
   }

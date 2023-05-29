@@ -26,7 +26,9 @@ export default ({ license, updateLicense, loading }) => {
 	return (
 		<Box
 			title={__('License', 'surecart')}
-			header_action={renderTag()}
+			header_action={
+				<div style={{ minWidth: 'auto' }}>{renderTag()}</div>
+			}
 			loading={loading}
 		>
 			<ScInput
