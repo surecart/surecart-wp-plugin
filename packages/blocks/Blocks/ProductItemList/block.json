@@ -56,9 +56,6 @@
 		},
 		"ids": {
 			"type": "array",
-			"items": {
-				"type": "string"
-			},
 			"default": []
 		}
 	}
