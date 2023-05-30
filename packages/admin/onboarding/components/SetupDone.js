@@ -9,24 +9,17 @@ let showVideoTimerId;
 const TIMEOUT = 2000;
 
 export default ({ setConfirmExit }) => {
-	const [showVideo, setShowVideo] = useState(false);
+	// const [showVideo, setShowVideo] = useState(false);
 
-	function visitStore() {
-		setConfirmExit(false);
-		setTimeout(() => {
-			// window.location.replace(href);
-		}, 100);
-	}
+	// useEffect(() => {
+	// 	showVideoTimerId = setTimeout(() => {
+	// 		setShowVideo(true);
+	// 	}, TIMEOUT);
 
-	useEffect(() => {
-		showVideoTimerId = setTimeout(() => {
-			setShowVideo(true);
-		}, TIMEOUT);
-
-		return () => {
-			clearTimeout(showVideoTimerId);
-		};
-	}, []);
+	// 	return () => {
+	// 		clearTimeout(showVideoTimerId);
+	// 	};
+	// }, []);
 
 	return (
 		<div
@@ -65,7 +58,7 @@ export default ({ setConfirmExit }) => {
 					{__('View My Store', 'surecart')}
 				</ScButton>
 			</ScFlex>
-			<div style={{ marginTop: '45px', height: '315px' }}>
+			{/* <div style={{ marginTop: '45px', height: '315px' }}>
 				{showVideo && (
 					<iframe
 						css={css`
@@ -85,7 +78,7 @@ export default ({ setConfirmExit }) => {
 						allowfullscreen
 					></iframe>
 				)}
-			</div>
+			</div> */}
 		</div>
 	);
 };
