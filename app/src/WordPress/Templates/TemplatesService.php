@@ -144,7 +144,6 @@ class TemplatesService {
 			return;
 		}
 
-		remove_filter( 'posts_pre_query', 'wpse_change_product_post_query' );
 		$product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $product_id );
 		if ( is_wp_error( $product ) ) {
 			$wp_query->is_404 = true;
@@ -182,6 +181,7 @@ class TemplatesService {
 		$wp_query->is_tax            = false;
 		$wp_query->is_home           = false;
 		$wp_query->is_search         = false;
+		$wp_query->is_404            = false;
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;
 
@@ -264,15 +264,6 @@ class TemplatesService {
 
 		// check for product and use the template id.
 		$product = get_query_var( 'surecart_current_product' );
-
-		if ( $product ) {
-			$id = ! empty( $product->template->wp_id ) ? $product->template->wp_id : $id;
-		}
-
-		// We don't have a single id.
-		if ( empty( $id ) ) {
-			return $template;
-		}
 
 		if ( ! empty( $product->metadata->wp_template_id ) ) {
 			$page_template = $product->metadata->wp_template_id;
