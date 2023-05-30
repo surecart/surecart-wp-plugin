@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-24T20:10:57",
+  "timestamp": "2023-05-30T20:31:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1813,7 +1813,6 @@
         "sc-cancel-discount",
         "sc-cancel-survey",
         "sc-cart-form-submit",
-        "sc-cart-submit",
         "sc-charges-list",
         "sc-coupon-form",
         "sc-customer-details",
@@ -1871,9 +1870,6 @@
           "sc-button"
         ],
         "sc-cart-form-submit": [
-          "sc-button"
-        ],
-        "sc-cart-submit": [
           "sc-button"
         ],
         "sc-charges-list": [
@@ -3425,7 +3421,7 @@
     },
     {
       "filePath": "./src/components/controllers/cart/sc-cart-loader/sc-cart-loader.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-cart-loader",
       "readme": "# sc-cart-loader\n\n\n",
       "docs": "",
@@ -3736,19 +3732,8 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "sc-button",
-        "sc-icon"
-      ],
-      "dependencyGraph": {
-        "sc-cart-submit": [
-          "sc-button",
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ]
-      }
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/ui/cc-logo/sc-cc-logo.tsx",
@@ -13408,7 +13393,6 @@
         "sc-cart-form-submit",
         "sc-cart-header",
         "sc-cart-icon",
-        "sc-cart-submit",
         "sc-cc-logo",
         "sc-charges-list",
         "sc-customer-details",
@@ -13471,9 +13455,6 @@
           "sc-icon"
         ],
         "sc-cart-icon": [
-          "sc-icon"
-        ],
-        "sc-cart-submit": [
           "sc-icon"
         ],
         "sc-cc-logo": [
@@ -22819,7 +22800,20 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "image",
+          "docs": ""
+        },
+        {
+          "name": "price",
+          "docs": ""
+        },
+        {
+          "name": "title",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-product-item-list"
       ],
@@ -22872,6 +22866,21 @@
           "required": false
         },
         {
+          "name": "productMedia",
+          "type": "ProductMedia",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ProductMedia"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "sizing",
           "type": "\"contain\" | \"cover\"",
           "mutable": false,
@@ -22886,22 +22895,6 @@
             },
             {
               "value": "cover",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "src",
-          "type": "string",
-          "mutable": false,
-          "attr": "src",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
               "type": "string"
             }
           ],
@@ -25595,8 +25588,70 @@
           "required": false
         },
         {
+          "name": "placement",
+          "type": "\"bottom\" | \"bottom-end\" | \"bottom-start\" | \"left\" | \"left-end\" | \"left-start\" | \"right\" | \"right-end\" | \"right-start\" | \"top\" | \"top-end\" | \"top-start\"",
+          "mutable": false,
+          "attr": "placement",
+          "reflectToAttr": true,
+          "docs": "The placement of the dropdown.",
+          "docsTags": [],
+          "default": "'bottom-start'",
+          "values": [
+            {
+              "value": "bottom",
+              "type": "string"
+            },
+            {
+              "value": "bottom-end",
+              "type": "string"
+            },
+            {
+              "value": "bottom-start",
+              "type": "string"
+            },
+            {
+              "value": "left",
+              "type": "string"
+            },
+            {
+              "value": "left-end",
+              "type": "string"
+            },
+            {
+              "value": "left-start",
+              "type": "string"
+            },
+            {
+              "value": "right",
+              "type": "string"
+            },
+            {
+              "value": "right-end",
+              "type": "string"
+            },
+            {
+              "value": "right-start",
+              "type": "string"
+            },
+            {
+              "value": "top",
+              "type": "string"
+            },
+            {
+              "value": "top-end",
+              "type": "string"
+            },
+            {
+              "value": "top-start",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "position",
-          "type": "\"bottom-left\" | \"bottom-right\"",
+          "type": "\"bottom-left\" | \"bottom-right\" | \"top-left\" | \"top-right\"",
           "mutable": false,
           "attr": "position",
           "reflectToAttr": false,
@@ -25610,6 +25665,14 @@
             },
             {
               "value": "bottom-right",
+              "type": "string"
+            },
+            {
+              "value": "top-left",
+              "type": "string"
+            },
+            {
+              "value": "top-right",
               "type": "string"
             }
           ],

@@ -1670,6 +1670,7 @@
     "name": true,
     "open": true,
     "placeholder": true,
+    "placement": true,
     "position": true,
     "required": true,
     "search": true,

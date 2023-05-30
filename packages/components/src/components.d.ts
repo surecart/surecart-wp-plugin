@@ -3039,7 +3039,22 @@ export namespace Components {
           * Placeholder for no value
          */
         "placeholder": string;
-        "position": 'bottom-left' | 'bottom-right';
+        /**
+          * The placement of the dropdown.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        "position": 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
         "reportValidity": () => Promise<boolean>;
         "required": boolean;
         /**
@@ -8680,7 +8695,22 @@ declare namespace LocalJSX {
           * Placeholder for no value
          */
         "placeholder"?: string;
-        "position"?: 'bottom-left' | 'bottom-right';
+        /**
+          * The placement of the dropdown.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        "position"?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
         "required"?: boolean;
         /**
           * Is search enabled?
