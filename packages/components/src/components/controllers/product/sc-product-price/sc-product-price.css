@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.price {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sc-spacing-x-small);
+}
+.scratch-price {
+  text-decoration: line-through;
+  opacity: 0.65;
+}
+.sale-badge {
+  font-size: min(1em, 14px);
+}

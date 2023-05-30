@@ -11,6 +11,13 @@ class LineItem extends Model {
 	use HasPrice;
 
 	/**
+	 * Rest API endpoint
+	 *
+	 * @var string
+	 */
+	protected $endpoint = 'line_items';
+
+	/**
 	 * Object name
 	 *
 	 * @var string

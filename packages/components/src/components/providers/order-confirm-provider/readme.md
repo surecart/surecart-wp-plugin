@@ -5,6 +5,11 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+This component listens to the order status
+and confirms the order when payment is successful.
+
 ## Properties
 
 | Property      | Attribute     | Description                | Type                                                      | Default     |

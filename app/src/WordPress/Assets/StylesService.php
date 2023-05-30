@@ -34,7 +34,6 @@ class StylesService {
 			[],
 			filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.css' ),
 		);
-
 		$brand = \SureCart::account()->brand;
 
 		$style = file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'dist/blocks/cloak.css' );
@@ -43,6 +42,8 @@ class StylesService {
 		$style .= '--sc-color-primary-500: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-color-gray-900: #' . ( $brand->heading ?? '000' ) . ';';
+		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $brand->color ?? '000' ) . ';';
 		$style .= '}';
 
 		wp_add_inline_style(
@@ -97,6 +98,7 @@ class StylesService {
 			--sc-tag-default-border-color: var(--sc-color-brand-stroke);
 			--sc-tag-default-color: var(--sc-color-brand-body);
 			--sc-stacked-list-row-hover-color: var(--sc-color-brand-main-background);
+			--sc-color-primary-text: white;
 		}
 		<?php
 

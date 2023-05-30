@@ -5,8 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1 } from "src/types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
+import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
     interface ScAddress {
         /**
@@ -257,6 +259,10 @@ export namespace Components {
          */
         "checkoutUrl": string;
         /**
+          * Whether the floating button should be visible
+         */
+        "floatingIconEnabled": boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId": string;
@@ -268,6 +274,24 @@ export namespace Components {
           * Are we in test or live mode.
          */
         "mode": 'test' | 'live';
+    }
+    interface ScCartButton {
+        /**
+          * Whether the cart icon is always shown when the cart is empty
+         */
+        "cartMenuAlwaysShown": boolean;
+        /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * Whether the cart count will be shown or not when the cart is empty
+         */
+        "showEmptyCount": boolean;
     }
     interface ScCartForm {
         /**
@@ -318,9 +342,17 @@ export namespace Components {
          */
         "count": number;
         /**
+          * The form id to use for the cart.
+         */
+        "formId": string;
+        /**
           * The icon to show.
          */
         "icon": string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode": 'test' | 'live';
     }
     interface ScCartLoader {
         /**
@@ -1544,8 +1576,13 @@ export namespace Components {
         "src": string;
     }
     interface ScImageSlider {
-        "images": { src: string; alt: string }[];
-        "thumbnails": boolean;
+        "autoHeight": boolean;
+        "hasThumbnails": boolean;
+        /**
+          * Accept a string or an array of objects
+         */
+        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -1798,6 +1835,7 @@ export namespace Components {
           * The bump
          */
         "bump": Bump;
+        "cdnRoot": string;
         /**
           * The checkout
          */
@@ -2488,6 +2526,44 @@ export namespace Components {
          */
         "type": 'checkbox' | 'radio';
     }
+    interface ScPriceChoiceContainer {
+        /**
+          * Is this checked by default
+         */
+        "checked": boolean;
+        /**
+          * Label for the choice.
+         */
+        "description": string;
+        /**
+          * Label for the choice.
+         */
+        "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        /**
+          * Stores the price
+         */
+        "price": string | Price1;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
+        /**
+          * Show the label
+         */
+        "showLabel": boolean;
+        /**
+          * Show the price amount
+         */
+        "showPrice": boolean;
+        /**
+          * Choice Type
+         */
+        "type": 'checkbox' | 'radio';
+    }
     interface ScPriceChoices {
         /**
           * Number of columns
@@ -2611,6 +2687,63 @@ export namespace Components {
          */
         "prices": Price[];
     }
+    interface ScProductBuyButton {
+    }
+    interface ScProductItem {
+        "layoutConfig": LayoutConfig;
+        "product": Product;
+    }
+    interface ScProductItemImage {
+        "alt": string;
+        "productMedia": ProductMedia;
+        "sizing": 'cover' | 'contain';
+    }
+    interface ScProductItemList {
+        /**
+          * Should we paginate?
+         */
+        "ajaxPagination": boolean;
+        /**
+          * Limit to a set of ids.
+         */
+        "ids": string[];
+        "layoutConfig": LayoutConfig;
+        "limit": number;
+        "paginationAlignment": string;
+        /**
+          * Should we auto-scroll to the top when paginating via ajax
+         */
+        "paginationAutoScroll": boolean;
+        /**
+          * Should we paginate?
+         */
+        "paginationEnabled": boolean;
+        /**
+          * Query to search for
+         */
+        "query": string;
+        /**
+          * Should allow search
+         */
+        "searchEnabled": boolean;
+        /**
+          * Sort
+         */
+        "sort": string;
+        /**
+          * Should allow search
+         */
+        "sortEnabled": boolean;
+    }
+    interface ScProductItemPrice {
+        "prices": Price1[];
+        /**
+          * Show price range?
+         */
+        "range": boolean;
+    }
+    interface ScProductItemTitle {
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -2641,6 +2774,10 @@ export namespace Components {
          */
         "max": number;
         /**
+          * The product media
+         */
+        "media": Media;
+        /**
           * Product name
          */
         "name": string;
@@ -2665,11 +2802,55 @@ export namespace Components {
          */
         "trialDurationDays": number;
     }
+    interface ScProductPrice {
+        "prices": Price[];
+        "saleText": string;
+    }
+    interface ScProductPriceChoices {
+        "label": string;
+        "showPrice": boolean;
+    }
+    interface ScProductPriceModal {
+        "buttonText": string;
+    }
+    interface ScProductQuantity {
+        /**
+          * Display server-side validation errors.
+         */
+        "errors": any;
+        /**
+          * Help text
+         */
+        "help": string;
+        /**
+          * Input label.
+         */
+        "label": string;
+        /**
+          * Name for the input. Used for validation errors.
+         */
+        "name": string;
+        /**
+          * Whether the input is required.
+         */
+        "required": boolean;
+        /**
+          * Show the label.
+         */
+        "showLabel": boolean;
+        /**
+          * Size of the control
+         */
+        "size": 'small' | 'medium' | 'large';
+    }
     interface ScProductSelectedPrice {
         /**
           * The product id.
          */
         "productId": string;
+    }
+    interface ScProductText {
+        "text": 'name' | 'description';
     }
     interface ScProse {
     }
@@ -2701,6 +2882,7 @@ export namespace Components {
         "max": number;
         "min": number;
         "quantity": number;
+        "size": 'small' | 'medium' | 'large';
     }
     interface ScRadio {
         /**
@@ -2846,7 +3028,22 @@ export namespace Components {
           * Placeholder for no value
          */
         "placeholder": string;
-        "position": 'bottom-left' | 'bottom-right';
+        /**
+          * The placement of the dropdown.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        "position": 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
         "reportValidity": () => Promise<boolean>;
         "required": boolean;
         /**
@@ -3691,6 +3888,10 @@ export interface ScPriceChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceChoiceElement;
 }
+export interface ScPriceChoiceContainerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPriceChoiceContainerElement;
+}
 export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceChoicesElement;
@@ -3859,6 +4060,12 @@ declare global {
     var HTMLScCartElement: {
         prototype: HTMLScCartElement;
         new (): HTMLScCartElement;
+    };
+    interface HTMLScCartButtonElement extends Components.ScCartButton, HTMLStencilElement {
+    }
+    var HTMLScCartButtonElement: {
+        prototype: HTMLScCartButtonElement;
+        new (): HTMLScCartButtonElement;
     };
     interface HTMLScCartFormElement extends Components.ScCartForm, HTMLStencilElement {
     }
@@ -4490,6 +4697,12 @@ declare global {
         prototype: HTMLScPriceChoiceElement;
         new (): HTMLScPriceChoiceElement;
     };
+    interface HTMLScPriceChoiceContainerElement extends Components.ScPriceChoiceContainer, HTMLStencilElement {
+    }
+    var HTMLScPriceChoiceContainerElement: {
+        prototype: HTMLScPriceChoiceContainerElement;
+        new (): HTMLScPriceChoiceContainerElement;
+    };
     interface HTMLScPriceChoicesElement extends Components.ScPriceChoices, HTMLStencilElement {
     }
     var HTMLScPriceChoicesElement: {
@@ -4508,17 +4721,83 @@ declare global {
         prototype: HTMLScPriceRangeElement;
         new (): HTMLScPriceRangeElement;
     };
+    interface HTMLScProductBuyButtonElement extends Components.ScProductBuyButton, HTMLStencilElement {
+    }
+    var HTMLScProductBuyButtonElement: {
+        prototype: HTMLScProductBuyButtonElement;
+        new (): HTMLScProductBuyButtonElement;
+    };
+    interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
+    }
+    var HTMLScProductItemElement: {
+        prototype: HTMLScProductItemElement;
+        new (): HTMLScProductItemElement;
+    };
+    interface HTMLScProductItemImageElement extends Components.ScProductItemImage, HTMLStencilElement {
+    }
+    var HTMLScProductItemImageElement: {
+        prototype: HTMLScProductItemImageElement;
+        new (): HTMLScProductItemImageElement;
+    };
+    interface HTMLScProductItemListElement extends Components.ScProductItemList, HTMLStencilElement {
+    }
+    var HTMLScProductItemListElement: {
+        prototype: HTMLScProductItemListElement;
+        new (): HTMLScProductItemListElement;
+    };
+    interface HTMLScProductItemPriceElement extends Components.ScProductItemPrice, HTMLStencilElement {
+    }
+    var HTMLScProductItemPriceElement: {
+        prototype: HTMLScProductItemPriceElement;
+        new (): HTMLScProductItemPriceElement;
+    };
+    interface HTMLScProductItemTitleElement extends Components.ScProductItemTitle, HTMLStencilElement {
+    }
+    var HTMLScProductItemTitleElement: {
+        prototype: HTMLScProductItemTitleElement;
+        new (): HTMLScProductItemTitleElement;
+    };
     interface HTMLScProductLineItemElement extends Components.ScProductLineItem, HTMLStencilElement {
     }
     var HTMLScProductLineItemElement: {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
     };
+    interface HTMLScProductPriceElement extends Components.ScProductPrice, HTMLStencilElement {
+    }
+    var HTMLScProductPriceElement: {
+        prototype: HTMLScProductPriceElement;
+        new (): HTMLScProductPriceElement;
+    };
+    interface HTMLScProductPriceChoicesElement extends Components.ScProductPriceChoices, HTMLStencilElement {
+    }
+    var HTMLScProductPriceChoicesElement: {
+        prototype: HTMLScProductPriceChoicesElement;
+        new (): HTMLScProductPriceChoicesElement;
+    };
+    interface HTMLScProductPriceModalElement extends Components.ScProductPriceModal, HTMLStencilElement {
+    }
+    var HTMLScProductPriceModalElement: {
+        prototype: HTMLScProductPriceModalElement;
+        new (): HTMLScProductPriceModalElement;
+    };
+    interface HTMLScProductQuantityElement extends Components.ScProductQuantity, HTMLStencilElement {
+    }
+    var HTMLScProductQuantityElement: {
+        prototype: HTMLScProductQuantityElement;
+        new (): HTMLScProductQuantityElement;
+    };
     interface HTMLScProductSelectedPriceElement extends Components.ScProductSelectedPrice, HTMLStencilElement {
     }
     var HTMLScProductSelectedPriceElement: {
         prototype: HTMLScProductSelectedPriceElement;
         new (): HTMLScProductSelectedPriceElement;
+    };
+    interface HTMLScProductTextElement extends Components.ScProductText, HTMLStencilElement {
+    }
+    var HTMLScProductTextElement: {
+        prototype: HTMLScProductTextElement;
+        new (): HTMLScProductTextElement;
     };
     interface HTMLScProseElement extends Components.ScProse, HTMLStencilElement {
     }
@@ -4841,6 +5120,7 @@ declare global {
         "sc-cancel-survey": HTMLScCancelSurveyElement;
         "sc-card": HTMLScCardElement;
         "sc-cart": HTMLScCartElement;
+        "sc-cart-button": HTMLScCartButtonElement;
         "sc-cart-form": HTMLScCartFormElement;
         "sc-cart-form-submit": HTMLScCartFormSubmitElement;
         "sc-cart-header": HTMLScCartHeaderElement;
@@ -4946,11 +5226,23 @@ declare global {
         "sc-phone-input": HTMLScPhoneInputElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
+        "sc-price-choice-container": HTMLScPriceChoiceContainerElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
+        "sc-product-buy-button": HTMLScProductBuyButtonElement;
+        "sc-product-item": HTMLScProductItemElement;
+        "sc-product-item-image": HTMLScProductItemImageElement;
+        "sc-product-item-list": HTMLScProductItemListElement;
+        "sc-product-item-price": HTMLScProductItemPriceElement;
+        "sc-product-item-title": HTMLScProductItemTitleElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-price": HTMLScProductPriceElement;
+        "sc-product-price-choices": HTMLScProductPriceChoicesElement;
+        "sc-product-price-modal": HTMLScProductPriceModalElement;
+        "sc-product-quantity": HTMLScProductQuantityElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
+        "sc-product-text": HTMLScProductTextElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
         "sc-provisional-banner": HTMLScProvisionalBannerElement;
@@ -5275,6 +5567,10 @@ declare namespace LocalJSX {
          */
         "checkoutUrl"?: string;
         /**
+          * Whether the floating button should be visible
+         */
+        "floatingIconEnabled"?: boolean;
+        /**
           * The form id to use for the cart.
          */
         "formId"?: string;
@@ -5286,6 +5582,24 @@ declare namespace LocalJSX {
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
+    }
+    interface ScCartButton {
+        /**
+          * Whether the cart icon is always shown when the cart is empty
+         */
+        "cartMenuAlwaysShown"?: boolean;
+        /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * Whether the cart count will be shown or not when the cart is empty
+         */
+        "showEmptyCount"?: boolean;
     }
     interface ScCartForm {
         /**
@@ -5337,9 +5651,17 @@ declare namespace LocalJSX {
          */
         "count"?: number;
         /**
+          * The form id to use for the cart.
+         */
+        "formId"?: string;
+        /**
           * The icon to show.
          */
         "icon"?: string;
+        /**
+          * Are we in test or live mode.
+         */
+        "mode"?: 'test' | 'live';
     }
     interface ScCartLoader {
         /**
@@ -6742,8 +7064,13 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface ScImageSlider {
-        "images"?: { src: string; alt: string }[];
-        "thumbnails"?: boolean;
+        "autoHeight"?: boolean;
+        "hasThumbnails"?: boolean;
+        /**
+          * Accept a string or an array of objects
+         */
+        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {
@@ -7009,6 +7336,7 @@ declare namespace LocalJSX {
           * The bump
          */
         "bump"?: Bump;
+        "cdnRoot"?: string;
         /**
           * The checkout
          */
@@ -7771,6 +8099,45 @@ declare namespace LocalJSX {
          */
         "type"?: 'checkbox' | 'radio';
     }
+    interface ScPriceChoiceContainer {
+        /**
+          * Is this checked by default
+         */
+        "checked"?: boolean;
+        /**
+          * Label for the choice.
+         */
+        "description"?: string;
+        /**
+          * Label for the choice.
+         */
+        "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        "onScChange"?: (event: ScPriceChoiceContainerCustomEvent<void>) => void;
+        /**
+          * Stores the price
+         */
+        "price"?: string | Price1;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
+        /**
+          * Show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * Show the price amount
+         */
+        "showPrice"?: boolean;
+        /**
+          * Choice Type
+         */
+        "type"?: 'checkbox' | 'radio';
+    }
     interface ScPriceChoices {
         /**
           * Number of columns
@@ -7905,6 +8272,63 @@ declare namespace LocalJSX {
          */
         "prices"?: Price[];
     }
+    interface ScProductBuyButton {
+    }
+    interface ScProductItem {
+        "layoutConfig"?: LayoutConfig;
+        "product"?: Product;
+    }
+    interface ScProductItemImage {
+        "alt"?: string;
+        "productMedia"?: ProductMedia;
+        "sizing"?: 'cover' | 'contain';
+    }
+    interface ScProductItemList {
+        /**
+          * Should we paginate?
+         */
+        "ajaxPagination"?: boolean;
+        /**
+          * Limit to a set of ids.
+         */
+        "ids"?: string[];
+        "layoutConfig"?: LayoutConfig;
+        "limit"?: number;
+        "paginationAlignment"?: string;
+        /**
+          * Should we auto-scroll to the top when paginating via ajax
+         */
+        "paginationAutoScroll"?: boolean;
+        /**
+          * Should we paginate?
+         */
+        "paginationEnabled"?: boolean;
+        /**
+          * Query to search for
+         */
+        "query"?: string;
+        /**
+          * Should allow search
+         */
+        "searchEnabled"?: boolean;
+        /**
+          * Sort
+         */
+        "sort"?: string;
+        /**
+          * Should allow search
+         */
+        "sortEnabled"?: boolean;
+    }
+    interface ScProductItemPrice {
+        "prices"?: Price1[];
+        /**
+          * Show price range?
+         */
+        "range"?: boolean;
+    }
+    interface ScProductItemTitle {
+    }
     interface ScProductLineItem {
         /**
           * Product monetary amount
@@ -7934,6 +8358,10 @@ declare namespace LocalJSX {
           * The max allowed.
          */
         "max"?: number;
+        /**
+          * The product media
+         */
+        "media"?: Media;
         /**
           * Product name
          */
@@ -7967,6 +8395,47 @@ declare namespace LocalJSX {
          */
         "trialDurationDays"?: number;
     }
+    interface ScProductPrice {
+        "prices"?: Price[];
+        "saleText"?: string;
+    }
+    interface ScProductPriceChoices {
+        "label"?: string;
+        "showPrice"?: boolean;
+    }
+    interface ScProductPriceModal {
+        "buttonText"?: string;
+    }
+    interface ScProductQuantity {
+        /**
+          * Display server-side validation errors.
+         */
+        "errors"?: any;
+        /**
+          * Help text
+         */
+        "help"?: string;
+        /**
+          * Input label.
+         */
+        "label"?: string;
+        /**
+          * Name for the input. Used for validation errors.
+         */
+        "name"?: string;
+        /**
+          * Whether the input is required.
+         */
+        "required"?: boolean;
+        /**
+          * Show the label.
+         */
+        "showLabel"?: boolean;
+        /**
+          * Size of the control
+         */
+        "size"?: 'small' | 'medium' | 'large';
+    }
     interface ScProductSelectedPrice {
         /**
           * Toggle line item event
@@ -7976,6 +8445,9 @@ declare namespace LocalJSX {
           * The product id.
          */
         "productId"?: string;
+    }
+    interface ScProductText {
+        "text"?: 'name' | 'description';
     }
     interface ScProse {
     }
@@ -8021,6 +8493,7 @@ declare namespace LocalJSX {
          */
         "onScInput"?: (event: ScQuantitySelectCustomEvent<number>) => void;
         "quantity"?: number;
+        "size"?: 'small' | 'medium' | 'large';
     }
     interface ScRadio {
         /**
@@ -8198,7 +8671,22 @@ declare namespace LocalJSX {
           * Placeholder for no value
          */
         "placeholder"?: string;
-        "position"?: 'bottom-left' | 'bottom-right';
+        /**
+          * The placement of the dropdown.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        "position"?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
         "required"?: boolean;
         /**
           * Is search enabled?
@@ -8924,6 +9412,7 @@ declare namespace LocalJSX {
         "sc-cancel-survey": ScCancelSurvey;
         "sc-card": ScCard;
         "sc-cart": ScCart;
+        "sc-cart-button": ScCartButton;
         "sc-cart-form": ScCartForm;
         "sc-cart-form-submit": ScCartFormSubmit;
         "sc-cart-header": ScCartHeader;
@@ -9029,11 +9518,23 @@ declare namespace LocalJSX {
         "sc-phone-input": ScPhoneInput;
         "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
+        "sc-price-choice-container": ScPriceChoiceContainer;
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
+        "sc-product-buy-button": ScProductBuyButton;
+        "sc-product-item": ScProductItem;
+        "sc-product-item-image": ScProductItemImage;
+        "sc-product-item-list": ScProductItemList;
+        "sc-product-item-price": ScProductItemPrice;
+        "sc-product-item-title": ScProductItemTitle;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-price": ScProductPrice;
+        "sc-product-price-choices": ScProductPriceChoices;
+        "sc-product-price-modal": ScProductPriceModal;
+        "sc-product-quantity": ScProductQuantity;
         "sc-product-selected-price": ScProductSelectedPrice;
+        "sc-product-text": ScProductText;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
         "sc-provisional-banner": ScProvisionalBanner;
@@ -9105,6 +9606,7 @@ declare module "@stencil/core" {
             "sc-cancel-survey": LocalJSX.ScCancelSurvey & JSXBase.HTMLAttributes<HTMLScCancelSurveyElement>;
             "sc-card": LocalJSX.ScCard & JSXBase.HTMLAttributes<HTMLScCardElement>;
             "sc-cart": LocalJSX.ScCart & JSXBase.HTMLAttributes<HTMLScCartElement>;
+            "sc-cart-button": LocalJSX.ScCartButton & JSXBase.HTMLAttributes<HTMLScCartButtonElement>;
             "sc-cart-form": LocalJSX.ScCartForm & JSXBase.HTMLAttributes<HTMLScCartFormElement>;
             "sc-cart-form-submit": LocalJSX.ScCartFormSubmit & JSXBase.HTMLAttributes<HTMLScCartFormSubmitElement>;
             "sc-cart-header": LocalJSX.ScCartHeader & JSXBase.HTMLAttributes<HTMLScCartHeaderElement>;
@@ -9210,11 +9712,23 @@ declare module "@stencil/core" {
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
+            "sc-price-choice-container": LocalJSX.ScPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScPriceChoiceContainerElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
+            "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
+            "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
+            "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
+            "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;
+            "sc-product-item-price": LocalJSX.ScProductItemPrice & JSXBase.HTMLAttributes<HTMLScProductItemPriceElement>;
+            "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
+            "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
+            "sc-product-price-modal": LocalJSX.ScProductPriceModal & JSXBase.HTMLAttributes<HTMLScProductPriceModalElement>;
+            "sc-product-quantity": LocalJSX.ScProductQuantity & JSXBase.HTMLAttributes<HTMLScProductQuantityElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
+            "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-provisional-banner": LocalJSX.ScProvisionalBanner & JSXBase.HTMLAttributes<HTMLScProvisionalBannerElement>;

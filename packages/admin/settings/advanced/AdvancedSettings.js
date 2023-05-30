@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { ScSwitch } from '@surecart/components-react';
@@ -67,24 +69,6 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScSwitch
-					checked={!item?.slide_out_cart_disabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							slide_out_cart_disabled:
-								!item?.slide_out_cart_disabled,
-						});
-					}}
-				>
-					{__('Enable Slide-Out Cart', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
@@ -105,10 +89,28 @@ export default () => {
 						});
 					}}
 				>
-					{__('Use the Stripe Payment Element', 'surecart')}
+					{__('Use The Stripe Payment Element', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							"Use Stripe's Payment Element instead of the Card Element in all forms.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={item?.auto_sync_user_to_customer}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							auto_sync_user_to_customer:
+								!item?.auto_sync_user_to_customer,
+						});
+					}}
+				>
+					{__('Auto Sync Customers', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'If a WordPress user does not have a customer record, find or create one when they login to their dashboard.',
 							'surecart'
 						)}
 					</span>

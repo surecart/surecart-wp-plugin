@@ -28,6 +28,16 @@ export default ({ id, setId }) => {
 				},
 				{ throwOnError: true }
 			);
+
+			if (!product?.id) {
+				throw {
+					message: __(
+						'Could not create product. Please try again.',
+						'sureacrt'
+					),
+				};
+			}
+
 			setId(product.id);
 		} catch (e) {
 			console.error(e);

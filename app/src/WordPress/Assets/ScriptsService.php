@@ -62,8 +62,9 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function register() {
+
 		// should we use the esm loader directly?
-		if ( \SureCart::assets()->usesEsmLoader() ) {
+		if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
@@ -90,6 +91,14 @@ class ScriptsService {
 			);
 		}
 
+		// wp_register_script(
+		// 'surecart-components',
+		// 'https://unpkg.com/@surecart/components@1.0.1-beta.1/dist/surecart/surecart.esm.js',
+		// [ 'wp-i18n' ],
+		// null,
+		// false
+		// );
+
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		wp_localize_script(
@@ -98,6 +107,7 @@ class ScriptsService {
 			apply_filters(
 				'surecart-components/scData',
 				[
+					'cdn_root'            => SURECART_CDN_IMAGE_BASE,
 					'root_url'            => esc_url_raw( get_rest_url() ),
 					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
 					'api_url'             => \SureCart::requests()->getBaseUrl(),
@@ -230,6 +240,7 @@ class ScriptsService {
 		$this->enqueueBlocks();
 		$this->enqueuePageTemplateEditor();
 		$this->enqueueCartBlocks();
+		$this->enqueueProductBlocks();
 	}
 
 	/**
@@ -239,6 +250,20 @@ class ScriptsService {
 	 */
 	public function enqueuePageTemplateEditor() {
 		wp_enqueue_script( 'surecart-templates-admin' );
+	}
+
+	/**
+	 * We only want these available in FSE.
+	 *
+	 * @return void
+	 */
+	public function enqueueProductBlocks() {
+		global $pagenow;
+		if ( 'site-editor.php' !== $pagenow ) {
+			return;
+		}
+
+		wp_enqueue_script( 'surecart-product-blocks' );
 	}
 
 	/**
@@ -278,6 +303,19 @@ class ScriptsService {
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/library.js',
 			$deps,
 			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
+			true
+		);
+
+		// only register
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product.asset.php';
+		$deps       = $asset_file['dependencies'];
+		// fix bug in deps array.
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-product-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/product.js',
+			$deps,
+			$asset_file['version'],
 			true
 		);
 

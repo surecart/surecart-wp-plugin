@@ -27,11 +27,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_profile_update_syncs_customer_model() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',
@@ -82,11 +77,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		]);
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_profile_update_syncs_doesnt_send_phone_if_empty() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',

@@ -16,7 +16,6 @@ export default ({ product, updateProduct, loading }) => {
 			>
 				<ScInput
 					label={__('Name', 'surecart')}
-					className="sc-product-name hydrated"
 					help={__('A name for your product.', 'surecart')}
 					value={product?.name}
 					onScInput={(e) => {

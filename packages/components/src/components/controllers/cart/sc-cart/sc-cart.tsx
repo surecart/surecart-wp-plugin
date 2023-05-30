@@ -6,6 +6,7 @@ import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
+import { expand } from '../../../../services/session';
 import { Checkout, ResponseError } from '../../../../types';
 
 @Component({
@@ -36,6 +37,9 @@ export class ScCart {
 
   /** Should we force show the cart, even if there's a form on the page? */
   @Prop() alwaysShow: boolean;
+
+  /** Whether the floating button should be visible */
+  @Prop() floatingIconEnabled: boolean = true;
 
   /** The current UI state. */
   @State() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
@@ -101,21 +105,7 @@ export class ScCart {
       const order = (await apiFetch({
         method: 'GET', // create or update
         path: addQueryArgs(`${baseUrl}${this.order()?.id}`, {
-          expand: [
-            'line_items',
-            'line_item.price',
-            'price.product',
-            'customer',
-            'customer.shipping_address',
-            'payment_intent',
-            'discount',
-            'discount.promotion',
-            'discount.coupon',
-            'recommended_bumps',
-            'bump.price',
-            'shipping_address',
-            'tax_identifier',
-          ],
+          expand,
         }),
       })) as Checkout;
       this.setOrder(order);
@@ -167,8 +157,6 @@ export class ScCart {
               onScUpdateOrderState={e => this.setOrder(e.detail)}
               onScError={e => (this.error = e.detail as ResponseError)}
             >
-              <sc-cart-icon count={this.getItemsCount()} onClick={() => (this.open = !this.open)}></sc-cart-icon>
-
               <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>
