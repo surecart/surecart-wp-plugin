@@ -21,8 +21,28 @@ const templates = [
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/fashion.jpg`,
 	},
 	{
+		id: 'a1fea471-82c3-4401-9b82-20458ed6729d',
+		name: __('Printables', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/books.jpg`,
+	},
+	{
+		id: '26fad3c0-e90b-4410-a200-c9797afbf7c4',
+		name: __('Courses', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/books.jpg`,
+	},
+	{
 		id: '874f5380-166a-4e51-9f1e-5b72519d4cd4',
 		name: __('Organic Store', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
+	},
+	{
+		id: '68376b5a-2392-443d-81b3-6985f4c835d2',
+		name: __('Pet Store', 'surecart'),
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
+	},
+	{
+		id: 'dab55a5a-2136-41d1-9976-4bf744cc85b2',
+		name: __('Band Store', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
 	},
 	{
@@ -62,16 +82,22 @@ export default ({
 					grid-template-columns: repeat(1, 1fr);
 					gap: 30px;
 					padding: 20px 0 0;
-					@media (min-width: 781px) {
-						gap: 40px;
-						padding: 60px 120px 0;
+					margin: 0 auto;
+					@media (min-width: 680px) {
+						padding: 30px 20px;
+						max-width: 780px;
 						grid-template-columns: repeat(3, 1fr);
 					}
+					@media (min-width: 1024px) {
+						gap: 40px;
+						max-width: 1024px;
+					}
 					@media (min-width: 1760px) {
+						max-width: 1024px;
 						grid-template-columns: repeat(4, 1fr);
 					}
 					@media (min-width: 2180px) {
-						grid-template-columns: repeat(5, 1fr);
+						grid-template-columns: repeat(4, 1fr);
 					}
 				`}
 			>

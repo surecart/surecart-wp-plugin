@@ -28,8 +28,8 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 	return (
 		<div
 			css={css`
-				padding: 0 36px;
-				height: 108px;
+				padding: 0 32px;
+				height: 96px;
 				border-top: 1px solid #dce0e6;
 				display: flex;
 				align-items: center;
@@ -41,7 +41,7 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 				bottom: 0;
 				background-color: #f0f0f1;
 				@media (max-width: 768px) {
-					height: 86px;
+					height: 84px;
 					padding: 0 24px;
 					border-top: ${onBackwardClick === null &&
 					onForwardClick === null &&

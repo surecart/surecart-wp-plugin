@@ -9,12 +9,12 @@ export default ({ children, currentStep }) => {
 		<OnboardingModel>
 			<div
 				css={css`
-					padding: 36px;
+					padding: 20px 32px;
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
 					@media (max-width: 768px) {
-						padding: 30px;
+						padding: 16px 30px;
 					}
 				`}
 			>

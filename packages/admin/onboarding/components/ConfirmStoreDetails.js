@@ -42,7 +42,7 @@ export default ({
 					}
 					title={__('Confirm Store Details', 'surecart')}
 					label={__(
-						'Confirm the details for your store.',
+						'Customize and configure your store settings.',
 						'surecart'
 					)}
 				/>
