@@ -21,6 +21,9 @@ export default ({ handleStepChange }) => {
 					display: flex;
 					justify-content: center;
 					gap: 10px;
+					margin: auto;
+					width: 100%;
+					max-width: 460px;
 					@media (max-width: 768px) {
 						flex-wrap: wrap;
 					}
@@ -29,7 +32,7 @@ export default ({ handleStepChange }) => {
 				<ScButton
 					size="large"
 					type="primary"
-					style={{ width: '230px' }}
+					style={{ width: '50%' }}
 					onClick={() => handleStepChange('forward')}
 				>
 					<sc-icon
@@ -42,7 +45,7 @@ export default ({ handleStepChange }) => {
 				{scData?.connect_url && (
 					<ScButton
 						size="large"
-						style={{ width: '230px' }}
+						style={{ width: '50%' }}
 						href={scData.connect_url}
 					>
 						<sc-icon
