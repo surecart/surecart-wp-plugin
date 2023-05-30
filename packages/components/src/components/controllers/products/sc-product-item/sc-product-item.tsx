@@ -18,7 +18,7 @@ export class ScProductItem {
     return (
       <a href={this.product?.permalink} class={{ 'product-item': true }}>
         {this.product &&
-          this.layoutConfig.map(layout => {
+          (this.layoutConfig || []).map(layout => {
             const attributes = layout.attributes || {};
             switch (layout.blockName) {
               case 'surecart/product-item-title':
