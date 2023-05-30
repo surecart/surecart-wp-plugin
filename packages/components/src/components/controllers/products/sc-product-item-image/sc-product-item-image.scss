@@ -16,13 +16,14 @@
   border: solid var(--sc-product-image-border-width) var(--sc-product-image-border-color);
   border-radius: var(--sc-product-image-border-radius);
   overflow: hidden;
+
   > img {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     object-fit: contain;
     display: block;
-    transition: opacity var(--sc-transition-medium) ease;
+    transition: transform var(--sc-transition-medium) ease;
   }
   &.is_covered > img {
     object-fit: cover;
@@ -37,6 +38,6 @@
   }
 
   &:hover img {
-    opacity: 0.5;
+    transform: scale(1.05);
   }
 }
