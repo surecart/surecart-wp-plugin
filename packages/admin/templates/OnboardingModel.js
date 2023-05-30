@@ -53,7 +53,7 @@ export default ({ children }) => {
 						position: fixed !important;
 						left: auto !important;
 						right: 40px;
-						bottom: 40px;
+						bottom: 125px;
 						width: auto !important;
 
 						:first-letter {
