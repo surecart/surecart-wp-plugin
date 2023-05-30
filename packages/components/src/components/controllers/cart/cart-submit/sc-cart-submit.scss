@@ -6,6 +6,9 @@ sc-cart-submit {
     position: relative;
     text-decoration: none;
     width: 100%;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
   }
 
   sc-spinner::part(base) {
