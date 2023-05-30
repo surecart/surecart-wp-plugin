@@ -2320,6 +2320,46 @@ export namespace Components {
          */
         "order": Checkout;
     }
+    interface ScPaystackAddMethod {
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
+    }
+    interface ScPaystackButtons {
+        /**
+          * Account id of the merchant.
+         */
+        "accountId": string;
+        /**
+          * Is this busy?
+         */
+        "busy": boolean;
+        /**
+          * Buttons to render
+         */
+        "buttons": string[];
+        /**
+          * Button color.
+         */
+        "color": 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
+        "label": 'paystack' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * Test or live mode.
+         */
+        "mode": 'test' | 'live';
+        /**
+          * The order.
+         */
+        "order": Checkout;
+        /**
+          * The api public key for paystack.
+         */
+        "publicKey": string;
+    }
     interface ScPhoneInput {
         /**
           * The input's autocomplete attribute.
@@ -3713,6 +3753,10 @@ export interface ScPaypalButtonsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPaypalButtonsElement;
 }
+export interface ScPaystackButtonsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScPaystackButtonsElement;
+}
 export interface ScPhoneInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPhoneInputElement;
@@ -4508,6 +4552,18 @@ declare global {
         prototype: HTMLScPaypalButtonsElement;
         new (): HTMLScPaypalButtonsElement;
     };
+    interface HTMLScPaystackAddMethodElement extends Components.ScPaystackAddMethod, HTMLStencilElement {
+    }
+    var HTMLScPaystackAddMethodElement: {
+        prototype: HTMLScPaystackAddMethodElement;
+        new (): HTMLScPaystackAddMethodElement;
+    };
+    interface HTMLScPaystackButtonsElement extends Components.ScPaystackButtons, HTMLStencilElement {
+    }
+    var HTMLScPaystackButtonsElement: {
+        prototype: HTMLScPaystackButtonsElement;
+        new (): HTMLScPaystackButtonsElement;
+    };
     interface HTMLScPhoneInputElement extends Components.ScPhoneInput, HTMLStencilElement {
     }
     var HTMLScPhoneInputElement: {
@@ -4974,6 +5030,8 @@ declare global {
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
+        "sc-paystack-add-method": HTMLScPaystackAddMethodElement;
+        "sc-paystack-buttons": HTMLScPaystackButtonsElement;
         "sc-phone-input": HTMLScPhoneInputElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
@@ -7614,6 +7672,55 @@ declare namespace LocalJSX {
          */
         "order"?: Checkout;
     }
+    interface ScPaystackAddMethod {
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
+    }
+    interface ScPaystackButtons {
+        /**
+          * Account id of the merchant.
+         */
+        "accountId"?: string;
+        /**
+          * Is this busy?
+         */
+        "busy"?: boolean;
+        /**
+          * Buttons to render
+         */
+        "buttons"?: string[];
+        /**
+          * Button color.
+         */
+        "color"?: 'gold' | 'blue' | 'silver' | 'black' | 'white';
+        /**
+          * Label for the button.
+         */
+        "label"?: 'paystack' | 'checkout' | 'buynow' | 'pay' | 'installment';
+        /**
+          * Test or live mode.
+         */
+        "mode"?: 'test' | 'live';
+        /**
+          * Emit an error
+         */
+        "onScError"?: (event: ScPaystackButtonsCustomEvent<object>) => void;
+        "onScPaid"?: (event: ScPaystackButtonsCustomEvent<void>) => void;
+        /**
+          * Set the state machine
+         */
+        "onScSetState"?: (event: ScPaystackButtonsCustomEvent<string>) => void;
+        /**
+          * The order.
+         */
+        "order"?: Checkout;
+        /**
+          * The api public key for paystack.
+         */
+        "publicKey"?: string;
+    }
     interface ScPhoneInput {
         /**
           * The input's autocomplete attribute.
@@ -9087,6 +9194,8 @@ declare namespace LocalJSX {
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
         "sc-paypal-buttons": ScPaypalButtons;
+        "sc-paystack-add-method": ScPaystackAddMethod;
+        "sc-paystack-buttons": ScPaystackButtons;
         "sc-phone-input": ScPhoneInput;
         "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
@@ -9268,6 +9377,8 @@ declare module "@stencil/core" {
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
+            "sc-paystack-add-method": LocalJSX.ScPaystackAddMethod & JSXBase.HTMLAttributes<HTMLScPaystackAddMethodElement>;
+            "sc-paystack-buttons": LocalJSX.ScPaystackButtons & JSXBase.HTMLAttributes<HTMLScPaystackButtonsElement>;
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;

@@ -199,6 +199,20 @@ class PaymentMethodController extends BaseController {
 						</sc-paypal-add-method>
 					</sc-toggle>
 				<?php endif; ?>
+
+				<?php if ( in_array( 'paystack', $processor_names ) ) : ?>
+					<sc-toggle class="sc-paystack-toggle" show-control shady borderless>
+						<span slot="summary" class="sc-payment-toggle-summary">
+							<sc-icon name="paystack" style="width: 80px; font-size: 24px"></sc-icon>
+						</span>
+						<sc-paystack-add-method
+							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
+							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
+							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
+						</sc-paystack-add-method>
+					</sc-toggle>
+				<?php endif; ?>
 			</sc-toggles>
 
 			<?php endif; ?>

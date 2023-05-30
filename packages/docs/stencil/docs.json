@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-10T22:27:28",
+  "timestamp": "2023-05-30T12:54:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -673,6 +673,7 @@
         "sc-payment",
         "sc-payment-methods-list",
         "sc-paypal-add-method",
+        "sc-paystack-add-method",
         "sc-price-choice",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
@@ -735,6 +736,9 @@
           "sc-alert"
         ],
         "sc-paypal-add-method": [
+          "sc-alert"
+        ],
+        "sc-paystack-add-method": [
           "sc-alert"
         ],
         "sc-price-choice": [
@@ -18674,6 +18678,7 @@
       "dependents": [],
       "dependencies": [
         "sc-paypal-buttons",
+        "sc-paystack-buttons",
         "sc-button",
         "sc-icon",
         "sc-total",
@@ -18682,12 +18687,16 @@
       "dependencyGraph": {
         "sc-order-submit": [
           "sc-paypal-buttons",
+          "sc-paystack-buttons",
           "sc-button",
           "sc-icon",
           "sc-total",
           "sc-secure-notice"
         ],
         "sc-paypal-buttons": [
+          "sc-skeleton"
+        ],
+        "sc-paystack-buttons": [
           "sc-skeleton"
         ],
         "sc-button": [
@@ -20616,6 +20625,337 @@
         ],
         "sc-order-submit": [
           "sc-paypal-buttons"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-paystack-add-method/sc-paystack-add-method.tsx",
+      "encapsulation": "none",
+      "tag": "sc-paystack-add-method",
+      "readme": "# sc-paystack-add-method\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-alert"
+      ],
+      "dependencyGraph": {
+        "sc-paystack-add-method": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/paystack-buttons/paystack-buttons.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-paystack-buttons",
+      "readme": "# sc-paystack-buttons\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "accountId",
+          "type": "string",
+          "mutable": false,
+          "attr": "account-id",
+          "reflectToAttr": false,
+          "docs": "Account id of the merchant.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "Is this busy?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "buttons",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Buttons to render",
+          "docsTags": [],
+          "default": "['paystack', 'card']",
+          "values": [
+            {
+              "type": "string[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "color",
+          "type": "\"black\" | \"blue\" | \"gold\" | \"silver\" | \"white\"",
+          "mutable": false,
+          "attr": "color",
+          "reflectToAttr": false,
+          "docs": "Button color.",
+          "docsTags": [],
+          "default": "'gold'",
+          "values": [
+            {
+              "value": "black",
+              "type": "string"
+            },
+            {
+              "value": "blue",
+              "type": "string"
+            },
+            {
+              "value": "gold",
+              "type": "string"
+            },
+            {
+              "value": "silver",
+              "type": "string"
+            },
+            {
+              "value": "white",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "\"buynow\" | \"checkout\" | \"installment\" | \"pay\" | \"paystack\"",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label for the button.",
+          "docsTags": [],
+          "default": "'paystack'",
+          "values": [
+            {
+              "value": "buynow",
+              "type": "string"
+            },
+            {
+              "value": "checkout",
+              "type": "string"
+            },
+            {
+              "value": "installment",
+              "type": "string"
+            },
+            {
+              "value": "pay",
+              "type": "string"
+            },
+            {
+              "value": "paystack",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "Test or live mode.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The order.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "publicKey",
+          "type": "string",
+          "mutable": false,
+          "attr": "public-key",
+          "reflectToAttr": false,
+          "docs": "The api public key for paystack.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scError",
+          "detail": "object",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Emit an error",
+          "docsTags": []
+        },
+        {
+          "event": "scPaid",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "scSetState",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Set the state machine",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "paystack-button",
+          "docs": ""
+        },
+        {
+          "name": "paystack-card-button",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-order-submit"
+      ],
+      "dependencies": [
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-paystack-buttons": [
+          "sc-skeleton"
+        ],
+        "sc-order-submit": [
+          "sc-paystack-buttons"
         ]
       }
     },
@@ -24970,6 +25310,7 @@
         "sc-orders-list",
         "sc-payment-methods-list",
         "sc-paypal-buttons",
+        "sc-paystack-buttons",
         "sc-price-choice",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -25041,6 +25382,9 @@
           "sc-skeleton"
         ],
         "sc-paypal-buttons": [
+          "sc-skeleton"
+        ],
+        "sc-paystack-buttons": [
           "sc-skeleton"
         ],
         "sc-price-choice": [

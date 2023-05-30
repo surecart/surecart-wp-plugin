@@ -1322,6 +1322,30 @@
     "class": true,
     "slot": true
   },
+  "sc-paystack-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-paystack-buttons": {
+    "account-id": true,
+    "busy": true,
+    "buttons": true,
+    "color": true,
+    "label": true,
+    "mode": true,
+    "order": true,
+    "public-key": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-phone-input": {
     "autocomplete": true,
     "autocorrect": true,
