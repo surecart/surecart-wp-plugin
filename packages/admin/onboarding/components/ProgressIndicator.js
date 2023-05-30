@@ -4,27 +4,6 @@ import { ScButton } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ currentStep, onBackwardClick, onForwardClick }) => {
-	function renderSteps(current) {
-		let steps = [];
-		for (let i = 0; i < 5; i++) {
-			steps.push(i);
-		}
-		return steps.map((step) => (
-			<div
-				key={step}
-				css={css`
-					width: 8vw;
-					max-width: 86px;
-					height: 7px;
-					background: ${step <= current
-						? 'var(--sc-color-brand-primary)'
-						: 'var(--sc-color-neutral-300)'};
-					border-radius: 6px;
-				`}
-			></div>
-		));
-	}
-
 	return (
 		<div
 			css={css`
@@ -49,7 +28,7 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 				}
 			`}
 		>
-			{onBackwardClick !== null ? (
+			{!!onBackwardClick && (
 				<ScButton
 					type="link"
 					size="large"
@@ -59,9 +38,8 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 					<sc-icon name="arrow-left" slot="prefix"></sc-icon>
 					{__('Back', 'surecart')}
 				</ScButton>
-			) : (
-				<div />
 			)}
+
 			<div
 				css={css`
 					position: absolute;
@@ -75,8 +53,24 @@ export default ({ currentStep, onBackwardClick, onForwardClick }) => {
 					}
 				`}
 			>
-				{renderSteps(currentStep)}
+				{[...Array(5)].map((_, step) => {
+					return (
+						<div
+							key={step}
+							css={css`
+								width: 8vw;
+								max-width: 86px;
+								height: 7px;
+								background: ${step <= currentStep
+									? 'var(--sc-color-brand-primary)'
+									: 'var(--sc-color-neutral-300)'};
+								border-radius: 6px;
+							`}
+						></div>
+					);
+				})}
 			</div>
+
 			{onForwardClick !== null && (
 				<ScButton
 					type="primary"

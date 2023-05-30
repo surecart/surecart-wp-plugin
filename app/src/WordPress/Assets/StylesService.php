@@ -43,7 +43,7 @@ class StylesService {
 		$style .= '--sc-focus-ring-color-primary: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '--sc-input-border-color-focus: #' . ( $brand->color ?? '000' ) . ';';
 		$style .= '--sc-color-gray-900: #' . ( $brand->heading ?? '000' ) . ';';
-		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $brand->color ?? '000' ) . ';';
+		$style .= '--sc-color-primary-text: #' . \SureCart::utility()->color()->calculateForegroundColor( $brand->color ?? '000000' ) . ';';
 		$style .= '}';
 
 		wp_add_inline_style(

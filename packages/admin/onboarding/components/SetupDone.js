@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import StepHeader from './StepHeader';
+import Step from './Step';
 import { useEffect, useState } from 'react';
 import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
 
@@ -31,7 +31,7 @@ export default ({ setConfirmExit }) => {
 				align-items: center;
 			`}
 		>
-			<StepHeader
+			<Step
 				imageNode={
 					<ScIcon
 						name="smile"
@@ -43,22 +43,22 @@ export default ({ setConfirmExit }) => {
 				}
 				title={__('Congratulations!', 'surecart')}
 				label={__('Your store has been created.', 'surecart')}
-			/>
-			<ScFlex style={{ marginTop: '16px', gap: '18px' }}>
-				<ScButton
-					type="primary"
-					size="large"
-					style={{ width: '200px' }}
-				>
-					<ScIcon
-						name="shopping-bag"
-						slot="prefix"
-						style={{ fontSize: '18px' }}
-					></ScIcon>
-					{__('View My Store', 'surecart')}
-				</ScButton>
-			</ScFlex>
-			{/* <div style={{ marginTop: '45px', height: '315px' }}>
+			>
+				{!!scData?.success_url && (
+					<ScButton
+						type="primary"
+						size="large"
+						href={scData.success_url}
+					>
+						<ScIcon
+							name="shopping-bag"
+							slot="prefix"
+							style={{ fontSize: '18px' }}
+						/>
+						{__('View My Store', 'surecart')}
+					</ScButton>
+				)}
+				{/* <div style={{ marginTop: '45px', height: '315px' }}>
 				{showVideo && (
 					<iframe
 						css={css`
@@ -79,6 +79,7 @@ export default ({ setConfirmExit }) => {
 					></iframe>
 				)}
 			</div> */}
+			</Step>
 		</div>
 	);
 };

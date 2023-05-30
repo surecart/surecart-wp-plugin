@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import StepHeader from './StepHeader';
+import Step from './Step';
 import ProgressIndicator from './ProgressIndicator';
 import { useState } from '@wordpress/element';
 import { ScAlert, ScFormControl, ScInput } from '@surecart/components-react';
@@ -30,7 +30,8 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 					margin: 0 auto;
 				`}
 			>
-				<StepHeader
+				<Step
+					width={'520px'}
 					imageNode={
 						<sc-icon
 							name="mail"
@@ -48,15 +49,6 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 						'This email is used for store notifications, such as new orders, payment failures and other store emails.',
 						'surecart'
 					)}
-				/>
-				<div
-					css={css`
-						margin: 40px auto 20px;
-						max-width: 370px;
-						display: flex;
-						flex-direction: column;
-						gap: 20px;
-					`}
 				>
 					<ScFormControl label={__('Email Address')}>
 						<ScInput
@@ -72,7 +64,7 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 					<ScAlert open={error} type="danger">
 						{error}
 					</ScAlert>
-				</div>
+				</Step>
 			</div>
 			<ProgressIndicator
 				currentStep={currentStep}

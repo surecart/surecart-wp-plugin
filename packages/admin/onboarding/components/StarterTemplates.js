@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import StepHeader from './StepHeader';
+import Step from './Step';
 import TemplateDefaultImg from '../template_default.svg';
 import ProgressIndicator from './ProgressIndicator';
 
@@ -60,7 +60,7 @@ export default ({
 }) => {
 	return (
 		<div>
-			<StepHeader
+			<Step
 				imageNode={
 					<sc-icon
 						name="book-open"
