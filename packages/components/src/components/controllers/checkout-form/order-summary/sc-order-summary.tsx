@@ -31,7 +31,7 @@ export class ScOrderSummary {
   componentWillLoad() {
     if (this.collapsedOnMobile) {
       const bodyRect = document.body.getClientRects();
-      if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
+      if (bodyRect.length && bodyRect[0]?.width < 781 ) this.collapsed = true ;
     }
     this.handleOpenChange();
   }
