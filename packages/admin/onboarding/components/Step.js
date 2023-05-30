@@ -39,7 +39,7 @@ export default ({ imageNode, title, label, children, width = '460px' }) => {
 					font-size: 18px;
 					margin: 0;
 					color: var(--sc-color-gray-500);
-					line-height: 1;
+					line-height: var(--sc-line-height-dense);
 					@media (max-width: 768px) {
 						font-size: 16px;
 					}
