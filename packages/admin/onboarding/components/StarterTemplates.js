@@ -23,27 +23,27 @@ const templates = [
 	{
 		id: 'a1fea471-82c3-4401-9b82-20458ed6729d',
 		name: __('Printables', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/books.jpg`,
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/print.jpg`,
 	},
 	{
 		id: '26fad3c0-e90b-4410-a200-c9797afbf7c4',
 		name: __('Courses', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/books.jpg`,
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/courses.jpg`,
 	},
 	{
 		id: '874f5380-166a-4e51-9f1e-5b72519d4cd4',
 		name: __('Organic Store', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpg`,
 	},
 	{
 		id: '68376b5a-2392-443d-81b3-6985f4c835d2',
 		name: __('Pet Store', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/pet.jpg`,
 	},
 	{
 		id: 'dab55a5a-2136-41d1-9976-4bf744cc85b2',
 		name: __('Band Store', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/starter-templates/organics.jpeg`,
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/band.jpg`,
 	},
 	{
 		id: '0784302f-2627-4c7d-96e7-2e537d9a18ec',

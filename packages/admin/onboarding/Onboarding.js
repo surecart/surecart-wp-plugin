@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 
 import Layout from './components/Layout';
@@ -45,9 +46,9 @@ export default () => {
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const refAnimationInstance = useRef(null);
 	const [confirmExit, setConfirmExit] = useState(true);
-	const [error, setError] = useState(null);
 	const [brandColor, setBrandColor] = useState('1e40af');
 	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const getInstance = useCallback((instance) => {
 		refAnimationInstance.current = instance;
@@ -88,9 +89,10 @@ export default () => {
 
 			handleStepChange('forward');
 		} catch (error) {
-			console.error(error);
-			setCurrentStep(1);
-			setError(error);
+			createErrorNotice(
+				__('Failed to create store. Please try again.', 'surecart')
+			);
+			setCurrentStep(0);
 		}
 	};
 
