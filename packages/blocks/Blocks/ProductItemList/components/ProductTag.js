@@ -15,7 +15,7 @@ export default ({ id, onClear }) => {
 	});
 
 	// don't render if the product was deleted.
-	if (!loading && !product?.name) {
+	if (!product?.name) {
 		return null;
 	}
 
