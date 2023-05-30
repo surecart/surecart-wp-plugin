@@ -76,11 +76,18 @@ export default () => {
 
 	const createProvisionalAccount = async (email) => {
 		try {
-			await saveEntityRecord('surecart', 'provisional_account', {
-				account_currency: accountCurrency,
-				email,
-				source_account_id: selectedTemplate,
-			});
+			await saveEntityRecord(
+				'surecart',
+				'provisional_account',
+				{
+					account_currency: accountCurrency,
+					email,
+					source_account_id: selectedTemplate,
+				},
+				{
+					throwOnError: true,
+				}
+			);
 
 			await saveEntityRecord('surecart', 'store', {
 				object: 'brand',
@@ -90,7 +97,9 @@ export default () => {
 			handleStepChange('forward');
 		} catch (error) {
 			createErrorNotice(
-				__('Failed to create store. Please try again.', 'surecart')
+				error?.message ||
+					__('Failed to create store. Please try again.', 'surecart'),
+				{ type: 'snackbar' }
 			);
 			setCurrentStep(0);
 		}
