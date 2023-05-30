@@ -5,6 +5,17 @@ import OnboardingModel from '../../templates/OnboardingModel';
 import Logo from '../../templates/Logo';
 
 export default ({ children, currentStep }) => {
+	function handleClose(step) {
+		if (!window.location) return;
+		const href =
+			step === 5
+				? addQueryArgs('admin.php', {
+						page: 'sc-dashboard',
+				  })
+				: addQueryArgs('index.php');
+		window.location.replace(href);
+	}
+
 	return (
 		<OnboardingModel>
 			<div
@@ -19,18 +30,15 @@ export default ({ children, currentStep }) => {
 				`}
 			>
 				<Logo display="block" />
-				<a
-					href={
-						currentStep === 5
-							? addQueryArgs('admin.php', {
-									page: 'sc-dashboard',
-							  })
-							: addQueryArgs('index.php')
-					}
-					style={{ color: 'var(--sc-color-gray-700)' }}
+				<div
+					onClick={() => handleClose(currentStep)}
+					css={css`
+						color: var(--sc-color-gray-700);
+						cursor: pointer;
+					`}
 				>
 					<sc-icon name="x" style={{ fontSize: '28px' }}></sc-icon>
-				</a>
+				</div>
 			</div>
 			<div
 				css={css`
