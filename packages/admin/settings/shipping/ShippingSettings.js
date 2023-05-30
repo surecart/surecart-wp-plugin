@@ -10,18 +10,21 @@ import {
 	ScIcon,
 	ScStackedList,
 	ScStackedListRow,
-	ScText,
+	ScSwitch,
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import AddShippingProfile from './profile/AddShippingProfile';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [showAddShipping, setShowAddShipping] = useState(false);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
 	const { shippingProfiles, loading, busy } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -32,6 +35,7 @@ export default () => {
 				expand: ['products', 'shipping_zones'],
 			},
 		];
+
 		const items = select(coreStore).getEntityRecords(...queryArgs);
 		const resolving = select(coreStore).isResolving(
 			'getEntityRecords',
@@ -42,7 +46,61 @@ export default () => {
 			loading: !!(!items?.length && resolving),
 			busy: !!(items?.length && resolving),
 		};
-	});
+	}, []);
+
+	const { shippingProtocol, loadingShippingProtocol } = useSelect(
+		(select) => {
+			const queryArgs = ['surecart', 'shipping-protocol'];
+
+			return {
+				shippingProtocol: select(coreStore).getEntityRecords(
+					...queryArgs
+				),
+				loadingShippingProtocol: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[]
+	);
+
+	const onSubmit = async () => {
+		try {
+			const dirtyRecords =
+				select(coreStore).__experimentalGetDirtyEntityRecords();
+			const pendingSavedRecords = [];
+
+			dirtyRecords.forEach(({ kind, name, key }) => {
+				pendingSavedRecords.push(
+					saveEditedEntityRecord(kind, name, key)
+				);
+			});
+
+			const values = await Promise.all(pendingSavedRecords);
+			if (values.some((value) => typeof value === 'undefined')) {
+				throw new Error(__('Saving failed.', 'surecart'));
+			}
+
+			createSuccessNotice(__('Updated', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (error) {
+			setError(error);
+			console.log(error);
+		}
+	};
+
+	const onToggleShipping = () => {
+		(e) => {
+			e.preventDefault();
+			editEntityRecord('surecart', 'shipping-protocol', {
+				shipping_enabled: !shippingProtocol?.shipping_enabled,
+			});
+		};
+	};
+
+	console.log(shippingProtocol);
 
 	return (
 		<Fragment>
@@ -50,8 +108,26 @@ export default () => {
 				title={__('Shipping and Delivery', 'surecart')}
 				icon={<ScIcon name="truck" />}
 				noButton
+				onSubmit={onSubmit}
 			>
-				<Error error={error} setError={setError} margin="80px" />
+				<Error error={error} setError={setError} margin="80px" />{' '}
+				<SettingsBox
+					loading={loadingShippingProtocol}
+					title={__('Protocol', 'surecart')}
+				>
+					<ScSwitch
+						checked={shippingProtocol?.shipping_enabled}
+						onClick={onToggleShipping}
+					>
+						{__('Shipping Enabled', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'When disabled, all shipping costs will be zero and shipping will not be available.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</SettingsBox>
 				<SettingsBox
 					title={__('Shipping', 'surecart')}
 					description={__(
