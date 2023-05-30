@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
@@ -2676,6 +2676,12 @@ export namespace Components {
     interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
     }
+    interface ScProvisionalBanner {
+        /**
+          * Claim URL.
+         */
+        "claimUrl": string;
+    }
     interface ScPurchaseDownloadsList {
         "allLink": string;
         "busy": boolean;
@@ -2962,7 +2968,31 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
         "confirm": (type: any, args?: {}) => Promise<void>;
+        /**
+          * The current form state.
+         */
+        "formState": FormState;
+        /**
+          * Order to watch
+         */
+        "order": Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId": ProcessorName;
+        /**
+          * The Payment Intent
+         */
+        "stripePaymentIntent": PaymentIntent;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -4502,6 +4532,12 @@ declare global {
         prototype: HTMLScProviderElement;
         new (): HTMLScProviderElement;
     };
+    interface HTMLScProvisionalBannerElement extends Components.ScProvisionalBanner, HTMLStencilElement {
+    }
+    var HTMLScProvisionalBannerElement: {
+        prototype: HTMLScProvisionalBannerElement;
+        new (): HTMLScProvisionalBannerElement;
+    };
     interface HTMLScPurchaseDownloadsListElement extends Components.ScPurchaseDownloadsList, HTMLStencilElement {
     }
     var HTMLScPurchaseDownloadsListElement: {
@@ -4917,6 +4953,7 @@ declare global {
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
+        "sc-provisional-banner": HTMLScProvisionalBannerElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
@@ -7946,6 +7983,12 @@ declare namespace LocalJSX {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: ScProviderCustomEvent<any>) => void;
     }
+    interface ScProvisionalBanner {
+        /**
+          * Claim URL.
+         */
+        "claimUrl"?: string;
+    }
     interface ScPurchaseDownloadsList {
         "allLink"?: string;
         "busy"?: boolean;
@@ -8283,6 +8326,14 @@ declare namespace LocalJSX {
     }
     interface ScStripePaymentElement {
         /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The current form state.
+         */
+        "formState"?: FormState;
+        /**
           * The order/invoice was paid for.
          */
         "onScPaid"?: (event: ScStripePaymentElementCustomEvent<void>) => void;
@@ -8294,6 +8345,22 @@ declare namespace LocalJSX {
           * Set the state
          */
         "onScSetState"?: (event: ScStripePaymentElementCustomEvent<FormStateSetter>) => void;
+        /**
+          * Order to watch
+         */
+        "order"?: Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId"?: ProcessorName;
+        /**
+          * The Payment Intent
+         */
+        "stripePaymentIntent"?: PaymentIntent;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl"?: string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -8969,6 +9036,7 @@ declare namespace LocalJSX {
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
+        "sc-provisional-banner": ScProvisionalBanner;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
@@ -9149,6 +9217,7 @@ declare module "@stencil/core" {
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
+            "sc-provisional-banner": LocalJSX.ScProvisionalBanner & JSXBase.HTMLAttributes<HTMLScProvisionalBannerElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
