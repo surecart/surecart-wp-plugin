@@ -42,6 +42,7 @@ return [
 		\SureCart\BlockLibrary\BlockServiceProvider::class,
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
+		\SureCart\Background\BackgroundServiceProvider::class,
 
 		// REST providers.
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,

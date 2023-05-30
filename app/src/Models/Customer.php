@@ -138,6 +138,36 @@ class Customer extends Model {
 	}
 
 	/**
+	 * Create the user from the customer.
+	 *
+	 * @return \SureCart\Models\User|\WP_Error
+	 */
+	public function createUser() {
+		if ( empty( $this->id ) && empty( $this->email ) ) {
+			return new \WP_Error( 'no_customer_id_or_email', __( 'No customer ID or email provided.', 'surecart' ) );
+		}
+
+		// if no user, create one with a password if provided.
+		$created = User::create(
+			[
+				'user_name'  => $this->name ?? $this->checkout->name ?? null,
+				'user_email' => $this->email,
+				'first_name' => $this->first_name ?? null,
+				'last_name'  => $this->last_name ?? null,
+				'phone'      => $this->phone ?? null,
+			]
+		);
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		$created->setCustomerId( $this->id, ! empty( $this->live_mode ) ? 'live' : 'test' );
+
+		return $created;
+	}
+
+	/**
 	 * Maybe also return the user when the id is set.
 	 *
 	 * @param string $value The user id.
