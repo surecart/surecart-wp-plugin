@@ -30,4 +30,13 @@ class UtilityService {
 		$root_path = trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . '/templates/';
 		return new TemplateUtilityService( $root_path . 'templates', $root_path . 'parts' );
 	}
+
+	/**
+	 * Holds the color service.
+	 *
+	 * @return ColorService
+	 */
+	public function color() {
+		return new ColorService();
+	}
 }
