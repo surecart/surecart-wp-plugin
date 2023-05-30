@@ -346,6 +346,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<ModelSelector
 							name="product"
 							placeholder={__('Select A Product', 'surecart')}
+							placement={'top-end'}
 							requestQuery={{
 								archived: false,
 								status: ['published'],
