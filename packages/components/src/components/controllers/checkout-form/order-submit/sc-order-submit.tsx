@@ -79,13 +79,36 @@ export class ScOrderSubmit {
     );
   }
 
+  renderPaystackButton(buttons) {
+    const { account_id, public_key } = getProcessorData(availableProcessors(), 'paystack', this.mode);
+    if (!account_id && !public_key) return null;
+
+    return (
+      <div>
+        <sc-paystack-buttons
+          buttons={buttons}
+          busy={this.busy || checkoutIsLocked()}
+          mode={this.mode}
+          order={this.order}
+          currency-code={this.currencyCode}
+          account-id={account_id}
+          public-key={public_key}
+          label="checkout"
+          color="blue"
+        ></sc-paystack-buttons>
+      </div>
+    );
+  }
+
   render() {
     return (
       <Fragment>
         {selectedProcessor.id === 'paypal' && !selectedProcessor?.method && this.renderPayPalButton(['paypal'])}
         {selectedProcessor.id === 'paypal' && selectedProcessor?.method === 'card' && this.renderPayPalButton(['card'])}
+        {selectedProcessor.id === 'paystack' && !selectedProcessor?.method && this.renderPaystackButton(['paystack'])}
+
         <sc-button
-          hidden={['paypal', 'paypal-card'].includes(selectedProcessor.id)}
+          hidden={['paypal', 'paypal-card', 'paystack'].includes(selectedProcessor.id)}
           submit
           type={this.type}
           size={this.size}
