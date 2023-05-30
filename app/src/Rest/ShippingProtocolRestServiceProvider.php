@@ -28,7 +28,7 @@ class ShippingProtocolRestServiceProvider  extends RestServiceProvider implement
 	 *
 	 * @var array
 	 */
-	protected $methods = [];
+	protected $methods = [ 'find', 'edit' ];
 
 	/**
 	 * Register REST Routes
@@ -103,7 +103,7 @@ class ShippingProtocolRestServiceProvider  extends RestServiceProvider implement
 	}
 
 	/**
-	 * Anyone can get the protocols.
+	 * Need privileges to get item
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -113,7 +113,7 @@ class ShippingProtocolRestServiceProvider  extends RestServiceProvider implement
 	}
 
 	/**
-	 * Need priveleges to update.
+	 * Need privileges to update item
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
