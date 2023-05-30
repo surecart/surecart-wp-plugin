@@ -2,6 +2,7 @@
 import { css, jsx, Global } from '@emotion/core';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import Notifications from '../components/Notifications';
 
 export default ({ children }) => {
 	return (
@@ -47,6 +48,19 @@ export default ({ children }) => {
 				`}
 			>
 				{children}
+				<Notifications
+					css={css`
+						position: fixed !important;
+						left: auto !important;
+						right: 40px;
+						bottom: 40px;
+						width: auto !important;
+
+						:first-letter {
+							text-transform: uppercase;
+						}
+					`}
+				/>
 			</div>
 		</Fragment>
 	);
