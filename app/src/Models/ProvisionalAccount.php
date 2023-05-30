@@ -45,6 +45,6 @@ class ProvisionalAccount extends Model {
 			return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
 		}
 
-		return parent::create();
+		return parent::create( $attributes );
 	}
 }
