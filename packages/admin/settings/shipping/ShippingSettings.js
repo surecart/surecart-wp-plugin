@@ -14,17 +14,18 @@ import {
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import AddShippingProfile from './profile/AddShippingProfile';
+import useEntity from '../../hooks/useEntity';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [showAddShipping, setShowAddShipping] = useState(false);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord } = useDispatch(coreStore);
 	const { shippingProfiles, loading, busy } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -48,22 +49,11 @@ export default () => {
 		};
 	}, []);
 
-	const { shippingProtocol, loadingShippingProtocol } = useSelect(
-		(select) => {
-			const queryArgs = ['surecart', 'shipping-protocol'];
-
-			return {
-				shippingProtocol: select(coreStore).getEntityRecords(
-					...queryArgs
-				),
-				loadingShippingProtocol: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[]
-	);
+	const {
+		item: shippingProtocol,
+		hasLoadedItem: hasLoadedShippingProtocol,
+		editItem: editShippingProtocol,
+	} = useEntity('store', 'shipping_protocol');
 
 	const onSubmit = async () => {
 		try {
@@ -91,16 +81,13 @@ export default () => {
 		}
 	};
 
-	const onToggleShipping = () => {
-		(e) => {
-			e.preventDefault();
-			editEntityRecord('surecart', 'shipping-protocol', {
-				shipping_enabled: !shippingProtocol?.shipping_enabled,
-			});
-		};
+	const onToggleShipping = (e) => {
+		console.log('called');
+		e.preventDefault();
+		editShippingProtocol({
+			shipping_enabled: !shippingProtocol?.shipping_enabled,
+		});
 	};
-
-	console.log(shippingProtocol);
 
 	return (
 		<Fragment>
@@ -112,7 +99,7 @@ export default () => {
 			>
 				<Error error={error} setError={setError} margin="80px" />{' '}
 				<SettingsBox
-					loading={loadingShippingProtocol}
+					loading={!hasLoadedShippingProtocol}
 					title={__('Protocol', 'surecart')}
 				>
 					<ScSwitch
