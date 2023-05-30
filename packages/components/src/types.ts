@@ -512,6 +512,11 @@ export interface ProcessorData {
     account_id: 'string';
     checkout_url: 'string';
   };
+  paystack: {
+    account_id: string;
+    public_key: string;
+    access_code: string;
+  };
 }
 
 export interface ManualPaymentMethod {
