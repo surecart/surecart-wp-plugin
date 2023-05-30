@@ -2896,6 +2896,8 @@ export namespace Components {
          */
         "prices": Array<PriceChoice>;
     }
+    interface ScShippingChoices {
+    }
     interface ScSkeleton {
         /**
           * Animation effect
@@ -4581,6 +4583,12 @@ declare global {
         prototype: HTMLScSessionProviderElement;
         new (): HTMLScSessionProviderElement;
     };
+    interface HTMLScShippingChoicesElement extends Components.ScShippingChoices, HTMLStencilElement {
+    }
+    var HTMLScShippingChoicesElement: {
+        prototype: HTMLScShippingChoicesElement;
+        new (): HTMLScShippingChoicesElement;
+    };
     interface HTMLScSkeletonElement extends Components.ScSkeleton, HTMLStencilElement {
     }
     var HTMLScSkeletonElement: {
@@ -4956,6 +4964,7 @@ declare global {
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
         "sc-session-provider": HTMLScSessionProviderElement;
+        "sc-shipping-choices": HTMLScShippingChoicesElement;
         "sc-skeleton": HTMLScSkeletonElement;
         "sc-spacing": HTMLScSpacingElement;
         "sc-spinner": HTMLScSpinnerElement;
@@ -8249,6 +8258,8 @@ declare namespace LocalJSX {
          */
         "prices"?: Array<PriceChoice>;
     }
+    interface ScShippingChoices {
+    }
     interface ScSkeleton {
         /**
           * Animation effect
@@ -9039,6 +9050,7 @@ declare namespace LocalJSX {
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
         "sc-session-provider": ScSessionProvider;
+        "sc-shipping-choices": ScShippingChoices;
         "sc-skeleton": ScSkeleton;
         "sc-spacing": ScSpacing;
         "sc-spinner": ScSpinner;
@@ -9219,6 +9231,7 @@ declare module "@stencil/core" {
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
             "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;
+            "sc-shipping-choices": LocalJSX.ScShippingChoices & JSXBase.HTMLAttributes<HTMLScShippingChoicesElement>;
             "sc-skeleton": LocalJSX.ScSkeleton & JSXBase.HTMLAttributes<HTMLScSkeletonElement>;
             "sc-spacing": LocalJSX.ScSpacing & JSXBase.HTMLAttributes<HTMLScSpacingElement>;
             "sc-spinner": LocalJSX.ScSpinner & JSXBase.HTMLAttributes<HTMLScSpinnerElement>;
