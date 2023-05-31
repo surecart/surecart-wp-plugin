@@ -35,6 +35,7 @@ import {
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import ClaimNoticeModal from '../../../admin/components/ClaimNoticeModal';
 
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
@@ -448,14 +449,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 			<StyleProvider>
 				{showClaimNotice ? (
-					<div
-						css={css`
-							overflow: hidden;
-							border-radius: 8px;
-						`}
-					>
-						<ScProvisionalBanner claimUrl={claimUrl} />
-					</div>
+					<ClaimNoticeModal
+						title={__('Complete Your Store!', 'surecart')}
+						bodyText={__(
+							'Please complete your store for free to enable live mode.',
+							'surecart'
+						)}
+						onRequestClose={() => setShowClaimNotice(false)}
+						claimUrl={claimUrl}
+					/>
 				) : null}
 				{blockCount === 0 ? (
 					<Setup
