@@ -270,6 +270,7 @@
     "disable-components-validation": true,
     "edit-line-items": true,
     "form-id": true,
+    "is-claimed": true,
     "loading-text": true,
     "logged-in": true,
     "manual-payment-methods": true,
