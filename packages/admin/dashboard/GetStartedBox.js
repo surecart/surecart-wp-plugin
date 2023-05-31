@@ -48,7 +48,6 @@ export default ({
 				href={buttonUrl}
 				style={{
 					'--primary-background': 'var(--sc-color-brand-heading)',
-					'--sc-color-primary-text': '#fff',
 				}}
 			>
 				{buttonLabel} &#8594;
