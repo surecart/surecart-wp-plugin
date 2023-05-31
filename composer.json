@@ -15,7 +15,8 @@
 		"pimple/pimple": "^3.2",
 		"guzzlehttp/psr7": "^1.5",
 		"typisttech/imposter-plugin": "^0.6.2",
-		"sultann/wp-query-builder": "^1.0"
+		"sultann/wp-query-builder": "^1.0",
+		"woocommerce/action-scheduler": "^3.6"
 	},
 	"require-dev": {
 		"php": "^7.4|^8.0|^8.1",
@@ -42,7 +43,8 @@
 		},
 		"files": [
 			"core/core/config.php",
-			"core/app-core/config.php"
+			"core/app-core/config.php",
+			"vendor/woocommerce/action-scheduler/action-scheduler.php"
 		]
 	},
 	"autoload-dev": {
@@ -64,7 +66,15 @@
 	},
 	"extra": {
 		"imposter": {
-			"namespace": "SureCartVendors\\"
+			"namespace": "SureCartVendors\\",
+			"excludes": [
+				"woocommerce/action-scheduler"
+			]
+		},
+		"installer-paths": {
+			"vendor/woocommerce/action-scheduler": [
+				"woocommerce/action-scheduler"
+			]
 		}
 	},
 	"config": {
