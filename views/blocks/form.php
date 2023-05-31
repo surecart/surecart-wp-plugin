@@ -27,7 +27,7 @@
 		'currencyCode'               => $currency_code ?? null,
 		'modified'                   => $modified ?? null,
 		'loggedIn'                   => is_user_logged_in(),
-		'mode'                       => $mode ?? 'live',
+		'mode'                       => $is_claimed ? 'test' : $mode ?? 'live',
 		'alignment'                  => $align ?? '',
 		'taxProtocol'                => $tax_protocol ?? [],
 		'loadingText'                => $loading_text ?? [],
@@ -37,7 +37,6 @@
 		'processors'                 => $processors,
 		'manualPaymentMethods'       => $manual_payment_methods,
 		'abandonedCheckoutReturnUrl' => $abandoned_checkout_return_url,
-		'isClaimed'                  => $is_claimed,
 	]
 );
 ?>
