@@ -12,10 +12,8 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 /**
  * Internal dependencies.
  */
-import apiFetch from '../../../functions/fetch';
-// import { hasSubscription } from '../../../functions/line-items';
 import { fetchCheckout } from '../../../services/session';
-import { Checkout, PaymentIntent } from '../../../types';
+import { Checkout } from '../../../types';
 
 @Component({
   tag: 'sc-paystack-buttons',
@@ -56,9 +54,6 @@ export class ScPaystackButtons {
   /** Label for the button. */
   @Prop() label: 'paystack' | 'checkout' | 'buynow' | 'pay' | 'installment' = 'paystack';
 
-  /** Button color. */
-  @Prop() color: 'gold' | 'blue' | 'silver' | 'black' | 'white' = 'gold';
-
   /** Has this loaded? */
   @State() loaded: boolean;
 
@@ -78,45 +73,47 @@ export class ScPaystackButtons {
 
     this.cardContainer.innerHTML = '';
     this.paystackContainer.innerHTML = '';
+    this.processTransaction();
   }
 
   async processTransaction() {
-    if (!this.publicKey || !this.accessCode) return;
+    // Stop processing if not get the access code, public key
+    // and order is not paid yet
+    if (!this.publicKey || !this.accessCode || this.order?.status === 'paid') return;
 
     try {
       const paystack = new PaystackPop();
       paystack.newTransaction({
         'key': this.publicKey,
-        'accessCode': this.accessCode,
+        'accessCode': this.accessCode, // We'll use accessCode which will handle product, price on our server.
         onSuccess: async () => {
           try {
-            this.order = (await fetchCheckout({ id: this.order?.id })) as Checkout;
-          } catch (e) {
-            console.error(e);
-            this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
-            this.scSetState.emit('REJECT');
-          }
+            this.order = (await fetchCheckout({
+              id: this.order?.id,
+              query: {
+                refresh_status: true
+              },
+            })) as Checkout;
 
-          try {
+            // Start to make the paying.
             this.scSetState.emit('PAYING');
-            const intent = (await apiFetch({
-              method: 'PATCH',
-              path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id || this.order?.payment_intent}/capture`,
-            })) as PaymentIntent;
-            if (['succeeded', 'processing'].includes(intent?.status)) {
+
+            // If order status is paid, it's actually paid.
+            if (this.order?.status === 'paid') {
               this.scSetState.emit('PAID');
               this.scPaid.emit();
             } else {
               this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
               this.scSetState.emit('REJECT');
             }
-          } catch (err) {
-            console.error(err);
+          } catch (e) {
+            console.error(e);
             this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
             this.scSetState.emit('REJECT');
           }
         },
         onCancel: () => {
+          this.scError.emit({ code: 'transaction_cancelled', message: __('The payment did not process. Please try again', 'surecart') });
           this.scSetState.emit('REJECT');
         },
       });
@@ -150,6 +147,7 @@ export class ScPaystackButtons {
 
       // resolve the payment intent id.
       if (order?.payment_intent?.external_intent_id) {
+        this.accessCode = order?.payment_intent?.processor_data?.paystack?.access_code;
         return resolve(order?.payment_intent?.external_intent_id);
       }
 
@@ -166,7 +164,21 @@ export class ScPaystackButtons {
         <div class="sc-paystack-button-container" hidden={this.busy}>
           <div part="paystack-card-button" hidden={!this.buttons.includes('card')} class="sc-paystack-card-button" ref={el => (this.cardContainer = el as HTMLDivElement)}></div>
           <div part="paystack-button" hidden={!this.buttons.includes('paystack')} class="sc-paystack-button" ref={el => (this.paystackContainer = el as HTMLDivElement)}></div>
-          <button class="paystack-button" onClick={() => this.checkAndConfigure()}>Purchase via Paystack</button>
+          <sc-button
+            onClick={this.checkAndConfigure}
+            submit
+            type={'primary'}
+            size={'medium'}
+            full={true}
+            loading={this.busy}
+            disabled={this.busy}
+          >
+            <slot>{__('Purchase', 'surecart')}</slot>
+            <span>
+              {'\u00A0'}
+              <sc-total></sc-total>
+            </span>
+          </sc-button>
         </div>
       </div>
     );

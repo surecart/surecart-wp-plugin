@@ -94,7 +94,6 @@ export class ScOrderSubmit {
           account-id={account_id}
           public-key={public_key}
           label="checkout"
-          color="blue"
         ></sc-paystack-buttons>
       </div>
     );

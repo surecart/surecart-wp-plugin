@@ -1336,7 +1336,6 @@
     "account-id": true,
     "busy": true,
     "buttons": true,
-    "color": true,
     "label": true,
     "mode": true,
     "order": true,

@@ -2340,10 +2340,6 @@ export namespace Components {
          */
         "buttons": string[];
         /**
-          * Button color.
-         */
-        "color": 'gold' | 'blue' | 'silver' | 'black' | 'white';
-        /**
           * Label for the button.
          */
         "label": 'paystack' | 'checkout' | 'buynow' | 'pay' | 'installment';
@@ -7691,10 +7687,6 @@ declare namespace LocalJSX {
           * Buttons to render
          */
         "buttons"?: string[];
-        /**
-          * Button color.
-         */
-        "color"?: 'gold' | 'blue' | 'silver' | 'black' | 'white';
         /**
           * Label for the button.
          */

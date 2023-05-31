@@ -9,7 +9,6 @@
 
   &:not(.paystack-buttons--busy):after {
     content: " ";
-    border-bottom: 1px solid var(--sc-input-border-color);
     width: 100%;
     height: 0;
     top: 50%;
