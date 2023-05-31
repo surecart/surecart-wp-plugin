@@ -2,13 +2,13 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Step from './Step';
-import { useEffect, useState } from 'react';
-import { ScButton, ScFlex, ScIcon } from '@surecart/components-react';
+// import { useEffect, useState } from 'react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
-let showVideoTimerId;
-const TIMEOUT = 2000;
+// let showVideoTimerId;
+// const TIMEOUT = 2000;
 
-export default ({ setConfirmExit }) => {
+export default () => {
 	// const [showVideo, setShowVideo] = useState(false);
 
 	// useEffect(() => {
