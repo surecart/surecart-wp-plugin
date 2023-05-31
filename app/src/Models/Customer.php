@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasPurchases;
+
 /**
  * Price model
  */
 class Customer extends Model {
+	use HasPurchases;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -131,7 +135,7 @@ class Customer extends Model {
 	/**
 	 * Get the customer's user.
 	 *
-	 * @return string|null
+	 * @return \SureCart\Models\User|false
 	 */
 	public function getUser() {
 		return User::findByCustomerId( $this->id );
@@ -147,24 +151,36 @@ class Customer extends Model {
 			return new \WP_Error( 'no_customer_id_or_email', __( 'No customer ID or email provided.', 'surecart' ) );
 		}
 
-		// if no user, create one with a password if provided.
-		$created = User::create(
-			[
-				'user_name'  => $this->name ?? $this->checkout->name ?? null,
-				'user_email' => $this->email,
-				'first_name' => $this->first_name ?? null,
-				'last_name'  => $this->last_name ?? null,
-				'phone'      => $this->phone ?? null,
-			]
-		);
+		$user = $this->getUser();
 
-		if ( is_wp_error( $created ) ) {
-			return $created;
+		if ( is_wp_error( $user ) ) {
+			return $user;
 		}
 
-		$created->setCustomerId( $this->id, ! empty( $this->live_mode ) ? 'live' : 'test' );
+		if ( empty( $user->ID ) ) {
+			$user = User::getUserBy( 'email', $this->email );
+			if ( empty( $user->ID ) ) {
+				// if no user, create one with a password if provided.
+				$user = User::create(
+					[
+						'user_name'  => $this->name ?? $this->checkout->name ?? null,
+						'user_email' => $this->email,
+						'first_name' => $this->first_name ?? null,
+						'last_name'  => $this->last_name ?? null,
+						'phone'      => $this->phone ?? null,
+					]
+				);
+			}
+		}
 
-		return $created;
+		if ( is_wp_error( $user ) ) {
+			error_log( $user->get_error_message() );
+			return $user;
+		}
+
+		$user->setCustomerId( $this->id, ! empty( $this->live_mode ) ? 'live' : 'test' );
+
+		return $user;
 	}
 
 	/**
