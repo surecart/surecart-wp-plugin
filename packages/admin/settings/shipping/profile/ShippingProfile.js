@@ -112,6 +112,7 @@ export default () => {
 				shippingProfileId={shippingProfileId}
 				loading={loadingShippingProfile}
 				products={shippingProfile?.products?.data}
+				isDefaultProfile={!!shippingProfile.default}
 			/>
 			<ShippingZones
 				shippingProfileId={shippingProfileId}
