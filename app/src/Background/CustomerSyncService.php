@@ -5,6 +5,7 @@ namespace SureCart\Background;
 
 use SureCart\Models\Customer;
 use SureCart\Models\Purchase;
+use SureCart\Models\User;
 
 /**
  * Syncs customer records to WordPress users.
@@ -110,31 +111,41 @@ class CustomerSyncService {
 
 		// create user.
 		if ( $create_user ) {
-			$customer->createUser();
-		}
-
-		$unrevoked_purchases = array_filter(
-			$customer->purchases->data ?? [],
-			function( $purchase ) {
-				return ! $purchase->revoked;
+			$user = $customer->getUser();
+			if ( ! $user ) {
+				$user = User::getUserBy( 'email', $customer->email );
+				if ( $user ) {
+					$user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
+				} else {
+					$customer->createUser();
+				}
 			}
-		);
-
-		// A customer has more than the 20 purchases that are expanded, we need to fetch the rest.
-		if ( $customer->purchases->pagination->count > $customer->purchases->pagination->limit ) {
-			// get 100 purchases.
-			$unrevoked_purchases = Purchase::where(
-				[
-					'customer_id' => $customer->id,
-					'revoked'     => false,
-				]
-			)->get();
 		}
 
 		// run purchase actions.
 		if ( $run_actions ) {
+			$unrevoked_purchases = array_filter(
+				$customer->purchases->data ?? [],
+				function( $purchase ) {
+					return ! $purchase->revoked;
+				}
+			);
+
+			// A customer has more than the 20 purchases that are expanded, we need to fetch the rest.
+			if ( ! empty( $customer->purchases->pagination->count ) && $customer->purchases->pagination->count > $customer->purchases->pagination->limit ) {
+				// get 100 purchases.
+				$unrevoked_purchases = Purchase::where(
+					[
+						'customer_id' => $customer->id,
+						'revoked'     => false,
+					]
+				)->get();
+			}
+
 			foreach ( $unrevoked_purchases as $purchase ) {
-				do_action( 'surecart/purchase_invoked', $purchase );
+				if ( $purchase->getWPUser() ) {
+					do_action( 'surecart/purchase_invoked', $purchase );
+				}
 			}
 		}
 
