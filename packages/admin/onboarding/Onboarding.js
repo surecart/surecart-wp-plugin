@@ -144,7 +144,7 @@ export default () => {
 			case 4:
 				return <SetupProgress />;
 			case 5:
-				return <SetupDone setConfirmExit={setConfirmExit} />;
+				return <SetupDone />;
 			default:
 				break;
 		}
