@@ -31,9 +31,12 @@ export default ({ open, onRequestClose }) => {
 					run_actions: runActions,
 				},
 			});
-			createSuccessNotice(__('Customer Sync Started', 'surecart'), {
-				type: 'snackbar',
-			});
+			createSuccessNotice(
+				__('Customer sync started in the background', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
