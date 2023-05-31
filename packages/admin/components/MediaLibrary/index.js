@@ -1,16 +1,18 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { Global, css, jsx } from '@emotion/core';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { DropZone, Button, FormFileUpload } from '@wordpress/components';
+import { DropZone, Button, FormFileUpload, Modal } from '@wordpress/components';
 import Template from './template';
 import {
 	ScBlockUi,
+	ScButton,
 	ScCard,
 	ScEmpty,
 	ScFormatBytes,
+	ScIcon,
 	ScTable,
 	ScTableCell,
 	ScTag,
@@ -20,6 +22,7 @@ import Error from '../Error';
 import MediaItem from './MediaItem';
 import Preview from './Preview';
 import StorageLimitWarning from '../StorageLimitWarning';
+import useEntity from '../../hooks/useEntity';
 
 export default ({
 	render,
@@ -38,10 +41,18 @@ export default ({
 	const uploadFile = useFileUpload();
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [selectedMedia, setSelectedMedia] = useState({});
+	const [isClaimed, setIsClaimed] = useState(false);
+
+	const { item: accountItem, hasLoadedItem: hasLoadedAccountItem } =
+		useEntity('store', 'account');
 
 	const { medias, fetching } = useSelect(
 		(select) => {
 			if (!open) return {}; // must be open.
+			if (!hasLoadedAccountItem) return {}; // account info must be loaded
+			if (accountItem?.claimed === true) {
+				setIsClaimed(true);
+			} else return {};
 			const queryArgs = [
 				'surecart',
 				'media',
@@ -61,7 +72,7 @@ export default ({
 				),
 			};
 		},
-		[page, open]
+		[page, open, hasLoadedAccountItem, accountItem]
 	);
 
 	const onMediaItemClick = (media) => {
@@ -293,95 +304,154 @@ export default ({
 			{render({ setOpen })}
 
 			{open && (
-				<Template
-					title={
-						<div
+				<Fragment>
+					{!isClaimed ? (
+						<Modal
+							title={__('Claim Your Store!', 'surecart')}
 							css={css`
-								display: flex;
-								align-items: center;
-								gap: 0.5em;
+								width: 100%;
+								box-sizing: border-box;
 							`}
+							overlayClassName={'sc-modal-overflow'}
+							onRequestClose={onRequestClose}
+							shouldCloseOnClickOutside={true}
 						>
-							<span>{__('SureCart Media', 'surecart')}</span>
-							{isPrivate ? (
-								<ScTag
-									type="warning"
-									style={{ fontSize: '13px' }}
-								>
-									{__('Private', 'surecart')}
-								</ScTag>
-							) : (
-								<ScTag
-									type="success"
-									style={{ fontSize: '13px' }}
-								>
-									{__('Public', 'surecart')}
-								</ScTag>
-							)}
-						</div>
-					}
-					header={header()}
-					mainContent={mainContent()}
-					onClose={onRequestClose}
-					footer={
-						<div
-							css={css`
-								display: flex;
-								align-items: flex-end;
-								justify-content: space-between;
-								flex: 1 0 0px;
-							`}
-						>
-							{isLowMediaStorage && (
-								<StorageLimitWarning
-									mediaUsageDetails={mediaUsage}
-									mediaUsagePercentage={mediaUsagePercentage}
-								/>
-							)}
-							<Button
-								css={css`
-									margin-left: auto;
+							<Global
+								styles={css`
+									.sc-modal-overflow {
+										box-sizing: border-box;
+										.components-modal__content,
+										.components-modal__frame {
+											/* overflow: visible !important; */
+											box-sizing: border-box;
+											max-width: 480px !important;
+											width: 100%;
+										}
+									}
 								`}
-								isPrimary
-								disabled={!Object.values(selectedMedia).length}
-								onClick={onChooseClicked}
-							>
-								{__(
-									`Choose ${
-										Object.values(selectedMedia).length > 1
-											? 'images'
-											: 'image'
-									}`,
-									'surecart'
-								)}
-							</Button>
-						</div>
-					}
-					sidebar={
-						!!Object.values(selectedMedia).length && (
+							/>
+							{__(
+								'Please claim your store to upload files in your store.',
+								'surecart'
+							)}
 							<div
 								css={css`
-									padding: 15px 0;
-									display: flex;
-									flex-direction: column;
-									gap: 1em;
+									margin-top: var(--sc-spacing-xx-large);
 								`}
 							>
-								{Object.values(selectedMedia).map((media) => (
-									<Preview
-										media={media}
-										onDeleted={() => {
-											delete selectedMedia[media.id];
-											setSelectedMedia({
-												...selectedMedia,
-											});
-										}}
-									/>
-								))}
+								<ScButton
+									type="primary"
+									href={accountItem?.claim_url}
+									disabled={!accountItem?.claim_url}
+								>
+									{__('Claim Store', 'surecart')}
+									<ScIcon slot="suffix" name="arrow-right" />
+								</ScButton>
 							</div>
-						)
-					}
-				/>
+						</Modal>
+					) : (
+						<Template
+							title={
+								<div
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: 0.5em;
+									`}
+								>
+									<span>
+										{__('SureCart Media', 'surecart')}
+									</span>
+									{isPrivate ? (
+										<ScTag
+											type="warning"
+											style={{ fontSize: '13px' }}
+										>
+											{__('Private', 'surecart')}
+										</ScTag>
+									) : (
+										<ScTag
+											type="success"
+											style={{ fontSize: '13px' }}
+										>
+											{__('Public', 'surecart')}
+										</ScTag>
+									)}
+								</div>
+							}
+							header={header()}
+							mainContent={mainContent()}
+							onClose={onRequestClose}
+							footer={
+								<div
+									css={css`
+										display: flex;
+										align-items: flex-end;
+										justify-content: space-between;
+										flex: 1 0 0px;
+									`}
+								>
+									{isLowMediaStorage && (
+										<StorageLimitWarning
+											mediaUsageDetails={mediaUsage}
+											mediaUsagePercentage={
+												mediaUsagePercentage
+											}
+										/>
+									)}
+									<Button
+										css={css`
+											margin-left: auto;
+										`}
+										isPrimary
+										disabled={
+											!Object.values(selectedMedia).length
+										}
+										onClick={onChooseClicked}
+									>
+										{__(
+											`Choose ${
+												Object.values(selectedMedia)
+													.length > 1
+													? 'images'
+													: 'image'
+											}`,
+											'surecart'
+										)}
+									</Button>
+								</div>
+							}
+							sidebar={
+								!!Object.values(selectedMedia).length && (
+									<div
+										css={css`
+											padding: 15px 0;
+											display: flex;
+											flex-direction: column;
+											gap: 1em;
+										`}
+									>
+										{Object.values(selectedMedia).map(
+											(media) => (
+												<Preview
+													media={media}
+													onDeleted={() => {
+														delete selectedMedia[
+															media.id
+														];
+														setSelectedMedia({
+															...selectedMedia,
+														});
+													}}
+												/>
+											)
+										)}
+									</div>
+								)
+							}
+						/>
+					)}
+				</Fragment>
 			)}
 		</Fragment>
 	);
