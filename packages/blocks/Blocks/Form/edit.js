@@ -5,7 +5,11 @@ import Cart from './components/Cart';
 import Mode from './components/Mode';
 import Setup from './components/Setup';
 import { css, jsx } from '@emotion/core';
-import { ScCheckout, ScIcon } from '@surecart/components-react';
+import {
+	ScCheckout,
+	ScIcon,
+	ScProvisionalBanner,
+} from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import StyleProvider from '../../components/StyleProvider';
 
@@ -51,6 +55,10 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		color,
 		success_url,
 	} = attributes;
+
+	const [showClaimNotice, setShowClaimNotice] = useState(false);
+	const isAccountClaimed = window?.scData?.is_claimed === '0';
+	const claimUrl = window?.scData?.claim_url;
 
 	const [custom_success_url, setCustomSuccessUrl] = useState(!!success_url);
 	useEffect(() => {
@@ -214,6 +222,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			createBlocksFromInnerBlocksTemplate(result),
 			false
 		);
+	};
+
+	const onModeSelect = (mode) => {
+		if (mode === 'live' && !isAccountClaimed) {
+			setShowClaimNotice(true);
+			return;
+		}
+		setAttributes({ mode });
+		setShowClaimNotice(false);
 	};
 
 	return (
@@ -430,6 +447,16 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			</InspectorControls>
 
 			<StyleProvider>
+				{showClaimNotice ? (
+					<div
+						css={css`
+							overflow: hidden;
+							border-radius: 8px;
+						`}
+					>
+						<ScProvisionalBanner claimUrl={claimUrl} />
+					</div>
+				) : null}
 				{blockCount === 0 ? (
 					<Setup
 						templates={patterns}
@@ -495,7 +522,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								>
 									<Mode
 										attributes={attributes}
-										setAttributes={setAttributes}
+										onModeSelect={onModeSelect}
 									/>
 									<div
 										css={css`

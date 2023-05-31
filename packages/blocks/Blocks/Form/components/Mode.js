@@ -1,7 +1,7 @@
 import { ScDropdown, ScMenu, ScMenuItem } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, onModeSelect }) => {
 	const { mode } = attributes;
 
 	const renderBadge = () => {
@@ -25,13 +25,13 @@ export default ({ attributes, setAttributes }) => {
 			<span slot="trigger">{renderBadge()}</span>
 			<ScMenu>
 				<ScMenuItem
-					onClick={() => setAttributes({ mode: 'test' })}
+					onClick={() => onModeSelect('test')}
 					checked={mode === 'test'}
 				>
 					{__('Test', 'surecart')}
 				</ScMenuItem>
 				<ScMenuItem
-					onClick={() => setAttributes({ mode: 'live' })}
+					onClick={() => onModeSelect('live')}
 					checked={mode === 'live' || !mode}
 				>
 					{__('Live', 'surecart')}

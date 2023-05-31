@@ -122,6 +122,8 @@ class ScriptsService {
 					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'is_claimed'  		  => \SureCart::account()->claimed ? '0' : '1',
+					'claim_url'  		  => \SureCart::account()->claim_url,
 				]
 			)
 		);
@@ -340,6 +342,8 @@ class ScriptsService {
 					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'is_claimed'  		  => \SureCart::account()->claimed ? '0' : '1',
+					'claim_url'  		  => \SureCart::account()->claim_url,
 				]
 			)
 		);
