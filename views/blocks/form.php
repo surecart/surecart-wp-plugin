@@ -37,6 +37,7 @@
 		'processors'                 => $processors,
 		'manualPaymentMethods'       => $manual_payment_methods,
 		'abandonedCheckoutReturnUrl' => $abandoned_checkout_return_url,
+		'isClaimed'                  => $is_claimed,
 	]
 );
 ?>

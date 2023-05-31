@@ -107,6 +107,9 @@ export class ScCheckout {
     button: string;
   };
 
+  /** If the account is claimed. */
+  @Prop() isClaimed: boolean = false;
+
   /** Stores fetched prices for use throughout component.  */
   @State() pricesEntities: Prices = {};
 
@@ -203,7 +206,7 @@ export class ScCheckout {
     processorsState.manualPaymentMethods = this.manualPaymentMethods;
     processorsState.config.stripe.paymentElement = this.stripePaymentElement;
     checkoutState.formId = this.formId;
-    checkoutState.mode = this.mode;
+    checkoutState.mode = this.isClaimed ? this.mode : 'test';
     checkoutState.product = this.product || null;
     checkoutState.currencyCode = this.currencyCode;
     checkoutState.groupId = this.el.id;
@@ -262,7 +265,7 @@ export class ScCheckout {
       loggedIn: this.loggedIn,
       emailExists: checkoutState.checkout?.email_exists,
       formId: this.formId,
-      mode: this.mode,
+      mode: this.isClaimed ? this.mode : 'test',
       currencyCode: this.currencyCode,
     };
   }
