@@ -1,18 +1,16 @@
 /** @jsx jsx */
-import { Global, css, jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { DropZone, Button, FormFileUpload, Modal } from '@wordpress/components';
+import { DropZone, Button, FormFileUpload } from '@wordpress/components';
 import Template from './template';
 import {
 	ScBlockUi,
-	ScButton,
 	ScCard,
 	ScEmpty,
 	ScFormatBytes,
-	ScIcon,
 	ScTable,
 	ScTableCell,
 	ScTag,
@@ -23,6 +21,7 @@ import MediaItem from './MediaItem';
 import Preview from './Preview';
 import StorageLimitWarning from '../StorageLimitWarning';
 import useEntity from '../../hooks/useEntity';
+import ClaimNoticeModal from '../ClaimNoticeModal';
 
 export default ({
 	render,
@@ -306,49 +305,15 @@ export default ({
 			{open && (
 				<Fragment>
 					{!isClaimed ? (
-						<Modal
-							title={__('Claim Your Store!', 'surecart')}
-							css={css`
-								width: 100%;
-								box-sizing: border-box;
-							`}
-							overlayClassName={'sc-modal-overflow'}
-							onRequestClose={onRequestClose}
-							shouldCloseOnClickOutside={true}
-						>
-							<Global
-								styles={css`
-									.sc-modal-overflow {
-										box-sizing: border-box;
-										.components-modal__content,
-										.components-modal__frame {
-											/* overflow: visible !important; */
-											box-sizing: border-box;
-											max-width: 480px !important;
-											width: 100%;
-										}
-									}
-								`}
-							/>
-							{__(
-								'Please claim your store to upload files in your store.',
+						<ClaimNoticeModal
+							title={__('Complete Setup!', 'surecart')}
+							bodyText={__(
+								'Please complete setting up your store for free to upload media.',
 								'surecart'
 							)}
-							<div
-								css={css`
-									margin-top: var(--sc-spacing-xx-large);
-								`}
-							>
-								<ScButton
-									type="primary"
-									href={accountItem?.claim_url}
-									disabled={!accountItem?.claim_url}
-								>
-									{__('Claim Store', 'surecart')}
-									<ScIcon slot="suffix" name="arrow-right" />
-								</ScButton>
-							</div>
-						</Modal>
+							onRequestClose={onRequestClose}
+							claimUrl={accountItem?.claim_url}
+						/>
 					) : (
 						<Template
 							title={
