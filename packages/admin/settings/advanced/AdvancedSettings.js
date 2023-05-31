@@ -113,6 +113,7 @@ export default () => {
 					'Manually sync your WordPress install with SureCart.',
 					'surecart'
 				)}
+				noButton
 				loading={!hasLoadedItem}
 			>
 				<div
