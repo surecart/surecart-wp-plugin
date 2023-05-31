@@ -37,7 +37,6 @@ export class ScPaystackAddMethod {
   @Watch('paymentIntent')
   async handlePaymentIntentCreate() {
     console.log('this sc-paystack-add-method', this);
-    alert('Payment Intent')
   }
 
   async createPaymentIntent() {

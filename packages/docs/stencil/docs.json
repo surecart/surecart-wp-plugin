@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-30T12:54:27",
+  "timestamp": "2023-05-31T03:00:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -1834,6 +1834,7 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-paystack-buttons",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
         "sc-rich-text",
@@ -1932,6 +1933,9 @@
           "sc-button"
         ],
         "sc-payment-methods-list": [
+          "sc-button"
+        ],
+        "sc-paystack-buttons": [
           "sc-button"
         ],
         "sc-product-selected-price": [
@@ -18697,7 +18701,9 @@
           "sc-skeleton"
         ],
         "sc-paystack-buttons": [
-          "sc-skeleton"
+          "sc-skeleton",
+          "sc-button",
+          "sc-total"
         ],
         "sc-button": [
           "sc-spinner"
@@ -20948,11 +20954,21 @@
         "sc-order-submit"
       ],
       "dependencies": [
-        "sc-skeleton"
+        "sc-skeleton",
+        "sc-button",
+        "sc-total"
       ],
       "dependencyGraph": {
         "sc-paystack-buttons": [
-          "sc-skeleton"
+          "sc-skeleton",
+          "sc-button",
+          "sc-total"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-total": [
+          "sc-format-number"
         ],
         "sc-order-submit": [
           "sc-paystack-buttons"
@@ -30595,7 +30611,8 @@
       "dependents": [
         "sc-line-item-total",
         "sc-order-submit",
-        "sc-order-summary"
+        "sc-order-summary",
+        "sc-paystack-buttons"
       ],
       "dependencies": [
         "sc-format-number"
@@ -30611,6 +30628,9 @@
           "sc-total"
         ],
         "sc-order-summary": [
+          "sc-total"
+        ],
+        "sc-paystack-buttons": [
           "sc-total"
         ]
       }

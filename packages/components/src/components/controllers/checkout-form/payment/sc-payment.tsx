@@ -96,12 +96,13 @@ export class ScPayment {
       <Fragment>
         <sc-payment-method-choice key={processor?.id} processor-id="paystack">
           <span slot="summary" class="sc-payment-toggle-summary">
-            <sc-icon name="paystack"></sc-icon>
+            <sc-icon name="credit-card"></sc-icon>&nbsp;
+            {__('Credit Card', 'surecart')}
           </span>
 
           <sc-card>
-            <sc-payment-selected label={__('Paystack selected for check out.', 'surecart')}>
-              <sc-icon slot="icon" name="paystack"></sc-icon>
+            <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+              <sc-icon slot="icon" name="credit-card"></sc-icon>
               {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
             </sc-payment-selected>
           </sc-card>

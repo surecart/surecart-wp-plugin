@@ -45,11 +45,17 @@
 ### Depends on
 
 - [sc-skeleton](../skeleton)
+- [sc-button](../button)
+- [sc-total](../../controllers/checkout-form/total)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-paystack-buttons --> sc-skeleton
+  sc-paystack-buttons --> sc-button
+  sc-paystack-buttons --> sc-total
+  sc-button --> sc-spinner
+  sc-total --> sc-format-number
   sc-order-submit --> sc-paystack-buttons
   style sc-paystack-buttons fill:#f9f,stroke:#333,stroke-width:4px
 ```
