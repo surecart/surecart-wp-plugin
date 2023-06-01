@@ -1,4 +1,4 @@
-import { addLineItem } from '@services/session';
+import { addLineItem } from '../../services/session';
 import state from './store';
 import { getCheckout, setCheckout } from '@store/checkouts';
 import { Checkout } from 'src/types';
