@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-quantity-select renders 1`] = `
-<sc-quantity-select quantity="1">
+<sc-quantity-select quantity="1" size="medium">
   <mock:shadow-root>
     <div class="quantity" part="base">
       <span aria-label="decrease number" class="button__decrease" part="minus" role="button">
@@ -17,7 +17,7 @@ exports[`sc-quantity-select renders 1`] = `
 `;
 
 exports[`sc-quantity-select renders disabled decrement if min is greater than 1 1`] = `
-<sc-quantity-select max="3" min="2" quantity="2">
+<sc-quantity-select max="3" min="2" quantity="2" size="medium">
   <mock:shadow-root>
     <div class="quantity" part="base">
       <span aria-label="decrease number" class="button--disabled button__decrease" part="minus" role="button">
@@ -33,7 +33,7 @@ exports[`sc-quantity-select renders disabled decrement if min is greater than 1 
 `;
 
 exports[`sc-quantity-select renders disabled increment if max matches quantity 1`] = `
-<sc-quantity-select max="2" quantity="2">
+<sc-quantity-select max="2" quantity="2" size="medium">
   <mock:shadow-root>
     <div class="quantity" part="base">
       <span aria-label="decrease number" class="button__decrease" part="minus" role="button">

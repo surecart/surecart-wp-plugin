@@ -28,6 +28,7 @@ import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
+// import * as CollapsibleRow from '@blocks/CollapsibleRow';
 import * as storeLogo from '@blocks/StoreLogo';
 
 // deprecated
@@ -39,7 +40,7 @@ registerBlocks([
 	checkout,
 	buyButton,
 	addToCartButton,
-  cartMenuButton,
+	cartMenuButton,
 	logoutButton,
 	card,
 	confirmation,
@@ -54,6 +55,7 @@ registerBlocks([
 	customerSubscriptions,
 	customerPaymentMethods,
 	customerBillingDetails,
+	// CollapsibleRow,
 	WordPressAccount,
 	dashboardArea,
 	dashboardPage,

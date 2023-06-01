@@ -66,6 +66,7 @@ class AssetsService {
 		// globals.
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueGlobals' ] );
 
+		add_filter( 'enqueue_block_assets', [ $this, 'preloadBlockAssets' ] );
 		add_filter( 'render_block_data', [ $this, 'preloadComponents' ] );
 
 		// block editor.
@@ -80,6 +81,18 @@ class AssetsService {
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
+	}
+
+	public function preloadBlockAssets() {
+		if ( is_admin() ) {
+			return;
+		}
+		global $post;
+		foreach ( $this->config['preload'] as $block_name => $deps ) {
+			if ( has_block( $block_name, $post ) ) {
+				\SureCart::preload()->add( $this->config['preload'][ $block_name ] );
+			}
+		}
 	}
 
 	/**

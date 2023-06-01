@@ -103,6 +103,7 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 	 * @return void
 	 */
 	public function registerModelRoutes() {
+		$this->registerRoutes();
 		if ( $this->hasAnyMethods( [ 'index', 'create' ] ) ) {
 			register_rest_route(
 				"$this->name/v$this->version",
@@ -153,8 +154,6 @@ abstract class RestServiceProvider extends \WP_REST_Controller implements RestSe
 				)
 			);
 		}
-
-		$this->registerRoutes();
 	}
 
 	/**

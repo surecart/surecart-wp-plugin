@@ -32,6 +32,7 @@
 | Part             | Description |
 | ---------------- | ----------- |
 | `"base"`         |             |
+| `"body"`         |             |
 | `"content"`      |             |
 | `"header"`       |             |
 | `"radio"`        |             |

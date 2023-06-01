@@ -1,4 +1,46 @@
-sc-order-submit {
-  display:block;
-  width: auto;
+sc-cart-submit {
+  position: relative;
+  width: 100%;
+
+  a.wp-block-button__link {
+    position: relative;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  sc-spinner::part(base) {
+    --indicator-color: currentColor;
+    --spinner-size: 12px;
+    position: absolute;
+    top: calc(50% - var(--spinner-size) + (var(--spinner-size) / 4));
+    left: calc(50% - var(--spinner-size) + (var(--spinner-size) / 4));
+  }
+
+  [data-text],
+  [data-loader] {
+    transition: opacity var(--sc-transition-fast) ease-in-out, visibility var(--sc-transition-fast) ease-in-out;
+  }
+
+  [data-loader] {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.is-disabled {
+    pointer-events: none;
+  }
+
+  &.is-busy {
+    [data-text] {
+      opacity: 0;
+      visibility: hidden;
+    }
+    [data-loader] {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }
