@@ -26,8 +26,8 @@ const query = {
 
 @Component({
   tag: 'sc-cart-form',
-  styles: ':host { display: block }',
-  shadow: true,
+  styles: 'sc-cart-form { display: inline-block }',
+  shadow: false,
 })
 export class ScCartForm {
   private form: HTMLScFormElement;
