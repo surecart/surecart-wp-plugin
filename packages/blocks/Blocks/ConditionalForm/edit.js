@@ -180,6 +180,7 @@ export default ({ attributes, setAttributes, clientId, isSelected }) => {
 						width: 75%;
 						max-width: 650px;
 						max-height: 80%;
+						--sc-color-primary-text: #fff;
 					`}
 				>
 					<Rules

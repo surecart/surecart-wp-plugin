@@ -1,13 +1,20 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSwitch } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDialog,
+	ScFormControl,
+	ScIcon,
+	ScSwitch,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
+import CustomerSyncModal from './components/CustomerSyncModal';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -16,6 +23,7 @@ export default () => {
 		'store',
 		'settings'
 	);
+	const [modal, setModal] = useState(null);
 
 	/**
 	 * Form is submitted.
@@ -97,24 +105,37 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScSwitch
-					checked={item?.auto_sync_user_to_customer}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							auto_sync_user_to_customer:
-								!item?.auto_sync_user_to_customer,
-						});
-					}}
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Syncing', 'surecart')}
+				description={__(
+					'Manually sync your WordPress install with SureCart.',
+					'surecart'
+				)}
+				noButton
+				loading={!hasLoadedItem}
+			>
+				<div
+					css={css`
+						display: grid;
+						gap: 0.5em;
+					`}
 				>
-					{__('Auto Sync Customers', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'If a WordPress user does not have a customer record, find or create one when they login to their dashboard.',
+					<ScFormControl
+						label={__('Customers', 'surecart')}
+						help={__(
+							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
 							'surecart'
 						)}
-					</span>
-				</ScSwitch>
+					/>
+					<div>
+						<ScButton onClick={() => setModal('customer-sync')}>
+							<ScIcon name="users" slot="prefix"></ScIcon>
+							{__('Sync Customers', 'surecart')}
+						</ScButton>
+					</div>
+				</div>
 			</SettingsBox>
 
 			<SettingsBox
@@ -143,6 +164,11 @@ export default () => {
 					</span>
 				</ScSwitch>
 			</SettingsBox>
+
+			<CustomerSyncModal
+				open={modal === 'customer-sync'}
+				onRequestClose={() => setModal(null)}
+			/>
 		</SettingsTemplate>
 	);
 };

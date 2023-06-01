@@ -23,7 +23,7 @@ class Block extends BaseBlock {
 
 		<sc-product-price-choices
 			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-			class="surecart-block"
+			class="surecart-block product-price-choices"
 			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns: <?php echo esc_attr( $attributes['columns'] ?? 2 ); ?>; border: none; <?php echo esc_attr( $styles ); ?>"
 			<?php echo ( ! empty( $attributes['show_price'] ) ? 'show-price' : '' ); ?>>
 		</sc-product-price-choices>

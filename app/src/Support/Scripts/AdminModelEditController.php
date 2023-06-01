@@ -64,6 +64,10 @@ abstract class AdminModelEditController {
 	public function enqueueComponents() {
 		wp_enqueue_script( 'surecart-components' );
 		wp_enqueue_style( 'surecart-themes-default' );
+		wp_add_inline_style(
+			'surecart-themes-default',
+			':root { --sc-color-primary-text: #fff; }' // this is important in case the user has a dark primary text.
+		);
 	}
 
 	/**

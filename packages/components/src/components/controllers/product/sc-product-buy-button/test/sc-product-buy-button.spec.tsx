@@ -7,12 +7,6 @@ describe('sc-product-buy-button', () => {
       components: [ScProductBuyButton],
       html: `<sc-product-buy-button></sc-product-buy-button>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-product-buy-button>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-product-buy-button>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

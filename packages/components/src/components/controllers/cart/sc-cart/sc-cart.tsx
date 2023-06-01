@@ -5,6 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
+import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { expand } from '../../../../services/session';
 import { Checkout, ResponseError } from '../../../../types';
@@ -123,6 +124,7 @@ export class ScCart {
     uiStore.onChange('cart', cart => {
       this.open = cart.open;
     });
+    checkoutState.mode = this.mode;
   }
 
   state() {

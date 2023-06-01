@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-product-price-choices renders 1`] = `
+<sc-product-price-choices style="display: none;">
+  <mock:shadow-root></mock:shadow-root>
+</sc-product-price-choices>
+`;

@@ -28,7 +28,7 @@ import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
-import * as CollapsibleRow from '@blocks/CollapsibleRow';
+// import * as CollapsibleRow from '@blocks/CollapsibleRow';
 import * as storeLogo from '@blocks/StoreLogo';
 
 // deprecated
@@ -55,7 +55,7 @@ registerBlocks([
 	customerSubscriptions,
 	customerPaymentMethods,
 	customerBillingDetails,
-	CollapsibleRow,
+	// CollapsibleRow,
 	WordPressAccount,
 	dashboardArea,
 	dashboardPage,

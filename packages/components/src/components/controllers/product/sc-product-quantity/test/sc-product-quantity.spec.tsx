@@ -7,12 +7,6 @@ describe('sc-product-quantity', () => {
       components: [ScProductQuantity],
       html: `<sc-product-quantity></sc-product-quantity>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-product-quantity>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-product-quantity>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });
