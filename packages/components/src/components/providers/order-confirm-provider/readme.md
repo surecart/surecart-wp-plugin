@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute     | Description                | Type                                                      | Default     |
-| ------------- | ------------- | -------------------------- | --------------------------------------------------------- | ----------- |
-| `successText` | --            | Success text for the form. | `{ title: string; description: string; button: string; }` | `undefined` |
-| `successUrl`  | `success-url` | Success url.               | `string`                                                  | `undefined` |
+| Property         | Attribute         | Description                                             | Type                                                      | Default     |
+| ---------------- | ----------------- | ------------------------------------------------------- | --------------------------------------------------------- | ----------- |
+| `checkoutStatus` | `checkout-status` | Checkout status to listen and do payment related stuff. | `string`                                                  | `undefined` |
+| `successText`    | --                | Success text for the form.                              | `{ title: string; description: string; button: string; }` | `undefined` |
+| `successUrl`     | `success-url`     | Success url.                                            | `string`                                                  | `undefined` |
 
 
 ## Events

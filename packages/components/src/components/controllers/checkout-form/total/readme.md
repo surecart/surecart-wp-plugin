@@ -20,7 +20,6 @@
  - [sc-line-item-total](../line-item-total)
  - [sc-order-submit](../order-submit)
  - [sc-order-summary](../order-summary)
- - [sc-paystack-buttons](../../../ui/paystack-buttons)
 
 ### Depends on
 
@@ -33,7 +32,6 @@ graph TD;
   sc-line-item-total --> sc-total
   sc-order-submit --> sc-total
   sc-order-summary --> sc-total
-  sc-paystack-buttons --> sc-total
   style sc-total fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -1028,6 +1028,7 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
+    "checkout-status": true,
     "success-text": true,
     "success-url": true,
     "style": true,
@@ -1327,19 +1328,6 @@
     "customer-id": true,
     "live-mode": true,
     "success-url": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-paystack-buttons": {
-    "account-id": true,
-    "busy": true,
-    "buttons": true,
-    "label": true,
-    "mode": true,
-    "order": true,
-    "public-key": true,
     "style": true,
     "id": true,
     "class": true,

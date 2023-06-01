@@ -184,7 +184,7 @@ return [
 		'surecart/payment'                   => [ 'sc-payment', 'sc-toggles', 'sc-toggle', 'sc-tag' ],
 		'surecart/price-choice'              => [ 'sc-price-choice', 'sc-choice', 'sc-skeleton' ],
 		'surecart/price-selector'            => [ 'sc-price-choices' ],
-		'surecart/submit'                    => [ 'sc-order-submit', 'sc-button', 'sc-total', 'sc-paypal-buttons', 'sc-paystack-buttons', 'sc-format-number', 'sc-spinner' ],
+		'surecart/submit'                    => [ 'sc-order-submit', 'sc-button', 'sc-total', 'sc-paypal-buttons', 'sc-format-number', 'sc-spinner' ],
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/totals'                    => [ 'sc-order-summary' ],

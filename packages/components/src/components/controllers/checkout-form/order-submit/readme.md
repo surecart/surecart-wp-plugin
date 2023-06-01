@@ -31,7 +31,6 @@
 ### Depends on
 
 - [sc-paypal-buttons](../../../ui/paypal-buttons)
-- [sc-paystack-buttons](../../../ui/paystack-buttons)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
 - [sc-total](../total)
@@ -41,15 +40,11 @@
 ```mermaid
 graph TD;
   sc-order-submit --> sc-paypal-buttons
-  sc-order-submit --> sc-paystack-buttons
   sc-order-submit --> sc-button
   sc-order-submit --> sc-icon
   sc-order-submit --> sc-total
   sc-order-submit --> sc-secure-notice
   sc-paypal-buttons --> sc-skeleton
-  sc-paystack-buttons --> sc-skeleton
-  sc-paystack-buttons --> sc-button
-  sc-paystack-buttons --> sc-total
   sc-button --> sc-spinner
   sc-total --> sc-format-number
   style sc-order-submit fill:#f9f,stroke:#333,stroke-width:4px
