@@ -99,7 +99,7 @@ export class ScPayment {
 
     // If stripe is used, then no need to show this, as we'll only show one card at a time.
     const stripe = getAvailableProcessor('stripe');
-    if (stripe !== null) {
+    if (!!stripe) {
       return;
     }
 
