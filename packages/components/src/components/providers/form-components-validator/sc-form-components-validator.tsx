@@ -119,10 +119,10 @@ export class ScFormComponentsValidator {
   addShippingChoices() {
     if (this.hasShippingChoices) return;
 
-    // const payment = this.el.querySelector('sc-payment');
-    // const shippingChoices = document.createElement('sc-shipping-choices');
-    // payment.parentNode.insertBefore(shippingChoices, payment);
-    // this.hasShippingChoices = true;
+    const payment = this.el.querySelector('sc-payment');
+    const shippingChoices = document.createElement('sc-shipping-choices');
+    payment.parentNode.insertBefore(shippingChoices, payment);
+    this.hasShippingChoices = true;
   }
 
   render() {
