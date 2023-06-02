@@ -92,12 +92,23 @@ export class ScPayment {
   }
 
   renderPaystack(processor) {
+    // if system currency is not in the supported currency list, then stop.
+    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
+      return;
+    }
+
+    // If stripe is used, then no need to show this, as we'll only show one card at a time.
+    const stripe = getAvailableProcessor('stripe');
+    if (stripe !== null) {
+      return;
+    }
+
     return (
       <Fragment>
         <sc-payment-method-choice key={processor?.id} processor-id="paystack">
           <span slot="summary" class="sc-payment-toggle-summary">
-            <sc-icon name="credit-card"></sc-icon>&nbsp;
-            {__('Credit Card', 'surecart')}
+            <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+            <span>{__('Credit Card', 'surecart')}</span>
           </span>
 
           <sc-card>
