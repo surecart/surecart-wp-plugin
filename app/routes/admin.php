@@ -9,6 +9,7 @@
  * @package SureCart
  */
 
+use SureCart\Middleware\AccountClaimMiddleware;
 use SureCart\Models\ApiToken;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,6 +28,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Onboarding
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->where( 'admin', 'sc-claim-account' )
+->name( 'account.claim' )
+->middleware( AccountClaimMiddleware::class )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
 ->handle( 'OnboardingController@show' );
 
