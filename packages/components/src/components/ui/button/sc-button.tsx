@@ -188,7 +188,7 @@ export class ScButton {
           'button--has-label': this.hasLabel,
           'button--has-prefix': this.hasPrefix,
           'button--has-suffix': this.hasSuffix,
-          'button--is-rtl':isRtl()
+          'button--is-rtl': isRtl(),
         }}
         href={this.href}
         target={this.target}

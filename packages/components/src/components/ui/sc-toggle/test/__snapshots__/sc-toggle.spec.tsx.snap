@@ -14,7 +14,7 @@ exports[`sc-toggle renders 1`] = `
           </slot>
         </span>
       </header>
-      <div class="details__body" hidden="" style="height: 0;">
+      <div class="details__body" hidden="" part="body" style="height: 0;">
         <div aria-labelledby="header" class="details__content" id="content" part="content" role="region">
           <slot></slot>
         </div>

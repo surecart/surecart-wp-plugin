@@ -1,0 +1,106 @@
+@import './styles/swiper.scss';
+:host {
+  display: block;
+}
+
+.image-slider {
+  user-select: none;
+
+  &__thumbs {
+    margin-top: var(--sc-slider-spacing, var(--sc-spacing-small));
+    display: flex;
+    align-items: stretch;
+
+    .swiper {
+      flex: 1; // important to prevent slideshow from collapsing.
+    }
+
+    .image-slider__navigation {
+      display: none;
+    }
+    &--has-navigation {
+      .image-slider__navigation {
+        display: flex;
+      }
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+
+    &.image-slider {
+      &--is-prev {
+        padding-right: 8px;
+      }
+      &--is-next {
+        padding-left: 8px;
+      }
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.25;
+      cursor: default;
+    }
+  }
+
+  /** Slider **/
+  &__slider {
+    height: var(--sc-product-slider-height, auto);
+    cursor: grab;
+
+    .swiper-slide-img {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      border-radius: var(--sc-border-radius-medium);
+      background: rgba(0, 0, 0, 0.1);
+
+      img {
+        display: block;
+        margin: auto;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: var(--sc-border-radius-medium);
+      }
+    }
+  }
+
+  /** Thumbnails **/
+  &__thumb {
+    cursor: pointer;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: var(--sc-border-radius-medium);
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: var(--sc-image-slideshow-thumb-object-fit, cover);
+      aspect-ratio: var(--sc-image-slideshow-thumb-aspect-ratio, 4 / 3);
+      border-radius: var(--sc-border-radius-medium);
+    }
+
+    &--is-active {
+      img {
+        outline: var(--sc-image-slideshow-thumb-active-outline, 2px solid var(--sc-focus-ring-color-primary, var(--sc-color-primary-500)));
+        outline-offset: -2px;
+      }
+    }
+  }
+
+  &--is-fixed-height .image-slider__slider {
+    .swiper-slide-img {
+      background: transparent;
+      img {
+        max-height: 100%;
+      }
+    }
+  }
+}

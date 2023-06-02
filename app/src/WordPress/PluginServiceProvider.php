@@ -16,8 +16,6 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$app = $container[ SURECART_APPLICATION_KEY ];
-
 		$container['surecart.plugin'] = function( $c ) {
 			return new PluginService( $c[ SURECART_APPLICATION_KEY ] );
 		};
