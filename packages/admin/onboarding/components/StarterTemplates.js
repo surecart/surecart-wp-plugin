@@ -84,6 +84,11 @@ export default ({
 					gap: 20px;
 					padding: 20px 0 0;
 					margin: 0 auto;
+					@media (min-width: 480px) {
+						padding: 30px 20px;
+						max-width: 780px;
+						grid-template-columns: repeat(2, 1fr);
+					}
 					@media (min-width: 680px) {
 						padding: 30px 20px;
 						max-width: 780px;
@@ -92,13 +97,13 @@ export default ({
 					@media (min-width: 1024px) {
 						max-width: 760px;
 					}
-					@media (min-width: 1760px) {
+					/* @media (min-width: 1760px) {
 						max-width: 1024px;
 						grid-template-columns: repeat(4, 1fr);
 					}
 					@media (min-width: 2180px) {
 						grid-template-columns: repeat(4, 1fr);
-					}
+					} */
 				`}
 			>
 				{templates.map((template) => (
@@ -147,9 +152,26 @@ function TemplateItem({ active, template, onItemClick }) {
 					position: relative;
 					width: 100%;
 					height: 100%;
-					background-color: rgba(0, 0, 0, 0.4);
+					border-radius: 12px;
 				`}
 			>
+				<div
+					css={css`
+						position: absolute;
+						inset: 0;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						transition: all 200ms ease;
+						background-color: ${active
+							? 'var(--sc-color-brand-primary)'
+							: 'var(--sc-color-gray-900)'};
+						opacity: ${active ? 1 : 0.4};
+						mix-blend-mode: multiply;
+						border-radius: 12px;
+					`}
+				/>
 				<div
 					css={css`
 						position: absolute;
