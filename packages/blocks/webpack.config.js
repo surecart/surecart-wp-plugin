@@ -24,7 +24,6 @@ module.exports = {
 		},
 	},
 	entry: {
-		...defaultConfig.entry,
 		library: path.resolve(__dirname, 'index.js'),
 		cart: path.resolve(__dirname, 'cart.js'),
 		product: path.resolve(__dirname, 'product.js'),

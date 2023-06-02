@@ -17,6 +17,8 @@ import {
 	Disabled,
 	PanelRow,
 	ToggleControl,
+	UnitControl as __stableUnitControl,
+	__experimentalUnitControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
@@ -33,6 +35,10 @@ import { PRODUCT_ITEM_LAYOUT } from '../ProductItem/edit';
 import ModelSelector from '../../../admin/components/ModelSelector';
 import ProductTag from './components/ProductTag';
 
+const UnitControl = __stableUnitControl
+	? __stableUnitControl
+	: __experimentalUnitControl;
+
 export default ({ attributes, setAttributes, clientId }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [layoutConfig, setLayoutConfig] = useState(null);
@@ -46,6 +52,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		pagination_enabled,
 		ajax_pagination,
 		pagination_auto_scroll,
+		pagination_size,
 		ids,
 	} = attributes;
 	const blockProps = useBlockProps();
@@ -78,6 +85,12 @@ export default ({ attributes, setAttributes, clientId }) => {
 			vars[`--sc-product-${prefix}-text-color`] = attributes?.textColor
 				? getColorPresetCssVar(attributes?.textColor)
 				: color?.text;
+		}
+		if (attributes?.backgroundColor || color?.background) {
+			vars[`--sc-product-${prefix}-background-color`] =
+				attributes?.backgroundColor
+					? getColorPresetCssVar(attributes?.backgroundColor)
+					: color?.background;
 		}
 		if (spacing?.padding) {
 			['top', 'bottom', 'left', 'right'].forEach((dir) => {
@@ -197,7 +210,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					<RangeControl
 						label={
 							pagination_enabled
-								? __('Per page limit', 'surecart')
+								? __('Products Per Page', 'surecart')
 								: __('Limit', 'surecart')
 						}
 						value={limit}
@@ -273,6 +286,25 @@ export default ({ attributes, setAttributes, clientId }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
+				<PanelBody>
+					<PanelRow>
+						<UnitControl
+							label={__('Pagination Font Size', 'surecart')}
+							onChange={(pagination_size) =>
+								setAttributes({ pagination_size })
+							}
+							value={pagination_size}
+							help={__(
+								'This controls the font size of the pagination.',
+								'surecart'
+							)}
+							units={[
+								{ value: 'px', label: 'px', default: 14 },
+								{ value: 'em', label: 'em', default: 1 },
+							]}
+						/>
+					</PanelRow>
+				</PanelBody>
 				<PanelBody title={__('Products', 'surecart')}>
 					<p>
 						{__(
@@ -314,6 +346,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<ModelSelector
 							name="product"
 							placeholder={__('Select A Product', 'surecart')}
+							placement={'top-end'}
 							requestQuery={{
 								archived: false,
 								status: ['published'],
@@ -353,6 +386,8 @@ export default ({ attributes, setAttributes, clientId }) => {
 								style={{
 									'border-style': 'none',
 									'--sc-product-item-list-column': columns,
+									'--sc-pagination-font-size':
+										pagination_size,
 									'--sc-product-item-list-gap':
 										getSpacingPresetCssVar(
 											style?.spacing?.blockGap
@@ -361,6 +396,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 									...getConfigStyles(layoutConfig),
 								}}
 								ids={ids}
+								limit={limit}
 								layoutConfig={layoutConfig}
 								paginationAlignment={pagination_alignment}
 								sortEnabled={sort_enabled}

@@ -124,15 +124,26 @@ export class ScProductItemList {
     }
   }
 
+  private debounce;
   @Watch('ids')
+  @Watch('limit')
   handleIdsChange() {
-    this.updateProducts();
+    if (this.debounce !== null) {
+      clearTimeout(this.debounce);
+      this.debounce = null;
+    }
+
+    this.debounce = window.setTimeout(() => {
+      // your debounced traitment
+      this.updateProducts();
+      this.debounce = null;
+    }, 200);
   }
 
   async fetchProducts() {
     const response = (await apiFetch({
       path: addQueryArgs(`surecart/v1/products/`, {
-        expand: ['prices'],
+        expand: ['prices', 'product_medias', 'product_media.media'],
         archived: false,
         status: ['published'],
         per_page: this.limit,
@@ -249,7 +260,11 @@ export class ScProductItemList {
                   {this.layoutConfig?.map(layout => {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
-                        return <sc-skeleton style={{ width: '80%' }}></sc-skeleton>;
+                        return (
+                          <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
+                            <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
+                          </div>
+                        );
                       case 'surecart/product-item-image':
                         return (
                           <sc-skeleton
@@ -258,11 +273,16 @@ export class ScProductItemList {
                               'minHeight': '90%',
                               'aspectRatio': layout.attributes?.ratio ?? '1/1.4',
                               '--sc-border-radius-pill': '12px',
+                              'display': 'inline-block',
                             }}
                           ></sc-skeleton>
                         );
                       case 'surecart/product-item-price':
-                        return <sc-skeleton style={{ width: '40%' }}></sc-skeleton>;
+                        return (
+                          <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
+                            <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+                          </div>
+                        );
                       default:
                         return null;
                     }
@@ -270,7 +290,7 @@ export class ScProductItemList {
                 </div>
               ))
             : (this.products || []).map(product => {
-                return <sc-product-item product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
+                return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
               })}
         </div>
         {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (

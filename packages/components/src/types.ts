@@ -237,6 +237,11 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Price>;
   };
+  product_medias: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<ProductMedia>;
+  };
   downloads: {
     object: 'list';
     pagination: Pagination;

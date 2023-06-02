@@ -1,11 +1,11 @@
-/**
- * WordPress dependencies
- */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { useState, useMemo } from '@wordpress/element';
 import { PanelRow, Dropdown, Button, Spinner } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies
@@ -46,6 +46,12 @@ export default function PostTemplate({ product, updateProduct }) {
 				className="edit-post-post-template__dropdown"
 				contentClassName="edit-post-post-template__dialog"
 				focusOnMount
+				css={css`
+					.components-dropdown__content .components-popover__content {
+						min-width: 240px;
+						padding: 0;
+					}
+				`}
 				renderToggle={({ isOpen, onToggle }) => (
 					<PostTemplateToggle
 						isOpen={isOpen}
@@ -54,12 +60,45 @@ export default function PostTemplate({ product, updateProduct }) {
 					/>
 				)}
 				renderContent={({ onClose }) => (
-					<PostTemplateForm
-						onClose={onClose}
-						template={template}
-						product={product}
-						updateProduct={updateProduct}
-					/>
+					<>
+						<div
+							css={css`
+								margin: 0;
+								padding: 8px;
+							`}
+						>
+							<PostTemplateForm
+								onClose={onClose}
+								template={template}
+								product={product}
+								updateProduct={updateProduct}
+							/>
+						</div>
+						<a
+							href={addQueryArgs('site-editor.php', {
+								postType: 'wp_template_part',
+								path: '/wp_template_part/all',
+							})}
+							className="components-button"
+							css={css`
+								background: #1e1e1e;
+								border-radius: 0;
+								color: #fff;
+								display: flex;
+								height: 44px;
+								justify-content: center;
+								width: 100%;
+
+								&:hover,
+								&:active,
+								&:focus {
+									color: #fff !important;
+								}
+							`}
+						>
+							{__('Manage all template parts', 'surecart')}
+						</a>
+					</>
 				)}
 			/>
 		</PanelRow>

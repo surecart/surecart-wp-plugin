@@ -27,6 +27,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'auto_sync_user_to_customer',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'honeypot_enabled',
 			[
 				'type'              => 'boolean',

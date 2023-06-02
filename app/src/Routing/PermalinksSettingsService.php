@@ -44,7 +44,8 @@ class PermalinksSettingsService {
 	 *
 	 * @return bool
 	 */
-	public function updatePermalinkSettings() {
+	public function updatePermalinkSettings( $key, $value ) {
+		$this->permalinks[ $key ] = $value;
 		return update_option( 'surecart_permalinks', $this->permalinks );
 	}
 

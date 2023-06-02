@@ -36,7 +36,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 
 		// Register product theme condition.
-		if ( class_exists( '\ElementorPro\Plugin' ) ) {
+		if ( defined( 'ELEMENTOR_PRO_VERSION' ) ) {
 			add_action( 'elementor/documents/register', [ $this, 'register_document' ] );
 			add_action( 'elementor/theme/register_conditions', [ $this, 'product_theme_conditions' ] );
 			add_filter( 'elementor/query/get_autocomplete/surecart-product', [ $this, 'get_autocomplete' ], 10, 2 );

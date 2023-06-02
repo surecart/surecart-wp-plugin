@@ -1,4 +1,4 @@
-import { addLineItem } from '@services/session';
+import { addLineItem } from '../../services/session';
 import state from './store';
 import { getCheckout, setCheckout } from '@store/checkouts';
 import { Checkout } from 'src/types';
@@ -7,7 +7,6 @@ import { toggleCart } from '@store/ui';
 export const submitCartForm = async () => {
   if (!state.selectedPrice?.id) return;
   if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
-  console.log(state.quantity);
   try {
     state.busy = true;
     const checkout = await addLineItem({

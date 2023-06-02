@@ -23,7 +23,7 @@ export default ({ product, updateProduct }) => {
 		<PanelRow
 			css={css`
 				align-items: flex-start;
-				justify-content: flex-start;
+				justify-content: space-between;
 				width: 100%;
 			`}
 			ref={setPopoverAnchor}
@@ -36,7 +36,7 @@ export default ({ product, updateProduct }) => {
 					width: 45%;
 				`}
 			>
-				{__('URL')}
+				{__('URL Slug', 'surecart')}
 			</span>
 			<Dropdown
 				popoverProps={popoverProps}
@@ -63,7 +63,7 @@ export default ({ product, updateProduct }) => {
 };
 
 function PostURLToggle({ isOpen, onClick, product }) {
-	const label = `${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`;
+	const label = product?.slug;
 	return (
 		<Button
 			css={css`

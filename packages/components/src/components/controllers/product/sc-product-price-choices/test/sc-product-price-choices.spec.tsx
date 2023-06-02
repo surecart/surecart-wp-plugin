@@ -7,12 +7,6 @@ describe('sc-product-price-choices', () => {
       components: [ScProductPriceChoices],
       html: `<sc-product-price-choices></sc-product-price-choices>`,
     });
-    expect(page.root).toEqualHtml(`
-      <sc-product-price-choices>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </sc-product-price-choices>
-    `);
+    expect(page.root).toMatchSnapshot();
   });
 });

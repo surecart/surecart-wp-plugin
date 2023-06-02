@@ -15,7 +15,8 @@
 			"type": "string"
 		},
 		"ratio": {
-			"type": "string"
+			"type": "string",
+			"default": "3 / 4"
 		}
 	},
 	"supports": {

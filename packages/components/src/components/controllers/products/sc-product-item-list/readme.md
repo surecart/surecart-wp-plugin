@@ -7,18 +7,19 @@
 
 ## Properties
 
-| Property              | Attribute              | Description            | Type                                        | Default             |
-| --------------------- | ---------------------- | ---------------------- | ------------------------------------------- | ------------------- |
-| `ajaxPagination`      | `ajax-pagination`      | Should we paginate?    | `boolean`                                   | `true`              |
-| `ids`                 | --                     | Limit to a set of ids. | `string[]`                                  | `undefined`         |
-| `layoutConfig`        | --                     |                        | `{ blockName: string; attributes: any; }[]` | `undefined`         |
-| `limit`               | `limit`                |                        | `number`                                    | `15`                |
-| `paginationAlignment` | `pagination-alignment` |                        | `string`                                    | `'center'`          |
-| `paginationEnabled`   | `pagination-enabled`   | Should we paginate?    | `boolean`                                   | `true`              |
-| `query`               | `query`                | Query to search for    | `string`                                    | `undefined`         |
-| `searchEnabled`       | `search-enabled`       | Should allow search    | `boolean`                                   | `true`              |
-| `sort`                | `sort`                 | Sort                   | `string`                                    | `'created_at:desc'` |
-| `sortEnabled`         | `sort-enabled`         | Should allow search    | `boolean`                                   | `true`              |
+| Property               | Attribute                | Description                                               | Type                                        | Default             |
+| ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ------------------- |
+| `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`         |
+| `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`         |
+| `limit`                | `limit`                  |                                                           | `number`                                    | `15`                |
+| `paginationAlignment`  | `pagination-alignment`   |                                                           | `string`                                    | `'center'`          |
+| `paginationAutoScroll` | `pagination-auto-scroll` | Should we auto-scroll to the top when paginating via ajax | `boolean`                                   | `true`              |
+| `paginationEnabled`    | `pagination-enabled`     | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `query`                | `query`                  | Query to search for                                       | `string`                                    | `undefined`         |
+| `searchEnabled`        | `search-enabled`         | Should allow search                                       | `boolean`                                   | `true`              |
+| `sort`                 | `sort`                   | Sort                                                      | `string`                                    | `'created_at:desc'` |
+| `sortEnabled`          | `sort-enabled`           | Should allow search                                       | `boolean`                                   | `true`              |
 
 
 ## Dependencies
@@ -29,6 +30,7 @@
 - [sc-button](../../../ui/button)
 - [sc-menu](../../../ui/menu)
 - [sc-menu-item](../../../ui/menu-item)
+- [sc-tag](../../../ui/tag)
 - [sc-input](../../../ui/input)
 - [sc-icon](../../../ui/icon)
 - [sc-empty](../../../ui/empty)
@@ -44,6 +46,7 @@ graph TD;
   sc-product-item-list --> sc-button
   sc-product-item-list --> sc-menu
   sc-product-item-list --> sc-menu-item
+  sc-product-item-list --> sc-tag
   sc-product-item-list --> sc-input
   sc-product-item-list --> sc-icon
   sc-product-item-list --> sc-empty

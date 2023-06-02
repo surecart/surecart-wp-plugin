@@ -34,9 +34,6 @@ export class ScProductQuantity {
   @Prop() help: string;
 
   render() {
-    if (state.selectedPrice?.ad_hoc) {
-      return <Host style={{ display: 'none' }}></Host>;
-    }
     return (
       <Host>
         <sc-form-control
@@ -51,7 +48,12 @@ export class ScProductQuantity {
           labelId={this.labelId}
           name={this.name}
         >
-          <sc-quantity-select size={this.size} quantity={state.quantity} onScInput={e => (state.quantity = e.detail)}></sc-quantity-select>
+          <sc-quantity-select
+            size={this.size}
+            quantity={state.selectedPrice?.ad_hoc ? 1 : state.quantity}
+            disabled={state.selectedPrice?.ad_hoc}
+            onScInput={e => (state.quantity = e.detail)}
+          ></sc-quantity-select>
         </sc-form-control>
       </Host>
     );

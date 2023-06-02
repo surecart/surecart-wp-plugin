@@ -86,6 +86,7 @@ class Block extends BaseBlock {
 	public function getProductListStyle( $attr ) {
 		$style  = '--sc-product-item-list-column: ' . ( $attr['columns'] ?? 3 ) . ';';
 		$style .= '--sc-product-item-list-gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '40px' ) . ';';
+		$style .= '--sc-pagination-font-size: ' . ( $attr['paginationSize'] ?? '14px' ) . ';';
 		return $style;
 	}
 
@@ -97,7 +98,7 @@ class Block extends BaseBlock {
 	 */
 	public function getVars( $attr, $prefix ) {
 		$style = '';
-		// padding
+		// padding.
 		if ( ! empty( $attr['style']['spacing']['padding'] ) ) {
 			$padding = $attr['style']['spacing']['padding'];
 			$style  .= '--sc-product-' . $prefix . '-padding-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $padding ) ? $padding['top'] : '0' ) . ';';
@@ -105,7 +106,7 @@ class Block extends BaseBlock {
 			$style  .= '--sc-product-' . $prefix . '-padding-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $padding ) ? $padding['left'] : '0' ) . ';';
 			$style  .= '--sc-product-' . $prefix . '-padding-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $padding ) ? $padding['right'] : '0' ) . ';';
 		}
-		// margin
+		// margin.
 		if ( ! empty( $attr['style']['spacing']['margin'] ) ) {
 			$margin = $attr['style']['spacing']['margin'];
 			$style .= '--sc-product-' . $prefix . '-margin-top: ' . $this->getSpacingPresetCssVar( array_key_exists( 'top', $margin ) ? $margin['top'] : '0' ) . ';';
@@ -113,38 +114,42 @@ class Block extends BaseBlock {
 			$style .= '--sc-product-' . $prefix . '-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $margin ) ? $margin['left'] : '0' ) . ';';
 			$style .= '--sc-product-' . $prefix . '-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $margin ) ? $margin['right'] : '0' ) . ';';
 		}
-		// aspect ratio
+		// aspect ratio.
 		if ( ! empty( $attr['ratio'] ) ) {
 			$style .= '--sc-product-' . $prefix . '-aspect-ratio: ' . $attr['ratio'] . ';';
 		}
-		// border width
+		// border width.
 		if ( ! empty( $attr['style']['border']['width'] ) ) {
 			$style .= '--sc-product-' . $prefix . '-border-width: ' . $attr['style']['border']['width'] . ';';
 		}
-		// border radius
+		// border radius.
 		if ( ! empty( $attr['style']['border']['radius'] ) ) {
 			$style .= '--sc-product-' . $prefix . '-border-radius: ' . $attr['style']['border']['radius'] . ';';
 		}
-		// font weight
+		// font weight.
 		if ( ! empty( $attr['style']['typography']['fontWeight'] ) ) {
 			$style .= '--sc-product-' . $prefix . '-font-weight: ' . $attr['style']['typography']['fontWeight'] . ';';
 		}
-		// font size
+		// font size.
 		if ( ! empty( $attr['fontSize'] ) || ! empty( $attr['style']['typography']['fontSize'] ) ) {
 			$font_size = ! empty( $attr['fontSize'] ) ? $this->getFontSizePresetCssVar( $attr['fontSize'] ) : $attr['style']['typography']['fontSize'];
 			$style    .= '--sc-product-' . $prefix . '-font-size: ' . $font_size . ';';
 		}
-		// border color
+		// border color.
 		if ( ! empty( $attr['borderColor'] ) || ! empty( $attr['style']['border']['color'] ) ) {
 			$border_color = ! empty( $attr['borderColor'] ) ? $this->getColorPresetCssVar( $attr['borderColor'] ) : $attr['style']['border']['color'];
 			$style       .= '--sc-product-' . $prefix . '-border-color: ' . $border_color . ';';
 		}
-		// text color
+		// text color.
 		if ( ! empty( $attr['textColor'] ) || ! empty( $attr['style']['color']['text'] ) ) {
 			$text_color = ! empty( $attr['textColor'] ) ? $this->getColorPresetCssVar( $attr['textColor'] ) : $attr['style']['color']['text'];
 			$style     .= '--sc-product-' . $prefix . '-text-color: ' . $text_color . ';';
 		}
-		// text align
+		if ( ! empty( $attr['backgroundColor'] ) || ! empty( $attr['style']['color']['background'] ) ) {
+			$background_color = ! empty( $attr['backgroundColor'] ) ? $this->getColorPresetCssVar( $attr['backgroundColor'] ) : $attr['style']['color']['background'];
+			$style           .= '--sc-product-' . $prefix . '-background-color: ' . $background_color . ';';
+		}
+		// text align.
 		if ( ! empty( $attr['align'] ) ) {
 			$style .= '--sc-product-' . $prefix . '-align: ' . $attr['align'] . ';';
 		}
@@ -177,7 +182,8 @@ class Block extends BaseBlock {
 		self::$instance++;
 
 		// check for inner blocks.
-		$product_inner_blocks      = $this->block->parsed_block['innerBlocks'] ?? [];
+		$product_inner_blocks = $this->block->parsed_block['innerBlocks'] ?? [];
+
 		$product_item_inner_blocks = $product_inner_blocks[0]['innerBlocks'] ?? $this->default_block_template;
 		$product_item_attributes   = $product_inner_blocks[0]['attrs'] ?? $attributes;
 
@@ -218,7 +224,7 @@ class Block extends BaseBlock {
 				'paginationAlignment'  => $attributes['pagination_alignment'],
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
-				'ids'                  => $attributes['ids'],
+				'ids'                  => array_values( array_filter( $attributes['ids'] ) ),
 				'paginationEnabled'    => $attributes['pagination_enabled'],
 				'ajaxPagination'       => $attributes['ajax_pagination'],
 				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],

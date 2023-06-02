@@ -32,6 +32,8 @@ abstract class ProductTypePageController {
 		add_action( 'wp_head', [ $this, 'preloadImage' ] );
 		// maybe add json schema.
 		add_action( 'wp_head', [ $this, 'displaySchema' ] );
+		// add meta title and description.
+		add_action( 'wp_head', [ $this, 'addSeoMetaData' ] );
 
 		// add data needed for product to load.
 		add_filter(
@@ -52,6 +54,31 @@ abstract class ProductTypePageController {
 	}
 
 	/**
+	 * Add meta title and description.
+	 *
+	 * @return void
+	 */
+	public function addSeoMetaData() {
+
+		?>
+		<!-- Primary Meta -->
+		<meta name="title" content="<?php echo esc_attr( sanitize_text_field( $this->product->page_title ) ); ?>">
+		<meta name="description" content="<?php echo esc_attr( sanitize_text_field( $this->product->meta_description ) ); ?>">
+
+		<!-- Open Graph -->
+		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="<?php echo esc_attr( $this->product->page_title ); ?>" />
+		<meta property="og:description" content="<?php echo esc_attr( sanitize_text_field( $this->product->meta_description ) ); ?>" />
+		<meta property="og:url" content="<?php echo esc_url( $this->product->permalink ); ?>" />
+		<meta property="og:site_name" content="<?php bloginfo( 'name' ); ?>" />
+		<?php if ( ! empty( $this->product->image_url ) ) { ?>
+			<meta property="og:image" content="<?php echo esc_url( $this->product->getImageUrl( 800 ) ); ?>" />
+		<?php } ?>
+		<?php
+	}
+
+	/**
 	 * Display the JSON Schema.
 	 *
 	 * @return void
@@ -60,7 +87,8 @@ abstract class ProductTypePageController {
 		$schema = $this->product->getJsonSchemaArray();
 		if ( empty( $schema ) ) {
 			return;
-		} ?>
+		}
+		?>
 		<script type="application/ld+json"><?php echo wp_json_encode( $schema ); ?></script>
 		<?php
 	}
@@ -85,7 +113,7 @@ abstract class ProductTypePageController {
 	 * @param array $parts The parts of the document title.
 	 */
 	public function documentTitle( $parts ) {
-		$parts['title'] = $this->product->name ?? $parts['title'];
+		$parts['title'] = esc_html( sanitize_text_field( $this->product->page_title ?? $parts['title'] ) );
 		return $parts;
 	}
 

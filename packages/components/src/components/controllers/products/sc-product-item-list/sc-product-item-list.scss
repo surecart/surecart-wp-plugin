@@ -34,6 +34,7 @@
 
   &__header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
   }
@@ -51,6 +52,9 @@
     margin-right: var(--sc-product-item-margin-right);
     border: solid var(--sc-product-item-border-width) var(--sc-product-item-border-color);
     border-radius: var(--sc-product-item-border-radius);
+    color: var(--sc-product-title-text-color);
+    background-color: var(--sc-product-item-background-color);
+    line-height: 1;
   }
 
   &__pagination {
@@ -84,4 +88,12 @@
     opacity: 1;
     visibility: visible;
   }
+}
+
+sc-product-item::part(image) {
+  aspect-ratio: var(--sc-product-image-aspect-ratio);
+}
+
+sc-pagination {
+  font-size: var(--sc-pagination-font-size);
 }

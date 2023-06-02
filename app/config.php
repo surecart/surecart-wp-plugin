@@ -43,6 +43,7 @@ return [
 		\SureCart\BlockLibrary\BlockServiceProvider::class,
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
+		\SureCart\Background\BackgroundServiceProvider::class,
 
 		// REST providers.
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
@@ -145,6 +146,7 @@ return [
 		\SureCartBlocks\Blocks\StoreLogo\Block::class,
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
+		\SureCartBlocks\Blocks\CartSubmit\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,

@@ -13,7 +13,7 @@
 | `description` | `description`  | Label for the choice.           | `string`                | `undefined` |
 | `label`       | `label`        | Label for the choice.           | `string`                | `undefined` |
 | `loading`     | `loading`      | Is this loading                 | `boolean`               | `false`     |
-| `price`       | --             | Stores the price                | `Price`                 | `undefined` |
+| `price`       | `price`        | Stores the price                | `Price \| string`       | `undefined` |
 | `showControl` | `show-control` | Show the radio/checkbox control | `boolean`               | `false`     |
 | `showLabel`   | `show-label`   | Show the label                  | `boolean`               | `true`      |
 | `showPrice`   | `show-price`   | Show the price amount           | `boolean`               | `true`      |

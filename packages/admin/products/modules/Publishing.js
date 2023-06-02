@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { store as noticesStore } from '@wordpress/notices';
+import { useEffect } from '@wordpress/element';
 
 import Box from '../../ui/Box';
 import Availability from '../components/Availability';
@@ -12,22 +11,21 @@ import Status from '../components/Status';
 import Url from '../components/Url';
 
 export default ({ product, updateProduct, loading }) => {
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const tag = document.querySelector('#wp-admin-bar-view-product-page');
+	const link = document.querySelector('#wp-admin-bar-view-product-page a');
 
-	const copy = async (text) => {
-		try {
-			await navigator.clipboard.writeText(text);
-			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (err) {
-			console.error(err);
-			createErrorNotice(__('Error copying to clipboard.', 'surecart'), {
-				type: 'snackbar',
-			});
+	// keep the admin bar page link in sync with url.
+	useEffect(() => {
+		if (!link || !tag) {
+			return;
 		}
-	};
+		if (product?.slug) {
+			tag.classList.remove('hidden');
+			link.href = `${scData?.home_url}/${scData?.product_page_slug}/${product?.slug}`;
+		} else {
+			tag.classList.add('hidden');
+		}
+	}, [product]);
 
 	return (
 		<Box

@@ -25,11 +25,13 @@ export default function PostTemplateForm({
 	template,
 }) {
 	// template parts.
-	const { parts, canCreate } = useSelect(
+	const { parts, defaultPart, canCreate } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
 			const parts = (
-				getEntityRecords('postType', 'wp_template_part') || []
+				getEntityRecords('postType', 'wp_template_part', {
+					per_page: -1,
+				}) || []
 			).filter((template) => {
 				return (
 					template.theme === 'surecart/surecart' ||
@@ -38,6 +40,9 @@ export default function PostTemplateForm({
 			});
 			return {
 				parts,
+				defaultPart: parts.find(
+					(part) => part.theme === 'surecart/surecart'
+				),
 				canCreate: canUser('create', 'templates'),
 			};
 		},
@@ -144,7 +149,7 @@ export default function PostTemplateForm({
 
 			{isCreateModalOpen && (
 				<PostTemplateCreateModal
-					template={template}
+					template={defaultPart}
 					product={product}
 					updateProduct={updateProduct}
 					onClose={() => setIsCreateModalOpen(false)}

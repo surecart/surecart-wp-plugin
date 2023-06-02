@@ -177,6 +177,7 @@ class TemplatesService {
 		$wp_query->found_posts       = 1;
 		$wp_query->max_num_pages     = 1;
 		$wp_query->is_singular       = true;
+		$wp_query->is_single         = true;
 		$wp_query->is_archive        = false;
 		$wp_query->is_tax            = false;
 		$wp_query->is_home           = false;

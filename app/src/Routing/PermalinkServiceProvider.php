@@ -69,7 +69,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 		$container['surecart.settings.permalinks.product']->bootstrap();
 		( new PermalinkService() )
 			->params( [ 'sc_product_page_id' ] )
-			->url( untrailingslashit( 'products' ) . '/([a-z0-9-]+)[/]?$' )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . '/([a-z0-9-]+)[/]?$' )
 			->query( 'index.php?sc_product_page_id=$matches[1]' )
 			->create();
 

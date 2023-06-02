@@ -55,7 +55,7 @@ class Conditions extends Condition_Base {
 	 * @return bool
 	 */
 	public function check( $args ) {
-		return true;
+		return get_query_var( 'surecart_current_product' );
 	}
 
 	/**

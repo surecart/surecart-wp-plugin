@@ -8,7 +8,8 @@ export default () => {
 	if (
 		!postId ||
 		(!postId.includes('sc-products') &&
-			!postId.includes('surecart/surecart'))
+			!postId.includes('surecart/surecart') &&
+			!postId.includes('sc-part-products-info'))
 	) {
 		return (
 			<Warning>

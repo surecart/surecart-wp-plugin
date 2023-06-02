@@ -63,6 +63,6 @@ class ProductCondition extends \ElementorPro\Modules\ThemeBuilder\Conditions\Con
 	 * @return bool
 	 */
 	public function check( $args ) {
-		return true;
+		return get_query_var( 'surecart_current_product' );
 	}
 }

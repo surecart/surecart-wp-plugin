@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1594,8 +1594,8 @@ export namespace Components {
         /**
           * Accept a string or an array of objects
          */
-        "images": string | { src: string; alt: string; srcset; width: number; sizes: string }[];
-        "thumbnails": string | { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -2704,46 +2704,7 @@ export namespace Components {
          */
         "prices": Price[];
     }
-    interface ScProduct {
-        "columnGap": string;
-        /**
-          * The form id to use for the cart.
-         */
-        "formId": number;
-        /**
-          * The media position.
-         */
-        "mediaPosition": 'left' | 'right';
-        /**
-          * The media width.
-         */
-        "mediaWidth": string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode": 'test' | 'live';
-        /**
-          * The product.
-         */
-        "product": Product;
-    }
     interface ScProductBuyButton {
-    }
-    interface ScProductBuyButtons {
-        /**
-          * The link to the checkout
-         */
-        "checkoutUrl": string;
-        "formId": number;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode": 'test' | 'live';
-    }
-    interface ScProductForm {
-    }
-    interface ScProductImage {
-        "product": Product;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -2751,8 +2712,8 @@ export namespace Components {
     }
     interface ScProductItemImage {
         "alt": string;
+        "productMedia": ProductMedia;
         "sizing": 'cover' | 'contain';
-        "src": string;
     }
     interface ScProductItemList {
         /**
@@ -3078,7 +3039,22 @@ export namespace Components {
           * Placeholder for no value
          */
         "placeholder": string;
-        "position": 'bottom-left' | 'bottom-right';
+        /**
+          * The placement of the dropdown.
+         */
+        "placement": | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        "position": 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
         "reportValidity": () => Promise<boolean>;
         "required": boolean;
         /**
@@ -4769,35 +4745,11 @@ declare global {
         prototype: HTMLScPriceRangeElement;
         new (): HTMLScPriceRangeElement;
     };
-    interface HTMLScProductElement extends Components.ScProduct, HTMLStencilElement {
-    }
-    var HTMLScProductElement: {
-        prototype: HTMLScProductElement;
-        new (): HTMLScProductElement;
-    };
     interface HTMLScProductBuyButtonElement extends Components.ScProductBuyButton, HTMLStencilElement {
     }
     var HTMLScProductBuyButtonElement: {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
-    };
-    interface HTMLScProductBuyButtonsElement extends Components.ScProductBuyButtons, HTMLStencilElement {
-    }
-    var HTMLScProductBuyButtonsElement: {
-        prototype: HTMLScProductBuyButtonsElement;
-        new (): HTMLScProductBuyButtonsElement;
-    };
-    interface HTMLScProductFormElement extends Components.ScProductForm, HTMLStencilElement {
-    }
-    var HTMLScProductFormElement: {
-        prototype: HTMLScProductFormElement;
-        new (): HTMLScProductFormElement;
-    };
-    interface HTMLScProductImageElement extends Components.ScProductImage, HTMLStencilElement {
-    }
-    var HTMLScProductImageElement: {
-        prototype: HTMLScProductImageElement;
-        new (): HTMLScProductImageElement;
     };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
@@ -5296,11 +5248,7 @@ declare global {
         "sc-price-choices": HTMLScPriceChoicesElement;
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
-        "sc-product": HTMLScProductElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
-        "sc-product-buy-buttons": HTMLScProductBuyButtonsElement;
-        "sc-product-form": HTMLScProductFormElement;
-        "sc-product-image": HTMLScProductImageElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
@@ -7147,8 +7095,8 @@ declare namespace LocalJSX {
         /**
           * Accept a string or an array of objects
          */
-        "images"?: string | { src: string; alt: string; srcset; width: number; sizes: string }[];
-        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; sizes: string }[];
+        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {
@@ -8354,46 +8302,7 @@ declare namespace LocalJSX {
          */
         "prices"?: Price[];
     }
-    interface ScProduct {
-        "columnGap"?: string;
-        /**
-          * The form id to use for the cart.
-         */
-        "formId"?: number;
-        /**
-          * The media position.
-         */
-        "mediaPosition"?: 'left' | 'right';
-        /**
-          * The media width.
-         */
-        "mediaWidth"?: string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode"?: 'test' | 'live';
-        /**
-          * The product.
-         */
-        "product"?: Product;
-    }
     interface ScProductBuyButton {
-    }
-    interface ScProductBuyButtons {
-        /**
-          * The link to the checkout
-         */
-        "checkoutUrl"?: string;
-        "formId"?: number;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode"?: 'test' | 'live';
-    }
-    interface ScProductForm {
-    }
-    interface ScProductImage {
-        "product"?: Product;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
@@ -8401,8 +8310,8 @@ declare namespace LocalJSX {
     }
     interface ScProductItemImage {
         "alt"?: string;
+        "productMedia"?: ProductMedia;
         "sizing"?: 'cover' | 'contain';
-        "src"?: string;
     }
     interface ScProductItemList {
         /**
@@ -8786,7 +8695,22 @@ declare namespace LocalJSX {
           * Placeholder for no value
          */
         "placeholder"?: string;
-        "position"?: 'bottom-left' | 'bottom-right';
+        /**
+          * The placement of the dropdown.
+         */
+        "placement"?: | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+        "position"?: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
         "required"?: boolean;
         /**
           * Is search enabled?
@@ -9622,11 +9546,7 @@ declare namespace LocalJSX {
         "sc-price-choices": ScPriceChoices;
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
-        "sc-product": ScProduct;
         "sc-product-buy-button": ScProductBuyButton;
-        "sc-product-buy-buttons": ScProductBuyButtons;
-        "sc-product-form": ScProductForm;
-        "sc-product-image": ScProductImage;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
@@ -9832,11 +9752,7 @@ declare module "@stencil/core" {
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
-            "sc-product": LocalJSX.ScProduct & JSXBase.HTMLAttributes<HTMLScProductElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
-            "sc-product-buy-buttons": LocalJSX.ScProductBuyButtons & JSXBase.HTMLAttributes<HTMLScProductBuyButtonsElement>;
-            "sc-product-form": LocalJSX.ScProductForm & JSXBase.HTMLAttributes<HTMLScProductFormElement>;
-            "sc-product-image": LocalJSX.ScProductImage & JSXBase.HTMLAttributes<HTMLScProductImageElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;

@@ -46,11 +46,11 @@ export class ScPagination {
       <sc-flex>
         <div class="pagination-display">{sprintf(__('Displaying %1d to %2d of %3d items', 'surecart'), this.from, this.to, this.total)}</div>
         <sc-flex>
-          <sc-button onClick={() => this.scPrevPage.emit()} type="text" disabled={!this.hasPreviousPage} size="small">
+          <sc-button onClick={() => this.scPrevPage.emit()} type="text" disabled={!this.hasPreviousPage}>
             {__('Previous', 'surecart')}
             <sc-icon name="arrow-left" slot="prefix" />
           </sc-button>
-          <sc-button onClick={() => this.scNextPage.emit()} type="text" disabled={!this.hasNextPage} size="small">
+          <sc-button onClick={() => this.scNextPage.emit()} type="text" disabled={!this.hasNextPage}>
             {__('Next', 'surecart')}
             <sc-icon name="arrow-right" slot="suffix" />
           </sc-button>

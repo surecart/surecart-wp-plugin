@@ -41,9 +41,10 @@ class Block extends BaseBlock {
 		$images     = array_map(
 			function( $product_media ) use ( $product, $width ) {
 				return [
-					'src'   => $product_media->getUrl( $width ),
-					'alt'   => $product_media->media->filename ?? $product->name ?? '',
-					'width' => $width,
+					'src'    => $product_media->getUrl( $width ),
+					'alt'    => $product_media->media->filename ?? $product->name ?? '',
+					'width'  => $product_media->width,
+					'height' => $product_media->height,
 				];
 			},
 			$product->product_medias->data
@@ -51,11 +52,12 @@ class Block extends BaseBlock {
 		$thumbnails = array_map(
 			function( $product_media ) use ( $product ) {
 				return [
-					'src'    => $product_media->getUrl( 90 ),
+					'src'    => $product_media->getUrl( 240 ),
 					'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
-					'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
+					'sizes'  => '(min-width: 780px) 120px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
 					'alt'    => $product_media->media->filename ?? $product->name ?? '',
-					'width'  => 90,
+					'width'  => $product_media->width,
+					'height' => $product_media->height,
 				];
 			},
 			$product->product_medias->data

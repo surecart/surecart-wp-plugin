@@ -50,11 +50,12 @@
 			"type": "string",
 			"default": "center"
 		},
+		"pagination_size": {
+			"type": "string",
+			"default": "14px"
+		},
 		"ids": {
 			"type": "array",
-			"items": {
-				"type": "string"
-			},
 			"default": []
 		}
 	}

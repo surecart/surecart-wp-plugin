@@ -112,7 +112,25 @@ class Product extends Model {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
-		return trailingslashit( get_home_url() ) . trailingslashit( 'products' ) . $this->slug;
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . $this->slug;
+	}
+
+	/**
+	 * Get the page title.
+	 *
+	 * @return string
+	 */
+	public function getPageTitleAttribute() {
+		return $this->metadata->page_title ?? $this->name;
+	}
+
+	/**
+	 * Get the meta description.
+	 *
+	 * @return string
+	 */
+	public function getMetaDescriptionAttribute() {
+		return $this->metadata->meta_description ?? $this->description;
 	}
 
 	/**

@@ -41,8 +41,8 @@ class ProductsController extends AdminController {
 			'/wp/v2/settings',
 			'/wp/v2/types/wp_template?context=edit',
 			'/wp/v2/types/wp_template-part?context=edit',
-			'/wp/v2/templates?context=edit',
-			'/wp/v2/template-parts?context=edit',
+			'/wp/v2/templates?context=edit&per_page=-1',
+			'/wp/v2/template-parts?context=edit&per_page=-1',
 			'/wp/v2/users/me',
 			'/wp/v2/types?context=view',
 			'/wp/v2/types?context=edit',
@@ -74,15 +74,21 @@ class ProductsController extends AdminController {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( ProductScriptsController::class, 'enqueue' ) );
 
-		$product = Product::find( $request->query( 'id' ) );
+		$product = null;
 
-		if ( is_wp_error( $product ) ) {
-			wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
+		if ( $request->query( 'id' ) ) {
+			$product = Product::find( $request->query( 'id' ) );
+
+			if ( is_wp_error( $product ) ) {
+				wp_die( implode( ' ', array_map( 'esc_html', $product->get_error_messages() ) ) );
+			}
 		}
 
-		$this->preloadAPIRequests( $product );
+		if ( ! empty( $product ) ) {
+			$this->preloadAPIRequests( $product );
+		}
 
-		// add instant checkout link.
+		// add product link.
 		add_action(
 			'admin_bar_menu',
 			function( $wp_admin_bar ) use ( $product ) {
@@ -90,7 +96,10 @@ class ProductsController extends AdminController {
 					[
 						'id'    => 'view-product-page',
 						'title' => __( 'View Product', 'surecart' ),
-						'href'  => esc_url( $product->permalink ),
+						'href'  => esc_url( $product->permalink ?? '#' ),
+						'meta'  => [
+							'class' => empty( $product->permalink ) ? 'hidden' : '',
+						],
 					]
 				);
 			},

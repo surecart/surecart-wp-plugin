@@ -28,9 +28,6 @@ class CheckoutsControllerProductIdValidationTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_requires_product_id()
 	{
 		$controller = \Mockery::mock(CheckoutsController::class)->shouldAllowMockingProtectedMethods()->makePartial();
