@@ -5405,6 +5405,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.33.0":
+  version: 1.34.3
+  resolution: "@playwright/test@npm:1.34.3"
+  dependencies:
+    "@types/node": "*"
+    fsevents: 2.3.2
+    playwright-core: 1.34.3
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: b387d85f09d275ed49aac4f600c0657205b4c20979108a52e7072ef0c43ea9b2d3d6d7206869230634680ab1f8e7b03373c63555899da4293cae700320bd31e1
+  languageName: node
+  linkType: hard
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.2":
   version: 0.5.4
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.4"
@@ -7253,6 +7269,7 @@ __metadata:
     "@emotion/react": ^11.7.1
     "@emotion/styled": ^10.0.23
     "@paystack/inline-js": ^2.12.6
+    "@playwright/test": ^1.33.0
     "@rails/activestorage": ^6.1.4-1
     "@wordpress/babel-preset-default": ^6.2.0
     "@wordpress/base-styles": ^2.1.0
@@ -7266,6 +7283,7 @@ __metadata:
     "@wordpress/dependency-extraction-webpack-plugin": ^3.2.1
     "@wordpress/dom-ready": ^2.10.0
     "@wordpress/e2e-test-utils": ^5.4.1
+    "@wordpress/e2e-test-utils-playwright": ^0.1.0
     "@wordpress/editor": ^9.21.0
     "@wordpress/element": ^2.17.0
     "@wordpress/env": ^4.8.0
@@ -9408,6 +9426,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wordpress/api-fetch@npm:^6.30.0":
+  version: 6.31.0
+  resolution: "@wordpress/api-fetch@npm:6.31.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@wordpress/i18n": ^4.34.0
+    "@wordpress/url": ^3.35.0
+  checksum: e78675730926e2fc1d39acb179b74106d54a706054c818053f636e9ca2bb52ff4cd7a6fabc4fdbdd20528d94c4d30a15f4d9f323b845becf8063015a5d0594d3
+  languageName: node
+  linkType: hard
+
 "@wordpress/autop@npm:^2.11.0, @wordpress/autop@npm:^2.12.2":
   version: 2.12.2
   resolution: "@wordpress/autop@npm:2.12.2"
@@ -10083,6 +10112,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wordpress/e2e-test-utils-playwright@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@wordpress/e2e-test-utils-playwright@npm:0.1.0"
+  dependencies:
+    "@wordpress/api-fetch": ^6.30.0
+    "@wordpress/keycodes": ^3.33.0
+    "@wordpress/url": ^3.34.0
+    change-case: ^4.1.2
+    form-data: ^4.0.0
+    mime: ^3.0.0
+  peerDependencies:
+    "@playwright/test": ">=1"
+  checksum: 213af8b827c9ef6f13555c6aefa01126b3f74e4bdb38cc9fe9a9eedd8591f3a6ca00398320eeb25ace9d744281e311fb268a7aa9db20ced43e8a83bf0cc091bc
+  languageName: node
+  linkType: hard
+
 "@wordpress/e2e-test-utils@npm:^5.4.1":
   version: 5.4.10
   resolution: "@wordpress/e2e-test-utils@npm:5.4.10"
@@ -10377,6 +10422,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@wordpress/hooks@npm:^3.34.0":
+  version: 3.34.0
+  resolution: "@wordpress/hooks@npm:3.34.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+  checksum: 758791f236d6dd8b3028bbc8296b5232b577d846eae88e91115ea4d95b9b758d1f1d5b7e9bdae411816bceedd59838826accf84381bf2dbdb50cc3ab0c7a1ef8
+  languageName: node
+  linkType: hard
+
 "@wordpress/html-entities@npm:^2.10.0, @wordpress/html-entities@npm:^2.11.2, @wordpress/html-entities@npm:^2.8.0":
   version: 2.11.2
   resolution: "@wordpress/html-entities@npm:2.11.2"
@@ -10434,6 +10488,22 @@ __metadata:
   bin:
     pot-to-php: tools/pot-to-php.js
   checksum: b30b20584687f439424cddce7a56ee25260778e0c2485ec01ee3fa41baaea65370128325883796d4488eff1352e5660124f63b95c655ec84b1ec9b8129bb5fea
+  languageName: node
+  linkType: hard
+
+"@wordpress/i18n@npm:^4.34.0":
+  version: 4.34.0
+  resolution: "@wordpress/i18n@npm:4.34.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@wordpress/hooks": ^3.34.0
+    gettext-parser: ^1.3.1
+    memize: ^2.1.0
+    sprintf-js: ^1.1.1
+    tannin: ^1.2.0
+  bin:
+    pot-to-php: tools/pot-to-php.js
+  checksum: 3905cfbb501c1a39c191fc3e3f046949cc77533d9ebc83c4c2994ec18b9fd711232d9aeab22d0d44e237a43e838b36f7078e9d4a861352582a65e9e4524df924
   languageName: node
   linkType: hard
 
@@ -10598,6 +10668,17 @@ __metadata:
     "@wordpress/i18n": ^4.3.1
     lodash: ^4.17.21
   checksum: a97a15f701fc2bfd0c24e753987329d258f12a7bf5ee6da7c9ae2c8e890e7853d9e9c2fa6272f39555a846d84f0f0ddf6a96b46e019ddc609577075ea8a5c55b
+  languageName: node
+  linkType: hard
+
+"@wordpress/keycodes@npm:^3.33.0":
+  version: 3.34.0
+  resolution: "@wordpress/keycodes@npm:3.34.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    "@wordpress/i18n": ^4.34.0
+    change-case: ^4.1.2
+  checksum: cc1c5847e56e7e6cf63107416e19a0fc5959b102b12136b4023c107600550e170581161eca840d77986251168da545bbc1c4a4706817edacc87ad0dd22e0459e
   languageName: node
   linkType: hard
 
@@ -11032,6 +11113,16 @@ __metadata:
     "@babel/runtime": ^7.16.0
     remove-accents: ^0.4.2
   checksum: c280753350cb4a4ccb2a03e328dc7760774c67b2ef8e76bcf3ba4159d0cae8a0fe116b11e980952eb487f42c606aa430c8ceeea60dc4a8147c5555b500f05a7a
+  languageName: node
+  linkType: hard
+
+"@wordpress/url@npm:^3.34.0, @wordpress/url@npm:^3.35.0":
+  version: 3.35.0
+  resolution: "@wordpress/url@npm:3.35.0"
+  dependencies:
+    "@babel/runtime": ^7.16.0
+    remove-accents: ^0.4.2
+  checksum: 5597af7b077a7098420dc51d7cfb1694fb690cdcccd2c68ff855e81c7afc15ebabc4c6f4eaf999b3725745ef0dc3babba3f30282a5372c46f8d1a9d1956dec41
   languageName: node
   linkType: hard
 
@@ -19215,6 +19306,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fsevents@npm:2.3.2, fsevents@npm:^2.1.2, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+  version: 2.3.2
+  resolution: "fsevents@npm:2.3.2"
+  dependencies:
+    node-gyp: latest
+  checksum: 97ade64e75091afee5265e6956cb72ba34db7819b4c3e94c431d4be2b19b8bb7a2d4116da417950c3425f17c8fe693d25e20212cac583ac1521ad066b77ae31f
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
 "fsevents@npm:^1.2.7":
   version: 1.2.13
   resolution: "fsevents@npm:1.2.13"
@@ -19226,12 +19327,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:^2.1.2, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.1.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@npm:2.3.2"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
-  checksum: 97ade64e75091afee5265e6956cb72ba34db7819b4c3e94c431d4be2b19b8bb7a2d4116da417950c3425f17c8fe693d25e20212cac583ac1521ad066b77ae31f
   conditions: os=darwin
   languageName: node
   linkType: hard
@@ -19242,15 +19342,6 @@ __metadata:
   dependencies:
     bindings: ^1.5.0
     nan: ^2.12.1
-  conditions: os=darwin
-  languageName: node
-  linkType: hard
-
-"fsevents@patch:fsevents@^2.1.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
-  version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
-  dependencies:
-    node-gyp: latest
   conditions: os=darwin
   languageName: node
   linkType: hard
@@ -24712,6 +24803,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memize@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "memize@npm:2.1.0"
+  checksum: b2fcaeb42c8f352ffb09c05f0b3a02a7d931a9f835d762a95a50946395aa5d1565796ffc93ff8df01ba223d78e6867492ffce619e890caa88f7f01e7d0f3a212
+  languageName: node
+  linkType: hard
+
 "memoize-one@npm:^6.0.0":
   version: 6.0.0
   resolution: "memoize-one@npm:6.0.0"
@@ -25015,6 +25113,15 @@ __metadata:
   bin:
     mime: cli.js
   checksum: 1497ba7b9f6960694268a557eae24b743fd2923da46ec392b042469f4b901721ba0adcf8b0d3c2677839d0e243b209d76e5edcbd09cfdeffa2dfb6bb4df4b862
+  languageName: node
+  linkType: hard
+
+"mime@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "mime@npm:3.0.0"
+  bin:
+    mime: cli.js
+  checksum: f43f9b7bfa64534e6b05bd6062961681aeb406a5b53673b53b683f27fcc4e739989941836a355eef831f4478923651ecc739f4a5f6e20a76487b432bfd4db928
   languageName: node
   linkType: hard
 
@@ -27283,6 +27390,15 @@ __metadata:
   dependencies:
     find-up: ^3.0.0
   checksum: 5bac346b7c7c903613c057ae3ab722f320716199d753f4a7d053d38f2b5955460f3e6ab73b4762c62fd3e947f58e04f1343e92089e7bb6091c90877406fcd8c8
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.34.3":
+  version: 1.34.3
+  resolution: "playwright-core@npm:1.34.3"
+  bin:
+    playwright-core: cli.js
+  checksum: eaf9e9b2d77b9726867dcbc641a1c72b0e8f680cdd71ff904366deea1c96141ff7563f6c6fb29f9975309d1b87dead97ea93f6f44953b59946882fb785b34867
   languageName: node
   linkType: hard
 

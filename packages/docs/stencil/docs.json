@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-24T19:11:12",
+  "timestamp": "2023-06-02T11:24:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -673,6 +673,7 @@
         "sc-payment",
         "sc-payment-methods-list",
         "sc-paypal-add-method",
+        "sc-paystack-add-method",
         "sc-price-choice",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
@@ -735,6 +736,9 @@
           "sc-alert"
         ],
         "sc-paypal-add-method": [
+          "sc-alert"
+        ],
+        "sc-paystack-add-method": [
           "sc-alert"
         ],
         "sc-price-choice": [
@@ -16527,6 +16531,22 @@
       "usage": {},
       "props": [
         {
+          "name": "checkoutStatus",
+          "type": "string",
+          "mutable": false,
+          "attr": "checkout-status",
+          "reflectToAttr": false,
+          "docs": "Checkout status to listen and do payment related stuff.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successText",
           "type": "{ title: string; description: string; button: string; }",
           "mutable": false,
@@ -16588,13 +16608,7 @@
           "docsTags": []
         }
       ],
-      "listeners": [
-        {
-          "event": "scPaid",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -20616,6 +20630,100 @@
         ],
         "sc-order-submit": [
           "sc-paypal-buttons"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-paystack-add-method/sc-paystack-add-method.tsx",
+      "encapsulation": "none",
+      "tag": "sc-paystack-add-method",
+      "readme": "# sc-paystack-add-method\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-alert"
+      ],
+      "dependencyGraph": {
+        "sc-paystack-add-method": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ]
       }
     },
