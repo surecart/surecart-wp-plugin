@@ -68,8 +68,10 @@
 		"test:cypress:ci": "wp-env start && wp-env clean && cypress run --config video=false --browser chrome",
 		"test:cypress:record": "wp-env start --xdebug && cypress run --browser chrome --record --key 29b7dee9-7f63-4a24-abd2-bd74c58ec60a",
 		"test:cypress": "yarn dev & npx cypress open",
-		"test:js": "wp-scripts test-unit-js --config jest.config.unit.js",
-		"test:js:coverage": "wp-scripts test-unit-js --config jest.config.unit.js --coverage"
+		"test:e2e": "yarn playwright test --reporter=list",
+		"test:e2e:ui": "yarn playwright test --ui",
+		"test:e2e:debug": "yarn playwright test --debug",
+		"test:e2e:trace": "yarn playwright test --trace on"
 	},
 	"browserslist": [
 		"last 3 versions"
@@ -88,6 +90,7 @@
 		"@wordpress/data": "^4.23.0",
 		"@wordpress/date": "^4.14.0",
 		"@wordpress/dom-ready": "^2.10.0",
+		"@wordpress/e2e-test-utils-playwright": "^0.1.0",
 		"@wordpress/editor": "^9.21.0",
 		"@wordpress/element": "^2.17.0",
 		"@wordpress/format-library": "^1.23.0",
@@ -144,6 +147,7 @@
 		"@emotion/native": "^10.0.22",
 		"@emotion/react": "^11.7.1",
 		"@emotion/styled": "^10.0.23",
+		"@playwright/test": "^1.33.0",
 		"@wordpress/data": "^6.1.0",
 		"@wordpress/dependency-extraction-webpack-plugin": "^3.2.1",
 		"@wordpress/e2e-test-utils": "^5.4.1",
