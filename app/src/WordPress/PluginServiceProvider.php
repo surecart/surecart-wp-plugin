@@ -3,6 +3,7 @@
 namespace SureCart\WordPress;
 
 use SureCart\WordPress\PluginService;
+use SureCart\WordPress\Sitemap\SitemapsService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -20,11 +21,14 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new PluginService( $c[ SURECART_APPLICATION_KEY ] );
 		};
 
-		$container['surecart.actions'] = function() {
+		$container['surecart.actions']        = function() {
 			return new ActionsService();
 		};
-		$container['surecart.config.setting'] = function($c) {
-			return json_decode(json_encode($c[SURECART_CONFIG_KEY]));
+		$container['surecart.config.setting'] = function( $c ) {
+			return json_decode( json_encode( $c[ SURECART_CONFIG_KEY ] ) );
+		};
+		$container['surecart.sitemaps']       = function() {
+			return new SitemapsService();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
@@ -38,6 +42,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		/** Nothing to bootstrap */
+		$container['surecart.sitemaps']->bootstrap();
 	}
 
 	/**
