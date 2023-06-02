@@ -1,4 +1,5 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-shipping-choices',
@@ -6,36 +7,42 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class ScShippingChoices {
+  /** The shipping section label */
+  @Prop() label:string;
+
+  /** Show control on shipping option */
+  @Prop() showControl:boolean = true;
+
   render() {
     return (
-      <Host>
-        <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-medium)' }}>
-          <sc-choice-container>
+      <sc-form-control label={this.label || __('Shipping','surecart')}>
+        <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-small)' }}>
+          <sc-choice-container showControl={this.showControl}>
             <div class="shipping-choice">
               <div class="shipping-choice__name">Standard</div>
               <div class="shipping-choice__price">$300.00</div>
             </div>
           </sc-choice-container>
-          <sc-choice-container>
+          <sc-choice-container showControl={this.showControl}>
             <div class="shipping-choice">
               <div class="shipping-choice__name">Express</div>
               <div class="shipping-choice__price">$300.00</div>
             </div>
           </sc-choice-container>
-          <sc-choice-container>
+          <sc-choice-container showControl={this.showControl}>
             <div class="shipping-choice">
               <div class="shipping-choice__name">Air</div>
               <div class="shipping-choice__price">$300.00</div>
             </div>
           </sc-choice-container>
-          <sc-choice-container>
+          <sc-choice-container showControl={this.showControl}>
             <div class="shipping-choice">
               <div class="shipping-choice__name">Foot</div>
               <div class="shipping-choice__price">$300.00</div>
             </div>
           </sc-choice-container>
         </sc-flex>
-      </Host>
+      </sc-form-control>
     );
   }
 }

@@ -34,6 +34,9 @@ export class ScFormComponentsValidator {
   /** Is there a bump line? */
   @State() hasBumpLine: boolean;
 
+  /** Is there shipping choices */
+  @State() hasShippingChoices: boolean;
+
   @Watch('order')
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
@@ -49,6 +52,8 @@ export class ScFormComponentsValidator {
     if (!!this.order?.tax_amount) {
       this.addTaxLine();
     }
+
+    this.addShippingChoices();
   }
 
   componentWillLoad() {
@@ -56,6 +61,7 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
+    this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -108,6 +114,15 @@ export class ScFormComponentsValidator {
       total.parentNode.insertBefore(tax, total);
     }
     this.hasTaxLine = true;
+  }
+
+  addShippingChoices() {
+    if (this.hasShippingChoices) return;
+
+    // const payment = this.el.querySelector('sc-payment');
+    // const shippingChoices = document.createElement('sc-shipping-choices');
+    // payment.parentNode.insertBefore(shippingChoices, payment);
+    // this.hasShippingChoices = true;
   }
 
   render() {

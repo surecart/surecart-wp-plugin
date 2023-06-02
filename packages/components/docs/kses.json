@@ -1567,6 +1567,14 @@
     "class": true,
     "slot": true
   },
+  "sc-shipping-choices": {
+    "label": true,
+    "show-control": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-skeleton": {
     "effect": true,
     "style": true,

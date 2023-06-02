@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-01T17:45:34",
+  "timestamp": "2023-06-02T12:14:21",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -5527,11 +5527,15 @@
         }
       ],
       "dependents": [
-        "sc-price-choice"
+        "sc-price-choice",
+        "sc-shipping-choices"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-price-choice": [
+          "sc-choice-container"
+        ],
+        "sc-shipping-choices": [
           "sc-choice-container"
         ]
       }
@@ -11204,6 +11208,7 @@
         "sc-pagination",
         "sc-password-nag",
         "sc-payment-methods-list",
+        "sc-shipping-choices",
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
@@ -11236,6 +11241,9 @@
           "sc-flex"
         ],
         "sc-payment-methods-list": [
+          "sc-flex"
+        ],
+        "sc-shipping-choices": [
           "sc-flex"
         ],
         "sc-subscription": [
@@ -11864,6 +11872,7 @@
         "sc-phone-input",
         "sc-rich-text",
         "sc-select",
+        "sc-shipping-choices",
         "sc-stripe-element",
         "sc-textarea"
       ],
@@ -11905,6 +11914,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-shipping-choices": [
           "sc-form-control"
         ],
         "sc-stripe-element": [
@@ -12848,7 +12860,7 @@
           "mutable": false,
           "attr": "no-convert",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Should we convert",
           "docsTags": [],
           "values": [
             {
@@ -12877,7 +12889,7 @@
         },
         {
           "name": "type",
-          "type": "\"currency\" | \"decimal\" | \"percent\"",
+          "type": "\"currency\" | \"decimal\" | \"percent\" | \"unit\"",
           "mutable": false,
           "attr": "type",
           "reflectToAttr": false,
@@ -12895,6 +12907,27 @@
             },
             {
               "value": "percent",
+              "type": "string"
+            },
+            {
+              "value": "unit",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "mutable": false,
+          "attr": "unit",
+          "reflectToAttr": false,
+          "docs": "The unit to use when formatting.",
+          "docsTags": [],
+          "default": "'lb'",
+          "values": [
+            {
               "type": "string"
             }
           ],
@@ -24677,6 +24710,72 @@
         ],
         "sc-checkout": [
           "sc-session-provider"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-shipping-choices/sc-shipping-choices.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-shipping-choices",
+      "readme": "# sc-shipping-choices\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The shipping section label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showControl",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-control",
+          "reflectToAttr": false,
+          "docs": "Show control on shipping option",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-form-control",
+        "sc-flex",
+        "sc-choice-container"
+      ],
+      "dependencyGraph": {
+        "sc-shipping-choices": [
+          "sc-form-control",
+          "sc-flex",
+          "sc-choice-container"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ]
       }
     },

@@ -2897,6 +2897,14 @@ export namespace Components {
         "prices": Array<PriceChoice>;
     }
     interface ScShippingChoices {
+        /**
+          * The shipping section label
+         */
+        "label": string;
+        /**
+          * Show control on shipping option
+         */
+        "showControl": boolean;
     }
     interface ScSkeleton {
         /**
@@ -8259,6 +8267,14 @@ declare namespace LocalJSX {
         "prices"?: Array<PriceChoice>;
     }
     interface ScShippingChoices {
+        /**
+          * The shipping section label
+         */
+        "label"?: string;
+        /**
+          * Show control on shipping option
+         */
+        "showControl"?: boolean;
     }
     interface ScSkeleton {
         /**
