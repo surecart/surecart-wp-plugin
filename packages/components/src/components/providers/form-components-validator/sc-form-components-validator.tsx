@@ -41,10 +41,12 @@ export class ScFormComponentsValidator {
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
+
     // make sure to add the address field if it's not there.
     if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled) {
       this.addAddressField();
     }
+
     // add order bumps.
     if (this?.order?.recommended_bumps?.data?.length) {
       this.addBumps();
@@ -53,7 +55,10 @@ export class ScFormComponentsValidator {
       this.addTaxLine();
     }
 
-    this.addShippingChoices();
+    // add shipping choices.
+    if (!!this.order?.shipping_choices?.data?.length) {
+      this.addShippingChoices();
+    }
   }
 
   componentWillLoad() {
@@ -119,10 +124,10 @@ export class ScFormComponentsValidator {
   addShippingChoices() {
     if (this.hasShippingChoices) return;
 
-    // const payment = this.el.querySelector('sc-payment');
-    // const shippingChoices = document.createElement('sc-shipping-choices');
-    // payment.parentNode.insertBefore(shippingChoices, payment);
-    // this.hasShippingChoices = true;
+    const payment = this.el.querySelector('sc-payment');
+    const shippingChoices = document.createElement('sc-shipping-choices');
+    payment.parentNode.insertBefore(shippingChoices, payment);
+    this.hasShippingChoices = true;
   }
 
   render() {
