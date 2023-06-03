@@ -26,6 +26,8 @@ export const expand = [
   'staged_payment_intents',
   'tax_identifier',
   'manual_payment_method',
+  'shipping_choices',
+  'shipping_choice.shipping_method',
 ];
 
 /** Default data we send with every request. */
