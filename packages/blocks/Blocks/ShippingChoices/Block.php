@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\StoreLogo;
+namespace SureCartBlocks\Blocks\ShippingChoices;
 
 use SureCartBlocks\Blocks\BaseBlock;
 

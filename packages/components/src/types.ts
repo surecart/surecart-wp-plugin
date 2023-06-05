@@ -417,6 +417,28 @@ export interface Order extends Object {
   created_at: number;
   updated_at: number;
 }
+
+export interface ShippingChoice {
+  amount: number;
+  checkout: string | Checkout;
+  currency: string;
+  id: string;
+  object: 'shipping_choice';
+  shipping_method: string | ShippingMethod;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ShippingMethod {
+  name: string;
+  description: string;
+  id: string;
+  object: 'shipping_method';
+  position: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Checkout extends Object {
   id?: string;
   status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
@@ -483,6 +505,14 @@ export interface Checkout extends Object {
   billing_address?: string | Address;
   shipping_address?: string | Address;
   shipping_enabled?: boolean;
+  shipping_choices?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<ShippingChoice>;
+  };
+  selected_shipping_choice?: string | ShippingChoice;
+  selected_shipping_choice_required: boolean;
+  shipping_amount?: number;
   processor_data?: ProcessorData;
   tax_identifier?: {
     number: string;
