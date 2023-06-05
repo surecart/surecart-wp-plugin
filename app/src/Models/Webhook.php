@@ -25,7 +25,7 @@ class Webhook extends Model {
 	 *
 	 * @return string
 	 */
-	protected function getListenerUrl() {
+	protected function getListenerUrl(): string {
 		return get_home_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 
@@ -47,35 +47,13 @@ class Webhook extends Model {
 				'enabled'     => true,
 				'destination' => 'wordpress',
 				'url'         => $this->getListenerUrl(),
-				'webhook_events' => [
-					// 'cancellation_act.updated',
-					// 'customer.created',
-					// 'customer.updated',
-					// 'order.created',
-					// 'order.made_processing',
-					// 'order.paid', // In doc
-					// 'order.payment_failed',
-					'purchase.created',
-					'purchase.invoked',
-					'purchase.updated',
-					'purchase.revoked',
-					// 'refund.created',
-					// 'refund.succeeded', // In doc
-					// 'subscription.canceled', // In doc
-					// 'subscription.created',
-					// 'subscription.completed',
-					// 'subscription.made_active', // In doc
-					// 'subscription.made_past_due',
-					// 'subscription.made_trialing', // In doc
-					'subscription.renewed', // needed for AffiliateWP recurring referrals.
-					// 'subscription.updated',
-				],
+				'webhook_events' => \SureCart::config()->webhook_events,
 			]
 		);
 	}
 
 	/**
-	 * Find existing webhook with the same listner url.
+	 * Find existing webhook with the same listener url.
 	 *
 	 * @return \SureCart\Models\Webhook|false
 	 */
