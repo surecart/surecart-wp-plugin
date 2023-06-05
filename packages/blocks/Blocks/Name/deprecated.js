@@ -6,7 +6,7 @@ export default [
 	{
 		attributes: {
 			required: {
-				typoe: 'boolean',
+				type: 'boolean',
 			},
 			label: {
 				type: 'string',
