@@ -16,6 +16,36 @@ import {
  */
 import { ScShippingChoices } from '@surecart/components-react';
 
+const shippingMethods = [
+	{
+		id: '2JLDFJ3',
+		amount: 200,
+		currency: 'USD',
+		shipping_method: {
+			name: __('Standard', 'surecart'),
+			description: __('1-2 days', 'surecart'),
+		},
+	},
+	{
+		id: '3KLDSFJ',
+		amount: 300,
+		currency: 'USD',
+		shipping_method: {
+			name: __('Express', 'surecart'),
+			description: __('Next-day delivery', 'surecart'),
+		},
+	},
+	{
+		id: '4DKLJF9',
+		amount: 150,
+		currency: 'USD',
+		shipping_method: {
+			name: __('Economy', 'surecart'),
+			description: __('3-5 days', 'surecart'),
+		},
+	},
+];
+
 export default ({ className, attributes, setAttributes }) => {
 	const { showControl, label } = attributes;
 
@@ -42,10 +72,11 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 			<ScShippingChoices
-				showControl={showControl}
-				label={label}
 				className={className}
-			></ScShippingChoices>
+				label={label}
+				showControl={showControl}
+				shippingChoices={shippingMethods}
+			/>
 		</Fragment>
 	);
 };

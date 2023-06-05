@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
@@ -2901,6 +2901,10 @@ export namespace Components {
           * The shipping section label
          */
         "label": string;
+        /**
+          * Shipping choices
+         */
+        "shippingChoices": ShippingChoice[];
         /**
           * Show control on shipping option
          */
@@ -8271,6 +8275,10 @@ declare namespace LocalJSX {
           * The shipping section label
          */
         "label"?: string;
+        /**
+          * Shipping choices
+         */
+        "shippingChoices"?: ShippingChoice[];
         /**
           * Show control on shipping option
          */

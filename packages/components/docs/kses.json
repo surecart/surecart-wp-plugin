@@ -1569,6 +1569,7 @@
   },
   "sc-shipping-choices": {
     "label": true,
+    "shipping-choices": true,
     "show-control": true,
     "style": true,
     "id": true,
