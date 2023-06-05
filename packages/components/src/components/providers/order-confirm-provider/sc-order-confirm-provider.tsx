@@ -5,8 +5,9 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, ManualPaymentMethod } from '../../../types';
+import { Checkout, ManualPaymentMethod, Product } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
+import { maybeConvertAmount } from '../../util/format-number/functions/utils';
 
 /**
  * This component listens to the order status
@@ -60,6 +61,7 @@ export class ScOrderConfirmProvider {
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
       this.scOrderPaid.emit(this.confirmedCheckout);
+      this.doGoogleAnalytics();
     } catch (e) {
       console.error(e);
       this.scError.emit(e);
@@ -75,6 +77,38 @@ export class ScOrderConfirmProvider {
       } else {
         this.showSuccessModal = true;
       }
+    }
+  }
+
+  doGoogleAnalytics() {
+    if (!window?.dataLayer && !window?.gtag) return;
+
+    const data = {
+      transaction_id: this.confirmedCheckout?.id,
+      value: maybeConvertAmount(this.confirmedCheckout?.total_amount, this.confirmedCheckout?.currency || 'USD'),
+      currency: (this.confirmedCheckout.currency || '').toUpperCase(),
+      ...(this.confirmedCheckout?.discount?.promotion?.code ? { coupon: this.confirmedCheckout?.discount?.promotion?.code } : {}),
+      ...(this.confirmedCheckout?.tax_amount ? { tax: maybeConvertAmount(this.confirmedCheckout?.tax_amount, this.confirmedCheckout?.currency || 'USD') } : {}),
+      items: (this.confirmedCheckout?.line_items?.data || []).map(item => ({
+        item_name: (item?.price?.product as Product)?.name || '',
+        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, this.confirmedCheckout?.currency || 'USD') : 0,
+        price: maybeConvertAmount(item?.price?.amount || 0, this.confirmedCheckout?.currency || 'USD'),
+        quantity: item?.quantity || 1,
+      })),
+    };
+
+    // handle gtag (analytics script.)
+    if (window?.gtag) {
+      window.gtag('event', 'purchase', data);
+    }
+
+    // handle dataLayer (google tag manager).
+    if (window?.dataLayer) {
+      window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+      window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: data,
+      });
     }
   }
 

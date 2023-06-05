@@ -224,7 +224,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (!subscription?.finite) return null;
+		if (subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {

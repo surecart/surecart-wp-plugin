@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-product-prices renders 1`] = `
+<sc-product-price>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-product-price>
+`;
