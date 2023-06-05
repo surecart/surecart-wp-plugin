@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -7,11 +7,10 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScUpgradeRequired {
-  @Event() requestClose: EventEmitter<void>;
-
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'small';
 
+  /** Is this required? */
   @Prop({ reflect: true }) required: boolean = true;
 
   /** Whether to render upgrade modal by default */
@@ -40,7 +39,7 @@ export class ScUpgradeRequired {
           open={this.open}
           onScRequestClose={() => {
             this.open = false;
-            this.requestClose.emit();
+            return true;
           }}
           style={{ '--width': '21rem', 'fontSize': '15px', '--body-spacing': '2rem' }}
         >

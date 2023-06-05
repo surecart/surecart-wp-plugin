@@ -490,8 +490,8 @@ export default () => {
 				style={{ display: 'block' }}
 				required
 				open={modal === 'upgrade_required'}
-				onRequestClose={onRequestCloseModal}
-			></ScUpgradeRequired>
+				onScRequestClose={onRequestCloseModal}
+			/>
 
 			{isSaving && <ScBlockUi spinner />}
 		</Template>
