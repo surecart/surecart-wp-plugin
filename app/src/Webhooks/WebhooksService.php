@@ -57,7 +57,7 @@ class WebhooksService {
 	 *
 	 * @return void
 	 */
-	public function maybeCreateWebooks() {
+	public function maybeCreateWebhooks() {
 		// Check for API key and early return if not.
 		if ( ! $this->hasToken() ) {
 			return;
