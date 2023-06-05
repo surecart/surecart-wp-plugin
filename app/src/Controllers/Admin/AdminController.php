@@ -17,7 +17,7 @@ abstract class AdminController {
 					[
 						'breadcrumbs'             => $breadcrumbs,
 						'show_provisional_banner' => ! \SureCart::account()->claimed,
-						'claim_url'               => \SureCart::account()->claim_url,
+						'claim_url'               => \SureCart::routeUrl( 'account.claim' ),
 					]
 				);
 			}
