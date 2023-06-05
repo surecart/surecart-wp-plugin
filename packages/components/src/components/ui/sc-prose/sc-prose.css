@@ -12,9 +12,9 @@
   letter-spacing: var(--sc-input-letter-spacing);
 }
 ::slotted(*) {
-  font-size: var(--sc-font-size-medium);
+  /* font-size: var(--sc-font-size-medium);
   color: var(--sc-input-color);
-  line-height: 1.75;
+  line-height: 1.75; */
 }
 
 ::slotted([class~="lead"]) {
