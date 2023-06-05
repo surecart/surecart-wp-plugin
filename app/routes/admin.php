@@ -69,10 +69,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->handle( 'Onboarding@complete' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'Onboarding@save' );
+		\SureCart::route()->get()->handle( 'OnboardingController@complete' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'OnboardingController@save' );
 	}
 );
 
