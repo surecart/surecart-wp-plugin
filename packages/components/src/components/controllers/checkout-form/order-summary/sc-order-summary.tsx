@@ -28,11 +28,20 @@ export class ScOrderSummary {
   /** Show the toggle */
   @Event() scHide: EventEmitter<void>;
 
+  isMobileScreen(): boolean {
+    const bodyRect = document.body.getClientRects();
+    return bodyRect.length && bodyRect[0]?.width < 781;
+  }
+
   componentWillLoad() {
-    if (this.collapsedOnMobile) {
-      const bodyRect = document.body.getClientRects();
-      if (bodyRect.length && bodyRect[0]?.width < 781 ) this.collapsed = true ;
+    if (this.isMobileScreen()) {
+      if (this.collapsedOnMobile) {
+        this.collapsed = true;
+      } else {
+        this.collapsed = false;
+      }
     }
+
     this.handleOpenChange();
   }
 

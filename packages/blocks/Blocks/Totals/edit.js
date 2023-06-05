@@ -85,14 +85,17 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(collapsible) => {
 								setAttributes({ collapsible });
 								if (!collapsible) {
-									setAttributes({ collapsed: false });
+									setAttributes({
+										collapsed: false,
+										collapsedOnMobile: false,
+									});
 								}
 							}}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__('Collapsed By Default', 'surecart')}
+							label={__('Collapsed On Desktop', 'surecart')}
 							checked={collapsed}
 							onChange={(collapsed) => {
 								setAttributes({ collapsed });
@@ -108,6 +111,9 @@ export default ({ attributes, setAttributes }) => {
 							checked={collapsedOnMobile}
 							onChange={(collapsedOnMobile) => {
 								setAttributes({ collapsedOnMobile });
+								if (collapsedOnMobile) {
+									setAttributes({ collapsible: true });
+								}
 							}}
 						/>
 					</PanelRow>
