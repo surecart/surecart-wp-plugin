@@ -21,4 +21,9 @@
     font-weight: var(--sc-price-choice-name-font-weight, var(--sc-font-weight-bold));
     text-transform: var(--sc-price-choice-text-transform, var(--sc-input-label-text-transform, none));
   }
+
+  &__description{
+    color: var(--sc-input-label-color);
+    font-weight: var(--sc-price-choice-price-font-weight, var(--sc-font-weight-normal));
+  }
 }

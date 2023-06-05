@@ -22,7 +22,10 @@ export class ScShippingChoices {
           {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, amount, currency, shipping_method }) => (
             <sc-choice-container showControl={this.showControl} checked={checkoutState?.checkout?.selected_shipping_choice === id}>
               <div class="shipping-choice">
-                <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name}</div>
+               <div>
+                 <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name}</div>
+                 <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
+               </div>
                 <div class="shipping-choice__price">
                   <sc-format-number type="currency" value={amount} currency={currency} />
                 </div>

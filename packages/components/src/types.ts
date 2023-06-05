@@ -522,6 +522,27 @@ export interface Checkout extends Object {
   created_at?: number;
 }
 
+export interface ShippingMethod{
+  id: string,
+  object: 'shipping_method',
+  description: string | null,
+  name: string,
+  position: number,
+  created_at: number,
+  updated_at: number,
+}
+
+export interface ShippingChoice{
+  id:string,
+  object: 'shipping_choice',
+  amount: number,
+  currency: string,
+  checkout:string | Checkout,
+  shipping_method: string | ShippingMethod,
+  created_at:number,
+  updated_at:number
+}
+
 export interface ProcessorData {
   stripe: {
     account_id: string;
