@@ -6,16 +6,21 @@ import ProgressIndicator from './ProgressIndicator';
 import { useState } from '@wordpress/element';
 import { ScAlert, ScFormControl, ScInput } from '@surecart/components-react';
 
-export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
-	const [userEmail, setUserEmail] = useState(email ?? '');
+export default ({
+	email,
+	setUserEmail,
+	currentStep,
+	handleStepChange,
+	onSubmitEmail,
+}) => {
 	const [error, setError] = useState(null);
 
 	function onSubmit() {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		setError(null);
 
-		if (emailRegex.test(userEmail.trim())) {
-			onSubmitEmail(userEmail.trim());
+		if (emailRegex.test(email.trim())) {
+			onSubmitEmail(email.trim());
 			handleStepChange('forward');
 		} else {
 			setError(__('Invalid email address!', 'surecart'));
@@ -57,7 +62,7 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 							required={true}
 							autofocus={true}
 							type="email"
-							value={userEmail}
+							value={email}
 							onScInput={(e) => setUserEmail(e.target.value)}
 						/>
 					</ScFormControl>
@@ -69,7 +74,7 @@ export default ({ email, currentStep, handleStepChange, onSubmitEmail }) => {
 			<ProgressIndicator
 				currentStep={currentStep}
 				onBackwardClick={() => handleStepChange('backward')}
-				onForwardClick={!!userEmail?.trim().length && onSubmit}
+				onForwardClick={!!email?.trim().length && onSubmit}
 			/>
 		</>
 	);

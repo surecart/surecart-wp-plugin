@@ -41,7 +41,7 @@ function getAnimationSettings(originXA, originXB) {
 
 export default () => {
 	const [currentStep, setCurrentStep] = useState(0);
-	const [accountEmail, setAccountEmail] = useState(scData?.user_email);
+	const [accountEmail, setAccountEmail] = useState('');
 	const [accountCurrency, setAccountCurrency] = useState('usd');
 	const [selectedTemplate, setSelectedTemplate] = useState(null);
 	const refAnimationInstance = useRef(null);
@@ -135,10 +135,8 @@ export default () => {
 						currentStep={currentStep}
 						handleStepChange={handleStepChange}
 						email={accountEmail}
-						onSubmitEmail={(email) => {
-							setAccountEmail(email);
-							createProvisionalAccount(email);
-						}}
+						setUserEmail={setAccountEmail}
+						onSubmitEmail={createProvisionalAccount}
 					/>
 				);
 			case 4:
@@ -164,6 +162,11 @@ export default () => {
 			clearTimeout(confettiTimerId);
 		};
 	}, [currentStep]);
+
+	useEffect(() => {
+		if (!!accountEmail.length || !scData?.user_email) return;
+		setAccountEmail(scData.user_email);
+	}, [scData?.user_email]);
 
 	return (
 		<>
