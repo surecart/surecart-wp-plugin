@@ -83,20 +83,15 @@ export default ({
 							))}
 						</div>
 					)}
-
-					{items?.length > 0 &&
-						(items || []).map((item) => (
-							<ScTableRow key={item.id} style={tableRowStyle}>
-								{Object.keys(columns).map((key) => (
-									<ScTableCell
-										key={key}
-										style={tableCellStyle}
-									>
-										{item[key]}
-									</ScTableCell>
-								))}
-							</ScTableRow>
-						))}
+					{(items || []).map((item) => (
+						<ScTableRow key={item.id} style={tableRowStyle}>
+							{Object.keys(columns).map((key) => (
+								<ScTableCell key={key} style={tableCellStyle}>
+									{item[key]}
+								</ScTableCell>
+							))}
+						</ScTableRow>
+					))}
 				</ScTable>
 
 				{children}
