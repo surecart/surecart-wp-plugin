@@ -43,10 +43,10 @@ class Webhook extends Model {
 
 		return $this->create(
 			[
-				'description' => 'Main webhook for SureCart',
-				'enabled'     => true,
-				'destination' => 'wordpress',
-				'url'         => $this->getListenerUrl(),
+				'description' 	 => 'Main webhook for SureCart',
+				'enabled'     	 => true,
+				'destination' 	 => 'wordpress',
+				'url'         	 => $this->getListenerUrl(),
 				'webhook_events' => \SureCart::config()->webhook_events,
 			]
 		);
