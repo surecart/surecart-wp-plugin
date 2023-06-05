@@ -45,7 +45,7 @@ class OnboardingScriptsController extends AdminModelEditController {
 						'account_time_zone' => wp_timezone_string(),
 					],
 				],
-				untrailingslashit( SURECART_APP_URL ) . '/sign_up'
+				untrailingslashit( SURECART_APP_URL ) . '/session/new'
 			)
 		);
 		$this->data['user_email']  = is_user_logged_in() ? wp_get_current_user()->user_email : '';
