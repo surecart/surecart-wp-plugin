@@ -243,6 +243,18 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.0.1 - June 6, 2023 =
+* New: Archive and delete option on upgrade groups.
+* New: Ability to disable purchase/download emails.
+* Improvement: Improved UI when updating subscription price on admin subscription page.
+* Improvement: Rename "Status" to "Product Page" to clarify product status.
+* Improvement: Truncate mobile line items to max of 3 lines.
+* Improvement: Hide product image on line items below certain widths to prevent squishing text.
+* Improvement: Update roles to allow multisite installations to manage their own stores.
+* Fix: Show notice if subscription payoff is not available for store.
+* Fix: Product description bullet points css issue on admin screen.
+* Fix: Coupon overflow issue on mobile when coupon field is expanded by default.
+
 = 2.0.0 - June 1, 2023 =
 * New: Customizable product pages.
 * New: Customizable shop page.
