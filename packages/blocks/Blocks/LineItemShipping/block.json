@@ -1,5 +1,5 @@
 {
-	"name": "surecart/shipping-line-item",
+	"name": "surecart/line-item-shipping",
 	"title": "Shipping Line Item",
 	"description": "Display the shipping amount",
 	"category": "surecart",
@@ -13,7 +13,7 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Shipping Amount"
+			"default": "Shipping"
 		}
 	}
 }

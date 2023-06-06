@@ -35,7 +35,7 @@ import * as taxLineItem from '@blocks/TaxLineItem';
 import * as textarea from '@blocks/Textarea';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
-import * as shippingLineItem from '@blocks/ShippingLineItem';
+import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 
 import { registerBlocks } from './register-block';

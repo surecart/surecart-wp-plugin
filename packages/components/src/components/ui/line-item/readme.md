@@ -46,6 +46,7 @@
 
  - [sc-coupon-form](../coupon-form)
  - [sc-line-item-bump](../../controllers/checkout-form/sc-line-item-bump)
+ - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
@@ -55,7 +56,6 @@
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-product-line-item](../product-line-item)
- - [sc-shipping-line-item](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -64,6 +64,7 @@
 graph TD;
   sc-coupon-form --> sc-line-item
   sc-line-item-bump --> sc-line-item
+  sc-line-item-shipping --> sc-line-item
   sc-line-item-tax --> sc-line-item
   sc-line-item-total --> sc-line-item
   sc-line-items --> sc-line-item
@@ -73,7 +74,6 @@ graph TD;
   sc-order-confirmation-totals --> sc-line-item
   sc-order-summary --> sc-line-item
   sc-product-line-item --> sc-line-item
-  sc-shipping-line-item --> sc-line-item
   sc-subscription-next-payment --> sc-line-item
   sc-upcoming-invoice --> sc-line-item
   style sc-line-item fill:#f9f,stroke:#333,stroke-width:4px

@@ -864,6 +864,13 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-shipping": {
+    "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item-tax": {
     "loading": true,
     "order": true,
@@ -1502,15 +1509,6 @@
   "sc-session-provider": {
     "persist": true,
     "prices": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-shipping-line-item": {
-    "label": true,
-    "loading": true,
-    "order": true,
     "style": true,
     "id": true,
     "class": true,

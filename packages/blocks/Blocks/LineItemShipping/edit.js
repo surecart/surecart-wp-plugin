@@ -24,15 +24,14 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-
-			<sc-shipping-line-item
+			<sc-line-item
 				{...blockProps}
 				label={label}
 				order={{
 					shipping_amount: 1234,
 					currency: scData?.currency || 'usd',
 				}}
-			></sc-shipping-line-item>
+			></sc-line-item>
 		</Fragment>
 	);
 };

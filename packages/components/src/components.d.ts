@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { Checkout as Checkout1, LineItemData as LineItemData1 } from "src/types";
+import { LineItemData as LineItemData1 } from "src/types";
 export namespace Components {
     interface ScAddress {
         /**
@@ -1682,6 +1682,12 @@ export namespace Components {
         "loading": boolean;
         "order": Checkout;
     }
+    interface ScLineItemShipping {
+        /**
+          * Label
+         */
+        "label": string;
+    }
     interface ScLineItemTax {
         "loading": boolean;
         "order": Checkout;
@@ -2725,20 +2731,6 @@ export namespace Components {
           * An array of prices to pre-fill in the form.
          */
         "prices": Array<PriceChoice>;
-    }
-    interface ScShippingLineItem {
-        /**
-          * Label
-         */
-        "label": string;
-        /**
-          * Whether parent is loading
-         */
-        "loading": boolean;
-        /**
-          * The order
-         */
-        "order": Checkout1;
     }
     interface ScSkeleton {
         /**
@@ -4053,6 +4045,12 @@ declare global {
         prototype: HTMLScLineItemBumpElement;
         new (): HTMLScLineItemBumpElement;
     };
+    interface HTMLScLineItemShippingElement extends Components.ScLineItemShipping, HTMLStencilElement {
+    }
+    var HTMLScLineItemShippingElement: {
+        prototype: HTMLScLineItemShippingElement;
+        new (): HTMLScLineItemShippingElement;
+    };
     interface HTMLScLineItemTaxElement extends Components.ScLineItemTax, HTMLStencilElement {
     }
     var HTMLScLineItemTaxElement: {
@@ -4395,12 +4393,6 @@ declare global {
         prototype: HTMLScSessionProviderElement;
         new (): HTMLScSessionProviderElement;
     };
-    interface HTMLScShippingLineItemElement extends Components.ScShippingLineItem, HTMLStencilElement {
-    }
-    var HTMLScShippingLineItemElement: {
-        prototype: HTMLScShippingLineItemElement;
-        new (): HTMLScShippingLineItemElement;
-    };
     interface HTMLScSkeletonElement extends Components.ScSkeleton, HTMLStencilElement {
     }
     var HTMLScSkeletonElement: {
@@ -4716,6 +4708,7 @@ declare global {
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
+        "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
         "sc-line-items": HTMLScLineItemsElement;
@@ -4773,7 +4766,6 @@ declare global {
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
         "sc-session-provider": HTMLScSessionProviderElement;
-        "sc-shipping-line-item": HTMLScShippingLineItemElement;
         "sc-skeleton": HTMLScSkeletonElement;
         "sc-spacing": HTMLScSpacingElement;
         "sc-spinner": HTMLScSpinnerElement;
@@ -6706,6 +6698,12 @@ declare namespace LocalJSX {
         "loading"?: boolean;
         "order"?: Checkout;
     }
+    interface ScLineItemShipping {
+        /**
+          * Label
+         */
+        "label"?: string;
+    }
     interface ScLineItemTax {
         "loading"?: boolean;
         "order"?: Checkout;
@@ -7897,20 +7895,6 @@ declare namespace LocalJSX {
          */
         "prices"?: Array<PriceChoice>;
     }
-    interface ScShippingLineItem {
-        /**
-          * Label
-         */
-        "label"?: string;
-        /**
-          * Whether parent is loading
-         */
-        "loading"?: boolean;
-        /**
-          * The order
-         */
-        "order"?: Checkout1;
-    }
     interface ScSkeleton {
         /**
           * Animation effect
@@ -8637,6 +8621,7 @@ declare namespace LocalJSX {
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
+        "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
         "sc-line-items": ScLineItems;
@@ -8694,7 +8679,6 @@ declare namespace LocalJSX {
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
         "sc-session-provider": ScSessionProvider;
-        "sc-shipping-line-item": ScShippingLineItem;
         "sc-skeleton": ScSkeleton;
         "sc-spacing": ScSpacing;
         "sc-spinner": ScSpinner;
@@ -8815,6 +8799,7 @@ declare module "@stencil/core" {
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
+            "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;
@@ -8872,7 +8857,6 @@ declare module "@stencil/core" {
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
             "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;
-            "sc-shipping-line-item": LocalJSX.ScShippingLineItem & JSXBase.HTMLAttributes<HTMLScShippingLineItemElement>;
             "sc-skeleton": LocalJSX.ScSkeleton & JSXBase.HTMLAttributes<HTMLScSkeletonElement>;
             "sc-spacing": LocalJSX.ScSpacing & JSXBase.HTMLAttributes<HTMLScSpacingElement>;
             "sc-spinner": LocalJSX.ScSpinner & JSXBase.HTMLAttributes<HTMLScSpinnerElement>;

@@ -1,4 +1,4 @@
 export default ({ attributes }) => {
 	const { label } = attributes;
-	return <sc-shipping-line-item label={label}></sc-shipping-line-item>;
+	return <sc-line-item-shipping label={label}></sc-line-item-shipping>;
 };

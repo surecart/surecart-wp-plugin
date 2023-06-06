@@ -1,28 +1,25 @@
 import { Component, Host, Prop, h } from '@stencil/core';
-import { Checkout } from 'src/types';
-import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
+import { state as formState } from '@store/form';
+import { state as checkoutState } from '@store/checkout';
 
 @Component({
-  tag: 'sc-shipping-line-item',
-  styleUrl: 'sc-shipping-line-item.scss',
+  tag: 'sc-line-item-shipping',
+  styleUrl: 'sc-line-item-shipping.scss',
   shadow: true,
 })
-export class ScShippingLineItem {
-  /** The order */
-  @Prop({ mutable: true }) order: Checkout;
-  /** Whether parent is loading */
-  @Prop() loading: boolean;
+export class ScLineItemShipping {
   /**Label */
   @Prop() label: string;
 
   render() {
+    const { checkout } = checkoutState;
     // don't show if no shipping amount.
-    if (!this.order?.shipping_amount) {
+    if (!checkout?.shipping_amount) {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
-    if (this.loading) {
+    if (formState.formState.value === 'loading') {
       return (
         <sc-line-item>
           <sc-skeleton slot="title" style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>
@@ -35,11 +32,9 @@ export class ScShippingLineItem {
       <sc-line-item>
         <span slot="description">{this.label || __('Shipping Amount', 'surecart')}</span>
         <span slot="price">
-          <sc-format-number type="currency" currency={this.order?.currency} value={this.order?.shipping_amount}></sc-format-number>
+          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.shipping_amount}></sc-format-number>
         </span>
       </sc-line-item>
     );
   }
 }
-
-openWormhole(ScShippingLineItem, ['order', 'loading', 'calculating'], false);

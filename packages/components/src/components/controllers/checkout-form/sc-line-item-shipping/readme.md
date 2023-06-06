@@ -7,18 +7,12 @@
 
 ## Properties
 
-| Property  | Attribute | Description               | Type       | Default     |
-| --------- | --------- | ------------------------- | ---------- | ----------- |
-| `label`   | `label`   | Label                     | `string`   | `undefined` |
-| `loading` | `loading` | Whether parent is loading | `boolean`  | `undefined` |
-| `order`   | --        | The order                 | `Checkout` | `undefined` |
+| Property | Attribute | Description | Type     | Default     |
+| -------- | --------- | ----------- | -------- | ----------- |
+| `label`  | `label`   | Label       | `string` | `undefined` |
 
 
 ## Dependencies
-
-### Used by
-
- - [sc-form-components-validator](../../../providers/form-components-validator)
 
 ### Depends on
 
@@ -29,11 +23,10 @@
 ### Graph
 ```mermaid
 graph TD;
-  sc-shipping-line-item --> sc-line-item
-  sc-shipping-line-item --> sc-skeleton
-  sc-shipping-line-item --> sc-format-number
-  sc-form-components-validator --> sc-shipping-line-item
-  style sc-shipping-line-item fill:#f9f,stroke:#333,stroke-width:4px
+  sc-line-item-shipping --> sc-line-item
+  sc-line-item-shipping --> sc-skeleton
+  sc-line-item-shipping --> sc-format-number
+  style sc-line-item-shipping fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
