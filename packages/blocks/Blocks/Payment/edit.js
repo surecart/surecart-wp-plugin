@@ -1,9 +1,6 @@
-import { ScPayment } from '@surecart/components-react';
+import { ScAlert, ScCard, ScPayment } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import Inspector from './components/Inspector';
-import ManualPaymentMethods from './components/ManualPaymentMethods';
-import PayPal from './components/PayPal';
-import Stripe from './components/Stripe';
 
 export default ({ attributes, setAttributes, context }) => {
 	const { label } = attributes;
@@ -17,7 +14,14 @@ export default ({ attributes, setAttributes, context }) => {
 				label={label}
 				mode={mode}
 				hideTestModeBadge={mode === 'live'}
-			/>
+			>
+				<ScAlert open type="info" slot="stripe">
+					{__(
+						'Please preview the form on the front-end to load the Stripe payment fields.',
+						'surecart'
+					)}
+				</ScAlert>
+			</ScPayment>
 		</>
 	);
 };

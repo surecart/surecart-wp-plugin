@@ -8,8 +8,12 @@ export default ({
 	scrollOnOpen = true,
 	children,
 }) => {
-	if (!error || !Object.keys(error).length) {
+	if (!error) {
 		return null;
+	}
+
+	if (typeof error === 'string') {
+		error = { message: error };
 	}
 
 	return (

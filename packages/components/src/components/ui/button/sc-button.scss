@@ -31,7 +31,9 @@
   white-space: nowrap;
   vertical-align: middle;
   padding: 0;
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow, var(--sc-input-transition, var(--sc-transition-medium)) opacity;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
+    var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow,
+    var(--sc-input-transition, var(--sc-transition-medium)) opacity;
   cursor: inherit;
 
   &::-moz-focus-inner {
@@ -402,6 +404,7 @@
   box-shadow: none;
   color: var(--sc-button-link-color, var(--primary-background));
   transition: opacity var(--sc-input-transition, var(--sc-transition-medium)) ease;
+  text-decoration: var(--sc-button-link-text-decoration, none);
 
   &.button--has-label {
     &.button--small,
@@ -433,20 +436,20 @@
     &.button--small,
     &.button--medium,
     &.button--large {
-        padding-left: 0;
-        .button__label {
-          padding-left: var(--sc-spacing-xx-small);
-        }
+      padding-left: 0;
+      .button__label {
+        padding-left: var(--sc-spacing-xx-small);
+      }
     }
   }
   &.button--has-suffix:not(.button--text) {
     &.button--small,
     &.button--medium,
     &.button--large {
-        padding-right: 0;
-        .button__label {
-          padding-right: var(--sc-spacing-xx-small);
-        }
+      padding-right: 0;
+      .button__label {
+        padding-right: var(--sc-spacing-xx-small);
+      }
     }
   }
 }
@@ -732,27 +735,27 @@ sc-spinner::part(base) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RTL support
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-.button--is-rtl{
-   &.button--has-prefix {
+.button--is-rtl {
+  &.button--has-prefix {
     &.button--small,
     &.button--medium,
     &.button--large {
+      padding-left: 0;
+      .button__label {
         padding-left: 0;
-        .button__label {
-          padding-left: 0;
-          padding-right: var(--sc-spacing-xx-small);
-        }
+        padding-right: var(--sc-spacing-xx-small);
+      }
     }
   }
   &.button--has-suffix {
     &.button--small,
     &.button--medium,
     &.button--large {
+      padding-right: 0;
+      .button__label {
         padding-right: 0;
-        .button__label {
-          padding-right: 0;
-          padding-left: var(--sc-spacing-xx-small);
-        }
+        padding-left: var(--sc-spacing-xx-small);
+      }
     }
   }
 }

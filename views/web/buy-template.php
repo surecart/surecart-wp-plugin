@@ -2,12 +2,47 @@
 <sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
-		<?php if ( $show_image && ! empty( $product->image->url ) ) : ?>
-			<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
-				<figure class="wp-block-image size-full is-resized has-custom-border">
-					<img src="<?php echo esc_url( $product->image->url ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
-				</figure>
-			<!-- /wp:image -->
+		<?php if ( $show_image && ! empty( $product->product_medias->data ) ) : ?>
+			<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
+				<sc-image-slider id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>" style="--sc-product-slider-height: 310px;"></sc-image-slider>
+				<?php
+				\SureCart::assets()->addComponentData(
+					'sc-image-slider',
+					'#sc-product-media-' . $product->id,
+					[
+						'hasThumbnails' => true,
+						'images'        => array_map(
+							function( $product_media ) use ( $product ) {
+								return [
+									'src'   => $product_media->getUrl( 450 ),
+									'alt'   => $product_media->media->filename ?? $product->name ?? '',
+									'width' => 450,
+								];
+							},
+							$product->product_medias->data
+						),
+						'thumbnails'    => array_map(
+							function( $product_media ) use ( $product ) {
+								return [
+									'src'    => $product_media->getUrl( 90 ),
+									'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
+									'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
+									'alt'    => $product_media->media->filename ?? $product->name ?? '',
+									'width'  => 90,
+								];
+							},
+							$product->product_medias->data
+						),
+					]
+				);
+				?>
+			<?php else : ?>
+				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
+					<figure class="wp-block-image size-full is-resized has-custom-border">
+						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+					</figure>
+				<!-- /wp:image -->
+			<?php endif; ?>
 		<?php endif; ?>
 
 

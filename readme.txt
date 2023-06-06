@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
-Requires at least: 5.9
+Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 1.9.2
+Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,80 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.0.0 - June 1, 2023 =
+* New: Customizable product pages.
+* New: Customizable shop page.
+* New: Elementor product page customization.
+* New: Customer background sync for imported customers.
+* New: SEO metadata and product schema integration.
+* Improvement: Don't show price decimal places if price is whole number.
+* Improvement: Update component dependencies.
+
+= 1.11.2 - May 23, 2023 =
+* New: Add setting to automaticaly sync WP users with SureCart customers upon dashboard login.
+* Fix: Showing dollar as currency in recovered revenue section.
+* Fix: Customer dashboard logout link not redirecting back to customer dashboard on mobile.
+* Fix: Update subscription menu item showing on admin dashboard for finite subscriptions.
+
+= 1.11.1 - May 19, 2023 =
+* Fix: Update Merchant UI to account for imported subscriptions.
+* Fix: TutorLMS index pages sometimes allowing access to restricted content without purchase.
+* Fix: PHP debug notice in CartService.php.
+
+= 1.11.0 - May 11, 2023 =
+* New: Cart icon in menu for classic and FSE themes.
+* New: Automatic Google Analytics purchase events.
+* Improvement: Responsive image sizes for instant checkout and line items.
+
+= 1.10.4 - May 10, 2023 =
+* Fix: Issue with email and name fields being disabled and blank if a user has created a checkout, then logs in and visits the same page.
+
+= 1.10.3 - May 9, 2023 =
+* Improvement: Remove US commonwealth countries from the country selector to avoid confusion, as they already exist as states.
+* Improvement: Added clarification text indicating that coupon redemption limits are not applied in test mode.
+* Fix: Resolved issue with updating prices not immediately reflecting changes in existing carts.
+* Fix: Addressed issue with PayPal checkout not succeeding if the status of the charge is "processing."
+* Fix: Corrected the problem of checkout line items not being passed with the scOrderPaid event.
+
+= 1.10.2 - May 4, 2023 =
+* Fix: Pricing line breaking awkwardness in checkout for larger numbers.
+* Fix: Sometimes showing dashboard error after activation if API token was replaced or was previously incorrect.
+* Fix: Add missing translation string for "one or more line items are referencing prices that are not purchasable".
+* Fix: Issue with needing to select the product twice on buy and add to cart buttons.
+* Fix: Admin menu permissions denied on dashboard for SureCart Store Manager roles.
+* Fix: Issue with blank dashboard page that occurred intermittently on first connection.
+* Fix: Processor block blank in admin for Stripe.
+
+= 1.10.1 - May 2, 2023 =
+* Fix: Issue with expanded coupon form not showing apply text.
+* Fix: Issue with payment block when all processors are disabled and manual processors are enabled.
+
+= 1.10.0 - May 1, 2023 =
+* New: Multiple product images.
+* New: Instant checkout product images slideshow.
+* New: Phone number block for checkout.
+* New: Pre-populate name and email fields from url parameters.
+* Improvement: Subscription pausing UX in merchant admin.
+* Improvement: Option to disable individual abandonded checkout emails.
+* Improvement: Ability to turn on/off abandoned checkouts in test mode.
+
+
+= 1.9.5 - April 27, 2023 =
+* Improvement: Don't log non-essential errors to error log.
+* Fix: Missing product image from buy page due to API change.
+
+= 1.9.4 - April 24, 2023 =
+* Improvement: Clicking add to cart button now increases the quantity.
+* Improvement: Disallow spaces as inputs for firstname, lastname or full name fields.
+* Fix: CSS issue for subscription saver modal being more than 2 columns.
+* Fix: Issue where coupon field gets too wide if button text is longer on mobile.
+* Fix: Issue with Kadence blocks styles being displayed for some themes in SureCart columns.
+
+= 1.9.3 - April 19, 2023 =
+* Fix: Overflow issue with order bumps and subscription saver items that have long titles.
+* Fix: Issue with price inputs in iOS Safari that contain decimals.
+* Fix: Permissions denied issue with switching between name your own price subscriptions.
 
 = 1.9.2 - April 10, 2023 =
 * Fix export links change for data export.

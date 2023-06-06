@@ -10,6 +10,8 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScUpgradeRequired,
+	ScPremiumTag,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -170,6 +172,13 @@ export default () => {
 			subscription?.status === 'completed'
 		)
 			return null;
+		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+			return (
+				<ScMenuItem onClick={() => setModal('dont_cancel')}>
+					{__("Don't Pause", 'surecart')}
+				</ScMenuItem>
+			);
+		}
 		if (subscription?.cancel_at_period_end) {
 			return (
 				<ScMenuItem onClick={() => setModal('dont_cancel')}>
@@ -215,7 +224,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (!subscription?.finite) return null;
+		if (subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -231,13 +240,31 @@ export default () => {
 
 	/** Render the pause button */
 	const renderPauseButton = () => {
+		if (subscription?.finite) return null;
+
+		if (
+			subscription?.cancel_at_period_end &&
+			subscription.current_period_end_at &&
+			subscription.restore_at
+		)
+			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
 
+		const upgradeRequired =
+			!window.scData?.entitlements?.subscription_restore_at;
 		return (
-			<ScMenuItem onClick={() => setModal('pause')}>
-				{__('Pause Subscription...', 'surecart')}
-			</ScMenuItem>
+			<ScUpgradeRequired
+				style={{ display: 'block' }}
+				required={upgradeRequired}
+			>
+				<ScMenuItem onClick={() => setModal('pause')}>
+					{upgradeRequired
+						? __('Pause', 'surecart')
+						: __('Pause Subscription', 'surecart')}{' '}
+					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+				</ScMenuItem>
+			</ScUpgradeRequired>
 		);
 	};
 	const renderPayOffButton = () => {
@@ -255,7 +282,13 @@ export default () => {
 
 	/** Render the restore at button */
 	const renderRestoreAtButton = () => {
-		if (subscription?.status !== 'canceled') return null;
+		const isSetToPause =
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at;
+
+		if (subscription?.status !== 'canceled' && !isSetToPause) return null;
 
 		return (
 			<ScMenuItem onClick={() => setModal('restore_at')}>
@@ -266,11 +299,18 @@ export default () => {
 
 	/** Render the renew at button */
 	const renderRenewAtButton = () => {
+		const isSetToPause =
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at;
+		if (isSetToPause) return null;
+
 		if (!['past_due', 'active'].includes(subscription?.status)) return null;
 
 		return (
 			<ScMenuItem onClick={() => setModal('renew_at')}>
-				{__('Renew At...', 'surecart')}
+				{__('Change Renewal Date', 'surecart')}
 			</ScMenuItem>
 		);
 	};
@@ -421,11 +461,12 @@ export default () => {
 			<RestoreSubscriptionAtModal
 				open={modal === 'restore_at'}
 				onRequestClose={onRequestCloseModal}
-				currentRestoreAt={subscription?.restore_at}
+				subscription={subscription}
 			/>
 			<PauseSubscriptionUntilModal
 				open={modal === 'pause'}
 				onRequestClose={onRequestCloseModal}
+				currentPeriodEndAt={subscription?.current_period_end_at}
 			/>
 			<RenewSubscriptionAtModal
 				open={modal === 'renew_at'}

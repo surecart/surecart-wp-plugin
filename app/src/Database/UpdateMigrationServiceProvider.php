@@ -41,6 +41,8 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		\SureCart::plugin()->roles()->create();
 		// make sure to check for and create cart post on every update.
 		\SureCart::page_seeder()->createCartPost();
+		// make sure to check for and create cart post on every update.
+		\SureCart::page_seeder()->createShopPage();
 	}
 
 	/**

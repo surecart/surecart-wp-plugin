@@ -27,6 +27,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'auto_sync_user_to_customer',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
+			]
+		);
+		$this->register(
+			'surecart',
 			'honeypot_enabled',
 			[
 				'type'              => 'boolean',
@@ -108,6 +118,72 @@ class SettingService {
 				'show_in_rest'      => true,
 				'default'           => '180px',
 				'sanitize_callback' => 'sanitize_text_field',
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_menu_alignment',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'right',
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_menu_always_shown',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_menu_selected_ids',
+			[
+				'type'         => 'array',
+				'items'        => 'integer',
+				'show_in_rest' => [
+					'schema' => [
+						'type'  => 'array',
+						'items' => [
+							'type' => 'integer',
+						],
+					],
+				],
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_icon',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'shopping-bag', // shopping-bag, shopping-cart.
+			]
+		);
+		$this->register(
+			'surecart',
+			'cart_icon_type',
+			[
+				'type'              => 'string',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => 'floating_icon', // both, floating_icon, menu_icon.
+			]
+		);
+		$this->register(
+			'surecart',
+			'password_validation_enabled',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => false,
 			]
 		);
 	}

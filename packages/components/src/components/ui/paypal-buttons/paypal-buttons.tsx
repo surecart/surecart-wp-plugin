@@ -136,7 +136,7 @@ export class ScPaypalButtons {
             method: 'PATCH',
             path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id || this.order?.payment_intent}/capture`,
           })) as PaymentIntent;
-          if (['succeeded', 'pending', 'requires_approval'].includes(intent?.status)) {
+          if (['succeeded', 'processing'].includes(intent?.status)) {
             this.scSetState.emit('PAID');
             this.scPaid.emit();
           } else {

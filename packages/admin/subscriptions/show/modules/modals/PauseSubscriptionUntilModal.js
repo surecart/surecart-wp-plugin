@@ -1,17 +1,23 @@
-import { ScBlockUi, ScButton } from '@surecart/components-react';
+/** @jsx jsx */
+import { css, jsx } from '@emotion/react';
+import { ScBlockUi, ScButton, ScDialog } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import apiFetch from '@wordpress/api-fetch';
 import { DateTimePicker } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import Error from '../../../../components/Error';
 import { addQueryArgs } from '@wordpress/url';
-import { ScDialog } from '@surecart/components-react';
+import { useEffect } from 'react';
+import { ScAlert } from '@surecart/components-react';
+import { formatTime } from '../../../../util/time';
 
-export default ({ open, onRequestClose }) => {
+const CANCEL_BEHAVIOR = 'pending';
+
+export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
@@ -20,23 +26,31 @@ export default ({ open, onRequestClose }) => {
 	const { invalidateResolutionForStore } = useDispatch(coreStore);
 	const [pauseUntil, setPauseUntil] = useState(new Date());
 
-	const onChangeDate = (date) => {
-		setPauseUntil(date);
+	const getDefaultPauseDate = () => {
+		const pauseDate = !!currentPeriodEndAt
+			? new Date(currentPeriodEndAt * 1000)
+			: new Date();
+		pauseDate.setDate(pauseDate.getDate() + 1);
+		return pauseDate;
 	};
+	useEffect(() => {
+		setPauseUntil(getDefaultPauseDate());
+	}, [currentPeriodEndAt]);
 
 	const cancel = () => {
-		setPauseUntil(new Date());
 		onRequestClose();
+		setPauseUntil(getDefaultPauseDate());
 	};
 
 	const onUpdatePauseUntil = async () => {
 		if (!pauseUntil) return;
+
 		try {
 			setLoading(true);
 			await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`surecart/v1/subscriptions/${id}/cancel`, {
-					cancel_behavior: 'immediate',
+					cancel_behavior: CANCEL_BEHAVIOR,
 				}),
 				data: {
 					restore_at: Date.parse(pauseUntil) / 1000,
@@ -56,14 +70,35 @@ export default ({ open, onRequestClose }) => {
 				e?.message || __('Something went wrong', 'surecart'),
 				{ type: 'snackbar' }
 			);
+			(e?.additional_errors || []).forEach((e) => {
+				createErrorNotice(
+					e?.message || __('Something went wrong', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			});
 		} finally {
 			setLoading(false);
 		}
 	};
 
+	const isInvalidDate = (date) => {
+		const today = new Date();
+		const oneYearFromNow = new Date(
+			today.getFullYear() + 1,
+			today.getMonth(),
+			today.getDate()
+		);
+
+		return (
+			Date.parse(new Date(currentPeriodEndAt * 1000)) >
+				Date.parse(date) ||
+			Date.parse(date) > Date.parse(oneYearFromNow)
+		);
+	};
+
 	return (
 		<ScDialog
-			label={__('Pause Subscription Until', 'surecart')}
+			label={__('Pause Subscription', 'surecart')}
 			open={open}
 			onScRequestClose={cancel}
 			style={{
@@ -75,28 +110,47 @@ export default ({ open, onRequestClose }) => {
 		>
 			<Error error={error} setError={setError} />
 
-			<DateTimePicker
-				currentDate={pauseUntil}
-				onChange={onChangeDate}
-				isInvalidDate={(date) => {
-					return Date.parse(new Date()) > Date.parse(date);
-				}}
-			/>
+			<div
+				css={css`
+					display: grid;
+					gap: var(--sc-spacing-small);
+				`}
+			>
+				{!!currentPeriodEndAt && (
+					<ScAlert type="info" open>
+						{sprintf(
+							__(
+								'This will automatically pause the subscription on %s. Please choose a restoration date.',
+								'surecart '
+							),
+							formatTime(currentPeriodEndAt, {
+								dateStyle: 'medium',
+							})
+						)}
+					</ScAlert>
+				)}
+
+				<DateTimePicker
+					currentDate={pauseUntil}
+					onChange={(pauseUntil) => setPauseUntil(pauseUntil)}
+					isInvalidDate={isInvalidDate}
+				/>
+			</div>
 
 			<ScButton
 				type="text"
 				slot="footer"
-				onClick={cancel}
+				onClick={() => cancel()}
 				disabled={loading}
 			>
-				{__('Cancel', 'surecart')}
+				{__("Don't Pause", 'surecart')}
 			</ScButton>
 
 			<ScButton
 				type="primary"
 				slot="footer"
 				onClick={() => onUpdatePauseUntil()}
-				disabled={loading || pauseUntil <= new Date()}
+				disabled={loading}
 			>
 				{__('Pause', 'surecart')}
 			</ScButton>

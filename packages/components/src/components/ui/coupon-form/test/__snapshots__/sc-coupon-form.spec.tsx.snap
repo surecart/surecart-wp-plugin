@@ -50,6 +50,9 @@ exports[`sc-coupon-form renders collapsed 1`] = `
             <slot></slot>
           </sc-button>
         </sc-input>
+        <sc-button class="coupon-button-mobile" exportparts="base:button__base, label:button_label" outline="" size="medium" type="primary">
+          <slot></slot>
+        </sc-button>
       </div>
     </div>
   </mock:shadow-root>

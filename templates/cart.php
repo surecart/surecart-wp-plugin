@@ -1,6 +1,6 @@
 <?php
 /**
- * Donation form block pattern
+ * Cart page block template.
  */
 return [
 	'title'      => __( 'Cart', 'surecart' ),

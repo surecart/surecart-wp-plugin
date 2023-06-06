@@ -63,18 +63,22 @@ export class ScForm {
 
   @Method('validate')
   async validate() {
+    console.log('validate');
     const formControls = this.getFormControls();
     const formControlsThatReport = formControls.filter((el: any) => typeof el.reportValidity === 'function') as any;
 
     if (!this.novalidate) {
       for (const el of formControlsThatReport) {
-        // must be not hidden to validate.
-        if (el.offsetParent !== null) {
-          const isValid = await el.reportValidity();
+        // element is hidden, don't client-side validate.
+        if (!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)) {
+          continue;
+        }
 
-          if (!isValid) {
-            return false;
-          }
+        const isValid = await el.reportValidity();
+
+        if (!isValid) {
+          console.log(el);
+          return false;
         }
       }
     }
@@ -107,7 +111,9 @@ export class ScForm {
         <form
           part="form"
           ref={el => (this.formElement = el as HTMLFormElement)}
+          class="test"
           onSubmit={async e => {
+            console.log('submitted');
             e.preventDefault();
             const isValid = await this.validate();
             if (!isValid) {

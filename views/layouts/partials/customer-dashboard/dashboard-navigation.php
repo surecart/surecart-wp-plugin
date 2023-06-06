@@ -52,7 +52,7 @@ $account_navigation = $account_navigation ?? [];
 				'icon_name' => 'log-out',
 				'name'      => __( 'Log Out', 'surecart' ),
 				'active'    => false,
-				'href'      => wp_logout_url(),
+				'href'      => $data['logout_link'] ?? wp_logout_url( get_permalink() ),
 				'is_mobile' => $is_mobile,
 			]
 		);

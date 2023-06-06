@@ -10,6 +10,7 @@
 | Property      | Attribute     | Description | Type       | Default     |
 | ------------- | ------------- | ----------- | ---------- | ----------- |
 | `busy`        | `busy`        |             | `boolean`  | `undefined` |
+| `buttonText`  | `button-text` |             | `string`   | `undefined` |
 | `collapsed`   | `collapsed`   |             | `boolean`  | `undefined` |
 | `error`       | `error`       |             | `any`      | `undefined` |
 | `label`       | `label`       |             | `string`   | `undefined` |

@@ -32,18 +32,24 @@ class UsersService {
 	 */
 	public function syncUserProfile( $user_id, $old_user_data, $userdata ) {
 		$customer_ids = \SureCart\Models\User::find( $user_id )->customerIds();
-		if ( empty( $customer_ids ) ) {
+		if ( is_wp_error( $customer_ids ) || empty( $customer_ids ) ) {
 			return;
 		}
 
 		foreach ( $customer_ids as $id ) {
 			\SureCart\Models\Customer::update(
-				[
-					'id'         => $id,
-					'first_name' => $userdata['first_name'],
-					'last_name'  => $userdata['last_name'],
-					'email'      => $userdata['user_email'],
-				]
+				array_filter(
+					[
+						'id'         => $id,
+						'first_name' => $userdata['first_name'],
+						'last_name'  => $userdata['last_name'],
+						'email'      => $userdata['user_email'],
+						'phone'      => $userdata['phone'] ?? null,
+					],
+					function( $x ) {
+						return null !== $x;
+					}
+				)
 			);
 		}
 	}

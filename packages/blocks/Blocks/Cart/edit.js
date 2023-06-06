@@ -5,8 +5,15 @@ import {
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	useBlockProps,
 	InnerBlocks,
+	__experimentalUnitControl as UnitControl,
 	__experimentalUseInnerBlocksProps,
+	InspectorControls,
 } from '@wordpress/block-editor';
+
+import {
+	__experimentalUseCustomUnits as useCustomUnits,
+	PanelBody,
+} from '@wordpress/components';
 
 const allowedBlocks = [
 	'surecart/cart-coupon',
@@ -18,7 +25,9 @@ const allowedBlocks = [
 	'surecart/cart-message',
 ];
 
-export default () => {
+import { useSetting } from '@wordpress/block-editor';
+
+export default ({ attributes: { width }, setAttributes }) => {
 	const blockProps = useBlockProps({
 		style: {
 			fontSize: '16px',
@@ -35,7 +44,7 @@ export default () => {
 			css: css`
 				flex: 1 1 auto;
 				overflow: auto;
-				max-width: 400px;
+				max-width: ${width};
 				width: 100%;
 				margin: auto;
 				border: var(--sc-drawer-border);
@@ -56,9 +65,33 @@ export default () => {
 		}
 	);
 
+	const units = useCustomUnits({
+		availableUnits: useSetting('spacing.units') || [
+			'%',
+			'px',
+			'em',
+			'rem',
+			'vw',
+		],
+	});
+
 	return (
-		<div {...blockProps}>
-			<div {...innerBlocksProps}></div>
-		</div>
+		<>
+			<InspectorControls>
+				<PanelBody>
+					<UnitControl
+						label={__('Width', 'surecart')}
+						labelPosition="top"
+						__unstableInputWidth="80px"
+						value={width}
+						onChange={(width) => setAttributes({ width })}
+						units={units}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...blockProps}>
+				<div {...innerBlocksProps}></div>
+			</div>
+		</>
 	);
 };
