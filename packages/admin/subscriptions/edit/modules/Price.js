@@ -102,13 +102,13 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 													setDialog('amount')
 												}
 											>
-												{__('Edit Amount')}
+												{__('Edit Amount', 'surecart')}
 											</ScMenuItem>
 										)}
 										<ScMenuItem
 											onClick={() => setDialog('price')}
 										>
-											{__('Change Price')}
+											{__('Change Price', 'surecart')}
 										</ScMenuItem>
 									</ScMenu>
 								</ScDropdown>
