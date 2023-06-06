@@ -129,26 +129,26 @@ export default ({ attributes, setAttributes }) => {
 									}}
 								/>
 							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__('Closed Text', 'surecart')}
+									value={closed_text}
+									onChange={(closed_text) =>
+										setAttributes({ closed_text })
+									}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={__('Open Text', 'surecart')}
+									value={open_text}
+									onChange={(open_text) =>
+										setAttributes({ open_text })
+									}
+								/>
+							</PanelRow>
 						</Fragment>
 					) : null}
-					<PanelRow>
-						<TextControl
-							label={__('Closed Text', 'surecart')}
-							value={closed_text}
-							onChange={(closed_text) =>
-								setAttributes({ closed_text })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Open Text', 'surecart')}
-							value={open_text}
-							onChange={(open_text) =>
-								setAttributes({ open_text })
-							}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
