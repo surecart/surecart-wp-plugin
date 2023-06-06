@@ -5,6 +5,7 @@ import Step from './Step';
 import ProgressIndicator from './ProgressIndicator';
 import { ScFormControl, ScInput, ScSelect } from '@surecart/components-react';
 import ColorPopup from '../../../blocks/components/ColorPopup';
+import { ScIcon } from '@surecart/components-react';
 
 export default ({
 	currentStep,
@@ -26,13 +27,13 @@ export default ({
 		<>
 			<Step
 				imageNode={
-					<sc-icon
-						name="mail"
+					<ScIcon
+						name="sliders"
 						style={{
 							fontSize: '38px',
 							color: 'var(--sc-color-brand-primary)',
 						}}
-					></sc-icon>
+					/>
 				}
 				title={__('Confirm Store Details', 'surecart')}
 				label={__(

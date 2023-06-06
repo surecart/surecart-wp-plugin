@@ -47,7 +47,7 @@ export default ({
 						></sc-icon>
 					}
 					title={__(
-						'Confirm Email for Store Notifications.',
+						'Confirm Email for Store Notifications',
 						'surecart'
 					)}
 					label={__(

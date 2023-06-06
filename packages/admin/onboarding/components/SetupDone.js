@@ -45,18 +45,27 @@ export default () => {
 				label={__('Your store has been created.', 'surecart')}
 			>
 				{!!scData?.success_url && (
-					<ScButton
-						type="primary"
-						size="large"
-						href={scData.success_url}
+					<div
+						css={css`
+							text-align: center;
+						`}
 					>
-						<ScIcon
-							name="shopping-bag"
-							slot="prefix"
-							style={{ fontSize: '18px' }}
-						/>
-						{__('View My Store', 'surecart')}
-					</ScButton>
+						<ScButton
+							type="primary"
+							size="large"
+							href={scData.success_url}
+							css={css`
+								min-width: 225px;
+							`}
+						>
+							<ScIcon
+								name="shopping-bag"
+								slot="prefix"
+								style={{ fontSize: '18px' }}
+							/>
+							{__('View My Store', 'surecart')}
+						</ScButton>
+					</div>
 				)}
 				{/* <div style={{ marginTop: '45px', height: '315px' }}>
 				{showVideo && (
