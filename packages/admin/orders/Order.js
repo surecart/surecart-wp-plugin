@@ -109,7 +109,7 @@ export default () => {
 
 		if (!['draft', 'paid'].includes(orderStatus)) {
 			menuItems.push({
-				title: __('Mark as Paid', 'surecart'),
+				title: __('Mark As Paid', 'surecart'),
 				modal: 'order_status_update',
 			});
 		}
@@ -122,7 +122,7 @@ export default () => {
 		}
 
 		return menuItems;
-	}
+	};
 	const menuItems = getMenuItems(order?.status);
 
 	return (
@@ -162,7 +162,7 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{menuItems.length > 0 &&
+					{menuItems.length > 0 && (
 						<>
 							<ScButton
 								type="primary"
@@ -173,16 +173,17 @@ export default () => {
 								{__('Actions', 'surecart')}
 							</ScButton>
 							<ScMenu>
-								{
-									menuItems.map((menuItem, key) => (
-										<ScMenuItem onClick={() => setModal(menuItem.modal)} key={key}>
-											{menuItem.title}
-										</ScMenuItem>
-									))
-								}
+								{menuItems.map((menuItem, key) => (
+									<ScMenuItem
+										onClick={() => setModal(menuItem.modal)}
+										key={key}
+									>
+										{menuItem.title}
+									</ScMenuItem>
+								))}
 							</ScMenu>
 						</>
-					}
+					)}
 				</ScDropdown>
 			}
 			sidebar={
