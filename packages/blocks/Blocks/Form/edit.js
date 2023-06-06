@@ -58,8 +58,8 @@ export default function edit({ clientId, attributes, setAttributes }) {
 	} = attributes;
 
 	const [showClaimNotice, setShowClaimNotice] = useState(false);
-	const isAccountClaimed = window?.scData?.is_claimed === '0';
 	const claimUrl = window?.scData?.claim_url;
+	const isAccountClaimed = !!claimUrl;
 
 	const [custom_success_url, setCustomSuccessUrl] = useState(!!success_url);
 	useEffect(() => {

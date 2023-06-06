@@ -17,6 +17,11 @@
 	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) : ?>
 		<sc-alert open type="info" closable style="position: relative; z-index: 10;"><?php esc_html_e( 'Cache cleared.', 'surecart' ); ?></sc-alert>
 	<?php endif; ?>
+
+	<?php if ( ! empty( $claim_url ) ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+	<?php endif; ?>
+
 	<div id="sc-settings-header">
 		<sc-breadcrumbs style="font-size: 16px">
 			<sc-breadcrumb>

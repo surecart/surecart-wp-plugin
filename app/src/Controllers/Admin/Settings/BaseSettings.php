@@ -48,6 +48,7 @@ abstract class BaseSettings {
 				'upgrade_url'  => \SureCart::config()->links->purchase,
 				'brand_color'  => \SureCart::account()->brand->color ?? null,
 				'status'       => $request->query( 'status' ),
+				'claim_url'    => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 			]
 		);
 	}
@@ -110,6 +111,7 @@ abstract class BaseSettings {
 				'plan_name'            => \SureCart::account()->plan->name ?? '',
 				'processors'           => Processor::get(),
 				'is_block_theme'       => (bool) wp_is_block_theme(),
+				'claim_url'            => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 			]
 		);
 	}

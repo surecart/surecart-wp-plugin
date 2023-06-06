@@ -5,7 +5,7 @@ import ErrorBoundary from '../../components/error-boundary';
 import admin from '../../styles/admin';
 import UnsavedChangesWarning from './UnsavedChangesWarning';
 import { css, jsx, Global } from '@emotion/core';
-import { ScForm } from '@surecart/components-react';
+import { ScForm, ScProvisionalBanner } from '@surecart/components-react';
 import { PostLockedModal } from '@wordpress/editor';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -41,6 +41,11 @@ export default ({
 			/>
 			<ErrorBoundary onError={onError}>
 				<UnsavedChangesWarning />
+
+				{!!scData?.claim_url && (
+					<ScProvisionalBanner claim-url={scData?.claim_url} />
+				)}
+
 				<ScForm
 					className="sc-model-form"
 					onScFormSubmit={onSubmit}

@@ -1,7 +1,14 @@
 <?php \SureCart::render( 'layouts/partials/admin-settings-styles' ); ?>
 
 <div id="sc-settings-container">
-	<?php \SureCart::render( 'layouts/partials/admin-settings-header' ); ?>
+	<?php
+	\SureCart::render(
+		'layouts/partials/admin-settings-header',
+		[
+			'claim_url' => $claim_url,
+		]
+	);
+	?>
 
 	<div id="sc-settings-content">
 		<?php

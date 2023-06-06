@@ -23,7 +23,7 @@ export default () => {
 	const [liveMode, setLiveMode] = useState(true);
 	return (
 		<>
-			{scData?.claimed === '0' && !!scData?.claim_url && (
+			{!!scData?.claim_url && (
 				<ScProvisionalBanner claimUrl={scData?.claim_url} />
 			)}
 			<DashboardModel

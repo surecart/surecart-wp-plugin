@@ -128,6 +128,7 @@ abstract class AdminModelEditController {
 		$this->data['buy_page_slug']     = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
 		$this->data['is_block_theme']    = \SureCart::utility()->blockTemplates()->isFSETheme();
+		$this->data['claim_url']         = ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '';
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;
@@ -146,12 +147,6 @@ abstract class AdminModelEditController {
 			foreach ( array_keys( \SureCart::getAdminPageNames() ) as $name ) {
 				$this->data['links'][ $name ] = esc_url_raw( add_query_arg( [ 'action' => 'edit' ], \SureCart::getUrl()->index( $name ) ) );
 			}
-		}
-		if ( in_array( 'claimed', $this->with_data ) ) {
-			$this->data['claimed'] = \SureCart::account()->claimed ? '1' : '0';
-		}
-		if ( in_array( 'claim_url', $this->with_data ) ) {
-			$this->data['claim_url'] = \SureCart::routeUrl( 'account.claim' );
 		}
 
 		// pass entitlements to page.
