@@ -93,30 +93,44 @@ export default ({ attributes, setAttributes }) => {
 							}}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Collapsed On Desktop', 'surecart')}
-							checked={collapsed}
-							onChange={(collapsed) => {
-								setAttributes({ collapsed });
-								if (collapsed) {
-									setAttributes({ collapsible: true });
-								}
-							}}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Collapsed On Mobile', 'surecart')}
-							checked={collapsedOnMobile}
-							onChange={(collapsedOnMobile) => {
-								setAttributes({ collapsedOnMobile });
-								if (collapsedOnMobile) {
-									setAttributes({ collapsible: true });
-								}
-							}}
-						/>
-					</PanelRow>
+					{collapsible ? (
+						<Fragment>
+							<PanelRow>
+								<ToggleControl
+									label={__(
+										'Collapsed On Desktop',
+										'surecart'
+									)}
+									checked={collapsed}
+									onChange={(collapsed) => {
+										setAttributes({ collapsed });
+										if (collapsed) {
+											setAttributes({
+												collapsible: true,
+											});
+										}
+									}}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<ToggleControl
+									label={__(
+										'Collapsed On Mobile',
+										'surecart'
+									)}
+									checked={collapsedOnMobile}
+									onChange={(collapsedOnMobile) => {
+										setAttributes({ collapsedOnMobile });
+										if (collapsedOnMobile) {
+											setAttributes({
+												collapsible: true,
+											});
+										}
+									}}
+								/>
+							</PanelRow>
+						</Fragment>
+					) : null}
 					<PanelRow>
 						<TextControl
 							label={__('Closed Text', 'surecart')}
