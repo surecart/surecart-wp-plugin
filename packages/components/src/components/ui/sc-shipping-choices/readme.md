@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute      | Description                     | Type               | Default     |
-| ----------------- | -------------- | ------------------------------- | ------------------ | ----------- |
-| `label`           | `label`        | The shipping section label      | `string`           | `undefined` |
-| `shippingChoices` | --             | Shipping choices                | `ShippingChoice[]` | `[]`        |
-| `showControl`     | `show-control` | Show control on shipping option | `boolean`          | `true`      |
+| Property          | Attribute          | Description                                     | Type               | Default     |
+| ----------------- | ------------------ | ----------------------------------------------- | ------------------ | ----------- |
+| `label`           | `label`            | The shipping section label                      | `string`           | `undefined` |
+| `shippingChoices` | --                 | Shipping choices                                | `ShippingChoice[]` | `[]`        |
+| `showControl`     | `show-control`     | Show control on shipping option                 | `boolean`          | `true`      |
+| `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean`          | `true`      |
 
 
 ## Dependencies

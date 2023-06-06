@@ -2909,6 +2909,10 @@ export namespace Components {
           * Show control on shipping option
          */
         "showControl": boolean;
+        /**
+          * Whether to show the shipping choice description
+         */
+        "showDescription": boolean;
     }
     interface ScSkeleton {
         /**
@@ -8283,6 +8287,10 @@ declare namespace LocalJSX {
           * Show control on shipping option
          */
         "showControl"?: boolean;
+        /**
+          * Whether to show the shipping choice description
+         */
+        "showDescription"?: boolean;
     }
     interface ScSkeleton {
         /**

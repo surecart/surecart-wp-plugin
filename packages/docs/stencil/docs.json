@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-05T11:34:22",
+  "timestamp": "2023-06-06T12:56:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -24783,6 +24783,23 @@
           "attr": "show-control",
           "reflectToAttr": false,
           "docs": "Show control on shipping option",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showDescription",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-description",
+          "reflectToAttr": false,
+          "docs": "Whether to show the shipping choice description",
           "docsTags": [],
           "default": "true",
           "values": [

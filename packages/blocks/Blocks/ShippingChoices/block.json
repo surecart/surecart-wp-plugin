@@ -17,6 +17,10 @@
 		"showControl": {
 			"type": "boolean",
 			"default": true
+		},
+		"showDescription": {
+			"type": "boolean",
+			"default": true
 		}
 	}
 }

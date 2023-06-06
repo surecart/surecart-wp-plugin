@@ -1571,6 +1571,7 @@
     "label": true,
     "shipping-choices": true,
     "show-control": true,
+    "show-description": true,
     "style": true,
     "id": true,
     "class": true,

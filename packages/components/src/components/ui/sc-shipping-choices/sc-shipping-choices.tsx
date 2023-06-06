@@ -15,6 +15,9 @@ export class ScShippingChoices {
   /** Show control on shipping option */
   @Prop() showControl: boolean = true;
 
+  /** Whether to show the shipping choice description */
+  @Prop() showDescription: boolean = true;
+
   /** Shipping choices */
   @Prop({ mutable: true }) shippingChoices: ShippingChoice[] = [];
 
@@ -39,7 +42,7 @@ export class ScShippingChoices {
               <div class="shipping-choice">
                 <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-xx-small)' }}>
                   <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name}</div>
-                  <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
+                  {this.showDescription &&  !!(shipping_method as ShippingMethod)?.description &&<div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>}
                 </sc-flex>
                 <div class="shipping-choice__price">
                   <sc-format-number type="currency" value={amount} currency={currency} />
