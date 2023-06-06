@@ -1,20 +1,25 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
-import PriceSelector from '@admin/components/PriceSelector';
 import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
 	ScInput,
-	ScPriceInput,
 	ScFormatNumber,
+	ScIcon,
+	ScButton,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import UpdateAmount from './Modals/UpdateAmount';
+import UpdatePrice from './Modals/UpdatePrice';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const [price, setPrice] = useState(null);
-	const [open, setOpen] = useState(false);
+	const [dialog, setDialog] = useState(null);
 	const lineItem = upcoming?.checkout?.line_items?.data?.[0];
 
 	useEffect(() => {
@@ -38,7 +43,6 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 					},
 					quantity: {
 						label: __('Qty', 'surecart'),
-						width: '75px',
 					},
 					total: {
 						label: (
@@ -55,70 +59,60 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 				}}
 				items={[
 					{
-						product: price ? (
-							<div>
-								<div
+						product: !!price && (
+							<div
+								css={css`
+									display: flex;
+									align-items: center;
+									gap: 1em;
+								`}
+							>
+								<div>
+									{price?.product?.name}
+									<div style={{ opacity: 0.5 }}>
+										<ScFormatNumber
+											type="currency"
+											value={
+												price?.ad_hoc &&
+												subscription?.ad_hoc_amount
+													? subscription?.ad_hoc_amount
+													: price?.amount
+											}
+											currency={price?.currency}
+										/>
+										{intervalString(price, {
+											labels: { interval: '/' },
+										})}
+									</div>
+								</div>
+
+								<ScDropdown
+									placement="bottom-end"
 									css={css`
-										display: flex;
-										align-items: center;
-										gap: 1em;
+										margin-left: auto;
 									`}
 								>
-									{price?.ad_hoc ? (
-										<ScPriceInput
-											label={price?.product?.name}
-											value={lineItem?.total_amount}
-											onScChange={(e) =>
-												updateSubscription({
-													ad_hoc_amount:
-														e.target.value,
-												})
-											}
-										/>
-									) : (
-										<div>
-											{price?.product?.name}
-											<div style={{ opacity: 0.5 }}>
-												<ScFormatNumber
-													type="currency"
-													value={price?.amount}
-													currency={price?.currency}
-												/>
-												{intervalString(price, {
-													labels: { interval: '/' },
-												})}
-											</div>
-										</div>
-									)}
-
-									<sc-button
-										size="small"
-										onClick={() => {
-											setPrice(false);
-											setOpen(true);
-										}}
-									>
-										{__('Change', 'surecart')}
-									</sc-button>
-								</div>
+									<ScButton circle type="text" slot="trigger">
+										<ScIcon name="more-vertical" />
+									</ScButton>
+									<ScMenu>
+										{price?.ad_hoc && (
+											<ScMenuItem
+												onClick={() =>
+													setDialog('amount')
+												}
+											>
+												{__('Edit Amount', 'surecart')}
+											</ScMenuItem>
+										)}
+										<ScMenuItem
+											onClick={() => setDialog('price')}
+										>
+											{__('Change Price', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
 							</div>
-						) : (
-							<PriceSelector
-								open={open}
-								required
-								value={price?.id}
-								onSelect={(price) => {
-									if (price) {
-										updateSubscription({
-											price,
-										});
-									}
-								}}
-								requestQuery={{
-									archived: false,
-									recurring: true,
-								}}
-							/>
 						),
 						quantity: (
 							<ScInput
@@ -130,6 +124,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 										quantity: e.target.value,
 									});
 								}}
+								style={{ maxWidth: 75 }}
 								required
 							></ScInput>
 						),
@@ -155,7 +150,24 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 					},
 				]}
 			/>
+
 			{loading && price !== null && <ScBlockUi spinner />}
+
+			<UpdateAmount
+				amount={lineItem?.ad_hoc_amount || price?.amount}
+				onUpdateAmount={(ad_hoc_amount) =>
+					updateSubscription({ ad_hoc_amount })
+				}
+				open={dialog === 'amount'}
+				onRequestClose={() => setDialog(null)}
+			/>
+
+			<UpdatePrice
+				price={price}
+				onUpdatePrice={(price) => updateSubscription({ price })}
+				open={dialog === 'price'}
+				onRequestClose={() => setDialog(null)}
+			/>
 		</div>
 	);
 };
