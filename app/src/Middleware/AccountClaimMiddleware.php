@@ -22,10 +22,13 @@ class AccountClaimMiddleware {
 		$account = Account::find();
 
 		if ( $account->claimed ) {
+			// clear the account cache.
+			\SureCart::account()->clearCache();
 			// render success.
 			return \SureCart::redirect()->to( esc_url_raw( add_query_arg( [ 'account_claimed_success' => true ], \SureCart::routeUrl( 'dashboard.show' ) ) ) );
 		}
 
-		return \SureCart::redirect()->to( esc_url_raw( $account->claim_url ) );
+		// redirect back here to handle invalidating cache.
+		return \SureCart::redirect()->to( esc_url_raw( add_query_arg( [ 'return_url' => \SureCart::routeUrl( 'account.claim' ) ], $account->claim_url ) ) );
 	}
 }
