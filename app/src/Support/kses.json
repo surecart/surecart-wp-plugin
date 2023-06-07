@@ -2086,6 +2086,7 @@
     "slot": true
   },
   "sc-upgrade-required": {
+    "open": true,
     "required": true,
     "size": true,
     "style": true,
