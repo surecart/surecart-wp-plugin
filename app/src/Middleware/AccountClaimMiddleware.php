@@ -29,6 +29,6 @@ class AccountClaimMiddleware {
 		}
 
 		// redirect back here to handle invalidating cache.
-		return \SureCart::redirect()->to( esc_url_raw( add_query_arg( [ 'return_url' => \SureCart::routeUrl( 'account.claim' ) ], $account->claim_url ) ) );
+		return \SureCart::redirect()->to( esc_url_raw( add_query_arg( [ [ 'onboarding' => [ 'return_url' => \SureCart::routeUrl( 'account.claim' ) ] ] ], $account->claim_url ) ) );
 	}
 }
