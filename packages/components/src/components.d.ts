@@ -3694,6 +3694,9 @@ export namespace Components {
           * Whether to render upgrade modal by default
          */
         "open": boolean;
+        /**
+          * Is this required?
+         */
         "required": boolean;
         /**
           * The tag's size.
@@ -3990,10 +3993,6 @@ export interface ScTextareaCustomEvent<T> extends CustomEvent<T> {
 export interface ScToggleCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScToggleElement;
-}
-export interface ScUpgradeRequiredCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScUpgradeRequiredElement;
 }
 declare global {
     interface HTMLScAddressElement extends Components.ScAddress, HTMLStencilElement {
@@ -9405,11 +9404,13 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
-        "onRequestClose"?: (event: ScUpgradeRequiredCustomEvent<void>) => void;
         /**
           * Whether to render upgrade modal by default
          */
         "open"?: boolean;
+        /**
+          * Is this required?
+         */
         "required"?: boolean;
         /**
           * The tag's size.
