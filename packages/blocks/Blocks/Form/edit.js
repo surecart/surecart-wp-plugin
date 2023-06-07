@@ -450,9 +450,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			<StyleProvider>
 				{showClaimNotice ? (
 					<ClaimNoticeModal
-						title={__('Complete Your Store!', 'surecart')}
+						title={__('Complete your store setup.', 'surecart')}
 						bodyText={__(
-							'Please complete your store for free to enable live mode.',
+							"Please complete your store to enable live mode. It's free!",
 							'surecart'
 						)}
 						onRequestClose={() => setShowClaimNotice(false)}
