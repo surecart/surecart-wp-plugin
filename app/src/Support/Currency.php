@@ -208,7 +208,8 @@ class Currency {
 	public static function formatCurrencyNumber( $amount, $currency_code = 'usd' ) {
 		$amount = (float) $amount;
 		// TODO: Test this.
-		if ( in_array( strtolower( $currency_code ), [ 'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw' ], true ) ) {
+		$zero_decimal_curr = [ 'bif', 'byr', 'clp', 'djf', 'gnf', 'huf', 'isk', 'jpy', 'kmf', 'krw', 'pyg', 'rwf', 'ugx', 'vnd', 'vuv', 'xaf', 'xag', 'xau', 'xba', 'xbb', 'xbc', 'xbd', 'xdr', 'xof', 'xpd', 'xpf', 'xpt', 'xts' ];
+		if ( in_array( strtolower( $currency_code ), $zero_decimal_curr, true ) ) {
 			return self::formatCents( $amount, 1 );
 		}
 		return self::formatCents( $amount / 100, 1 );
@@ -393,20 +394,33 @@ class Currency {
 	public static function isZeroDecimal( $currency ) {
 		$is_zero = array(
 			'BIF',
+			'BYR',
 			'CLP',
 			'DJF',
 			'GNF',
+			'HUF',
+			'ISK',
 			'JPY',
 			'KMF',
 			'KRW',
-			'MGA',
 			'PYG',
 			'RWF',
+			'UGX',
 			'VND',
 			'VUV',
 			'XAF',
+			'XAG',
+			'XAU',
+			'XBA',
+			'XBB',
+			'XBC',
+			'XBD',
+			'XDR',
 			'XOF',
+			'XPD',
 			'XPF',
+			'XPT',
+			'XTS',
 		);
 
 		return in_array( strtoupper( $currency ), $is_zero );
