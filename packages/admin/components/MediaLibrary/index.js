@@ -20,7 +20,6 @@ import Error from '../Error';
 import MediaItem from './MediaItem';
 import Preview from './Preview';
 import StorageLimitWarning from '../StorageLimitWarning';
-import useEntity from '../../hooks/useEntity';
 import ClaimNoticeModal from '../ClaimNoticeModal';
 
 export default ({
@@ -40,18 +39,10 @@ export default ({
 	const uploadFile = useFileUpload();
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const [selectedMedia, setSelectedMedia] = useState({});
-	const [isClaimed, setIsClaimed] = useState(false);
-
-	const { item: accountItem, hasLoadedItem: hasLoadedAccountItem } =
-		useEntity('store', 'account');
 
 	const { medias, fetching } = useSelect(
 		(select) => {
 			if (!open) return {}; // must be open.
-			if (!hasLoadedAccountItem) return {}; // account info must be loaded
-			if (accountItem?.claimed === true) {
-				setIsClaimed(true);
-			} else return {};
 			const queryArgs = [
 				'surecart',
 				'media',
@@ -71,7 +62,7 @@ export default ({
 				),
 			};
 		},
-		[page, open, hasLoadedAccountItem, accountItem]
+		[page, open]
 	);
 
 	const onMediaItemClick = (media) => {
@@ -304,7 +295,7 @@ export default ({
 
 			{open && (
 				<Fragment>
-					{!isClaimed ? (
+					{!!scData?.claim_url ? (
 						<ClaimNoticeModal
 							title={__('Complete Setup!', 'surecart')}
 							bodyText={__(
@@ -312,7 +303,7 @@ export default ({
 								'surecart'
 							)}
 							onRequestClose={onRequestClose}
-							claimUrl={accountItem?.claim_url}
+							claimUrl={scData?.claim_url}
 						/>
 					) : (
 						<Template
