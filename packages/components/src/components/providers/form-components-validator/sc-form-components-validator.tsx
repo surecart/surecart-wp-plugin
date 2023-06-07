@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-
+import { state as checkoutState } from '@store/checkout';
 import { Checkout, TaxProtocol } from '../../../types';
 
 @Component({
@@ -56,7 +56,7 @@ export class ScFormComponentsValidator {
     }
 
     // add shipping choices.
-    if (!!this.order?.shipping_choices?.data?.length) {
+    if (checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required && !!this.order?.shipping_choices?.data?.length) {
       this.addShippingChoices();
     }
   }

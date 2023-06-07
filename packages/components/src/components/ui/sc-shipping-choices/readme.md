@@ -15,6 +15,13 @@
 | `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean`          | `true`      |
 
 
+## Events
+
+| Event     | Description | Type                         |
+| --------- | ----------- | ---------------------------- |
+| `scError` | Error event | `CustomEvent<ResponseError>` |
+
+
 ## Dependencies
 
 ### Used by
