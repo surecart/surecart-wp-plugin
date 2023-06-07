@@ -246,6 +246,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 2.0.1 - June 7, 2023 =
 * New: Archive and delete option on upgrade groups.
 * New: Ability to disable purchase/download emails.
+* New: Cancel orders and manually mark orders as paid.
 * Improvement: Improved UI when updating subscription price on admin subscription page.
 * Improvement: Rename "Status" to "Product Page" to clarify product status.
 * Improvement: Truncate mobile line items to max of 3 lines.
