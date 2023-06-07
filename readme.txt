@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.0.1 - June 6, 2023 =
+= 2.0.1 - June 7, 2023 =
 * New: Archive and delete option on upgrade groups.
 * New: Ability to disable purchase/download emails.
 * Improvement: Improved UI when updating subscription price on admin subscription page.
