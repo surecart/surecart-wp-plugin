@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-01T17:45:34",
+  "timestamp": "2023-06-08T06:53:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "2.17.1",
@@ -12848,7 +12848,7 @@
           "mutable": false,
           "attr": "no-convert",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Should we convert",
           "docsTags": [],
           "values": [
             {
@@ -12877,7 +12877,7 @@
         },
         {
           "name": "type",
-          "type": "\"currency\" | \"decimal\" | \"percent\"",
+          "type": "\"currency\" | \"decimal\" | \"percent\" | \"unit\"",
           "mutable": false,
           "attr": "type",
           "reflectToAttr": false,
@@ -12895,6 +12895,27 @@
             },
             {
               "value": "percent",
+              "type": "string"
+            },
+            {
+              "value": "unit",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "mutable": false,
+          "attr": "unit",
+          "reflectToAttr": false,
+          "docs": "The unit to use when formatting.",
+          "docsTags": [],
+          "default": "'lb'",
+          "values": [
+            {
               "type": "string"
             }
           ],

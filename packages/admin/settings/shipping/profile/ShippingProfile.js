@@ -8,11 +8,11 @@ import SettingsBox from '../../SettingsBox';
 import { ScInput } from '@surecart/components-react';
 import Error from '../../../components/Error';
 import Products from './Products';
-import ShippingZones from './ShippingZones';
+import ShippingZones from '../zone/ShippingZones';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
-import FallbackZone from './FallbackZone';
+import FallbackZone from '../zone/FallbackZone';
 
 export default () => {
 	const [error, setError] = useState();

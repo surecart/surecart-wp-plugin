@@ -16,13 +16,13 @@ import {
 	ScMenuItem,
 	ScBlockUi,
 } from '@surecart/components-react';
-import ShippingRateCondition from './ShippingRateCondition';
+import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
-import ShippingMethodForm from './ShippingMethodForm';
+import ShippingRateForm from '../rate/ShippingRateForm';
 
 const modals = {
 	ADD_RATE: 'add_shipping_rate',
@@ -167,7 +167,7 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 
 			{currentModal === modals.ADD_RATE ||
 			currentModal === modals.EDIT_RATE ? (
-				<ShippingMethodForm
+				<ShippingRateForm
 					onRequestClose={() => {
 						setCurrentModal('');
 						setSelectedShippingRate();
