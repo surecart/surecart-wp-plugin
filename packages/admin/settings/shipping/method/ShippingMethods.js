@@ -54,6 +54,10 @@ export default () => {
 		perPage: PER_PAGE,
 	});
 
+	if (!shippingMethods.length) {
+		return null;
+	}
+
 	return (
 		<SettingsBox
 			title={__('Shipping Methods', 'surecart')}
