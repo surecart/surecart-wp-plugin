@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
 import { getCurrencySymbol } from '../../../functions/price';
 import { FormSubmitController } from '../../../functions/form-data';
-import { isZeroDecimal, maybeConvertAmount } from '../../util/format-number/functions/utils';
+import { isZeroDecimal } from '../../util/format-number/functions/utils';
 
 /**
  * @part base - The elements base wrapper.
@@ -188,7 +188,8 @@ export class ScPriceInput {
         onScInput={() => this.handleInput()}
         onScBlur={() => this.scBlur.emit()}
         onScFocus={() => this.scFocus.emit()}
-        value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
+        // commented below line fixing firefox decimal input issue
+        // value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
       >
         <span style={{ opacity: '0.5' }} slot="prefix">
           {getCurrencySymbol(this.currencyCode)}
