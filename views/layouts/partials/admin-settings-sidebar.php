@@ -95,7 +95,7 @@
 					</sc-flex>
 					<sc-text><?php esc_html_e( 'Unlock revenue boosting features when you upgrade to Pro!', 'surecart' ); ?></sc-text>
 					<sc-button type="primary" href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank">
-						<?php esc_html_e( 'Upgrade To Pro', 'surecart' ); ?>
+						<?php esc_html_e( 'Upgrade To Premium', 'surecart' ); ?>
 					</sc-button>
 				</sc-flex>
 			</sc-card>
