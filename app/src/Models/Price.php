@@ -3,7 +3,6 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Product;
-use SureCart\Support\Currency;
 
 /**
  * Price model
