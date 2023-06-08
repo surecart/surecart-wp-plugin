@@ -299,7 +299,7 @@ export default ({
 						<ClaimNoticeModal
 							title={__('Complete Setup!', 'surecart')}
 							bodyText={__(
-								'Please complete setting up your store for free to upload media.',
+								'Please complete setting up your store. Its free and only takes a minute.',
 								'surecart'
 							)}
 							onRequestClose={onRequestClose}
