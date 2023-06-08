@@ -7,8 +7,12 @@ export default ({ title, model }) => {
 			<sc-button
 				size="small"
 				slot="suffix"
-				href={`${scData?.app_url}/exports`}
-				target="_blank"
+				href={
+					scData?.claim_url
+						? scData?.claim_url
+						: `${scData?.app_url}/exports`
+				}
+				target={scData?.claim_url ? '_self' : '_blank'}
 			>
 				<sc-icon name="download" slot="suffix"></sc-icon>
 				{__('Export CSV', 'surecart')}
