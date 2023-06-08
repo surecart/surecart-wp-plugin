@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-upgrade-required Should only render children when required is false 1`] = `
+<sc-upgrade-required required="" size="small">
+  <mock:shadow-root>
+    <span class="trigger">
+      <span class="trigger__disabled">
+        <slot>
+          <sc-premium-badge></sc-premium-badge>
+        </slot>
+      </span>
+    </span>
+    <sc-dialog label="Boost Your Revenue" style="--width: 21rem; font-size: 15px; --body-spacing: 2rem;">
+      <span class="dialog__title" slot="label">
+        <sc-icon name="zap"></sc-icon>
+        <span>
+          Boost Your Revenue
+        </span>
+      </span>
+      <p>
+        Unlock revenue boosting features when you upgrade your plan!
+      </p>
+      <sc-button full="" href="https://app.surecart.com/billing" target="_blank" type="primary">
+        Upgrade Now
+        <sc-icon name="arrow-right" slot="suffix"></sc-icon>
+      </sc-button>
+    </sc-dialog>
+  </mock:shadow-root>
+  <div>
+    Should be rendered
+  </div>
+</sc-upgrade-required>
+`;
+
+exports[`sc-upgrade-required Should render modal by default when defaultOpen is true 1`] = `
+<sc-upgrade-required required="" size="small">
+  <mock:shadow-root>
+    <span class="trigger">
+      <span class="trigger__disabled">
+        <slot>
+          <sc-premium-badge></sc-premium-badge>
+        </slot>
+      </span>
+    </span>
+    <sc-dialog label="Boost Your Revenue" open="" style="--width: 21rem; font-size: 15px; --body-spacing: 2rem;">
+      <span class="dialog__title" slot="label">
+        <sc-icon name="zap"></sc-icon>
+        <span>
+          Boost Your Revenue
+        </span>
+      </span>
+      <p>
+        Unlock revenue boosting features when you upgrade your plan!
+      </p>
+      <sc-button full="" href="https://app.surecart.com/billing" target="_blank" type="primary">
+        Upgrade Now
+        <sc-icon name="arrow-right" slot="suffix"></sc-icon>
+      </sc-button>
+    </sc-dialog>
+  </mock:shadow-root>
+</sc-upgrade-required>
+`;
+
+exports[`sc-upgrade-required renders 1`] = `
+<sc-upgrade-required required="" size="small">
+  <mock:shadow-root>
+    <span class="trigger">
+      <span class="trigger__disabled">
+        <slot>
+          <sc-premium-badge></sc-premium-badge>
+        </slot>
+      </span>
+    </span>
+    <sc-dialog label="Boost Your Revenue" style="--width: 21rem; font-size: 15px; --body-spacing: 2rem;">
+      <span class="dialog__title" slot="label">
+        <sc-icon name="zap"></sc-icon>
+        <span>
+          Boost Your Revenue
+        </span>
+      </span>
+      <p>
+        Unlock revenue boosting features when you upgrade your plan!
+      </p>
+      <sc-button full="" href="https://app.surecart.com/billing" target="_blank" type="primary">
+        Upgrade Now
+        <sc-icon name="arrow-right" slot="suffix"></sc-icon>
+      </sc-button>
+    </sc-dialog>
+  </mock:shadow-root>
+</sc-upgrade-required>
+`;

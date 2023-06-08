@@ -1,0 +1,8 @@
+.sc-block-image img {
+	height: auto;
+	max-width: 100%;
+	vertical-align: bottom;
+	box-sizing: border-box;
+  border-radius: var(--sc-border-radius-medium);
+}
+

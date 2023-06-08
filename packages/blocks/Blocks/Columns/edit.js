@@ -42,6 +42,7 @@ import {
 	getMappedColumnWidths,
 	getRedistributedColumnWidths,
 	toWidthPrecision,
+	getPresetStyles,
 } from './utils';
 
 import { ScColumns } from '@surecart/components-react';
@@ -78,6 +79,7 @@ function ColumnsEditContainer({
 		verticalAlignment,
 		isFullHeight,
 		isReversedOnMobile,
+		style,
 	} = attributes;
 
 	const { template, postType, id } = useSelect((select) => {
@@ -144,12 +146,19 @@ function ColumnsEditContainer({
 		[clientId]
 	);
 
+	const presetStyles = getPresetStyles(style);
+
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		orientation: 'horizontal',
 		renderAppender: false,
 	});
+
+	const innerBlocksPropsObj = {
+		...innerBlocksProps,
+		style: { ...innerBlocksProps?.style, ...presetStyles },
+	};
 
 	return (
 		<>
@@ -168,7 +177,7 @@ function ColumnsEditContainer({
 						min={1}
 						max={Math.max(6, count)}
 					/>
-					{count > 6 && (
+					{columns > 3 && (
 						<Notice status="warning" isDismissible={false}>
 							{__(
 								'This column count exceeds the recommended amount and may cause visual breakage.'
@@ -209,7 +218,7 @@ function ColumnsEditContainer({
 				is-stacked-on-mobile={isStackedOnMobile}
 				is-full-height={isFullHeight}
 				is-reversed-on-mobile={isReversedOnMobile}
-				{...innerBlocksProps}
+				{...innerBlocksPropsObj}
 			/>
 		</>
 	);

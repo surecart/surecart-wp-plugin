@@ -87,6 +87,7 @@ interface IntervalOptions {
   labels?: {
     interval?: string;
     period?: string;
+    once?: string;
   };
 }
 export const intervalString = (price: Price, options: IntervalOptions = {}) => {

@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
-Requires at least: 5.9
+Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 1.11.2
+Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,27 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.0.1 - June 7, 2023 =
+* New: Archive and delete option on upgrade groups.
+* New: Ability to disable purchase/download emails.
+* Improvement: Improved UI when updating subscription price on admin subscription page.
+* Improvement: Rename "Status" to "Product Page" to clarify product status.
+* Improvement: Truncate mobile line items to max of 3 lines.
+* Improvement: Hide product image on line items below certain widths to prevent squishing text.
+* Improvement: Update roles to allow multisite installations to manage their own stores.
+* Fix: Show notice if subscription payoff is not available for store.
+* Fix: Product description bullet points css issue on admin screen.
+* Fix: Coupon overflow issue on mobile when coupon field is expanded by default.
+
+= 2.0.0 - June 1, 2023 =
+* New: Customizable product pages.
+* New: Customizable shop page.
+* New: Elementor product page customization.
+* New: Customer background sync for imported customers.
+* New: SEO metadata and product schema integration.
+* Improvement: Don't show price decimal places if price is whole number.
+* Improvement: Update component dependencies.
 
 = 1.11.2 - May 23, 2023 =
 * New: Add setting to automaticaly sync WP users with SureCart customers upon dashboard login.

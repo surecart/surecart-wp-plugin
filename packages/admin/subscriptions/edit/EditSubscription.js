@@ -46,7 +46,11 @@ export default () => {
 				'subscription',
 				id,
 				{
-					expand: ['current_period', 'current_period.checkout'],
+					expand: [
+						'current_period',
+						'current_period.checkout',
+						'discount',
+					],
 				},
 			];
 
@@ -70,13 +74,13 @@ export default () => {
 
 	useEffect(() => {
 		if (subscription?.id) {
-			console.log('fetching');
 			fetchUpcomingPeriod();
 		}
 	}, [
 		subscription?.id,
 		subscription?.quantity,
 		subscription?.price,
+		subscription?.ad_hoc_amount,
 		subscription?.trial_end_at,
 		skipProration,
 		updateBehavior,
@@ -238,7 +242,9 @@ export default () => {
 								checked={updateBehavior === 'immediate'}
 								onScChange={(e) =>
 									setUpdateBehavior(
-										e.target.checked ? 'immediate' : 'pending'
+										e.target.checked
+											? 'immediate'
+											: 'pending'
 									)
 								}
 							>

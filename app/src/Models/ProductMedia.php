@@ -50,6 +50,24 @@ class ProductMedia extends Model {
 	}
 
 	/**
+	 * Get the width for the product media.
+	 *
+	 * @return integer|null
+	 */
+	public function getWidthAttribute() {
+		return ! empty( $this->media ) ? $this->media->width : null;
+	}
+
+	/**
+	 * Get the width for the product media.
+	 *
+	 * @return integer|null
+	 */
+	public function getHeightAttribute() {
+		return ! empty( $this->media ) ? $this->media->width : null;
+	}
+
+	/**
 	 * Get the srcset for the product media.
 	 * We do this because the media object is not always set.
 	 *

@@ -86,7 +86,7 @@ class AdminURLService {
 	 * @return string URL for the page.
 	 */
 	public function index( $name ) {
-		return esc_url( menu_page_url( $this->page_names[ $name ], false ) );
+		return esc_url( admin_url( 'admin.php?page=' . $this->page_names[ $name ] ) );
 	}
 
 	/**
