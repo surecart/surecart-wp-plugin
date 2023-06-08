@@ -1,38 +1,10 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { Coupon, Price } from '../types';
+import { zeroDecimalCurrencies } from '../../src/components/util/format-number/functions/utils';
 
 export const convertAmount = (amount: number, currency: string) => {
-  return [
-    'bif',
-    'byr',
-    'clp',
-    'djf',
-    'gnf',
-    'huf',
-    'isk',
-    'jpy',
-    'kmf',
-    'krw',
-    'pyg',
-    'rwf',
-    'ugx',
-    'vnd',
-    'vuv',
-    'xaf',
-    'xag',
-    'xau',
-    'xba',
-    'xbb',
-    'xbc',
-    'xbd',
-    'xdr',
-    'xof',
-    'xpd',
-    'xpf',
-    'xpt',
-    'xts',
-  ].includes(currency)
+  return zeroDecimalCurrencies.includes(currency)
     ? amount
     : amount / 100;
 };
