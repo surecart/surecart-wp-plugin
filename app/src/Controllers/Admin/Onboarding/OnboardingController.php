@@ -2,6 +2,8 @@
 
 namespace SureCart\Controllers\Admin\Onboarding;
 
+use SureCart\Models\ApiToken;
+
 /**
  * Handles onboarding http requests.
  */
