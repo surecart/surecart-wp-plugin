@@ -31,7 +31,7 @@ export default ({ handleStepChange }) => {
 					`}
 				>
 					{__(
-						'You are a few moments away from adding e-commerce to your website. SureCart is a cloud powered e-commerce platform that is easy to use and high performance.',
+						'You are a few clicks away from adding e-commerce to your website. SureCart is a cloud powered e-commerce platform that is easy to use, lightweight, and lightning fast.',
 						'surecart'
 					)}
 				</p>

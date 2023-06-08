@@ -41,7 +41,10 @@ export default ({
 					'surecart'
 				)}
 			>
-				<ScFormControl label={__('Brand Color', 'surecart')}>
+				<ScFormControl
+					label={__('Brand Color', 'surecart')}
+					help={__('You can always change this later.', 'surecart')}
+				>
 					<div
 						css={css`
 							display: flex;

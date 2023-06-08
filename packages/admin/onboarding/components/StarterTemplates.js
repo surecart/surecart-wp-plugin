@@ -12,22 +12,22 @@ const templates = [
 	},
 	{
 		id: '0f681088-a74d-4aaa-9996-ef97d2ff0f32',
-		name: __('Beauty', 'surecart'),
+		name: __('Beauty Products', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/beauty.png`,
 	},
 	{
 		id: '25e55247-e1e6-4e7b-955c-3d719618d594',
-		name: __('Fashion', 'surecart'),
+		name: __('Clothing & Apparel', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/fashion.png`,
 	},
 	{
 		id: 'a1fea471-82c3-4401-9b82-20458ed6729d',
-		name: __('Printables', 'surecart'),
+		name: __('Printable Merchandise', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/print.png`,
 	},
 	{
 		id: 'dab55a5a-2136-41d1-9976-4bf744cc85b2',
-		name: __('Bands', 'surecart'),
+		name: __('Band Merchandise', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/band.png`,
 	},
 	{
@@ -37,12 +37,12 @@ const templates = [
 	},
 	{
 		id: '874f5380-166a-4e51-9f1e-5b72519d4cd4',
-		name: __('Organics', 'surecart'),
+		name: __('Organic Food', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/organic.png`,
 	},
 	{
 		id: '68376b5a-2392-443d-81b3-6985f4c835d2',
-		name: __('Pets', 'surecart'),
+		name: __('Pet Supplies', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/pet.png`,
 	},
 
