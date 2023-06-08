@@ -18,7 +18,7 @@ import {
 	ScRadioGroup,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import Error from '../../../components/Error';
 import ModelSelector from '../../../components/ModelSelector';
 import { useDispatch } from '@wordpress/data';
@@ -268,16 +268,7 @@ export default ({
 	};
 
 	return (
-		<ScDialog
-			open={true}
-			label={
-				isEdit
-					? __('Edit Shipping Rate', 'surecart')
-					: __('Add New Shipping Rate', 'surecart')
-			}
-			onScRequestClose={onRequestClose}
-			style={{ '--dialog-body-overflow': 'visible' }}
-		>
+		<Fragment>
 			<Error error={error} setError={setError} />
 			<ScForm
 				onScSubmit={(e) => {
@@ -451,6 +442,6 @@ export default ({
 					spinner
 				/>
 			)}
-		</ScDialog>
+		</Fragment>
 	);
 };

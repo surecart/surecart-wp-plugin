@@ -23,6 +23,8 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import ShippingRateForm from '../rate/ShippingRateForm';
+import AddShippingRate from '../rate/AddShippingRate';
+import EditShippingRate from '../rate/EditShippingRate';
 
 const modals = {
 	ADD_RATE: 'add_shipping_rate',
@@ -165,18 +167,26 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 				/>
 			)}
 
-			{currentModal === modals.ADD_RATE ||
-			currentModal === modals.EDIT_RATE ? (
-				<ShippingRateForm
+			{currentModal === modals.ADD_RATE && (
+				<AddShippingRate
+					shippingZoneId={shippingZone?.id}
 					onRequestClose={() => {
 						setCurrentModal('');
 						setSelectedShippingRate();
 					}}
-					isEdit={currentModal === modals.EDIT_RATE}
+				/>
+			)}
+
+			{currentModal === modals.EDIT_RATE && (
+				<EditShippingRate
+					onRequestClose={() => {
+						setCurrentModal('');
+						setSelectedShippingRate();
+					}}
 					shippingZoneId={shippingZone?.id}
 					selectedShippingRate={selectedShippingRate}
 				/>
-			) : null}
+			)}
 		</ScCard>
 	);
 };
