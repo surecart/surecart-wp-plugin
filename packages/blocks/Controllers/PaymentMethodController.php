@@ -200,11 +200,13 @@ class PaymentMethodController extends BaseController {
 					</sc-toggle>
 				<?php endif; ?>
 
-				<?php if ( in_array( 'paystack', $processor_names ) ) : ?>
+				<?php if ( in_array( 'paystack', $processor_names ) && ! in_array( 'stripe', $processor_names ) ) : ?>
 					<sc-toggle class="sc-paystack-toggle" show-control shady borderless>
 						<span slot="summary" class="sc-payment-toggle-summary">
-							<sc-icon name="credit-card" style="width: 80px; font-size: 24px"></sc-icon>&nbsp;
-							<?php esc_html_e( 'Credit Card', 'surecart' ); ?>
+							<sc-flex>
+								<sc-icon name="creditcard" style="font-size:24px"></sc-icon>
+								<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
+							</sc-flex>
 						</span>
 						<sc-paystack-add-method
 							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
