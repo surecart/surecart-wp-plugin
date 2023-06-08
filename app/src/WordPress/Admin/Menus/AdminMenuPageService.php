@@ -29,6 +29,43 @@ class AdminMenuPageService {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
 		add_action( 'admin_head', [ $this, 'adminMenuCSS' ] );
 		add_filter( 'parent_file', [ $this, 'forceSelect' ] );
+
+		// Admin bar menus.
+		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
+			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 31 );
+		}
+	}
+
+	/**
+	 * Add the "Visit Store" link in admin bar main menu.
+	 *
+	 * @since 2.4.0
+	 * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
+	 */
+	public function adminBarMenu( $wp_admin_bar ) {
+		if ( ! is_admin() || ! is_admin_bar_showing() ) {
+			return;
+		}
+
+		// Show only when the user is a member of this site, or they're a super admin.
+		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
+			return;
+		}
+
+		// Don't display when shop page is the same of the page on front.
+		if ( intval( get_option( 'page_on_front' ) ) === \SureCart::pages()->getId( 'shop' ) ) {
+			return;
+		}
+
+		// Add an option to visit the store.
+		$wp_admin_bar->add_node(
+			array(
+				'parent' => 'site-name',
+				'id'     => 'view-sc-store',
+				'title'  => class_exists( 'WooCommerce' ) ? __( 'Visit SureCart Store', 'surecart' ) : __( 'Visit Store', 'surecart' ),
+				'href'   => \SureCart::pages()->url( 'shop' ),
+			)
+		);
 	}
 
 	/**
