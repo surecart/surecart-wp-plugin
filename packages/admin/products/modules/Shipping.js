@@ -3,9 +3,7 @@ import { css, jsx } from '@emotion/core';
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
-	ScAlert,
 	ScButton,
-	ScCard,
 	ScDropdown,
 	ScIcon,
 	ScInput,
@@ -22,8 +20,8 @@ const WEIGHT_UNIT_TYPES = [
 ];
 
 export default ({ loading, product, updateProduct }) => {
-	const renderShippingSettings = () => {
-		return (
+	return (
+		<Box loading={loading} title={__('Shipping', 'surecart')}>
 			<ScToggle
 				showControl
 				open={!!product?.shipping_enabled}
@@ -34,45 +32,32 @@ export default ({ loading, product, updateProduct }) => {
 				}}
 				summary={__('Physical product', 'surecart')}
 			>
-				<ScCard
-					borderless
-					noPadding
-					onClick={(e) => e.stopPropagation()}
+				<ScInput
+					label={__('Shipping Weight', 'surecart')}
+					value={product?.weight}
+					onScInput={(e) => updateProduct({ weight: e.target.value })}
 				>
-					<ScInput
-						label={__('Shipping Weight', 'surecart')}
-						value={product?.weight}
-						onScInput={(e) =>
-							updateProduct({ weight: e.target.value })
-						}
-					>
-						<ScDropdown slot="suffix" placement="bottom-end">
-							<ScButton type="text" slot="trigger" circle>
-								{product?.weight_unit}{' '}
-								<ScIcon name="chevron-down" />
-							</ScButton>
-							<ScMenu>
-								{WEIGHT_UNIT_TYPES.map((unit) => (
-									<ScMenuItem
-										onClick={() =>
-											updateProduct({ weight_unit: unit })
-										}
-										key={unit}
-									>
-										{unit}
-									</ScMenuItem>
-								))}
-							</ScMenu>
-						</ScDropdown>
-					</ScInput>
-				</ScCard>
+					<ScDropdown slot="suffix" placement="bottom-end">
+						<ScButton type="text" slot="trigger" circle>
+							{product?.weight_unit}{' '}
+							<ScIcon name="chevron-down" />
+						</ScButton>
+						<ScMenu>
+							{WEIGHT_UNIT_TYPES.map((unit) => (
+								<ScMenuItem
+									onClick={() =>
+										updateProduct({ weight_unit: unit })
+									}
+									key={unit}
+								>
+									{unit}
+								</ScMenuItem>
+							))}
+						</ScMenu>
+					</ScDropdown>
+				</ScInput>
 			</ScToggle>
-		);
-	};
 
-	return (
-		<Box loading={loading} title={__('Shipping', 'surecart')}>
-			{renderShippingSettings()}
 			<ScToggle
 				showControl
 				open={!product?.shipping_enabled}
@@ -83,14 +68,17 @@ export default ({ loading, product, updateProduct }) => {
 				}}
 				summary={__('Digital product or service', 'surecart')}
 			>
-				<ScCard borderless noPadding>
-					<ScAlert type="info" open>
-						{__(
-							'Shipping details will not be collected for this product',
-							'surecart'
-						)}
-					</ScAlert>
-				</ScCard>
+				<div
+					css={css`
+						color: var(--sc-input-help-text-color);
+						font-size: var(--sc-input-help-text-font-size-medium);
+					`}
+				>
+					{__(
+						'Customers won’t enter shipping details at checkout.',
+						'surecart'
+					)}
+				</div>
 			</ScToggle>
 		</Box>
 	);
