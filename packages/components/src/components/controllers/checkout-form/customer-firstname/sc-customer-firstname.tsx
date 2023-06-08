@@ -82,7 +82,9 @@ export class ScCustomerFirstname {
 
   @Method()
   async reportValidity() {
-    if (!this.required) return true;
+    if (!this.required) {
+      return await this.input?.setCustomValidity?.('');
+    }
     this.input?.setCustomValidity?.('');
 
     if (!this.input?.value.trim().length) {
