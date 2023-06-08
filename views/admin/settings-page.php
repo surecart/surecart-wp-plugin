@@ -5,7 +5,8 @@
 	\SureCart::render(
 		'layouts/partials/admin-settings-header',
 		[
-			'claim_url' => $claim_url,
+			'claim_url'  => $claim_url,
+			'breadcrumb' => $breadcrumb,
 		]
 	);
 	?>

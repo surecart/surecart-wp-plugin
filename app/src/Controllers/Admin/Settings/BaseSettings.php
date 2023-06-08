@@ -32,6 +32,33 @@ abstract class BaseSettings {
 	protected $dependencies = [];
 
 	/**
+	 * Tabs for the page.
+	 *
+	 * @var array
+	 */
+	protected $tabs = [];
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->tabs = [
+			'brand'                          => __( 'Design & Branding', 'surecart' ),
+			'order'                          => __( 'Orders & Receipts', 'surecart' ),
+			'abandoned_checkout'             => __( 'Abandoned Checkout', 'surecart' ),
+			'customer_notification_protocol' => __( 'Notifications', 'surecart' ),
+			'subscription_protocol'          => __( 'Subscriptions', 'surecart' ),
+			'subscription_preservation'      => __( 'Subscription Saver', 'surecart' ),
+			'portal_protocol'                => __( 'Customer Portal', 'surecart' ),
+			'tax_protocol'                   => __( 'Taxes', 'surecart' ),
+			'processors'                     => __( 'Payment Processors', 'surecart' ),
+			'export'                         => __( 'Data Export', 'surecart' ),
+			'connection'                     => __( 'Connection', 'surecart' ),
+			'advanced'                       => __( 'Advanced', 'surecart' ),
+		];
+	}
+
+	/**
 	 * Show the page.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
@@ -43,6 +70,7 @@ abstract class BaseSettings {
 		return \SureCart::view( $this->template )->with(
 			[
 				'tab'          => $request->query( 'tab' ) ?? '',
+				'breadcrumb'   => ! empty( $this->tabs[ $request->query( 'tab' ) ?? '' ] ) ? $this->tabs[ $request->query( 'tab' ) ?? '' ] : '',
 				'is_free'      => (bool) ( \SureCart::account()->plan->free ?? true ),
 				'entitlements' => \SureCart::account()->entitlements,
 				'upgrade_url'  => \SureCart::config()->links->purchase,
