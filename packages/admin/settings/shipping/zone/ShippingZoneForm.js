@@ -252,21 +252,23 @@ export default ({
 			style={{ '--dialog-body-overflow': 'visible' }}
 			noHeader={!isEdit}
 		>
-			<ScFlex
-				gap="1em"
-				css={css`
-					margin-bottom: var(--sc-spacing-large);
-				`}
-			>
-				<ProgressBar
-					isFilled={section >= sections.SECTION_ADD_ZONE}
-					title={__('1. Create Zone', 'surecart')}
-				/>
-				<ProgressBar
-					isFilled={section === sections.SECTION_ADD_RATE}
-					title={__('2. Create Rate', 'surecart')}
-				/>
-			</ScFlex>
+			{!isEdit && (
+				<ScFlex
+					gap="1em"
+					css={css`
+						margin-bottom: var(--sc-spacing-large);
+					`}
+				>
+					<ProgressBar
+						isFilled={section >= sections.SECTION_ADD_ZONE}
+						title={__('1. Create Zone', 'surecart')}
+					/>
+					<ProgressBar
+						isFilled={section === sections.SECTION_ADD_RATE}
+						title={__('2. Create Rate', 'surecart')}
+					/>
+				</ScFlex>
+			)}
 			{section === sections.SECTION_ADD_ZONE ? (
 				renderZoneForm()
 			) : (
