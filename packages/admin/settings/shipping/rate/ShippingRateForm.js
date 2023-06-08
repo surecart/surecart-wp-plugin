@@ -424,31 +424,24 @@ export default ({
 						{getSubmitText()}
 					</ScButton>{' '}
 					{showAddNew ? (
-						<ScFlex justifyContent="flex-start">
-							<ScButton
-								type="text"
-								onClick={() => {
-									setShowAddNew(false);
-									updateShippingRate(
-										'shipping_method_id',
-										null
-									);
-								}}
-								disabled={loading}
-							>
-								{__('Back', 'surecart')}
-							</ScButton>
-						</ScFlex>
+						<ScButton
+							type="text"
+							onClick={() => {
+								setShowAddNew(false);
+								updateShippingRate('shipping_method_id', null);
+							}}
+							disabled={loading}
+						>
+							{__('Back', 'surecart')}
+						</ScButton>
 					) : (
-						<ScFlex justifyContent="flex-start">
-							<ScButton
-								type="text"
-								onClick={onRequestClose}
-								disabled={loading}
-							>
-								{__('Cancel', 'surecart')}
-							</ScButton>
-						</ScFlex>
+						<ScButton
+							type="text"
+							onClick={onRequestClose}
+							disabled={loading}
+						>
+							{__('Cancel', 'surecart')}
+						</ScButton>
 					)}
 				</ScFlex>
 			</ScForm>
