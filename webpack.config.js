@@ -145,6 +145,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/upgrade/index.js'
 		),
+		['admin/settings/shipping']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/index.js'
+		),
+		['admin/settings/shipping/profile']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/profile/index.js'
+		),
 
 		/**
 		 * Data.

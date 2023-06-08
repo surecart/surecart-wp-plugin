@@ -314,6 +314,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->where( 'sc_url_var', 'region', 'type' )->name( 'settings.tax.region' )->handle( 'TaxRegionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->name( 'settings.tax' )->handle( 'TaxSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'upgrade', 'tab' )->name( 'settings.upgrade' )->handle( 'UpgradeSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'shipping_protocol', 'tab' )->where('sc_url_var','shipping_profile','type')->name( 'settings.shipping.profile' )->handle( 'ShippingProfileSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'shipping_protocol', 'tab' )->name( 'settings.shipping' )->handle( 'ShippingSettings@show' );
 
 		// Connection.
 		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );

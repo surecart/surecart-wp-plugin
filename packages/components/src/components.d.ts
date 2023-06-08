@@ -1508,6 +1508,9 @@ export namespace Components {
           * The minimum number of significant digits to use. Possible values are 1 - 21.
          */
         "minimumSignificantDigits": number;
+        /**
+          * Should we convert
+         */
         "noConvert": boolean;
         /**
           * Turns off grouping separators.
@@ -1516,7 +1519,11 @@ export namespace Components {
         /**
           * The formatting style to use.
          */
-        "type": 'currency' | 'decimal' | 'percent';
+        "type": 'currency' | 'decimal' | 'percent' | 'unit';
+        /**
+          * The unit to use when formatting.
+         */
+        "unit": string;
         /**
           * The number to format.
          */
@@ -6661,6 +6668,9 @@ declare namespace LocalJSX {
           * The minimum number of significant digits to use. Possible values are 1 - 21.
          */
         "minimumSignificantDigits"?: number;
+        /**
+          * Should we convert
+         */
         "noConvert"?: boolean;
         /**
           * Turns off grouping separators.
@@ -6669,7 +6679,11 @@ declare namespace LocalJSX {
         /**
           * The formatting style to use.
          */
-        "type"?: 'currency' | 'decimal' | 'percent';
+        "type"?: 'currency' | 'decimal' | 'percent' | 'unit';
+        /**
+          * The unit to use when formatting.
+         */
+        "unit"?: string;
         /**
           * The number to format.
          */

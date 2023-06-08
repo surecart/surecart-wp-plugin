@@ -1,6 +1,19 @@
 import { Component, Prop } from '@stencil/core';
 import { maybeConvertAmount } from './functions/utils';
 
+//TODO: Remove this when unit types are supported
+interface NumberFormatOptionsWithUnit extends Intl.NumberFormatOptions {
+  unit: string;
+  unitDisplay: 'long' | 'short' | 'narrow';
+}
+
+const UNIT_TYPES = {
+  kg: 'kilogram',
+  lb: 'pound',
+  g: 'gram',
+  oz: 'ounce',
+};
+
 @Component({
   tag: 'sc-format-number',
   shadow: false,
@@ -13,7 +26,7 @@ export class ScFormatNumber {
   @Prop({ mutable: true }) locale: string;
 
   /** The formatting style to use. */
-  @Prop() type: 'currency' | 'decimal' | 'percent' = 'decimal';
+  @Prop() type: 'currency' | 'decimal' | 'percent' | 'unit' = 'decimal';
 
   /** Turns off grouping separators. */
   @Prop({ attribute: 'no-grouping' }) noGrouping: boolean = false;
@@ -39,7 +52,11 @@ export class ScFormatNumber {
   /** The maximum number of significant digits to use,. Possible values are 1 - 21. */
   @Prop() maximumSignificantDigits: number;
 
+  /** Should we convert */
   @Prop() noConvert: boolean;
+
+  /** The unit to use when formatting.  */
+  @Prop() unit: string = 'lb';
 
   render() {
     if (isNaN(this.value)) {
@@ -56,6 +73,7 @@ export class ScFormatNumber {
       maximumFractionDigits: this.maximumFractionDigits,
       minimumSignificantDigits: this.minimumSignificantDigits,
       maximumSignificantDigits: this.maximumSignificantDigits,
-    }).format(this.noConvert ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase()));
+      unit: UNIT_TYPES[this.unit],
+    } as NumberFormatOptionsWithUnit).format(this.noConvert ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase()));
   }
 }

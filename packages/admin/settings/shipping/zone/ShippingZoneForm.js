@@ -1,0 +1,282 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import {
+	ScBlockUi,
+	ScButton,
+	ScDialog,
+	ScInput,
+	ScFlex,
+	ScFormControl,
+	ScSelect,
+	ScTag,
+	ScForm,
+} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { useState, useEffect, Fragment } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
+import { useDispatch } from '@wordpress/data';
+import Error from '../../../components/Error';
+import { countryChoices } from '@surecart/components';
+import ProgressBar from './ProgressBar';
+import ShippingRateForm from '../rate/ShippingRateForm';
+
+const sections = {
+	SECTION_ADD_ZONE: 1,
+	SECTION_ADD_RATE: 2,
+};
+
+export default ({
+	open,
+	onRequestClose,
+	shippingProfileId,
+	selectedZone,
+	isEdit,
+}) => {
+	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [zoneName, setZoneName] = useState('');
+	const [zoneCountries, setZoneCountries] = useState([]);
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const [section, setSection] = useState(sections.SECTION_ADD_ZONE);
+	const [shippingZoneId, setShippingZoneId] = useState();
+
+	useEffect(() => {
+		return () => {
+			setZoneCountries([]);
+			setZoneName('');
+			setError();
+		};
+	}, [open]);
+
+	useEffect(() => {
+		if (isEdit) {
+			setZoneName(selectedZone?.name || '');
+			setZoneCountries(selectedZone?.countries || []);
+		}
+	}, [isEdit]);
+
+	const addShippingZone = async () => {
+		const shippingZone = await saveEntityRecord(
+			'surecart',
+			'shipping-zone',
+			{
+				name: zoneName,
+				shipping_profile_id: shippingProfileId,
+				countries: zoneCountries,
+			},
+			{ throwOnError: true }
+		);
+
+		setShippingZoneId(shippingZone.id);
+		setSection(sections.SECTION_ADD_RATE);
+	};
+
+	const editShippingZone = async () => {
+		await saveEntityRecord(
+			'surecart',
+			'shipping-zone',
+			{
+				id: selectedZone.id,
+				name: zoneName,
+				countries: zoneCountries,
+			},
+			{ throwOnError: true }
+		);
+	};
+
+	const onSubmit = async () => {
+		if (!zoneCountries.length) {
+			setError({
+				message: __(
+					'Select at least one country to create zone.',
+					'surecart'
+				),
+			});
+			return;
+		}
+
+		setLoading(true);
+		try {
+			if (isEdit) {
+				await editShippingZone();
+				createSuccessNotice(__('Zone updated', 'surecart'), {
+					type: 'snackbar',
+				});
+				onRequestClose();
+			} else {
+				await addShippingZone();
+				createSuccessNotice(__('Zone added', 'surecart'), {
+					type: 'snackbar',
+				});
+			}
+		} catch (error) {
+			console.error(error);
+			setError(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const onCountrySelect = (e) => {
+		const value = e.target.value;
+		if (!value) return;
+
+		setZoneCountries([...zoneCountries, value]);
+	};
+
+	const onRemoveZoneCountry = (value) => {
+		setZoneCountries(
+			zoneCountries.filter((zoneCountry) => zoneCountry !== value)
+		);
+	};
+
+	const renderCountryPill = (zoneCountry) => {
+		const country = countryChoices.find(
+			(countryChoice) => countryChoice.value === zoneCountry
+		);
+		return (
+			<ScTag
+				key={`zone-country-${country.value}`}
+				pill
+				clearable
+				onScClear={() => onRemoveZoneCountry(country.value)}
+			>
+				{country.label}
+			</ScTag>
+		);
+	};
+
+	const renderZoneForm = () => {
+		return (
+			<Fragment>
+				<Error error={error} setError={setError} />
+				<ScForm
+					onScSubmit={(e) => {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+						onSubmit();
+					}}
+					onScFormSubmit={(e) => {
+						e.preventDefault();
+						e.stopImmediatePropagation();
+					}}
+				>
+					<ScFlex
+						flexDirection="column"
+						css={css`
+							gap: var(--sc-spacing-medium);
+						`}
+					>
+						<ScInput
+							required
+							label={__('Zone Name', 'surecart')}
+							onScInput={(e) => setZoneName(e.target.value)}
+							name="zone-name"
+							value={zoneName}
+							placeholder={__(
+								'United States,  United Kingdom, Global ...',
+								'surecart'
+							)}
+						/>
+						<ScFormControl
+							label={__('Select Countries', 'surecart')}
+						>
+							{!!zoneCountries.length ? (
+								<ScFlex
+									columnGap="1em"
+									justifyContent="flex-start"
+									css={css`
+										padding: 0.44em 0;
+										margin-bottom: var(--sc-spacing-medium);
+									`}
+									flexWrap="wrap"
+								>
+									{zoneCountries.map((zoneCountry) =>
+										renderCountryPill(zoneCountry)
+									)}
+								</ScFlex>
+							) : null}
+							<ScSelect
+								search
+								onScChange={onCountrySelect}
+								choices={countryChoices.filter(
+									(countryChoice) =>
+										!zoneCountries.includes(
+											countryChoice.value
+										)
+								)}
+								value=""
+							/>
+						</ScFormControl>
+					</ScFlex>
+					<ScFlex justifyContent="flex-start">
+						<ScButton
+							type="primary"
+							disabled={loading}
+							submit={true}
+						>
+							{isEdit
+								? __('Save', 'surecart')
+								: __('Next', 'surecart')}
+						</ScButton>{' '}
+						<ScButton
+							type="text"
+							onClick={onRequestClose}
+							disabled={loading}
+						>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</ScFlex>
+				</ScForm>
+				{loading && (
+					<ScBlockUi
+						style={{ '--sc-block-ui-opacity': '0.75' }}
+						spinner
+					/>
+				)}
+			</Fragment>
+		);
+	};
+
+	return (
+		<ScDialog
+			open={open}
+			label={
+				isEdit
+					? __('Edit Zone', 'surecart')
+					: __('Add Zone', 'surecart')
+			}
+			onScRequestClose={onRequestClose}
+			style={{ '--dialog-body-overflow': 'visible' }}
+			noHeader={!isEdit}
+		>
+			{!isEdit && (
+				<ScFlex
+					gap="1em"
+					css={css`
+						margin-bottom: var(--sc-spacing-large);
+					`}
+				>
+					<ProgressBar
+						isFilled={section >= sections.SECTION_ADD_ZONE}
+						title={__('1. Create Zone', 'surecart')}
+					/>
+					<ProgressBar
+						isFilled={section === sections.SECTION_ADD_RATE}
+						title={__('2. Create Rate', 'surecart')}
+					/>
+				</ScFlex>
+			)}
+			{section === sections.SECTION_ADD_ZONE ? (
+				renderZoneForm()
+			) : (
+				<ShippingRateForm
+					onRequestClose={onRequestClose}
+					shippingZoneId={shippingZoneId}
+				/>
+			)}
+		</ScDialog>
+	);
+};
