@@ -428,7 +428,7 @@ class Currency {
 	 * @return bool
 	 */
 	public static function isZeroDecimal( $currency ) {
-		return in_array( strtoupper( $currency ), self::getZeroDecicalCurrencies() );
+		return in_array( strtoupper( $currency ), self::getZeroDecicalCurrencies(), true );
 	}
 
 	/**
