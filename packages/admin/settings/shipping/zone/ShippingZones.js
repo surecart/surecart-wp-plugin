@@ -79,16 +79,18 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 				)}
 			</ScFlex>
 
-			<ShippingZoneForm
-				open={
-					currentModal === modals.ADD_ZONE ||
-					currentModal === modals.EDIT_ZONE
-				}
-				onRequestClose={() => setCurrentModal('')}
-				shippingProfileId={shippingProfileId}
-				selectedZone={selectedZone}
-				isEdit={currentModal === modals.EDIT_ZONE}
-			/>
+			{currentModal && (
+				<ShippingZoneForm
+					open={
+						currentModal === modals.ADD_ZONE ||
+						currentModal === modals.EDIT_ZONE
+					}
+					onRequestClose={() => setCurrentModal('')}
+					shippingProfileId={shippingProfileId}
+					selectedZone={selectedZone}
+					isEdit={currentModal === modals.EDIT_ZONE}
+				/>
+			)}
 		</SettingsBox>
 	);
 };
