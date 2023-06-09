@@ -304,7 +304,7 @@ export default () => {
 							action="notification3"
 						/>
 						<EmailRow
-							title={__('Email Verificaiton Code', 'surecart')}
+							title={__('Email Verification Code', 'surecart')}
 							description={__(
 								'Sent to customers to login to the customer portal without a password.',
 								'surecart'
