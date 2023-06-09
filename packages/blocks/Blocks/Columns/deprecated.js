@@ -19,35 +19,6 @@ export default [
 				type: 'boolean',
 				default: true,
 			},
-		},
-		save({ attributes }) {
-			const useInnerBlocksProps = __stableUseInnerBlocksProps
-				? __stableUseInnerBlocksProps
-				: __experimentalUseInnerBlocksProps;
-
-			const { isStackedOnMobile, verticalAlignment } = attributes;
-
-			const blockProps = useBlockProps.save();
-			const innerBlocksProps = useInnerBlocksProps.save(blockProps);
-
-			return (
-				<sc-columns
-					vertical-alignment={verticalAlignment}
-					is-stacked-on-mobile={isStackedOnMobile}
-					{...innerBlocksProps}
-				/>
-			);
-		},
-	},
-	{
-		attributes: {
-			verticalAlignment: {
-				type: 'string',
-			},
-			isStackedOnMobile: {
-				type: 'boolean',
-				default: true,
-			},
 			isFullHeight: {
 				type: 'boolean',
 				default: false,
@@ -87,6 +58,35 @@ export default [
 					is-full-height={isFullHeight ? '1' : null}
 					is-reversed-on-mobile={isReversedOnMobile ? '1' : null}
 					{...innerBlocksPropsObj}
+				/>
+			);
+		},
+	},
+	{
+		attributes: {
+			verticalAlignment: {
+				type: 'string',
+			},
+			isStackedOnMobile: {
+				type: 'boolean',
+				default: true,
+			},
+		},
+		save({ attributes }) {
+			const useInnerBlocksProps = __stableUseInnerBlocksProps
+				? __stableUseInnerBlocksProps
+				: __experimentalUseInnerBlocksProps;
+
+			const { isStackedOnMobile, verticalAlignment } = attributes;
+
+			const blockProps = useBlockProps.save();
+			const innerBlocksProps = useInnerBlocksProps.save(blockProps);
+
+			return (
+				<sc-columns
+					vertical-alignment={verticalAlignment}
+					is-stacked-on-mobile={isStackedOnMobile}
+					{...innerBlocksProps}
 				/>
 			);
 		},
