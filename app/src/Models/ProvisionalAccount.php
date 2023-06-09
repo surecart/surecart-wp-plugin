@@ -45,6 +45,16 @@ class ProvisionalAccount extends Model {
 			return new \WP_Error( 'setup_complete', __( 'You have already set up your store.', 'surecart' ) );
 		}
 
+		// set account name as the site name if nothing is provided.
+		if ( empty( $attributes['account_name'] ) ) {
+			$attributes['account_name'] = get_bloginfo( 'name' ) ? get_bloginfo( 'name' ) : get_bloginfo( 'url' );
+		}
+
+		// set the account url from the blog url.
+		if ( empty( $attributes['account_url'] ) ) {
+			$attributes['account_url'] = get_bloginfo( 'url' );
+		}
+
 		return parent::create( $attributes );
 	}
 }
