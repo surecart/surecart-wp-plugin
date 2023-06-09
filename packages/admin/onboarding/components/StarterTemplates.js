@@ -27,7 +27,7 @@ const templates = [
 	},
 	{
 		id: 'dab55a5a-2136-41d1-9976-4bf744cc85b2',
-		name: __('Band Merchandise', 'surecart'),
+		name: __('Musical Instruments', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/band.png`,
 	},
 	{
