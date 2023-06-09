@@ -1,31 +1,94 @@
-import { __experimentalUseInnerBlocksProps, useInnerBlocksProps as __stableUseInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
+import {
+	__experimentalUseInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	useBlockProps,
+} from '@wordpress/block-editor';
 
-export default [{
-  "attributes": {
-		"verticalAlignment": {
-			"type": "string"
+/**
+ * Internal dependencies
+ */
+import { getPresetStyles } from './utils';
+
+export default [
+	{
+		attributes: {
+			verticalAlignment: {
+				type: 'string',
+			},
+			isStackedOnMobile: {
+				type: 'boolean',
+				default: true,
+			},
 		},
-		"isStackedOnMobile": {
-			"type": "boolean",
-			"default": true
-		}
+		save({ attributes }) {
+			const useInnerBlocksProps = __stableUseInnerBlocksProps
+				? __stableUseInnerBlocksProps
+				: __experimentalUseInnerBlocksProps;
+
+			const { isStackedOnMobile, verticalAlignment } = attributes;
+
+			const blockProps = useBlockProps.save();
+			const innerBlocksProps = useInnerBlocksProps.save(blockProps);
+
+			return (
+				<sc-columns
+					vertical-alignment={verticalAlignment}
+					is-stacked-on-mobile={isStackedOnMobile}
+					{...innerBlocksProps}
+				/>
+			);
+		},
 	},
-  save({ attributes }) {
-    const useInnerBlocksProps = __stableUseInnerBlocksProps
-      ? __stableUseInnerBlocksProps
-      : __experimentalUseInnerBlocksProps;
+	{
+		attributes: {
+			verticalAlignment: {
+				type: 'string',
+			},
+			isStackedOnMobile: {
+				type: 'boolean',
+				default: true,
+			},
+			isFullHeight: {
+				type: 'boolean',
+				default: false,
+			},
+			isReversedOnMobile: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		save({ attributes }) {
+			const useInnerBlocksProps = __stableUseInnerBlocksProps
+				? __stableUseInnerBlocksProps
+				: __experimentalUseInnerBlocksProps;
 
-    const { isStackedOnMobile, verticalAlignment } = attributes;
+			const {
+				isStackedOnMobile,
+				verticalAlignment,
+				isFullHeight,
+				isReversedOnMobile,
+				style,
+			} = attributes;
 
-    const blockProps = useBlockProps.save();
-    const innerBlocksProps = useInnerBlocksProps.save(blockProps);
+			const blockProps = useBlockProps.save();
+			const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
-    return (
-      <sc-columns
-        vertical-alignment={verticalAlignment}
-        is-stacked-on-mobile={isStackedOnMobile}
-        {...innerBlocksProps}
-      />
-    );
-  }
-}]
+			const presetStyles = getPresetStyles(style);
+
+			const innerBlocksPropsObj = {
+				...innerBlocksProps,
+				style: { ...innerBlocksProps?.style, ...presetStyles },
+			};
+
+			return (
+				<sc-columns
+					vertical-alignment={verticalAlignment}
+					is-stacked-on-mobile={isStackedOnMobile ? '1' : null}
+					is-full-height={isFullHeight ? '1' : null}
+					is-reversed-on-mobile={isReversedOnMobile ? '1' : null}
+					{...innerBlocksPropsObj}
+				/>
+			);
+		},
+	},
+];
