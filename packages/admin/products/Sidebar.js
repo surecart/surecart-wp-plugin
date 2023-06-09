@@ -10,6 +10,7 @@ import Definition from '../ui/Definition';
 import Advanced from './modules/Advanced';
 import Image from './modules/Image';
 import Taxes from './modules/Tax';
+import Shipping from './modules/Shipping';
 
 export default ({
 	id,
@@ -84,6 +85,12 @@ export default ({
 			</Box>
 
 			<Taxes
+				product={product}
+				updateProduct={updateProduct}
+				loading={loading}
+			/>
+
+			<Shipping
 				product={product}
 				updateProduct={updateProduct}
 				loading={loading}
