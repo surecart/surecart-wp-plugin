@@ -133,8 +133,15 @@ class WebhookController {
 		$id    = $this->getObjectId( $request['data'] );
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
-		// broadcast the webhook.
-		do_action( $event, $model, $request );
+		// broadcast the webhook as a background task.
+		\SureCart::queue()->add(
+			$event,
+			array(
+				'model'   => $model,
+				'request' => $request,
+			),
+			Webhook::GROUP_NAME
+		);
 
 		// return data.
 		return [
