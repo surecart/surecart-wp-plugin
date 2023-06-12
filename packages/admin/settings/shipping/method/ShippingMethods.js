@@ -1,11 +1,16 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import SettingsBox from '../../SettingsBox';
 import {
+	ScBlockUi,
 	ScButton,
+	ScDropdown,
 	ScIcon,
+	ScMenu,
+	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
 } from '@surecart/components-react';
@@ -14,6 +19,7 @@ import { useState } from 'react';
 import ShippingMethodForm from './ShippingMethodForm';
 import usePagination from '../../../hooks/usePagination';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
+import Error from '../../../components/Error';
 
 const PER_PAGE = 5;
 const modals = {
@@ -25,6 +31,10 @@ export default () => {
 	const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
 	const [currentModal, setCurrentModal] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [busy, setBusy] = useState(false);
+	const { deleteEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const [error, setError] = useState(false);
 
 	const { shippingMethods, loadingMethods } = useSelect((select) => {
 		const queryArgs = [
@@ -54,6 +64,28 @@ export default () => {
 		perPage: PER_PAGE,
 	});
 
+	const onDeleteShippingMethod = async (shippingMethodId) => {
+		setBusy(true);
+		try {
+			await deleteEntityRecord(
+				'surecart',
+				'shipping-method',
+				shippingMethodId,
+				{
+					throwOnError: true,
+				}
+			);
+			createSuccessNotice(__('Shipping method removed', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (error) {
+			console.error(error);
+			setError(error);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	if (!shippingMethods.length) {
 		return null;
 	}
@@ -76,6 +108,7 @@ export default () => {
 				'surecart'
 			)}
 		>
+			<Error error={error} setError={setError} />
 			<ScStackedList>
 				{shippingMethods.map((shippingMethod) => (
 					<ScStackedListRow
@@ -87,20 +120,36 @@ export default () => {
 						<strong>{shippingMethod.name}</strong>
 						<div>{shippingMethod.description}</div>
 						<div>
-							<ScButton
-								onClick={() => {
-									setSelectedShippingMethod(shippingMethod);
-									setCurrentModal(modals.MODAL_EDIT_METHOD);
-								}}
-							>
-								<ScIcon
-									name="edit"
-									css={css`
-										margin-right: var(--sc-spacing-small);
-									`}
-								/>{' '}
-								{__('Edit', 'surecart')}
-							</ScButton>
+							<ScDropdown slot="suffix" placement="bottom-end">
+								<ScButton type="text" slot="trigger" circle>
+									<ScIcon name="more-horizontal" />
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem
+										onClick={() => {
+											setSelectedShippingMethod(
+												shippingMethod
+											);
+											setCurrentModal(
+												modals.MODAL_EDIT_METHOD
+											);
+										}}
+									>
+										<ScIcon slot="prefix" name="edit" />
+										{__('Edit', 'surecart')}
+									</ScMenuItem>
+									<ScMenuItem
+										onClick={() =>
+											onDeleteShippingMethod(
+												shippingMethod.id
+											)
+										}
+									>
+										<ScIcon slot="prefix" name="trash" />
+										{__('Delete', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
 						</div>
 					</ScStackedListRow>
 				))}
@@ -119,6 +168,12 @@ export default () => {
 						loading={loadingMethods}
 					/>
 				</div>
+			)}
+			{busy && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.75' }}
+					spinner
+				/>
 			)}
 			{currentModal && (
 				<ShippingMethodForm
