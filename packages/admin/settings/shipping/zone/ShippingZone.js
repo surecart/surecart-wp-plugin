@@ -22,7 +22,6 @@ import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
-import ShippingRateForm from '../rate/ShippingRateForm';
 import AddShippingRate from '../rate/AddShippingRate';
 import EditShippingRate from '../rate/EditShippingRate';
 
@@ -40,6 +39,28 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 	const { deleteEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
+
+	const onDeleteShippingZone = async () => {
+		setBusy(true);
+		try {
+			await deleteEntityRecord(
+				'surecart',
+				'shipping-zone',
+				shippingZone.id,
+				{
+					throwOnError: true,
+				}
+			);
+			createSuccessNotice(__('Shipping zone deleted', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (error) {
+			console.error(error);
+			setError(error);
+		} finally {
+			setBusy(false);
+		}
+	};
 
 	const onRemoveShippingRate = async (shippingRateId) => {
 		try {
@@ -151,9 +172,21 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 						</sc-tag>
 					)}
 				</div>
-				<ScButton type="text" onClick={onEditZone}>
-					{__('Edit Zone', 'surecart')}
-				</ScButton>
+				<ScDropdown placement="bottom-end">
+					<ScButton type="text" slot="trigger" circle>
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem onClick={onEditZone}>
+							<ScIcon slot="prefix" name="edit" />
+							{__('Edit', 'surecart')}
+						</ScMenuItem>
+						<ScMenuItem onClick={onDeleteShippingZone}>
+							<ScIcon slot="prefix" name="trash" />
+							{__('Delete', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
 			</ScFlex>
 			<Error error={error} setError={setError} />
 			{renderShippingRates(shippingZone?.shipping_rates)}
