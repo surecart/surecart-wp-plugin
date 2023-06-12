@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
 import { ScButton, ScFlex, ScIcon, ScEmpty } from '@surecart/components-react';
-import { useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import ShippingZone from './ShippingZone';
@@ -45,40 +45,41 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 	});
 
 	return (
-		<SettingsBox
-			title={__('Shipping Zones', 'surecart')}
-			end={
-				<ScButton
-					type="primary"
-					onClick={() => setCurrentModal(modals.ADD_ZONE)}
-				>
-					<ScIcon name="plus" /> {__('Create Zone', 'surecart')}
-				</ScButton>
-			}
-			loading={loading}
-			noButton
-		>
-			<ScFlex flexDirection="column">
-				{!!shippingZones?.length ? (
-					shippingZones.map((shippingZone) => (
-						<ShippingZone
-							key={shippingZone.id}
-							shippingZone={shippingZone}
-							onEditZone={() => {
-								setCurrentModal(modals.EDIT_ZONE);
-								setSelectedZone(shippingZone);
-							}}
-							parentBusy={busy}
-							isFallback={shippingZone.id === fallbackZoneId}
-						/>
-					))
-				) : (
-					<ScEmpty icon="map">
-						{__('No shipping zones present.', 'surecart')}
-					</ScEmpty>
-				)}
-			</ScFlex>
-
+		<Fragment>
+			<SettingsBox
+				title={__('Shipping Zones', 'surecart')}
+				end={
+					<ScButton
+						type="primary"
+						onClick={() => setCurrentModal(modals.ADD_ZONE)}
+					>
+						<ScIcon name="plus" /> {__('Create Zone', 'surecart')}
+					</ScButton>
+				}
+				loading={loading}
+				noButton
+			>
+				<ScFlex flexDirection="column">
+					{!!shippingZones?.length ? (
+						shippingZones.map((shippingZone) => (
+							<ShippingZone
+								key={shippingZone.id}
+								shippingZone={shippingZone}
+								onEditZone={() => {
+									setCurrentModal(modals.EDIT_ZONE);
+									setSelectedZone(shippingZone);
+								}}
+								parentBusy={busy}
+								isFallback={shippingZone.id === fallbackZoneId}
+							/>
+						))
+					) : (
+						<ScEmpty icon="map">
+							{__('No shipping zones present.', 'surecart')}
+						</ScEmpty>
+					)}
+				</ScFlex>
+			</SettingsBox>
 			{currentModal && (
 				<ShippingZoneForm
 					open={
@@ -91,6 +92,6 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 					isEdit={currentModal === modals.EDIT_ZONE}
 				/>
 			)}
-		</SettingsBox>
+		</Fragment>
 	);
 };
