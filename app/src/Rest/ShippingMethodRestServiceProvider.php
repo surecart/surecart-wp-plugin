@@ -28,7 +28,7 @@ class ShippingMethodRestServiceProvider extends RestServiceProvider implements R
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'find','edit','create' ];
+	protected $methods = [ 'index', 'find', 'edit', 'create', 'delete' ];
 
 
 	/**
@@ -100,6 +100,17 @@ class ShippingMethodRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return current_user_can( 'manage_sc_shop_settings',$request->get_params() );
+		return current_user_can( 'manage_sc_shop_settings', $request->get_params() );
 	}
+
+	/**
+	 * Delete shipping method
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to delete items, WP_Error object otherwise.
+	 */
+	public function delete_item_permissions_check( $request ) {
+		return current_user_can( 'manage_sc_shop_settings' );
+	}
+
 }
