@@ -21,6 +21,13 @@ class Webhook extends Model {
 	protected $object_name = 'webhook_endpoint';
 
 	/**
+	 * Group name.
+	 *
+	 * @var string
+	 */
+	public const GROUP_NAME = 'surecart-webhooks';
+
+	/**
 	 * Get the listener url.
 	 *
 	 * @return string
@@ -41,7 +48,7 @@ class Webhook extends Model {
 			return $existing;
 		}
 
-		return $this->create(
+		$webhook = $this->create(
 			[
 				'description' => 'Main webhook for SureCart',
 				'enabled'     => true,
@@ -72,6 +79,15 @@ class Webhook extends Model {
 				],
 			]
 		);
+
+		if ( ! $webhook || empty ( $webhook->id ) ) {
+			return false;
+		}
+
+		// Send a test webhook to queue to check if it works.
+		$this->addTestWebhookToQueue( $webhook );
+
+		return $webhook;
 	}
 
 	/**
@@ -89,5 +105,43 @@ class Webhook extends Model {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Add test webhook to queue.
+	 *
+	 * @param Webhook $webhook
+	 *
+	 * @return void
+	 */
+	private function addTestWebhookToQueue( Webhook $webhook ) {
+		\SureCart::queue()->add(
+			'surecart/send-test-webhook',
+			[
+				'webhook_id' => $webhook->id,
+			],
+			self::GROUP_NAME
+		);
+	}
+
+	/**
+	 * Send test webhook to the endpoint.
+	 *
+	 * @param string $webhook_id
+	 *
+	 * @return void
+	 */
+	public function sendTestWebhook( string $webhook_id ) {
+		try {
+			$this->makeRequest(
+				[
+					'method' => 'POST',
+					'query'  => [],
+				],
+				$this->endpoint . '/' . $webhook_id . '/test',
+			);
+		} catch ( \Exception $exception ) {
+			// Do nothing.
+		}
 	}
 }
