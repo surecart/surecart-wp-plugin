@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Form;
 
+use SureCart\Models\Form;
 use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Processor;
 use SureCartBlocks\Blocks\BaseBlock;
@@ -73,7 +74,7 @@ class Block extends BaseBlock {
 				),
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'mode'                          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
+				'mode'                          => Form::getMode( $sc_form_id ),
 				'form_id'                       => $attributes['form_id'] ?? $sc_form_id,
 				'id'                            => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
 				'prices'                        => $attributes['prices'] ?? [],
