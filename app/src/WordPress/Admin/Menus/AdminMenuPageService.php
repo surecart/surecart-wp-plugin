@@ -29,6 +29,43 @@ class AdminMenuPageService {
 		add_action( 'admin_menu', [ $this, 'registerAdminPages' ] );
 		add_action( 'admin_head', [ $this, 'adminMenuCSS' ] );
 		add_filter( 'parent_file', [ $this, 'forceSelect' ] );
+
+		// Admin bar menus.
+		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
+			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 31 );
+		}
+	}
+
+	/**
+	 * Add the "Visit Store" link in admin bar main menu.
+	 *
+	 * @since 2.4.0
+	 * @param WP_Admin_Bar $wp_admin_bar Admin bar instance.
+	 */
+	public function adminBarMenu( $wp_admin_bar ) {
+		if ( ! is_admin() || ! is_admin_bar_showing() ) {
+			return;
+		}
+
+		// Show only when the user is a member of this site, or they're a super admin.
+		if ( ! is_user_member_of_blog() && ! is_super_admin() ) {
+			return;
+		}
+
+		// Don't display when shop page is the same of the page on front.
+		if ( intval( get_option( 'page_on_front' ) ) === \SureCart::pages()->getId( 'shop' ) ) {
+			return;
+		}
+
+		// Add an option to visit the store.
+		$wp_admin_bar->add_node(
+			array(
+				'parent' => 'site-name',
+				'id'     => 'view-sc-store',
+				'title'  => class_exists( 'WooCommerce' ) ? __( 'Visit SureCart Store', 'surecart' ) : __( 'Visit Store', 'surecart' ),
+				'href'   => \SureCart::pages()->url( 'shop' ),
+			)
+		);
 	}
 
 	/**
@@ -110,8 +147,8 @@ class AdminMenuPageService {
 		// not yet installed.
 		if ( ! ApiToken::get() ) {
 			$this->pages = [
-				'get-started'     => \add_submenu_page( $this->slug, __( 'Get Started', 'surecart' ), __( 'Get Started', 'surecart' ), 'install_plugins', $this->slug, '__return_false' ),
-				'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'install_plugins', 'sc-complete-signup', '__return_false' ),
+				'get-started'     => \add_submenu_page( $this->slug, __( 'Get Started', 'surecart' ), __( 'Get Started', 'surecart' ), 'manage_options', $this->slug, '__return_false' ),
+				'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
 				'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 			];
 			return;
@@ -121,7 +158,8 @@ class AdminMenuPageService {
 
 		$this->pages = [
 			'get-started'     => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
-			'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'install_plugins', 'sc-complete-signup', '__return_false' ),
+			'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
+			'claim-account'   => \add_submenu_page( null, __( 'Claim Account', 'surecart' ), __( 'Claim Account', 'surecart' ), 'manage_options', 'sc-claim-account', '__return_false' ),
 			'orders'          => \add_submenu_page( $this->slug, __( 'Orders', 'surecart' ), __( 'Orders', 'surecart' ), 'edit_sc_orders', 'sc-orders', '__return_false' ),
 			'abandoned'       => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts' ] ) ? \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ) : null,
 			'products'        => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),

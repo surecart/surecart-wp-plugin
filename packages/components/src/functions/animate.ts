@@ -16,6 +16,10 @@ export function animateTo(el: HTMLElement, keyframes: Keyframe[], options?: Keyf
       duration: prefersReducedMotion() ? 0 : options!.duration,
     });
 
+    if (!animation) {
+      return;
+    }
+
     animation.addEventListener('cancel', resolve, { once: true });
     animation.addEventListener('finish', resolve, { once: true });
   });

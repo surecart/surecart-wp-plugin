@@ -47,7 +47,7 @@
 }
 
 .form-control--is-required slot[name='label']:after {
-  content: ' *';
+  content: var(--sc-input-required-indicator, ' *');
   color: var(--sc-color-danger-500);
 }
 

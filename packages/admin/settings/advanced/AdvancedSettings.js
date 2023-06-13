@@ -1,11 +1,20 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScSwitch } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDialog,
+	ScFormControl,
+	ScIcon,
+	ScSwitch,
+} from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
+import CustomerSyncModal from './components/CustomerSyncModal';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -14,6 +23,7 @@ export default () => {
 		'store',
 		'settings'
 	);
+	const [modal, setModal] = useState(null);
 
 	/**
 	 * Form is submitted.
@@ -67,24 +77,6 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-				<ScSwitch
-					checked={!item?.slide_out_cart_disabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							slide_out_cart_disabled:
-								!item?.slide_out_cart_disabled,
-						});
-					}}
-				>
-					{__('Enable Slide-Out Cart', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'If you do not wish to use the slide-out cart, you can disable this to prevent scripts from loading on your pages.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
 			</SettingsBox>
 
 			<SettingsBox
@@ -105,7 +97,7 @@ export default () => {
 						});
 					}}
 				>
-					{__('Use the Stripe Payment Element', 'surecart')}
+					{__('Use The Stripe Payment Element', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							"Use Stripe's Payment Element instead of the Card Element in all forms.",
@@ -113,6 +105,37 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Syncing', 'surecart')}
+				description={__(
+					'Manually sync your WordPress install with SureCart.',
+					'surecart'
+				)}
+				noButton
+				loading={!hasLoadedItem}
+			>
+				<div
+					css={css`
+						display: grid;
+						gap: 0.5em;
+					`}
+				>
+					<ScFormControl
+						label={__('Customers', 'surecart')}
+						help={__(
+							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
+							'surecart'
+						)}
+					/>
+					<div>
+						<ScButton onClick={() => setModal('customer-sync')}>
+							<ScIcon name="users" slot="prefix"></ScIcon>
+							{__('Sync Customers', 'surecart')}
+						</ScButton>
+					</div>
+				</div>
 			</SettingsBox>
 
 			<SettingsBox
@@ -141,6 +164,11 @@ export default () => {
 					</span>
 				</ScSwitch>
 			</SettingsBox>
+
+			<CustomerSyncModal
+				open={modal === 'customer-sync'}
+				onRequestClose={() => setModal(null)}
+			/>
 		</SettingsTemplate>
 	);
 };

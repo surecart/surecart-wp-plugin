@@ -3,7 +3,8 @@ import { state as processorsState } from '@store/processors';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
-import { Checkout } from '../../types';
+import { Checkout, DeletedItem, LineItem } from '../../types';
+import { __ } from '@wordpress/i18n';
 
 /** The base url for this service. */
 export const baseUrl = 'surecart/v1/checkouts/';
@@ -116,4 +117,76 @@ export const finalizeCheckout = async ({ id, data = {}, query = {}, processor }:
     ),
     data: withDefaultData(data),
   })) as Checkout;
+};
+
+/**
+ * Add a line item.
+ */
+export const addLineItem = async ({ checkout, data, live_mode = false }) => {
+  // create the checkout with the line item.
+  if (!checkout?.id) {
+    return (await apiFetch({
+      method: 'POST', // create
+      path: addQueryArgs(parsePath(null)),
+      data: {
+        line_items: [data],
+        live_mode,
+      },
+    })) as Checkout;
+  }
+
+  const item = (await apiFetch({
+    path: addQueryArgs('surecart/v1/line_items', {
+      consolidate: true,
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'POST',
+    data: {
+      ...data,
+      checkout: checkout.id,
+    },
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
+};
+
+/**
+ * Remove a line item.
+ */
+export const removeLineItem = async ({ checkoutId, itemId }) => {
+  const { deleted } = (await apiFetch({
+    path: `surecart/v1/line_items/${itemId}`,
+    method: 'DELETE',
+  })) as DeletedItem;
+
+  if (!deleted) {
+    throw { code: 'error', message: __('Failed to delete', 'surecart') };
+  }
+
+  return await fetchCheckout({ id: checkoutId });
+};
+
+/**
+ * Update a line item.
+ */
+export const updateLineItem = async ({ id, data }) => {
+  const item = (await apiFetch({
+    path: addQueryArgs(`surecart/v1/line_items/${id}`, {
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'PATCH',
+    data,
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
 };

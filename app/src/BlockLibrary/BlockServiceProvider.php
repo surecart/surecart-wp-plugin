@@ -116,8 +116,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
 
 		// add slot to defaults.
-		$tags['span']['slot'] = true;
-		$tags['div']['slot']  = true;
+		$tags['span']['slot']         = true;
+		$tags['div']['slot']          = true;
+		$tags['sc-spinner']['data-*'] = true;
 
 		return array_merge( $components, $tags );
 	}
