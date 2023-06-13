@@ -32,8 +32,9 @@ class ProvisionalAccountRestServiceProviderTest extends SureCartUnitTestCase
     public function requestProvider()
     {
         return [
-			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/public/provisional_accounts', 200],
-            'Create: Missing Capability' => [[], 'POST', '/surecart/v1/public/provisional_accounts', 200],
+			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/provisional_accounts', 401],
+            'Create: Missing Capability' => [[], 'POST', '/surecart/v1/provisional_accounts', 403],
+			'Create: Setup Complete' => [['manage_options'], 'POST', '/surecart/v1/provisional_accounts', 500],
         ];
     }
 
@@ -44,7 +45,7 @@ class ProvisionalAccountRestServiceProviderTest extends SureCartUnitTestCase
     {
         //mock the requests in the container
         $requests = \Mockery::mock(RequestService::class);
-        \SureCart::alias('request', function () use ($requests) {
+        \SureCart::alias('unAuthorizedRequests', function () use ($requests) {
             return call_user_func_array([$requests, 'makeRequest'], func_get_args());
         });
 
