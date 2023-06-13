@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { maybeConvertAmount } from './functions/utils';
+import { maybeConvertAmount } from '../../../functions/currency';
 
 @Component({
   tag: 'sc-format-number',
