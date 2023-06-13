@@ -203,6 +203,8 @@ export class ScSelectDropdown {
       this.value = value;
     }
 
+    this.searchTerm = '';
+
     this.scChange.emit();
   }
 
@@ -451,6 +453,7 @@ export class ScSelectDropdown {
                 class="search"
                 clearable
                 part="search"
+                value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}

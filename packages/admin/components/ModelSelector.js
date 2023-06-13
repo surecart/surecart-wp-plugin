@@ -85,7 +85,7 @@ export default (props) => {
 	useEffect(() => {
 		if (query === null || isLoading) return;
 		fetchData(pagination);
-	}, [pagination]);
+	}, [pagination.per_page, pagination.page, query]);
 
 	useEffect(() => {
 		if (fetchOnLoad) {
