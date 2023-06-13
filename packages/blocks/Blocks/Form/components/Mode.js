@@ -3,9 +3,10 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ attributes, onModeSelect }) => {
 	const { mode } = attributes;
+	const formMode = !!window?.scData?.claim_url ? 'test' : mode;
 
 	const renderBadge = () => {
-		if (mode === 'test') {
+		if (formMode === 'test') {
 			return (
 				<sc-button type="warning" size="small" caret>
 					{__('Test', 'surecart')}
@@ -26,13 +27,13 @@ export default ({ attributes, onModeSelect }) => {
 			<ScMenu>
 				<ScMenuItem
 					onClick={() => onModeSelect('test')}
-					checked={mode === 'test'}
+					checked={formMode === 'test' || !!window?.scData?.claim_url}
 				>
 					{__('Test', 'surecart')}
 				</ScMenuItem>
 				<ScMenuItem
 					onClick={() => onModeSelect('live')}
-					checked={mode === 'live' || !mode}
+					checked={formMode === 'live' || !formMode}
 				>
 					{__('Live', 'surecart')}
 				</ScMenuItem>
