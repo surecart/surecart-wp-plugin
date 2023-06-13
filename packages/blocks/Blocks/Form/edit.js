@@ -5,11 +5,7 @@ import Cart from './components/Cart';
 import Mode from './components/Mode';
 import Setup from './components/Setup';
 import { css, jsx } from '@emotion/core';
-import {
-	ScCheckout,
-	ScIcon,
-	ScProvisionalBanner,
-} from '@surecart/components-react';
+import { ScCheckout, ScIcon } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import StyleProvider from '../../components/StyleProvider';
 
