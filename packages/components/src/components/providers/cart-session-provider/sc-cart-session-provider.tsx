@@ -57,7 +57,7 @@ export class ScCartSessionProvider {
 
   /** Handle the error response. */
   handleErrorResponse(e) {
-    if (e?.code === 'readonly') {
+    if (e?.code === 'readonly' || e?.additional_errors?.[0]?.code === 'checkout.customer.account_mismatch') {
       this.scUpdateOrderState.emit(null);
     }
 
