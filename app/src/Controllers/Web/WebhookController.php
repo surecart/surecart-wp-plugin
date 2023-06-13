@@ -26,6 +26,7 @@ class WebhookController {
 		'refund'       => \SureCart\Models\Refund::class,
 		'subscription' => \SureCart\Models\Subscription::class,
 		'invoice'      => \SureCart\Models\Invoice::class,
+		'account'      => \SureCart\Models\Account::class,
 	];
 
 	/**

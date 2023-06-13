@@ -23,6 +23,10 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 			return new WebhooksTestService();
 		};
 
+		$container['surecart.webhooks_account'] = function () use ( $container ) {
+			return new WebhooksAccountService();
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'webhooks', 'surecart.webhooks' );
 	}
@@ -35,12 +39,16 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		if ( ! empty( $container['surecart.webhooks'] ) ) {
-			$container['surecart.webhooks']->maybeCreateWebooks();
+			$container['surecart.webhooks']->maybeCreateWebhooks();
 			$container['surecart.webhooks']->listenForDomainChanges();
 		}
 
 		if ( ! empty( $container['surecart.webhooks_test'] ) ) {
 			$container['surecart.webhooks_test']->runQueue();
+		}
+
+		if ( ! empty( $container['surecart.webhooks_account'] ) ) {
+			$container['surecart.webhooks_account']->listenForAccountUpdated();
 		}
 	}
 }
