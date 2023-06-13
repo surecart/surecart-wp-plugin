@@ -8,7 +8,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 // let showVideoTimerId;
 // const TIMEOUT = 2000;
 
-export default () => {
+export default ({ button }) => {
 	// const [showVideo, setShowVideo] = useState(false);
 
 	// useEffect(() => {
@@ -50,21 +50,7 @@ export default () => {
 							text-align: center;
 						`}
 					>
-						<ScButton
-							type="primary"
-							size="large"
-							href={scData.success_url}
-							css={css`
-								min-width: 225px;
-							`}
-						>
-							<ScIcon
-								name="shopping-bag"
-								slot="prefix"
-								style={{ fontSize: '18px' }}
-							/>
-							{__('View My Store', 'surecart')}
-						</ScButton>
+						{button}
 					</div>
 				)}
 				{/* <div style={{ marginTop: '45px', height: '315px' }}>

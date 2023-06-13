@@ -1,11 +1,12 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
+import { addQueryArgs } from '@wordpress/url';
 
 import Layout from './components/Layout';
 import InitialSetup from './components/InitialSetup';
@@ -15,6 +16,7 @@ import SetupProgress from './components/SetupProgress';
 import StarterTemplates from './components/StarterTemplates';
 import ConfirmExit from './components/ConfirmExit';
 import ConfirmStoreEmail from './components/ConfirmStoreEmail';
+import { ScIcon, ScButton } from '@surecart/components-react';
 
 let confettiIntervalId;
 let confettiTimerId;
@@ -141,7 +143,48 @@ export default () => {
 			case 4:
 				return <SetupProgress />;
 			case 5:
-				return <SetupDone />;
+				return (
+					<SetupDone
+						button={
+							selectedTemplate === null ? (
+								<ScButton
+									type="primary"
+									size="large"
+									href={addQueryArgs('admin.php', {
+										page: 'sc-products',
+										action: 'edit',
+									})}
+									css={css`
+										min-width: 225px;
+									`}
+								>
+									<ScIcon
+										name="shopping-bag"
+										slot="prefix"
+										style={{ fontSize: '18px' }}
+									/>
+									{__('Add A Product', 'surecart')}
+								</ScButton>
+							) : (
+								<ScButton
+									type="primary"
+									size="large"
+									href={scData.success_url}
+									css={css`
+										min-width: 225px;
+									`}
+								>
+									<ScIcon
+										name="shopping-bag"
+										slot="prefix"
+										style={{ fontSize: '18px' }}
+									/>
+									{__('View My Store', 'surecart')}
+								</ScButton>
+							)
+						}
+					/>
+				);
 			default:
 				break;
 		}
