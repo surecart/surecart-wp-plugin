@@ -20,7 +20,7 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container['surecart.queue'] = function() {
-			return new ScQueueService();
+			return new QueueService();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
@@ -36,5 +36,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sync']->customers()->bootstrap();
+		$container['surecart.queue']->bootstrap();
 	}
 }

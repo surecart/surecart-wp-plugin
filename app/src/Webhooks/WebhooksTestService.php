@@ -14,7 +14,7 @@ class WebhooksTestService {
 	 * @return void
 	 */
 	public function runQueue() {
-		\add_action( 'surecart/send-test-webhook', [ $this, 'sendTestWebhook' ] );
+		add_action( 'surecart/send-test-webhook', [ $this, 'sendTestWebhook' ] );
 	}
 
 	/**

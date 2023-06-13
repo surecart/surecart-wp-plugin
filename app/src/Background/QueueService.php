@@ -7,7 +7,7 @@ namespace SureCart\Background;
  *
  * A job queue using WordPress actions.
  */
-class ScQueueService {
+class QueueService {
 	/**
 	 * Enqueue an action to run one time, as soon as possible
 	 *
@@ -145,5 +145,14 @@ class ScQueueService {
 	 */
 	public function search( $args = array(), $return_format = OBJECT ) {
 		return as_get_scheduled_actions( $args, $return_format );
+	}
+
+	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		// nothing to bootstrap.
 	}
 }
