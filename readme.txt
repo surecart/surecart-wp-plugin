@@ -243,6 +243,15 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.1.0 - June 13, 2023 =
+* New: Better, quicker onboarding for new stores.
+* New: Visit Store link in WordPress admin bar.
+* Improvement: Settings page sticky header.
+* Fix: Rename magic sign-in.
+* Fix: Change "Pro" to "Premium".
+* Fix: Issue with product pages not loading for some servers that don't have support for NumberFormatter.
+* Fix: Z-index issue with product page header and WordPress menu.
+
 = 2.0.1 - June 7, 2023 =
 * New: Archive and delete option on upgrade groups.
 * New: Ability to disable purchase/download emails.
