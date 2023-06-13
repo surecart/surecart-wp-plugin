@@ -20,6 +20,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import AddShippingProfile from './profile/AddShippingProfile';
 import useEntity from '../../hooks/useEntity';
+import ShippingMethods from './method/ShippingMethods';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -210,6 +211,7 @@ export default () => {
 						)}
 					</ScCard>
 				</SettingsBox>
+				<ShippingMethods />
 			</SettingsTemplate>
 			<AddShippingProfile
 				open={showAddShipping}

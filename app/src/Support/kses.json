@@ -1637,12 +1637,6 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
-    "address": true,
-    "form-state": true,
-    "order": true,
-    "selected-processor-id": true,
-    "stripe-payment-intent": true,
-    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

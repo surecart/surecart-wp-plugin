@@ -18,12 +18,12 @@ import {
 	ScRadioGroup,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import Error from '../../../components/Error';
 import ModelSelector from '../../../components/ModelSelector';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticeStore} from '@wordpress/notices'
+import { store as noticeStore } from '@wordpress/notices';
 
 const rate_types = {
 	ITEM_WEIGHT: 'weight',
@@ -46,7 +46,10 @@ export default ({
 }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
-	const [methodName, setMethodName] = useState('');
+	const [method, setMethod] = useState({
+		name: '',
+		description: '',
+	});
 	const [shippingRate, setShippingRate] = useState({
 		amount: 0,
 		rate_type: rate_types.FLAT_RATE,
@@ -56,7 +59,7 @@ export default ({
 	const [showAddNew, setShowAddNew] = useState(false);
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
-    const {createSuccessNotice} = useDispatch(noticeStore)
+	const { createSuccessNotice } = useDispatch(noticeStore);
 
 	useEffect(() => {
 		return () => {
@@ -123,9 +126,7 @@ export default ({
 				const shippingMethod = await saveEntityRecord(
 					'surecart',
 					'shipping-method',
-					{
-						name: methodName,
-					}
+					method
 				);
 
 				shippingRate.shipping_method_id = shippingMethod?.id;
@@ -267,16 +268,7 @@ export default ({
 	};
 
 	return (
-		<ScDialog
-			open={true}
-			label={
-				isEdit
-					? __('Edit Shipping Rate', 'surecart')
-					: __('Add New Shipping Rate', 'surecart')
-			}
-			onScRequestClose={onRequestClose}
-			style={{ '--dialog-body-overflow': 'visible' }}
-		>
+		<Fragment>
 			<Error error={error} setError={setError} />
 			<ScForm
 				onScSubmit={(e) => {
@@ -296,13 +288,36 @@ export default ({
 					`}
 				>
 					{showAddNew ? (
-						<ScInput
-							required
-							label={__('Name', 'surecart')}
-							onScInput={(e) => setMethodName(e.target.value)}
-							name="method-name"
-							value={methodName}
-						/>
+						<>
+							<ScInput
+								required
+								label={__('Name', 'surecart')}
+								onScInput={(e) =>
+									setMethod({
+										...method,
+										name: e.target.value,
+									})
+								}
+								name="method-name"
+								value={method.name}
+							/>
+							<ScInput
+								label={__('Description', 'surecart')}
+								placeholder={__('E.g. 1-2 days', 'surecart')}
+								help={__(
+									'A description to let the customer know the average time it takes for shipping.',
+									'surecart'
+								)}
+								onScInput={(e) =>
+									setMethod({
+										...method,
+										description: e.target.value,
+									})
+								}
+								value={method.description}
+								name="method-description"
+							/>
+						</>
 					) : (
 						<ScFormControl
 							label={__('Shipping Method', 'surecart')}
@@ -400,31 +415,24 @@ export default ({
 						{getSubmitText()}
 					</ScButton>{' '}
 					{showAddNew ? (
-						<ScFlex justifyContent="flex-start">
-							<ScButton
-								type="text"
-								onClick={() => {
-									setShowAddNew(false);
-									updateShippingRate(
-										'shipping_method_id',
-										null
-									);
-								}}
-								disabled={loading}
-							>
-								{__('Back', 'surecart')}
-							</ScButton>
-						</ScFlex>
+						<ScButton
+							type="text"
+							onClick={() => {
+								setShowAddNew(false);
+								updateShippingRate('shipping_method_id', null);
+							}}
+							disabled={loading}
+						>
+							{__('Back', 'surecart')}
+						</ScButton>
 					) : (
-						<ScFlex justifyContent="flex-start">
-							<ScButton
-								type="text"
-								onClick={onRequestClose}
-								disabled={loading}
-							>
-								{__('Cancel', 'surecart')}
-							</ScButton>
-						</ScFlex>
+						<ScButton
+							type="text"
+							onClick={onRequestClose}
+							disabled={loading}
+						>
+							{__('Cancel', 'surecart')}
+						</ScButton>
 					)}
 				</ScFlex>
 			</ScForm>
@@ -434,6 +442,6 @@ export default ({
 					spinner
 				/>
 			)}
-		</ScDialog>
+		</Fragment>
 	);
 };

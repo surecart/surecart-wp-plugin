@@ -28,7 +28,7 @@ import usePagination from '../../../hooks/usePagination';
 
 const PRODUCTS_PER_PAGE = 10;
 
-export default ({ shippingProfileId }) => {
+export default ({ shippingProfileId, isDefaultProfile }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [draftProducts, setDraftProducts] = useState(0);
@@ -61,7 +61,9 @@ export default ({ shippingProfileId }) => {
 
 			return {
 				products: Array.from(
-					new Set(fetchedProducts.map((item) => JSON.stringify(item))),
+					new Set(
+						fetchedProducts.map((item) => JSON.stringify(item))
+					),
 					JSON.parse
 				),
 				loading: loading && !products?.length,
@@ -196,14 +198,16 @@ export default ({ shippingProfileId }) => {
 			title={__('Products', 'surecart')}
 			wrapperTag="div"
 			end={
-				<ScButton
-					type="primary"
-					onClick={() => setDraftProducts(draftProducts + 1)}
-					disabled={draftProducts > 0}
-				>
-					<ScIcon name="plus" />
-					{__('Add New', 'surecart')}
-				</ScButton>
+				!isDefaultProfile && (
+					<ScButton
+						type="primary"
+						onClick={() => setDraftProducts(draftProducts + 1)}
+						disabled={draftProducts > 0}
+					>
+						<ScIcon name="plus" />
+						{__('Add New', 'surecart')}
+					</ScButton>
+				)
 			}
 			loading={loading}
 			css={css`
@@ -216,29 +220,42 @@ export default ({ shippingProfileId }) => {
 				{products?.length || !!draftProducts || currentPage > 1 ? (
 					<ScStackedList>
 						{products.map((product) => (
-							<ScStackedListRow key={product.id}>
+							<ScStackedListRow
+								key={product.id}
+								css={css`
+									--sc-list-row-background-color: var(
+										--sc-color-gray-100
+									);
+								`}
+							>
 								{renderProduct(product)}
-								<ScDropdown
-									slot="suffix"
-									placement="bottom-end"
-								>
-									<ScButton type="text" slot="trigger" circle>
-										<ScIcon name="more-horizontal" />
-									</ScButton>
-									<ScMenu>
-										<ScMenuItem
-											onClick={() =>
-												onRemoveProduct(product.id)
-											}
+								{!isDefaultProfile ? (
+									<ScDropdown
+										slot="suffix"
+										placement="bottom-end"
+									>
+										<ScButton
+											type="text"
+											slot="trigger"
+											circle
 										>
-											<ScIcon
-												slot="prefix"
-												name="trash"
-											/>
-											{__('Remove', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</ScDropdown>
+											<ScIcon name="more-horizontal" />
+										</ScButton>
+										<ScMenu>
+											<ScMenuItem
+												onClick={() =>
+													onRemoveProduct(product.id)
+												}
+											>
+												<ScIcon
+													slot="prefix"
+													name="trash"
+												/>
+												{__('Remove', 'surecart')}
+											</ScMenuItem>
+										</ScMenu>
+									</ScDropdown>
+								) : null}
 							</ScStackedListRow>
 						))}
 						{[...Array(draftProducts)].map((_, index) => (

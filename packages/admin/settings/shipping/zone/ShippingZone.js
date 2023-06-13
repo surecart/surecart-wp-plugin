@@ -16,13 +16,14 @@ import {
 	ScMenuItem,
 	ScBlockUi,
 } from '@surecart/components-react';
-import ShippingRateCondition from './ShippingRateCondition';
+import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
-import ShippingMethodForm from './ShippingMethodForm';
+import AddShippingRate from '../rate/AddShippingRate';
+import EditShippingRate from '../rate/EditShippingRate';
 
 const modals = {
 	ADD_RATE: 'add_shipping_rate',
@@ -38,6 +39,28 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 	const { deleteEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
+
+	const onDeleteShippingZone = async () => {
+		setBusy(true);
+		try {
+			await deleteEntityRecord(
+				'surecart',
+				'shipping-zone',
+				shippingZone.id,
+				{
+					throwOnError: true,
+				}
+			);
+			createSuccessNotice(__('Shipping zone deleted', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (error) {
+			console.error(error);
+			setError(error);
+		} finally {
+			setBusy(false);
+		}
+	};
 
 	const onRemoveShippingRate = async (shippingRateId) => {
 		try {
@@ -149,9 +172,21 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 						</sc-tag>
 					)}
 				</div>
-				<ScButton type="text" onClick={onEditZone}>
-					{__('Edit Zone', 'surecart')}
-				</ScButton>
+				<ScDropdown placement="bottom-end">
+					<ScButton type="text" slot="trigger" circle>
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem onClick={onEditZone}>
+							<ScIcon slot="prefix" name="edit" />
+							{__('Edit', 'surecart')}
+						</ScMenuItem>
+						<ScMenuItem onClick={onDeleteShippingZone}>
+							<ScIcon slot="prefix" name="trash" />
+							{__('Delete', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
 			</ScFlex>
 			<Error error={error} setError={setError} />
 			{renderShippingRates(shippingZone?.shipping_rates)}
@@ -165,18 +200,26 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 				/>
 			)}
 
-			{currentModal === modals.ADD_RATE ||
-			currentModal === modals.EDIT_RATE ? (
-				<ShippingMethodForm
+			{currentModal === modals.ADD_RATE && (
+				<AddShippingRate
+					shippingZoneId={shippingZone?.id}
 					onRequestClose={() => {
 						setCurrentModal('');
 						setSelectedShippingRate();
 					}}
-					isEdit={currentModal === modals.EDIT_RATE}
+				/>
+			)}
+
+			{currentModal === modals.EDIT_RATE && (
+				<EditShippingRate
+					onRequestClose={() => {
+						setCurrentModal('');
+						setSelectedShippingRate();
+					}}
 					shippingZoneId={shippingZone?.id}
 					selectedShippingRate={selectedShippingRate}
 				/>
-			) : null}
+			)}
 		</ScCard>
 	);
 };
