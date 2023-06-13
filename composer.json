@@ -10,7 +10,7 @@
 	],
 	"license": "GPL-2.0-only",
 	"require": {
-		"php": ">=5.5",
+		"php": ">=7.4",
 		"composer/installers": "^1.4",
 		"pimple/pimple": "^3.2",
 		"guzzlehttp/psr7": "^1.5",
