@@ -71,7 +71,7 @@ export class ScCustomerName {
   @Method()
   async reportValidity() {
     if (!this.required) {
-      return await this.input?.setCustomValidity?.('');
+      return await this.input?.reportValidity?.();
     }
     this.input?.setCustomValidity?.('');
 
