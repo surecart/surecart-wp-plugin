@@ -12,7 +12,8 @@
 	},
 	"attributes": {
 		"label": {
-			"type": "string"
+			"type": "string",
+			"default": "Shipping"
 		},
 		"showControl": {
 			"type": "boolean",
