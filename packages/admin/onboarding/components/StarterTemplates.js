@@ -97,13 +97,6 @@ export default ({
 					@media (min-width: 1024px) {
 						max-width: 760px;
 					}
-					/* @media (min-width: 1760px) {
-						max-width: 1024px;
-						grid-template-columns: repeat(4, 1fr);
-					}
-					@media (min-width: 2180px) {
-						grid-template-columns: repeat(4, 1fr);
-					} */
 				`}
 			>
 				{templates.map((template) => (
