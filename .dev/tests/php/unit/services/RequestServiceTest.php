@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Services;
 
+use SureCart\Models\ApiToken;
 use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -20,6 +21,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class
 			]
 		], false);
 
@@ -51,5 +53,17 @@ class RequestServiceTest extends SureCartUnitTestCase
 			[true, 'string', ['method' => 'GET', 'query' => ['cached' => false]], false],
 			[true, 'string', ['method' => 'POST'], false],
 		];
+	}
+
+	/**
+	 * Should clear the token if a 401 issue.
+	 *
+	 * @group failing
+	 */
+	public function test_shouldNotMakeRequestIfNoToken() {
+		$service = new RequestService( null );
+		$this->assertWPError( $service->makeRequest( 'test') );
+		$error = $service->makeRequest( 'test' );
+		$this->assertSame( 'missing_token', $error->get_error_code() );
 	}
 }

@@ -13,7 +13,7 @@ export const submitCartForm = async () => {
       checkout: getCheckout(state?.formId, state.mode),
       data: {
         price: state.selectedPrice?.id,
-        ad_hoc_amount: state.adHocAmount,
+        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
       },
       live_mode: state.mode !== 'test',

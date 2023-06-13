@@ -2874,6 +2874,12 @@ export namespace Components {
     interface ScProvider {
         "STENCIL_CONTEXT": { [key: string]: any };
     }
+    interface ScProvisionalBanner {
+        /**
+          * Claim URL.
+         */
+        "claimUrl": string;
+    }
     interface ScPurchaseDownloadsList {
         "allLink": string;
         "busy": boolean;
@@ -3690,6 +3696,13 @@ export namespace Components {
         "successUrl": string;
     }
     interface ScUpgradeRequired {
+        /**
+          * Whether to render upgrade modal by default
+         */
+        "open": boolean;
+        /**
+          * Is this required?
+         */
         "required": boolean;
         /**
           * The tag's size.
@@ -4835,6 +4848,12 @@ declare global {
         prototype: HTMLScProviderElement;
         new (): HTMLScProviderElement;
     };
+    interface HTMLScProvisionalBannerElement extends Components.ScProvisionalBanner, HTMLStencilElement {
+    }
+    var HTMLScProvisionalBannerElement: {
+        prototype: HTMLScProvisionalBannerElement;
+        new (): HTMLScProvisionalBannerElement;
+    };
     interface HTMLScPurchaseDownloadsListElement extends Components.ScPurchaseDownloadsList, HTMLStencilElement {
     }
     var HTMLScPurchaseDownloadsListElement: {
@@ -5263,6 +5282,7 @@ declare global {
         "sc-product-text": HTMLScProductTextElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
+        "sc-provisional-banner": HTMLScProvisionalBannerElement;
         "sc-purchase-downloads-list": HTMLScPurchaseDownloadsListElement;
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
@@ -8485,6 +8505,12 @@ declare namespace LocalJSX {
         "STENCIL_CONTEXT"?: { [key: string]: any };
         "onMountConsumer"?: (event: ScProviderCustomEvent<any>) => void;
     }
+    interface ScProvisionalBanner {
+        /**
+          * Claim URL.
+         */
+        "claimUrl"?: string;
+    }
     interface ScPurchaseDownloadsList {
         "allLink"?: string;
         "busy"?: boolean;
@@ -9397,6 +9423,13 @@ declare namespace LocalJSX {
         "successUrl"?: string;
     }
     interface ScUpgradeRequired {
+        /**
+          * Whether to render upgrade modal by default
+         */
+        "open"?: boolean;
+        /**
+          * Is this required?
+         */
         "required"?: boolean;
         /**
           * The tag's size.
@@ -9561,6 +9594,7 @@ declare namespace LocalJSX {
         "sc-product-text": ScProductText;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
+        "sc-provisional-banner": ScProvisionalBanner;
         "sc-purchase-downloads-list": ScPurchaseDownloadsList;
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
@@ -9767,6 +9801,7 @@ declare module "@stencil/core" {
             "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
+            "sc-provisional-banner": LocalJSX.ScProvisionalBanner & JSXBase.HTMLAttributes<HTMLScProvisionalBannerElement>;
             "sc-purchase-downloads-list": LocalJSX.ScPurchaseDownloadsList & JSXBase.HTMLAttributes<HTMLScPurchaseDownloadsListElement>;
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
