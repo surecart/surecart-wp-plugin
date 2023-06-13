@@ -1,7 +1,3 @@
-/**
- * WordPress dependencies.
- */
-
 export default [
 	{
 		attributes: {
