@@ -91,7 +91,7 @@ export default ({
 							background: #fff;
 							top: 32px;
 							width: 100%;
-							z-index: 99999;
+							z-index: 9989;
 							margin-bottom: var(
 								--sc-spacing-xx-large
 							) !important;
