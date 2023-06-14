@@ -1,12 +1,8 @@
 <?php
 /**
- * Sitemaps: WP_Sitemaps_Posts class
+ * Sitemaps: ProductSiteMap class
  *
  * Builds the sitemaps for our product object type.
- *
- * @package WordPress
- * @subpackage Sitemaps
- * @since 5.5.0
  */
 
 namespace SureCart\WordPress\Sitemap;
@@ -14,15 +10,11 @@ namespace SureCart\WordPress\Sitemap;
 use SureCart\Models\Product;
 
 /**
- *  XML sitemap provider.
- *
- * @since 5.5.0
+ * XML sitemap provider.
  */
 class ProductSiteMap extends \WP_Sitemaps_Provider {
 	/**
 	 * WP_Sitemaps_Users constructor.
-	 *
-	 * @since 5.5.0
 	 */
 	public function __construct() {
 		$this->name        = 'products';
@@ -31,8 +23,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 
 	/**
 	 * Gets a URL list for a user sitemap.
-	 *
-	 * @since 5.5.0
 	 *
 	 * @param int    $page_num       Page of results.
 	 * @param string $object_subtype Optional. Not applicable for Users but
@@ -62,14 +52,11 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			return $url_list;
 		}
 
-		$args = $this->get_products_query_args();
+		$products = $this->get_products( $page_num );
 
-		$products = Product::where( $args )->paginate(
-			[
-				'page'     => $page_num,
-				'per_page' => $this->get_max_urls(),
-			]
-		);
+		if ( is_wp_error( $products ) ) {
+			return [];
+		}
 
 		foreach ( $products->data as $product ) {
 			$sitemap_entry = array(
@@ -93,8 +80,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 
 	/**
 	 * Gets the max number of pages available for the object type.
-	 *
-	 * @since 5.5.0
 	 *
 	 * @see WP_Sitemaps_Provider::max_num_pages
 	 *
@@ -120,12 +105,11 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			return $max_num_pages;
 		}
 
-		$args     = $this->get_products_query_args();
-		$products = Product::where( $args )->paginate(
-			[
-				'per_page' => 1,
-			]
-		);
+		$products = $this->get_products( 1 );
+
+		if ( is_wp_error( $products ) ) {
+			return 1;
+		}
 
 		$total_products = $products->pagination->count;
 
@@ -133,9 +117,25 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 	}
 
 	/**
-	 * Returns the query args for retrieving users to list in the sitemap.
+	 * Get products
 	 *
-	 * @since 5.5.0
+	 * @param integer $page_num The page number.
+	 *
+	 * @return Collection
+	 */
+	protected function get_products( $page_num ) {
+		$args = $this->get_products_query_args();
+
+		return Product::where( $args )->paginate(
+			[
+				'page'     => $page_num,
+				'per_page' => $this->get_max_urls(),
+			]
+		);
+	}
+
+	/**
+	 * Returns the query args for retrieving users to list in the sitemap.
 	 *
 	 * @return array Array of WP_User_Query arguments.
 	 */
@@ -154,7 +154,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 		$args = apply_filters(
 			'wp_sitemaps_sc_products_query_args',
 			array(
-				'expand' => [ 'prices', 'product_medias', 'product_media.media' ],
 				'status' => [ 'published' ],
 			)
 		);
