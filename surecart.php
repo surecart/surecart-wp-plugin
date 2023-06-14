@@ -28,6 +28,7 @@ define( 'SURECART_PLUGIN_FILE', __FILE__ );
 
 define( 'SURECART_PLUGIN_DIR_NAME', dirname( plugin_basename( SURECART_PLUGIN_FILE ) ) );
 define( 'SURECART_LANGUAGE_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'languages' );
+define( 'SURECART_VENDOR_DIR', __DIR__ . DIRECTORY_SEPARATOR . 'vendor' );
 
 // define host url.
 if ( ! defined( 'SURECART_APP_URL' ) ) {
@@ -41,8 +42,8 @@ if ( ! defined( 'SURECART_CDN_IMAGE_BASE' ) ) {
 }
 
 // Load composer dependencies.
-if ( file_exists( __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php' ) ) {
-	require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+if ( file_exists( SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'autoload.php' ) ) {
+	require_once SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'autoload.php';
 }
 
 // Load helpers.
