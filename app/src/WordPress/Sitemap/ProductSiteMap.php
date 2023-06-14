@@ -67,7 +67,7 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 		$products = Product::where( $args )->paginate(
 			[
 				'page'     => $page_num,
-				'per_page' => wp_sitemaps_get_max_urls( $this->object_type ),
+				'per_page' => $this->get_max_urls(),
 			]
 		);
 
@@ -120,12 +120,16 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			return $max_num_pages;
 		}
 
-		$args  = $this->get_products_query_args();
-		$query = new \WP_User_Query( $args );
+		$args     = $this->get_products_query_args();
+		$products = Product::where( $args )->paginate(
+			[
+				'per_page' => 1,
+			]
+		);
 
-		$total_users = $query->get_total();
+		$total_products = $products->pagination->count;
 
-		return (int) ceil( $total_users / wp_sitemaps_get_max_urls( $this->object_type ) );
+		return (int) ceil( $total_products / $this->get_max_urls() );
 	}
 
 	/**
@@ -156,5 +160,14 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 		);
 
 		return $args;
+	}
+
+	/**
+	 * We need to change this since 100 is the max.
+	 *
+	 * @return integer
+	 */
+	protected function get_max_urls() {
+		return apply_filters( 'wp_sitemaps_max_urls', 100, 'sc_product' );
 	}
 }
