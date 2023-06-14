@@ -59,6 +59,9 @@ jobs:
       - name: Yarn Install
         run: yarn
 
+      - name: Build
+        run: yarn wp-scripts build
+
       - name: Install WordPress
         run: |
           chmod -R 767 ./ # TODO: Possibly integrate in wp-env
