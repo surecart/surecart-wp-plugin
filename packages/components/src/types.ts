@@ -135,6 +135,7 @@ export interface License {
   id: string;
   object: 'license';
   activation_limit: number;
+  activation_count: number;
   key: string;
   activations?: {
     object: 'list';
