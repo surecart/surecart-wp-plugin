@@ -1,6 +1,6 @@
 describe('Cart', () => {
   const closeCart = () => {
-    cy.get('sc-cart-loader').shadow().find('sc-cart-header').shadow().find('.cart__close').click();
+    cy.get('sc-cart-loader').find('.cart__close').click();
   };
 
   it('Can add to cart ', () => {
@@ -38,16 +38,7 @@ describe('Cart', () => {
     cy.get('sc-cart-form-submit.hydrated sc-button.hydrated').find('button').click({ force: true });
 
     // the panel should open with the correct stuff.
-    cy.get('sc-cart-loader')
-      .shadow()
-      .find('sc-line-items')
-      .shadow()
-      .find('sc-product-line-item')
-      .should('have.length', 1)
-      .shadow()
-      .find('sc-quantity-select')
-      .should('be.visible')
-      .should('have.attr', 'quantity', '1');
+    cy.get('sc-cart-loader').find('sc-product-line-item').should('have.length', 1).find('sc-quantity-select').should('be.visible').should('have.attr', 'quantity', '1');
 
     // close the cart.
     closeCart();

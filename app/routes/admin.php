@@ -9,6 +9,7 @@
  * @package SureCart
  */
 
+use SureCart\Middleware\AccountClaimMiddleware;
 use SureCart\Models\ApiToken;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +28,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
-->handle( 'Onboarding@show' );
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Claim Account
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->where( 'admin', 'sc-claim-account' )
+->name( 'account.claim' )
+->middleware( AccountClaimMiddleware::class )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@show' );
 
 /*
 |--------------------------------------------------------------------------
@@ -54,10 +69,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->handle( 'Onboarding@complete' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'Onboarding@save' );
+		\SureCart::route()->get()->handle( 'OnboardingController@complete' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'OnboardingController@save' );
 	}
 );
 

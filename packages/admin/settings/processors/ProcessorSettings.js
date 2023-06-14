@@ -31,7 +31,9 @@ export default () => {
 		};
 	});
 
-	const link = `${scData?.app_url}/processors`;
+	const link = scData?.claim_url
+		? scData?.claim_url
+		: `${scData?.app_url}/processors`;
 
 	const renderStatus = (type) => {
 		const test = (processors || []).some(
@@ -87,7 +89,10 @@ export default () => {
 			>
 				<ScCard no-padding style={{ overflow: 'hidden' }}>
 					<ScStackedList>
-						<ScStackedListRow href={link} target="_blank">
+						<ScStackedListRow
+							href={link}
+							target={scData?.claim_url ? '_self' : '_blank'}
+						>
 							<ScIcon name="chevron-right" slot="suffix"></ScIcon>
 							<ScFlex flex-direction="column" gap="1em">
 								<div>
