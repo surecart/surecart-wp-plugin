@@ -2,6 +2,7 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	...defaultConfig,
@@ -21,6 +22,10 @@ module.exports = {
 		},
 	},
 	entry: {
+		['admin/onboarding']: path.resolve(
+			__dirname,
+			'packages/admin/onboarding/index.js'
+		),
 		['admin/dashboard']: path.resolve(
 			__dirname,
 			'packages/admin/dashboard/index.js'
@@ -190,6 +195,27 @@ module.exports = {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
+	},
+	optimization: {
+		...defaultConfig.optimization,
+		minimizer: [
+			new TerserPlugin({
+				parallel: true,
+				exclude: /\.entry\.js$/,
+				terserOptions: {
+					output: {
+						comments: /translators:/i,
+					},
+					compress: {
+						passes: 2,
+					},
+					mangle: {
+						reserved: ['__', '_n', '_nx', '_x'],
+					},
+				},
+				extractComments: false,
+			}),
+		],
 	},
 	plugins: [
 		...defaultConfig.plugins,

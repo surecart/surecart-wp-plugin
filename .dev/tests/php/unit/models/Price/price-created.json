@@ -18,6 +18,7 @@
 		"description": "A pair of everyday sneakers.",
 		"active": true,
 		"created_at": 1624716432,
-		"updated_at": 1624717374
+		"updated_at": 1624717374,
+    "image_srcset": ""
 	}
 }

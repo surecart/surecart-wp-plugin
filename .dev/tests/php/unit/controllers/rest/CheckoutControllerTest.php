@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Controllers\Rest;
 
+use SureCart\Account\AccountService;
 use SureCart\Controllers\Rest\CheckoutsController;
 use SureCart\Models\Checkout;
 use SureCart\Models\User;
@@ -20,6 +21,7 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\Account\AccountServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Support\Errors\ErrorsServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class
@@ -123,6 +125,12 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
+
+		$account = \Mockery::mock(AccountService::class)->shouldAllowMockingProtectedMethods();
+		\SureCart::alias('account', function () use ($account) {
+			return $account;
+		});
+		$account->shouldReceive('fetchCachedAccount')->andReturn((object) ['claimed' => true]);
 
 		// validate first.
 		$controller->shouldReceive('validate')

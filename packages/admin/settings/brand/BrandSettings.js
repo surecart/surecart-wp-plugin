@@ -13,25 +13,45 @@ import {
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
 import { __ } from '@wordpress/i18n';
 import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import Logo from './Logo';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'brand'
-	);
+
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const [scThemeData, setScThemeData] = useEntityProp(
 		'root',
 		'site',
 		'surecart_theme'
 	);
+
+	/** Edit Item */
+	const editItem = (data) =>
+		editEntityRecord('surecart', 'store', 'brand', data);
+
+	/** Load Item */
+	const { item, itemError, hasLoadedItem } = useSelect((select) => {
+		const entityData = ['surecart', 'store', 'brand'];
+		return {
+			item: select(coreStore).getEditedEntityRecord(...entityData),
+			itemError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+		};
+	});
 
 	/**
 	 * Form is submitted.

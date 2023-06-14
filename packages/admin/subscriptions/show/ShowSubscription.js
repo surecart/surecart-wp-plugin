@@ -224,7 +224,7 @@ export default () => {
 			return null;
 		if (['completed', 'canceled'].includes(subscription?.status))
 			return null;
-		if (!subscription?.finite) return null;
+		if (subscription?.finite) return null;
 		return (
 			<ScMenuItem
 				href={addQueryArgs('admin.php', {
@@ -254,17 +254,16 @@ export default () => {
 		const upgradeRequired =
 			!window.scData?.entitlements?.subscription_restore_at;
 		return (
-			<ScUpgradeRequired
-				style={{ display: 'block' }}
-				required={upgradeRequired}
+			<ScMenuItem
+				onClick={() =>
+					setModal(upgradeRequired ? 'upgrade_required' : 'pause')
+				}
 			>
-				<ScMenuItem onClick={() => setModal('pause')}>
-					{upgradeRequired
-						? __('Pause', 'surecart')
-						: __('Pause Subscription', 'surecart')}{' '}
-					{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
-				</ScMenuItem>
-			</ScUpgradeRequired>
+				{upgradeRequired
+					? __('Pause', 'surecart')
+					: __('Pause Subscription', 'surecart')}{' '}
+				{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+			</ScMenuItem>
 		);
 	};
 	const renderPayOffButton = () => {
@@ -273,9 +272,19 @@ export default () => {
 
 		if (!subscription?.finite) return null;
 
+		const upgradeRequired =
+			!window.scData?.entitlements?.subscription_pay_off;
+
 		return (
-			<ScMenuItem onClick={() => setModal('pay_off')}>
-				{__('Pay Off Subscription', 'surecart')}
+			<ScMenuItem
+				onClick={() =>
+					setModal(upgradeRequired ? 'upgrade_required' : 'pay_off')
+				}
+			>
+				{upgradeRequired
+					? __('Pay Off', 'surecart')
+					: __('Pay Off Subscription', 'surecart')}
+				{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
 			</ScMenuItem>
 		);
 	};
@@ -477,6 +486,13 @@ export default () => {
 				open={modal === 'pay_off'}
 				onRequestClose={onRequestCloseModal}
 			/>
+			<ScUpgradeRequired
+				style={{ display: 'block' }}
+				required
+				open={modal === 'upgrade_required'}
+				onScRequestClose={onRequestCloseModal}
+			/>
+
 			{isSaving && <ScBlockUi spinner />}
 		</Template>
 	);

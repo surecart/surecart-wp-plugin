@@ -91,7 +91,7 @@ export class ScPasswordNag {
     if (this.success) {
       return (
         <sc-alert type="success" open>
-          <span slot="title">{__('Succcess!', 'surecart')}</span>
+          <span slot="title">{__('Success!', 'surecart')}</span>
           {__('You have successfully set your password.', 'surecart')}
         </sc-alert>
       );

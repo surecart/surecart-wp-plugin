@@ -1,4 +1,4 @@
-import { Component, h, Host, Prop, State } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -10,9 +10,11 @@ export class ScUpgradeRequired {
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'small';
 
+  /** Is this required? */
   @Prop({ reflect: true }) required: boolean = true;
 
-  @State() open: boolean = false;
+  /** Whether to render upgrade modal by default */
+  @Prop({ mutable: true }) open: boolean = false;
 
   render() {
     if (!this.required) {
@@ -35,7 +37,10 @@ export class ScUpgradeRequired {
         <sc-dialog
           label={__('Boost Your Revenue', 'surecart')}
           open={this.open}
-          onScRequestClose={() => (this.open = false)}
+          onScRequestClose={() => {
+            this.open = false;
+            return true;
+          }}
           style={{ '--width': '21rem', 'fontSize': '15px', '--body-spacing': '2rem' }}
         >
           <span class="dialog__title" slot="label">

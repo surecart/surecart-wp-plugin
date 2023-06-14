@@ -72,6 +72,13 @@ class Form {
 		if ( empty( $this->post ) ) {
 			return null;
 		}
+
+		// it's not claimed, force test.
+		$claimed = \SureCart::account()->claimed;
+		if ( ! $claimed ) {
+			return 'test';
+		}
+
 		$blocks     = parse_blocks( $this->post->post_content );
 		$form_block = $blocks[0] ?? false;
 		if ( ! $form_block || 'surecart/form' !== $form_block['blockName'] ) {

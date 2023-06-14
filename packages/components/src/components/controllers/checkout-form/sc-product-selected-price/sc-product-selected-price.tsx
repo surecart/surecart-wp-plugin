@@ -81,7 +81,7 @@ export class ScProductSelectedPrice {
               placeholder={'0.00'}
               required={true}
               value={this.adHocAmount?.toString?.()}
-              onScInput={e => (this.adHocAmount = parseInt(e.target.value))}
+              onScInput={e => (this.adHocAmount = parseFloat(e.target.value))}
             >
               <sc-button slot="suffix" type="link" submit>
                 {__('Update', 'surecart')}

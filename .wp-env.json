@@ -13,11 +13,15 @@
 			"config": {
 				"FS_METHOD": "direct",
 				"WP_DEBUG": true,
-				"SURECART_API_TOKEN": "5mpGxDdaJ5iahGY2bnVkijs4",
-				"SURECART_API_URL": "https://surecart-pr-9.herokuapp.com",
+				"SURECART_API_TOKEN": "rJLEGce6TpeaUm7xaNiw2x77",
+				"SURECART_API_URL": "https://staging.surecart.com",
 				"CE_TESTING": true
 			},
-			"port": 8009
+			"plugins": [
+				".",
+				".dev/tests/e2e/gutenberg-plugin-disables-the-css-animations"
+			],
+			"port": 8889
 		}
 	}
 }

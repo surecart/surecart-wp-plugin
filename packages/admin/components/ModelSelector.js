@@ -48,7 +48,7 @@ export default (props) => {
 
 		const queryArgs = {
 			query,
-			page: pagination.page,
+			page: pagination?.enabled ? pagination.page : 1,
 			per_page: pagination.per_page,
 			...requestQuery,
 		};

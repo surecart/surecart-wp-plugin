@@ -9,6 +9,7 @@ import './formats';
 import * as checkout from '@blocks/CheckoutForm';
 import * as buyButton from '@blocks/BuyButton';
 import * as addToCartButton from '@blocks/AddToCartButton';
+import * as cartMenuButton from '@blocks/CartMenuButton';
 import * as logoutButton from '@blocks/LogoutButton';
 import * as card from '@blocks/Card';
 import * as confirmation from '@blocks/Confirmation';
@@ -27,6 +28,7 @@ import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
+// import * as CollapsibleRow from '@blocks/CollapsibleRow';
 import * as storeLogo from '@blocks/StoreLogo';
 
 // deprecated
@@ -38,6 +40,7 @@ registerBlocks([
 	checkout,
 	buyButton,
 	addToCartButton,
+	cartMenuButton,
 	logoutButton,
 	card,
 	confirmation,
@@ -52,6 +55,7 @@ registerBlocks([
 	customerSubscriptions,
 	customerPaymentMethods,
 	customerBillingDetails,
+	// CollapsibleRow,
 	WordPressAccount,
 	dashboardArea,
 	dashboardPage,

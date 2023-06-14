@@ -10,7 +10,7 @@
 
 [hidden] {
   border: 0 !important;
-  clip: rect(0 0 0 0)  !important;
+  clip: rect(0 0 0 0) !important;
   height: 1px !important;
   margin: -1px !important;
   overflow: hidden !important;
@@ -25,16 +25,17 @@
   font-size: var(--sc-input-font-size-medium);
   font-weight: var(--sc-input-font-weight);
   user-select: none;
-  border: var(--sc-choice-border);
-  border-radius: var(--sc-input-border-radius-large);
+  border: solid var(--sc-choice-border-width, var(--sc-input-border-width)) var(--sc-choice-border-color, var(--sc-input-border-color));
+  border-radius: var(--sc-choice-border-radius, var(--sc-input-border-radius-large));
   box-shadow: var(--sc-choice-box-shadow);
   cursor: pointer;
-  padding: 1.3em 1.1em;
+  padding: var(--sc-choice-padding-top, 1.3em) var(--sc-choice-padding-right, 1.1em) var(--sc-choice-padding-bottom, 1.3em) var(--sc-choice-padding-left, 1.1em);
   position: relative;
   text-decoration: none;
-  color: var(--sc-input-color);
+  color: var(--sc-choice-text-color, var(--sc-input-color));
   height: 100%; // TODO: test this.
   transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+  box-sizing: border-box;
 
   &--is-rtl {
     text-align: right;
@@ -51,7 +52,7 @@
   &--checked {
     border-color: var(--sc-color-primary-500);
     box-shadow: 0 0 0 1px var(--sc-color-primary-500);
-    z-index:1;
+    z-index: 1;
   }
 
   &__title {
@@ -88,7 +89,8 @@
   border: solid var(--sc-input-border-width) var(--sc-input-border-color);
   background-color: var(--sc-input-background-color);
   color: transparent;
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color,
+    var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &.choice__radio {
     width: var(--sc-radio-size);
