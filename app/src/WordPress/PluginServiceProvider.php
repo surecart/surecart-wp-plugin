@@ -41,7 +41,6 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		/** Nothing to bootstrap */
 		$container['surecart.sitemaps']->bootstrap();
 	}
 
