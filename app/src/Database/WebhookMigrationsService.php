@@ -18,18 +18,17 @@ class WebhookMigrationsService extends GeneralMigration {
 		$webhookEvents = \SureCart::config()->webhook_events;
 
 		// Find the existing registered webhook.
-		$webhook = ( new Webhook() )->findExisting();
+		$webhook = ( new Webhook() )->register();
+
+		// Stop if webhook is not found.
 		if ( ! $webhook ) {
-			( new Webhook() )->register();
-			$webhook = ( new Webhook() )->findExisting();
+			return;
 		}
 
 		// Update the webhook events on the server.
-		$webhook->update(
-			[
-				'webhook_events' => $webhookEvents,
-			]
-		);
+		$webhook->update([
+			'webhook_events' => $webhookEvents,
+		]);
 
 		// Update the webhook events to webhook history.
 		\SureCart::webhooks()->saveRegisteredWebhook( $webhookEvents );

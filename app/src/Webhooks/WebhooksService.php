@@ -99,7 +99,7 @@ class WebhooksService {
 	/**
 	 * Register webhooks for this site.
 	 *
-	 * @return \WP_Error|\SureCart\Models\Webhook;
+	 * @return \WP_Error|\SureCart\Models\Webhook
 	 */
 	public function register() {
 		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
@@ -147,7 +147,7 @@ class WebhooksService {
 	 *
 	 * @return bool
 	 */
-	public function deleteSigningSecret() {
+	public function deleteSigningSecret(): bool {
 		return delete_option( $this->signing_key );
 	}
 
@@ -156,16 +156,17 @@ class WebhooksService {
 	 *
 	 * @return boolean
 	 */
-	public function hasSigningSecret() {
+	public function hasSigningSecret(): bool {
 		return (bool) $this->getSigningSecret();
 	}
 
 	/**
 	 * Save the domain for the webhooks
 	 *
+	 * @param $webhook
 	 * @return bool
 	 */
-	public function saveRegisteredWebhook( $webhook ) {
+	public function saveRegisteredWebhook( $webhook ): bool {
 		return $this->domain_service->saveRegisteredWebhook( $webhook );
 	}
 
@@ -174,7 +175,7 @@ class WebhooksService {
 	 *
 	 * @return boolean
 	 */
-	public function domainMatches() {
+	public function domainMatches(): bool {
 		return $this->domain_service->domainMatches();
 	}
 
