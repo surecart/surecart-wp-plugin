@@ -95,6 +95,11 @@ return [
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
+		\SureCart\Rest\ShippingProfileRestServiceProvider::class,
+		\SureCart\Rest\ShippingMethodRestServiceProvider::class,
+		\SureCart\Rest\ShippingRateRestServiceProvider::class,
+		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
+		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
 
 		// integrations.

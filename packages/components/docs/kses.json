@@ -789,6 +789,7 @@
     "no-convert": true,
     "no-grouping": true,
     "type": true,
+    "unit": true,
     "value": true,
     "style": true,
     "id": true,
