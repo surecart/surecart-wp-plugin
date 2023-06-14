@@ -8,7 +8,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import SelectPrice from './SelectPrice';
 
-export default ({ onSelect, ad_hoc, value, open = false }) => {
+export default ({ onSelect, ad_hoc, value, open = false, ...props }) => {
 	const [query, setQuery] = useState(null);
 	const [products, setProducts] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -91,6 +91,7 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 			loading={isLoading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
+			{...props}
 		/>
 	);
 };

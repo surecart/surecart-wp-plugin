@@ -22,7 +22,7 @@ export default ({ product, updateProduct }) => {
 
 	return (
 		<PanelRow className="edit-post-post-url" ref={setPopoverAnchor}>
-			<span>{__('Status')}</span>
+			<span>{__('Product Page', 'surecart')}</span>
 			<Dropdown
 				popoverProps={popoverProps}
 				className="edit-post-post-url__dropdown"
@@ -61,7 +61,7 @@ export default ({ product, updateProduct }) => {
 							onClose={onClose}
 						/>
 						<ScRadioGroup
-							label={__('Status', 'surecart')}
+							label={__('Product Page', 'surecart')}
 							onScChange={(e) => {
 								updateProduct({ status: e.target.value });
 							}}

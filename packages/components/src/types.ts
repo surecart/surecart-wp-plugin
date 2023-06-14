@@ -49,6 +49,8 @@ declare global {
         dashboard: string;
         checkout: string;
       };
+      is_claimed: string;
+      claim_url: string;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;

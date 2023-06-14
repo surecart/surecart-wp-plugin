@@ -43,8 +43,8 @@ export default ({ product, updateProduct, loading }) => {
 			}
 		>
 			<div>
-				<Status product={product} updateProduct={updateProduct} />
 				<Availability product={product} updateProduct={updateProduct} />
+				<Status product={product} updateProduct={updateProduct} />
 				{scData?.is_block_theme ? (
 					<SelectTemplate
 						product={product}

@@ -101,7 +101,7 @@ class ProductsListTable extends ListTable {
 			'price'        => __( 'Price', 'surecart' ),
 			// 'type'         => __( 'Type', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
-			'status'       => __( 'Published' ),
+			'status'       => __( 'Product Page', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 		];
 	}

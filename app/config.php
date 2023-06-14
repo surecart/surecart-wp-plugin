@@ -100,6 +100,7 @@ return [
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
 		\SureCart\Rest\ShippingZoneRestServiceProvider::class,
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
+		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
 
 		// integrations.
