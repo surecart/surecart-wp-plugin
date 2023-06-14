@@ -1,5 +1,5 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { License, Purchase, Product } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 import apiFetch from '../../../../functions/fetch';
@@ -88,9 +88,8 @@ export class ScLicensesList {
       return <sc-tag type="danger">{__('Revoked', 'surecart')}</sc-tag>;
     }
     if (status === 'inactive') {
-      return <sc-tag type="info">{__('Inactive', 'surecart')}</sc-tag>;
+      return <sc-tag type="info">{__('Not Activated', 'surecart')}</sc-tag>;
     }
-
     return <sc-tag type="info">{status}</sc-tag>;
   }
 
@@ -110,12 +109,14 @@ export class ScLicensesList {
 
   renderLoading() {
     return (
-      <sc-card noPadding>
+      <sc-card no-padding style={{ '--overflow': 'hidden' }}>
         <sc-stacked-list>
-          <sc-stacked-list-row style={{ '--columns': '4' }} mobile-size={500}>
-            {[...Array(4)].map(() => (
-              <sc-skeleton style={{ width: '100px', display: 'inline-block' }}></sc-skeleton>
-            ))}
+          <sc-stacked-list-row style={{ '--columns': '2' }} mobile-size={0}>
+            <div style={{ padding: '0.5em' }}>
+              <sc-skeleton style={{ width: '30%', marginBottom: '0.75em' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '20%', marginBottom: '0.75em' }}></sc-skeleton>
+              <sc-skeleton style={{ width: '40%' }}></sc-skeleton>
+            </div>
           </sc-stacked-list-row>
         </sc-stacked-list>
       </sc-card>
@@ -142,8 +143,8 @@ export class ScLicensesList {
 
     return (
       <sc-card no-padding>
-        <sc-sc-stacked-list>
-          {this.licenses?.map(({ id, purchase, status, activations, activation_limit, created_at }) => (
+        <sc-stacked-list>
+          {this.licenses?.map(({ id, purchase, status, activation_limit, activation_count }) => (
             <sc-stacked-list-row
               key={id}
               href={addQueryArgs(window.location.href, {
@@ -151,17 +152,20 @@ export class ScLicensesList {
                 model: 'license',
                 id,
               })}
-              style={{ '--columns': '4' }}
+              mobile-size={0}
             >
-              <sc-format-date class="license__date" date={created_at} type="timestamp" month="short" day="numeric" year="numeric"></sc-format-date>
-              <div>{((purchase as Purchase)?.product as Product)?.name}</div>
-              <div>{this.renderStatus(status)}</div>
-              <div>
-                {activations?.pagination?.count} / {activation_limit || <span>&infin;</span>}
+              <div class="license__details">
+                <div class="license__name">{((purchase as Purchase)?.product as Product)?.name}</div>
+                <div>
+                  {this.renderStatus(status)} {sprintf(__('%1s of %2s Activations Used'), activation_count || 0, activation_limit || '∞')}
+                </div>
               </div>
+              {/* <div>{this.renderStatus(status)}</div> */}
+              <sc-icon name="chevron-right" slot="suffix"></sc-icon>
+              {/* <sc-tag type="info">{sprintf(__('%1s of %2s Activations Used'), activation_count || 0, activation_limit || '∞')}</sc-tag> */}
             </sc-stacked-list-row>
           ))}
-        </sc-sc-stacked-list>
+        </sc-stacked-list>
       </sc-card>
     );
   }
