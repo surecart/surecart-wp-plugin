@@ -37,8 +37,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 		 * Returning a non-null value will effectively short-circuit the generation,
 		 * returning that value instead.
 		 *
-		 * @since 5.5.0
-		 *
 		 * @param array[]|null $url_list The URL list. Default null.
 		 * @param int        $page_num Page of results.
 		 */
@@ -66,8 +64,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 			/**
 			 * Filters the sitemap entry for an individual product.
 			 *
-			 * @since 5.5.0
-			 *
 			 * @param array   $sitemap_entry Sitemap entry for the user.
 			 * @param \SureCart\Models\Product $product          Product object.
 			 */
@@ -94,8 +90,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 		 *
 		 * Returning a non-null value will effectively short-circuit the generation,
 		 * returning that value instead.
-		 *
-		 * @since 5.5.0
 		 *
 		 * @param int|null $max_num_pages The maximum number of pages. Default null.
 		 */
@@ -146,8 +140,6 @@ class ProductSiteMap extends \WP_Sitemaps_Provider {
 		 * Allows modification of the authors query arguments before querying.
 		 *
 		 * @see WP_User_Query for a full list of arguments
-		 *
-		 * @since 5.5.0
 		 *
 		 * @param array $args Array of WP_User_Query arguments.
 		 */
