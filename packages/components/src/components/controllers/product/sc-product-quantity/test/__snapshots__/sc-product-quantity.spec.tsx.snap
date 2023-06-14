@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-product-quantity renders 1`] = `
+<sc-product-quantity size="medium">
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control" helpid="sc-quantity-help-text-1" inputid="sc-quantity-1" labelid="sc-quantity-label-1" showlabel="" size="medium">
+      <sc-quantity-select quantity="1" size="medium"></sc-quantity-select>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-product-quantity>
+`;

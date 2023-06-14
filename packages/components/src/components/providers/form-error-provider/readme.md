@@ -5,6 +5,10 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+This component listens for a confirmed event and redirects to the success url.
+
 ## Properties
 
 | Property        | Attribute        | Description        | Type                                                                                                                                                           | Default     |

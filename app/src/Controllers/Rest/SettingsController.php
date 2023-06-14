@@ -18,12 +18,13 @@ class SettingsController {
 	public function find( \WP_REST_Request $request ) {
 		return rest_ensure_response(
 			[
-				'object'                  => 'settings',
-				'api_token'               => ApiToken::get(),
-				'uninstall'               => (bool) get_option( 'sc_uninstall', false ),
-				'stripe_payment_element'  => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'use_esm_loader'          => (bool) get_option( 'surecart_use_esm_loader', false ),
-				'slide_out_cart_disabled' => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
+				'object'                     => 'settings',
+				'api_token'                  => ApiToken::get(),
+				'uninstall'                  => (bool) get_option( 'sc_uninstall', false ),
+				'stripe_payment_element'     => (bool) get_option( 'sc_stripe_payment_element', false ),
+				'auto_sync_user_to_customer' => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
+				'use_esm_loader'             => (bool) get_option( 'surecart_use_esm_loader', false ),
+				'slide_out_cart_disabled'    => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
 			]
 		);
 	}
@@ -65,6 +66,10 @@ class SettingsController {
 		// update slide out cart option.
 		if ( isset( $request['slide_out_cart_disabled'] ) ) {
 			update_option( 'sc_slide_out_cart_disabled', (bool) $request->get_param( 'slide_out_cart_disabled' ) );
+		}
+
+		if ( isset( $request['auto_sync_user_to_customer'] ) ) {
+			update_option( 'surecart_auto_sync_user_to_customer', (bool) $request->get_param( 'auto_sync_user_to_customer' ) );
 		}
 
 		return rest_ensure_response( $this->find( $request ) );

@@ -41,6 +41,22 @@ export default () => {
 		}
 	};
 
+	/**
+	 * Toggle the notification setting.
+	 *
+	 * @param {object} e
+	 */
+	const toggleNotificationSetting = (e) => {
+		e.preventDefault();
+		const name = e?.target?.name;
+
+		if (name !== undefined) {
+			editItem({
+				[name]: !item?.[name] ?? e?.target?.checked,
+			});
+		}
+	};
+
 	return (
 		<SettingsTemplate
 			title={__('Notifications', 'surecart')}
@@ -100,13 +116,23 @@ export default () => {
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
+					checked={item?.purchase_enabled}
+					name="purchase_enabled"
+					onScChange={toggleNotificationSetting}
+				>
+					{__('Product Access Emails', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Send a product access email to your customer when a purchase has done for a licensed downloadable product.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={item?.order_enabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							order_enabled: !item?.order_enabled,
-						});
-					}}
+					name="order_enabled"
+					onScChange={toggleNotificationSetting}
 				>
 					{__('Order Confirmation Emails', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
@@ -120,9 +146,8 @@ export default () => {
 				{!!item?.order_enabled && (
 					<ScSwitch
 						checked={item?.free_order_enabled}
-						onScChange={(e) => {
-							editItem({ free_order_enabled: e.target.checked });
-						}}
+						name="free_order_enabled"
+						onScChange={toggleNotificationSetting}
 					>
 						{__('Free Order Emails', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
@@ -136,12 +161,8 @@ export default () => {
 
 				<ScSwitch
 					checked={item?.refund_enabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							refund_enabled: !item?.refund_enabled,
-						});
-					}}
+					name="refund_enabled"
+					onScChange={toggleNotificationSetting}
 				>
 					{__('Refund Emails', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
@@ -154,13 +175,8 @@ export default () => {
 
 				<ScSwitch
 					checked={item?.subscription_renewal_enabled}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							subscription_renewal_enabled:
-								!item?.subscription_renewal_enabled,
-						});
-					}}
+					name="subscription_renewal_enabled"
+					onScChange={toggleNotificationSetting}
 				>
 					{__('Subscription Renewal Emails', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
@@ -173,13 +189,8 @@ export default () => {
 
 				<ScSwitch
 					checked={item?.subscription_cancellation_enabled}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							subscription_cancellation_enabled:
-								!item?.subscription_cancellation_enabled,
-						});
-					}}
+					name="subscription_cancellation_enabled"
+					onScChange={toggleNotificationSetting}
 				>
 					{__('Subscription Cancellation Notification', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
@@ -192,13 +203,8 @@ export default () => {
 
 				<ScSwitch
 					checked={item?.subscription_reminder_enabled}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							subscription_reminder_enabled:
-								!item?.subscription_reminder_enabled,
-						});
-					}}
+					name="subscription_reminder_enabled"
+					onScChange={toggleNotificationSetting}
 					css={css`
 						::part(base) {
 							opacity: 1;
@@ -228,13 +234,8 @@ export default () => {
 						disabled={
 							!scData?.entitlements?.payment_failure_notifications
 						}
-						onScChange={(e) => {
-							e.preventDefault();
-							editItem({
-								payment_failure_enabled:
-									!item?.payment_failure_enabled,
-							});
-						}}
+						name="payment_failure_enabled"
+						onScChange={toggleNotificationSetting}
 						css={css`
 							::part(base) {
 								opacity: 1;
@@ -303,7 +304,7 @@ export default () => {
 							action="notification3"
 						/>
 						<EmailRow
-							title={__('Magic Sign In', 'surecart')}
+							title={__('Email Verification Code', 'surecart')}
 							description={__(
 								'Sent to customers to login to the customer portal without a password.',
 								'surecart'

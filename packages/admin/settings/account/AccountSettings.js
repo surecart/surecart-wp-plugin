@@ -1,6 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScAlert, ScButton, ScIcon, ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScButton,
+	ScIcon,
+	ScInput,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
 import { useEntityProp } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -10,15 +17,25 @@ import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
+import CartSettings from './components/CartSettings';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
 	const [showNotice, setShowNotice] = useState(false);
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'account'
-	);
+	const {
+		item: accountItem,
+		itemError: accountItemError,
+		editItem: editAccountItem,
+		hasLoadedItem: hasLoadedAccountItem,
+	} = useEntity('store', 'account');
+
+	const {
+		item: settingItem,
+		itemError: settingItemError,
+		editItem: editSettingItem,
+		hasLoadedItem: hasLoadedSettingItem,
+	} = useEntity('store', 'settings');
 
 	// honeypot.
 	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
@@ -86,10 +103,10 @@ export default () => {
 			title={__('Store Settings', 'surecart')}
 			icon={<sc-icon name="sliders"></sc-icon>}
 			onSubmit={onSubmit}
-			loading={!hasLoadedItem}
+			loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
 		>
 			<Error
-				error={itemError || error}
+				error={accountItemError || settingItemError || error}
 				setError={setError}
 				margin="80px"
 			/>
@@ -100,7 +117,7 @@ export default () => {
 					'The name of your store will be visible to customers, so you should use a name that is recognizable and identifies your store to your customers.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem || !hasLoadedSettingItem}
 			>
 				<div
 					css={css`
@@ -110,10 +127,12 @@ export default () => {
 					`}
 				>
 					<ScInput
-						value={item?.name}
+						value={accountItem?.name}
 						label={__('Store Name', 'surecart')}
 						placeholder={__('Store Name', 'surecart')}
-						onScInput={(e) => editItem({ name: e.target.value })}
+						onScInput={(e) =>
+							editAccountItem({ name: e.target.value })
+						}
 						help={__(
 							'This is displayed in the UI and in notifications.',
 							'surecart'
@@ -122,10 +141,12 @@ export default () => {
 					></ScInput>
 
 					<ScInput
-						value={item?.url}
+						value={accountItem?.url}
 						label={__('Store URL', 'surecart')}
 						placeholder={__('https://example.com', 'surecart')}
-						onScInput={(e) => editItem({ url: e.target.value })}
+						onScInput={(e) =>
+							editAccountItem({ url: e.target.value })
+						}
 						help={__(
 							'This should be your live storefront URL.',
 							'surecart'
@@ -135,9 +156,9 @@ export default () => {
 
 					<ScSelect
 						search
-						value={item?.currency}
+						value={accountItem?.currency}
 						onScChange={(e) =>
-							editItem({ currency: e.target.value })
+							editAccountItem({ currency: e.target.value })
 						}
 						choices={Object.keys(
 							scData?.supported_currencies || {}
@@ -158,9 +179,9 @@ export default () => {
 
 					<ScSelect
 						search
-						value={item?.time_zone}
+						value={accountItem?.time_zone}
 						onScChange={(e) =>
-							editItem({ time_zone: e.target.value })
+							editAccountItem({ time_zone: e.target.value })
 						}
 						choices={Object.keys(scData?.time_zones || {}).map(
 							(value) => {
@@ -180,8 +201,10 @@ export default () => {
 					></ScSelect>
 
 					<ScSelect
-						value={item?.locale}
-						onScChange={(e) => editItem({ locale: e.target.value })}
+						value={accountItem?.locale}
+						onScChange={(e) =>
+							editAccountItem({ locale: e.target.value })
+						}
 						choices={[
 							{
 								value: 'en',
@@ -234,8 +257,35 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
+					/>
 				</div>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Cart', 'surecart')}
+				loading={!hasLoadedAccountItem && !hasLoadedSettingItem}
+				description={__('Change cart settings.', 'surecart')}
+			>
+				<ScSwitch
+					checked={!settingItem?.slide_out_cart_disabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editSettingItem({
+							slide_out_cart_disabled:
+								!settingItem?.slide_out_cart_disabled,
+						});
+					}}
+				>
+					{__('Enable Cart', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This will enable slide-out cart. If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				{!settingItem?.slide_out_cart_disabled && <CartSettings />}
 			</SettingsBox>
 
 			<SettingsBox
@@ -244,7 +294,7 @@ export default () => {
 					'Change your checkout spam protection and security settings.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem}
 			>
 				<ScSwitch
 					checked={honeypotEnabled}
@@ -383,7 +433,7 @@ export default () => {
 					'Clear out all of your test data with one-click.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem}
 				noButton={true}
 			>
 				<ScButton

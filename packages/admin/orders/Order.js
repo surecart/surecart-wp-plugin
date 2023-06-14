@@ -54,22 +54,6 @@ export default () => {
 	});
 	const [modal, setModal] = useState();
 
-	const renderMarkPaidButton = () => {
-		return (
-			<ScMenuItem onClick={() => setModal('order_status_update')}>
-				{__('Mark as Paid', 'surecart')}
-			</ScMenuItem>
-		);
-	};
-
-	const renderOrderCancelButton = () => {
-		return (
-			<ScMenuItem onClick={() => setModal('order_cancel')}>
-				{__('Cancel Order', 'surecart')}
-			</ScMenuItem>
-		);
-	};
-
 	useEffect(() => {
 		if (order?.checkout) {
 			receiveEntityRecords(
@@ -120,6 +104,27 @@ export default () => {
 		}
 	}, [orderError]);
 
+	const getMenuItems = (orderStatus) => {
+		const menuItems = [];
+
+		if (!['draft', 'paid'].includes(orderStatus)) {
+			menuItems.push({
+				title: __('Mark As Paid', 'surecart'),
+				modal: 'order_status_update',
+			});
+		}
+
+		if (['draft', 'processing', 'paid'].includes(orderStatus)) {
+			menuItems.push({
+				title: __('Cancel Order', 'surecart'),
+				modal: 'order_cancel',
+			});
+		}
+
+		return menuItems;
+	};
+	const menuItems = getMenuItems(order?.status);
+
 	return (
 		<UpdateModel
 			title={
@@ -157,24 +162,28 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{order?.status === 'processing' &&
-						order?.checkout?.manual_payment &&
-						order?.status !== 'canceled' && (
-							<>
-								<ScButton
-									type="primary"
-									slot="trigger"
-									caret
-									loading={!hasLoadedOrder}
-								>
-									{__('Actions', 'surecart')}
-								</ScButton>
-								<ScMenu>
-									{renderMarkPaidButton()}{' '}
-									{renderOrderCancelButton()}
-								</ScMenu>
-							</>
-						)}
+					{menuItems.length > 0 && (
+						<>
+							<ScButton
+								type="primary"
+								slot="trigger"
+								caret
+								loading={!hasLoadedOrder}
+							>
+								{__('Actions', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								{menuItems.map((menuItem, key) => (
+									<ScMenuItem
+										onClick={() => setModal(menuItem.modal)}
+										key={key}
+									>
+										{menuItem.title}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</>
+					)}
 				</ScDropdown>
 			}
 			sidebar={

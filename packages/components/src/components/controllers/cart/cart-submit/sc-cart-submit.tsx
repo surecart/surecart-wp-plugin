@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 
 @Component({
@@ -26,21 +26,15 @@ export class ScCartSubmit {
 
   render() {
     return (
-      <sc-button
-        href={this.checkoutLink}
-        type={this.type}
-        size={this.size}
-        full={this.full}
-        loading={this.busy}
-        disabled={this.busy}
+      <Host
+        class={{ 'is-busy': this.busy, 'is-disabled': this.busy }}
         onClick={() => {
           this.busy = true;
           return true;
         }}
       >
-        {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
         <slot />
-      </sc-button>
+      </Host>
     );
   }
 }

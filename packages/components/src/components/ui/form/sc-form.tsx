@@ -63,6 +63,7 @@ export class ScForm {
 
   @Method('validate')
   async validate() {
+    console.log('validate');
     const formControls = this.getFormControls();
     const formControlsThatReport = formControls.filter((el: any) => typeof el.reportValidity === 'function') as any;
 
@@ -76,6 +77,7 @@ export class ScForm {
         const isValid = await el.reportValidity();
 
         if (!isValid) {
+          console.log(el);
           return false;
         }
       }
@@ -109,7 +111,9 @@ export class ScForm {
         <form
           part="form"
           ref={el => (this.formElement = el as HTMLFormElement)}
+          class="test"
           onSubmit={async e => {
+            console.log('submitted');
             e.preventDefault();
             const isValid = await this.validate();
             if (!isValid) {

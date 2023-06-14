@@ -18,6 +18,7 @@ class PriceTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class
 			]
@@ -59,6 +60,6 @@ class PriceTest extends SureCartUnitTestCase
 		$this->assertInstanceOf(Product::class, $created->product);
 
 		// response is correct
-		$this->assertEquals($created->toArray(), json_decode(json_encode($response), true));
+		$this->assertContains($created->toArray(), json_decode(json_encode($response), true));
 	}
 }

@@ -20,6 +20,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'brand',
+		kind: 'surecart',
+		label: __('Brand', 'surecart'),
+		baseURL: 'surecart/v1/brand',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'bump',
 		kind: 'surecart',
 		label: __('Bump', 'surecart'),
@@ -144,6 +151,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Payment Method', 'surecart'),
 		baseURL: 'surecart/v1/payment_methods',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'provisional_account',
+		kind: 'surecart',
+		label: __('Provisional Accounts', 'surecart'),
+		baseURL: 'surecart/v1/provisional_accounts',
 		baseURLParams: { context: 'edit' },
 	},
 	{
