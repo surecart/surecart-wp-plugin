@@ -46,8 +46,6 @@ class Block extends BaseBlock {
 			$processors = [];
 		}
 
-		$mode = Form::getMode( $sc_form_id );
-
 		return \SureCart::blocks()->render(
 			'blocks/form',
 			[
@@ -76,7 +74,7 @@ class Block extends BaseBlock {
 				),
 				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'mode'                          => ! empty( $mode ) ? $mode : 'live',
+				'mode'                          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
 				'form_id'                       => $attributes['form_id'] ?? $sc_form_id,
 				'id'                            => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
 				'prices'                        => $attributes['prices'] ?? [],
