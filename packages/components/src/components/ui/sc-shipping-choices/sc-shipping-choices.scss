@@ -3,9 +3,15 @@
 }
 
 .shipping-choice {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
+  padding: var(--sc-spacing-medium);
+  margin: 0;
+  border: 1px solid var(--sc-color-gray-300);
+  background-color: var(--sc-color-white);
+
+  &:not(:first-child){
+    border-top-width: 0;
+  }
 }
 
 .shipping-choice {
@@ -26,4 +32,18 @@
     color: var(--sc-input-label-color);
     font-weight: var(--sc-price-choice-price-font-weight, var(--sc-font-weight-normal));
   }
+}
+
+sc-radio::part(base) {
+  width: 100%;
+}
+
+sc-radio::part(label) {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+sc-radio-group::slotted(sc-radio:not(:last-of-type)) {
+  margin-bottom: 0;
 }

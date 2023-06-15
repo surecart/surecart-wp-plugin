@@ -2906,10 +2906,6 @@ export namespace Components {
          */
         "shippingChoices": ShippingChoice[];
         /**
-          * Show control on shipping option
-         */
-        "showControl": boolean;
-        /**
           * Whether to show the shipping choice description
          */
         "showDescription": boolean;
@@ -8291,10 +8287,6 @@ declare namespace LocalJSX {
           * Shipping choices
          */
         "shippingChoices"?: ShippingChoice[];
-        /**
-          * Show control on shipping option
-         */
-        "showControl"?: boolean;
         /**
           * Whether to show the shipping choice description
          */

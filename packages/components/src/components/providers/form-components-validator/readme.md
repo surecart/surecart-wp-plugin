@@ -74,9 +74,11 @@ graph TD;
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
   sc-shipping-choices --> sc-form-control
+  sc-shipping-choices --> sc-radio-group
+  sc-shipping-choices --> sc-radio
   sc-shipping-choices --> sc-flex
-  sc-shipping-choices --> sc-choice-container
   sc-shipping-choices --> sc-format-number
+  sc-shipping-choices --> sc-block-ui
   sc-checkout --> sc-form-components-validator
   style sc-form-components-validator fill:#f9f,stroke:#333,stroke-width:4px
 ```

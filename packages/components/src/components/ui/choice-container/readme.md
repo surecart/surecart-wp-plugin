@@ -88,13 +88,11 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
- - [sc-shipping-choices](../sc-shipping-choices)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-price-choice --> sc-choice-container
-  sc-shipping-choices --> sc-choice-container
   style sc-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

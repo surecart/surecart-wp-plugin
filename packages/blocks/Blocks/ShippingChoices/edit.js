@@ -47,7 +47,7 @@ const shippingMethods = [
 ];
 
 export default ({ className, attributes, setAttributes }) => {
-	const { showControl, label, showDescription } = attributes;
+	const { label, showDescription } = attributes;
 
 	return (
 		<Fragment>
@@ -58,15 +58,6 @@ export default ({ className, attributes, setAttributes }) => {
 							label={__('Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Show control', 'surecart')}
-							checked={showControl}
-							onChange={(showControl) =>
-								setAttributes({ showControl })
-							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -83,7 +74,6 @@ export default ({ className, attributes, setAttributes }) => {
 			<ScShippingChoices
 				className={className}
 				label={label}
-				showControl={showControl}
 				shippingChoices={shippingMethods}
 				showDescription={showDescription}
 			/>

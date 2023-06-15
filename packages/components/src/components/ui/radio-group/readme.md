@@ -36,6 +36,19 @@ Type: `Promise<boolean>`
 | `"label"` |             |
 
 
+## Dependencies
+
+### Used by
+
+ - [sc-shipping-choices](../sc-shipping-choices)
+
+### Graph
+```mermaid
+graph TD;
+  sc-shipping-choices --> sc-radio-group
+  style sc-radio-group fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
