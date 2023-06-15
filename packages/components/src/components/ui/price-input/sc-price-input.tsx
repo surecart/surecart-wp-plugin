@@ -145,6 +145,9 @@ export class ScPriceInput {
     if (!this.input.shadowRoot.querySelector('input').checkValidity()) {
       return;
     }
+    if (!this.input.value) {
+      return;
+    }
     const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.input.value) : (parseFloat(this.input.value) * 100).toFixed(2);
     this.value = this.input.value ? val.toString() : '';
   }
@@ -179,7 +182,7 @@ export class ScPriceInput {
         minlength={this.minlength}
         maxlength={this.maxlength}
         min={!!this.min ? this.min / 100 : 0.0}
-        step={0.001}
+        step={0.01}
         max={!!this.max ? this.max / 100 : null}
         // TODO: Test These below
         autofocus={this.autofocus}
@@ -188,6 +191,7 @@ export class ScPriceInput {
         onScInput={() => this.handleInput()}
         onScBlur={() => this.scBlur.emit()}
         onScFocus={() => this.scFocus.emit()}
+        pattern="^\d*(\.\d{0,2})?$" // This prevents more than two decimal places
         value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
       >
         <span style={{ opacity: '0.5' }} slot="prefix">
