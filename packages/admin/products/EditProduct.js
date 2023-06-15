@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -14,13 +14,18 @@ import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
 import BuyLink from './modules/BuyLink';
+
+import Advanced from './modules/Advanced';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
+import Image from './modules/Image';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
-import Sidebar from './Sidebar';
-import Image from './modules/Image';
+import Publishing from './modules/Publishing';
+import SearchEngine from './modules/SearchEngine';
+import Tax from './modules/Tax';
+import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -41,7 +46,7 @@ export default ({ id }) => {
 	/**
 	 * Handle the form submission
 	 */
-	const onSubmit = async () => {
+	const onSubmit = async (e) => {
 		try {
 			setError(null);
 
@@ -124,6 +129,17 @@ export default ({ id }) => {
 		}
 	};
 
+	const renderStatusBadge = () => {
+		if (!product?.id) return null;
+		if (product?.archived) {
+			return <ScTag type="warning">{__('Archived', 'surecart')}</ScTag>;
+		}
+		if (product?.status === 'published') {
+			return <ScTag type="success">{__('Published', 'surecart')}</ScTag>;
+		}
+		return <ScTag>{__('Draft', 'surecart')}</ScTag>;
+	};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -152,14 +168,7 @@ export default ({ id }) => {
 						<sc-breadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
 								{__('Edit Product', 'surecart')}
-								{product?.archived && (
-									<>
-										{' '}
-										<sc-tag type="warning">
-											{__('Archived', 'surecart')}
-										</sc-tag>
-									</>
-								)}
+								{renderStatusBadge()}
 							</sc-flex>
 						</sc-breadcrumb>
 					</sc-breadcrumbs>
@@ -197,14 +206,30 @@ export default ({ id }) => {
 				</div>
 			}
 			sidebar={
-				<Sidebar
-					id={id}
-					onToggleArchiveProduct={onToggleArchiveProduct}
-					loading={!hasLoadedProduct}
-					product={product}
-					updateProduct={editProduct}
-					isSaving={savingProduct}
-				/>
+				<>
+					<Publishing
+						id={id}
+						product={product}
+						onToggleArchiveProduct={onToggleArchiveProduct}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Shipping
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Advanced
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+				</>
 			}
 		>
 			<Fragment>
@@ -244,6 +269,11 @@ export default ({ id }) => {
 
 				<Licensing
 					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+				<SearchEngine
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

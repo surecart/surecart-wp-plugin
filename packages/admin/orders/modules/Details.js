@@ -64,7 +64,7 @@ export default ({ order, checkout, loading }) => {
 			<div>
 				<ScOrderStatusBadge
 					status={order?.status || checkout?.status}
-				></ScOrderStatusBadge>
+				/>
 			</div>
 		</div>
 	);

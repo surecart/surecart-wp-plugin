@@ -53,7 +53,6 @@
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
- - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
@@ -74,6 +73,8 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-rich-text](../rich-text)
@@ -104,7 +105,6 @@ graph TD;
   sc-cancel-discount --> sc-button
   sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
-  sc-cart-submit --> sc-button
   sc-charges-list --> sc-button
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button
@@ -125,6 +125,8 @@ graph TD;
   sc-password-nag --> sc-button
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
+  sc-product-item-list --> sc-button
+  sc-product-price-modal --> sc-button
   sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button
   sc-rich-text --> sc-button

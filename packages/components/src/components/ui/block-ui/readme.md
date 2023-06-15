@@ -45,6 +45,7 @@
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-shipping-choices](../sc-shipping-choices)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -85,6 +86,7 @@ graph TD;
   sc-orders-list --> sc-block-ui
   sc-password-nag --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
+  sc-product-item-list --> sc-block-ui
   sc-purchase-downloads-list --> sc-block-ui
   sc-shipping-choices --> sc-block-ui
   sc-subscription --> sc-block-ui

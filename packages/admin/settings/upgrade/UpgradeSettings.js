@@ -34,7 +34,7 @@ export default () => {
 
 	return (
 		<SettingsTemplate
-			title={__('Upgrade to Pro', 'surecart')}
+			title={__('Upgrade to Premium', 'surecart')}
 			icon={<sc-icon name="zap"></sc-icon>}
 			onSubmit={onSubmit}
 			noButton

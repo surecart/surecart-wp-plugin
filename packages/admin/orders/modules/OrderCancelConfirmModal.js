@@ -23,7 +23,10 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 			const checkout = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(
-					`surecart/v1/checkouts/${order?.checkout?.id}/cancel`
+					`surecart/v1/checkouts/${order?.checkout?.id}/cancel`,
+					{
+						expand: ['order'],
+					}
 				),
 			});
 
@@ -32,7 +35,7 @@ export default ({ order, open, onRequestClose, hasLoading }) => {
 
 			receiveEntityRecords('surecart', 'order', {
 				...order,
-				status: checkout?.status,
+				status: checkout?.order?.status,
 			});
 
 			createSuccessNotice(__('Order Canceled.', 'surecart'), {

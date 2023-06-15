@@ -36,6 +36,7 @@ import * as taxLineItem from '@blocks/TaxLineItem';
 import * as textarea from '@blocks/Textarea';
 import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
+import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
 
@@ -79,6 +80,7 @@ registerBlocks([
 	total,
 	totals,
 	shippingChoices,
+	shippingLineItem,
 	...(!!window?.scBlockData?.entitlements?.bumps ? [orderBumps] : []),
 	...(!!window?.scBlockData?.entitlements?.conditional_forms
 		? [conditionalForm]

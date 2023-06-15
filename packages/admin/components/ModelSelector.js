@@ -48,7 +48,7 @@ export default (props) => {
 
 		const queryArgs = {
 			query,
-			page: pagination.page,
+			page: pagination?.enabled ? pagination.page : 1,
 			per_page: pagination.per_page,
 			...requestQuery,
 		};
@@ -85,7 +85,7 @@ export default (props) => {
 	useEffect(() => {
 		if (query === null || isLoading) return;
 		fetchData(pagination);
-	}, [pagination]);
+	}, [pagination.per_page, pagination.page, query]);
 
 	useEffect(() => {
 		if (fetchOnLoad) {

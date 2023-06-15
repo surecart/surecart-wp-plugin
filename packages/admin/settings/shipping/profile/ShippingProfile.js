@@ -5,7 +5,14 @@ import SettingsTemplate from '../../SettingsTemplate';
 import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import SettingsBox from '../../SettingsBox';
-import { ScInput } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScIcon,
+	ScInput,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import Error from '../../../components/Error';
 import Products from './Products';
 import ShippingZones from '../zone/ShippingZones';
@@ -13,9 +20,13 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch, select } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import FallbackZone from '../zone/FallbackZone';
-
+import DeleteShippingProfile from './DeleteShippingProfile';
+const modals = {
+	CONFIRM_DELETE_PROFILE: 'confirm_delete_profile',
+};
 export default () => {
 	const [error, setError] = useState();
+	const [currentModal, setCurrentModal] = useState('');
 	const shippingProfileId = getQueryArg(window.location.href, 'profile');
 
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -92,6 +103,27 @@ export default () => {
 					<sc-icon name="arrow-left"></sc-icon>
 				</sc-button>
 			}
+			suffix={
+				!shippingProfile?.default && (
+					<ScDropdown placement="bottom-end">
+						<ScButton type="text" slot="trigger" circle>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem
+								onClick={() =>
+									setCurrentModal(
+										modals.CONFIRM_DELETE_PROFILE
+									)
+								}
+							>
+								<ScIcon slot="prefix" name="trash" />
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+				)
+			}
 			onSubmit={onSubmit}
 			noButton
 		>
@@ -125,6 +157,14 @@ export default () => {
 				loading={loadingShippingProfile}
 				onEditShippingProfile={onEdit}
 			/>
+
+			{currentModal && (
+				<DeleteShippingProfile
+					open={currentModal === modals.CONFIRM_DELETE_PROFILE}
+					onRequestClose={() => setCurrentModal('')}
+					shippingProfileId={shippingProfileId}
+				/>
+			)}
 		</SettingsTemplate>
 	);
 };

@@ -5,24 +5,40 @@
 		position: sticky;
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		padding: 20px;
 		background: #fff;
 		border-bottom: 1px solid var(--sc-color-gray-200);
-		height: 66px;
+		gap: 1.2em;
 		z-index:9;
 	}
+	@media screen and (min-width: 600px) {
+		.sc-settings-header-container {
+			position: sticky;
+			top: 32px;
+			z-index: 999999;
+		}
+	}
 </style>
-<div>
+<div class="sc-settings-header-container">
 	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) : ?>
 		<sc-alert open type="info" closable style="position: relative; z-index: 10;"><?php esc_html_e( 'Cache cleared.', 'surecart' ); ?></sc-alert>
 	<?php endif; ?>
+
+	<?php if ( ! empty( $claim_url ) ) : ?>
+		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+	<?php endif; ?>
+
 	<div id="sc-settings-header">
 		<sc-breadcrumbs style="font-size: 16px">
 			<sc-breadcrumb>
 				<img style="display: block" src="<?php echo esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ); ?>" alt="SureCart" width="125">
 			</sc-breadcrumb>
-			<sc-breadcrumb><?php esc_html_e( 'Settings', 'surecart' ); ?></sc-breadcrumb>
+			<sc-breadcrumb href="<?php echo esc_url( menu_page_url( 'sc-settings', false ) ); ?>"><?php esc_html_e( 'Settings', 'surecart' ); ?></sc-breadcrumb>
+			<?php if ( ! empty( $breadcrumb ) ) : ?>
+				<sc-breadcrumb><?php echo esc_html( $breadcrumb ); ?></sc-breadcrumb>
+			<?php endif; ?>
 		</sc-breadcrumbs>
 
 		<sc-flex>
@@ -52,4 +68,4 @@
 			</sc-tag>
 		</sc-flex>
 	</div>
-	</div>
+</div>

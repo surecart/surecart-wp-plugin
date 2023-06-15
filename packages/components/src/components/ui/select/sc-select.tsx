@@ -82,7 +82,22 @@ export class ScSelectDropdown {
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
-  @Prop() position: 'bottom-left' | 'bottom-right' = 'bottom-right';
+  @Prop() position: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right' = 'bottom-right';
+
+  /** The placement of the dropdown. */
+  @Prop({ reflect: true }) placement:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end' = 'bottom-start';
 
   /**
    * This will be true when the control is in an invalid state. Validity is determined by props such as `type`,
@@ -202,6 +217,8 @@ export class ScSelectDropdown {
     } else {
       this.value = value;
     }
+
+    this.searchTerm = '';
 
     this.scChange.emit();
   }
@@ -433,6 +450,7 @@ export class ScSelectDropdown {
             disabled={this.disabled}
             open={this.open}
             position={this.position}
+            placement={this.placement}
             hoist={this.hoist}
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
@@ -451,6 +469,7 @@ export class ScSelectDropdown {
                 class="search"
                 clearable
                 part="search"
+                value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}

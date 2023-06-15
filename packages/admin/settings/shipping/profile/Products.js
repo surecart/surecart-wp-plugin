@@ -223,9 +223,9 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 							<ScStackedListRow
 								key={product.id}
 								css={css`
-									--sc-list-row-background-color: var(
-										--sc-color-gray-100
-									);
+									--sc-list-row-background-color: ${isDefaultProfile
+										? 'var(--sc-color-gray-100)'
+										: ''};
 								`}
 							>
 								{renderProduct(product)}

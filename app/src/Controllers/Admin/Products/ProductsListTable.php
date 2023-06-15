@@ -14,6 +14,7 @@ use SureCart\Models\Integration;
 class ProductsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
+	public $pages    = [];
 
 	/**
 	 * Prepare the items for the table to process
@@ -28,6 +29,7 @@ class ProductsListTable extends ListTable {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		$query = $this->table_data();
+
 		if ( is_wp_error( $query ) ) {
 			$this->error = $query->get_error_message();
 			$this->items = [];
@@ -99,6 +101,7 @@ class ProductsListTable extends ListTable {
 			'price'        => __( 'Price', 'surecart' ),
 			// 'type'         => __( 'Type', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
+			'status'       => __( 'Product Page', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 		];
 	}
@@ -275,6 +278,26 @@ class ProductsListTable extends ListTable {
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
+
+	/**
+	 * Published column
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_status( $product ) {
+		ob_start();
+		?>
+		<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
+			<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+		<?php else : ?>
+			<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+		<?php endif; ?>
+		<?php
+		return ob_get_clean();
+	}
+
 	/**
 	 * Name column
 	 *
@@ -290,37 +313,27 @@ class ProductsListTable extends ListTable {
 		<?php if ( $product->image_url ) { ?>
 			<img src="<?php echo esc_url( $product->image_url ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
-		<div class="sc-product-image-preview">
-			<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-			  </svg>
-		</div>
-	  <?php } ?>
+			<div class="sc-product-image-preview">
+				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+				</svg>
+			</div>
+		<?php } ?>
 
 	  <div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
 		</a>
 
-		<script> function copyClick(e, content){
-			navigator.clipboard.writeText(content).then(() =>{
-				const oldText = e.target.innerText;
-				e.target.innerText = '<?php echo esc_html_e( 'Copied!', 'surecart' ); ?>';
-				setTimeout(() =>{
-					e.target.innerText = oldText;
-				}, 2000);
-			}).catch(err => {
-
-			});
-		} </script>
-
-
 		<?php
 		echo $this->row_actions(
-			[
-				'edit'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'trash' => $this->action_toggle_archive( $product ),
-			],
+			array_filter(
+				[
+					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'trash'        => $this->action_toggle_archive( $product ),
+					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				]
+			),
 		);
 		?>
 		</div>

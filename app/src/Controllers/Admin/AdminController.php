@@ -16,6 +16,7 @@ abstract class AdminController {
 					'layouts/partials/admin-header',
 					[
 						'breadcrumbs' => $breadcrumbs,
+						'claim_url'   => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 					]
 				);
 			}

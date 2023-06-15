@@ -32,7 +32,7 @@ export class ScOrderStatusBadge {
       case 'canceled':
         return 'danger';
       case 'void':
-        return 'default';
+        return 'danger';
       case 'canceled':
         return 'danger';
     }

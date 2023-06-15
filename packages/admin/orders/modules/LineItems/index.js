@@ -196,6 +196,14 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
+				{!!checkout?.shipping_amount && (
+					<LineItem
+						label={__('Shipping', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.shipping_amount}
+					/>
+				)}
+
 				{!!checkout?.tax_amount && (
 					<LineItem
 						label={`${formatTaxDisplay(checkout?.tax_label)} (${
