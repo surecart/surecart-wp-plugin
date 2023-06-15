@@ -16,6 +16,7 @@ import {
 	ScStackedList,
 	ScStackedListRow,
 } from '@surecart/components-react';
+import { addQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
@@ -28,7 +29,11 @@ import usePagination from '../../../hooks/usePagination';
 
 const PRODUCTS_PER_PAGE = 10;
 
-export default ({ shippingProfileId, isDefaultProfile }) => {
+export default ({
+	shippingProfileId,
+	isDefaultProfile,
+	loading: loadingShippingProfile,
+}) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
 	const [draftProducts, setDraftProducts] = useState(0);
@@ -196,6 +201,10 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
+			description={__(
+				'Add products to this shipping profile.',
+				'surecart'
+			)}
 			wrapperTag="div"
 			end={
 				!isDefaultProfile && (
@@ -217,17 +226,29 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 		>
 			<Error error={error} setError={setError} />
 			<ScCard noPadding>
+				{!!isDefaultProfile && (
+					<div
+						css={css`
+							padding: var(--sc-spacing-x-large);
+							background: var(--sc-color-brand-main-background);
+							border-bottom: 1px solid
+								var(--sc-color-brand-stroke);
+							display: flex;
+							align-items: center;
+							gap: var(--sc-spacing-small);
+						`}
+					>
+						<ScIcon name="info" />
+						{__(
+							'New products are added to this profile.',
+							'surecart'
+						)}
+					</div>
+				)}
 				{products?.length || !!draftProducts || currentPage > 1 ? (
 					<ScStackedList>
 						{products.map((product) => (
-							<ScStackedListRow
-								key={product.id}
-								css={css`
-									--sc-list-row-background-color: ${isDefaultProfile
-										? 'var(--sc-color-gray-100)'
-										: ''};
-								`}
-							>
+							<ScStackedListRow key={product.id}>
 								{renderProduct(product)}
 								{!isDefaultProfile ? (
 									<ScDropdown
@@ -315,7 +336,9 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 				{hasPagination && (
 					<div
 						css={css`
-							padding: var(--sc-spacing-medium);
+							padding: var(--sc-spacing-x-large);
+							border-top: 1px solid var(--sc-color-brand-stroke);
+							margin: 0;
 						`}
 					>
 						<PrevNextButtons
@@ -325,6 +348,28 @@ export default ({ shippingProfileId, isDefaultProfile }) => {
 							perPage={PRODUCTS_PER_PAGE}
 							loading={loading}
 						/>
+					</div>
+				)}
+				{!!isDefaultProfile && (
+					<div
+						css={css`
+							padding: var(--sc-spacing-x-large);
+							background: var(--sc-color-brand-main-background);
+							border-top: 1px solid var(--sc-color-brand-stroke);
+						`}
+					>
+						{__(
+							'To charge different rates for only certain products, create a new profile in',
+							'surecart'
+						)}{' '}
+						<a
+							href={addQueryArgs('admin.php', {
+								page: 'sc-settings',
+								tab: 'shipping_protocol',
+							})}
+						>
+							{__('shipping settings', 'surecart')}
+						</a>
 					</div>
 				)}
 			</ScCard>

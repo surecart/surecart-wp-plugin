@@ -22,7 +22,7 @@ import AddShippingProfile from './profile/AddShippingProfile';
 import useEntity from '../../hooks/useEntity';
 import ShippingMethods from './method/ShippingMethods';
 import useSave from '../UseSave';
-import ShipingProfileListItem from './profile/ShipingProfileListItem';
+import ShippingProfileListItem from './profile/ShippingProfileListItem';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -144,10 +144,10 @@ export default () => {
 											)}
 										>
 											<ScCard noPadding>
-												<ShipingProfileListItem
+												<ShippingProfileListItem
 													style={{
 														'--sc-list-row-background-color':
-															'var(--sc-color-gray-50)',
+															'var(--sc-color-brand-main-background)',
 													}}
 													shippingProfile={
 														defaultShippingProfile
@@ -173,123 +173,57 @@ export default () => {
 											'surecart'
 										)}
 									>
-										{!!shippingProfiles?.length && (
-											<ScStackedList>
-												{shippingProfiles.map(
-													(shippingProfile) => (
-														<ScStackedListRow
-															key={
-																shippingProfile.id
-															}
-															href={addQueryArgs(
-																window.location
-																	.href,
-																{
-																	type: 'shipping_profile',
-																	profile:
-																		shippingProfile.id,
-																}
-															)}
-															style={{
-																'--columns':
-																	'2',
-															}}
-														>
-															<div>
-																<strong>
-																	{
-																		shippingProfile.name
+										<div
+											css={css`
+												display: grid;
+												gap: var(--sc-spacing-large);
+											`}
+										>
+											{!!shippingProfiles?.length && (
+												<ScCard noPadding>
+													<ScStackedList>
+														{shippingProfiles.map(
+															(
+																shippingProfile
+															) => (
+																<ShippingProfileListItem
+																	key={
+																		shippingProfile.id
 																	}
-																</strong>
-																<div
-																	css={css`
-																		margin-top: var(
-																			--sc-spacing-medium
-																		);
-																	`}
-																>
-																	{
+																	shippingProfile={
 																		shippingProfile
-																			?.products
-																			?.pagination
-																			?.count
-																	}{' '}
-																	{__(
-																		'Products',
-																		'surecart'
-																	)}
-																</div>
-															</div>
-															<div>
-																<strong>
-																	{__(
-																		'Zones',
-																		'surecart'
-																	)}
-																</strong>
-
-																<ul
-																	css={css`
-																		list-style: none;
-																	`}
-																>
-																	{shippingProfile
-																		?.shipping_zones
-																		?.data
-																		.length ===
-																		0 && (
-																		<li>
-																			_
-																		</li>
-																	)}
-																	{shippingProfile?.shipping_zones?.data.map(
-																		(
-																			shippingZone
-																		) => (
-																			<li
-																				key={
-																					shippingZone.id
-																				}
-																			>
-																				{
-																					shippingZone.name
-																				}
-																			</li>
-																		)
-																	)}
-																</ul>
-															</div>
-															<ScIcon
-																name="chevron-right"
-																slot="suffix"
-															></ScIcon>
-														</ScStackedListRow>
-													)
-												)}
-											</ScStackedList>
-										)}
-										<ScCard noPadding>
-											<ScEmpty>
-												{__(
-													'Add custom rates or destination restrictions for groups of products.',
-													'surecart'
-												)}
-												<ScButton
-													onClick={() =>
-														setShowAddShipping(true)
-													}
-												>
-													<ScIcon
-														name="plus"
-														slot="prefix"
-													/>
+																	}
+																/>
+															)
+														)}
+													</ScStackedList>
+												</ScCard>
+											)}
+											<ScCard noPadding>
+												<ScEmpty>
 													{__(
-														'Add New Profile',
+														'Add custom rates or destination restrictions for groups of products.',
 														'surecart'
 													)}
-												</ScButton>
-											</ScEmpty>
-										</ScCard>
+													<ScButton
+														onClick={() =>
+															setShowAddShipping(
+																true
+															)
+														}
+													>
+														<ScIcon
+															name="plus"
+															slot="prefix"
+														/>
+														{__(
+															'Add New Profile',
+															'surecart'
+														)}
+													</ScButton>
+												</ScEmpty>
+											</ScCard>
+										</div>
 									</ScFormControl>
 								</div>
 							</ScCard>

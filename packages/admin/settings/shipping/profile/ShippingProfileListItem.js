@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { ScIcon, ScStackedListRow } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -32,22 +32,34 @@ export default ({ shippingProfile, productsCount, className, style }) => {
 					{productsCount
 						? productsCount
 						: sprintf(
-								__('%d Products', 'surecart'),
+								_n(
+									'%d product',
+									'%d products',
+									shippingProfile?.products?.pagination
+										?.count,
+									'surecart'
+								),
 								shippingProfile?.products?.pagination?.count
 						  )}
 				</div>
 			</div>
 
 			<div>
-				<strong>{__('Zones', 'surecart')}</strong>
+				<strong>{__('Rates for', 'surecart')}</strong>
 				<ul
 					css={css`
 						list-style: none;
 						margin: var(--sc-spacing-x-small) 0 0 0;
+						color: var(--sc-color-gray-600);
 					`}
 				>
 					{shippingProfile?.shipping_zones?.data.length === 0 && (
-						<li>_</li>
+						<li>
+							{__(
+								'No shipping rates available for products in this profile',
+								'surecart'
+							)}
+						</li>
 					)}
 					{shippingProfile?.shipping_zones?.data.map(
 						(shippingZone) => (

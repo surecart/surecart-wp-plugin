@@ -26,6 +26,7 @@ const modals = {
 };
 export default () => {
 	const [error, setError] = useState();
+	const [showAdvanced, setShowAdvanced] = useState(false);
 	const [currentModal, setCurrentModal] = useState('');
 	const shippingProfileId = getQueryArg(window.location.href, 'profile');
 
@@ -152,11 +153,25 @@ export default () => {
 				fallbackZoneId={shippingProfile?.fallback_shipping_zone}
 			/>
 
-			<FallbackZone
-				shippingProfile={shippingProfile}
-				loading={loadingShippingProfile}
-				onEditShippingProfile={onEdit}
-			/>
+			<div>
+				<ScButton
+					type="text"
+					onClick={() => setShowAdvanced(!showAdvanced)}
+				>
+					{__('Advanced Options', 'surecart')}{' '}
+					<ScIcon name="chevron-down" slot="suffix" />
+				</ScButton>
+
+				{!!showAdvanced && (
+					<>
+						<FallbackZone
+							shippingProfile={shippingProfile}
+							loading={loadingShippingProfile}
+							onEditShippingProfile={onEdit}
+						/>
+					</>
+				)}
+			</div>
 
 			{currentModal && (
 				<DeleteShippingProfile
