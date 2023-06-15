@@ -19,6 +19,7 @@ export default ({
 	ad_hoc = true,
 	loading,
 	onScrollEnd = () => {},
+	...props
 }) => {
 	const selectRef = useRef();
 	const findProduct = throttle(
@@ -72,6 +73,7 @@ export default ({
 			}}
 			choices={choices}
 			onScScrollEnd={onScrollEnd}
+			{...props}
 		>
 			{onNew && (
 				<span slot="prefix">

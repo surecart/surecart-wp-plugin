@@ -57,6 +57,15 @@ class ScriptsService {
 	}
 
 	/**
+	 * Get the claim url.
+	 *
+	 * @return string
+	 */
+	public function getAccountClaimUrl() {
+		return ! wp_doing_ajax() && is_admin() && ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '';
+	}
+
+	/**
 	 * Register the component scripts and translations.
 	 *
 	 * @return void
@@ -122,6 +131,7 @@ class ScriptsService {
 					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'claim_url'           => $this->getAccountClaimUrl(),
 				]
 			)
 		);
@@ -340,6 +350,7 @@ class ScriptsService {
 					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'claim_url'           => $this->getAccountClaimUrl(),
 				]
 			)
 		);
