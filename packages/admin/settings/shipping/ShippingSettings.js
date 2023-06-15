@@ -14,19 +14,19 @@ import {
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
-import { useSelect, useDispatch, select } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import AddShippingProfile from './profile/AddShippingProfile';
 import useEntity from '../../hooks/useEntity';
 import ShippingMethods from './method/ShippingMethods';
+import useSave from '../UseSave';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [showAddShipping, setShowAddShipping] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { save } = useSave();
+
 	const { shippingProfiles, loading, busy } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
@@ -56,29 +56,18 @@ export default () => {
 		editItem: editShippingProtocol,
 	} = useEntity('store', 'shipping_protocol');
 
+	/**
+	 * Form is submitted.
+	 */
 	const onSubmit = async () => {
+		setError(null);
 		try {
-			const dirtyRecords =
-				select(coreStore).__experimentalGetDirtyEntityRecords();
-			const pendingSavedRecords = [];
-
-			dirtyRecords.forEach(({ kind, name, key }) => {
-				pendingSavedRecords.push(
-					saveEditedEntityRecord(kind, name, key)
-				);
+			await save({
+				successMessage: __('Settings Updated.', 'surecart'),
 			});
-
-			const values = await Promise.all(pendingSavedRecords);
-			if (values.some((value) => typeof value === 'undefined')) {
-				throw new Error(__('Saving failed.', 'surecart'));
-			}
-
-			createSuccessNotice(__('Updated', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (error) {
-			setError(error);
-			console.log(error);
+		} catch (e) {
+			console.error(e);
+			setError(e);
 		}
 	};
 
