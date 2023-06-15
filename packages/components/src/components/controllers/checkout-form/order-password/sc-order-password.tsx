@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method, Host } from '@stencil/core';
+import { Component, Prop, h, Method, Host, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
@@ -64,6 +64,12 @@ export class ScOrderPassword {
   /** Ensures strong password validation. */
   @Prop({ reflect: true }) enableValidation = true;
 
+  /** Hint Text. */
+  @State() hintText: string;
+
+  /** Show/Hide Hint Text. */
+  @State() showHintText: boolean = false;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
@@ -75,13 +81,6 @@ export class ScOrderPassword {
     if (this.confirmation) {
       if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
         this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
-      }
-    }
-
-    if (this.enableValidation) {
-      const validPassword = this.validatePassword(this.input?.value);
-      if (!validPassword) {
-        this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
       }
     }
 
@@ -97,10 +96,30 @@ export class ScOrderPassword {
     return valid;
   }
 
-  validatePassword(password: string) {
-    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
-    if (regex.test(password)) return true;
-    return false;
+  showHelpText() {
+    if (!this.showHintText) this.showHintText = true;
+  }
+
+  validatePassword(val: string) {
+    if (!this.enableValidation) return;
+    let message: string;
+
+    // must be at least 6 characters
+    if (val.trim().length < 6) {
+      message = __('Passwords should at least 6 characters.', 'surecart');
+      this.hintText = message;
+      return;
+    }
+
+    // must contain a special charater
+    const regex = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!regex.test(val)) {
+      message = __('Passwords must contain a special character.', 'surecart');
+      this.hintText = message;
+      return;
+    }
+
+    this.hintText = '';
   }
 
   render() {
@@ -114,20 +133,26 @@ export class ScOrderPassword {
 
     return (
       <div class="password">
-        <sc-input
-          ref={el => (this.input = el as HTMLScInputElement)}
-          label={this.label}
-          help={this.help}
-          autofocus={this.autofocus}
-          placeholder={this.placeholder}
-          showLabel={this.showLabel}
-          size={this.size ? this.size : 'medium'}
-          type="password"
-          name="password"
-          value={this.value}
-          required={this.required}
-          disabled={this.disabled}
-        ></sc-input>
+        <div>
+          <sc-input
+            ref={el => (this.input = el as HTMLScInputElement)}
+            label={this.label}
+            help={this.help}
+            autofocus={this.autofocus}
+            placeholder={this.placeholder}
+            showLabel={this.showLabel}
+            size={this.size ? this.size : 'medium'}
+            type="password"
+            name="password"
+            value={this.value}
+            required={this.required}
+            disabled={this.disabled}
+            onBlur={() => this.showHelpText()}
+            onScInput={e => this.validatePassword(e.target.value)}
+          ></sc-input>
+          {this.showHintText && <small class="password__hint">{this.hintText}</small>}
+        </div>
+
         {this.confirmation && (
           <sc-input
             ref={el => (this.confirmInput = el as HTMLScInputElement)}

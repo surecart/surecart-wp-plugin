@@ -414,18 +414,18 @@ export default () => {
 						</span>
 					</ScSwitch>
 				)}
-				{/* <ScSwitch
+				<ScSwitch
 					checked={passwordValidation}
 					onScChange={(e) => setPasswordValidation(e.target.checked)}
 				>
-					{__('Password Validation', 'surecart')}
+					{__('Strong Password Validation', 'surecart')}
 					<span slot="description">
 						{__(
 							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
 							'surecart'
 						)}
 					</span>
-				</ScSwitch> */}
+				</ScSwitch>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Clear Test Data', 'surecart')}

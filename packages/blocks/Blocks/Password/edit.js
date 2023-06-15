@@ -34,7 +34,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				{/* <Card size="small">
+				<Card size="small">
 					<CardBody size="small">
 						<p>
 							You can override the global password validation by
@@ -50,7 +50,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 							Site Settings
 						</Button>
 					</CardBody>
-				</Card> */}
+				</Card>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl
