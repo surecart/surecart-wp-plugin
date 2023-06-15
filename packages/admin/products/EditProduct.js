@@ -25,6 +25,7 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -214,6 +215,11 @@ export default ({ id }) => {
 						loading={!hasLoadedProduct}
 					/>
 					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Shipping
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
