@@ -83,7 +83,6 @@ export default () => {
 	};
 
 	const onToggleShipping = (e) => {
-		console.log('called');
 		e.preventDefault();
 		editShippingProtocol({
 			shipping_enabled: !shippingProtocol?.shipping_enabled,
@@ -93,7 +92,7 @@ export default () => {
 	return (
 		<Fragment>
 			<SettingsTemplate
-				title={__('Shipping and Delivery', 'surecart')}
+				title={__('Shipping', 'surecart')}
 				icon={<ScIcon name="truck" />}
 				noButton
 				onSubmit={onSubmit}
@@ -101,13 +100,13 @@ export default () => {
 				<Error error={error} setError={setError} margin="80px" />{' '}
 				<SettingsBox
 					loading={!hasLoadedShippingProtocol}
-					title={__('Protocol', 'surecart')}
+					title={__('Shipping Settings', 'surecart')}
 				>
 					<ScSwitch
 						checked={shippingProtocol?.shipping_enabled}
 						onClick={onToggleShipping}
 					>
-						{__('Shipping Enabled', 'surecart')}
+						{__('Enable Shipping', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
 								'When disabled, all shipping costs will be zero and shipping will not be available.',
