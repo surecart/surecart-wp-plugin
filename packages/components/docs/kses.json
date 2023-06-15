@@ -1586,6 +1586,13 @@
     "class": true,
     "slot": true
   },
+  "sc-provisional-banner": {
+    "claim-url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-purchase-downloads-list": {
     "all-link": true,
     "busy": true,

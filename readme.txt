@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.0.1
+Stable tag: 2.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,18 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.1.1 - June 14, 2023 =
+* HotFix: Processors not showing for some users on instant checkout pages.
+
+= 2.1.0 - June 13, 2023 =
+* New: Better, quicker onboarding for new stores.
+* New: Visit Store link in WordPress admin bar.
+* Improvement: Settings page sticky header.
+* Fix: Rename magic sign-in.
+* Fix: Change "Pro" to "Premium".
+* Fix: Issue with product pages not loading for some servers that don't have support for NumberFormatter.
+* Fix: Z-index issue with product page header and WordPress menu.
 
 = 2.0.1 - June 7, 2023 =
 * New: Archive and delete option on upgrade groups.
