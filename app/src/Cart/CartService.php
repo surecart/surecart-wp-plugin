@@ -241,7 +241,7 @@ class CartService {
 	 * @return string
 	 */
 	public function isFloatingIconEnabled() {
-		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
+		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', 'floating_icon' );
 		return in_array( $cart_icon_type, [ 'floating_icon', 'both' ] );
 	}
 
