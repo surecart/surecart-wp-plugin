@@ -52,10 +52,10 @@ export default () => {
 
 		if (name !== undefined) {
 			editItem({
-				[name]: !item?.[name] ?? e?.target?.checked
+				[name]: !item?.[name] ?? e?.target?.checked,
 			});
 		}
-	}
+	};
 
 	return (
 		<SettingsTemplate
@@ -304,7 +304,7 @@ export default () => {
 							action="notification3"
 						/>
 						<EmailRow
-							title={__('Magic Sign In', 'surecart')}
+							title={__('Email Verification Code', 'surecart')}
 							description={__(
 								'Sent to customers to login to the customer portal without a password.',
 								'surecart'
