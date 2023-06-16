@@ -358,6 +358,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 \SureCart::route()
 	->get()
+	->where( 'sc_url_var', 'create_webhook', 'action' )
+	->name( 'webhook.create' )
+	->middleware( 'nonce:create_webhook' )
+	->middleware( 'user.can:edit_sc_webhooks' )
+	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@create' );
+\SureCart::route()
+	->get()
+	->where( 'sc_url_var', 'update_webhook', 'action' )
+	->name( 'webhook.update' )
+	->middleware( 'nonce:update_webhook' )
+	->middleware( 'user.can:edit_sc_webhooks' )
+	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@update' );
+\SureCart::route()
+	->get()
 	->where( 'sc_url_var', 'remove_webhook', 'action' )
 	->name( 'webhook.remove' )
 	->middleware( 'nonce:remove_webhook' )

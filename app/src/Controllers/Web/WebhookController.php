@@ -1,9 +1,12 @@
 <?php
+
 namespace SureCart\Controllers\Web;
 
 use SureCart\Models\Webhook;
+use SureCart\Support\Encryption;
 use SureCart\Webhooks\WebhooksHistoryService;
 use SureCartCore\Responses\RedirectResponse;
+use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
 /**
  * Handles webhooks
@@ -30,16 +33,61 @@ class WebhookController {
 	];
 
 	/**
-	 * Remove the webhook.
+	 * Create new webhook for this site.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return function
+	 * @return ResponseInterface
 	 */
-	public function remove( $request ) {
-		$deleted = Webhook::delete( $request->query( 'id' ) );
-		if ( is_wp_error( $deleted ) ) {
-			wp_die( $deleted->get_error_message() );
+	public function create( $request ) {
+		// We'll create a webhook for this site with signing secret.
+		\SureCart::webhooks()->createWebhook();
+		
+		return ( new RedirectResponse( $request ) )->back();
+	}
+
+	/**
+	 * Update the webhook.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return ResponseInterface
+	 */
+	public function update( $request ) {
+		// Update the webhook url and signing secret.
+		$webhook = Webhook::find( $request->query( 'id' ) );
+		if ( is_wp_error( $webhook ) ) {
+			wp_die( $webhook->get_error_message() );
 		}
+
+		$updated = $webhook->update(
+			[
+				'url' => Webhook::getListenerUrl(),
+			]
+		);
+
+		if ( is_wp_error( $updated ) ) {
+			wp_die( $updated->get_error_message() );
+		}
+
+		// Get the previous webhook.
+		$previousWebhook = \SureCart::webhooks()->getPreviousWebhook();
+
+		if ( ! $previousWebhook ) {
+			return ( new RedirectResponse( $request ) )->back();
+		}
+
+		// Delete the previous registered webhook.
+		\SureCart::webhooks()->deleteRegisteredWebhookById( $previousWebhook['id'] );
+
+		// Save the updated webhook to webhook history.
+		\SureCart::webhooks()->saveRegisteredWebhook(
+			[
+				'id'  		     => $previousWebhook['id'],
+				'url' 			 => Webhook::getListenerUrl(),
+				'webhook_events' => $previousWebhook['webhook_events'],
+				'signing_secret' => Encryption::encrypt( $previousWebhook['signing_secret'] ),
+			]
+		);
+
 		return ( new RedirectResponse( $request ) )->back();
 	}
 
@@ -47,11 +95,32 @@ class WebhookController {
 	 * Remove the webhook.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return function
+	 * @return ResponseInterface
+	 */
+	public function remove( $request ) {
+		// Remove the registered webhook by id.
+		$deleted = \SureCart::webhooks()->deleteRegisteredWebhookById( $request->query( 'id' ) );
+
+		// Remove the webhook from the server.
+		if ( $deleted ) {
+			$deleted = Webhook::delete( $request->query( 'id' ) );
+			if ( is_wp_error( $deleted ) ) {
+				wp_die( $deleted->get_error_message() );
+			}
+		}
+
+		return ( new RedirectResponse( $request ) )->back();
+	}
+
+	/**
+	 * Ignore the notice.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return ResponseInterface
 	 */
 	public function ignore( $request ) {
 		$service = new WebHooksHistoryService();
-		$service->deletePreviousWebhook();
+		$service->setIgnoreNotice( true );
 		return ( new RedirectResponse( $request ) )->back();
 	}
 
