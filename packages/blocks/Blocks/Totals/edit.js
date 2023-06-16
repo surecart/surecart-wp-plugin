@@ -33,7 +33,7 @@ export default ({ attributes, setAttributes }) => {
 
 	const {
 		collapsible,
-		collapsed,
+		collapsedOnDesktop,
 		closed_text,
 		open_text,
 		collapsedOnMobile,
@@ -101,10 +101,10 @@ export default ({ attributes, setAttributes }) => {
 										'Collapsed On Desktop',
 										'surecart'
 									)}
-									checked={collapsed}
-									onChange={(collapsed) => {
-										setAttributes({ collapsed });
-										if (collapsed) {
+									checked={collapsedOnDesktop}
+									onChange={(collapsedOnDesktop) => {
+										setAttributes({ collapsedOnDesktop });
+										if (collapsedOnDesktop) {
 											setAttributes({
 												collapsible: true,
 											});
@@ -154,7 +154,7 @@ export default ({ attributes, setAttributes }) => {
 
 			<ScOrderSummary
 				collapsible={collapsible}
-				collapsed={collapsed}
+				collapsedOnDesktop={collapsedOnDesktop}
 				closedText={closed_text || null}
 				openText={open_text || null}
 				collapsedOnMobile={collapsedOnMobile}
