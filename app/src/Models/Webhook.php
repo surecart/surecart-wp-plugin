@@ -3,7 +3,7 @@
 namespace SureCart\Models;
 
 /**
- * Price model
+ * Webhook Model.
  */
 class Webhook extends Model {
 	/**
@@ -37,9 +37,9 @@ class Webhook extends Model {
 	}
 
 	/**
-	 * Register webhook for this site
+	 * Register webhook for this site.
 	 *
-	 * @return $this|false
+	 * @return self|boolean
 	 */
 	protected function register() {
 		$existing = $this->findExisting();
@@ -62,8 +62,8 @@ class Webhook extends Model {
 			return false;
 		}
 
-		// Send a test webhook to queue to check if it works.
-		$this->addTestWebhookToQueue( $webhook );
+		// Send a test webhook to check if it works.
+		$this->sendTestWebhook( $webhook );
 
 		return $webhook;
 	}
@@ -71,9 +71,9 @@ class Webhook extends Model {
 	/**
 	 * Find existing webhook with the same listener url.
 	 *
-	 * @return \SureCart\Models\Webhook|false
+	 * @return \SureCart\Models\Webhook|boolean
 	 */
-	public function findExisting() {
+	protected function findExisting() {
 		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();
 		if ( is_array( $webhooks ) && ! empty( $webhooks ) ) {
 			foreach ( $webhooks as $webhook ) {
@@ -86,40 +86,23 @@ class Webhook extends Model {
 	}
 
 	/**
-	 * Add test webhook to queue.
+	 * Send test webhook.
 	 *
 	 * @param Webhook $webhook
 	 *
 	 * @return void
 	 */
-	private function addTestWebhookToQueue( Webhook $webhook ) {
-		\SureCart::queue()->add(
-			'surecart/send-test-webhook',
-			[
-				'webhook_id' => $webhook->id,
-			],
-			self::GROUP_NAME
-		);
-	}
-
-	/**
-	 * Send test webhook to the endpoint.
-	 *
-	 * @param string $webhook_id
-	 *
-	 * @return void
-	 */
-	public function sendTestWebhook( string $webhook_id ) {
+	private function sendTestWebhook( Webhook $webhook ) {
 		try {
 			$this->makeRequest(
 				[
 					'method' => 'POST',
 					'query'  => [],
 				],
-				$this->endpoint . '/' . $webhook_id . '/test',
+				$this->endpoint . '/' . $webhook->id . '/test',
 			);
 		} catch ( \Exception $exception ) {
-			// Do nothing.
+			// SKIP.
 		}
 	}
 }

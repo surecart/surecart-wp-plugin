@@ -7,16 +7,9 @@ use SureCart\Models\Webhook;
 use SureCart\Support\Encryption;
 
 /**
- * WordPress Users service.
+ * Webhooks service.
  */
 class WebhooksService {
-	/**
-	 * Option value for signing key.
-	 *
-	 * @var string
-	 */
-	protected $signing_key = 'sc_webhook_signing_secret';
-
 	/**
 	 * Hold the domain service.
 	 *
@@ -47,9 +40,36 @@ class WebhooksService {
 	 *
 	 * @return boolean
 	 */
-	public function hasToken() {
+	public function hasToken(): bool {
 		$token = ApiToken::get();
 		return ! empty( ApiToken::get() ) && 'test' !== $token;
+	}
+
+	/**
+	 * May be create webhook.
+	 * 
+	 * Check if we have previous webhook registered for this site 
+	 * but for staging or something else.
+	 *
+	 * @return void
+	 */
+	public function maybeCreateWebhook(): void {
+		// Get registered webhooks.
+		$registeredWebhooks = $this->domain_service->getRegisteredWebhooks() ?? [];
+
+		// If there is a registered webhook, and the domain matched, then return.
+		$matched = false;
+		foreach ( $registeredWebhooks as $registeredWebhook ) {
+			if ( $this->domain_service->getDomain( $registeredWebhook['url'] ) === $this->domain_service->getDomain( Webhook::getListenerUrl() ) ) {
+				$matched = true;
+			}
+		}
+
+		if ( $matched ) {
+			return;
+		}
+
+		$this->createWebhook();
 	}
 
 	/**
@@ -57,7 +77,7 @@ class WebhooksService {
 	 *
 	 * @return void
 	 */
-	public function maybeCreateWebhooks() {
+	public function createWebhook(): void {
 		// Check for API key and early return if not.
 		if ( ! $this->hasToken() ) {
 			return;
@@ -73,7 +93,7 @@ class WebhooksService {
 
 		// handle error and show notice to user.
 		if ( is_wp_error( $registered ) ) {
-			return add_action(
+			add_action(
 				'admin_notices',
 				function() use ( $registered ) {
 					$this->showWebhooksErrorNotice( $registered );
@@ -83,17 +103,31 @@ class WebhooksService {
 
 		// if successful, update the domain and signing secret.
 		if ( ! empty( $registered['signing_secret'] ) ) {
-			$this->setSigningSecret( $registered['signing_secret'] );
+			// $this->setSigningSecret( $registered['signing_secret'] );
 			$this->saveRegisteredWebhook(
 				[
-					'id'  => $registered['id'],
-					'url' => $registered['url'],
+					'id'  		     => $registered['id'],
+					'url' 			 => $registered['url'],
+					'webhook_events' => $registered['webhook_events'],
+					'signing_secret' => Encryption::encrypt( $registered['signing_secret'] ),
 				]
 			);
-			return true;
 		}
+	}
 
-		return false;
+	/**
+	 * Delete the registered webhook.
+	 *
+	 * @return void
+	 */
+	public function maybeClearWebhook(): void {
+		$webhook = Webhook::findExisting();
+		if ( $webhook ) {
+			Webhook::delete( $webhook['id'] );
+
+			// Delete this webhook from registered webhooks list.
+			$this->domain_service->deleteRegisteredWebhookById( $webhook['id'] );
+		}
 	}
 
 	/**
@@ -115,7 +149,7 @@ class WebhooksService {
 	 *
 	 * @return void
 	 */
-	public function showWebhooksErrorNotice( \WP_Error $error ) {
+	public function showWebhooksErrorNotice( \WP_Error $error ): void {
 		$messages = implode( '<br>', $error->get_error_messages() );
 		$class    = 'notice notice-error';
 		$message  = __( 'SureCart webhooks could not be created.', 'surecart' ) . $messages;
@@ -128,27 +162,11 @@ class WebhooksService {
 	 * @return string|bool Decrypted value, or false on failure.
 	 */
 	public function getSigningSecret() {
-		return Encryption::decrypt( get_option( $this->signing_key, '' ) );
-	}
+		// Get the registered webhook.
+		$webhook = $this->domain_service->getRegisteredWebhook();
 
-	/**
-	 * Set the signing secret as encrypted data in the WP database.
-	 *
-	 * @param string $value The secret.
-	 * @return string|bool Encrypted value, or false on failure.
-	 */
-	public function setSigningSecret( $value ) {
-		$this->deleteSigningSecret();
-		return update_option( $this->signing_key, Encryption::encrypt( $value ), false );
-	}
-
-	/**
-	 * Delete the existing signing secret from the WP database.
-	 *
-	 * @return bool
-	 */
-	public function deleteSigningSecret(): bool {
-		return delete_option( $this->signing_key );
+		// Return the signing secret from the registered webhook.
+		return Encryption::decrypt( $webhook['signing_secret'] ?? '' );
 	}
 
 	/**
@@ -161,13 +179,51 @@ class WebhooksService {
 	}
 
 	/**
-	 * Save the domain for the webhooks
+	 * Save the webhook data to registered webhooks.
 	 *
-	 * @param $webhook
+	 * @param array $webhook
 	 * @return bool
 	 */
-	public function saveRegisteredWebhook( $webhook ): bool {
+	public function saveRegisteredWebhook( array $webhook ): bool {
 		return $this->domain_service->saveRegisteredWebhook( $webhook );
+	}
+
+	/**
+	 * Get the registered webhook.
+	 *
+	 * @return array|null
+	 */
+	public function getRegisteredWebhook() {
+		return $this->domain_service->getRegisteredWebhook();
+	}
+
+	/**
+	 * Get previous webhook.
+	 *
+	 * @return array|null
+	 */
+	public function getPreviousWebhook() {
+		return $this->domain_service->getPreviousWebhook();
+	}
+
+	/**
+	 * Get the registered webhooks.
+	 *
+	 * @return array
+	 */
+	public function getRegisteredWebhooks(): array {
+		return $this->domain_service->getRegisteredWebhooks();
+	}
+
+	/**
+	 * Delete registered webhook by id.
+	 *
+	 * @param string $webhookId
+	 *
+	 * @return bool
+	 */
+	public function deleteRegisteredWebhookById( string $webhookId ): bool {
+		return $this->domain_service->deleteRegisteredWebhookById( $webhookId );
 	}
 
 	/**
@@ -186,7 +242,7 @@ class WebhooksService {
 	 *
 	 * @return void
 	 */
-	public function broadcast( $event, $model ) {
+	public function broadcast( $event, $model ): void {
 		$webhook = get_transient( 'surecart_webhook_' . $event . $model->id, false );
 		if ( false === $webhook ) {
 			// perform the action.
