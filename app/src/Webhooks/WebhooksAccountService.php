@@ -12,7 +12,7 @@ class WebhooksAccountService {
 	 *
 	 * @return void
 	 */
-	public function listenForAccountUpdated() {
+	public function listen(): void {
 		\add_action( 'surecart/account_updated', [ $this, 'clearAccountCache' ], 10, 2 );
 	}
 
@@ -21,7 +21,7 @@ class WebhooksAccountService {
 	 *
 	 * @return void
 	 */
-	public function clearAccountCache() {
+	public function clearAccountCache(): void {
 		delete_transient( 'surecart_account' );
 	}
 }
