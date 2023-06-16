@@ -37,6 +37,7 @@ class ActivationService {
 	 */
 	public function bootstrap() {
 		register_activation_hook( SURECART_PLUGIN_FILE, [ $this, 'activate' ] );
+		register_deactivation_hook( SURECART_PLUGIN_FILE, [ $this, 'deactivate' ] );
 	}
 
 	/**
@@ -45,10 +46,24 @@ class ActivationService {
 	 * @return void
 	 */
 	public function activate() {
-		// create roles.
+		// Create roles.
 		$this->roles->create();
-		// seed pages and forms.
+
+		// Seed pages and forms.
 		$this->seeder->seed();
+
+		// Create webhooks.
+		\SureCart::webhooks()->maybeCreateWebhook();
+	}
+
+	/**
+	 * On deactivation logic.
+	 *
+	 * @return void
+	 */
+	public function deactivate() {
+		// Clear webhooks.
+		\SureCart::webhooks()->maybeClearWebhook();
 	}
 
 	/**
@@ -105,7 +120,7 @@ class ActivationService {
 	 * @return void
 	 */
 	public function removeOptions() {
-		delete_option( 'ce_registered_webhook' );
+		delete_option( 'ce_registered_webhooks' );
 		delete_option( 'surecart_order-confirmation_page_id' );
 		delete_option( 'surecart_dashboard_page_id' );
 		delete_option( 'surecart_checkout_sc_form_id' );

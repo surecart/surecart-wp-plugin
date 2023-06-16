@@ -30,7 +30,7 @@ class QueueService {
 	 * @return string The action ID.
 	 */
 	public function scheduleSingle( $timestamp, $hook, $args = array(), $group = '' ) {
-		return as_schedule_single_action( $timestamp, $hook, $args, $group );
+		return \as_schedule_single_action( $timestamp, $hook, $args, $group );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class QueueService {
 	 * @return string The action ID.
 	 */
 	public function scheduleRecurring( $timestamp, $interval_in_seconds, $hook, $args = array(), $group = '' ) {
-		return as_schedule_recurring_action( $timestamp, $interval_in_seconds, $hook, $args, $group );
+		return \as_schedule_recurring_action( $timestamp, $interval_in_seconds, $hook, $args, $group );
 	}
 
 	/**
@@ -68,7 +68,7 @@ class QueueService {
 	 * @return string The action ID
 	 */
 	public function scheduleCron( $timestamp, $cron_schedule, $hook, $args = array(), $group = '' ) {
-		return as_schedule_cron_action( $timestamp, $cron_schedule, $hook, $args, $group );
+		return \as_schedule_cron_action( $timestamp, $cron_schedule, $hook, $args, $group );
 	}
 
 	/**
@@ -88,7 +88,7 @@ class QueueService {
 	 * @param string $group The group the job is assigned to (if any).
 	 */
 	public function cancel( $hook, $args = array(), $group = '' ) {
-		as_unschedule_action( $hook, $args, $group );
+		\as_unschedule_action( $hook, $args, $group );
 	}
 
 	/**
@@ -99,7 +99,7 @@ class QueueService {
 	 * @param string $group The group the job is assigned to (if any).
 	 */
 	public function cancelAll( $hook, $args = array(), $group = '' ) {
-		as_unschedule_all_actions( $hook, $args, $group );
+		\as_unschedule_all_actions( $hook, $args, $group );
 	}
 
 	/**
@@ -144,7 +144,7 @@ class QueueService {
 	 * @return array
 	 */
 	public function search( $args = array(), $return_format = OBJECT ) {
-		return as_get_scheduled_actions( $args, $return_format );
+		return \as_get_scheduled_actions( $args, $return_format );
 	}
 
 	/**

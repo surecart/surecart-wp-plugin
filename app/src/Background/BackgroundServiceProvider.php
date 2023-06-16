@@ -20,11 +20,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container['surecart.queue'] = function() {
-			// Check if the action scheduler is imported, if not manually import it.
-			if ( ! function_exists( 'as_schedule_single_action' ) ) {
-				require_once SURECART_VENDOR_DIR . '/woocommerce/action-scheduler/action-scheduler.php';
-			}
-
 			return new QueueService();
 		};
 
