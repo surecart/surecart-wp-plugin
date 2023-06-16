@@ -27,7 +27,7 @@ import { intervalString } from '../../../util/translations';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import usePagination from '../../../hooks/usePagination';
 
-const PRODUCTS_PER_PAGE = 10;
+const PRODUCTS_PER_PAGE = 5;
 
 export default ({
 	shippingProfileId,
@@ -201,10 +201,11 @@ export default ({
 	return (
 		<SettingsBox
 			title={__('Products', 'surecart')}
-			description={__(
-				'Add products to this shipping profile.',
-				'surecart'
-			)}
+			description={
+				isDefaultProfile
+					? __('All products not in other profiles', 'surecart')
+					: __('Add products to this shipping profile.', 'surecart')
+			}
 			wrapperTag="div"
 			end={
 				!isDefaultProfile && (
@@ -230,6 +231,7 @@ export default ({
 					<div
 						css={css`
 							padding: var(--sc-spacing-x-large);
+							margin: 0;
 							background: var(--sc-color-brand-main-background);
 							border-bottom: 1px solid
 								var(--sc-color-brand-stroke);
@@ -246,7 +248,11 @@ export default ({
 					</div>
 				)}
 				{products?.length || !!draftProducts || currentPage > 1 ? (
-					<ScStackedList>
+					<ScStackedList
+						css={css`
+							margin: 0;
+						`}
+					>
 						{products.map((product) => (
 							<ScStackedListRow key={product.id}>
 								{renderProduct(product)}
@@ -330,7 +336,7 @@ export default ({
 					</ScStackedList>
 				) : (
 					<ScEmpty icon="shopping-cart">
-						{__('No products added yet.', 'surecart')}
+						{__('No products', 'surecart')}
 					</ScEmpty>
 				)}
 				{hasPagination && (

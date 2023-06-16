@@ -129,7 +129,10 @@ export default () => {
 			noButton
 		>
 			<Error error={error} setError={setError} margin="80px" />
-			<SettingsBox loading={loadingShippingProfile}>
+			<SettingsBox
+				title={__('Profile Details', 'surecart')}
+				loading={loadingShippingProfile}
+			>
 				<ScInput
 					label={__('Name', 'surecart')}
 					type="text"

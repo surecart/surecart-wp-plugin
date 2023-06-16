@@ -121,13 +121,24 @@ export default () => {
 							}}
 						>
 							<strong>{shippingMethod.name}</strong>
-							<div>{shippingMethod.description}</div>
+							<div
+								css={css`
+									color: var(--sc-color-gray-600);
+								`}
+							>
+								{shippingMethod.description || '\u2013'}
+							</div>
 							<div>
 								<ScDropdown
 									slot="suffix"
 									placement="bottom-end"
 								>
-									<ScButton type="text" slot="trigger" circle>
+									<ScButton
+										type="text"
+										slot="trigger"
+										size="small"
+										circle
+									>
 										<ScIcon name="more-horizontal" />
 									</ScButton>
 									<ScMenu>
