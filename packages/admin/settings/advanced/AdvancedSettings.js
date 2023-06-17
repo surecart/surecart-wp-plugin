@@ -7,6 +7,8 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScSwitch,
+	ScInput,
+	ScAlert
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
