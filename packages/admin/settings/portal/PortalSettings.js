@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScFormControl, ScInput, ScSwitch } from '@surecart/components-react';
-import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
+import { ScInput, ScSwitch } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 

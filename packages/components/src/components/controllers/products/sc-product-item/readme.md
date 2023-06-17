@@ -13,6 +13,15 @@
 | `product`      | --        |             | `Product`                                   | `undefined` |
 
 
+## Shadow Parts
+
+| Part      | Description |
+| --------- | ----------- |
+| `"image"` |             |
+| `"price"` |             |
+| `"title"` |             |
+
+
 ## Dependencies
 
 ### Used by

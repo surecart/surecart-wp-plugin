@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-30T20:31:34",
+  "timestamp": "2023-06-17T14:46:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -2990,7 +2990,7 @@
     },
     {
       "filePath": "./src/components/controllers/cart/sc-cart-form/sc-cart-form.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-cart-form",
       "readme": "# sc-cart-form\n\n\n",
       "docs": "",
@@ -6891,8 +6891,7 @@
         "sc-input",
         "sc-button",
         "sc-alert",
-        "sc-block-ui",
-        "sc-form-control"
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-coupon-form": [
@@ -6903,8 +6902,7 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui",
-          "sc-form-control"
+          "sc-block-ui"
         ],
         "sc-input": [
           "sc-form-control"
@@ -12035,7 +12033,6 @@
         "sc-button-group",
         "sc-choices",
         "sc-compact-address",
-        "sc-coupon-form",
         "sc-input",
         "sc-order-bumps",
         "sc-payment",
@@ -12063,9 +12060,6 @@
           "sc-form-control"
         ],
         "sc-compact-address": [
-          "sc-form-control"
-        ],
-        "sc-coupon-form": [
           "sc-form-control"
         ],
         "sc-input": [
@@ -13415,6 +13409,7 @@
         "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-selected-price",
+        "sc-provisional-banner",
         "sc-purchase-downloads-list",
         "sc-quantity-select",
         "sc-rich-text",
@@ -13521,6 +13516,9 @@
           "sc-icon"
         ],
         "sc-product-selected-price": [
+          "sc-icon"
+        ],
+        "sc-provisional-banner": [
           "sc-icon"
         ],
         "sc-purchase-downloads-list": [
@@ -17324,8 +17322,7 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui",
-          "sc-form-control"
+          "sc-block-ui"
         ],
         "sc-input": [
           "sc-form-control"
@@ -24264,6 +24261,49 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/ui/sc-provisional-banner/sc-provisional-banner.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-provisional-banner",
+      "readme": "# sc-provisional-banner\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "claimUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "claim-url",
+          "reflectToAttr": false,
+          "docs": "Claim URL.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-provisional-banner": [
+          "sc-icon"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/purchase-downloads-list/sc-purchase-downloads-list.tsx",
@@ -31862,8 +31902,7 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui",
-          "sc-form-control"
+          "sc-block-ui"
         ],
         "sc-input": [
           "sc-form-control"
@@ -31928,7 +31967,7 @@
           "mutable": false,
           "attr": "required",
           "reflectToAttr": true,
-          "docs": "",
+          "docs": "Is this required?",
           "docsTags": [],
           "default": "true",
           "values": [
@@ -31967,17 +32006,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "requestClose",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],

@@ -40,7 +40,6 @@
  - [sc-button-group](../sc-button-group)
  - [sc-choices](../choices)
  - [sc-compact-address](../sc-compact-address)
- - [sc-coupon-form](../coupon-form)
  - [sc-input](../input)
  - [sc-order-bumps](../../controllers/checkout-form/sc-order-bumps)
  - [sc-payment](../../controllers/checkout-form/payment)
@@ -63,7 +62,6 @@ graph TD;
   sc-button-group --> sc-form-control
   sc-choices --> sc-form-control
   sc-compact-address --> sc-form-control
-  sc-coupon-form --> sc-form-control
   sc-input --> sc-form-control
   sc-order-bumps --> sc-form-control
   sc-payment --> sc-form-control

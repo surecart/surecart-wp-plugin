@@ -57,10 +57,10 @@
 				<?php endif; ?>
 			</sc-tab>
 		</sc-upgrade-required>
-		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'portal_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'portal_protocol' === $tab ? 'active' : ''; ?>>
+		<!-- <sc-tab href="<?php //echo esc_url( add_query_arg( [ 'tab' => 'portal_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php // echo 'portal_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="briefcase"></sc-icon>
-			<?php esc_html_e( 'Customer Portal', 'surecart' ); ?>
-		</sc-tab>
+			<?php // esc_html_e( 'Customer Portal', 'surecart' ); ?>
+		</sc-tab> -->
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'tax_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'tax_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="tag"></sc-icon>
 			<?php esc_html_e( 'Taxes', 'surecart' ); ?>

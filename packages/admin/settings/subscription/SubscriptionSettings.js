@@ -5,7 +5,7 @@ import {
 	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
-	ScFormControl,
+	ScFormControl
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -22,6 +22,16 @@ export default () => {
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'subscription_protocol'
+	);
+	
+	const { 
+		item: portalItem, 
+		itemError: portalItemError, 
+		editItem: portalEditItem, 
+		hasLoadedItem: portalHasLoadedItem 
+	} = useEntity(
+		'store',
+		'portal_protocol'
 	);
 
 	/**
@@ -57,7 +67,7 @@ export default () => {
 			onSubmit={onSubmit}
 		>
 			<Error
-				error={itemError || error}
+				error={itemError || portalItemError || error}
 				setError={setError}
 				margin="80px"
 			/>
@@ -282,6 +292,71 @@ export default () => {
 						/>
 					</ScFormControl>
 				</div>
+			</SettingsBox>
+			<SettingsBox
+				title={__('Functionality', 'surecart')}
+				description={__(
+					'Manage what your customers are able to see and do from the customer portal.',
+					'surecart'
+				)}
+				loading={!portalHasLoadedItem}
+			>
+				<ScSwitch
+					checked={portalItem?.subscription_updates_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						portalEditItem({
+							subscription_updates_enabled:
+								!portalItem?.subscription_updates_enabled,
+						});
+					}}
+				>
+					{__('Allow Subscription Changes', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to switch pricing plans from the customer portal. You can configure what happens when a subscription change happens from the Subscriptions settings page.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={portalItem?.subscription_quantity_updates_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						portalEditItem({
+							subscription_quantity_updates_enabled:
+								!portalItem?.subscription_quantity_updates_enabled,
+						});
+					}}
+				>
+					{__('Allow Subscription Quantity Changes', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to change subscription quantities from the customer portal.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={portalItem?.subscription_cancellations_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						portalEditItem({
+							subscription_cancellations_enabled:
+								!portalItem?.subscription_cancellations_enabled,
+						});
+					}}
+				>
+					{__('Allow Subscription Cancellations', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
