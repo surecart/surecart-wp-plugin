@@ -2336,28 +2336,6 @@
 					"upgrade_behavior": {
 						"type": "string",
 						"description": "Controls how subscription changes should be handled when upgrading – one of `immediate` or `pending`."
-					},
-					"privacy_url": {
-						"type": "string",
-						"nullable": true,
-						"description": "The privacy policy link that is shown to customers on the customer portal."
-					},
-					"subscription_cancellations_enabled": {
-						"type": "boolean",
-						"description": "Whether or not customers can cancel subscriptions from the customer portal."
-					},
-					"subscription_updates_enabled": {
-						"type": "boolean",
-						"description": "Whether or not customers can make subscription changes from the customer portal."
-					},
-					"subscription_quantity_updates_enabled": {
-						"type": "boolean",
-						"description": "Whether or not customers can change subscription quantities from the customer portal."
-					},
-					"terms_url": {
-						"type": "string",
-						"nullable": true,
-						"description": "The terms of service link that is shown to customers on the customer portal."
 					}
 				}
 			},
