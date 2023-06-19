@@ -39,7 +39,7 @@ export class ScFormComponentsValidator {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
     // make sure to add the address field if it's not there.
-    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled) {
+    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled || this?.order?.shipping_address_required) {
       this.addAddressField();
     }
     // add order bumps.
@@ -76,6 +76,12 @@ export class ScFormComponentsValidator {
     const payment = this.el.querySelector('sc-payment');
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
+
+    if(this.order?.shipping_address_required){
+      address.showName = true;
+      address.required = true;
+    }
+
     payment.parentNode.insertBefore(address, payment);
     this.hasAddress = true;
   }
@@ -109,6 +115,7 @@ export class ScFormComponentsValidator {
     }
     this.hasTaxLine = true;
   }
+
 
   render() {
     return <slot />;
