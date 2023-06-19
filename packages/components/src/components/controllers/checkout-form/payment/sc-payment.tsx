@@ -5,6 +5,7 @@ import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
 import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * @part base - The elements base wrapper.
@@ -118,7 +119,18 @@ export class ScPayment {
             <Tag collapsible={false} theme="container">
               {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
-                  {__('You do not have any processors enabled for this mode and cart. Please configure your processors.', 'surecart')}
+                  {__('You do not have any processors enabled for this mode and cart. Please ', 'surecart')}
+
+                  <a
+                    href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
+                      page: 'sc-settings',
+                      tab: 'processors',
+                    })}
+                    style={{ color: 'var(--sc-color-gray-700)' }}
+                  >
+                    {__('configure your processors', 'surecart')}
+                  </a>
+                  .
                 </sc-alert>
               )}
               {(availableProcessors() || []).map(processor => {
