@@ -458,6 +458,28 @@ export interface Order extends Object {
   created_at: number;
   updated_at: number;
 }
+
+export interface ShippingChoice {
+  amount: number;
+  checkout: string | Checkout;
+  currency: string;
+  id: string;
+  object: 'shipping_choice';
+  shipping_method: string | ShippingMethod;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ShippingMethod {
+  name: string;
+  description: string;
+  id: string;
+  object: 'shipping_method';
+  position: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Checkout extends Object {
   id?: string;
   status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
@@ -522,9 +544,16 @@ export interface Checkout extends Object {
   discount_amount?: number;
   discount?: DiscountResponse;
   billing_address?: string | Address;
-  shipping_amount:number,
+  shipping_amount?: number;
   shipping_address?: string | Address;
   shipping_enabled?: boolean;
+  shipping_choices?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<ShippingChoice>;
+  };
+  selected_shipping_choice?: string | ShippingChoice;
+  selected_shipping_choice_required: boolean;
   processor_data?: ProcessorData;
   tax_identifier?: {
     number: string;
@@ -532,6 +561,27 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+}
+
+export interface ShippingMethod {
+  id: string;
+  object: 'shipping_method';
+  description: string | null;
+  name: string;
+  position: number;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ShippingChoice {
+  id: string;
+  object: 'shipping_choice';
+  amount: number;
+  currency: string;
+  checkout: string | Checkout;
+  shipping_method: string | ShippingMethod;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface ProcessorData {

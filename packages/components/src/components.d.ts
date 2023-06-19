@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -3122,6 +3122,20 @@ export namespace Components {
          */
         "prices": Array<PriceChoice>;
     }
+    interface ScShippingChoices {
+        /**
+          * The shipping section label
+         */
+        "label": string;
+        /**
+          * Shipping choices
+         */
+        "shippingChoices": ShippingChoice[];
+        /**
+          * Whether to show the shipping choice description
+         */
+        "showDescription": boolean;
+    }
     interface ScSkeleton {
         /**
           * Animation effect
@@ -3968,6 +3982,10 @@ export interface ScSelectCustomEvent<T> extends CustomEvent<T> {
 export interface ScSessionProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSessionProviderElement;
+}
+export interface ScShippingChoicesCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScShippingChoicesElement;
 }
 export interface ScStripeElementCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4921,6 +4939,12 @@ declare global {
         prototype: HTMLScSessionProviderElement;
         new (): HTMLScSessionProviderElement;
     };
+    interface HTMLScShippingChoicesElement extends Components.ScShippingChoices, HTMLStencilElement {
+    }
+    var HTMLScShippingChoicesElement: {
+        prototype: HTMLScShippingChoicesElement;
+        new (): HTMLScShippingChoicesElement;
+    };
     interface HTMLScSkeletonElement extends Components.ScSkeleton, HTMLStencilElement {
     }
     var HTMLScSkeletonElement: {
@@ -5311,6 +5335,7 @@ declare global {
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
         "sc-session-provider": HTMLScSessionProviderElement;
+        "sc-shipping-choices": HTMLScShippingChoicesElement;
         "sc-skeleton": HTMLScSkeletonElement;
         "sc-spacing": HTMLScSpacingElement;
         "sc-spinner": HTMLScSpinnerElement;
@@ -8825,6 +8850,24 @@ declare namespace LocalJSX {
          */
         "prices"?: Array<PriceChoice>;
     }
+    interface ScShippingChoices {
+        /**
+          * The shipping section label
+         */
+        "label"?: string;
+        /**
+          * Error event
+         */
+        "onScError"?: (event: ScShippingChoicesCustomEvent<ResponseError>) => void;
+        /**
+          * Shipping choices
+         */
+        "shippingChoices"?: ShippingChoice[];
+        /**
+          * Whether to show the shipping choice description
+         */
+        "showDescription"?: boolean;
+    }
     interface ScSkeleton {
         /**
           * Animation effect
@@ -9637,6 +9680,7 @@ declare namespace LocalJSX {
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
         "sc-session-provider": ScSessionProvider;
+        "sc-shipping-choices": ScShippingChoices;
         "sc-skeleton": ScSkeleton;
         "sc-spacing": ScSpacing;
         "sc-spinner": ScSpinner;
@@ -9845,6 +9889,7 @@ declare module "@stencil/core" {
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
             "sc-session-provider": LocalJSX.ScSessionProvider & JSXBase.HTMLAttributes<HTMLScSessionProviderElement>;
+            "sc-shipping-choices": LocalJSX.ScShippingChoices & JSXBase.HTMLAttributes<HTMLScShippingChoicesElement>;
             "sc-skeleton": LocalJSX.ScSkeleton & JSXBase.HTMLAttributes<HTMLScSkeletonElement>;
             "sc-spacing": LocalJSX.ScSpacing & JSXBase.HTMLAttributes<HTMLScSpacingElement>;
             "sc-spinner": LocalJSX.ScSpinner & JSXBase.HTMLAttributes<HTMLScSpinnerElement>;

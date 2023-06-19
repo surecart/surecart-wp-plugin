@@ -7,6 +7,7 @@ import {
 	ScButton,
 	ScCard,
 	ScEmpty,
+	ScFormControl,
 	ScIcon,
 	ScStackedList,
 	ScStackedListRow,
@@ -14,41 +15,50 @@ import {
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
-import { useSelect, useDispatch, select } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
 import AddShippingProfile from './profile/AddShippingProfile';
 import useEntity from '../../hooks/useEntity';
 import ShippingMethods from './method/ShippingMethods';
+import useSave from '../UseSave';
+import ShippingProfileListItem from './profile/ShippingProfileListItem';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [showAddShipping, setShowAddShipping] = useState(false);
-	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
-	const { shippingProfiles, loading, busy } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'shipping-profile',
-			{
-				context: 'edit',
-				per_page: 100,
-				expand: ['products', 'shipping_zones'],
-			},
-		];
+	const { save } = useSave();
 
-		const items = select(coreStore).getEntityRecords(...queryArgs);
-		const resolving = select(coreStore).isResolving(
-			'getEntityRecords',
-			queryArgs
-		);
-		return {
-			shippingProfiles: select(coreStore).getEntityRecords(...queryArgs),
-			loading: !!(!items?.length && resolving),
-			busy: !!(items?.length && resolving),
-		};
-	}, []);
+	const { shippingProfiles, defaultShippingProfile, loading, busy } =
+		useSelect((select) => {
+			const queryArgs = [
+				'surecart',
+				'shipping-profile',
+				{
+					context: 'edit',
+					per_page: 100,
+					expand: ['products', 'shipping_zones'],
+				},
+			];
+
+			const items = select(coreStore).getEntityRecords(...queryArgs);
+			const resolving = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+			return {
+				defaultShippingProfile: (items || []).find(
+					(profile) => profile.default
+				),
+				shippingProfiles: (items || []).filter(
+					(profile) => !profile.default
+				),
+				loading: !!(!items?.length && resolving),
+				busy: !!(items?.length && resolving),
+			};
+		}, []);
+
+	console.log({ shippingProfiles });
 
 	const {
 		item: shippingProtocol,
@@ -56,34 +66,22 @@ export default () => {
 		editItem: editShippingProtocol,
 	} = useEntity('store', 'shipping_protocol');
 
+	/**
+	 * Form is submitted.
+	 */
 	const onSubmit = async () => {
+		setError(null);
 		try {
-			const dirtyRecords =
-				select(coreStore).__experimentalGetDirtyEntityRecords();
-			const pendingSavedRecords = [];
-
-			dirtyRecords.forEach(({ kind, name, key }) => {
-				pendingSavedRecords.push(
-					saveEditedEntityRecord(kind, name, key)
-				);
+			await save({
+				successMessage: __('Settings Updated.', 'surecart'),
 			});
-
-			const values = await Promise.all(pendingSavedRecords);
-			if (values.some((value) => typeof value === 'undefined')) {
-				throw new Error(__('Saving failed.', 'surecart'));
-			}
-
-			createSuccessNotice(__('Updated', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (error) {
-			setError(error);
-			console.log(error);
+		} catch (e) {
+			console.error(e);
+			setError(e);
 		}
 	};
 
 	const onToggleShipping = (e) => {
-		console.log('called');
 		e.preventDefault();
 		editShippingProtocol({
 			shipping_enabled: !shippingProtocol?.shipping_enabled,
@@ -93,7 +91,7 @@ export default () => {
 	return (
 		<Fragment>
 			<SettingsTemplate
-				title={__('Shipping and Delivery', 'surecart')}
+				title={__('Shipping', 'surecart')}
 				icon={<ScIcon name="truck" />}
 				noButton
 				onSubmit={onSubmit}
@@ -101,13 +99,13 @@ export default () => {
 				<Error error={error} setError={setError} margin="80px" />{' '}
 				<SettingsBox
 					loading={!hasLoadedShippingProtocol}
-					title={__('Protocol', 'surecart')}
+					title={__('Shipping Settings', 'surecart')}
 				>
 					<ScSwitch
 						checked={shippingProtocol?.shipping_enabled}
 						onClick={onToggleShipping}
 					>
-						{__('Shipping Enabled', 'surecart')}
+						{__('Enable Shipping', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
 								'When disabled, all shipping costs will be zero and shipping will not be available.',
@@ -116,102 +114,123 @@ export default () => {
 						</span>
 					</ScSwitch>
 				</SettingsBox>
-				<SettingsBox
-					title={__('Shipping', 'surecart')}
-					description={__(
-						'Choose where you ship and how much you charge for shipping at checkout',
-						'surecart'
-					)}
-					end={
-						<ScButton
-							type="primary"
-							onClick={() => setShowAddShipping(true)}
+				{shippingProtocol?.shipping_enabled && (
+					<>
+						<SettingsBox
+							title={__('Shipping', 'surecart')}
+							description={__(
+								'Choose where you ship and how much you charge for shipping at checkout',
+								'surecart'
+							)}
+							loading={loading}
+							wrapperTag="div"
+							noButton
 						>
-							<ScIcon name="plus" />
-							{__('Add New', 'surecart')}
-						</ScButton>
-					}
-					loading={loading}
-					wrapperTag="div"
-					noButton
-				>
-					<ScCard noPadding style={{ overflow: 'hidden' }}>
-						{shippingProfiles?.length ? (
-							<ScStackedList>
-								{shippingProfiles.map((shippingProfile) => (
-									<ScStackedListRow
-										key={shippingProfile.id}
-										href={addQueryArgs(
-											window.location.href,
-											{
-												type: 'shipping_profile',
-												profile: shippingProfile.id,
-											}
+							<ScCard>
+								<div
+									css={css`
+										display: grid;
+										gap: var(--sc-spacing-large);
+										--sc-input-label-margin: var(
+											--sc-spacing-small
+										);
+									`}
+								>
+									{!!defaultShippingProfile && (
+										<ScFormControl
+											label={__(
+												'General shipping rates',
+												'surecart'
+											)}
+										>
+											<ScCard noPadding>
+												<ShippingProfileListItem
+													style={{
+														'--sc-list-row-background-color':
+															'var(--sc-color-brand-main-background)',
+													}}
+													shippingProfile={
+														defaultShippingProfile
+													}
+													productsCount={
+														shippingProfiles?.length
+															? __(
+																	'All products not in other profiles',
+																	'surecart'
+															  )
+															: __(
+																	'All products',
+																	'surecart'
+															  )
+													}
+												/>
+											</ScCard>
+										</ScFormControl>
+									)}
+									<ScFormControl
+										label={__(
+											'Custom shipping rates',
+											'surecart'
 										)}
-										style={{
-											'--columns': '2',
-										}}
 									>
-										<div>
-											<strong>
-												{shippingProfile.name}
-											</strong>
-											<div
-												css={css`
-													margin-top: var(
-														--sc-spacing-medium
-													);
-												`}
-											>
-												{
-													shippingProfile?.products
-														?.pagination?.count
-												}{' '}
-												{__('Products', 'surecart')}
-											</div>
+										<div
+											css={css`
+												display: grid;
+												gap: var(--sc-spacing-large);
+											`}
+										>
+											{!!shippingProfiles?.length && (
+												<ScCard noPadding>
+													<ScStackedList>
+														{shippingProfiles.map(
+															(
+																shippingProfile
+															) => (
+																<ShippingProfileListItem
+																	key={
+																		shippingProfile.id
+																	}
+																	shippingProfile={
+																		shippingProfile
+																	}
+																/>
+															)
+														)}
+													</ScStackedList>
+												</ScCard>
+											)}
+											<ScCard noPadding>
+												<ScEmpty>
+													{__(
+														'Add custom rates or destination restrictions for groups of products.',
+														'surecart'
+													)}
+													<ScButton
+														onClick={() =>
+															setShowAddShipping(
+																true
+															)
+														}
+													>
+														<ScIcon
+															name="plus"
+															slot="prefix"
+														/>
+														{__(
+															'Add New Profile',
+															'surecart'
+														)}
+													</ScButton>
+												</ScEmpty>
+											</ScCard>
 										</div>
-										<div>
-											<strong>
-												{__('Zones', 'surecart')}
-											</strong>
-
-											<ul
-												css={css`
-													list-style: none;
-												`}
-											>
-												{shippingProfile?.shipping_zones
-													?.data.length === 0 && (
-													<li>_</li>
-												)}
-												{shippingProfile?.shipping_zones?.data.map(
-													(shippingZone) => (
-														<li
-															key={
-																shippingZone.id
-															}
-														>
-															{shippingZone.name}
-														</li>
-													)
-												)}
-											</ul>
-										</div>
-										<ScIcon
-											name="chevron-right"
-											slot="suffix"
-										></ScIcon>
-									</ScStackedListRow>
-								))}
-							</ScStackedList>
-						) : (
-							<ScEmpty icon="truck">
-								{__('No shipping present', 'surecart')}
-							</ScEmpty>
-						)}
-					</ScCard>
-				</SettingsBox>
-				<ShippingMethods />
+									</ScFormControl>
+								</div>
+							</ScCard>
+						</SettingsBox>
+						<ShippingMethods />
+					</>
+				)}
 			</SettingsTemplate>
 			<AddShippingProfile
 				open={showAddShipping}

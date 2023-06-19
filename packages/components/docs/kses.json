@@ -1712,6 +1712,15 @@
     "class": true,
     "slot": true
   },
+  "sc-shipping-choices": {
+    "label": true,
+    "shipping-choices": true,
+    "show-description": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-skeleton": {
     "effect": true,
     "style": true,

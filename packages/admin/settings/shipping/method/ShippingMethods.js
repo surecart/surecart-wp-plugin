@@ -9,6 +9,7 @@ import {
 	ScButton,
 	ScDropdown,
 	ScIcon,
+	ScCard,
 	ScMenu,
 	ScMenuItem,
 	ScStackedList,
@@ -103,57 +104,77 @@ export default () => {
 			}
 			loading={loadingMethods}
 			noButton
+			wrapperTag="div"
 			description={__(
 				'Create customized shipping methods to accommodate diverse needs, including options for speed, affordability, and promotional incentives.',
 				'surecart'
 			)}
 		>
 			<Error error={error} setError={setError} />
-			<ScStackedList>
-				{shippingMethods.map((shippingMethod) => (
-					<ScStackedListRow
-						key={shippingMethod.id}
-						style={{
-							'--columns': '3',
-						}}
-					>
-						<strong>{shippingMethod.name}</strong>
-						<div>{shippingMethod.description}</div>
-						<div>
-							<ScDropdown slot="suffix" placement="bottom-end">
-								<ScButton type="text" slot="trigger" circle>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() => {
-											setSelectedShippingMethod(
-												shippingMethod
-											);
-											setCurrentModal(
-												modals.MODAL_EDIT_METHOD
-											);
-										}}
+			<ScCard noPadding>
+				<ScStackedList>
+					{shippingMethods.map((shippingMethod) => (
+						<ScStackedListRow
+							key={shippingMethod.id}
+							style={{
+								'--columns': '3',
+							}}
+						>
+							<strong>{shippingMethod.name}</strong>
+							<div
+								css={css`
+									color: var(--sc-color-gray-600);
+								`}
+							>
+								{shippingMethod.description || '\u2013'}
+							</div>
+							<div>
+								<ScDropdown
+									slot="suffix"
+									placement="bottom-end"
+								>
+									<ScButton
+										type="text"
+										slot="trigger"
+										size="small"
+										circle
 									>
-										<ScIcon slot="prefix" name="edit" />
-										{__('Edit', 'surecart')}
-									</ScMenuItem>
-									<ScMenuItem
-										onClick={() =>
-											onDeleteShippingMethod(
-												shippingMethod.id
-											)
-										}
-									>
-										<ScIcon slot="prefix" name="trash" />
-										{__('Delete', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-						</div>
-					</ScStackedListRow>
-				))}
-			</ScStackedList>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() => {
+												setSelectedShippingMethod(
+													shippingMethod
+												);
+												setCurrentModal(
+													modals.MODAL_EDIT_METHOD
+												);
+											}}
+										>
+											<ScIcon slot="prefix" name="edit" />
+											{__('Edit', 'surecart')}
+										</ScMenuItem>
+										<ScMenuItem
+											onClick={() =>
+												onDeleteShippingMethod(
+													shippingMethod.id
+												)
+											}
+										>
+											<ScIcon
+												slot="prefix"
+												name="trash"
+											/>
+											{__('Delete', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							</div>
+						</ScStackedListRow>
+					))}
+				</ScStackedList>
+			</ScCard>
 			{hasPagination && (
 				<div
 					css={css`

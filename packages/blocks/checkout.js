@@ -38,6 +38,7 @@ import * as total from '@blocks/Total';
 import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
+import * as shippingChoices from '@blocks/ShippingChoices';
 
 import { registerBlocks } from './register-block';
 
@@ -78,6 +79,7 @@ registerBlocks([
 	switchBlock,
 	total,
 	totals,
+	shippingChoices,
 	shippingLineItem,
 	...(!!window?.scBlockData?.entitlements?.bumps ? [orderBumps] : []),
 	...(!!window?.scBlockData?.entitlements?.conditional_forms

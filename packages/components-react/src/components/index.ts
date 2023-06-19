@@ -157,6 +157,7 @@ export const ScRichText = /*@__PURE__*/createReactComponent<JSX.ScRichText, HTML
 export const ScSecureNotice = /*@__PURE__*/createReactComponent<JSX.ScSecureNotice, HTMLScSecureNoticeElement>('sc-secure-notice');
 export const ScSelect = /*@__PURE__*/createReactComponent<JSX.ScSelect, HTMLScSelectElement>('sc-select');
 export const ScSessionProvider = /*@__PURE__*/createReactComponent<JSX.ScSessionProvider, HTMLScSessionProviderElement>('sc-session-provider');
+export const ScShippingChoices = /*@__PURE__*/createReactComponent<JSX.ScShippingChoices, HTMLScShippingChoicesElement>('sc-shipping-choices');
 export const ScSkeleton = /*@__PURE__*/createReactComponent<JSX.ScSkeleton, HTMLScSkeletonElement>('sc-skeleton');
 export const ScSpacing = /*@__PURE__*/createReactComponent<JSX.ScSpacing, HTMLScSpacingElement>('sc-spacing');
 export const ScSpinner = /*@__PURE__*/createReactComponent<JSX.ScSpinner, HTMLScSpinnerElement>('sc-spinner');

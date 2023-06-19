@@ -109,6 +109,7 @@ graph TD;
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
+  sc-form-components-validator --> sc-shipping-choices
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -142,6 +143,12 @@ graph TD;
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
+  sc-shipping-choices --> sc-form-control
+  sc-shipping-choices --> sc-radio-group
+  sc-shipping-choices --> sc-radio
+  sc-shipping-choices --> sc-flex
+  sc-shipping-choices --> sc-format-number
+  sc-shipping-choices --> sc-block-ui
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module
