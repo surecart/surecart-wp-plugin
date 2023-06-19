@@ -21,7 +21,7 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 		$service->shouldReceive('domainMatches')->once()->andReturn(true);
 		$service->shouldReceive('hasSigningSecret')->once()->andReturn(true);
 
-		$this->assertNull($service->maybeCreateWebhooks());
+		$this->assertNull($service->maybeCreateWebhook());
 	}
 
 	public function test_registers_webhooks_if_doesnt_have_signing_secret() {
@@ -30,9 +30,16 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 		$service->shouldReceive('hasToken')->once()->andReturn(true);
 		$service->shouldReceive('domainMatches')->once()->andReturn(true);
 		$service->shouldReceive('hasSigningSecret')->once()->andReturn(false);
-		$service->shouldReceive('register')->once()->andReturn(new Webhook(['signing_secret' => 'secret']));
+		$service->shouldReceive('register')->once()->andReturn(
+			new Webhook(
+				[
+					'signing_secret' => 'secret',
+					'url' => 'http://test.com',
+				]
+			)
+		);
 
-		$this->assertTrue($service->maybeCreateWebhooks()); // created.
+		$service->maybeCreateWebhook(); // created.
 		$this->assertSame($service->getSigningSecret(), 'secret'); // stored signing secret.
 	}
 
@@ -41,9 +48,16 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
 		$service->shouldReceive('hasToken')->once()->andReturn(true);
 		$service->shouldReceive('domainMatches')->once()->andReturn(false);
-		$service->shouldReceive('register')->once()->andReturn(new Webhook(['signing_secret' => 'secret1']));
+		$service->shouldReceive('register')->once()->andReturn(
+			new Webhook(
+				[
+					'signing_secret' => 'secret1',
+					'url' => 'http://test.com',
+				]
+			)
+		);
 
-		$this->assertTrue($service->maybeCreateWebhooks()); // created.
+		$service->maybeCreateWebhook(); // created.
 		$this->assertSame($service->getSigningSecret(), 'secret1'); // stored signing secret.
 	}
 }

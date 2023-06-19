@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Unit\Services;
 
+use SureCart\Support\Encryption;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Webhooks\WebHooksHistoryService;
 
@@ -10,6 +11,8 @@ use SureCart\Webhooks\WebHooksHistoryService;
  */
 class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
+	private WebHooksHistoryService $service;
 
 	/**
 	 * Set up a new app instance to use for tests.
@@ -25,26 +28,65 @@ class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Permissions\RolesServiceProvider::class,
+				\SureCart\Background\BackgroundServiceProvider::class,
 			]
 		], false);
+
+		$this->service = new WebHooksHistoryService();
 
 		parent::setUp();
 	}
 
-
-	public function test_stores_previous_domain_when_domain_changes()
+	public function test_webhook_notice_is_shown()
 	{
-		$service = new WebHooksHistoryService();
-		$this->assertEmpty($service->getPreviousDomain());
-		$this->assertFalse($service->maybeShowDomainChangeNotice());
+		ob_start();
+		$this->service->maybeShowDomainChangeNotice();
+		$result = ob_get_clean();
 
-		$service->setPreviousWebhook(['id' => 'asdf', 'url' => 'foo.com']);
-		$this->assertSame('foo.com', $service->getPreviousDomain());
+		$this->assertStringContainsString('action=create_webhook', $result);
+	}
+
+	public function test_webhook_notice_is_not_shown_if_already_registered()
+	{
+		$this->service->saveRegisteredWebhook(
+			[
+				'id'  		     => 'asdf',
+				'url' 			 => 'http://test.com',
+				'webhook_events' => ['test'],
+				'signing_secret' => Encryption::encrypt( '1234' ),
+			],
+		);
+
+		$this->assertCount(1, $this->service->getRegisteredWebhooks());
 
 		ob_start();
-		$service->maybeShowDomainChangeNotice();
+		$this->service->maybeShowDomainChangeNotice();
 		$result = ob_get_clean();
-		$this->assertStringContainsString('action=remove_webhook', $result);
+
+		$this->assertEmpty($result);
+	}
+
+	public function test_webhook_notice_shown_on_url_change()
+	{
+		$this->service->saveRegisteredWebhook(
+			[
+				'id'  		     => 'asdf',
+				'url' 			 => 'https://test.com', // https url, but our current listener url is http
+				'webhook_events' => ['test'],
+				'signing_secret' => Encryption::encrypt( '1234' ),
+			],
+		);
+
+		$this->assertArrayHasKey('id', $this->service->getPreviousWebhook());
+		$this->assertContains('https://test.com', $this->service->getPreviousWebhook()['url']);
+
+		ob_start();
+		$this->service->maybeShowDomainChangeNotice();
+		$result = ob_get_clean();
+
 		$this->assertStringContainsString('action=ignore_webhook', $result);
+		$this->assertStringContainsString('action=create_webhook', $result);
+		$this->assertStringContainsString('action=update_webhook', $result);
+		$this->assertStringContainsString('action=remove_webhook', $result);
 	}
 }

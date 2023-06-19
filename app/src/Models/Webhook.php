@@ -33,6 +33,10 @@ class Webhook extends Model {
 	 * @return string
 	 */
 	protected function getListenerUrl(): string {
+		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+			return 'http://test.com';
+		}
+
 		return get_home_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 

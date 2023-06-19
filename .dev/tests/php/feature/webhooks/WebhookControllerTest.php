@@ -24,6 +24,7 @@ class WebhookControllerTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Background\BackgroundServiceProvider::class,
 			]
 		], false);
 	}

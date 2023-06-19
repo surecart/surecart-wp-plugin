@@ -19,7 +19,7 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 			return new SyncService();
 		};
 
-		$container['surecart.queue'] = function() {
+		$container['surecart.queue'] = function () use ( $container ) {
 			return new QueueService();
 		};
 
