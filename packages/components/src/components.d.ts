@@ -1769,6 +1769,12 @@ export namespace Components {
         "loading": boolean;
         "order": Checkout;
     }
+    interface ScLineItemShipping {
+        /**
+          * Label
+         */
+        "label": string;
+    }
     interface ScLineItemTax {
         "loading": boolean;
         "order": Checkout;
@@ -4479,6 +4485,12 @@ declare global {
         prototype: HTMLScLineItemBumpElement;
         new (): HTMLScLineItemBumpElement;
     };
+    interface HTMLScLineItemShippingElement extends Components.ScLineItemShipping, HTMLStencilElement {
+    }
+    var HTMLScLineItemShippingElement: {
+        prototype: HTMLScLineItemShippingElement;
+        new (): HTMLScLineItemShippingElement;
+    };
     interface HTMLScLineItemTaxElement extends Components.ScLineItemTax, HTMLStencilElement {
     }
     var HTMLScLineItemTaxElement: {
@@ -5227,6 +5239,7 @@ declare global {
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
+        "sc-line-item-shipping": HTMLScLineItemShippingElement;
         "sc-line-item-tax": HTMLScLineItemTaxElement;
         "sc-line-item-total": HTMLScLineItemTotalElement;
         "sc-line-items": HTMLScLineItemsElement;
@@ -7303,6 +7316,12 @@ declare namespace LocalJSX {
         "label"?: string;
         "loading"?: boolean;
         "order"?: Checkout;
+    }
+    interface ScLineItemShipping {
+        /**
+          * Label
+         */
+        "label"?: string;
     }
     interface ScLineItemTax {
         "loading"?: boolean;
@@ -9546,6 +9565,7 @@ declare namespace LocalJSX {
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
+        "sc-line-item-shipping": ScLineItemShipping;
         "sc-line-item-tax": ScLineItemTax;
         "sc-line-item-total": ScLineItemTotal;
         "sc-line-items": ScLineItems;
@@ -9749,6 +9769,7 @@ declare module "@stencil/core" {
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
+            "sc-line-item-shipping": LocalJSX.ScLineItemShipping & JSXBase.HTMLAttributes<HTMLScLineItemShippingElement>;
             "sc-line-item-tax": LocalJSX.ScLineItemTax & JSXBase.HTMLAttributes<HTMLScLineItemTaxElement>;
             "sc-line-item-total": LocalJSX.ScLineItemTotal & JSXBase.HTMLAttributes<HTMLScLineItemTotalElement>;
             "sc-line-items": LocalJSX.ScLineItems & JSXBase.HTMLAttributes<HTMLScLineItemsElement>;

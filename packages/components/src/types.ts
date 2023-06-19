@@ -522,6 +522,7 @@ export interface Checkout extends Object {
   discount_amount?: number;
   discount?: DiscountResponse;
   billing_address?: string | Address;
+  shipping_amount:number,
   shipping_address?: string | Address;
   shipping_enabled?: boolean;
   processor_data?: ProcessorData;

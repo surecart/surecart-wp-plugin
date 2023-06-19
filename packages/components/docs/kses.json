@@ -899,6 +899,13 @@
     "class": true,
     "slot": true
   },
+  "sc-line-item-shipping": {
+    "label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-line-item-tax": {
     "loading": true,
     "order": true,

@@ -85,6 +85,7 @@ export const ScInvoicesList = /*@__PURE__*/createReactComponent<JSX.ScInvoicesLi
 export const ScLicensesList = /*@__PURE__*/createReactComponent<JSX.ScLicensesList, HTMLScLicensesListElement>('sc-licenses-list');
 export const ScLineItem = /*@__PURE__*/createReactComponent<JSX.ScLineItem, HTMLScLineItemElement>('sc-line-item');
 export const ScLineItemBump = /*@__PURE__*/createReactComponent<JSX.ScLineItemBump, HTMLScLineItemBumpElement>('sc-line-item-bump');
+export const ScLineItemShipping = /*@__PURE__*/createReactComponent<JSX.ScLineItemShipping, HTMLScLineItemShippingElement>('sc-line-item-shipping');
 export const ScLineItemTax = /*@__PURE__*/createReactComponent<JSX.ScLineItemTax, HTMLScLineItemTaxElement>('sc-line-item-tax');
 export const ScLineItemTotal = /*@__PURE__*/createReactComponent<JSX.ScLineItemTotal, HTMLScLineItemTotalElement>('sc-line-item-total');
 export const ScLineItems = /*@__PURE__*/createReactComponent<JSX.ScLineItems, HTMLScLineItemsElement>('sc-line-items');
