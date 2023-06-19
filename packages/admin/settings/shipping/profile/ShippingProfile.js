@@ -6,6 +6,7 @@ import { getQueryArg, removeQueryArgs } from '@wordpress/url';
 import { useState } from '@wordpress/element';
 import SettingsBox from '../../SettingsBox';
 import {
+	ScAlert,
 	ScButton,
 	ScDropdown,
 	ScIcon,
@@ -52,6 +53,43 @@ export default () => {
 		},
 		[shippingProfileId]
 	);
+
+	const {
+		shippingZones,
+		loadingShippingZones,
+		fetchingShippingZones,
+		hasRates,
+	} = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'shipping-zone',
+			{
+				shipping_profile_ids: [shippingProfileId],
+				per_page: 100,
+				expand: ['shipping_rates', 'shipping_rates.shipping_method'],
+			},
+		];
+
+		const loading = select(coreStore).isResolving(
+			'getEntityRecords',
+			queryArgs
+		);
+
+		const shippingZones =
+			select(coreStore).getEntityRecords(...queryArgs) || [];
+
+		const hasRates = shippingZones.some(
+			(zone) => zone.shipping_rates?.data?.length
+		);
+
+		return {
+			shippingZones,
+			hasRates: hasRates || loading,
+			loadingShippingZones: loading && !shippingZones?.length,
+			fetchingShippingZones: loading && !!shippingZones?.length,
+		};
+	});
+
 	const { editEntityRecord, saveEditedEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async () => {
@@ -129,6 +167,18 @@ export default () => {
 			noButton
 		>
 			<Error error={error} setError={setError} margin="80px" />
+			{!hasRates && (
+				<ScAlert
+					type="warning"
+					open
+					title={__('No shipping rates', 'surecart')}
+				>
+					{__(
+						"Customers won't be able to complete checkout for products in this profile",
+						'surecart'
+					)}
+				</ScAlert>
+			)}
 			<SettingsBox
 				title={__('Profile Details', 'surecart')}
 				loading={loadingShippingProfile}
@@ -144,15 +194,19 @@ export default () => {
 					help={__("Customers won't see this.", 'surecart')}
 				/>
 			</SettingsBox>
+
 			<Products
 				shippingProfileId={shippingProfileId}
 				loading={loadingShippingProfile}
 				products={shippingProfile?.products?.data}
 				isDefaultProfile={!!shippingProfile.default}
 			/>
+
 			<ShippingZones
+				shippingZones={shippingZones}
+				loading={loadingShippingZones}
+				fetching={fetchingShippingZones}
 				shippingProfileId={shippingProfileId}
-				loading={loadingShippingProfile}
 				fallbackZoneId={shippingProfile?.fallback_shipping_zone}
 			/>
 

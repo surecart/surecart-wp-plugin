@@ -70,6 +70,7 @@ export interface ChoiceItem extends Object {
   value: string;
   label: string;
   disabled?: boolean;
+  checked?: boolean;
   choices?: ChoiceItem[];
   suffix?: string;
   icon?: string;

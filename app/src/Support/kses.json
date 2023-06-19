@@ -1676,6 +1676,7 @@
   "sc-select": {
     "autocomplete": true,
     "choices": true,
+    "close-on-select": true,
     "disabled": true,
     "help": true,
     "hoist": true,

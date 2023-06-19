@@ -56,7 +56,7 @@ export default ({ shippingProfile, productsCount, className, style }) => {
 					{shippingProfile?.shipping_zones?.data.length === 0 && (
 						<li>
 							{__(
-								'No shipping rates available for products in this profile',
+								'No shipping rates available for customers to choose from.',
 								'surecart'
 							)}
 						</li>

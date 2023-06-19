@@ -100,6 +100,10 @@ export default () => {
 				<SettingsBox
 					loading={!hasLoadedShippingProtocol}
 					title={__('Shipping Settings', 'surecart')}
+					description={__(
+						'Turning on shipping allows you to restrict purchase areas and charge shipping costs.',
+						'surecart'
+					)}
 				>
 					<ScSwitch
 						checked={shippingProtocol?.shipping_enabled}

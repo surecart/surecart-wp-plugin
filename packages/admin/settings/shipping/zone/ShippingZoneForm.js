@@ -200,12 +200,15 @@ export default ({
 							) : null}
 							<ScSelect
 								search
+								closeOnSelect={false}
 								onScChange={onCountrySelect}
-								choices={countryChoices.filter(
-									(countryChoice) =>
-										!zoneCountries.includes(
+								choices={countryChoices.map(
+									(countryChoice) => ({
+										...countryChoice,
+										checked: zoneCountries.includes(
 											countryChoice.value
-										)
+										),
+									})
 								)}
 								value=""
 							/>
@@ -249,7 +252,10 @@ export default ({
 					: __('Add Zone', 'surecart')
 			}
 			onScRequestClose={onRequestClose}
-			style={{ '--dialog-body-overflow': 'visible' }}
+			style={{
+				'--dialog-body-overflow': 'visible',
+				'--body-spacing': 'var(--sc-spacing-xx-large)',
+			}}
 			noHeader={!isEdit}
 		>
 			{!isEdit && (

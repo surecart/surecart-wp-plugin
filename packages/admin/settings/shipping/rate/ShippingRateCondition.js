@@ -50,9 +50,5 @@ export default ({ shippingRate }) => {
 			</Fragment>
 		);
 	}
-	return (
-		<Fragment>
-			<ScTag type="primary">{__('Flat Rate', 'surecart')}</ScTag>
-		</Fragment>
-	);
+	return <ScTag type="default">{__('Flat Rate', 'surecart')}</ScTag>;
 };
