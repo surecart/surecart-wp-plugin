@@ -201,6 +201,43 @@ class Currency {
 		return self::getCurrencySymbol( $currency_code ) . self::formatCurrencyNumber( $amount );
 	}
 
+	/**
+	 * Get zero decimal currencies in uppercase.
+	 *
+	 * @return array
+	 */
+	public static function getZeroDecicalCurrencies(): array {
+		return array(
+			'BIF',
+			'BYR',
+			'CLP',
+			'DJF',
+			'GNF',
+			'HUF',
+			'ISK',
+			'JPY',
+			'KMF',
+			'KRW',
+			'PYG',
+			'RWF',
+			'UGX',
+			'VND',
+			'VUV',
+			'XAF',
+			'XAG',
+			'XAU',
+			'XBA',
+			'XBB',
+			'XBC',
+			'XBD',
+			'XDR',
+			'XOF',
+			'XPD',
+			'XPF',
+			'XPT',
+			'XTS',
+		);
+	}
 
 	/**
 	 * Format the currency number
@@ -208,7 +245,7 @@ class Currency {
 	public static function formatCurrencyNumber( $amount, $currency_code = 'usd' ) {
 		$amount = (float) $amount;
 		// TODO: Test this.
-		if ( in_array( strtolower( $currency_code ), [ 'bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw' ], true ) ) {
+		if ( in_array( strtoupper( $currency_code ), self::getZeroDecicalCurrencies(), true ) ) {
 			return self::formatCents( $amount, 1 );
 		}
 		return self::formatCents( $amount / 100, 1 );
@@ -391,25 +428,7 @@ class Currency {
 	 * @return bool
 	 */
 	public static function isZeroDecimal( $currency ) {
-		$is_zero = array(
-			'BIF',
-			'CLP',
-			'DJF',
-			'GNF',
-			'JPY',
-			'KMF',
-			'KRW',
-			'MGA',
-			'PYG',
-			'RWF',
-			'VND',
-			'VUV',
-			'XAF',
-			'XOF',
-			'XPF',
-		);
-
-		return in_array( strtoupper( $currency ), $is_zero );
+		return in_array( strtoupper( $currency ), self::getZeroDecicalCurrencies(), true );
 	}
 
 	/**

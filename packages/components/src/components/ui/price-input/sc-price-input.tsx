@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from '@stencil/core';
 import { getCurrencySymbol } from '../../../functions/price';
 import { FormSubmitController } from '../../../functions/form-data';
-import { isZeroDecimal, maybeConvertAmount } from '../../util/format-number/functions/utils';
+import { isZeroDecimal, maybeConvertAmount } from '../../../functions/currency';
 
 /**
  * @part base - The elements base wrapper.
