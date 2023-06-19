@@ -70,6 +70,8 @@ export class ScSelectDropdown {
   /** Is search enabled? */
   @Prop() search: boolean;
 
+  @Prop() closeOnSelect: boolean = true;
+
   /** The input's name attribute. */
   @Prop({ reflect: true }) name: string;
 
@@ -190,7 +192,10 @@ export class ScSelectDropdown {
     return false;
   }
 
-  isChecked({ value }) {
+  isChecked({ value, checked = false }) {
+    if (checked) {
+      return true;
+    }
     return this.value === value;
   }
 
@@ -449,6 +454,7 @@ export class ScSelectDropdown {
             exportparts="trigger, panel"
             disabled={this.disabled}
             open={this.open}
+            closeOnSelect={this.closeOnSelect}
             position={this.position}
             placement={this.placement}
             hoist={this.hoist}

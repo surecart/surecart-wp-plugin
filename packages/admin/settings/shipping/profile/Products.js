@@ -61,16 +61,11 @@ export default ({
 				queryArgs
 			);
 
-			const fetchedProducts =
+			const products =
 				select(coreStore).getEntityRecords(...queryArgs) || [];
 
 			return {
-				products: Array.from(
-					new Set(
-						fetchedProducts.map((item) => JSON.stringify(item))
-					),
-					JSON.parse
-				),
+				products,
 				loading: loading && !products?.length,
 			};
 		},

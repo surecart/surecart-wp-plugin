@@ -3031,6 +3031,7 @@ export namespace Components {
           * The input's value attribute.
          */
         "choices": Array<ChoiceItem>;
+        "closeOnSelect": boolean;
         "disabled": boolean;
         /**
           * Some help text for the input.
@@ -8724,6 +8725,7 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "choices"?: Array<ChoiceItem>;
+        "closeOnSelect"?: boolean;
         "disabled"?: boolean;
         /**
           * Some help text for the input.

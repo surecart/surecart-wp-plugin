@@ -1,11 +1,13 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsBox from '../../SettingsBox';
-import { ScButton, ScFlex, ScIcon, ScEmpty } from '@surecart/components-react';
-import { Fragment, useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
+import {
+	ScButton,
+	ScFlex,
+	ScIcon,
+	ScBlockUi,
+	ScAlert,
+} from '@surecart/components-react';
+import { useState } from '@wordpress/element';
 import ShippingZone from './ShippingZone';
 import ShippingZoneForm from './ShippingZoneForm';
 
@@ -14,46 +16,31 @@ const modals = {
 	ADD_ZONE: 'add_shipping_zone',
 };
 
-export default ({ shippingProfileId, fallbackZoneId }) => {
+export default ({
+	shippingProfileId,
+	shippingZones,
+	fallbackZoneId,
+	loading,
+	fetching,
+}) => {
 	const [currentModal, setCurrentModal] = useState('');
 	const [selectedZone, setSelectedZone] = useState();
 
-	const { shippingZones, loading, busy } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'shipping-zone',
-			{
-				shipping_profile_ids: [shippingProfileId],
-				per_page: 100,
-				expand: ['shipping_rates', 'shipping_rates.shipping_method'],
-			},
-		];
-
-		const loading = select(coreStore).isResolving(
-			'getEntityRecords',
-			queryArgs
-		);
-
-		const shippingZones =
-			select(coreStore).getEntityRecords(...queryArgs) || [];
-
-		return {
-			shippingZones,
-			loading: loading && !shippingZones?.length,
-			busy: loading && !!shippingZones?.length,
-		};
-	});
-
 	return (
-		<Fragment>
+		<>
 			<SettingsBox
 				title={__('Shipping Zones', 'surecart')}
+				description={__(
+					'Shipping zones are geographic regions where you ship products.',
+					'surecart'
+				)}
 				end={
 					<ScButton
 						type="primary"
 						onClick={() => setCurrentModal(modals.ADD_ZONE)}
 					>
-						<ScIcon name="plus" /> {__('Create Zone', 'surecart')}
+						<ScIcon name="plus" slot="prefix" />
+						{__('Create Zone', 'surecart')}
 					</ScButton>
 				}
 				loading={loading}
@@ -69,16 +56,24 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 									setCurrentModal(modals.EDIT_ZONE);
 									setSelectedZone(shippingZone);
 								}}
-								parentBusy={busy}
+								parentBusy={fetching}
 								isFallback={shippingZone.id === fallbackZoneId}
 							/>
 						))
 					) : (
-						<ScEmpty icon="map">
-							{__('No shipping zones present.', 'surecart')}
-						</ScEmpty>
+						<ScAlert
+							type="warning"
+							open
+							title={__('No shipping zones or rates', 'surecart')}
+						>
+							{__(
+								"Customers won't be able to complete checkout for products in this profile.",
+								'surecart'
+							)}
+						</ScAlert>
 					)}
 				</ScFlex>
+				{fetching && <ScBlockUi spinner />}
 			</SettingsBox>
 			{currentModal && (
 				<ShippingZoneForm
@@ -92,6 +87,6 @@ export default ({ shippingProfileId, fallbackZoneId }) => {
 					isEdit={currentModal === modals.EDIT_ZONE}
 				/>
 			)}
-		</Fragment>
+		</>
 	);
 };

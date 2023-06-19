@@ -15,6 +15,7 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScBlockUi,
+	ScAlert,
 } from '@surecart/components-react';
 import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
@@ -85,74 +86,93 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 	const renderShippingRates = (shippingRates) => {
 		if (!shippingRates?.data?.length) {
 			return (
-				<ScEmpty>{__('No shipping rates present', 'surecart')}</ScEmpty>
+				<ScAlert
+					type="warning"
+					open
+					title={__('No shipping rates', 'surecart')}
+				>
+					{__(
+						"Customers won't be able to complete checkout for products in this zone.",
+						'surecart'
+					)}
+				</ScAlert>
 			);
 		}
 
 		return (
-			<ScTable>
-				<ScTableCell slot="head">{__('Name', 'surecart')}</ScTableCell>
-				<ScTableCell slot="head">
-					{__('Condition', 'surecart')}
-				</ScTableCell>
-				<ScTableCell slot="head">{__('Price', 'surecart')}</ScTableCell>
-				<ScTableCell slot="head"></ScTableCell>
-				{shippingRates?.data?.map((shippingRate) => (
-					<ScTableRow href="#" key={shippingRate.id}>
-						<ScTableCell>
-							{shippingRate.shipping_method?.name}
-						</ScTableCell>
-						<ScTableCell>
-							<ShippingRateCondition
-								shippingRate={shippingRate}
-							/>
-						</ScTableCell>
-						<ScTableCell>
-							<ScFormatNumber
-								value={shippingRate.amount}
-								type="currency"
-								currency={shippingRate.currency}
-							/>
-						</ScTableCell>
-						<ScTableCell>
-							<ScDropdown placement="bottom-end">
-								<ScButton type="text" slot="trigger" circle>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() => {
-											setSelectedShippingRate(
-												shippingRate
-											);
-											setCurrentModal(modals.EDIT_RATE);
-										}}
-									>
-										<ScIcon slot="prefix" name="edit" />
-										{__('Edit', 'surecart')}
-									</ScMenuItem>
-									<ScMenuItem
-										onClick={() =>
-											onRemoveShippingRate(
-												shippingRate.id
-											)
-										}
-									>
-										<ScIcon slot="prefix" name="trash" />
-										{__('Remove', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
-						</ScTableCell>
-					</ScTableRow>
-				))}
-			</ScTable>
+			<ScCard noPadding>
+				<ScTable>
+					<ScTableCell slot="head">
+						{__('Name', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Condition', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head">
+						{__('Price', 'surecart')}
+					</ScTableCell>
+					<ScTableCell slot="head"></ScTableCell>
+					{shippingRates?.data?.map((shippingRate) => (
+						<ScTableRow href="#" key={shippingRate.id}>
+							<ScTableCell>
+								{shippingRate.shipping_method?.name}
+							</ScTableCell>
+							<ScTableCell>
+								<ShippingRateCondition
+									shippingRate={shippingRate}
+								/>
+							</ScTableCell>
+							<ScTableCell>
+								<ScFormatNumber
+									value={shippingRate.amount}
+									type="currency"
+									currency={shippingRate.currency}
+								/>
+							</ScTableCell>
+							<ScTableCell>
+								<ScDropdown placement="bottom-end">
+									<ScButton type="text" slot="trigger" circle>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() => {
+												setSelectedShippingRate(
+													shippingRate
+												);
+												setCurrentModal(
+													modals.EDIT_RATE
+												);
+											}}
+										>
+											<ScIcon slot="prefix" name="edit" />
+											{__('Edit', 'surecart')}
+										</ScMenuItem>
+										<ScMenuItem
+											onClick={() =>
+												onRemoveShippingRate(
+													shippingRate.id
+												)
+											}
+										>
+											<ScIcon
+												slot="prefix"
+												name="trash"
+											/>
+											{__('Remove', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							</ScTableCell>
+						</ScTableRow>
+					))}
+				</ScTable>
+			</ScCard>
 		);
 	};
 
 	return (
 		<ScCard
-			key={shippingZone.id}
 			css={css`
 				position: relative;
 			`}
@@ -173,7 +193,7 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 					)}
 				</div>
 				<ScDropdown placement="bottom-end">
-					<ScButton type="text" slot="trigger" circle>
+					<ScButton type="text" slot="trigger" size="small" circle>
 						<ScIcon name="more-horizontal" />
 					</ScButton>
 					<ScMenu>
@@ -191,7 +211,8 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 			<Error error={error} setError={setError} />
 			{renderShippingRates(shippingZone?.shipping_rates)}
 			<ScButton onClick={() => setCurrentModal(modals.ADD_RATE)}>
-				<ScIcon name="plus" /> {__('Add Rate', 'surecart')}
+				<ScIcon name="plus" slot="prefix" />
+				{__('Add Rate', 'surecart')}
 			</ScButton>
 			{(busy || parentBusy) && (
 				<ScBlockUi
