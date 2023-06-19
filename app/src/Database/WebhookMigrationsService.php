@@ -23,36 +23,36 @@ class WebhookMigrationsService extends GeneralMigration {
 	 */
 	public function run(): void {
 		// Get the registered webhooks.
-		$webhookEvents = \SureCart::config()->webhook_events;
+		$webhook_events = \SureCart::config()->webhook_events;
 
 		// Get the registered webhooks.
-		$registeredWebhook = \SureCart::webhooks()->getRegisteredWebhook();
+		$registered_webhook = \SureCart::webhooks()->getRegisteredWebhook();
 
 		// Stop if webhook is not found.
-		if ( ! $registeredWebhook ) {
+		if ( ! $registered_webhook ) {
 			return;
 		}
 
 		// Update the webhook events on the server.
 		try {
-			$webhook = Webhook::find( $registeredWebhook['id'] );
+			$webhook = Webhook::find( $registered_webhook['id'] );
 			$webhook->update(
 				[
-					'webhook_events' => $webhookEvents,
+					'webhook_events' => $webhook_events,
 				]
 			);
 
 			// Update the webhooks to webhook history.
 			\SureCart::webhooks()->saveRegisteredWebhook(
 				[
-					'id'  			 => $webhook['id'],
-					'url' 			 => $webhook['url'],
+					'id'             => $webhook['id'],
+					'url'            => $webhook['url'],
 					'webhook_events' => $webhook['webhook_events'],
 					'signing_secret' => Encryption::encrypt( $webhook['signing_secret'] ),
 				]
 			);
 		} catch ( \Exception $exception ) {
-			// Do nothing.
+			wp_die( 'Webhook migration fails. Error: ' . esc_attr( $exception->getMessage() ) );
 		}
 	}
 }

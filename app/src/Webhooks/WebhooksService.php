@@ -47,20 +47,20 @@ class WebhooksService {
 
 	/**
 	 * May be create webhook.
-	 * 
-	 * Check if we have previous webhook registered for this site 
+	 *
+	 * Check if we have previous webhook registered for this site
 	 * but for staging or something else.
 	 *
 	 * @return void
 	 */
 	public function maybeCreateWebhook(): void {
 		// Get registered webhooks.
-		$registeredWebhooks = $this->domain_service->getRegisteredWebhooks() ?? [];
+		$registered_webhooks = $this->domain_service->getRegisteredWebhooks() ?? [];
 
 		// If there is a registered webhook, and the domain matched, then return.
 		$matched = false;
-		foreach ( $registeredWebhooks as $registeredWebhook ) {
-			if ( $this->domain_service->getDomain( $registeredWebhook['url'] ) === $this->domain_service->getDomain( Webhook::getListenerUrl() ) ) {
+		foreach ( $registered_webhooks as $registered_webhook ) {
+			if ( $this->domain_service->getDomain( $registered_webhook['url'] ) === $this->domain_service->getDomain( Webhook::getListenerUrl() ) ) {
 				$matched = true;
 			}
 		}
@@ -106,8 +106,8 @@ class WebhooksService {
 			// $this->setSigningSecret( $registered['signing_secret'] );
 			$this->saveRegisteredWebhook(
 				[
-					'id'  		     => $registered['id'],
-					'url' 			 => $registered['url'],
+					'id'             => $registered['id'],
+					'url'            => $registered['url'],
 					'webhook_events' => $registered['webhook_events'],
 					'signing_secret' => Encryption::encrypt( $registered['signing_secret'] ),
 				]
@@ -181,7 +181,7 @@ class WebhooksService {
 	/**
 	 * Save the webhook data to registered webhooks.
 	 *
-	 * @param array $webhook
+	 * @param array $webhook Webhook data.
 	 * @return bool
 	 */
 	public function saveRegisteredWebhook( array $webhook ): bool {
@@ -218,12 +218,12 @@ class WebhooksService {
 	/**
 	 * Delete registered webhook by id.
 	 *
-	 * @param string $webhookId
+	 * @param string $webhook_id Webhook ID.
 	 *
 	 * @return bool
 	 */
-	public function deleteRegisteredWebhookById( string $webhookId ): bool {
-		return $this->domain_service->deleteRegisteredWebhookById( $webhookId );
+	public function deleteRegisteredWebhookById( string $webhook_id ): bool {
+		return $this->domain_service->deleteRegisteredWebhookById( $webhook_id );
 	}
 
 	/**
@@ -239,6 +239,9 @@ class WebhooksService {
 	 * Broadcast the php hook.
 	 * This sets the webhook in a transient so that
 	 * it is not accidentally broadcasted twice.
+	 *
+	 * @param string $event Event name.
+	 * @param mixed  $model Model.
 	 *
 	 * @return void
 	 */

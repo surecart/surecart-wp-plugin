@@ -41,23 +41,26 @@ class WebhooksHistoryService {
 
 	/**
 	 * Save the registered webhook.
-	 * 
+	 *
 	 * Push the webhook to the registered webhooks list.
-	 * 
+	 *
 	 * @param array $webhook The webhook to save.
 	 *
 	 * @return bool
 	 */
 	public function saveRegisteredWebhook( array $webhook ): bool {
-		$registeredWebhooks = $this->getRegisteredWebhooks() ?? [];
+		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
 
 		// If there is already a webhook for this site, remove it.
-		$registeredWebhooks = array_filter( $registeredWebhooks, function( $registeredWebhook ) use ( $webhook ) {
-			return $registeredWebhook['url'] !== $webhook['url'];
-		} );
+		$registered_webhooks = array_filter(
+			$registered_webhooks,
+			function( $registered_webhook ) use ( $webhook ) {
+				return $registered_webhook['url'] !== $webhook['url'];
+			}
+		);
 
 		// Merge the new webhook with the previous webhooks.
-		$webhooks = array_merge( $registeredWebhooks, [ $webhook ] );
+		$webhooks = array_merge( $registered_webhooks, [ $webhook ] );
 
 		// Save the webhooks.
 		return $this->saveRegisteredWebhooks( $webhooks );
@@ -65,26 +68,29 @@ class WebhooksHistoryService {
 
 	/**
 	 * Get registered webhook.
-	 * 
+	 *
 	 * Filter the registered webhooks to get the webhook for this site.
 	 *
 	 * @return array|null
 	 */
 	public function getRegisteredWebhook() {
-		$registeredWebhooks = $this->getRegisteredWebhooks() ?? [];
+		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
 
 		// If no items, return null.
-		if ( empty( $registeredWebhooks ) || ! is_array( $registeredWebhooks ) ) {
+		if ( empty( $registered_webhooks ) || ! is_array( $registered_webhooks ) ) {
 			return null;
 		}
-		
+
 		// Get the registered webhook for this site.
-		$filteredWebhooks = array_filter( $registeredWebhooks, function( $webhook ) {
-			return $webhook['url'] === Webhook::getListenerUrl();
-		} );
+		$webhooks = array_filter(
+			$registered_webhooks,
+			function( $webhook ) {
+				return Webhook::getListenerUrl() === $webhook['url'];
+			}
+		);
 
 		// Return the first webhook.
-		return array_shift( $filteredWebhooks );
+		return array_shift( $webhooks );
 	}
 
 	/**
@@ -93,21 +99,23 @@ class WebhooksHistoryService {
 	 * @return array|null
 	 */
 	public function getPreviousWebhook() {
-		$registeredWebhooks = $this->getRegisteredWebhooks() ?? [];
+		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
 
 		// If no items, return null.
-		if ( empty( $registeredWebhooks ) || ! is_array( $registeredWebhooks ) ) {
+		if ( empty( $registered_webhooks ) || ! is_array( $registered_webhooks ) ) {
 			return null;
 		}
 
-		$filteredWebhooks = array_filter( $registeredWebhooks, function( $webhook ) {
-			$currentDomain = $this->getDomain( Webhook::getListenerUrl() );
-			$webhookDomain = $this->getDomain( $webhook['url'] );
-			return $webhook['url'] !== Webhook::getListenerUrl()
-				&& $currentDomain === $webhookDomain;
-		} );
+		$webhooks = array_filter(
+			$registered_webhooks,
+			function( $webhook ) {
+				$current_domain = $this->getDomain( Webhook::getListenerUrl() );
+				$webhook_domain = $this->getDomain( $webhook['url'] );
+				return Webhook::getListenerUrl() !== $webhook['url'] && $current_domain === $webhook_domain;
+			}
+		);
 
-		return array_shift( $filteredWebhooks );
+		return array_shift( $webhooks );
 	}
 
 	/**
@@ -121,6 +129,8 @@ class WebhooksHistoryService {
 
 	/**
 	 * Save the registered webhooks.
+	 *
+	 * @param array $webhooks The list of webhooks to save.
 	 *
 	 * @return bool
 	 */
@@ -140,7 +150,7 @@ class WebhooksHistoryService {
 	/**
 	 * Set if the user has ignored the notice.
 	 *
-	 * @param bool $value
+	 * @param bool $value The value to set, true or false.
 	 *
 	 * @return void
 	 */
@@ -151,23 +161,23 @@ class WebhooksHistoryService {
 	/**
 	 * Delete registered webhook by id.
 	 *
-	 * @param string $webhookId
+	 * @param string $webhook_id The webhook id to delete.
 	 *
 	 * @return bool
 	 */
-	public function deleteRegisteredWebhookById( string $webhookId ): bool {
-		$registeredWebhooks = $this->getRegisteredWebhooks() ?? [];
+	public function deleteRegisteredWebhookById( string $webhook_id ): bool {
+		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
 
-		if ( ! empty( $registeredWebhooks ) ) {
-			foreach ( $registeredWebhooks as $key => $registeredWebhook ) {
-				if ( $registeredWebhook['id'] === $webhookId ) {
-					unset( $registeredWebhooks[ $key ] );
+		if ( ! empty( $registered_webhooks ) ) {
+			foreach ( $registered_webhooks as $key => $registered_webhook ) {
+				if ( $registered_webhook['id'] === $webhook_id ) {
+					unset( $registered_webhooks[ $key ] );
 				}
 			}
 		}
 
 		// After unsetting, save the registered webhooks.
-		return $this->saveRegisteredWebhooks( $registeredWebhooks );
+		return $this->saveRegisteredWebhooks( $registered_webhooks );
 	}
 
 	/**
@@ -199,66 +209,70 @@ class WebhooksHistoryService {
 		$webhook = $this->getRegisteredWebhook();
 
 		// If we found a registered webhook for this domain, then return.
-		if ( ! empty( $webhook ) && $webhook['url'] === Webhook::getListenerUrl() ) {
+		if ( ! empty( $webhook ) && Webhook::getListenerUrl() === $webhook['url'] ) {
 			return;
 		}
 
 		// If no previous webhook, means - user somehow deleted all.
-		$previousWebhook = $this->getPreviousWebhook();
-		if ( empty( $previousWebhook ) ) {
+		$previous_webhook = $this->getPreviousWebhook();
+		if ( empty( $previous_webhook ) ) {
 			$this->renderNotice( [], false );
 			return;
 		}
 
 		// Abstract the domain name from previous webhook and compare with current domain.
-		$isDuplicate = $this->getDomain( $previousWebhook['url'] ) === $this->getDomain( Webhook::getListenerUrl() );
+		$is_duplicate = $this->getDomain( $previous_webhook['url'] ) === $this->getDomain( Webhook::getListenerUrl() );
 
 		// Render the notice.
-		$this->renderNotice( $previousWebhook, $isDuplicate );
+		$this->renderNotice( $previous_webhook, $is_duplicate );
 	}
 
 	/**
 	 * Get the domain name from the url.
 	 *
-	 * @param string $url
+	 * @param string $url The url to get the domain from.
 	 *
 	 * @return string|null
 	 */
 	public function getDomain( string $url ) {
-		return parse_url( $url, PHP_URL_HOST );
+		return wp_parse_url( $url, PHP_URL_HOST );
 	}
 
 	/**
 	 * Render the notice.
 	 *
-	 * @param array $previousWebhook
-	 * @param boolean $isDuplicate
+	 * @param array   $previous_webhook The previous webhook.
+	 * @param boolean $is_duplicate     Is the domain duplicate.
 	 *
 	 * @return void
 	 */
-	private function renderNotice( array $previousWebhook, bool $isDuplicate = false ): void {
+	private function renderNotice( array $previous_webhook, bool $is_duplicate = false ): void {
 		?>
 		<div class="notice notice-error">
 			<p>
 			<?php
-				if ( $isDuplicate ) {
-					_e( 'It looks like this site has been duplicated or a staging site. You should create new webhook for the domain to prevent purchase sync issues.', 'surecart' );
-				} else {
-					_e( 'It looks like this site has been moved to a different address. You should create new webhook for the domain to prevent purchase sync issues.', 'surecart' );
-				}
+			if ( $is_duplicate ) {
+				esc_html_e( 'It looks like this site has been duplicated or a staging site. You should create new webhook for the domain to prevent purchase sync issues.', 'surecart' );
+			} else {
+				esc_html_e( 'It looks like this site has been moved to a different address. You should create new webhook for the domain to prevent purchase sync issues.', 'surecart' );
+			}
 			?>
 			</p>
 			<p>
 			<?php
-				echo $isDuplicate ? $this->actionIgnoreWebhook() : '';
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $is_duplicate ) {
+				echo $this->actionIgnoreWebhook();
+			}
 
-				if ( empty( $previousWebhook ) ) {
-					echo $this->actionAddWebhook();
-				} else {
-					echo $this->actionAddWebhook();
-					echo $this->actionUpdateWebhook( $previousWebhook );
-					echo $this->actionRemoveWebhook( $previousWebhook );
-				}
+			if ( empty( $previous_webhook ) ) {
+				echo $this->actionAddWebhook();
+			} else {
+				echo $this->actionAddWebhook();
+				echo $this->actionUpdateWebhook( $previous_webhook );
+				echo $this->actionRemoveWebhook( $previous_webhook );
+			}
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
 			</p>
 		</div>
@@ -273,7 +287,7 @@ class WebhooksHistoryService {
 	private function actionIgnoreWebhook(): string {
 		return sprintf(
 			'<a href="%1s" class="button button-primary" style="margin-right: 10px;" aria-label="%2s">%3s</a>',
-			esc_url( \SureCart::getUrl()->editModel( "ignore_webhook", '0' ) ),
+			esc_url( \SureCart::getUrl()->editModel( 'ignore_webhook', '0' ) ),
 			esc_attr__( 'Ignore Webhook', 'surecart' ),
 			esc_html__( 'Ignore Webhook', 'surecart' )
 		);
@@ -296,13 +310,13 @@ class WebhooksHistoryService {
 	/**
 	 * Update webhook action link and text.
 	 *
-	 * @param array $webhook
+	 * @param array $webhook The webhook to update.
 	 * @return string
 	 */
 	private function actionUpdateWebhook( array $webhook ): string {
 		return sprintf(
 			'<a href="%1s" class="button button-primary" style="margin-right: 10px;" aria-label="%2s">%3s</a>',
-			esc_url( \SureCart::getUrl()->editModel( "update_webhook", $webhook['id'] ) ),
+			esc_url( \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ) ),
 			esc_attr__( 'Update Webhook.', 'surecart' ),
 			esc_html__( 'Update Webhook', 'surecart' )
 		);
@@ -311,12 +325,12 @@ class WebhooksHistoryService {
 	/**
 	 * Remove webhook action link and text.
 	 *
-	 * @param array $webhook
+	 * @param array $webhook The webhook to remove.
 	 * @return string
 	 */
 	private function actionRemoveWebhook( array $webhook ): string {
 		$confirm_message = __( 'Are you sure you want to remove the previous webhook?', 'surecart' );
-		$link            = \SureCart::getUrl()->editModel( "remove_webhook", $webhook['id'] );
+		$link            = \SureCart::getUrl()->editModel( 'remove_webhook', $webhook['id'] );
 		$text            = __( 'Remove Previous Webhook', 'surecart' );
 
 		return sprintf(
