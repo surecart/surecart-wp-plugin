@@ -199,7 +199,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @param  array  $atts Shortcode attributes.
 	 * @param  string $content Shortcode content.
-	 * @param  string $content Shortcode tag.
+	 * @param  string $name Shortcode tag.
 	 *
 	 * @return string Shortcode output.
 	 */
