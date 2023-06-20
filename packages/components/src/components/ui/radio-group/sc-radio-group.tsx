@@ -49,7 +49,7 @@ export class ScRadioGroup {
           'radio-group': true,
           'radio-group--invalid': this.invalid,
           'radio-group--is-required': this.required,
-          'radio-group--is-rtl':isRtl()
+          'radio-group--is-rtl': isRtl(),
         }}
         aria-invalid={this.invalid}
         role="radiogroup"
@@ -59,8 +59,9 @@ export class ScRadioGroup {
         </legend>
 
         <input type="text" class="radio-group__hidden-input" ref={el => (this.input = el as HTMLInputElement)} required={this.required} value={this.value} tabindex="-1" />
-
-        <slot></slot>
+        <div part="items" class="radio-group__items">
+          <slot></slot>
+        </div>
       </fieldset>
     );
   }
