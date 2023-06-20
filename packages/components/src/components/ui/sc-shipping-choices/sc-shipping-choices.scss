@@ -2,15 +2,24 @@
   display: block;
 }
 
+.shipping-choices::part(items) {
+  border: var(--sc-input-border, 1px solid var(--sc-color-gray-300));
+  border-radius: var(--sc-shipping-choice-border-radius, var(--sc-input-border-radius-medium));
+  box-shadow: var(--sc-shipping-box-shadow, var(--sc-input-box-shadow));
+  overflow: hidden;
+  position: relative;
+}
+
 .shipping-choice {
   width: 100%;
   padding: var(--sc-spacing-medium);
   margin: 0;
-  border: 1px solid var(--sc-color-gray-300);
   background-color: var(--sc-color-white);
+  box-sizing: border-box;
+  border-bottom: var(--sc-input-border, 1px solid var(--sc-color-gray-300));
 
-  &:not(:first-child){
-    border-top-width: 0;
+  &:last-child {
+    border-bottom-width: 0;
   }
 }
 

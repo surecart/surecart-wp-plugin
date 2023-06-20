@@ -1,9 +1,10 @@
-import { Component, Prop, h, EventEmitter, Event,State } from '@stencil/core';
+import { Component, Prop, h, EventEmitter, Event, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { Checkout, ResponseError, ShippingChoice, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
+import { checkoutIsLocked } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-shipping-choices',
@@ -22,8 +23,6 @@ export class ScShippingChoices {
 
   /** Error event */
   @Event() scError: EventEmitter<ResponseError>;
-
-  @State() busy:boolean = false;
 
   componentDidLoad() {
     if (checkoutState?.checkout?.shipping_choices?.data) this.shippingChoices = checkoutState?.checkout?.shipping_choices?.data || [];
@@ -44,7 +43,6 @@ export class ScShippingChoices {
 
   async maybeUpdateOrder(selectedShippingChoiceId: string) {
     try {
-      this.busy = true;
       lockCheckout('selected_shipping_choice');
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
@@ -57,7 +55,6 @@ export class ScShippingChoices {
       this.scError.emit(e);
     } finally {
       unLockCheckout('selected_shipping_choice');
-      this.busy = false;
     }
   }
 
@@ -67,18 +64,10 @@ export class ScShippingChoices {
     }
 
     return (
-      <sc-form-control label={this.label || __('Shipping', 'surecart')} style={{'position':'relative'}}>
-        <sc-radio-group>
+      <Host>
+        <sc-radio-group label={this.label || __('Shipping', 'surecart')} class="shipping-choices">
           {(this.shippingChoices || []).map(({ id, amount, currency, shipping_method }) => (
-            <sc-radio
-              key={id}
-              checked={checkoutState?.checkout?.selected_shipping_choice === id}
-              class="shipping-choice"
-              value={id}
-              onClick={()=>{
-                this.maybeUpdateOrder(id);
-              }}
-            >
+            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} class="shipping-choice" value={id} onClick={() => this.maybeUpdateOrder(id)}>
               <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-xx-small)' }}>
                 <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name}</div>
                 {this.showDescription && !!(shipping_method as ShippingMethod)?.description && (
@@ -91,10 +80,8 @@ export class ScShippingChoices {
             </sc-radio>
           ))}
         </sc-radio-group>
-        {
-          this.busy && <sc-block-ui></sc-block-ui>
-        }
-      </sc-form-control>
+        {checkoutIsLocked() && <sc-block-ui></sc-block-ui>}
+      </Host>
     );
   }
 }
