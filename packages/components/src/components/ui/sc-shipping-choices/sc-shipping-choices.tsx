@@ -50,6 +50,7 @@ export class ScShippingChoices {
 
   /** Maybe update the order. */
   async updateCheckout(selectedShippingChoiceId: string) {
+    if (!selectedShippingChoiceId) return;
     try {
       lockCheckout('selected_shipping_choice');
       checkoutState.checkout = (await createOrUpdateCheckout({
@@ -74,7 +75,7 @@ export class ScShippingChoices {
 
     return (
       <Host>
-        <sc-radio-group label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.target.value)}>
+        <sc-radio-group label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
           {(this.shippingChoices || []).map(({ id, amount, currency, shipping_method }) => (
             <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} class="shipping-choice" value={id}>
               <div class="shipping-choice__text">

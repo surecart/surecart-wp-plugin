@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method, Listen, Event, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, h, Method, Listen, Event, EventEmitter } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
 
 @Component({
@@ -34,18 +34,18 @@ export class ScRadioGroup {
     return this.input.reportValidity();
   }
 
-  @Listen('click')
+  @Listen('scChange')
   handleRadioClick(event) {
+    if (event.target.tagName !== 'SC-RADIO') return;
+    event.stopImmediatePropagation();
     const target = event.target as HTMLScRadioElement;
     if (target.disabled) {
       return;
     }
-    this.value = target.value;
-  }
-
-  @Watch('value')
-  handleValueChange(val: string) {
-    this.scChange.emit(val);
+    if (target.checked) {
+      this.value = target.value;
+      this.scChange.emit(target.value);
+    }
   }
 
   render() {

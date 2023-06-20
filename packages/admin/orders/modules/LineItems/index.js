@@ -5,6 +5,7 @@ import {
 	ScFormatNumber,
 	ScIcon,
 	ScLineItem,
+	ScOrderStatusBadge,
 	ScProductLineItem,
 	ScSkeleton,
 } from '@surecart/components-react';
@@ -20,8 +21,57 @@ import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 
+const status = {
+	processing: __('Processing', 'surecart'),
+	payment_failed: __('Payment Failed', 'surecart'),
+	paid: __('Paid', 'surecart'),
+	canceled: __('Canceled', 'surecart'),
+	void: __('Void', 'surecart'),
+	canceled: __('Canceled', 'surecart'),
+};
+
 export default ({ order, checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
+
+	const statusBadge = () => {
+		if (!order?.status) {
+			return null;
+		}
+
+		if (order?.status === 'paid') {
+			return (
+				<ScIcon
+					css={css`
+						font-size: 22px;
+						color: var(--sc-color-success-500);
+					`}
+					name="check-circle"
+				/>
+			);
+		}
+
+		if (order?.status === 'void' || order?.status === 'payment_failed') {
+			return (
+				<ScIcon
+					css={css`
+						font-size: 22px;
+						color: var(--sc-color-danger-500);
+					`}
+					name="x-circle"
+				/>
+			);
+		}
+
+		return (
+			<ScIcon
+				css={css`
+					font-size: 22px;
+					color: var(--sc-color-warning-500);
+				`}
+				name="circle"
+			/>
+		);
+	};
 
 	const { charge, loadedCharge } = useSelect(
 		(select) => {
@@ -60,7 +110,18 @@ export default ({ order, checkout, loading }) => {
 
 	return (
 		<Box
-			title={__('Order Details', 'surecart')}
+			title={
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					{statusBadge()}
+					{status[order?.status] || order?.status}
+				</div>
+			}
 			loading={loading}
 			header_action={
 				order?.statement_url && (

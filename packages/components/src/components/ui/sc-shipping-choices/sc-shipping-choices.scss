@@ -23,6 +23,7 @@
   &__price {
     color: var(--sc-input-label-color);
     font-weight: var(--sc-price-choice-price-font-weight, var(--sc-font-weight-normal));
+    white-space: nowrap;
   }
 
   &__name {
@@ -31,11 +32,13 @@
     font-size: var(--sc-price-choice-name-size, var(--sc-input-label-font-size-medium));
     font-weight: var(--sc-price-choice-name-font-weight, var(--sc-font-weight-bold));
     text-transform: var(--sc-price-choice-text-transform, var(--sc-input-label-text-transform, none));
+    line-height: var(--sc-shipping-description-line-height, 1.2);
   }
 
   &__description {
     color: var(--sc-input-label-color);
     font-weight: var(--sc-price-choice-price-font-weight, var(--sc-font-weight-normal));
+    line-height: var(--sc-shipping-description-line-height, 1.2);
   }
 }
 
@@ -55,6 +58,7 @@ sc-radio::part(label) {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  gap: var(--sc-spacing-small);
 }
 
 sc-radio-group::slotted(sc-radio:not(:last-of-type)) {
