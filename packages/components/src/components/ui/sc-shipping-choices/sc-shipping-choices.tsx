@@ -24,24 +24,32 @@ export class ScShippingChoices {
   /** Error event */
   @Event() scError: EventEmitter<ResponseError>;
 
+  // function for removing the checkout listener.
+  private removeCheckoutListener = () => {};
+
+  // sync shipping choices with checkout
   componentDidLoad() {
     if (checkoutState?.checkout?.shipping_choices?.data) this.shippingChoices = checkoutState?.checkout?.shipping_choices?.data || [];
-
-    onChange('checkout', () => {
+    this.removeCheckoutListener = onChange('checkout', () => {
       this.shippingChoices = checkoutState?.checkout?.shipping_choices?.data || [];
     });
   }
 
+  /** Remove the checkout listener when the component is destroyed. */
+  disconnectedCallback() {
+    this.removeCheckoutListener();
+  }
+
+  /** Can we show shipping choices. */
   canShowShippingChoices(): boolean {
-    // are we on test mode
     if (!checkoutState?.checkout?.shipping_choices?.pagination?.count && !!this.shippingChoices.length) {
       return true;
     }
-
     return checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required && !!this.shippingChoices.length;
   }
 
-  async maybeUpdateOrder(selectedShippingChoiceId: string) {
+  /** Maybe update the order. */
+  async updateCheckout(selectedShippingChoiceId: string) {
     try {
       lockCheckout('selected_shipping_choice');
       checkoutState.checkout = (await createOrUpdateCheckout({
@@ -59,21 +67,22 @@ export class ScShippingChoices {
   }
 
   render() {
+    /** We shouldn't show shipping choices for this checkout. */
     if (!this.canShowShippingChoices()) {
       return null;
     }
 
     return (
       <Host>
-        <sc-radio-group label={this.label || __('Shipping', 'surecart')} class="shipping-choices">
+        <sc-radio-group label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.target.value)}>
           {(this.shippingChoices || []).map(({ id, amount, currency, shipping_method }) => (
-            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} class="shipping-choice" value={id} onClick={() => this.maybeUpdateOrder(id)}>
-              <sc-flex flexDirection="column" style={{ '--sc-flex-column-gap': 'var(--sc-spacing-xx-small)' }}>
+            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} class="shipping-choice" value={id}>
+              <div class="shipping-choice__text">
                 <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name}</div>
                 {this.showDescription && !!(shipping_method as ShippingMethod)?.description && (
                   <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
                 )}
-              </sc-flex>
+              </div>
               <div class="shipping-choice__price">
                 <sc-format-number type="currency" value={amount} currency={currency} />
               </div>

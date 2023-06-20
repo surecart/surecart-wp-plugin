@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method, Listen } from '@stencil/core';
+import { Component, Prop, h, Method, Listen, Event, EventEmitter, Watch } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
 
 @Component({
@@ -25,6 +25,8 @@ export class ScRadioGroup {
   /** Is one of these items required. */
   @Prop() required: boolean;
 
+  @Event() scChange: EventEmitter<string>;
+
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
   @Method()
   async reportValidity() {
@@ -39,6 +41,11 @@ export class ScRadioGroup {
       return;
     }
     this.value = target.value;
+  }
+
+  @Watch('value')
+  handleValueChange(val: string) {
+    this.scChange.emit(val);
   }
 
   render() {
