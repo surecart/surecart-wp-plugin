@@ -4,10 +4,10 @@ import { ScDialog } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import ShippingRateForm from './ShippingRateForm';
 
-export default ({ onRequestClose, shippingZoneId }) => {
+export default ({ open, onRequestClose, shippingZoneId }) => {
 	return (
 		<ScDialog
-			open={true}
+			open={open}
 			label={__('Add New Shipping Rate', 'surecart')}
 			onScRequestClose={onRequestClose}
 			style={{ '--dialog-body-overflow': 'visible' }}

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx } from '@emotion/core';
+import { jsx, css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import SettingsTemplate from '../../SettingsTemplate';
 import { getQueryArg, removeQueryArgs } from '@wordpress/url';
@@ -210,25 +210,38 @@ export default () => {
 				fallbackZoneId={shippingProfile?.fallback_shipping_zone}
 			/>
 
-			<div>
-				<ScButton
-					type="text"
-					onClick={() => setShowAdvanced(!showAdvanced)}
+			{!!shippingZones?.length && (
+				<div
+					css={css`
+						display: grid;
+						gap: var(--sc-spacing-xx-large);
+					`}
 				>
-					{__('Advanced Options', 'surecart')}{' '}
-					<ScIcon name="chevron-down" slot="suffix" />
-				</ScButton>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+							cursor: pointer;
+						`}
+						onClick={() => setShowAdvanced(!showAdvanced)}
+					>
+						{__('Advanced Options', 'surecart')}
+						<ScIcon name="chevron-down" />
+					</div>
 
-				{!!showAdvanced && (
-					<>
-						<FallbackZone
-							shippingProfile={shippingProfile}
-							loading={loadingShippingProfile}
-							onEditShippingProfile={onEdit}
-						/>
-					</>
-				)}
-			</div>
+					{!!showAdvanced && (
+						<>
+							<FallbackZone
+								shippingZones={shippingZones}
+								loading={loadingShippingZones}
+								shippingProfile={shippingProfile}
+								onEditShippingProfile={onEdit}
+							/>
+						</>
+					)}
+				</div>
+			)}
 
 			{currentModal && (
 				<DeleteShippingProfile

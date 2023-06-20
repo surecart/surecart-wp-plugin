@@ -12,7 +12,7 @@ import {
 	ScForm,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment, useRef } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
@@ -41,8 +41,14 @@ export default ({
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [section, setSection] = useState(sections.SECTION_ADD_ZONE);
 	const [shippingZoneId, setShippingZoneId] = useState();
+	const input = useRef(null);
 
 	useEffect(() => {
+		if (open) {
+			setTimeout(() => {
+				input.current.triggerFocus();
+			}, 100);
+		}
 		return () => {
 			setZoneCountries([]);
 			setZoneName('');
@@ -123,7 +129,14 @@ export default ({
 		const value = e.target.value;
 		if (!value) return;
 
-		setZoneCountries([...zoneCountries, value]);
+		console.log({ value, zoneCountries, countryChoices });
+		if (zoneCountries.includes(value)) {
+			setZoneCountries(
+				zoneCountries.filter((zoneCountry) => zoneCountry !== value)
+			);
+		} else {
+			setZoneCountries([...zoneCountries, value]);
+		}
 	};
 
 	const onRemoveZoneCountry = (value) => {
@@ -170,6 +183,7 @@ export default ({
 						`}
 					>
 						<ScInput
+							ref={input}
 							required
 							label={__('Zone Name', 'surecart')}
 							onScInput={(e) => setZoneName(e.target.value)}
@@ -183,21 +197,6 @@ export default ({
 						<ScFormControl
 							label={__('Select Countries', 'surecart')}
 						>
-							{!!zoneCountries.length ? (
-								<ScFlex
-									columnGap="1em"
-									justifyContent="flex-start"
-									css={css`
-										padding: 0.44em 0;
-										margin-bottom: var(--sc-spacing-medium);
-									`}
-									flexWrap="wrap"
-								>
-									{zoneCountries.map((zoneCountry) =>
-										renderCountryPill(zoneCountry)
-									)}
-								</ScFlex>
-							) : null}
 							<ScSelect
 								search
 								closeOnSelect={false}
@@ -210,8 +209,28 @@ export default ({
 										),
 									})
 								)}
-								value=""
-							/>
+							>
+								{!!zoneCountries.length ? (
+									<div
+										css={css`
+											display: flex;
+											flex-wrap: wrap;
+											justify-content: flex-start;
+											gap: 0.25em;
+											padding: var(
+													--sc-input-spacing-small
+												)
+												0;
+										`}
+									>
+										{zoneCountries.map((zoneCountry) =>
+											renderCountryPill(zoneCountry)
+										)}
+									</div>
+								) : (
+									__('Select Countries', 'surecart')
+								)}
+							</ScSelect>
 						</ScFormControl>
 					</ScFlex>
 					<ScFlex justifyContent="flex-start">
@@ -254,7 +273,9 @@ export default ({
 			onScRequestClose={onRequestClose}
 			style={{
 				'--dialog-body-overflow': 'visible',
-				'--body-spacing': 'var(--sc-spacing-xx-large)',
+				...(!isEdit
+					? { '--body-spacing': 'var(--sc-spacing-xx-large)' }
+					: {}),
 			}}
 			noHeader={!isEdit}
 		>

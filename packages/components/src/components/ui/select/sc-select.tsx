@@ -223,7 +223,9 @@ export class ScSelectDropdown {
       this.value = value;
     }
 
-    this.searchTerm = '';
+    if (this.closeOnSelect) {
+      this.searchTerm = '';
+    }
 
     this.scChange.emit();
   }
@@ -463,7 +465,9 @@ export class ScSelectDropdown {
             onScHide={() => this.handleHide()}
           >
             <div class="trigger" slot="trigger">
-              <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
+              <div class="select__value">
+                <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
+              </div>
               <sc-icon exportparts="base:caret" class="select__caret" name="chevron-down" />
             </div>
 
