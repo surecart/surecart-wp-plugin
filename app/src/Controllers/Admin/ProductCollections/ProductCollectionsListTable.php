@@ -1,0 +1,147 @@
+<?php
+
+namespace SureCart\Controllers\Admin\ProductCollections;
+
+use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\ProductCollection;
+
+/**
+ * Create a new table class that will extend the WP_List_Table
+ */
+class ProductCollectionsListTable extends ListTable {
+	/**
+	 * Prepare the items for the table to process
+	 *
+	 * @return void
+	 */
+	public function prepare_items(): void {
+		$columns  = $this->get_columns();
+		$hidden   = $this->get_hidden_columns();
+		$sortable = $this->get_sortable_columns();
+
+		$this->_column_headers = array( $columns, $hidden, $sortable );
+
+		$query = $this->table_data();
+		if ( is_wp_error( $query ) ) {
+			$this->items = [];
+			return;
+		}
+
+		$this->set_pagination_args(
+			[
+				'total_items' => $query->pagination->count,
+				'per_page'    => $this->get_items_per_page( 'product_collections' ),
+			]
+		);
+
+		$this->items = $query->data;
+	}
+
+	/**
+	 * Override the parent display method. Add the search form.
+	 *
+	 * @return void
+	 */
+	public function search() {
+		?>
+		<form class="search-form" method="get">
+			<?php $this->search_box( __( 'Search collections...', 'surecart' ), 'product_collections' ); ?>
+			<input type="hidden" name="id" value="1" />
+		</form>
+		<?php
+	}
+
+	/**
+	 * Override the parent columns method. Defines the columns to use in your listing table
+	 *
+	 * @return array
+	 */
+	public function get_columns(): array {
+		return [
+			'name'        => __( 'Name', 'surecart' ),
+			'description' => __( 'Description', 'surecart' ),
+			'created'     => __( 'Created', 'surecart' ),
+		];
+	}
+
+	/**
+	 * Define which columns are hidden.
+	 *
+	 * @return array
+	 */
+	public function get_hidden_columns(): array {
+		return [];
+	}
+
+	/**
+	 * Define the sortable columns.
+	 *
+	 * @return array
+	 */
+	public function get_sortable_columns(): array {
+		return array( 'name' => array( 'name', false ) );
+	}
+
+	/**
+	 * Get the table data.
+	 *
+	 * @return object
+	 */
+	protected function table_data() {
+		return ProductCollection::where(
+			[
+				'archived' => $this->getArchiveStatus(),
+				'query'    => $this->get_search_query(),
+			]
+		)->paginate(
+			[
+				'per_page' => $this->get_items_per_page( 'product_collection' ),
+				'page'     => $this->get_pagenum(),
+			]
+		);
+	}
+
+	/**
+	 * Handle the date column.
+	 *
+	 * @param \SureCart\Models\ProductCollection $product_collection Product collection object.
+	 *
+	 * @return string
+	 */
+	public function column_date( $product_collection ) {
+		return "<sc-format-date date='$product_collection->created' type='timestamp'></sc-format-date>";
+	}
+
+	/**
+	 * Handle the description column.
+	 *
+	 * @param \SureCart\Models\ProductCollection $product_collection Product collection object.
+	 *
+	 * @return string
+	 */
+	public function column_description( $product_collection ) {
+		return wp_trim_words( $product_collection->description, 30, '...' );
+	}
+
+	/**
+	 * Handle the name column.
+	 *
+	 * @param \SureCart\Models\ProductCollection $collection Product collection object.
+	 *
+	 * @return string
+	 */
+	public function column_name( $collection ) {
+		ob_start();
+		?>
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Collection', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ); ?>">
+			<?php echo esc_html( $collection->name ); ?>
+		</a>
+		<?php
+		echo $this->row_actions(
+			[
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ) . '" aria-label="' . esc_attr__( 'Edit Collection', 'surecart' ) . '">' . esc_attr__( 'Edit', 'surecart' ) . '</a>',
+			],
+		);
+		return ob_get_clean();
+	}
+}
