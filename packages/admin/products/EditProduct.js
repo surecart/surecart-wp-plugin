@@ -25,6 +25,7 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Collection from './modules/Collection';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -210,6 +211,11 @@ export default ({ id }) => {
 						id={id}
 						product={product}
 						onToggleArchiveProduct={onToggleArchiveProduct}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collection
+						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
