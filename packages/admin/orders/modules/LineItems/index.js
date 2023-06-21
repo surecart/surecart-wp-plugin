@@ -138,7 +138,7 @@ export default ({ order, checkout, loading }) => {
 							href={addQueryArgs(order?.statement_url, {
 								receipt: true,
 							})}
-							type="primary"
+							type="default"
 							size="small"
 						>
 							{__('Download Receipt / Invoice', 'surecart')}

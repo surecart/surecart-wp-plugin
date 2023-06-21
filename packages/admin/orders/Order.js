@@ -30,7 +30,7 @@ import PaymentFailures from './modules/PaymentFailures';
 import Refunds from './modules/Refunds';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
-import Fullfillment from './modules/Fullfillment';
+import Fulfillment from './modules/Fulfillment';
 
 export default () => {
 	const { createErrorNotice } = useDispatch(noticesStore);
@@ -202,7 +202,7 @@ export default () => {
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
 				/>
-				<Fullfillment
+				<Fulfillment
 					loading={!hasLoadedOrder}
 					orderId={id}
 					checkout={order?.checkout}
