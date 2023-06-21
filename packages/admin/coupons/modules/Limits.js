@@ -95,14 +95,14 @@ export default ({ coupon, loading, updateCoupon }) => {
 								)}
 							</BaseControl.VisualLabel>
 							<DateTimePicker
-								currentDate={new Date(coupon?.redeem_by)}
-								onChange={(redeem_by) => {
+								currentDate={new Date(coupon?.redeem_by * 1000)}
+								onChange={(redeem_by) =>
 									updateCoupon({
-										redeem_by: new Date(
-											redeem_by
-										).getTime(),
-									});
-								}}
+										redeem_by:
+											Date.parse(new Date(redeem_by)) /
+											1000,
+									})
+								}
 							/>
 						</div>
 					)}
