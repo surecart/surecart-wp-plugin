@@ -7,7 +7,7 @@ import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
 import { Checkout, ManualPaymentMethod, Product } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
-import { maybeConvertAmount } from '../../util/format-number/functions/utils';
+import { maybeConvertAmount } from '../../../functions/currency';
 
 /**
  * This component listens to the order status
