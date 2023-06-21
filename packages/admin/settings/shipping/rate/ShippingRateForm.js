@@ -126,7 +126,10 @@ export default ({
 				const shippingMethod = await saveEntityRecord(
 					'surecart',
 					'shipping-method',
-					method
+					method,
+					{
+						throwOnError: true,
+					}
 				);
 
 				shippingRate.shipping_method_id = shippingMethod?.id;

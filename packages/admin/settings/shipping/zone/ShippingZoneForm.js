@@ -182,6 +182,7 @@ export default ({
 						/>
 						<ScFormControl
 							label={__('Select Countries', 'surecart')}
+							required
 						>
 							{!!zoneCountries.length ? (
 								<ScFlex
