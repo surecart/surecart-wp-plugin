@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { maybeConvertAmount } from './functions/utils';
+import { maybeConvertAmount } from '../../../functions/currency';
 
 //TODO: Remove this when unit types are supported
 interface NumberFormatOptionsWithUnit extends Intl.NumberFormatOptions {
