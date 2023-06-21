@@ -1111,6 +1111,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-fulfillment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-manual-instructions": {
     "manual-payment-instructions": true,
     "manual-payment-title": true,

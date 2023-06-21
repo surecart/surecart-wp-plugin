@@ -8,7 +8,7 @@ import {
 	ScOrderStatusBadge,
 	ScSkeleton,
 	ScTag,
-	ScOrderFulfillmentStatusBadge,
+	ScOrderFulfillmentBadge,
 } from '@surecart/components-react';
 
 export default ({ order, checkout, loading }) => {
@@ -52,8 +52,8 @@ export default ({ order, checkout, loading }) => {
 				>
 					<h1>#{order?.number}</h1>
 					<ScOrderStatusBadge status={order?.status} pill />
-					<ScOrderFulfillmentStatusBadge
-						status={order?.fulfillment_status}
+					<ScOrderFulfillmentBadge
+						status={order?.fulfillment_status || 'unfulfilled'}
 						pill
 					/>
 				</div>

@@ -46,6 +46,7 @@
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
+ - [sc-order-fulfillment-badge](../order-fulfillment-badge)
  - [sc-order-status-badge](../order-status-badge)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment](../../controllers/checkout-form/payment)
@@ -74,6 +75,7 @@ graph TD;
   sc-order --> sc-tag
   sc-order-confirmation-details --> sc-tag
   sc-order-confirmation-totals --> sc-tag
+  sc-order-fulfillment-badge --> sc-tag
   sc-order-status-badge --> sc-tag
   sc-orders-list --> sc-tag
   sc-payment --> sc-tag

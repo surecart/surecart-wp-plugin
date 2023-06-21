@@ -47,7 +47,6 @@
  - [sc-product-quantity](../../controllers/product/sc-product-quantity)
  - [sc-rich-text](../rich-text)
  - [sc-select](../select)
- - [sc-shipping-choices](../sc-shipping-choices)
  - [sc-stripe-element](../stripe-element)
  - [sc-textarea](../sc-textarea)
 
@@ -70,7 +69,6 @@ graph TD;
   sc-product-quantity --> sc-form-control
   sc-rich-text --> sc-form-control
   sc-select --> sc-form-control
-  sc-shipping-choices --> sc-form-control
   sc-stripe-element --> sc-form-control
   sc-textarea --> sc-form-control
   style sc-form-control fill:#f9f,stroke:#333,stroke-width:4px

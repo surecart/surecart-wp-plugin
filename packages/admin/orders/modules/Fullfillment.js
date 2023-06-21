@@ -6,10 +6,12 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScProductLineItem,
 	ScTag,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../ui/Box';
+import { intervalString } from '../../util/translations';
 
 const status = {
 	unfulfilled: __('Unfulfilled', 'surecart'),
@@ -32,14 +34,16 @@ const icon = {
 	fulfilled: 'check-circle',
 	on_hold: 'pause-circle',
 	scheduled: 'clock',
-	partially_fulfilled: 'circle',
+	partially_fulfilled: 'pie-chart',
 };
 
-export default ({ orderId, loading }) => {
+export default ({ checkout, loading }) => {
 	// get fulfillment data from order id.
 	const fulfillment = {
-		status: 'partially_fulfilled',
+		status: 'unfulfilled',
 	};
+
+	const line_items = checkout?.line_items?.data;
 
 	const statusBadge = () => {
 		if (!fulfillment?.status) {
@@ -137,10 +141,28 @@ export default ({ orderId, loading }) => {
 			}
 			footer={
 				<ScButton>
-					<ScIcon name="package" slot="prefix" />
-					{__('Fulfill Items', 'surecart')}
+					<ScIcon name="truck" slot="prefix" />
+					{__('Ship And Fulfill Items', 'surecart')}
 				</ScButton>
 			}
-		></Box>
+		>
+			{(line_items || []).map((item) => {
+				return (
+					<ScProductLineItem
+						key={item.id}
+						imageUrl={item?.price?.product?.image_url}
+						name={item?.price?.product?.name}
+						editable={false}
+						removable={false}
+						fees={item?.fees?.data}
+						quantity={item.quantity}
+						amount={item.subtotal_amount}
+						currency={item?.price?.currency}
+						trialDurationDays={item?.price?.trial_duration_days}
+						interval={intervalString(item?.price)}
+					></ScProductLineItem>
+				);
+			})}
+		</Box>
 	);
 };

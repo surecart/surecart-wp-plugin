@@ -202,7 +202,11 @@ export default () => {
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
 				/>
-				<Fullfillment orderId={id} />
+				<Fullfillment
+					loading={!hasLoadedOrder}
+					orderId={id}
+					checkout={order?.checkout}
+				/>
 				<LineItems
 					order={order}
 					checkout={order?.checkout}
