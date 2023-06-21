@@ -68,7 +68,9 @@ export default ({ coupon, loading, updateCoupon }) => {
 						checked={!!coupon?.redeem_by}
 						onScChange={(e) => {
 							updateCoupon({
-								redeem_by: e.target.checked ? Date.now() : null,
+								redeem_by: e.target.checked
+									? Date.now() / 1000
+									: null,
 							});
 						}}
 					>
