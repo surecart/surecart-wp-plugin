@@ -67,6 +67,7 @@ return [
 		\SureCart\Rest\PaymentIntentsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
+		\SureCart\Rest\ProductCollectionRestServiceProvider::class,
 		\SureCart\Rest\PriceRestServiceProvider::class,
 		\SureCart\Rest\CouponRestServiceProvider::class,
 		\SureCart\Rest\PromotionRestServiceProvider::class,
