@@ -95,7 +95,7 @@ class PermalinkSettingService {
 			<tbody>
 				<?php foreach ( $this->options as $permalink ) : ?>
 				<tr>
-					<th><label><input name="<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
+					<th><label><input name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
 					<td><code><?php echo esc_html( home_url() ); ?>/<?php echo esc_attr( $permalink['value'] ); ?>/sample-product/</code></td>
 				</tr>
 				<?php endforeach; ?>
@@ -103,7 +103,7 @@ class PermalinkSettingService {
 					<th>
 						<label>
 							<input
-								name="<?php echo esc_attr( $this->slug ); ?>_permalink"
+								name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink"
 								id="surecart_<?php echo esc_attr( $this->slug ); ?>_custom_selection"
 								type="radio"
 								value="custom"
@@ -128,7 +128,7 @@ class PermalinkSettingService {
 						</label>
 					</th>
 					<td>
-						<input name="<?php echo esc_attr( $this->slug ); ?>_permalink_structure" id="surecart_<?php echo esc_attr( $this->slug ); ?>_permalink_structure" type="text" value="<?php echo esc_attr( ! in_array( $this->current_base, [ $values ], true ) ? untrailingslashit( $this->current_base ) : '' ); ?>" class="regular-text code"> <span class="description"><?php esc_html_e( 'Enter a custom base to use. A base must be set or WordPress will use default instead.', 'surecart' ); ?></span>
+						<input name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink_structure" id="surecart_<?php echo esc_attr( $this->slug ); ?>_permalink_structure" type="text" value="<?php echo esc_attr( ! in_array( $this->current_base, [ $values ], true ) ? untrailingslashit( $this->current_base ) : '' ); ?>" class="regular-text code"> <span class="description"><?php esc_html_e( 'Enter a custom base to use. A base must be set or WordPress will use default instead.', 'surecart' ); ?></span>
 					</td>
 				</tr>
 			</tbody>
@@ -158,8 +158,8 @@ class PermalinkSettingService {
 			return;
 		}
 
-		$structure_key = esc_attr( $this->slug ) . '_permalink_structure';
-		$permalink_key = esc_attr( $this->slug ) . '_permalink';
+		$structure_key = 'sc_' . esc_attr( $this->slug ) . '_permalink_structure';
+		$permalink_key = 'sc_' . esc_attr( $this->slug ) . '_permalink';
 
 		// we must have our permalink post data and nonce.
 		if ( ! isset( $_POST[ $structure_key ], $_POST[ $permalink_key ] ) || ! wp_verify_nonce( wp_unslash( $_POST['surecart-permalinks-nonce'] ), 'surecart-permalinks' ) ) { // WPCS: input var ok, sanitization ok.
