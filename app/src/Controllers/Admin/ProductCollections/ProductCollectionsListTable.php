@@ -58,9 +58,10 @@ class ProductCollectionsListTable extends ListTable {
 	 */
 	public function get_columns(): array {
 		return [
-			'name'        => __( 'Name', 'surecart' ),
-			'description' => __( 'Description', 'surecart' ),
-			'created'     => __( 'Created', 'surecart' ),
+			'name'           => __( 'Name', 'surecart' ),
+			'products_count' => __( 'No of products', 'surecart' ),
+			'description'    => __( 'Description', 'surecart' ),
+			'created'        => __( 'Created', 'surecart' ),
 		];
 	}
 
@@ -143,5 +144,16 @@ class ProductCollectionsListTable extends ListTable {
 			],
 		);
 		return ob_get_clean();
+	}
+
+	/**
+	 * Handle the products_count column.
+	 *
+	 * @param \SureCart\Models\ProductCollection $collection Product collection object.
+	 *
+	 * @return int
+	 */
+	public function column_products_count( $collection ) {
+		return $collection->products_count;
 	}
 }
