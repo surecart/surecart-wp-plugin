@@ -19,4 +19,14 @@ class Fulfillment extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'fulfillment';
+
+	/**
+	 * Set the prices attribute.
+	 *
+	 * @param  object $value Array of price objects.
+	 * @return void
+	 */
+	public function setFulfillmentItemsAttribute( $value ) {
+		$this->setCollection( 'fulfillment_items', $value, FulfillmentItem::class );
+	}
 }
