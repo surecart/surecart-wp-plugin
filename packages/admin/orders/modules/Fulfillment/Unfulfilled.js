@@ -14,14 +14,17 @@ import {
 	ScTag,
 	ScInput,
 	ScFormatNumber,
+	ScFormControl,
+	ScTooltip,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
+import AddressDisplay from '../../../components/AddressDisplay';
 
-export default ({ items }) => {
+export default ({ items, checkout }) => {
 	const [modal, setModal] = useState(false);
 	const [tracking, setTracking] = useState([
 		{
@@ -453,6 +456,33 @@ export default ({ items }) => {
 								margin-top: auto;
 							`}
 						/>
+
+						<div
+							css={css`
+								display: grid;
+								gap: var(--sc-spacing-medium);
+								padding: var(--sc-spacing-x-large);
+							`}
+						>
+							<ScFormControl label={true}>
+								<div slot="label">
+									{__('Shipping Address', 'surecart')}
+									<ScTooltip
+										text={__('Copy Address', 'surecart')}
+										type="text"
+									>
+										<ScButton type="link" circle>
+											<ScIcon name="clipboard" />
+										</ScButton>
+									</ScTooltip>
+								</div>
+								<AddressDisplay
+									address={checkout?.shipping_address}
+								/>
+							</ScFormControl>
+						</div>
+
+						<ScDivider />
 
 						<div
 							css={css`

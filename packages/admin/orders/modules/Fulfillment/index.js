@@ -37,7 +37,7 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 
 	return (
 		<>
-			<Unfulfilled items={unfulfilled} />
+			<Unfulfilled items={unfulfilled} checkout={checkout} />
 			<Fulfilled items={fulfilled} />
 		</>
 	);
