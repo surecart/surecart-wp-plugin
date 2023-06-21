@@ -6,6 +6,7 @@ import {
 	ScIcon,
 	ScBlockUi,
 	ScAlert,
+	ScCard,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import ShippingZone from './ShippingZone';
@@ -45,36 +46,45 @@ export default ({
 				}
 				loading={loading}
 				noButton
+				wrapperTag="div"
 			>
-				<ScFlex flexDirection="column">
-					{!!shippingZones?.length ? (
-						shippingZones.map((shippingZone) => (
-							<ShippingZone
-								key={shippingZone.id}
-								shippingZone={shippingZone}
-								onEditZone={() => {
-									setCurrentModal(modals.EDIT_ZONE);
-									setSelectedZone(shippingZone);
-								}}
-								parentBusy={fetching}
-								isFallback={shippingZone.id === fallbackZoneId}
-							/>
-						))
-					) : (
-						<ScAlert
-							type="warning"
-							open
-							title={__('No shipping zones or rates', 'surecart')}
-						>
-							{__(
-								"Customers won't be able to complete checkout for products in this profile.",
-								'surecart'
-							)}
-						</ScAlert>
-					)}
-				</ScFlex>
-				{fetching && <ScBlockUi spinner />}
+				<ScCard>
+					<ScFlex flexDirection="column">
+						{!!shippingZones?.length ? (
+							shippingZones.map((shippingZone) => (
+								<ShippingZone
+									key={shippingZone.id}
+									shippingZone={shippingZone}
+									onEditZone={() => {
+										setCurrentModal(modals.EDIT_ZONE);
+										setSelectedZone(shippingZone);
+									}}
+									parentBusy={fetching}
+									isFallback={
+										shippingZone.id === fallbackZoneId
+									}
+								/>
+							))
+						) : (
+							<ScAlert
+								type="warning"
+								open
+								title={__(
+									'No shipping zones or rates',
+									'surecart'
+								)}
+							>
+								{__(
+									"Customers won't be able to complete checkout for products in this profile.",
+									'surecart'
+								)}
+							</ScAlert>
+						)}
+					</ScFlex>
+					{fetching && <ScBlockUi spinner />}
+				</ScCard>
 			</SettingsBox>
+
 			{currentModal && (
 				<ShippingZoneForm
 					open={

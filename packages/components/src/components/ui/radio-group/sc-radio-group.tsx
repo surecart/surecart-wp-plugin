@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method, Listen } from '@stencil/core';
+import { Component, Prop, h, Method, Listen, Event, EventEmitter, Watch } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
 
 @Component({
@@ -25,6 +25,8 @@ export class ScRadioGroup {
   /** Is one of these items required. */
   @Prop() required: boolean;
 
+  @Event() scChange: EventEmitter<string>;
+
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
   @Method()
   async reportValidity() {
@@ -41,6 +43,11 @@ export class ScRadioGroup {
     this.value = target.value;
   }
 
+  @Watch('value')
+  handleValueChange(val: string) {
+    this.scChange.emit(val);
+  }
+
   render() {
     return (
       <fieldset
@@ -49,7 +56,7 @@ export class ScRadioGroup {
           'radio-group': true,
           'radio-group--invalid': this.invalid,
           'radio-group--is-required': this.required,
-          'radio-group--is-rtl':isRtl()
+          'radio-group--is-rtl': isRtl(),
         }}
         aria-invalid={this.invalid}
         role="radiogroup"
@@ -59,8 +66,9 @@ export class ScRadioGroup {
         </legend>
 
         <input type="text" class="radio-group__hidden-input" ref={el => (this.input = el as HTMLInputElement)} required={this.required} value={this.value} tabindex="-1" />
-
-        <slot></slot>
+        <div part="items" class="radio-group__items">
+          <slot></slot>
+        </div>
       </fieldset>
     );
   }

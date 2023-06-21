@@ -61,6 +61,7 @@ export class ScFormComponentsValidator {
     if (checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required && !!this.order?.shipping_choices?.data?.length) {
       this.addShippingChoices();
     }
+
     if (!!this.order?.shipping_amount) {
       this.addShippingAmount();
     }
@@ -146,7 +147,7 @@ export class ScFormComponentsValidator {
       insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER' ? total.previousElementSibling : total;
     }
 
-    const shippingAmount = document.createElement('sc-shipping-line-item');
+    const shippingAmount = document.createElement('sc-line-item-shipping');
     insertBeforeElement.parentNode.insertBefore(shippingAmount, insertBeforeElement);
     this.hasShippingAmount = true;
   }

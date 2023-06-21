@@ -10,14 +10,12 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScStackedList,
-	ScStackedListRow,
 	ScSwitch,
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { addQueryArgs } from '@wordpress/url';
 import AddShippingProfile from './profile/AddShippingProfile';
 import useEntity from '../../hooks/useEntity';
 import ShippingMethods from './method/ShippingMethods';
