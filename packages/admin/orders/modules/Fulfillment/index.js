@@ -3,6 +3,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import Fulfilled from './Fulfilled';
 import Unfulfilled from './Unfulfilled';
+import Box from '../../../ui/Box';
 
 export default ({ orderId, checkout, loading: loadingOrder }) => {
 	// fetch fulfillment data from order id.
@@ -14,6 +15,7 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 				{
 					order_ids: [orderId],
 					expand: [
+						'trackings',
 						'fulfillment_items',
 						'fulfillment_item.line_item',
 						'line_item.price',
@@ -32,13 +34,39 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 		[orderId]
 	);
 
+	// fetch fulfillment data from order id.
+	const { lineItems, loadingLineItems } = useSelect(
+		(select) => {
+			if (!checkout?.id) {
+				return {};
+			}
+
+			const queryArgs = [
+				'surecart',
+				'line_item',
+				{
+					checkout_ids: [checkout?.id],
+					expand: ['price', 'price.product'],
+				},
+			];
+			return {
+				lineItems: select(coreStore).getEntityRecords(...queryArgs),
+				loadingLineItems: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[checkout?.id]
+	);
+
 	// filter unfulfilled items
-	const unfulfilled = (checkout?.line_items?.data || []).filter((item) => {
+	const unfulfilled = (lineItems || []).filter((item) => {
 		return item?.quantity !== item?.fulfilled_quantity;
 	});
 
-	if (loading || loadingOrder) {
-		return null;
+	if (loading || loadingOrder || loadingLineItems) {
+		return <Box loading={true} />;
 	}
 
 	return (

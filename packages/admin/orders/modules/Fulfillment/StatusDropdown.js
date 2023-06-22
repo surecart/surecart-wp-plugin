@@ -117,6 +117,7 @@ export default ({ fulfillment, ...rest }) => {
 						css={css`
 							padding: 0.5em 1em;
 						`}
+						checked={notificationsEnabled}
 						onScChange={(e) =>
 							setNotificationsEnabled(e.target.checked)
 						}

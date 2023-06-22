@@ -17,29 +17,6 @@ import FulfillItems from './FulfillItems';
 
 export default ({ items, checkout, orderId }) => {
 	const [modal, setModal] = useState(false);
-	const [tracking, setTracking] = useState([
-		{
-			tracking_number: '',
-			tracking_url: '',
-		},
-	]);
-
-	function updateTrackingItem(trackingIndex, data) {
-		setTracking(
-			tracking.map((item, index) => {
-				if (index !== trackingIndex) {
-					// This isn't the item we care about - keep it as-is
-					return item;
-				}
-
-				// Otherwise, this is the one we want - return an updated value
-				return {
-					...item,
-					...data,
-				};
-			})
-		);
-	}
 
 	return (
 		<>
@@ -93,17 +70,8 @@ export default ({ items, checkout, orderId }) => {
 							<ScIcon name="more-horizontal" />
 						</ScButton>
 						<ScMenu>
-							<ScMenuItem>
-								{__('Print packing slip', 'surecart')}
-							</ScMenuItem>
-							<ScMenuItem
-								css={css`
-									--sc-menu-item-color: var(
-										--sc-color-danger-600
-									);
-								`}
-							>
-								{__('Cancel fulfillment', 'surecart')}
+							<ScMenuItem onClick={() => setModal(true)}>
+								{__('Fulfill Items', 'surecart')}
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
@@ -128,7 +96,7 @@ export default ({ items, checkout, orderId }) => {
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
-							quantity={item.quantity}
+							quantity={item.quantity - item.fulfilled_quantity}
 							amount={item.subtotal_amount}
 							currency={item?.price?.currency}
 							trialDurationDays={item?.price?.trial_duration_days}

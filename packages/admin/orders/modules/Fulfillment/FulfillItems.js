@@ -17,9 +17,8 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
-import { update } from 'lodash';
 
 export default ({
 	items: fulfillmentItems,
@@ -28,28 +27,37 @@ export default ({
 	open,
 	onRequestClose,
 }) => {
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const [busy, setBusy] = useState(false);
-	const [tracking, setTracking] = useState([
+	const [trackings, setTrackings] = useState([
 		{
-			tracking_number: '',
-			tracking_url: '',
+			number: '',
+			url: '',
 		},
 	]);
 
-	const [items, setItems] = useState(
-		(fulfillmentItems || []).map(({ quantity, ...item }) => {
-			return {
-				...item,
-				quantity,
-				originalQuantity: quantity,
-			};
-		})
-	);
+	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+	const [items, setItems] = useState([]);
+
+	useEffect(() => {
+		setItems(
+			(fulfillmentItems || []).map(
+				({ quantity, fulfilled_quantity, ...item }) => {
+					return {
+						...item,
+						quantity: quantity - fulfilled_quantity,
+						originalQuantity: quantity - fulfilled_quantity,
+					};
+				}
+			)
+		);
+	}, [fulfillmentItems]);
 
 	const updateTrackingItem = (trackingIndex, data) => {
-		setTracking(
-			tracking.map((item, index) => {
+		setTrackings(
+			trackings.map((item, index) => {
 				if (index !== trackingIndex) {
 					// This isn't the item we care about - keep it as-is
 					return item;
@@ -90,15 +98,22 @@ export default ({
 				'fulfillment',
 				{
 					order: orderId,
-					fulfillment_items: items.map(({ id, quantity }) => ({
-						line_item: id,
-						quantity,
-					})),
+					fulfillment_items: items
+						.filter((item) => !!item.quantity)
+						.map(({ id, quantity }) => ({
+							line_item: id,
+							quantity,
+						})),
+					trackings: trackings.filter(
+						({ number, url }) => !!number && !!url
+					),
+					notifications_enabled: notificationsEnabled,
 				},
 				{
 					throwOnError: true,
 				}
 			);
+			invalidateResolutionForStore();
 			onRequestClose();
 		} catch (error) {
 			setBusy(false);
@@ -241,19 +256,16 @@ export default ({
 											label={__('Quantity', 'surecart')}
 											showLabel={false}
 											value={item.quantity}
-											max={item.quantity}
+											max={item.originalQuantity}
 											type="number"
 											css={css`
 												max-width: 100px;
 											`}
 											onScInput={(e) => {
-												setTimeout(() => {
-													updateItems(index, {
-														quantity: Math.min(
-															e.target.value,
-															item?.originalQuantity
-														),
-													});
+												updateItems(index, {
+													quantity: parseInt(
+														e.target.value
+													),
 												});
 											}}
 										>
@@ -284,99 +296,93 @@ export default ({
 							gap: var(--sc-spacing-large);
 						`}
 					>
-						{(tracking || []).map(
-							({ tracking_number, tracking_url }, index) => (
+						{(trackings || []).map(({ number, url }, index) => (
+							<div
+								css={css`
+									display: flex;
+									gap: 1em;
+									&:not(:first-child) {
+										border-top: 1px solid
+											var(--sc-color-gray-200);
+										padding-top: var(--sc-spacing-large);
+									}
+								`}
+							>
 								<div
 									css={css`
-										display: flex;
-										gap: 1em;
-										&:not(:first-child) {
-											border-top: 1px solid
-												var(--sc-color-gray-200);
-											padding-top: var(
-												--sc-spacing-large
-											);
-										}
+										display: grid;
+										flex: 1;
+										gap: var(--sc-spacing-large);
 									`}
 								>
 									<div
 										css={css`
-											display: grid;
-											flex: 1;
+											width: 100%;
+											display: flex;
 											gap: var(--sc-spacing-large);
+											flex-wrap: wrap;
 										`}
 									>
-										<div
+										<ScInput
 											css={css`
-												width: 100%;
-												display: flex;
-												gap: var(--sc-spacing-large);
-												flex-wrap: wrap;
+												flex: 1;
 											`}
-										>
-											<ScInput
-												css={css`
-													flex: 1;
-												`}
-												label={__(
-													'Tracking number',
-													'surecart'
-												)}
-												value={tracking_number}
-												onScInput={(e) =>
-													updateTrackingItem(index, {
-														tracking_number:
-															e.target.value,
-													})
-												}
-											/>
-											<ScInput
-												css={css`
-													flex: 1;
-												`}
-												label={__(
-													'Tracking Link',
-													'surecart'
-												)}
-												type="url"
-												value={tracking_url}
-												onScInput={(e) =>
-													updateTrackingItem(index, {
-														tracking_url:
-															e.target.value,
-													})
-												}
-											/>
-										</div>
+											label={__(
+												'Tracking number',
+												'surecart'
+											)}
+											value={number}
+											onScInput={(e) =>
+												updateTrackingItem(index, {
+													number: e.target.value,
+												})
+											}
+										/>
+										<ScInput
+											css={css`
+												flex: 1;
+											`}
+											label={__(
+												'Tracking Link',
+												'surecart'
+											)}
+											type="url"
+											value={url}
+											onScInput={(e) =>
+												updateTrackingItem(index, {
+													url: e.target.value,
+												})
+											}
+										/>
 									</div>
-									{tracking?.length > 1 && (
-										<ScButton
-											type="text"
-											circle
-											onClick={() => {
-												setTracking(
-													tracking.filter(
-														(_, i) => i !== index
-													)
-												);
-											}}
-										>
-											<ScIcon name="trash" />
-										</ScButton>
-									)}
 								</div>
-							)
-						)}
+								{trackings?.length > 1 && (
+									<ScButton
+										type="text"
+										circle
+										onClick={() => {
+											setTrackings(
+												trackings.filter(
+													(_, i) => i !== index
+												)
+											);
+										}}
+									>
+										<ScIcon name="trash" />
+									</ScButton>
+								)}
+							</div>
+						))}
 
 						<div>
 							<ScButton
 								type="link"
 								onClick={() =>
-									setTracking([
-										...tracking,
+									setTrackings([
+										...trackings,
 										{
-											tracking_url: '',
-											tracking_number: '',
+											url: '',
+											number: '',
 											carrier: '',
 										},
 									])
@@ -428,7 +434,12 @@ export default ({
 							padding: var(--sc-spacing-x-large);
 						`}
 					>
-						<ScSwitch>
+						<ScSwitch
+							checked={notificationsEnabled}
+							onScChange={(e) =>
+								setNotificationsEnabled(e.target.checked)
+							}
+						>
 							{__('Notify customer of shipment', 'surecart')}
 							<span slot="description">
 								{__(

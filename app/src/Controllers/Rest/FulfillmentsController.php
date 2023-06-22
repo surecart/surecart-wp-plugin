@@ -14,11 +14,4 @@ class FulfillmentsController extends RestController {
 	 * @var string
 	 */
 	protected $class = Fulfillment::class;
-
-	/**
-	 * Always fetch with items.
-	 *
-	 * @var array
-	 */
-	protected $with = [ 'fulfillment_items' ];
 }
