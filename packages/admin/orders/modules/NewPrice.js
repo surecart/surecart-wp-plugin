@@ -11,13 +11,16 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect, select } from '@wordpress/data';
 import PriceSelector from '@admin/components/PriceSelector';
+import { store as uiStore } from '../../store/ui';
 
-export default ({ prices, setPrices }) => {
+export default () => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [priceID, setPriceID] = useState(false);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+	const { setPricesForCreateOrder } = useDispatch(uiStore);
+	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
 	
 	const { price } = useSelect(
 		(select) => {
@@ -45,11 +48,13 @@ export default ({ prices, setPrices }) => {
 			});
 
 			setOpen(false);
+	console.log(prices);
+
 			const finalPrices = [
-				...prices,
+				...prices?.pricesForCreateOrder || [],
 				price
 			];
-			setPrices(finalPrices);
+			setPricesForCreateOrder(finalPrices);
 
 		} catch (e) {
 			console.error(e);

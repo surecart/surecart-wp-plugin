@@ -9,33 +9,41 @@ import {
 	ScSkeleton,
 	ScText,
 	ScStackedList,
-	ScFormatNumber
+	ScFormatNumber,
+	ScInput
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, useSelect } from '@wordpress/data';
 import ModelRow from './ModelRow';
+import { store as uiStore } from '../../store/ui';
 
-export default ({ price, setPrices, prices }) => {
+export default ({ price }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { setPricesForCreateOrder } = useDispatch(uiStore);
+	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
 	
 	const onRemove = () => {
 		
 		let finalPrices = [
-			...prices
+			...prices?.pricesForCreateOrder || []
 		];
 
 		finalPrices = finalPrices.filter(function(productItem) {
 			return productItem?.id !== price?.id;
 		});
 
-		setPrices(finalPrices);
+		setPricesForCreateOrder(finalPrices);
 
 		createSuccessNotice(__('Product removed.', 'surecart'), {
 			type: 'snackbar',
 		});
 	};
 
+	const onQuantityChange = () => {
+
+	};
+	console.log(price);
 	return (
 		<ScCard noPadding>
 			<ScStackedList>
@@ -44,6 +52,17 @@ export default ({ price, setPrices, prices }) => {
 					imageUrl={price?.product?.image_url}
 					suffix={
 						<div>
+							{/* <ScInput
+								label={__('Bump Name', 'surecart')}
+								required
+								help={__(
+									'A name for this bump that will be visible to customers.',
+									'surecart'
+								)}
+								onScInput={(e) => onQuantityChange({ quantity: e.target.value })}
+								value={price?.quantity || 1 }
+								name="name"
+							/> */}
 							<ScButton
 								size="small"
 								onClick={onRemove}

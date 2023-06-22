@@ -82,3 +82,10 @@ export function removeSnackbarNotice(id) {
 		id,
 	};
 }
+
+export function setPricesForCreateOrder(value) {
+	return {
+		type: 'SET_PRICES_FOR_CREATE_ORDER',
+		value,
+	};
+}

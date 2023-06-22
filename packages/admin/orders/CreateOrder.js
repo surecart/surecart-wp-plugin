@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import Box from '../ui/Box';
@@ -12,12 +12,15 @@ import { useState } from '@wordpress/element';
 // import { finalizeCheckout } from '../../components/src/services/session/index';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+// import { state as checkoutState } from '@store/checkout';
+import { store as uiStore } from '../store/ui';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [canSaveNow, setCanSaveNow] = useState(true);
-	const [prices, setPrices] = useState([]);
 	const [error, setError] = useState('');
+
+	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
 
 	const { saveEntityRecord } = useDispatch(coreStore);
     
@@ -33,7 +36,7 @@ export default ({ id, setId }) => {
 
 	// create the order.
 	const onSubmit = async (e) => {
-        const lineItems = prices.map((price) => {
+        const lineItems = prices?.pricesForCreateOrder?.map((price) => {
             const {
                 id,
                 ad_hoc_min_amount
@@ -117,7 +120,7 @@ export default ({ id, setId }) => {
 			}
 		>
 			<Box title={__('Create New Order', 'surecart')}></Box>
-            <Prices prices={prices} setPrices={setPrices} />
+            <Prices/>
             
             {
                 canSaveNow && (
