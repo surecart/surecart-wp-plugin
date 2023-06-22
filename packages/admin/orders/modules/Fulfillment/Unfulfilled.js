@@ -26,7 +26,7 @@ export default ({ items, checkout, orderId }) => {
 						css={css`
 							display: flex;
 							align-items: center;
-							gap: 0.5em;
+							gap: 0.75em;
 						`}
 					>
 						<ScIcon

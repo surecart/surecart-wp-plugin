@@ -14,6 +14,7 @@ import {
 	ScBlockUi,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -29,6 +30,7 @@ export default ({
 }) => {
 	const { saveEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const [busy, setBusy] = useState(false);
 	const [trackings, setTrackings] = useState([
 		{
@@ -116,8 +118,14 @@ export default ({
 			invalidateResolutionForStore();
 			onRequestClose();
 		} catch (error) {
-			setBusy(false);
 			console.error(error);
+			setBusy(false);
+			createErrorNotice(
+				error?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 		}
 	};
 
@@ -332,6 +340,7 @@ export default ({
 												'surecart'
 											)}
 											value={number}
+											required={!!number || !!url}
 											onScInput={(e) =>
 												updateTrackingItem(index, {
 													number: e.target.value,
@@ -347,6 +356,7 @@ export default ({
 												'surecart'
 											)}
 											type="url"
+											required={!!number || !!url}
 											value={url}
 											onScInput={(e) =>
 												updateTrackingItem(index, {

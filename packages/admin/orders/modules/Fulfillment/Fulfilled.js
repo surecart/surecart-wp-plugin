@@ -7,7 +7,6 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScProductLineItem,
-	ScFulfillmentShippingStatusBadge,
 	ScTag,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
@@ -69,7 +68,7 @@ export default ({ fulfillment }) => {
 					css={css`
 						display: flex;
 						align-items: center;
-						gap: 0.5em;
+						gap: 0.75em;
 					`}
 				>
 					<ScIcon
@@ -166,7 +165,7 @@ export default ({ fulfillment }) => {
 				<div
 					css={css`
 						display: flex;
-						gap: 0.5em;
+						gap: 0.75em;
 						color: var(
 							--sc-line-item-title-color,
 							var(--sc-input-label-color)
@@ -210,7 +209,7 @@ export default ({ fulfillment }) => {
 					<div
 						css={css`
 							display: flex;
-							gap: 0.5em;
+							gap: 0.75em;
 							color: var(
 								--sc-line-item-title-color,
 								var(--sc-input-label-color)
