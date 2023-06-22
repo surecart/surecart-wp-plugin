@@ -17,13 +17,13 @@ export default defineConfig({
 	globalSetup: require.resolve('./.dev/tests/e2e/global-setup.ts'),
 
 	/* Run tests for specific directories */
-	testDir: 'packages/blocks/Blocks',
+	// testDir: 'packages/blocks/Blocks',
 
-	/* Test file match extension. Currently only supporting `.spec.ts` extension */
-	testMatch: ['packages/blocks/Blocks/**/*.spec.ts'],
-
-	/* Run tests for specific file matches [If needs] */
-	// testMatch: ["**/test/*-pw.spec.ts"],
+	/* Run tests for specific file matches */
+	testMatch: [
+		"packages/blocks/Blocks/**/*.spec.ts",
+		"packages/admin/**/*.spec.ts",
+	],
 
 	/* Run tests in files in parallel */
 	fullyParallel: true,
