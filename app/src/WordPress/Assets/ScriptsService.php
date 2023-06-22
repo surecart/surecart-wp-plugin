@@ -132,7 +132,7 @@ class ScriptsService {
 					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
 					'claim_url'           => $this->getAccountClaimUrl(),
-					'admin_url'			  => admin_url()
+					'admin_url'			  => trailingslashit(admin_url())
 				]
 			)
 		);
@@ -352,7 +352,7 @@ class ScriptsService {
 					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
 					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
 					'claim_url'           => $this->getAccountClaimUrl(),
-					'admin_url'			  => admin_url()
+					'admin_url'			  => trailingslashit(admin_url())
 				]
 			)
 		);

@@ -119,7 +119,7 @@ export class ScPayment {
             <Tag collapsible={false} theme="container">
               {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
-                  {__('You do not have any processors enabled for this mode and cart. Please ', 'surecart')}
+                  {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
 
                   <a
                     href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
@@ -128,7 +128,7 @@ export class ScPayment {
                     })}
                     style={{ color: 'var(--sc-color-gray-700)' }}
                   >
-                    {__('configure your processors', 'surecart')}
+                    {__('Please configure your processors', 'surecart')}
                   </a>
                   .
                 </sc-alert>
