@@ -10,6 +10,13 @@
 	?>
 
 	<?php $table->search_form( __( 'Search Orders', 'surecart' ), 'sc-search-orders' ); ?>
-	<?php $table->display(); ?>
+
+	<form id="posts-filter" method="get">
+
+		<?php $table->views(); ?>
+		<?php $table->display(); ?>
+
+		<div id="ajax-response"></div>
+	</form>
 </div>
 

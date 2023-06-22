@@ -87,7 +87,7 @@ class OrdersListTable extends ListTable {
 			$status_links[ $status ] = "<a href='$link'$current_link_attributes>" . $label . '</a>';
 		}
 
-		// filter links
+		// filter links.
 		return apply_filters( 'sc_order_status_links', $status_links );
 	}
 
@@ -99,14 +99,15 @@ class OrdersListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'order'        => __( 'Order', 'surecart' ),
-			'status'       => __( 'Status', 'surecart' ),
-			'method'       => __( 'Method', 'surecart' ),
-			'integrations' => __( 'Integrations', 'surecart' ),
-			'total'        => __( 'Total', 'surecart' ),
-			'type'         => __( 'Type', 'surecart' ),
-			'created'      => __( 'Date', 'surecart' ),
-			'mode'         => '',
+			'order'              => __( 'Order', 'surecart' ),
+			'status'             => __( 'Payment Status', 'surecart' ),
+			'fulfillment_status' => __( 'Fulfillment Status', 'surecart' ),
+			'method'             => __( 'Method', 'surecart' ),
+			'integrations'       => __( 'Integrations', 'surecart' ),
+			'total'              => __( 'Total', 'surecart' ),
+			'type'               => __( 'Type', 'surecart' ),
+			'created'            => __( 'Date', 'surecart' ),
+			'mode'               => '',
 		];
 	}
 
@@ -254,6 +255,17 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
+	 * Handle the status
+	 *
+	 * @param \SureCart\Models\Order $order Order Model.
+	 *
+	 * @return string
+	 */
+	public function column_fulfillment_status( $order ) {
+		return '<sc-order-fulfillment-badge status="' . esc_attr( $order->fulfillment_status ) . '"></sc-order-fulfillment-badge>';
+	}
+
+	/**
 	 * Name of the coupon
 	 *
 	 * @param \SureCart\Models\Promotion $promotion Promotion model.
@@ -276,5 +288,98 @@ class OrdersListTable extends ListTable {
 		<?php
 
 		return ob_get_clean();
+	}
+
+	/**
+	 * Displays a formats drop-down for filtering items.
+	 *
+	 * @since 5.2.0
+	 * @access protected
+	 *
+	 * @param string $post_type Post type slug.
+	 */
+	protected function fulfillment_dropdown() {
+		/**
+		 * Filters whether to remove the 'Formats' drop-down from the post list table.
+		 *
+		 * @param bool   $disable   Whether to disable the drop-down. Default false.
+		 */
+		if ( apply_filters( 'surecart/disable_fulfillment_dropdown', false ) ) {
+			return;
+		}
+
+		$displayed_order_fulfillment = isset( $_GET['fulfillment_status'] ) ? $_GET['fulfillment_status'] : '';
+		?>
+
+		<label for="filter-by-fulfillment" class="screen-reader-text">
+			<?php
+			/* translators: Hidden accessibility text. */
+			esc_html_e( 'Filter by fulfillment', 'surecart' );
+			?>
+		</label>
+		<select name="fulfillment_status" id="filter-by-fulfillment">
+			<option<?php selected( $displayed_order_fulfillment, '' ); ?> value=""><?php esc_html_e( 'All Fulfillments', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_fulfillment, 'unfulfilled' ); ?> value="unfulfilled"><?php echo esc_html_e( 'Unfulfilled', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_fulfillment, 'fulfilled' ); ?> value="fulfilled"><?php echo esc_html_e( 'Fulfilled', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_fulfillment, '"partially_fulfilled' ); ?> value="fulfilled"><?php echo esc_html_e( 'Partially Fulfilled', 'surecart' ); ?></option>
+		</select>
+		<?php
+	}
+
+	/**
+	 * @param string $which
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-orders" />
+
+		<?php if ( ! empty( $_GET['status'] ) ) : ?>
+			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
+		<?php endif; ?>
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->fulfillment_dropdown();
+
+			/**
+			 * Fires before the Filter button on the Posts and Pages list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @since 2.1.0
+			 * @since 4.4.0 The `$post_type` parameter was added.
+			 * @since 4.6.0 The `$which` parameter was added.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_orders', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter' ), '', 'filter_action', false, array( 'id' => 'filter-by-fulfillment-submit' ) );
+			}
+		}
+
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav for the posts
+		 * list table.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_orders_extra_tablenav', $which );
 	}
 }
