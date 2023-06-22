@@ -5,6 +5,7 @@
 		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Orders', 'surecart' ),
+			'new_link' => \SureCart::getUrl()->edit( 'order' ),
 		]
 	);
 	?>
