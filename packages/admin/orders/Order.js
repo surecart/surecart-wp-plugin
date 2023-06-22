@@ -48,6 +48,7 @@ export default () => {
 			'checkout.line_items',
 			'discount.promotion',
 			'line_item.price',
+			'fulfillments',
 			'line_item.fees',
 			'customer.balances',
 			'price.product',

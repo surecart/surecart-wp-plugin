@@ -6,15 +6,23 @@ import Unfulfilled from './Unfulfilled';
 
 export default ({ orderId, checkout, loading: loadingOrder }) => {
 	// fetch fulfillment data from order id.
-	const { fulfilled, loading } = useSelect(
+	const { fulfillments, loading } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
 				'fulfillment',
-				{ order_id: orderId },
+				{
+					order_ids: [orderId],
+					expand: [
+						'fulfillment_items',
+						'fulfillment_item.line_item',
+						'line_item.price',
+						'price.product',
+					],
+				},
 			];
 			return {
-				fulfilled: select(coreStore).getEntityRecords(...queryArgs),
+				fulfillments: select(coreStore).getEntityRecords(...queryArgs),
 				loading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
@@ -26,9 +34,7 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 
 	// filter unfulfilled items
 	const unfulfilled = (checkout?.line_items?.data || []).filter((item) => {
-		return !fulfilled?.find((fulfillment) => {
-			return fulfillment.line_item_id === item.id;
-		});
+		return item?.quantity !== item?.fulfilled_quantity;
 	});
 
 	if (loading || loadingOrder) {
@@ -37,8 +43,17 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 
 	return (
 		<>
-			<Unfulfilled items={unfulfilled} checkout={checkout} />
-			<Fulfilled items={fulfilled} />
+			{!!unfulfilled?.length && (
+				<Unfulfilled
+					items={unfulfilled}
+					checkout={checkout}
+					orderId={orderId}
+				/>
+			)}
+
+			{(fulfillments || []).map((fulfillment) => (
+				<Fulfilled fulfillment={fulfillment} />
+			))}
 		</>
 	);
 };

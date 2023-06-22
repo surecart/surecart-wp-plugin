@@ -53,7 +53,7 @@ export default ({ order, checkout, loading }) => {
 					<h1>#{order?.number}</h1>
 					<ScOrderStatusBadge status={order?.status} pill />
 					<ScOrderFulfillmentBadge
-						status={order?.fulfillment_status || 'unfulfilled'}
+						status={order?.fulfillment_status}
 						pill
 					/>
 				</div>

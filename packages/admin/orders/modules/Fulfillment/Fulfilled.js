@@ -7,13 +7,22 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScProductLineItem,
+	ScFulfillmentShippingStatusBadge,
 	ScTag,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
+import { ScFormatDate } from '@surecart/components-react';
+import StatusDropdown from './StatusDropdown';
 
-export default ({ items }) => {
+const status = {
+	pending: __('Pending Shipment', 'surecart'),
+	shipped: __('Shipped', 'surecart'),
+	delivered: __('Delivered', 'surecart'),
+};
+
+export default ({ fulfillment }) => {
 	return (
 		<Box
 			title={
@@ -43,42 +52,37 @@ export default ({ items }) => {
 							_n(
 								'%d Item',
 								'%d Items',
-								items?.length,
+								fulfillment?.fulfillment_items?.data?.length,
 								'surecart'
 							),
-							items?.length
+							fulfillment?.fulfillment_items?.data?.length
 						)}
 					</ScTag>
+					<div
+						css={css`
+							opacity: 0.65;
+							font-weight: normal;
+							font-size: 14px;
+						`}
+					>
+						#{fulfillment?.number}
+					</div>
 				</div>
 			}
 			header_action={
-				<ScDropdown placement="bottom-end">
-					<ScButton
-						circle
-						type="text"
-						style={{
-							'--button-color': 'var(--sc-color-gray-600)',
-							margin: '-10px',
-						}}
-						slot="trigger"
-					>
-						<ScIcon name="more-horizontal" />
-					</ScButton>
-					<ScMenu>
-						<ScMenuItem>
-							{__('Print packing slip', 'surecart')}
-						</ScMenuItem>
-						<ScMenuItem
-							css={css`
-								--sc-menu-item-color: var(
-									--sc-color-danger-600
-								);
-							`}
-						>
-							{__('Cancel fulfillment', 'surecart')}
-						</ScMenuItem>
-					</ScMenu>
-				</ScDropdown>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+						min-width: auto !important;
+					`}
+				>
+					<StatusDropdown
+						fulfillment={fulfillment}
+						placement="bottom-end"
+					/>
+				</div>
 			}
 			footer={
 				<ScButton type="default">
@@ -86,7 +90,51 @@ export default ({ items }) => {
 				</ScButton>
 			}
 		>
-			{(items || []).map((item) => {
+			<div
+				css={css`
+					display: flex;
+					gap: 0.5em;
+					color: var(
+						--sc-line-item-title-color,
+						var(--sc-input-label-color)
+					);
+				`}
+			>
+				<ScIcon
+					name="calendar"
+					css={css`
+						opacity: 0.5;
+						font-size: 22px;
+					`}
+				/>
+				<div
+					css={css`
+						display: grid;
+						gap: 0.25em;
+					`}
+				>
+					<div
+						css={css`
+							font-weight: bold;
+						`}
+					>
+						{__('Fulfilled on', 'surecart')}
+					</div>
+					<ScFormatDate
+						slot="price"
+						type="timestamp"
+						date={fulfillment?.created_at}
+						month="short"
+						day="numeric"
+						year="numeric"
+						hour="numeric"
+						minute="numeric"
+					/>
+				</div>
+				{/* Add any tracking numbers */}
+			</div>
+			{/* {(items || []).map(({ id }) => {
+				console.log({ item });
 				return (
 					<ScProductLineItem
 						key={item.id}
@@ -102,7 +150,7 @@ export default ({ items }) => {
 						interval={intervalString(item?.price)}
 					></ScProductLineItem>
 				);
-			})}
+			})} */}
 		</Box>
 	);
 };

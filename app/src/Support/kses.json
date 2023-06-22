@@ -796,6 +796,16 @@
     "class": true,
     "slot": true
   },
+  "sc-fulfillment-shipping-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-heading": {
     "size": true,
     "style": true,
@@ -1792,6 +1802,12 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
+    "address": true,
+    "form-state": true,
+    "order": true,
+    "selected-processor-id": true,
+    "stripe-payment-intent": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

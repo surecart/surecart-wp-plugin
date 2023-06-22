@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1573,6 +1573,24 @@ export namespace Components {
           * The number to format.
          */
         "value": number;
+    }
+    interface ScFulfillmentShippingStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": FulfillmentStatus;
     }
     interface ScHeading {
         "size": 'small' | 'medium' | 'large';
@@ -3228,7 +3246,31 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     interface ScStripePaymentElement {
+        /**
+          * Should we collect an address?
+         */
+        "address": boolean;
         "confirm": (type: any, args?: {}) => Promise<void>;
+        /**
+          * The current form state.
+         */
+        "formState": FormState;
+        /**
+          * Order to watch
+         */
+        "order": Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId": ProcessorName;
+        /**
+          * The Payment Intent
+         */
+        "stripePaymentIntent": PaymentIntent;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl": string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -4454,6 +4496,12 @@ declare global {
         prototype: HTMLScFormatNumberElement;
         new (): HTMLScFormatNumberElement;
     };
+    interface HTMLScFulfillmentShippingStatusBadgeElement extends Components.ScFulfillmentShippingStatusBadge, HTMLStencilElement {
+    }
+    var HTMLScFulfillmentShippingStatusBadgeElement: {
+        prototype: HTMLScFulfillmentShippingStatusBadgeElement;
+        new (): HTMLScFulfillmentShippingStatusBadgeElement;
+    };
     interface HTMLScHeadingElement extends Components.ScHeading, HTMLStencilElement {
     }
     var HTMLScHeadingElement: {
@@ -5260,6 +5308,7 @@ declare global {
         "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
         "sc-format-number": HTMLScFormatNumberElement;
+        "sc-fulfillment-shipping-status-badge": HTMLScFulfillmentShippingStatusBadgeElement;
         "sc-heading": HTMLScHeadingElement;
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
@@ -7138,6 +7187,24 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface ScFulfillmentShippingStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: FulfillmentStatus;
+    }
     interface ScHeading {
         "size"?: 'small' | 'medium' | 'large';
     }
@@ -8966,6 +9033,14 @@ declare namespace LocalJSX {
     }
     interface ScStripePaymentElement {
         /**
+          * Should we collect an address?
+         */
+        "address"?: boolean;
+        /**
+          * The current form state.
+         */
+        "formState"?: FormState;
+        /**
           * The order/invoice was paid for.
          */
         "onScPaid"?: (event: ScStripePaymentElementCustomEvent<void>) => void;
@@ -8977,6 +9052,22 @@ declare namespace LocalJSX {
           * Set the state
          */
         "onScSetState"?: (event: ScStripePaymentElementCustomEvent<FormStateSetter>) => void;
+        /**
+          * Order to watch
+         */
+        "order"?: Checkout;
+        /**
+          * The selected processor name.
+         */
+        "selectedProcessorId"?: ProcessorName;
+        /**
+          * The Payment Intent
+         */
+        "stripePaymentIntent"?: PaymentIntent;
+        /**
+          * Success url to redirect.
+         */
+        "successUrl"?: string;
     }
     interface ScStripePaymentRequest {
         /**
@@ -9602,6 +9693,7 @@ declare namespace LocalJSX {
         "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
         "sc-format-number": ScFormatNumber;
+        "sc-fulfillment-shipping-status-badge": ScFulfillmentShippingStatusBadge;
         "sc-heading": ScHeading;
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
@@ -9808,6 +9900,7 @@ declare module "@stencil/core" {
             "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
+            "sc-fulfillment-shipping-status-badge": LocalJSX.ScFulfillmentShippingStatusBadge & JSXBase.HTMLAttributes<HTMLScFulfillmentShippingStatusBadgeElement>;
             "sc-heading": LocalJSX.ScHeading & JSXBase.HTMLAttributes<HTMLScHeadingElement>;
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;

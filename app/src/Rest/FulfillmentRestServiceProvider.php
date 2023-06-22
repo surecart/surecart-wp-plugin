@@ -3,7 +3,7 @@
 namespace SureCart\Rest;
 
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\DownloadsController;
+use SureCart\Controllers\Rest\FulfillmentsController;
 
 /**
  * Service provider for Price Rest Requests
@@ -21,7 +21,7 @@ class FulfillmentRestServiceProvider extends RestServiceProvider implements Rest
 	 *
 	 * @var string
 	 */
-	protected $controller = DownloadsController::class;
+	protected $controller = FulfillmentsController::class;
 
 	/**
 	 * Methods allowed for the model.

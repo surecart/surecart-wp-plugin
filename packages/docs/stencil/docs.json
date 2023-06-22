@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-20T21:55:20",
+  "timestamp": "2023-06-22T17:32:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13266,6 +13266,117 @@
         ],
         "sc-upcoming-invoice": [
           "sc-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/fulfillment-shipping-status-badge/sc-fulfillment-shipping-status-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-fulfillment-shipping-status-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"delivered\" | \"pending\" | \"shipped\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "delivered",
+              "type": "string"
+            },
+            {
+              "value": "pending",
+              "type": "string"
+            },
+            {
+              "value": "shipped",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-fulfillment-shipping-status-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -30368,6 +30479,7 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
+        "sc-fulfillment-shipping-status-badge",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-order",
@@ -30408,6 +30520,9 @@
           "sc-tag"
         ],
         "sc-downloads-list": [
+          "sc-tag"
+        ],
+        "sc-fulfillment-shipping-status-badge": [
           "sc-tag"
         ],
         "sc-invoices-list": [
