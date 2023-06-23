@@ -68,6 +68,11 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
+		// if the customer id is set, return early.
+		if ( $request->get_param( 'customer_id' ) || $request->get_param( 'customer' ) ) {
+			return $class;
+		}
+
 		// get current user.
 		$user = User::current();
 

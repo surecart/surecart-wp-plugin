@@ -5,8 +5,6 @@ namespace SureCart\Rest;
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\CheckoutsController;
 use SureCart\Form\FormValidationService;
-use SureCart\Models\Form;
-use SureCart\Models\Product;
 use SureCart\Models\User;
 
 /**
@@ -250,6 +248,9 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
+		if ( ! empty( $request->get_param( 'customer_id' ) ) || ! empty( $request->get_param( 'customer' ) ) ) {
+			return current_user_can( 'edit_sc_checkouts' );
+		}
 		return true;
 	}
 
@@ -260,7 +261,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return true;
+		return $this->create_item_permissions_check( $request );
 	}
 
 	/**
