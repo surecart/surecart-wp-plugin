@@ -10,6 +10,9 @@ export function isSaving(state) {
 export function getPricesForCreateOrder(state) {
 	return state.pricesForCreateOrder || [];
 }
+export function getCustomerForCreateOrder(state) {
+	return state.customerForCreateOrder || {};
+}
 export function flash(state) {
 	return state.errors.flash;
 }

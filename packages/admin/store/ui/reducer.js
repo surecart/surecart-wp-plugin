@@ -31,6 +31,17 @@ export const pricesForCreateOrder = (state, action) => {
 	return state;
 };
 
+export const customerForCreateOrder = (state, action) => {
+	switch (action.type) {
+		case 'SET_CUSTOMER_FOR_CREATE_ORDER':
+			return {
+				...state,
+				customerForCreateOrder: action.value,
+			};
+	}
+	return state;
+};
+
 export const errors = (
 	state = {
 		flash: {},
@@ -153,4 +164,5 @@ export default combineReducers({
 	modal,
 	snackbar,
 	pricesForCreateOrder,
+	customerForCreateOrder
 });

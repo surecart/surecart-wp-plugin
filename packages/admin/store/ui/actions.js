@@ -89,3 +89,10 @@ export function setPricesForCreateOrder(value) {
 		value,
 	};
 }
+
+export function setCustomerForCreateOrder(value) {
+	return {
+		type: 'SET_CUSTOMER_FOR_CREATE_ORDER',
+		value,
+	};
+}

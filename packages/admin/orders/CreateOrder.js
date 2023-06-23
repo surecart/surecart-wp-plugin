@@ -14,6 +14,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 // import { state as checkoutState } from '@store/checkout';
 import { store as uiStore } from '../store/ui';
+import SelectCustomer from './modules/SelectCustomer';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
@@ -21,6 +22,7 @@ export default ({ id, setId }) => {
 	const [error, setError] = useState('');
 
 	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
+	const customer = useSelect((select) => select(uiStore).getCustomerForCreateOrder())?.customerForCreateOrder;
 
 	const { saveEntityRecord } = useDispatch(coreStore);
     
@@ -48,6 +50,15 @@ export default ({ id, setId }) => {
             }
             
         });
+
+        const customerData = {
+            first_name: customer?.first_name,
+            last_name: customer?.last_name,
+            name: customer?.name,
+            email: customer?.email,
+            customer: customer?.id
+        }
+
 		e.preventDefault();
 		try {
             
@@ -56,6 +67,7 @@ export default ({ id, setId }) => {
 				'surecart',
 				'checkout',
 				{
+                    ...customerData,
 					line_items: lineItems,
 				},
 				{ throwOnError: true }
@@ -118,39 +130,31 @@ export default ({ id, setId }) => {
 					</sc-breadcrumbs>
 				</div>
 			}
+            button={
+                <ScForm onScSubmit={onSubmit}>
+                    <div
+                        css={css`display: flex gap: var(--sc-spacing-small);`}
+                    >
+                        <ScButton type="primary" submit loading={isSaving}>
+                            {__('Create', 'surecart')}
+                        </ScButton>
+                        <ScButton
+                            href={'admin.php?page=sc-orders'}
+                            type="text"
+                        >
+                            {__('Cancel', 'surecart')}
+                        </ScButton>
+                    </div>
+                </ScForm>
+            }
+            sidebar={
+                <Box title={__('Customer', 'surecart')}>
+                    <SelectCustomer/>
+                </Box>
+            }
 		>
 			<Box title={__('Create New Order', 'surecart')}></Box>
             <Prices/>
-            
-            {
-                canSaveNow && (
-                    <ScForm onScSubmit={onSubmit}>
-                        <div
-                            css={css`
-                                display: grid;
-                                text-align: center;
-                                background: #ffffff;
-                                padding: 24px 32px;
-                                gap: var(--sc-spacing-large);
-                            `}
-                        >
-                            <div
-                                css={css`display: flex gap: var(--sc-spacing-small);`}
-                            >
-                                <ScButton type="primary" submit loading={isSaving}>
-                                    {__('Create', 'surecart')}
-                                </ScButton>
-                                <ScButton
-                                    href={'admin.php?page=sc-orders'}
-                                    type="text"
-                                >
-                                    {__('Cancel', 'surecart')}
-                                </ScButton>
-                            </div>
-                        </div>
-                    </ScForm>
-                )
-            }
 		</UpdateModel>
         </>
     );
