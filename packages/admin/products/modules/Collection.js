@@ -55,6 +55,8 @@ export default ({ loading, product, updateProduct }) => {
 			(collectionChoice) => collectionChoice.value === collectionSelected
 		);
 
+		if (!collection) return;
+
 		return (
 			<ScTag
 				key={`collection-${collection.value}`}
