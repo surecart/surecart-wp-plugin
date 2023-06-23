@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { FulfillmentStatus } from '../../../types';
 
 const status = {
-  pending: __('Pending', 'surecart'),
+  pending: __('Not Shipped', 'surecart'),
   shipped: __('Shipped', 'surecart'),
   delivered: __('Delivered', 'surecart'),
 } as {
