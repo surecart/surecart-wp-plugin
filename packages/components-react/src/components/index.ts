@@ -78,6 +78,7 @@ export const ScFormatDate = /*@__PURE__*/createReactComponent<JSX.ScFormatDate, 
 export const ScFormatInterval = /*@__PURE__*/createReactComponent<JSX.ScFormatInterval, HTMLScFormatIntervalElement>('sc-format-interval');
 export const ScFormatNumber = /*@__PURE__*/createReactComponent<JSX.ScFormatNumber, HTMLScFormatNumberElement>('sc-format-number');
 export const ScFulfillmentShippingStatusBadge = /*@__PURE__*/createReactComponent<JSX.ScFulfillmentShippingStatusBadge, HTMLScFulfillmentShippingStatusBadgeElement>('sc-fulfillment-shipping-status-badge');
+export const ScFulfillments = /*@__PURE__*/createReactComponent<JSX.ScFulfillments, HTMLScFulfillmentsElement>('sc-fulfillments');
 export const ScHeading = /*@__PURE__*/createReactComponent<JSX.ScHeading, HTMLScHeadingElement>('sc-heading');
 export const ScIcon = /*@__PURE__*/createReactComponent<JSX.ScIcon, HTMLScIconElement>('sc-icon');
 export const ScImageSlider = /*@__PURE__*/createReactComponent<JSX.ScImageSlider, HTMLScImageSliderElement>('sc-image-slider');

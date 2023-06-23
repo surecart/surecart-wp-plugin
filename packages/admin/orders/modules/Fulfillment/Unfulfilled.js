@@ -6,16 +6,17 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScProductLineItem,
 	ScTag,
+	ScFormatNumber,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
-import { intervalString } from '../../../util/translations';
 import { useState } from 'react';
+import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
+import { addQueryArgs } from '@wordpress/url';
 
-export default ({ items, checkout, orderId }) => {
+export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
 
 	return (
@@ -87,7 +88,41 @@ export default ({ items, checkout, orderId }) => {
 					</ScButton>
 				}
 			>
-				{(items || []).map((item) => {
+				<div
+					css={css`
+						display: grid;
+						gap: var(--sc-spacing-large);
+					`}
+				>
+					{(items || []).map((item) => {
+						return (
+							<LineItem
+								key={item?.id}
+								imageUrl={item?.price?.product?.image_url}
+								suffix={sprintf(
+									__('Qty: %d', 'surecart'),
+									item.quantity - item.fulfilled_quantity || 0
+								)}
+							>
+								<a
+									href={addQueryArgs('admin.php', {
+										page: 'sc-products',
+										action: 'edit',
+										id: item?.price?.product?.id,
+									})}
+								>
+									{item?.price?.product?.name}
+								</a>
+								<ScFormatNumber
+									type="unit"
+									value={item?.price?.product?.weight}
+									unit={item?.price?.product?.weight_unit}
+								/>
+							</LineItem>
+						);
+					})}
+				</div>
+				{/* {(items || []).map((item) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
@@ -103,7 +138,7 @@ export default ({ items, checkout, orderId }) => {
 							interval={intervalString(item?.price)}
 						></ScProductLineItem>
 					);
-				})}
+				})} */}
 			</Box>
 
 			<CreateFulfillment
@@ -112,6 +147,7 @@ export default ({ items, checkout, orderId }) => {
 				checkout={checkout}
 				open={modal}
 				onRequestClose={() => setModal(false)}
+				onCreateSuccess={onCreateSuccess}
 			/>
 		</>
 	);

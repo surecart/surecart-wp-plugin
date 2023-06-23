@@ -25,8 +25,8 @@ const status = {
 };
 
 const types = {
-	pending: 'warning',
-	shipped: 'default',
+	pending: 'danger',
+	shipped: 'warning',
 	delivered: 'success',
 };
 

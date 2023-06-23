@@ -6,7 +6,6 @@ import {
 	ScDivider,
 	ScForm,
 	ScIcon,
-	ScSwitch,
 	ScInput,
 	ScFormatNumber,
 	ScFormControl,
@@ -21,6 +20,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
+import LineItem from './components/LineItem';
 
 export default ({
 	items: fulfillmentItems,
@@ -28,21 +28,48 @@ export default ({
 	checkout,
 	open,
 	onRequestClose,
+	onCreateSuccess,
 }) => {
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+
+	const copy = async () => {
+		try {
+			const { name, line_1, line_2, city, state, postal_code, country } =
+				checkout?.shipping_address;
+			const address = [
+				name,
+				line_1,
+				line_2,
+				city,
+				state,
+				country,
+				postal_code,
+			];
+			await navigator.clipboard.writeText(
+				address.filter((item) => !!item).join('\n ')
+			);
+			createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (err) {
+			console.error(err);
+			createErrorNotice(__('Error copying to clipboard.', 'surecart'), {
+				type: 'snackbar',
+			});
+		}
+	};
+
 	const [busy, setBusy] = useState(false);
+	const [items, setItems] = useState([]);
+	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 	const [trackings, setTrackings] = useState([
 		{
 			number: '',
 			url: '',
 		},
 	]);
-
-	const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-	const [items, setItems] = useState([]);
 
 	useEffect(() => {
 		setItems(
@@ -57,23 +84,6 @@ export default ({
 			)
 		);
 	}, [fulfillmentItems]);
-
-	const updateTrackingItem = (trackingIndex, data) => {
-		setTrackings(
-			trackings.map((item, index) => {
-				if (index !== trackingIndex) {
-					// This isn't the item we care about - keep it as-is
-					return item;
-				}
-
-				// Otherwise, this is the one we want - return an updated value
-				return {
-					...item,
-					...data,
-				};
-			})
-		);
-	};
 
 	const updateItems = (itemsIndex, data) => {
 		setItems(
@@ -116,7 +126,10 @@ export default ({
 					throwOnError: true,
 				}
 			);
-			invalidateResolutionForStore();
+			onCreateSuccess();
+			createSuccessNotice(__('Fulfillment created.', 'surecart'), {
+				type: 'snackbar',
+			});
 			onRequestClose();
 		} catch (error) {
 			console.error(error);
@@ -139,9 +152,7 @@ export default ({
 				e.stopImmediatePropagation();
 				submit();
 			}}
-			onScSubmitForm={(e) => {
-				e.stopImmediatePropagation();
-			}}
+			onScSubmitForm={(e) => e.stopImmediatePropagation()}
 		>
 			<ScDrawer
 				label={_n(
@@ -152,7 +163,7 @@ export default ({
 				)}
 				style={{ '--sc-drawer-size': '600px' }}
 				open={open}
-				onScRequestClose={() => onRequestClose()}
+				onScRequestClose={onRequestClose}
 			>
 				<div
 					css={css`
@@ -170,97 +181,10 @@ export default ({
 					>
 						{(items || []).map((item, index) => {
 							return (
-								<div
-									css={css`
-										box-sizing: border-box;
-										margin: 0px;
-										min-width: 0px;
-										display: flex;
-										gap: 18px;
-										justify-content: space-between;
-										align-items: stretch;
-										width: 100%;
-										border-bottom: none;
-										${item?.price?.product?.image_url
-											? 'align-items: center'
-											: ''};
-										${item?.price?.product?.image_url
-											? 'container-type: inline-size'
-											: ''};
-									`}
-								>
-									{!!item?.price?.product?.image_url && (
-										<img
-											src={
-												item?.price?.product?.image_url
-											}
-											css={css`
-												width: var(
-													--sc-product-line-item-image-size,
-													4em
-												);
-												height: var(
-													--sc-product-line-item-image-size,
-													4em
-												);
-												object-fit: cover;
-												border-radius: 4px;
-												border: solid 1px
-													var(
-														--sc-input-border-color,
-														var(--sc-input-border)
-													);
-												display: block;
-												box-shadow: var(
-													--sc-input-box-shadow
-												);
-											`}
-										/>
-									)}
-
-									<div
-										css={css`
-											flex: 1 1 0%;
-										`}
-									>
-										<div
-											css={css`
-												box-sizing: border-box;
-												margin: 0px;
-												min-width: 0px;
-												display: flex;
-												gap: 6px;
-												flex-direction: column;
-												align-items: flex-start;
-												justify-content: flex-start;
-											`}
-										>
-											<a
-												href={addQueryArgs(
-													'admin.php',
-													{
-														page: 'sc-products',
-														action: 'edit',
-														id: item?.price?.product
-															?.id,
-													}
-												)}
-											>
-												{item?.price?.product?.name}
-											</a>
-										</div>
-										<ScFormatNumber
-											type="unit"
-											value={item?.price?.product?.weight}
-											unit={
-												item?.price?.product
-													?.weight_unit
-											}
-										/>
-										{/* Add SKU and Variant here in the future. */}
-									</div>
-
-									<div>
+								<LineItem
+									key={index}
+									imageUrl={item?.price?.product?.image_url}
+									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}
 											showLabel={false}
@@ -290,8 +214,23 @@ export default ({
 												)}
 											</span>
 										</ScInput>
-									</div>
-								</div>
+									}
+								>
+									<a
+										href={addQueryArgs('admin.php', {
+											page: 'sc-products',
+											action: 'edit',
+											id: item?.price?.product?.id,
+										})}
+									>
+										{item?.price?.product?.name}
+									</a>
+									<ScFormatNumber
+										type="unit"
+										value={item?.price?.product?.weight}
+										unit={item?.price?.product?.weight_unit}
+									/>
+								</LineItem>
 							);
 						})}
 					</div>
@@ -308,113 +247,6 @@ export default ({
 							setTrackings={setTrackings}
 						/>
 					</div>
-
-					{/* <div
-						css={css`
-							padding: var(--sc-spacing-x-large);
-							display: grid;
-							gap: var(--sc-spacing-large);
-						`}
-					>
-						{(trackings || []).map(({ number, url }, index) => (
-							<div
-								css={css`
-									display: flex;
-									gap: 1em;
-									&:not(:first-child) {
-										border-top: 1px solid
-											var(--sc-color-gray-200);
-										padding-top: var(--sc-spacing-large);
-									}
-								`}
-							>
-								<div
-									css={css`
-										display: grid;
-										flex: 1;
-										gap: var(--sc-spacing-large);
-									`}
-								>
-									<div
-										css={css`
-											width: 100%;
-											display: flex;
-											gap: var(--sc-spacing-large);
-											flex-wrap: wrap;
-										`}
-									>
-										<ScInput
-											css={css`
-												flex: 1;
-											`}
-											label={__(
-												'Tracking number',
-												'surecart'
-											)}
-											value={number}
-											required={!!number || !!url}
-											onScInput={(e) =>
-												updateTrackingItem(index, {
-													number: e.target.value,
-												})
-											}
-										/>
-										<ScInput
-											css={css`
-												flex: 1;
-											`}
-											label={__(
-												'Tracking Link',
-												'surecart'
-											)}
-											type="url"
-											required={!!number || !!url}
-											value={url}
-											onScInput={(e) =>
-												updateTrackingItem(index, {
-													url: e.target.value,
-												})
-											}
-										/>
-									</div>
-								</div>
-								{trackings?.length > 1 && (
-									<ScButton
-										type="text"
-										circle
-										onClick={() => {
-											setTrackings(
-												trackings.filter(
-													(_, i) => i !== index
-												)
-											);
-										}}
-									>
-										<ScIcon name="trash" />
-									</ScButton>
-								)}
-							</div>
-						))}
-
-						<div>
-							<ScButton
-								type="link"
-								onClick={() =>
-									setTrackings([
-										...trackings,
-										{
-											url: '',
-											number: '',
-											carrier: '',
-										},
-									])
-								}
-							>
-								<ScIcon name="plus" slot="prefix" />
-								{__('Add another tracking number', 'surecart')}
-							</ScButton>
-						</div>
-					</div> */}
 
 					<ScDivider
 						css={css`
@@ -436,7 +268,7 @@ export default ({
 									text={__('Copy Address', 'surecart')}
 									type="text"
 								>
-									<ScButton type="link" circle>
+									<ScButton type="link" onClick={copy} circle>
 										<ScIcon name="clipboard" />
 									</ScButton>
 								</ScTooltip>

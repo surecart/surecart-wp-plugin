@@ -806,6 +806,14 @@
     "class": true,
     "slot": true
   },
+  "sc-fulfillments": {
+    "heading": true,
+    "order-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-heading": {
     "size": true,
     "style": true,

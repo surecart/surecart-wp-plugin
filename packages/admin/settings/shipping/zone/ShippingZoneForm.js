@@ -128,15 +128,7 @@ export default ({
 	const onCountrySelect = (e) => {
 		const value = e.target.value;
 		if (!value) return;
-
-		console.log({ value, zoneCountries, countryChoices });
-		if (zoneCountries.includes(value)) {
-			setZoneCountries(
-				zoneCountries.filter((zoneCountry) => zoneCountry !== value)
-			);
-		} else {
-			setZoneCountries([...zoneCountries, value]);
-		}
+		setZoneCountries([...new Set([...zoneCountries, value])]);
 	};
 
 	const onRemoveZoneCountry = (value) => {

@@ -149,8 +149,9 @@ class OrdersListTable extends ListTable {
 	protected function table_data() {
 		return Order::where(
 			[
-				'status' => $this->getStatus(),
-				'query'  => $this->get_search_query(),
+				'status'             => $this->getStatus(),
+				'fulfillment_status' => ! empty( $_GET['fulfillment_status'] ) ? [ $_GET['fulfillment_status'] ] : [],
+				'query'              => $this->get_search_query(),
 			]
 		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(

@@ -5,20 +5,20 @@ import {
 	ScBreadcrumbs,
 	ScButton,
 	ScDropdown,
-	ScFlex,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useEffect, useState } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 import Logo from '../templates/Logo';
-// template
 import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
@@ -32,35 +32,67 @@ import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
 
 export default () => {
-	const { createErrorNotice } = useDispatch(noticesStore);
-	const { invalidateResolution } = useDispatch(coreStore);
+	const [modal, setModal] = useState();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
-	const queryArgs = [
-		'surecart',
-		'order',
-		id,
-		{
-			expand: [
-				'checkout',
-				'checkout.charge',
-				'checkout.customer',
-				'checkout.tax_identifier',
-				'checkout.payment_failures',
-				'checkout.shipping_address',
-				'checkout.discount',
-				'checkout.line_items',
-				'discount.promotion',
-				'line_item.price',
-				'line_item.fees',
-				'customer.balances',
-				'price.product',
-			],
-		},
-	];
+	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
+
+	/** This is a workaround until we can sort out why store invalidation is not working for order. */
+	const manuallyRefetchOrder = async () => {
+		const { baseURL } = select(coreStore).getEntityConfig(
+			'surecart',
+			'order'
+		);
+		const order = await apiFetch({
+			method: 'GET',
+			path: addQueryArgs(`${baseURL}/${id}`, {
+				context: 'edit',
+				expand: [
+					'checkout',
+					'checkout.charge',
+					'checkout.customer',
+					'checkout.tax_identifier',
+					'checkout.payment_failures',
+					'checkout.shipping_address',
+					'checkout.discount',
+					'checkout.line_items',
+					'discount.promotion',
+					'line_item.price',
+					'line_item.fees',
+					'customer.balances',
+					'price.product',
+				],
+			}),
+		});
+
+		receiveEntityRecords('surecart', 'order', order);
+	};
 
 	const { order, hasLoadedOrder, orderError } = useSelect(
 		(select) => {
+			const queryArgs = [
+				'surecart',
+				'order',
+				id,
+				{
+					expand: [
+						'checkout',
+						'checkout.charge',
+						'checkout.customer',
+						'checkout.tax_identifier',
+						'checkout.payment_failures',
+						'checkout.shipping_address',
+						'checkout.discount',
+						'checkout.line_items',
+						'discount.promotion',
+						'line_item.price',
+						'line_item.fees',
+						'customer.balances',
+						'price.product',
+					],
+				},
+			];
 			return {
 				order: select(coreStore)?.getEntityRecord?.(...queryArgs),
 				hasLoadedOrder: select(coreStore)?.hasFinishedResolution?.(
@@ -76,15 +108,13 @@ export default () => {
 		[id]
 	);
 
-	const [modal, setModal] = useState();
-
-	// useEffect(() => {
-	// 	if (orderError) {
-	// 		createErrorNotice(
-	// 			orderError?.message || __('Something went wrong', 'surecart')
-	// 		);
-	// 	}
-	// }, [orderError]);
+	useEffect(() => {
+		if (orderError) {
+			createErrorNotice(
+				orderError?.message || __('Something went wrong', 'surecart')
+			);
+		}
+	}, [orderError]);
 
 	const getMenuItems = (orderStatus) => {
 		const menuItems = [];
@@ -133,9 +163,7 @@ export default () => {
 							{__('Orders', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
-							<ScFlex style={{ gap: '1em' }}>
-								{__('View Order', 'surecart')}
-							</ScFlex>
+							{__('View Order', 'surecart')}
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
 				</div>
@@ -188,6 +216,8 @@ export default () => {
 					loading={!hasLoadedOrder}
 					orderId={id}
 					checkout={order?.checkout}
+					onCreateSuccess={manuallyRefetchOrder}
+					onDeleteSuccess={manuallyRefetchOrder}
 				/>
 				<LineItems
 					order={order}

@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { Fragment, useState } from '@wordpress/element';
 import SettingsTemplate from '../SettingsTemplate';
 import {
+	ScAlert,
 	ScButton,
 	ScCard,
 	ScEmpty,
@@ -27,36 +28,50 @@ export default () => {
 	const [showAddShipping, setShowAddShipping] = useState(false);
 	const { save } = useSave();
 
-	const { shippingProfiles, defaultShippingProfile, loading, busy } =
-		useSelect((select) => {
-			const queryArgs = [
-				'surecart',
-				'shipping-profile',
-				{
-					context: 'edit',
-					per_page: 100,
-					expand: ['products', 'shipping_zones'],
-				},
-			];
+	const {
+		hasRates,
+		hasZones,
+		shippingProfiles,
+		defaultShippingProfile,
+		loading,
+	} = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'shipping-profile',
+			{
+				context: 'edit',
+				per_page: 100,
+				expand: [
+					'products',
+					'shipping_zones',
+					'shipping_zone.shipping_rates',
+				],
+			},
+		];
 
-			const items = select(coreStore).getEntityRecords(...queryArgs);
-			const resolving = select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			);
-			return {
-				defaultShippingProfile: (items || []).find(
-					(profile) => profile.default
-				),
-				shippingProfiles: (items || []).filter(
-					(profile) => !profile.default
-				),
-				loading: !!(!items?.length && resolving),
-				busy: !!(items?.length && resolving),
-			};
-		}, []);
+		const items = select(coreStore).getEntityRecords(...queryArgs);
+		const resolving = select(coreStore).isResolving(
+			'getEntityRecords',
+			queryArgs
+		);
 
-	console.log({ shippingProfiles });
+		const hasZones = (items || []).some(
+			({ shipping_zones }) => !!shipping_zones?.data?.length
+		);
+
+		return {
+			hasRates,
+			hasZones,
+			defaultShippingProfile: (items || []).find(
+				(profile) => profile.default
+			),
+			shippingProfiles: (items || []).filter(
+				(profile) => !profile.default
+			),
+			loading: !!(!items?.length && resolving),
+			busy: !!(items?.length && resolving),
+		};
+	}, []);
 
 	const {
 		item: shippingProtocol,
@@ -95,6 +110,18 @@ export default () => {
 				onSubmit={onSubmit}
 			>
 				<Error error={error} setError={setError} margin="80px" />{' '}
+				{!loading && !hasZones && shippingProtocol?.shipping_enabled && (
+					<ScAlert
+						type="warning"
+						open
+						title={__('No shipping rates', 'surecart')}
+					>
+						{__(
+							"Customers won't be able to complete checkout for physical products. Please add shipping rates.",
+							'surecart'
+						)}
+					</ScAlert>
+				)}
 				<SettingsBox
 					loading={!hasLoadedShippingProtocol}
 					title={__('Shipping Settings', 'surecart')}
@@ -118,6 +145,7 @@ export default () => {
 				</SettingsBox>
 				{shippingProtocol?.shipping_enabled && (
 					<>
+						{}
 						<SettingsBox
 							title={__('Shipping', 'surecart')}
 							description={__(

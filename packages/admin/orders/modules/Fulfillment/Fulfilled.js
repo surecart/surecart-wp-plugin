@@ -6,22 +6,23 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScProductLineItem,
 	ScTag,
+	ScFormatNumber,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
-import { intervalString } from '../../../util/translations';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { ScFormatDate } from '@surecart/components-react';
 import StatusDropdown from './components/StatusDropdown';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { ScBlockUi } from '@surecart/components-react';
 import AddTracking from './components/AddTracking';
+import LineItem from './components/LineItem';
+import { addQueryArgs } from '@wordpress/url';
 
-export default ({ fulfillment }) => {
+export default ({ fulfillment, onDeleteSuccess }) => {
 	const [busy, setBusy] = useState(false);
 	const [modal, setModal] = useState(false);
 	const { deleteEntityRecord, invalidateResolutionForStore } =
@@ -47,6 +48,7 @@ export default ({ fulfillment }) => {
 				{ throwOnError: true }
 			);
 			invalidateResolutionForStore();
+			onDeleteSuccess();
 			createSuccessNotice(__('Fulfillment canceled.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -242,8 +244,7 @@ export default ({ fulfillment }) => {
 									{_n(
 										'Tracking number',
 										'Tracking numbers',
-										fulfillment?.fulfillment_items?.data
-											?.length,
+										fulfillment?.trackngs?.data?.length,
 										'surecart'
 									)}
 								</div>
@@ -269,26 +270,38 @@ export default ({ fulfillment }) => {
 						{(fulfillment?.fulfillment_items?.data || []).map(
 							({ id, line_item, quantity }) => {
 								return (
-									<ScProductLineItem
+									<LineItem
 										key={id}
 										imageUrl={
 											line_item?.price?.product?.image_url
 										}
-										name={line_item?.price?.product?.name}
-										editable={false}
-										removable={false}
-										fees={line_item?.fees?.data}
-										quantity={quantity}
-										amount={line_item.subtotal_amount}
-										currency={line_item?.price?.currency}
-										trialDurationDays={
-											line_item?.price
-												?.trial_duration_days
-										}
-										interval={intervalString(
-											line_item?.price
+										suffix={sprintf(
+											__('Qty: %d', 'surecart'),
+											quantity || 0
 										)}
-									></ScProductLineItem>
+									>
+										<a
+											href={addQueryArgs('admin.php', {
+												page: 'sc-products',
+												action: 'edit',
+												id: line_item?.price?.product
+													?.id,
+											})}
+										>
+											{line_item?.price?.product?.name}
+										</a>
+										<ScFormatNumber
+											type="unit"
+											value={
+												line_item?.price?.product
+													?.weight
+											}
+											unit={
+												line_item?.price?.product
+													?.weight_unit
+											}
+										/>
+									</LineItem>
 								);
 							}
 						)}

@@ -96,7 +96,16 @@ class FulfillmentRestServiceProvider extends RestServiceProvider implements Rest
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_sc_orders' );
+		// if they are not requesting a specific order id, or they are requesting multiple order ids.
+		if ( empty( $request['order_ids'] ) || count( $request['order_ids'] ) > 1 ) {
+			return current_user_can( 'read_sc_orders' );
+		}
+
+		// get the order id.
+		$order_id = $request['order_ids'][0] ?? null;
+
+		// can the user read the order?
+		return current_user_can( 'read_sc_order', $order_id );
 	}
 
 	/**

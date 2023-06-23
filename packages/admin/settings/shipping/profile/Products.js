@@ -36,12 +36,13 @@ export default ({
 }) => {
 	const [error, setError] = useState(null);
 	const [busy, setBusy] = useState(false);
+	const [open, setOpen] = useState(false);
 	const [draftProducts, setDraftProducts] = useState(0);
 	const [currentPage, setCurrentPage] = useState(1);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const { products, loading } = useSelect(
+	const { products, loading, productsBusy } = useSelect(
 		(select) => {
 			const queryArgs = [
 				'surecart',
@@ -61,12 +62,16 @@ export default ({
 				queryArgs
 			);
 
-			const products =
-				select(coreStore).getEntityRecords(...queryArgs) || [];
+			const products = (
+				select(coreStore).getEntityRecords(...queryArgs) || []
+			).filter(
+				(product) => product?.shipping_profile === shippingProfileId
+			);
 
 			return {
 				products,
 				loading: loading && !products?.length,
+				productsBusy: loading && products?.length,
 			};
 		},
 		[shippingProfileId, currentPage]
@@ -202,18 +207,6 @@ export default ({
 					: __('Add products to this shipping profile.', 'surecart')
 			}
 			wrapperTag="div"
-			end={
-				!isDefaultProfile && (
-					<ScButton
-						type="primary"
-						onClick={() => setDraftProducts(draftProducts + 1)}
-						disabled={draftProducts > 0}
-					>
-						<ScIcon name="plus" />
-						{__('Add New', 'surecart')}
-					</ScButton>
-				)
-			}
 			loading={loading}
 			css={css`
 				position: relative;
@@ -280,6 +273,7 @@ export default ({
 								) : null}
 							</ScStackedListRow>
 						))}
+
 						{[...Array(draftProducts)].map((_, index) => (
 							<ScStackedListRow key={`draft-product-${index}`}>
 								<ModelSelector
@@ -287,6 +281,9 @@ export default ({
 										min-width: 380px;
 									`}
 									key={index}
+									open={open}
+									onScClose={() => setOpen(false)}
+									fetchOnLoad={true}
 									name="product"
 									placeholder={__(
 										'Find a product...',
@@ -328,10 +325,35 @@ export default ({
 								</ScDropdown>
 							</ScStackedListRow>
 						))}
+
+						{draftProducts === 0 && !isDefaultProfile && (
+							<ScStackedListRow>
+								<ScButton
+									type="default"
+									onClick={(e) => {
+										setDraftProducts(draftProducts + 1);
+										setOpen(true);
+									}}
+								>
+									<ScIcon name="plus" />
+									{__('Add Product', 'surecart')}
+								</ScButton>
+							</ScStackedListRow>
+						)}
 					</ScStackedList>
 				) : (
-					<ScEmpty icon="shopping-cart">
-						{__('No products', 'surecart')}
+					<ScEmpty icon="shopping-bag">
+						{__('No products in this profile.', 'surecart')}
+						<ScButton
+							type="default"
+							onClick={() => {
+								setDraftProducts(draftProducts + 1);
+								setOpen(true);
+							}}
+						>
+							<ScIcon name="plus" />
+							{__('Add Product', 'surecart')}
+						</ScButton>
 					</ScEmpty>
 				)}
 				{hasPagination && (
@@ -374,7 +396,8 @@ export default ({
 					</div>
 				)}
 			</ScCard>
-			{busy && (
+
+			{(busy || productsBusy) && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
 					spinner

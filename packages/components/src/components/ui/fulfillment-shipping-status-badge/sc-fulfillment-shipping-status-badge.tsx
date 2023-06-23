@@ -13,10 +13,10 @@ const status = {
 
 const type = {
   pending: 'default',
-  shipped: 'warning',
-  delivered: 'success',
+  shipped: 'success',
+  delivered: 'info',
 } as {
-  [key in FulfillmentStatus]: 'default' | 'warning' | 'success';
+  [key in FulfillmentStatus]: 'default' | 'info' | 'success';
 };
 
 @Component({

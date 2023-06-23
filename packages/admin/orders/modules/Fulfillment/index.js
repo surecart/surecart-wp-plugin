@@ -5,7 +5,13 @@ import Fulfilled from './Fulfilled';
 import Unfulfilled from './Unfulfilled';
 import Box from '../../../ui/Box';
 
-export default ({ orderId, checkout, loading: loadingOrder }) => {
+export default ({
+	orderId,
+	checkout,
+	loading: loadingOrder,
+	onCreateSuccess,
+	onDeleteSuccess,
+}) => {
 	// fetch fulfillment data from order id.
 	const { fulfillments, loading } = useSelect(
 		(select) => {
@@ -34,38 +40,12 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 		[orderId]
 	);
 
-	// fetch fulfillment data from order id.
-	const { lineItems, loadingLineItems } = useSelect(
-		(select) => {
-			if (!checkout?.id) {
-				return {};
-			}
-
-			const queryArgs = [
-				'surecart',
-				'line_item',
-				{
-					checkout_ids: [checkout?.id],
-					expand: ['price', 'price.product'],
-				},
-			];
-			return {
-				lineItems: select(coreStore).getEntityRecords(...queryArgs),
-				loadingLineItems: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[checkout?.id]
-	);
-
 	// filter unfulfilled items
-	const unfulfilled = (lineItems || []).filter((item) => {
+	const unfulfilled = (checkout?.line_items?.data || []).filter((item) => {
 		return item?.quantity !== item?.fulfilled_quantity;
 	});
 
-	if (loading || loadingOrder || loadingLineItems) {
+	if (loading || loadingOrder) {
 		return <Box loading={true} />;
 	}
 
@@ -76,11 +56,15 @@ export default ({ orderId, checkout, loading: loadingOrder }) => {
 					items={unfulfilled}
 					checkout={checkout}
 					orderId={orderId}
+					onCreateSuccess={onCreateSuccess}
 				/>
 			)}
 
 			{(fulfillments || []).map((fulfillment) => (
-				<Fulfilled fulfillment={fulfillment} />
+				<Fulfilled
+					fulfillment={fulfillment}
+					onDeleteSuccess={onDeleteSuccess}
+				/>
 			))}
 		</>
 	);

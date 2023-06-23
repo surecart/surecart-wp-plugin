@@ -235,6 +235,8 @@ export interface Product extends Object {
   tax_enabled: boolean;
   purchase_limit: number;
   permalink: string;
+  weight: number;
+  weight_unit: 'kg' | 'lb' | 'g' | 'oz';
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -929,6 +931,36 @@ export interface Address extends Object {
   state?: string;
   postal_code?: string;
   country?: string;
+}
+
+export interface Fulfillment {
+  id: string;
+  object: 'fulfillment';
+  number: string;
+  shipping_status: FulfillmentStatus;
+  trackings: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Tracking>;
+  };
+  fulfillment_items: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<FulfillmentItem>;
+  };
+}
+
+export interface FulfillmentItem {
+  id: string;
+  line_item: LineItem;
+  quantity: number;
+  fulfillment: string | Fulfillment;
+}
+
+export interface Tracking {
+  courier_name?: string;
+  number: string;
+  url: string;
 }
 
 export interface PriceData extends Object {

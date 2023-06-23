@@ -1592,6 +1592,10 @@ export namespace Components {
          */
         "status": FulfillmentStatus;
     }
+    interface ScFulfillments {
+        "heading": string;
+        "orderId": string;
+    }
     interface ScHeading {
         "size": 'small' | 'medium' | 'large';
     }
@@ -4502,6 +4506,12 @@ declare global {
         prototype: HTMLScFulfillmentShippingStatusBadgeElement;
         new (): HTMLScFulfillmentShippingStatusBadgeElement;
     };
+    interface HTMLScFulfillmentsElement extends Components.ScFulfillments, HTMLStencilElement {
+    }
+    var HTMLScFulfillmentsElement: {
+        prototype: HTMLScFulfillmentsElement;
+        new (): HTMLScFulfillmentsElement;
+    };
     interface HTMLScHeadingElement extends Components.ScHeading, HTMLStencilElement {
     }
     var HTMLScHeadingElement: {
@@ -5309,6 +5319,7 @@ declare global {
         "sc-format-interval": HTMLScFormatIntervalElement;
         "sc-format-number": HTMLScFormatNumberElement;
         "sc-fulfillment-shipping-status-badge": HTMLScFulfillmentShippingStatusBadgeElement;
+        "sc-fulfillments": HTMLScFulfillmentsElement;
         "sc-heading": HTMLScHeadingElement;
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
@@ -7204,6 +7215,10 @@ declare namespace LocalJSX {
           * The tag's statux type.
          */
         "status"?: FulfillmentStatus;
+    }
+    interface ScFulfillments {
+        "heading"?: string;
+        "orderId"?: string;
     }
     interface ScHeading {
         "size"?: 'small' | 'medium' | 'large';
@@ -9694,6 +9709,7 @@ declare namespace LocalJSX {
         "sc-format-interval": ScFormatInterval;
         "sc-format-number": ScFormatNumber;
         "sc-fulfillment-shipping-status-badge": ScFulfillmentShippingStatusBadge;
+        "sc-fulfillments": ScFulfillments;
         "sc-heading": ScHeading;
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
@@ -9901,6 +9917,7 @@ declare module "@stencil/core" {
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
             "sc-fulfillment-shipping-status-badge": LocalJSX.ScFulfillmentShippingStatusBadge & JSXBase.HTMLAttributes<HTMLScFulfillmentShippingStatusBadgeElement>;
+            "sc-fulfillments": LocalJSX.ScFulfillments & JSXBase.HTMLAttributes<HTMLScFulfillmentsElement>;
             "sc-heading": LocalJSX.ScHeading & JSXBase.HTMLAttributes<HTMLScHeadingElement>;
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
