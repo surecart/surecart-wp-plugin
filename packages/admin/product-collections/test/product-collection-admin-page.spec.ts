@@ -5,7 +5,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 const API_BASE_PATH = '/surecart/v1/product_collections';
 
-test.describe('Product Collection Page', () => {
+test.describe('Product Collection Admin Page', () => {
 	test.beforeEach(async ({ requestUtils }) => {
 		const collections = await requestUtils.rest({
 			path: API_BASE_PATH,
