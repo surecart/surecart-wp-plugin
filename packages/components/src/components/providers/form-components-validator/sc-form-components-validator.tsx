@@ -58,7 +58,7 @@ export class ScFormComponentsValidator {
     }
 
     // add shipping choices.
-    if (checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required && !!this.order?.shipping_choices?.data?.length) {
+    if (checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required) {
       this.addShippingChoices();
     }
 

@@ -2,6 +2,7 @@ import { Component, Fragment, h, Prop } from '@stencil/core';
 import { checkoutIsLocked } from '@store/checkout/getters';
 import { availableProcessors } from '@store/processors/getters';
 import { state as selectedProcessor } from '@store/selected-processor';
+import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -59,6 +60,10 @@ export class ScOrderSubmit {
   /** Show the secure notice */
   @Prop() secureNotice: boolean = true;
 
+  cannotShipToLocation() {
+    return checkoutState?.checkout?.selected_shipping_choice_required && !checkoutState.checkout?.selected_shipping_choice;
+  }
+
   renderPayPalButton(buttons) {
     const { client_id, account_id, merchant_initiated_enabled } = getProcessorData(availableProcessors(), 'paypal', this.mode);
     if (!client_id && !account_id) return null;
@@ -91,7 +96,7 @@ export class ScOrderSubmit {
           size={this.size}
           full={this.full}
           loading={this.loading || this.paying}
-          disabled={this.loading || this.paying || this.busy || checkoutIsLocked()}
+          disabled={this.loading || this.paying || this.busy || checkoutIsLocked() || this.cannotShipToLocation()}
         >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>

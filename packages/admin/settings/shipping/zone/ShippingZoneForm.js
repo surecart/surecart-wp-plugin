@@ -262,7 +262,13 @@ export default ({
 					? __('Edit Zone', 'surecart')
 					: __('Add Zone', 'surecart')
 			}
-			onScRequestClose={onRequestClose}
+			onScRequestClose={(e) => {
+				if (e.detail === 'overlay') {
+					e.preventDefault();
+					return false;
+				}
+				onRequestClose();
+			}}
 			style={{
 				'--dialog-body-overflow': 'visible',
 				...(!isEdit

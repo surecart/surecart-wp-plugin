@@ -10,6 +10,15 @@
   box-sizing: border-box;
   border-bottom: var(--sc-input-border, 1px solid var(--sc-color-gray-300));
 
+  &__empty {
+    background: var(--sc-color-gray-100);
+    opacity: 0.75;
+    padding: var(--sc-spacing-large);
+    border-radius: var(--sc-input-border-radius-medium);
+    line-height: var(--sc-line-height-dense);
+    font-size: var(--sc-font-size-small);
+  }
+
   &:last-child {
     border-bottom-width: 0;
   }

@@ -1743,7 +1743,6 @@
   },
   "sc-shipping-choices": {
     "label": true,
-    "shipping-choices": true,
     "show-description": true,
     "style": true,
     "id": true,
