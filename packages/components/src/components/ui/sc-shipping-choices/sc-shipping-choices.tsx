@@ -61,7 +61,7 @@ export class ScShippingChoices {
           {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, amount, currency, shipping_method }) => (
             <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} class="shipping-choice" value={id}>
               <div class="shipping-choice__text">
-                <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name}</div>
+                <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name || __('Standard Shipping', 'surecart')}</div>
                 {this.showDescription && !!(shipping_method as ShippingMethod)?.description && (
                   <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
                 )}

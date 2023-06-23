@@ -41,7 +41,7 @@
     font-size: var(--sc-price-choice-name-size, var(--sc-input-label-font-size-medium));
     font-weight: var(--sc-price-choice-name-font-weight, var(--sc-font-weight-bold));
     text-transform: var(--sc-price-choice-text-transform, var(--sc-input-label-text-transform, none));
-    line-height: var(--sc-shipping-description-line-height, 1.2);
+    line-height: var(--sc-shipping-name-line-height, 1);
   }
 
   &__description {
