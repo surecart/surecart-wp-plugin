@@ -61,7 +61,9 @@ export default ({ id }) => {
 	const deleteCollection = async () => {
 		try {
 			await deleteItem({ throwOnError: true });
-			createSuccessNotice(__('Collection deleted.', 'surecart'));
+			createSuccessNotice(__('Collection deleted.', 'surecart'), {
+				type: 'snackbar',
+			});
 			window.location.assign('admin.php?page=sc-product-collections');
 		} catch (e) {
 			console.error(e?.message);
