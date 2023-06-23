@@ -80,7 +80,7 @@ class ProductCollectionsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_sortable_columns(): array {
-		return array( 'name' => array( 'name', false ) );
+		return [];
 	}
 
 	/**
