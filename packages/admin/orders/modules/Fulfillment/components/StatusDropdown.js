@@ -112,7 +112,7 @@ export default ({ fulfillment, ...rest }) => {
 							{status[key]}
 						</ScMenuItem>
 					))}
-					<ScMenuDivider />
+					{/* <ScMenuDivider />
 					<ScCheckbox
 						css={css`
 							padding: 0.5em 1em;
@@ -123,7 +123,7 @@ export default ({ fulfillment, ...rest }) => {
 						}
 					>
 						{__('Notify customer of status change', 'surecart')}
-					</ScCheckbox>
+					</ScCheckbox> */}
 				</ScMenu>
 			</ScDropdown>
 			{busy && <ScBlockUi spinner />}

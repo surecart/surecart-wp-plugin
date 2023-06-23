@@ -20,6 +20,7 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
+import Tracking from './components/Tracking';
 
 export default ({
 	items: fulfillmentItems,
@@ -300,6 +301,17 @@ export default ({
 					<div
 						css={css`
 							padding: var(--sc-spacing-x-large);
+						`}
+					>
+						<Tracking
+							trackings={trackings}
+							setTrackings={setTrackings}
+						/>
+					</div>
+
+					{/* <div
+						css={css`
+							padding: var(--sc-spacing-x-large);
 							display: grid;
 							gap: var(--sc-spacing-large);
 						`}
@@ -402,7 +414,7 @@ export default ({
 								{__('Add another tracking number', 'surecart')}
 							</ScButton>
 						</div>
-					</div>
+					</div> */}
 
 					<ScDivider
 						css={css`
@@ -435,7 +447,7 @@ export default ({
 						</ScFormControl>
 					</div>
 
-					<ScDivider />
+					{/* <ScDivider />
 
 					<div
 						css={css`
@@ -458,7 +470,7 @@ export default ({
 								)}
 							</span>
 						</ScSwitch>
-					</div>
+					</div> */}
 				</div>
 
 				<ScButton

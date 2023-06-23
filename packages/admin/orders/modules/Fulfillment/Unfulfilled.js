@@ -13,7 +13,7 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { intervalString } from '../../../util/translations';
 import { useState } from 'react';
-import FulfillItems from './FulfillItems';
+import CreateFulfillment from './CreateFulfillment';
 
 export default ({ items, checkout, orderId }) => {
 	const [modal, setModal] = useState(false);
@@ -106,7 +106,7 @@ export default ({ items, checkout, orderId }) => {
 				})}
 			</Box>
 
-			<FulfillItems
+			<CreateFulfillment
 				items={items}
 				orderId={orderId}
 				checkout={checkout}
