@@ -342,18 +342,25 @@ export default ({
 						)}
 					</ScStackedList>
 				) : (
-					<ScEmpty icon="shopping-bag">
+					<ScEmpty
+						icon="shopping-bag"
+						css={css`
+							margin: 0;
+						`}
+					>
 						{__('No products in this profile.', 'surecart')}
-						<ScButton
-							type="default"
-							onClick={() => {
-								setDraftProducts(draftProducts + 1);
-								setOpen(true);
-							}}
-						>
-							<ScIcon name="plus" />
-							{__('Add Product', 'surecart')}
-						</ScButton>
+						{!isDefaultProfile && (
+							<ScButton
+								type="default"
+								onClick={() => {
+									setDraftProducts(draftProducts + 1);
+									setOpen(true);
+								}}
+							>
+								<ScIcon name="plus" />
+								{__('Add Product', 'surecart')}
+							</ScButton>
+						)}
 					</ScEmpty>
 				)}
 				{hasPagination && (
