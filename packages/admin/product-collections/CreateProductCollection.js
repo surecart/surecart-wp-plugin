@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from 'react';
+import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -11,11 +11,15 @@ import { useState } from 'react';
 import { ScAlert, ScButton, ScForm, ScInput, ScRichText } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
+import Permalink from '../components/Permalink';
+import { slugify } from '../util/slug';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
+	const [slug, setSlug] = useState('');
+	const [slugCustomized, setSlugCustomized] = useState(false);
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -29,6 +33,7 @@ export default ({ id, setId }) => {
 				'product-collection',
 				{
 					name,
+					slug,
 					description,
 				},
 				{ throwOnError: true }
@@ -40,6 +45,12 @@ export default ({ id, setId }) => {
 			setIsSaving(false);
 		}
 	};
+
+	useEffect(() => {
+		if (name && !slugCustomized) {
+			setSlug(slugify(name));
+		}
+	}, [name]);
 
 	return (
 		<CreateTemplate id={id}>
@@ -69,6 +80,14 @@ export default ({ id, setId }) => {
 							name="name"
 							required
 							autofocus
+						/>
+						<Permalink
+							baseUrl={`${scData?.home_url}/collections`}
+							name={'slug'}
+							value={slug}
+							onChange={setSlug}
+							onCustomized={setSlugCustomized}
+							required
 						/>
 						<ScRichText
 							label={__('Description', 'surecart')}

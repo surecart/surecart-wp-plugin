@@ -7,20 +7,9 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScInput, ScRichText } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { useEffect } from 'react';
+import Permalink from '../../components/Permalink';
 
 export default ({ id, productCollection, updateProductCollection, loading }) => {
-
-	useEffect(() => {
-		if (productCollection?.name) {
-			// Make slug from name, replace spaces with dashes.
-			const slug = productCollection?.name
-				.toLowerCase()
-				.replace(/\s+/g, '-');
-			updateProductCollection({ slug });
-		}
-	}, [productCollection?.name]);
-
 	return (
 		<Box
 			title={
@@ -39,7 +28,10 @@ export default ({ id, productCollection, updateProductCollection, loading }) => 
 				<ScInput
 					label={__('Name', 'surecart')}
 					className="sc-collection-name hydrated"
-					help={__('A name for your product collection.', 'surecart')}
+					help={__(
+						'A name for your product collection.',
+						'surecart'
+					)}
 					value={productCollection?.name}
 					onScInput={(e) => {
 						updateProductCollection({ name: e.target.value });
@@ -47,14 +39,13 @@ export default ({ id, productCollection, updateProductCollection, loading }) => 
 					name="name"
 					required
 				/>
-				<ScInput
-					label={__('URL', 'surecart')}
-					className="sc-collection-slug hydrated"
-					help={__('The last part of the URL.', 'surecart')}
+				<Permalink
+					baseUrl={`${scData?.home_url}/collections`}
 					value={productCollection?.slug}
-					onScInput={(e) => {
-						updateProductCollection({ slug: e.target.value });
+					onChange={(value) => {
+						updateProductCollection({ slug: value });
 					}}
+					hideReset={true}
 					name="slug"
 					required
 				/>

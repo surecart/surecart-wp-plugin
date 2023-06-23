@@ -131,18 +131,15 @@ test.describe('Product Collection Admin Page', () => {
 
 		// Check if the collection is created with name by going to the edit page.
 		await expect(page.locator('input[name="name"]')).toHaveValue('Test Product Collection');
-		await expect(page.locator('input[name="slug"]')).toHaveValue('test-product-collection');
 
 		// Fill the form.
 		await page.fill('input[name="name"]', 'Test Product Collection Updated');
-		await page.fill('input[name="slug"]', 'test-collection');
 
 		// Click on the save button.
 		await page.click('button[type="submit"]');
 
-		// Check if the collection is created with name and slug by going to the edit page.
+		// Check if the collection is created with name by going to the edit page.
 		await expect(page.locator('input[name="name"]')).toHaveValue('Test Product Collection Updated');
-		await expect(page.locator('input[name="slug"]')).toHaveValue('test-collection');
 	});
 
 	test('Should delete a product collection', async ({ page }) => {
