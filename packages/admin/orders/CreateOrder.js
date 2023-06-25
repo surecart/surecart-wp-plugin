@@ -15,6 +15,7 @@ import { addQueryArgs } from '@wordpress/url';
 // import { state as checkoutState } from '@store/checkout';
 import { store as uiStore } from '../store/ui';
 import SelectCustomer from './modules/SelectCustomer';
+import Address from './modules/Address';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
@@ -162,9 +163,17 @@ export default ({ id, setId }) => {
                 </ScForm>
             }
             sidebar={
-                <Box title={__('Customer', 'surecart')}>
-                    <SelectCustomer/>
-                </Box>
+                <>
+                    <Box title={__('Customer', 'surecart')}>
+                        <SelectCustomer/>
+                    </Box>
+                    { !!customer?.shipping_address && (
+                        <Address
+                            address={customer?.shipping_address}
+                            label={__('Shipping & Tax Address', 'surecart')}
+                        />
+                    )}
+                </>
             }
 		>
 			<Box title={__('Create New Order', 'surecart')}></Box>

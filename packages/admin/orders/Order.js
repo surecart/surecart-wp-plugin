@@ -68,6 +68,7 @@ export default () => {
 		],
 	});
 
+	console.log(order);
 	const [modal, setModal] = useState();
 
 	useEffect(() => {
