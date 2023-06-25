@@ -42,7 +42,6 @@
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-header](../../controllers/cart/cart-header)
  - [sc-cart-icon](../sc-cart-icon)
- - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
@@ -93,7 +92,6 @@ graph TD;
   sc-cart-form-submit --> sc-icon
   sc-cart-header --> sc-icon
   sc-cart-icon --> sc-icon
-  sc-cart-submit --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
   sc-customer-details --> sc-icon
