@@ -67,6 +67,7 @@ export default () => {
 			'price.product',
 		],
 	});
+
 	const [modal, setModal] = useState();
 
 	useEffect(() => {

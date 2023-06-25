@@ -21,13 +21,35 @@ import ModelSelector from '../../components/ModelSelector';
 import useAvatar from '../../hooks/useAvatar';
 import { store as uiStore } from '../../store/ui';
 import { store as coreStore } from '@wordpress/core-data';
+import { useState, useEffect } from '@wordpress/element';
 
 export default () => {
 	
 	const customer = useSelect((select) => select(uiStore).getCustomerForCreateOrder())?.customerForCreateOrder;
 	const { setCustomerForCreateOrder } = useDispatch(uiStore);
 	const avatarUrl = useAvatar({ email: customer?.email });
-	
+	const [customerID, setCustomerID] = useState(false);
+
+	const { customerData } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'customer',
+				customerID,
+				{ expand: ['shipping_address', 'billing_address', 'tax_identifier'] }
+			];
+			return {
+				customerData: select(coreStore).getEntityRecord(...queryArgs),
+			};
+		}
+	);
+
+	useEffect(() => {
+		if ( customerData ) {
+			setCustomerForCreateOrder(customerData);
+		}
+	}, [customerData]);
+
 	return (
 		<>
 			<ScFormControl
@@ -96,15 +118,7 @@ export default () => {
 						}
 						value={customer?.id || customer}
 						onSelect={(customer) => {
-							const queryArgs = [
-								'surecart',
-								'customer',
-								customer,
-								{ expand: ['shipping_address', 'billing_address', 'tax_identifier'] }
-							];
-							const customerData = select(coreStore).getEntityRecord(...queryArgs);
-							console.log(customerData);
-							setCustomerForCreateOrder(customerData);
+							setCustomerID(customer);
 						}}
 					/>
 				)}

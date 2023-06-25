@@ -48,7 +48,6 @@ export default () => {
 			});
 
 			setOpen(false);
-	console.log(prices);
 
 			const finalPrices = [
 				...prices?.pricesForCreateOrder || [],

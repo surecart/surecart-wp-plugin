@@ -21,11 +21,10 @@ export default ({ id, setId }) => {
 	const [canSaveNow, setCanSaveNow] = useState(false);
 	const [error, setError] = useState('');
 
-	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
+	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder())?.pricesForCreateOrder;
 	const customer = useSelect((select) => select(uiStore).getCustomerForCreateOrder())?.customerForCreateOrder;
 
     useEffect(() => {
-		
         if ( customer && prices && 0 !== Object.keys(customer)?.length && 0 !== prices?.length ) {
             setCanSaveNow( true );
         }
@@ -50,15 +49,17 @@ export default ({ id, setId }) => {
 
 	// create the order.
 	const onSubmit = async (e) => {
-        const lineItems = prices?.pricesForCreateOrder?.map((price) => {
+        const lineItems = prices?.map((price) => {
             const {
                 id,
-                ad_hoc_min_amount
+                ad_hoc_min_amount,
+                quantity
             } = price;
 
             return {
                 price: id,
                 ad_hoc_amount: ad_hoc_min_amount,
+                quantity: quantity || 1
             }
             
         });
@@ -68,7 +69,7 @@ export default ({ id, setId }) => {
             last_name: customer?.last_name,
             name: customer?.name,
             email: customer?.email,
-            customer: customer?.id
+            shipping_address: customer?.shipping_address
         }
 
 		e.preventDefault();
@@ -94,13 +95,11 @@ export default ({ id, setId }) => {
 				};
 			}
 
-            const session = await finalizeCheckout( {
+            const order = await finalizeCheckout( {
                 id: checkout.id,
                 customer_id: customer?.id
             } );
-
-            console.log(session);
-			// setId(order.id);
+			setId(order?.order);
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong.', 'surecart'));
