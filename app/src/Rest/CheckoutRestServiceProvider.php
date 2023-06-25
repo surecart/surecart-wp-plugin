@@ -157,6 +157,11 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
+
+		if ( ! empty( $request['customer_id'] ) ) {
+			return true;
+		}
+
 		// form id or a product id is required.
 		if ( empty( $request['form_id'] ) && empty( $request['product_id'] ) ) {
 			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );

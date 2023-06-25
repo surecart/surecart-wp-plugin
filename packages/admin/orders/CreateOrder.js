@@ -8,7 +8,7 @@ import Box from '../ui/Box';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 // import { finalizeCheckout } from '../../components/src/services/session/index';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -18,20 +18,32 @@ import SelectCustomer from './modules/SelectCustomer';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [canSaveNow, setCanSaveNow] = useState(true);
+	const [canSaveNow, setCanSaveNow] = useState(false);
 	const [error, setError] = useState('');
 
 	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
 	const customer = useSelect((select) => select(uiStore).getCustomerForCreateOrder())?.customerForCreateOrder;
 
+    useEffect(() => {
+		
+        if ( customer && prices && 0 !== Object.keys(customer)?.length && 0 !== prices?.length ) {
+            setCanSaveNow( true );
+        }
+
+	}, [ prices, customer ]);
+
 	const { saveEntityRecord } = useDispatch(coreStore);
     
-    const finalizeCheckout = async ({id}) => {
+    const finalizeCheckout = async ({id, customer_id}) => {
         return await apiFetch({
           method: 'PATCH',
           path: addQueryArgs(
             `surecart/v1/checkouts/${id}/finalize`,
-            {manual_payment: true}
+            {
+                manual_payment: true,
+                skip_spam_check: true,
+                customer_id: customer_id
+            }
           )
         });
     };
@@ -82,7 +94,10 @@ export default ({ id, setId }) => {
 				};
 			}
 
-            const session = await finalizeCheckout({id: checkout.id});
+            const session = await finalizeCheckout( {
+                id: checkout.id,
+                customer_id: customer?.id
+            } );
 
             console.log(session);
 			// setId(order.id);
@@ -135,7 +150,7 @@ export default ({ id, setId }) => {
                     <div
                         css={css`display: flex gap: var(--sc-spacing-small);`}
                     >
-                        <ScButton type="primary" submit loading={isSaving}>
+                        <ScButton type="primary" submit loading={isSaving} disabled={ ! canSaveNow } >
                             {__('Create', 'surecart')}
                         </ScButton>
                         <ScButton
