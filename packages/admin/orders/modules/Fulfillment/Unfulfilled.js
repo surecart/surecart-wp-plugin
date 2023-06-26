@@ -72,7 +72,12 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 						</ScButton>
 						<ScMenu>
 							<ScMenuItem onClick={() => setModal(true)}>
-								{__('Fulfill Items', 'surecart')}
+								{_n(
+									'Fulfill Item',
+									'Fulfill Items',
+									items?.length,
+									'surecart'
+								)}
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
@@ -80,8 +85,8 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 				footer={
 					<ScButton type="default" onClick={() => setModal(true)}>
 						{_n(
-							'Fulfill item',
-							'Fulfill items',
+							'Fulfill Item',
+							'Fulfill Items',
 							items?.length,
 							'surecart'
 						)}
@@ -122,23 +127,6 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 						);
 					})}
 				</div>
-				{/* {(items || []).map((item) => {
-					return (
-						<ScProductLineItem
-							key={item.id}
-							imageUrl={item?.price?.product?.image_url}
-							name={item?.price?.product?.name}
-							editable={false}
-							removable={false}
-							fees={item?.fees?.data}
-							quantity={item.quantity - item.fulfilled_quantity}
-							amount={item.subtotal_amount}
-							currency={item?.price?.currency}
-							trialDurationDays={item?.price?.trial_duration_days}
-							interval={intervalString(item?.price)}
-						></ScProductLineItem>
-					);
-				})} */}
 			</Box>
 
 			<CreateFulfillment

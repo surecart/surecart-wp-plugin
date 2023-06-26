@@ -156,8 +156,8 @@ export default ({
 		>
 			<ScDrawer
 				label={_n(
-					'Fulfill item',
-					'Fulfill items',
+					'Fulfill Item',
+					'Fulfill Items',
 					items?.length,
 					'surecart'
 				)}
@@ -313,8 +313,8 @@ export default ({
 					disabled={!(items || []).some((item) => item?.quantity)}
 				>
 					{_n(
-						'Fulfill item',
-						'Fulfill items',
+						'Fulfill Item',
+						'Fulfill Items',
 						items?.length,
 						'surecart'
 					)}
