@@ -9,15 +9,17 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect, select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import { useDispatch, select } from '@wordpress/data';
+import expand from '../query';
 import PriceSelector from '@admin/components/PriceSelector';
 
 export default ({ checkout }) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [priceID, setPriceID] = useState(false);
-	const { saveEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 
@@ -27,15 +29,48 @@ export default ({ checkout }) => {
 
 		try {
 			setLoading(true);
-			await saveEntityRecord('surecart', 'line_item', {
-				checkout: checkout?.id,
-				price: priceID,
-				quantity: 1,
+
+			// get the line items endpoint.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'line_item'
+			);
+
+			// add the line item.
+			const { checkout: data } = await apiFetch({
+				method: 'POST',
+				path: addQueryArgs(baseURL, {
+					expand: [
+						// expand the checkout and the checkout's required expands.
+						...(expand || []).map((item) => {
+							return item.includes('.')
+								? item
+								: `checkout.${item}`;
+						}),
+						'checkout',
+					],
+				}),
+				data: {
+					checkout: checkout?.id,
+					price: priceID,
+					quantity: 1,
+				},
 			});
-			invalidateResolutionForStore();
+
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'checkout',
+				data,
+				undefined,
+				false,
+				checkout
+			);
+
 			createSuccessNotice(__('Product added.', 'surecart'), {
 				type: 'snackbar',
 			});
+
 			setOpen(false);
 		} catch (e) {
 			console.error(e);

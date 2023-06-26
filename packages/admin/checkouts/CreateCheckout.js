@@ -14,6 +14,7 @@ import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { store as uiStore } from '../store/ui';
+import expand from './query';
 import SelectCustomer from './modules/SelectCustomer';
 import Address from './modules/Address';
 
@@ -40,35 +41,12 @@ export default ({ setId }) => {
 
 	const { checkout, loading, busy, error } = useSelect(
 		(select) => {
-			console.log('invalidate', id);
 			// we don't yet have a checkout.
 			if (!id) {
 				return {};
 			}
-
 			// our entity query data.
-			const entityData = [
-				'surecart',
-				'checkout',
-				id,
-				{
-					expand: [
-						'line_items',
-						'line_item.price',
-						'line_item.fees',
-						'price.product',
-						'customer',
-						'customer.shipping_address',
-						'payment_intent',
-						'discount',
-						'discount.promotion',
-						'discount.coupon',
-						'shipping_address',
-						'tax_identifier',
-						'manual_payment_method',
-					],
-				},
-			];
+			const entityData = ['surecart', 'checkout', id, { expand }];
 
 			const checkout = select(coreStore).getEditedEntityRecord(
 				...entityData
@@ -88,7 +66,7 @@ export default ({ setId }) => {
 				),
 			};
 		},
-		[id]
+		[id, checkout?.line_items]
 	);
 
 	// we don't yet have a checkout.

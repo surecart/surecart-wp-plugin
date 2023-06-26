@@ -12,23 +12,49 @@ import {
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
+import expand from '../query';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 
 export default ({ checkout, loading, busy }) => {
 	const line_items = checkout?.line_items?.data || [];
 	const [deleting, setDeleting] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const { deleteEntityRecord, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
 	const onRemove = async (id) => {
 		try {
 			setDeleting(true);
+
+			// delete the entity record.
 			await deleteEntityRecord('surecart', 'line_item', id, null, {
 				throwOnError: true,
 			});
-			invalidateResolutionForStore();
+
+			// get the checkouts endpoint.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'checkout'
+			);
+
+			// fetch the updated checkout.
+			const data = await apiFetch({
+				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
+					expand,
+				}),
+			});
+
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'checkout',
+				data,
+				undefined,
+				false,
+				checkout
+			);
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
