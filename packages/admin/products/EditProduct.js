@@ -214,12 +214,12 @@ export default ({ id }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Tax
+					<Shipping
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Shipping
+					<Tax
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
