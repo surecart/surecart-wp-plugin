@@ -158,7 +158,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
 
-		if ( ! empty( $request['customer_id'] ) ) {
+		if ( $this->create_item_permissions_check( $request ) ) {
 			return true;
 		}
 
