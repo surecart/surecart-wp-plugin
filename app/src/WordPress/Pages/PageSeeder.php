@@ -181,6 +181,11 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createPosts( $posts ) {
+		// ability to turn off page seeding.
+		if ( ! apply_filters( 'surecart/seed/all', true ) ) {
+			return;
+		}
+
 		foreach ( $posts as $key => $post ) {
 			$this->pages->findOrCreate(
 				esc_sql( $post['name'] ),
