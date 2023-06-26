@@ -204,14 +204,18 @@ class WebhookController {
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
 		// broadcast the webhook as a background task.
-		\SureCart::queue()->add(
-			$event,
-			array(
-				'model'   => $model,
-				'request' => $request,
-			),
-			Webhook::GROUP_NAME
-		);
+		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+			do_action( $event, $model, $request );
+		} else {
+			\SureCart::queue()->add(
+				$event,
+				array(
+					'model'   => $model,
+					'request' => $request,
+				),
+				Webhook::GROUP_NAME
+			);
+		}
 
 		// return data.
 		return [

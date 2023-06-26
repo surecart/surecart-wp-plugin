@@ -52,6 +52,10 @@ class ActivationService {
 		// Seed pages and forms.
 		$this->seeder->seed();
 
+		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+			return;
+		}
+
 		// Create webhooks.
 		\SureCart::webhooks()->maybeCreateWebhook();
 	}
