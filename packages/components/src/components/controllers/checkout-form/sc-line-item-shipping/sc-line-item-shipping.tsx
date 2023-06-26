@@ -14,8 +14,9 @@ export class ScLineItemShipping {
 
   render() {
     const { checkout } = checkoutState;
-    // don't show if no shipping amount.
-    if (!checkout?.shipping_amount) {
+
+    // don't show if no shipping amount if no choice selected
+    if (!checkout?.selected_shipping_choice) {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
@@ -32,7 +33,11 @@ export class ScLineItemShipping {
       <sc-line-item>
         <span slot="description">{this.label || __('Shipping', 'surecart')}</span>
         <span slot="price">
-          <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.shipping_amount}></sc-format-number>
+          {checkout?.shipping_amount ? (
+            <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.shipping_amount}></sc-format-number>
+          ) : (
+            __('Free', 'surecart')
+          )}
         </span>
       </sc-line-item>
     );
