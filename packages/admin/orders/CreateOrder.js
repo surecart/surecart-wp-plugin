@@ -19,7 +19,6 @@ export default ({ setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [canSaveNow, setCanSaveNow] = useState(false);
 	const [customerShippingStatus, setCustomerShippingStatus] = useState(false);
-	const [customerShippingInput, setCustomerShippingInput] = useState(false);
 	const [error, setError] = useState('');
 
 	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder())?.pricesForCreateOrder;
@@ -32,7 +31,7 @@ export default ({ setId }) => {
             return;
         }
 
-        if ( 0 !== Object.keys(customer)?.length && 0 !== prices?.length && customerShippingInput ) {
+        if ( 0 !== Object.keys(customer)?.length && 0 !== prices?.length ) {
             setCanSaveNow( true );
         }
 
@@ -40,7 +39,8 @@ export default ({ setId }) => {
 
     useEffect(() => {
         
-        if ( ! customer || ! customer?.shipping_address || customerShippingStatus ) {
+        if ( ! customer || ! customer?.shipping_address ) {
+            setCustomerShippingStatus(false);
             return;
         }
 
@@ -193,7 +193,7 @@ export default ({ setId }) => {
                     <Box title={__('Customer', 'surecart')}>
                         <SelectCustomer/>
                     </Box>
-                    { customer && customerShippingInput && (
+                    { customer && customerShippingStatus && (
                         <>
                         
                         <Address
@@ -203,10 +203,9 @@ export default ({ setId }) => {
                         </>
                     )}
                     {
-                        customer && (! customerShippingStatus || ! customerShippingInput) && (
-                            <ScForm onScSubmit={() => setCustomerShippingInput(true)}>
+                        customer && ! customerShippingStatus && (
+                            <Box title={__('Update Shipping & Tax Address', 'surecart')}>
                                 <ScAddress
-                                    label={__('Shipping & Tax Address', 'surecart')}
                                     required={true}
                                     onScInputAddress={(e) => {
                                         const finalCustomerData = {
@@ -221,10 +220,7 @@ export default ({ setId }) => {
                                         
                                     }}
                                 />
-                                <ScButton type="primary" submit loading={isSaving} disabled={ ! customerShippingStatus } >
-                                    {__('Update', 'surecart')}
-                                </ScButton>
-                            </ScForm>
+                            </Box>
                         )
                     }
                 </>
