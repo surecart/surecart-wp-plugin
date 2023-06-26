@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import Price from './Price';
 import NewPrice from './NewPrice';
 import { store as uiStore } from '../../store/ui';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import {
 	ScCard,
 	ScFlex,

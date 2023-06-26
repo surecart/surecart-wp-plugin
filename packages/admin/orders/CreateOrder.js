@@ -9,15 +9,13 @@ import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
 import { useState, useEffect } from '@wordpress/element';
-// import { finalizeCheckout } from '../../components/src/services/session/index';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-// import { state as checkoutState } from '@store/checkout';
 import { store as uiStore } from '../store/ui';
 import SelectCustomer from './modules/SelectCustomer';
 import Address from './modules/Address';
 
-export default ({ id, setId }) => {
+export default ({ setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [canSaveNow, setCanSaveNow] = useState(false);
 	const [error, setError] = useState('');

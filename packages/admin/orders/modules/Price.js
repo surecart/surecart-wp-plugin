@@ -4,11 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { intervalString } from '../../util/translations';
 import {
 	ScButton,
-	ScCard,
 	ScFlex,
-	ScSkeleton,
-	ScText,
-	ScStackedList,
 	ScFormatNumber,
 	ScInput,
 	ScStackedListRow

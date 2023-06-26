@@ -6,14 +6,10 @@ import {
 	ScCard,
 	ScDropdown,
 	ScFlex,
-	ScForm,
 	ScFormControl,
 	ScIcon,
-	ScInput,
 	ScMenu,
-	ScMenuDivider,
-	ScMenuItem,
-	ScSkeleton,
+	ScMenuItem
 } from '@surecart/components-react';
 import { useDispatch, useSelect, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
