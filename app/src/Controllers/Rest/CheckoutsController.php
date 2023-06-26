@@ -69,7 +69,7 @@ class CheckoutsController extends RestController {
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
 		// if the customer id is set, return early.
-		if ( $request->get_param( 'customer_id' ) || $request->get_param( 'customer' ) ) {
+		if ( ! is_null( $request->get_param( 'customer_id' ) ) || ! is_null( $request->get_param( 'customer' ) ) ) {
 			return $class;
 		}
 
@@ -262,13 +262,12 @@ class CheckoutsController extends RestController {
 	 * @return \WP_Error Errors.
 	 */
 	public function validate( $args, $request ) {
-		
+
 		$errors = new \WP_Error();
-		
+
 		if ( ! empty( $request->get_param( 'skip_spam_check' ) ) ) {
 			return apply_filters( 'surecart/checkout/validate', $errors, $args, $request );
 		}
-
 
 		// check if they are trying to sign in.
 		$valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
