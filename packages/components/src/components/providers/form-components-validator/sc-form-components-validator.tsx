@@ -73,7 +73,7 @@ export class ScFormComponentsValidator {
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
     this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
-    this.hasShippingAmount = !!this.el.querySelector('sc-shipping-line-item');
+    this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
