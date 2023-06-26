@@ -36,6 +36,12 @@ class WebhookMigrationsService extends GeneralMigration {
 		// Update the webhook events on the server.
 		try {
 			$webhook = Webhook::find( $registered_webhook['id'] );
+
+			// Stop if the webhook is not found or there is some error.
+			if ( is_wp_error( $webhook ) || empty( $webhook->id ) || empty( $webhook->url ) ) {
+				return;
+			}
+
 			$webhook->update(
 				[
 					'webhook_events' => $webhook_events,
