@@ -141,7 +141,6 @@ export default () => {
 	};
 	const menuItems = getMenuItems(order?.status);
 
-
 	/**
 	 * Replaces the browser URL with a edit link for a given id ID.
 	 *
@@ -151,7 +150,7 @@ export default () => {
 	 *
 	 * @param {number} id id for the model for which to generate edit URL.
 	 */
-	 const setBrowserURL = (id) => {
+	const setBrowserURL = (id) => {
 		window.history.replaceState({ id }, 'Post ' + id, getEditURL(id));
 		setHistoryId(id);
 	};
@@ -161,10 +160,6 @@ export default () => {
 			setBrowserURL(id);
 		}
 	};
-
-	if ( ! id ) {
-		return <CreateOrder setId={setId} />;
-	}
 
 	return (
 		<UpdateModel

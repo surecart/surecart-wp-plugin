@@ -9,7 +9,7 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScMenu,
-	ScMenuItem
+	ScMenuItem,
 } from '@surecart/components-react';
 import { useDispatch, useSelect, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -20,28 +20,33 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
 
 export default () => {
-	
-	const customer = useSelect((select) => select(uiStore).getCustomerForCreateOrder())?.customerForCreateOrder;
+	const customer = useSelect((select) =>
+		select(uiStore).getCustomerForCreateOrder()
+	)?.customerForCreateOrder;
 	const { setCustomerForCreateOrder } = useDispatch(uiStore);
 	const avatarUrl = useAvatar({ email: customer?.email });
 	const [customerID, setCustomerID] = useState(false);
 
-	const { customerData } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'customer',
-				customerID,
-				{ expand: ['shipping_address', 'billing_address', 'tax_identifier'] }
-			];
-			return {
-				customerData: select(coreStore).getEntityRecord(...queryArgs),
-			};
-		}
-	);
+	const { customerData } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'customer',
+			customerID,
+			{
+				expand: [
+					'shipping_address',
+					'billing_address',
+					'tax_identifier',
+				],
+			},
+		];
+		return {
+			customerData: select(coreStore).getEntityRecord(...queryArgs),
+		};
+	});
 
 	useEffect(() => {
-		if ( customerData ) {
+		if (customerData) {
 			setCustomerForCreateOrder(customerData);
 		}
 	}, [customerData]);

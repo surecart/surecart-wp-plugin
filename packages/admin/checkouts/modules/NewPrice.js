@@ -11,50 +11,32 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect, select } from '@wordpress/data';
 import PriceSelector from '@admin/components/PriceSelector';
-import { store as uiStore } from '../../store/ui';
 
-export default () => {
+export default ({ checkout }) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [priceID, setPriceID] = useState(false);
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
-	const { setPricesForCreateOrder } = useDispatch(uiStore);
-	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder());
-	
-	const { price } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'price',
-				priceID,
-				{expand: ['product']},
-			];
-			return {
-				price: select(coreStore).getEntityRecord(...queryArgs),
-			};
-		}
-	);
-	
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		e.stopImmediatePropagation();
 
 		try {
 			setLoading(true);
-			
+			await saveEntityRecord('surecart', 'line_item', {
+				checkout: checkout?.id,
+				price: priceID,
+				quantity: 1,
+			});
+			invalidateResolutionForStore();
 			createSuccessNotice(__('Product added.', 'surecart'), {
 				type: 'snackbar',
 			});
-
 			setOpen(false);
-
-			const finalPrices = [
-				...prices?.pricesForCreateOrder || [],
-				price
-			];
-			setPricesForCreateOrder(finalPrices);
-
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -66,7 +48,6 @@ export default () => {
 		} finally {
 			setLoading(false);
 		}
-		
 	};
 
 	return (

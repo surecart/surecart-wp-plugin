@@ -1,4 +1,4 @@
-import Address from './modules/Address';
+import Address from '../checkouts/modules/Address';
 import Customer from './modules/Customer';
 import Phone from './modules/Phone';
 import MetaData from './modules/MetaData';
