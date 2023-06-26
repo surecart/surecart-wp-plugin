@@ -135,11 +135,11 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		});
 		$requests->shouldReceive('makeRequest')->andReturn((object) ['live_mode' => false]);
 
-		$account = \Mockery::mock(AccountService::class)->shouldAllowMockingProtectedMethods();
-		\SureCart::alias('account', function () use ($account) {
-			return $account;
+		\SureCart::alias('account', function () {
+			return (object) [
+				'claimed' => true,
+			];
 		});
-		$account->shouldReceive('fetchCachedAccount')->andReturn((object) ['claimed' => true]);
 
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testid/finalize');
 		$request->set_param('live_mode', false);
