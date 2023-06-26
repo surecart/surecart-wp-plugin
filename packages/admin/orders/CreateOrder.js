@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
+import { ScAlert, ScButton, ScForm, ScInput, ScAddress } from '@surecart/components-react';
 import Box from '../ui/Box';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -18,18 +18,45 @@ import Address from './modules/Address';
 export default ({ setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [canSaveNow, setCanSaveNow] = useState(false);
+	const [customerShippingStatus, setCustomerShippingStatus] = useState(false);
+	const [customerShippingInput, setCustomerShippingInput] = useState(false);
 	const [error, setError] = useState('');
 
 	const prices = useSelect((select) => select(uiStore).getPricesForCreateOrder())?.pricesForCreateOrder;
 	const customer = useSelect((select) => select(uiStore).getCustomerForCreateOrder())?.customerForCreateOrder;
+	const { setCustomerForCreateOrder } = useDispatch(uiStore);
 
     useEffect(() => {
-        if ( customer && prices && 0 !== Object.keys(customer)?.length && 0 !== prices?.length ) {
+
+        if ( ! customer || ! prices ) {
+            return;
+        }
+
+        if ( 0 !== Object.keys(customer)?.length && 0 !== prices?.length && customerShippingInput ) {
             setCanSaveNow( true );
         }
 
 	}, [ prices, customer ]);
 
+    useEffect(() => {
+        
+        if ( ! customer || ! customer?.shipping_address || customerShippingStatus ) {
+            return;
+        }
+
+        const {
+            city,
+            country,
+            line_1,
+            postal_code,
+            state
+        } = customer?.shipping_address;
+
+        if ( customer?.shipping_address && city && country && line_1 && postal_code && state ) {
+            setCustomerShippingStatus(true);
+        }
+
+    }, [ customer ]);
 	const { saveEntityRecord } = useDispatch(coreStore);
     
     const finalizeCheckout = async ({id, customer_id}) => {
@@ -89,7 +116,7 @@ export default ({ setId }) => {
 				throw {
 					message: __(
 						'Could not create checkout. Please try again.',
-						'sureacrt'
+						'surecart'
 					),
 				};
 			}
@@ -105,7 +132,8 @@ export default ({ setId }) => {
 			setIsSaving(false);
 		}
 	};
- 
+    
+    
     return (
         <>
         <ScAlert open={error?.length} type="danger" closable scrollOnOpen>
@@ -165,12 +193,40 @@ export default ({ setId }) => {
                     <Box title={__('Customer', 'surecart')}>
                         <SelectCustomer/>
                     </Box>
-                    { !!customer?.shipping_address && (
+                    { customer && customerShippingInput && (
+                        <>
+                        
                         <Address
                             address={customer?.shipping_address}
                             label={__('Shipping & Tax Address', 'surecart')}
                         />
+                        </>
                     )}
+                    {
+                        customer && (! customerShippingStatus || ! customerShippingInput) && (
+                            <ScForm onScSubmit={() => setCustomerShippingInput(true)}>
+                                <ScAddress
+                                    label={__('Shipping & Tax Address', 'surecart')}
+                                    required={true}
+                                    onScInputAddress={(e) => {
+                                        const finalCustomerData = {
+                                            ...customer,
+                                            shipping_address: {
+                                                ...customer?.shipping_address,
+                                                id: 'new_customer',
+                                                ...e.detail
+                                            }
+                                        }
+                                        setCustomerForCreateOrder(finalCustomerData);
+                                        
+                                    }}
+                                />
+                                <ScButton type="primary" submit loading={isSaving} disabled={ ! customerShippingStatus } >
+                                    {__('Update', 'surecart')}
+                                </ScButton>
+                            </ScForm>
+                        )
+                    }
                 </>
             }
 		>

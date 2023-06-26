@@ -7,7 +7,8 @@ import {
 	ScFlex,
 	ScFormatNumber,
 	ScInput,
-	ScStackedListRow
+	ScStackedListRow,
+	ScIcon
 } from '@surecart/components-react';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, useSelect } from '@wordpress/data';
