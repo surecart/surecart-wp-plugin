@@ -66,9 +66,7 @@ export class ScShippingChoices {
                   <div class="shipping-choice__description">{(shipping_method as ShippingMethod)?.description}</div>
                 )}
               </div>
-              <div class="shipping-choice__price">
-                <sc-format-number type="currency" value={amount} currency={currency} />
-              </div>
+              <div class="shipping-choice__price">{!!amount ? <sc-format-number type="currency" value={amount} currency={currency} /> : __('Free', 'surecart')}</div>
             </sc-radio>
           ))}
         </sc-radio-group>
