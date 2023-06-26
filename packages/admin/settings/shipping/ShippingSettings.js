@@ -117,7 +117,7 @@ export default () => {
 						title={__('No shipping rates', 'surecart')}
 					>
 						{__(
-							"Customers won't be able to complete checkout for physical products. Please add shipping rates.",
+							"Customers won't be able to complete checkout for physical products. Please add at least one shipping rate.",
 							'surecart'
 						)}
 					</ScAlert>
