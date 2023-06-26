@@ -264,14 +264,20 @@ export default ({
 						<ScFormControl label={true}>
 							<div slot="label">
 								{__('Shipping Address', 'surecart')}
-								<ScTooltip
-									text={__('Copy Address', 'surecart')}
-									type="text"
-								>
-									<ScButton type="link" onClick={copy} circle>
-										<ScIcon name="clipboard" />
-									</ScButton>
-								</ScTooltip>
+								{location.protocol === 'https:' && (
+									<ScTooltip
+										text={__('Copy Address', 'surecart')}
+										type="text"
+									>
+										<ScButton
+											type="link"
+											onClick={copy}
+											circle
+										>
+											<ScIcon name="clipboard" />
+										</ScButton>
+									</ScTooltip>
+								)}
 							</div>
 							<AddressDisplay
 								address={checkout?.shipping_address}
