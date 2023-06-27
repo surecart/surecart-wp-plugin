@@ -137,7 +137,7 @@ class PageSeeder {
 				'checkout'  => [
 					'name'          => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'         => _x( 'Checkout', 'Page title', 'surecart' ),
-					'content'       => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} --><!-- /wp:surecart/checkout-form -->',
+					'content'       => '<!-- wp:surecart/checkout-form {"id":' . (int) ( $form->ID ?? 0 ) . '} --><!-- /wp:surecart/checkout-form -->',
 					'page_template' => 'pages/template-surecart-blank.php',
 				],
 				'dashboard' => [
