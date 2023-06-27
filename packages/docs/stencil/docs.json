@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-23T13:58:38",
+  "timestamp": "2023-06-27T18:45:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -2572,6 +2572,7 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-login-form",
@@ -2611,6 +2612,9 @@
           "sc-card"
         ],
         "sc-downloads-list": [
+          "sc-card"
+        ],
+        "sc-fulfillments": [
           "sc-card"
         ],
         "sc-invoices-list": [
@@ -4749,6 +4753,7 @@
           "sc-format-number"
         ],
         "sc-shipping-choices": [
+          "sc-form-control",
           "sc-radio-group",
           "sc-radio",
           "sc-format-number",
@@ -9608,6 +9613,7 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-order",
@@ -9655,6 +9661,9 @@
           "sc-dashboard-module"
         ],
         "sc-downloads-list": [
+          "sc-dashboard-module"
+        ],
+        "sc-fulfillments": [
           "sc-dashboard-module"
         ],
         "sc-invoices-list": [
@@ -11388,6 +11397,7 @@
         "sc-cancel-discount",
         "sc-cancel-survey",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-login-form",
         "sc-order",
         "sc-pagination",
@@ -11410,6 +11420,9 @@
           "sc-flex"
         ],
         "sc-downloads-list": [
+          "sc-flex"
+        ],
+        "sc-fulfillments": [
           "sc-flex"
         ],
         "sc-login-form": [
@@ -11791,6 +11804,7 @@
           "sc-format-number"
         ],
         "sc-shipping-choices": [
+          "sc-form-control",
           "sc-radio-group",
           "sc-radio",
           "sc-format-number",
@@ -12072,6 +12086,7 @@
         "sc-product-quantity",
         "sc-rich-text",
         "sc-select",
+        "sc-shipping-choices",
         "sc-stripe-element",
         "sc-textarea"
       ],
@@ -12113,6 +12128,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-shipping-choices": [
           "sc-form-control"
         ],
         "sc-stripe-element": [
@@ -13158,6 +13176,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-coupon-form",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-bump",
         "sc-line-item-shipping",
@@ -13190,6 +13209,9 @@
           "sc-format-number"
         ],
         "sc-coupon-form": [
+          "sc-format-number"
+        ],
+        "sc-fulfillments": [
           "sc-format-number"
         ],
         "sc-invoices-list": [
@@ -13370,11 +13392,101 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-fulfillments"
+      ],
       "dependencies": [
         "sc-tag"
       ],
       "dependencyGraph": {
+        "sc-fulfillment-shipping-status-badge": [
+          "sc-tag"
+        ],
+        "sc-fulfillments": [
+          "sc-fulfillment-shipping-status-badge"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/fulfillments/sc-fulfillments.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-fulfillments",
+      "readme": "# sc-fulfillments\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "orderId",
+          "type": "string",
+          "mutable": false,
+          "attr": "order-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-flex",
+        "sc-skeleton",
+        "sc-spacing",
+        "sc-dashboard-module",
+        "sc-card",
+        "sc-stacked-list",
+        "sc-stacked-list-row",
+        "sc-fulfillment-shipping-status-badge",
+        "sc-icon",
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-fulfillments": [
+          "sc-flex",
+          "sc-skeleton",
+          "sc-spacing",
+          "sc-dashboard-module",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row",
+          "sc-fulfillment-shipping-status-badge",
+          "sc-icon",
+          "sc-format-number"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
         "sc-fulfillment-shipping-status-badge": [
           "sc-tag"
         ]
@@ -13566,6 +13678,7 @@
         "sc-downloads-list",
         "sc-drawer",
         "sc-empty",
+        "sc-fulfillments",
         "sc-image-slider",
         "sc-invoices-list",
         "sc-login-form",
@@ -13643,6 +13756,9 @@
           "sc-icon"
         ],
         "sc-empty": [
+          "sc-icon"
+        ],
+        "sc-fulfillments": [
           "sc-icon"
         ],
         "sc-image-slider": [
@@ -18241,6 +18357,121 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/order-shipment-badge/sc-order-shipment-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-shipment-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"delivered\" | \"partially_shipped\" | \"shipped\" | \"unshipped\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "delivered",
+              "type": "string"
+            },
+            {
+              "value": "partially_shipped",
+              "type": "string"
+            },
+            {
+              "value": "shipped",
+              "type": "string"
+            },
+            {
+              "value": "unshipped",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-order-shipment-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -26695,22 +26926,6 @@
           "required": false
         },
         {
-          "name": "shippingChoices",
-          "type": "ShippingChoice[]",
-          "mutable": true,
-          "reflectToAttr": false,
-          "docs": "Shipping choices",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "ShippingChoice[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "showDescription",
           "type": "boolean",
           "mutable": false,
@@ -26748,6 +26963,7 @@
         "sc-form-components-validator"
       ],
       "dependencies": [
+        "sc-form-control",
         "sc-radio-group",
         "sc-radio",
         "sc-format-number",
@@ -26755,10 +26971,14 @@
       ],
       "dependencyGraph": {
         "sc-shipping-choices": [
+          "sc-form-control",
           "sc-radio-group",
           "sc-radio",
           "sc-format-number",
           "sc-block-ui"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -26843,6 +27063,7 @@
         "sc-custom-order-price-input",
         "sc-customer-details",
         "sc-donation-choices",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-shipping",
         "sc-line-item-total",
@@ -26893,6 +27114,9 @@
           "sc-skeleton"
         ],
         "sc-donation-choices": [
+          "sc-skeleton"
+        ],
+        "sc-fulfillments": [
           "sc-skeleton"
         ],
         "sc-invoices-list": [
@@ -26997,11 +27221,15 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-fulfillments",
         "sc-order",
         "sc-purchase-downloads-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-fulfillments": [
+          "sc-spacing"
+        ],
         "sc-order": [
           "sc-spacing"
         ],
@@ -27087,6 +27315,7 @@
         "sc-charges-list",
         "sc-customer-details",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-order",
         "sc-orders-list",
@@ -27106,6 +27335,9 @@
           "sc-stacked-list"
         ],
         "sc-downloads-list": [
+          "sc-stacked-list"
+        ],
+        "sc-fulfillments": [
           "sc-stacked-list"
         ],
         "sc-invoices-list": [
@@ -27212,6 +27444,7 @@
         "sc-charges-list",
         "sc-customer-details",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-order",
         "sc-orders-list",
@@ -27232,6 +27465,9 @@
           "sc-stacked-list-row"
         ],
         "sc-downloads-list": [
+          "sc-stacked-list-row"
+        ],
+        "sc-fulfillments": [
           "sc-stacked-list-row"
         ],
         "sc-invoices-list": [
@@ -30486,6 +30722,7 @@
         "sc-order-confirmation-details",
         "sc-order-confirmation-totals",
         "sc-order-fulfillment-badge",
+        "sc-order-shipment-badge",
         "sc-order-status-badge",
         "sc-orders-list",
         "sc-payment",
@@ -30541,6 +30778,9 @@
           "sc-tag"
         ],
         "sc-order-fulfillment-badge": [
+          "sc-tag"
+        ],
+        "sc-order-shipment-badge": [
           "sc-tag"
         ],
         "sc-order-status-badge": [

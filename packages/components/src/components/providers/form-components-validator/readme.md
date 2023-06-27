@@ -75,6 +75,7 @@ graph TD;
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
+  sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
   sc-shipping-choices --> sc-format-number

@@ -1171,6 +1171,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-shipment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-shipping-address": {
     "city-placeholder": true,
     "country-placeholder": true,

@@ -1,14 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-	ScCheckbox,
 	ScDropdown,
 	ScIcon,
 	ScMenu,
-	ScMenuDivider,
 	ScMenuItem,
 	ScTag,
-	ScSpinner,
 	ScBlockUi,
 } from '@surecart/components-react';
 import { useDispatch, select } from '@wordpress/data';
@@ -19,14 +16,14 @@ import { __, _n } from '@wordpress/i18n';
 import { useEffect, useState } from 'react';
 
 const status = {
-	pending: __('Not Shipped', 'surecart'),
+	unshipped: __('Not Shipped', 'surecart'),
 	shipped: __('Shipped', 'surecart'),
 	delivered: __('Delivered', 'surecart'),
 };
 
 const types = {
-	pending: 'danger',
-	shipped: 'warning',
+	unshipped: 'warning',
+	shipped: 'info',
 	delivered: 'success',
 };
 
@@ -43,9 +40,9 @@ export default ({ fulfillment, ...rest }) => {
 		setNotificationsEnabled(fulfillment?.notifications_enabled);
 	}, [fulfillment]);
 
-	const saveStatus = async (shipping_status) => {
+	const saveStatus = async (shipment_status) => {
 		// status didn't change.
-		if (shipping_status === fulfillment?.shipping_status) return;
+		if (shipment_status === fulfillment?.shipment_status) return;
 
 		try {
 			setBusy(true);
@@ -59,7 +56,7 @@ export default ({ fulfillment, ...rest }) => {
 				method: 'PATCH',
 				path: `${baseURL}/${fulfillment.id}`,
 				data: {
-					shipping_status,
+					shipment_status,
 					notifications_enabled: notificationsEnabled,
 				},
 			});
@@ -88,7 +85,7 @@ export default ({ fulfillment, ...rest }) => {
 			<ScDropdown {...rest}>
 				<ScTag
 					slot="trigger"
-					type={types?.[fulfillment?.shipping_status] || 'default'}
+					type={types?.[fulfillment?.shipment_status] || 'default'}
 				>
 					<div
 						css={css`
@@ -97,8 +94,8 @@ export default ({ fulfillment, ...rest }) => {
 							gap: 0.25em;
 						`}
 					>
-						{status?.[fulfillment?.shipping_status] ||
-							fulfillment?.shipping_status}
+						{status?.[fulfillment?.shipment_status] ||
+							fulfillment?.shipment_status}
 						<ScIcon name="chevron-down" />
 					</div>
 				</ScTag>
@@ -107,7 +104,7 @@ export default ({ fulfillment, ...rest }) => {
 					{Object.keys(status).map((key) => (
 						<ScMenuItem
 							onClick={() => saveStatus(key)}
-							checked={key === fulfillment?.shipping_status}
+							checked={key === fulfillment?.shipment_status}
 						>
 							{status[key]}
 						</ScMenuItem>

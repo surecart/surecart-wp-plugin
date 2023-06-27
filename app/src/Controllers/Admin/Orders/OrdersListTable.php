@@ -101,7 +101,7 @@ class OrdersListTable extends ListTable {
 			// 'cb'          => '<input type="checkbox" />',
 			'order'              => __( 'Order', 'surecart' ),
 			'status'             => __( 'Payment Status', 'surecart' ),
-			'fulfillment_status' => __( 'Fulfillment Status', 'surecart' ),
+			'fulfillment_status' => __( 'Shipping', 'surecart' ),
 			'method'             => __( 'Method', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'total'              => __( 'Total', 'surecart' ),
@@ -151,6 +151,7 @@ class OrdersListTable extends ListTable {
 			[
 				'status'             => $this->getStatus(),
 				'fulfillment_status' => ! empty( $_GET['fulfillment_status'] ) ? [ $_GET['fulfillment_status'] ] : [],
+				'shipment_status'    => ! empty( $_GET['shipment_status'] ) ? [ $_GET['shipment_status'] ] : [],
 				'query'              => $this->get_search_query(),
 			]
 		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
@@ -263,7 +264,20 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_fulfillment_status( $order ) {
-		return '<sc-order-fulfillment-badge status="' . esc_attr( $order->fulfillment_status ) . '"></sc-order-fulfillment-badge>';
+		ob_start();
+		?>
+
+		<sc-spacing style="--spacing: var(--sc-spacing-small)">
+			<div>
+				<sc-order-fulfillment-badge status="<?php echo esc_attr( $order->fulfillment_status ); ?>"></sc-order-fulfillment-badge>
+			</div>
+			<div>
+				<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
+			</div>
+		</sc-spacing>
+
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -327,6 +341,43 @@ class OrdersListTable extends ListTable {
 		<?php
 	}
 
+		/**
+		 * Displays a formats drop-down for filtering items.
+		 *
+		 * @since 5.2.0
+		 * @access protected
+		 *
+		 * @param string $post_type Post type slug.
+		 */
+	protected function shipment_dropdown() {
+		/**
+		 * Filters whether to remove the 'Formats' drop-down from the post list table.
+		 *
+		 * @param bool   $disable   Whether to disable the drop-down. Default false.
+		 */
+		if ( apply_filters( 'surecart/disable_shipment_dropdown', false ) ) {
+			return;
+		}
+
+		$displayed_order_shipment = isset( $_GET['shipment_status'] ) ? $_GET['shipment_status'] : '';
+		?>
+
+		<label for="filter-by-shipment" class="screen-reader-text">
+			<?php
+			/* translators: Hidden accessibility text. */
+			esc_html_e( 'Filter by shipment', 'surecart' );
+			?>
+		</label>
+		<select name="shipment_status" id="filter-by-shipment">
+			<option<?php selected( $displayed_order_shipment, '' ); ?> value=""><?php esc_html_e( 'All Shipment Statuses', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_shipment, 'unshipped' ); ?> value="unshipped"><?php echo esc_html_e( 'Not Shipped', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_shipment, 'shipped' ); ?> value="shipped"><?php echo esc_html_e( 'Shipped', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_shipment, 'partially_shipped' ); ?> value="partially_shipped"><?php echo esc_html_e( 'Partially Shipped', 'surecart' ); ?></option>
+			<option<?php selected( $displayed_order_shipment, 'delivered' ); ?> value="delivered"><?php echo esc_html_e( 'Delivered', 'surecart' ); ?></option>
+		</select>
+		<?php
+	}
+
 	/**
 	 * @param string $which
 	 */
@@ -343,6 +394,7 @@ class OrdersListTable extends ListTable {
 		if ( 'top' === $which ) {
 			ob_start();
 			$this->fulfillment_dropdown();
+			$this->shipment_dropdown();
 
 			/**
 			 * Fires before the Filter button on the Posts and Pages list tables.

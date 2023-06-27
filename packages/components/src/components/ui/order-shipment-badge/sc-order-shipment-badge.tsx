@@ -1,32 +1,34 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
-import { FulfillmentStatus } from '../../../types';
+import { OrderShipmentStatus } from '../../../types';
 
 const status = {
   unshipped: __('Not Shipped', 'surecart'),
   shipped: __('Shipped', 'surecart'),
+  partially_shipped: __('Partially Shipped', 'surecart'),
   delivered: __('Delivered', 'surecart'),
 } as {
-  [key in FulfillmentStatus]: string;
+  [key in OrderShipmentStatus]: string;
 };
 
 const type = {
   unshipped: 'default',
   shipped: 'success',
+  partially_shipped: 'warning',
   delivered: 'info',
 } as {
-  [key in FulfillmentStatus]: 'default' | 'info' | 'success';
+  [key in OrderShipmentStatus]: 'default' | 'success' | 'warning' | 'danger' | 'info';
 };
 
 @Component({
-  tag: 'sc-fulfillment-shipping-status-badge',
-  styleUrl: 'sc-fulfillment-shipping-status-badge.css',
+  tag: 'sc-order-shipment-badge',
+  styleUrl: 'sc-order-shipment-badge.css',
   shadow: true,
 })
-export class ScOrderStatusBadge {
+export class ScOrderShipmentBadge {
   /** The tag's statux type. */
-  @Prop() status: FulfillmentStatus;
+  @Prop() status: OrderShipmentStatus;
 
   /** The tag's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';

@@ -17,6 +17,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
+
 ### Depends on
 
 - [sc-tag](../tag)
@@ -25,6 +29,7 @@
 ```mermaid
 graph TD;
   sc-fulfillment-shipping-status-badge --> sc-tag
+  sc-fulfillments --> sc-fulfillment-shipping-status-badge
   style sc-fulfillment-shipping-status-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

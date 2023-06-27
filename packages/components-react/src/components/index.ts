@@ -114,6 +114,7 @@ export const ScOrderDetail = /*@__PURE__*/createReactComponent<JSX.ScOrderDetail
 export const ScOrderFulfillmentBadge = /*@__PURE__*/createReactComponent<JSX.ScOrderFulfillmentBadge, HTMLScOrderFulfillmentBadgeElement>('sc-order-fulfillment-badge');
 export const ScOrderManualInstructions = /*@__PURE__*/createReactComponent<JSX.ScOrderManualInstructions, HTMLScOrderManualInstructionsElement>('sc-order-manual-instructions');
 export const ScOrderPassword = /*@__PURE__*/createReactComponent<JSX.ScOrderPassword, HTMLScOrderPasswordElement>('sc-order-password');
+export const ScOrderShipmentBadge = /*@__PURE__*/createReactComponent<JSX.ScOrderShipmentBadge, HTMLScOrderShipmentBadgeElement>('sc-order-shipment-badge');
 export const ScOrderShippingAddress = /*@__PURE__*/createReactComponent<JSX.ScOrderShippingAddress, HTMLScOrderShippingAddressElement>('sc-order-shipping-address');
 export const ScOrderStatusBadge = /*@__PURE__*/createReactComponent<JSX.ScOrderStatusBadge, HTMLScOrderStatusBadgeElement>('sc-order-status-badge');
 export const ScOrderSubmit = /*@__PURE__*/createReactComponent<JSX.ScOrderSubmit, HTMLScOrderSubmitElement>('sc-order-submit');

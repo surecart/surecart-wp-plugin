@@ -28,7 +28,7 @@ const type = {
   styleUrl: 'sc-order-fulfillment-badge.css',
   shadow: true,
 })
-export class ScOrderStatusBadge {
+export class ScOrderFulFillmentBadge {
   /** The tag's statux type. */
   @Prop() status: OrderFulFillmentStatus;
 
