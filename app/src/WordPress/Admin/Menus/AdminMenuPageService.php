@@ -161,7 +161,7 @@ class AdminMenuPageService {
 			'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
 			'claim-account'   => \add_submenu_page( null, __( 'Claim Account', 'surecart' ), __( 'Claim Account', 'surecart' ), 'manage_options', 'sc-claim-account', '__return_false' ),
 			'orders'          => \add_submenu_page( $this->slug, __( 'Orders', 'surecart' ), __( 'Orders', 'surecart' ), 'edit_sc_orders', 'sc-orders', '__return_false' ),
-			'orders'          => \add_submenu_page( null, __( 'Checkouts', 'surecart' ), __( 'Checkouts', 'surecart' ), 'edit_sc_orders', 'sc-checkouts', '__return_false' ),
+			'checkouts'          => \add_submenu_page( null, __( 'Checkouts', 'surecart' ), __( 'Checkouts', 'surecart' ), 'edit_sc_orders', 'sc-checkouts', '__return_false' ),
 			'abandoned'       => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts' ] ) ? \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ) : null,
 			'products'        => \add_submenu_page( $this->slug, __( 'Products', 'surecart' ), __( 'Products', 'surecart' ), 'edit_sc_products', 'sc-products', '__return_false' ),
 			'product-groups'  => ! empty( $entitlements->product_groups ) && in_array( $_GET['page'] ?? '', [ 'sc-products', 'sc-product-groups', 'sc-bumps' ] ) ? \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), '↳ ' . __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ) : null,
