@@ -116,16 +116,16 @@ export default ({ setId }) => {
 	)?.customerForCreateOrder;
 
 	const { setCustomerForCreateOrder } = useDispatch(uiStore);
-
 	useEffect(() => {
-		if (!customer || !prices) {
+		
+		if (!checkout?.line_items?.data || ! customer) {
 			return;
 		}
 
-		if (0 !== Object.keys(customer)?.length && 0 !== prices?.length) {
+		if (0 !== Object.keys(customer)?.length && 0 !== checkout?.line_items?.data?.length) {
 			setCanSaveNow(true);
 		}
-	}, [prices, customer]);
+	}, [checkout?.line_items, customer]);
 
 	useEffect(() => {
 		if (!customer || !customer?.shipping_address) {
@@ -161,16 +161,7 @@ export default ({ setId }) => {
 
 	// create the order.
 	const onSubmit = async (e) => {
-		const lineItems = prices?.map((price) => {
-			const { id, ad_hoc_min_amount, quantity } = price;
-
-			return {
-				price: id,
-				ad_hoc_amount: ad_hoc_min_amount,
-				quantity: quantity || 1,
-			};
-		});
-
+		
 		const customerData = {
 			first_name: customer?.first_name,
 			last_name: customer?.last_name,
@@ -187,20 +178,9 @@ export default ({ setId }) => {
 				'checkout',
 				{
 					...customerData,
-					line_items: lineItems,
 				},
 				{ throwOnError: true }
 			);
-
-			if (!checkout?.id) {
-				throw {
-					message: __(
-						'Could not create checkout. Please try again.',
-						'surecart'
-					),
-				};
-			}
-
 			const order = await finalizeCheckout({
 				id: checkout.id,
 				customer_id: customer?.id,
@@ -211,7 +191,6 @@ export default ({ setId }) => {
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
 			setIsSaving(false);
 		}
 	};
@@ -269,7 +248,7 @@ export default ({ setId }) => {
 			sidebar={
 				<>
 					<Box title={__('Customer', 'surecart')}>
-						<SelectCustomer />
+						<SelectCustomer/>
 					</Box>
 					{customer && customerShippingStatus && (
 						<>
@@ -279,7 +258,7 @@ export default ({ setId }) => {
 							/>
 						</>
 					)}
-					{customer && !customerShippingStatus && (
+					{/* {customer && !customerShippingStatus && (
 						<Box
 							title={__(
 								'Update Shipping & Tax Address',
@@ -303,7 +282,7 @@ export default ({ setId }) => {
 								}}
 							/>
 						</Box>
-					)}
+					)} */}
 				</>
 			}
 		>

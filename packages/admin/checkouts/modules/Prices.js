@@ -26,7 +26,6 @@ import { useState } from 'react';
 
 export default ({ checkout, loading, busy }) => {
 
-	console.log(checkout);
 	const line_items = checkout?.line_items?.data || [];
 	const [updatingQuantity, setUpdatingQuantity] = useState(false);
 	const [updatingCoupon, setUpdatingCoupon] = useState(false);
@@ -88,22 +87,40 @@ export default ({ checkout, loading, busy }) => {
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'checkout'
+				'line_item'
 			);
 			
-			// add the line item.
 			const { checkout: data } = await apiFetch({
 				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-					line_items: [
-						{
-							price: id,
-							quantity: e?.target?.value
-						}
-					]
-				})
+				path: addQueryArgs(`${baseURL}/${id}`, {
+				  expand: [
+					// expand the checkout and the checkout's required expands.
+					...(expand || []).map((item) => {
+					  return item.includes('.')
+						? item
+						: `checkout.${item}`;
+					}),
+					'checkout',
+				  ],
+				}),
+				data: {
+				  quantity: e?.target?.value, // update the quantity.
+				},
 			});
+			console.log(data);
+			// // add the line item.
+			// const { checkout: data } = await apiFetch({
+			// 	method: 'PATCH',
+			// 	path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
+			// 		expand,
+			// 		line_items: [
+			// 			{
+			// 				price: id,
+			// 				quantity: e?.target?.value
+			// 			}
+			// 		]
+			// 	})
+			// });
 
 			// update the checkout in the redux store.
 			receiveEntityRecords(
@@ -237,13 +254,13 @@ export default ({ checkout, loading, busy }) => {
 					></ScFormatNumber>
 				</ScLineItem>
 				
-				<ScCouponForm
+				{/* <ScCouponForm
 					collapsed={true}
 					placeholder={__('Enter Coupon Code', 'surecart')}
 					label={__('Add Coupon Code', 'surecart')}
 					buttonText={__('Apply', 'surecart')}
 					onScApplyCoupon={onCouponChange}	
-				/>
+				/> */}
 			</>
 		);
 	};
