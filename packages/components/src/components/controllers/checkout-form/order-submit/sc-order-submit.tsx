@@ -85,6 +85,21 @@ export class ScOrderSubmit {
   }
 
   render() {
+    if (this.cannotShipToLocation()) {
+      return (
+        <sc-button type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={true}>
+          {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
+          <slot>{__('Purchase', 'surecart')}</slot>
+          {this.showTotal && (
+            <span>
+              {'\u00A0'}
+              <sc-total></sc-total>
+            </span>
+          )}
+        </sc-button>
+      );
+    }
+
     return (
       <Fragment>
         {selectedProcessor.id === 'paypal' && !selectedProcessor?.method && this.renderPayPalButton(['paypal'])}
