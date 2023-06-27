@@ -80,6 +80,18 @@ export default ({ fulfillment, ...rest }) => {
 		}
 	};
 
+	const shippable = (fulfillment?.fulfillment_items?.data || []).some(
+		(item) => item?.line_item?.price?.product?.shipping_enabled
+	);
+
+	if (!shippable) {
+		return (
+			<ScTag type="default">
+				{__('No Shipping Required', 'surecart')}
+			</ScTag>
+		);
+	}
+
 	return (
 		<>
 			<ScDropdown {...rest}>

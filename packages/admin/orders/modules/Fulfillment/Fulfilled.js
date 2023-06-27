@@ -65,6 +65,10 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 		}
 	};
 
+	const shippable = (fulfillment?.fulfillment_items?.data || []).some(
+		(item) => item?.line_item?.price?.product?.shipping_enabled
+	);
+
 	return (
 		<>
 			<Box
@@ -155,7 +159,8 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 					</div>
 				}
 				footer={
-					!fulfillment?.trackings?.data?.length && (
+					!fulfillment?.trackings?.data?.length &&
+					shippable && (
 						<ScButton type="default" onClick={() => setModal(true)}>
 							{__('Add Tracking', 'surecart')}
 						</ScButton>
@@ -290,17 +295,20 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 										>
 											{line_item?.price?.product?.name}
 										</a>
-										<ScFormatNumber
-											type="unit"
-											value={
-												line_item?.price?.product
-													?.weight
-											}
-											unit={
-												line_item?.price?.product
-													?.weight_unit
-											}
-										/>
+										{!!line_item?.price?.product
+											?.weight && (
+											<ScFormatNumber
+												type="unit"
+												value={
+													line_item?.price?.product
+														?.weight
+												}
+												unit={
+													line_item?.price?.product
+														?.weight_unit
+												}
+											/>
+										)}
 									</LineItem>
 								);
 							}

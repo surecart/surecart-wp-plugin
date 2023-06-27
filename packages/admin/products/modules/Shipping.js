@@ -22,7 +22,6 @@ const WEIGHT_UNIT_TYPES = [
 ];
 
 export default ({ loading, product, updateProduct }) => {
-	const [advanced, setAdvanced] = useState(false);
 	return (
 		<Box loading={loading} title={__('Shipping', 'surecart')}>
 			<ScToggle
@@ -33,8 +32,16 @@ export default ({ loading, product, updateProduct }) => {
 						shipping_enabled: true,
 					});
 				}}
-				summary={__('Physical product', 'surecart')}
 			>
+				<span
+					slot="summary"
+					css={css`
+						font-weight: var(--sc-input-label-font-weight);
+					`}
+				>
+					{__('Physical product', 'surecart')}
+				</span>
+
 				<ScInput
 					label={__('Shipping Weight', 'surecart')}
 					value={product?.weight}
@@ -69,12 +76,19 @@ export default ({ loading, product, updateProduct }) => {
 						shipping_enabled: false,
 					});
 				}}
-				summary={__('Digital product or service', 'surecart')}
 			>
+				<span
+					slot="summary"
+					css={css`
+						font-weight: var(--sc-input-label-font-weight);
+					`}
+				>
+					{__('Digital product or service', 'surecart')}
+				</span>
 				<div
 					css={css`
 						display: grid;
-						gap: var(--sc-spacing-medium);
+						gap: var(--sc-spacing-large);
 					`}
 				>
 					<div
@@ -91,51 +105,22 @@ export default ({ loading, product, updateProduct }) => {
 						)}
 					</div>
 
-					<div
-						css={css`
-							display: grid;
-							gap: var(--sc-spacing-small);
-						`}
+					<ScSwitch
+						checked={product?.auto_fulfill}
+						onScChange={(e) => {
+							updateProduct({
+								auto_fulfill: e.target.checked,
+							});
+						}}
 					>
-						<div>
-							<div
-								onClick={() => setAdvanced(!advanced)}
-								css={css`
-									display: flex;
-									align-items: center;
-									gap: var(--sc-spacing-small);
-									color: var(--sc-input-help-text-color);
-									font-size: var(
-										--sc-input-help-text-font-size-medium
-									);
-									cursor: pointer;
-									user-select: none;
-								`}
-							>
-								{__('Advanced Options', 'surecart')}
-								<ScIcon name="chevron-down" slot="suffix" />
-							</div>
-						</div>
-
-						{advanced && (
-							<ScSwitch
-								checked={product?.auto_fulfill}
-								onScChange={(e) => {
-									updateProduct({
-										auto_fulfill: e.target.checked,
-									});
-								}}
-							>
-								{__('Auto Fulfill', 'surecart')}
-								<span slot="description">
-									{__(
-										'Turn this off if you do not wish to automatically fulfill this product when an order is placed.',
-										'surecart'
-									)}
-								</span>
-							</ScSwitch>
-						)}
-					</div>
+						{__('Auto Fulfill', 'surecart')}
+						<span slot="description">
+							{__(
+								'Turn this off if you do not wish to automatically fulfill this product when an order is placed.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
 				</div>
 			</ScToggle>
 		</Box>

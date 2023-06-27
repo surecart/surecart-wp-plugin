@@ -42,18 +42,11 @@ export default ({
 
 	// filter unfulfilled items
 	const unfulfilled = (checkout?.line_items?.data || []).filter((item) => {
-		return (
-			item?.quantity !== item?.fulfilled_quantity &&
-			item?.price?.product?.shipping_enabled
-		);
+		return item?.quantity !== item?.fulfilled_quantity;
 	});
 
 	if (loading || loadingOrder) {
 		return <Box loading={true} />;
-	}
-
-	if (!checkout?.selected_shipping_choice_required) {
-		return null;
 	}
 
 	return (

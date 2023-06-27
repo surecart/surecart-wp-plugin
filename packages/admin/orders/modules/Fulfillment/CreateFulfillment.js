@@ -143,6 +143,10 @@ export default ({
 		}
 	};
 
+	const shippable = (fulfillmentItems || []).some(
+		(item) => item?.price?.product?.shipping_enabled
+	);
+
 	return (
 		<ScForm
 			style={{
@@ -242,10 +246,12 @@ export default ({
 							padding: var(--sc-spacing-x-large);
 						`}
 					>
-						<Tracking
-							trackings={trackings}
-							setTrackings={setTrackings}
-						/>
+						{shippable && (
+							<Tracking
+								trackings={trackings}
+								setTrackings={setTrackings}
+							/>
+						)}
 					</div>
 
 					<ScDivider
@@ -261,28 +267,36 @@ export default ({
 							padding: var(--sc-spacing-x-large);
 						`}
 					>
-						<ScFormControl label={true}>
-							<div slot="label">
-								{__('Shipping Address', 'surecart')}
-								{location.protocol === 'https:' && (
-									<ScTooltip
-										text={__('Copy Address', 'surecart')}
-										type="text"
-									>
-										<ScButton
-											type="link"
-											onClick={copy}
-											circle
+						{shippable ? (
+							<ScFormControl label={true}>
+								<div slot="label">
+									{__('Shipping Address', 'surecart')}
+									{location.protocol === 'https:' && (
+										<ScTooltip
+											text={__(
+												'Copy Address',
+												'surecart'
+											)}
+											type="text"
 										>
-											<ScIcon name="clipboard" />
-										</ScButton>
-									</ScTooltip>
-								)}
-							</div>
-							<AddressDisplay
-								address={checkout?.shipping_address}
-							/>
-						</ScFormControl>
+											<ScButton
+												type="link"
+												onClick={copy}
+												circle
+											>
+												<ScIcon name="clipboard" />
+											</ScButton>
+										</ScTooltip>
+									)}
+								</div>
+
+								<AddressDisplay
+									address={checkout?.shipping_address}
+								/>
+							</ScFormControl>
+						) : (
+							__('No shipping required', 'surecart')
+						)}
 					</div>
 
 					{/* <ScDivider />
