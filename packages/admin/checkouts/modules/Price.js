@@ -12,6 +12,7 @@ import {
 	ScTable,
 	ScTableCell,
 	ScTableRow,
+	ScQuantitySelect
 } from '@surecart/components-react';
 
 export default ({ price, onRemove, onQuantityChange }) => {
@@ -71,12 +72,8 @@ export default ({ price, onRemove, onQuantityChange }) => {
 				</ScFlex>
 			</ScTableCell>
 			<ScTableCell>
-				<ScInput
-					required
+				<ScQuantitySelect
 					value={price?.quantity || 1}
-					name="name"
-					type="number"
-					step="1"
 					onScInput={onQuantityChange}
 				/>
 			</ScTableCell>
