@@ -12,12 +12,14 @@ import {
 	ScTable,
 	ScTableCell,
 	ScTableRow,
-	ScQuantitySelect
+	ScQuantitySelect,
 } from '@surecart/components-react';
 
-export default ({ price, onRemove, onQuantityChange }) => {
+export default ({ price, quantity, onRemove, onQuantityChange }) => {
 	const imageUrl = price?.product?.image_url;
-	
+
+	console.log({ quantity });
+
 	return (
 		<ScTableRow>
 			<ScTableCell>
@@ -73,15 +75,19 @@ export default ({ price, onRemove, onQuantityChange }) => {
 			</ScTableCell>
 			<ScTableCell>
 				<ScQuantitySelect
-					value={price?.quantity || 1}
-					onScInput={onQuantityChange}
+					quantity={quantity}
+					onScChange={(e) => onQuantityChange(e.detail)}
 				/>
 			</ScTableCell>
 			<ScTableCell style={{ textAlign: 'center' }}>
 				<ScFormatNumber
 					type="currency"
 					currency={price?.currency || 'usd'}
-					value={price?.quantity ? price?.amount * price?.quantity : price?.amount}
+					value={
+						price?.quantity
+							? price?.amount * price?.quantity
+							: price?.amount
+					}
 				/>
 			</ScTableCell>
 			<ScTableCell>

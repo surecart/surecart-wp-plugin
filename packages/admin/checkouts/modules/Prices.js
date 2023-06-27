@@ -14,7 +14,7 @@ import {
 	ScTableRow,
 	ScFormatNumber,
 	ScLineItem,
-	ScCouponForm
+	ScCouponForm,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -25,15 +25,14 @@ import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 
 export default ({ checkout, loading, busy }) => {
-
 	const line_items = checkout?.line_items?.data || [];
 	const [updatingQuantity, setUpdatingQuantity] = useState(false);
 	const [updatingCoupon, setUpdatingCoupon] = useState(false);
-
 	const [deleting, setDeleting] = useState(false);
 
-	const { createErrorNotice, createSuccessNotice } = useDispatch(noticesStore);
-	
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+
 	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
 	const onRemove = async (id) => {
@@ -80,8 +79,8 @@ export default ({ checkout, loading, busy }) => {
 		}
 	};
 
-	const onQuantityChange = async (e,id) => {
-
+	const onQuantityChange = async (id, quantity) => {
+		console.log({ quantity });
 		try {
 			setUpdatingQuantity(true);
 			// get the line items endpoint.
@@ -89,22 +88,22 @@ export default ({ checkout, loading, busy }) => {
 				'surecart',
 				'line_item'
 			);
-			
+
 			const { checkout: data } = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
-				  expand: [
-					// expand the checkout and the checkout's required expands.
-					...(expand || []).map((item) => {
-					  return item.includes('.')
-						? item
-						: `checkout.${item}`;
-					}),
-					'checkout',
-				  ],
+					expand: [
+						// expand the checkout and the checkout's required expands.
+						...(expand || []).map((item) => {
+							return item.includes('.')
+								? item
+								: `checkout.${item}`;
+						}),
+						'checkout',
+					],
 				}),
 				data: {
-				  quantity: e?.target?.value, // update the quantity.
+					quantity, // update the quantity.
 				},
 			});
 			console.log(data);
@@ -135,7 +134,6 @@ export default ({ checkout, loading, busy }) => {
 			createSuccessNotice(__('Quantity updated.', 'surecart'), {
 				type: 'snackbar',
 			});
-
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -147,11 +145,9 @@ export default ({ checkout, loading, busy }) => {
 		} finally {
 			setUpdatingQuantity(false);
 		}
-
 	};
 
 	const onCouponChange = async (e) => {
-		
 		try {
 			setUpdatingCoupon(true);
 			// get the line items endpoint.
@@ -159,7 +155,7 @@ export default ({ checkout, loading, busy }) => {
 				'surecart',
 				'checkout'
 			);
-			
+
 			// add the line item.
 			const { checkout: data } = await apiFetch({
 				method: 'PATCH',
@@ -168,9 +164,9 @@ export default ({ checkout, loading, busy }) => {
 					discount: [
 						{
 							promotion_code: e?.detail,
-						}
-					]
-				})
+						},
+					],
+				}),
 			});
 
 			// update the checkout in the redux store.
@@ -186,7 +182,6 @@ export default ({ checkout, loading, busy }) => {
 			createSuccessNotice(__('Quantity updated.', 'surecart'), {
 				type: 'snackbar',
 			});
-
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -198,7 +193,6 @@ export default ({ checkout, loading, busy }) => {
 		} finally {
 			setUpdatingCoupon(false);
 		}
-
 	};
 	const renderPrices = () => {
 		if (!line_items?.length) {
@@ -218,20 +212,31 @@ export default ({ checkout, loading, busy }) => {
 					<ScTableCell style={{ width: '20%' }} slot="head">
 						<div>{__('Quantity', 'surecart')}</div>
 					</ScTableCell>
-					<ScTableCell style={{ width: '20%', textAlign: 'center' }} slot="head">
+					<ScTableCell
+						style={{ width: '20%', textAlign: 'center' }}
+						slot="head"
+					>
 						<div>{__('Total', 'surecart')}</div>
 					</ScTableCell>
-					<ScTableCell style={{ width: '20%' }} slot="head">
-					</ScTableCell>
-							
-					{(line_items || []).map(({ id, price }) => (
-						<Price
-							key={id}
-							price={price}
-							onRemove={() => onRemove(id)}
-							onQuantityChange={(e) => onQuantityChange(e,id)}
-						/>
-					))}
+					<ScTableCell
+						style={{ width: '20%' }}
+						slot="head"
+					></ScTableCell>
+
+					{(line_items || []).map((line_item) => {
+						const { id, price, quantity } = line_item;
+						return (
+							<Price
+								key={id}
+								price={price}
+								quantity={quantity}
+								onRemove={() => onRemove(id)}
+								onQuantityChange={(quantity) =>
+									onQuantityChange(id, quantity)
+								}
+							/>
+						);
+					})}
 				</ScTable>
 			</ScCard>
 		);
@@ -240,7 +245,7 @@ export default ({ checkout, loading, busy }) => {
 	const renderPaymentDetails = () => {
 		return (
 			<>
-			<ScLineItem>
+				<ScLineItem>
 					<span slot="description">{__('Subtotal', 'surecart')}</span>
 					<ScFormatNumber
 						slot="price"
@@ -253,13 +258,13 @@ export default ({ checkout, loading, busy }) => {
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
-				
+
 				{/* <ScCouponForm
 					collapsed={true}
 					placeholder={__('Enter Coupon Code', 'surecart')}
 					label={__('Add Coupon Code', 'surecart')}
 					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}	
+					onScApplyCoupon={onCouponChange}
 				/> */}
 			</>
 		);
@@ -269,16 +274,21 @@ export default ({ checkout, loading, busy }) => {
 		<>
 			<Box
 				title={__('Add Prices', 'surecart')}
-				loading={loading|| !!busy || !!deleting || !!updatingQuantity}
+				loading={loading}
 				footer={<NewPrice checkout={checkout} />}
 			>
 				{renderPrices()}
+
+				{(!!busy || !!deleting || !!updatingQuantity) && (
+					<ScBlockUi spinner />
+				)}
 			</Box>
-			<Box
-				title={__('Payment', 'surecart')}
-				loading={loading|| !!busy || !!deleting || !!updatingQuantity || !!updatingCoupon}
-			>
+
+			<Box title={__('Payment', 'surecart')} loading={loading}>
 				{renderPaymentDetails()}
+				{(!!busy || !!deleting || !!updatingQuantity) && (
+					<ScBlockUi spinner />
+				)}
 			</Box>
 		</>
 	);
