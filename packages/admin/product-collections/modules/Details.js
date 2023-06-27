@@ -45,6 +45,9 @@ export default ({ id, productCollection, updateProductCollection, loading }) => 
 					onChange={(value) => {
 						updateProductCollection({ slug: value });
 					}}
+					onCustomized={(value) => {
+						updateProductCollection({ slug: value });
+					}}
 					hideReset={true}
 					name="slug"
 					required

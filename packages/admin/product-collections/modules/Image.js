@@ -18,10 +18,10 @@ export default ({ label, productCollection, updateProductCollection, showLabel =
 	};
 
 	const onRemoveMedia = (media) => {
-		const r = confirm(
+		const confirmedRemoveImage = confirm(
 			__('Are you sure you want to remove this image?', 'surecart')
 		);
-		if (!r) return;
+		if (!confirmedRemoveImage) return;
 		return updateProductCollection({
 			media_id: null,
 			image_url: null,
@@ -71,7 +71,7 @@ export default ({ label, productCollection, updateProductCollection, showLabel =
 								render={({ setOpen }) => {
 									return (
 										<Button
-											isPrimary
+											variant="primary"
 											onClick={() => setOpen(true)}
 										>
 											{__('Replace', 'surecart')}
@@ -79,7 +79,7 @@ export default ({ label, productCollection, updateProductCollection, showLabel =
 									);
 								}}
 							></MediaLibrary>
-							<Button isTertiary onClick={onRemoveMedia}>
+							<Button variant="tertiary" onClick={onRemoveMedia}>
 								{__('Remove', 'surecart')}
 							</Button>
 						</div>

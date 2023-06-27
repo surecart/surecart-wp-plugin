@@ -8,7 +8,8 @@ import { useState, useEffect } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import { ScAlert, ScButton, ScForm, ScInput, ScRichText } from '@surecart/components-react';
+import { ScButton, ScForm, ScInput, ScRichText } from '@surecart/components-react';
+import Error from '../components/Error';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import Permalink from '../components/Permalink';
@@ -41,7 +42,7 @@ export default ({ id, setId }) => {
 			setId(productCollection.id);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 			setIsSaving(false);
 		}
 	};
@@ -54,11 +55,17 @@ export default ({ id, setId }) => {
 
 	return (
 		<CreateTemplate id={id}>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
+			<Error
+				error={error}
+				setError={setError}
+			/>
 
-			<Box title={__('Create Collection', 'surecart')}>
+			<Box
+				title={__('Create Collection', 'surecart')}
+				css={css`
+					margin-top: var(--sc-spacing-large);
+				`}
+			>
 				<ScForm onScSubmit={onSubmit}>
 					<div
 						css={css`

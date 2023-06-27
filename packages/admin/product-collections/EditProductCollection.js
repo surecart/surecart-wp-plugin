@@ -2,9 +2,6 @@
 import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { Modal } from '@wordpress/components';
-import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
@@ -12,7 +9,6 @@ import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScButton,
 	ScDropdown,
-	ScFlex,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
@@ -22,13 +18,13 @@ import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
+import DeleteModal from './modules/DeleteModal';
 import SaveButton from '../templates/SaveButton';
 import useSave from '../settings/UseSave';
 import Image from './modules/Image';
 import Box from '../ui/Box';
 
 export default ({ id }) => {
-	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
 	const { save } = useSave();
@@ -51,22 +47,6 @@ export default ({ id }) => {
 			setError(null);
 			save({ successMessage: __('Collection updated.', 'surecart') });
 		} catch (e) {
-			setError(e);
-		}
-	};
-
-	/**
-	 * Handle the delete action.
-	 */
-	const deleteCollection = async () => {
-		try {
-			await deleteItem({ throwOnError: true });
-			createSuccessNotice(__('Collection deleted.', 'surecart'), {
-				type: 'snackbar',
-			});
-			window.location.assign('admin.php?page=sc-product-collections');
-		} catch (e) {
-			console.error(e?.message);
 			setError(e);
 		}
 	};
@@ -154,7 +134,6 @@ export default ({ id }) => {
 				<Error
 					error={saveError || itemError || error}
 					setError={setError}
-					margin="80px"
 				/>
 
 				<Details
@@ -164,33 +143,12 @@ export default ({ id }) => {
 				/>
 
 				{modal === 'delete' && (
-					<Modal
-						title={__('Delete this collection?', 'surecart')}
-						css={css`
-						max-width: 500px !important;
-					`}
-						onRequestClose={() => setModal(false)}
-						shouldCloseOnClickOutside={false}
-					>
-						<p>
-							{__(
-								'Are you sure you want to delete this collection?',
-								'surecart'
-							)}
-						</p>
-						<ScFlex alignItems="center" justifyContent="flex-start">
-							<ScButton
-								type="primary"
-								busy={deletingItem}
-								onClick={deleteCollection}
-							>
-								{__('Delete', 'surecart')}
-							</ScButton>
-							<ScButton type="text" onClick={() => setModal(false)}>
-								{__('Cancel', 'surecart')}
-							</ScButton>
-						</ScFlex>
-					</Modal>
+					<DeleteModal
+						deleteItem={deleteItem}
+						deletingItem={deletingItem}
+						onClose={() => setModal(null)}
+						setError={setError}
+					/>
 				)}
 			</>
 		</UpdateModel>
