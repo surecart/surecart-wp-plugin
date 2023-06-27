@@ -1,7 +1,7 @@
 import { Component, Prop, h, EventEmitter, Event, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, ResponseError, ShippingMethod } from '../../../types';
+import { Address, Checkout, ResponseError, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { checkoutIsLocked } from '@store/checkout/getters';
@@ -47,10 +47,10 @@ export class ScShippingChoices {
     }
 
     // no shipping choices yet.
-    if (!checkoutState?.checkout?.shipping_choices?.data?.length) {
+    if (!checkoutState?.checkout?.shipping_choices?.data?.length && (checkoutState?.checkout?.shipping_address as Address)?.country) {
       return (
         <sc-form-control label={this.label || __('Shipping', 'surecart')}>
-          <div class="shipping-choice__empty">{__('Enter your shipping address to view available shipping methods', 'surecart')}</div>
+          <div class="shipping-choice__empty">{__('Sorry, we are not able to ship to your address.', 'surecart')}</div>
         </sc-form-control>
       );
     }
