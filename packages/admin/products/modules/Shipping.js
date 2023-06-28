@@ -106,10 +106,10 @@ export default ({ loading, product, updateProduct }) => {
 					</div>
 
 					<ScSwitch
-						checked={product?.auto_fulfill}
+						checked={product?.auto_fulfill_enabled}
 						onScChange={(e) => {
 							updateProduct({
-								auto_fulfill: e.target.checked,
+								auto_fulfill_enabled: e.target.checked,
 							});
 						}}
 					>
