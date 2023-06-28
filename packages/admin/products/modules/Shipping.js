@@ -12,7 +12,6 @@ import {
 	ScSwitch,
 	ScToggle,
 } from '@surecart/components-react';
-import { useState } from 'react';
 
 const WEIGHT_UNIT_TYPES = [
 	__('lb', 'surecart'),

@@ -77,7 +77,7 @@ export default ({
 								)}
 							>
 								{__(
-									"Customers won't be able to complete checkout for products in this profile.",
+									'First create a shipping zone (where you ship to) and then a shipping rate (the cost to ship there).',
 									'surecart'
 								)}
 							</ScAlert>
