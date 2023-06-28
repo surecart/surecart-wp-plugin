@@ -32,7 +32,6 @@ export function getEditURL(id) {
 export default () => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [canSaveNow, setCanSaveNow] = useState(false);
-	const [customerShippingAddress, setCustomerShippingAddress] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } = useDispatch(noticesStore);
@@ -138,16 +137,16 @@ export default () => {
 
 	// create the order.
 	const onSubmit = async (e) => {
-		
+		console.log(checkout);
 		e.preventDefault();
 		try {
 			setIsSaving(true);
-			const checkout = await finalizeCheckout({
-				id: checkout.id,
+			const checkoutResult = await finalizeCheckout({
+				id: checkout?.id,
 				customer_id: customer?.id,
 			});
 
-			console.log(checkout?.order);
+			console.log(checkoutResult?.order);
 			
 			createSuccessNotice(__('Manual Order Created', 'surecart'), {
 				type: 'snackbar',
@@ -158,6 +157,8 @@ export default () => {
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
+			setIsSaving(false);
+		} finally {
 			setIsSaving(false);
 		}
 	};
@@ -187,6 +188,7 @@ export default () => {
 					],
 				}),
 				data: {
+					customer_id: checkout?.customer_id,
 					shipping_address: {
 						...address
 					}, // update the address.
@@ -272,33 +274,16 @@ export default () => {
 			sidebar={
 				<>
 					<SelectCustomer checkout={checkout} busy={busy} />
-					{ customer && shippingAddress && (
+					{ checkout?.customer_id && shippingAddress && (
 						<>
 							<Address
 								label={__('Shipping & Tax Address','surecart')}
 								address={shippingAddress} 
+								onAddressChange={onAddressChange}
+								loading={loading}
+								busy={busy}
+								busyCustomer={busyCustomer}
 							/>
-							<Box
-								title={__(
-									'Shipping & Tax Address',
-									'surecart'
-								)}
-							>
-								<ScAddress
-									required={false}
-									onScInputAddress={(e) => setCustomerShippingAddress(e?.detail)}
-								/>
-								{(!!busy || !!busyCustomer ) && (
-									<ScBlockUi spinner />
-								)}
-
-								<ScButton
-									type="primary"
-									onClick={() => onAddressChange(customerShippingAddress)}
-								>
-									{__('Update', 'surecart')}
-								</ScButton>
-							</Box>
 						</>
 					)}
 

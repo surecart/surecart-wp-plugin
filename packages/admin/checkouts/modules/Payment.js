@@ -22,6 +22,7 @@ import expand from '../query';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
+import { formatTaxDisplay } from '../../util/tax';
 
 export default ({ checkout, loading, busy }) => {
 	const [busyPayment, setBusyPayment] = useState(false);
@@ -101,7 +102,21 @@ export default ({ checkout, loading, busy }) => {
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
-
+                <ScLineItem>
+					<span slot="description">{`${formatTaxDisplay(__('Order Tax', 'surecart'))} (${
+							checkout?.tax_percent
+						}%)`}</span>
+					<ScFormatNumber
+						slot="price"
+						style={{
+							fontWeight: 'var(--sc-font-weight-semibold)',
+							color: 'var(--sc-color-gray-800)',
+						}}
+						type="currency"
+						currency={checkout?.currency}
+						value={checkout?.tax_amount}
+					></ScFormatNumber>
+				</ScLineItem>
 				<ScCouponForm
 					collapsed={true}
 					placeholder={__('Enter Coupon Code', 'surecart')}

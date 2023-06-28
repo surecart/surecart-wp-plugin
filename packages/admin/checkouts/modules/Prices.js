@@ -195,7 +195,12 @@ export default ({ checkout, loading, busy }) => {
 					<ScBlockUi spinner />
 				)}
 			</Box>
-			<Payment checkout={checkout} loading={loading} busy={busy} />
+			{
+				0 !== line_items?.length && (
+					<Payment checkout={checkout} loading={loading} busy={busy} />
+				)
+			}
+			
 		</>
 	);
 };
