@@ -23,6 +23,7 @@ import expand from '../query';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
+import Payment from './Payment';
 
 export default ({ checkout, loading, busy }) => {
 	const line_items = checkout?.line_items?.data || [];
@@ -131,10 +132,6 @@ export default ({ checkout, loading, busy }) => {
 		}
 	};
 
-	const onCouponChange = async (e) => {
-		
-	};
-	
 	const renderPrices = () => {
 		if (!line_items?.length) {
 			return (
@@ -185,34 +182,6 @@ export default ({ checkout, loading, busy }) => {
 		);
 	};
 
-	const renderPaymentDetails = () => {
-		return (
-			<>
-				<ScLineItem>
-					<span slot="description">{__('Subtotal', 'surecart')}</span>
-					<ScFormatNumber
-						slot="price"
-						style={{
-							fontWeight: 'var(--sc-font-weight-semibold)',
-							color: 'var(--sc-color-gray-800)',
-						}}
-						type="currency"
-						currency={checkout?.currency}
-						value={checkout?.subtotal_amount}
-					></ScFormatNumber>
-				</ScLineItem>
-
-				{/* <ScCouponForm
-					collapsed={true}
-					placeholder={__('Enter Coupon Code', 'surecart')}
-					label={__('Add Coupon Code', 'surecart')}
-					buttonText={__('Apply', 'surecart')}
-					onScApplyCoupon={onCouponChange}
-				/> */}
-			</>
-		);
-	};
-
 	return (
 		<>
 			<Box
@@ -226,13 +195,7 @@ export default ({ checkout, loading, busy }) => {
 					<ScBlockUi spinner />
 				)}
 			</Box>
-
-			<Box title={__('Payment', 'surecart')} loading={loading}>
-				{renderPaymentDetails()}
-				{(!!busy || !!busyPrices) && (
-					<ScBlockUi spinner />
-				)}
-			</Box>
+			<Payment checkout={checkout} loading={loading} busy={busy} />
 		</>
 	);
 };
