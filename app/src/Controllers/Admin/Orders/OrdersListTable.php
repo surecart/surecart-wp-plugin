@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Admin\Orders;
 
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Support\Arrays;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -103,6 +102,7 @@ class OrdersListTable extends ListTable {
 			// 'cb'          => '<input type="checkbox" />',
 			'order'              => __( 'Order', 'surecart' ),
 			'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
+			'shipment_status'    => __( 'Shipping', 'surecart' ),
 			'method'             => __( 'Method', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'total'              => __( 'Total', 'surecart' ),
@@ -111,11 +111,6 @@ class OrdersListTable extends ListTable {
 			'created'            => __( 'Date', 'surecart' ),
 			'mode'               => '',
 		];
-
-		// show shipping status if enabled.
-		if ( \SureCart::account()->shipping_protocol->shipping_enabled ?? false ) {
-			$columns = Arrays::insertAfter( 'fulfillment_status', $columns, [ 'shipment_status' => __( 'Shipping', 'surecart' ) ] );
-		}
 
 		return $columns;
 	}
@@ -138,7 +133,7 @@ class OrdersListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array();
+		return ( is_array( get_user_meta( get_current_user_id(), 'managesurecart_page_sc-orderscolumnshidden', true ) ) ) ? get_user_meta( get_current_user_id(), 'managesurecart_page_sc-orderscolumnshidden', true ) : array();
 	}
 
 	/**
@@ -275,10 +270,7 @@ class OrdersListTable extends ListTable {
 	public function column_fulfillment_status( $order ) {
 		ob_start();
 		?>
-
-
-				<sc-order-fulfillment-badge status="<?php echo esc_attr( $order->fulfillment_status ); ?>"></sc-order-fulfillment-badge>
-
+			<sc-order-fulfillment-badge status="<?php echo esc_attr( $order->fulfillment_status ); ?>"></sc-order-fulfillment-badge>
 		<?php
 		return ob_get_clean();
 	}
@@ -293,7 +285,11 @@ class OrdersListTable extends ListTable {
 	public function column_shipment_status( $order ) {
 		ob_start();
 		?>
-		<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
+		<?php if ( 'unshippable' === $order->shipment_status ) : ?>
+			-
+		<?php else : ?>
+			<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
+		<?php endif; ?>
 		<?php
 		return ob_get_clean();
 	}
@@ -359,14 +355,14 @@ class OrdersListTable extends ListTable {
 		<?php
 	}
 
-		/**
-		 * Displays a formats drop-down for filtering items.
-		 *
-		 * @since 5.2.0
-		 * @access protected
-		 *
-		 * @param string $post_type Post type slug.
-		 */
+	/**
+	 * Displays a formats drop-down for filtering items.
+	 *
+	 * @since 5.2.0
+	 * @access protected
+	 *
+	 * @param string $post_type Post type slug.
+	 */
 	protected function shipment_dropdown() {
 		/**
 		 * Filters whether to remove the 'Formats' drop-down from the post list table.
@@ -397,7 +393,9 @@ class OrdersListTable extends ListTable {
 	}
 
 	/**
-	 * @param string $which
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
 	 */
 	protected function extra_tablenav( $which ) {
 		?>
