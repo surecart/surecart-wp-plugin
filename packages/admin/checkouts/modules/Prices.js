@@ -104,21 +104,7 @@ export default ({ checkout, loading, busy }) => {
 					quantity, // update the quantity.
 				},
 			});
-			console.log(data);
-			// // add the line item.
-			// const { checkout: data } = await apiFetch({
-			// 	method: 'PATCH',
-			// 	path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-			// 		expand,
-			// 		line_items: [
-			// 			{
-			// 				price: id,
-			// 				quantity: e?.target?.value
-			// 			}
-			// 		]
-			// 	})
-			// });
-
+			
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
@@ -146,52 +132,9 @@ export default ({ checkout, loading, busy }) => {
 	};
 
 	const onCouponChange = async (e) => {
-		try {
-			setBusyPrices(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'checkout'
-			);
-
-			// add the line item.
-			const { checkout: data } = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand,
-					discount: [
-						{
-							promotion_code: e?.detail,
-						},
-					],
-				}),
-			});
-
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
-
-			createSuccessNotice(__('Quantity updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-		} finally {
-			setBusyPrices(false);
-		}
+		
 	};
+	
 	const renderPrices = () => {
 		if (!line_items?.length) {
 			return (
@@ -223,7 +166,7 @@ export default ({ checkout, loading, busy }) => {
 
 					{(line_items || []).map((line_item) => {
 						const { id, price, quantity, total_amount } = line_item;
-						console.log(line_item);
+						
 						return (
 							<Price
 								key={id}

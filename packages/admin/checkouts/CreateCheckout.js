@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
-import { ScButton, ScForm, ScAddress } from '@surecart/components-react';
+import { ScButton, ScForm, ScAddress, ScBlockUi } from '@surecart/components-react';
 import Box from '../ui/Box';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -29,15 +29,16 @@ export function getEditURL(id) {
 	return addQueryArgs(window.location.href, { id });
 }
 
-export default ({ setId }) => {
+export default () => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [canSaveNow, setCanSaveNow] = useState(false);
-	const [customerShippingStatus, setCustomerShippingStatus] = useState(false);
+	const [customerShippingAddress, setCustomerShippingAddress] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
-	const { saveEntityRecord } = useDispatch(coreStore);
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } = useDispatch(noticesStore);
 
 	const id = useSelect((select) => select(dataStore).selectPageId());
+	const [busyCustomer, setBusyCustomer] = useState(false);
 
 	const { checkout, loading, busy, error } = useSelect(
 		(select) => {
@@ -66,8 +67,10 @@ export default ({ setId }) => {
 				),
 			};
 		},
-		[id, checkout?.line_items]
+		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
+	const customer = checkout?.customer;
+	const line_items = checkout?.line_items;
 
 	// we don't yet have a checkout.
 	useEffect(() => {
@@ -107,46 +110,17 @@ export default ({ setId }) => {
 		}
 	};
 
-	const prices = useSelect((select) =>
-		select(uiStore).getPricesForCreateOrder()
-	)?.pricesForCreateOrder;
-
-	const customer = useSelect((select) =>
-		select(uiStore).getCustomerForCreateOrder()
-	)?.customerForCreateOrder;
-
-	const { setCustomerForCreateOrder } = useDispatch(uiStore);
 	useEffect(() => {
 		
-		if (!checkout?.line_items?.data || ! customer) {
+		if (!line_items?.data || ! customer) {
 			return;
 		}
 
-		if (0 !== Object.keys(customer)?.length && 0 !== checkout?.line_items?.data?.length) {
+		if (0 !== Object.keys(customer)?.length && 0 !== line_items?.data?.length) {
 			setCanSaveNow(true);
 		}
-	}, [checkout?.line_items, customer]);
+	}, [line_items, customer]);
 
-	useEffect(() => {
-		if (!customer || !customer?.shipping_address) {
-			setCustomerShippingStatus(false);
-			return;
-		}
-
-		const { city, country, line_1, postal_code, state } =
-			customer?.shipping_address;
-
-		if (
-			customer?.shipping_address &&
-			city &&
-			country &&
-			line_1 &&
-			postal_code &&
-			state
-		) {
-			setCustomerShippingStatus(true);
-		}
-	}, [customer]);
 
 	const finalizeCheckout = async ({ id, customer_id }) => {
 		return await apiFetch({
@@ -162,36 +136,76 @@ export default ({ setId }) => {
 	// create the order.
 	const onSubmit = async (e) => {
 		
-		const customerData = {
-			first_name: customer?.first_name,
-			last_name: customer?.last_name,
-			name: customer?.name,
-			email: customer?.email,
-			shipping_address: customer?.shipping_address,
-		};
-
 		e.preventDefault();
 		try {
 			setIsSaving(true);
-			const checkout = await saveEntityRecord(
-				'surecart',
-				'checkout',
-				{
-					...customerData,
-				},
-				{ throwOnError: true }
-			);
 			const order = await finalizeCheckout({
 				id: checkout.id,
 				customer_id: customer?.id,
 			});
-			setId(order?.order);
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
 			setIsSaving(false);
+		}
+	};
+
+
+	const onAddressChange = async (address) => {
+		
+		try {
+			setBusyCustomer(true);
+			// get the line items endpoint.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'checkout'
+			);
+
+			const data = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${id}`, {
+					expand: [
+						// expand the checkout and the checkout's required expands.
+						...(expand || []).map((item) => {
+							return item.includes('.')
+								? item
+								: `checkout.${item}`;
+						}),
+						'checkout',
+					],
+				}),
+				data: {
+					shipping_address: {
+						...address
+					}, // update the address.
+				},
+			});
+		
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'checkout',
+				data,
+				undefined,
+				false,
+				checkout
+			);
+
+			createSuccessNotice(__('Shipping Address updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+		} finally {
+			setBusyCustomer(false);
 		}
 	};
 
@@ -247,42 +261,37 @@ export default ({ setId }) => {
 			}
 			sidebar={
 				<>
-					<Box title={__('Customer', 'surecart')}>
-						<SelectCustomer/>
-					</Box>
-					{customer && customerShippingStatus && (
+					<SelectCustomer checkout={checkout} busy={busy} />
+					{checkout?.shipping_address && (
 						<>
 							<Address
-								address={customer?.shipping_address}
-								label={__('Shipping & Tax Address', 'surecart')}
+								label={__('Shipping & Tax Address','surecart')}
+								address={checkout?.shipping_address} 
 							/>
+							<Box
+								title={__(
+									'Shipping & Tax Address',
+									'surecart'
+								)}
+							>
+								<ScAddress
+									required={false}
+									onScInputAddress={(e) => setCustomerShippingAddress(e?.detail)}
+								/>
+								{(!!busy || !!busyCustomer ) && (
+									<ScBlockUi spinner />
+								)}
+
+								<ScButton
+									type="primary"
+									onClick={() => onAddressChange(customerShippingAddress)}
+								>
+									{__('Update', 'surecart')}
+								</ScButton>
+							</Box>
 						</>
 					)}
-					{/* {customer && !customerShippingStatus && (
-						<Box
-							title={__(
-								'Update Shipping & Tax Address',
-								'surecart'
-							)}
-						>
-							<ScAddress
-								required={true}
-								onScInputAddress={(e) => {
-									const finalCustomerData = {
-										...customer,
-										shipping_address: {
-											...customer?.shipping_address,
-											id: 'new_customer',
-											...e.detail,
-										},
-									};
-									setCustomerForCreateOrder(
-										finalCustomerData
-									);
-								}}
-							/>
-						</Box>
-					)} */}
+
 				</>
 			}
 		>

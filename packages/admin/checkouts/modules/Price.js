@@ -18,8 +18,6 @@ import {
 export default ({ price, quantity, onRemove, onQuantityChange, total_amount }) => {
 	const imageUrl = price?.product?.image_url;
 
-	console.log({ quantity });
-
 	return (
 		<ScTableRow>
 			<ScTableCell>
