@@ -59,6 +59,22 @@ class FormPostTypeService {
 		add_action( 'in_admin_header', [ $this, 'showHeader' ] );
 		add_action( "manage_{$this->post_type}_posts_custom_column", [ $this, 'postTypeContent' ], 10, 2 );
 		add_action( 'use_block_editor_for_post', [ $this, 'forceGutenberg' ], 999, 2 );
+		add_action( 'surecart/payments/mode', [ $this, 'forceTestModeForProvisionalAccounts' ] );
+	}
+
+	/**
+	 * Force the payments mode to "test" if the account is not claimed.
+	 *
+	 * @param string $mode "test" or "live".
+	 *
+	 * @return string
+	 */
+	public function forceTestModeForProvisionalAccounts( $mode ) {
+		if ( ! \SureCart::account()->claimed ) {
+			return 'test';
+		}
+
+		return $mode;
 	}
 
 	/**

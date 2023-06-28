@@ -15,6 +15,13 @@
 | `value`    | `value`    | The selected value of the control.                                                                                                                                                                            | `string`  | `''`        |
 
 
+## Events
+
+| Event      | Description | Type                  |
+| ---------- | ----------- | --------------------- |
+| `scChange` |             | `CustomEvent<string>` |
+
+
 ## Methods
 
 ### `reportValidity() => Promise<boolean>`
@@ -33,6 +40,7 @@ Type: `Promise<boolean>`
 | Part      | Description |
 | --------- | ----------- |
 | `"base"`  |             |
+| `"items"` |             |
 | `"label"` |             |
 
 

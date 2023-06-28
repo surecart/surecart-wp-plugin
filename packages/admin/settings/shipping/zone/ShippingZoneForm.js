@@ -129,14 +129,7 @@ export default ({
 	const onCountrySelect = (e) => {
 		const value = e.target.value;
 		if (!value) return;
-
-		if (zoneCountries.includes(value)) {
-			setZoneCountries(
-				zoneCountries.filter((zoneCountry) => zoneCountry !== value)
-			);
-		} else {
-			setZoneCountries([...zoneCountries, value]);
-		}
+		setZoneCountries([...new Set([...zoneCountries, value])]);
 	};
 
 	const onRemoveZoneCountry = (value) => {
@@ -271,7 +264,13 @@ export default ({
 					? __('Edit Zone', 'surecart')
 					: __('Add Zone', 'surecart')
 			}
-			onScRequestClose={onRequestClose}
+			onScRequestClose={(e) => {
+				if (e.detail === 'overlay') {
+					e.preventDefault();
+					return false;
+				}
+				onRequestClose();
+			}}
 			style={{
 				'--dialog-body-overflow': 'visible',
 				...(!isEdit

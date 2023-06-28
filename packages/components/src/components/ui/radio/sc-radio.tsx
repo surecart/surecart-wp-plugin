@@ -49,7 +49,7 @@ export class ScRadio {
   @Event() scBlur: EventEmitter<void>;
 
   /** Emitted when the control's checked state changes. */
-  @Event({ bubbles: false }) scChange: EventEmitter<void>;
+  @Event() scChange: EventEmitter<void>;
 
   /** Emitted when the control gains focus. */
   @Event() scFocus: EventEmitter<void>;

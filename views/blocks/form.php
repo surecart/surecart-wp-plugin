@@ -27,7 +27,7 @@
 		'currencyCode'               => $currency_code ?? null,
 		'modified'                   => $modified ?? null,
 		'loggedIn'                   => is_user_logged_in(),
-		'mode'                       => $mode,
+		'mode'                       => ! empty( $mode ) ? $mode : 'live',
 		'alignment'                  => $align ?? '',
 		'taxProtocol'                => $tax_protocol ?? [],
 		'loadingText'                => $loading_text ?? [],

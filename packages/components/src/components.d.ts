@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, ShippingChoice, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentIntent, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1574,6 +1574,28 @@ export namespace Components {
          */
         "value": number;
     }
+    interface ScFulfillmentShippingStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": FulfillmentStatus;
+    }
+    interface ScFulfillments {
+        "heading": string;
+        "orderId": string;
+    }
     interface ScHeading {
         "size": 'small' | 'medium' | 'large';
     }
@@ -1956,6 +1978,24 @@ export namespace Components {
         "order": Checkout;
         "value": string;
     }
+    interface ScOrderFulfillmentBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": OrderFulFillmentStatus;
+    }
     interface ScOrderManualInstructions {
         "manualPaymentInstructions": string;
         "manualPaymentTitle": string;
@@ -2031,6 +2071,24 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": string;
+    }
+    interface ScOrderShipmentBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
         "cityPlaceholder": string;
@@ -3129,10 +3187,6 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Shipping choices
-         */
-        "shippingChoices": ShippingChoice[];
-        /**
           * Whether to show the shipping choice description
          */
         "showDescription": boolean;
@@ -3972,6 +4026,10 @@ export interface ScRadioCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRadioElement;
 }
+export interface ScRadioGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScRadioGroupElement;
+}
 export interface ScRichTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRichTextElement;
@@ -4456,6 +4514,18 @@ declare global {
         prototype: HTMLScFormatNumberElement;
         new (): HTMLScFormatNumberElement;
     };
+    interface HTMLScFulfillmentShippingStatusBadgeElement extends Components.ScFulfillmentShippingStatusBadge, HTMLStencilElement {
+    }
+    var HTMLScFulfillmentShippingStatusBadgeElement: {
+        prototype: HTMLScFulfillmentShippingStatusBadgeElement;
+        new (): HTMLScFulfillmentShippingStatusBadgeElement;
+    };
+    interface HTMLScFulfillmentsElement extends Components.ScFulfillments, HTMLStencilElement {
+    }
+    var HTMLScFulfillmentsElement: {
+        prototype: HTMLScFulfillmentsElement;
+        new (): HTMLScFulfillmentsElement;
+    };
     interface HTMLScHeadingElement extends Components.ScHeading, HTMLStencilElement {
     }
     var HTMLScHeadingElement: {
@@ -4652,6 +4722,12 @@ declare global {
         prototype: HTMLScOrderDetailElement;
         new (): HTMLScOrderDetailElement;
     };
+    interface HTMLScOrderFulfillmentBadgeElement extends Components.ScOrderFulfillmentBadge, HTMLStencilElement {
+    }
+    var HTMLScOrderFulfillmentBadgeElement: {
+        prototype: HTMLScOrderFulfillmentBadgeElement;
+        new (): HTMLScOrderFulfillmentBadgeElement;
+    };
     interface HTMLScOrderManualInstructionsElement extends Components.ScOrderManualInstructions, HTMLStencilElement {
     }
     var HTMLScOrderManualInstructionsElement: {
@@ -4663,6 +4739,12 @@ declare global {
     var HTMLScOrderPasswordElement: {
         prototype: HTMLScOrderPasswordElement;
         new (): HTMLScOrderPasswordElement;
+    };
+    interface HTMLScOrderShipmentBadgeElement extends Components.ScOrderShipmentBadge, HTMLStencilElement {
+    }
+    var HTMLScOrderShipmentBadgeElement: {
+        prototype: HTMLScOrderShipmentBadgeElement;
+        new (): HTMLScOrderShipmentBadgeElement;
     };
     interface HTMLScOrderShippingAddressElement extends Components.ScOrderShippingAddress, HTMLStencilElement {
     }
@@ -5256,6 +5338,8 @@ declare global {
         "sc-format-date": HTMLScFormatDateElement;
         "sc-format-interval": HTMLScFormatIntervalElement;
         "sc-format-number": HTMLScFormatNumberElement;
+        "sc-fulfillment-shipping-status-badge": HTMLScFulfillmentShippingStatusBadgeElement;
+        "sc-fulfillments": HTMLScFulfillmentsElement;
         "sc-heading": HTMLScHeadingElement;
         "sc-icon": HTMLScIconElement;
         "sc-image-slider": HTMLScImageSliderElement;
@@ -5288,8 +5372,10 @@ declare global {
         "sc-order-confirmation-totals": HTMLScOrderConfirmationTotalsElement;
         "sc-order-coupon-form": HTMLScOrderCouponFormElement;
         "sc-order-detail": HTMLScOrderDetailElement;
+        "sc-order-fulfillment-badge": HTMLScOrderFulfillmentBadgeElement;
         "sc-order-manual-instructions": HTMLScOrderManualInstructionsElement;
         "sc-order-password": HTMLScOrderPasswordElement;
+        "sc-order-shipment-badge": HTMLScOrderShipmentBadgeElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
         "sc-order-submit": HTMLScOrderSubmitElement;
@@ -7133,6 +7219,28 @@ declare namespace LocalJSX {
          */
         "value"?: number;
     }
+    interface ScFulfillmentShippingStatusBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: FulfillmentStatus;
+    }
+    interface ScFulfillments {
+        "heading"?: string;
+        "orderId"?: string;
+    }
     interface ScHeading {
         "size"?: 'small' | 'medium' | 'large';
     }
@@ -7554,6 +7662,24 @@ declare namespace LocalJSX {
         "order"?: Checkout;
         "value"?: string;
     }
+    interface ScOrderFulfillmentBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: OrderFulFillmentStatus;
+    }
     interface ScOrderManualInstructions {
         "manualPaymentInstructions"?: string;
         "manualPaymentTitle"?: string;
@@ -7628,6 +7754,24 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
+    }
+    interface ScOrderShipmentBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
         "cityPlaceholder"?: string;
@@ -8655,6 +8799,7 @@ declare namespace LocalJSX {
           * The radio group label. Required for proper accessibility.
          */
         "label"?: string;
+        "onScChange"?: (event: ScRadioGroupCustomEvent<string>) => void;
         /**
           * Is one of these items required.
          */
@@ -8861,10 +9006,6 @@ declare namespace LocalJSX {
           * Error event
          */
         "onScError"?: (event: ScShippingChoicesCustomEvent<ResponseError>) => void;
-        /**
-          * Shipping choices
-         */
-        "shippingChoices"?: ShippingChoice[];
         /**
           * Whether to show the shipping choice description
          */
@@ -9602,6 +9743,8 @@ declare namespace LocalJSX {
         "sc-format-date": ScFormatDate;
         "sc-format-interval": ScFormatInterval;
         "sc-format-number": ScFormatNumber;
+        "sc-fulfillment-shipping-status-badge": ScFulfillmentShippingStatusBadge;
+        "sc-fulfillments": ScFulfillments;
         "sc-heading": ScHeading;
         "sc-icon": ScIcon;
         "sc-image-slider": ScImageSlider;
@@ -9634,8 +9777,10 @@ declare namespace LocalJSX {
         "sc-order-confirmation-totals": ScOrderConfirmationTotals;
         "sc-order-coupon-form": ScOrderCouponForm;
         "sc-order-detail": ScOrderDetail;
+        "sc-order-fulfillment-badge": ScOrderFulfillmentBadge;
         "sc-order-manual-instructions": ScOrderManualInstructions;
         "sc-order-password": ScOrderPassword;
+        "sc-order-shipment-badge": ScOrderShipmentBadge;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
         "sc-order-submit": ScOrderSubmit;
@@ -9807,6 +9952,8 @@ declare module "@stencil/core" {
             "sc-format-date": LocalJSX.ScFormatDate & JSXBase.HTMLAttributes<HTMLScFormatDateElement>;
             "sc-format-interval": LocalJSX.ScFormatInterval & JSXBase.HTMLAttributes<HTMLScFormatIntervalElement>;
             "sc-format-number": LocalJSX.ScFormatNumber & JSXBase.HTMLAttributes<HTMLScFormatNumberElement>;
+            "sc-fulfillment-shipping-status-badge": LocalJSX.ScFulfillmentShippingStatusBadge & JSXBase.HTMLAttributes<HTMLScFulfillmentShippingStatusBadgeElement>;
+            "sc-fulfillments": LocalJSX.ScFulfillments & JSXBase.HTMLAttributes<HTMLScFulfillmentsElement>;
             "sc-heading": LocalJSX.ScHeading & JSXBase.HTMLAttributes<HTMLScHeadingElement>;
             "sc-icon": LocalJSX.ScIcon & JSXBase.HTMLAttributes<HTMLScIconElement>;
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
@@ -9843,8 +9990,10 @@ declare module "@stencil/core" {
             "sc-order-confirmation-totals": LocalJSX.ScOrderConfirmationTotals & JSXBase.HTMLAttributes<HTMLScOrderConfirmationTotalsElement>;
             "sc-order-coupon-form": LocalJSX.ScOrderCouponForm & JSXBase.HTMLAttributes<HTMLScOrderCouponFormElement>;
             "sc-order-detail": LocalJSX.ScOrderDetail & JSXBase.HTMLAttributes<HTMLScOrderDetailElement>;
+            "sc-order-fulfillment-badge": LocalJSX.ScOrderFulfillmentBadge & JSXBase.HTMLAttributes<HTMLScOrderFulfillmentBadgeElement>;
             "sc-order-manual-instructions": LocalJSX.ScOrderManualInstructions & JSXBase.HTMLAttributes<HTMLScOrderManualInstructionsElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
+            "sc-order-shipment-badge": LocalJSX.ScOrderShipmentBadge & JSXBase.HTMLAttributes<HTMLScOrderShipmentBadgeElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
             "sc-order-submit": LocalJSX.ScOrderSubmit & JSXBase.HTMLAttributes<HTMLScOrderSubmitElement>;

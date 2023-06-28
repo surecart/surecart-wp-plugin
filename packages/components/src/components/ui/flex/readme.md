@@ -31,12 +31,12 @@
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
- - [sc-shipping-choices](../sc-shipping-choices)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
@@ -51,12 +51,12 @@ graph TD;
   sc-cancel-discount --> sc-flex
   sc-cancel-survey --> sc-flex
   sc-downloads-list --> sc-flex
+  sc-fulfillments --> sc-flex
   sc-login-form --> sc-flex
   sc-order --> sc-flex
   sc-pagination --> sc-flex
   sc-password-nag --> sc-flex
   sc-payment-methods-list --> sc-flex
-  sc-shipping-choices --> sc-flex
   sc-subscription --> sc-flex
   sc-subscription-cancel --> sc-flex
   sc-subscription-details --> sc-flex

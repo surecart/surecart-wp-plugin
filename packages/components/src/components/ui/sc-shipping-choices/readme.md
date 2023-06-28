@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property          | Attribute          | Description                                     | Type               | Default     |
-| ----------------- | ------------------ | ----------------------------------------------- | ------------------ | ----------- |
-| `label`           | `label`            | The shipping section label                      | `string`           | `undefined` |
-| `shippingChoices` | --                 | Shipping choices                                | `ShippingChoice[]` | `[]`        |
-| `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean`          | `true`      |
+| Property          | Attribute          | Description                                     | Type      | Default     |
+| ----------------- | ------------------ | ----------------------------------------------- | --------- | ----------- |
+| `label`           | `label`            | The shipping section label                      | `string`  | `undefined` |
+| `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean` | `true`      |
 
 
 ## Events
@@ -32,7 +31,6 @@
 - [sc-form-control](../form-control)
 - [sc-radio-group](../radio-group)
 - [sc-radio](../radio)
-- [sc-flex](../flex)
 - [sc-format-number](../../util/format-number)
 - [sc-block-ui](../block-ui)
 
@@ -42,7 +40,6 @@ graph TD;
   sc-shipping-choices --> sc-form-control
   sc-shipping-choices --> sc-radio-group
   sc-shipping-choices --> sc-radio
-  sc-shipping-choices --> sc-flex
   sc-shipping-choices --> sc-format-number
   sc-shipping-choices --> sc-block-ui
   sc-form-control --> sc-tooltip

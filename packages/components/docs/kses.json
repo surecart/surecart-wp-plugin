@@ -796,6 +796,24 @@
     "class": true,
     "slot": true
   },
+  "sc-fulfillment-shipping-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-fulfillments": {
+    "heading": true,
+    "order-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-heading": {
     "size": true,
     "style": true,
@@ -1111,6 +1129,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-fulfillment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-manual-instructions": {
     "manual-payment-instructions": true,
     "manual-payment-title": true,
@@ -1138,6 +1166,16 @@
     "show-label": true,
     "size": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-shipment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1715,7 +1753,6 @@
   },
   "sc-shipping-choices": {
     "label": true,
-    "shipping-choices": true,
     "show-description": true,
     "style": true,
     "id": true,

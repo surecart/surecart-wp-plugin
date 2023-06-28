@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { maybeConvertAmount } from './functions/utils';
+import { maybeConvertAmount } from '../../../functions/currency';
 
 //TODO: Remove this when unit types are supported
 interface NumberFormatOptionsWithUnit extends Intl.NumberFormatOptions {
@@ -65,7 +65,7 @@ export class ScFormatNumber {
     const lang = navigator.language || (navigator as any)?.browserLanguage || (navigator.languages || ['en'])[0];
 
     // maybe convert zero decimal currencies.
-    const value = this.noConvert ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase());
+    const value = this.noConvert || this.type !== 'currency' ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase());
 
     // decide how many decimal places to use.
     const minimumFractionDigits = value % 1 == 0 ? 0 : 2;
@@ -81,6 +81,6 @@ export class ScFormatNumber {
       minimumSignificantDigits: this.minimumSignificantDigits,
       maximumSignificantDigits: this.maximumSignificantDigits,
       unit: UNIT_TYPES[this.unit],
-    } as NumberFormatOptionsWithUnit).format(this.noConvert ? this.value : maybeConvertAmount(this.value, this.currency.toUpperCase()));
+    } as NumberFormatOptionsWithUnit).format(value);
   }
 }
