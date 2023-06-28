@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { FulfillmentStatus } from '../../../types';
@@ -38,6 +38,11 @@ export class ScOrderStatusBadge {
   @Prop() clearable: boolean = false;
 
   render() {
+    // don't render if not shippable.
+    if (this.status === 'unshippable') {
+      return <Host style={{ display: 'none' }}></Host>;
+    }
+
     return (
       <sc-tag type={type?.[this?.status]} pill={this.pill}>
         {status?.[this.status] || this.status}

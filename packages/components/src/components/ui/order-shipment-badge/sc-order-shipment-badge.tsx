@@ -41,7 +41,7 @@ export class ScOrderShipmentBadge {
 
   render() {
     // don't render if not shippable.
-    if (this.status === 'not_shippable') {
+    if (this.status === 'unshippable') {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
