@@ -112,8 +112,14 @@ export default () => {
 						onClick={() => setCurrentModal(modals.MODAL_ADD_METHOD)}
 					>
 						<ScIcon name="plus" /> {__('Add New', 'surecart')}
-						{upgradeRequired() && <ScPremiumTag />}
 					</ScButton>
+
+					<p slot="content">
+						{__(
+							'Upgrade to SureCart Premium to add unlimited shipping methods.',
+							'surecart'
+						)}
+					</p>
 				</ScUpgradeRequired>
 			}
 			loading={loadingMethods}
