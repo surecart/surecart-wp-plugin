@@ -272,6 +272,15 @@ export default ({
 		});
 	};
 
+	const upgradeToAddMethodRequired = () => {
+		const shippingMethods = scData.entitlements?.shipping_methods;
+
+		return (
+			!!shippingMethods.limit &&
+			shippingMethods.count >= shippingMethods.limit
+		);
+	};
+
 	return (
 		<Fragment>
 			<Error error={error} setError={setError} />
@@ -335,8 +344,14 @@ export default ({
 								prefix={
 									<div slot="prefix">
 										<ScUpgradeRequired
-											required={true}
-											onClick={onUpgradeRequired}
+											required={upgradeToAddMethodRequired()}
+											onClick={() =>
+												upgradeToAddMethodRequired() &&
+												onUpgradeRequired()
+											}
+											css={css`
+												width: 100%;
+											`}
 										>
 											<ScMenuItem
 												onClick={() => {
@@ -352,7 +367,9 @@ export default ({
 													name="plus"
 												/>
 												{__('Add New', 'surecart')}
-												<ScPremiumTag slot="suffix" />
+												{upgradeToAddMethodRequired() && (
+													<ScPremiumTag slot="suffix" />
+												)}
 											</ScMenuItem>
 										</ScUpgradeRequired>
 										<ScMenuDivider />
@@ -394,32 +411,79 @@ export default ({
 						}}
 						value={shippingRate.rate_type}
 					>
-						<ScRadio
-							value={rate_types.FLAT_RATE}
-							checked={
-								shippingRate.rate_type === rate_types.FLAT_RATE
-							}
-						>
-							{__('Flat Rate', 'surecart')}
-						</ScRadio>
-						<ScRadio
-							value={rate_types.ITEM_WEIGHT}
-							checked={
-								shippingRate.rate_type ===
-								rate_types.ITEM_WEIGHT
-							}
-						>
-							{__('Based on item weight', 'surecart')}
-						</ScRadio>
-						<ScRadio
-							value={rate_types.ORDER_PRICE}
-							checked={
-								shippingRate.rate_type ===
-								rate_types.ORDER_PRICE
-							}
-						>
-							{__('Based on order price', 'surecart')}
-						</ScRadio>
+						<ScFlex flexDirection="column" gap="1em">
+							<ScRadio
+								value={rate_types.FLAT_RATE}
+								checked={
+									shippingRate.rate_type ===
+									rate_types.FLAT_RATE
+								}
+							>
+								{__('Flat Rate', 'surecart')}
+							</ScRadio>
+							<ScUpgradeRequired
+								required={
+									!scData?.entitlements
+										?.advanced_shipping_rates
+								}
+								onClick={() =>
+									!scData?.entitlements
+										?.advanced_shipping_rates &&
+									onUpgradeRequired()
+								}
+							>
+								<ScRadio
+									value={rate_types.ITEM_WEIGHT}
+									checked={
+										shippingRate.rate_type ===
+										rate_types.ITEM_WEIGHT
+									}
+								>
+									{__('Based on item weight', 'surecart')}
+									{!scData?.entitlements
+										?.advanced_shipping_rates && (
+										<ScPremiumTag
+											css={css`
+												margin-left: var(
+													--sc-spacing-x-small
+												);
+											`}
+										/>
+									)}
+								</ScRadio>
+							</ScUpgradeRequired>
+							<ScUpgradeRequired
+								required={
+									!scData?.entitlements
+										?.advanced_shipping_rates
+								}
+								onClick={() =>
+									!scData?.entitlements
+										?.advanced_shipping_rates &&
+									onUpgradeRequired()
+								}
+							>
+								<ScRadio
+									value={rate_types.ORDER_PRICE}
+									checked={
+										shippingRate.rate_type ===
+										rate_types.ORDER_PRICE
+									}
+								>
+									{__('Based on order price', 'surecart')}
+									{!scData?.entitlements
+										?.advanced_shipping_rates && (
+										<ScPremiumTag
+											css={css`
+												margin-left: var(
+													--sc-spacing-x-small
+												);
+											`}
+										/>
+									)}
+								</ScRadio>
+							</ScUpgradeRequired>
+						</ScFlex>
 					</ScRadioGroup>
 					<div>{renderMaxMinInputs()}</div>
 				</ScFlex>

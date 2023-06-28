@@ -93,21 +93,26 @@ export default () => {
 		return null;
 	}
 
+	const upgradeRequired = () => {
+		const shippingMethods = scData.entitlements?.shipping_methods;
+
+		return (
+			!!shippingMethods.limit &&
+			shippingMethods.count >= shippingMethods.limit
+		);
+	};
+
 	return (
 		<SettingsBox
 			title={__('Shipping Methods', 'surecart')}
 			end={
-				<ScUpgradeRequired required={true}>
+				<ScUpgradeRequired required={upgradeRequired()}>
 					<ScButton
 						type="primary"
 						onClick={() => setCurrentModal(modals.MODAL_ADD_METHOD)}
 					>
 						<ScIcon name="plus" /> {__('Add New', 'surecart')}
-						<ScPremiumTag
-							css={css`
-								margin-left: var(--sc-spacing-x-small);
-							`}
-						/>
+						{upgradeRequired() && <ScPremiumTag />}
 					</ScButton>
 				</ScUpgradeRequired>
 			}

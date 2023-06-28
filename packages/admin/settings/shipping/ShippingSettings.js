@@ -86,6 +86,17 @@ export default () => {
 		});
 	};
 
+	const upgradeRequired = () => {
+		const shippingProfileEntitlements =
+			scData?.entitlements.shipping_profiles;
+
+		return (
+			!!shippingProfileEntitlements?.limit &&
+			shippingProfileEntitlements?.count >=
+				shippingProfileEntitlements?.limit
+		);
+	};
+
 	return (
 		<Fragment>
 			<SettingsTemplate
@@ -208,7 +219,7 @@ export default () => {
 														'surecart'
 													)}
 													<ScUpgradeRequired
-														required={true}
+														required={upgradeRequired()}
 													>
 														<ScButton
 															onClick={() =>
@@ -225,13 +236,9 @@ export default () => {
 																'Add New Profile',
 																'surecart'
 															)}
-															<ScPremiumTag
-																css={css`
-																	margin-left: var(
-																		--sc-spacing-x-small
-																	);
-																`}
-															/>
+															{upgradeRequired() && (
+																<ScPremiumTag />
+															)}
 														</ScButton>
 													</ScUpgradeRequired>
 												</ScEmpty>
