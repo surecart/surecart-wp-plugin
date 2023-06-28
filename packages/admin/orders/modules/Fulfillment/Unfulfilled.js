@@ -118,11 +118,13 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 								>
 									{item?.price?.product?.name}
 								</a>
-								<ScFormatNumber
-									type="unit"
-									value={item?.price?.product?.weight}
-									unit={item?.price?.product?.weight_unit}
-								/>
+								{!!item?.price?.product?.weight && (
+									<ScFormatNumber
+										type="unit"
+										value={item?.price?.product?.weight}
+										unit={item?.price?.product?.weight_unit}
+									/>
+								)}
 							</LineItem>
 						);
 					})}
