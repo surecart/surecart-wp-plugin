@@ -100,12 +100,12 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'order'              => __( 'Order', 'surecart' ),
-			'status'             => __( 'Payment', 'surecart' ),
 			'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
 			'shipment_status'    => __( 'Shipping', 'surecart' ),
 			'method'             => __( 'Method', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'total'              => __( 'Total', 'surecart' ),
+			'status'             => __( 'Payment', 'surecart' ),
 			'type'               => __( 'Type', 'surecart' ),
 			'created'            => __( 'Date', 'surecart' ),
 			'mode'               => '',
@@ -230,7 +230,7 @@ class OrdersListTable extends ListTable {
 	 */
 	public function column_type( $order ) {
 		if ( ! empty( $order->order_type ) && 'subscription' === $order->order_type ) {
-			return '<sc-tag type="success">' . esc_html__( 'Subscription Renewal', 'surecart' ) . '</sc-tag>';
+			return '<sc-tag type="success">' . esc_html__( 'Plan Renewal', 'surecart' ) . '</sc-tag>';
 		}
 
 		return '<sc-tag type="info">' . esc_html__( 'Checkout', 'surecart' ) . '</sc-tag>';
@@ -304,7 +304,7 @@ class OrdersListTable extends ListTable {
 			#<?php echo sanitize_text_field( $order->number ?? $order->id ); ?>
 		</a>
 		<br />
-		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>">
+		<a  aria-label="<?php echo esc_attr__( 'Edit Order', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'order', $order->id ) ); ?>" style="word-break: break-word">
 			<?php
 			// translators: Customer name.
 			echo sprintf( esc_html__( 'By %s', 'surecart' ), esc_html( $order->checkout->customer->name ?? $order->checkout->customer->email ) );
