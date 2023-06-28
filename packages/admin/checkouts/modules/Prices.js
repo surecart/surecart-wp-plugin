@@ -26,9 +26,7 @@ import { useState } from 'react';
 
 export default ({ checkout, loading, busy }) => {
 	const line_items = checkout?.line_items?.data || [];
-	const [updatingQuantity, setUpdatingQuantity] = useState(false);
-	const [updatingCoupon, setUpdatingCoupon] = useState(false);
-	const [deleting, setDeleting] = useState(false);
+	const [busyPrices, setBusyPrices] = useState(false);
 
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -37,7 +35,7 @@ export default ({ checkout, loading, busy }) => {
 
 	const onRemove = async (id) => {
 		try {
-			setDeleting(true);
+			setBusyPrices(true);
 
 			// delete the entity record.
 			await deleteEntityRecord('surecart', 'line_item', id, null, {
@@ -75,14 +73,14 @@ export default ({ checkout, loading, busy }) => {
 				}
 			);
 		} finally {
-			setDeleting(false);
+			setBusyPrices(false);
 		}
 	};
 
 	const onQuantityChange = async (id, quantity) => {
-		console.log({ quantity });
+		
 		try {
-			setUpdatingQuantity(true);
+			setBusyPrices(true);
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -143,13 +141,13 @@ export default ({ checkout, loading, busy }) => {
 				}
 			);
 		} finally {
-			setUpdatingQuantity(false);
+			setBusyPrices(false);
 		}
 	};
 
 	const onCouponChange = async (e) => {
 		try {
-			setUpdatingCoupon(true);
+			setBusyPrices(true);
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -191,7 +189,7 @@ export default ({ checkout, loading, busy }) => {
 				}
 			);
 		} finally {
-			setUpdatingCoupon(false);
+			setBusyPrices(false);
 		}
 	};
 	const renderPrices = () => {
@@ -224,12 +222,14 @@ export default ({ checkout, loading, busy }) => {
 					></ScTableCell>
 
 					{(line_items || []).map((line_item) => {
-						const { id, price, quantity } = line_item;
+						const { id, price, quantity, total_amount } = line_item;
+						console.log(line_item);
 						return (
 							<Price
 								key={id}
 								price={price}
 								quantity={quantity}
+								total_amount={total_amount}
 								onRemove={() => onRemove(id)}
 								onQuantityChange={(quantity) =>
 									onQuantityChange(id, quantity)
@@ -279,14 +279,14 @@ export default ({ checkout, loading, busy }) => {
 			>
 				{renderPrices()}
 
-				{(!!busy || !!deleting || !!updatingQuantity) && (
+				{(!!busy || !!busyPrices ) && (
 					<ScBlockUi spinner />
 				)}
 			</Box>
 
 			<Box title={__('Payment', 'surecart')} loading={loading}>
 				{renderPaymentDetails()}
-				{(!!busy || !!deleting || !!updatingQuantity) && (
+				{(!!busy || !!busyPrices) && (
 					<ScBlockUi spinner />
 				)}
 			</Box>
