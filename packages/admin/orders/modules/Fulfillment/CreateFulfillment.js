@@ -295,7 +295,13 @@ export default ({
 								/>
 							</ScFormControl>
 						) : (
-							__('No shipping required', 'surecart')
+							<div
+								css={css`
+									color: var(--sc-input-help-text-color);
+								`}
+							>
+								{__('No shipping required.', 'surecart')}
+							</div>
 						)}
 					</div>
 
