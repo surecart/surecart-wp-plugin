@@ -126,7 +126,7 @@ export default () => {
 			noButton
 			wrapperTag="div"
 			description={__(
-				'Create customized shipping methods to accommodate diverse needs, including options for speed, affordability, and promotional incentives.',
+				'Shipping methods represent the different speeds or classes of shipping that your store offers.',
 				'surecart'
 			)}
 		>

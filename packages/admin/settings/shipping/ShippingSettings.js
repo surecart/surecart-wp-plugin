@@ -138,28 +138,24 @@ export default () => {
 				<SettingsBox
 					loading={!hasLoadedShippingProtocol}
 					title={__('Shipping Settings', 'surecart')}
-					description={__(
-						'Turning on shipping allows you to restrict purchase areas and charge shipping costs.',
-						'surecart'
-					)}
 				>
 					<ScSwitch
 						checked={shippingProtocol?.shipping_enabled}
 						onClick={onToggleShipping}
 					>
-						{__('Enable Shipping', 'surecart')}
+						{__('Enable Shipping Rates', 'surecart')}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'When disabled, all shipping costs will be zero and shipping will not be available.',
+								'Enabling shipping rates allows you to charge shipping costs and restrict purchase areas.',
 								'surecart'
 							)}
 						</span>
 					</ScSwitch>
 				</SettingsBox>
 				<SettingsBox
-					title={__('Shipping', 'surecart')}
+					title={__('Shipping Profiles', 'surecart')}
 					description={__(
-						'Choose where you ship and how much you charge for shipping at checkout',
+						'Set where you ship and how much you charge for shipping.',
 						'surecart'
 					)}
 					loading={loading}
@@ -177,38 +173,29 @@ export default () => {
 							`}
 						>
 							{!!defaultShippingProfile && (
-								<ScFormControl
-									label={__(
-										'General shipping rates',
-										'surecart'
-									)}
-								>
-									<ScCard noPadding>
-										<ShippingProfileListItem
-											style={{
-												'--sc-list-row-background-color':
-													'var(--sc-color-brand-main-background)',
-											}}
-											shippingProfile={
-												defaultShippingProfile
-											}
-											productsCount={
-												shippingProfiles?.length
-													? __(
-															'All products not in other profiles',
-															'surecart'
-													  )
-													: __(
-															'All products',
-															'surecart'
-													  )
-											}
-										/>
-									</ScCard>
-								</ScFormControl>
+								<ScCard noPadding>
+									<ShippingProfileListItem
+										style={{
+											'--sc-list-row-background-color':
+												'var(--sc-color-brand-main-background)',
+										}}
+										shippingProfile={defaultShippingProfile}
+										productsCount={
+											shippingProfiles?.length
+												? __(
+														'All products not in other profiles',
+														'surecart'
+												  )
+												: __('All products', 'surecart')
+										}
+									/>
+								</ScCard>
 							)}
 							<ScFormControl
-								label={__('Custom shipping rates', 'surecart')}
+								label={__(
+									'Custom Shipping Profiles',
+									'surecart'
+								)}
 							>
 								<div
 									css={css`
