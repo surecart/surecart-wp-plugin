@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
 	ScButton,
-	ScDialog,
 	ScDropdown,
 	ScFlex,
 	ScForm,
@@ -13,9 +12,11 @@ import {
 	ScMenu,
 	ScMenuDivider,
 	ScMenuItem,
+	ScPremiumTag,
 	ScPriceInput,
 	ScRadio,
 	ScRadioGroup,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useEffect, useState } from '@wordpress/element';
@@ -332,18 +333,33 @@ export default ({
 								fetchOnLoad={isEdit}
 								prefix={
 									<div slot="prefix">
-										<ScMenuItem
-											onClick={() => {
-												setShowAddNew(true);
-												updateShippingRate(
-													'shipping_method_id',
-													null
-												);
-											}}
+										<ScUpgradeRequired
+											required={true}
+											onClick={() => onRequestClose()}
 										>
-											<ScIcon slot="prefix" name="plus" />
-											{__('Add New', 'surecart')}
-										</ScMenuItem>
+											<ScMenuItem
+												onClick={() => {
+													setShowAddNew(true);
+													updateShippingRate(
+														'shipping_method_id',
+														null
+													);
+												}}
+											>
+												<ScIcon
+													slot="prefix"
+													name="plus"
+												/>
+												{__('Add New', 'surecart')}
+												<ScPremiumTag
+													css={css`
+														margin-left: var(
+															--sc-spacing-x-small
+														);
+													`}
+												/>
+											</ScMenuItem>
+										</ScUpgradeRequired>
 										<ScMenuDivider />
 									</div>
 								}

@@ -9,8 +9,10 @@ import {
 	ScEmpty,
 	ScFormControl,
 	ScIcon,
+	ScPremiumTag,
 	ScStackedList,
 	ScSwitch,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
@@ -55,8 +57,6 @@ export default () => {
 				busy: !!(items?.length && resolving),
 			};
 		}, []);
-
-	console.log({ shippingProfiles });
 
 	const {
 		item: shippingProtocol,
@@ -207,22 +207,33 @@ export default () => {
 														'Add custom rates or destination restrictions for groups of products.',
 														'surecart'
 													)}
-													<ScButton
-														onClick={() =>
-															setShowAddShipping(
-																true
-															)
-														}
+													<ScUpgradeRequired
+														required={true}
 													>
-														<ScIcon
-															name="plus"
-															slot="prefix"
-														/>
-														{__(
-															'Add New Profile',
-															'surecart'
-														)}
-													</ScButton>
+														<ScButton
+															onClick={() =>
+																setShowAddShipping(
+																	true
+																)
+															}
+														>
+															<ScIcon
+																name="plus"
+																slot="prefix"
+															/>
+															{__(
+																'Add New Profile',
+																'surecart'
+															)}
+															<ScPremiumTag
+																css={css`
+																	margin-left: var(
+																		--sc-spacing-x-small
+																	);
+																`}
+															/>
+														</ScButton>
+													</ScUpgradeRequired>
 												</ScEmpty>
 											</ScCard>
 										</div>

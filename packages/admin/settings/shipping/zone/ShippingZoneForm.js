@@ -129,7 +129,6 @@ export default ({
 		const value = e.target.value;
 		if (!value) return;
 
-		console.log({ value, zoneCountries, countryChoices });
 		if (zoneCountries.includes(value)) {
 			setZoneCountries(
 				zoneCountries.filter((zoneCountry) => zoneCountry !== value)

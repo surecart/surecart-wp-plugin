@@ -15,7 +15,6 @@ import {
 	ScMenuItem,
 	ScBlockUi,
 	ScAlert,
-	ScDialog,
 } from '@surecart/components-react';
 import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
@@ -25,14 +24,16 @@ import { store as noticeStore } from '@wordpress/notices';
 import Error from '../../../components/Error';
 import AddShippingRate from '../rate/AddShippingRate';
 import EditShippingRate from '../rate/EditShippingRate';
+import ConfirmDeleteZone from './ConfirmDeleteZone';
 
 const modals = {
 	ADD_RATE: 'add_shipping_rate',
 	EDIT_RATE: 'edit_shipping_rate',
 	CONFIRM_DELETE_ZONE: 'confirm_delete_zone',
+	UPGRADE_REQUIRED: 'upgrade_required',
 };
 
-export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
+export default ({ shippingZone, onEditZone, isFallback }) => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 	const [currentModal, setCurrentModal] = useState('');
@@ -41,29 +42,6 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 	const { deleteEntityRecord, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticeStore);
-
-	const onDeleteShippingZone = async () => {
-		setCurrentModal(false);
-		setBusy(true);
-		try {
-			await deleteEntityRecord(
-				'surecart',
-				'shipping-zone',
-				shippingZone.id,
-				{
-					throwOnError: true,
-				}
-			);
-			createSuccessNotice(__('Shipping zone deleted', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (error) {
-			console.error(error);
-			setError(error);
-		} finally {
-			setBusy(false);
-		}
-	};
 
 	const onRemoveShippingRate = async (shippingRateId) => {
 		try {
@@ -244,7 +222,7 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 					<ScIcon name="plus" slot="prefix" />
 					{__('Add Rate', 'surecart')}
 				</ScButton>
-				{(busy || parentBusy) && (
+				{busy && (
 					<ScBlockUi
 						style={{ '--sc-block-ui-opacity': '0.75' }}
 						spinner
@@ -252,45 +230,39 @@ export default ({ shippingZone, onEditZone, parentBusy, isFallback }) => {
 				)}
 			</ScCard>
 
-			<AddShippingRate
-				open={currentModal === modals.ADD_RATE}
-				shippingZoneId={shippingZone?.id}
-				onRequestClose={() => {
-					setCurrentModal('');
-					setSelectedShippingRate();
-				}}
-			/>
+			{currentModal && (
+				<>
+					<AddShippingRate
+						open={currentModal === modals.ADD_RATE}
+						shippingZoneId={shippingZone?.id}
+						onRequestClose={() => {
+							setCurrentModal('');
+							setSelectedShippingRate();
+						}}
+					/>
 
-			<EditShippingRate
-				open={currentModal === modals.EDIT_RATE}
-				onRequestClose={() => {
-					setCurrentModal('');
-					setSelectedShippingRate();
-				}}
-				shippingZoneId={shippingZone?.id}
-				selectedShippingRate={selectedShippingRate}
-			/>
+					<EditShippingRate
+						open={currentModal === modals.EDIT_RATE}
+						onRequestClose={() => {
+							setCurrentModal('');
+							setSelectedShippingRate();
+						}}
+						shippingZoneId={shippingZone?.id}
+						selectedShippingRate={selectedShippingRate}
+						onUpgradeRequired={() =>
+							setCurrentModal(modals.UPGRADE_REQUIRED)
+						}
+					/>
 
-			<ScDialog
-				label={__('Are you sure?', 'surecart')}
-				open={currentModal === modals.CONFIRM_DELETE_ZONE}
-			>
-				{__('This action cannot be undone.', 'surecart')}
-				<ScButton
-					type="text"
-					slot="footer"
-					onClick={() => setCurrentModal(false)}
-				>
-					{__('Cancel', 'surecart')}
-				</ScButton>
-				<ScButton
-					type="primary"
-					slot="footer"
-					onClick={onDeleteShippingZone}
-				>
-					{__('Delete', 'surecart')}
-				</ScButton>
-			</ScDialog>
+					<ConfirmDeleteZone
+						open={currentModal === modals.CONFIRM_DELETE_ZONE}
+						onRequestClose={() => {
+							setCurrentModal('');
+						}}
+						shippingZoneId={shippingZone?.id}
+					/>
+				</>
+			)}
 		</>
 	);
 };

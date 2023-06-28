@@ -14,6 +14,8 @@ import {
 	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
+	ScUpgradeRequired,
+	ScPremiumTag,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
@@ -95,12 +97,19 @@ export default () => {
 		<SettingsBox
 			title={__('Shipping Methods', 'surecart')}
 			end={
-				<ScButton
-					type="primary"
-					onClick={() => setCurrentModal(modals.MODAL_ADD_METHOD)}
-				>
-					<ScIcon name="plus" /> {__('Add New', 'surecart')}
-				</ScButton>
+				<ScUpgradeRequired required={true}>
+					<ScButton
+						type="primary"
+						onClick={() => setCurrentModal(modals.MODAL_ADD_METHOD)}
+					>
+						<ScIcon name="plus" /> {__('Add New', 'surecart')}
+						<ScPremiumTag
+							css={css`
+								margin-left: var(--sc-spacing-x-small);
+							`}
+						/>
+					</ScButton>
+				</ScUpgradeRequired>
 			}
 			loading={loadingMethods}
 			noButton
