@@ -13,8 +13,8 @@ const status = {
 
 const type = {
   unshipped: 'default',
-  shipped: 'success',
-  delivered: 'info',
+  shipped: 'info',
+  delivered: 'success',
 } as {
   [key in FulfillmentStatus]: 'default' | 'info' | 'success';
 };

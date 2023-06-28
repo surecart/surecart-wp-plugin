@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { OrderShipmentStatus } from '../../../types';
@@ -14,9 +14,9 @@ const status = {
 
 const type = {
   unshipped: 'default',
-  shipped: 'success',
+  shipped: 'info',
   partially_shipped: 'warning',
-  delivered: 'info',
+  delivered: 'success',
 } as {
   [key in OrderShipmentStatus]: 'default' | 'success' | 'warning' | 'danger' | 'info';
 };
@@ -40,6 +40,11 @@ export class ScOrderShipmentBadge {
   @Prop() clearable: boolean = false;
 
   render() {
+    // don't render if not shippable.
+    if (this.status === 'not_shippable') {
+      return <Host style={{ display: 'none' }}></Host>;
+    }
+
     return (
       <sc-tag type={type?.[this?.status]} pill={this.pill}>
         {status?.[this.status] || this.status}

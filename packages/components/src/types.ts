@@ -457,6 +457,7 @@ export interface Order extends Object {
   order_type?: 'checkout' | 'subscription';
   statement_url?: string;
   status?: OrderStatus;
+  shipment_status?: OrderShipmentStatus;
   checkout?: Checkout | string;
   created_at: number;
   updated_at: number;
@@ -748,7 +749,7 @@ export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_du
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
 export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
-export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered';
+export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'not_shippable';
 export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered';
 
 export interface PaymentMethod extends Object {
@@ -938,7 +939,7 @@ export interface Fulfillment {
   id: string;
   object: 'fulfillment';
   number: string;
-  shipping_status: FulfillmentStatus;
+  shipment_status: FulfillmentStatus;
   trackings: {
     object: 'list';
     pagination: Pagination;

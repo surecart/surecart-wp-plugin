@@ -219,7 +219,6 @@ export default ({
 							shippingRate?.currency || scData?.currency
 						}
 						value={shippingRate.max_amount || null}
-						required
 						placeholder={__('No limit', 'surecart')}
 						onScInput={(e) => {
 							updateShippingRate('max_amount', e.target.value);

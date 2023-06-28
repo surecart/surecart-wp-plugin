@@ -69,7 +69,7 @@ export class ScFulfillments {
               <sc-stacked-list>
                 <sc-stacked-list-row>
                   <div class="fulfillment__header">
-                    <sc-fulfillment-shipping-status-badge status={fulfillment.shipping_status} />
+                    <sc-fulfillment-shipping-status-badge status={fulfillment.shipment_status} />
                     <div class="fulfillment__number">#{fulfillment?.number}</div>
                   </div>
                 </sc-stacked-list-row>
