@@ -60,7 +60,6 @@ class ProductPagePostTypeService {
 				'show_in_rest'      => false,
 				'show_in_nav_menus' => false,
 				'can_export'        => false,
-				'rest_base'         => 'sc-cart',
 				'capability_type'   => 'post',
 				'map_meta_cap'      => true,
 				'supports'          => array(
