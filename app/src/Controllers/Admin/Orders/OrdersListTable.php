@@ -100,8 +100,9 @@ class OrdersListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'order'              => __( 'Order', 'surecart' ),
-			'status'             => __( 'Payment Status', 'surecart' ),
-			'fulfillment_status' => __( 'Shipping', 'surecart' ),
+			'status'             => __( 'Payment', 'surecart' ),
+			'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
+			'shipment_status'    => __( 'Shipping', 'surecart' ),
 			'method'             => __( 'Method', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'total'              => __( 'Total', 'surecart' ),
@@ -267,15 +268,24 @@ class OrdersListTable extends ListTable {
 		ob_start();
 		?>
 
-		<sc-spacing style="--spacing: var(--sc-spacing-small)">
-			<div>
-				<sc-order-fulfillment-badge status="<?php echo esc_attr( $order->fulfillment_status ); ?>"></sc-order-fulfillment-badge>
-			</div>
-			<div>
-				<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
-			</div>
-		</sc-spacing>
 
+				<sc-order-fulfillment-badge status="<?php echo esc_attr( $order->fulfillment_status ); ?>"></sc-order-fulfillment-badge>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Handle the status
+	 *
+	 * @param \SureCart\Models\Order $order Order Model.
+	 *
+	 * @return string
+	 */
+	public function column_shipment_status( $order ) {
+		ob_start();
+		?>
+		<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
 		<?php
 		return ob_get_clean();
 	}
