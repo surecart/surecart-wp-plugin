@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\Orders;
 
 use SureCart\Models\Order;
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Support\Arrays;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -15,26 +16,21 @@ class OrdersListTable extends ListTable {
 	 * @return Void
 	 */
 	public function prepare_items() {
+		$query       = $this->table_data();
+		$this->items = is_wp_error( $query ) ? [] : $query->data;
+
 		$columns  = $this->get_columns();
 		$hidden   = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
-		$query = $this->table_data();
-		if ( is_wp_error( $query ) ) {
-			$this->items = [];
-			return;
-		}
-
 		$this->set_pagination_args(
 			[
-				'total_items' => $query->pagination->count,
+				'total_items' => $query->pagination->count ?? 0,
 				'per_page'    => $this->get_items_per_page( 'orders' ),
 			]
 		);
-
-		$this->items = $query->data;
 	}
 
 	/**
@@ -97,11 +93,19 @@ class OrdersListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		return [
+		// do we have some with shipment status that is not shipable?
+		$has_shippable = is_array( $this->items ) ? array_filter(
+			$this->items,
+			function( $obj ) {
+				// Check if the property exists and if it's not 'not_shippable'.
+				return ! empty( $obj->shipment_status ) && 'not_shippable' !== $obj->shipment_status;
+			}
+		) : false;
+
+		$columns = [
 			// 'cb'          => '<input type="checkbox" />',
 			'order'              => __( 'Order', 'surecart' ),
 			'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
-			'shipment_status'    => __( 'Shipping', 'surecart' ),
 			'method'             => __( 'Method', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'total'              => __( 'Total', 'surecart' ),
@@ -110,6 +114,12 @@ class OrdersListTable extends ListTable {
 			'created'            => __( 'Date', 'surecart' ),
 			'mode'               => '',
 		];
+
+		if ( $has_shippable ) {
+			$columns = Arrays::insertAfter( 'fulfillment_status', $columns, [ 'shipment_status' => __( 'Shipping', 'surecart' ) ] );
+		}
+
+		return $columns;
 	}
 
 	/**
