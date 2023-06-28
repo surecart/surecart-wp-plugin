@@ -69,8 +69,11 @@ export default () => {
 		},
 		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
+
+	console.log(checkout);
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
+	const shippingAddress = 0 !== checkout?.shipping_address?.length ? checkout?.shipping_address : customer?.shipping_address;
 
 	// we don't yet have a checkout.
 	useEffect(() => {
@@ -139,10 +142,17 @@ export default () => {
 		e.preventDefault();
 		try {
 			setIsSaving(true);
-			const order = await finalizeCheckout({
+			const checkout = await finalizeCheckout({
 				id: checkout.id,
 				customer_id: customer?.id,
 			});
+
+			console.log(checkout?.order);
+			
+			createSuccessNotice(__('Manual Order Created', 'surecart'), {
+				type: 'snackbar',
+			});
+
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -262,11 +272,11 @@ export default () => {
 			sidebar={
 				<>
 					<SelectCustomer checkout={checkout} busy={busy} />
-					{checkout?.shipping_address && (
+					{ customer && shippingAddress && (
 						<>
 							<Address
 								label={__('Shipping & Tax Address','surecart')}
-								address={checkout?.shipping_address} 
+								address={shippingAddress} 
 							/>
 							<Box
 								title={__(

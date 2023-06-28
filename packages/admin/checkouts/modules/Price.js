@@ -15,7 +15,7 @@ import {
 	ScQuantitySelect,
 } from '@surecart/components-react';
 
-export default ({ price, quantity, onRemove, onQuantityChange, total_amount }) => {
+export default ({ price, quantity, onRemove, onQuantityChange, full_amount }) => {
 	const imageUrl = price?.product?.image_url;
 
 	return (
@@ -81,7 +81,7 @@ export default ({ price, quantity, onRemove, onQuantityChange, total_amount }) =
 				<ScFormatNumber
 					type="currency"
 					currency={price?.currency || 'usd'}
-					value={ total_amount }
+					value={ full_amount }
 				/>
 			</ScTableCell>
 			<ScTableCell>

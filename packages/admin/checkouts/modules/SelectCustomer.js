@@ -60,12 +60,31 @@ export default ( {checkout, busy} ) => {
 					customer_id: customerID, // update the customer.
 				},
 			});
-			
+			const checkoutData = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
+					expand: [
+						// expand the checkout and the checkout's required expands.
+						...(expand || []).map((item) => {
+							return item.includes('.')
+								? item
+								: `checkout.${item}`;
+						}),
+						'checkout',
+					],
+				}),
+				data: {
+					customer_id: customerID,
+					shipping_address: {
+						...data?.customer?.shipping_address
+					}, // update the shipping address for checkout.
+				},
+			});
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
 				'checkout',
-				data,
+				checkoutData,
 				undefined,
 				false,
 				checkout
