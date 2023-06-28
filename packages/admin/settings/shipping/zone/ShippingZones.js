@@ -32,7 +32,7 @@ export default ({
 	return (
 		<>
 			<SettingsBox
-				title={__('Shipping Zones', 'surecart')}
+				title={__('Shipping Zones & Rates', 'surecart')}
 				description={__(
 					'Shipping zones are geographic regions where you ship products.',
 					'surecart'
