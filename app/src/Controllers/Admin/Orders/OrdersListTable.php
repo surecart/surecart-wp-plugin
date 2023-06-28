@@ -16,21 +16,26 @@ class OrdersListTable extends ListTable {
 	 * @return Void
 	 */
 	public function prepare_items() {
-		$query       = $this->table_data();
-		$this->items = is_wp_error( $query ) ? [] : $query->data;
-
 		$columns  = $this->get_columns();
 		$hidden   = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
+		$query = $this->table_data();
+		if ( is_wp_error( $query ) ) {
+			$this->items = [];
+			return;
+		}
+
 		$this->set_pagination_args(
 			[
-				'total_items' => $query->pagination->count ?? 0,
+				'total_items' => $query->pagination->count,
 				'per_page'    => $this->get_items_per_page( 'orders' ),
 			]
 		);
+
+		$this->items = $query->data;
 	}
 
 	/**
@@ -93,14 +98,6 @@ class OrdersListTable extends ListTable {
 	 * @return Array
 	 */
 	public function get_columns() {
-		// do we have some with shipment status that is not shipable?
-		$has_shippable = is_array( $this->items ) ? array_filter(
-			$this->items,
-			function( $obj ) {
-				// Check if the property exists and if it's not 'not_shippable'.
-				return ! empty( $obj->shipment_status ) && 'not_shippable' !== $obj->shipment_status;
-			}
-		) : false;
 
 		$columns = [
 			// 'cb'          => '<input type="checkbox" />',
@@ -115,7 +112,8 @@ class OrdersListTable extends ListTable {
 			'mode'               => '',
 		];
 
-		if ( $has_shippable ) {
+		// show shipping status if enabled.
+		if ( \SureCart::account()->shipping_procol->enabled ?? false ) {
 			$columns = Arrays::insertAfter( 'fulfillment_status', $columns, [ 'shipment_status' => __( 'Shipping', 'surecart' ) ] );
 		}
 
