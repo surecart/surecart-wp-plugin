@@ -113,7 +113,7 @@ class OrdersListTable extends ListTable {
 		];
 
 		// show shipping status if enabled.
-		if ( \SureCart::account()->shipping_procol->enabled ?? false ) {
+		if ( \SureCart::account()->shipping_protocol->enabled ?? false ) {
 			$columns = Arrays::insertAfter( 'fulfillment_status', $columns, [ 'shipment_status' => __( 'Shipping', 'surecart' ) ] );
 		}
 
