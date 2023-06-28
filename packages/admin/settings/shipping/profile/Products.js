@@ -61,8 +61,13 @@ export default ({
 				queryArgs
 			);
 
-			const products =
-				select(coreStore).getEntityRecords(...queryArgs) || [];
+      // need to eliminate duplicates
+			const products = (
+				select(coreStore).getEntityRecords(...queryArgs) || []
+			).filter(
+				(value, index, self) =>
+					self.findIndex((v) => v.id === value.id) === index
+			);
 
 			return {
 				products,
