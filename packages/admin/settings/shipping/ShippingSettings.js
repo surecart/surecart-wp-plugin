@@ -236,24 +236,31 @@ export default () => {
 									)}
 									<ScCard noPadding>
 										<ScEmpty>
+											{upgradeRequired() && (
+												<ScPremiumTag />
+											)}
 											{__(
 												'Add custom rates or destination restrictions for groups of products.',
 												'surecart'
 											)}
-											<ScButton
-												onClick={() =>
-													setShowAddShipping(true)
-												}
+											<ScUpgradeRequired
+												required={upgradeRequired()}
 											>
-												<ScIcon
-													name="plus"
-													slot="prefix"
-												/>
-												{__(
-													'Add New Profile',
-													'surecart'
-												)}
-											</ScButton>
+												<ScButton
+													onClick={() =>
+														setShowAddShipping(true)
+													}
+												>
+													<ScIcon
+														name="plus"
+														slot="prefix"
+													/>
+													{__(
+														'Add New Profile',
+														'surecart'
+													)}
+												</ScButton>
+											</ScUpgradeRequired>
 										</ScEmpty>
 									</ScCard>
 								</div>
