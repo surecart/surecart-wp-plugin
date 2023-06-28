@@ -749,8 +749,8 @@ export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_du
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
 export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
-export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'not_shippable';
-export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered';
+export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
+export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
 
 export interface PaymentMethod extends Object {
   id: string;
