@@ -44,6 +44,7 @@ export default ({
 	shippingZoneId,
 	isEdit,
 	selectedShippingRate,
+	onUpgradeRequired,
 }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -335,7 +336,7 @@ export default ({
 									<div slot="prefix">
 										<ScUpgradeRequired
 											required={true}
-											onClick={() => onRequestClose()}
+											onClick={onUpgradeRequired}
 										>
 											<ScMenuItem
 												onClick={() => {
@@ -351,13 +352,7 @@ export default ({
 													name="plus"
 												/>
 												{__('Add New', 'surecart')}
-												<ScPremiumTag
-													css={css`
-														margin-left: var(
-															--sc-spacing-x-small
-														);
-													`}
-												/>
+												<ScPremiumTag slot="suffix" />
 											</ScMenuItem>
 										</ScUpgradeRequired>
 										<ScMenuDivider />

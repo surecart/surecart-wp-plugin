@@ -15,6 +15,7 @@ import {
 	ScMenuItem,
 	ScBlockUi,
 	ScAlert,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import ShippingRateCondition from '../rate/ShippingRateCondition';
 import { useState } from '@wordpress/element';
@@ -61,6 +62,10 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 		} finally {
 			setBusy(false);
 		}
+	};
+
+	const onUpgradeRequired = () => {
+		setCurrentModal(modals.UPGRADE_REQUIRED);
 	};
 
 	const renderShippingRates = (shippingRates) => {
@@ -239,6 +244,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 							setCurrentModal('');
 							setSelectedShippingRate();
 						}}
+						onUpgradeRequired={onUpgradeRequired}
 					/>
 
 					<EditShippingRate
@@ -249,9 +255,7 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 						}}
 						shippingZoneId={shippingZone?.id}
 						selectedShippingRate={selectedShippingRate}
-						onUpgradeRequired={() =>
-							setCurrentModal(modals.UPGRADE_REQUIRED)
-						}
+						onUpgradeRequired={onUpgradeRequired}
 					/>
 
 					<ConfirmDeleteZone
@@ -260,6 +264,15 @@ export default ({ shippingZone, onEditZone, isFallback }) => {
 							setCurrentModal('');
 						}}
 						shippingZoneId={shippingZone?.id}
+					/>
+
+					<ScUpgradeRequired
+						style={{ display: 'block' }}
+						required
+						open={currentModal === modals.UPGRADE_REQUIRED}
+						onScRequestClose={() => {
+							setCurrentModal('');
+						}}
 					/>
 				</>
 			)}

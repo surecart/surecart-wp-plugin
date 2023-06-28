@@ -7,6 +7,7 @@ import {
 	ScBlockUi,
 	ScAlert,
 	ScCard,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import ShippingZone from './ShippingZone';
@@ -15,6 +16,7 @@ import ShippingZoneForm from './ShippingZoneForm';
 const modals = {
 	EDIT_ZONE: 'edit_shipping_zone',
 	ADD_ZONE: 'add_shipping_zone',
+	UPGRADE_REQUIRED: 'upgrade_required',
 };
 
 export default ({
@@ -86,16 +88,30 @@ export default ({
 			</SettingsBox>
 
 			{currentModal && (
-				<ShippingZoneForm
-					open={
-						currentModal === modals.ADD_ZONE ||
-						currentModal === modals.EDIT_ZONE
-					}
-					onRequestClose={() => setCurrentModal('')}
-					shippingProfileId={shippingProfileId}
-					selectedZone={selectedZone}
-					isEdit={currentModal === modals.EDIT_ZONE}
-				/>
+				<>
+					<ShippingZoneForm
+						open={
+							currentModal === modals.ADD_ZONE ||
+							currentModal === modals.EDIT_ZONE
+						}
+						onRequestClose={() => setCurrentModal('')}
+						shippingProfileId={shippingProfileId}
+						selectedZone={selectedZone}
+						isEdit={currentModal === modals.EDIT_ZONE}
+						onUpgradeRequired={() => {
+							setCurrentModal(modals.UPGRADE_REQUIRED);
+						}}
+					/>
+
+					<ScUpgradeRequired
+						style={{ display: 'block' }}
+						required
+						open={currentModal === modals.UPGRADE_REQUIRED}
+						onScRequestClose={() => {
+							setCurrentModal('');
+						}}
+					/>
+				</>
 			)}
 		</>
 	);

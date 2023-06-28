@@ -9,6 +9,7 @@ export default ({
 	onRequestClose,
 	shippingZoneId,
 	selectedShippingRate,
+	onUpgradeRequired,
 }) => {
 	return (
 		<ScDialog
@@ -22,6 +23,7 @@ export default ({
 				shippingZoneId={shippingZoneId}
 				selectedShippingRate={selectedShippingRate}
 				isEdit
+				onUpgradeRequired={onUpgradeRequired}
 			/>
 		</ScDialog>
 	);

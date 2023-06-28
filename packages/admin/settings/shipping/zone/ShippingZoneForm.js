@@ -32,6 +32,7 @@ export default ({
 	shippingProfileId,
 	selectedZone,
 	isEdit,
+	onUpgradeRequired,
 }) => {
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -302,6 +303,7 @@ export default ({
 				<ShippingRateForm
 					onRequestClose={onRequestClose}
 					shippingZoneId={shippingZoneId}
+					onUpgradeRequired={onUpgradeRequired}
 				/>
 			)}
 		</ScDialog>

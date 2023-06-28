@@ -4,7 +4,12 @@ import { ScDialog } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import ShippingRateForm from './ShippingRateForm';
 
-export default ({ open, onRequestClose, shippingZoneId }) => {
+export default ({
+	open,
+	onRequestClose,
+	shippingZoneId,
+	onUpgradeRequired,
+}) => {
 	return (
 		<ScDialog
 			open={open}
@@ -15,6 +20,7 @@ export default ({ open, onRequestClose, shippingZoneId }) => {
 			<ShippingRateForm
 				onRequestClose={onRequestClose}
 				shippingZoneId={shippingZoneId}
+				onUpgradeRequired={onUpgradeRequired}
 			/>
 		</ScDialog>
 	);
