@@ -6,7 +6,6 @@ namespace SureCart\WordPress\PostTypes;
  * Form post type service class.
  */
 class ProductPagePostTypeService {
-
 	/**
 	 * The post type slug.
 	 *
