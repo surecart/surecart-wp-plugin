@@ -36,7 +36,7 @@ export class ScFulfillments {
         path: addQueryArgs(`surecart/v1/fulfillments`, {
           expand: ['trackings', 'fulfillment_items', 'fulfillment_item.line_item', 'line_item.price', 'price.product'],
           order_ids: [this.orderId],
-          shipment_statuses: ['shipped', 'delivered'],
+          shipment_status: ['shipped', 'delivered'],
         }),
       })) as Fulfillment[];
     } catch (e) {
