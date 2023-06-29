@@ -6,7 +6,6 @@ namespace SureCart\WordPress\PostTypes;
  * Form post type service class.
  */
 class ProductPagePostTypeService {
-
 	/**
 	 * The post type slug.
 	 *
@@ -32,7 +31,7 @@ class ProductPagePostTypeService {
 		register_post_type(
 			$this->post_type,
 			array(
-				'labels'          => array(
+				'labels'            => array(
 					'name'                     => _x( 'SureCart Products', 'post type general name', 'surecart' ),
 					'singular_name'            => _x( 'SureCart Product', 'post type singular name', 'surecart' ),
 					'add_new'                  => _x( 'Add New', 'SureCart Product', 'surecart' ),
@@ -53,15 +52,16 @@ class ProductPagePostTypeService {
 					'item_scheduled'           => __( 'SureCart Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'SureCart Product updated.', 'surecart' ),
 				),
-				'public'          => true,
-				'show_ui'         => false,
-				'show_in_menu'    => false,
-				'rewrite'         => false,
-				'show_in_rest'    => true,
-				'rest_base'       => 'sc-cart',
-				'capability_type' => 'post',
-				'map_meta_cap'    => true,
-				'supports'        => array(
+				'public'            => true,
+				'show_ui'           => false,
+				'show_in_menu'      => false,
+				'rewrite'           => false,
+				'show_in_rest'      => false,
+				'show_in_nav_menus' => false,
+				'can_export'        => false,
+				'capability_type'   => 'post',
+				'map_meta_cap'      => true,
+				'supports'          => array(
 					'custom-fields',
 				),
 			)
