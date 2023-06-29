@@ -15,12 +15,10 @@ import {
 	ScAddress
 } from '@surecart/components-react';
 import { useState, useEffect } from '@wordpress/element';
+import { Notice } from '@wordpress/components';
 
 export default ({ address = {}, label, loading, onAddressChange, busyCustomer, busy }) => {
-	if (!loading && !address?.id) {
-		return null;
-	}
-
+	
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(false);
 	const [open, setOpen] = useState(false);
 
@@ -35,7 +33,18 @@ export default ({ address = {}, label, loading, onAddressChange, busyCustomer, b
 				</ScButton>
 			}
 		>
-			<AddressDisplay address={address} />
+			{
+				0 !== address?.length ? (
+					<AddressDisplay address={address} />
+				) : (
+					<div>
+						<Notice status="warning" isDismissible={false}>
+							{__('Update shipping address for creating a order.', 'surecart')}
+						</Notice>
+					</div>
+				)
+			}
+			
 			{(!!busy || !!busyCustomer ) && (
 				<ScBlockUi spinner />
 			)}

@@ -116,11 +116,24 @@ export default () => {
 
 	useEffect(() => {
 		
-		if (!line_items?.data || ! customer) {
+		if ( ! line_items?.data || ! customer || ! checkout || ! checkout?.shipping_address) {
 			return;
 		}
 
-		if (0 !== Object.keys(customer)?.length && 0 !== line_items?.data?.length) {
+		const {
+			id,
+			country,
+			line_1,
+			postal_code
+		} = checkout?.shipping_address;
+
+		let shippingSet = false;
+
+		if ( id && country && line_1 && postal_code ) {
+			shippingSet = true;
+		}
+
+		if (0 !== Object.keys(customer)?.length && 0 !== line_items?.data?.length && shippingSet) {
 			setCanSaveNow(true);
 		}
 	}, [line_items, customer]);
@@ -273,7 +286,7 @@ export default () => {
 			sidebar={
 				<>
 					<SelectCustomer checkout={checkout} busy={busy} loading={loading} />
-					{ checkout?.customer_id && checkout?.shipping_address && (
+					{ checkout?.customer_id && (
 						<>
 							<Address
 								label={__('Shipping & Tax Address','surecart')}
