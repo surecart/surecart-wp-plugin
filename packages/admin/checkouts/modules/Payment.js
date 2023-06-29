@@ -60,7 +60,7 @@ export default ({ checkout, loading, busy }) => {
                     }, // update the coupon.
 				},
 			});
-			console.log(data);
+			
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',

@@ -35,7 +35,7 @@ export default () => {
 	const [historyId, setHistoryId] = useState(null);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } = useDispatch(noticesStore);
-
+	const [checkoutIdLoading, setCheckoutIdLoading] = useState(false);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busyCustomer, setBusyCustomer] = useState(false);
 
@@ -69,7 +69,6 @@ export default () => {
 		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
 
-	console.log(checkout);
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
 	const shippingAddress = 0 !== checkout?.shipping_address?.length ? checkout?.shipping_address : customer?.shipping_address;
@@ -84,15 +83,19 @@ export default () => {
 	// create the checkout for the first time.
 	const createCheckout = async () => {
 		try {
+			setCheckoutIdLoading(true);
 			const { id } = await saveEntityRecord('surecart', 'checkout', {
 				customer_id: false,
 			});
 			setCheckoutId(id);
 		} catch (e) {
+			setCheckoutIdLoading(false);
 			console.error(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
+		} finally {
+			setCheckoutIdLoading(false);
 		}
 	};
 
@@ -137,7 +140,6 @@ export default () => {
 
 	// create the order.
 	const onSubmit = async (e) => {
-		console.log(checkout);
 		e.preventDefault();
 		try {
 			setIsSaving(true);
@@ -146,8 +148,6 @@ export default () => {
 				customer_id: customer?.id,
 			});
 
-			console.log(checkoutResult?.order);
-			
 			createSuccessNotice(__('Manual Order Created', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -222,6 +222,7 @@ export default () => {
 	};
 
 	return (
+		<>
 		<UpdateModel
 			onSubmit={onSubmit}
 			title={
@@ -292,5 +293,9 @@ export default () => {
 		>
 			<Prices checkout={checkout} loading={loading} busy={busy} />
 		</UpdateModel>
+		{(!!checkoutIdLoading) && (
+			<ScBlockUi spinner />
+		)}
+		</>
 	);
 };
