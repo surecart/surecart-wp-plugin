@@ -174,6 +174,7 @@ export default ({ checkout, loading, busy }) => {
 								onQuantityChange={(quantity) =>
 									onQuantityChange(id, quantity)
 								}
+								checkout={checkout}
 							/>
 						);
 					})}
