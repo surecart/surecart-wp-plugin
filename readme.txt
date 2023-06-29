@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,12 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.1.4 - June 28, 2023 =
+* Improvement: Add filter to skip page and form seeding.
+* Fix: Compare at price cannot be cleared due to firefox fix in previous version.
+* Fix: Fix conflict with Bricks Builder shop page dropdown width.
+* Fix: Disallow SureCart Products to be selected as menu items as this is not currently supported.
 
 = 2.1.3 - June 21, 2023 =
 * Improvement: Make subscription saver description text darker to better comply with accessiblity.
