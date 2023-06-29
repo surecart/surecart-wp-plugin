@@ -147,7 +147,7 @@ export default ({ checkout, loading, busy }) => {
 					<ScTableCell style={{ width: '40%' }} slot="head">
 						<div>{__('Product', 'surecart')}</div>
 					</ScTableCell>
-					<ScTableCell style={{ width: '20%' }} slot="head">
+					<ScTableCell style={{ width: '20%', textAlign: 'center' }} slot="head">
 						<div>{__('Quantity', 'surecart')}</div>
 					</ScTableCell>
 					<ScTableCell

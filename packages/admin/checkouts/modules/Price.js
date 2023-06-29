@@ -17,7 +17,7 @@ import {
 
 export default ({ price, quantity, onRemove, onQuantityChange, full_amount }) => {
 	const imageUrl = price?.product?.image_url;
-
+	
 	return (
 		<ScTableRow>
 			<ScTableCell>
@@ -71,11 +71,17 @@ export default ({ price, quantity, onRemove, onQuantityChange, full_amount }) =>
 					</div>
 				</ScFlex>
 			</ScTableCell>
-			<ScTableCell>
-				<ScQuantitySelect
-					quantity={quantity}
-					onScChange={(e) => onQuantityChange(e.detail)}
-				/>
+			<ScTableCell style={{ textAlign: 'center' }}>
+			{
+				!!price?.ad_hoc ? (
+					__('--', 'surecart')
+				) : (
+					<ScQuantitySelect
+						quantity={quantity}
+						onScChange={(e) => onQuantityChange(e.detail)}
+					/>
+				)
+			}
 			</ScTableCell>
 			<ScTableCell style={{ textAlign: 'center' }}>
 				<ScFormatNumber
