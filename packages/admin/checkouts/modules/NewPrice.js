@@ -4,7 +4,7 @@ import {
 	ScDialog,
 	ScForm,
 	ScIcon,
-	ScPriceInput
+	ScPriceInput,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
@@ -30,7 +30,7 @@ export default ({ checkout }) => {
 				return {};
 			}
 			// our entity query data.
-			const entityData = ['surecart', 'price', priceID, { expand }];
+			const entityData = ['surecart', 'price', priceID];
 
 			const price = select(coreStore).getEditedEntityRecord(
 				...entityData
@@ -42,12 +42,13 @@ export default ({ checkout }) => {
 
 			return {
 				price,
-				priceLoading
+				priceLoading,
 			};
 		},
 		[priceID]
 	);
 	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		e.stopImmediatePropagation();
@@ -79,7 +80,7 @@ export default ({ checkout }) => {
 					checkout: checkout?.id,
 					price: priceID,
 					quantity: 1,
-					ad_hoc_amount: addHocAmount
+					ad_hoc_amount: addHocAmount,
 				},
 			});
 
@@ -133,30 +134,25 @@ export default ({ checkout }) => {
 							archived: false,
 						}}
 					/>
-					{
-						price?.ad_hoc && (
-
-							<ScPriceInput
-								label={__('Amount', 'surecart')}
-								placeholder={__('Enter an Amount', 'surecart')}
-								style={{ flex: 1 }}
-								currencyCode={ price?.currency }
-								value={addHocAmount || price?.amount || null}
-								onScInput={(e) => {
-									setAddHocAmount(e.target.value);
-								}}
-							/>
-						)
-					}
+					{price?.ad_hoc && (
+						<ScPriceInput
+							label={__('Amount', 'surecart')}
+							placeholder={__('Enter an Amount', 'surecart')}
+							style={{ flex: 1 }}
+							currencyCode={price?.currency}
+							value={addHocAmount || price?.amount || null}
+							onScInput={(e) => {
+								setAddHocAmount(e.target.value);
+							}}
+						/>
+					)}
 					<ScButton type="primary" submit>
 						{__('Add Price', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={() => setOpen(false)}>
 						{__('Cancel', 'surecart')}
 					</ScButton>
-					{(!!loading || !!priceLoading ) && (
-						<ScBlockUi spinner />
-					)}
+					{(!!loading || !!priceLoading) && <ScBlockUi spinner />}
 				</ScForm>
 			</ScDialog>
 		</>

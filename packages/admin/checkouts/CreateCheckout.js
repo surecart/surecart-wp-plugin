@@ -5,7 +5,12 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
-import { ScButton, ScForm, ScAddress, ScBlockUi } from '@surecart/components-react';
+import {
+	ScButton,
+	ScForm,
+	ScAddress,
+	ScBlockUi,
+} from '@surecart/components-react';
 import Box from '../ui/Box';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -17,6 +22,7 @@ import { store as uiStore } from '../store/ui';
 import expand from './query';
 import SelectCustomer from './modules/SelectCustomer';
 import Address from './modules/Address';
+import Payment from './modules/Payment';
 
 /**
  * Returns the Model Edit URL.
@@ -34,7 +40,8 @@ export default () => {
 	const [canSaveNow, setCanSaveNow] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
-	const { createErrorNotice, createSuccessNotice } = useDispatch(noticesStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
 	const [checkoutIdLoading, setCheckoutIdLoading] = useState(false);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busyCustomer, setBusyCustomer] = useState(false);
@@ -71,7 +78,7 @@ export default () => {
 
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
-	
+
 	// we don't yet have a checkout.
 	useEffect(() => {
 		if (!id) {
@@ -115,29 +122,31 @@ export default () => {
 	};
 
 	useEffect(() => {
-		
-		if ( ! line_items?.data || ! customer || ! checkout || ! checkout?.shipping_address) {
+		if (
+			!line_items?.data ||
+			!customer ||
+			!checkout ||
+			!checkout?.shipping_address
+		) {
 			return;
 		}
 
-		const {
-			id,
-			country,
-			line_1,
-			postal_code
-		} = checkout?.shipping_address;
+		const { id, country, line_1, postal_code } = checkout?.shipping_address;
 
 		let shippingSet = false;
 
-		if ( id && country && line_1 && postal_code ) {
+		if (id && country && line_1 && postal_code) {
 			shippingSet = true;
 		}
 
-		if (0 !== Object.keys(customer)?.length && 0 !== line_items?.data?.length && shippingSet) {
+		if (
+			0 !== Object.keys(customer)?.length &&
+			0 !== line_items?.data?.length &&
+			shippingSet
+		) {
 			setCanSaveNow(true);
 		}
 	}, [line_items, customer]);
-
 
 	const finalizeCheckout = async ({ id, customer_id }) => {
 		return await apiFetch({
@@ -163,7 +172,6 @@ export default () => {
 			createSuccessNotice(__('Manual Order Created', 'surecart'), {
 				type: 'snackbar',
 			});
-
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -175,9 +183,7 @@ export default () => {
 		}
 	};
 
-
 	const onAddressChange = async (address) => {
-		
 		try {
 			setBusyCustomer(true);
 			// get the line items endpoint.
@@ -202,11 +208,11 @@ export default () => {
 				data: {
 					customer_id: checkout?.customer_id,
 					shipping_address: {
-						...address
+						...address,
 					}, // update the address.
 				},
 			});
-		
+
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
@@ -233,80 +239,100 @@ export default () => {
 		}
 	};
 
+	console.log(checkout);
+
 	return (
 		<>
-		<UpdateModel
-			title={
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<ScButton
-						circle
-						size="small"
-						href="admin.php?page=sc-orders"
+			<UpdateModel
+				title={
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							gap: 1em;
+						`}
 					>
-						<sc-icon name="arrow-left"></sc-icon>
-					</ScButton>
-					<sc-breadcrumbs>
-						<sc-breadcrumb>
-							<Logo display="block" />
-						</sc-breadcrumb>
-						<sc-breadcrumb href="admin.php?page=sc-orders">
-							{__('Orders', 'surecart')}
-						</sc-breadcrumb>
-						<sc-breadcrumb>
-							<sc-flex style={{ gap: '1em' }}>
-								{__('Create Order', 'surecart')}
-							</sc-flex>
-						</sc-breadcrumb>
-					</sc-breadcrumbs>
-				</div>
-			}
-			button={
-				<ScForm onScSubmit={onSubmit}>
-					<div css={css`display: flex gap: var(--sc-spacing-small);`}>
 						<ScButton
-							type="primary"
-							submit
-							loading={isSaving}
-							disabled={!canSaveNow}
+							circle
+							size="small"
+							href="admin.php?page=sc-orders"
 						>
-							{__('Create', 'surecart')}
+							<sc-icon name="arrow-left"></sc-icon>
 						</ScButton>
-						<ScButton href={'admin.php?page=sc-orders'} type="text">
-							{__('Cancel', 'surecart')}
-						</ScButton>
+						<sc-breadcrumbs>
+							<sc-breadcrumb>
+								<Logo display="block" />
+							</sc-breadcrumb>
+							<sc-breadcrumb href="admin.php?page=sc-orders">
+								{__('Orders', 'surecart')}
+							</sc-breadcrumb>
+							<sc-breadcrumb>
+								<sc-flex style={{ gap: '1em' }}>
+									{__('Create Order', 'surecart')}
+								</sc-flex>
+							</sc-breadcrumb>
+						</sc-breadcrumbs>
 					</div>
-				</ScForm>
-			}
-			sidebar={
-				<>
-					<SelectCustomer checkout={checkout} busy={busy} loading={loading} />
-					{ checkout?.customer_id && (
-						<>
-							<Address
-								label={__('Shipping & Tax Address','surecart')}
-								address={checkout?.shipping_address} 
-								onAddressChange={onAddressChange}
-								loading={loading}
-								busy={busy}
-								busyCustomer={busyCustomer}
-							/>
-						</>
-					)}
+				}
+				button={
+					<ScForm onScSubmit={onSubmit}>
+						<div
+							css={css`display: flex gap: var(--sc-spacing-small);`}
+						>
+							<ScButton
+								type="primary"
+								submit
+								loading={isSaving}
+								disabled={!canSaveNow}
+							>
+								{__('Create', 'surecart')}
+							</ScButton>
+							<ScButton
+								href={'admin.php?page=sc-orders'}
+								type="text"
+							>
+								{__('Cancel', 'surecart')}
+							</ScButton>
+						</div>
+					</ScForm>
+				}
+				sidebar={
+					<>
+						<SelectCustomer
+							checkout={checkout}
+							busy={busy}
+							loading={loading}
+						/>
+						{checkout?.customer_id && (
+							<>
+								<Address
+									label={__(
+										'Shipping & Tax Address',
+										'surecart'
+									)}
+									address={checkout?.shipping_address}
+									onAddressChange={onAddressChange}
+									loading={loading}
+									busy={busy}
+									busyCustomer={busyCustomer}
+								/>
+							</>
+						)}
+					</>
+				}
+			>
+				<Prices checkout={checkout} loading={loading} busy={busy} />
 
-				</>
-			}
-		>
-			<Prices checkout={checkout} loading={loading} busy={busy} />
-		</UpdateModel>
-		{(!!checkoutIdLoading) && (
-			<ScBlockUi spinner />
-		)}
+				{!!checkout?.line_items?.data?.length && (
+					<Payment
+						checkout={checkout}
+						loading={loading}
+						busy={busy}
+					/>
+				)}
+
+				{!!checkoutIdLoading && <ScBlockUi spinner />}
+			</UpdateModel>
 		</>
 	);
 };

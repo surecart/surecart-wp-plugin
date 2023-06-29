@@ -1,4 +1,6 @@
+/** @jsx jsx */
 import Box from '../../ui/Box';
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Price from './Price';
 import NewPrice from './NewPrice';
@@ -6,15 +8,8 @@ import {
 	ScBlockUi,
 	ScCard,
 	ScEmpty,
-	ScFlex,
-	ScStackedList,
-	ScStackedListRow,
 	ScTable,
 	ScTableCell,
-	ScTableRow,
-	ScFormatNumber,
-	ScLineItem,
-	ScCouponForm,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -29,8 +24,7 @@ export default ({ checkout, loading, busy }) => {
 	const line_items = checkout?.line_items?.data || [];
 	const [busyPrices, setBusyPrices] = useState(false);
 
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
@@ -78,8 +72,7 @@ export default ({ checkout, loading, busy }) => {
 		}
 	};
 
-	const onQuantityChange = async (id, quantity) => {
-		
+	const onChange = async (id, data) => {
 		try {
 			setBusyPrices(true);
 			// get the line items endpoint.
@@ -88,7 +81,7 @@ export default ({ checkout, loading, busy }) => {
 				'line_item'
 			);
 
-			const { checkout: data } = await apiFetch({
+			const { checkout } = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
 					expand: [
@@ -101,24 +94,18 @@ export default ({ checkout, loading, busy }) => {
 						'checkout',
 					],
 				}),
-				data: {
-					quantity, // update the quantity.
-				},
+				data,
 			});
-			
+
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
 				'checkout',
-				data,
+				checkout,
 				undefined,
 				false,
 				checkout
 			);
-
-			createSuccessNotice(__('Quantity updated.', 'surecart'), {
-				type: 'snackbar',
-			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -142,49 +129,65 @@ export default ({ checkout, loading, busy }) => {
 		}
 
 		return (
-			<ScCard noPadding>
-				<ScTable>
-					<ScTableCell style={{ width: '40%' }} slot="head">
-						<div>{__('Product', 'surecart')}</div>
-					</ScTableCell>
-					<ScTableCell style={{ width: '20%', textAlign: 'center' }} slot="head">
-						<div>{__('Quantity', 'surecart')}</div>
-					</ScTableCell>
-					<ScTableCell
-						style={{ width: '20%', textAlign: 'center' }}
-						slot="head"
-					>
-						<div>{__('Total', 'surecart')}</div>
-					</ScTableCell>
-					<ScTableCell
-						style={{ width: '20%' }}
-						slot="head"
-					></ScTableCell>
+			<ScTable
+				style={{
+					'--shadow': 'none',
+					'--border-radius': '0',
+					borderLeft: '0',
+					borderRight: '0',
+				}}
+			>
+				<ScTableCell style={{ width: '40%' }} slot="head">
+					<div>{__('Product', 'surecart')}</div>
+				</ScTableCell>
+				<ScTableCell
+					style={{ width: '20%', textAlign: 'center' }}
+					slot="head"
+				>
+					<div>{__('Quantity', 'surecart')}</div>
+				</ScTableCell>
+				<ScTableCell
+					style={{ width: '20%', textAlign: 'center' }}
+					slot="head"
+				>
+					<div>{__('Total', 'surecart')}</div>
+				</ScTableCell>
+				<ScTableCell style={{ width: '20%' }} slot="head"></ScTableCell>
 
-					{(line_items || []).map((line_item) => {
-						const { id, price, quantity, full_amount } = line_item;
-						
-						return (
-							<Price
-								key={id}
-								price={price}
-								quantity={quantity}
-								full_amount={full_amount}
-								onRemove={() => onRemove(id)}
-								onQuantityChange={(quantity) =>
-									onQuantityChange(id, quantity)
-								}
-								checkout={checkout}
-							/>
-						);
-					})}
-				</ScTable>
-			</ScCard>
+				{(line_items || []).map((line_item) => {
+					const { id, price, quantity, full_amount } = line_item;
+
+					return (
+						<Price
+							key={id}
+							price={price}
+							quantity={quantity}
+							full_amount={full_amount}
+							onRemove={() => onRemove(id)}
+							onChange={(data) => onChange(id, data)}
+							checkout={checkout}
+						/>
+					);
+				})}
+			</ScTable>
 		);
 	};
 
 	return (
-		<>
+		<div
+			css={css`
+				sc-table-cell:first-of-type {
+					padding-left: 30px;
+				}
+				sc-table-cell:last-of-type {
+					padding-right: 30px;
+				}
+				.components-card__body {
+					padding: 0 !important;
+				}
+				--sc-table-cell-spacing: var(--sc-spacing-large);
+			`}
+		>
 			<Box
 				title={__('Add Prices', 'surecart')}
 				loading={loading}
@@ -192,16 +195,8 @@ export default ({ checkout, loading, busy }) => {
 			>
 				{renderPrices()}
 
-				{(!!busy || !!busyPrices ) && (
-					<ScBlockUi spinner />
-				)}
+				{(!!busy || !!busyPrices) && <ScBlockUi spinner />}
 			</Box>
-			{
-				0 !== line_items?.length && (
-					<Payment checkout={checkout} loading={loading} busy={busy} busyPrices={busyPrices} />
-				)
-			}
-			
-		</>
+		</div>
 	);
 };
