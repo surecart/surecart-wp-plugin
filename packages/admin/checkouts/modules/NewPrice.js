@@ -4,6 +4,7 @@ import {
 	ScDialog,
 	ScForm,
 	ScIcon,
+	ScPriceInput
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
@@ -11,7 +12,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useDispatch, select } from '@wordpress/data';
+import { useDispatch, select, useSelect } from '@wordpress/data';
 import expand from '../query';
 import PriceSelector from '@admin/components/PriceSelector';
 
@@ -22,7 +23,31 @@ export default ({ checkout }) => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+	const { price, priceLoading } = useSelect(
+		(select) => {
+			// we don't yet have a price id.
+			if (!priceID) {
+				return {};
+			}
+			// our entity query data.
+			const entityData = ['surecart', 'price', priceID, { expand }];
 
+			const price = select(coreStore).getEditedEntityRecord(
+				...entityData
+			);
+			const priceLoading = !select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			);
+
+			return {
+				price,
+				priceLoading
+			};
+		},
+		[priceID]
+	);
+	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		e.stopImmediatePropagation();
@@ -54,6 +79,7 @@ export default ({ checkout }) => {
 					checkout: checkout?.id,
 					price: priceID,
 					quantity: 1,
+					ad_hoc_amount: addHocAmount
 				},
 			});
 
@@ -101,19 +127,36 @@ export default ({ checkout }) => {
 					<PriceSelector
 						required
 						value={priceID}
-						ad_hoc={false}
+						ad_hoc={true}
 						onSelect={(price) => setPriceID(price)}
 						requestQuery={{
 							archived: false,
 						}}
 					/>
+					{
+						price?.ad_hoc && (
+
+							<ScPriceInput
+								label={__('Amount', 'surecart')}
+								placeholder={__('Enter an Amount', 'surecart')}
+								style={{ flex: 1 }}
+								currencyCode={ price?.currency }
+								value={addHocAmount || price?.amount || null}
+								onScInput={(e) => {
+									setAddHocAmount(e.target.value);
+								}}
+							/>
+						)
+					}
 					<ScButton type="primary" submit>
 						{__('Add Price', 'surecart')}
 					</ScButton>
 					<ScButton type="text" onClick={() => setOpen(false)}>
 						{__('Cancel', 'surecart')}
 					</ScButton>
-					{loading && <ScBlockUi spinner />}
+					{(!!loading || !!priceLoading ) && (
+						<ScBlockUi spinner />
+					)}
 				</ScForm>
 			</ScDialog>
 		</>

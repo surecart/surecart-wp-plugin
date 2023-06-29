@@ -65,7 +65,7 @@ export default ({ price, quantity, onRemove, onQuantityChange, full_amount }) =>
 						<ScFormatNumber
 							type="currency"
 							currency={price?.currency || 'usd'}
-							value={price?.amount}
+							value={price?.ad_hoc_amount ? price?.ad_hoc_amount : price?.amount}
 						/>
 						{intervalString(price)}
 					</div>
