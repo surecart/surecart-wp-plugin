@@ -71,8 +71,7 @@ export default () => {
 
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
-	const shippingAddress = 0 !== checkout?.shipping_address?.length ? checkout?.shipping_address : customer?.shipping_address;
-
+	
 	// we don't yet have a checkout.
 	useEffect(() => {
 		if (!id) {
@@ -224,7 +223,6 @@ export default () => {
 	return (
 		<>
 		<UpdateModel
-			onSubmit={onSubmit}
 			title={
 				<div
 					css={css`
@@ -274,12 +272,12 @@ export default () => {
 			}
 			sidebar={
 				<>
-					<SelectCustomer checkout={checkout} busy={busy} />
-					{ checkout?.customer_id && shippingAddress && (
+					<SelectCustomer checkout={checkout} busy={busy} loading={loading} />
+					{ checkout?.customer_id && checkout?.shipping_address && (
 						<>
 							<Address
 								label={__('Shipping & Tax Address','surecart')}
-								address={shippingAddress} 
+								address={checkout?.shipping_address} 
 								onAddressChange={onAddressChange}
 								loading={loading}
 								busy={busy}

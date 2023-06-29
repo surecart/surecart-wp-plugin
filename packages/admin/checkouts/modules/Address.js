@@ -60,6 +60,9 @@ export default ({ address = {}, label, loading, onAddressChange, busyCustomer, b
 					onAddressChange(customerShippingAddress)
 					setOpen(false)
 				}}
+				style={{
+					marginTop: '17.5px'
+				}}
 			>
 				{__('Update', 'surecart')}
 			</ScButton>

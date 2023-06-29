@@ -24,13 +24,13 @@ import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
 
-export default ({ checkout, loading, busy }) => {
+export default ({ checkout, loading, busy, busyPrices }) => {
 	const [busyPayment, setBusyPayment] = useState(false);
     
     const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
     const onCouponChange = async (e) => {
 		try {
@@ -55,6 +55,7 @@ export default ({ checkout, loading, busy }) => {
 					],
 				}),
 				data: {
+                    customer_id: checkout?.customer_id,
 					discount: {
                         promotion_code: e?.detail
                     }, // update the coupon.
@@ -71,7 +72,7 @@ export default ({ checkout, loading, busy }) => {
 				checkout
 			);
 
-			createSuccessNotice(__('Quantity updated.', 'surecart'), {
+			createSuccessNotice(__('Coupon Applied.', 'surecart'), {
 				type: 'snackbar',
 			});
 		} catch (e) {
@@ -150,7 +151,7 @@ export default ({ checkout, loading, busy }) => {
 	return (
         <Box title={__('Payment', 'surecart')} loading={loading}>
             {renderPaymentDetails()}
-            {(!!busy || !!busyPayment) && (
+            {(!!busy || !!busyPayment || !!busyPrices) && (
                 <ScBlockUi spinner />
             )}
         </Box>

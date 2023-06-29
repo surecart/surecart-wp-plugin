@@ -25,7 +25,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import expand from '../query';
 
-export default ( {checkout, busy} ) => {
+export default ( {checkout, busy, loading} ) => {
 	const [busyCustomer, setBusyCustomer] = useState(false);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -107,7 +107,10 @@ export default ( {checkout, busy} ) => {
 	};
 
 	return (
-		<Box title={__('Customer', 'surecart')}>
+		<Box 
+			title={__('Customer', 'surecart')}
+			loading={loading}
+		>
 			<ScFormControl
 				label={__('Select a Customer', 'surecart')}
 				style={{ display: 'block' }}
@@ -178,7 +181,7 @@ export default ( {checkout, busy} ) => {
 				)}
 			</ScFormControl>
 
-			{(!!busy || !!busyCustomer ) && (
+			{(!!busy || !!loading || !!busyCustomer ) && (
 				<ScBlockUi spinner />
 			)}
 		</Box>

@@ -197,7 +197,7 @@ export default ({ checkout, loading, busy }) => {
 			</Box>
 			{
 				0 !== line_items?.length && (
-					<Payment checkout={checkout} loading={loading} busy={busy} />
+					<Payment checkout={checkout} loading={loading} busy={busy} busyPrices={busyPrices} />
 				)
 			}
 			
