@@ -296,12 +296,6 @@ export default () => {
 							>
 								{__('Create', 'surecart')}
 							</ScButton>
-							<ScButton
-								href={'admin.php?page=sc-orders'}
-								type="text"
-							>
-								{__('Cancel', 'surecart')}
-							</ScButton>
 						</div>
 					</ScForm>
 				}
