@@ -243,6 +243,9 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.2.0 - June 28, 2023 =
+* New: Shipping and fulfillment support! Add custom shipping rates, location restrictions, tracking and fulfillment.
+
 = 2.1.4 - June 28, 2023 =
 * Improvement: Add filter to skip page and form seeding.
 * Fix: Compare at price cannot be cleared due to firefox fix in previous version.
