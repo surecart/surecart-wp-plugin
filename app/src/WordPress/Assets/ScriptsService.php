@@ -87,7 +87,7 @@ class ScriptsService {
 			wp_register_script(
 				'surecart-components',
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/static-loader.js',
-				array_merge( [ 'wp-i18n' ], $static_assets['dependencies'] ),
+				array_merge( [ 'wp-i18n' ], $static_assets['dependencies'] ?? [] ),
 				$static_assets['version'] . '-' . \SureCart::plugin()->version(),
 				true
 			);
@@ -143,7 +143,7 @@ class ScriptsService {
 		wp_register_script(
 			'sc-core-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/data.js',
-			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
+			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ?? [] ),
 			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
 			true
 		);
@@ -153,7 +153,7 @@ class ScriptsService {
 		wp_register_script(
 			'sc-ui-data',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/store/ui.js',
-			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ),
+			array_merge( [ 'surecart-components' ], $asset_file['dependencies'] ?? [] ),
 			$asset_file['version'] . '-' . \SureCart::plugin()->version(),
 			true
 		);
@@ -162,7 +162,7 @@ class ScriptsService {
 
 		wp_localize_script( 'surecart-cart-blocks', 'scIcons', [ 'path' => esc_url_raw( plugin_dir_url( SURECART_PLUGIN_FILE ) . 'dist/icon-assets' ) ] );
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/cart.asset.php';
-		$deps       = $asset_file['dependencies'];
+		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
 		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
 		wp_register_script(
@@ -185,7 +185,7 @@ class ScriptsService {
 
 		// cart.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/cart.asset.php';
-		$deps       = $asset_file['dependencies'];
+		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
 		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
 		wp_register_script(
@@ -305,7 +305,7 @@ class ScriptsService {
 		);
 		// blocks.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/library.asset.php';
-		$deps       = $asset_file['dependencies'];
+		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
 		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
 		wp_register_script(
@@ -318,7 +318,7 @@ class ScriptsService {
 
 		// only register
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product.asset.php';
-		$deps       = $asset_file['dependencies'];
+		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
 		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
 		wp_register_script(

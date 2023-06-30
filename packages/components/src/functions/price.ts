@@ -1,9 +1,10 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { Coupon, Price } from '../types';
+import { zeroDecimalCurrencies } from './currency';
 
 export const convertAmount = (amount: number, currency: string) => {
-  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'xaf'].includes(currency) ? amount : amount / 100;
+  return zeroDecimalCurrencies.includes(currency) ? amount : amount / 100;
 };
 
 export const getHumanDiscount = (coupon: Coupon) => {
