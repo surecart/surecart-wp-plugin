@@ -25,6 +25,7 @@ import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
 
 export default ({ checkout, loading, busy, busyPrices }) => {
+
 	const [busyPayment, setBusyPayment] = useState(false);
     
     const { createErrorNotice, createSuccessNotice } =
@@ -103,21 +104,24 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
-                <ScLineItem>
-					<span slot="description">{`${formatTaxDisplay(__('Order Tax', 'surecart'))} (${
-							checkout?.tax_percent
-						}%)`}</span>
-					<ScFormatNumber
-						slot="price"
-						style={{
-							fontWeight: 'var(--sc-font-weight-semibold)',
-							color: 'var(--sc-color-gray-800)',
-						}}
-						type="currency"
-						currency={checkout?.currency}
-						value={checkout?.tax_amount}
-					></ScFormatNumber>
-				</ScLineItem>
+                {
+                    0 !== checkout?.tax_amount && (
+                    <ScLineItem>
+                        <span slot="description">{`${formatTaxDisplay(__('Order Tax', 'surecart'))} (${
+                                checkout?.tax_percent
+                            }%)`}</span>
+                        <ScFormatNumber
+                            slot="price"
+                            style={{
+                                fontWeight: 'var(--sc-font-weight-semibold)',
+                                color: 'var(--sc-color-gray-800)',
+                            }}
+                            type="currency"
+                            currency={checkout?.currency}
+                            value={checkout?.tax_amount}
+                        ></ScFormatNumber>
+                    </ScLineItem>
+                )}
 				<ScCouponForm
 					collapsed={true}
 					placeholder={__('Enter Coupon Code', 'surecart')}

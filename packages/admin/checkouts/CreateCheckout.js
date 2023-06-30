@@ -8,21 +8,20 @@ import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScButton,
 	ScForm,
-	ScAddress,
 	ScBlockUi,
+	ScAlert
 } from '@surecart/components-react';
-import Box from '../ui/Box';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
 import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { store as uiStore } from '../store/ui';
 import expand from './query';
 import SelectCustomer from './modules/SelectCustomer';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
+import Error from '../components/Error';
 
 /**
  * Returns the Model Edit URL.
@@ -37,7 +36,6 @@ export function getEditURL(id) {
 
 export default () => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [canSaveNow, setCanSaveNow] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
@@ -45,6 +43,7 @@ export default () => {
 	const [checkoutIdLoading, setCheckoutIdLoading] = useState(false);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busyCustomer, setBusyCustomer] = useState(false);
+	const [checkoutError, setCheckoutError] = useState(false);
 
 	const { checkout, loading, busy, error } = useSelect(
 		(select) => {
@@ -121,33 +120,6 @@ export default () => {
 		}
 	};
 
-	useEffect(() => {
-		if (
-			!line_items?.data ||
-			!customer ||
-			!checkout ||
-			!checkout?.shipping_address
-		) {
-			return;
-		}
-
-		const { id, country, line_1, postal_code } = checkout?.shipping_address;
-
-		let shippingSet = false;
-
-		if (id && country && line_1 && postal_code) {
-			shippingSet = true;
-		}
-
-		if (
-			0 !== Object.keys(customer)?.length &&
-			0 !== line_items?.data?.length &&
-			shippingSet
-		) {
-			setCanSaveNow(true);
-		}
-	}, [line_items, customer]);
-
 	const finalizeCheckout = async ({ id, customer_id }) => {
 		return await apiFetch({
 			method: 'PATCH',
@@ -159,30 +131,66 @@ export default () => {
 		});
 	};
 
-	// create the order.
-	const onSubmit = async (e) => {
-		e.preventDefault();
+	const getErrors = (e) => {
+
+		let errors = {
+			message: __( 'Failed to create an order. Please check for below errors & try again.', 'surecart' ),
+			additional_errors: []
+		}
+		const additionalErrors = e?.additional_errors;
+		if (additionalErrors) {
+			for (const error of additionalErrors) {
+				let errorMessage = '';
+				switch (error?.code) {
+					case 'checkout.line_items.required':
+						errorMessage = __( 'Please add at least one product.', 'surecart' );
+						errors?.additional_errors?.push({message:errorMessage});
+						break;
+					case 'checkout.customer.blank':
+						errorMessage = __( 'Please select a customer.', 'surecart' );
+						errors?.additional_errors?.push({message:errorMessage});
+						break;
+					case 'checkout.shipping_address.invalid_shipping_address':
+						errorMessage = __( 'Please add a valid address with necessary shipping information.', 'surecart' );
+						errors?.additional_errors?.push({message:errorMessage});
+						break;
+					case 'checkout.shipping_address.invalid_tax_address':
+						errorMessage = __( 'Please select a valid tax address.', 'surecart' );
+						errors?.additional_errors?.push({message:errorMessage});
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		return errors;
+	};
+
+	/**
+	 * Handle the form submission
+	 */
+	 const onSubmit = async () => {
 		try {
 			setIsSaving(true);
 			const checkoutResult = await finalizeCheckout({
 				id: checkout?.id,
 				customer_id: customer?.id,
 			});
-
-			createSuccessNotice(__('Manual Order Created', 'surecart'), {
+			
+			createSuccessNotice(__('Order Created.', 'surecart'), {
 				type: 'snackbar',
 			});
 		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong.', 'surecart')
-			);
+			const errors = getErrors(e);
+			console.log(errors);
+			setCheckoutError(errors);
 			setIsSaving(false);
 		} finally {
 			setIsSaving(false);
 		}
 	};
-
+	
 	const onAddressChange = async (address) => {
 		try {
 			setBusyCustomer(true);
@@ -239,10 +247,12 @@ export default () => {
 		}
 	};
 
-	console.log(checkout);
-
 	return (
 		<>
+			<Error
+				error={checkoutError}
+				setError={setCheckoutError}
+			/>
 			<UpdateModel
 				title={
 					<div
@@ -283,7 +293,6 @@ export default () => {
 								type="primary"
 								submit
 								loading={isSaving}
-								disabled={!canSaveNow}
 							>
 								{__('Create', 'surecart')}
 							</ScButton>
