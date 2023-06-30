@@ -294,7 +294,7 @@ export default () => {
 				</div>
 			</SettingsBox>
 			<SettingsBox
-				title={__('Functionality', 'surecart')}
+				title={__('Customer Portal', 'surecart')}
 				description={__(
 					'Manage what your customers are able to see and do from the customer portal.',
 					'surecart'
