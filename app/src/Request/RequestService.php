@@ -276,9 +276,9 @@ class RequestService {
 		$response_body = wp_remote_retrieve_body( $response );
 		$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
 
-		if(!$this->authorized){
-			$api_token  = (string) wp_remote_retrieve_header( $response, 'X-SURECART-API-TOKEN' );
-			ApiToken::save($api_token);
+		if ( ! $this->authorized ) {
+			$api_token = (string) wp_remote_retrieve_header( $response, 'X-SURECART-API-TOKEN' );
+			ApiToken::save( $api_token );
 		}
 
 		if ( $admin_notice ) {

@@ -61,6 +61,10 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="tag"></sc-icon>
 			<?php esc_html_e( 'Taxes', 'surecart' ); ?>
 		</sc-tab>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'shipping_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'shipping_protocol' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="truck"></sc-icon>
+			<?php esc_html_e( 'Shipping', 'surecart' ); ?>
+		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'processors' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'processors' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="credit-card"></sc-icon>
 			<?php esc_html_e( 'Payment Processors', 'surecart' ); ?>
