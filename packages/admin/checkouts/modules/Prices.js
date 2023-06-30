@@ -183,7 +183,7 @@ export default ({ checkout, loading, busy }) => {
 					padding-right: 30px;
 				}
 				.components-card__body {
-					padding: 0 !important;
+					padding: ${ loading ? '24px' : '0 !important'};
 				}
 				--sc-table-cell-spacing: var(--sc-spacing-large);
 			`}
