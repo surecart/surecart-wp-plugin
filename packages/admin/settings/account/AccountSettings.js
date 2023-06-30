@@ -1,10 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import {
-	ScInput,
-	ScSelect,
-	ScAddress
-} from '@surecart/components-react';
+import { ScInput, ScSelect, ScAddress } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -27,33 +23,27 @@ export default () => {
 		hasLoadedItem: hasLoadedAccountItem,
 	} = useEntity('store', 'account');
 
-	const { 
-		item: portalItem, 
-		itemError: portalItemError, 
-		editItem: portalEditItem, 
-		hasLoadedItem: portalHasLoadedItem 
-	} = useEntity(
-		'store',
-		'portal_protocol'
-	);
-	const { 
-		item: notificationItem, 
-		itemError: notificationItemError, 
-		editItem: notificationEditItem, 
+	const {
+		item: portalItem,
+		itemError: portalItemError,
+		editItem: portalEditItem,
+		hasLoadedItem: portalHasLoadedItem,
+	} = useEntity('store', 'portal_protocol');
+	const {
+		item: notificationItem,
+		itemError: notificationItemError,
+		editItem: notificationEditItem,
 		hasLoadedItem: notificationHasLoadedItem,
-	} = useEntity(
-		'store',
-		'customer_notification_protocol'
-	);
+	} = useEntity('store', 'customer_notification_protocol');
 	/** Edit Item */
 	const brandEditItem = (data) =>
 		editEntityRecord('surecart', 'store', 'brand', data);
 
 	/** Load Item */
-	const { 
-		item: brandItem, 
-		itemError: brandItemError, 
-		hasLoadedItem: brandHasLoadedItem
+	const {
+		item: brandItem,
+		itemError: brandItemError,
+		hasLoadedItem: brandHasLoadedItem,
 	} = useSelect((select) => {
 		const entityData = ['surecart', 'store', 'brand'];
 		return {
@@ -100,10 +90,16 @@ export default () => {
 			title={__('Store Settings', 'surecart')}
 			icon={<sc-icon name="sliders"></sc-icon>}
 			onSubmit={onSubmit}
-			loading={!hasLoadedAccountItem}
+			loading={!hasLoadedAccountItem || !portalHasLoadedItem}
 		>
 			<Error
-				error={accountItemError || portalItemError || brandItemError || notificationItemError || error}
+				error={
+					accountItemError ||
+					portalItemError ||
+					brandItemError ||
+					notificationItemError ||
+					error
+				}
 				setError={setError}
 				margin="80px"
 			/>
@@ -152,6 +148,9 @@ export default () => {
 					></ScInput>
 
 					<ScSelect
+						css={css`
+							grid-column: 1 / 3;
+						`}
 						search
 						value={accountItem?.currency}
 						onScChange={(e) =>
@@ -172,7 +171,7 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
+					/>
 
 					<ScSelect
 						search
@@ -195,7 +194,7 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
+					/>
 
 					<ScSelect
 						value={accountItem?.locale}
@@ -255,25 +254,9 @@ export default () => {
 						)}
 						required
 					/>
-				</div>
-			</SettingsBox>
-			<SettingsBox
-				title={__('Store Details', 'surecart')}
-				description={__(
-					'Set additional customer portal details for your store.',
-					'surecart'
-				)}
-				loading={!portalHasLoadedItem}
-			>
-				<div
-					css={css`
-						gap: var(--sc-form-row-spacing);
-						display: grid;
-						grid-template-columns: repeat(2, minmax(0, 1fr));
-					`}
-				>
+
 					<ScInput
-						label={__('Terms of Service', 'surecart')}
+						label={__('Terms Page', 'surecart')}
 						type="url"
 						value={portalItem?.terms_url}
 						onScInput={(e) => {
@@ -282,12 +265,12 @@ export default () => {
 							});
 						}}
 						help={__(
-							'A link to your privacy terms page.',
+							'A link to your store terms page.',
 							'surecart'
 						)}
 					/>
 					<ScInput
-						label={__('Privacy Policy', 'surecart')}
+						label={__('Privacy Policy Page', 'surecart')}
 						type="url"
 						value={portalItem?.privacy_url}
 						onScInput={(e) => {
@@ -302,6 +285,7 @@ export default () => {
 					/>
 				</div>
 			</SettingsBox>
+
 			<SettingsBox
 				title={__('Notification Settings', 'surecart')}
 				description={__(
@@ -333,7 +317,9 @@ export default () => {
 						)}
 						value={notificationItem.reply_to_email}
 						onScInput={(e) =>
-							notificationEditItem({ reply_to_email: e.target.value })
+							notificationEditItem({
+								reply_to_email: e.target.value,
+							})
 						}
 						type="tel"
 					/>
@@ -358,21 +344,27 @@ export default () => {
 						label={__('Email', 'surecart')}
 						value={brandItem.email}
 						placeholder={__('Enter an email', 'surecart')}
-						onScInput={(e) => brandEditItem({ email: e.target.value })}
+						onScInput={(e) =>
+							brandEditItem({ email: e.target.value })
+						}
 						type="email"
 					/>
 					<ScInput
 						label={__('Phone', 'surecart')}
 						value={brandItem.phone}
 						placeholder={__('Enter an phone number', 'surecart')}
-						onScInput={(e) => brandEditItem({ phone: e.target.value })}
+						onScInput={(e) =>
+							brandEditItem({ phone: e.target.value })
+						}
 						type="tel"
 					/>
 					<ScInput
 						label={__('Website', 'surecart')}
 						value={brandItem.website}
 						placeholder={__('Enter a website URL', 'surecart')}
-						onScInput={(e) => brandEditItem({ website: e.target.value })}
+						onScInput={(e) =>
+							brandEditItem({ website: e.target.value })
+						}
 						type="url"
 					/>
 				</div>
@@ -384,7 +376,9 @@ export default () => {
 					showLine2={true}
 					address={brandItem.address}
 					names={{}}
-					onScInputAddress={(e) => brandEditItem({ address: e.detail })}
+					onScInputAddress={(e) =>
+						brandEditItem({ address: e.detail })
+					}
 				/>
 			</SettingsBox>
 		</SettingsTemplate>
