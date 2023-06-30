@@ -28,6 +28,35 @@ export default [
 				default: false,
 			},
 		},
+		supports: {
+			anchor: true,
+			align: ['wide', 'full'],
+			html: false,
+			color: {
+				gradients: true,
+				link: true,
+			},
+			spacing: {
+				blockGap: {
+					__experimentalDefault: '2em',
+					sides: ['horizontal', 'vertical'],
+				},
+				margin: ['top', 'bottom'],
+				padding: true,
+				__experimentalDefaultControls: {
+					padding: true,
+				},
+			},
+			__experimentalLayout: {
+				allowSwitching: false,
+				allowInheriting: false,
+				allowEditing: false,
+				default: {
+					type: 'flex',
+					flexWrap: 'nowrap',
+				},
+			},
+		},
 		save({ attributes }) {
 			const useInnerBlocksProps = __stableUseInnerBlocksProps
 				? __stableUseInnerBlocksProps

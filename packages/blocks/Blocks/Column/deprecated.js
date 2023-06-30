@@ -36,7 +36,29 @@ export default [
 			},
 		},
 		supports: {
-			className: false,
+			anchor: true,
+			reusable: false,
+			html: false,
+			color: {
+				gradients: true,
+				link: true,
+			},
+			__experimentalBorder: {
+				width: true,
+				color: true,
+				__experimentalDefaultControls: {
+					width: true,
+					color: true,
+				},
+			},
+			spacing: {
+				padding: true,
+				blockGap: true,
+				__experimentalDefaultControls: {
+					padding: true,
+					blockGap: true,
+				},
+			},
 		},
 		save({ attributes }) {
 			const useInnerBlocksProps = __stableUseInnerBlocksProps
