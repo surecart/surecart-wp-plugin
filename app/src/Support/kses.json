@@ -1450,6 +1450,7 @@
     "slot": true
   },
   "sc-product-buy-button": {
+    "add_to_cart": true,
     "style": true,
     "id": true,
     "class": true,
