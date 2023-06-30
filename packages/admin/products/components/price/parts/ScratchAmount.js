@@ -10,9 +10,7 @@ export default ({ className, price, updatePrice, suffix }) => {
 			value={price?.scratch_amount}
 			name="price"
 			min={price?.amount}
-			onScInput={(e) => {
-				updatePrice({ scratch_amount: e.target.value });
-			}}
+			onScInput={(e) => updatePrice({ scratch_amount: e.target.value })}
 		>
 			{!!suffix && <span slot="suffix">{suffix}</span>}
 		</ScPriceInput>
