@@ -198,7 +198,7 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Behavior', 'surecart')}
+				title={__('Purchase Behavior', 'surecart')}
 				description={__(
 					'Manage your subscription purchase behavior.',
 					'surecart'
