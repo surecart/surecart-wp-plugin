@@ -119,18 +119,26 @@ export class ScPayment {
             <Tag collapsible={false} theme="container">
               {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
-                  {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
+                  {
+                    window?.scData?.manage_sc_shop_settings ? (
+                      <Fragment>
+                          {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
 
-                  <a
-                    href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
-                      page: 'sc-settings',
-                      tab: 'processors',
-                    })}
-                    style={{ color: 'var(--sc-color-gray-700)' }}
-                  >
-                    {__('Please configure your processors', 'surecart')}
-                  </a>
-                  .
+                          <a
+                            href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
+                              page: 'sc-settings',
+                              tab: 'processors',
+                            })}
+                            style={{ color: 'var(--sc-color-gray-700)' }}
+                          >
+                            {__('Please configure your processors', 'surecart')}
+                          </a>
+                          .
+                      </Fragment>
+                    ) : (
+                      __('Please contact us for payment.', 'surecart')
+                    )
+                  }
                 </sc-alert>
               )}
               {(availableProcessors() || []).map(processor => {

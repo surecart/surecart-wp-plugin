@@ -52,6 +52,7 @@ declare global {
       is_claimed: string;
       claim_url: string;
       admin_url: string;
+      manage_sc_shop_settings: boolean
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
