@@ -3,6 +3,7 @@
 namespace Surecart\Tests\Feature\Rest;
 
 use SureCart\Request\RequestServiceProvider;
+use SureCart\Rest\VariantValuesRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -18,7 +19,7 @@ class VariantValuesRestServiceProviderTest extends SureCartUnitTestCase{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
-				VariantValuesRestServiceProviderTest::class,
+				VariantValuesRestServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class
 			]
