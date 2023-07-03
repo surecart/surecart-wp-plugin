@@ -58,7 +58,13 @@ function ColumnsEditContainer({
 	updateColumns,
 	clientId,
 }) {
-	const { isStackedOnMobile, verticalAlignment, templateLock } = attributes;
+	const {
+		isStackedOnMobile,
+		verticalAlignment,
+		templateLock,
+		isFullHeight,
+		isReversedOnMobile,
+	} = attributes;
 
 	const { count, canInsertColumnBlock, minCount } = useSelect(
 		(select) => {
@@ -97,6 +103,8 @@ function ColumnsEditContainer({
 	const classes = classnames({
 		[`are-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
 		[`is-not-stacked-on-mobile`]: !isStackedOnMobile,
+		[`is-full-height`]: isFullHeight,
+		[`is-reversed-on-mobile`]: isReversedOnMobile,
 	});
 
 	const blockProps = useBlockProps({
@@ -150,6 +158,24 @@ function ColumnsEditContainer({
 						onChange={() =>
 							setAttributes({
 								isStackedOnMobile: !isStackedOnMobile,
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Full vertical height')}
+						checked={isFullHeight}
+						onChange={() =>
+							setAttributes({
+								isFullHeight: !isFullHeight,
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Reverse order on mobile')}
+						checked={isReversedOnMobile}
+						onChange={() =>
+							setAttributes({
+								isReversedOnMobile: !isReversedOnMobile,
 							})
 						}
 					/>
