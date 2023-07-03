@@ -23,6 +23,7 @@ export default ({ checkout }) => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+
 	const { price, priceLoading } = useSelect(
 		(select) => {
 			// we don't yet have a price id.
@@ -47,6 +48,7 @@ export default ({ checkout }) => {
 		},
 		[priceID]
 	);
+	
 	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
 
 	const onSubmit = async (e) => {

@@ -13,13 +13,12 @@ import {
 	ScBlockUi
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import { useDispatch, useSelect, select } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import ModelSelector from '../../components/ModelSelector';
 import useAvatar from '../../hooks/useAvatar';
-import { store as uiStore } from '../../store/ui';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';

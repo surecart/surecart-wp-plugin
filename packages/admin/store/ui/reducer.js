@@ -20,28 +20,6 @@ export const modal = (state, action) => {
 	return state;
 };
 
-export const pricesForCreateOrder = (state, action) => {
-	switch (action.type) {
-		case 'SET_PRICES_FOR_CREATE_ORDER':
-			return {
-				...state,
-				pricesForCreateOrder: action.value,
-			};
-	}
-	return state;
-};
-
-export const customerForCreateOrder = (state, action) => {
-	switch (action.type) {
-		case 'SET_CUSTOMER_FOR_CREATE_ORDER':
-			return {
-				...state,
-				customerForCreateOrder: action.value,
-			};
-	}
-	return state;
-};
-
 export const errors = (
 	state = {
 		flash: {},
@@ -163,6 +141,4 @@ export default combineReducers({
 	modelErrors,
 	modal,
 	snackbar,
-	pricesForCreateOrder,
-	customerForCreateOrder
 });

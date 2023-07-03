@@ -8,8 +8,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScButton,
 	ScForm,
-	ScBlockUi,
-	ScAlert
+	ScBlockUi
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -183,7 +182,6 @@ export default () => {
 			});
 		} catch (e) {
 			const errors = getErrors(e);
-			console.log(errors);
 			setCheckoutError(errors);
 			setIsSaving(false);
 		} finally {

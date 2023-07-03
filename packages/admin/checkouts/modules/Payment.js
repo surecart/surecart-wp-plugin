@@ -2,14 +2,6 @@ import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
 	ScBlockUi,
-	ScCard,
-	ScEmpty,
-	ScFlex,
-	ScStackedList,
-	ScStackedListRow,
-	ScTable,
-	ScTableCell,
-	ScTableRow,
 	ScFormatNumber,
 	ScLineItem,
 	ScCouponForm,

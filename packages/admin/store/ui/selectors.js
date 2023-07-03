@@ -7,12 +7,6 @@ export function showUpgradeModal(state) {
 export function isSaving(state) {
 	return state.saving.isSaving;
 }
-export function getPricesForCreateOrder(state) {
-	return state.pricesForCreateOrder || [];
-}
-export function getCustomerForCreateOrder(state) {
-	return state.customerForCreateOrder || {};
-}
 export function flash(state) {
 	return state.errors.flash;
 }

@@ -3,18 +3,12 @@ import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
-	ScCard,
-	ScDropdown,
-	ScFlex,
-	ScFormControl,
 	ScIcon,
-	ScMenu,
-	ScMenuItem,
 	ScBlockUi,
 	ScDialog,
 	ScAddress
 } from '@surecart/components-react';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { Notice } from '@wordpress/components';
 
 export default ({ address = {}, label, loading, onAddressChange, busyCustomer, busy }) => {

@@ -6,7 +6,6 @@ import Price from './Price';
 import NewPrice from './NewPrice';
 import {
 	ScBlockUi,
-	ScCard,
 	ScEmpty,
 	ScTable,
 	ScTableCell,
@@ -18,10 +17,10 @@ import expand from '../query';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
-import Payment from './Payment';
 
 export default ({ checkout, loading, busy }) => {
 	const line_items = checkout?.line_items?.data || [];
+	
 	const [busyPrices, setBusyPrices] = useState(false);
 
 	const { createErrorNotice } = useDispatch(noticesStore);

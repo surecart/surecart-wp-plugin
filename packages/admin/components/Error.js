@@ -8,7 +8,6 @@ export default ({
 	scrollOnOpen = true,
 	children,
 }) => {
-	console.log(error);
 	if (!error) {
 		return null;
 	}
