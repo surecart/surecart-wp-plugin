@@ -39,6 +39,16 @@ export default ({ id, setId }) => {
 				},
 				{ throwOnError: true }
 			);
+
+			if (!productCollection?.id) {
+				throw {
+					message: __(
+						'Could not create product collection. Please try again.',
+						'sureacrt'
+					),
+				};
+			}
+
 			setId(productCollection.id);
 		} catch (e) {
 			console.error(e);
@@ -89,7 +99,7 @@ export default ({ id, setId }) => {
 							autofocus
 						/>
 						<Permalink
-							baseUrl={`${scData?.home_url}/collections`}
+							baseUrl={`${scData?.home_url}/${scData?.collection_page_slug}`}
 							name={'slug'}
 							value={slug}
 							onChange={setSlug}

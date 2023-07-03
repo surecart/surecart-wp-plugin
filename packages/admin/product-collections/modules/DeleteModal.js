@@ -2,6 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { Modal } from '@wordpress/components';
 
@@ -17,13 +18,14 @@ export default ({
 	onClose = () => { },
 }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { deleteEntityRecord} = useDispatch(coreStore);
 
 	/**
 	 * Handle the delete action.
 	 */
 	const deleteCollection = async () => {
 		try {
-			await deleteItem({ throwOnError: true });
+			await deleteEntityRecord('surecart', 'product-collection', deleteItem?.id);
 			createSuccessNotice(__('Collection deleted.', 'surecart'), {
 				type: 'snackbar',
 			});

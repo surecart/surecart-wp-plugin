@@ -1,6 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { useState } from '@wordpress/element';
+import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -14,13 +21,11 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 import Error from '../components/Error';
-import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
 import DeleteModal from './modules/DeleteModal';
 import SaveButton from '../templates/SaveButton';
-import useSave from '../settings/UseSave';
 import Image from './modules/Image';
 import Box from '../ui/Box';
 import Publishing from './modules/Publishing';
@@ -28,31 +33,68 @@ import Publishing from './modules/Publishing';
 export default ({ id }) => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
-	const { save } = useSave();
-	const {
-		item,
-		editItem,
-		itemError,
-		saveError,
-		savingItem,
-		deleteItem,
-		deletingItem,
-		hasLoadedItem,
-	} = useEntity('product-collection', id);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+
+	const { productCollection, isLoading, isDeleting, isSaving, saveError, loadError } =
+		useSelect((select) => {
+			const entityData = ['surecart', 'product-collection', id];
+
+			return {
+				productCollection: select(coreStore).getEditedEntityRecord(...entityData),
+				isLoading: select(coreStore)?.isResolving?.(
+					'getEditedEntityRecord',
+					[...entityData]
+				),
+				isSaving: select(coreStore)?.isSavingEntityRecord?.(
+					...entityData
+				),
+				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
+					...entityData
+				),
+				saveError: select(coreStore)?.getLastEntitySaveError(
+					...entityData
+				),
+				loadError: select(coreStore)?.getResolutionError?.(
+					'getEditedEntityRecord',
+					...entityData
+				)
+			};
+		});
 
 	/**
 	 * Handle the form submission.
 	 */
-	const onSubmit = async () => {
+	const onSubmit = async (e) => {
+		e.preventDefault();
+
 		try {
 			setError(null);
-			save({ successMessage: __('Collection updated.', 'surecart') });
+			await saveEntityRecord(
+				'surecart',
+				'product-collection',
+				{
+					id,
+					...productCollection,
+				},
+				{
+					throwOnError: true,
+				}
+			);
+			createSuccessNotice(__('Collection updated.', 'surecart'), {
+				type: 'snackbar',
+			});
 		} catch (e) {
+			console.error(e);
 			setError(e);
 		}
 	};
 
-	const button = !hasLoadedItem ? (
+	const updateProductCollection = (data) => {
+		editEntityRecord('surecart', 'product-collection', id, data);
+	};
+
+	const button = isLoading ? (
 		<sc-skeleton
 			style={{
 				width: '120px',
@@ -78,7 +120,7 @@ export default ({ id }) => {
 					</ScMenuItem>
 				</ScMenu>
 			</ScDropdown>
-			<SaveButton busy={deletingItem || savingItem}>
+			<SaveButton busy={isDeleting || isSaving}>
 				{__('Save Collection', 'surecart')}
 			</SaveButton>
 		</div>
@@ -121,17 +163,17 @@ export default ({ id }) => {
 			sidebar={
 				<>
 					<Publishing
-						productCollection={item}
-						updateProductCollection={editItem}
-						loading={!hasLoadedItem}
+						productCollection={productCollection}
+						updateProductCollection={updateProductCollection}
+						loading={isLoading}
 					/>
 
-					<Box title={__('Image', 'surecart')} loading={!hasLoadedItem}>
+					<Box title={__('Image', 'surecart')} loading={isLoading}>
 						<Image
 							label={__('Image', 'surecart')}
-							productCollection={item}
-							updateProductCollection={editItem}
-							loading={!hasLoadedItem}
+							productCollection={productCollection}
+							updateProductCollection={updateProductCollection}
+							loading={isLoading}
 						/>
 					</Box>
 				</>
@@ -139,20 +181,20 @@ export default ({ id }) => {
 		>
 			<>
 				<Error
-					error={saveError || itemError || error}
+					error={saveError || loadError || error}
 					setError={setError}
 				/>
 
 				<Details
-					productCollection={item}
-					updateProductCollection={editItem}
-					loading={!hasLoadedItem}
+					productCollection={productCollection}
+					updateProductCollection={updateProductCollection}
+					loading={isLoading}
 				/>
 
 				{modal === 'delete' && (
 					<DeleteModal
-						deleteItem={deleteItem}
-						deletingItem={deletingItem}
+						deleteItem={productCollection}
+						deletingItem={isDeleting}
 						onClose={() => setModal(null)}
 						setError={setError}
 					/>
