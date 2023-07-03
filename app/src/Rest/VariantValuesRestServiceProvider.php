@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\VariantValuesController;
 use SureCart\Rest\RestServiceInterface;
 
 /**

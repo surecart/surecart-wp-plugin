@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\VariantsController;
 use SureCart\Rest\RestServiceInterface;
 
 /**
@@ -51,14 +52,15 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 				'id' => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
 					'readonly'    => true,
 				],
 			],
-
 		];
 
 		return $this->schema;
 	}
+
 
 	/**
 	 * Anyone can get a specfic variant.

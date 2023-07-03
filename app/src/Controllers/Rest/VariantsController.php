@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Rest;
+namespace SureCart\Controllers\Rest;
 
 use SureCart\Controllers\Rest\RestController;
 use SureCart\Models\Variant;

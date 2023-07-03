@@ -2,6 +2,7 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\VariantOptionsController;
 use SureCart\Rest\RestServiceInterface;
 
 /**
