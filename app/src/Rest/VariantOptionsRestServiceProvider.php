@@ -5,22 +5,23 @@ namespace SureCart\Rest;
 use SureCart\Rest\RestServiceInterface;
 
 /**
- * Service provider for Variant Rest Requests
+ * Service provider for Variant Options Rest Requests
  */
-class VariantsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+
+class VariantOptionsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'variants';
+	protected $endpoint = 'variant_options';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = VariantsController::class;
+	protected $controller = VariantOptionsController::class;
 
 	/**
 	 * Methods allowed for the model.
@@ -61,7 +62,7 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Anyone can get a specfic variant.
+	 * Anyone can get a specfic variant option.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request .
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
@@ -71,7 +72,7 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Who can list variants
+	 * Who can list variant options
 	 *
 	 * @param \WP_REST_Request $request Full details about the request .
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
@@ -85,7 +86,7 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Who can create variants
+	 * Who can create variant option
 	 *
 	 * @param \WP_REST_Request $request Full details about the request .
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
@@ -95,7 +96,7 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Who can edit variants
+	 * Who can edit variant option
 	 *
 	 * @param \WP_REST_Request $request Full details about the request .
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
@@ -105,7 +106,7 @@ class VariantsRestServiceProvider extends RestServiceProvider implements RestSer
 	}
 
 	/**
-	 * Who can delete variants
+	 * Who can delete variant option
 	 *
 	 * @param \WP_REST_Request $request Full details about the request .
 	 * @return true | \WP_Error true if the request has access to create items, WP_Error object otherwise .
