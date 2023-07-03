@@ -133,7 +133,9 @@ class ScriptsService {
 					'recaptcha_site_key'      => \SureCart::settings()->recaptcha()->getSiteKey(),
 					'claim_url'               => $this->getAccountClaimUrl(),
 					'admin_url'               => trailingslashit( admin_url() ),
-					'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' )
+					'user_permissions' =>  array (
+						'manage_sc_shop_settings'  => current_user_can( 'manage_sc_shop_settings' )
+					)
 				]
 			)
 		);
@@ -354,7 +356,9 @@ class ScriptsService {
 					'recaptcha_site_key'      => \SureCart::settings()->recaptcha()->getSiteKey(),
 					'claim_url'               => $this->getAccountClaimUrl(),
 					'admin_url'               => trailingslashit( admin_url() ),
-					'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' )
+					'user_permissions' =>  array (
+						'manage_sc_shop_settings'  => current_user_can( 'manage_sc_shop_settings' )
+					)
 				]
 			)
 		);

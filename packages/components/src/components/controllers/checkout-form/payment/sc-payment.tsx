@@ -120,7 +120,7 @@ export class ScPayment {
               {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
                   {
-                    window?.scData?.manage_sc_shop_settings ? (
+                    window?.scData?.user_permissions?.manage_sc_shop_settings ? (
                       <Fragment>
                           {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
 
