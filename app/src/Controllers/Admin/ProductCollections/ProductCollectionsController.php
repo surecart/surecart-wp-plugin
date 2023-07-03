@@ -48,6 +48,24 @@ class ProductCollectionsController {
 			if ( is_wp_error( $product_collection ) ) {
 				wp_die( implode( ' ', array_map( 'esc_html', $product_collection->get_error_messages() ) ) );
 			}
+
+			// add product collection link.
+			add_action(
+				'admin_bar_menu',
+				function( $wp_admin_bar ) use ( $product_collection ) {
+					$wp_admin_bar->add_node(
+						[
+							'id'    => 'view-product-collection-page',
+							'title' => __( 'View Collection', 'surecart' ),
+							'href'  => esc_url( $product_collection->permalink ?? '#' ),
+							'meta'  => [
+								'class' => empty( $product_collection->permalink ) ? 'hidden' : '',
+							],
+						]
+					);
+				},
+				99
+			);
 		}
 
 		// return view.
