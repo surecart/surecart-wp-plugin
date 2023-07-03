@@ -7,7 +7,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScInput, ScRichText } from '@surecart/components-react';
 import Box from '../../ui/Box';
-import Permalink from '../../components/Permalink';
 
 export default ({ id, productCollection, updateProductCollection, loading }) => {
 	return (
@@ -37,19 +36,6 @@ export default ({ id, productCollection, updateProductCollection, loading }) => 
 						updateProductCollection({ name: e.target.value });
 					}}
 					name="name"
-					required
-				/>
-				<Permalink
-					baseUrl={`${scData?.home_url}/collections`}
-					value={productCollection?.slug}
-					onChange={(value) => {
-						updateProductCollection({ slug: value });
-					}}
-					onCustomized={(value) => {
-						updateProductCollection({ slug: value });
-					}}
-					hideReset={true}
-					name="slug"
 					required
 				/>
 				<ScRichText

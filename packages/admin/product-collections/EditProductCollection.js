@@ -23,6 +23,7 @@ import SaveButton from '../templates/SaveButton';
 import useSave from '../settings/UseSave';
 import Image from './modules/Image';
 import Box from '../ui/Box';
+import Publishing from './modules/Publishing';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -119,6 +120,12 @@ export default ({ id }) => {
 			button={button}
 			sidebar={
 				<>
+					<Publishing
+						productCollection={item}
+						updateProductCollection={editItem}
+						loading={!hasLoadedItem}
+					/>
+
 					<Box title={__('Image', 'surecart')} loading={!hasLoadedItem}>
 						<Image
 							label={__('Image', 'surecart')}

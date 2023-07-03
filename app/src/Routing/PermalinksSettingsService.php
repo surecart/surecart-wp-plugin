@@ -31,8 +31,9 @@ class PermalinksSettingsService {
 		return wp_parse_args(
 			$settings,
 			[
-				'buy_page'     => _x( 'buy', 'buy-page-slug', 'surecart' ),
-				'product_page' => _x( 'products', 'product-page-slug', 'surecart' ),
+				'buy_page'                => _x( 'buy', 'buy-page-slug', 'surecart' ),
+				'product_page'            => _x( 'products', 'product-page-slug', 'surecart' ),
+				'product_collection_page' => _x( 'collections', 'collection-page-slug', 'surecart' ),
 			]
 		);
 	}
