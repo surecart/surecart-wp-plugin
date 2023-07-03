@@ -22,16 +22,6 @@ class ProductCollectionsController {
 	}
 
 	/**
-	 * Show
-	 */
-	public function show() {
-		// enqueue needed script.
-		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( self::class, 'enqueue' ) );
-		// return view.
-		return '<div id="app"></div>';
-	}
-
-	/**
 	 * Edit a product.
 	 *
 	 * @param \WP_REST_Request $request Request.

@@ -19,6 +19,7 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScSkeleton,
 } from '@surecart/components-react';
 import Error from '../components/Error';
 import Logo from '../templates/Logo';
@@ -95,13 +96,13 @@ export default ({ id }) => {
 	};
 
 	const button = isLoading ? (
-		<sc-skeleton
+		<ScSkeleton
 			style={{
 				width: '120px',
 				height: '35px',
 				display: 'inline-block',
 			}}
-		></sc-skeleton>
+		></ScSkeleton>
 	) : (
 		<div
 			css={css`

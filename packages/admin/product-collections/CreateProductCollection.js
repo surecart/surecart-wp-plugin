@@ -1,9 +1,14 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies.
+ */
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState, useEffect } from '@wordpress/element';
+import { cleanForSlug } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -13,7 +18,6 @@ import Error from '../components/Error';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import Permalink from '../components/Permalink';
-import { slugify } from '../util/slug';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
@@ -59,7 +63,7 @@ export default ({ id, setId }) => {
 
 	useEffect(() => {
 		if (name && !slugCustomized) {
-			setSlug(slugify(name));
+			setSlug(cleanForSlug(name));
 		}
 	}, [name]);
 

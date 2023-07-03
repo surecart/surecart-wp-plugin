@@ -121,7 +121,12 @@ class ProductCollectionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_description( $product_collection ) {
-		return wp_trim_words( $product_collection->description, 30, '...' );
+		$description         = wp_strip_all_tags( $product_collection->description );
+		$trimmed_description = substr( $description, 0, 30 );
+		if ( strlen( $description ) > 30 ) {
+			$trimmed_description .= '...';
+		}
+		return $trimmed_description;
 	}
 
 	/**
@@ -154,6 +159,6 @@ class ProductCollectionsListTable extends ListTable {
 	 * @return int
 	 */
 	public function column_products_count( $collection ) {
-		return $collection->products_count;
+		return $collection->products_count ?? 0;
 	}
 }
