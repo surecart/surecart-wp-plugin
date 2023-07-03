@@ -28,7 +28,7 @@ export default ({ children }) => {
 						min-height: 100vh;
 						z-index: 999999;
 					}
-					#wpbody-content {
+					#wpbody-content #app {
 						padding: 0 !important;
 						position: fixed;
 						top: 0;
