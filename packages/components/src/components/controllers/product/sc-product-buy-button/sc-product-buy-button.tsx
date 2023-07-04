@@ -12,7 +12,7 @@ export class ScProductBuyButton {
   @Element() el: HTMLScProductBuyButtonElement;
 
   // Is add to cart enabled
-  @Prop() add_to_cart: boolean;
+  @Prop() addToCart: boolean;
 
   handleCartClick(e) {
     e.preventDefault();
@@ -21,7 +21,7 @@ export class ScProductBuyButton {
     if (state.busy) return;
 
     // if add to cart is undefined/false navigate to buy url
-    if (!this.add_to_cart) {
+    if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
       const buyLink = getProductBuyLink(checkoutUrl);
