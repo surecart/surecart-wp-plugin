@@ -369,8 +369,8 @@ export default ({
 											`Choose ${
 												Object.values(selectedMedia)
 													.length > 1
-													? 'images'
-													: 'image'
+													? 'files'
+													: 'file'
 											}`,
 											'surecart'
 										)}
