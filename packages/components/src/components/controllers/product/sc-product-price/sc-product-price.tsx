@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Fragment } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Price } from '../../../../types';
 import { state } from '@store/product';
@@ -19,7 +19,31 @@ export class ScProductPrice {
     return <sc-price-range prices={state.prices} />;
   }
 
-  renderPrice(price) {
+  renderRecurringInterval(price: Price) {
+    if (!price?.recurring_interval) return;
+
+    return (
+      <span class="recurring-interval">
+        / {price.recurring_period_count > 1 && `${price.recurring_period_count} `}
+        {price.recurring_interval}
+        {price.recurring_period_count > 1 && 's'}
+        {price.recurring_interval_count > 1 ? `(${price.recurring_interval_count} payments)` : ''}
+      </span>
+    );
+  }
+
+  renderSetupFee(price: Price) {
+    if (!price?.setup_fee_enabled) return;
+
+    return (
+      <div class="setup-fee">
+        +<sc-format-number type="currency" currency={price.currency} value={price.setup_fee_amount}></sc-format-number> Setup fee.{' '}
+        {price.setup_fee_trial_enabled && !!price.trial_duration_days ? `Starting in ${price.trial_duration_days} days.` : ''}
+      </div>
+    );
+  }
+
+  renderPrice(price: Price) {
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
     }
@@ -29,17 +53,23 @@ export class ScProductPrice {
     }
 
     return (
-      <div class="price">
-        {!!price?.scratch_amount && (
-          <sc-format-number class="scratch-price" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
-        )}
-        <sc-format-number type="currency" value={price?.amount} currency={price?.currency} />
-        {!!price?.scratch_amount && (
-          <sc-tag type="primary" pill class="sale-badge">
-            {this.saleText || __('Sale', 'surecart')}
-          </sc-tag>
-        )}
-      </div>
+      <Fragment>
+        <div>
+          <div class="price">
+            {!!price?.scratch_amount && (
+              <sc-format-number class="scratch-price" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
+            )}
+            <sc-format-number type="currency" value={price?.amount} currency={price?.currency} />
+            {this.renderRecurringInterval(price)}
+            {!!price?.scratch_amount && (
+              <sc-tag type="primary" pill class="sale-badge">
+                {this.saleText || __('Sale', 'surecart')}
+              </sc-tag>
+            )}
+          </div>
+          {this.renderSetupFee(price)}
+        </div>
+      </Fragment>
     );
   }
 

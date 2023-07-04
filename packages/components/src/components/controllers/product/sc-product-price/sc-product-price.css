@@ -14,3 +14,12 @@
 .sale-badge {
   font-size: min(1em, 14px);
 }
+
+.recurring-interval, .setup-fee{
+  font-size: min(1em, 14px);
+  color: var(--sc-color-gray-400);
+}
+
+.recurring-interval {
+  font-weight: 600;
+}
