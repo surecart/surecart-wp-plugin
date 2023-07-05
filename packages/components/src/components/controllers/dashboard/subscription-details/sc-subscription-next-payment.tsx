@@ -149,6 +149,13 @@ export class ScSubscriptionNextPayment {
               </sc-line-item>
             )}
 
+            {!!checkout?.shipping_amount && (
+              <sc-line-item style={{ marginTop: 'var(--sc-spacing-small)' }}>
+                <span slot="description">{__('Shipping', 'surecart')}</span>
+                <sc-format-number slot="price" type="currency" currency={checkout?.currency} value={checkout?.shipping_amount}></sc-format-number>
+              </sc-line-item>
+            )}
+
             {!!checkout.tax_amount && (
               <sc-line-item>
                 <span slot="description">{formatTaxDisplay(checkout?.tax_label)}</span>

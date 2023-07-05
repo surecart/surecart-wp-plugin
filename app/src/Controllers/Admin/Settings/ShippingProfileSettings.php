@@ -5,13 +5,13 @@ namespace SureCart\Controllers\Admin\Settings;
 /**
  * Controls the settings page.
  */
-class PortalSettings extends BaseSettings {
+class ShippingProfileSettings extends BaseSettings {
 	/**
 	 * Script handles for pages
 	 *
 	 * @var array
 	 */
 	protected $scripts = [
-		'show' => [ 'surecart/scripts/admin/portal', 'admin/settings/portal' ],
+		'show' => [ 'surecart/scripts/admin/shipping/profile', 'admin/settings/shipping/profile' ],
 	];
 }

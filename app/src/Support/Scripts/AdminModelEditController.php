@@ -136,6 +136,9 @@ abstract class AdminModelEditController {
 		if ( in_array( 'tax_protocol', $this->with_data ) ) {
 			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
 		}
+		if ( in_array( 'shipping_protocol', $this->with_data ) ) {
+			$this->data['shipping_protocol'] = \SureCart::account()->shipping_protocol;
+		}
 		if ( in_array( 'checkout_page_url', $this->with_data ) ) {
 			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();
 		}
