@@ -50,6 +50,7 @@ const store = createStore<Store>(
       price_id: selectedPrice?.id,
       quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
+      variant: '',
     },
     selectedVariant: ''
   },
