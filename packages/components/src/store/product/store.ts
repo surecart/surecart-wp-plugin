@@ -1,12 +1,14 @@
 import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
-import { Price, Product } from 'src/types';
+import { Price, Product, Variant, ProductVariant } from 'src/types';
 
 interface Store {
   formId: number;
   mode: 'live' | 'test';
   product: Product;
   prices: Price[];
+  variants: ProductVariant[];
+  variant_options: Variant[];
   quantity: number;
   selectedPrice: Price;
   total: number;
@@ -17,10 +19,14 @@ interface Store {
   dialog: string;
   line_item: LineItemData;
   error: string;
+  selectedVariant: string;
 }
 const product = window?.scData?.product_data?.product || null;
 const prices = product?.prices?.data || [];
+const variant_options = product?.variant_options?.data || [];
+const variants = product?.variants?.data || [];
 const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
+
 const adHocAmount = selectedPrice?.amount || null;
 
 const store = createStore<Store>(
@@ -29,6 +35,8 @@ const store = createStore<Store>(
     mode: window?.scData?.product_data?.mode || 'live',
     product,
     prices,
+    variant_options,
+    variants,
     quantity: 1,
     selectedPrice,
     total: null,
@@ -43,6 +51,7 @@ const store = createStore<Store>(
       quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
     },
+    selectedVariant: ''
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

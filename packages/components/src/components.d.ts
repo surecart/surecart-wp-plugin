@@ -2869,6 +2869,10 @@ export namespace Components {
     interface ScProductText {
         "text": 'name' | 'description';
     }
+    interface ScProductVariationChoices {
+        "label": string;
+        "showPrice": boolean;
+    }
     interface ScProse {
     }
     interface ScProvider {
@@ -4836,6 +4840,12 @@ declare global {
         prototype: HTMLScProductTextElement;
         new (): HTMLScProductTextElement;
     };
+    interface HTMLScProductVariationChoicesElement extends Components.ScProductVariationChoices, HTMLStencilElement {
+    }
+    var HTMLScProductVariationChoicesElement: {
+        prototype: HTMLScProductVariationChoicesElement;
+        new (): HTMLScProductVariationChoicesElement;
+    };
     interface HTMLScProseElement extends Components.ScProse, HTMLStencilElement {
     }
     var HTMLScProseElement: {
@@ -5280,6 +5290,7 @@ declare global {
         "sc-product-quantity": HTMLScProductQuantityElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-product-text": HTMLScProductTextElement;
+        "sc-product-variation-choices": HTMLScProductVariationChoicesElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
         "sc-provisional-banner": HTMLScProvisionalBannerElement;
@@ -8499,6 +8510,10 @@ declare namespace LocalJSX {
     interface ScProductText {
         "text"?: 'name' | 'description';
     }
+    interface ScProductVariationChoices {
+        "label"?: string;
+        "showPrice"?: boolean;
+    }
     interface ScProse {
     }
     interface ScProvider {
@@ -9592,6 +9607,7 @@ declare namespace LocalJSX {
         "sc-product-quantity": ScProductQuantity;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-product-text": ScProductText;
+        "sc-product-variation-choices": ScProductVariationChoices;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
         "sc-provisional-banner": ScProvisionalBanner;
@@ -9799,6 +9815,7 @@ declare module "@stencil/core" {
             "sc-product-quantity": LocalJSX.ScProductQuantity & JSXBase.HTMLAttributes<HTMLScProductQuantityElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
+            "sc-product-variation-choices": LocalJSX.ScProductVariationChoices & JSXBase.HTMLAttributes<HTMLScProductVariationChoicesElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-provisional-banner": LocalJSX.ScProvisionalBanner & JSXBase.HTMLAttributes<HTMLScProvisionalBannerElement>;
