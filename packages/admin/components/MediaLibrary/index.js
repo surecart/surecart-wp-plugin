@@ -370,11 +370,11 @@ export default ({
 											_n(
 												'%s file',
 												'%s files',
-												Object.values(selectedMedia)
+												Object.values(selectedMedia || {})
 													.length || 0,
 												'surecart'
 											),
-											Object.values(selectedMedia)
+											Object.values(selectedMedia || {})
 												.length || ''
 										)}
 									</Button>
