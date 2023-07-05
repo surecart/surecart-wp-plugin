@@ -276,7 +276,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-error-text-color: var(--sc-color-danger-500);
   --sc-toggle-size: 1em;
   --sc-toggle-shady-color: var(--sc-color-gray-50);
-  --sc-radio-size: 1em;
+  --sc-radio-size:  0.85em;
   --sc-toggle-radio-size: 0.85em;
   --sc-checkbox-size: 1em;
   --sc-overlay-background-color: #37415180;

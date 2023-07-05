@@ -8,7 +8,9 @@ exports[`sc-radio-group renders 1`] = `
         <slot name="label"></slot>
       </legend>
       <input class="radio-group__hidden-input" tabindex="-1" type="text" value="">
-      <slot></slot>
+      <div class="radio-group__items" part="items">
+        <slot></slot>
+      </div>
     </fieldset>
   </mock:shadow-root>
 </sc-radio-group>
