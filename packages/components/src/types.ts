@@ -580,6 +580,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  variant: string;
 }
 
 export interface ProcessorData {

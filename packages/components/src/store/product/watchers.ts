@@ -16,8 +16,6 @@ onChange('adHocAmount', () => setLineItem());
 onChange('quantity', () => setLineItem());
 
 const setLineItem = () => {
-  console.log(state.selectedVariant);
-  
   state.line_item = {
     price_id: state.selectedPrice?.id,
     quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
