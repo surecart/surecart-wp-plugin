@@ -107,62 +107,56 @@ export default ({ checkout, busy, loading }) => {
 
 	return (
 		<Box title={__('Customer', 'surecart')} loading={loading}>
-			<ScFormControl
-				label={__('Select a Customer', 'surecart')}
-				style={{ display: 'block' }}
-			>
-				{customer?.id ? (
-					<ScCard>
-						<ScFlex
-							alignItems="center"
-							justifyContent="space-between"
-						>
-							<ScFlex
-								alignItems="center"
-								justifyContent="flex-start"
-							>
-								<div>
-									<img
-										src={avatarUrl || ''}
-										css={css`
-											width: 36px;
-											height: 36px;
-											border-radius: var(
-												--sc-border-radius-medium
-											);
-										`}
-									/>
-								</div>
-								<div>
-									<div>{customer?.name}</div>
-									<div>{customer?.email}</div>
-								</div>
-							</ScFlex>
-
-							<ScDropdown placement="bottom-end">
-								<ScButton type="text" slot="trigger" circle>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() => {
-											onCustomerUpdate();
-										}}
-									>
-										<ScIcon
-											slot="prefix"
-											name="trash"
-											style={{
-												opacity: 0.5,
-											}}
-										/>
-										{__('Remove', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
+			{customer?.id ? (
+				<ScCard>
+					<ScFlex alignItems="center" justifyContent="space-between">
+						<ScFlex alignItems="center" justifyContent="flex-start">
+							<div>
+								<img
+									src={avatarUrl || ''}
+									css={css`
+										width: 36px;
+										height: 36px;
+										border-radius: var(
+											--sc-border-radius-medium
+										);
+									`}
+								/>
+							</div>
+							<div>
+								<div>{customer?.name}</div>
+								<div>{customer?.email}</div>
+							</div>
 						</ScFlex>
-					</ScCard>
-				) : (
+
+						<ScDropdown placement="bottom-end">
+							<ScButton type="text" slot="trigger" circle>
+								<ScIcon name="more-horizontal" />
+							</ScButton>
+							<ScMenu>
+								<ScMenuItem
+									onClick={() => {
+										onCustomerUpdate();
+									}}
+								>
+									<ScIcon
+										slot="prefix"
+										name="trash"
+										style={{
+											opacity: 0.5,
+										}}
+									/>
+									{__('Remove', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
+					</ScFlex>
+				</ScCard>
+			) : (
+				<ScFormControl
+					label={__('Select a Customer', 'surecart')}
+					style={{ display: 'block' }}
+				>
 					<ModelSelector
 						name="customer"
 						placeholder={__('Any Customer', 'surecart')}
@@ -176,8 +170,8 @@ export default ({ checkout, busy, loading }) => {
 							onCustomerUpdate(customer);
 						}}
 					/>
-				)}
-			</ScFormControl>
+				</ScFormControl>
+			)}
 
 			{(!!busy || !!loading || !!busyCustomer) && <ScBlockUi spinner />}
 		</Box>
