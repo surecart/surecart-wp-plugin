@@ -3,26 +3,25 @@
 namespace SureCart\Models;
 
 /**
- * Variant Option model
+ * Variant Option model.
  */
-
 class VariantOption extends Model {
 	/**
-	 * Rest API endpoint
+	 * Rest API endpoint.
 	 *
 	 * @var string
 	 */
 	protected $endpoint = 'variant_options';
 
 	/**
-	 * Object name
+	 * Object name.
 	 *
 	 * @var string
 	 */
 	protected $object_name = 'variant_option';
 
 	/**
-	 * Set the product attribute
+	 * Set the product attribute.
 	 *
 	 * @param  string $value Product properties.
 	 * @return void

@@ -3,19 +3,18 @@
 namespace SureCart\Models;
 
 /**
- * Variant Value model
+ * Variant Value model.
  */
-
 class VariantValue extends Model {
 	/**
-	 * Rest API endpoint
+	 * Rest API endpoint.
 	 *
 	 * @var string
 	 */
 	protected $endpoint = 'variant_values';
 
 	/**
-	 * Object name
+	 * Object name.
 	 *
 	 * @var string
 	 */
