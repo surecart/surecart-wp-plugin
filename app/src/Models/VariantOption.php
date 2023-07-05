@@ -20,4 +20,14 @@ class VariantOption extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'variant_option';
+
+	/**
+	 * Set the product attribute
+	 *
+	 * @param  string $value Product properties.
+	 * @return void
+	 */
+	public function setProductAttribute( $value ) {
+		$this->setRelation( 'product', $value, Product::class );
+	}
 }
