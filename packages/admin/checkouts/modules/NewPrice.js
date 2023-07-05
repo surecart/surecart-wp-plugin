@@ -48,7 +48,7 @@ export default ({ checkout }) => {
 		},
 		[priceID]
 	);
-	
+
 	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
 
 	const onSubmit = async (e) => {

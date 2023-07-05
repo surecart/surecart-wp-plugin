@@ -10,7 +10,7 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScBlockUi
+	ScBlockUi,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useDispatch, select } from '@wordpress/data';
@@ -24,16 +24,16 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import expand from '../query';
 
-export default ( {checkout, busy, loading} ) => {
+export default ({ checkout, busy, loading }) => {
 	const [busyCustomer, setBusyCustomer] = useState(false);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const { receiveEntityRecords, invalidateResolutionForStore } = useDispatch(coreStore);
+	const { receiveEntityRecords, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 	const customer = checkout?.customer_id ? checkout?.customer : {};
 	const avatarUrl = useAvatar({ email: customer?.email });
 
 	const onCustomerUpdate = async (customerID = false) => {
-
 		try {
 			setBusyCustomer(true);
 			// get the checkout endpoint.
@@ -75,7 +75,7 @@ export default ( {checkout, busy, loading} ) => {
 				data: {
 					customer_id: customerID,
 					shipping_address: {
-						...data?.customer?.shipping_address
+						...data?.customer?.shipping_address,
 					}, // update the shipping address for checkout.
 				},
 			});
@@ -106,10 +106,7 @@ export default ( {checkout, busy, loading} ) => {
 	};
 
 	return (
-		<Box 
-			title={__('Customer', 'surecart')}
-			loading={loading}
-		>
+		<Box title={__('Customer', 'surecart')} loading={loading}>
 			<ScFormControl
 				label={__('Select a Customer', 'surecart')}
 				style={{ display: 'block' }}
@@ -148,7 +145,9 @@ export default ( {checkout, busy, loading} ) => {
 								</ScButton>
 								<ScMenu>
 									<ScMenuItem
-										onClick={() => { onCustomerUpdate()}}
+										onClick={() => {
+											onCustomerUpdate();
+										}}
 									>
 										<ScIcon
 											slot="prefix"
@@ -180,9 +179,7 @@ export default ( {checkout, busy, loading} ) => {
 				)}
 			</ScFormControl>
 
-			{(!!busy || !!loading || !!busyCustomer ) && (
-				<ScBlockUi spinner />
-			)}
+			{(!!busy || !!loading || !!busyCustomer) && <ScBlockUi spinner />}
 		</Box>
 	);
 };

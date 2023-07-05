@@ -5,7 +5,7 @@ import {
 	ScFormatNumber,
 	ScLineItem,
 	ScCouponForm,
-    ScDivider
+	ScDivider,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -17,15 +17,14 @@ import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
 
 export default ({ checkout, loading, busy, busyPrices }) => {
-
 	const [busyPayment, setBusyPayment] = useState(false);
-    
-    const { createErrorNotice, createSuccessNotice } =
+
+	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
-    const onCouponChange = async (e) => {
+	const onCouponChange = async (e) => {
 		try {
 			setBusyPayment(true);
 			// get the line items endpoint.
@@ -48,13 +47,13 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 					],
 				}),
 				data: {
-                    customer_id: checkout?.customer_id,
+					customer_id: checkout?.customer_id,
 					discount: {
-                        promotion_code: e?.detail
-                    }, // update the coupon.
+						promotion_code: e?.detail,
+					}, // update the coupon.
 				},
 			});
-			
+
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
@@ -80,7 +79,7 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 			setBusyPayment(false);
 		}
 	};
-    const renderPaymentDetails = () => {
+	const renderPaymentDetails = () => {
 		return (
 			<>
 				<ScLineItem>
@@ -96,38 +95,37 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
-                {
-                    0 !== checkout?.tax_amount && (
-                    <ScLineItem>
-                        <span slot="description">{`${formatTaxDisplay(__('Order Tax', 'surecart'))} (${
-                                checkout?.tax_percent
-                            }%)`}</span>
-                        <ScFormatNumber
-                            slot="price"
-                            style={{
-                                fontWeight: 'var(--sc-font-weight-semibold)',
-                                color: 'var(--sc-color-gray-800)',
-                            }}
-                            type="currency"
-                            currency={checkout?.currency}
-                            value={checkout?.tax_amount}
-                        ></ScFormatNumber>
-                    </ScLineItem>
-                )}
+				{0 !== checkout?.tax_amount && (
+					<ScLineItem>
+						<span slot="description">{`${formatTaxDisplay(
+							__('Order Tax', 'surecart')
+						)} (${checkout?.tax_percent}%)`}</span>
+						<ScFormatNumber
+							slot="price"
+							style={{
+								fontWeight: 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
+							type="currency"
+							currency={checkout?.currency}
+							value={checkout?.tax_amount}
+						></ScFormatNumber>
+					</ScLineItem>
+				)}
 				<ScCouponForm
 					collapsed={true}
 					placeholder={__('Enter Coupon Code', 'surecart')}
 					label={__('Add Coupon Code', 'surecart')}
 					buttonText={__('Apply', 'surecart')}
 					onScApplyCoupon={onCouponChange}
-                    discount={checkout?.discount}
-                    currency={checkout?.currency}
-                    discountAmount={checkout?.discount_amount}    
+					discount={checkout?.discount}
+					currency={checkout?.currency}
+					discountAmount={checkout?.discount_amount}
 				/>
 
-                <ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
+				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
-                <ScLineItem>
+				<ScLineItem>
 					<span slot="description">{__('Total', 'surecart')}</span>
 					<ScFormatNumber
 						slot="price"
@@ -145,11 +143,9 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 	};
 
 	return (
-        <Box title={__('Payment', 'surecart')} loading={loading}>
-            {renderPaymentDetails()}
-            {(!!busy || !!busyPayment || !!busyPrices) && (
-                <ScBlockUi spinner />
-            )}
-        </Box>
-    );
-}
+		<Box title={__('Payment', 'surecart')} loading={loading}>
+			{renderPaymentDetails()}
+			{(!!busy || !!busyPayment || !!busyPrices) && <ScBlockUi spinner />}
+		</Box>
+	);
+};

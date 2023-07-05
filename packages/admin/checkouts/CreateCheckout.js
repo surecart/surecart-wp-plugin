@@ -5,11 +5,7 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
-import {
-	ScButton,
-	ScForm,
-	ScBlockUi
-} from '@surecart/components-react';
+import { ScButton, ScForm, ScBlockUi } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
@@ -131,52 +127,74 @@ export default () => {
 	};
 
 	const getErrors = (e) => {
-
 		let errors = {
-			message: __( 'Failed to create an order. Please check for below errors & try again.', 'surecart' ),
-			additional_errors: []
-		}
+			message: __(
+				'Failed to create an order. Please check for below errors & try again.',
+				'surecart'
+			),
+			additional_errors: [],
+		};
 		const additionalErrors = e?.additional_errors;
 		if (additionalErrors) {
 			for (const error of additionalErrors) {
 				let errorMessage = '';
 				switch (error?.code) {
 					case 'checkout.line_items.required':
-						errorMessage = __( 'Please add at least one product.', 'surecart' );
-						errors?.additional_errors?.push({message:errorMessage});
+						errorMessage = __(
+							'Please add at least one product.',
+							'surecart'
+						);
+						errors?.additional_errors?.push({
+							message: errorMessage,
+						});
 						break;
 					case 'checkout.customer.blank':
-						errorMessage = __( 'Please select a customer.', 'surecart' );
-						errors?.additional_errors?.push({message:errorMessage});
+						errorMessage = __(
+							'Please select a customer.',
+							'surecart'
+						);
+						errors?.additional_errors?.push({
+							message: errorMessage,
+						});
 						break;
 					case 'checkout.shipping_address.invalid_shipping_address':
-						errorMessage = __( 'Please add a valid address with necessary shipping information.', 'surecart' );
-						errors?.additional_errors?.push({message:errorMessage});
+						errorMessage = __(
+							'Please add a valid address with necessary shipping information.',
+							'surecart'
+						);
+						errors?.additional_errors?.push({
+							message: errorMessage,
+						});
 						break;
 					case 'checkout.shipping_address.invalid_tax_address':
-						errorMessage = __( 'Please select a valid tax address.', 'surecart' );
-						errors?.additional_errors?.push({message:errorMessage});
+						errorMessage = __(
+							'Please select a valid tax address.',
+							'surecart'
+						);
+						errors?.additional_errors?.push({
+							message: errorMessage,
+						});
 						break;
 					default:
 						break;
 				}
 			}
 		}
-		
+
 		return errors;
 	};
 
 	/**
 	 * Handle the form submission
 	 */
-	 const onSubmit = async () => {
+	const onSubmit = async () => {
 		try {
 			setIsSaving(true);
 			const checkoutResult = await finalizeCheckout({
 				id: checkout?.id,
 				customer_id: customer?.id,
 			});
-			
+
 			createSuccessNotice(__('Order Created.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -188,7 +206,7 @@ export default () => {
 			setIsSaving(false);
 		}
 	};
-	
+
 	const onAddressChange = async (address) => {
 		try {
 			setBusyCustomer(true);
@@ -247,10 +265,7 @@ export default () => {
 
 	return (
 		<>
-			<Error
-				error={checkoutError}
-				setError={setCheckoutError}
-			/>
+			<Error error={checkoutError} setError={setCheckoutError} />
 			<UpdateModel
 				title={
 					<div
@@ -287,12 +302,8 @@ export default () => {
 						<div
 							css={css`display: flex gap: var(--sc-spacing-small);`}
 						>
-							<ScButton
-								type="primary"
-								submit
-								loading={isSaving}
-							>
-								{__('Create', 'surecart')}
+							<ScButton type="primary" submit loading={isSaving}>
+								{__('Create Order', 'surecart')}
 							</ScButton>
 						</div>
 					</ScForm>
