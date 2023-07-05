@@ -30,6 +30,22 @@ class OrderPermissionsController extends ModelPermissionsController {
 	}
 
 	/**
+	 * Does the model belong to the user?
+	 *
+	 * @param string                $model Model name.
+	 * @param string                $id Model ID.
+	 * @param \SureCart\Models\User $user User model.
+	 * @return boolean
+	 */
+	public function belongsToUser( $model, $id, $user ) {
+		$order = Order::with( [ 'checkout' ] )->find( $id );
+		if ( is_wp_error( $order ) ) {
+			return $order;
+		}
+		return $order->checkout->belongsToUser( $user );
+	}
+
+	/**
 	 * Can user read.
 	 *
 	 * @param \SureCart\Models\User $user User model.
