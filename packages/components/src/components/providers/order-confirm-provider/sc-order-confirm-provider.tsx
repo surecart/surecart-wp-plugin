@@ -73,7 +73,7 @@ export class ScOrderConfirmProvider {
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { order: this.confirmedCheckout?.id })), 50);
+        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: this.confirmedCheckout?.id })), 50);
       } else {
         this.showSuccessModal = true;
       }
@@ -114,7 +114,7 @@ export class ScOrderConfirmProvider {
 
   getSuccessUrl() {
     const url = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
-    return url ? addQueryArgs(url, { order: this.confirmedCheckout?.id }) : window?.scData?.pages?.dashboard;
+    return url ? addQueryArgs(url, { sc_order: this.confirmedCheckout?.id }) : window?.scData?.pages?.dashboard;
   }
 
   render() {
