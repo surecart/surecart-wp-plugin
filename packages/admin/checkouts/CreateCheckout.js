@@ -267,6 +267,7 @@ export default () => {
 		<>
 			<Error error={checkoutError} setError={setCheckoutError} />
 			<UpdateModel
+				onSubmit={onSubmit}
 				title={
 					<div
 						css={css`
@@ -298,15 +299,9 @@ export default () => {
 					</div>
 				}
 				button={
-					<ScForm onScSubmit={onSubmit}>
-						<div
-							css={css`display: flex gap: var(--sc-spacing-small);`}
-						>
-							<ScButton type="primary" submit loading={isSaving}>
-								{__('Create Order', 'surecart')}
-							</ScButton>
-						</div>
-					</ScForm>
+					<ScButton type="primary" submit loading={isSaving}>
+						{__('Create Order', 'surecart')}
+					</ScButton>
 				}
 				sidebar={
 					<>
