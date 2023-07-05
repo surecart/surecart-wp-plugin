@@ -20,4 +20,14 @@ class VariantValue extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'variant_value';
+
+	/**
+	 * Set the VariantOption attribute
+	 *
+	 * @param  string $value VariantOption properties.
+	 * @return void
+	 */
+	public function setVariantOptionAttribute( $value ) {
+		$this->setRelation( 'variant_option', $value, VariantOption::class );
+	}
 }
