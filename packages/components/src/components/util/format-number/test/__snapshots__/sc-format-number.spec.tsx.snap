@@ -2,6 +2,6 @@
 
 exports[`sc-format-currency renders 1`] = `
 <sc-format-number value="2000">
-  20
+  2,000
 </sc-format-number>
 `;

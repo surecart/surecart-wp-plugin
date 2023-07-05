@@ -2,6 +2,7 @@ import { Component, Prop, Event, EventEmitter, h, Method, Watch, Element } from 
 import { getCurrencySymbol } from '../../../functions/price';
 import { FormSubmitController } from '../../../functions/form-data';
 import { isZeroDecimal, maybeConvertAmount } from '../../../functions/currency';
+import { sprintf, __ } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -104,7 +105,17 @@ export class ScPriceInput {
 
   @Method()
   async reportValidity() {
-    return this.input.shadowRoot.querySelector('input').reportValidity();
+    const input = this.input.shadowRoot.querySelector('input');
+    input.setCustomValidity('');
+    if (this.min && this.value && parseFloat(this.value) <= this.min) {
+      this.invalid = true;
+      input.setCustomValidity(sprintf(__('Must be greater than %d', 'surecart'), maybeConvertAmount(this.min, this.currencyCode).toString()));
+    }
+    if (this.max && this.value && parseFloat(this.value) >= this.max) {
+      this.invalid = true;
+      input.setCustomValidity(sprintf(__('Must be less than %d', 'surecart'), maybeConvertAmount(this.max, this.currencyCode).toString()));
+    }
+    return input.reportValidity();
   }
 
   /** Sets focus on the input. */
@@ -142,14 +153,14 @@ export class ScPriceInput {
   updateValue() {
     // This fixes issues on mobile Safari where a decimal point is added to the end of the input value
     // does not have an input value.
-    if (!this.input.shadowRoot.querySelector('input').checkValidity()) {
+    const parsed = parseFloat(this.input.value);
+    if (isNaN(parsed)) {
+      this.value = '';
       return;
     }
-    if (!this.input.value) {
-      return;
-    }
-    const val = isZeroDecimal(this.currencyCode) ? parseFloat(this.input.value) : (parseFloat(this.input.value) * 100).toFixed(2);
-    this.value = this.input.value ? val.toString() : '';
+    const val = isZeroDecimal(this.currencyCode) ? parsed : (parsed * 100).toFixed(2);
+    this.value = val.toString();
+    this.setCustomValidity('');
   }
 
   componentDidLoad() {
@@ -173,7 +184,7 @@ export class ScPriceInput {
         showLabel={this.showLabel}
         help={this.help}
         ref={el => (this.input = el as HTMLScInputElement)}
-        type="number"
+        type="text" // we cannot use number because it's basically the worst. https://stackoverflow.blog/2022/12/26/why-the-number-input-is-the-worst-input/
         name={this.name}
         disabled={this.disabled}
         readonly={this.readonly}
@@ -192,7 +203,7 @@ export class ScPriceInput {
         onScBlur={() => this.scBlur.emit()}
         onScFocus={() => this.scFocus.emit()}
         pattern="^\d*(\.\d{0,2})?$" // This prevents more than two decimal places
-        value={maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString()}
+        value={this.value ? maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString() : ''}
       >
         <span style={{ opacity: '0.5' }} slot="prefix">
           {getCurrencySymbol(this.currencyCode)}

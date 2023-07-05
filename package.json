@@ -87,7 +87,7 @@
 		"@wordpress/blocks": "^6.21.0",
 		"@wordpress/components": "^10.1.0",
 		"@wordpress/core-data": "^2.21.0",
-		"@wordpress/data": "^4.23.0",
+		"@wordpress/data": "^6.1.0",
 		"@wordpress/date": "^4.14.0",
 		"@wordpress/dom-ready": "^2.10.0",
 		"@wordpress/e2e-test-utils-playwright": "^0.1.0",

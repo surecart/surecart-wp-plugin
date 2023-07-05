@@ -4,12 +4,13 @@
 
 .radio {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   font-family: var(--sc-input-font-family);
   font-size: var(--sc-input-font-size-medium);
   font-weight: var(--sc-input-font-weight);
   color: var(--sc-input-color);
   vertical-align: middle;
+  gap: var(--sc-spacing-xx-small);
 }
 
 .radio:not(.radio--editing) {
@@ -39,7 +40,9 @@
   border-radius: 50%;
   background-color: var(--sc-input-background-color);
   color: transparent;
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) opacity, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) opacity,
+    var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   input[type='radio'] {
     position: absolute;
