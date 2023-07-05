@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Watch } from '@stencil/core';
+import { Component, Prop, h, State, Watch, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
@@ -34,6 +34,9 @@ export class ScProductVariationChoices {
   }
 
   render() {  
+
+    if (this.variants?.length < 2) return <Host style={{ display: 'none' }}></Host>;
+
     const options = [];
 
     this.variantOptions.forEach((variation) => {
@@ -75,7 +78,7 @@ export class ScProductVariationChoices {
                     this.variantValues = [...this.variantValues, e?.target?.value];
                   }}
                   choices={option?.values}
-                  // placeholder={__('Select Variation', 'surecart')}
+                  placeholder={__('Select Variation', 'surecart')}
                   name={__('Select Variation', 'surecart')}
                   unselect={false}
                   squared-bottom
