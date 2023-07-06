@@ -109,11 +109,11 @@ export class ScPriceInput {
     input.setCustomValidity('');
     if (this.min && this.value && parseFloat(this.value) < this.min) {
       this.invalid = true;
-      input.setCustomValidity(sprintf(__('Must be %d or more', 'surecart'), maybeConvertAmount(this.min, this.currencyCode).toString()));
+      input.setCustomValidity(sprintf(__('Must be %d or more.', 'surecart'), maybeConvertAmount(this.min, this.currencyCode).toString()));
     }
     if (this.max && this.value && parseFloat(this.value) > this.max) {
       this.invalid = true;
-      input.setCustomValidity(sprintf(__('Must be %d or less', 'surecart'), maybeConvertAmount(this.max, this.currencyCode).toString()));
+      input.setCustomValidity(sprintf(__('Must be %d or less.', 'surecart'), maybeConvertAmount(this.max, this.currencyCode).toString()));
     }
     return input.reportValidity();
   }
