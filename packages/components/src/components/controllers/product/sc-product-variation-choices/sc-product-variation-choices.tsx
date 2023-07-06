@@ -19,12 +19,16 @@ export class ScProductVariationChoices {
 
   componentWillLoad() {
     if ( ! this.isDummy ) {
+      this.variantOptions = this.variantOptions?.sort((a, b) => a?.position - b?.position);
+      
       this.variantOptions.forEach((variation) => {
         if (!variation.name) {
           return;
         }
         const { id, name, position, variant_values } = variation;
         
+        variant_values?.data?.sort((a, b) => a?.position - b?.position);
+
         this.options.push(
           {
             id,
@@ -37,6 +41,7 @@ export class ScProductVariationChoices {
             }))
           }
         );
+        
       });
     } else {
       this.options = [...dummyOptions];
