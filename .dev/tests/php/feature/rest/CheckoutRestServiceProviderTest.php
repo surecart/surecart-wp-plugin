@@ -48,6 +48,12 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
+		\SureCart::alias('account', function () {
+			return (object) [
+				'id' => 'testid'
+			];
+		});
+
 		$account = \Mockery::mock(AccountService::class)->shouldAllowMockingProtectedMethods();
 		\SureCart::alias('account', function () use ($account) {
 			return $account;
