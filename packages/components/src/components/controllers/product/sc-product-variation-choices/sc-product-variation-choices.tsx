@@ -15,8 +15,7 @@ export class ScProductVariationChoices {
 
   @Element() el: HTMLScProductVariationChoicesElement;
   @Prop() isDummy: boolean;
-  @State() variantValues: Array<string> = [];
-  @State() selectedOptions: Array<string> = [];
+  @State() variantValues: { [key: string]: string } = {};
 
   componentWillLoad() {
     if ( ! this.isDummy ) {
@@ -42,27 +41,42 @@ export class ScProductVariationChoices {
     } else {
       this.options = [...dummyOptions];
     }
-    
+    for (const option of this.options) {
+      this.variantValues = {
+        ...this.variantValues,
+        [option?.id]: option?.values?.[0]?.value
+      };
+    }
+
   }
 
   @Watch('variantValues')
-  variantValuesChanged(newValue: Array<any>) {
-    if ( newValue?.length === this.variantOptions?.length ) {
-      let matchedVariant = '';
-      for ( const variant of this.variants ) {
-        if (variant?.variant_values?.length === newValue.length &&
-          newValue.every(value => variant.variant_values.includes(value))) {
-          matchedVariant = variant.id;
-        }
-      }
+  variantValuesChanged(newValue: { [key: string]: string }) {
+    if ( !this.isDummy ) {
+      const variantValueKeys = Object.keys(newValue);
 
-      if ( matchedVariant ) {
-        state.selectedVariant = matchedVariant;
+      if (variantValueKeys.length === this.variantOptions.length) {
+        let matchedVariant = '';
+
+        for (const variant of this.variants) {
+          if (
+            variant?.variant_values?.length === variantValueKeys.length &&
+            variantValueKeys.every(key => variant.variant_values.includes(newValue[key]))
+          ) {
+            matchedVariant = variant.id;
+            break;
+          }
+        }
+        
+        if (matchedVariant) {
+          state.selectedVariant = matchedVariant;
+        }
       }
     }
   }
 
   render() {  
+    
     if ( ! this.isDummy && this.variants?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
     return (
@@ -79,12 +93,14 @@ export class ScProductVariationChoices {
                 <sc-select
                   exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
                   part="name__input"
-                  value={this.selectedOptions[option?.id] || option?.values?.[0]?.value || false}
+                  value={this.variantValues?.[option.id] || option?.values?.[0]?.value || false}
                   onScChange={(e: any) => {
-                    if ( ! this.isDummy ) {
-                      this.variantValues = [...this.variantValues, e?.target?.value];
+                    if ( !this.isDummy ) {
+                      this.variantValues = {
+                        ...this.variantValues,
+                        [option?.id]: e?.target?.value
+                      };
                     }
-                    this.selectedOptions[option?.id] = e?.target?.value;
                   }}
                   choices={option?.values}
                   placeholder={__('Select Variation', 'surecart')}
