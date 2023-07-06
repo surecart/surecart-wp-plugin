@@ -2870,8 +2870,6 @@ export namespace Components {
         "text": 'name' | 'description';
     }
     interface ScProductVariationChoices {
-        "label": string;
-        "showPrice": boolean;
     }
     interface ScProse {
     }
@@ -8511,8 +8509,6 @@ declare namespace LocalJSX {
         "text"?: 'name' | 'description';
     }
     interface ScProductVariationChoices {
-        "label"?: string;
-        "showPrice"?: boolean;
     }
     interface ScProse {
     }

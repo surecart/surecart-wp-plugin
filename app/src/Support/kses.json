@@ -1574,8 +1574,6 @@
     "slot": true
   },
   "sc-product-variation-choices": {
-    "label": true,
-    "show-price": true,
     "style": true,
     "id": true,
     "class": true,

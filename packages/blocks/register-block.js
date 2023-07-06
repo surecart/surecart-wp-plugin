@@ -17,8 +17,9 @@ const registerBlock = (block) => {
 	if (!block) {
 		return;
 	}
+
 	const { metadata, settings } = block;
-	
+
 	registerBlockType(
 		{
 			...metadata,

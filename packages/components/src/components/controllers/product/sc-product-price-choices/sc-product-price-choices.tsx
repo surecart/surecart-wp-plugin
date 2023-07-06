@@ -31,7 +31,7 @@ export class ScProductPriceChoices {
     );
   }
 
-  render() {  
+  render() {
     const prices = availablePrices();
     if (prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 

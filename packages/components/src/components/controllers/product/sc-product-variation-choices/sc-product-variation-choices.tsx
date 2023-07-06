@@ -1,4 +1,4 @@
-import { Component, Prop, h, State, Watch, Host } from '@stencil/core';
+import { Component, h, State, Watch, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
@@ -9,8 +9,6 @@ import { state } from '@store/product';
   shadow: true,
 })
 export class ScProductVariationChoices {
-  @Prop() label: string;
-  @Prop() showPrice: boolean;
   @State() variantValues: Array<[]> = [];
 
   variantOptions = availableVariantOptions();
