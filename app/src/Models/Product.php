@@ -39,6 +39,24 @@ class Product extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
+	 * Create a new model
+	 *
+	 * @param array $attributes Attributes to create.
+	 *
+	 * @return $this|false
+	 */
+	protected function create( $attributes = [] ) {
+		if ( ! wp_is_block_theme() ) {
+			$attributes['metadata'] = [
+				...$attributes['metadata'] ?? [],
+				'wp_template_id' => apply_filters( 'surecart/templates/products/default', 'pages/template-surecart-product.php' ),
+			];
+		}
+
+		return parent::create( $attributes );
+	}
+
+	/**
 	 * Image srcset.
 	 *
 	 * @return string

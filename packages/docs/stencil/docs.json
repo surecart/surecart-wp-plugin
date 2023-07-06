@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-05-30T20:31:34",
+  "timestamp": "2023-06-27T18:45:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1101,6 +1101,7 @@
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-purchase-downloads-list",
+        "sc-shipping-choices",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
         "sc-subscription-cancel",
@@ -1180,6 +1181,9 @@
           "sc-block-ui"
         ],
         "sc-purchase-downloads-list": [
+          "sc-block-ui"
+        ],
+        "sc-shipping-choices": [
           "sc-block-ui"
         ],
         "sc-subscription": [
@@ -2568,6 +2572,7 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-login-form",
@@ -2607,6 +2612,9 @@
           "sc-card"
         ],
         "sc-downloads-list": [
+          "sc-card"
+        ],
+        "sc-fulfillments": [
           "sc-card"
         ],
         "sc-invoices-list": [
@@ -2990,7 +2998,7 @@
     },
     {
       "filePath": "./src/components/controllers/cart/sc-cart-form/sc-cart-form.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-cart-form",
       "readme": "# sc-cart-form\n\n\n",
       "docs": "",
@@ -4689,7 +4697,9 @@
           "sc-order-shipping-address",
           "sc-order-tax-id-input",
           "sc-order-bumps",
-          "sc-line-item-tax"
+          "sc-line-item-tax",
+          "sc-shipping-choices",
+          "sc-line-item-shipping"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -4740,6 +4750,18 @@
         ],
         "sc-line-item-tax": [
           "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-shipping-choices": [
+          "sc-form-control",
+          "sc-radio-group",
+          "sc-radio",
+          "sc-format-number",
+          "sc-block-ui"
+        ],
+        "sc-line-item-shipping": [
+          "sc-line-item",
+          "sc-skeleton",
           "sc-format-number"
         ],
         "sc-order-confirm-provider": [
@@ -6891,8 +6913,7 @@
         "sc-input",
         "sc-button",
         "sc-alert",
-        "sc-block-ui",
-        "sc-form-control"
+        "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-coupon-form": [
@@ -6903,8 +6924,7 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui",
-          "sc-form-control"
+          "sc-block-ui"
         ],
         "sc-input": [
           "sc-form-control"
@@ -8243,7 +8263,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9593,6 +9613,7 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-order",
@@ -9640,6 +9661,9 @@
           "sc-dashboard-module"
         ],
         "sc-downloads-list": [
+          "sc-dashboard-module"
+        ],
+        "sc-fulfillments": [
           "sc-dashboard-module"
         ],
         "sc-invoices-list": [
@@ -11373,6 +11397,7 @@
         "sc-cancel-discount",
         "sc-cancel-survey",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-login-form",
         "sc-order",
         "sc-pagination",
@@ -11395,6 +11420,9 @@
           "sc-flex"
         ],
         "sc-downloads-list": [
+          "sc-flex"
+        ],
+        "sc-fulfillments": [
           "sc-flex"
         ],
         "sc-login-form": [
@@ -11699,14 +11727,18 @@
         "sc-order-shipping-address",
         "sc-order-tax-id-input",
         "sc-order-bumps",
-        "sc-line-item-tax"
+        "sc-line-item-tax",
+        "sc-shipping-choices",
+        "sc-line-item-shipping"
       ],
       "dependencyGraph": {
         "sc-form-components-validator": [
           "sc-order-shipping-address",
           "sc-order-tax-id-input",
           "sc-order-bumps",
-          "sc-line-item-tax"
+          "sc-line-item-tax",
+          "sc-shipping-choices",
+          "sc-line-item-shipping"
         ],
         "sc-order-shipping-address": [
           "sc-address",
@@ -11769,6 +11801,18 @@
         ],
         "sc-line-item-tax": [
           "sc-line-item",
+          "sc-format-number"
+        ],
+        "sc-shipping-choices": [
+          "sc-form-control",
+          "sc-radio-group",
+          "sc-radio",
+          "sc-format-number",
+          "sc-block-ui"
+        ],
+        "sc-line-item-shipping": [
+          "sc-line-item",
+          "sc-skeleton",
           "sc-format-number"
         ],
         "sc-checkout": [
@@ -12035,7 +12079,6 @@
         "sc-button-group",
         "sc-choices",
         "sc-compact-address",
-        "sc-coupon-form",
         "sc-input",
         "sc-order-bumps",
         "sc-payment",
@@ -12043,6 +12086,7 @@
         "sc-product-quantity",
         "sc-rich-text",
         "sc-select",
+        "sc-shipping-choices",
         "sc-stripe-element",
         "sc-textarea"
       ],
@@ -12065,9 +12109,6 @@
         "sc-compact-address": [
           "sc-form-control"
         ],
-        "sc-coupon-form": [
-          "sc-form-control"
-        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -12087,6 +12128,9 @@
           "sc-form-control"
         ],
         "sc-select": [
+          "sc-form-control"
+        ],
+        "sc-shipping-choices": [
           "sc-form-control"
         ],
         "sc-stripe-element": [
@@ -13031,7 +13075,7 @@
           "mutable": false,
           "attr": "no-convert",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Should we convert",
           "docsTags": [],
           "values": [
             {
@@ -13060,7 +13104,7 @@
         },
         {
           "name": "type",
-          "type": "\"currency\" | \"decimal\" | \"percent\"",
+          "type": "\"currency\" | \"decimal\" | \"percent\" | \"unit\"",
           "mutable": false,
           "attr": "type",
           "reflectToAttr": false,
@@ -13078,6 +13122,27 @@
             },
             {
               "value": "percent",
+              "type": "string"
+            },
+            {
+              "value": "unit",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "unit",
+          "type": "string",
+          "mutable": false,
+          "attr": "unit",
+          "reflectToAttr": false,
+          "docs": "The unit to use when formatting.",
+          "docsTags": [],
+          "default": "'lb'",
+          "values": [
+            {
               "type": "string"
             }
           ],
@@ -13111,8 +13176,10 @@
       "dependents": [
         "sc-charges-list",
         "sc-coupon-form",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-bump",
+        "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
         "sc-order",
@@ -13129,6 +13196,7 @@
         "sc-product-price",
         "sc-product-price-choices",
         "sc-product-selected-price",
+        "sc-shipping-choices",
         "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-switch",
@@ -13143,10 +13211,16 @@
         "sc-coupon-form": [
           "sc-format-number"
         ],
+        "sc-fulfillments": [
+          "sc-format-number"
+        ],
         "sc-invoices-list": [
           "sc-format-number"
         ],
         "sc-line-item-bump": [
+          "sc-format-number"
+        ],
+        "sc-line-item-shipping": [
           "sc-format-number"
         ],
         "sc-line-item-tax": [
@@ -13197,6 +13271,9 @@
         "sc-product-selected-price": [
           "sc-format-number"
         ],
+        "sc-shipping-choices": [
+          "sc-format-number"
+        ],
         "sc-subscription-details": [
           "sc-format-number"
         ],
@@ -13211,6 +13288,207 @@
         ],
         "sc-upcoming-invoice": [
           "sc-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/fulfillment-shipping-status-badge/sc-fulfillment-shipping-status-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-fulfillment-shipping-status-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"delivered\" | \"pending\" | \"shipped\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "delivered",
+              "type": "string"
+            },
+            {
+              "value": "pending",
+              "type": "string"
+            },
+            {
+              "value": "shipped",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-fulfillments"
+      ],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-fulfillment-shipping-status-badge": [
+          "sc-tag"
+        ],
+        "sc-fulfillments": [
+          "sc-fulfillment-shipping-status-badge"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/fulfillments/sc-fulfillments.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-fulfillments",
+      "readme": "# sc-fulfillments\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "mutable": false,
+          "attr": "heading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "orderId",
+          "type": "string",
+          "mutable": false,
+          "attr": "order-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-flex",
+        "sc-skeleton",
+        "sc-spacing",
+        "sc-dashboard-module",
+        "sc-card",
+        "sc-stacked-list",
+        "sc-stacked-list-row",
+        "sc-fulfillment-shipping-status-badge",
+        "sc-icon",
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-fulfillments": [
+          "sc-flex",
+          "sc-skeleton",
+          "sc-spacing",
+          "sc-dashboard-module",
+          "sc-card",
+          "sc-stacked-list",
+          "sc-stacked-list-row",
+          "sc-fulfillment-shipping-status-badge",
+          "sc-icon",
+          "sc-format-number"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-fulfillment-shipping-status-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -13400,6 +13678,7 @@
         "sc-downloads-list",
         "sc-drawer",
         "sc-empty",
+        "sc-fulfillments",
         "sc-image-slider",
         "sc-invoices-list",
         "sc-login-form",
@@ -13415,6 +13694,7 @@
         "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-selected-price",
+        "sc-provisional-banner",
         "sc-purchase-downloads-list",
         "sc-quantity-select",
         "sc-rich-text",
@@ -13478,6 +13758,9 @@
         "sc-empty": [
           "sc-icon"
         ],
+        "sc-fulfillments": [
+          "sc-icon"
+        ],
         "sc-image-slider": [
           "sc-icon"
         ],
@@ -13521,6 +13804,9 @@
           "sc-icon"
         ],
         "sc-product-selected-price": [
+          "sc-icon"
+        ],
+        "sc-provisional-banner": [
           "sc-icon"
         ],
         "sc-purchase-downloads-list": [
@@ -14993,6 +15279,7 @@
       "dependents": [
         "sc-coupon-form",
         "sc-line-item-bump",
+        "sc-line-item-shipping",
         "sc-line-item-tax",
         "sc-line-item-total",
         "sc-line-items",
@@ -15011,6 +15298,9 @@
           "sc-line-item"
         ],
         "sc-line-item-bump": [
+          "sc-line-item"
+        ],
+        "sc-line-item-shipping": [
           "sc-line-item"
         ],
         "sc-line-item-tax": [
@@ -15120,6 +15410,57 @@
         "sc-line-item-bump": [
           "sc-line-item",
           "sc-format-number"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-line-item-shipping/sc-line-item-shipping.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-line-item-shipping",
+      "readme": "# sc-shipping-amount\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-line-item",
+        "sc-skeleton",
+        "sc-format-number"
+      ],
+      "dependencyGraph": {
+        "sc-line-item-shipping": [
+          "sc-line-item",
+          "sc-skeleton",
+          "sc-format-number"
+        ],
+        "sc-form-components-validator": [
+          "sc-line-item-shipping"
         ]
       }
     },
@@ -17324,8 +17665,7 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui",
-          "sc-form-control"
+          "sc-block-ui"
         ],
         "sc-input": [
           "sc-form-control"
@@ -17477,6 +17817,125 @@
         "sc-order-detail": [
           "sc-format-number",
           "sc-skeleton"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/order-fulfillment-badge/sc-order-fulfillment-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-fulfillment-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"fulfilled\" | \"on_hold\" | \"partially_fulfilled\" | \"scheduled\" | \"unfulfilled\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "fulfilled",
+              "type": "string"
+            },
+            {
+              "value": "on_hold",
+              "type": "string"
+            },
+            {
+              "value": "partially_fulfilled",
+              "type": "string"
+            },
+            {
+              "value": "scheduled",
+              "type": "string"
+            },
+            {
+              "value": "unfulfilled",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-order-fulfillment-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -17898,6 +18357,121 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/order-shipment-badge/sc-order-shipment-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-shipment-badge",
+      "readme": "# ce-subscription-status-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"delivered\" | \"partially_shipped\" | \"shipped\" | \"unshipped\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "delivered",
+              "type": "string"
+            },
+            {
+              "value": "partially_shipped",
+              "type": "string"
+            },
+            {
+              "value": "shipped",
+              "type": "string"
+            },
+            {
+              "value": "unshipped",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-order-shipment-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -19043,7 +19617,7 @@
         },
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_address?: string | Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -19099,10 +19673,13 @@
               "type": "Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string"
             },
             {
-              "type": "Address; shipping_address?: string"
+              "type": "Address; shipping_amount?: number; shipping_address?: string"
             },
             {
-              "type": "Address; shipping_enabled?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+              "type": "Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string"
+            },
+            {
+              "type": "ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -24266,6 +24843,49 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/ui/sc-provisional-banner/sc-provisional-banner.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-provisional-banner",
+      "readme": "# sc-provisional-banner\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "claimUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "claim-url",
+          "reflectToAttr": false,
+          "docs": "Claim URL.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-provisional-banner": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/purchase-downloads-list/sc-purchase-downloads-list.tsx",
       "encapsulation": "shadow",
       "tag": "sc-purchase-downloads-list",
@@ -24912,9 +25532,15 @@
           "docs": "The label."
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-shipping-choices"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-shipping-choices": [
+          "sc-radio"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/radio-group/sc-radio-group.tsx",
@@ -25005,10 +25631,20 @@
           "docsTags": []
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "event": "scChange",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "listeners": [
         {
-          "event": "click",
+          "event": "scChange",
           "capture": false,
           "passive": false
         }
@@ -25021,13 +25657,23 @@
           "docs": ""
         },
         {
+          "name": "items",
+          "docs": ""
+        },
+        {
           "name": "label",
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-shipping-choices"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-shipping-choices": [
+          "sc-radio-group"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/rich-text/sc-rich-text.tsx",
@@ -25435,6 +26081,23 @@
           "values": [
             {
               "type": "ChoiceItem[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "closeOnSelect",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "close-on-select",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -26238,6 +26901,94 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-shipping-choices/sc-shipping-choices.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-shipping-choices",
+      "readme": "# sc-shipping-choices\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The shipping section label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showDescription",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-description",
+          "reflectToAttr": false,
+          "docs": "Whether to show the shipping choice description",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scError",
+          "detail": "ResponseError",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Error event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-form-components-validator"
+      ],
+      "dependencies": [
+        "sc-form-control",
+        "sc-radio-group",
+        "sc-radio",
+        "sc-format-number",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-shipping-choices": [
+          "sc-form-control",
+          "sc-radio-group",
+          "sc-radio",
+          "sc-format-number",
+          "sc-block-ui"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-form-components-validator": [
+          "sc-shipping-choices"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/skeleton/sc-skeleton.tsx",
       "encapsulation": "shadow",
       "tag": "sc-skeleton",
@@ -26312,7 +27063,9 @@
         "sc-custom-order-price-input",
         "sc-customer-details",
         "sc-donation-choices",
+        "sc-fulfillments",
         "sc-invoices-list",
+        "sc-line-item-shipping",
         "sc-line-item-total",
         "sc-line-items",
         "sc-mollie-add-method",
@@ -26363,7 +27116,13 @@
         "sc-donation-choices": [
           "sc-skeleton"
         ],
+        "sc-fulfillments": [
+          "sc-skeleton"
+        ],
         "sc-invoices-list": [
+          "sc-skeleton"
+        ],
+        "sc-line-item-shipping": [
           "sc-skeleton"
         ],
         "sc-line-item-total": [
@@ -26462,11 +27221,15 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-fulfillments",
         "sc-order",
         "sc-purchase-downloads-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-fulfillments": [
+          "sc-spacing"
+        ],
         "sc-order": [
           "sc-spacing"
         ],
@@ -26552,6 +27315,7 @@
         "sc-charges-list",
         "sc-customer-details",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-order",
         "sc-orders-list",
@@ -26571,6 +27335,9 @@
           "sc-stacked-list"
         ],
         "sc-downloads-list": [
+          "sc-stacked-list"
+        ],
+        "sc-fulfillments": [
           "sc-stacked-list"
         ],
         "sc-invoices-list": [
@@ -26677,6 +27444,7 @@
         "sc-charges-list",
         "sc-customer-details",
         "sc-downloads-list",
+        "sc-fulfillments",
         "sc-invoices-list",
         "sc-order",
         "sc-orders-list",
@@ -26697,6 +27465,9 @@
           "sc-stacked-list-row"
         ],
         "sc-downloads-list": [
+          "sc-stacked-list-row"
+        ],
+        "sc-fulfillments": [
           "sc-stacked-list-row"
         ],
         "sc-invoices-list": [
@@ -29944,11 +30715,14 @@
         "sc-customer-details",
         "sc-customer-edit",
         "sc-downloads-list",
+        "sc-fulfillment-shipping-status-badge",
         "sc-invoices-list",
         "sc-licenses-list",
         "sc-order",
         "sc-order-confirmation-details",
         "sc-order-confirmation-totals",
+        "sc-order-fulfillment-badge",
+        "sc-order-shipment-badge",
         "sc-order-status-badge",
         "sc-orders-list",
         "sc-payment",
@@ -29985,6 +30759,9 @@
         "sc-downloads-list": [
           "sc-tag"
         ],
+        "sc-fulfillment-shipping-status-badge": [
+          "sc-tag"
+        ],
         "sc-invoices-list": [
           "sc-tag"
         ],
@@ -29998,6 +30775,12 @@
           "sc-tag"
         ],
         "sc-order-confirmation-totals": [
+          "sc-tag"
+        ],
+        "sc-order-fulfillment-badge": [
+          "sc-tag"
+        ],
+        "sc-order-shipment-badge": [
           "sc-tag"
         ],
         "sc-order-status-badge": [
@@ -31862,8 +32645,7 @@
           "sc-input",
           "sc-button",
           "sc-alert",
-          "sc-block-ui",
-          "sc-form-control"
+          "sc-block-ui"
         ],
         "sc-input": [
           "sc-form-control"
@@ -31928,7 +32710,7 @@
           "mutable": false,
           "attr": "required",
           "reflectToAttr": true,
-          "docs": "",
+          "docs": "Is this required?",
           "docsTags": [],
           "default": "true",
           "values": [
@@ -31967,17 +32749,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "requestClose",
-          "detail": "void",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
