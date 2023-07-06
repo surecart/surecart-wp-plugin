@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,12 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.2.1 - July 6th, 2023 =
+* Improvement: Improve loading performance of Stripe Payment Element by using deferred payment intents.
+* Fix: Thank you pages that redirect to the homepage being redirected to the blog page instead.
+* Fix: Change button text for media library to account for non-image files.
+* Fix: Validation issue with price input not allowing refunds to be fully refunded.
 
 = 2.2.0 - July 5th, 2023 =
 * New: Shipping and fulfillment support! Add custom shipping rates, location restrictions, tracking and fulfillment.
