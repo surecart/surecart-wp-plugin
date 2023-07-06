@@ -107,11 +107,11 @@ export class ScPriceInput {
   async reportValidity() {
     const input = this.input.shadowRoot.querySelector('input');
     input.setCustomValidity('');
-    if (this.min && this.value && parseFloat(this.value) <= this.min) {
+    if (this.min && this.value && parseFloat(this.value) < this.min) {
       this.invalid = true;
       input.setCustomValidity(sprintf(__('Must be greater than %d', 'surecart'), maybeConvertAmount(this.min, this.currencyCode).toString()));
     }
-    if (this.max && this.value && parseFloat(this.value) >= this.max) {
+    if (this.max && this.value && parseFloat(this.value) > this.max) {
       this.invalid = true;
       input.setCustomValidity(sprintf(__('Must be less than %d', 'surecart'), maybeConvertAmount(this.max, this.currencyCode).toString()));
     }
