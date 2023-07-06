@@ -37,31 +37,35 @@ export default ({ id }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 
-	const { productCollection, isLoading, isDeleting, isSaving, saveError, loadError } =
-		useSelect((select) => {
-			const entityData = ['surecart', 'product-collection', id];
+	const {
+		productCollection,
+		isLoading,
+		isDeleting,
+		isSaving,
+		saveError,
+		loadError,
+	} = useSelect((select) => {
+		const entityData = ['surecart', 'product-collection', id];
 
-			return {
-				productCollection: select(coreStore).getEditedEntityRecord(...entityData),
-				isLoading: select(coreStore)?.isResolving?.(
-					'getEditedEntityRecord',
-					[...entityData]
-				),
-				isSaving: select(coreStore)?.isSavingEntityRecord?.(
-					...entityData
-				),
-				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
-					...entityData
-				),
-				saveError: select(coreStore)?.getLastEntitySaveError(
-					...entityData
-				),
-				loadError: select(coreStore)?.getResolutionError?.(
-					'getEditedEntityRecord',
-					...entityData
-				)
-			};
-		});
+		return {
+			productCollection: select(coreStore).getEditedEntityRecord(
+				...entityData
+			),
+			isLoading: select(coreStore)?.isResolving?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+			isSaving: select(coreStore)?.isSavingEntityRecord?.(...entityData),
+			isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
+				...entityData
+			),
+			saveError: select(coreStore)?.getLastEntitySaveError(...entityData),
+			loadError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+		};
+	});
 
 	/**
 	 * Handle the form submission.
