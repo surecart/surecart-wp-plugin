@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-27T18:45:06",
+  "timestamp": "2023-07-06T16:14:51",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13362,7 +13362,7 @@
         },
         {
           "name": "status",
-          "type": "\"delivered\" | \"pending\" | \"shipped\"",
+          "type": "\"delivered\" | \"shipped\" | \"unshippable\" | \"unshipped\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -13374,11 +13374,15 @@
               "type": "string"
             },
             {
-              "value": "pending",
+              "value": "shipped",
               "type": "string"
             },
             {
-              "value": "shipped",
+              "value": "unshippable",
+              "type": "string"
+            },
+            {
+              "value": "unshipped",
               "type": "string"
             }
           ],
@@ -18431,7 +18435,7 @@
         },
         {
           "name": "status",
-          "type": "\"delivered\" | \"partially_shipped\" | \"shipped\" | \"unshipped\"",
+          "type": "\"delivered\" | \"partially_shipped\" | \"shipped\" | \"unshippable\" | \"unshipped\"",
           "mutable": false,
           "attr": "status",
           "reflectToAttr": false,
@@ -18451,6 +18455,10 @@
               "type": "string"
             },
             {
+              "value": "unshippable",
+              "type": "string"
+            },
+            {
               "value": "unshipped",
               "type": "string"
             }
@@ -18465,13 +18473,18 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-orders-list"
+      ],
       "dependencies": [
         "sc-tag"
       ],
       "dependencyGraph": {
         "sc-order-shipment-badge": [
           "sc-tag"
+        ],
+        "sc-orders-list": [
+          "sc-order-shipment-badge"
         ]
       }
     },
@@ -19899,6 +19912,7 @@
         "sc-empty",
         "sc-format-date",
         "sc-text",
+        "sc-order-shipment-badge",
         "sc-format-number",
         "sc-dashboard-module",
         "sc-button",
@@ -19918,6 +19932,7 @@
           "sc-empty",
           "sc-format-date",
           "sc-text",
+          "sc-order-shipment-badge",
           "sc-format-number",
           "sc-dashboard-module",
           "sc-button",
@@ -19930,6 +19945,9 @@
         ],
         "sc-empty": [
           "sc-icon"
+        ],
+        "sc-order-shipment-badge": [
+          "sc-tag"
         ],
         "sc-dashboard-module": [
           "sc-alert"
@@ -27910,156 +27928,7 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "address",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "address",
-          "reflectToAttr": false,
-          "docs": "Should we collect an address?",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "formState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
-          "mutable": false,
-          "attr": "form-state",
-          "reflectToAttr": false,
-          "docs": "The current form state.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "confirmed",
-              "type": "string"
-            },
-            {
-              "value": "confirming",
-              "type": "string"
-            },
-            {
-              "value": "draft",
-              "type": "string"
-            },
-            {
-              "value": "expired",
-              "type": "string"
-            },
-            {
-              "value": "failure",
-              "type": "string"
-            },
-            {
-              "value": "finalizing",
-              "type": "string"
-            },
-            {
-              "value": "idle",
-              "type": "string"
-            },
-            {
-              "value": "loading",
-              "type": "string"
-            },
-            {
-              "value": "paid",
-              "type": "string"
-            },
-            {
-              "value": "paying",
-              "type": "string"
-            },
-            {
-              "value": "redirecting",
-              "type": "string"
-            },
-            {
-              "value": "updating",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Order to watch",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "selectedProcessorId",
-          "type": "\"paypal\" | \"paypal-card\" | \"stripe\"",
-          "mutable": false,
-          "attr": "selected-processor-id",
-          "reflectToAttr": false,
-          "docs": "The selected processor name.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "paypal",
-              "type": "string"
-            },
-            {
-              "value": "paypal-card",
-              "type": "string"
-            },
-            {
-              "value": "stripe",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "stripePaymentIntent",
-          "type": "PaymentIntent",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The Payment Intent",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "PaymentIntent"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "successUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "success-url",
-          "reflectToAttr": false,
-          "docs": "Success url to redirect.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [
         {
           "name": "confirm",

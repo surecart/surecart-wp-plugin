@@ -9,7 +9,10 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
   {
     formState: checkoutMachine.initialState,
   },
-  (newValue, oldValue) => {
+  (newValue, oldValue, propChanged) => {
+    if (propChanged === 'formState') {
+      return newValue.value !== oldValue.value;
+    }
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
   },
 );
