@@ -1,32 +1,14 @@
-import { ScChoices, ScPriceChoiceContainer } from '@surecart/components-react';
 import {
-	InspectorControls,
 	useBlockProps,
-	__experimentalUseBorderProps as useBorderProps,
-	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
-import {
-	Notice,
-	PanelBody,
-	PanelRow,
-	RangeControl,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { ScProductVariationChoices } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes, setAttributes, context }) => {
-	const { label, columns, show_price } = attributes;
-	const blockProps = useBlockProps({
-		label,
-		showPrice: show_price,
-	});
-
-	const borderProps = useBorderProps(attributes);
-	const colorProps = useColorProps(attributes);
+	const blockProps = useBlockProps();
 	const spacingProps = useSpacingProps(attributes);
 
 	const warning = useProductPageWarning();
@@ -35,14 +17,20 @@ export default ({ attributes, setAttributes, context }) => {
 	}
 
 	return (
-		<>
-			<InspectorControls>
-				Variants
-			</InspectorControls>
-
-			<div {...blockProps}>
-				Variants
-			</div>
-		</>
+		<div {...blockProps}>
+			<ScProductVariationChoices 
+				style={{
+					paddingTop: spacingProps?.style?.paddingTop,
+					paddingLeft: spacingProps?.style?.paddingLeft,
+					paddingRight: spacingProps?.style?.paddingRight,
+					paddingBottom: spacingProps?.style?.paddingBottom,
+					marginTop: spacingProps?.style?.marginTop,
+					marginLeft: spacingProps?.style?.marginLeft,
+					marginRight: spacingProps?.style?.marginRight,
+					marginBottom: spacingProps?.style?.marginBottom,
+				}}
+				isDummy={true}
+			/>
+		</div>
 	);
 };

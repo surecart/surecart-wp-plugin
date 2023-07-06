@@ -2870,6 +2870,7 @@ export namespace Components {
         "text": 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        "isDummy": boolean;
     }
     interface ScProse {
     }
@@ -8509,6 +8510,7 @@ declare namespace LocalJSX {
         "text"?: 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        "isDummy"?: boolean;
     }
     interface ScProse {
     }

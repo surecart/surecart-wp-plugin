@@ -1,18 +1,49 @@
-import { Component, h, State, Watch, Host } from '@stencil/core';
+import { Component, h, State, Prop, Watch, Host, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
-
+import dummyOptions from './dummy-options.js';
 @Component({
   tag: 'sc-product-variation-choices',
   styleUrl: 'sc-product-variation-choices.css',
   shadow: true,
 })
 export class ScProductVariationChoices {
-  @State() variantValues: Array<[]> = [];
-
   variantOptions = availableVariantOptions();
   variants = availableVariants();
+  options = [];
+
+  @Element() el: HTMLScProductVariationChoicesElement;
+  @Prop() isDummy: boolean;
+  @State() variantValues: Array<string> = [];
+  @State() selectedOptions: Array<string> = [];
+
+  componentWillLoad() {
+    if ( ! this.isDummy ) {
+      this.variantOptions.forEach((variation) => {
+        if (!variation.name) {
+          return;
+        }
+        const { id, name, position, variant_values } = variation;
+        
+        this.options.push(
+          {
+            id,
+            name,
+            position,
+            values: variant_values.data.map(({ label, position, id }) => ({
+              label,
+              value: id,
+              position
+            }))
+          }
+        );
+      });
+    } else {
+      this.options = [...dummyOptions];
+    }
+    
+  }
 
   @Watch('variantValues')
   variantValuesChanged(newValue: Array<any>) {
@@ -32,30 +63,7 @@ export class ScProductVariationChoices {
   }
 
   render() {  
-
-    if (this.variants?.length < 2) return <Host style={{ display: 'none' }}></Host>;
-
-    const options = [];
-
-    this.variantOptions.forEach((variation) => {
-      if (!variation.name) {
-        return;
-      }
-      const { id, name, position, variant_values } = variation;
-      
-      options.push(
-        {
-          id,
-          name,
-          position,
-          values: variant_values.data.map(({ label, position, id }) => ({
-            label,
-            value: id,
-            position
-          }))
-        }
-      );
-    });
+    if ( ! this.isDummy && this.variants?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
     return (
         <div
@@ -65,15 +73,18 @@ export class ScProductVariationChoices {
             flexDirection: 'column' 
           }}
         >
-          {(options || []).map(option => {
+          {( this.options || []).map(option => {
             return (
               <sc-form-control exportparts="label, help-text, form-control" label={option?.name} class="sc-product-variation-choices" part="control">
                 <sc-select
                   exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
                   part="name__input"
-                  // value={state.selectedVariant}
+                  value={this.selectedOptions[option?.id] || option?.values?.[0]?.value || false}
                   onScChange={(e: any) => {
-                    this.variantValues = [...this.variantValues, e?.target?.value];
+                    if ( ! this.isDummy ) {
+                      this.variantValues = [...this.variantValues, e?.target?.value];
+                    }
+                    this.selectedOptions[option?.id] = e?.target?.value;
                   }}
                   choices={option?.values}
                   placeholder={__('Select Variation', 'surecart')}
