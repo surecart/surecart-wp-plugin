@@ -40,7 +40,7 @@ export class ScProductBuyButton {
 
   render() {
     return (
-      <Host class={{ 'is-busy': state.busy, 'is-disabled': state.disabled }} onClick={e => this.handleCartClick(e)}>
+      <Host class={{ 'is-busy': state.busy && !!this.addToCart, 'is-disabled': state.disabled }} onClick={e => this.handleCartClick(e)}>
         <slot />
       </Host>
     );
