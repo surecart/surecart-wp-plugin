@@ -6,19 +6,28 @@
 	"category": "surecart",
 	"keywords": ["variant", "product", "choice"],
 	"attributes": {
-		"label": {
+		"gap": {
 			"type": "string",
-			"default": "Variants"
+			"default": "12px"
 		}
 	},
 	"supports": {
 		"reusable": false,
 		"html": false,
 		"multiple": false,
+		"attributes" : {
+			"gap": {
+				"type": "string"
+			}
+		},
 		"spacing": {
-			"__experimentalSkipSerialization": true,
 			"margin": true,
-			"padding": true
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
 		}
 	},
 	"style": "file:./preload.css"

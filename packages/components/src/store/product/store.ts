@@ -20,6 +20,7 @@ interface Store {
   line_item: LineItemData;
   error: string;
   selectedVariant: string;
+  variantValues: { [key: string]: string };
 }
 const product = window?.scData?.product_data?.product || null;
 const prices = product?.prices?.data || [];
@@ -52,7 +53,8 @@ const store = createStore<Store>(
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
       variant: '',
     },
-    selectedVariant: ''
+    selectedVariant: '',
+    variantValues: {}
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

@@ -21,7 +21,10 @@ class Block extends BaseBlock {
 		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin', 'padding' ] );
 		ob_start(); ?>
 		<sc-product-variation-choices
-			style="<?php echo esc_attr( $styles ); ?>"
+			style="
+				<?php echo esc_attr( $styles ); ?>
+				<?php echo '--sc-variation-gap: ' . $attributes['gap'] ?>
+			"
 		>
 		</sc-product-variation-choices>
 		<?php
