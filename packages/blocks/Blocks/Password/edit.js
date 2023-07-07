@@ -38,13 +38,14 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 					<CardBody size="small">
 						<p>
 							You can override the global password validation by
-							going to the site settings.
+							going to the advanced settings.
 						</p>
 						<Button
 							variant="primary"
 							isSmall
 							href={addQueryArgs('admin.php', {
 								page: 'sc-settings',
+								tab: 'advanced',
 							})}
 						>
 							Site Settings

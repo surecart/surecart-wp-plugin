@@ -2,6 +2,8 @@ import { Component, Prop, h, Method, Host, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
+let showHintTimer;
+
 @Component({
   tag: 'sc-order-password',
   styleUrl: 'sc-order-password.scss',
@@ -84,6 +86,11 @@ export class ScOrderPassword {
       }
     }
 
+    // hint text is not empty.
+    if (!!this.hintText) {
+      this.input.setCustomValidity(__(this.hintText, 'surecart'));
+    }
+
     const valid = await this.input.reportValidity();
     if (!valid) {
       return false;
@@ -96,8 +103,15 @@ export class ScOrderPassword {
     return valid;
   }
 
-  showHelpText() {
-    if (!this.showHintText) this.showHintText = true;
+  handleValidateOnInput(val: string) {
+    // clear existing timeout
+    clearTimeout(showHintTimer);
+
+    // show hint text after some delay
+    showHintTimer = setTimeout(() => {
+      if (!this.showHintText) this.showHintText = true;
+      this.validatePassword(val);
+    }, 1000);
   }
 
   validatePassword(val: string) {
@@ -147,8 +161,7 @@ export class ScOrderPassword {
             value={this.value}
             required={this.required}
             disabled={this.disabled}
-            onBlur={() => this.showHelpText()}
-            onScInput={e => this.validatePassword(e.target.value)}
+            onScInput={e => this.handleValidateOnInput(e.target.value)}
           ></sc-input>
           {this.showHintText && <small class="password__hint">{this.hintText}</small>}
         </div>
