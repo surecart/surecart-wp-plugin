@@ -4,7 +4,7 @@ import {
 	useSetting,
 	InspectorControls
 } from '@wordpress/block-editor';
-import { ScProductVariationChoices } from '@surecart/components-react';
+import { ScProductVariationChoices, ScSelect } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import {
 	__experimentalUseCustomUnits as useCustomUnits,
@@ -50,6 +50,23 @@ export default ({ attributes, setAttributes, context }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
+				<ScSelect
+					label={__('Color', 'surecart')}
+					value={'black'}
+					onScChange={(e) =>
+						console.log(e)
+					}
+					choices={[
+						{
+							value: 'black',
+							label: __('Black', 'surecart'),
+						},
+						{
+							value: 'white',
+							label: __('White', 'surecart'),
+						},
+					]}
+				/>
 				<ScProductVariationChoices 
 					style={{
 						...spacingProps.style,
