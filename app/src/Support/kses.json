@@ -789,7 +789,26 @@
     "no-convert": true,
     "no-grouping": true,
     "type": true,
+    "unit": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-fulfillment-shipping-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-fulfillments": {
+    "heading": true,
+    "order-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -893,6 +912,13 @@
     "label": true,
     "loading": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-shipping": {
+    "label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1103,6 +1129,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-fulfillment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-manual-instructions": {
     "manual-payment-instructions": true,
     "manual-payment-title": true,
@@ -1130,6 +1166,16 @@
     "show-label": true,
     "size": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-shipment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1675,6 +1721,7 @@
   "sc-select": {
     "autocomplete": true,
     "choices": true,
+    "close-on-select": true,
     "disabled": true,
     "help": true,
     "hoist": true,
@@ -1706,6 +1753,14 @@
   "sc-session-provider": {
     "persist": true,
     "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-shipping-choices": {
+    "label": true,
+    "show-description": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1771,12 +1826,6 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
-    "address": true,
-    "form-state": true,
-    "order": true,
-    "selected-processor-id": true,
-    "stripe-payment-intent": true,
-    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

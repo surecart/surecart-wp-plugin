@@ -25,6 +25,7 @@ export default ({ id, setId }) => {
 				'product',
 				{
 					name,
+					auto_fulfill_enabled: true,
 				},
 				{ throwOnError: true }
 			);
