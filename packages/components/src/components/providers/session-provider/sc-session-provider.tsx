@@ -183,7 +183,11 @@ export class ScSessionProvider {
     // get URL params.
     const { redirect_status, checkout_id, line_items, coupon, is_surecart_payment_redirect } = getQueryArgs(window.location.href);
     // remove params we don't want.
-    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
+    window.history.replaceState(
+      {},
+      document.title,
+      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart'),
+    );
 
     // handle abandoned checkout.
     if (!!is_surecart_payment_redirect && !!checkout_id) {
