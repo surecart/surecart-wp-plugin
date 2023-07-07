@@ -20,18 +20,16 @@ export class ScProductBuyButton {
     // already busy, do nothing.
     if (state.busy) return;
 
+    // ad hoc price, use the dialog.
+    if (state?.selectedPrice?.ad_hoc) {
+      return (state.dialog = this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy');
+    }
+
     // if add to cart is undefined/false navigate to buy url
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      const buyLink = getProductBuyLink(checkoutUrl);
-      window.location.assign(buyLink);
-      return;
-    }
-
-    // ad hoc price, use the dialog.
-    if (state?.selectedPrice?.ad_hoc) {
-      return (state.dialog = 'ad_hoc');
+      return window.location.assign(getProductBuyLink(checkoutUrl));
     }
 
     // submit the cart form.

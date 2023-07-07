@@ -14,8 +14,8 @@ export const submitCartForm = async () => {
       checkout: getCheckout(state?.formId, state.mode),
       data: {
         price: state.selectedPrice?.id,
-        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
       live_mode: state.mode !== 'test',
     });
@@ -38,10 +38,10 @@ export const getProductBuyLink = url => {
     line_items: [
       {
         price: state.selectedPrice?.id,
-        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
     ],
-    no_cart: true
+    no_cart: true,
   });
 };
