@@ -14,7 +14,7 @@ beforeEach(() => {
 });
 
 describe('sc-payment', () => {
-  it('renders no processors', async () => {
+  it('renders no processors & user does not have `manage_sc_shop_settings` capability', async () => {
     const page = await newSpecPage({
       components: [ScPayment],
       html: `<sc-payment></sc-payment>`,
