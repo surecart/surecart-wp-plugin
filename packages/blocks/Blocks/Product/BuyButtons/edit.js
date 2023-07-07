@@ -36,8 +36,8 @@ const DEFAULT_BLOCK = {
 	],
 };
 
-export default ({ attributes, setAttributes, className }) => {
-	const { fontSize, style } = attributes;
+export default ({ attributes, className }) => {
+	const { fontSize, layout, style } = attributes;
 	const blockProps = useBlockProps({
 		className: classnames(className, {
 			'wp-block-buttons': true,
@@ -53,8 +53,6 @@ export default ({ attributes, setAttributes, className }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
-		// __experimentalDefaultBlock: DEFAULT_BLOCK,
-		// __experimentalDirectInsert: true,
 		template: [
 			[
 				buttonBlockName,
@@ -74,6 +72,7 @@ export default ({ attributes, setAttributes, className }) => {
 			],
 		],
 		templateInsertUpdatesSelection: true,
+		orientation: layout?.orientation ?? 'horizontal',
 	});
 
 	return <div {...innerBlocksProps} />;

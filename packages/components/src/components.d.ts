@@ -2705,7 +2705,7 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductBuyButton {
-        "add_to_cart": boolean;
+        "addToCart": boolean;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -2829,6 +2829,7 @@ export namespace Components {
         "showPrice": boolean;
     }
     interface ScProductPriceModal {
+        "addToCart": boolean;
         "buttonText": string;
     }
     interface ScProductQuantity {
@@ -8324,7 +8325,7 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductBuyButton {
-        "add_to_cart"?: boolean;
+        "addToCart"?: boolean;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
@@ -8456,6 +8457,7 @@ declare namespace LocalJSX {
         "showPrice"?: boolean;
     }
     interface ScProductPriceModal {
+        "addToCart"?: boolean;
         "buttonText"?: string;
     }
     interface ScProductQuantity {
