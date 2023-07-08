@@ -64,6 +64,7 @@ export default ({ attributes, setAttributes, context }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
+
 			<div {...blockProps}>
 				<ScSelect ref={selectColor} label={__('Color', 'surecart')} />
 				<ScProductVariationChoices
