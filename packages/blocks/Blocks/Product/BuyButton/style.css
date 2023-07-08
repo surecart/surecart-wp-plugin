@@ -24,7 +24,7 @@
 .wp-block-buttons > .wp-block-button.has-custom-width {
   max-width: none;
 }
-.wp-block-buttons > .wp-block-button.has-custom-width .wp-block-button__link {
+.wp-block-button.has-custom-width .wp-block-button__link {
   width: 100%;
 }
 .wp-block-buttons > .wp-block-button.has-custom-font-size .wp-block-button__link {
