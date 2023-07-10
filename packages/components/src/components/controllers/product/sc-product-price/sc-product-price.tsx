@@ -1,5 +1,5 @@
 import { Component, h, Prop, Fragment } from '@stencil/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
 import { state } from '@store/product';
 
@@ -24,9 +24,9 @@ export class ScProductPrice {
 
     return (
       <span class="recurring-interval">
-        / {price.recurring_period_count > 1 && `${price.recurring_period_count} `}
-        {price.recurring_interval}
-        {price.recurring_interval_count > 1 ? sprintf(__('(%s% payments)', 'surecart'), price.recurring_interval_count) : ''}
+        / {price.recurring_period_count > 1 && `${price.recurring_period_count} ` }
+        {price.recurring_interval + _n('', 's', price.recurring_period_count, 'surecart')}
+        {price.recurring_interval_count > 1 ? sprintf(__('(%s payments)', 'surecart'), price.recurring_interval_count) : ''}
       </span>
     );
   }
@@ -37,7 +37,9 @@ export class ScProductPrice {
     return (
       <div class="setup-fee">
         +<sc-format-number type="currency" currency={price.currency} value={price.setup_fee_amount}></sc-format-number> {price.setup_fee_name || __('Setup Fee', 'surecart')}.{' '}
-        {price.setup_fee_trial_enabled && !!price.trial_duration_days ? sprintf(__('Starting in %s% days', 'surecart'), price.trial_duration_days) : ''}
+        { !!price.trial_duration_days
+          ? sprintf(_n('Starting in %s day', 'Starting in %s days', price.trial_duration_days, 'surecart'), price.trial_duration_days)
+          : ''}
       </div>
     );
   }
