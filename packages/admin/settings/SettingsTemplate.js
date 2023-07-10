@@ -31,6 +31,7 @@ export default ({
 						--wp-admin-theme-color-darker-20: var(
 							--sc-color-primary-500
 						);
+						--sc-color-primary-text: #fff;
 					}
 				`}
 			/>

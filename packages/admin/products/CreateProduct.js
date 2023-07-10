@@ -25,9 +25,20 @@ export default ({ id, setId }) => {
 				'product',
 				{
 					name,
+					auto_fulfill_enabled: true,
 				},
 				{ throwOnError: true }
 			);
+
+			if (!product?.id) {
+				throw {
+					message: __(
+						'Could not create product. Please try again.',
+						'sureacrt'
+					),
+				};
+			}
+
 			setId(product.id);
 		} catch (e) {
 			console.error(e);

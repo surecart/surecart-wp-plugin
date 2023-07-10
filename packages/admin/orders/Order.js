@@ -5,21 +5,20 @@ import {
 	ScBreadcrumbs,
 	ScButton,
 	ScDropdown,
-	ScFlex,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useEffect, useState } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
-import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
-// template
 import UpdateModel from '../templates/UpdateModel';
 import Charges from './modules/Charges';
 import Details from './modules/Details';
@@ -30,87 +29,84 @@ import PaymentFailures from './modules/PaymentFailures';
 import Refunds from './modules/Refunds';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
+import Fulfillment from './modules/Fulfillment';
 
 export default () => {
-	const { createErrorNotice } = useDispatch(noticesStore);
-	const { receiveEntityRecords } = useDispatch(coreStore);
-	const id = useSelect((select) => select(dataStore).selectPageId());
-	const { order, hasLoadedOrder, orderError } = useEntity('order', id, {
-		expand: [
-			'checkout',
-			'checkout.charge',
-			'checkout.customer',
-			'checkout.tax_identifier',
-			'checkout.payment_failures',
-			'checkout.shipping_address',
-			'checkout.discount',
-			'checkout.line_items',
-			'discount.promotion',
-			'line_item.price',
-			'line_item.fees',
-			'customer.balances',
-			'price.product',
-		],
-	});
 	const [modal, setModal] = useState();
+	const id = useSelect((select) => select(dataStore).selectPageId());
 
-	const renderMarkPaidButton = () => {
-		return (
-			<ScMenuItem onClick={() => setModal('order_status_update')}>
-				{__('Mark as Paid', 'surecart')}
-			</ScMenuItem>
+	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
+
+	/** This is a workaround until we can sort out why store invalidation is not working for order. */
+	const manuallyRefetchOrder = async () => {
+		const { baseURL } = select(coreStore).getEntityConfig(
+			'surecart',
+			'order'
 		);
+		const order = await apiFetch({
+			method: 'GET',
+			path: addQueryArgs(`${baseURL}/${id}`, {
+				context: 'edit',
+				expand: [
+					'checkout',
+					'checkout.charge',
+					'checkout.customer',
+					'checkout.tax_identifier',
+					'checkout.payment_failures',
+					'checkout.shipping_address',
+					'checkout.discount',
+					'checkout.line_items',
+					'discount.promotion',
+					'line_item.price',
+					'line_item.fees',
+					'customer.balances',
+					'price.product',
+				],
+			}),
+		});
+
+		receiveEntityRecords('surecart', 'order', order);
 	};
 
-	const renderOrderCancelButton = () => {
-		return (
-			<ScMenuItem onClick={() => setModal('order_cancel')}>
-				{__('Cancel Order', 'surecart')}
-			</ScMenuItem>
-		);
-	};
-
-	useEffect(() => {
-		if (order?.checkout) {
-			receiveEntityRecords(
+	const { order, hasLoadedOrder, orderError } = useSelect(
+		(select) => {
+			const queryArgs = [
 				'surecart',
-				'checkout',
-				order?.checkout,
+				'order',
+				id,
 				{
 					expand: [
-						'line_items',
+						'checkout',
+						'checkout.charge',
+						'checkout.customer',
+						'checkout.tax_identifier',
+						'checkout.payment_failures',
+						'checkout.shipping_address',
+						'checkout.discount',
+						'checkout.line_items',
+						'discount.promotion',
 						'line_item.price',
+						'line_item.fees',
+						'customer.balances',
 						'price.product',
-						'charge',
-						'charge.payment_method',
-						'payment_method.card',
-						'payment_method.payment_instrument',
-						'payment_method.paypal_account',
-						'payment_method.bank_account',
 					],
 				},
-				true
-			);
-		}
-		if (order?.checkout?.charge) {
-			receiveEntityRecords(
-				'surecart',
-				'charge',
-				order?.checkout?.charge,
-				{
-					checkout_ids: [order?.checkout?.id],
-					expand: [
-						'payment_method',
-						'payment_method.card',
-						'payment_method.payment_instrument',
-						'payment_method.paypal_account',
-						'payment_method.bank_account',
-					],
-				},
-				true
-			);
-		}
-	}, [order]);
+			];
+			return {
+				order: select(coreStore)?.getEntityRecord?.(...queryArgs),
+				hasLoadedOrder: select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecord',
+					[...queryArgs]
+				),
+				orderError: select(coreStore)?.getResolutionError?.(
+					'getEntityRecord',
+					...queryArgs
+				),
+			};
+		},
+		[id]
+	);
 
 	useEffect(() => {
 		if (orderError) {
@@ -119,6 +115,28 @@ export default () => {
 			);
 		}
 	}, [orderError]);
+
+	const getMenuItems = (orderStatus) => {
+		const menuItems = [];
+
+		if (!['draft', 'paid'].includes(orderStatus)) {
+			menuItems.push({
+				title: __('Mark As Paid', 'surecart'),
+				modal: 'order_status_update',
+			});
+		}
+
+		if (['draft', 'processing', 'paid'].includes(orderStatus)) {
+			menuItems.push({
+				title: __('Cancel Order', 'surecart'),
+				modal: 'order_cancel',
+			});
+		}
+
+		return menuItems;
+	};
+
+	const menuItems = getMenuItems(order?.status);
 
 	return (
 		<UpdateModel
@@ -145,9 +163,7 @@ export default () => {
 							{__('Orders', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
-							<ScFlex style={{ gap: '1em' }}>
-								{__('View Order', 'surecart')}
-							</ScFlex>
+							{__('View Order', 'surecart')}
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
 				</div>
@@ -157,24 +173,28 @@ export default () => {
 					position="bottom-right"
 					style={{ '--panel-width': '14em' }}
 				>
-					{order?.status === 'processing' &&
-						order?.checkout?.manual_payment &&
-						order?.status !== 'canceled' && (
-							<>
-								<ScButton
-									type="primary"
-									slot="trigger"
-									caret
-									loading={!hasLoadedOrder}
-								>
-									{__('Actions', 'surecart')}
-								</ScButton>
-								<ScMenu>
-									{renderMarkPaidButton()}{' '}
-									{renderOrderCancelButton()}
-								</ScMenu>
-							</>
-						)}
+					{menuItems.length > 0 && (
+						<>
+							<ScButton
+								type="primary"
+								slot="trigger"
+								caret
+								loading={!hasLoadedOrder}
+							>
+								{__('Actions', 'surecart')}
+							</ScButton>
+							<ScMenu>
+								{menuItems.map((menuItem, key) => (
+									<ScMenuItem
+										onClick={() => setModal(menuItem.modal)}
+										key={key}
+									>
+										{menuItem.title}
+									</ScMenuItem>
+								))}
+							</ScMenu>
+						</>
+					)}
 				</ScDropdown>
 			}
 			sidebar={
@@ -191,6 +211,13 @@ export default () => {
 					order={order}
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
+				/>
+				<Fulfillment
+					loading={!hasLoadedOrder}
+					orderId={id}
+					checkout={order?.checkout}
+					onCreateSuccess={manuallyRefetchOrder}
+					onDeleteSuccess={manuallyRefetchOrder}
 				/>
 				<LineItems
 					order={order}

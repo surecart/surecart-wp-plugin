@@ -211,8 +211,7 @@ export class ScCouponForm {
         {this.loading && <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>}
       </div>
     ) : (
-      <sc-form-control
-        label={this.label}
+      <div
         class={{
           'coupon-form': true,
           'coupon-form--has-value': !!this.value,
@@ -220,6 +219,7 @@ export class ScCouponForm {
         }}
       >
         <sc-input
+          label={this.label}
           exportparts="base:input__base, input, form-control:input__form-control"
           value={this.value}
           onScInput={(e: any) => (this.value = e.target.value)}
@@ -240,12 +240,23 @@ export class ScCouponForm {
             <slot>{this.buttonText}</slot>
           </sc-button>
         </sc-input>
+        <sc-button
+          exportparts="base:button__base, label:button_label"
+          type="primary"
+          outline
+          loading={this.busy}
+          size="medium"
+          class="coupon-button-mobile"
+          onClick={() => this.applyCoupon()}
+        >
+          <slot>{this.buttonText}</slot>
+        </sc-button>
         {!!this.error && (
           <sc-alert exportparts="base:error__base, icon:error__icon, text:error__text, title:error_title, message:error__message" type="danger" open>
             <span slot="title">{this.error}</span>
           </sc-alert>
         )}
-      </sc-form-control>
+      </div>
     );
   }
 }

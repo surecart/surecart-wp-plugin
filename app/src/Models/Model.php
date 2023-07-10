@@ -647,6 +647,14 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			return $items;
 		}
 
+		if ( ! empty( $items->data ) ) {
+			$models = [];
+			foreach ( $items->data as $data ) {
+				$models[] = new static( $data );
+			}
+			$items->data = $models;
+		}
+
 		return new Collection( $items );
 	}
 

@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
 import {
-	ScAddress,
 	ScFormControl,
 	ScInput,
 	ScSelect,
@@ -13,25 +12,54 @@ import {
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
-import useEntity from '../../hooks/useEntity';
 import { __ } from '@wordpress/i18n';
 import ColorPopup from '../../../blocks/components/ColorPopup';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import Logo from './Logo';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch, useSelect } from '@wordpress/data';
+import useEntity from '../../hooks/useEntity';
+import CartSettings from './components/CartSettings';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'brand'
-	);
+
+	const { editEntityRecord } = useDispatch(coreStore);
+
 	const [scThemeData, setScThemeData] = useEntityProp(
 		'root',
 		'site',
 		'surecart_theme'
 	);
+
+	/** Edit Item */
+	const editItem = (data) =>
+		editEntityRecord('surecart', 'store', 'brand', data);
+
+	/** Load Item */
+	const { item, itemError, hasLoadedItem } = useSelect((select) => {
+		const entityData = ['surecart', 'store', 'brand'];
+		return {
+			item: select(coreStore).getEditedEntityRecord(...entityData),
+			itemError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+		};
+	});
+
+	const {
+		item: settingItem,
+		itemError: settingItemError,
+		editItem: editSettingItem,
+		hasLoadedItem: hasLoadedSettingItem,
+	} = useEntity('store', 'settings');
 
 	/**
 	 * Form is submitted.
@@ -55,7 +83,7 @@ export default () => {
 			onSubmit={onSubmit}
 		>
 			<Error
-				error={itemError || error}
+				error={itemError || settingItemError || error}
 				setError={setError}
 				margin="80px"
 			/>
@@ -183,54 +211,32 @@ export default () => {
 					</ScUpgradeRequired>
 				</div>
 			</SettingsBox>
-
+			
 			<SettingsBox
-				title={__('Contact Information', 'surecart')}
-				description={__(
-					'This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails).',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
+				title={__('Cart', 'surecart')}
+				loading={!hasLoadedSettingItem}
+				description={__('Change cart settings.', 'surecart')}
 			>
-				<div
-					css={css`
-						gap: var(--sc-form-row-spacing);
-						display: grid;
-						grid-template-columns: repeat(3, minmax(0, 1fr));
-					`}
+				<ScSwitch
+					checked={!settingItem?.slide_out_cart_disabled}
+					onClick={(e) => {
+						e.preventDefault();
+						editSettingItem({
+							slide_out_cart_disabled:
+								!settingItem?.slide_out_cart_disabled,
+						});
+					}}
 				>
-					<ScInput
-						label={__('Email', 'surecart')}
-						value={item?.email}
-						placeholder={__('Enter an email', 'surecart')}
-						onScInput={(e) => editItem({ email: e.target.value })}
-						type="email"
-					/>
-					<ScInput
-						label={__('Phone', 'surecart')}
-						value={item?.phone}
-						placeholder={__('Enter an phone number', 'surecart')}
-						onScInput={(e) => editItem({ phone: e.target.value })}
-						type="tel"
-					/>
-					<ScInput
-						label={__('Website', 'surecart')}
-						value={item?.website}
-						placeholder={__('Enter a website URL', 'surecart')}
-						onScInput={(e) => editItem({ website: e.target.value })}
-						type="url"
-					/>
-				</div>
+					{__('Enable Cart', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'This will enable slide-out cart. If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 
-				<ScAddress
-					label={__('Address', 'surecart')}
-					required={false}
-					showName={true}
-					showLine2={true}
-					address={item?.address}
-					names={{}}
-					onScInputAddress={(e) => editItem({ address: e.detail })}
-				/>
+				{!settingItem?.slide_out_cart_disabled && <CartSettings />}
 			</SettingsBox>
 		</SettingsTemplate>
 	);

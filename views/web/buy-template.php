@@ -98,7 +98,7 @@
 
 			<sc-divider></sc-divider>
 
-			<sc-line-items removable="false" editable="false" class="wp-block-surecart-line-items"></sc-line-items>
+			<sc-line-items removable="false" editable="true" class="wp-block-surecart-line-items"></sc-line-items>
 
 			<sc-divider></sc-divider>
 

@@ -789,7 +789,26 @@
     "no-convert": true,
     "no-grouping": true,
     "type": true,
+    "unit": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-fulfillment-shipping-status-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-fulfillments": {
+    "heading": true,
+    "order-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -813,6 +832,7 @@
     "slot": true
   },
   "sc-image-slider": {
+    "auto-height": true,
     "has-thumbnails": true,
     "images": true,
     "thumbnails": true,
@@ -892,6 +912,13 @@
     "label": true,
     "loading": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-line-item-shipping": {
+    "label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1103,6 +1130,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-fulfillment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-manual-instructions": {
     "manual-payment-instructions": true,
     "manual-payment-title": true,
@@ -1130,6 +1167,16 @@
     "show-label": true,
     "size": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-shipment-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1400,6 +1447,21 @@
     "class": true,
     "slot": true
   },
+  "sc-price-choice-container": {
+    "checked": true,
+    "description": true,
+    "label": true,
+    "loading": true,
+    "price": true,
+    "show-control": true,
+    "show-label": true,
+    "show-price": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-price-choices": {
     "columns": true,
     "label": true,
@@ -1444,6 +1506,60 @@
     "class": true,
     "slot": true
   },
+  "sc-product-buy-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item": {
+    "layout-config": true,
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-image": {
+    "alt": true,
+    "product-media": true,
+    "sizing": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-list": {
+    "ajax-pagination": true,
+    "ids": true,
+    "layout-config": true,
+    "limit": true,
+    "pagination-alignment": true,
+    "pagination-auto-scroll": true,
+    "pagination-enabled": true,
+    "query": true,
+    "search-enabled": true,
+    "sort": true,
+    "sort-enabled": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-price": {
+    "prices": true,
+    "range": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-item-title": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-line-item": {
     "amount": true,
     "currency": true,
@@ -1464,8 +1580,51 @@
     "class": true,
     "slot": true
   },
+  "sc-product-price": {
+    "prices": true,
+    "sale-text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-price-choices": {
+    "label": true,
+    "show-price": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-price-modal": {
+    "button-text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-quantity": {
+    "errors": true,
+    "help": true,
+    "label": true,
+    "name": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-selected-price": {
     "product-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-text": {
+    "text": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1479,6 +1638,13 @@
   },
   "sc-provider": {
     "-s-t-e-n-c-i-l_-c-o-n-t-e-x-t": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-provisional-banner": {
+    "claim-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1504,6 +1670,7 @@
     "max": true,
     "min": true,
     "quantity": true,
+    "size": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1558,6 +1725,7 @@
   "sc-select": {
     "autocomplete": true,
     "choices": true,
+    "close-on-select": true,
     "disabled": true,
     "help": true,
     "hoist": true,
@@ -1567,6 +1735,7 @@
     "name": true,
     "open": true,
     "placeholder": true,
+    "placement": true,
     "position": true,
     "required": true,
     "search": true,
@@ -1588,6 +1757,14 @@
   "sc-session-provider": {
     "persist": true,
     "prices": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-shipping-choices": {
+    "label": true,
+    "show-description": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1653,12 +1830,6 @@
     "slot": true
   },
   "sc-stripe-payment-element": {
-    "address": true,
-    "form-state": true,
-    "order": true,
-    "selected-processor-id": true,
-    "stripe-payment-intent": true,
-    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1974,6 +2145,7 @@
     "slot": true
   },
   "sc-upgrade-required": {
+    "open": true,
     "required": true,
     "size": true,
     "style": true,

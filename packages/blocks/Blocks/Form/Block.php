@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Form;
 
+use SureCart\Models\Form;
 use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Processor;
 use SureCartBlocks\Blocks\BaseBlock;
@@ -10,17 +11,6 @@ use SureCartBlocks\Blocks\BaseBlock;
  * Checkout block
  */
 class Block extends BaseBlock {
-	/**
-	 * Get the classes for the block
-	 *
-	 * @param  array $attributes Block attributes.
-	 * @return string
-	 */
-	public function getClasses( $attributes ) {
-		$block_alignment = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
-		return ! empty( $block_alignment ) ? 'align' . $block_alignment : '';
-	}
-
 	/**
 	 * Get the style for the block
 	 *
@@ -92,6 +82,7 @@ class Block extends BaseBlock {
 				'loading_text'                  => array_filter( $attributes['loading_text'] ?? [] ),
 				'success_text'                  => array_filter( $attributes['success_text'] ?? [] ),
 				'success_url'                   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
+				'is_claimed'                    => \SureCart::account()->claimed,
 			]
 		);
 	}
