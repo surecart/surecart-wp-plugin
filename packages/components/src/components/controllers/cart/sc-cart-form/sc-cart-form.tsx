@@ -6,7 +6,8 @@ import { convertLineItemsToLineItemData } from '../../../../functions/line-items
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
-import { Checkout, LineItemData } from '../../../../types';
+import { Checkout, LineItemData, Product } from '../../../../types';
+import { doCartGoogleAnalytics } from '../../../../functions/google-analytics-cart';
 
 const query = {
   expand: [
@@ -79,6 +80,16 @@ export class ScCartForm {
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
+      doCartGoogleAnalytics({
+        currency: order?.currency,
+        value: order?.total_amount,
+        items: order?.line_items?.data?.map((item) => ({
+          item_id: item.id,
+          item_name: (item?.price?.product as Product)?.name || '',
+          price: item?.price?.amount || 0,
+          quantity: item?.quantity || 1,
+        })),
+      })
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
