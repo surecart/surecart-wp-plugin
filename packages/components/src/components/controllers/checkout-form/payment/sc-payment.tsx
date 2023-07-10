@@ -57,6 +57,7 @@ export class ScPayment {
 
   renderPayPal(processor) {
     const stripe = getAvailableProcessor('stripe');
+    const paystack = getAvailableProcessor('paystack');
     return (
       <Fragment>
         <sc-payment-method-choice key={processor?.id} processor-id="paypal">
@@ -72,7 +73,7 @@ export class ScPayment {
           </sc-card>
         </sc-payment-method-choice>
 
-        {!stripe && (
+        {!stripe && !paystack && (
           <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
@@ -104,21 +105,19 @@ export class ScPayment {
     }
 
     return (
-      <Fragment>
-        <sc-payment-method-choice key={processor?.id} processor-id="paystack">
-          <span slot="summary" class="sc-payment-toggle-summary">
-            <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-            <span>{__('Credit Card', 'surecart')}</span>
-          </span>
+      <sc-payment-method-choice key={processor?.id} processor-id="paystack">
+        <span slot="summary" class="sc-payment-toggle-summary">
+          <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+          <span>{__('Credit Card', 'surecart')}</span>
+        </span>
 
-          <sc-card>
-            <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-              <sc-icon slot="icon" name="credit-card"></sc-icon>
-              {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
-            </sc-payment-selected>
-          </sc-card>
-        </sc-payment-method-choice>
-      </Fragment>
+        <sc-card>
+          <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+            <sc-icon slot="icon" name="credit-card"></sc-icon>
+            {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+          </sc-payment-selected>
+        </sc-card>
+      </sc-payment-method-choice>
     );
   }
 
