@@ -305,6 +305,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-paystack-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,

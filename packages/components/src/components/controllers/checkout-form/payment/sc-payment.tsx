@@ -117,6 +117,7 @@ export class ScPayment {
             {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
           </sc-payment-selected>
         </sc-card>
+        <sc-checkout-paystack-payment-provider />
       </sc-payment-method-choice>
     );
   }

@@ -64,7 +64,6 @@ export class ScFormErrorProvider {
   maybeAddErrorsComponent() {
     if (!!this.el.querySelector('sc-checkout-form-errors')) return;
     const errorsComponent = document.createElement('sc-checkout-form-errors');
-    console.log(this.el.querySelector('sc-form'));
     this.el.querySelector('sc-form').prepend(errorsComponent);
   }
 
