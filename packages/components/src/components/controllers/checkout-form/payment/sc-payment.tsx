@@ -93,14 +93,14 @@ export class ScPayment {
   }
 
   renderPaystack(processor) {
-    // if system currency is not in the supported currency list, then stop.
-    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
-      return;
-    }
-
     // If stripe is used, then no need to show this, as we'll only show one card at a time.
     const stripe = getAvailableProcessor('stripe');
     if (!!stripe) {
+      return;
+    }
+
+    // if system currency is not in the supported currency list, then stop.
+    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
       return;
     }
 
