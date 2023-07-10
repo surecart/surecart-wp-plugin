@@ -79,7 +79,7 @@
 	],
 	"dependencies": {
 		"-": "^0.0.1",
-		"@paystack/inline-js": "^2.12.6",
+		"@paystack/inline-js": "^2.13",
 		"@rails/activestorage": "^6.1.4-1",
 		"@wordpress/babel-preset-default": "^6.2.0",
 		"@wordpress/base-styles": "^2.1.0",
