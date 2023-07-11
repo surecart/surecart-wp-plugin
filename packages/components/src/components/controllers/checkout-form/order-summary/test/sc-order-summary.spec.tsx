@@ -4,6 +4,16 @@ import { h } from '@stencil/core';
 import { state as checkoutStore, dispose } from '@store/checkout';
 
 describe('sc-order-summary', () => {
+  beforeAll(() => {
+    document.body.getClientRects = jest.fn(()=>{
+        return {
+          item: () => null,
+          length: 0,
+          [Symbol.iterator]: jest.fn(),
+        };
+    })
+  });
+
   beforeEach(() => {
     dispose();
   });
