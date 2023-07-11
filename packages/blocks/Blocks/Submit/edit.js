@@ -18,8 +18,17 @@ import {
 import { ScButton } from '@surecart/components-react';
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, text, submit, full, size, show_total, show_icon } =
-		attributes;
+	const {
+		type,
+		text,
+		submit,
+		full,
+		size,
+		show_total,
+		show_icon,
+		show_secure_notice,
+		secure_notice_text,
+	} = attributes;
 
 	return (
 		<div className={className}>
@@ -60,6 +69,32 @@ export default ({ className, attributes, setAttributes }) => {
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Show secure notice.', 'surecart')}
+							checked={show_secure_notice}
+							onChange={(show_secure_notice) =>
+								setAttributes({ show_secure_notice })
+							}
+						/>
+					</PanelRow>
+					{show_secure_notice && (
+						<PanelRow>
+							<TextControl
+								label={__('Secure Payment Text', 'surecart')}
+								value={
+									secure_notice_text ||
+									__(
+										'This is a secure, encrypted payment.',
+										'surecart'
+									)
+								}
+								onChange={(secure_notice_text) =>
+									setAttributes({ secure_notice_text })
+								}
+							/>
+						</PanelRow>
+					)}
 					<PanelRow>
 						<SelectControl
 							label={__('Size', 'surecart')}
