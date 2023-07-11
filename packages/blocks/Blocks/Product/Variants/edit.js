@@ -5,7 +5,6 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import {
-	ScProductVariationChoices,
 	ScSelect,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
@@ -19,6 +18,7 @@ import { useRef, useEffect } from '@wordpress/element';
 
 export default ({ attributes, setAttributes, context }) => {
 	const selectColor = useRef();
+	const selectSize = useRef();
 	const { gap } = attributes;
 	const blockProps = useBlockProps();
 	const spacingProps = useSpacingProps(attributes);
@@ -45,7 +45,24 @@ export default ({ attributes, setAttributes, context }) => {
 				},
 			];
 		}
-	}, [selectColor]);
+		if (selectSize.current) {
+			selectSize.current.value = 'xl';
+			selectSize.current.choices = [
+				{
+					value: 'xl',
+					label: __('XL', 'surecart'),
+				},
+				{
+					value: 'l',
+					label: __('L', 'surecart'),
+				},
+				{
+					value: 'm',
+					label: __('M', 'surecart'),
+				},
+			];
+		}
+	}, [selectColor, selectSize]);
 
 	return (
 		<>
@@ -65,15 +82,16 @@ export default ({ attributes, setAttributes, context }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
+			<div {...blockProps}
+				style={{
+					display: 'flex',
+  					flexDirection: 'column',
+					  gap,
+					...spacingProps.style
+				}}
+			>
 				<ScSelect ref={selectColor} label={__('Color', 'surecart')} />
-				<ScProductVariationChoices
-					style={{
-						...spacingProps.style,
-						'--sc-variation-gap': gap,
-					}}
-					isDummy={true}
-				/>
+				<ScSelect ref={selectSize} label={__('Size', 'surecart')} />
 			</div>
 		</>
 	);

@@ -2,7 +2,6 @@ import { Component, h, Prop, Host, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
-import dummyOptions from './dummy-options.js';
 @Component({
   tag: 'sc-product-variation-choices',
   styleUrl: 'sc-product-variation-choices.css',
@@ -15,13 +14,11 @@ export class ScProductVariationChoices {
  
   render() {  
     
-    if ( ! this.isDummy && availableVariants()?.length < 2) return <Host style={{ display: 'none' }}></Host>;
-
-    const options = ! this.isDummy ? availableVariantOptions() : dummyOptions;
+    if ( availableVariants()?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
     return (
         <div class="sc-product-variation-choice-wrap">
-          {( options || []).map(option => {
+          {( availableVariantOptions() || []).map(option => {
             return (
               <sc-select
                 exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
