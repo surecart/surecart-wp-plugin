@@ -31,10 +31,6 @@ export class ScPaystackAddMethod {
   @State() error: string;
   @State() paymentIntent: PaymentIntent;
 
-  componentWillLoad() {
-    this.createPaymentIntent();
-  }
-
   @Watch('paymentIntent')
   async handlePaymentIntentCreate() {
     const { public_key, access_code } = this.paymentIntent?.processor_data?.paystack || {};
@@ -91,7 +87,16 @@ export class ScPaystackAddMethod {
             {this.error}
           </sc-alert>
         )}
-        <div class="sc-paystack-button-container" hidden={!this.loaded}></div>
+        <div class="sc-paystack-button-container">
+          <sc-button
+            loading={this.loading}
+            onClick={() => {
+              this.createPaymentIntent();
+            }}
+          >
+            {__('Add Payment Method', 'surecart')}
+          </sc-button>
+        </div>
       </Host>
     );
   }
