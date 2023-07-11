@@ -30,6 +30,7 @@ export function getEditURL(id) {
 }
 
 export default () => {
+	
 	const [isSaving, setIsSaving] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
@@ -69,7 +70,7 @@ export default () => {
 		},
 		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
-
+	console.log(checkout);
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
 
@@ -79,6 +80,12 @@ export default () => {
 			createCheckout();
 		}
 	}, [id]);
+
+	useEffect(() => {
+		if (error) {
+			setCheckoutError(error);
+		}
+	}, [error]);
 
 	// create the checkout for the first time.
 	const createCheckout = async () => {
@@ -252,21 +259,17 @@ export default () => {
 							busy={busy}
 							loading={loading}
 						/>
-						{checkout?.customer_id && (
-							<>
-								<Address
-									label={__(
-										'Shipping & Tax Address',
-										'surecart'
-									)}
-									address={checkout?.shipping_address}
-									onAddressChange={onAddressChange}
-									loading={loading}
-									busy={busy}
-									busyCustomer={busyCustomer}
-								/>
-							</>
-						)}
+						<Address
+							label={__(
+								'Shipping & Tax Address',
+								'surecart'
+							)}
+							address={checkout?.shipping_address}
+							onAddressChange={onAddressChange}
+							loading={loading}
+							busy={busy}
+							busyCustomer={busyCustomer}
+						/>
 					</>
 				}
 			>

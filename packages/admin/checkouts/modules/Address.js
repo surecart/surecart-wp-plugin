@@ -9,7 +9,6 @@ import {
 	ScAddress,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
-import { Notice } from '@wordpress/components';
 
 export default ({
 	address = {},
@@ -39,19 +38,16 @@ export default ({
 					</ScButton>
 				}
 			>
-				{0 !== address?.length ? (
-					<AddressDisplay address={address} />
-				) : (
-					<div>
-						<Notice status="warning" isDismissible={false}>
-							{__(
-								'Update shipping address for creating a order.',
-								'surecart'
-							)}
-						</Notice>
-					</div>
-				)}
-
+				{ (address && 0 !== address?.length) ? 
+					<AddressDisplay address={address} /> : 
+					<span style={{
+						fontStyle: 'italic',
+						color: 'var(--sc-color-gray-500)'	
+					}}
+					>
+						{__('Nothing to show here.', 'surecart')}
+					</span> 
+				}
 				{(!!busy || !!busyCustomer) && <ScBlockUi spinner />}
 			</Box>
 
