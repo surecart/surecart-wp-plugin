@@ -31,8 +31,8 @@ export class ScOrderSummary {
   @Event() scHide: EventEmitter<void>;
 
   isMobileScreen(): boolean {
-    const bodyRect = document.body.getClientRects();
-    return bodyRect.length && bodyRect[0]?.width < 781;
+    const bodyRect = document.body?.getClientRects();
+    return bodyRect?.length && bodyRect[0]?.width < 781;
   }
 
   componentWillLoad() {
