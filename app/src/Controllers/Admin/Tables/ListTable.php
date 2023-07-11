@@ -152,7 +152,7 @@ abstract class ListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	public function get_search_query() {
-		$search = urldecode( $_GET['s'] ?? null );
+		$search = urldecode( $_GET['s'] ?? '' );
 		return str_replace( [ "\r", "\n" ], '', $search );
 	}
 

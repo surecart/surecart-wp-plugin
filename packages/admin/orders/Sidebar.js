@@ -18,7 +18,6 @@ export default ({ order, checkout, customer, loading }) => {
 					loading={loading}
 				/>
 			)}
-			<Purchases checkoutId={checkout?.id} />
 			{!!checkout?.shipping_address && (
 				<Address
 					address={checkout?.shipping_address}
@@ -31,6 +30,7 @@ export default ({ order, checkout, customer, loading }) => {
 					loading={loading}
 				/>
 			)}
+			<Purchases checkoutId={checkout?.id} />
 			<MetaData order={order} loading={loading} />
 		</Fragment>
 	);

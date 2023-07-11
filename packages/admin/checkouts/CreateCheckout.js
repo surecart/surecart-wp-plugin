@@ -126,69 +126,12 @@ export default () => {
 		});
 	};
 
-	const getErrors = (e) => {
-		let errors = {
-			message: __(
-				'Failed to create an order. Please check for below errors & try again.',
-				'surecart'
-			),
-			additional_errors: [],
-		};
-		const additionalErrors = e?.additional_errors;
-		if (additionalErrors) {
-			for (const error of additionalErrors) {
-				let errorMessage = '';
-				switch (error?.code) {
-					case 'checkout.line_items.required':
-						errorMessage = __(
-							'Please add at least one product.',
-							'surecart'
-						);
-						errors?.additional_errors?.push({
-							message: errorMessage,
-						});
-						break;
-					case 'checkout.customer.blank':
-						errorMessage = __(
-							'Please select a customer.',
-							'surecart'
-						);
-						errors?.additional_errors?.push({
-							message: errorMessage,
-						});
-						break;
-					case 'checkout.shipping_address.invalid_shipping_address':
-						errorMessage = __(
-							'Please add a valid address with necessary shipping information.',
-							'surecart'
-						);
-						errors?.additional_errors?.push({
-							message: errorMessage,
-						});
-						break;
-					case 'checkout.shipping_address.invalid_tax_address':
-						errorMessage = __(
-							'Please select a valid tax address.',
-							'surecart'
-						);
-						errors?.additional_errors?.push({
-							message: errorMessage,
-						});
-						break;
-					default:
-						break;
-				}
-			}
-		}
-
-		return errors;
-	};
-
 	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
 		try {
+			setCheckoutError(false);
 			setIsSaving(true);
 			const checkoutResult = await finalizeCheckout({
 				id: checkout?.id,
@@ -199,8 +142,7 @@ export default () => {
 				type: 'snackbar',
 			});
 		} catch (e) {
-			const errors = getErrors(e);
-			setCheckoutError(errors);
+			setCheckoutError(e);
 			setIsSaving(false);
 		} finally {
 			setIsSaving(false);

@@ -4,7 +4,7 @@ describe('Order Confirmation', () => {
     cy.get('sc-order-confirmation').shadow().find('sc-heading').contains('Order not found.');
   });
   it('Shows an error message', () => {
-    cy.visit('/test/sc-order-confirmation/?order=test');
+    cy.visit('/test/sc-order-confirmation/?sc_order=test');
     cy.get('sc-order-confirmation').shadow().find('sc-heading').contains('Order not found.');
   });
   it('Shows an order', () => {
@@ -40,7 +40,7 @@ describe('Order Confirmation', () => {
       },
     ).as('checkout');
 
-    cy.visit('/test/sc-order-confirmation/?order=test');
+    cy.visit('/test/sc-order-confirmation/?sc_order=test');
     cy.wait('@checkout');
     cy.get('sc-order-confirmation-line-items').shadow().find('sc-product-line-item').shadow().find('[part=base]').contains('Test Product');
   });
