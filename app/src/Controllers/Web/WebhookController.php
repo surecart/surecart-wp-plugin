@@ -98,15 +98,15 @@ class WebhookController {
 	 * @return ResponseInterface
 	 */
 	public function remove( $request ) {
-		// Remove the registered webhook by id.
-		$deleted = \SureCart::webhooks()->deleteRegisteredWebhookById( $request->query( 'id' ) );
-
 		// Remove the webhook from the server.
+		$deleted = Webhook::delete( $request->query( 'id' ) );
+		if ( is_wp_error( $deleted ) ) {
+			wp_die( $deleted->get_error_message() );
+		}
+
+		// Remove the registered webhook by id.
 		if ( $deleted ) {
-			$deleted = Webhook::delete( $request->query( 'id' ) );
-			if ( is_wp_error( $deleted ) ) {
-				wp_die( $deleted->get_error_message() );
-			}
+			\SureCart::webhooks()->deleteRegisteredWebhookById( $request->query( 'id' ) );
 		}
 
 		return ( new RedirectResponse( $request ) )->back();
@@ -204,9 +204,9 @@ class WebhookController {
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
 		// broadcast the webhook as a background task.
-		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
-			do_action( $event, $model, $request );
-		} else {
+		// if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
+		// 	do_action( $event, $model, $request );
+		// } else {
 			\SureCart::queue()->add(
 				$event,
 				array(
@@ -215,7 +215,7 @@ class WebhookController {
 				),
 				Webhook::GROUP_NAME
 			);
-		}
+		// }
 
 		// return data.
 		return [

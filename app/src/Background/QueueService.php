@@ -146,13 +146,4 @@ class QueueService {
 	public function search( $args = array(), $return_format = OBJECT ) {
 		return \as_get_scheduled_actions( $args, $return_format );
 	}
-
-	/**
-	 * Bootstrap the service.
-	 *
-	 * @return void
-	 */
-	public function bootstrap() {
-		// nothing to bootstrap.
-	}
 }

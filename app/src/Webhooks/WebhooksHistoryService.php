@@ -21,14 +21,14 @@ class WebhooksHistoryService {
 	 *
 	 * @var string
 	 */
-	public const WEBHOOK_REGISTERED_ENTRIES = 'ce_registered_webhooks';
+	public const WEBHOOK_REGISTERED_ENTRIES = 'surecart_registered_webhooks';
 
 	/**
 	 * Webhook ignore notice option name.
 	 *
 	 * @var string
 	 */
-	public const WEBHOOK_IGNORE_NOTICE_KEY = 'ce_ignore_webhook_notice';
+	public const WEBHOOK_IGNORE_NOTICE_KEY = 'surecart_ignore_webhook_notice';
 
 	/**
 	 * Listen to domain changes.

@@ -36,6 +36,5 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sync']->customers()->bootstrap();
-		$container['surecart.queue']->bootstrap();
 	}
 }
