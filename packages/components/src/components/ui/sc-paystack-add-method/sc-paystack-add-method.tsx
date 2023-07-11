@@ -1,11 +1,12 @@
 /**
  * WordPress dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies.
  */
+import PaystackPop from '@paystack/inline-js';
 import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
 
 /**
@@ -36,7 +37,27 @@ export class ScPaystackAddMethod {
 
   @Watch('paymentIntent')
   async handlePaymentIntentCreate() {
-    console.log('this sc-paystack-add-method', this);
+    const { public_key, access_code } = this.paymentIntent?.processor_data?.paystack || {};
+
+    // we need this data.
+    if (!public_key || !access_code) return;
+
+    const paystack = new PaystackPop();
+
+    await paystack.newTransaction({
+      key: public_key,
+      accessCode: access_code, // We'll use accessCode which will handle product, price on our server.
+      onSuccess: async transaction => {
+        if (transaction?.status !== 'success') {
+          throw { message: sprintf(__('Paystack transaction could not be finished. Status: %s', 'surecart'), transaction?.status) };
+        }
+        window.location.assign(this.successUrl);
+      },
+      onClose: err => {
+        console.error(err);
+        alert(err?.message || __('The payment did not process. Please try again.', 'surecart'));
+      },
+    });
   }
 
   async createPaymentIntent() {
