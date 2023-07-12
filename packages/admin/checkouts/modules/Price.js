@@ -143,8 +143,8 @@ export default ({ price, quantity, onRemove, onChange, full_amount }) => {
 						label={__('Amount', 'surecart')}
 						placeholder={__('Enter an Amount', 'surecart')}
 						currencyCode={price?.currency}
-						value={full_amount || null}
-						onScInput={(e) => setAddHocAmount(e.target.value)}
+						value={addHocAmount || full_amount || null}
+						onScInput={(e) => setAddHocAmount(e?.target?.value)}
 						required
 					/>
 					<ScButton slot="footer" type="primary" submit>
