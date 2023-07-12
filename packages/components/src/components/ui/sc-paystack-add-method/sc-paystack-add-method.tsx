@@ -88,19 +88,17 @@ export class ScPaystackAddMethod {
           </sc-alert>
         )}
         <div class="sc-paystack-button-container">
-          <sc-alert open={true} type="info">
-            {__('In order to verify the payment method, we\'ll make a refund of a "small amount" for one time.', 'surecart')}
+          <sc-alert open={true} type="warning">
+            {__(
+              'In order to add a new card, we will need to make a small transaction to authenticate it. This is for authentication purposes and will be immediately refunded.',
+              'surecart',
+            )}
+            <div>
+              <sc-button loading={this.loading} type="primary" onClick={() => this.createPaymentIntent()} style={{ marginTop: 'var(--sc-spacing-medium)' }}>
+                {__('Add New Card', 'surecart')}
+              </sc-button>
+            </div>
           </sc-alert>
-          <sc-button
-            loading={this.loading}
-            type="primary"
-            onClick={() => {
-              this.createPaymentIntent();
-            }}
-            style={{ marginTop: 'var(--sc-spacing-medium)' }}
-          >
-            {__('Add Payment Method', 'surecart')}
-          </sc-button>
         </div>
       </Host>
     );
