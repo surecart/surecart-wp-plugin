@@ -2,9 +2,9 @@
 	"apiVersion": 2,
 	"name": "surecart/product-collections",
 	"title": "Product Collections",
-	"description": "Displays the collections for the product",
+	"description": "Displays product collection selector for a product.",
 	"category": "surecart",
-	"keywords": ["surecart", "product", "collection"],
+	"keywords": ["collection", "form", "product"],
 	"attributes": {
 		"size": {
 			"type": "string",
@@ -22,6 +22,30 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false
+		"multiple": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"color": {
+			"gradients": false,
+			"background": false,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
 	}
 }
