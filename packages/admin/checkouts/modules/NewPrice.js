@@ -110,6 +110,7 @@ export default ({ checkout }) => {
 				}
 			);
 		} finally {
+			setAddHocAmount(null);
 			setLoading(false);
 		}
 	};
