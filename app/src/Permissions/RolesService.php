@@ -157,7 +157,7 @@ class RolesService {
 			'sc_balance_transaction',
 			'sc_checkout',
 			'sc_purchase',
-			'sc_webhooks',
+			'sc_webhook',
 			'sc_product',
 			'sc_license',
 			'sc_customer',
