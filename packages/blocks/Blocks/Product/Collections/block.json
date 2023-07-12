@@ -8,11 +8,11 @@
 	"attributes": {
 		"size": {
 			"type": "string",
-			"default": "medium"
+			"default": "small"
 		},
 		"pill": {
 			"type": "boolean",
-			"default": true
+			"default": false
 		},
 		"type": {
 			"type": "string",

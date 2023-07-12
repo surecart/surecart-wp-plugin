@@ -17,7 +17,7 @@ export class ScProductCollections {
 
   render() {
     return (
-      <sc-flex >
+      <sc-flex justifyContent="flex-start" >
         <sc-product-collection-badge size={this.size} pill={this.pill} type={this.type} name="Male"></sc-product-collection-badge>
         {/* <sc-product-collection-badge size={this.size} pill={this.pill} type={this.type} name="Female"></sc-product-collection-badge> */}
         <sc-product-collection-badge size={this.size} pill={this.pill} type={this.type} name="Unisex"></sc-product-collection-badge>

@@ -6,7 +6,7 @@ import * as Price from './Blocks/Product/Price';
 import * as Quantity from './Blocks/Product/Quantity';
 import * as Title from './Blocks/Product/Title';
 import * as PriceChoices from './Blocks/Product/PriceChoices';
-import * as Collections from './Blocks/Product/Collection';
+import * as Collections from './Blocks/Product/Collections';
 import { registerBlocks } from './register-block';
 import { __ } from '@wordpress/i18n';
 
