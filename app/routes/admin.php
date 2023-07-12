@@ -109,6 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function() {
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CheckoutsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CheckoutsController@edit' );
 	}
 );
 
