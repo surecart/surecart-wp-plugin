@@ -205,7 +205,7 @@ class PaymentMethodController extends BaseController {
 						<span slot="summary" class="sc-payment-toggle-summary">
 							<sc-flex>
 								<sc-icon name="creditcard" style="font-size:24px"></sc-icon>
-								<span><?php esc_html_e( 'Credit Card', 'surecart' ); ?></span>
+								<span><?php esc_html_e( 'Credit Card or Bank Account', 'surecart' ); ?></span>
 							</sc-flex>
 						</span>
 						<sc-paystack-add-method

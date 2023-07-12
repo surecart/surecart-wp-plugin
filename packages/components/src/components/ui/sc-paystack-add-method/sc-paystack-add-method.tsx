@@ -93,6 +93,7 @@ export class ScPaystackAddMethod {
           </sc-alert>
           <sc-button
             loading={this.loading}
+            type="primary"
             onClick={() => {
               this.createPaymentIntent();
             }}
