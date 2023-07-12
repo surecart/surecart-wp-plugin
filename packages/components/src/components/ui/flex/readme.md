@@ -36,6 +36,7 @@
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-collections](../../controllers/product/sc-product-collections)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
@@ -55,6 +56,7 @@ graph TD;
   sc-pagination --> sc-flex
   sc-password-nag --> sc-flex
   sc-payment-methods-list --> sc-flex
+  sc-product-collections --> sc-flex
   sc-subscription --> sc-flex
   sc-subscription-cancel --> sc-flex
   sc-subscription-details --> sc-flex

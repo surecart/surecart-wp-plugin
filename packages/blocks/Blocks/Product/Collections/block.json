@@ -1,0 +1,27 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-collections",
+	"title": "Product Collections",
+	"description": "Displays the collections for the product",
+	"category": "surecart",
+	"keywords": ["surecart", "product", "collection"],
+	"attributes": {
+		"size": {
+			"type": "string",
+			"default": "medium"
+		},
+		"pill": {
+			"type": "boolean",
+			"default": true
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	}
+}
