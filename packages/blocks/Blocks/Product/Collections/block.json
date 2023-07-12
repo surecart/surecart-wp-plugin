@@ -22,30 +22,6 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false,
-		"spacing": {
-			"margin": true,
-			"padding": true
-		},
-		"typography": {
-			"fontSize": true
-		},
-		"color": {
-			"gradients": false,
-			"background": false,
-			"link": false,
-			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true,
-				"link": true
-			}
-		},
-		"__experimentalBorder": {
-			"radius": true,
-			"__experimentalSkipSerialization": true,
-			"__experimentalDefaultControls": {
-				"radius": true
-			}
-		}
+		"multiple": false
 	}
 }

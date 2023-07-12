@@ -22,7 +22,7 @@ class Block extends BaseBlock {
 				size="<?php echo esc_attr( $attributes['size'] ?? '' ); ?>"
 				type="<?php echo esc_attr( $attributes['type'] ?? '' ); ?>"
 				pill="<?php echo esc_attr( $attributes['pill'] ?? '' ); ?>"
-			/>
+			></sc-product-collections>
 		<?php
 		return ob_get_clean();
 	}
