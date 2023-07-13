@@ -2,10 +2,11 @@ import { Component, h, Prop, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
 import { state } from '@store/product';
+import { intervalString } from 'src/functions/price';
 
 @Component({
   tag: 'sc-product-price',
-  styleUrl: 'sc-product-price.css',
+  styleUrl: 'sc-product-price.scss',
   shadow: true,
 })
 export class ScProductPrice {
@@ -17,31 +18,6 @@ export class ScProductPrice {
       return this.renderPrice(state.prices[0]);
     }
     return <sc-price-range prices={state.prices} />;
-  }
-
-  renderRecurringInterval(price: Price) {
-    if (!price?.recurring_interval) return;
-
-    return (
-      <span class="recurring-interval">
-        / {price.recurring_period_count > 1 && `${price.recurring_period_count} ` }
-        {price.recurring_interval + _n('', 's', price.recurring_period_count, 'surecart')}
-        {price.recurring_interval_count > 1 ? sprintf(__('(%s payments)', 'surecart'), price.recurring_interval_count) : ''}
-      </span>
-    );
-  }
-
-  renderSetupFee(price: Price) {
-    if (!price?.setup_fee_enabled) return;
-
-    return (
-      <div class="setup-fee">
-        +<sc-format-number type="currency" currency={price.currency} value={price.setup_fee_amount}></sc-format-number> {price.setup_fee_name || __('Setup Fee', 'surecart')}.{' '}
-        { !!price.trial_duration_days
-          ? sprintf(_n('Starting in %s day', 'Starting in %s days', price.trial_duration_days, 'surecart'), price.trial_duration_days)
-          : ''}
-      </div>
-    );
   }
 
   renderPrice(price: Price) {
@@ -60,15 +36,41 @@ export class ScProductPrice {
             {!!price?.scratch_amount && (
               <sc-format-number class="scratch-price" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
             )}
-            <sc-format-number type="currency" value={price?.amount} currency={price?.currency} />
-            {this.renderRecurringInterval(price)}
+
+            <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
+
+            {intervalString(price, {
+              showOnce: true,
+              abbreviate: false,
+              labels: {
+                interval: '/',
+                period:
+                  /** translators: used as in time period: "for 3 months" */
+                  __('for', 'surecart'),
+              },
+            })}
+
             {!!price?.scratch_amount && (
               <sc-tag type="primary" pill class="sale-badge">
                 {this.saleText || __('Sale', 'surecart')}
               </sc-tag>
             )}
           </div>
-          {this.renderSetupFee(price)}
+
+          {(!!price?.trial_duration_days || (!!price?.setup_fee_enabled && price?.setup_fee_amount)) && (
+            <div class="price__details">
+              {!!price?.trial_duration_days && (
+                <span class="price__trial">{sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)} </span>
+              )}
+
+              {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
+                <span class="price__setup-fee">
+                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
+                  {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </Fragment>
     );

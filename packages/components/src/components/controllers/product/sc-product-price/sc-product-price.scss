@@ -6,18 +6,19 @@
   display: inline-flex;
   align-items: center;
   gap: var(--sc-spacing-x-small);
+
+  &__details {
+    font-size: min(1em, 14px);
+    opacity: 0.75;
+  }
 }
 .scratch-price {
   text-decoration: line-through;
   opacity: 0.65;
 }
+
 .sale-badge {
   font-size: min(1em, 14px);
-}
-
-.recurring-interval, .setup-fee{
-  font-size: min(1em, 14px);
-  color: var(--sc-color-gray-400);
 }
 
 .recurring-interval {
