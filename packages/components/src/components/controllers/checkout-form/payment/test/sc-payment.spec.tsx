@@ -22,6 +22,25 @@ describe('sc-payment', () => {
     expect(page.root).toMatchSnapshot();
   });
 
+  it('renders no processors & user has `manage_sc_shop_settings` capability', async () => {
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
+    });
+
+    // Set the mock attribute.
+    global.window = Object.create(window);
+    Object.defineProperty(window, 'scData', {
+      value: {
+        user_permissions: {
+          manage_sc_shop_settings: true
+        },
+        admin_url: 'https://test.com'
+      }
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+
   it('renders stripe and paypal with no checkout', async () => {
     const page = await newSpecPage({
       components: [ScPayment],

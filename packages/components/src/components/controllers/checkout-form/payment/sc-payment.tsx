@@ -93,6 +93,8 @@ export class ScPayment {
   }
 
   render() {
+    console.log( window?.scData?.user_permissions?.manage_sc_shop_settings);
+    
     // payment is not required for this order.
     if (checkoutState.checkout?.payment_method_required === false) {
       return null;

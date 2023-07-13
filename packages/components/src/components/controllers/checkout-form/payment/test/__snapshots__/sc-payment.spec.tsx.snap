@@ -100,6 +100,23 @@ exports[`sc-payment renders no processors & user does not have \`manage_sc_shop_
 </sc-payment>
 `;
 
+exports[`sc-payment renders no processors & user has \`manage_sc_shop_settings\` capability 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+      </div>
+      <div theme="container">
+        <sc-alert open="" type="info">
+          Please contact us for payment.
+        </sc-alert>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
 exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
 <sc-payment>
   <mock:shadow-root>

@@ -53,7 +53,7 @@ declare global {
       claim_url: string;
       admin_url: string;
       user_permissions: {
-        manage_sc_shop_settings: string;
+        manage_sc_shop_settings: boolean;
       }
     };
     ceRegisterIconLibrary: any;
