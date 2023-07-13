@@ -1,4 +1,9 @@
 /**
+ * @jsx jsx
+ */
+import { css, jsx } from '@emotion/core';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -82,13 +87,7 @@ export default ({ className, attributes, setAttributes }) => {
 						<PanelRow>
 							<TextControl
 								label={__('Secure Payment Text', 'surecart')}
-								value={
-									secure_notice_text ||
-									__(
-										'This is a secure, encrypted payment.',
-										'surecart'
-									)
-								}
+								value={secure_notice_text}
 								onChange={(secure_notice_text) =>
 									setAttributes({ secure_notice_text })
 								}
@@ -126,46 +125,68 @@ export default ({ className, attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScButton
-				type={type}
-				submit={submit}
-				icon={show_icon ? 'lock' : false}
-				{...(full ? { full: true } : {})}
-				size={size}
+			<div
+				css={css`
+					display: block;
+					width: auto;
+					display: grid;
+					gap: var(--sc-form-row-spacing);
+				`}
 			>
-				{show_icon && (
-					<svg
-						slot="prefix"
-						xmlns="http://www.w3.org/2000/svg"
-						width="16"
-						height="16"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
+				<ScButton
+					type={type}
+					submit={submit}
+					icon={show_icon ? 'lock' : false}
+					{...(full ? { full: true } : {})}
+					size={size}
+				>
+					{show_icon && (
+						<svg
+							slot="prefix"
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+							/>
+						</svg>
+					)}
+					<RichText
+						aria-label={__('Button text')}
+						placeholder={__('Add text…')}
+						value={text}
+						onChange={(value) => setAttributes({ text: value })}
+						withoutInteractiveFormatting
+						allowedFormats={['core/bold', 'core/italic']}
+					/>
+					{show_total && (
+						<span>
+							{'\u00A0'}
+							<sc-total></sc-total>
+						</span>
+					)}
+				</ScButton>
+
+				{show_secure_notice && (
+					<div
+						css={css`
+							display: flex;
+							justify-content: center;
+						`}
 					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							strokeWidth={2}
-							d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-						/>
-					</svg>
+						<sc-secure-notice>
+							{secure_notice_text}
+						</sc-secure-notice>
+					</div>
 				)}
-				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
-					value={text}
-					onChange={(value) => setAttributes({ text: value })}
-					withoutInteractiveFormatting
-					allowedFormats={['core/bold', 'core/italic']}
-				/>
-				{show_total && (
-					<span>
-						{'\u00A0'}
-						<sc-total></sc-total>
-					</span>
-				)}
-			</ScButton>
+			</div>
 		</div>
 	);
 };
