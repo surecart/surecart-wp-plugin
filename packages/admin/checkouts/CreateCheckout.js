@@ -17,6 +17,7 @@ import SelectCustomer from './modules/SelectCustomer';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
+import { Modal } from '@wordpress/components';
 
 /**
  * Returns the Model Edit URL.
@@ -33,6 +34,7 @@ export default () => {
 	
 	const [isSaving, setIsSaving] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
+	const [orderID, setOrderID] = useState(null);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -40,6 +42,7 @@ export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busyCustomer, setBusyCustomer] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
+	const [modal, setModal] = useState(false);
 
 	const { checkout, loading, busy, error } = useSelect(
 		(select) => {
@@ -140,11 +143,12 @@ export default () => {
 		try {
 			setCheckoutError(false);
 			setIsSaving(true);
-			const checkoutResult = await finalizeCheckout({
+			const {order} = await finalizeCheckout({
 				id: checkout?.id,
 				customer_id: customer?.id,
 			});
-
+			setOrderID(order);
+			setModal(true);
 			createSuccessNotice(__('Order Created.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -285,6 +289,40 @@ export default () => {
 
 				{!!checkoutIdLoading && <ScBlockUi spinner />}
 			</UpdateModel>
+			{!!modal && (
+				<Modal
+					title={__('Your manual order has been successfully created.', 'surecart')}
+					css={css`
+						max-width: 500px !important;
+					`}
+					onRequestClose={() => setModal(false)}
+					shouldCloseOnClickOutside={false}
+				>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							gap: '1em',
+							marginTop: '10px',
+						}}
+					>
+						<ScButton
+							size="large"
+							type="primary"
+							href={"admin.php?page=sc-checkouts&action=edit"}
+						>
+							{__('Add New', 'surecart')}
+						</ScButton>
+						<ScButton
+							size="large"
+							type="link"
+							href={`admin.php?page=sc-orders&action=edit&id=${orderID}`}
+						>
+							{__('Go to Order', 'surecart')}
+						</ScButton>
+					</div>
+				</Modal>
+			)}
 		</>
 	);
 };
