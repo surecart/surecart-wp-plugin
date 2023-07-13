@@ -1,0 +1,175 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import {
+	ScForm,
+	ScSelect,
+	ScSwitch,
+} from '@surecart/components-react';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+
+import Multiple from '../../../components/price/Multiple';
+import OneTime from '../../../components/price/OneTime';
+import PriceName from '../../../components/price/parts/PriceName';
+import Subscription from '../../../components/price/Subscription';
+import Box from '../../../../ui/Box';
+
+export default ({ onRequestClose, product }) => {
+	const [error, setError] = useState(null);
+	const [additionalErrors, setAdditionalErrors] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [price, setPrice] = useState({});
+	const [type, setType] = useState('once');
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
+	// update the price.
+	const updatePrice = (data) => {
+		setPrice({ ...price, ...data });
+	};
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			setLoading(true);
+			await saveEntityRecord(
+				'surecart',
+				'price',
+				{
+					...price,
+					product: product?.id,
+				},
+				{ throwOnError: true }
+			);
+			createSuccessNotice(__('Price created.', 'surecart'), {
+				type: 'snackbar',
+			});
+			onRequestClose();
+		} catch (e) {
+			console.error(e);
+			setError(e?.message || __('Something went wrong.', 'surecart'));
+			if (e?.additional_errors) {
+				setAdditionalErrors(e.additional_errors);
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		switch (type) {
+			case 'subscription':
+				updatePrice({
+					recurring_interval: 'month',
+					recurring_interval_count: 1,
+					recurring_period_count: null,
+					recurring_end_behavior: 'cancel',
+				});
+				break;
+			case 'multiple':
+				updatePrice({
+					recurring_interval: 'month',
+					recurring_interval_count: 1,
+					recurring_period_count: 3,
+					recurring_end_behavior: 'complete',
+				});
+				break;
+			case 'once':
+				updatePrice({
+					recurring_interval: null,
+					recurring_interval_count: null,
+					recurring_period_count: null,
+					recurring_end_behavior: null,
+				});
+				break;
+		}
+	}, [type]);
+
+	return (
+		<Box title={__('Pricing', 'surecart')} loading={loading}>
+			<ScForm
+				onScFormSubmit={onSubmit}
+				css={css`
+					--sc-form-row-spacing: var(--sc-spacing-large);
+				`}
+			>
+				<sc-alert type="danger" open={error?.length}>
+					<span slot="title">{error}</span>
+					{additionalErrors.map((e) => (
+						<div>{e?.message}</div>
+					))}
+				</sc-alert>
+
+				<PriceName price={price} updatePrice={updatePrice} />
+
+				<ScSelect
+					label={__('Payment Type', 'surecart')}
+					required
+					unselect={false}
+					value={type}
+					onScChange={(e) => setType(e.target.value)}
+					choices={[
+						{
+							value: 'once',
+							label: __('One Time', 'surecart'),
+						},
+						{
+							value: 'multiple',
+							label: __('Installment', 'surecart'),
+						},
+						{
+							value: 'subscription',
+							label: __('Subscription', 'surecart'),
+						},
+					]}
+				/>
+
+				{type === 'subscription' && (
+					<Subscription price={price} updatePrice={updatePrice} />
+				)}
+
+				{type === 'multiple' && (
+					<Multiple price={price} updatePrice={updatePrice} />
+				)}
+
+				{type === 'once' && (
+					<OneTime price={price} updatePrice={updatePrice} />
+				)}
+
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+						gap: 0.5em;
+						margin-top: var(--sc-spacing-xx-large);
+					`}
+				>
+					{product?.tax_enabled && scData?.tax_protocol?.tax_enabled && (
+						<ScSwitch
+							style={{
+								marginTop: '0.5em',
+								display: 'inline-block',
+							}}
+							checked={price?.tax_behavior === 'inclusive'}
+							onScChange={() =>
+								updatePrice({
+									tax_behavior:
+										price?.tax_behavior === 'inclusive'
+											? 'exclusive'
+											: 'inclusive',
+								})
+							}
+						>
+							{__('Tax is included', 'surecart')}
+						</ScSwitch>
+					)}
+				</div>
+			</ScForm>
+			{loading && <sc-block-ui spinner></sc-block-ui>}
+		</Box>
+	);
+};

@@ -25,6 +25,8 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import VariablePrice from './modules/Prices/VariablePrice';
+import Variations from './modules/Variations';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -245,12 +247,31 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				<Prices
-					productId={id}
-					product={product}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
+				{!product?.variants_enabled ? (
+					<Prices
+						productId={id}
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+				) : (
+					<>
+						<VariablePrice
+							productId={id}
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+
+						<Variations 
+							productId={id}
+							product={product}
+							updateProduct={editProduct}
+							loading={!hasLoadedProduct}
+						/>
+					</>
+				)}
+
 
 				<Integrations id={id} />
 
