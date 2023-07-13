@@ -11,6 +11,9 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScBlockUi,
+	ScMenuDivider,
+	ScForm,
+	ScInput,
 } from '@surecart/components-react';
 import Box from '../../ui/Box';
 import { useDispatch, select } from '@wordpress/data';
@@ -18,21 +21,31 @@ import { __ } from '@wordpress/i18n';
 import ModelSelector from '../../components/ModelSelector';
 import useAvatar from '../../hooks/useAvatar';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
+import { useState, useRef } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { Modal } from '@wordpress/components';
 import expand from '../query';
 
 export default ({ checkout, busy, loading }) => {
+	const name = useRef();
 	const [busyCustomer, setBusyCustomer] = useState(false);
+	const [modal, setModal] = useState(false);
+	const [newCustomer, setNewCustomer] = useState(null);
+	const updateNewCustomer = (data) =>
+		setNewCustomer({
+			...(newCustomer || {}),
+			...data,
+		});
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const { receiveEntityRecords, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 	const customer = checkout?.customer_id ? checkout?.customer : {};
 	const avatarUrl = useAvatar({ email: customer?.email });
-
+	const { saveEntityRecord } = useDispatch(coreStore);
+	
 	const onCustomerUpdate = async (customerID = false) => {
 		try {
 			setBusyCustomer(true);
@@ -101,7 +114,34 @@ export default ({ checkout, busy, loading }) => {
 				}
 			);
 		} finally {
+			setModal(false);
 			setBusyCustomer(false);
+		}
+	};
+
+	const onSubmit = async () => {
+		try {
+			setBusyCustomer(true);
+			const customer = await saveEntityRecord(
+				'surecart',
+				'customer',
+				newCustomer,
+				{
+					throwOnError: true,
+				}
+			);
+			onCustomerUpdate(customer?.id);
+			createSuccessNotice(__('Customer created.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 		}
 	};
 
@@ -160,6 +200,22 @@ export default ({ checkout, busy, loading }) => {
 					<ModelSelector
 						name="customer"
 						placeholder={__('Any Customer', 'surecart')}
+						prefix={
+							<div slot="prefix">
+								<ScMenuItem
+									onClick={() => {
+										setModal(true);
+										setTimeout(() => {
+											name.current.triggerFocus();
+										}, 50);
+									}}
+								>
+									<ScIcon slot="prefix" name="plus" />
+									{__('Add New', 'surecart')}
+								</ScMenuItem>
+								<ScMenuDivider />
+							</div>
+						}
 						display={(item) =>
 							`${!!item?.name ? `${item?.name} - ` : ''}${
 								item.email
@@ -172,7 +228,73 @@ export default ({ checkout, busy, loading }) => {
 					/>
 				</ScFormControl>
 			)}
+			{!!modal && (
+				<Modal
+					title={__('Add Customer', 'surecart')}
+					css={css`
+						max-width: 500px !important;
+					`}
+					onRequestClose={() => setModal(false)}
+					shouldCloseOnClickOutside={false}
+				>
+					<ScForm
+						onScFormSubmit={onSubmit}
+						css={css`
+							--sc-form-row-spacing: var(--sc-spacing-large);
+						`}
+					>
+						<ScInput
+							ref={name}
+							label={__('First Name', 'surecart')}
+							type="text"
+							onScInput={(e) =>
+								updateNewCustomer({
+									first_name: e.target.value,
+								})
+							}
+							tabIndex="0"
+							autofocus
+						/>
 
+						<ScInput
+							label={__('Last Name', 'surecart')}
+							onScInput={(e) =>
+								updateNewCustomer({ last_name: e.target.value })
+							}
+							tabIndex="0"
+							type="text"
+						/>
+
+						<ScInput
+							label={__('Email', 'surecart')}
+							type="email"
+							onScInput={(e) =>
+								updateNewCustomer({ email: e.target.value })
+							}
+							tabIndex="0"
+							required
+						/>
+
+						<div
+							css={css`
+								display: flex;
+								align-items: center;
+								gap: 0.5em;
+							`}
+						>
+							<ScButton type="primary" busy={busyCustomer} submit>
+								{__('Create', 'surecart')}
+							</ScButton>
+							<ScButton
+								type="text"
+								onClick={() => setModal(false)}
+							>
+								{__('Cancel', 'surecart')}
+							</ScButton>
+						</div>
+					</ScForm>
+				</Modal>
+			)}
 			{(!!busy || !!loading || !!busyCustomer) && <ScBlockUi spinner />}
 		</Box>
 	);
