@@ -2,6 +2,8 @@
  * WordPress dependencies.
  */
 
+import { __ } from '@wordpress/i18n';
+
 export default [
 	{
 		attributes: {
@@ -34,6 +36,16 @@ export default [
 			reusable: false,
 			html: false,
 			multiple: false,
+		},
+		migrate: (attributes) => {
+			return {
+				...attributes,
+				show_secure_notice: true,
+				secure_notice_text: __(
+					'This is a secure, encrypted payment.',
+					'surecart'
+				),
+			};
 		},
 		save({ attributes }) {
 			const { type, full, size, text, show_total, show_icon } =
