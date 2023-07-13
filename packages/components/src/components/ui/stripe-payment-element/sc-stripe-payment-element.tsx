@@ -151,7 +151,7 @@ export class ScStripePaymentElement {
   /** Update the payment element mode, amount and currency when it changes. */
   createOrUpdateElements() {
     // need an order amount, etc.
-    if (!checkoutState.checkout) return;
+    if (!checkoutState?.checkout?.amount_due) return;
 
     // create the elements if they have not yet been created.
     if (!this.elements) {
@@ -189,7 +189,6 @@ export class ScStripePaymentElement {
       this.element.on('ready', () => (this.loaded = true));
       return;
     }
-    console.log(this.getElementsConfig());
     this.elements.update(this.getElementsConfig());
   }
 
