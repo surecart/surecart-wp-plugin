@@ -8,10 +8,12 @@ import { useState } from 'react';
 import { ScAlert, ScButton, ScForm, ScInput } from '@surecart/components-react';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
+import ProductType from './modules/ProductType';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
+	const [variantsEnabled, setVariantsEnabled] = useState(false);
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 
@@ -25,6 +27,8 @@ export default ({ id, setId }) => {
 				'product',
 				{
 					name,
+					variants_enabled: variantsEnabled,
+					auto_fulfill_enabled: true,
 				},
 				{ throwOnError: true }
 			);
@@ -71,6 +75,11 @@ export default ({ id, setId }) => {
 							name="name"
 							required
 							autofocus
+						/>
+
+						<ProductType
+							variantsEnabled={variantsEnabled}
+							setVariantsEnabled={setVariantsEnabled}
 						/>
 
 						<div
