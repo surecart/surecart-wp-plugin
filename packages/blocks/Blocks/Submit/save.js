@@ -17,7 +17,7 @@ export default ({ attributes }) => {
 			size={size}
 			icon={show_icon ? 'lock' : false}
 			show-total={show_total ? 'true' : false}
-			secure-notice={show_secure_notice ? 'true' : false}
+			secure-notice={show_secure_notice ? 'true' : 'false'}
 			secure-notice-text={secure_notice_text}
 		>
 			{text}

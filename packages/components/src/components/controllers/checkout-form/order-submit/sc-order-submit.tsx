@@ -58,7 +58,7 @@ export class ScOrderSubmit {
   @Prop() secureNoticeText: string;
 
   /** Show the secure notice */
-  @Prop() secureNotice: boolean;
+  @Prop() secureNotice: boolean = true;
 
   cannotShipToLocation() {
     return checkoutState?.checkout?.selected_shipping_choice_required && !checkoutState.checkout?.selected_shipping_choice;
