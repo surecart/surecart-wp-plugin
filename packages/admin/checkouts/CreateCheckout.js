@@ -14,6 +14,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import expand from './query';
 import SelectCustomer from './modules/SelectCustomer';
+import SelectShipping from './modules/SelectShipping';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
@@ -273,6 +274,11 @@ export default () => {
 							loading={loading}
 							busy={busy}
 							busyCustomer={busyCustomer}
+						/>
+						<SelectShipping
+							checkout={checkout}
+							busy={busy}
+							loading={loading}
 						/>
 					</>
 				}

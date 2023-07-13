@@ -95,6 +95,22 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
+				{ !!checkout?.shipping_amount && (
+						<ScLineItem>
+							<span slot="description">{__('Shipping', 'surecart')}</span>
+							<ScFormatNumber
+								slot="price"
+								style={{
+									fontWeight: 'var(--sc-font-weight-semibold)',
+									color: 'var(--sc-color-gray-800)',
+								}}
+								type="currency"
+								currency={checkout?.currency}
+								value={checkout?.shipping_amount}
+							></ScFormatNumber>
+						</ScLineItem>
+					)
+				}
 				{0 !== checkout?.tax_amount && (
 					<ScLineItem>
 						<span slot="description">{`${formatTaxDisplay(
