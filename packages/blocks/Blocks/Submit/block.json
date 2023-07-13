@@ -21,7 +21,8 @@
 			"default": true
 		},
 		"secure_notice_text": {
-			"type": "string"
+			"type": "string",
+			"default": "This is a secure, encrypted payment."
 		},
 		"type": {
 			"type": "string",
