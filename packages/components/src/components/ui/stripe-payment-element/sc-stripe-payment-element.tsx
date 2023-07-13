@@ -55,12 +55,16 @@ export class ScStripePaymentElement {
   @State() styles: CSSStyleDeclaration;
 
   async componentWillLoad() {
-    this.styles = (await this.getComputedStyles()) as CSSStyleDeclaration;
+    this.fetchStyles();
   }
 
   @Watch('styles')
   async handleStylesChange() {
     this.createOrUpdateElements();
+  }
+
+  async fetchStyles() {
+    this.styles = (await this.getComputedStyles()) as CSSStyleDeclaration;
   }
 
   /**
@@ -100,6 +104,7 @@ export class ScStripePaymentElement {
     this.createOrUpdateElements();
     this.handleUpdateElement();
     this.unlistenToCheckout = onChange('checkout', () => {
+      this.fetchStyles();
       this.createOrUpdateElements();
       this.handleUpdateElement();
     });
