@@ -58,6 +58,10 @@ export class ScOrderStatusBadge {
   }
 
   render() {
-    return <sc-tag type={this.getType()}>{this.getText()}</sc-tag>;
+    return (
+      <sc-tag type={this.getType()} pill={this.pill}>
+        {this.getText()}
+      </sc-tag>
+    );
   }
 }
