@@ -37,8 +37,10 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 				<Card size="small">
 					<CardBody size="small">
 						<p>
-							You can override the global password validation by
-							going to the advanced settings.
+							{__(
+								'You can override the global password validation by going to the advanced settings.',
+								'surecart'
+							)}
 						</p>
 						<Button
 							variant="primary"
@@ -48,7 +50,7 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 								tab: 'advanced',
 							})}
 						>
-							Site Settings
+							{__('Site Settings', 'surecart')} &rarr;
 						</Button>
 					</CardBody>
 				</Card>
