@@ -111,21 +111,27 @@ export class ScOrderPassword {
     showHintTimer = setTimeout(() => {
       if (!this.showHintText) this.showHintText = true;
       this.validatePassword(val);
-    }, 1000);
+    }, 500);
   }
 
   validatePassword(val: string) {
     if (!this.enableValidation) return;
     let message: string;
 
-    // must be at least 6 characters
+    // nothing entered.
+    if (val.trim().length === 0) {
+      this.hintText = '';
+      return;
+    }
+
+    // must be at least 6 characters.
     if (val.trim().length < 6) {
       message = __('Passwords should at least 6 characters.', 'surecart');
       this.hintText = message;
       return;
     }
 
-    // must contain a special charater
+    // must contain a special charater.
     const regex = /[!@#$%^&*(),.?":{}|<>]/;
     if (!regex.test(val)) {
       message = __('Passwords must contain a special character.', 'surecart');
