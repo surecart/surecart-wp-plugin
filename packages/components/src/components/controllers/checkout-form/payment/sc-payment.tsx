@@ -93,8 +93,6 @@ export class ScPayment {
   }
 
   render() {
-    console.log( window?.scData?.user_permissions?.manage_sc_shop_settings);
-    
     // payment is not required for this order.
     if (checkoutState.checkout?.payment_method_required === false) {
       return null;
@@ -121,26 +119,23 @@ export class ScPayment {
             <Tag collapsible={false} theme="container">
               {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
-                  {
-                    window?.scData?.user_permissions?.manage_sc_shop_settings ? (
-                      <Fragment>
-                          {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
-
-                          <a
-                            href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
-                              page: 'sc-settings',
-                              tab: 'processors',
-                            })}
-                            style={{ color: 'var(--sc-color-gray-700)' }}
-                          >
-                            {__('Please configure your processors', 'surecart')}
-                          </a>
-                          .
-                      </Fragment>
-                    ) : (
-                      __('Please contact us for payment.', 'surecart')
-                    )
-                  }
+                  {window?.scData?.user_permissions?.manage_sc_shop_settings ? (
+                    <Fragment>
+                      {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
+                      <a
+                        href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
+                          page: 'sc-settings',
+                          tab: 'processors',
+                        })}
+                        style={{ color: 'var(--sc-color-gray-700)' }}
+                      >
+                        {__('Please configure your processors', 'surecart')}
+                      </a>
+                      .
+                    </Fragment>
+                  ) : (
+                    __('Please contact us for payment.', 'surecart')
+                  )}
                 </sc-alert>
               )}
               {(availableProcessors() || []).map(processor => {

@@ -23,20 +23,19 @@ describe('sc-payment', () => {
   });
 
   it('renders no processors & user has `manage_sc_shop_settings` capability', async () => {
-    const page = await newSpecPage({
-      components: [ScPayment],
-      html: `<sc-payment></sc-payment>`,
-    });
-
     // Set the mock attribute.
     global.window = Object.create(window);
     Object.defineProperty(window, 'scData', {
       value: {
         user_permissions: {
-          manage_sc_shop_settings: true
+          manage_sc_shop_settings: true,
         },
-        admin_url: 'https://test.com'
-      }
+        admin_url: 'https://test.com/',
+      },
+    });
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
     });
     expect(page.root).toMatchSnapshot();
   });

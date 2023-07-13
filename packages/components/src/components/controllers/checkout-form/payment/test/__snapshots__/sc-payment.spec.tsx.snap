@@ -109,7 +109,11 @@ exports[`sc-payment renders no processors & user has \`manage_sc_shop_settings\`
       </div>
       <div theme="container">
         <sc-alert open="" type="info">
-          Please contact us for payment.
+          You do not have any processors enabled for this mode and cart.
+          <a href="https://test.com/admin.php?page=sc-settings&amp;tab=processors" style="color: var(--sc-color-gray-700);">
+            Please configure your processors
+          </a>
+          .
         </sc-alert>
       </div>
     </sc-form-control>
