@@ -1,0 +1,96 @@
+.surecart-webhook-change-notice {
+	padding: 2rem;
+
+	.breadcrumbs {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	h1 {
+		font-size: 24px;
+		color: #000;
+	}
+
+	.description {
+		font-size: 16px;
+		color: #52555b;
+		font-weight: 400;
+		max-width: 700px;
+	}
+
+	.learn-more-safe-mode {
+		color: #52555b;
+	}
+
+	.webhook-cards {
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		margin-top: 1.5rem;
+
+		.webhook-card {
+			flex: 1;
+			background-color: #fff;
+			border-radius: 4px;
+			box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05),
+				0 1px 3px 0 rgba(0, 0, 0, 0.15);
+			padding: 2rem;
+		}
+	}
+
+	.webhook-links {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+		margin-top: 1.5rem;
+
+		span {
+			font-size: 16px;
+			color: #52555b;
+			padding: 6px 12px;
+			border-radius: 22px;
+			font-weight: 700;
+		}
+
+		.previous-webhook {
+			background: #fff5eb;
+			color: #b87637;
+			text-decoration: line-through;
+		}
+
+		.previous-to-current {
+			background: #fff;
+			border: 1px solid #d9d9d9;
+			padding: 6px 10px;
+		}
+
+		.current-webhook {
+			background: #e8f8f1;
+			color: #01824c;
+		}
+
+		.webhook-action-link {
+			width: 100%;
+			text-align: center;
+
+			a {
+				display: block;
+				background: #01824c;
+				color: #fff;
+				border-radius: 4px;
+				padding: 10px 20px;
+				font-size: 16px;
+				font-weight: 400;
+				text-decoration: none;
+				transition: all 0.2s ease-in-out;
+
+				&:hover {
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+}

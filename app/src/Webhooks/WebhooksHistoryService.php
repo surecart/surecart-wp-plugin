@@ -215,7 +215,7 @@ class WebhooksHistoryService {
 	 * @return void
 	 */
 	private function renderNotice( array $previous_webhook, bool $is_duplicate = false ): void {
-		wp_enqueue_script( 'surecart-webhook-admin-notices' );
+		wp_enqueue_style( 'surecart-webhook-admin-notices' );
 
 		echo \SureCart::render(
 			'admin/notices/webhook-change',
@@ -224,7 +224,7 @@ class WebhooksHistoryService {
 				'update_url'       => \SureCart::getUrl()->editModel( 'update_webhook', $previous_webhook['id'] ),
 				'add_url'          => \SureCart::getUrl()->editModel( 'create_webhook', '0' ),
 				'is_duplicate'     => $is_duplicate,
-				'previous_web_url' => $this->getWebsiteUrl( $previous_webhook['url'] ),
+				'previous_web_url' => $this->getWebsiteUrl( $previous_webhook['url'] ?? '' ),
 				'current_web_url'  => $this->getWebsiteUrl( Webhook::getListenerUrl() ),
 			]
 		);
@@ -233,7 +233,7 @@ class WebhooksHistoryService {
 	/**
 	 * Get the website url from the webhook endpoint.
 	 *
-	 * @param string $webhook_endpoint
+	 * @param string $webhook_endpoint The webhook endpoint.
 	 *
 	 * @return string
 	 */
