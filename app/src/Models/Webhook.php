@@ -28,15 +28,25 @@ class Webhook extends Model {
 	public const GROUP_NAME = 'surecart-webhooks';
 
 	/**
+	 * Is this cachable?
+	 *
+	 * @var boolean
+	 */
+	protected $cachable = true;
+
+	/**
+	 * Clear cache when webhook endpoints are updated.
+	 *
+	 * @var string
+	 */
+	protected $cache_key = 'webhook_endpoints_updated_at';
+
+	/**
 	 * Get the listener url.
 	 *
 	 * @return string
 	 */
 	protected function getListenerUrl(): string {
-		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
-			return 'http://test.com';
-		}
-
 		return get_home_url( null, '/surecart/webhooks', is_ssl() ? 'https' : 'http' );
 	}
 
@@ -54,15 +64,15 @@ class Webhook extends Model {
 
 		$webhook = $this->create(
 			[
-				'description' 	 => 'Main webhook for SureCart',
-				'enabled'     	 => true,
-				'destination' 	 => 'wordpress',
-				'url'         	 => $this->getListenerUrl(),
+				'description'    => 'Main webhook for SureCart',
+				'enabled'        => true,
+				'destination'    => 'wordpress',
+				'url'            => $this->getListenerUrl(),
 				'webhook_events' => \SureCart::config()->webhook_events,
 			]
 		);
 
-		if ( ! $webhook || empty ( $webhook->id ) ) {
+		if ( ! $webhook || empty( $webhook->id ) ) {
 			return false;
 		}
 
@@ -90,9 +100,29 @@ class Webhook extends Model {
 	}
 
 	/**
+	 * Has any webhook error?
+	 *
+	 * @return boolean
+	 */
+	protected function hasAnyWebhookError(): bool {
+		$hasAnyError = false;
+		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();
+		if ( is_array( $webhooks ) && ! empty( $webhooks ) ) {
+			foreach ( $webhooks as $webhook ) {
+				if ( ! empty( $webhook->erroring_grace_period_started_at ) ||  ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+					$hasAnyError = true;
+					break;
+				}
+			}
+		}
+
+		return $hasAnyError;
+	}
+
+	/**
 	 * Send test webhook.
 	 *
-	 * @param Webhook $webhook
+	 * @param Webhook $webhook Webhook object.
 	 *
 	 * @return void
 	 */
@@ -106,7 +136,12 @@ class Webhook extends Model {
 				$this->endpoint . '/' . $webhook->id . '/test',
 			);
 		} catch ( \Exception $exception ) {
-			// SKIP.
+			add_action(
+				'admin_notices',
+				function() {
+					\SureCart::webhooks()->showWebhooksErrorNotice( new \WP_Error( 'webhook-test-error', esc_html__( 'The webhook is not working. Please check your site connection.', 'surecart' ) ) );
+				}
+			);
 		}
 	}
 }

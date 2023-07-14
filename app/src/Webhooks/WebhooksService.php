@@ -103,7 +103,6 @@ class WebhooksService {
 
 		// if successful, update the domain and signing secret.
 		if ( ! empty( $registered['signing_secret'] ) ) {
-			// $this->setSigningSecret( $registered['signing_secret'] );
 			$this->saveRegisteredWebhook(
 				[
 					'id'             => $registered['id'],
@@ -127,6 +126,26 @@ class WebhooksService {
 
 			// Delete this webhook from registered webhooks list.
 			$this->domain_service->deleteRegisteredWebhookById( $webhook['id'] );
+		}
+	}
+
+	/**
+	 * Verify webhooks.
+	 *
+	 * @return void
+	 */
+	public function verifyWebhooks(): void {
+		$has_webhook_error = Webhook::hasAnyWebhookError();
+
+		// If there is no webhook, then show error notice.
+		if ( $has_webhook_error ) {
+			add_action(
+				'admin_notices',
+				function() {
+					$this->showWebhooksErrorNotice( new \WP_Error( 'webhook_error', __( 'SureCart site connection is not working.', 'surecart' ) ) );
+				}
+			);
+			return;
 		}
 	}
 
