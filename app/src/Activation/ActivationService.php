@@ -51,13 +51,6 @@ class ActivationService {
 
 		// Seed pages and forms.
 		$this->seeder->seed();
-
-		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
-			return;
-		}
-
-		// Create webhooks.
-		\SureCart::webhooks()->maybeCreateWebhook();
 	}
 
 	/**
@@ -84,7 +77,7 @@ class ActivationService {
 		$this->removeFormPosts();
 		// remove all options from the options table.
 		$this->removeOptions();
-		// remove all tables
+		// remove all tables.
 		$this->removeTables();
 	}
 

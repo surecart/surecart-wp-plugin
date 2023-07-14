@@ -58,7 +58,7 @@ class WebhookMigrationsService extends GeneralMigration {
 				]
 			);
 		} catch ( \Exception $exception ) {
-			wp_die( 'Webhook migration fails. Error: ' . esc_attr( $exception->getMessage() ) );
+			wp_die( 'Webhook migration failed. Error: ' . esc_attr( $exception->getMessage() ) );
 		}
 	}
 }
