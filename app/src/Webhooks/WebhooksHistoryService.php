@@ -24,19 +24,12 @@ class WebhooksHistoryService {
 	public const WEBHOOK_REGISTERED_ENTRIES = 'surecart_registered_webhooks';
 
 	/**
-	 * Webhook ignore notice option name.
-	 *
-	 * @var string
-	 */
-	public const WEBHOOK_IGNORE_NOTICE_KEY = 'surecart_ignore_webhook_notice';
-
-	/**
 	 * Listen to domain changes.
 	 *
 	 * @return void
 	 */
 	public function listen(): void {
-		\add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
+		add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
 	}
 
 	/**
@@ -139,26 +132,6 @@ class WebhooksHistoryService {
 	}
 
 	/**
-	 * Get if the user has ignored the notice forcefully.
-	 *
-	 * @return bool
-	 */
-	public function getIgnoreNotice(): bool {
-		return get_option( self::WEBHOOK_IGNORE_NOTICE_KEY, false );
-	}
-
-	/**
-	 * Set if the user has ignored the notice.
-	 *
-	 * @param bool $value The value to set, true or false.
-	 *
-	 * @return void
-	 */
-	public function setIgnoreNotice( $value ): void {
-		update_option( self::WEBHOOK_IGNORE_NOTICE_KEY, $value );
-	}
-
-	/**
 	 * Delete registered webhook by id.
 	 *
 	 * @param string $webhook_id The webhook id to delete.
@@ -200,15 +173,10 @@ class WebhooksHistoryService {
 	 * @return void
 	 */
 	public function maybeShowDomainChangeNotice(): void {
-		// Stop if the user has ignored the notice once.
-		if ( $this->getIgnoreNotice() ) {
-			return;
-		}
-
 		// Retreive the saved registered webhook.
 		$webhook = $this->getRegisteredWebhook();
 
-		// If we found a registered webhook for this domain, then return.
+		// If we found a registered webhook for this site, then return.
 		if ( ! empty( $webhook ) && Webhook::getListenerUrl() === $webhook['url'] ) {
 			return;
 		}
@@ -247,98 +215,30 @@ class WebhooksHistoryService {
 	 * @return void
 	 */
 	private function renderNotice( array $previous_webhook, bool $is_duplicate = false ): void {
-		?>
-		<div class="notice notice-error">
-			<p>
-			<?php
-			if ( $is_duplicate ) {
-				esc_html_e( 'It looks like this site has been duplicated or a staging site. You should create new webhook for the domain to prevent purchase sync issues.', 'surecart' );
-			} else {
-				esc_html_e( 'It looks like this site has been moved to a different address. You should create new webhook for the domain to prevent purchase sync issues.', 'surecart' );
-			}
-			?>
-			</p>
-			<p>
-			<?php
-			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-			if ( $is_duplicate ) {
-				echo $this->actionIgnoreWebhook();
-			}
+		wp_enqueue_script( 'surecart-webhook-admin-notices' );
 
-			if ( empty( $previous_webhook ) ) {
-				echo $this->actionAddWebhook();
-			} else {
-				echo $this->actionAddWebhook();
-				echo $this->actionUpdateWebhook( $previous_webhook );
-				echo $this->actionRemoveWebhook( $previous_webhook );
-			}
-			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
-			?>
-			</p>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Ignore webhook action link and text.
-	 *
-	 * @return string
-	 */
-	private function actionIgnoreWebhook(): string {
-		return sprintf(
-			'<a href="%1s" class="button button-primary" style="margin-right: 10px;" aria-label="%2s">%3s</a>',
-			esc_url( \SureCart::getUrl()->editModel( 'ignore_webhook', '0' ) ),
-			esc_attr__( 'Ignore Webhook', 'surecart' ),
-			esc_html__( 'Ignore Webhook', 'surecart' )
+		echo \SureCart::render(
+			'admin/notices/webhook-change',
+			[
+				'previous_webhook' => $previous_webhook,
+				'update_url'       => \SureCart::getUrl()->editModel( 'update_webhook', $previous_webhook['id'] ),
+				'add_url'          => \SureCart::getUrl()->editModel( 'create_webhook', '0' ),
+				'is_duplicate'     => $is_duplicate,
+				'previous_web_url' => $this->getWebsiteUrl( $previous_webhook['url'] ),
+				'current_web_url'  => $this->getWebsiteUrl( Webhook::getListenerUrl() ),
+			]
 		);
 	}
 
 	/**
-	 * Add webhook action link and text.
+	 * Get the website url from the webhook endpoint.
+	 *
+	 * @param string $webhook_endpoint
 	 *
 	 * @return string
 	 */
-	private function actionAddWebhook(): string {
-		return sprintf(
-			'<a href="%1s" class="button button-primary" style="margin-right: 10px;" aria-label="%2s">%3s</a>',
-			esc_url( \SureCart::getUrl()->editModel( 'create_webhook', '0' ) ),
-			esc_attr__( 'Create New Webhook', 'surecart' ),
-			esc_html__( 'Create New Webhook', 'surecart' )
-		);
-	}
-
-	/**
-	 * Update webhook action link and text.
-	 *
-	 * @param array $webhook The webhook to update.
-	 * @return string
-	 */
-	private function actionUpdateWebhook( array $webhook ): string {
-		return sprintf(
-			'<a href="%1s" class="button button-primary" style="margin-right: 10px;" aria-label="%2s">%3s</a>',
-			esc_url( \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ) ),
-			esc_attr__( 'Update Webhook.', 'surecart' ),
-			esc_html__( 'Update Webhook', 'surecart' )
-		);
-	}
-
-	/**
-	 * Remove webhook action link and text.
-	 *
-	 * @param array $webhook The webhook to remove.
-	 * @return string
-	 */
-	private function actionRemoveWebhook( array $webhook ): string {
-		$confirm_message = __( 'Are you sure you want to remove the previous webhook?', 'surecart' );
-		$link            = \SureCart::getUrl()->editModel( 'remove_webhook', $webhook['id'] );
-		$text            = __( 'Remove Previous Webhook', 'surecart' );
-
-		return sprintf(
-			'<a class="button button-confirm" style="margin-right: 10px;" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
-			esc_attr( $confirm_message ),
-			esc_url( $link ),
-			esc_attr__( 'Remove Previous Webhook', 'surecart' ),
-			esc_html( $text )
-		);
+	private function getWebsiteUrl( string $webhook_endpoint ): string {
+		$parsed_url = parse_url( $webhook_endpoint );
+		return $parsed_url['scheme'] . '://' . $parsed_url['host'];
 	}
 }

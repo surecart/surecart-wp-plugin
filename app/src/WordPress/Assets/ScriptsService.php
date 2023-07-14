@@ -215,6 +215,16 @@ class ScriptsService {
 			$asset_file['version'],
 			true
 		);
+
+		// admin notices.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/webhook-notice.asset.php';
+		wp_register_script(
+			'surecart-webhook-admin-notices',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
 	}
 
 	/**
