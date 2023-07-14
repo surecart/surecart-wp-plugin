@@ -5,7 +5,7 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
-import { ScButton, ScBlockUi } from '@surecart/components-react';
+import { ScButton, ScBlockUi, ScDialog, ScIcon, ScDashboardModule } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
@@ -18,7 +18,6 @@ import SelectShipping from './modules/SelectShipping';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
-import { Modal } from '@wordpress/components';
 
 /**
  * Returns the Model Edit URL.
@@ -295,20 +294,49 @@ export default () => {
 
 				{!!checkoutIdLoading && <ScBlockUi spinner />}
 			</UpdateModel>
-			{!!modal && (
-				<Modal
-					title={__('Your manual order has been successfully created.', 'surecart')}
-					css={css`
-						max-width: 500px !important;
-					`}
-					onRequestClose={() => setModal(false)}
-					shouldCloseOnClickOutside={false}
+			
+			<ScDialog
+				open={!!modal}
+				onScRequestClose={e => e.preventDefault()}
+				style={{ '--body-spacing': 'var(--sc-spacing-large)' }} 
+				noHeader
+			>
+				<div
+					style={{
+						display: 'flex',
+						marginBottom: 'var(--sc-spacing-large)',
+						justifyContent: 'center',
+					}}
 				>
 					<div
 						style={{
 							display: 'flex',
-							justifyContent: 'space-between',
-							gap: '1em',
+							justifyContent: 'center',
+							alignItems: 'center',
+							fontSize: '26px',
+							lineHeight: '1',
+							color: 'white',
+							background: 'var(--sc-color-primary-500)',
+							width: '55px',
+							height: '55px',
+							borderRadius: '100%',
+						}}
+					>
+						<ScIcon name="check" />
+					</div>
+				</div>
+				<ScDashboardModule
+					css={css`
+						--sc-dashboard-module-spacing: 1em;
+						text-align: center;
+					`}
+				>
+					<span slot="heading">{__('Your manual order has been successfully created!', 'surecart')}</span>
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							gap: '2em',
 							marginTop: '10px',
 						}}
 					>
@@ -327,8 +355,8 @@ export default () => {
 							{__('Go to Order', 'surecart')}
 						</ScButton>
 					</div>
-				</Modal>
-			)}
+				</ScDashboardModule>
+			</ScDialog>
 		</>
 	);
 };
