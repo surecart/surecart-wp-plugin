@@ -15,8 +15,9 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
+import CollectPayment from './CollectPayment';
 
-export default ({ checkout, loading, busy, busyPrices }) => {
+export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }) => {
 	const [busyPayment, setBusyPayment] = useState(false);
 
 	const { createErrorNotice, createSuccessNotice } =
@@ -159,7 +160,20 @@ export default ({ checkout, loading, busy, busyPrices }) => {
 	};
 
 	return (
-		<Box title={__('Payment', 'surecart')} loading={loading}>
+		<Box 
+			title={__('Payment', 'surecart')} 
+			loading={loading}
+			footer={
+				<CollectPayment 
+					checkout={checkout}
+					setPaymentID={setPaymentID}
+					paymentID={paymentID}
+				/>
+			}
+			footerStyle={{ 
+				justifyContent: 'flex-end',
+			}}
+		>
 			{renderPaymentDetails()}
 			{(!!busy || !!busyPayment || !!busyPrices) && <ScBlockUi spinner />}
 		</Box>

@@ -43,6 +43,7 @@ export default () => {
 	const [busyCustomer, setBusyCustomer] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
 	const [modal, setModal] = useState(false);
+	const [paymentID, setPaymentID] = useState(false);
 
 	const { checkout, loading, busy, error } = useSelect(
 		(select) => {
@@ -73,7 +74,7 @@ export default () => {
 		},
 		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
-	console.log(checkout);
+	
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
 
@@ -96,6 +97,7 @@ export default () => {
 			setCheckoutIdLoading(true);
 			const { id } = await saveEntityRecord('surecart', 'checkout', {
 				customer_id: false,
+				live_mode:false
 			});
 			setCheckoutId(id);
 		} catch (e) {
@@ -129,7 +131,8 @@ export default () => {
 		return await apiFetch({
 			method: 'PATCH',
 			path: addQueryArgs(`surecart/v1/checkouts/${id}/finalize`, {
-				manual_payment: true,
+				manual_payment: paymentID ? false : true,
+				payment_method_id: paymentID,
 				skip_spam_check: true,
 				customer_id: customer_id,
 			}),
@@ -289,6 +292,8 @@ export default () => {
 						checkout={checkout}
 						loading={loading}
 						busy={busy}
+						setPaymentID={setPaymentID}
+						paymentID={paymentID}
 					/>
 				)}
 

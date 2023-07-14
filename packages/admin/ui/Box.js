@@ -14,6 +14,7 @@ export default ({
 	loading,
 	footer,
 	className,
+	footerStyle = {},
 }) => {
 	const hasChildren = () => {
 		if (!children) {
@@ -95,7 +96,7 @@ export default ({
 					)}
 				</CardBody>
 			)}
-			{!!footer && <CardFooter>{footer}</CardFooter>}
+			{!!footer && <CardFooter style={footerStyle}>{footer}</CardFooter>}
 		</Card>
 	);
 };

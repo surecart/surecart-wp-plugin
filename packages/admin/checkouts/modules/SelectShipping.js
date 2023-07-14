@@ -32,7 +32,6 @@ export default ({ checkout, busy, loading }) => {
     }, [shippingId]);
 
     const onShippingChange = async (shippingId) => {
-        console.log('shippingId', shippingId);
 		try {
 			setBusyShipping(true);
 			// get the checkout endpoint.
@@ -88,9 +87,7 @@ export default ({ checkout, busy, loading }) => {
     if ( ! checkout?.selected_shipping_choice_required || ! checkout?.shipping_choices?.data?.length ) {
         return null;
     }
-    console.log(checkout?.selected_shipping_choice);
-    console.log(shippingId);
-
+   
     return (
         <Box title={__('Shipping', 'surecart')} loading={loading}>
             <ScRadioGroup
