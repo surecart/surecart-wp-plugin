@@ -6,6 +6,7 @@ import {
 	ScLineItem,
 	ScCouponForm,
 	ScDivider,
+	ScPaymentMethod
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -19,6 +20,7 @@ import CollectPayment from './CollectPayment';
 
 export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }) => {
 	const [busyPayment, setBusyPayment] = useState(false);
+	const [paymentMethod, setPaymentMethod] = useState(false);
 
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -155,6 +157,32 @@ export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }
 						value={checkout?.total_amount}
 					></ScFormatNumber>
 				</ScLineItem>
+
+				{ !!paymentMethod && (
+					<>
+					<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
+					<div
+						style={{ 
+							display: 'flex',
+							width: '100%',
+							justifyContent: 'space-between',
+						}}
+					>
+						<ScPaymentMethod paymentMethod={paymentMethod}/>
+						<div>
+							{!!paymentMethod?.card?.exp_month && (
+								<span>
+									{__('Exp.', 'surecart')}
+									{paymentMethod?.card?.exp_month}/
+									{paymentMethod?.card?.exp_year}
+								</span>
+							)}
+							{!!paymentMethod?.paypal_account?.email &&
+								paymentMethod?.paypal_account?.email}
+						</div>
+					</div>
+					</>
+            	)}
 			</>
 		);
 	};
@@ -165,9 +193,7 @@ export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }
 			loading={loading}
 			footer={
 				<CollectPayment 
-					checkout={checkout}
-					setPaymentID={setPaymentID}
-					paymentID={paymentID}
+					{...{ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMethod }}
 				/>
 			}
 			footerStyle={{ 

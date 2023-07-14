@@ -17,10 +17,10 @@ import { useDispatch, select, useSelect } from '@wordpress/data';
 import expand from '../query';
 import DataTable from '../../components/DataTable';
 
-export default ({ checkout, setPaymentID, paymentID }) => {
+export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMethod }) => {
 	const [open, setOpen] = useState(false);
 	const [busy, setBusy] = useState(false);
-    
+
     const { paymentMethods, loading } = useSelect(
         (select) => {
             const queryArgs = [
@@ -54,6 +54,10 @@ export default ({ checkout, setPaymentID, paymentID }) => {
         },
         [checkout?.customer_id]
     );
+    
+    useEffect(() => {
+		setPaymentMethod(paymentMethods?.find((item) => item?.id === paymentID));
+	}, [paymentID]);
 
     useEffect(() => {
 		if (paymentMethods?.length && !paymentID) {
@@ -139,15 +143,7 @@ export default ({ checkout, setPaymentID, paymentID }) => {
                                 float: 'right',
                             }}
                         >
-                            <span>{__('Charge', 'surecart')}</span>
-                            <ScFormatNumber
-                                type="currency"
-                                currency={checkout?.currency}
-                                value={checkout?.total_amount}
-                                style={{
-                                    marginLeft: '0.5em',
-                                }}
-                            />
+                            <span>{__('Add Payment Method', 'surecart')}</span>
                         </ScButton>
                     )
                 }
