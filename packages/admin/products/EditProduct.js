@@ -41,7 +41,9 @@ export default ({ id }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id);
+	} = useEntity('product', id, {
+		expand: ['product_collections'],
+	});
 
 	/**
 	 * Handle the form submission

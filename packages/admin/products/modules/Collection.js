@@ -11,42 +11,46 @@ import Box from '../../ui/Box';
 import { ScFormControl, ScSelect, ScTag } from '@surecart/components-react';
 
 export default ({ loading, product, updateProduct }) => {
-	const collections = product?.product_collection_ids || [];
+	const collections = product?.product_collections?.data
+		? product.product_collections.data.map((collection) => collection.id)
+		: product?.product_collections || [];
 
 	/**
 	 * Get product collections and make for select.
 	 * Fetch the 100 most recent product collections.
 	 */
-	const { collectionLists, loadingCollectionLists } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product-collection',
-				{
-					per_page: 100,
-				},
-			];
+	const { collectionLists, loadingCollectionLists } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'product-collection',
+			{
+				per_page: 100,
+			},
+		];
 
-			const allCollectionLists = select(coreStore).getEntityRecords(
-				...queryArgs
-			);
+		const allCollectionLists = select(coreStore).getEntityRecords(
+			...queryArgs
+		);
 
-			return {
-				collectionLists: allCollectionLists ? allCollectionLists.map(
-					(collection) => ({ value: collection.id, label: collection.name })
-				) : [],
-				loadingCollectionLists: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[]
-	);
+		return {
+			collectionLists: allCollectionLists
+				? allCollectionLists.map((collection) => ({
+						value: collection.id,
+						label: collection.name,
+				  }))
+				: [],
+			loadingCollectionLists: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	}, []);
 
 	const onRemoveCollectionLink = (value) => {
 		updateProduct({
-			product_collection_ids: collections.filter((collection) => collection !== value)
+			product_collections: collections.filter(
+				(collection) => collection !== value
+			),
 		});
 	};
 
@@ -75,37 +79,38 @@ export default ({ loading, product, updateProduct }) => {
 
 		if (collectionLists.includes(value)) {
 			updateProduct({
-				product_collection_ids: collectionLists.filter((collectionValue) => collectionValue !== value)
+				product_collections: collectionLists.filter(
+					(collectionValue) => collectionValue !== value
+				),
 			});
 		} else {
 			updateProduct({
-				product_collection_ids: [...collections, value]
+				product_collections: [...collections, value],
 			});
 		}
 	};
 
 	const collectionChoices = collectionLists
 		.filter((collection) => !collections.includes(collection.value))
-		.map(
-			(collection) => ({
-				...collection,
-				selected: false,
-			})
-		);
+		.map((collection) => ({
+			...collection,
+			selected: false,
+		}));
 
 	return (
-		<Box loading={loading || loadingCollectionLists} title={__('Collections', 'surecart')}>
+		<Box
+			loading={loading || loadingCollectionLists}
+			title={__('Collections', 'surecart')}
+		>
 			<ScFormControl label={__('Select Product Collections', 'surecart')}>
 				{!!collections.length && (
 					<div
 						css={css`
-								display: flex;
-								flex-wrap: wrap;
-								justify-content: flex-start;
-								gap: 0.25em;
-								padding: var(
-									--sc-input-spacing-small
-								);
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: flex-start;
+							gap: 0.25em;
+							padding: var(--sc-input-spacing-small);
 						`}
 					>
 						{collections.map((collection) =>
