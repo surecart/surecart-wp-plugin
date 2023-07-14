@@ -248,7 +248,7 @@ exports[`sc-order-summary should render when collapsible, not collapsed on deskt
 </sc-order-summary>
 `;
 
-exports[`sc-order-summary should render when not collapsible, not collapsed on desktop and not collapsed in mobile 1`] = `
+exports[`sc-order-summary should render when collapsible, not collapsed on desktop and not collapsed in mobile 1`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary summary--open">
@@ -277,7 +277,7 @@ exports[`sc-order-summary should render when not collapsible, not collapsed on d
 </sc-order-summary>
 `;
 
-exports[`sc-order-summary should render when not collapsible, not collapsed on desktop and not collapsed in mobile 2`] = `
+exports[`sc-order-summary should render when collapsible, not collapsed on desktop and not collapsed in mobile 2`] = `
 <sc-order-summary>
   <mock:shadow-root>
     <div class="summary summary--open">
@@ -295,6 +295,36 @@ exports[`sc-order-summary should render when not collapsible, not collapsed on d
           <sc-total class="total-price" total="total"></sc-total>
         </span>
       </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when not collapsible 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when not collapsible 2`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
       <div class="summary__content summary__content--empty" style="overflow: hidden;">
         <slot></slot>
       </div>
