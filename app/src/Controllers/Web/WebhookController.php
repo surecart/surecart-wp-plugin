@@ -92,39 +92,6 @@ class WebhookController {
 	}
 
 	/**
-	 * Remove the webhook.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return ResponseInterface
-	 */
-	public function remove( $request ) {
-		// Remove the webhook from the server.
-		$deleted = Webhook::delete( $request->query( 'id' ) );
-		if ( is_wp_error( $deleted ) ) {
-			wp_die( $deleted->get_error_message() );
-		}
-
-		// Remove the registered webhook by id.
-		if ( $deleted ) {
-			\SureCart::webhooks()->deleteRegisteredWebhookById( $request->query( 'id' ) );
-		}
-
-		return ( new RedirectResponse( $request ) )->back();
-	}
-
-	/**
-	 * Ignore the notice.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return ResponseInterface
-	 */
-	public function ignore( $request ) {
-		$service = new WebHooksHistoryService();
-		$service->setIgnoreNotice( true );
-		return ( new RedirectResponse( $request ) )->back();
-	}
-
-	/**
 	 * Recieve webhook
 	 */
 	public function receive( $request ) {
