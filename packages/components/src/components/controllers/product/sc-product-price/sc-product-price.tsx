@@ -2,7 +2,7 @@ import { Component, h, Prop, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
 import { state } from '@store/product';
-import { intervalString } from 'src/functions/price';
+import { intervalString } from '../../../../functions/price';
 
 @Component({
   tag: 'sc-product-price',
