@@ -100,23 +100,31 @@ class Webhook extends Model {
 	}
 
 	/**
-	 * Has any webhook error?
+	 * Has any webhook error or not.
+	 *
+	 * We'll hit this cached endpoint on every page load and see if there is any webhook error.
 	 *
 	 * @return boolean
 	 */
 	protected function hasAnyWebhookError(): bool {
-		$hasAnyError = false;
-		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();
-		if ( is_array( $webhooks ) && ! empty( $webhooks ) ) {
-			foreach ( $webhooks as $webhook ) {
-				if ( ! empty( $webhook->erroring_grace_period_started_at ) ||  ! empty( $webhook->erroring_grace_period_ends_at ) ) {
-					$hasAnyError = true;
-					break;
-				}
-			}
+		$registered_webhook = \SureCart::webhooks()->getRegisteredWebhook();
+
+		if ( ! $registered_webhook || empty( $registered_webhook['id'] ) ) {
+			return true;
 		}
 
-		return $hasAnyError;
+		$webhook = $this->find( $registered_webhook['id'] );
+
+		if ( ! $webhook || empty( $webhook->id ) ) {
+			return true;
+		}
+
+		// If erroring_grace_period_started_at and erroring_grace_period_ends_at is not empty, then there is an error.
+		if ( ! empty( $webhook->erroring_grace_period_started_at ) ||  ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
