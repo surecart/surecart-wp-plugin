@@ -17,7 +17,7 @@ import { ScButton, ScForm, ScIcon, ScInput } from '@surecart/components-react';
 
 export default ({ onRequestClose, id }) => {
 	const [optionName, setOptionName] = useState('');
-	const [optionValues, setOptionValues] = useState(['', '']);
+	const [optionValues, setOptionValues] = useState([{ index: 1, name: '' }]);
 	const [loading, setLoading] = useState(false);
 	const { editEntityRecord } = useDispatch(coreStore);
 
@@ -40,15 +40,7 @@ export default ({ onRequestClose, id }) => {
 		try {
 			setError(null);
 			setLoading(true);
-			await saveEntityRecord(
-				'surecart',
-				'variant_options',
-				{
-					name: optionName,
-					variant_values: optionValues,
-				},
-				{ throwOnError: true }
-			);
+			await saveOption();
 			createSuccessNotice(__('Variation option saved.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -60,10 +52,52 @@ export default ({ onRequestClose, id }) => {
 		}
 	};
 
-	const onChangeOptionValue = (e, index) => {
-		const newOptionValues = [...optionValues];
-		newOptionValues[index] = e.target.value;
-		setOptionValues(newOptionValues);
+	const onChangeOptionValue = async (index, newName) => {
+		const updatedOptionValues = optionValues.map((optionValue) =>
+			optionValue.index === index
+				? { ...optionValue, name: newName }
+				: optionValue
+		);
+
+		// Check if the last optionValue has a name, if yes, add a new empty optionValue
+		const lastOptionValue =
+			updatedOptionValues[updatedOptionValues.length - 1];
+		if (lastOptionValue.name !== '') {
+			const newOptionValue = {
+				index: updatedOptionValues.length + 1,
+				name: '',
+			};
+			updatedOptionValues.push(newOptionValue);
+		}
+
+		setOptionValues(updatedOptionValues);
+
+		// just save the option.
+		await saveOption(index);
+	};
+
+	const saveOption = async (index) => {
+		try {
+			setError(null);
+			await saveEntityRecord(
+				'surecart',
+				'variant_options',
+				{
+					name: optionName,
+					variant_values: optionValues,
+					product_id: id,
+				},
+				{ throwOnError: true }
+			);
+			console.log('saved', {
+				name: optionName,
+				variant_values: optionValues,
+				product_id: id,
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		}
 	};
 
 	const deleteOptionValue = (index) => {
@@ -87,7 +121,7 @@ export default ({ onRequestClose, id }) => {
 					max-width: 500px !important;
 					width: 100% !important;
 					.components-modal__content {
-						overflow: visible !important;
+						overflow: auto !important;
 					}
 				`}
 				overlayClassName={'sc-modal-overflow'}
@@ -182,11 +216,14 @@ export default ({ onRequestClose, id }) => {
 																'Add another value',
 																'surecart'
 															)}
-															value={optionValue}
-															onChange={(e) =>
+															value={
+																optionValue.name
+															}
+															onInput={(e) =>
 																onChangeOptionValue(
-																	e,
-																	index
+																	optionValue.index,
+																	e.target
+																		.value
 																)
 															}
 														/>
