@@ -38,6 +38,16 @@
 				0 1px 3px 0 rgba(0, 0, 0, 0.15);
 			padding: 2rem;
 		}
+
+        // Mobile view
+        @media (max-width: 768px) {
+            flex-direction: column;
+            gap: 1rem;
+
+            .webhook-card {
+                width: 100%;
+            }
+        }
 	}
 
 	.webhook-links {
