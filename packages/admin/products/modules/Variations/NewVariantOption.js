@@ -106,6 +106,16 @@ export default ({ onRequestClose, id }) => {
 		setOptionValues(newOptionValues);
 	};
 
+	// TODO: for now passed as props
+	const saveOptionValues = () => {
+		onRequestClose({
+			name: optionName,
+			values: optionValues.filter((optionValue) => {
+				return optionValue.name !== '';
+			}),
+		});
+	};
+
 	return (
 		<>
 			<Global
@@ -125,7 +135,7 @@ export default ({ onRequestClose, id }) => {
 					}
 				`}
 				overlayClassName={'sc-modal-overflow'}
-				onRequestClose={onRequestClose}
+				onRequestClose={saveOptionValues}
 				shouldCloseOnClickOutside={false}
 			>
 				<ScForm
@@ -143,7 +153,7 @@ export default ({ onRequestClose, id }) => {
 							required
 							label={__('Option Name', 'surecart')}
 							value={optionName}
-							onChange={(e) => setOptionName(e.target.value)}
+							onScInput={(e) => setOptionName(e.target.value)}
 						/>
 
 						<div
@@ -278,9 +288,7 @@ export default ({ onRequestClose, id }) => {
 							type="primary"
 							busy={loading}
 							disabled={loading}
-							onClick={() => {
-								setOptionValues([...optionValues, '']);
-							}}
+							onClick={saveOptionValues}
 						>
 							<ScIcon name="plus" slot="prefix" />
 							{__('Add Option', 'surecart')}
