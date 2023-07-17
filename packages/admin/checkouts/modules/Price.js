@@ -16,10 +16,10 @@ import {
 	ScForm,
 } from '@surecart/components-react';
 
-export default ({ price, quantity, onRemove, onChange, full_amount }) => {
+export default ({ price, quantity, onRemove, onChange, full_amount, total_amount }) => {
 	const imageUrl = price?.product?.image_url;
 	const [open, setOpen] = useState(false);
-	const [addHocAmount, setAddHocAmount] = useState(full_amount);
+	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
 
 	return (
 		<>
@@ -107,7 +107,7 @@ export default ({ price, quantity, onRemove, onChange, full_amount }) => {
 						<ScFormatNumber
 							type="currency"
 							currency={price?.currency || 'usd'}
-							value={full_amount}
+							value={!!price?.ad_hoc ? total_amount : full_amount}
 						/>
 						{!!price?.ad_hoc && (
 							<ScButton
@@ -131,6 +131,7 @@ export default ({ price, quantity, onRemove, onChange, full_amount }) => {
 					e.stopImmediatePropagation(); // prevents the page form from submitting.
 					setOpen(false);
 					onChange({ ad_hoc_amount: addHocAmount });
+					setAddHocAmount(false);
 				}}
 			>
 				<ScDialog
@@ -143,14 +144,18 @@ export default ({ price, quantity, onRemove, onChange, full_amount }) => {
 						label={__('Amount', 'surecart')}
 						placeholder={__('Enter an Amount', 'surecart')}
 						currencyCode={price?.currency}
-						value={addHocAmount || full_amount || null}
+						value={addHocAmount || price?.amount || null}
 						onScInput={(e) => setAddHocAmount(e?.target?.value)}
 						required
 					/>
 					<ScButton slot="footer" type="primary" submit>
 						{__('Update', 'surecart')}
 					</ScButton>
-					<ScButton slot="footer" type="text">
+					<ScButton 
+						slot="footer" 
+						type="text"
+						onClick={() => setOpen(false)}
+					>
 						{__('Cancel', 'surecart')}
 					</ScButton>
 				</ScDialog>
