@@ -49,6 +49,7 @@ declare global {
         dashboard: string;
         checkout: string;
       };
+      currency: string;
       is_claimed: string;
       claim_url: string;
       admin_url: string;
@@ -608,6 +609,11 @@ export interface ProcessorData {
     account_id: 'string';
     checkout_url: 'string';
   };
+  paystack: {
+    account_id: string;
+    public_key: string;
+    access_code: string;
+  };
 }
 
 export interface ManualPaymentMethod {
@@ -638,6 +644,7 @@ export interface Processor {
     merchant_initiated?: boolean;
   };
   recurring_enabled: boolean;
+  supported_currencies: Array<string>;
   processor_type: 'paypal' | 'stripe' | 'mollie';
 }
 
@@ -838,14 +845,14 @@ export interface DiscountResponse {
 }
 
 export interface ResponseError {
-  code: string;
+  code?: string;
   message: string;
-  data: {
+  data?: {
     http_status: string;
     status?: number;
     type: string;
   };
-  additional_errors: Array<{
+  additional_errors?: Array<{
     code: string;
     message: string;
     data: {

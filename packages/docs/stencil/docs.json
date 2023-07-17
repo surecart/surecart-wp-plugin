@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-06T16:14:51",
+  "timestamp": "2023-07-17T19:35:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -673,6 +673,7 @@
         "sc-payment",
         "sc-payment-methods-list",
         "sc-paypal-add-method",
+        "sc-paystack-add-method",
         "sc-price-choice",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
@@ -735,6 +736,9 @@
           "sc-alert"
         ],
         "sc-paypal-add-method": [
+          "sc-alert"
+        ],
+        "sc-paystack-add-method": [
           "sc-alert"
         ],
         "sc-price-choice": [
@@ -1837,6 +1841,7 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-paystack-add-method",
         "sc-product-item-list",
         "sc-product-price-modal",
         "sc-product-selected-price",
@@ -1934,6 +1939,9 @@
           "sc-button"
         ],
         "sc-payment-methods-list": [
+          "sc-button"
+        ],
+        "sc-paystack-add-method": [
           "sc-button"
         ],
         "sc-product-item-list": [
@@ -4981,6 +4989,41 @@
         ],
         "sc-payment": [
           "sc-checkout-mollie-payment"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-checkout-paystack-payment-provider/sc-checkout-paystack-payment-provider.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-paystack-payment-provider",
+      "readme": "# sc-checkout-paystack-payment-provider\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [
+        {
+          "event": "scError",
+          "detail": "ResponseError",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-payment"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-payment": [
+          "sc-checkout-paystack-payment-provider"
         ]
       }
     },
@@ -16956,6 +16999,22 @@
       "usage": {},
       "props": [
         {
+          "name": "checkoutStatus",
+          "type": "string",
+          "mutable": false,
+          "attr": "checkout-status",
+          "reflectToAttr": false,
+          "docs": "Checkout status to listen and do payment related stuff.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "successText",
           "type": "{ title: string; description: string; button: string; }",
           "mutable": false,
@@ -17017,13 +17076,7 @@
           "docsTags": []
         }
       ],
-      "listeners": [
-        {
-          "event": "scPaid",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -20425,6 +20478,7 @@
         "sc-icon",
         "sc-card",
         "sc-payment-selected",
+        "sc-checkout-paystack-payment-provider",
         "sc-form-control",
         "sc-tag",
         "sc-checkout-mollie-payment",
@@ -20436,6 +20490,7 @@
           "sc-icon",
           "sc-card",
           "sc-payment-selected",
+          "sc-checkout-paystack-payment-provider",
           "sc-form-control",
           "sc-tag",
           "sc-checkout-mollie-payment",
@@ -21302,6 +21357,105 @@
         ],
         "sc-order-submit": [
           "sc-paypal-buttons"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/sc-paystack-add-method/sc-paystack-add-method.tsx",
+      "encapsulation": "none",
+      "tag": "sc-paystack-add-method",
+      "readme": "# sc-paystack-add-method\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "customerId",
+          "type": "string",
+          "mutable": false,
+          "attr": "customer-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "liveMode",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "live-mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-alert",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-paystack-add-method": [
+          "sc-alert",
+          "sc-button"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },

@@ -73,6 +73,7 @@
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-paystack-add-method](../sc-paystack-add-method)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
@@ -125,6 +126,7 @@ graph TD;
   sc-password-nag --> sc-button
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
+  sc-paystack-add-method --> sc-button
   sc-product-item-list --> sc-button
   sc-product-price-modal --> sc-button
   sc-product-selected-price --> sc-button
