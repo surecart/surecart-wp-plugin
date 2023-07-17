@@ -243,6 +243,14 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.3.0 - July 17th, 2023 =
+* New: Paystack processors for African merchants!
+* Improvement: Better notice for how to conntect processors on checkout form.
+* Improvement: Hide admin notices during onboarding.
+* Fix: Issue with dashboard date being in UTC time.
+* Fix: Mobile stacking of order bump.
+* Fix: Stripe Payment element showing a notice when the amount on the checkout form is 0.
+
 = 2.2.1 - July 6th, 2023 =
 * Improvement: Improve loading performance of Stripe Payment Element by using deferred payment intents.
 * Fix: Thank you pages that redirect to the homepage being redirected to the blog page instead.
