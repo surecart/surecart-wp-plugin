@@ -32,12 +32,12 @@ export class ScProductPrice {
     return (
       <Fragment>
         <div class="price">
-          <div class="price__amount">
+          <div class="price__amounts">
             {!!price?.scratch_amount && (
-              <sc-format-number class="scratch-price" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
+              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
             )}
 
-            <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
+            <sc-format-number class="price__amount" type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
 
             <div class="price__interval">
               {intervalString(price, {
