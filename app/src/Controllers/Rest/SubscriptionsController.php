@@ -104,7 +104,10 @@ class SubscriptionsController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->upcomingPeriod( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+
+		$diff = $this->recursive_array_diff_assoc( $request->get_params(), $request->get_query_params() );
+		
+		return $model->where( $request->get_query_params() )->upcomingPeriod( $diff );
 	}
 
 	/**
@@ -120,5 +123,30 @@ class SubscriptionsController extends RestController {
 			return $model;
 		}
 		return $model->where( $request->get_query_params() )->payOff( $request['id'] );
+	}
+
+	/**
+	 * Finds difference between nested arrays recursively
+	 *
+	 * @param array $array1 First array to compare.
+	 * @param array $array2 Second array to compare.
+	 *
+	 * @return array Difference between arrays.
+	 */
+	public function recursive_array_diff_assoc($array1, $array2) {
+		$difference = array();
+	
+		foreach ( $array1 as $key => $value ) {
+			if ( is_array( $value ) && isset( $array2[ $key ] ) && is_array( $array2[ $key ] ) ) {
+				$recursive_diff = $this->recursive_array_diff_assoc( $value, $array2[ $key ] );
+				if ( ! empty( $recursive_diff ) ) {
+					$difference[ $key ] = $recursive_diff;
+				}
+			} elseif ( ! array_key_exists( $key, $array2 ) || $array2[ $key ] !== $value ) {
+				$difference[ $key ] = $value;
+			}
+		}
+	
+		return $difference;
 	}
 }
