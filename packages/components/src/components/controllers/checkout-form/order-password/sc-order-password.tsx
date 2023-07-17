@@ -2,7 +2,7 @@ import { Component, Prop, h, Method, Host, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
-let showHintTimer;
+let showHintTimer, showVerificationTimer;
 
 @Component({
   tag: 'sc-order-password',
@@ -69,8 +69,8 @@ export class ScOrderPassword {
   /** Hint Text. */
   @State() hintText: string;
 
-  /** Show/Hide Hint Text. */
-  @State() showHintText: boolean = false;
+  /** Verify Text. */
+  @State() verifyText: string;
 
   @Method()
   async reportValidity() {
@@ -103,43 +103,57 @@ export class ScOrderPassword {
     return valid;
   }
 
-  handleValidateOnInput(val: string) {
+  /** Handle password verification. */
+  handleVerification() {
+    clearTimeout(showVerificationTimer);
+    // show hint text after some delay
+    showVerificationTimer = setTimeout(() => {
+      this.verifyPassword();
+    }, 500);
+  }
+
+  /** Handle password validation. */
+  handleValidate() {
     // clear existing timeout
     clearTimeout(showHintTimer);
 
     // show hint text after some delay
     showHintTimer = setTimeout(() => {
-      if (!this.showHintText) this.showHintText = true;
-      this.validatePassword(val);
+      this.validatePassword();
     }, 500);
   }
 
-  validatePassword(val: string) {
+  /** Validate the password input. */
+  validatePassword() {
     if (!this.enableValidation) return;
-    let message: string;
 
     // nothing entered.
-    if (val.trim().length === 0) {
+    if (this.input?.value.trim().length === 0) {
       this.hintText = '';
       return;
     }
 
     // must be at least 6 characters.
-    if (val.trim().length < 6) {
-      message = __('Passwords should at least 6 characters.', 'surecart');
-      this.hintText = message;
-      return;
+    if (this.input?.value.trim().length < 6) {
+      return (this.hintText = __('Passwords should at least 6 characters.', 'surecart'));
     }
 
     // must contain a special charater.
     const regex = /[!@#$%^&*(),.?":{}|<>]/;
-    if (!regex.test(val)) {
-      message = __('Passwords must contain a special character.', 'surecart');
-      this.hintText = message;
-      return;
+    if (!regex.test(this.input?.value)) {
+      return (this.hintText = __('Passwords must contain a special character.', 'surecart'));
     }
 
     this.hintText = '';
+  }
+
+  /** Verify the password confirmation. */
+  verifyPassword() {
+    if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
+      return (this.verifyText = __('Password does not match.', 'surecart'));
+    }
+
+    this.verifyText = '';
   }
 
   render() {
@@ -167,23 +181,27 @@ export class ScOrderPassword {
             value={this.value}
             required={this.required}
             disabled={this.disabled}
-            onScInput={e => this.handleValidateOnInput(e.target.value)}
-          ></sc-input>
-          {this.showHintText && <small class="password__hint">{this.hintText}</small>}
+            onScInput={() => this.handleValidate()}
+          />
+          {!!this.hintText && <small class="password__hint">{this.hintText}</small>}
         </div>
 
         {this.confirmation && (
-          <sc-input
-            ref={el => (this.confirmInput = el as HTMLScInputElement)}
-            label={this.confirmationLabel ?? __('Confirm Password', 'surecart')}
-            help={this.confirmationHelp}
-            placeholder={this.confirmationPlaceholder}
-            size={this.size ? this.size : 'medium'}
-            type="password"
-            value={this.value}
-            required={this.required}
-            disabled={this.disabled}
-          ></sc-input>
+          <div>
+            <sc-input
+              ref={el => (this.confirmInput = el as HTMLScInputElement)}
+              label={this.confirmationLabel ?? __('Confirm Password', 'surecart')}
+              help={this.confirmationHelp}
+              placeholder={this.confirmationPlaceholder}
+              size={this.size ? this.size : 'medium'}
+              type="password"
+              value={this.value}
+              onScInput={() => this.handleVerification()}
+              required={this.required}
+              disabled={this.disabled}
+            />
+            {!!this.verifyText && <small class="password__hint">{this.verifyText}</small>}
+          </div>
         )}
       </div>
     );
