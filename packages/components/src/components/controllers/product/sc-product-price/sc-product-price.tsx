@@ -53,7 +53,7 @@ export class ScProductPrice {
             </div>
 
             {!!price?.scratch_amount && (
-              <sc-tag type="primary" pill class="sale-badge">
+              <sc-tag type="primary" pill class="price__sale-badge">
                 {this.saleText || __('Sale', 'surecart')}
               </sc-tag>
             )}

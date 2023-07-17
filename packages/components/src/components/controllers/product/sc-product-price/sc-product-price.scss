@@ -28,13 +28,9 @@
     font-size: min(var(--sc-font-size-small), 16px);
     opacity: 0.75;
   }
-}
 
-.sale-badge {
-  font-size: min(1em, 14px);
-  align-self: center;
-}
-
-.recurring-interval {
-  font-weight: 600;
+  &__sale-badge {
+    font-size: min(1em, 14px);
+    align-self: center;
+  }
 }
