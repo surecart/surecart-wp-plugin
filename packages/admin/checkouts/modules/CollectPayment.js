@@ -60,10 +60,12 @@ export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMe
 	}, [paymentID]);
 
     useEffect(() => {
-		if (paymentMethods?.length && !paymentID) {
+		if (paymentMethods?.length) {
 			setPaymentID(paymentMethods[0]?.id);
-		}
-	}, [paymentMethods]);
+		} else {
+            setPaymentID(false);
+        }
+	}, [paymentMethods, checkout?.customer_id]);
 
     const onPaymentSelected = () => {
         setBusy(false);
