@@ -244,7 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.3.0 - July 17th, 2023 =
-* New: Paystack processors for African merchants!
+* New: Paystack processor support for African merchants.
 * Improvement: Better notice for how to conntect processors on checkout form.
 * Improvement: Hide admin notices during onboarding.
 * Fix: Issue with dashboard date being in UTC time.
