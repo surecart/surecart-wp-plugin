@@ -3,9 +3,21 @@
 }
 
 .price {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sc-spacing-x-small);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-spacing-xxx-small);
+
+  &__amount {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sc-spacing-xx-small);
+  }
+
+  &__interval {
+    font-size: min(1em, 14px);
+    opacity: 0.75;
+  }
 
   &__details {
     font-size: min(1em, 14px);
@@ -19,6 +31,7 @@
 
 .sale-badge {
   font-size: min(1em, 14px);
+  align-self: center;
 }
 
 .recurring-interval {

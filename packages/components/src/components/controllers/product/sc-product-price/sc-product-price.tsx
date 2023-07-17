@@ -31,24 +31,26 @@ export class ScProductPrice {
 
     return (
       <Fragment>
-        <div>
-          <div class="price">
+        <div class="price">
+          <div class="price__amount">
             {!!price?.scratch_amount && (
               <sc-format-number class="scratch-price" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
             )}
 
             <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
 
-            {intervalString(price, {
-              showOnce: true,
-              abbreviate: false,
-              labels: {
-                interval: '/',
-                period:
-                  /** translators: used as in time period: "for 3 months" */
-                  __('for', 'surecart'),
-              },
-            })}
+            <div class="price__interval">
+              {intervalString(price, {
+                showOnce: true,
+                abbreviate: false,
+                labels: {
+                  interval: '/',
+                  period:
+                    /** translators: used as in time period: "for 3 months" */
+                    __('for', 'surecart'),
+                },
+              })}
+            </div>
 
             {!!price?.scratch_amount && (
               <sc-tag type="primary" pill class="sale-badge">
