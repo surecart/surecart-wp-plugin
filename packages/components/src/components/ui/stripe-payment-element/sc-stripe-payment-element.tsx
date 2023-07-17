@@ -55,12 +55,16 @@ export class ScStripePaymentElement {
   @State() styles: CSSStyleDeclaration;
 
   async componentWillLoad() {
-    this.styles = (await this.getComputedStyles()) as CSSStyleDeclaration;
+    this.fetchStyles();
   }
 
   @Watch('styles')
   async handleStylesChange() {
     this.createOrUpdateElements();
+  }
+
+  async fetchStyles() {
+    this.styles = (await this.getComputedStyles()) as CSSStyleDeclaration;
   }
 
   /**
@@ -100,6 +104,7 @@ export class ScStripePaymentElement {
     this.createOrUpdateElements();
     this.handleUpdateElement();
     this.unlistenToCheckout = onChange('checkout', () => {
+      this.fetchStyles();
       this.createOrUpdateElements();
       this.handleUpdateElement();
     });
@@ -151,7 +156,7 @@ export class ScStripePaymentElement {
   /** Update the payment element mode, amount and currency when it changes. */
   createOrUpdateElements() {
     // need an order amount, etc.
-    if (!checkoutState.checkout) return;
+    if (!checkoutState?.checkout?.amount_due) return;
 
     // create the elements if they have not yet been created.
     if (!this.elements) {
@@ -189,7 +194,6 @@ export class ScStripePaymentElement {
       this.element.on('ready', () => (this.loaded = true));
       return;
     }
-    console.log(this.getElementsConfig());
     this.elements.update(this.getElementsConfig());
   }
 
