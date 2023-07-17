@@ -1,6 +1,8 @@
-import { Component, Prop, h, Method, Host } from '@stencil/core';
+import { Component, Prop, h, Method, Host, State } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
+
+let showHintTimer, showVerificationTimer;
 
 @Component({
   tag: 'sc-order-password',
@@ -64,6 +66,12 @@ export class ScOrderPassword {
   /** Ensures strong password validation. */
   @Prop({ reflect: true }) enableValidation = true;
 
+  /** Hint Text. */
+  @State() hintText: string;
+
+  /** Verify Text. */
+  @State() verifyText: string;
+
   @Method()
   async reportValidity() {
     if (this.loggedIn) return true;
@@ -78,11 +86,9 @@ export class ScOrderPassword {
       }
     }
 
-    if (this.enableValidation) {
-      const validPassword = this.validatePassword(this.input?.value);
-      if (!validPassword) {
-        this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
-      }
+    // hint text is not empty.
+    if (!!this.hintText) {
+      this.input.setCustomValidity(__(this.hintText, 'surecart'));
     }
 
     const valid = await this.input.reportValidity();
@@ -97,10 +103,58 @@ export class ScOrderPassword {
     return valid;
   }
 
-  validatePassword(password: string) {
-    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
-    if (regex.test(password)) return true;
-    return false;
+  /** Handle password verification. */
+  handleVerification() {
+    clearTimeout(showVerificationTimer);
+    // show hint text after some delay
+    showVerificationTimer = setTimeout(() => {
+      this.verifyPassword();
+    }, 500);
+  }
+
+  /** Handle password validation. */
+  handleValidate() {
+    this.handleVerification();
+    // clear existing timeout
+    clearTimeout(showHintTimer);
+
+    // show hint text after some delay
+    showHintTimer = setTimeout(() => {
+      this.validatePassword();
+    }, 500);
+  }
+
+  /** Validate the password input. */
+  validatePassword() {
+    if (!this.enableValidation) return;
+
+    // nothing entered.
+    if (this.input?.value.trim().length === 0) {
+      this.hintText = '';
+      return;
+    }
+
+    // must be at least 6 characters.
+    if (this.input?.value.trim().length < 6) {
+      return (this.hintText = __('Passwords should at least 6 characters.', 'surecart'));
+    }
+
+    // must contain a special charater.
+    const regex = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!regex.test(this.input?.value)) {
+      return (this.hintText = __('Passwords must contain a special character.', 'surecart'));
+    }
+
+    this.hintText = '';
+  }
+
+  /** Verify the password confirmation. */
+  verifyPassword() {
+    if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
+      return (this.verifyText = __('Password does not match.', 'surecart'));
+    }
+
+    this.verifyText = '';
   }
 
   render() {
@@ -114,32 +168,41 @@ export class ScOrderPassword {
 
     return (
       <div class="password">
-        <sc-input
-          ref={el => (this.input = el as HTMLScInputElement)}
-          label={this.label}
-          help={this.help}
-          autofocus={this.autofocus}
-          placeholder={this.placeholder}
-          showLabel={this.showLabel}
-          size={this.size ? this.size : 'medium'}
-          type="password"
-          name="password"
-          value={this.value}
-          required={this.required}
-          disabled={this.disabled}
-        ></sc-input>
-        {this.confirmation && (
+        <div>
           <sc-input
-            ref={el => (this.confirmInput = el as HTMLScInputElement)}
-            label={this.confirmationLabel ?? __('Confirm Password', 'surecart')}
-            help={this.confirmationHelp}
-            placeholder={this.confirmationPlaceholder}
+            ref={el => (this.input = el as HTMLScInputElement)}
+            label={this.label}
+            help={this.help}
+            autofocus={this.autofocus}
+            placeholder={this.placeholder}
+            showLabel={this.showLabel}
             size={this.size ? this.size : 'medium'}
             type="password"
+            name="password"
             value={this.value}
             required={this.required}
             disabled={this.disabled}
-          ></sc-input>
+            onScInput={() => this.handleValidate()}
+          />
+          {!!this.hintText && <small class="password__hint">{this.hintText}</small>}
+        </div>
+
+        {this.confirmation && (
+          <div>
+            <sc-input
+              ref={el => (this.confirmInput = el as HTMLScInputElement)}
+              label={this.confirmationLabel ?? __('Confirm Password', 'surecart')}
+              help={this.confirmationHelp}
+              placeholder={this.confirmationPlaceholder}
+              size={this.size ? this.size : 'medium'}
+              type="password"
+              value={this.value}
+              onScInput={() => this.handleVerification()}
+              required={this.required}
+              disabled={this.disabled}
+            />
+            {!!this.verifyText && <small class="password__hint">{this.verifyText}</small>}
+          </div>
         )}
       </div>
     );
