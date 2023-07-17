@@ -32,7 +32,13 @@ export default ({
 						type="text"
 						slot="trigger"
 						circle
-						onClick={() => setOpen(true)}
+						onClick={() => {
+							console.log(address);
+							if ( address && 0 !== address?.length )	{
+								setCustomerShippingAddress(address);
+							}
+							setOpen(true)
+						}}
 					>
 						<ScIcon name="edit" />
 					</ScButton>
@@ -59,6 +65,7 @@ export default ({
 			>
 				<ScAddress
 					required={false}
+					address={customerShippingAddress}
 					onScInputAddress={(e) =>
 						setCustomerShippingAddress(e?.detail)
 					}
