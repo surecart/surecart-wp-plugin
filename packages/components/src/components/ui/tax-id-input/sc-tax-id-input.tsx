@@ -44,6 +44,9 @@ export class ScTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
+  /** Whether tax input is required */
+  @Prop() required: boolean = false;
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
 
@@ -95,7 +98,7 @@ export class ScTaxIdInput {
   render() {
     return (
       <Fragment>
-        <sc-input name="tax_identifier.number_type" value={this.type} style={{ display: 'none' }} />
+        <sc-input name="tax_identifier.number_type" required={this.required} value={this.type} style={{ display: 'none' }} />
 
         <sc-input
           label={zones?.[this?.type || 'other']?.label}
@@ -115,6 +118,7 @@ export class ScTaxIdInput {
               number_type: this.type || 'other',
             });
           }}
+          required={this.required}
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 

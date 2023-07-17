@@ -95,6 +95,7 @@ export class ScOrderTaxIdInput {
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
+        required={this.taxProtocol?.eu_vat_required}
       ></sc-tax-id-input>
     );
   }
