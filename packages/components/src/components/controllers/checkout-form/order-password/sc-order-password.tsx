@@ -114,6 +114,7 @@ export class ScOrderPassword {
 
   /** Handle password validation. */
   handleValidate() {
+    this.handleVerification();
     // clear existing timeout
     clearTimeout(showHintTimer);
 
