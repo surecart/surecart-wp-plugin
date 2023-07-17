@@ -146,6 +146,15 @@ export default () => {
 		try {
 			setCheckoutError(false);
 			setIsSaving(true);
+			if ( paymentID ) {
+				const r = confirm(
+					__(
+						'Creating this checkout will charge the customer. Are you sure you want to continue?',
+						'surecart'
+					)
+				);
+				if (!r) return;
+			}
 			const {order} = await finalizeCheckout({
 				id: checkout?.id,
 				customer_id: customer?.id,
