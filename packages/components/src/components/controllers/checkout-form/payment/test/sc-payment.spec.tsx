@@ -14,7 +14,25 @@ beforeEach(() => {
 });
 
 describe('sc-payment', () => {
-  it('renders no processors', async () => {
+  it('renders no processors & user does not have `manage_sc_shop_settings` capability', async () => {
+    const page = await newSpecPage({
+      components: [ScPayment],
+      html: `<sc-payment></sc-payment>`,
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+
+  it('renders no processors & user has `manage_sc_shop_settings` capability', async () => {
+    // Set the mock attribute.
+    global.window = Object.create(window);
+    Object.defineProperty(window, 'scData', {
+      value: {
+        user_permissions: {
+          manage_sc_shop_settings: true,
+        },
+        admin_url: 'https://test.com/',
+      },
+    });
     const page = await newSpecPage({
       components: [ScPayment],
       html: `<sc-payment></sc-payment>`,
