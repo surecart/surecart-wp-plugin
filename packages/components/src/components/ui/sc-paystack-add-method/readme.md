@@ -20,12 +20,15 @@
 ### Depends on
 
 - [sc-alert](../alert)
+- [sc-button](../button)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-paystack-add-method --> sc-alert
+  sc-paystack-add-method --> sc-button
   sc-alert --> sc-icon
+  sc-button --> sc-spinner
   style sc-paystack-add-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

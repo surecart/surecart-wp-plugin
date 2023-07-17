@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-10T17:09:29",
+  "timestamp": "2023-07-17T19:35:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1841,6 +1841,7 @@
         "sc-password-nag",
         "sc-payment-method",
         "sc-payment-methods-list",
+        "sc-paystack-add-method",
         "sc-product-item-list",
         "sc-product-price-modal",
         "sc-product-selected-price",
@@ -1938,6 +1939,9 @@
           "sc-button"
         ],
         "sc-payment-methods-list": [
+          "sc-button"
+        ],
+        "sc-paystack-add-method": [
           "sc-button"
         ],
         "sc-product-item-list": [
@@ -4985,6 +4989,41 @@
         ],
         "sc-payment": [
           "sc-checkout-mollie-payment"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/sc-checkout-paystack-payment-provider/sc-checkout-paystack-payment-provider.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-paystack-payment-provider",
+      "readme": "# sc-checkout-paystack-payment-provider\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [
+        {
+          "event": "scError",
+          "detail": "ResponseError",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-payment"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-payment": [
+          "sc-checkout-paystack-payment-provider"
         ]
       }
     },
@@ -20439,6 +20478,7 @@
         "sc-icon",
         "sc-card",
         "sc-payment-selected",
+        "sc-checkout-paystack-payment-provider",
         "sc-form-control",
         "sc-tag",
         "sc-checkout-mollie-payment",
@@ -20450,6 +20490,7 @@
           "sc-icon",
           "sc-card",
           "sc-payment-selected",
+          "sc-checkout-paystack-payment-provider",
           "sc-form-control",
           "sc-tag",
           "sc-checkout-mollie-payment",
@@ -21402,14 +21443,19 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-alert"
+        "sc-alert",
+        "sc-button"
       ],
       "dependencyGraph": {
         "sc-paystack-add-method": [
-          "sc-alert"
+          "sc-alert",
+          "sc-button"
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
