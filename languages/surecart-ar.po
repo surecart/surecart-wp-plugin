@@ -32,9 +32,9 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: sc-charges-list.js:110
+#: sc-charges-list.js:112
 msgid "#%s"
-msgstr "#%s"
+msgstr ""
 
 #. translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type
 #: Blocks/Column/edit.js:104
@@ -51,13 +51,25 @@ msgstr "%1d%% خصم"
 msgid "%1s of %2s Activations Used"
 msgstr "تم استخدام %1s of %2s من عمليات التفعيل"
 
+#: orders/modules/Fulfillment/Fulfilled.js:99
+#: orders/modules/Fulfillment/Unfulfilled.js:49
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
 #: subscriptions/show/modules/Details.js:110
 msgid "%d Remaining"
 msgstr "%d متبقية"
 
-#: sc-textarea2.js:189
+#: sc-rich-text.js:18842
+#: sc-textarea2.js:183
 msgid "%d characters remaining"
-msgstr "%d الأحرف المتبقية"
+msgstr ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
@@ -72,15 +84,15 @@ msgstr[3] "%d أيام"
 msgstr[4] "%d أيام"
 msgstr[5] "%d أيام"
 
-#: sc-product-line-item2.js:24
+#: sc-product-line-item2.js:37
 msgid "%d day free"
 msgid_plural "%d days free"
-msgstr[0] "%d يوم مجاني"
-msgstr[1] "%d يوم مجانًا"
-msgstr[2] "%d يوم مجانًا"
-msgstr[3] "%d أيام مجانًا"
-msgstr[4] "%d أيام"
-msgstr[5] "%d أيام"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:80
 msgid "%d day left in trial"
@@ -92,7 +104,7 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: price.js:50
+#: price.js:52
 msgid "%d mo"
 msgid_plural "%d months"
 msgstr[0] ""
@@ -130,9 +142,19 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: price.js:84
+#: price.js:86
 msgid "%d payment remaining"
 msgid_plural "%d payments remaining"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: settings/shipping/profile/Products.js:184
+msgid "%d price"
+msgid_plural "%d prices"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -143,6 +165,16 @@ msgstr[5] ""
 #: coupons/modules/Product.js:104
 msgid "%d prices"
 msgstr "%d أسعار"
+
+#: settings/shipping/profile/ShippingProfileListItem.js:35
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
@@ -157,7 +189,7 @@ msgstr[3] "%d أسابيع"
 msgstr[4] ""
 msgstr[5] ""
 
-#: price.js:48
+#: price.js:50
 msgid "%d wk"
 msgid_plural "%d wks"
 msgstr[0] ""
@@ -180,7 +212,7 @@ msgstr[3] "٪d سنوات"
 msgstr[4] ""
 msgstr[5] ""
 
-#: price.js:52
+#: price.js:54
 msgid "%d yr"
 msgid_plural "%d yrs"
 msgstr[0] ""
@@ -211,13 +243,14 @@ msgstr "منذ %s"
 msgid "%s can't be blank."
 msgstr "لا يمكن أن يكون %s فارغًا."
 
-#: sc-purchase-downloads-list2.js:48
+#: components/MediaLibrary/index.js:370
+#: sc-purchase-downloads-list2.js:54
 msgid "%s file"
 msgid_plural "%s files"
-msgstr[0] "%s ملف"
-msgstr[1] "%s ملفات"
-msgstr[2] "%s ملف"
-msgstr[3] "%s ملفات"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
@@ -278,7 +311,7 @@ msgstr "%s من"
 msgid "%s selected for check out."
 msgstr "تم تحديد %s للسحب."
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "%s selected."
 msgstr ""
 
@@ -309,6 +342,14 @@ msgstr "1 ساعة"
 #: settings/abandoned/util.js:57
 msgid "1 week"
 msgstr "أسبوع 1"
+
+#: Blocks/ShippingChoices/edit.js:26
+msgid "1-2 days"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:291
+msgid "1. Create Zone"
+msgstr ""
 
 #: settings/abandoned/util.js:33
 msgid "1.5 Days"
@@ -342,6 +383,10 @@ msgstr "2 أيام"
 msgid "2 Hours"
 msgstr "ساعاتين"
 
+#: settings/shipping/zone/ShippingZoneForm.js:295
+msgid "2. Create Rate"
+msgstr ""
+
 #: Blocks/Columns/variations.js:132
 msgid "25 / 50 / 25"
 msgstr "25/50/25"
@@ -357,6 +402,10 @@ msgstr "3 أيام"
 #: settings/abandoned/util.js:17
 msgid "3 Hours"
 msgstr "3 ساعات"
+
+#: Blocks/ShippingChoices/edit.js:44
+msgid "3-5 days"
+msgstr ""
 
 #: Blocks/Columns/variations.js:60
 msgid "30 / 70"
@@ -415,8 +464,13 @@ msgctxt "block description"
 msgid "A container to display the product media"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "A default payment method will be used as a fallback in case other payment methods get removed from a subscription."
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:128
+#: settings/shipping/rate/ShippingRateForm.js:320
+msgid "A description to let the customer know the average time it takes for shipping."
 msgstr ""
 
 #: products/modules/AddExternalUrlModal.js:56
@@ -443,9 +497,9 @@ msgstr ""
 msgid "A link to your privacy policy page."
 msgstr "ربط بصفحة سياسة الخصوصية الخاصة بك."
 
-#: settings/portal/PortalSettings.js:139
-msgid "A link to your privacy terms page."
-msgstr "ربط بصفحة شروط الخصوصية الخاصة بك."
+#: settings/account/AccountSettings.js:267
+msgid "A link to your store terms page."
+msgstr ""
 
 #: bumps/CreateBump.js:65
 #: bumps/modules/Name.js:11
@@ -488,7 +542,7 @@ msgid "A single column within a columns block."
 msgstr "عمود واحد داخل قسم أعمدة."
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:83
-msgid "A single product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign."
+msgid "A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign."
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
@@ -577,9 +631,10 @@ msgstr ""
 msgid "Account Details"
 msgstr "تفاصيل الحساب"
 
+#: sc-wordpress-user-edit.js:61
 #: sc-wordpress-user.js:27
 msgid "Account Email"
-msgstr "البريد الإلكتروني للحساب"
+msgstr ""
 
 #: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:206
@@ -648,6 +703,10 @@ msgstr "أضف شرط"
 #: products/modules/Prices/NewPrice/index.js:103
 msgid "Add A Price"
 msgstr "أضف السعر"
+
+#: onboarding/Onboarding.js:166
+msgid "Add A Product"
+msgstr ""
 
 #: coupons/modules/NewRestriction.js:46
 #: coupons/modules/Restrictions.js:31
@@ -775,6 +834,14 @@ msgstr "إضافة تطبيق جديد"
 msgid "Add New Product"
 msgstr "اضافة منتج جديد"
 
+#: settings/shipping/ShippingSettings.js:245
+msgid "Add New Profile"
+msgstr ""
+
+#: settings/shipping/rate/AddShippingRate.js:16
+msgid "Add New Shipping Rate"
+msgstr ""
+
 #: components/SelectProductGroup.js:58
 msgid "Add New Upgrade Group"
 msgstr "إضافة مجموعة ترقية جديدة"
@@ -806,6 +873,19 @@ msgstr "إضافة قيود المنتج"
 msgid "Add Promotion Code"
 msgstr "أضف رمز الترويج"
 
+#: settings/shipping/rate/ShippingRateForm.js:194
+#: settings/shipping/zone/ShippingZone.js:228
+msgid "Add Rate"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:91
+msgid "Add Shipping Method"
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:72
+msgid "Add Shipping Profile"
+msgstr ""
+
 #: Blocks/Donation/edit.js:249
 msgid "Add Suggested Donation Amount"
 msgstr "أضف مبلغ التبرع المقترح"
@@ -828,6 +908,11 @@ msgstr "زر إضف الى السلة"
 msgid "Add To Cart Button Shortcode"
 msgstr "إضافة إلى كود زر عربة التسوق"
 
+#: orders/modules/Fulfillment/components/AddTracking.js:70
+#: orders/modules/Fulfillment/Fulfilled.js:165
+msgid "Add Tracking"
+msgstr ""
+
 #: src/Integrations/User/UserService.php:57
 msgid "Add User Role"
 msgstr "إضافة دور مستخدم"
@@ -835,6 +920,10 @@ msgstr "إضافة دور مستخدم"
 #: src/Integrations/User/UserService.php:48
 msgid "Add WordPress User Role"
 msgstr "إضافة دور مستخدم WordPress"
+
+#: settings/shipping/zone/ShippingZoneForm.js:265
+msgid "Add Zone"
+msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation description"
@@ -878,6 +967,10 @@ msgstr "إضافة عنوان…"
 msgid "Add additional information to receipts and invoices."
 msgstr "أضف معلومات إضافية إلى الإيصالات والفواتير."
 
+#: orders/modules/Fulfillment/components/Tracking.js:117
+msgid "Add another tracking number"
+msgstr ""
+
 #: dashboard/components/GetStarted.js:73
 msgid "Add buy and cart buttons"
 msgstr "أضف أزرار الشراء والعربة"
@@ -890,6 +983,10 @@ msgstr "أضف عربة وشراء الأزرار إلى موقعك."
 msgid "Add custom manual tax rates for specific countries."
 msgstr "أضف معدلات الضرائب  المخصصة بشكل يدوي حسب البلد."
 
+#: settings/shipping/ShippingSettings.js:229
+msgid "Add custom rates or destination restrictions for groups of products."
+msgstr ""
+
 #: src/WordPress/PostTypes/CartPostTypeService.php:214
 msgid "Add new Cart"
 msgstr "إضافة عربة جديدة"
@@ -900,6 +997,10 @@ msgstr "إضافة نموذج تسجيل دفع جديد"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:39
 msgid "Add new SureCart Product"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:213
+msgid "Add products to this shipping profile."
 msgstr ""
 
 #: Blocks/Checkbox/edit.js:69
@@ -957,9 +1058,9 @@ msgstr "أضف العنوان ..."
 msgid "Added"
 msgstr "مضاف"
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Additional Comments"
-msgstr "تعليقات اضافية"
+msgstr ""
 
 #: orders/modules/MetaData.js:16
 msgid "Additional Order Data"
@@ -977,11 +1078,11 @@ msgstr "معلومات إضافية للطلب"
 msgid "Address"
 msgstr "عنوان"
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:34
-#: sc-order-shipping-address2.js:43
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:41
+#: sc-order-shipping-address2.js:50
 msgid "Address Line 2"
-msgstr "سطر العنوان 2"
+msgstr ""
 
 #: Blocks/Address/edit.js:125
 msgid "Address Placeholder"
@@ -996,6 +1097,10 @@ msgstr "يقوم المسؤول بإلغاء إبطال عملية الشراء"
 msgid "Advanced"
 msgstr "متقدم"
 
+#: settings/shipping/profile/ShippingProfile.js:229
+msgid "Advanced Options"
+msgstr ""
+
 #: admin/advanced.php:30
 #: settings/advanced/AdvancedSettings.js:35
 msgid "Advanced Settings"
@@ -1005,25 +1110,25 @@ msgstr "إعدادات متقدمة"
 msgid "Advanced settings for abandoned checkouts"
 msgstr ""
 
-#: address.js:17
+#: address.js:14
 msgid "Afghanistan"
-msgstr "أفغانستان"
+msgstr ""
 
 #: Blocks/ProductItemList/edit.js:235
 msgid "Ajax Pagination"
 msgstr ""
 
-#: address.js:18
+#: address.js:15
 msgid "Albania"
-msgstr "ألبانيا"
+msgstr ""
 
 #: src/Support/Currency.php:240
 msgid "Albanian Lek"
 msgstr "ليك ألباني"
 
-#: address.js:19
+#: address.js:16
 msgid "Algeria"
-msgstr "الجزائر"
+msgstr ""
 
 #: src/Support/Currency.php:241
 msgid "Algerian Dinar"
@@ -1050,10 +1155,18 @@ msgstr "جميع عربات"
 msgid "All Checkout Forms"
 msgstr "جميع نماذج الدفع"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:350
+msgid "All Fulfillments"
+msgstr ""
+
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
 #: Blocks/ProductItemList/modules/EditLayoutConfig.js:13
 msgid "All Products"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:386
+msgid "All Shipment Statuses"
 msgstr ""
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:43
@@ -1063,6 +1176,15 @@ msgstr ""
 #: bumps/modules/Conditions.js:39
 msgid "All of these items are in the cart."
 msgstr "كل هذه العناصر موجودة في عربة التسوق."
+
+#: settings/shipping/ShippingSettings.js:189
+msgid "All products"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:212
+#: settings/shipping/ShippingSettings.js:185
+msgid "All products not in other profiles"
+msgstr ""
 
 #: coupons/modules/Restrictions.js:73
 msgid "Allow Coupon"
@@ -1124,9 +1246,9 @@ msgstr ""
 msgid "Always show cart"
 msgstr ""
 
-#: address.js:20
+#: address.js:17
 msgid "American Samoa"
-msgstr "ساموا الأمريكية"
+msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:14
 #: coupons/modules/Types.js:42
@@ -1183,31 +1305,31 @@ msgstr "لا يمكن إنشاء فاتورة للعميل المحدد حيث �
 msgid "An invoice cannot be generated for the specified subscription as there are no pending invoice items. Check that the correct subscription is being specified or create any necessary invoice items first."
 msgstr "لا يمكن إنشاء فاتورة للاشتراك المحدد حيث لا توجد منتجات مفوترة معلقة. تحقق من تحديد الاشتراك الصحيح أو قم بضرورة إنشاء منتجات مفوترة أولاً."
 
-#: fetch.js:1888
+#: fetch.js:737
 msgid "An unknown error occurred."
-msgstr "حدث خطأ غير معروف."
+msgstr ""
 
 #: admin/product-groups/index.php:10
 msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
 msgstr "مجموعات الترقية هي الطريقة التي تحدد بها مسارات الترقية والرجوع إلى إصدار أقدم لعملائك. يعتمد على المنتجات التي تم شراؤها مسبقًا."
 
-#: address.js:21
+#: address.js:18
 msgid "Andorra"
-msgstr "أندورا"
+msgstr ""
 
-#: address.js:22
+#: address.js:19
 msgid "Angola"
-msgstr "أنغولا"
+msgstr ""
 
 #: src/Support/Currency.php:242
 msgid "Angolan Kwanza"
 msgstr "الأنغولي كوانزا"
 
-#: address.js:23
+#: address.js:20
 msgid "Anguilla"
-msgstr "أنغيلا"
+msgstr ""
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "Another step will appear after submitting your order to add this payment method."
 msgstr ""
 
@@ -1226,13 +1348,13 @@ msgstr "تم إنشاء إجابة"
 msgid "Answer updated."
 msgstr "تم تحديث الإجابة"
 
-#: address.js:24
+#: address.js:21
 msgid "Antarctica"
-msgstr "أنتاركتيكا"
+msgstr ""
 
-#: address.js:25
+#: address.js:22
 msgid "Antigua and Barbuda"
-msgstr "أنتيغوا وبربودا"
+msgstr ""
 
 #: coupons/modules/SelectCustomer.js:155
 msgid "Any Customer"
@@ -1317,6 +1439,10 @@ msgstr "أرشفة العرض الخاص الـ bumb ؟ لن يكون هذا ا�
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr "أرشفة هذا السعر؟ لن يكون هذا المنتج قابلاً للشراء وسيتم فقد جميع التغييرات غير المحفوظة."
 
+#: product-groups/EditProductGroup.js:76
+msgid "Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:55
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
@@ -1353,9 +1479,9 @@ msgstr "هل أنت متأكد أنك تريد أرشفة هذه القسيمة�
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr "هل أنت متأكد أنك تريد أرشفة هذا المنتج؟ لن يكون هذا متاحًا للشراء."
 
-#: sc-subscription.js:42
+#: sc-subscription.js:70
 msgid "Are you sure you want to cancel the pending update to your plan?"
-msgstr "هل أنت متأكد من إلغاء التحديث المعلق لإشتراكك؟"
+msgstr ""
 
 #: Blocks/Form/edit.js:78
 msgid "Are you sure you want to change the template? This will completely replace your current form."
@@ -1364,6 +1490,10 @@ msgstr "هل أنت متأكد أنك تريد تغيير النموذج؟ سي�
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:46
 msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
 msgstr "هل أنت متأكد أنك تريد إكمال خطة الدفع هذه؟ سيؤدي هذا إلى التخلص من أي مدفوعات إضافية ووضع علامة على الخطة على أنها مكتملة. لا يمكنك التراجع عن هذا."
+
+#: settings/shipping/profile/DeleteShippingProfile.js:58
+msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
+msgstr ""
 
 #: coupons/EditCoupon.js:234
 msgid "Are you sure you want to delete this coupon?"
@@ -1395,6 +1525,10 @@ msgstr "هل أنت متأكد أنك تريد تجاهل هذا السعر؟"
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
 msgstr "هل أنت متأكد أنك تريد فصل هذا عن هذا العميل؟ سيؤدي ذلك إلى فقدهم للوصول إلى مشترياتهم."
 
+#: onboarding/components/ConfirmExit.js:9
+msgid "Are you sure you want to leave this page?"
+msgstr ""
+
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:63
 msgid "Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan."
 msgstr ""
@@ -1420,10 +1554,10 @@ msgstr "هل أنت متأكد أنك تريد إزالة هذا الرابط؟"
 msgid "Are you sure you want to remove this logo?"
 msgstr "هل أنت متأكد أنك تريد إزالة هذا الشعار؟"
 
-#: sc-payment-methods-list.js:48
-#: sc-subscription-payment-method.js:80
+#: sc-payment-methods-list.js:182
+#: sc-subscription-payment-method.js:85
 msgid "Are you sure you want to remove this payment method?"
-msgstr "هل أنت متأكد أنك تريد إزالة طريقة الدفع هذه؟"
+msgstr ""
 
 #: src/Webhooks/WebhooksHistoryService.php:149
 #: src/Webhooks/WebhooksHistoryService.php:168
@@ -1476,25 +1610,29 @@ msgstr "هل أنت متأكد أنك ترغب في إزالة هذا الراب
 msgid "Are you sure you wish to resume this subscription?"
 msgstr "هل أنت متأكد أنك ترغب في استئناف هذا الاشتراك؟"
 
-#: address.js:26
+#: settings/shipping/zone/ConfirmDeleteZone.js:41
+msgid "Are you sure?"
+msgstr ""
+
+#: address.js:23
 msgid "Argentina"
-msgstr "الأرجنتين"
+msgstr ""
 
 #: src/Support/Currency.php:243
 msgid "Argentine Peso"
 msgstr "بيزو أرجنتيني"
 
-#: address.js:27
+#: address.js:24
 msgid "Armenia"
-msgstr "أرمينيا"
+msgstr ""
 
 #: src/Support/Currency.php:244
 msgid "Armenian Dram"
 msgstr "درام أرميني"
 
-#: address.js:28
+#: address.js:25
 msgid "Aruba"
-msgstr "أروبا"
+msgstr ""
 
 #: src/Support/Currency.php:245
 msgid "Aruban Florin"
@@ -1576,13 +1714,17 @@ msgstr "أستراليا"
 msgid "Australian Dollar"
 msgstr "دولار استرالي"
 
-#: address.js:30
+#: address.js:27
 msgid "Austria"
-msgstr "النمسا"
+msgstr ""
 
 #: bumps/modules/Behavior.js:12
 msgid "Auto Apply Discount"
 msgstr "تطبيق الخصم تلقائيًا"
+
+#: products/modules/Shipping.js:115
+msgid "Auto Fulfill"
+msgstr ""
 
 #: Blocks/Product/Media/edit.js:52
 msgid "Auto Height"
@@ -1614,9 +1756,9 @@ msgstr "متاح للشراء"
 msgid "Average Order Value"
 msgstr "متوسط قيمة الطلب"
 
-#: address.js:31
+#: address.js:28
 msgid "Azerbaijan"
-msgstr "أذربيجان"
+msgstr ""
 
 #: src/Support/Currency.php:247
 msgid "Azerbaijani Manat"
@@ -1636,17 +1778,17 @@ msgstr "رجوع إلى جميع الفواتير"
 msgid "Background Color"
 msgstr "لون الخلفية"
 
-#: address.js:32
+#: address.js:29
 msgid "Bahamas"
-msgstr "جزر البهاما"
+msgstr ""
 
 #: src/Support/Currency.php:248
 msgid "Bahamian Dollar"
 msgstr "الدولار الباهامي"
 
-#: address.js:33
+#: address.js:30
 msgid "Bahrain"
-msgstr "البحرين"
+msgstr ""
 
 #: customers/modules/Balance/index.js:16
 msgid "Balance"
@@ -1656,9 +1798,9 @@ msgstr "الرصيد"
 msgid "Balance Transactions"
 msgstr "معاملات الرصيد"
 
-#: address.js:34
+#: address.js:31
 msgid "Bangladesh"
-msgstr "بنغلاديش"
+msgstr ""
 
 #: src/Support/Currency.php:249
 msgid "Bangladeshi Taka"
@@ -1668,46 +1810,53 @@ msgstr "تاكا بنجلاديشي"
 msgid "Barbadian Dollar"
 msgstr "دولار بربادوسي"
 
-#: address.js:35
+#: address.js:32
 msgid "Barbados"
-msgstr "بربادوس"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:441
+msgid "Based on item weight"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:472
+msgid "Based on order price"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:15
+msgid "Beauty Products"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:41
 msgid "Begins"
 msgstr "يبدأ"
 
-#: bumps/modules/Behavior.js:7
-#: settings/subscription/SubscriptionSettings.js:184
-msgid "Behavior"
-msgstr "سلوك"
-
-#: address.js:36
+#: address.js:33
 msgid "Belarus"
-msgstr "بيلاروسيا"
+msgstr ""
 
 #: src/Support/Currency.php:251
 msgid "Belarusian Ruble"
 msgstr "روبل بيلاروسي"
 
-#: address.js:37
+#: address.js:34
 msgid "Belgium"
-msgstr "بلجيكا"
+msgstr ""
 
-#: address.js:38
+#: address.js:35
 msgid "Belize"
-msgstr "بليز"
+msgstr ""
 
 #: src/Support/Currency.php:252
 msgid "Belize Dollar"
 msgstr "دولار بليز"
 
-#: address.js:39
+#: address.js:36
 msgid "Benin"
-msgstr "بنين"
+msgstr ""
 
-#: address.js:40
+#: address.js:37
 msgid "Bermuda"
-msgstr "برمودا"
+msgstr ""
 
 #: src/Support/Currency.php:253
 msgid "Bermudian Dollar"
@@ -1718,9 +1867,9 @@ msgstr "الدولار البرمودي"
 msgid "Beta Features"
 msgstr "الميزات التجريبية"
 
-#: address.js:41
+#: address.js:38
 msgid "Bhutan"
-msgstr "بوتان"
+msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:89
 #: Controllers/CustomerController.php:54
@@ -1761,9 +1910,9 @@ msgstr "فترة الفاتورة"
 msgid "Billing Periods"
 msgstr "فترات الفوترة"
 
-#: sc-customer-edit.js:105
+#: sc-customer-edit.js:110
 msgid "Billing address same as shipping"
-msgstr "عنوان الفوترة هو نفسه عنوان الشحن"
+msgstr ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:44
 msgid "Bills Now"
@@ -1778,17 +1927,21 @@ msgstr "الدفع على"
 msgid "Block types that the pattern is intended to be used with."
 msgstr "أنواع الإقسام التي من المقرر استخدام النمط معها."
 
-#: address.js:42
+#: address.js:39
 msgid "Bolivia"
-msgstr "بوليفيا"
+msgstr ""
 
 #: src/Support/Currency.php:254
 msgid "Bolivian Boliviano"
 msgstr "بوليفيانو بوليفي"
 
-#: address.js:43
+#: address.js:40
 msgid "Bonaire, Sint Eustatius and Saba"
-msgstr "بونير وسانت يوستاتيوس وسابا"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:51
+msgid "Books"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:72
 #: components/UpgradeModal.js:19
@@ -1803,9 +1956,9 @@ msgstr "حدود"
 msgid "Borderless"
 msgstr "بلا حدود"
 
-#: address.js:44
+#: address.js:41
 msgid "Bosnia and Herzegovina"
-msgstr "البوسنة والهرسك"
+msgstr ""
 
 #: src/Support/Currency.php:255
 msgid "Bosnia and Herzegovina Convertible Mark"
@@ -1819,9 +1972,9 @@ msgstr ""
 msgid "Both a customer and source ID have been provided, but the source has not been saved to the customer. To create a charge for a customer with a specified source, you must first save the card details."
 msgstr "تم توفير كل من معرف العميل والمصدر ، ولكن لم يتم حفظ المصدر للعميل. لإنشاء رسوم لعميل بمصدر محدد ، يجب عليك أولاً حفظ تفاصيل البطاقة."
 
-#: address.js:45
+#: address.js:42
 msgid "Botswana"
-msgstr "بوتسوانا"
+msgstr ""
 
 #: src/Support/Currency.php:256
 msgid "Botswana Pula"
@@ -1831,9 +1984,13 @@ msgstr "بوتسوانا بولا"
 msgid "Bottom Border"
 msgstr "الحد السفلي"
 
-#: address.js:46
+#: address.js:43
 msgid "Bouvet Island"
-msgstr "جزيرة بوفيت"
+msgstr ""
+
+#: store/add-entities.js:25
+msgid "Brand"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:79
 msgid "Brand Color"
@@ -1843,25 +2000,25 @@ msgstr "لون العلامة التجارية"
 msgid "Brand Settings"
 msgstr "إعدادات العلامة التجارية"
 
-#: address.js:47
+#: address.js:44
 msgid "Brazil"
-msgstr "البرازيل"
+msgstr ""
 
 #: src/Support/Currency.php:257
 msgid "Brazilian Real"
 msgstr "ريال برازيلي"
 
-#: address.js:48
+#: address.js:45
 msgid "British Indian Ocean Territory"
-msgstr "إقليم المحيط البريطاني الهندي"
+msgstr ""
 
 #: src/Support/Currency.php:258
 msgid "British Pound"
 msgstr "الجنيه البريطاني( الإسترليني)"
 
-#: address.js:49
+#: address.js:46
 msgid "Brunei Darussalam"
-msgstr "بروناي دار السلام"
+msgstr ""
 
 #: src/Support/Currency.php:259
 msgid "Brunei Dollar"
@@ -1872,9 +2029,9 @@ msgstr "دولار بروناي"
 msgid "BuddyBoss Group"
 msgstr "مجموعة BuddyBoss"
 
-#: address.js:50
+#: address.js:47
 msgid "Bulgaria"
-msgstr "بلغاريا"
+msgstr ""
 
 #: src/Support/Currency.php:260
 msgid "Bulgarian Lev"
@@ -1924,13 +2081,13 @@ msgstr "عروض خاصة Bumps"
 msgid "Bundle Discount"
 msgstr "خصم الباقة"
 
-#: address.js:51
+#: address.js:48
 msgid "Burkina Faso"
-msgstr "بوركينا فاسو"
+msgstr ""
 
-#: address.js:52
+#: address.js:49
 msgid "Burundi"
-msgstr "بوروندي"
+msgstr ""
 
 #: src/Support/Currency.php:261
 msgid "Burundian Franc"
@@ -2010,6 +2167,10 @@ msgstr "اشتري لي قهوة!"
 msgid "By %s"
 msgstr "بواسطة %s"
 
+#: onboarding/components/InitialSetup.js:88
+msgid "By continuing, you agree to the"
+msgstr ""
+
 #: Controllers/SubscriptionController.php:244
 #: Controllers/SubscriptionController.php:248
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
@@ -2028,9 +2189,9 @@ msgstr "ضريبة السلع والخدمات في كاليفورنيا"
 msgid "CA GST Label"
 msgstr ""
 
-#: address.js:53
+#: address.js:50
 msgid "Cabo Verde"
-msgstr "كابو فيردي"
+msgstr ""
 
 #: layouts/partials/admin-settings-header.php:18
 msgid "Cache cleared."
@@ -2040,17 +2201,17 @@ msgstr "تم مسح ذاكرة التخزين المؤقت."
 msgid "Call to action"
 msgstr "زر إتخاذ إجراء"
 
-#: address.js:54
+#: address.js:51
 msgid "Cambodia"
-msgstr "كمبوديا"
+msgstr ""
 
 #: src/Support/Currency.php:262
 msgid "Cambodian Riel"
 msgstr "الريال الكمبودي"
 
-#: address.js:55
+#: address.js:52
 msgid "Cameroon"
-msgstr "الكاميرون"
+msgstr ""
 
 #: Blocks/Dashboard/CustomerDownloads/edit.js:57
 #: Blocks/Dashboard/OrderDownloads/edit.js:55
@@ -2143,14 +2304,14 @@ msgstr ""
 msgid "Cancel Pending Update"
 msgstr "إلغاء التحديث المعلق"
 
-#: sc-subscription-cancel.js:94
-#: sc-subscription.js:141
+#: sc-subscription-cancel2.js:66
+#: sc-subscription.js:183
 msgid "Cancel Plan"
-msgstr "إلغاء خطة الإشتراك"
+msgstr ""
 
-#: sc-subscription.js:135
+#: sc-subscription.js:181
 msgid "Cancel Scheduled Update"
-msgstr "إلغاء التحديث المجدول"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:75
 #: components/data-tables/subscriptions-data-table/Cancel.js:124
@@ -2169,9 +2330,13 @@ msgstr "إلغاء الاشتراكات بعد"
 msgid "Cancel behavior. Either pending or immediate."
 msgstr "قم بإلغاء السلوك. إما معلق أو فوري."
 
-#: sc-subscription-cancel.js:94
+#: orders/modules/Fulfillment/Fulfilled.js:155
+msgid "Cancel fulfillment"
+msgstr ""
+
+#: sc-subscription-cancel2.js:66
 msgid "Cancel your plan"
-msgstr "إلغاء خطة إشتراكك"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
@@ -2339,9 +2504,9 @@ msgstr "قائمة عربات التسوق"
 msgid "Carts list navigation"
 msgstr "قائمة التنقل في عربات التسوق"
 
-#: address.js:57
+#: address.js:54
 msgid "Cayman Islands"
-msgstr "جزر كايمان"
+msgstr ""
 
 #: src/Support/Currency.php:265
 msgid "Cayman Islands Dollar"
@@ -2351,17 +2516,17 @@ msgstr "دولار جزر كايمان"
 msgid "Central African Cfa Franc"
 msgstr "فرنك وسط أفريقي"
 
-#: address.js:58
+#: address.js:55
 msgid "Central African Republic"
-msgstr "جمهورية افريقيا الوسطى"
+msgstr ""
 
 #: src/Support/Currency.php:267
 msgid "Cfp Franc"
 msgstr "فرنك سي إف بي"
 
-#: address.js:59
+#: address.js:56
 msgid "Chad"
-msgstr "تشاد"
+msgstr ""
 
 #: bumps/modules/Price.js:46
 #: subscriptions/edit/modules/Price.js:101
@@ -2369,13 +2534,17 @@ msgstr "تشاد"
 msgid "Change"
 msgstr "تغيير"
 
-#: sc-product-selected-price.js:70
+#: sc-product-selected-price.js:73
 msgid "Change Amount"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:217
 msgid "Change Payment Method"
 msgstr "قم بتغيير آلية الدفع"
+
+#: subscriptions/edit/modules/Price.js:111
+msgid "Change Price"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:67
 msgid "Change Product"
@@ -2466,9 +2635,9 @@ msgstr "فرض ضريبة على هذا المنتج"
 msgid "Charges"
 msgstr "رسوم"
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Check your email for a confirmation code"
-msgstr "تحقق من بريدك الإلكتروني للحصول على رمز التأكيد"
+msgstr ""
 
 #: Blocks/Checkbox/block.json
 msgctxt "block title"
@@ -2489,9 +2658,9 @@ msgstr "محدد بشكل افتراضي"
 msgid "Checked by default"
 msgstr "مفعّل بشكل افتراضي"
 
-#: sc-payment-method2.js:19
+#: sc-payment-method2.js:24
 msgid "Checking"
-msgstr "تدقيق"
+msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:228
 #: store/add-entities.js:39
@@ -2573,17 +2742,17 @@ msgstr "قائمة التنقل في قائمة \"نماذج الدفع\""
 msgid "Checkout Recovery Rate"
 msgstr "معدل استرداد المدفوعات"
 
-#: address.js:60
+#: address.js:57
 msgid "Chile"
-msgstr "تشيلي"
+msgstr ""
 
 #: src/Support/Currency.php:268
 msgid "Chilean Peso"
 msgstr "بيزو تشيلي"
 
-#: address.js:61
+#: address.js:58
 msgid "China"
-msgstr "الصين"
+msgstr ""
 
 #: src/Support/Currency.php:269
 msgid "Chinese Renminbi Yuan"
@@ -2611,9 +2780,9 @@ msgstr "اختر منتج التبرع"
 msgid "Choose A Starting Design"
 msgstr "اختر تصميم البداية"
 
-#: sc-subscription-switch.js:181
+#: sc-subscription-switch.js:190
 msgid "Choose Amount"
-msgstr "اختيار مبلغ"
+msgstr ""
 
 #: Blocks/Form/components/SelectPrices.js:54
 msgid "Choose An Invoice Product"
@@ -2631,9 +2800,9 @@ msgstr "اختر نموذجًا"
 msgid "Choose a product"
 msgstr "اختر منتجًا"
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Choose a reason"
-msgstr "اختر سببًا"
+msgstr ""
 
 #: subscriptions/edit/modules/Trial.js:24
 msgid "Choose a trial end date"
@@ -2644,6 +2813,10 @@ msgstr "اختر تاريخ انتهاء النسخة التجريبية"
 msgid "Choose a type"
 msgstr "اختر النوع"
 
+#: onboarding/components/StarterTemplates.js:75
+msgid "Choose some example data or start from scratch."
+msgstr ""
+
 #: settings/tax/TaxSettings.js:139
 msgid "Choose the checkout behavior when VAT verification fails."
 msgstr "اختر سلوك الخروج عند فشل التحقق من ضريبة القيمة المضافة."
@@ -2652,19 +2825,23 @@ msgstr "اختر سلوك الخروج عند فشل التحقق من ضريب�
 msgid "Choose the style of order numbers."
 msgstr "اختر نمط أرقام الطلبات."
 
-#: address.js:62
+#: address.js:59
 msgid "Christmas Island"
-msgstr "جزيرة الكريسماس"
+msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:32
-#: sc-order-shipping-address2.js:41
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:39
+#: sc-order-shipping-address2.js:48
 msgid "City"
-msgstr "مدينة"
+msgstr ""
 
 #: Blocks/Address/edit.js:116
 msgid "City Placeholder"
 msgstr "موضع إسم المدينة"
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:162
+msgid "Claim Account"
+msgstr ""
 
 #: layouts/partials/admin-settings-header.php:41
 msgid "Clear Account Cache"
@@ -2683,18 +2860,23 @@ msgstr "امسح جميع بيانات الاختبار الخاصة بك بنق
 msgid "Click here to add some radio text..."
 msgstr "انقر هنا لإضافة بعض نصوص الاختيار المتعدد ..."
 
-#: sc-dialog2.js:164
-#: sc-drawer2.js:154
+#. translators: Close this modal window.
+#: sc-dialog2.js:152
+#: sc-drawer2.js:140
 msgid "Close"
-msgstr "إغلاق"
+msgstr ""
 
 #: Blocks/Totals/edit.js:101
 msgid "Closed Text"
 msgstr "نص مغلق"
 
-#: address.js:63
+#: onboarding/components/StarterTemplates.js:20
+msgid "Clothing & Apparel"
+msgstr ""
+
+#: address.js:60
 msgid "Cocos (Keeling) Islands"
-msgstr "جزر كوكوس (كيلينغ)"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:76
 #: abandoned-checkouts/modules/Coupon.js:37
@@ -2740,9 +2922,9 @@ msgstr "تحصيل ضريبة القيمة المضافة في الاتحاد ا
 msgid "Collect Tax"
 msgstr "جمع الضرائب"
 
-#: address.js:64
+#: address.js:61
 msgid "Colombia"
-msgstr "كولومبيا"
+msgstr ""
 
 #: src/Support/Currency.php:270
 msgid "Colombian Peso"
@@ -2783,9 +2965,9 @@ msgstr "لم تكن التجارة على WordPress أسهل أو أسرع أو 
 msgid "Comorian Franc"
 msgstr "فرنك جزر القمر"
 
-#: address.js:65
+#: address.js:62
 msgid "Comoros"
-msgstr "جزر القمر"
+msgstr ""
 
 #: products/components/price/parts/ScratchAmount.js:8
 msgid "Compare at price"
@@ -2794,6 +2976,14 @@ msgstr "قارن في السعر"
 #: admin/onboarding/complete.php:69
 msgid "Complete Installation"
 msgstr "التثبيت الكامل"
+
+#: components/ClaimNoticeModal.js:40
+msgid "Complete Setup"
+msgstr ""
+
+#: components/MediaLibrary/index.js:300
+msgid "Complete Setup!"
+msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:114
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
@@ -2805,15 +2995,23 @@ msgstr "أكمل التسجيل"
 msgid "Complete Subscription"
 msgstr "اشتراك مكتمل"
 
-#: sc-subscription-status-badge2.js:60
+#: Blocks/Form/edit.js:449
+msgid "Complete your store setup."
+msgstr ""
+
+#: sc-subscription-status-badge2.js:63
 msgid "Completed"
-msgstr "مكتمل"
+msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
 #: settings/advanced/AdvancedSettings.js:137
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr "قم بإزالة جميع بيانات البرنامج المساعد تمامًا عند حذفها. هذا لا يمكن التراجع عنها."
+
+#: settings/shipping/zone/ShippingZone.js:96
+msgid "Condition"
+msgstr ""
 
 #: Blocks/ConditionalForm/edit.js:138
 #: Blocks/ConditionalForm/edit.js:162
@@ -2862,46 +3060,54 @@ msgstr "تأكيد"
 msgid "Confirm Charge"
 msgstr ""
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: onboarding/components/ConfirmStoreEmail.js:49
+msgid "Confirm Email for Store Notifications"
+msgstr ""
+
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "Confirm New Password"
-msgstr "تأكيد كلمة المرور الجديدة"
+msgstr ""
 
-#: sc-order-password.js:63
+#: sc-order-password.js:74
 msgid "Confirm Password"
-msgstr "تأكيد كلمة المرور"
+msgstr ""
 
-#: sc-login-form.js:145
+#: onboarding/components/ConfirmStoreDetails.js:38
+msgid "Confirm Store Details"
+msgstr ""
+
+#: sc-login-form.js:147
 msgid "Confirmation code"
-msgstr "رمز التأكيد"
+msgstr ""
 
 #: Blocks/Form/edit.js:338
 msgid "Confirming Payment"
 msgstr "تأكيد الدفع"
 
-#: address.js:66
+#: address.js:63
 msgid "Congo"
-msgstr "الكونغو"
+msgstr ""
 
-#: address.js:67
+#: address.js:64
 msgid "Congo, The Democratic Republic of the"
-msgstr "جمهورية الكونغو الديمقراطية"
+msgstr ""
 
 #: src/Support/Currency.php:272
 msgid "Congolese Franc"
 msgstr "فرنك كونغولي"
 
+#: onboarding/components/SetupDone.js:44
+msgid "Congratulations!"
+msgstr ""
+
+#: onboarding/components/InitialSetup.js:78
+msgid "Connect Existing Store"
+msgstr ""
+
 #: customers/modules/User/index.js:203
 msgid "Connect a user"
 msgstr "ربط المستخدم"
-
-#: admin/processors.php:135
-msgid "Connect with PayPal to add a PayPal express button to your checkout."
-msgstr "تفعيل PayPal لإضافة زر PayPal السريع إلى عملية الدفع الخاصة بك."
-
-#: admin/processors.php:57
-msgid "Connect with Stripe to accept credit cards and other payment methods."
-msgstr "تواصل مع Stripe لقبول بطاقات الائتمان وطرق الدفع الأخرى."
 
 #: src/Rest/AccountRestServiceProvider.php:115
 #: src/Rest/SettingsRestServiceProvider.php:115
@@ -2944,9 +3150,9 @@ msgstr ""
 msgid "Continue"
 msgstr "متابعة"
 
-#: address.js:68
+#: address.js:65
 msgid "Cook Islands"
-msgstr "جزر كوك"
+msgstr ""
 
 #: products/modules/Prices/Price/CopyInput.js:14
 msgid "Copied to clipboard."
@@ -2966,13 +3172,17 @@ msgstr "تم النسخ!"
 msgid "Copy"
 msgstr "نسخ"
 
+#: orders/modules/Fulfillment/CreateFulfillment.js:276
+msgid "Copy Address"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:210
 msgid "Copy Links"
 msgstr "نسخ الروابط"
 
-#: address.js:69
+#: address.js:66
 msgid "Costa Rica"
-msgstr "كوستا ريكا"
+msgstr ""
 
 #: src/Support/Currency.php:273
 msgid "Costa Rican Colón"
@@ -3000,9 +3210,9 @@ msgstr ""
 msgid "Could not download the file."
 msgstr "تعذر تنزيل الملف."
 
-#: sc-session-provider2.js:240
+#: sc-session-provider2.js:189
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
-msgstr "لا يمكن العثور على نموذج الدفع. يرجى الاتصال بنا قبل محاولة الشراء مرة أخرى."
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:46
 msgid "Could not start subscription."
@@ -3027,9 +3237,9 @@ msgstr "دولة"
 msgid "Country Placeholder"
 msgstr "موضع إسم البلد"
 
-#: sc-compact-address2.js:45
+#: sc-compact-address2.js:46
 msgid "Country or region"
-msgstr "الدولة او المنطقة"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
 msgid "Country-Specific VAT Registrations"
@@ -3091,6 +3301,10 @@ msgstr "كوبونات"
 #: src/Integrations/TutorLMS/TutorLMSService.php:217
 msgid "Course Access"
 msgstr "الوصول إلى الدورة التدريبية"
+
+#: onboarding/components/StarterTemplates.js:35
+msgid "Courses"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
 msgid "Cover"
@@ -3172,6 +3386,10 @@ msgstr "إنشاء طلب جديد"
 msgid "Create New Product"
 msgstr "إنشاء منتج جديد"
 
+#: onboarding/components/InitialSetup.js:63
+msgid "Create New Store"
+msgstr ""
+
 #: products/modules/Prices/NewPrice/index.js:195
 msgid "Create Price"
 msgstr "إنشاء سعر"
@@ -3199,6 +3417,10 @@ msgstr ""
 
 #: settings/advanced/components/CustomerSyncModal.js:83
 msgid "Create WordPress users if the user does not yet exist."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:46
+msgid "Create Zone"
 msgstr ""
 
 #: Blocks/CheckoutForm/components/Empty.js:77
@@ -3285,29 +3507,29 @@ msgstr "بطاقة إئتمان"
 msgid "Credit Card selected for check out."
 msgstr "تم تحديد بطاقة الائتمان في نموذج الدفع."
 
-#: address.js:70
+#: address.js:67
 msgid "Croatia"
-msgstr "كرواتيا"
+msgstr ""
 
 #: src/Support/Currency.php:274
 msgid "Croatian Kuna"
 msgstr "كونا الكرواتية"
 
-#: address.js:71
+#: address.js:68
 msgid "Cuba"
-msgstr "كوبا"
+msgstr ""
 
-#: address.js:72
+#: address.js:69
 msgid "Curaçao"
-msgstr "كوراساو"
+msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:82
 msgid "Current"
 msgstr "الحالي"
 
-#: sc-subscription-payment-method.js:147
+#: sc-subscription-payment-method.js:154
 msgid "Current Payment Method"
-msgstr "طريقة الدفع الحالية"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:113
 #: Controllers/SubscriptionController.php:203
@@ -3338,6 +3560,10 @@ msgstr "زر مخصص"
 #: bumps/modules/CTA.js:10
 msgid "Custom Call to action"
 msgstr "زر إتخاذ إجراء مخصص"
+
+#: settings/shipping/ShippingSettings.js:195
+msgid "Custom Shipping Profiles"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:17
 #: products/components/SelectTemplatePart/create-modal.js:17
@@ -3464,10 +3690,9 @@ msgctxt "block title"
 msgid "Customer Payment Methods"
 msgstr "طرق الدفع العملاء"
 
-#: layouts/partials/admin-settings-sidebar.php:40
-#: settings/portal/PortalSettings.js:39
+#: settings/subscription/SubscriptionSettings.js:297
 msgid "Customer Portal"
-msgstr "بوابة العملاء"
+msgstr ""
 
 #: products/modules/Advanced.js:27
 msgid "Customer Purchase Limit"
@@ -3550,10 +3775,30 @@ msgstr "سيتمكن العملاء من تبديل خطط الأسعار من �
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr "سيدخل العملاء رمز الخصم هذا عند الخروج. اترك هذا فارغًا وسننشئ واحدًا لك."
 
+#: settings/shipping/zone/ShippingZone.js:79
+msgid "Customers won't be able to complete checkout for products in this zone."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:194
+msgid "Customers won't see this."
+msgstr ""
+
+#: products/modules/Shipping.js:101
+msgid "Customers won’t enter shipping details at checkout."
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:79
+msgid "Customers won’t see this."
+msgstr ""
+
 #: dashboard/components/GetStarted.js:85
 #: dashboard/components/GetStarted.js:91
 msgid "Customize"
 msgstr "تخصيص"
+
+#: onboarding/components/ConfirmStoreDetails.js:39
+msgid "Customize and configure your store settings."
+msgstr ""
 
 #: dashboard/components/GetStarted.js:86
 msgid "Customize forms"
@@ -3575,21 +3820,21 @@ msgstr ""
 msgid "Customize your checkout forms with a no-code experience."
 msgstr "تخصيص نماذج الشراء الخاصة بك مع تجربة عدم وجود أكواد."
 
-#: address.js:73
+#: address.js:70
 msgid "Cyprus"
-msgstr "قبرص"
+msgstr ""
 
 #: src/Support/Currency.php:275
 msgid "Czech Koruna"
 msgstr "الكورونا التشيكية"
 
-#: address.js:74
+#: address.js:71
 msgid "Czechia"
-msgstr "التشيك"
+msgstr ""
 
-#: address.js:75
+#: address.js:72
 msgid "Côte d'Ivoire"
-msgstr "كوت ديفوار"
+msgstr ""
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:11
 #: dashboard/components/overview/parts/ReportByDropdown.js:24
@@ -3730,8 +3975,12 @@ msgstr ""
 msgid "Delete"
 msgstr "مسح"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Delete Payment Method"
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:54
+msgid "Delete Shipping Profile"
 msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:191
@@ -3765,9 +4014,16 @@ msgstr "محذوف."
 msgid "Deleting This is Restricted"
 msgstr ""
 
-#: address.js:76
+#: src/Controllers/Admin/Orders/OrdersListTable.php:390
+#: orders/modules/Fulfillment/components/StatusDropdown.js:21
+#: sc-fulfillment-shipping-status-badge2.js:9
+#: sc-order-shipment-badge2.js:10
+msgid "Delivered"
+msgstr ""
+
+#: address.js:73
 msgid "Denmark"
-msgstr "الدنمارك"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:80
 #: products/components/SelectTemplatePart/create-modal.js:84
@@ -3798,6 +4054,10 @@ msgstr "تفاصيل"
 #: src/Rest/BlockPatternsRestServiceProvider.php:219
 msgid "Determines whether the pattern is visible in inserter."
 msgstr "تحديد ما إذا كان النمط مرئيًا في أداة الإدخال."
+
+#: products/modules/Shipping.js:85
+msgid "Digital product or service"
+msgstr ""
 
 #: coupons/components/DisableModal.js:27
 #: settings/processors/ManualPaymentMethod.js:136
@@ -3857,9 +4117,9 @@ msgstr "إعدادات الخصم"
 msgid "Discounts"
 msgstr "الخصومات"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Dismiss"
-msgstr "رفض"
+msgstr ""
 
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:159
 msgid "Dismiss Notice"
@@ -4068,6 +4328,11 @@ msgctxt "block description"
 msgid "Display the cart subtotal"
 msgstr "عرض المجموع الفرعي لعربة التسوق"
 
+#: Blocks/ShippingChoices/block.json
+msgctxt "block description"
+msgid "Display the list of shipping choices"
+msgstr ""
+
 #: Blocks/Product/Description/block.json
 msgctxt "block description"
 msgid "Display the product description"
@@ -4077,6 +4342,11 @@ msgstr ""
 msgctxt "block description"
 msgid "Display the session totals."
 msgstr "عرض مجموع الجلسة."
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block description"
+msgid "Display the shipping amount"
+msgstr ""
 
 #: Blocks/StoreLogo/block.json
 msgctxt "block description"
@@ -4088,9 +4358,9 @@ msgctxt "block description"
 msgid "Display your order bumps."
 msgstr "عرض العروض الخاصة Bumbs الخاصة بك."
 
-#: sc-pagination2.js:37
+#: sc-pagination2.js:40
 msgid "Displaying %1d to %2d of %3d items"
-msgstr "عرض %1d to %2d of %3d  عنصر"
+msgstr ""
 
 #: Blocks/Dashboard/CustomerSubscriptions/block.json
 msgctxt "block description"
@@ -4278,25 +4548,25 @@ msgctxt "block title"
 msgid "Divider"
 msgstr "فاصل"
 
-#: address.js:77
+#: address.js:74
 msgid "Djibouti"
-msgstr "جيبوتي"
+msgstr ""
 
 #: src/Support/Currency.php:277
 msgid "Djiboutian Franc"
 msgstr "فرنك جيبوتي"
 
-#: address.js:78
+#: address.js:75
 msgid "Dominica"
-msgstr "دومينيكا"
+msgstr ""
 
 #: src/Support/Currency.php:278
 msgid "Dominican Peso"
 msgstr "بيزو دومنيكاني"
 
-#: address.js:79
+#: address.js:76
 msgid "Dominican Republic"
-msgstr "جمهورية الدومينيكان"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:130
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
@@ -4326,10 +4596,6 @@ msgstr ""
 #: settings/abandoned/util.js:9
 msgid "Don't send"
 msgstr ""
-
-#: src/Controllers/Admin/Onboarding.php:46
-msgid "Donation"
-msgstr "تبرع"
 
 #: Blocks/Donation/block.json
 msgctxt "block title"
@@ -4374,9 +4640,9 @@ msgstr "إيصال التنزيل"
 msgid "Download Receipt / Invoice"
 msgstr "تحميل الإيصال / الفاتورة"
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Download Receipt/Invoice"
-msgstr "تحميل الإيصال / الفاتورة"
+msgstr ""
 
 #: products/modules/Downloads.js:58
 msgid "Download added."
@@ -4410,9 +4676,9 @@ msgstr "مسودة"
 msgid "Dry run the sync."
 msgstr ""
 
-#: sc-checkout.js:187
+#: sc-checkout.js:203
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
-msgstr "نظرًا لقيود المعالج ، يُسمح بنموذج تسجيل خروج واحد فقط في الصفحة."
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:121
 msgid "Duplicate"
@@ -4421,6 +4687,11 @@ msgstr "نسخ"
 #: coupons/Sidebar.js:75
 msgid "Duration"
 msgstr "مدة"
+
+#: settings/shipping/method/ShippingMethodForm.js:127
+#: settings/shipping/rate/ShippingRateForm.js:319
+msgid "E.g. 1-2 days"
+msgstr ""
 
 #: orders/modules/TaxInfo.js:10
 #: tax.js:19
@@ -4439,9 +4710,13 @@ msgstr "إعدادات ضريبة القيمة المضافة في الاتحا�
 msgid "East Caribbean Dollar"
 msgstr "دولار شرق الكاريبي"
 
-#: address.js:80
+#: Blocks/ShippingChoices/edit.js:43
+msgid "Economy"
+msgstr ""
+
+#: address.js:77
 msgid "Ecuador"
-msgstr "الاكوادور"
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:281
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:262
@@ -4461,6 +4736,10 @@ msgstr "تعديل"
 #: licenses/modules/Activations/Activation.js:137
 msgid "Edit Activation"
 msgstr "تحرير التفعيل"
+
+#: subscriptions/edit/modules/Price.js:105
+msgid "Edit Amount"
+msgstr ""
 
 #: bumps/EditBump.js:173
 msgid "Edit Bump"
@@ -4520,6 +4799,14 @@ msgstr "تحرير مجموعة المنتجات"
 msgid "Edit Promotion Code"
 msgstr "تحرير الرمز الترويجي"
 
+#: settings/shipping/method/ShippingMethodForm.js:90
+msgid "Edit Shipping Method"
+msgstr ""
+
+#: settings/shipping/rate/EditShippingRate.js:17
+msgid "Edit Shipping Rate"
+msgstr ""
+
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:394
 #: subscriptions/edit/EditSubscription.js:227
 msgid "Edit Subscription"
@@ -4527,6 +4814,14 @@ msgstr "تعديل الاشتراك"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:41
 msgid "Edit SureCart Product"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/AddTracking.js:69
+msgid "Edit Tracking"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:264
+msgid "Edit Zone"
 msgstr ""
 
 #: products/components/SelectTemplate/form.js:125
@@ -4538,22 +4833,26 @@ msgstr ""
 msgid "Edit the layout of each product"
 msgstr ""
 
+#: orders/modules/Fulfillment/Fulfilled.js:144
+msgid "Edit tracking"
+msgstr ""
+
 #: Blocks/CartItems/edit.js:44
 #: Blocks/LineItems/edit.js:36
 msgid "Editable"
 msgstr "قابل للتعديل"
 
-#: address.js:81
+#: address.js:78
 msgid "Egypt"
-msgstr "مصر"
+msgstr ""
 
 #: src/Support/Currency.php:280
 msgid "Egyptian Pound"
 msgstr "الجنيه المصري"
 
-#: address.js:82
+#: address.js:79
 msgid "El Salvador"
-msgstr "السلفادور"
+msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
 #: coupons/modules/CustomerSelector.js:132
@@ -4585,9 +4884,13 @@ msgstr "تم إرسال البريد الإلكتروني"
 msgid "Email Status"
 msgstr "حالة البريد الإلكتروني"
 
-#: sc-login-provider2.js:79
+#: settings/customer/CustomerSettings.js:307
+msgid "Email Verification Code"
+msgstr ""
+
+#: sc-login-provider2.js:83
 msgid "Email or Username"
-msgstr "البريد الإلكتروني أو اسم المستخدم"
+msgstr ""
 
 #: src/Rest/CustomerLinksRestServiceProvider.php:59
 msgid "Email or username for the request"
@@ -4620,6 +4923,10 @@ msgstr "تمكين بوابة دفع PayPal"
 #: settings/account/AccountSettings.js:260
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr "تمكين الحماية من البريد العشوائي Recaptcha في نماذج الشراء."
+
+#: settings/shipping/ShippingSettings.js:146
+msgid "Enable Shipping Rates"
+msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:65
 msgid "Enable Stripe payment"
@@ -4673,6 +4980,10 @@ msgstr ""
 #: Blocks/Payment/components/Inspector.js:42
 msgid "Enabled Processors"
 msgstr "تمكين معالجات الدفع"
+
+#: settings/shipping/ShippingSettings.js:148
+msgid "Enabling shipping rates allows you to charge shipping costs and restrict purchase areas."
+msgstr ""
 
 #: coupons/modules/Limits.js:72
 msgid "End Date"
@@ -4744,6 +5055,10 @@ msgstr "أدخل رقم هاتف"
 msgid "Enter coupon code"
 msgstr "أدخل كوبون الخصم"
 
+#: onboarding/components/ConfirmStoreEmail.js:61
+msgid "Enter email address"
+msgstr ""
+
 #: licenses/modules/Details/index.js:56
 msgid "Enter the number of unique activations for this key. Leave blank for infinite."
 msgstr "أدخل عدد عمليات التفعيل الفريدة لهذا المفتاح. اتركه فارغا لعدد لانهائي."
@@ -4778,26 +5093,25 @@ msgstr "إدخال مفتاح الترخيص الخاص بك"
 msgid "Enter your license key to activate your plan on thie store."
 msgstr "أدخل مفتاح الترخيص الخاص بك لتفعيل خطتك في المتجر."
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "Enter your password"
-msgstr "ادخل كلمة المرور"
+msgstr ""
 
-#: address.js:83
+#: address.js:80
 msgid "Equatorial Guinea"
-msgstr "غينيا الإستوائية"
+msgstr ""
 
-#: address.js:84
+#: address.js:81
 msgid "Eritrea"
-msgstr "إريتريا"
+msgstr ""
 
-#: sc-cart-form.js:128
-#: sc-dashboard-module2.js:16
-#: sc-login-form.js:106
-#: sc-paypal-add-method.js:103
-#: sc-stripe-add-method.js:128
-#: sc-upcoming-invoice.js:208
+#: sc-cart-form.js:129
+#: sc-dashboard-module2.js:17
+#: sc-paypal-add-method.js:108
+#: sc-stripe-add-method.js:132
+#: sc-upcoming-invoice.js:221
 msgid "Error"
-msgstr "خطأ"
+msgstr ""
 
 #: abandoned-checkouts/components/Link.js:35
 #: licenses/modules/Details/Copy.js:16
@@ -4816,19 +5130,19 @@ msgstr "خطأ."
 
 #: sc-line-item-tax2.js:18
 msgid "Estimated %s"
-msgstr "يقدر بـ %s"
+msgstr ""
 
-#: address.js:85
+#: address.js:82
 msgid "Estonia"
-msgstr "إستونيا"
+msgstr ""
 
-#: address.js:86
+#: address.js:83
 msgid "Eswatini"
-msgstr "إيسواتيني"
+msgstr ""
 
-#: address.js:87
+#: address.js:84
 msgid "Ethiopia"
-msgstr "أثيوبيا"
+msgstr ""
 
 #: src/Support/Currency.php:281
 msgid "Ethiopian Birr"
@@ -4874,14 +5188,18 @@ msgstr "منتهي الصلاحية"
 msgid "Export CSV"
 msgstr "تصدير  بصيغة CSV"
 
+#: Blocks/ShippingChoices/edit.js:34
+msgid "Express"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block title"
 msgid "Express Payment"
 msgstr "الدفع السريع"
 
-#: sc-stripe-payment-request2.js:287
+#: sc-stripe-payment-request2.js:286
 msgid "Express Payment"
-msgstr "الدفع السريع"
+msgstr ""
 
 #: products/modules/Downloads.js:146
 msgid "External Link"
@@ -4904,9 +5222,17 @@ msgstr "فشل إلغاء الاشتراك."
 msgid "Failed to create refund."
 msgstr "فشل إنشاء استرداد."
 
-#: sc-paypal-add-method.js:74
+#: settings/shipping/rate/ShippingRateForm.js:141
+msgid "Failed to create shipping method"
+msgstr ""
+
+#: onboarding/Onboarding.js:102
+msgid "Failed to create store. Please try again."
+msgstr ""
+
+#: sc-paypal-add-method.js:79
 msgid "Failed to load the PayPal JS SDK script"
-msgstr "فشل تحميل النص البرمجي لـ PayPal JS SDK"
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:10
 msgid "Failed to save coupon."
@@ -4930,35 +5256,43 @@ msgstr "فشل العودة عن إلغاء الاشتراك."
 msgid "Failed to update. Please check for errors and try again."
 msgstr "اخفاق التحديث. يرجى التحقق من وجود أخطاء وحاول مرة أخرى."
 
-#: address.js:88
+#: address.js:85
 msgid "Falkland Islands (Malvinas)"
-msgstr "جزر فوكلاند (مالفيناس)"
+msgstr ""
 
 #: src/Support/Currency.php:283
 msgid "Falkland Pound"
 msgstr "جنيه فوكلاند"
 
+#: settings/shipping/zone/ShippingZone.js:183
+msgid "Fallback"
+msgstr ""
+
 #: settings/tax/TaxSettings.js:97
 msgid "Fallback Rate"
 msgstr "معدل التراجع"
 
-#: address.js:89
+#: settings/shipping/zone/FallbackZone.js:33
+msgid "Fallback Zone"
+msgstr ""
+
+#: address.js:86
 msgid "Faroe Islands"
-msgstr "جزر فاروس"
+msgstr ""
 
 #: products/modules/Image/ImageDisplay.js:43
 msgid "Featured"
 msgstr ""
 
-#: sc-customer-firstname.js:50
-#: sc-customer-lastname.js:47
-#: sc-customer-name.js:47
+#: sc-customer-firstname.js:46
+#: sc-customer-lastname.js:43
+#: sc-customer-name.js:42
 msgid "Field must not be empty."
 msgstr ""
 
-#: address.js:90
+#: address.js:87
 msgid "Fiji"
-msgstr "فيجي"
+msgstr ""
 
 #: src/Support/Currency.php:284
 msgid "Fijian Dollar"
@@ -4975,6 +5309,20 @@ msgstr "اسم الملف"
 #: src/Rest/ProductsRestServiceProvider.php:53
 msgid "Files attached to the product."
 msgstr "الملفات المرفقة بالمنتج."
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:436
+msgid "Filter"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:346
+msgid "Filter by fulfillment"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:382
+msgid "Filter by shipment"
+msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:222
 #: src/WordPress/PostTypes/FormPostTypeService.php:215
@@ -5004,9 +5352,9 @@ msgstr "ابحث عن منتج ..."
 msgid "Fingerprint"
 msgstr "بصمة"
 
-#: address.js:91
+#: address.js:88
 msgid "Finland"
-msgstr "فنلندا"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:114
 msgid "First Email Delay"
@@ -5035,6 +5383,11 @@ msgstr "مساعدة الاسم الأول"
 msgid "First Name Label"
 msgstr "تسمية الاسم الأول"
 
+#: settings/shipping/profile/ShippingProfile.js:176
+#: settings/shipping/zone/ShippingZones.js:79
+msgid "First create a shipping zone (where you ship to) and then a shipping rate (the cost to ship there)."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:242
 msgid "First email sent when a checkout is abandoned."
 msgstr "يتم إرسال أول بريد إلكتروني عندما يتم ترك سلة المشتريات عند انهاء الشراء."
@@ -5051,6 +5404,11 @@ msgstr "ثابت"
 #: settings/abandoned/Coupon.js:72
 msgid "Fixed Discount"
 msgstr "خصم ثابت"
+
+#: settings/shipping/rate/ShippingRateCondition.js:53
+#: settings/shipping/rate/ShippingRateForm.js:421
+msgid "Flat Rate"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:279
 msgid "Floating Icon"
@@ -5114,9 +5472,9 @@ msgstr "عنوان النموذج"
 msgid "Forms"
 msgstr "نماذج"
 
-#: address.js:92
+#: address.js:89
 msgid "France"
-msgstr "فرنسا"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:125
 msgid "Fraudulent"
@@ -5146,17 +5504,53 @@ msgstr "أيام التجربة المجانية"
 msgid "Free Trial Ends"
 msgstr "انتهاء الفترة التجريبية المجانية"
 
-#: address.js:93
+#: address.js:90
 msgid "French Guiana"
-msgstr "غيانا الفرنسية"
+msgstr ""
 
-#: address.js:94
+#: address.js:91
 msgid "French Polynesia"
-msgstr "بولينيزيا الفرنسية"
+msgstr ""
 
-#: address.js:95
+#: address.js:92
 msgid "French Southern Territories"
-msgstr "المناطق الجنوبية لفرنسا"
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:162
+#: orders/modules/Fulfillment/CreateFulfillment.js:341
+#: orders/modules/Fulfillment/Unfulfilled.js:75
+#: orders/modules/Fulfillment/Unfulfilled.js:87
+msgid "Fulfill Item"
+msgid_plural "Fulfill Items"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:352
+#: orders/modules/Fulfillment/Fulfilled.js:90
+#: sc-order-fulfillment-badge.js:8
+msgid "Fulfilled"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:204
+msgid "Fulfilled on"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:104
+#: store/add-entities.js:88
+msgid "Fulfillment"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:52
+msgid "Fulfillment canceled."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:130
+msgid "Fulfillment created."
+msgstr ""
 
 #: Blocks/CustomerDashboardButton/edit.js:50
 #: Blocks/Submit/edit.js:37
@@ -5171,10 +5565,6 @@ msgstr "الاسم الكامل"
 #: Blocks/Columns/edit.js:125
 msgid "Full vertical height"
 msgstr "ارتفاع عمودي كامل"
-
-#: settings/portal/PortalSettings.js:50
-msgid "Functionality"
-msgstr "وظائف"
 
 #: settings/abandoned/AbandonedSettings.js:278
 msgid "GDPR Message"
@@ -5880,29 +6270,29 @@ msgstr "رقم GST"
 msgid "GST Registration"
 msgstr "التسجيل في ضريبة السلع والخدمات"
 
-#: address.js:96
+#: address.js:93
 msgid "Gabon"
-msgstr "الجابون"
+msgstr ""
 
-#: address.js:97
+#: address.js:94
 msgid "Gambia"
-msgstr "غامبيا"
+msgstr ""
 
 #: src/Support/Currency.php:285
 msgid "Gambian Dalasi"
 msgstr "الدالاسي الجامبي"
 
-#: address.js:98
+#: address.js:95
 msgid "Georgia"
-msgstr "جورجيا"
+msgstr ""
 
 #: src/Support/Currency.php:286
 msgid "Georgian Lari"
 msgstr "الجورجية لاري"
 
-#: address.js:99
+#: address.js:96
 msgid "Germany"
-msgstr "ألمانيا"
+msgstr ""
 
 #: admin/onboarding/show.php:69
 #: dashboard/components/LearnMore.js:53
@@ -5929,13 +6319,13 @@ msgstr "ابدأ بتحديد نموذج أو قم بإنشاء نموذج جد�
 msgid "Get started with SureCart"
 msgstr "ابدأ مع SureCart"
 
-#: address.js:100
+#: address.js:97
 msgid "Ghana"
-msgstr "غانا"
+msgstr ""
 
-#: address.js:101
+#: address.js:98
 msgid "Gibraltar"
-msgstr "جبل طارق"
+msgstr ""
 
 #: src/Support/Currency.php:287
 msgid "Gibraltar Pound"
@@ -5958,17 +6348,17 @@ msgstr "عودة الى الخلف."
 msgid "Grace Period"
 msgstr ""
 
-#: address.js:102
+#: address.js:99
 msgid "Greece"
-msgstr "اليونان"
+msgstr ""
 
-#: address.js:103
+#: address.js:100
 msgid "Greenland"
-msgstr "الأرض الخضراء"
+msgstr ""
 
-#: address.js:104
+#: address.js:101
 msgid "Grenada"
-msgstr "غرينادا"
+msgstr ""
 
 #: src/Integrations/BuddyBoss/BuddyBossService.php:55
 #: src/Integrations/LearnDashGroup/LearnDashGroupService.php:55
@@ -5985,45 +6375,45 @@ msgstr "أسم المجموعة"
 msgid "Grow your store worry-free."
 msgstr "قم بتنمية متجرك دون قلق."
 
-#: address.js:105
+#: address.js:102
 msgid "Guadeloupe"
-msgstr "جوادلوب"
+msgstr ""
 
-#: address.js:107
+#: address.js:103
 msgid "Guatemala"
-msgstr "غواتيمالا"
+msgstr ""
 
 #: src/Support/Currency.php:288
 msgid "Guatemalan Quetzal"
 msgstr "كوتزال غواتيمالا"
 
-#: address.js:108
+#: address.js:104
 msgid "Guernsey"
-msgstr "غيرنسي"
+msgstr ""
 
-#: address.js:109
+#: address.js:105
 msgid "Guinea"
-msgstr "غينيا"
+msgstr ""
 
-#: address.js:110
+#: address.js:106
 msgid "Guinea-Bissau"
-msgstr "غينيا بيساو"
+msgstr ""
 
 #: src/Support/Currency.php:289
 msgid "Guinean Franc"
 msgstr "فرنك غينيا"
 
-#: address.js:111
+#: address.js:107
 msgid "Guyana"
-msgstr "غيانا"
+msgstr ""
 
 #: src/Support/Currency.php:290
 msgid "Guyanese Dollar"
 msgstr "دولار جوياني"
 
-#: address.js:112
+#: address.js:108
 msgid "Haiti"
-msgstr "هايتي"
+msgstr ""
 
 #: src/Support/Currency.php:291
 msgid "Haitian Gourde"
@@ -6038,9 +6428,9 @@ msgstr "نص الترويسة"
 msgid "Heading %d"
 msgstr ""
 
-#: address.js:113
+#: address.js:109
 msgid "Heard Island and McDonald Islands"
-msgstr "قلب الجزيرة وجزر ماكدونالز"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:85
 #: Blocks/Checkbox/components/Inspector.js:39
@@ -6066,9 +6456,9 @@ msgstr "إخفاء %d الأسعار المؤرشفة"
 msgid "Hide %d Archived Promotion Codes"
 msgstr "إخفاء %d رموز الترويج المؤرشفة"
 
-#: address.js:114
+#: address.js:110
 msgid "Holy See (Vatican City State)"
-msgstr "الكرسي الرسولي (دولة الفاتيكان)"
+msgstr ""
 
 #: web/no-customer.php:8
 msgid "Home"
@@ -6078,17 +6468,17 @@ msgstr "الرئيسية"
 msgid "Honduran Lempira"
 msgstr "هندوراس لمبيرا"
 
-#: address.js:115
+#: address.js:111
 msgid "Honduras"
-msgstr "هندوراس"
+msgstr ""
 
 #: settings/account/AccountSettings.js:242
 msgid "Honeypot"
 msgstr "أماكن الجذب"
 
-#: address.js:116
+#: address.js:112
 msgid "Hong Kong"
-msgstr "هونج كونج"
+msgstr ""
 
 #: src/Support/Currency.php:293
 msgid "Hong Kong Dollar"
@@ -6102,9 +6492,9 @@ msgstr "كيفية إضافة الأزرار"
 msgid "Hungarian Forint"
 msgstr "فورنت مجري"
 
-#: address.js:117
+#: address.js:113
 msgid "Hungary"
-msgstr "هنغاريا"
+msgstr ""
 
 #. translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
 #: src/Controllers/Web/BuyPageController.php:214
@@ -6133,9 +6523,9 @@ msgstr "مثال.. الشحن مجانا لجميع الطلبات  …"
 msgid "I.E. Pay with cash upon delivery."
 msgstr "مثال. ادفع نقدا عند الاستلام."
 
-#: address.js:118
+#: address.js:114
 msgid "Iceland"
-msgstr "أيسلندا"
+msgstr ""
 
 #: src/Support/Currency.php:295
 msgid "Icelandic Króna"
@@ -6234,9 +6624,9 @@ msgstr "إذا كانت الضريبة أو الشحن مطلوبة عند إن�
 msgid "If there are errors in the checkout, they will display here."
 msgstr "إذا كانت هناك أخطاء في الدفع ، فسيتم عرضها هنا."
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "If you change your mind, you can renew your subscription."
-msgstr "إذا غيرت رأيك ، يمكنك تجديد اشتراكك."
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:39
 msgid "If you do business in Australia, you may be required to collect GST on sales in Australia."
@@ -6321,23 +6711,23 @@ msgstr "غير نشط"
 
 #: sc-subscription-status-badge2.js:50
 msgid "Incomplete"
-msgstr "غير مكتمل"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:71
 msgid "Increase quantity"
 msgstr "زيادة العدد"
 
-#: address.js:119
+#: address.js:115
 msgid "India"
-msgstr "الهند"
+msgstr ""
 
 #: src/Support/Currency.php:296
 msgid "Indian Rupee"
 msgstr "الروبية الهندية"
 
-#: address.js:120
+#: address.js:116
 msgid "Indonesia"
-msgstr "إندونيسيا"
+msgstr ""
 
 #: src/Support/Currency.php:297
 msgid "Indonesian Rupiah"
@@ -6438,6 +6828,10 @@ msgstr "رمز API غير صالح"
 msgid "Invalid API token."
 msgstr ""
 
+#: onboarding/components/ConfirmStoreEmail.js:26
+msgid "Invalid email address!"
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:13
 msgid "Invalid promotion code."
 msgstr "رمز الترويج غير صالح."
@@ -6464,9 +6858,9 @@ msgstr "فاتورة"
 msgid "Invoice Details"
 msgstr "تفاصيل الفاتورة"
 
-#: sc-invoices-list.js:140
+#: sc-invoices-list.js:142
 msgid "Invoice History"
-msgstr "تاريخ الفاتورة"
+msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
 #: admin/invoices/index.php:21
@@ -6483,25 +6877,25 @@ msgstr "الفواتير والإيصالات"
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr "تشبه الفواتير الطلبات ، ولكنها تُستخدم للمدفوعات وتغييرات الخطة على الاشتراكات النشطة. في المستقبل ، ستتمكن من إنشاء فاتورة لإرسالها."
 
-#: address.js:121
+#: address.js:117
 msgid "Iran, Islamic Republic of"
-msgstr "جمهورية إيران الإسلامية"
+msgstr ""
 
-#: address.js:122
+#: address.js:118
 msgid "Iraq"
-msgstr "العراق"
+msgstr ""
 
-#: address.js:123
+#: address.js:119
 msgid "Ireland"
-msgstr "أيرلندا"
+msgstr ""
 
-#: address.js:124
+#: address.js:120
 msgid "Isle of Man"
-msgstr "جزيرة آيل أوف مان"
+msgstr ""
 
-#: address.js:125
+#: address.js:121
 msgid "Israel"
-msgstr "إسرائيل"
+msgstr ""
 
 #: src/Support/Currency.php:298
 msgid "Israeli New Sheqel"
@@ -6543,9 +6937,9 @@ msgstr ""
 msgid "It must be greater than the largest existing order number."
 msgstr "يجب أن يكون أكبر من أكبر رقم طلب موجود."
 
-#: address.js:126
+#: address.js:122
 msgid "Italy"
-msgstr "إيطاليا"
+msgstr ""
 
 #: customers/modules/Purchases.js:38
 #: invoices/modules/Purchases.js:31
@@ -6561,29 +6955,29 @@ msgstr "منتج"
 msgid "Items"
 msgstr "منتجات"
 
-#: address.js:127
+#: address.js:123
 msgid "Jamaica"
-msgstr "جامايكا"
+msgstr ""
 
 #: src/Support/Currency.php:299
 msgid "Jamaican Dollar"
 msgstr "الدولار الجامايكي"
 
-#: address.js:128
+#: address.js:124
 msgid "Japan"
-msgstr "اليابان"
+msgstr ""
 
 #: src/Support/Currency.php:300
 msgid "Japanese Yen"
 msgstr "الين الياباني"
 
-#: address.js:129
+#: address.js:125
 msgid "Jersey"
-msgstr "جيرسي"
+msgstr ""
 
-#: address.js:130
+#: address.js:126
 msgid "Jordan"
-msgstr "الأردن"
+msgstr ""
 
 #: admin/onboarding/complete.php:56
 msgid "Just one last step!"
@@ -6605,25 +6999,25 @@ msgstr ""
 msgid "Justify items right"
 msgstr ""
 
-#: address.js:131
+#: address.js:127
 msgid "Kazakhstan"
-msgstr "كازاخستان"
+msgstr ""
 
 #: src/Support/Currency.php:301
 msgid "Kazakhstani Tenge"
 msgstr "التنج الكازاخستاني"
 
-#: sc-subscription-cancel2.js:56
+#: sc-subscription-cancel2.js:66
 msgid "Keep My Plan"
-msgstr "احتفظ بخطتي / إشتراكي"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:197
 msgid "Keep Update"
 msgstr "إبقاء التحديث"
 
-#: address.js:132
+#: address.js:128
 msgid "Kenya"
-msgstr "كينيا"
+msgstr ""
 
 #: src/Support/Currency.php:302
 msgid "Kenyan Shilling"
@@ -6634,17 +7028,17 @@ msgstr "شلن كيني"
 msgid "Key"
 msgstr "مفتاح"
 
-#: address.js:133
+#: address.js:129
 msgid "Kiribati"
-msgstr "كيريباتي"
+msgstr ""
 
-#: address.js:134
+#: address.js:130
 msgid "Kuwait"
-msgstr "الكويت"
+msgstr ""
 
-#: address.js:135
+#: address.js:131
 msgid "Kyrgyzstan"
-msgstr "قيرغيزستان"
+msgstr ""
 
 #: src/Support/Currency.php:303
 msgid "Kyrgyzstani Som"
@@ -6698,9 +7092,9 @@ msgstr ""
 msgid "Lao Kip"
 msgstr "لاو كيب"
 
-#: address.js:136
+#: address.js:132
 msgid "Lao People's Democratic Republic"
-msgstr "جمهورية لاو الديمقراطية الشعبية"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:127
 #: Blocks/BuyButton/edit.js:112
@@ -6750,9 +7144,9 @@ msgstr "الأسبوع الماضي"
 msgid "Latest"
 msgstr ""
 
-#: address.js:137
+#: address.js:133
 msgid "Latvia"
-msgstr "لاتفيا"
+msgstr ""
 
 #: Blocks/Column/edit.js:134
 msgid "Layout"
@@ -6783,17 +7177,17 @@ msgstr "اترك هذا فارغًا وسننشئ واحدًا لك."
 msgid "Lebanese Pound"
 msgstr "ليرة لبنانية"
 
-#: address.js:138
+#: address.js:134
 msgid "Lebanon"
-msgstr "لبنان"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:188
 msgid "Left"
 msgstr ""
 
-#: address.js:139
+#: address.js:135
 msgid "Lesotho"
-msgstr "ليسوتو"
+msgstr ""
 
 #: src/Support/Currency.php:306
 msgid "Lesotho Loti"
@@ -6804,17 +7198,17 @@ msgctxt "block description"
 msgid "Lets the customer update payment methods."
 msgstr "إتاحة تحديث طرق الدفع للعميل."
 
-#: address.js:140
+#: address.js:136
 msgid "Liberia"
-msgstr "ليبيريا"
+msgstr ""
 
 #: src/Support/Currency.php:307
 msgid "Liberian Dollar"
 msgstr "الدولار الليبيري"
 
-#: address.js:141
+#: address.js:137
 msgid "Libya"
-msgstr "ليبيا"
+msgstr ""
 
 #: licenses/modules/Details/index.js:28
 #: store/add-entities.js:96
@@ -6846,9 +7240,9 @@ msgstr "التراخيص"
 msgid "Licensing"
 msgstr "الترخيص"
 
-#: address.js:142
+#: address.js:138
 msgid "Liechtenstein"
-msgstr "ليختنشتاين"
+msgstr ""
 
 #: subscriptions/shared/EndDate.js:9
 #: subscriptions/show/modules/Details.js:18
@@ -6912,6 +7306,10 @@ msgctxt "block title"
 msgid "Line Items"
 msgstr "العناصر"
 
+#: store/add-entities.js:131
+msgid "Line Items"
+msgstr ""
+
 #: products/modules/BuyLink.js:273
 msgid "Link"
 msgstr ""
@@ -6936,9 +7334,9 @@ msgstr "تمت إزالة الرابط."
 msgid "Links and Shortcodes"
 msgstr "الروابط والأكواد القصيرة"
 
-#: address.js:143
+#: address.js:139
 msgid "Lithuania"
-msgstr "ليتوانيا"
+msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/WordPress/PostTypes/FormPostTypeService.php:321
@@ -6946,16 +7344,6 @@ msgstr "ليتوانيا"
 #: Blocks/Form/components/Mode.js:37
 msgid "Live"
 msgstr "نشط"
-
-#: admin/processors.php:65
-#: admin/processors.php:143
-msgid "Live Payments Enabled"
-msgstr "تم تمكين المدفوعات الحية"
-
-#: admin/processors.php:70
-#: admin/processors.php:148
-msgid "Live Payments Not Enabled"
-msgstr "المدفوعات الحية غير ممكّنة"
 
 #: components/data-tables/PaginationFooter.js:16
 #: subscriptions/show/modules/Invoices.js:50
@@ -6986,13 +7374,13 @@ msgstr ""
 msgid "Login"
 msgstr "تسجيل الدخول"
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Login to your account"
-msgstr "تسجيل الدخول إلى حسابك"
+msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Login with Code"
-msgstr "تسجيل الدخول باستخدام رمز / كود"
+msgstr ""
 
 #: settings/brand/Logo.js:110
 msgid "Logo"
@@ -7012,29 +7400,25 @@ msgstr "زر الخروج"
 msgid "Logout button settings"
 msgstr "إعدادات زر تسجيل الخروج"
 
-#: address.js:144
+#: address.js:140
 msgid "Luxembourg"
-msgstr "لوكسمبورغ"
+msgstr ""
 
 #: src/Support/Currency.php:308
 msgid "Macanese Pataca"
 msgstr "باتاكا ماكاوي"
 
-#: address.js:145
+#: address.js:141
 msgid "Macao"
-msgstr "ماكاو"
+msgstr ""
 
 #: src/Support/Currency.php:309
 msgid "Macedonian Denar"
 msgstr "دينار مقدوني"
 
-#: address.js:146
+#: address.js:142
 msgid "Madagascar"
-msgstr "مدغشقر"
-
-#: settings/customer/CustomerSettings.js:277
-msgid "Magic Sign In"
-msgstr "تسجيل الدخول برابط خاص"
+msgstr ""
 
 #: customers/modules/PaymentMethods/Actions.js:87
 #: sc-payment-methods-list.js:131
@@ -7053,41 +7437,45 @@ msgstr ""
 msgid "Malagasy Ariary"
 msgstr "مدغشقر أرياري"
 
-#: address.js:147
+#: address.js:143
 msgid "Malawi"
-msgstr "ملاوي"
+msgstr ""
 
 #: src/Support/Currency.php:311
 msgid "Malawian Kwacha"
 msgstr "كواشا الملاوية"
 
-#: address.js:148
+#: address.js:144
 msgid "Malaysia"
-msgstr "ماليزيا"
+msgstr ""
 
 #: src/Support/Currency.php:312
 msgid "Malaysian Ringgit"
 msgstr "رينغيت ماليزي"
 
-#: address.js:149
+#: address.js:145
 msgid "Maldives"
-msgstr "جزر المالديف"
+msgstr ""
 
 #: src/Support/Currency.php:313
 msgid "Maldivian Rufiyaa"
 msgstr "الروفيا المالديفية"
 
-#: address.js:150
+#: address.js:146
 msgid "Mali"
-msgstr "مالي"
+msgstr ""
 
-#: address.js:151
+#: address.js:147
 msgid "Malta"
-msgstr "مالطا"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:155
 msgid "Manage Scheduled Update"
 msgstr "إدارة التحديث المجدول"
+
+#: settings/shipping/profile/ShippingProfile.js:131
+msgid "Manage Shipping Profile"
+msgstr ""
 
 #: products/components/SelectTemplatePart/index.js:99
 msgid "Manage all template parts"
@@ -7149,34 +7537,34 @@ msgstr "طرق الدفع اليدوية"
 msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
+#: orders/Order.js:112
+msgid "Mark As Paid"
+msgstr ""
+
 #: orders/modules/OrderStatusConfirmModal.js:85
 msgid "Mark Paid"
 msgstr "تعيين كطلب مدفوع"
-
-#: orders/Order.js:154
-msgid "Mark as Paid"
-msgstr "وضع علامة كمدفوع"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:354
 msgctxt "comment"
 msgid "Mark as spam"
 msgstr "علامة كـ سبام"
 
-#: address.js:152
+#: address.js:148
 msgid "Marshall Islands"
-msgstr "جزر مارشال"
+msgstr ""
 
-#: address.js:153
+#: address.js:149
 msgid "Martinique"
-msgstr "مارتينيك"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:127
 msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
 msgstr ""
 
-#: address.js:154
+#: address.js:150
 msgid "Mauritania"
-msgstr "موريتانيا"
+msgstr ""
 
 #: src/Support/Currency.php:314
 msgid "Mauritanian Ouguiya"
@@ -7186,9 +7574,9 @@ msgstr "الأوقية الموريتانية"
 msgid "Mauritian Rupee"
 msgstr "روبية موريشيوسية"
 
-#: address.js:155
+#: address.js:151
 msgid "Mauritius"
-msgstr "موريشيوس"
+msgstr ""
 
 #: components/MediaLibrary/index.js:182
 msgid "Max"
@@ -7206,17 +7594,21 @@ msgstr "السعر الأقصى"
 msgid "Maximum height"
 msgstr "الحد الاقصى للإرتفاع"
 
-#: address.js:156
+#: settings/shipping/rate/ShippingRateForm.js:248
+msgid "Maximum weight"
+msgstr ""
+
+#: address.js:152
 msgid "Mayotte"
-msgstr "مايوت"
+msgstr ""
 
 #: store/add-entities.js:103
 msgid "Media"
 msgstr "وسائط"
 
-#: fetch.js:1958
+#: fetch.js:807
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
-msgstr "فشل تحميل الوسائط. إذا كانت هذه صورة أو صورة كبيرة ، فيرجى تصغيرها وإعادة المحاولة."
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:123
 #: Blocks/BuyButton/edit.js:108
@@ -7282,21 +7674,25 @@ msgstr "لم يتم تنفيذ الأسلوب '%s'. يجب تجاوزه في ف�
 msgid "Mexican Peso"
 msgstr "بيزو مكسيكي"
 
-#: address.js:157
+#: address.js:153
 msgid "Mexico"
-msgstr "المكسيك"
+msgstr ""
 
 #: settings/tax-region/RegionSettings.js:90
 msgid "Micro-Business Exemption"
 msgstr "إعفاء المشاريع الصغيرة"
 
-#: address.js:158
+#: address.js:154
 msgid "Micronesia, Federated States of"
-msgstr "ولايات ميكرونيزيا الموحدة"
+msgstr ""
 
 #: products/components/price/parts/AdHoc.js:29
 msgid "Minimum Price"
 msgstr "سعر الحد الأدنى"
+
+#: settings/shipping/rate/ShippingRateForm.js:236
+msgid "Minimum weight"
+msgstr ""
 
 #: products/modules/Prices/Price/Header.js:269
 msgid "Miscellaneous"
@@ -7306,9 +7702,9 @@ msgstr "متنوع"
 msgid "Mode"
 msgstr "وضع"
 
-#: address.js:159
+#: address.js:155
 msgid "Moldova"
-msgstr "مولدوفا"
+msgstr ""
 
 #: src/Support/Currency.php:317
 msgid "Moldovan Leu"
@@ -7318,21 +7714,21 @@ msgstr "ليو مولدوفا"
 msgid "Mollie"
 msgstr ""
 
-#: address.js:160
+#: address.js:156
 msgid "Monaco"
-msgstr "موناكو"
+msgstr ""
 
-#: address.js:161
+#: address.js:157
 msgid "Mongolia"
-msgstr "منغوليا"
+msgstr ""
 
 #: src/Support/Currency.php:318
 msgid "Mongolian Tögrög"
 msgstr "Tögrög المنغولية"
 
-#: address.js:162
+#: address.js:158
 msgid "Montenegro"
-msgstr "الجبل الأسود"
+msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:92
 #: util.js:39
@@ -7349,17 +7745,17 @@ msgstr "شهريا"
 msgid "Monthly, Basic Plan, etc."
 msgstr ""
 
-#: address.js:163
+#: address.js:159
 msgid "Montserrat"
-msgstr "مونتسيرات"
+msgstr ""
 
 #: src/Support/Currency.php:319
 msgid "Moroccan Dirham"
 msgstr "درهم مغربي"
 
-#: address.js:164
+#: address.js:160
 msgid "Morocco"
-msgstr "المغرب"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:366
 msgid "Move to Trash"
@@ -7369,9 +7765,21 @@ msgstr "ارسال الى سلة المحذوفات"
 msgid "Mozambican Metical"
 msgstr "متكال موزمبيقي"
 
-#: address.js:165
+#: address.js:161
 msgid "Mozambique"
-msgstr "موزمبيق"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:30
+msgid "Musical Instruments"
+msgstr ""
+
+#: sc-price-input2.js:51
+msgid "Must be %d or less."
+msgstr ""
+
+#: sc-price-input2.js:47
+msgid "Must be %d or more."
+msgstr ""
 
 #: src/Support/Errors/Translations/types.php:21
 msgid "Must be accepted."
@@ -7408,9 +7816,9 @@ msgstr "يجب أن يكون أصغر."
 msgid "My website domain has permanently changed. Remove webhook for %s"
 msgstr "تم تغيير مجال موقع الويب الخاص بي بشكل دائم. إزالة webhook لـ %s"
 
-#: address.js:166
+#: address.js:162
 msgid "Myanmar"
-msgstr "ميانمار"
+msgstr ""
 
 #: src/Support/Currency.php:321
 msgid "Myanmar Kyat"
@@ -7451,31 +7859,31 @@ msgstr "حدد السعر الذي تريده"
 msgid "Name Your Price"
 msgstr "ادفع المبلغ الذي تريده"
 
-#: sc-address2.js:105
-#: sc-order-shipping-address2.js:30
-#: sc-order-shipping-address2.js:39
+#: sc-address2.js:102
+#: sc-order-shipping-address2.js:37
+#: sc-order-shipping-address2.js:46
 msgid "Name or Company Name"
-msgstr "الاسم أو اسم الشركة"
+msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:239
 msgid "Name your own price"
 msgstr "حدد السعر الخاص بك"
 
-#: address.js:167
+#: address.js:163
 msgid "Namibia"
-msgstr "ناميبيا"
+msgstr ""
 
 #: src/Support/Currency.php:322
 msgid "Namibian Dollar"
 msgstr "الدولار الناميبي"
 
-#: address.js:168
+#: address.js:164
 msgid "Nauru"
-msgstr "ناورو"
+msgstr ""
 
-#: address.js:169
+#: address.js:165
 msgid "Nepal"
-msgstr "نيبال"
+msgstr ""
 
 #: src/Support/Currency.php:323
 msgid "Nepalese Rupee"
@@ -7493,17 +7901,17 @@ msgstr ""
 msgid "Net Payment"
 msgstr "صافي الدفع"
 
-#: address.js:170
+#: address.js:166
 msgid "Netherlands"
-msgstr "هولندا"
+msgstr ""
 
 #: src/Support/Currency.php:324
 msgid "Netherlands Antillean Gulden"
 msgstr "هولندا جزر الأنتيل جولدين"
 
-#: address.js:171
+#: address.js:167
 msgid "New Caledonia"
-msgstr "كاليدونيا الجديدة"
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:71
 msgid "New Cancellation Reason"
@@ -7525,10 +7933,10 @@ msgstr "نموذج جديد"
 msgid "New Order"
 msgstr "طلب جديد"
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "New Password"
-msgstr "كلمة المرور الجديدة"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:360
 #: sc-upcoming-invoice.js:208
@@ -7555,13 +7963,17 @@ msgstr "الدولار التايواني الجديد"
 msgid "New Upgrade Group"
 msgstr "مجموعة ترقية جديدة"
 
-#: address.js:172
+#: address.js:168
 msgid "New Zealand"
-msgstr "نيوزيلندا"
+msgstr ""
 
 #: src/Support/Currency.php:326
 msgid "New Zealand Dollar"
 msgstr "الدولار النيوزيلندي"
+
+#: settings/shipping/profile/Products.js:238
+msgid "New products are added to this profile."
+msgstr ""
 
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:107
@@ -7587,39 +7999,47 @@ msgstr "الصفحة التالية"
 msgid "Next retry:"
 msgstr "المحاولة التالية:"
 
-#: address.js:173
+#: Blocks/ShippingChoices/edit.js:35
+msgid "Next-day delivery"
+msgstr ""
+
+#: address.js:169
 msgid "Nicaragua"
-msgstr "نيكاراغوا"
+msgstr ""
 
 #: src/Support/Currency.php:327
 msgid "Nicaraguan Córdoba"
 msgstr "نيكاراغوا قرطبة"
 
-#: address.js:174
+#: address.js:170
 msgid "Niger"
-msgstr "النيجر"
+msgstr ""
 
-#: address.js:175
+#: address.js:171
 msgid "Nigeria"
-msgstr "نيجيريا"
+msgstr ""
 
 #: src/Support/Currency.php:328
 msgid "Nigerian Naira"
 msgstr "نيرة نيجيرية"
 
-#: address.js:176
+#: address.js:172
 msgid "Niue"
-msgstr "نيوي"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:139
 msgid "No Reason Provided"
 msgstr "لم يتم تقديم أي أسباب"
 
-#: sc-customer-email.js:79
-msgid "No Thanks"
-msgstr "ًلا شكرا"
+#: orders/modules/Fulfillment/components/StatusDropdown.js:90
+msgid "No Shipping Required"
+msgstr ""
 
-#: sc-checkout-mollie-payment2.js:97
+#: sc-customer-email.js:89
+msgid "No Thanks"
+msgstr ""
+
+#: sc-checkout-mollie-payment2.js:101
 msgid "No available payment methods"
 msgstr ""
 
@@ -7670,6 +8090,10 @@ msgstr "لم يتم العثور على العناصر"
 msgid "No licenses found."
 msgstr "لم يتم العثور على تراخيص."
 
+#: settings/shipping/rate/ShippingRateForm.js:222
+msgid "No limit"
+msgstr ""
+
 #: settings/processors/ManualPaymentMethods.js:47
 msgid "No manual payment methods."
 msgstr "لا توجد طرق دفع يدوية."
@@ -7713,6 +8137,28 @@ msgstr "لا يوجد منتج"
 msgid "No products found."
 msgstr "لا توجد منتجات."
 
+#: settings/shipping/profile/Products.js:357
+msgid "No products in this profile."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:174
+#: settings/shipping/ShippingSettings.js:130
+#: settings/shipping/zone/ShippingZone.js:77
+msgid "No shipping rates"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:58
+msgid "No shipping rates available for customers to choose from."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:303
+msgid "No shipping required."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:74
+msgid "No shipping zones or rates"
+msgstr ""
+
 #: src/Support/Blocks/TemplateUtilityService.php:197
 msgid "No theme is defined for this template."
 msgstr ""
@@ -7735,25 +8181,25 @@ msgstr "لا شيء وجد."
 msgid "None of these items are in the cart."
 msgstr "لا يوجد أي من هذه العناصر في عربة التسوق."
 
-#: address.js:177
+#: address.js:173
 msgid "Norfolk Island"
-msgstr "جزيرة نورفولك"
+msgstr ""
 
-#: address.js:178
+#: address.js:174
 msgid "North Korea"
-msgstr "كوريا الشمالية"
+msgstr ""
 
-#: address.js:179
+#: address.js:175
 msgid "North Macedonia"
-msgstr "مقدونيا الشمالية"
+msgstr ""
 
-#: address.js:180
+#: address.js:176
 msgid "Northern Mariana Islands"
-msgstr "جزر مريانا الشمالية"
+msgstr ""
 
-#: address.js:181
+#: address.js:177
 msgid "Norway"
-msgstr "النرويج"
+msgstr ""
 
 #: src/Support/Currency.php:329
 msgid "Norwegian Krone"
@@ -7781,6 +8227,13 @@ msgstr "لم يتم طلبها"
 msgid "Not Scheduled"
 msgstr "غير مجدول"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:387
+#: orders/modules/Fulfillment/components/StatusDropdown.js:19
+#: sc-fulfillment-shipping-status-badge2.js:7
+#: sc-order-shipment-badge2.js:7
+msgid "Not Shipped"
+msgstr ""
+
 #: src/Support/Errors/Translations/types.php:15
 msgid "Not a number"
 msgstr "ليس رقما"
@@ -7803,9 +8256,9 @@ msgstr "ملاحظة: بالتحقق من هذا ، سيعرض نص التأكي
 msgid "Note: Redemption limits are not applied in test mode."
 msgstr ""
 
-#: sc-select2.js:2060
+#: sc-select2.js:2068
 msgid "Nothing Found"
-msgstr "لم يتم العثور على شيء"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:91
 #: settings/customer/CustomerSettings.js:50
@@ -7869,13 +8322,14 @@ msgstr "تمام"
 msgid "Oldest"
 msgstr ""
 
-#: address.js:182
+#: address.js:178
 msgid "Oman"
-msgstr "سلطنة عمان"
+msgstr ""
 
 #: sc-order-confirmation-details.js:33
+#: sc-order-fulfillment-badge.js:9
 msgid "On Hold"
-msgstr "في الانتظار"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:202
 msgid "On the final email"
@@ -7997,7 +8451,7 @@ msgstr "طلب"
 
 #: sc-order-confirmation-details.js:44
 msgid "Order #%s"
-msgstr "رقم الطلب #%s"
+msgstr ""
 
 #: bumps/CreateBump.js:60
 #: bumps/modules/Price.js:29
@@ -8073,18 +8527,18 @@ msgstr "ترتيب الترقيم"
 msgid "Order Numbers Counter"
 msgstr "عداد أرقام الطلب"
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Order Status"
-msgstr "حالة الطلب"
+msgstr ""
 
-#: sc-order-summary.js:50
+#: sc-order-summary.js:53
 msgid "Order Summary"
 msgstr ""
 
 #: sc-order-confirmation.js:111
-#: sc-order.js:107
+#: sc-order.js:115
 msgid "Order not found."
-msgstr "الطلب غير موجود."
+msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
@@ -8104,6 +8558,10 @@ msgstr "طلبات"
 #: settings/order/OrderProtocol.js:40
 msgid "Orders & Receipts"
 msgstr "الطلبات والإيصالات"
+
+#: onboarding/components/StarterTemplates.js:40
+msgid "Organic Food"
+msgstr ""
 
 #: orders/modules/TaxInfo.js:11
 #: orders/modules/TaxInfo.js:23
@@ -8156,45 +8614,50 @@ msgstr ""
 msgid "Paid"
 msgstr "مدفوع"
 
-#: address.js:183
+#: address.js:179
 msgid "Pakistan"
-msgstr "باكستان"
+msgstr ""
 
 #: src/Support/Currency.php:330
 msgid "Pakistani Rupee"
 msgstr "روبية باكستانية"
 
-#: address.js:184
+#: address.js:180
 msgid "Palau"
-msgstr "بالاو"
+msgstr ""
 
-#: address.js:185
+#: address.js:181
 msgid "Palestine, State of"
-msgstr "دولة فلسطين"
+msgstr ""
 
-#: address.js:186
+#: address.js:182
 msgid "Panama"
-msgstr "بنما"
+msgstr ""
 
 #: src/Support/Currency.php:331
 msgid "Panamanian Balboa"
 msgstr "بالبوا بنمي"
 
-#: address.js:187
+#: address.js:183
 msgid "Papua New Guinea"
-msgstr "بابوا غينيا الجديدة"
+msgstr ""
 
 #: src/Support/Currency.php:332
 msgid "Papua New Guinean Kina"
 msgstr "كينا بابوا غينيا الجديدة"
 
-#: address.js:188
+#: address.js:184
 msgid "Paraguay"
-msgstr "باراغواي"
+msgstr ""
 
 #: src/Support/Currency.php:333
 msgid "Paraguayan Guaraní"
 msgstr "غواراني باراغواي"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:353
+#: sc-order-fulfillment-badge.js:11
+msgid "Partially Fulfilled"
+msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:30
 #: sc-charges-list.js:85
@@ -8202,6 +8665,11 @@ msgstr "غواراني باراغواي"
 #: sc-orders-list.js:112
 msgid "Partially Refunded"
 msgstr "المردودة جزئيا"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:389
+#: sc-order-shipment-badge2.js:9
+msgid "Partially Shipped"
+msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:71
 #: sc-login-provider2.js:79
@@ -8229,18 +8697,18 @@ msgstr "تسمية تأكيد كلمة المرور"
 msgid "Password Confirmation Placeholder"
 msgstr "موضغ تأكيد كلمة المرور"
 
-#: sc-order-password.js:43
+#: sc-order-password.js:42
 msgid "Password does not match."
-msgstr "كلمة المرور غير متطابقة."
+msgstr ""
 
-#: sc-password-nag.js:62
-#: sc-wordpress-password-edit.js:34
-msgid "Passwords do not match."
-msgstr "كلمة المرور غير مطابقة."
-
-#: sc-order-password.js:50
 #: sc-password-nag.js:71
-#: sc-wordpress-password-edit.js:43
+#: sc-wordpress-password-edit.js:44
+msgid "Passwords do not match."
+msgstr ""
+
+#: sc-order-password.js:48
+#: sc-password-nag.js:74
+#: sc-wordpress-password-edit.js:47
 msgid "Passwords should at least 6 characters and contain one special character."
 msgstr ""
 
@@ -8257,8 +8725,12 @@ msgstr ""
 msgid "Pause Subscription"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:47
+#: sc-subscription-status-badge2.js:46
 msgid "Pauses"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:285
+msgid "Pay Off"
 msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:275
@@ -8293,9 +8765,10 @@ msgctxt "block title"
 msgid "Payment"
 msgstr "دفعة"
 
+#: orders/modules/LineItems/index.js:26
 #: sc-order-status-badge2.js:37
 msgid "Payment Failed"
-msgstr "فشل في الدفع"
+msgstr ""
 
 #: orders/modules/PaymentFailures.js:17
 msgid "Payment Failures"
@@ -8338,7 +8811,7 @@ msgstr ""
 msgid "Payment Type"
 msgstr "نوع الدفع"
 
-#: sc-session-provider2.js:257
+#: sc-session-provider2.js:256
 msgid "Payment canceled. Please try again."
 msgstr ""
 
@@ -8371,9 +8844,11 @@ msgstr "تمت إعادة محاولة الدفع بنجاح!"
 msgid "Payment retry window in weeks."
 msgstr "نافذة إعادة محاولة الدفع في غضون أسابيع."
 
-#: sc-session-provider2.js:233
+#: sc-session-provider2.js:183
+#: sc-session-provider2.js:250
+#: sc-session-provider2.js:260
 msgid "Payment unsuccessful. Please try again."
-msgstr "فشل في الدفع . حاول مرة اخرى."
+msgstr ""
 
 #: products/components/price/Multiple.js:37
 #: subscriptions/show/modules/Details.js:107
@@ -8460,21 +8935,29 @@ msgstr "هل تريد حذف العرض الخاص الـ bumb هذا نهائي
 msgid "Permanently delete this price? You cannot undo this action."
 msgstr "هل تريد حذف هذا السعر نهائيًا؟ لا يمكنك التراجع عن هذا الإجراء."
 
-#: address.js:189
+#: product-groups/EditProductGroup.js:55
+msgid "Permanently delete this product group? You cannot undo this action."
+msgstr ""
+
+#: address.js:185
 msgid "Peru"
-msgstr "بيرو"
+msgstr ""
 
 #: src/Support/Currency.php:334
 msgid "Peruvian Sol"
 msgstr "سول بيروفي"
 
+#: onboarding/components/StarterTemplates.js:45
+msgid "Pet Supplies"
+msgstr ""
+
 #: src/Support/Currency.php:335
 msgid "Philippine Peso"
 msgstr "بيزو فلبيني"
 
-#: address.js:190
+#: address.js:186
 msgid "Philippines"
-msgstr "فيلبيني"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:164
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
@@ -8487,9 +8970,13 @@ msgctxt "block title"
 msgid "Phone"
 msgstr ""
 
-#: address.js:191
+#: products/modules/Shipping.js:41
+msgid "Physical product"
+msgstr ""
+
+#: address.js:187
 msgid "Pitcairn"
-msgstr "بيتكيرن"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:97
 msgid "Placed By"
@@ -8518,6 +9005,10 @@ msgstr "موضع"
 msgid "Plan"
 msgstr "خطة"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:236
+msgid "Plan Renewal"
+msgstr ""
+
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
 msgid "Plan Status"
 msgstr "حالة الإشتراك"
@@ -8530,21 +9021,31 @@ msgstr "الخطط"
 msgid "Please add at least one product."
 msgstr "الرجاء إضافة منتج واحد على الأقل."
 
-#: sc-choice2.js:55
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose at least one."
-msgstr "الرجاء اختيار واحد على الأقل."
+msgstr ""
 
 #: components/DatePicker.js:39
 msgid "Please choose date to continue."
 msgstr ""
 
-#: sc-choice2.js:55
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose one."
-msgstr "إختر واحد من فضلك."
+msgstr ""
 
 #: settings/account/AccountSettings.js:270
 msgid "Please clear checkout page cache after changing this setting."
 msgstr "يرجى مسح ذاكرة التخزين المؤقت لصفحة الشراء بعد تغيير هذا الإعداد."
+
+#: components/MediaLibrary/index.js:301
+msgid "Please complete setting up your store. Its free and only takes a minute."
+msgstr ""
+
+#: Blocks/Form/edit.js:450
+msgid "Please complete your store to enable live mode. It's free!"
+msgstr ""
 
 #: src/Request/RequestService.php:208
 msgid "Please connect your site to SureCart."
@@ -8581,17 +9082,21 @@ msgstr ""
 msgid "Please refresh the page and try again."
 msgstr "يرجى تحديث الصفحة وحاول مرة أخرى."
 
-#: sc-form-state-provider2.js:125
+#: sc-form-state-provider2.js:48
 msgid "Please refresh the page."
-msgstr "يرجى تحديث الصفحة."
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:123
+msgid "Please select a shipping method"
+msgstr ""
 
 #: admin/plugin.php:68
 msgid "Plugin Settings"
 msgstr "إعدادات الإضافة"
 
-#: address.js:192
+#: address.js:188
 msgid "Poland"
-msgstr "بولندا"
+msgstr ""
 
 #: src/Support/Currency.php:336
 msgid "Polish Złoty"
@@ -8601,9 +9106,9 @@ msgstr "الزلوتي البولندي"
 msgid "Portrait"
 msgstr ""
 
-#: address.js:193
+#: address.js:189
 msgid "Portugal"
-msgstr "البرتغال"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:171
 msgid "Position of cart button"
@@ -8613,12 +9118,12 @@ msgstr ""
 msgid "Postal Code Placeholder"
 msgstr "موضع الرمز البريدي"
 
-#: sc-address2.js:108
-#: sc-compact-address2.js:102
-#: sc-order-shipping-address2.js:35
-#: sc-order-shipping-address2.js:44
+#: sc-address2.js:105
+#: sc-compact-address2.js:115
+#: sc-order-shipping-address2.js:42
+#: sc-order-shipping-address2.js:51
 msgid "Postal Code/Zip"
-msgstr "عنوان البريد / الرمز البريدي"
+msgstr ""
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:297
 msgid "Potential Checkout Recovery Rate"
@@ -8636,9 +9141,9 @@ msgstr "الإيرادات المستردة المحتملة"
 msgid "Potential Revenue Recovery Rate"
 msgstr "معدل استرداد الإيرادات المحتمل"
 
-#: products/components/price/parts/Trial.js:16
+#: sc-premium-tag.js:12
 msgid "Premium"
-msgstr "منتج بمزايا متقدمة"
+msgstr ""
 
 #: bumps/modules/Preview.js:17
 msgid "Preview"
@@ -8720,6 +9225,10 @@ msgstr "التسعير"
 msgid "Primary Button"
 msgstr "الزر الرئيسي"
 
+#: onboarding/components/StarterTemplates.js:25
+msgid "Printable Merchandise"
+msgstr ""
+
 #: bumps/modules/Priority.js:7
 msgid "Priority"
 msgstr "أولوية"
@@ -8729,6 +9238,10 @@ msgstr "أولوية"
 #: Controllers/SubscriptionController.php:244
 msgid "Privacy Policy"
 msgstr "سياسة الخصوصية"
+
+#: settings/account/AccountSettings.js:273
+msgid "Privacy Policy Page"
+msgstr ""
 
 #: components/MediaLibrary/index.js:287
 #: components/MediaLibrary/MediaItem.js:93
@@ -8757,11 +9270,6 @@ msgstr "معالجة الدفع..."
 msgid "Processor"
 msgstr "المعالج"
 
-#: admin/processors.php:30
-#: layouts/partials/admin-settings-sidebar.php:48
-msgid "Processors"
-msgstr "معالجات"
-
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
@@ -8783,6 +9291,10 @@ msgstr "منتج"
 #: settings/customer/CustomerSettings.js:332
 msgid "Product Access"
 msgstr "الوصول إلى المنتج"
+
+#: settings/customer/CustomerSettings.js:123
+msgid "Product Access Emails"
+msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation title"
@@ -8870,8 +9382,18 @@ msgstr "اسم المنتج"
 msgid "Product Options"
 msgstr "خيارات المنتج"
 
+#: src/Controllers/Admin/Products/ProductsListTable.php:104
+#: products/components/Status/index.js:25
+#: products/components/Status/index.js:64
+msgid "Product Page"
+msgstr ""
+
 #: Blocks/Product/Price/block.json
 msgctxt "block title"
+msgid "Product Price"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:79
 msgid "Product Price"
 msgstr ""
 
@@ -8899,6 +9421,10 @@ msgctxt "block title"
 msgid "Product Title"
 msgstr ""
 
+#: settings/shipping/profile/Products.js:122
+msgid "Product added"
+msgstr ""
+
 #: product-groups/modules/NewProduct.js:37
 msgid "Product added."
 msgstr "تمت إضافة المنتج."
@@ -8909,6 +9435,18 @@ msgstr "تمت إضافة المنتج."
 #: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product archived."
 msgstr "تمت أرشفة المنتج."
+
+#: product-groups/EditProductGroup.js:85
+msgid "Product group archived."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:64
+msgid "Product group deleted."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:86
+msgid "Product group un-archived."
+msgstr ""
 
 #: product-groups/EditProductGroup.js:35
 msgid "Product group updated."
@@ -8921,6 +9459,10 @@ msgstr "تم شراء المنتج أو الاشتراك"
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
 msgid "Product purchase is revoked or subscription cancels"
 msgstr "تم إبطال شراء المنتج أو إلغاء الاشتراك"
+
+#: settings/shipping/profile/Products.js:101
+msgid "Product removed"
+msgstr ""
 
 #: product-groups/modules/Product.js:34
 msgid "Product removed."
@@ -8969,6 +9511,10 @@ msgstr ""
 #: settings/export/ExportSettings.js:31
 msgid "Products/Prices"
 msgstr "المنتجات / الأسعار"
+
+#: settings/shipping/profile/ShippingProfile.js:183
+msgid "Profile Details"
+msgstr ""
 
 #: store/add-entities.js:180
 msgid "Promotion"
@@ -9022,9 +9568,13 @@ msgstr "قدم خصمًا للاحتفاظ بالاشتراك."
 msgid "Province"
 msgstr "مقاطعة"
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:108
 msgid "Province/Region"
-msgstr "المقاطعة / المنطقة"
+msgstr ""
+
+#: store/add-entities.js:159
+msgid "Provisional Accounts"
+msgstr ""
 
 #: components/MediaLibrary/index.js:294
 #: components/MediaLibrary/MediaItem.js:91
@@ -9055,6 +9605,10 @@ msgstr ""
 msgid "Purchase"
 msgstr "شراء"
 
+#: settings/subscription/SubscriptionSettings.js:201
+msgid "Purchase Behavior"
+msgstr ""
+
 #: settings/subscription/SubscriptionSettings.js:244
 msgid "Purchase Revoke Behavior"
 msgstr "سلوك إلغاء الشراء"
@@ -9067,9 +9621,9 @@ msgstr "المشتريات"
 msgid "Purchases syncing happens in both directions. For example, access is automatically revoked during a subscription cancellation or expiration."
 msgstr "تتم مزامنة عمليات الشراء في كلا الاتجاهين. على سبيل المثال ، يتم إبطال الوصول تلقائيًا أثناء إلغاء الاشتراك أو انتهاء صلاحيته."
 
-#: address.js:195
+#: address.js:190
 msgid "Qatar"
-msgstr "دولة قطر"
+msgstr ""
 
 #: src/Support/Currency.php:337
 msgid "Qatari Riyal"
@@ -9081,9 +9635,15 @@ msgstr "ريال قطري"
 msgid "Qty"
 msgstr "الكمية"
 
-#: sc-product-line-item2.js:29
+#: sc-product-line-item2.js:44
 msgid "Qty:"
-msgstr "الكمية:"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:284
+#: orders/modules/Fulfillment/Unfulfilled.js:108
+#: sc-fulfillments.js:65
+msgid "Qty: %d"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:17
@@ -9111,6 +9671,10 @@ msgstr "نص الاختيار المتعدد"
 #: settings/order/OrderProtocol.js:89
 msgid "Random Numbers And Letters"
 msgstr "أرقام وحروف عشوائية"
+
+#: settings/shipping/profile/ShippingProfileListItem.js:48
+msgid "Rates for"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:111
 #: orders/modules/PaymentFailures.js:25
@@ -9232,9 +9796,9 @@ msgstr "ارفض الطلب وأظهر خطأ."
 msgid "Remaining Payments"
 msgstr "المدفوعات المتبقية"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Reminder"
-msgstr "تذكير"
+msgstr ""
 
 #: Blocks/CartItems/edit.js:31
 #: Blocks/LineItems/edit.js:23
@@ -9363,6 +9927,10 @@ msgstr "إعادة ضبط"
 msgid "Rest Of The World"
 msgstr "بقية العالم"
 
+#: settings/shipping/zone/FallbackZone.js:19
+msgid "Rest Of The World Fallback Zone"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:358
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:64
 msgid "Restore"
@@ -9376,9 +9944,9 @@ msgstr ""
 msgid "Restore Now"
 msgstr ""
 
-#: sc-subscription.js:171
+#: sc-subscription.js:181
 msgid "Restore Plan"
-msgstr "إستعادة خطة الإشتراك"
+msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:122
 msgid "Restore Subscription"
@@ -9462,9 +10030,9 @@ msgstr "ملغي"
 msgid "Right"
 msgstr ""
 
-#: address.js:196
+#: address.js:191
 msgid "Romania"
-msgstr "رومانيا"
+msgstr ""
 
 #: src/Support/Currency.php:338
 msgid "Romanian Leu"
@@ -9486,57 +10054,57 @@ msgstr ""
 msgid "Run purchase actions"
 msgstr ""
 
-#: address.js:197
+#: address.js:192
 msgid "Russian Federation"
-msgstr "الاتحاد الروسي"
+msgstr ""
 
 #: src/Support/Currency.php:339
 msgid "Russian Ruble"
 msgstr "روبل روسي"
 
-#: address.js:198
+#: address.js:193
 msgid "Rwanda"
-msgstr "رواندا"
+msgstr ""
 
 #: src/Support/Currency.php:340
 msgid "Rwandan Franc"
 msgstr "فرنك رواندي"
 
-#: address.js:199
+#: address.js:194
 msgid "Réunion"
-msgstr "جمع شمل"
+msgstr ""
 
-#: address.js:200
+#: address.js:195
 msgid "Saint Barthélemy"
-msgstr "سانت بارتيليمي"
+msgstr ""
 
-#: address.js:201
+#: address.js:196
 msgid "Saint Helena, Ascension and Tristan da Cunha"
-msgstr "سانت هيلانة وأسنسيون وتريستان دا كونها"
+msgstr ""
 
 #: src/Support/Currency.php:341
 msgid "Saint Helenian Pound"
 msgstr "جنيه سانت هيليني"
 
-#: address.js:202
+#: address.js:197
 msgid "Saint Kitts and Nevis"
-msgstr "سانت كيتس ونيفيس"
+msgstr ""
 
-#: address.js:203
+#: address.js:198
 msgid "Saint Lucia"
-msgstr "القديسة لوسيا"
+msgstr ""
 
-#: address.js:204
+#: address.js:199
 msgid "Saint Martin (French part)"
-msgstr "سانت مارتن (الجزء الفرنسي)"
+msgstr ""
 
-#: address.js:205
+#: address.js:200
 msgid "Saint Pierre and Miquelon"
-msgstr "سانت بيير وميكلون"
+msgstr ""
 
-#: address.js:206
+#: address.js:201
 msgid "Saint Vincent and the Grenadines"
-msgstr "سانت فنسنت وجزر غرينادين"
+msgstr ""
 
 #: sc-product-price.js:30
 msgid "Sale"
@@ -9546,9 +10114,9 @@ msgstr ""
 msgid "Sale Text"
 msgstr ""
 
-#: address.js:207
+#: address.js:202
 msgid "Samoa"
-msgstr "ساموا"
+msgstr ""
 
 #: src/Support/Currency.php:342
 msgid "Samoan Tala"
@@ -9564,17 +10132,17 @@ msgstr "ساموان تالا"
 msgid "Sample Data"
 msgstr "بيانات العينة"
 
-#: address.js:208
+#: address.js:203
 msgid "San Marino"
-msgstr "سان مارينو"
+msgstr ""
 
-#: address.js:209
+#: address.js:204
 msgid "Sao Tome and Principe"
-msgstr "ساو تومي وبرينسيبي"
+msgstr ""
 
-#: address.js:210
+#: address.js:205
 msgid "Saudi Arabia"
-msgstr "المملكة العربية السعودية"
+msgstr ""
 
 #: src/Support/Currency.php:343
 msgid "Saudi Riyal"
@@ -9591,9 +10159,9 @@ msgstr "الريال السعودي"
 msgid "Save"
 msgstr "حفظ"
 
-#: sc-order-bump2.js:61
+#: sc-order-bump2.js:72
 msgid "Save %s%%"
-msgstr "حفظ %s%%"
+msgstr ""
 
 #: customers/EditCustomer.js:97
 msgid "Save Customer"
@@ -9611,9 +10179,9 @@ msgstr "حفظ الترخيص"
 msgid "Save Order Bump"
 msgstr "حفظ العرض الخاص ( bumb )"
 
-#: sc-stripe-add-method.js:128
+#: sc-stripe-add-method.js:132
 msgid "Save Payment Method"
-msgstr "حفظ طريقة الدفع"
+msgstr ""
 
 #: products/EditProduct.js:147
 msgid "Save Product"
@@ -9648,9 +10216,13 @@ msgstr "نسبة التوفير من خلال قسيمة الخصم"
 msgid "Saved."
 msgstr "تم الحفظ."
 
-#: sc-payment-method2.js:22
+#: settings/shipping/profile/ShippingProfile.js:111
+msgid "Saving failed."
+msgstr ""
+
+#: sc-payment-method2.js:27
 msgid "Savings"
-msgstr "مدخرات"
+msgstr ""
 
 #: abandoned-checkouts/modules/Schedule.js:14
 msgid "Schedule"
@@ -9800,6 +10372,10 @@ msgstr ""
 msgid "Secure Storage"
 msgstr ""
 
+#: settings/shipping/rate/ShippingRateForm.js:340
+msgid "Select"
+msgstr ""
+
 #: coupons/modules/NewRestriction.js:139
 msgid "Select A Customer"
 msgstr "حدد العميل"
@@ -9815,6 +10391,10 @@ msgstr "حدد سعر"
 msgid "Select A Product"
 msgstr "اختر المنتج"
 
+#: onboarding/components/StarterTemplates.js:74
+msgid "Select A Starting Point"
+msgstr ""
+
 #: components/data-tables/charges-data-table/Refund.js:174
 msgid "Select All"
 msgstr "تحديد الكل"
@@ -9827,6 +10407,11 @@ msgstr "حدد تطبييق"
 #: coupons/modules/NewRestriction.js:149
 msgid "Select An Upgrade Group"
 msgstr "حدد مجموعة ترقية"
+
+#: settings/shipping/zone/ShippingZoneForm.js:191
+#: settings/shipping/zone/ShippingZoneForm.js:225
+msgid "Select Countries"
+msgstr ""
 
 #: src/Integrations/Elementor/ReusableFormWidget.php:110
 #: Blocks/CheckoutForm/components/Empty.js:192
@@ -9849,9 +10434,9 @@ msgstr "اختر قالب"
 msgid "Select Theme (Beta)"
 msgstr "حدد القالب (تجريبي)"
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:115
 msgid "Select Your Country"
-msgstr "اختر البلد"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:174
 msgid "Select a Form Template"
@@ -9865,9 +10450,9 @@ msgstr "إختر نموذج دفع"
 msgid "Select a form"
 msgstr "حدد نموذجًا"
 
-#: sc-subscription-payment.js:115
+#: sc-subscription-payment.js:120
 msgid "Select a payment method"
-msgstr "اختر طريقة الدفع"
+msgstr ""
 
 #: components/SelectPrice.js:64
 msgid "Select a price"
@@ -9899,6 +10484,10 @@ msgstr "حدد أيقونة"
 #: components/SelectProductGroup.js:44
 msgid "Select an upgrade group"
 msgstr "حدد مجموعة ترقية"
+
+#: settings/shipping/zone/ShippingZoneForm.js:99
+msgid "Select at least one country to create zone."
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:113
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:90
@@ -9952,6 +10541,10 @@ msgstr ""
 msgid "Select the menu(s) where the cart icon will appear."
 msgstr ""
 
+#: sc-select2.js:2066
+msgid "Select..."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:106
 msgid "Send a general order confirmation email to your customers when an order is paid. These emails include a breakdown of the order, and a link to a page where they can download their invoice and receipt."
 msgstr "إرسال بريد إلكتروني عام لتأكيد الطلب إلى عملائك عند دفع أحد الطلبات. تتضمن رسائل البريد الإلكتروني هذه تفصيلاً للطلب ورابطًا لصفحة يمكنهم من خلالها تنزيل الفاتورة والإيصال."
@@ -9960,9 +10553,13 @@ msgstr "إرسال بريد إلكتروني عام لتأكيد الطلب إل
 msgid "Send a general subscription cancellation confirmation email to your customers when subscription canceled."
 msgstr "إرسال رسالة بريد إلكتروني عامة لتأكيد إلغاء الاشتراك  إلى عملائك عند إلغاء الاشتراك."
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Send a login code"
-msgstr "إرسال رمز / كود لتسجيل الدخول"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:125
+msgid "Send a product access email to your customer when a purchase has done for a licensed downloadable product."
+msgstr ""
 
 #: settings/customer/CustomerSettings.js:124
 msgid "Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded."
@@ -9984,9 +10581,9 @@ msgstr "أرسل بريدًا إلكترونيًا للطلب إلى العمل�
 msgid "Sender Name"
 msgstr "اسم المرسل"
 
-#: address.js:211
+#: address.js:206
 msgid "Senegal"
-msgstr "السنغال"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
 #: abandoned-checkouts/modules/Details.js:13
@@ -10045,9 +10642,9 @@ msgstr "يتم إرساله عند إنشاء الطلب."
 msgid "Sequential"
 msgstr "تسلسلي"
 
-#: address.js:212
+#: address.js:207
 msgid "Serbia"
-msgstr "صربيا"
+msgstr ""
 
 #: src/Support/Currency.php:344
 msgid "Serbian Dinar"
@@ -10058,9 +10655,9 @@ msgctxt "block title"
 msgid "Session Info"
 msgstr "معلومات الجلسة"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Set A Password"
-msgstr "قم بتعيين كلمة مرور"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:80
 #: Blocks/ProductItemImage/edit.js:97
@@ -10083,10 +10680,6 @@ msgstr "تعيين زر إتخاذ إجراء مخصص للعمل من أجل ا
 msgid "Set a maximum height"
 msgstr "اضبط الحد الأقصى للإرتفاع"
 
-#: settings/portal/PortalSettings.js:117
-msgid "Set additional customer portal details for your store."
-msgstr "قم بتعيين تفاصيل لوحة التحكم الإضافية لمتجرك."
-
 #: products/modules/integrations/IntegrationHelp.js:79
 msgid "Set it and forget it."
 msgstr "اضبطها واتركها."
@@ -10094,6 +10687,14 @@ msgstr "اضبطها واتركها."
 #: products/modules/Prices/index.js:94
 msgid "Set up pricing for your product."
 msgstr "قم بإعداد التسعير لمنتجك."
+
+#: settings/shipping/ShippingSettings.js:157
+msgid "Set where you ship and how much you charge for shipping."
+msgstr ""
+
+#: onboarding/components/SetupProgress.js:56
+msgid "Setting up your store..."
+msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:115
@@ -10121,6 +10722,10 @@ msgstr "تم تحديث الإعدادات."
 msgid "Setup"
 msgstr "تثبيت"
 
+#: dashboard/Dashboard.js:82
+msgid "Setup Complete!"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:59
 #: sc-price-choice.js:811
 msgid "Setup Fee"
@@ -10138,13 +10743,45 @@ msgstr ""
 msgid "Setup fee name"
 msgstr ""
 
-#: address.js:213
+#: address.js:208
 msgid "Seychelles"
-msgstr "سيشيل"
+msgstr ""
 
 #: src/Support/Currency.php:345
 msgid "Seychellois Rupee"
 msgstr "روبية سيشيلية"
+
+#: sc-fulfillments.js:60
+msgid "Shipment"
+msgid_plural "Shipments"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:388
+#: orders/modules/Fulfillment/components/StatusDropdown.js:20
+#: sc-fulfillment-shipping-status-badge2.js:8
+#: sc-order-shipment-badge2.js:8
+msgid "Shipped"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:105
+#: layouts/partials/admin-settings-sidebar.php:66
+#: abandoned-checkouts/modules/LineItems/index.js:110
+#: orders/modules/LineItems/index.js:262
+#: products/modules/Shipping.js:25
+#: settings/shipping/ShippingSettings.js:120
+#: subscriptions/show/modules/LineItems/index.js:105
+#: sc-line-item-shipping2.js:26
+#: sc-order-confirmation-totals2.js:35
+#: sc-shipping-choices2.js:54
+#: sc-shipping-choices2.js:56
+#: sc-subscription-next-payment2.js:101
+msgid "Shipping"
+msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:138
 #: orders/Sidebar.js:17
@@ -10163,9 +10800,108 @@ msgctxt "block title"
 msgid "Shipping Address"
 msgstr "عنوان الشحن"
 
+#: Blocks/LineItemShipping/edit.js:29
+msgid "Shipping Amount"
+msgstr ""
+
+#: Blocks/ShippingChoices/edit.js:55
+msgid "Shipping Choices"
+msgstr ""
+
+#: Blocks/ShippingChoices/block.json
+msgctxt "block title"
+msgid "Shipping Choices"
+msgstr ""
+
 #: Blocks/ConditionalForm/translations.js:9
 msgid "Shipping Country"
 msgstr "بلد الشحن"
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block title"
+msgid "Shipping Line Item"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:336
+#: store/add-entities.js:278
+msgid "Shipping Method"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:107
+msgid "Shipping Methods"
+msgstr ""
+
+#: store/add-entities.js:257
+msgid "Shipping Profile"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:156
+msgid "Shipping Profiles"
+msgstr ""
+
+#: store/add-entities.js:250
+msgid "Shipping Protocol"
+msgstr ""
+
+#: store/add-entities.js:271
+msgid "Shipping Rate"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:140
+msgid "Shipping Settings"
+msgstr ""
+
+#: products/modules/Shipping.js:45
+msgid "Shipping Weight"
+msgstr ""
+
+#: store/add-entities.js:264
+msgid "Shipping Zone"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:35
+msgid "Shipping Zones & Rates"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:69
+msgid "Shipping method added"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:81
+msgid "Shipping method removed"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:64
+msgid "Shipping method updated"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:128
+msgid "Shipping methods represent the different speeds or classes of shipping that your store offers."
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:36
+msgid "Shipping profile deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:152
+msgid "Shipping rate added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZone.js:57
+msgid "Shipping rate deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:147
+msgid "Shipping rate updated"
+msgstr ""
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:29
+msgid "Shipping zone deleted"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:36
+msgid "Shipping zones are geographic regions where you ship products."
+msgstr ""
 
 #: src/Routing/PermalinkServiceProvider.php:33
 msgid "Shop"
@@ -10212,6 +10948,10 @@ msgstr "إظهار العرض الخاص الـ bumb إذا"
 msgid "Show Currency Code"
 msgstr "إظهار رمز العملة"
 
+#: Blocks/ShippingChoices/edit.js:65
+msgid "Show Description"
+msgstr ""
+
 #: settings/account/components/CartSettings.js:255
 msgid "Show Floating Cart Icon"
 msgstr ""
@@ -10232,9 +10972,9 @@ msgstr ""
 msgid "Show Price Amount"
 msgstr "إظهار مبلغ السعر"
 
-#: sc-order-summary.js:20
+#: sc-order-summary.js:21
 msgid "Show Summary"
-msgstr "عرض الملخص"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:257
 msgid "Show a floating cart icon in the bottom corner of your site, if there are items in the cart."
@@ -10286,9 +11026,9 @@ msgstr "اعرض حقل \"الاسم أو اسم الشركة\" في النمو�
 msgid "Show total due in button text."
 msgstr "إظهار الإجمالي المستحق في نص الزر."
 
-#: address.js:214
+#: address.js:209
 msgid "Sierra Leone"
-msgstr "سيرا ليون"
+msgstr ""
 
 #: src/Support/Currency.php:346
 msgid "Sierra Leonean Leone"
@@ -10306,17 +11046,17 @@ msgstr "بسيط"
 msgid "Since SureCart's integrations are native, there's no need to worry about the complexity of growing your store."
 msgstr "نظرًا لأن عمليات تكامل SureCart أصلية ، فلا داعي للقلق بشأن تعقيد تنمية متجرك."
 
-#: address.js:215
+#: address.js:210
 msgid "Singapore"
-msgstr "سنغافورة"
+msgstr ""
 
 #: src/Support/Currency.php:347
 msgid "Singapore Dollar"
 msgstr "دولار سينغافوري"
 
-#: address.js:216
+#: address.js:211
 msgid "Sint Maarten (Dutch part)"
-msgstr "سينت مارتن (الجزء الهولندي)"
+msgstr ""
 
 #: components/MediaLibrary/Preview.js:110
 #: Blocks/BuyButton/edit.js:91
@@ -10334,13 +11074,13 @@ msgstr "تخطي الرابط"
 msgid "Slider Height"
 msgstr ""
 
-#: address.js:217
+#: address.js:212
 msgid "Slovakia"
-msgstr "سلوفاكيا"
+msgstr ""
 
-#: address.js:218
+#: address.js:213
 msgid "Slovenia"
-msgstr "سلوفينيا"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:119
 #: Blocks/BuyButton/edit.js:104
@@ -10350,9 +11090,9 @@ msgstr "سلوفينيا"
 msgid "Small"
 msgstr "صغير"
 
-#: address.js:219
+#: address.js:214
 msgid "Solomon Islands"
-msgstr "جزر سليمان"
+msgstr ""
 
 #: src/Support/Currency.php:348
 msgid "Solomon Islands Dollar"
@@ -10362,9 +11102,9 @@ msgstr "دولار جزر سليمان"
 msgid "Somali Shilling"
 msgstr "شلن صومالي"
 
-#: address.js:220
+#: address.js:215
 msgid "Somalia"
-msgstr "الصومال"
+msgstr ""
 
 #: src/Middleware/NonceMiddleware.php:26
 msgid "Something is wrong with the provided link."
@@ -10452,12 +11192,16 @@ msgstr "هناك خطأ ما."
 
 #: paypal-buttons.js:144
 msgid "Something went wrong. Please contact us for payment."
-msgstr "هناك خطأ ما. يرجى الاتصال بنا للدفع."
+msgstr ""
 
 #: components/MediaLibrary/index.js:136
 #: settings/processors/CreateEditPaymentMethod.js:53
 msgid "Something went wrong. Please try again."
 msgstr "هناك خطأ ما. حاول مرة اخرى."
+
+#: sc-shipping-choices2.js:54
+msgid "Sorry, we are not able to ship to your address."
+msgstr ""
 
 #: src/Rest/ProductsRestServiceProvider.php:153
 #: src/Rest/ProductsRestServiceProvider.php:171
@@ -10473,37 +11217,37 @@ msgstr "عذرًا ، لا يُسمح لك بمشاهدة أنماط النما�
 msgid "Sort"
 msgstr ""
 
-#: address.js:221
+#: address.js:216
 msgid "South Africa"
-msgstr "جنوب أفريقيا"
+msgstr ""
 
 #: src/Support/Currency.php:350
 msgid "South African Rand"
 msgstr "راند جنوب أفريقيا"
 
-#: address.js:222
+#: address.js:217
 msgid "South Georgia and the South Sandwich Islands"
-msgstr "جورجيا الجنوبية وجزر ساندويتش الجنوبية"
+msgstr ""
 
-#: address.js:223
+#: address.js:218
 msgid "South Korea"
-msgstr "كوريا الجنوبية"
+msgstr ""
 
 #: src/Support/Currency.php:351
 msgid "South Korean Won"
 msgstr "وون كوريا الجنوبية"
 
-#: address.js:224
+#: address.js:219
 msgid "South Sudan"
-msgstr "جنوب السودان"
+msgstr ""
 
 #: components/CartInspectorControls.js:33
 msgid "Spacing"
 msgstr "تباعد"
 
-#: address.js:225
+#: address.js:220
 msgid "Spain"
-msgstr "إسبانيا"
+msgstr ""
 
 #: settings/account/AccountSettings.js:231
 msgid "Spam Protection & Security"
@@ -10513,9 +11257,9 @@ msgstr "الحماية والأمان من البريد العشوائي"
 msgid "Square"
 msgstr ""
 
-#: address.js:226
+#: address.js:221
 msgid "Sri Lanka"
-msgstr "سيريلانكا"
+msgstr ""
 
 #: src/Support/Currency.php:352
 msgid "Sri Lankan Rupee"
@@ -10537,6 +11281,18 @@ msgstr "الإعدادات المتقدمة لمحرر الأقسام ."
 msgid "Standalone Editor top bar."
 msgstr "الشريط العلوي للمحرر ."
 
+#: Blocks/ShippingChoices/edit.js:25
+msgid "Standard"
+msgstr ""
+
+#: sc-shipping-choices2.js:58
+msgid "Standard Shipping"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:10
+msgid "Start From Scratch"
+msgstr ""
+
 #: settings/order/OrderProtocol.js:99
 msgid "Start Order Number At"
 msgstr "بدء رقم الطلب في"
@@ -10553,7 +11309,8 @@ msgstr ""
 msgid "Started"
 msgstr "بدأت"
 
-#: sc-price-choice.js:811
+#: sc-price-choice-container2.js:58
+#: sc-price-choice.js:813
 msgid "Starting in %s day"
 msgid_plural "Starting in %s days"
 msgstr[0] ""
@@ -10576,11 +11333,11 @@ msgstr "موضع إسم الولاية"
 msgid "State Sales Tax Registrations"
 msgstr "تسجيلات ضريبة المبيعات الحكومية"
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:36
-#: sc-order-shipping-address2.js:45
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:43
+#: sc-order-shipping-address2.js:52
 msgid "State/Province/Region"
-msgstr "الدولة / الإقليم / المنطقة"
+msgstr ""
 
 #: store/add-entities.js:201
 msgid "Statistic"
@@ -10615,6 +11372,10 @@ msgstr ""
 
 #: products/components/Availability/index.js:61
 msgid "Status defines whether a product is purchasable."
+msgstr ""
+
+#: orders/modules/Fulfillment/components/StatusDropdown.js:66
+msgid "Status updated."
 msgstr ""
 
 #: Blocks/Column/edit.js:144
@@ -10683,12 +11444,12 @@ msgstr "بوابة دفع سترايب Stripe"
 msgid "Stripe Fraud Monitoring"
 msgstr "مراقبة الاحتيال لبوابة دفع Stripe"
 
-#: sc-stripe-add-method.js:35
-#: sc-stripe-element.js:38
-#: sc-stripe-payment-element.js:51
-#: sc-stripe-payment-request2.js:60
+#: sc-stripe-add-method.js:39
+#: sc-stripe-element.js:43
+#: sc-stripe-payment-element.js:59
+#: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
-msgstr "تعذر تحميل  بوابة دفع Stripe"
+msgstr ""
 
 #: Blocks/Form/edit.js:227
 msgid "Style"
@@ -10707,9 +11468,9 @@ msgstr "تقديم الطلب"
 msgid "Submitting Order..."
 msgstr "تقديم الطلب ..."
 
-#: sc-checkout.js:194
+#: sc-checkout.js:210
 msgid "Submitting order..."
-msgstr "تقديم الطلب ..."
+msgstr ""
 
 #: Blocks/Product/PriceChoices/edit.js:115
 msgid "Subscribe and Save"
@@ -10893,9 +11654,9 @@ msgstr ""
 msgid "Success! Redirecting..."
 msgstr "تمت العملية بنجاح! إعادة التوجيه..."
 
-#: address.js:227
+#: address.js:222
 msgid "Sudan"
-msgstr "السودان"
+msgstr ""
 
 #: coupons/Sidebar.js:52
 #: products/Sidebar.js:34
@@ -11047,9 +11808,9 @@ msgstr "كائن منتج SureCart"
 msgid "SureCart webhooks could not be created."
 msgstr "تعذر إنشاء webhook من SureCart."
 
-#: address.js:228
+#: address.js:223
 msgid "Suriname"
-msgstr "سورينام"
+msgstr ""
 
 #: src/Support/Currency.php:353
 msgid "Surinamese Dollar"
@@ -11059,17 +11820,17 @@ msgstr "دولار سورينامي"
 msgid "Survey Answers"
 msgstr "إجابات الإستطلاع"
 
-#: address.js:229
+#: address.js:224
 msgid "Svalbard and Jan Mayen"
-msgstr "سفالبارد وجان ماين"
+msgstr ""
 
 #: src/Support/Currency.php:354
 msgid "Swazi Lilangeni"
 msgstr "سوازي ليلانجيني"
 
-#: address.js:230
+#: address.js:225
 msgid "Sweden"
-msgstr "السويد"
+msgstr ""
 
 #: src/Support/Currency.php:355
 msgid "Swedish Krona"
@@ -11097,9 +11858,9 @@ msgstr "التبديل إلى وضع المتجر النشط."
 msgid "Switch to test mode."
 msgstr "قم بالتبديل إلى الوضع الاختباري."
 
-#: address.js:231
+#: address.js:226
 msgid "Switzerland"
-msgstr "سويسرا"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:135
 msgid "Sync Customers"
@@ -11113,9 +11874,9 @@ msgstr "قم بمزامنة عمليات الشراء مع الإضافات  ا�
 msgid "Syncing"
 msgstr ""
 
-#: address.js:232
+#: address.js:227
 msgid "Syrian Arab Republic"
-msgstr "الجمهورية العربية السورية"
+msgstr ""
 
 #: src/Support/Currency.php:357
 msgid "São Tomé and Príncipe Dobra"
@@ -11134,21 +11895,21 @@ msgctxt "block title"
 msgid "Tabbed Customer Dashboard"
 msgstr ""
 
-#: address.js:233
+#: address.js:228
 msgid "Taiwan"
-msgstr "تايوان"
+msgstr ""
 
-#: address.js:234
+#: address.js:229
 msgid "Tajikistan"
-msgstr "طاجيكستان"
+msgstr ""
 
 #: src/Support/Currency.php:358
 msgid "Tajikistani Somoni"
 msgstr "طاجيكستان سوموني"
 
-#: address.js:235
+#: address.js:230
 msgid "Tanzania"
-msgstr "تنزانيا"
+msgstr ""
 
 #: src/Support/Currency.php:359
 msgid "Tanzanian Shilling"
@@ -11208,10 +11969,6 @@ msgstr "التسجيل الضريبي"
 msgid "Tax Zone"
 msgstr "المنطقة الضريبية"
 
-#: products/modules/Tax.js:68
-msgid "Tax and Shipping"
-msgstr "الضرائب والشحن"
-
 #: subscriptions/show/modules/Tax.js:37
 msgid "Tax disabled."
 msgstr "تعطيل الضريبة."
@@ -11229,7 +11986,7 @@ msgstr "يتم احتساب الضريبة تلقائيًا وتطبيقها ع�
 msgid "Tax is included"
 msgstr "شامل الضريبة"
 
-#: sc-line-item-tax2.js:20
+#: sc-line-item-tax2.js:22
 msgid "Tax:"
 msgstr ""
 
@@ -11260,6 +12017,10 @@ msgstr ""
 #: Controllers/SubscriptionController.php:248
 msgid "Terms"
 msgstr "شروط"
+
+#: settings/account/AccountSettings.js:259
+msgid "Terms Page"
+msgstr ""
 
 #: settings/portal/PortalSettings.js:131
 msgid "Terms of Service"
@@ -11292,21 +12053,6 @@ msgstr "تجريبي"
 #: sc-payment.js:72
 msgid "Test Mode"
 msgstr "وضع الاختبار"
-
-#: admin/processors.php:66
-#: admin/processors.php:144
-msgid "Test Payment Not Enabled"
-msgstr "الدفع التجريبي غير ممكّن"
-
-#: admin/processors.php:69
-#: admin/processors.php:147
-msgid "Test Payments Enabled"
-msgstr "تم تفعيل المدفوعات التجريبية"
-
-#: admin/processors.php:62
-#: admin/processors.php:140
-msgid "Test and Live Payments Enabled"
-msgstr "تم تمكين المدفوعات الحية والتجريبية"
 
 #: Blocks/Form/Block.php:144
 msgid "Test and live mode API keys, requests, and objects are only available within the mode they are in."
@@ -11343,9 +12089,9 @@ msgstr "حقل نصي"
 msgid "Thai Baht"
 msgstr "البات التايلندي"
 
-#: address.js:236
+#: address.js:231
 msgid "Thailand"
-msgstr "تايلاند"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:203
 #: Blocks/Form/components/Setup.js:85
@@ -11708,6 +12454,14 @@ msgstr "فشلت آخر محاولة دفع لـ نية الدفع . تحقق م
 msgid "The line items for the session."
 msgstr "بنود الجلسة."
 
+#: src/Support/Errors/Translations/codes.php:76
+msgid "The maximum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:75
+msgid "The maximum amount must be greater than or equal to the minimum amount."
+msgstr ""
+
 #: Blocks/Form/Block.php:124
 msgid "The maximum number of subscriptions for a customer has been reached. Contact us if you are receiving this error."
 msgstr "تم الوصول إلى الحد الأقصى لعدد الاشتراكات للعميل. اتصل بنا إذا كنت تتلقى هذا الخطأ."
@@ -11720,9 +12474,33 @@ msgstr "يجب أن يكون الحد الأقصى للسعر أكبر من ال
 msgid "The maximum price must be smaller."
 msgstr "يجب أن يكون الحد الأقصى للسعر أصغر."
 
+#: src/Support/Errors/Translations/codes.php:72
+msgid "The maximum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:71
+msgid "The maximum weight must be greater than or equal to the minimum weight."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:78
+msgid "The minimum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:77
+msgid "The minimum amount must be greater than or equal to zero."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:44
 msgid "The minimum price must be smaller."
 msgstr "يجب أن يكون الحد الأدنى للسعر أصغر."
+
+#: src/Support/Errors/Translations/codes.php:74
+msgid "The minimum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:73
+msgid "The minimum weight must be greater than or equal to zero."
+msgstr ""
 
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:125
 msgid "The model to get integration providers for."
@@ -11804,11 +12582,11 @@ msgstr "عرض إطار عرض النمط لمعاينة الواضع."
 #: paypal-buttons.js:89
 #: paypal-buttons.js:103
 #: paypal-buttons.js:109
-#: sc-paypal-add-method.js:56
 #: sc-paypal-add-method.js:61
-#: sc-paypal-add-method.js:67
+#: sc-paypal-add-method.js:66
+#: sc-paypal-add-method.js:72
 msgid "The payment did not process. Please try again."
-msgstr "لم تتم معالجة الدفع. حاول مرة اخرى."
+msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:124
 msgid "The phone number that will be shown to customers for support, on invoices, etc."
@@ -11845,6 +12623,10 @@ msgstr "أولوية العرض الخاص الـ bumb  فيما يتعلق با
 #: src/Support/Errors/Translations/codes.php:27
 msgid "The product image must be an image."
 msgstr "يجب أن تكون صورة المنتج صورة."
+
+#: settings/shipping/profile/AddShippingProfile.js:36
+msgid "The profile name is required."
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:132
 msgid "The prompt that will appear when you request more information."
@@ -11883,9 +12665,77 @@ msgstr "يحتوي الطلب على واحد أو أكثر من المعلما�
 msgid "The request timed out. Try again later."
 msgstr "الطلب انتهى. حاول مرة أخرى في وقت لاحق."
 
-#: fetch.js:1845
+#: fetch.js:694
 msgid "The response is not a valid JSON response."
-msgstr "الاستجابة لـ JSON غير صالحة."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:60
+msgid "The selected countries are already used in another shipping zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:61
+msgid "The selected countries are not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:70
+msgid "The shipping method cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:65
+msgid "The shipping method description is too long. Please enter a shorter description."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:62
+msgid "The shipping method name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:54
+msgid "The shipping method name is already in use ."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:64
+msgid "The shipping method name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:63
+msgid "The shipping method name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:55
+msgid "The shipping profile name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:56
+msgid "The shipping profile name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:66
+msgid "The shipping rate type cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:67
+msgid "The shipping rate type is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:68
+msgid "The shipping weight unit cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:69
+msgid "The shipping weight unit is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:57
+msgid "The shipping zone name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:58
+msgid "The shipping zone name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:59
+msgid "The shipping zone name is too long. Please enter a shorter name."
+msgstr ""
 
 #: Blocks/Form/Block.php:139
 msgid "The source cannot be used because it is not in the correct state (e.g., a charge request is trying to use a source with a pending, failed, or consumed source). Check the status of the source you are attempting to use."
@@ -11961,9 +12811,10 @@ msgstr "موقع الويب الذي سيتم عرضه للعملاء للحصو
 msgid "Theme Layout"
 msgstr ""
 
-#: sc-product-line-item2.js:24
+#. translators: 30 days free, Then $99 per month.
+#: sc-product-line-item2.js:39
 msgid "Then"
-msgstr "ثم"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:181
 msgid "There are no cancellation reasons for this period."
@@ -12005,6 +12856,10 @@ msgstr "هذا الشهر"
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:222
 msgid "This Week"
 msgstr "هذا الاسبوع"
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:43
+msgid "This action cannot be undone."
+msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:132
 msgid "This action will re-enable associated access."
@@ -12088,6 +12943,10 @@ msgstr "غير متطابق"
 msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr "لا يمكن إزالة هذا التنزيل أو أرشفته عند تعيينه كإصدار حالي."
 
+#: onboarding/components/ConfirmStoreEmail.js:53
+msgid "This email is used for store notifications, such as new orders, payment failures and other store emails."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 msgid "This form has been deleted or is unavailable."
 msgstr "تم حذف هذا النموذج أو أنه غير متوفر."
@@ -12108,7 +12967,7 @@ msgstr "هذه قائمة بجميع خطط الاشتراك الخاصة بك. 
 msgid "This is a physical product"
 msgstr "هذا منتج مادي"
 
-#: sc-order-submit.js:46
+#: sc-order-submit.js:57
 msgid "This is a secure, encrypted payment."
 msgstr ""
 
@@ -12172,7 +13031,7 @@ msgstr "لم تعد هذه الطريقة لإنشاء مدفوعات Bitcoin م
 
 #: sc-order-confirmation.js:111
 msgid "This order could not be found. Please try again."
-msgstr "لم يتم العثور على هذا الطلب. حاول مرة اخرى."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
 msgid "This payment method cannot be used for subscriptions."
@@ -12186,17 +13045,17 @@ msgstr "هذه البادئة طويلة جدًا. الرجاء إدخال با�
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr "هذه البادئة قصيرة جدًا. الرجاء إدخال بادئة أطول."
 
-#: sc-custom-order-price-input.js:72
+#: sc-custom-order-price-input.js:74
 msgid "This price has been archived."
-msgstr "تم أرشفة هذا السعر  ."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:42
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr "يتم استخدام هذا السعر حاليًا في الاشتراكات أو جلسات انهاء الشراء. يرجى أرشفة السعر وإنشاء سعر آخر."
 
-#: sc-price-choice.js:782
+#: sc-price-choice.js:776
 msgid "This product has been archived."
-msgstr "تم أرشفة هذا المنتج ."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
 msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
@@ -12206,10 +13065,10 @@ msgstr "هذا المنتج له أسعار يتم استخدامها حاليا
 msgid "This product is invalid."
 msgstr ""
 
-#: sc-error2.js:25
-#: sc-form-error-provider2.js:42
+#: sc-checkout-form-errors2.js:17
+#: sc-error2.js:24
 msgid "This product is no longer purchasable."
-msgstr "هذا المنتج لم يعد قابلاً للشراء."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:41
 msgid "This product is no longer purchaseable."
@@ -12221,10 +13080,6 @@ msgstr "هذا المنتج لم يعد قابلاً للشراء."
 msgid "This product is not available for purchase."
 msgstr ""
 
-#: products/modules/Tax.js:71
-msgid "This product requires shipping"
-msgstr "هذا المنتج يتطلب الشحن"
-
 #: src/Support/Errors/Translations/codes.php:24
 msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr "رمز الترويج هذا موجود بالفعل. يرجى أرشفة الكود القديم أو استخدام رمز مختلف."
@@ -12233,9 +13088,9 @@ msgstr "رمز الترويج هذا موجود بالفعل. يرجى أرشف�
 msgid "This should be your live storefront URL."
 msgstr "يجب أن يكون هذا هو عنوان URL المباشر لواجهة المتجر."
 
-#: sc-subscription.js:117
+#: sc-subscription.js:163
 msgid "This subscription does not exist."
-msgstr "هذا الإشتراك غير موجود."
+msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:129
 msgid "This subscription is going to be paused on %s. When would you like the subscription to be restored?"
@@ -12298,6 +13153,10 @@ msgstr ""
 msgid "This will save any changes on the page. Do you want to save your changes?"
 msgstr "سيؤدي هذا إلى حفظ أي تغييرات على الصفحة. هل تريد حفظ التغييرات؟"
 
+#: settings/shipping/zone/FallbackZone.js:20
+msgid "This zone is optionally used for regions that are not included in any other shipping zone."
+msgstr ""
+
 #: settings/subscription/SubscriptionSettings.js:168
 msgid "Three Weeks"
 msgstr "ثلاثة اسابيع"
@@ -12322,9 +13181,9 @@ msgstr "فترة زمنية"
 msgid "Time Zone"
 msgstr "النطاق الزمني"
 
-#: address.js:237
+#: address.js:232
 msgid "Timor-Leste"
-msgstr "تيمور ليشتي"
+msgstr ""
 
 #: Blocks/Card/edit.js:28
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:22
@@ -12367,17 +13226,25 @@ msgstr "لإضافة بعض المنتجات زر \"إضافة منتجات\"."
 msgid "To adjust your abandoned checkout notifications,"
 msgstr "لضبط إشعارات السلات المتروكة ،"
 
+#: settings/shipping/profile/Products.js:397
+msgid "To charge different rates for only certain products, create a new profile in"
+msgstr ""
+
 #: products/modules/Tax.js:48
 msgid "To charge tax, please set up your tax information on the settings page."
 msgstr "لتحصيل الضرائب ، يرجى إعداد معلوماتك الضريبية في صفحة الإعدادات."
+
+#: settings/shipping/ShippingSettings.js:132
+msgid "To complete the shipping setup, please add shipping rates to a shipping profile below."
+msgstr ""
 
 #: settings/account/AccountSettings.js:324
 msgid "To get your Recaptcha keys"
 msgstr "للحصول على مفاتيح Recaptcha الخاصة بك"
 
-#: sc-subscription-switch.js:196
+#: sc-subscription-switch.js:205
 msgid "To make changes to your payment plan, please contact us."
-msgstr "لإجراء أي تغيير على خطة الدفع يرجى التواصل معنا ."
+msgstr ""
 
 #: src/WordPress/Pages/PageService.php:39
 #: src/WordPress/Pages/PageService.php:65
@@ -12406,17 +13273,17 @@ msgstr "تبديل أرشيف القسيمة"
 msgid "Toggle Product Archive"
 msgstr "تبديل أرشيف المنتج"
 
-#: address.js:238
+#: address.js:233
 msgid "Togo"
-msgstr "توجو"
+msgstr ""
 
-#: address.js:239
+#: address.js:234
 msgid "Tokelau"
-msgstr "توكيلاو"
+msgstr ""
 
-#: address.js:240
+#: address.js:235
 msgid "Tonga"
-msgstr "تونغا"
+msgstr ""
 
 #: src/Support/Currency.php:361
 msgid "Tongan Paʻanga"
@@ -12520,6 +13387,22 @@ msgstr "المجموع"
 msgid "Tracking Confirmation"
 msgstr "تأكيد التتبع"
 
+#: orders/modules/Fulfillment/components/Tracking.js:74
+msgid "Tracking Link"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/Tracking.js:61
+#: orders/modules/Fulfillment/Fulfilled.js:249
+#: sc-fulfillments.js:63
+msgid "Tracking number"
+msgid_plural "Tracking numbers"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
 #: Blocks/Form/Block.php:146
 msgid "Transfers and payouts on behalf of a Standard connected account are not allowed."
 msgstr "لا يُسمح بالتحويلات والمدفوعات نيابة عن حساب قياسي متصل."
@@ -12538,37 +13421,41 @@ msgstr "تنتهي الفترة التجريبية في"
 msgid "Trialing"
 msgstr "تجريبي"
 
-#: address.js:241
+#: address.js:236
 msgid "Trinidad and Tobago"
-msgstr "ترينداد وتوباغو"
+msgstr ""
 
 #: src/Support/Currency.php:362
 msgid "Trinidad and Tobago Dollar"
 msgstr "دولار ترينداد وتوباغو"
 
-#: address.js:242
+#: address.js:237
 msgid "Tunisia"
-msgstr "تونس"
+msgstr ""
 
-#: address.js:243
+#: address.js:238
 msgid "Turkey"
-msgstr "ديك رومى"
+msgstr ""
 
 #: src/Support/Currency.php:363
 msgid "Turkish Lira"
 msgstr "الليرة التركية"
 
-#: address.js:244
+#: address.js:239
 msgid "Turkmenistan"
-msgstr "تركمانستان"
+msgstr ""
 
-#: address.js:245
+#: address.js:240
 msgid "Turks and Caicos Islands"
-msgstr "جزر تركس وكايكوس"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:104
 msgid "Turn on abandoned cart for your store."
 msgstr "قم بتفعيل السلات المتروكة لمتجرك."
+
+#: products/modules/Shipping.js:117
+msgid "Turn this off if you do not wish to automatically fulfill this product when an order is placed."
+msgstr ""
 
 #: settings/subscription-preservation/PreservationSettings.js:194
 msgid "Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active."
@@ -12583,9 +13470,9 @@ msgstr "دورة TutorLMS"
 msgid "Tutorial"
 msgstr "درس تعليمي"
 
-#: address.js:246
+#: address.js:241
 msgid "Tuvalu"
-msgstr "توفالو"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:192
 msgid "Two Column"
@@ -12649,17 +13536,17 @@ msgstr ""
 msgid "URL Slug"
 msgstr ""
 
-#: address.js:247
+#: address.js:242
 msgid "Uganda"
-msgstr "أوغندا"
+msgstr ""
 
 #: src/Support/Currency.php:364
 msgid "Ugandan Shilling"
 msgstr "شلن أوغندي"
 
-#: address.js:248
+#: address.js:243
 msgid "Ukraine"
-msgstr "أوكرانيا"
+msgstr ""
 
 #: src/Support/Currency.php:365
 msgid "Ukrainian Hryvnia"
@@ -12695,6 +13582,10 @@ msgstr "إلغاء أرشفة العرض الخاص الـ bumb ؟ هذا سيج
 msgid "Un-Archive this price? This will make the product purchaseable again."
 msgstr "الغاء أرشفة هذا السعر؟ هذا سيجعل المنتج قابلاً للشراء مرة أخرى."
 
+#: product-groups/EditProductGroup.js:75
+msgid "Un-Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:348
 msgid "Unapprove"
 msgstr "غير موافق"
@@ -12702,6 +13593,12 @@ msgstr "غير موافق"
 #: products/components/Availability/index.js:85
 #: Blocks/Product/BuyButton/Block.php:117
 msgid "Unavailable For Purchase"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:351
+#: orders/modules/Fulfillment/Unfulfilled.js:40
+#: sc-order-fulfillment-badge.js:7
+msgid "Unfulfilled"
 msgstr ""
 
 #: admin/advanced.php:63
@@ -12755,9 +13652,9 @@ msgstr "الغاء التثبيت"
 msgid "Unique identifier for the object."
 msgstr "معرف فريد للكائن."
 
-#: address.js:249
+#: address.js:244
 msgid "United Arab Emirates"
-msgstr "الإمارات العربية المتحدة"
+msgstr ""
 
 #: src/Support/Currency.php:366
 msgid "United Arab Emirates Dirham"
@@ -12779,9 +13676,13 @@ msgstr "الولايات المتحدة"
 msgid "United States Dollar"
 msgstr "دولار الولايات المتحدة"
 
-#: address.js:252
+#: address.js:247
 msgid "United States Minor Outlying Islands"
-msgstr "جزر الولايات المتحدة البعيدة الصغرى"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:185
+msgid "United States,  United Kingdom, Global ..."
+msgstr ""
 
 #: orders/modules/Refunds.js:59
 msgid "Unknown"
@@ -12804,9 +13705,9 @@ msgstr "أطلق العنان لميزات زيادة الإيرادات عند 
 msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr "افتح ميزات زيادة الإيرادات عند ترقية خطتك!"
 
-#: sc-subscription-status-badge2.js:62
+#: sc-subscription-status-badge2.js:65
 msgid "Unpaid"
-msgstr "غير مدفوع"
+msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:78
 msgid "Unrevoke"
@@ -12857,7 +13758,7 @@ msgstr "تحديث"
 msgid "Update Account Details"
 msgstr "تحديث تفاصيل الحساب"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update All Subscriptions"
 msgstr ""
 
@@ -12874,7 +13775,7 @@ msgstr "تحديث تفاصيل الفوترة"
 msgid "Update Coupon"
 msgstr "تحديث القسيمة"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update Default Payment Method"
 msgstr ""
 
@@ -12907,20 +13808,24 @@ msgstr "تحديث طريقة الدفع"
 msgid "Update Plan"
 msgstr "تحديث الخطة"
 
-#: sc-subscription-details2.js:107
+#: sc-subscription-details2.js:109
 msgid "Update Scheduled"
-msgstr "تحديث الجدولة"
+msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
 #: subscriptions/show/ShowSubscription.js:141
 msgid "Update Subscription"
 msgstr "تحديث الاشتراك"
 
+#: subscriptions/edit/modules/Modals/UpdatePrice.js:28
+msgid "Update Subscription Price"
+msgstr ""
+
 #: admin/connection-invalid.php:25
 msgid "Update Your Connection"
 msgstr "قم بتحديث اتصالك"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update all existing subscriptions to use this payment method"
 msgstr ""
 
@@ -12955,17 +13860,17 @@ msgstr "ترقية المجموعة"
 msgid "Upgrade Groups"
 msgstr "ترقية المجموعات"
 
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Upgrade Now"
-msgstr "ترقية إشتراكك الآن"
+msgstr ""
 
 #: settings/upgrade/UpgradeSettings.js:57
 msgid "Upgrade This Store"
 msgstr "قم بترقية هذا المتجر"
 
-#: layouts/partials/admin-settings-sidebar.php:76
-msgid "Upgrade To Pro"
-msgstr "ترقية الى Pro"
+#: layouts/partials/admin-settings-sidebar.php:94
+msgid "Upgrade To Premium"
+msgstr ""
 
 #: components/UpgradeModal.js:39
 msgid "Upgrade Your Plan"
@@ -12977,8 +13882,12 @@ msgid "Upgrade behavior. Either pending or immediate."
 msgstr "ترقية السلوك. إما معلق أو فوري."
 
 #: settings/upgrade/UpgradeSettings.js:37
-msgid "Upgrade to Pro"
-msgstr "ترقية الى النسخة الإحترافية"
+msgid "Upgrade to Premium"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:118
+msgid "Upgrade to SureCart Premium to add unlimited shipping methods."
+msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:88
 #: settings/subscription/SubscriptionSettings.js:89
@@ -12997,9 +13906,9 @@ msgstr "تحميل الوسائط"
 msgid "Url Slug"
 msgstr "إمتداد رابط URL"
 
-#: address.js:253
+#: address.js:248
 msgid "Uruguay"
-msgstr "أوروغواي"
+msgstr ""
 
 #: src/Support/Currency.php:368
 msgid "Uruguayan Peso"
@@ -13057,15 +13966,15 @@ msgstr "المستخدم متصل."
 msgid "User disconnected."
 msgstr "المستخدم غير متصل."
 
-#: sc-wordpress-password-edit.js:26
-#: sc-wordpress-user-edit.js:28
+#: sc-wordpress-password-edit.js:30
+#: sc-wordpress-user-edit.js:31
 #: sc-wordpress-user.js:30
 msgid "User not found."
-msgstr "لم يتم إيجاد المستخدم."
+msgstr ""
 
-#: sc-login-form.js:150
+#: sc-login-form.js:152
 msgid "Username or Email Address"
-msgstr "إسم المستخدم او البريد الإلكتروني"
+msgstr ""
 
 #: coupons/modules/Limits.js:89
 msgid "Users must redeem this coupon by:"
@@ -13076,18 +13985,18 @@ msgstr "يجب على المستخدمين استرداد هذه القسيمة 
 msgid "Uses"
 msgstr "الاستخدامات"
 
-#: address.js:254
+#: address.js:249
 msgid "Uzbekistan"
-msgstr "أوزبكستان"
+msgstr ""
 
 #: src/Support/Currency.php:369
 msgid "Uzbekistan Som"
 msgstr "سوم أوزبكستان"
 
-#: tax.js:14
-#: tax.js:18
+#: tax.js:11
+#: tax.js:15
 msgid "VAT Number"
-msgstr "رقم ضريبة القيمة المضافة"
+msgstr ""
 
 #: settings/tax/TaxSettings.js:129
 msgid "VAT Number Verification Failure"
@@ -13127,30 +14036,30 @@ msgstr "صلاحية"
 msgid "Value"
 msgstr "قيمة"
 
-#: address.js:255
+#: address.js:250
 msgid "Vanuatu"
-msgstr "فانواتو"
+msgstr ""
 
 #: src/Support/Currency.php:370
 msgid "Vanuatu Vatu"
 msgstr "فانواتو فاتو"
 
-#: address.js:256
+#: address.js:251
 msgid "Venezuela"
-msgstr "فنزويلا"
+msgstr ""
 
-#: sc-login-form.js:92
+#: sc-login-form.js:94
 msgid "Verification code is not valid. Please try again."
-msgstr "رمز التحقق غير صالح. حاول مرة اخرى."
+msgstr ""
 
 #. translators: Version number.
 #: layouts/partials/admin-settings-header.php:50
 msgid "Version %s"
 msgstr "الإصدار %s"
 
-#: address.js:257
+#: address.js:252
 msgid "Vietnam"
-msgstr "فيتنام"
+msgstr ""
 
 #: src/Support/Currency.php:371
 msgid "Vietnamese Đồng"
@@ -13202,6 +14111,10 @@ msgstr "عرض الفاتورة"
 msgid "View License"
 msgstr "عرض الترخيص"
 
+#: onboarding/Onboarding.js:182
+msgid "View My Store"
+msgstr ""
+
 #: abandoned-checkouts/modules/LineItems/index.js:33
 #: components/data-tables/charges-data-table/index.js:157
 #: orders/Order.js:131
@@ -13239,29 +14152,42 @@ msgstr "مشاهدة الكل"
 msgid "View charge on "
 msgstr "عرض رسوم على"
 
-#: address.js:258
+#: address.js:253
 msgid "Virgin Islands, British"
-msgstr "جزر العذراء البريطانية"
+msgstr ""
 
-#: address.js:259
+#: address.js:254
 msgid "Virgin Islands, U.S."
-msgstr "جزر فيرجن الأمريكية"
+msgstr ""
 
-#: sc-order-status-badge2.js:41
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit Store"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit SureCart Store"
+msgstr ""
+
+#: orders/modules/LineItems/index.js:29
+#: sc-order-status-badge2.js:43
 msgid "Void"
-msgstr "ملغي"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:335
 msgid "Wait for a period of time after a customer has made a purchase to send other abandoned checkouts."
 msgstr ""
 
-#: address.js:260
+#: address.js:255
 msgid "Wallis and Futuna"
-msgstr "واليس وفوتونا"
+msgstr ""
 
 #: admin/coming-soon.php:50
 msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
 msgstr "نحن نعمل حاليًا على ميزات Pro الخاصة بنا. يرجى التحقق مرة أخرى بمجرد إصدار ميزات جديدة للإيرادات وتوفير الوقت."
+
+#: src/Support/Errors/Translations/codes.php:53
+msgid "We don't currently ship to your address."
+msgstr ""
 
 #: products/modules/Image/AddUrlImage.js:74
 msgid "We recommend that you optimize your images before linking them to your products."
@@ -13285,25 +14211,29 @@ msgstr "أسبوع"
 msgid "Weekly"
 msgstr "أسبوعي"
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Welcome"
-msgstr "مرحباً بك"
+msgstr ""
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Welcome back!"
-msgstr "مرحبًا بعودتك!"
+msgstr ""
 
 #: admin/onboarding/install.php:48
 msgid "Welcome to SureCart!"
 msgstr "مرحبًا بكم في SureCart!"
 
+#: onboarding/components/InitialSetup.js:22
+msgid "Welcome, Let’s Setup Your Online Store"
+msgstr ""
+
 #: src/Support/Currency.php:372
 msgid "West African Cfa Franc"
 msgstr "فرنك غرب أفريقي"
 
-#: address.js:261
+#: address.js:256
 msgid "Western Sahara"
-msgstr "الصحراء الغربية"
+msgstr ""
 
 #: admin/invoices/index.php:8
 msgid "What are Invoices?"
@@ -13361,6 +14291,10 @@ msgstr "ما إذا كان بإمكان العملاء تغيير عدد الا�
 msgid "Whether or not customers can make subscription changes from the customer portal."
 msgstr "ما إذا كان بإمكان العملاء إجراء تغييرات على الاشتراك من لوحة تحكم العميل أم لا."
 
+#: src/Rest/ShippingProtocolRestServiceProvider.php:87
+msgid "Whether or not shipping is enabled"
+msgstr ""
+
 #: src/Rest/BumpRestServiceProvider.php:83
 msgid "Whether or not this bump is currently enabled and being shown to customers."
 msgstr "ما إذا كان هذا الـ bumb ممكّنًا حاليًا أم لا ويتم عرضه للعملاء."
@@ -13411,9 +14345,9 @@ msgstr "سنة"
 msgid "Yearly"
 msgstr "سنوي"
 
-#: address.js:262
+#: address.js:257
 msgid "Yemen"
-msgstr "اليمن"
+msgstr ""
 
 #: src/Support/Currency.php:373
 msgid "Yemeni Rial"
@@ -13422,6 +14356,10 @@ msgstr "ريال يمني"
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:216
 msgid "Yesterday"
 msgstr "أمس"
+
+#: onboarding/components/InitialSetup.js:33
+msgid "You are a few clicks away from adding e-commerce to your website. SureCart is a cloud powered e-commerce platform that is easy to use, lightweight, and lightning fast."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:46
 msgid "You are already collecting tax for this zone."
@@ -13439,9 +14377,13 @@ msgstr "أنت لست عميل في الوضع الاختباري."
 msgid "You are not currently a customer."
 msgstr "انت لست عميل حاليا."
 
-#: fetch.js:2076
+#: fetch.js:925
 msgid "You are probably offline."
-msgstr "ربما تكون غير متصل بالإنترنت."
+msgstr ""
+
+#: onboarding/components/ConfirmStoreDetails.js:46
+msgid "You can always change this later."
+msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:84
 msgid "You can create multiple single product templates, and assign each to different types of products, enabling a custom design for each group of similar products."
@@ -13480,17 +14422,17 @@ msgstr "لا يمكنك تمكين عمليات الدفع المتروكة حت
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr "لا يمكنك تمكين الضرائب ما لم يتم توفير عنوان ضريبي صالح"
 
-#: sc-subscription-payment-method.js:41
+#: sc-subscription-payment-method.js:46
 msgid "You do not have any payment methods."
-msgstr "لا يوجد لديك أي طرق دفع."
+msgstr ""
 
-#: sc-payment.js:46
+#: sc-payment.js:51
 msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:172
+#: sc-stripe-payment-request2.js:171
 msgid "You do not have any wallets set up in your browser."
-msgstr "ليس لديك أي محافظ إلكترونية معدّة في متصفحك."
+msgstr ""
 
 #: src/Middleware/ArchiveModelMiddleware.php:28
 #: src/Middleware/EditModelMiddleware.php:28
@@ -13505,26 +14447,26 @@ msgstr "غير مصرح لك القيام بهذه الحركة."
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
 msgstr "ليس لديك أي تسجيلات لضريبة القيمة المضافة خاصة بكل بلد. إذا كنت مسجلاً في متجر شامل ، فلن تحتاج إلى إنشاء تسجيلات ضريبية خاصة بكل بلد. إذا لم تكن كذلك ، فأضف تسجيلًا ضريبيًا لبدء تحصيل الضرائب."
 
-#: sc-purchase-downloads-list2.js:30
+#: sc-purchase-downloads-list2.js:34
 msgid "You don't have any downloads."
-msgstr "ليس لديك أي تنزيلات."
+msgstr ""
 
-#: sc-invoices-list.js:117
+#: sc-invoices-list.js:119
 msgid "You don't have any invoices."
-msgstr "ليس لديك أي فواتير."
+msgstr ""
 
 #: dashboard/components/RecentOrders.js:68
 #: sc-orders-list.js:121
 msgid "You don't have any orders."
 msgstr "ليس لديك أي طلبات."
 
-#: sc-payment-methods-list.js:123
+#: sc-payment-methods-list.js:148
 msgid "You don't have any saved payment methods."
-msgstr "ليس لديك أي طرق دفع محفوظة."
+msgstr ""
 
-#: sc-subscriptions-list.js:107
+#: sc-subscriptions-list.js:110
 msgid "You don't have any subscriptions."
-msgstr "لا يوجد لديك أي إشتراكات."
+msgstr ""
 
 #: settings/subscription-preservation/Reasons.js:109
 msgid "You don't have any survey answers. Please add at least one to collect cancellation feedback."
@@ -13538,26 +14480,30 @@ msgstr "ليس لديك أي تسجيلات ضريبية. أضف تسجيلًا 
 msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
 msgstr "لقد طلبت بالفعل رمزًا في آخر 60 ثانية. يرجى الانتظار قبل الطلب مرة أخرى."
 
-#: sc-login-provider2.js:76
-msgid "You have logged in successfully."
-msgstr "لقد قمت بتسجيل الدخول بنجاح."
+#: src/Models/ProvisionalAccount.php:45
+msgid "You have already set up your store."
+msgstr ""
 
-#: sc-charges-list.js:90
-#: sc-subscription-payment.js:105
+#: sc-login-provider2.js:80
+msgid "You have logged in successfully."
+msgstr ""
+
+#: sc-charges-list.js:92
+#: sc-subscription-payment.js:110
 msgid "You have no saved payment methods."
-msgstr "ليس لديك طرق دفع محفوظة."
+msgstr ""
 
 #: web/dashboard/orders/show.php:42
 msgid "You have not been charged for this order."
 msgstr "لم يتم تحصيل رسوم منك مقابل هذا الطلب."
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "You have not yet set a password. Please set a password for your account."
-msgstr "لم تقم بتعيين كلمة مرور بعد. يرجى تعيين كلمة مرور لحسابك."
+msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:96
 msgid "You have successfully set your password."
-msgstr "لقد نجحت في تعيين كلمة المرور الخاصة بك."
+msgstr ""
 
 #: components/unsaved-changes-warning/index.js:40
 #: templates/UpdateModel/UnsavedChangesWarning.js:38
@@ -13572,18 +14518,18 @@ msgstr "يجب إدخال مبلغ بين٪ 1 $ s و٪ 2 $ s"
 msgid "You must first purchase something to access your dashboard."
 msgstr "يجب عليك أولاً شراء شيء ما للوصول إلى لوحة التحكم الخاصة بك."
 
-#: sc-stripe-payment-request2.js:166
+#: sc-stripe-payment-request2.js:165
 msgid "You must serve this page over HTTPS to display express payment buttons."
-msgstr "يجب أن تخدم هذه الصفحة عبر HTTPS لعرض أزرار الدفع السريع."
+msgstr ""
 
-#: sc-customer-email.js:81
+#: sc-customer-email.js:91
 msgid "You won't receive further emails from us."
-msgstr "لن تتلقى المزيد من رسائل البريد الإلكتروني من قبلنا."
+msgstr ""
 
-#: sc-upcoming-invoice.js:169
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:182
+#: sc-upcoming-invoice.js:184
 msgid "You'll be switched to this plan"
-msgstr "سيتم تحويل حسابك الى هذه الباقة"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:62
 msgid "You're not collecting GST in Australia. Add a tax registration to start collecting tax."
@@ -13609,9 +14555,9 @@ msgstr "مفتاح API الخاص بك غير صحيح. يرجى التحقق م
 msgid "Your Connect platform is attempting to share an unverified bank account with a connected account."
 msgstr "تحاول المنصة المرتبطة الخاصة بك مشاركة حساب مصرفي لم يتم التحقق منه مع حساب متصل."
 
-#: sc-order-summary.js:64
+#: sc-order-summary.js:81
 msgid "Your cart is empty."
-msgstr "عربة التسوق فارغة."
+msgstr ""
 
 #: customers/modules/Details.js:61
 msgid "Your customer's email address."
@@ -13655,50 +14601,50 @@ msgstr "تم حفظ بريدك الإلكتروني وسلة التسوق حتى
 msgid "Your name"
 msgstr ""
 
-#: sc-subscription-next-payment2.js:92
+#: sc-subscription-next-payment2.js:97
 msgid "Your next payment is"
-msgstr "دفعتك القادمة هي"
+msgstr ""
 
-#: sc-subscription-details2.js:83
+#: sc-subscription-details2.js:87
 msgid "Your next payment is on"
-msgstr "موعد الدفعة القادمة بتاريخ"
+msgstr ""
 
-#: sc-checkout-unsaved-changes-warning2.js:24
+#: sc-checkout-unsaved-changes-warning2.js:23
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
-msgstr "دفعتك قيد المعالجة. قد يؤدي الخروج من هذه الصفحة إلى حدوث خطأ في طلبك. من فضلك لا تخرج من هذه الصفحة."
+msgstr ""
 
 #: Blocks/Form/edit.js:398
 #: sc-order-confirm-provider2.js:70
 msgid "Your payment was successful, and your order is complete. A receipt is on its way to your inbox."
 msgstr ""
 
-#: sc-subscription-details2.js:80
-#: sc-subscription.js:109
+#: sc-subscription-details2.js:84
+#: sc-subscription.js:155
 msgid "Your plan begins on"
-msgstr "خطة إشتراكك تبدأ بتاريخ"
+msgstr ""
 
-#: sc-subscription-details2.js:83
-#: sc-subscription.js:112
+#: sc-subscription-details2.js:87
+#: sc-subscription.js:158
 msgid "Your plan renews on"
-msgstr "يتم تجديد إشتراكك بتاريخ"
+msgstr ""
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "Your plan switches to"
-msgstr "تم تحويل إشتراكك لـ"
+msgstr ""
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled immediately. You cannot change your mind."
-msgstr "سيتم إلغاء إشتراكك على الفور. لا يمكنك تغيير رأيك."
+msgstr ""
 
-#: sc-subscription-details2.js:68
-#: sc-subscription.js:106
+#: sc-subscription-details2.js:72
+#: sc-subscription.js:152
 msgid "Your plan will be canceled on"
-msgstr "سيتم إلغاء إشتراكك بتاريخ"
+msgstr ""
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
-msgstr "سيتم إلغاء خطتك ولكنها ستبقى متاحة حتى نهاية فترة الفوترة الخاصة بك بتاريخ"
+msgstr ""
 
 #: Blocks/Form/Block.php:122
 msgid "Your platform attempted to create a custom account in a country that is not yet supported. Make sure that users can only sign up in countries supported by custom accounts."
@@ -13729,21 +14675,41 @@ msgstr "مساحة التخزين الخاصة بك منخفضة"
 msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
 msgstr "لا يبدو أن متجرك يستخدم اتصالاً آمنًا. مطلوب اتصال آمن (https) لاستخدام SureCart لمعالجة المعاملات المباشرة."
 
+#: onboarding/components/SetupDone.js:45
+msgid "Your store has been created."
+msgstr ""
+
+#: dashboard/Dashboard.js:88
+msgid "Your store is now connected to SureCart."
+msgstr ""
+
 #: settings/tax-region/TaxRegionSettings.js:55
 msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
 msgstr "ستحتاج إلى تحصيل ضريبة المبيعات إذا كنت تفي بمتطلبات حالة معينة ، تُعرف أيضًا باسم nexus. لبدء تحصيل الضرائب ، يجب عليك التسجيل لدى مصلحة الضرائب الحكومية المناسبة."
 
-#: address.js:263
+#: address.js:258
 msgid "Zambia"
-msgstr "زامبيا"
+msgstr ""
 
 #: src/Support/Currency.php:374
 msgid "Zambian Kwacha"
 msgstr "كواشا زامبيا"
 
-#: address.js:264
+#: address.js:259
 msgid "Zimbabwe"
-msgstr "زيمبابوي"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:181
+msgid "Zone Name"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:117
+msgid "Zone added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:111
+msgid "Zone updated"
+msgstr ""
 
 #. translators: Visible only in the front end, this warning takes the place of a faulty block.
 #: Blocks/CheckoutForm/Block.php:39
@@ -13776,6 +14742,10 @@ msgctxt "block keyword"
 msgid "amount"
 msgstr "المبلغ"
 
+#: onboarding/components/InitialSetup.js:98
+msgid "and"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "android"
@@ -13786,9 +14756,9 @@ msgctxt "block keyword"
 msgid "apple"
 msgstr "آبل"
 
-#: sc-upcoming-invoice.js:169
+#: sc-upcoming-invoice.js:182
 msgid "at the end of your billing cycle on"
-msgstr "في نهاية دورة الفوترة بتاريخ"
+msgstr ""
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -13968,9 +14938,9 @@ msgstr[3] "%d أيام"
 msgstr[4] ""
 msgstr[5] ""
 
-#: sc-quantity-select2.js:60
+#: sc-quantity-select2.js:66
 msgid "decrease number"
-msgstr "تقليل العدد"
+msgstr ""
 
 #: Blocks/Product/Description/block.json
 msgctxt "block keyword"
@@ -14070,6 +15040,11 @@ msgctxt "block keyword"
 msgid "form"
 msgstr "نموذج"
 
+#: products/modules/Shipping.js:20
+#: settings/shipping/rate/ShippingRateForm.js:39
+msgid "g"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "google"
@@ -14098,17 +15073,17 @@ msgctxt "block keyword"
 msgid "image"
 msgstr "صورة"
 
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:184
 msgid "immediately"
-msgstr "فوراً"
+msgstr ""
 
-#: sc-line-item-tax2.js:33
+#: sc-line-item-tax2.js:37
 msgid "included"
-msgstr "متضمن"
+msgstr ""
 
-#: sc-quantity-select2.js:60
+#: sc-quantity-select2.js:66
 msgid "increase number"
-msgstr "زيادة العدد"
+msgstr ""
 
 #: Blocks/Input/block.json
 #: Blocks/Password/block.json
@@ -14155,10 +15130,20 @@ msgctxt "block keyword"
 msgid "item"
 msgstr ""
 
+#: products/modules/Shipping.js:18
+#: settings/shipping/rate/ShippingRateForm.js:37
+msgid "kg"
+msgstr ""
+
 #: Blocks/LastName/block.json
 msgctxt "block keyword"
 msgid "last-name"
 msgstr "اسم العائلة"
+
+#: products/modules/Shipping.js:17
+#: settings/shipping/rate/ShippingRateForm.js:36
+msgid "lb"
+msgstr ""
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -14226,7 +15211,7 @@ msgctxt "block keyword"
 msgid "meta"
 msgstr "بيانات وصفية"
 
-#: price.js:50
+#: price.js:52
 msgid "mo"
 msgid_plural "%d mos"
 msgstr[0] ""
@@ -14306,10 +15291,14 @@ msgstr "notifications@surecart.com"
 msgid "of"
 msgstr "من"
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
+#: orders/modules/Fulfillment/CreateFulfillment.js:216
+msgid "of %d"
+msgstr ""
+
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "on"
-msgstr "في"
+msgstr ""
 
 #: util/translations.js:7
 #: util/translations.js:56
@@ -14320,9 +15309,9 @@ msgstr "في"
 msgid "once"
 msgstr "مرة واحدة"
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "or"
-msgstr "أو"
+msgstr ""
 
 #: components/MediaLibrary/index.js:178
 msgid "or drag and drop a file to upload."
@@ -14333,6 +15322,11 @@ msgstr "أو قم بسحب وإسقاط ملف للتحميل."
 msgctxt "Page slug"
 msgid "order-confirmation"
 msgstr "تأكيد الطلب"
+
+#: products/modules/Shipping.js:19
+#: settings/shipping/rate/ShippingRateForm.js:38
+msgid "oz"
+msgstr ""
 
 #: Blocks/Password/block.json
 msgctxt "block keyword"
@@ -14417,12 +15411,16 @@ msgctxt "block keyword"
 msgid "shipping"
 msgstr "شحن"
 
+#: settings/shipping/profile/Products.js:407
+msgid "shipping settings"
+msgstr ""
+
 #: src/WordPress/Pages/PageSeeder.php:90
 msgctxt "Shop page slug"
 msgid "shop"
 msgstr ""
 
-#: sc-product-line-item2.js:30
+#: sc-product-line-item2.js:39
 msgid "starting in %d day"
 msgid_plural "starting in %d days"
 msgstr[0] ""
@@ -14572,7 +15570,7 @@ msgstr[3] "%d أسابيع"
 msgstr[4] ""
 msgstr[5] ""
 
-#: price.js:48
+#: price.js:50
 msgid "wk"
 msgid_plural "%d wks"
 msgstr[0] ""
@@ -14595,7 +15593,7 @@ msgstr[3] "٪d سنوات"
 msgstr[4] ""
 msgstr[5] ""
 
-#: price.js:52
+#: price.js:54
 msgid "yr"
 msgid_plural "%d yrs"
 msgstr[0] ""
@@ -14605,6 +15603,6 @@ msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
 
-#: address.js:265
+#: address.js:260
 msgid "Åland Islands"
-msgstr "جزر آلاند"
+msgstr ""
