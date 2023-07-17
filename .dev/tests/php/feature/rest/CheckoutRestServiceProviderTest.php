@@ -2,9 +2,12 @@
 
 namespace SureCart\Tests\Feature\Rest;
 
+use SureCart\Account\AccountService;
+use SureCart\Account\AccountServiceProvider;
 use SureCart\Models\User;
 use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\CheckoutRestServiceProvider;
+use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 use WP_REST_Request;
@@ -23,6 +26,8 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				SettingsServiceProvider::class,
+				AccountServiceProvider::class,
 				CheckoutRestServiceProvider::class,
 				RequestServiceProvider::class,
 				ErrorsServiceProvider::class
@@ -42,6 +47,13 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
+
+		$account = \Mockery::mock(AccountService::class)->shouldAllowMockingProtectedMethods();
+		\SureCart::alias('account', function () use ($account) {
+			return $account;
+		});
+		$account->shouldReceive('fetchCachedAccount')->andReturn((object) ['claimed' => true]);
+
 
 		$requests->shouldReceive('makeRequest')
 			->once()
@@ -121,8 +133,14 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		\SureCart::alias('request', function () use ($requests) {
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
-
 		$requests->shouldReceive('makeRequest')->andReturn((object) ['live_mode' => false]);
+
+		\SureCart::alias('account', function () {
+			return (object) [
+				'claimed' => true,
+			];
+		});
+
 		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts/testid/finalize');
 		$request->set_param('live_mode', false);
 		$request->set_query_params(['form_id' => $live_form->ID]);

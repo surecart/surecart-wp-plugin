@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
-Requires at least: 5.9
+Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 1.11.0
+Stable tag: 2.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,84 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.2.1 - July 6th, 2023 =
+* Improvement: Improve loading performance of Stripe Payment Element by using deferred payment intents.
+* Fix: Thank you pages that redirect to the homepage being redirected to the blog page instead.
+* Fix: Change button text for media library to account for non-image files.
+* Fix: Validation issue with price input not allowing refunds to be fully refunded.
+
+= 2.2.0 - July 5th, 2023 =
+* New: Shipping and fulfillment support! Add custom shipping rates, location restrictions, tracking and fulfillment.
+* Improvement: Rearrange SureCart settings and combine some sections.
+
+= 2.1.4 - June 28, 2023 =
+* Improvement: Add filter to skip page and form seeding.
+* Fix: Compare at price cannot be cleared due to firefox fix in previous version.
+* Fix: Fix conflict with Bricks Builder shop page dropdown width.
+* Fix: Disallow SureCart Products to be selected as menu items as this is not currently supported.
+
+= 2.1.3 - June 21, 2023 =
+* Improvement: Make subscription saver description text darker to better comply with accessiblity.
+* Fix: Coupon redemption dates incorrect on admin.
+* Fix: Conflict with WooCommerce permalinks and SureCart permalinks.
+* Fix: Quantity selector missing from line items on instant checkout page.
+* Fix: Display of some zero decimal currencies.
+
+= 2.1.2 - June 15, 2023 =
+* Improvement: Update wording in order bump condition selector.
+* Improvement: Updated translations.
+* Fix: Product pages not showing up in WordPress sitemap.
+* Fix: Firstname, Lastname always being required by default.
+* Fix: Floating cart not enabled by default.
+* Fix: Issue with incomplete store setups not able to make test checkouts.
+* Fix: Decimal point issue on adding prices in newest version of Firefox.
+
+
+= 2.1.1 - June 14, 2023 =
+* HotFix: Processors not showing for some users on instant checkout pages.
+
+= 2.1.0 - June 13, 2023 =
+* New: Better, quicker onboarding for new stores.
+* New: Visit Store link in WordPress admin bar.
+* Improvement: Settings page sticky header.
+* Fix: Rename magic sign-in.
+* Fix: Change "Pro" to "Premium".
+* Fix: Issue with product pages not loading for some servers that don't have support for NumberFormatter.
+* Fix: Z-index issue with product page header and WordPress menu.
+
+= 2.0.1 - June 7, 2023 =
+* New: Archive and delete option on upgrade groups.
+* New: Ability to disable purchase/download emails.
+* New: Cancel orders and manually mark orders as paid.
+* Improvement: Improved UI when updating subscription price on admin subscription page.
+* Improvement: Rename "Status" to "Product Page" to clarify product status.
+* Improvement: Truncate mobile line items to max of 3 lines.
+* Improvement: Hide product image on line items below certain widths to prevent squishing text.
+* Improvement: Update roles to allow multisite installations to manage their own stores.
+* Fix: Show notice if subscription payoff is not available for store.
+* Fix: Product description bullet points css issue on admin screen.
+* Fix: Coupon overflow issue on mobile when coupon field is expanded by default.
+
+= 2.0.0 - June 1, 2023 =
+* New: Customizable product pages.
+* New: Customizable shop page.
+* New: Elementor product page customization.
+* New: Customer background sync for imported customers.
+* New: SEO metadata and product schema integration.
+* Improvement: Don't show price decimal places if price is whole number.
+* Improvement: Update component dependencies.
+
+= 1.11.2 - May 23, 2023 =
+* New: Add setting to automaticaly sync WP users with SureCart customers upon dashboard login.
+* Fix: Showing dollar as currency in recovered revenue section.
+* Fix: Customer dashboard logout link not redirecting back to customer dashboard on mobile.
+* Fix: Update subscription menu item showing on admin dashboard for finite subscriptions.
+
+= 1.11.1 - May 19, 2023 =
+* Fix: Update Merchant UI to account for imported subscriptions.
+* Fix: TutorLMS index pages sometimes allowing access to restricted content without purchase.
+* Fix: PHP debug notice in CartService.php.
 
 = 1.11.0 - May 11, 2023 =
 * New: Cart icon in menu for classic and FSE themes.

@@ -8,7 +8,13 @@ import { addQueryArgs } from '@wordpress/url';
 import SelectModel from './SelectModel';
 
 export default (props) => {
-	const { name, requestQuery = {}, display, exclude = [] } = props;
+	const {
+		name,
+		requestQuery = {},
+		display,
+		exclude = [],
+		fetchOnLoad = false,
+	} = props;
 	const [query, setQuery] = useState(null);
 	const [choices, setChoices] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +48,7 @@ export default (props) => {
 
 		const queryArgs = {
 			query,
-			page: pagination.page,
+			page: pagination?.enabled ? pagination.page : 1,
 			per_page: pagination.per_page,
 			...requestQuery,
 		};
@@ -79,7 +85,13 @@ export default (props) => {
 	useEffect(() => {
 		if (query === null || isLoading) return;
 		fetchData(pagination);
-	}, [pagination]);
+	}, [pagination.per_page, pagination.page, query]);
+
+	useEffect(() => {
+		if (fetchOnLoad) {
+			setQuery('');
+		}
+	}, [fetchOnLoad]);
 
 	return (
 		<SelectModel

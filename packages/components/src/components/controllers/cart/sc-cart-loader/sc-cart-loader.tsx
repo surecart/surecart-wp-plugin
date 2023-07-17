@@ -6,7 +6,7 @@ import uiStore from '@store/ui';
 @Component({
   tag: 'sc-cart-loader',
   styleUrl: 'sc-cart-loader.scss',
-  shadow: true,
+  shadow: false,
 })
 export class ScCartLoader {
   /** The form id to use for the cart. */
@@ -19,6 +19,11 @@ export class ScCartLoader {
   @Prop() template: string;
 
   render() {
+    // check for forms.
+    if (document.querySelector('sc-checkout')) {
+      return;
+    }
+
     // clear the order if it's already paid.
     const order = getOrder(this.formId, this.mode);
     if (order?.status === 'paid') {

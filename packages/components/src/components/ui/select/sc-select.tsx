@@ -70,6 +70,8 @@ export class ScSelectDropdown {
   /** Is search enabled? */
   @Prop() search: boolean;
 
+  @Prop() closeOnSelect: boolean = true;
+
   /** The input's name attribute. */
   @Prop({ reflect: true }) name: string;
 
@@ -82,7 +84,22 @@ export class ScSelectDropdown {
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
-  @Prop() position: 'bottom-left' | 'bottom-right' = 'bottom-right';
+  @Prop() position: 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right' = 'bottom-right';
+
+  /** The placement of the dropdown. */
+  @Prop({ reflect: true }) placement:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end' = 'bottom-start';
 
   /**
    * This will be true when the control is in an invalid state. Validity is determined by props such as `type`,
@@ -175,7 +192,10 @@ export class ScSelectDropdown {
     return false;
   }
 
-  isChecked({ value }) {
+  isChecked({ value, checked = false }) {
+    if (checked) {
+      return true;
+    }
     return this.value === value;
   }
 
@@ -201,6 +221,10 @@ export class ScSelectDropdown {
       this.value = '';
     } else {
       this.value = value;
+    }
+
+    if (this.closeOnSelect) {
+      this.searchTerm = '';
     }
 
     this.scChange.emit();
@@ -432,14 +456,18 @@ export class ScSelectDropdown {
             exportparts="trigger, panel"
             disabled={this.disabled}
             open={this.open}
+            closeOnSelect={this.closeOnSelect}
             position={this.position}
+            placement={this.placement}
             hoist={this.hoist}
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}
           >
             <div class="trigger" slot="trigger">
-              <div class="select__value">{this.displayValue() || this.placeholder || 'Select...'}</div>
+              <div class="select__value">
+                <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
+              </div>
               <sc-icon exportparts="base:caret" class="select__caret" name="chevron-down" />
             </div>
 
@@ -451,6 +479,7 @@ export class ScSelectDropdown {
                 class="search"
                 clearable
                 part="search"
+                value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}

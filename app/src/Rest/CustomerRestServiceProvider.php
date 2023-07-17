@@ -55,6 +55,49 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 		return $this->schema;
 	}
 
+		/**
+		 * Get our sample schema for a post.
+		 *
+		 * @return array The sample schema for a post
+		 */
+	public function sync_schema() {
+		if ( $this->sync_schema ) {
+			// Since WordPress 5.3, the schema can be cached in the $schema property.
+			return $this->sync_schema;
+		}
+
+		$this->schema = [
+			// This tells the spec of JSON Schema we are using which is draft 4.
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			// The title property marks the identity of the resource.
+			'title'      => $this->endpoint,
+			'type'       => 'object',
+			// In JSON Schema you can specify object properties in the properties attribute.
+			'properties' => [
+				'create_user' => [
+					'description' => esc_html__( 'Create the WordPress user.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'default'     => true,
+				],
+				'run_actions' => [
+					'description' => esc_html__( 'Run any purchase syncing actions.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'default'     => true,
+				],
+				'dry_run'     => [
+					'description' => esc_html__( 'Dry run the sync.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit', 'embed' ],
+					'default'     => false,
+				],
+			],
+		];
+
+		return $this->schema;
+	}
+
 	/**
 	 * Register REST Routes
 	 *
@@ -72,6 +115,21 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+
+		// sync with SureCart.
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/sync',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'sync' ),
+					'permission_callback' => [ $this, 'sync_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'sync_schema' ],
 			]
 		);
 
@@ -99,6 +157,17 @@ class CustomerRestServiceProvider extends RestServiceProvider implements RestSer
 	public function connect_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_customers' );
 	}
+
+	/**
+	 * A WordPress user can read their own customer record.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return boolean
+	 */
+	public function sync_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_customers' );
+	}
+
 
 	/**
 	 * A WordPress user can read their own customer record.

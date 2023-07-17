@@ -95,10 +95,10 @@ export default ({ id, license }) => {
 			loading={loading}
 			header_action={
 				!loading && (
-					<ScTag type="info">
+					<ScTag type="info" style={{ minWidth: 'max-content' }}>
 						{sprintf(
 							__('%1s of %2s Activations Used'),
-							parseInt(license?.activation_count || 0),
+							parseInt(license?.activations_count || 0),
 							parseInt(license?.activation_limit) || '∞'
 						)}
 					</ScTag>

@@ -1,0 +1,36 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-buy-buttons",
+	"title": "Product Buy Buttons",
+	"description": "Displays product buy and add to cart buttons",
+	"category": "surecart",
+	"keywords": ["button", "buy", "product"],
+	"supports": {
+		"anchor": true,
+		"align": ["wide", "full"],
+		"html": false,
+		"__experimentalExposeControlsToChildren": true,
+		"spacing": {
+			"blockGap": true,
+			"margin": ["top", "bottom"],
+			"__experimentalDefaultControls": {
+				"blockGap": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		}
+	},
+	"style": ["file:./preload.css", "surecar-themes-default"],
+	"script": "surecart-components"
+}

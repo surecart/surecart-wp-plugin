@@ -23,12 +23,14 @@ export default ({ id }) => {
 				'getEntityRecords',
 				queryArgs
 			);
+
 			const products = (
 				select(coreStore).getEntityRecords(...queryArgs) || []
 			).filter(
 				(value, index, self) =>
 					self.findIndex((v) => v.id === value.id) === index
 			);
+
 			return {
 				products,
 				loading: loading && !products?.length,

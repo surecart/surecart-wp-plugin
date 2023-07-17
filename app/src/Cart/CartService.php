@@ -119,9 +119,10 @@ class CartService {
 	 * @return array
 	 */
 	public function addCartMenu( $items, $args ) {
-		$id = is_int( $args->menu ) ? $args->menu : $args->menu->term_id;
+		$id = is_int( $args->menu ) ? $args->menu : ( $args->menu->term_id ?? false );
 
-		if ( ! $this->isMenuIconEnabled( $id ) || ! $this->isCartEnabled() ) {
+		// if there is no id, or the menu icon is not enabled, or the cart is disabled, return.
+		if ( ! $id || ! $this->isMenuIconEnabled( $id ) || ! $this->isCartEnabled() ) {
 			return $items;
 		}
 
@@ -172,6 +173,12 @@ class CartService {
 			return '';
 		}
 
+		// get cart block.
+		$blocks = parse_blocks( $cart->post_content );
+		if ( ! empty( $blocks[0] ) ) {
+			$attributes = $blocks[0]['attrs'];
+		}
+
 		ob_start();
 		?>
 
@@ -181,7 +188,7 @@ class CartService {
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-			style="font-size: 16px"
+			style="font-size: 16px; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
 			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
 		</sc-cart>
@@ -234,7 +241,7 @@ class CartService {
 	 * @return string
 	 */
 	public function isFloatingIconEnabled() {
-		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
+		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', 'floating_icon' );
 		return in_array( $cart_icon_type, [ 'floating_icon', 'both' ] );
 	}
 

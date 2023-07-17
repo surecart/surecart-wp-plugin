@@ -1,14 +1,27 @@
+import { ObservableMap } from '@stencil/store';
 import { IconLibraryMutator, IconLibraryResolver } from './components/ui/icon/library';
 
 declare global {
   interface Window {
     grecaptcha: any;
-    dataLayer: any;
-    gtag: any;
+    surecart?: {
+      product?: {
+        store: ObservableMap<any>;
+        state: any;
+        update: Function;
+      };
+    };
     wp: {
       apiFetch: any;
       blocks: any;
       i18n: any;
+    };
+    dataLayer: any;
+    gtag: any;
+    sc?: {
+      store?: {
+        product?: any;
+      };
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;
@@ -24,10 +37,20 @@ declare global {
       nonce_endpoint: string;
       recaptcha_site_key: string;
       theme: string;
+      product_data: {
+        checkout_link: string;
+        mode: 'live' | 'test';
+        form: {
+          ID: number;
+        };
+        product: Product;
+      };
       pages: {
         dashboard: string;
         checkout: string;
       };
+      is_claimed: string;
+      claim_url: string;
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -47,6 +70,7 @@ export interface ChoiceItem extends Object {
   value: string;
   label: string;
   disabled?: boolean;
+  checked?: boolean;
   choices?: ChoiceItem[];
   suffix?: string;
   icon?: string;
@@ -79,6 +103,7 @@ export interface Price {
   created_at: number;
   updated_at: number;
   product?: Product | string;
+  position: number;
   metadata: { [key: string]: string };
 }
 
@@ -209,10 +234,18 @@ export interface Product extends Object {
   tax_category: string;
   tax_enabled: boolean;
   purchase_limit: number;
+  permalink: string;
+  weight: number;
+  weight_unit: 'kg' | 'lb' | 'g' | 'oz';
   prices: {
     object: 'list';
     pagination: Pagination;
     data: Array<Price>;
+  };
+  product_medias: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<ProductMedia>;
   };
   downloads: {
     object: 'list';
@@ -261,6 +294,7 @@ export interface LineItem extends Object {
   name: string;
   object: string;
   quantity: number;
+  checkout: string | Checkout;
   bump: string | Bump;
   fees?: {
     object: 'list';
@@ -277,6 +311,13 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+}
+
+export interface DeletedItem {
+  cache_status: string;
+  deleted: boolean;
+  id: string;
+  object: string;
 }
 
 export interface Fee {
@@ -416,10 +457,33 @@ export interface Order extends Object {
   order_type?: 'checkout' | 'subscription';
   statement_url?: string;
   status?: OrderStatus;
+  shipment_status?: OrderShipmentStatus;
   checkout?: Checkout | string;
   created_at: number;
   updated_at: number;
 }
+
+export interface ShippingChoice {
+  amount: number;
+  checkout: string | Checkout;
+  currency: string;
+  id: string;
+  object: 'shipping_choice';
+  shipping_method: string | ShippingMethod;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ShippingMethod {
+  name: string;
+  description: string;
+  id: string;
+  object: 'shipping_method';
+  position: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Checkout extends Object {
   id?: string;
   status?: 'canceled' | 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'processing';
@@ -484,8 +548,16 @@ export interface Checkout extends Object {
   discount_amount?: number;
   discount?: DiscountResponse;
   billing_address?: string | Address;
+  shipping_amount?: number;
   shipping_address?: string | Address;
   shipping_enabled?: boolean;
+  shipping_choices?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<ShippingChoice>;
+  };
+  selected_shipping_choice?: string | ShippingChoice;
+  selected_shipping_choice_required: boolean;
   processor_data?: ProcessorData;
   tax_identifier?: {
     number: string;
@@ -493,6 +565,27 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+}
+
+export interface ShippingMethod {
+  id: string;
+  object: 'shipping_method';
+  description: string | null;
+  name: string;
+  position: number;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ShippingChoice {
+  id: string;
+  object: 'shipping_choice';
+  amount: number;
+  currency: string;
+  checkout: string | Checkout;
+  shipping_method: string | ShippingMethod;
+  created_at: number;
+  updated_at: number;
 }
 
 export interface ProcessorData {
@@ -655,6 +748,9 @@ export type SubscriptionStatus = 'incomplete' | 'trialing' | 'active' | 'past_du
 
 export type CheckoutStatus = 'draft' | 'finalized' | 'paid' | 'payment_intent_canceled' | 'payment_failed' | 'requires_approval';
 export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'canceled';
+export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
+export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
+export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -837,6 +933,36 @@ export interface Address extends Object {
   state?: string;
   postal_code?: string;
   country?: string;
+}
+
+export interface Fulfillment {
+  id: string;
+  object: 'fulfillment';
+  number: string;
+  shipment_status: FulfillmentStatus;
+  trackings: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Tracking>;
+  };
+  fulfillment_items: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<FulfillmentItem>;
+  };
+}
+
+export interface FulfillmentItem {
+  id: string;
+  line_item: LineItem;
+  quantity: number;
+  fulfillment: string | Fulfillment;
+}
+
+export interface Tracking {
+  courier_name?: string;
+  number: string;
+  url: string;
 }
 
 export interface PriceData extends Object {
