@@ -74,7 +74,7 @@ export default () => {
 		},
 		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
-	
+	console.log(checkout);
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
 

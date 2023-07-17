@@ -55,6 +55,7 @@ export default ({ checkout, busy, loading }) => {
 				}),
 				data: {
 					selected_shipping_choice: shippingId, // update the shipping choice.
+                    customer_id: checkout?.customer_id 
 				},
 			});
 			
