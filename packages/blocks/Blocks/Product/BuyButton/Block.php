@@ -103,15 +103,15 @@ class Block extends BaseBlock {
 		}
 
 		// set width class.
-		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
+		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 
 		ob_start();
 		?>
 		<sc-product-buy-button
 			<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
-			class="wp-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
+			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
-			<a class="wp-block-button__link wp-element-button sc-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+			<a class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
 				<?php echo $attributes['add_to_cart'] ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
 			</a>

@@ -13,6 +13,7 @@ export default function save({ attributes, className }) {
 	const blockProps = useBlockProps.save({
 		className: classnames(className, {
 			'wp-block-buttons': true,
+			'sc-block-buttons': true,
 			'is-layout-flex': true,
 			'has-custom-font-size': fontSize || style?.typography?.fontSize,
 			[`is-content-justification-${contentJustification}`]:
