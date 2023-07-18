@@ -43,14 +43,23 @@ export default ({
 					return true;
 				})
 				.map((price) => {
-					return {
-						value: price?.id,
-						label: `${formatNumber(price.amount, price.currency)}${
-							price?.archived ? ' (Archived)' : ''
-						}`,
-						suffix: intervalString(price, { showOnce: true }),
-					};
-				}),
+					const variants = product?.variants?.data || [];
+					return variants
+						.sort((a, b) => a?.position - b?.position)
+						.map((variant) => {
+							return {
+								value: price.id,
+								label: `${formatNumber(price.amount, price.currency)}${
+									price?.archived ? ' (Archived)' : ''
+								}`,
+								suffix: intervalString(price, { showOnce: true }),
+								tag: variant?.labels, // Add the variant label to the choice
+								detail: {
+									variant_id: variant?.id,
+								},
+							};
+					});
+				}).flat(),
 		};
 	});
 
@@ -69,7 +78,10 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
-				onSelect(e.target.value);
+				onSelect({
+					price_id: e.target.value,
+					...e?.detail
+				});
 			}}
 			choices={choices}
 			onScScrollEnd={onScrollEnd}
