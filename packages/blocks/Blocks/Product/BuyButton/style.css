@@ -39,7 +39,7 @@
   container-type: inline-size;
 }
 
-@container (width > 400px) {
+@container (width > 325px) {
   .sc-block-buttons > .sc-block-button.sc-block-button__width-25 {
     width: calc(25% - (var(--wp--style--block-gap, 0.5em) * 0.75));
   }
