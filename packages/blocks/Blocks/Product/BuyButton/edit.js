@@ -8,12 +8,7 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import {
-	Button,
-	ButtonGroup,
-	PanelBody,
-	TextControl,
-} from '@wordpress/components';
+import { Button, ButtonGroup, PanelBody } from '@wordpress/components';
 import {
 	AlignmentControl,
 	BlockControls,
@@ -105,11 +100,11 @@ export default (props) => {
 				})}
 			>
 				<RichText
-					aria-label={__('Button text')}
-					placeholder={__('Add text…')}
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
 					className={classnames(
 						className,
-						'wp-block-button__link',
+						'sc-block-button__link',
 						colorProps.className,
 						borderProps.className,
 						{

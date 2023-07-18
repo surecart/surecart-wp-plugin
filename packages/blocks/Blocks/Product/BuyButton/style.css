@@ -3,7 +3,8 @@
   display: inline-block;
   text-align: center;
   word-break: break-word;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
+  width: 100%;
 }
 .sc-block-button__link.aligncenter {
   text-align: center;

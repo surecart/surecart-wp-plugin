@@ -117,11 +117,21 @@ class Block extends BaseBlock {
 			</a>
 		</sc-product-buy-button>
 
-		<sc-product-price-modal <?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>>
-			<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
-		</sc-product-price-modal>
-
 		<?php
+
+		// add this to the footer to make sure it's not covered by any other elements
+		// and can escape the container query.
+		add_action(
+			'wp_footer',
+			function() use ( $attributes, $product ) {
+				?>
+		<sc-product-price-modal <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
+				<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
+		</sc-product-price-modal>
+				<?php
+			}
+		);
+
 		return ob_get_clean();
 	}
 }
