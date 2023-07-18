@@ -1,16 +1,72 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { ScFlex } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ variantsEnabled, setVariantsEnabled }) => {
+	const renderProductType = (isVariant = false) => {
+		return (
+			<div
+				onClick={() => {
+					setVariantsEnabled(isVariant);
+				}}
+				css={css`
+					border: 2px solid
+						${isVariant && variantsEnabled
+							? 'var(--sc-color-info-500)'
+							: !isVariant && !variantsEnabled
+							? 'var(--sc-color-info-500)'
+							: '#eee'};
+					flex: 1;
+					border-radius: 4px;
+					padding: 1rem 3rem 1rem 1rem;
+					cursor: pointer;
+					color: var(--sc-input-label-color);
+					font-family: var(--sc-font-sans);
+					font-size: var(--sc-font-size-medium);
+					font-weight: var(--sc-font-weight-normal);
+					transition: border-color 0.2s ease-in-out;
+				`}
+			>
+				<label
+					css={css`
+						color: var(--sc-color-black);
+						font-size: var(--sc-font-size-large);
+						display: block;
+						margin-bottom: 1rem;
+					`}
+				>
+					{isVariant
+						? __('Variation options', 'surecart')
+						: __('Price options', 'surecart')}
+				</label>
+				<span
+					css={css`
+						color: rgb(107, 114, 128);
+						font-size: var(--sc-font-size-medium);
+					`}
+				>
+					{isVariant
+						? __(
+								'Add variation option choices like size and color.',
+								'surecart'
+						  )
+						: __(
+								'Add optional multiple one item, subscription and installment price choices.',
+								'surecart'
+						  )}
+				</span>
+			</div>
+		);
+	};
+
 	return (
-		<div css={css`display: flex gap: var(--sc-spacing-small);`}>
+		<div>
 			<label
 				css={css`
 					font-family: var(--sc-font-sans);
 					font-size: var(--sc-font-size-medium);
 					font-weight: var(--sc-font-weight-normal);
-					gap: var(--sc-input-label-margin);
 					display: inline-block;
 					color: var(--sc-input-label-color);
 					font-weight: var(--sc-input-label-font-weight);
@@ -20,111 +76,13 @@ export default ({ variantsEnabled, setVariantsEnabled }) => {
 				`}
 			>
 				{__('Product type', 'surecart')}
+				<span style={{ color: 'red' }}> *</span>
 			</label>
 
-			<div
-				css={css`
-					display: flex;
-					gap: var(--sc-spacing-small);
-				`}
-			>
-				<div
-					onClick={() => {
-						setVariantsEnabled(false);
-					}}
-					css={css`
-						border: 2px solid
-							${!variantsEnabled
-								? 'var(--sc-color-info-500)'
-								: '#eee'};
-						flex: 1;
-						border-radius: 4px;
-						padding: 0.8rem 1rem;
-						cursor: pointer;
-						color: var(--sc-input-label-color);
-						font-family: var(--sc-font-sans);
-						font-size: var(--sc-font-size-medium);
-						font-weight: var(--sc-font-weight-normal);
-						transition: border-color 0.2s ease-in-out;
-						:hover {
-							border: 2px solid
-								${!variantsEnabled
-									? 'var(--sc-color-info-500)'
-									: '#eee'};
-						}
-					`}
-				>
-					<label
-						css={css`
-							color: var(--sc-color-black);
-							font-size: var(--sc-font-size-large);
-							display: block;
-							margin-bottom: 1rem;
-						`}
-					>
-						{__('Price options', 'surecart')}
-					</label>
-					<span
-						css={css`
-							color: var(--sc-input-label-color);
-							font-size: var(--sc-font-size-medium);
-						`}
-					>
-						{__(
-							'Add optional multiple one item, subscription and installment price choices.',
-							'surecart'
-						)}
-					</span>
-				</div>
-				<div
-					onClick={() => {
-						setVariantsEnabled(true);
-					}}
-					css={css`
-						border: 2px solid
-							${variantsEnabled
-								? 'var(--sc-color-info-500)'
-								: '#eee'};
-						flex: 1;
-						border-radius: 4px;
-						padding: 0.8rem 1rem;
-						cursor: pointer;
-						color: var(--sc-input-label-color);
-						font-family: var(--sc-font-sans);
-						font-size: var(--sc-font-size-medium);
-						font-weight: var(--sc-font-weight-normal);
-						transition: border-color 0.2s ease-in-out;
-						:hover {
-							border: 2px solid
-								${variantsEnabled
-									? 'var(--sc-color-info-500)'
-									: '#eee'};
-						}
-					`}
-				>
-					<label
-						css={css`
-							color: var(--sc-color-black);
-							font-size: var(--sc-font-size-large);
-							display: block;
-							margin-bottom: 1rem;
-						`}
-					>
-						{__('Variation options', 'surecart')}
-					</label>
-					<span
-						css={css`
-							color: var(--sc-input-label-color);
-							font-size: var(--sc-font-size-medium);
-						`}
-					>
-						{__(
-							'Add variation option choices like size and color.',
-							'surecart'
-						)}
-					</span>
-				</div>
-			</div>
+			<ScFlex style={{ gap: '2rem' }}>
+				{renderProductType(false)}
+				{renderProductType(true)}
+			</ScFlex>
 		</div>
 	);
 };
