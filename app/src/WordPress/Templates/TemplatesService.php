@@ -187,8 +187,6 @@ class TemplatesService {
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;
 
-		var_dump( $post );
-
 		return $posts;
 	}
 
