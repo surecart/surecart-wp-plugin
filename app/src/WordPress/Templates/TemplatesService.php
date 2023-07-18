@@ -168,10 +168,10 @@ class TemplatesService {
 		$post->ping_status       = 'closed';
 		$post->post_password     = '';
 		$post->post_excerpt      = '';
-		$post->post_date         = date( 'Y-m-d H:i:s', $product->created_at );
-		$post->post_date_gmt     = gmdate( 'Y-m-d H:i:s',$product->created_at );
-		$post->post_modified     = date( 'Y-m-d H:i:s', $product->updated_at );
-		$post->post_modified_gmt = gmdate( 'Y-m-d H:i:s', $product->updated_at );
+		$post->post_date         = date_i18n( 'Y-m-d H:i:s', $product->created_at );
+		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $product->created_at, true );
+		$post->post_modified     = date_i18n( 'Y-m-d H:i:s', $product->updated_at );
+		$post->post_modified_gmt = date_i18n( 'Y-m-d H:i:s', $product->updated_at, true );
 		$post->ID                = 999999999;
 		$posts                   = array( $post );
 
@@ -186,6 +186,8 @@ class TemplatesService {
 		$wp_query->is_404            = false;
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;
+
+		var_dump( $post );
 
 		return $posts;
 	}
