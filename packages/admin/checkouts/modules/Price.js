@@ -16,7 +16,7 @@ import {
 	ScForm,
 } from '@surecart/components-react';
 
-export default ({ price, quantity, onRemove, onChange, full_amount, total_amount }) => {
+export default ({ price, quantity, onRemove, onChange, subtotal_amount, ad_hoc_amount }) => {
 	const imageUrl = price?.product?.image_url;
 	const [open, setOpen] = useState(false);
 	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
@@ -107,7 +107,7 @@ export default ({ price, quantity, onRemove, onChange, full_amount, total_amount
 						<ScFormatNumber
 							type="currency"
 							currency={price?.currency || 'usd'}
-							value={!!price?.ad_hoc ? total_amount : full_amount}
+							value={!!price?.ad_hoc && ad_hoc_amount ? ad_hoc_amount : subtotal_amount}
 						/>
 						{!!price?.ad_hoc && (
 							<ScButton

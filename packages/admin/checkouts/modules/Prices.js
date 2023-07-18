@@ -154,15 +154,15 @@ export default ({ checkout, loading, busy }) => {
 				<ScTableCell style={{ width: '20%' }} slot="head"></ScTableCell>
 
 				{(line_items || []).map((line_item) => {
-					const { id, price, quantity, full_amount, total_amount } = line_item;
+					const { id, price, quantity, subtotal_amount, ad_hoc_amount } = line_item;
 
 					return (
 						<Price
 							key={id}
 							price={price}
 							quantity={quantity}
-							full_amount={full_amount}
-							total_amount={total_amount}
+							subtotal_amount={subtotal_amount}
+							ad_hoc_amount={ad_hoc_amount}
 							onRemove={() => onRemove(id)}
 							onChange={(data) => onChange(id, data)}
 							checkout={checkout}

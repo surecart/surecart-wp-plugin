@@ -70,7 +70,7 @@ export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMe
 	return (
 		<>
 			<ScButton type="primary" onClick={() => setOpen(true)}>
-				{__('Collect Payment', 'surecart')}
+				{__('Add Payment Method', 'surecart')}
 			</ScButton>
 			<ScDialog
                 label={__('Choose a payment method', 'surecart')}
@@ -139,7 +139,7 @@ export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMe
                                 float: 'right',
                             }}
                         >
-                            <span>{__('Add Payment Method', 'surecart')}</span>
+                            <span>{__('Add Method', 'surecart')}</span>
                         </ScButton>
                     )
                 }
