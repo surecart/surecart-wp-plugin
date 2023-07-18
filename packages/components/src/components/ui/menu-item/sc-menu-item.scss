@@ -56,15 +56,6 @@
       margin-left: var(--sc-spacing-x-small);
     }
   }
-  .menu-item__tag {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-
-    ::slotted(*) {
-      margin-left: var(--sc-spacing-x-small);
-    }
-  }
 }
 
 .menu-item .menu-item__check {
