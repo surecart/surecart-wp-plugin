@@ -65,9 +65,9 @@ export default ({
 						ad_hoc={true}
 						open={false}
 						value={choices[0]?.id}
-						onSelect={(id) => {
-							if (id) {
-								setChoices([{ id, quantity: 1 }]);
+						onSelect={({price_id}) => {
+							if (price_id) {
+								setChoices([{ price_id, quantity: 1 }]);
 							} else {
 								setChoices([]);
 							}
