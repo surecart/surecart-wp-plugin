@@ -179,7 +179,7 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Product', 'surecart'),
 		baseURL: 'surecart/v1/products',
-		baseURLParams: { context: 'edit' },
+		baseURLParams: { context: 'edit', expand: ['variants', 'variant_options', 'variant_options.variant_values'] },
 	},
 	{
 		name: 'product-media',

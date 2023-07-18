@@ -15,32 +15,64 @@ import arrayMove from 'array-move';
 import Error from '../../../components/Error';
 import { ScButton, ScForm, ScIcon, ScInput } from '@surecart/components-react';
 
-export default ({ onRequestClose, id }) => {
+export default ({ onRequestClose, id, product, updateProduct }) => {
 	const [optionName, setOptionName] = useState('');
-	const [optionValues, setOptionValues] = useState([{ index: 1, name: '' }]);
+	const [optionValues, setOptionValues] = useState([{ index: 1, label: '' }]);
 	const [loading, setLoading] = useState(false);
-	const { editEntityRecord } = useDispatch(coreStore);
-
-	const applyDrag = async (oldIndex, newIndex) => {
-		const result = arrayMove(optionValues, oldIndex, newIndex);
-		// edit entity record to update indexes.
-		(result || []).forEach((optionValue, index) =>
-			editEntityRecord('surecart', 'variant_values', optionValue, {
-				position: index,
-			})
-		);
-	};
-
+	const [isSaving, setIsSaving] = useState(false);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
-	const { saveEntityRecord } = useDispatch(coreStore);
+	const applyDrag = (oldIndex, newIndex) => {
+		setOptionValues(arrayMove(optionValues, oldIndex, newIndex));
+	};
 
 	const onSubmit = async (e) => {
 		try {
+			// Get processed variant values.
+			const variantValues = optionValues.map((optionValue) => {
+				// Remove empty option values.
+				if (optionValue.label === '') {
+					return;
+				}
+
+				return {
+					label: optionValue.label,
+					position: optionValue.index,
+				};
+			});
+
 			setError(null);
-			setLoading(true);
-			await saveOption();
+			setIsSaving(true);
+			const response = await saveEntityRecord(
+				'surecart',
+				'variant-option',
+				{
+					name: optionName,
+					variant_values: variantValues,
+					product_id: id,
+				},
+				{ throwOnError: true }
+			);
+
+			updateProduct({
+				...product,
+				variant_options: {
+					...(product.variant_options || {}),
+					data: [
+						...(product.variant_options?.data || []),
+						{
+							...response,
+							variant_values: {
+								data: variantValues,
+							},
+						},
+					],
+				},
+			});
+
+			setIsSaving(false);
 			createSuccessNotice(__('Variation option saved.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -48,55 +80,33 @@ export default ({ onRequestClose, id }) => {
 		} catch (e) {
 			console.error(e);
 			setError(e);
-			setLoading(false);
+			setIsSaving(false);
 		}
 	};
 
-	const onChangeOptionValue = async (index, newName) => {
+	const onChangeOptionValue = async (index, newLabel) => {
 		const updatedOptionValues = optionValues.map((optionValue) =>
 			optionValue.index === index
-				? { ...optionValue, name: newName }
+				? { ...optionValue, label: newLabel }
 				: optionValue
 		);
 
 		// Check if the last optionValue has a name, if yes, add a new empty optionValue
 		const lastOptionValue =
 			updatedOptionValues[updatedOptionValues.length - 1];
-		if (lastOptionValue.name !== '') {
+		if (lastOptionValue.label !== '') {
 			const newOptionValue = {
 				index: updatedOptionValues.length + 1,
-				name: '',
+				label: '',
 			};
 			updatedOptionValues.push(newOptionValue);
 		}
 
 		setOptionValues(updatedOptionValues);
 
-		// just save the option.
-		await saveOption(index);
-	};
-
-	const saveOption = async (index) => {
-		try {
+		// Has any option values error.
+		if (!hasOptionAndValuesError(updatedOptionValues)) {
 			setError(null);
-			await saveEntityRecord(
-				'surecart',
-				'variant_options',
-				{
-					name: optionName,
-					variant_values: optionValues,
-					product_id: id,
-				},
-				{ throwOnError: true }
-			);
-			console.log('saved', {
-				name: optionName,
-				variant_values: optionValues,
-				product_id: id,
-			});
-		} catch (e) {
-			console.error(e);
-			setError(e);
 		}
 	};
 
@@ -104,16 +114,67 @@ export default ({ onRequestClose, id }) => {
 		const newOptionValues = [...optionValues];
 		newOptionValues.splice(index, 1);
 		setOptionValues(newOptionValues);
+
+		// Has any option values error.
+		if (hasOptionAndValuesError(newOptionValues)) {
+			return;
+		}
 	};
 
-	// TODO: for now passed as props
-	const saveOptionValues = () => {
-		onRequestClose({
-			name: optionName,
-			values: optionValues.filter((optionValue) => {
-				return optionValue.name !== '';
-			}),
-		});
+	/**
+	 * If any duplicate optionValue.label is found, then don't add
+	 * instead throw an error
+	 *
+	 * @returns boolean
+	 */
+	const hasOptionAndValuesError = (optionValuesData = null) => {
+		if (!optionValuesData) {
+			optionValuesData = [...optionValues];
+		}
+
+		// If optionName is empty then throw an error
+		if (optionName === '') {
+			setError({
+				message: __('Option name is required.', 'surecart'),
+			});
+			return true;
+		}
+
+		// If optionValues filtered trimmed data is empty, then throw an error
+		if (
+			optionValuesData.filter((optionValue) => {
+				return optionValue.label !== '';
+			}).length === 0
+		) {
+			setError({
+				message: __('Option values are required.', 'surecart'),
+			});
+			return true;
+		}
+
+		const duplicateOptionValue = optionValuesData.find(
+			(optionValue, index) => {
+				return (
+					optionValuesData.findIndex((optionValue2, index2) => {
+						return (
+							optionValue.label === optionValue2.label &&
+							index !== index2
+						);
+					}) !== -1
+				);
+			}
+		);
+
+		if (duplicateOptionValue) {
+			setError({
+				message: __(
+					'Option values should not be the same.',
+					'surecart'
+				),
+			});
+		}
+
+		return duplicateOptionValue;
 	};
 
 	return (
@@ -135,7 +196,7 @@ export default ({ onRequestClose, id }) => {
 					}
 				`}
 				overlayClassName={'sc-modal-overflow'}
-				onRequestClose={saveOptionValues}
+				onRequestClose={onRequestClose}
 				shouldCloseOnClickOutside={false}
 			>
 				<ScForm
@@ -153,7 +214,14 @@ export default ({ onRequestClose, id }) => {
 							required
 							label={__('Option Name', 'surecart')}
 							value={optionName}
-							onScInput={(e) => setOptionName(e.target.value)}
+							onScInput={(e) => {
+								setOptionName(e.target.value);
+
+								// Has any option values error.
+								if (hasOptionAndValuesError()) {
+									return;
+								}
+							}}
 						/>
 
 						<div
@@ -166,15 +234,17 @@ export default ({ onRequestClose, id }) => {
 								css={css`
 									display: block;
 									margin-left: 1.6rem;
+									font-weight: 600;
 								`}
 							>
-								{__('Option Values', 'surecart')}
+								{__('Option Values', 'surecart')}{' '}
+								<span style={{ color: 'red' }}>*</span>
 							</label>
 							<SortableList onSortEnd={applyDrag}>
 								{(optionValues || []).map(
-									(optionValue, index) => {
+									(optionValue, optionValueKey) => {
 										return (
-											<SortableItem key={index}>
+											<SortableItem key={optionValueKey}>
 												<div
 													css={css`
 														padding-top: var(
@@ -194,8 +264,8 @@ export default ({ onRequestClose, id }) => {
 															justify-content: center;
 														`}
 													>
-														{/* Hide deletebutton for last two index */}
-														{index !==
+														{/* Hide deletebutton for last item */}
+														{optionValueKey !==
 														optionValues.length -
 															1 ? (
 															<ScIcon
@@ -227,7 +297,7 @@ export default ({ onRequestClose, id }) => {
 																'surecart'
 															)}
 															value={
-																optionValue.name
+																optionValue.label
 															}
 															onInput={(e) =>
 																onChangeOptionValue(
@@ -238,35 +308,32 @@ export default ({ onRequestClose, id }) => {
 															}
 														/>
 
-														{index !==
+														{optionValueKey !==
 															optionValues.length -
-																1 &&
-															index !==
-																optionValues.length -
-																	2 && (
-																<ScButton
-																	type="text"
-																	css={css`
-																		position: absolute;
-																		right: 0;
-																		hover: {
-																			color: var(
-																				--sc-color-danger
-																			);
-																		}
-																	`}
-																	onClick={() =>
-																		deleteOptionValue(
-																			index
-																		)
+																1 && (
+															<ScButton
+																type="text"
+																css={css`
+																	position: absolute;
+																	right: 0;
+																	hover: {
+																		color: var(
+																			--sc-color-danger
+																		);
 																	}
-																>
-																	<ScIcon
-																		name="trash"
-																		slot="suffix"
-																	/>
-																</ScButton>
-															)}
+																`}
+																onClick={() =>
+																	deleteOptionValue(
+																		optionValueKey
+																	)
+																}
+															>
+																<ScIcon
+																	name="trash"
+																	slot="suffix"
+																/>
+															</ScButton>
+														)}
 													</div>
 												</div>
 											</SortableItem>
@@ -286,12 +353,11 @@ export default ({ onRequestClose, id }) => {
 					>
 						<ScButton
 							type="primary"
-							busy={loading}
-							disabled={loading}
-							onClick={saveOptionValues}
+							submit
+							loading={isSaving}
+							disabled={loading || !optionName || error}
 						>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Option', 'surecart')}
+							{__('Save', 'surecart')}
 						</ScButton>
 						<ScButton type="text" onClick={onRequestClose}>
 							{__('Cancel', 'surecart')}
