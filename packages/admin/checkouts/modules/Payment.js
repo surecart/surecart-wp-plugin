@@ -6,7 +6,12 @@ import {
 	ScLineItem,
 	ScCouponForm,
 	ScDivider,
-	ScPaymentMethod
+	ScPaymentMethod,
+	ScButton,
+	ScIcon,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -166,10 +171,17 @@ export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }
 							display: 'flex',
 							width: '100%',
 							justifyContent: 'space-between',
+							alignItems: 'center',
 						}}
 					>
 						<ScPaymentMethod paymentMethod={paymentMethod}/>
-						<div>
+						<div
+							style={{ 
+								display: 'flex',
+								alignItems: 'center',
+								gap: '2em'
+							}}
+						>
 							{!!paymentMethod?.card?.exp_month && (
 								<span>
 									{__('Exp.', 'surecart')}
@@ -179,6 +191,33 @@ export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }
 							)}
 							{!!paymentMethod?.paypal_account?.email &&
 								paymentMethod?.paypal_account?.email}
+
+							<ScDropdown placement="bottom-end">
+								<ScButton 
+									type="text" 
+									slot="trigger" 
+									circle
+								>
+									<ScIcon name="more-horizontal" />
+								</ScButton>
+								<ScMenu>
+									<ScMenuItem
+										onClick={() => {
+											setPaymentID(false);
+											setPaymentMethod(false);
+										}}
+									>
+										<ScIcon
+											slot="prefix"
+											name="trash"
+											style={{
+												opacity: 0.5,
+											}}
+										/>
+										{__('Remove', 'surecart')}
+									</ScMenuItem>
+								</ScMenu>
+							</ScDropdown>
 						</div>
 					</div>
 					</>
