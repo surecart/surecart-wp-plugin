@@ -17,9 +17,10 @@
 | `minimumFractionDigits`    | `minimum-fraction-digits`    | The minimum number of fraction digits to use. Possible values are 0 - 20.                      | `number`                                         | `null`      |
 | `minimumIntegerDigits`     | `minimum-integer-digits`     | The minimum number of integer digits to use. Possible values are 1 - 21.                       | `number`                                         | `undefined` |
 | `minimumSignificantDigits` | `minimum-significant-digits` | The minimum number of significant digits to use. Possible values are 1 - 21.                   | `number`                                         | `undefined` |
-| `noConvert`                | `no-convert`                 |                                                                                                | `boolean`                                        | `undefined` |
+| `noConvert`                | `no-convert`                 | Should we convert                                                                              | `boolean`                                        | `undefined` |
 | `noGrouping`               | `no-grouping`                | Turns off grouping separators.                                                                 | `boolean`                                        | `false`     |
-| `type`                     | `type`                       | The formatting style to use.                                                                   | `"currency" \| "decimal" \| "percent"`           | `'decimal'` |
+| `type`                     | `type`                       | The formatting style to use.                                                                   | `"currency" \| "decimal" \| "percent" \| "unit"` | `'decimal'` |
+| `unit`                     | `unit`                       | The unit to use when formatting.                                                               | `string`                                         | `'lb'`      |
 | `value`                    | `value`                      | The number to format.                                                                          | `number`                                         | `0`         |
 
 
@@ -29,8 +30,10 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../../ui/coupon-form)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-bump](../../controllers/checkout-form/sc-line-item-bump)
+ - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-tax](../../controllers/checkout-form/line-item-tax)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-order](../../controllers/dashboard/order)
@@ -47,6 +50,7 @@
  - [sc-product-price](../../controllers/product/sc-product-price)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
+ - [sc-shipping-choices](../../ui/sc-shipping-choices)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -58,8 +62,10 @@
 graph TD;
   sc-charges-list --> sc-format-number
   sc-coupon-form --> sc-format-number
+  sc-fulfillments --> sc-format-number
   sc-invoices-list --> sc-format-number
   sc-line-item-bump --> sc-format-number
+  sc-line-item-shipping --> sc-format-number
   sc-line-item-tax --> sc-format-number
   sc-line-item-total --> sc-format-number
   sc-order --> sc-format-number
@@ -76,6 +82,7 @@ graph TD;
   sc-product-price --> sc-format-number
   sc-product-price-choices --> sc-format-number
   sc-product-selected-price --> sc-format-number
+  sc-shipping-choices --> sc-format-number
   sc-subscription-details --> sc-format-number
   sc-subscription-next-payment --> sc-format-number
   sc-subscription-switch --> sc-format-number
