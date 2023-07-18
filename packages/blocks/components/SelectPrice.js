@@ -88,13 +88,16 @@ export default ({
 									suffix:intervalString(price, {
 										showOnce: true,
 									}),
-									tag: variant.labels, // Add the variant label to the choice
+									tag: variant?.labels, // Add the variant label to the choice
+									detail: {
+										variant_id: variant?.id,
+									},
 								};
 						});
 					}).flat(),
 			};
 		});
-console.log(products);
+
 	return (
 		<ScSelect
 			style={styles}
@@ -111,7 +114,10 @@ console.log(products);
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
-				onSelect(e.target.value);
+				onSelect({
+					price_id: e.target.value,
+					...e?.detail
+				});
 			}}
 			choices={choices}
 		>
