@@ -95,7 +95,8 @@ export default (props) => {
 				{...blockProps}
 				className={classnames(blockProps.className, {
 					'wp-block-button': true,
-					[`has-custom-width wp-block-button__width-${width}`]: width,
+					'sc-block-button': true,
+					[`has-custom-width sc-block-button__width-${width}`]: width,
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
 			>
@@ -104,6 +105,7 @@ export default (props) => {
 					placeholder={__('Add text…', 'surecart')}
 					className={classnames(
 						className,
+						'wp-block-button__link',
 						'sc-block-button__link',
 						colorProps.className,
 						borderProps.className,
