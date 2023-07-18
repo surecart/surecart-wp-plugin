@@ -51,15 +51,15 @@ export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMe
     );
     
     useEffect(() => {
-		setPaymentMethod(paymentMethods?.find((item) => item?.id === paymentID));
+        if ( paymentID ) {
+		    setPaymentMethod(paymentMethods?.find((item) => item?.id === paymentID));
+        }
 	}, [paymentID]);
 
     useEffect(() => {
-		if (paymentMethods?.length) {
-			setPaymentID(paymentMethods[0]?.id);
-		} else {
+		if ( ! paymentMethods?.length ) {
             setPaymentID(false);
-        }
+		}
 	}, [paymentMethods, checkout?.customer_id]);
 
     const onPaymentSelected = () => {
