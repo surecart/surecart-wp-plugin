@@ -36,22 +36,20 @@
   width: 100%;
 }
 
-.sc-block-buttons {
-  container-type: inline-size;
+.sc-block-button {
+  display: inline-block
 }
 
-@container (width > 325px) {
-  .sc-block-buttons > .sc-block-button.sc-block-button__width-25 {
-    width: calc(25% - (var(--wp--style--block-gap, 0.5em) * 0.75));
-  }
-  .sc-block-buttons > .sc-block-button.sc-block-button__width-50 {
-    width: calc(50% - (var(--wp--style--block-gap, 0.5em) * 0.5));
-  }
-  .sc-block-buttons > .sc-block-button.sc-block-button__width-75 {
-    width: calc(75% - (var(--wp--style--block-gap, 0.5em) * 0.25));
-  }
+.sc-block-button.sc-block-button__width-25 {
+  width: calc(25% - (var(--wp--style--block-gap, 0.5em) * 0.75));
 }
-.sc-block-buttons > .sc-block-button.sc-block-button__width-100 {
+.sc-block-button.sc-block-button__width-50 {
+  width: calc(50% - (var(--wp--style--block-gap, 0.5em) * 0.5));
+}
+.sc-block-button.sc-block-button__width-75 {
+  width: calc(75% - (var(--wp--style--block-gap, 0.5em) * 0.25));
+}
+.sc-block-button.sc-block-button__width-100 {
   width: 100%;
   flex-basis: 100%;
 }
