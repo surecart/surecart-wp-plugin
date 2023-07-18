@@ -4,17 +4,12 @@ import {
     ScPaymentMethod,
     ScRadioGroup,
     ScRadio,
-    ScBlockUi,
-    ScFormatNumber
+    ScBlockUi
 } from '@surecart/components-react';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useState, useEffect } from '@wordpress/element';
-import { store as noticesStore } from '@wordpress/notices';
+import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import { useDispatch, select, useSelect } from '@wordpress/data';
-import expand from '../query';
 import DataTable from '../../components/DataTable';
 
 export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMethod }) => {
@@ -78,7 +73,7 @@ export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMe
 				{__('Collect Payment', 'surecart')}
 			</ScButton>
 			<ScDialog
-				noHeader
+                label={__('Choose a payment method', 'surecart')}
 				open={open}
 				style={{ 
                     '--dialog-body-overflow': 'visible',
@@ -87,7 +82,6 @@ export default ({ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMe
 				onScRequestClose={() => setOpen(false)}
 			>
                 <DataTable
-                    title={__('Choose a payment method', 'surecart')}
                     empty={__('None found.', 'surecart')}
                     loading={loading}
                     columns={{
