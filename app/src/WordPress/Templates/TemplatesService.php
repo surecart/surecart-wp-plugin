@@ -152,12 +152,6 @@ class TemplatesService {
 
 		set_query_var( 'surecart_current_product', $product );
 
-		// Need to convert unix timestamps to local timezone.
-		$updated = new \DateTime( "@$product->updated_at" );
-		$updated->setTimezone( new \DateTimeZone( wp_timezone_string() ) );
-		$created = new \DateTime( "@$product->created_at" );
-		$created->setTimezone( new \DateTimeZone( wp_timezone_string() ) );
-
 		// create a fake post for the product.
 		$post                    = new \stdClass();
 		$post->post_title        = $product->name;
@@ -174,9 +168,9 @@ class TemplatesService {
 		$post->ping_status       = 'closed';
 		$post->post_password     = '';
 		$post->post_excerpt      = '';
-		$post->post_date         = $created->format( 'Y-m-d H:i:s' );
+		$post->post_date         = ( new \DateTime( "@$product->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
 		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $product->created_at, true );
-		$post->post_modified     = $updated->format( 'Y-m-d H:i:s' );
+		$post->post_modified     = ( new \DateTime( "@$product->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
 		$post->post_modified_gmt = date_i18n( 'Y-m-d H:i:s', $product->updated_at, true );
 		$post->ID                = 999999999;
 		$posts                   = array( $post );
