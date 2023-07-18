@@ -28,7 +28,7 @@ export default ({
 		750,
 		{ leading: false }
 	);
-
+	
 	const choices = (products || [])
 		.filter((product) => !!product?.prices?.data?.length)
 		.filter((product) => {
@@ -76,19 +76,25 @@ export default ({
 						return true;
 					})
 					.map((price) => {
-						return {
-							value: price.id,
-							label: price?.ad_hoc
-								? __('Name Your Price', 'surecart')
-								: formatNumber(price.amount, price.currency),
-							suffix: intervalString(price, {
-								showOnce: true,
-							}),
-						};
-					}),
+						const variants = product?.variants?.data || [];
+						return variants
+							.sort((a, b) => a?.position - b?.position)
+							.map((variant) => {
+								return {
+									value: price.id,
+									label: price?.ad_hoc
+										? __('Name Your Price', 'surecart')
+										: formatNumber(price.amount, price.currency),
+									suffix:intervalString(price, {
+										showOnce: true,
+									}),
+									tag: variant.labels, // Add the variant label to the choice
+								};
+						});
+					}).flat(),
 			};
 		});
-
+console.log(products);
 	return (
 		<ScSelect
 			style={styles}

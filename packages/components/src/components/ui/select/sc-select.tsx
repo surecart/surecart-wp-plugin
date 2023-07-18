@@ -144,7 +144,7 @@ export class ScSelectDropdown {
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scChange: EventEmitter<void>;
+  scChange: EventEmitter<any>;
 
   /** Emitted when the list scrolls to the end. */
   @Event() scScrollEnd: EventEmitter<void>;
@@ -216,7 +216,13 @@ export class ScSelectDropdown {
     this.scSearch.emit(this.searchTerm);
   }
 
-  handleSelect(value) {
+  handleSelect(choice) {
+
+    const {
+      value,
+      detail
+    } = choice;
+
     if (this.value === value && this.unselect) {
       this.value = '';
     } else {
@@ -227,7 +233,7 @@ export class ScSelectDropdown {
       this.searchTerm = '';
     }
 
-    this.scChange.emit();
+    this.scChange.emit(detail);
   }
 
   @Watch('searchTerm')
@@ -402,17 +408,18 @@ export class ScSelectDropdown {
         key={index}
         checked={this.isChecked(choice)}
         value={choice?.value}
-        onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        onClick={() => !choice.disabled && this.handleSelect(choice)}
         disabled={choice.disabled}
       >
         {choice.label}
+        {!!choice?.tag && <span slot="tag"><sc-tag>{choice.tag}</sc-tag></span>}
         {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
         {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );
   }
 
-  render() {
+  render() {    
     return (
       <div
         part="base"
