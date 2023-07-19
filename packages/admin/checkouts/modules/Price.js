@@ -19,7 +19,7 @@ import {
 export default ({ price, quantity, onRemove, onChange, subtotal_amount, ad_hoc_amount }) => {
 	const imageUrl = price?.product?.image_url;
 	const [open, setOpen] = useState(false);
-	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
+	const [addHocAmount, setAddHocAmount] = useState(ad_hoc_amount);
 
 	return (
 		<>
@@ -74,8 +74,8 @@ export default ({ price, quantity, onRemove, onChange, subtotal_amount, ad_hoc_a
 								type="currency"
 								currency={price?.currency || 'usd'}
 								value={
-									price?.ad_hoc_amount
-										? price?.ad_hoc_amount
+									!!price?.ad_hoc && ad_hoc_amount
+										? ad_hoc_amount
 										: price?.amount
 								}
 							/>
@@ -144,7 +144,7 @@ export default ({ price, quantity, onRemove, onChange, subtotal_amount, ad_hoc_a
 						label={__('Amount', 'surecart')}
 						placeholder={__('Enter an Amount', 'surecart')}
 						currencyCode={price?.currency}
-						value={addHocAmount || price?.amount || null}
+						value={addHocAmount || ad_hoc_amount || null}
 						onScInput={(e) => setAddHocAmount(e?.target?.value)}
 						required
 					/>
