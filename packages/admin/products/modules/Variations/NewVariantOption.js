@@ -31,17 +31,19 @@ export default ({ onRequestClose, id, product, updateProduct }) => {
 	const onSubmit = async (e) => {
 		try {
 			// Get processed variant values.
-			const variantValues = optionValues.map((optionValue) => {
-				// Remove empty option values.
-				if (optionValue.label === '') {
-					return;
-				}
+			const variantValues = optionValues
+				.map((optionValue) => {
+					// if optionValue label is empty, then don't add it.
+					if (optionValue?.label?.length === 0) {
+						return null;
+					}
 
-				return {
-					label: optionValue.label,
-					position: optionValue.index,
-				};
-			});
+					return {
+						label: optionValue.label,
+						position: optionValue.index,
+					};
+				})
+				.filter((value) => value !== null);
 
 			setError(null);
 			setIsSaving(true);
@@ -56,6 +58,7 @@ export default ({ onRequestClose, id, product, updateProduct }) => {
 				{ throwOnError: true }
 			);
 
+			// TODO: Remove this once the variant API new work is finished.
 			updateProduct({
 				...product,
 				variant_options: {

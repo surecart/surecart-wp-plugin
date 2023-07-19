@@ -26,6 +26,15 @@ export default ({ product, updateProduct, loading }) => {
 		});
 	};
 
+	// sort option?.variant_values?.data by position desc order.
+	const getSortedVariantValues = (option) => {
+		return (
+			option?.variant_values?.data.sort(
+				(a, b) => a.position - b.position
+			) || []
+		);
+	};
+
 	return (
 		<div style={{ marginBotttom: '2rem' }} loading={loading}>
 			<SortableList onSortEnd={applyDrag}>
@@ -70,9 +79,7 @@ export default ({ product, updateProduct, loading }) => {
 									</div>
 
 									<div>
-										{(
-											option?.variant_values?.data || []
-										).map(
+										{getSortedVariantValues(option).map(
 											(optionValue, KeyVariantValue) => {
 												return (
 													<ScTag

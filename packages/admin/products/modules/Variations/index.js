@@ -11,6 +11,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import NewVariantOption from './NewVariantOption';
 import VariantOptions from './VariantOptions';
+import Variants from './Variants';
 
 export default ({ product, updateProduct, loading }) => {
 	const [modal, setModal] = useState(false);
@@ -48,6 +49,13 @@ export default ({ product, updateProduct, loading }) => {
 								<ScIcon name="plus" slot="prefix" />
 								{__('Add More Options', 'surecart')}
 							</ScButton>
+
+							<Variants
+								id={product?.id}
+								product={product}
+								updateProduct={updateProduct}
+								loading={loading}
+							/>
 						</div>
 					)}
 
