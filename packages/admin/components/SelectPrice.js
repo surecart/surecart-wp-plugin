@@ -44,6 +44,17 @@ export default ({
 				})
 				.map((price) => {
 					const variants = product?.variants?.data || [];
+
+					if ( ! variants.length) {
+						return {
+							value: price.id,
+							label: `${formatNumber(price.amount, price.currency)}${
+								price?.archived ? ' (Archived)' : ''
+							}`,
+							suffix: intervalString(price, { showOnce: true }),
+						};
+					}
+
 					return variants
 						.sort((a, b) => a?.position - b?.position)
 						.map((variant) => {
@@ -76,6 +87,7 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
+				console.log(e);
 				onSelect({
 					price_id: e?.target?.value,
 					variant_id: e?.detail?.variant_id

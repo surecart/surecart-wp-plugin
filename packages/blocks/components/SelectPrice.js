@@ -77,6 +77,19 @@ export default ({
 					})
 					.map((price) => {
 						const variants = product?.variants?.data || [];
+						
+						if ( ! variants.length) {
+							return {
+								value: price.id,
+								label: price?.ad_hoc
+									? __('Name Your Price', 'surecart')
+									: formatNumber(price.amount, price.currency),
+								suffix:intervalString(price, {
+									showOnce: true,
+								}),
+							};
+						}
+
 						return variants
 							.sort((a, b) => a?.position - b?.position)
 							.map((variant) => {
