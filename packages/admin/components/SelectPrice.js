@@ -63,8 +63,7 @@ export default ({
 								label: `${formatNumber(price.amount, price.currency)}${
 									price?.archived ? ' (Archived)' : ''
 								}`,
-								suffix: intervalString(price, { showOnce: true }),
-								tag: variant?.labels, // Add the variant label to the choice
+								suffix: `${variant?.labels ? `(${variant?.labels}) ` : ''} ${intervalString(price, { showOnce: true })}`,
 								variant_id: variant?.id,
 							};
 					});

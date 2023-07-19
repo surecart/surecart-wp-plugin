@@ -98,10 +98,7 @@ export default ({
 									label: price?.ad_hoc
 										? __('Name Your Price', 'surecart')
 										: formatNumber(price.amount, price.currency),
-									suffix:intervalString(price, {
-										showOnce: true,
-									}),
-									tag: variant?.labels, // Add the variant label to the choice
+									suffix: `${variant?.labels ? `(${variant?.labels}) ` : ''} ${intervalString(price, { showOnce: true })}`,
 									variant_id: variant?.id,
 									
 								};

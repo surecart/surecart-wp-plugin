@@ -409,14 +409,13 @@ export class ScSelectDropdown {
         disabled={choice.disabled}
       >
         {choice.label}
-        {!!choice?.tag && <span slot="tag"><sc-tag>{choice.tag}</sc-tag></span>}
         {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
         {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );
   }
 
-  render() {    
+  render() {   
     return (
       <div
         part="base"
