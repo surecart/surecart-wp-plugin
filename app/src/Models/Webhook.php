@@ -120,7 +120,7 @@ class Webhook extends Model {
 		}
 
 		// If erroring_grace_period_started_at and erroring_grace_period_ends_at is not empty, then there is an error.
-		if ( ! empty( $webhook->erroring_grace_period_started_at ) ||  ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+		if ( ! empty( $webhook->erroring_grace_period_started_at ) || ! empty( $webhook->erroring_grace_period_ends_at ) ) {
 			return true;
 		}
 

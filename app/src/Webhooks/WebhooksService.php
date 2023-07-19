@@ -135,6 +135,11 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function verifyWebhooks(): void {
+		// Stop verify webhook checks for every request in development mode.
+		if ( defined( 'SURECART_DEV_MODE' ) && SURECART_DEV_MODE ) {
+			return;
+		}
+
 		$has_webhook_error = Webhook::hasAnyWebhookError();
 
 		// If there is no webhook, then show error notice.
@@ -142,7 +147,7 @@ class WebhooksService {
 			add_action(
 				'admin_notices',
 				function() {
-					$this->showWebhooksErrorNotice( new \WP_Error( 'webhook_error', __( 'SureCart site connection is not working.', 'surecart' ) ) );
+					$this->showWebhooksErrorNotice( new \WP_Error( 'webhook_error', __( 'Connection is not working.', 'surecart' ) ) );
 				}
 			);
 			return;
@@ -171,7 +176,7 @@ class WebhooksService {
 	public function showWebhooksErrorNotice( \WP_Error $error ): void {
 		$messages = implode( '<br>', $error->get_error_messages() );
 		$class    = 'notice notice-error';
-		$message  = __( 'SureCart webhooks could not be created.', 'surecart' ) . $messages;
+		$message  = __( 'SureCart site connection error.', 'surecart' ) . $messages;
 		printf( '<div class ="%1$s"><p>%2$s</p></div>', esc_attr( $class ), wp_kses_post( $message ) );
 	}
 
