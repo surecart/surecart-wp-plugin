@@ -89,9 +89,8 @@ export default ({
 										showOnce: true,
 									}),
 									tag: variant?.labels, // Add the variant label to the choice
-									detail: {
-										variant_id: variant?.id,
-									},
+									variant_id: variant?.id,
+									
 								};
 						});
 					}).flat(),
@@ -115,8 +114,8 @@ export default ({
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
 				onSelect({
-					price_id: e.target.value,
-					...e?.detail
+					price_id: e?.target?.value,
+					variant_id: e?.detail?.variant_id
 				});
 			}}
 			choices={choices}

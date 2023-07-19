@@ -19,7 +19,7 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 				'product',
 				{
 					query,
-					expand: ['prices', 'variants', 'variant_options', 'variant_options.variant_values'],
+					expand: ['prices'],
 					archived: false,
 					...(ad_hoc !== null ? { ad_hoc } : {}),
 				},

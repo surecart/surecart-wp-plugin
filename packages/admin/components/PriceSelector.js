@@ -37,7 +37,7 @@ export default ({ onSelect, ad_hoc, value, open = false, ...props }) => {
 
 		const queryArgs = {
 			query,
-			expand: ['prices', 'variants', 'variant_options', 'variant_options.variant_values'],
+			expand: ['prices', 'variants'],
 			page: pagination.page,
 			per_page: pagination.per_page,
 		};

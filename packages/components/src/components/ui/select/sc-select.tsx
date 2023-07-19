@@ -144,7 +144,7 @@ export class ScSelectDropdown {
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scChange: EventEmitter<any>;
+  scChange: EventEmitter<ChoiceItem>;
 
   /** Emitted when the list scrolls to the end. */
   @Event() scScrollEnd: EventEmitter<void>;
@@ -218,10 +218,7 @@ export class ScSelectDropdown {
 
   handleSelect(choice) {
 
-    const {
-      value,
-      detail
-    } = choice;
+    const { value } = choice;
 
     if (this.value === value && this.unselect) {
       this.value = '';
@@ -233,7 +230,7 @@ export class ScSelectDropdown {
       this.searchTerm = '';
     }
 
-    this.scChange.emit(detail);
+    this.scChange.emit(choice);
   }
 
   @Watch('searchTerm')

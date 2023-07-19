@@ -8916,7 +8916,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: ScSelectCustomEvent<any>) => void;
+        "onScChange"?: (event: ScSelectCustomEvent<ChoiceItem>) => void;
         /**
           * Emitted whent the components search query changes
          */
