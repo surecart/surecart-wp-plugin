@@ -244,8 +244,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.3.1 - July 19th, 2023 =
-* Fix: Issue with updated_at_gmt not accurate for product pages.
 * Fix: Stripe Payment Element (beta) not loading under certain conditions during free trial with payment required.
+* Fix: Issue with post_modified_gmt and post_date_gmt not accurate for product pages.
 
 = 2.3.0 - July 17th, 2023 =
 * New: Paystack processor support for African merchants.
