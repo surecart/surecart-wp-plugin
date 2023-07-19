@@ -77,4 +77,6 @@ return [
 	'shipping_rate.max_amount.not_a_number'             => __( 'The maximum amount must be a number.', 'surecart' ),
 	'shipping_rate.min_amount.greater_than_or_equal_to' => __( 'The minimum amount must be greater than or equal to zero.', 'surecart' ),
 	'shipping_rate.min_amount.not_a_number'             => __( 'The minimum amount must be a number.', 'surecart' ),
+
+	'customer.shipping_address.blank'                   => __( 'Please fill out your address.', 'surecart' ),
 ];

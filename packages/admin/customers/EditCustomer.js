@@ -30,9 +30,16 @@ import Subscriptions from './modules/Subscriptions';
 import PaymentMethods from './modules/PaymentMethods';
 import User from './modules/User';
 import ActionsDropdown from './components/ActionsDropdown';
+import ShippingAddress from './modules/ShippingAddress';
+import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
+
+const modals = {
+	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
+};
 
 export default () => {
 	const [error, setError] = useState(null);
+	const [currentModal, setCurrentModal] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const { saveDirtyRecords } = useDirty();
@@ -44,7 +51,7 @@ export default () => {
 		hasLoadedCustomer,
 		deletingCustomer,
 		savingCustomer,
-	} = useEntity('customer', id, { expand: ['balances'] });
+	} = useEntity('customer', id, { expand: ['balances', 'shipping_address'] });
 
 	/**
 	 * Handle the form submission
@@ -147,6 +154,13 @@ export default () => {
 				<>
 					<Balance customer={customer} loading={!hasLoadedCustomer} />
 					<Purchases customerId={id} />
+					<ShippingAddress
+						shippingAddress={customer?.shipping_address}
+						loading={!hasLoadedCustomer}
+						onEditAddress={() =>
+							setCurrentModal(modals.EDIT_SHIPPING_ADDRESS)
+						}
+					/>
 					<User customer={customer} customerId={id} />
 					<Notifications
 						customer={customer}
@@ -198,6 +212,17 @@ export default () => {
 					loading={!hasLoadedProduct}
 				/>
 			</Fragment> */}
+
+			{!!currentModal ? (
+				<>
+					<EditAddressModal
+						open={currentModal}
+						shippingAddress={customer?.shipping_address}
+						onRequestClose={() => setCurrentModal('')}
+						customerId={id}
+					/>
+				</>
+			) : null}
 		</UpdateModel>
 	);
 };
