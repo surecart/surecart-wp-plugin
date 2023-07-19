@@ -41,7 +41,6 @@
 		"anchor": true,
 		"align": false,
 		"alignWide": false,
-		"multiple": false,
 		"spacing": {
 			"__experimentalSkipSerialization": true,
 			"padding": ["horizontal", "vertical"],
