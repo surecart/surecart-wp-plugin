@@ -67,7 +67,7 @@ export default ({
 						value={choices[0]?.id}
 						onSelect={({price_id}) => {
 							if (price_id) {
-								setChoices([{ price_id, quantity: 1 }]);
+								setChoices([{ id: price_id, quantity: 1 }]);
 							} else {
 								setChoices([]);
 							}

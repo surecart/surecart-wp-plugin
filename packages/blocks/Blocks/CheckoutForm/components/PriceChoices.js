@@ -80,7 +80,7 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 							<PriceChoice
 								key={index}
 								choice={choice}
-								onSelect={({price_id}) => onUpdate({ price_id }, index)}
+								onSelect={({price_id}) => onUpdate({ price: price_id }, index)}
 								onRemove={() => onRemove(index)}
 								onUpdate={(data) => onUpdate(data, index)}
 							/>
