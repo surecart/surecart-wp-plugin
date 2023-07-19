@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-07T06:14:22",
+  "timestamp": "2023-07-19T12:46:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -12084,7 +12084,6 @@
         "sc-payment",
         "sc-phone-input",
         "sc-product-quantity",
-        "sc-product-variation-choices",
         "sc-rich-text",
         "sc-select",
         "sc-shipping-choices",
@@ -12123,9 +12122,6 @@
           "sc-form-control"
         ],
         "sc-product-quantity": [
-          "sc-form-control"
-        ],
-        "sc-product-variation-choices": [
           "sc-form-control"
         ],
         "sc-rich-text": [
@@ -24802,24 +24798,7 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "isDummy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "is-dummy",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -24827,26 +24806,17 @@
       "slots": [],
       "parts": [
         {
-          "name": "control",
-          "docs": ""
-        },
-        {
           "name": "name__input",
           "docs": ""
         }
       ],
       "dependents": [],
       "dependencies": [
-        "sc-form-control",
         "sc-select"
       ],
       "dependencyGraph": {
         "sc-product-variation-choices": [
-          "sc-form-control",
           "sc-select"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-select": [
           "sc-icon",
@@ -24857,6 +24827,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
         ],
         "sc-input": [
           "sc-form-control"

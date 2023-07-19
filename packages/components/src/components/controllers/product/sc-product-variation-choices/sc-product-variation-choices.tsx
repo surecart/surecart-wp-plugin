@@ -1,4 +1,4 @@
-import { Component, h, Prop, Host, Element } from '@stencil/core';
+import { Component, h, Host, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
@@ -10,7 +10,6 @@ import { state } from '@store/product';
 export class ScProductVariationChoices {
   
   @Element() el: HTMLScProductVariationChoicesElement;
-  @Prop() isDummy: boolean;
  
   render() {  
     
@@ -25,12 +24,10 @@ export class ScProductVariationChoices {
                 part="name__input"
                 value={state.variantValues?.[option.id] || option?.values?.[0]?.value || ''}
                 onScChange={(e: any) => {
-                  if ( ! this.isDummy ) {
-                    state.variantValues = {
-                      ...state.variantValues,
-                      [option?.id]: e?.target?.value
-                    };
-                  }
+                  state.variantValues = {
+                    ...state.variantValues,
+                    [option?.id]: e?.target?.value
+                  };
                 }}
                 label={option?.name}
                 choices={option?.values}
