@@ -2941,6 +2941,7 @@ export namespace Components {
         "text": 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        "type": 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
     }
@@ -8696,6 +8697,7 @@ declare namespace LocalJSX {
           * Error event
          */
         "onScError"?: (event: ScProductVariationChoicesCustomEvent<ResponseError>) => void;
+        "type"?: 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
     }
