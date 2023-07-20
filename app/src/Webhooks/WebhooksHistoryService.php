@@ -144,9 +144,9 @@ class WebhooksHistoryService {
 	/**
 	 * May be show a notice to the user that the domain has changed.
 	 *
-	 * @return void
+	 * @return string|null
 	 */
-	public function maybeShowDomainChangeNotice(): void {
+	public function maybeShowDomainChangeNotice() {
 		// skip if we've already registered for this domain.
 		if ( $this->domainMatches() ) {
 			return;
@@ -159,7 +159,7 @@ class WebhooksHistoryService {
 		}
 
 		// if domain does not match, then show notice.
-		$this->renderNotice( $webhook );
+		return $this->renderNotice( $webhook );
 	}
 
 	/**
@@ -191,7 +191,7 @@ class WebhooksHistoryService {
 	 *
 	 * @return string
 	 */
-	private function getWebsiteUrl( string $webhook_endpoint ): string {
+	public function getWebsiteUrl( string $webhook_endpoint ): string {
 		if ( empty( $webhook_endpoint ) ) {
 			return '';
 		}

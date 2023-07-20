@@ -5,6 +5,7 @@ namespace SureCart\Tests\Unit\Services;
 use SureCart\Support\Encryption;
 use SureCart\Tests\SureCartUnitTestCase;
 use SureCart\Webhooks\WebHooksHistoryService;
+use SureCartCore\View\ViewService;
 
 /**
  * @group webhooks
@@ -43,26 +44,38 @@ class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 		$this->assertEmpty($this->service->getRegisteredWebhook());
 		$this->assertNull($this->service->maybeShowDomainChangeNotice());
 
-		$this->service->saveRegisteredWebhook(
-			[
-				'id'  		     => 'asdf',
-				'url' 			 => 'https://foo.com',
-				'webhook_events' => ['test'],
-				'signing_secret' => Encryption::encrypt( '1234' ),
-			],
-		);
+		$registered_webhook = [
+			'id'  		     => 'asdf',
+			'url' 			 => 'https://foo.com',
+			'webhook_events' => ['test'],
+			'signing_secret' => Encryption::encrypt('1234'),
+		];
+
+		$this->service->saveRegisteredWebhook($registered_webhook);
 		$this->assertSame('asdf', $this->service->getRegisteredWebhook()['id']);
 		$this->assertSame('https://foo.com', $this->service->getRegisteredWebhook()['url']);
 
-		// change the domain.
-		$mock_service = \Mockery::mock($this->service)->makePartial();
-		$mock_service->shouldReceive('domainMatches')->once()->andReturn(false);
+		$view_service = \Mockery::mock(ViewService::class)->makePartial();
+		\SureCart::alias('views', function () use ($view_service) {
+			return $view_service;
+		});
+		$view_service
+			->shouldReceive('render')
+			->once()
+			->andReturn(
+				[
+					'update_url' => \SureCart::getUrl()->editModel( 'update_webhook', $registered_webhook['id'] ),
+					'add_url'    => \SureCart::getUrl()->editModel( 'create_webhook', '0' ),
+				]
+			);
 
-		ob_start();
-		$this->service->maybeShowDomainChangeNotice();
-		$result = ob_get_clean();
+		$result = $this->service->maybeShowDomainChangeNotice();
 
-		$this->assertStringContainsString('action=update_webhook', $result);
-		$this->assertStringContainsString('action=create_webhook', $result);
+		$this->assertArrayHasKey('update_url', $result ?? []);
+		$this->assertArrayHasKey('add_url', $result ?? []);
+		$this->assertSame(
+			\SureCart::getUrl()->editModel( 'update_webhook', $registered_webhook['id'] ),
+			$result['update_url']
+		);
 	}
 }
