@@ -41,9 +41,7 @@ export default ({ id }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id, {
-		expand: ['product_collections'],
-	});
+	} = useEntity('product', id);
 
 	/**
 	 * Handle the form submission
@@ -217,6 +215,7 @@ export default ({ id }) => {
 						loading={!hasLoadedProduct}
 					/>
 					<Collection
+						productId={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
