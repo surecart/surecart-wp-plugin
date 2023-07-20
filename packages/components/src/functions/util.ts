@@ -66,7 +66,5 @@ export const getVariantFromValues = ({variants, values}) => {
       break;
     }
   }
-  console.log(matchedVariant);
-  
   return matchedVariant;
 }
