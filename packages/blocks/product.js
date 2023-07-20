@@ -21,7 +21,8 @@ registerBlocksForTemplates({
 		Price,
 		PriceChoices,
 	],
-	templates: [
+	// include only for these templates.
+	include: [
 		'surecart/surecart//product-info',
 		'surecart/surecart//single-product',
 		'sc-products',
