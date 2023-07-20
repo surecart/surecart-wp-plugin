@@ -1,46 +1,47 @@
 /**
  * External dependencies.
  */
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import SortableList, { SortableItem } from 'react-easy-sort';
-import arrayMove from 'array-move';
 
 /**
  * Internal dependencies.
  */
-import { ScButton, ScIcon, ScTag } from '@surecart/components-react';
+import { ScInput, ScTag } from '@surecart/components-react';
+import VariantOptionValues from './VariantOptionValues';
 
 export default ({ product, updateProduct, loading }) => {
-	const variantOptions = product?.variant_options?.data || [];
-
-	const applyDrag = async (oldIndex, newIndex) => {
-		const result = arrayMove(variantOptions, oldIndex, newIndex);
-
+	// function to update product?.variant_options based on the index.
+	const updateVariantOption = (action) => {
 		updateProduct({
 			...product,
-			variant_options: {
-				...product.variant_options,
-				data: result,
-			},
+			variant_options: product.variant_options.map((item, index) => {
+				if (index !== action.index) {
+					return item;
+				}
+				return {
+					...item,
+					...action.data,
+				};
+			}),
 		});
-	};
-
-	// sort option?.variant_values?.data by position desc order.
-	const getSortedVariantValues = (option) => {
-		return (
-			option?.variant_values?.data.sort(
-				(a, b) => a.position - b.position
-			) || []
-		);
 	};
 
 	return (
 		<div style={{ marginBotttom: '2rem' }} loading={loading}>
-			<SortableList onSortEnd={applyDrag}>
-				{variantOptions.map((option) => (
-					<SortableItem key={option.id}>
+			{Array.isArray(product?.variant_options) &&
+				product?.variant_options.map((option, index) => {
+					const values = [
+						...new Set(
+							Array.from(product?.variants || []).map(
+								(obj) => obj[`option_${index + 1}`]
+							)
+						),
+					];
+					return (
 						<div
+							key={index}
 							css={css`
 								padding-top: var(--sc-spacing-xx-small);
 								padding-bottom: var(--sc-spacing-xx-small);
@@ -60,59 +61,43 @@ export default ({ product, updateProduct, loading }) => {
 								}}
 							>
 								<div>
-									<div
-										style={{
-											display: 'flex',
-											marginBottom: '1rem',
-										}}
-									>
-										<ScIcon
-											name="drag"
-											slot="prefix"
-											style={{
-												marginRight: '1rem',
-												cursor: 'grab',
-											}}
-										/>
-
-										<b>{option?.name}</b>
-									</div>
-
-									<div>
-										{getSortedVariantValues(option).map(
-											(optionValue, KeyVariantValue) => {
-												return (
-													<ScTag
-														style={{
-															marginRight:
-																'0.5em',
-															marginLeft:
-																KeyVariantValue ===
-																0
-																	? '2em'
-																	: '0',
-														}}
-														type="primary"
-														key={KeyVariantValue}
-													>
-														{optionValue?.label}
-													</ScTag>
-												);
-											}
+									<ScInput
+										type="text"
+										placeholder={__(
+											'Option Name',
+											'surecart'
 										)}
-									</div>
-								</div>
+										required
+										label={__('Option Name', 'surecart')}
+										value={option?.name}
+										onScInput={(e) => {
+											updateVariantOption({
+												index,
+												data: {
+													name: e.target.value,
+												},
+											});
+										}}
+									/>
 
-								<div>
-									<ScButton onClick={() => {}}>
-										{__('Edit', 'surecart')}
-									</ScButton>
+									{(values || []).map((value, valueIndex) => {
+										return (
+											<ScTag key={valueIndex}>
+												{value}
+											</ScTag>
+										);
+									})}
+
+									<VariantOptionValues
+										option={option}
+										product={product}
+										updateProduct={updateProduct}
+									/>
 								</div>
 							</div>
 						</div>
-					</SortableItem>
-				))}
-			</SortableList>
+					);
+				})}
 		</div>
 	);
 };

@@ -24,11 +24,12 @@ import DataTable from '../../../components/DataTable';
 
 export default ({ product, updateProduct, loading }) => {
 	const [isDeleting, setIsDeleting] = useState(false);
-	const variants = product?.variants?.data || [];
+	const variants = Array.from(product?.variants || []);
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
+	console.log({ product });
 	/**
 	 * On Delete variant, just update the status as draft.
 	 *
@@ -77,7 +78,15 @@ export default ({ product, updateProduct, loading }) => {
 				},
 			}}
 			items={variants.map((variant) => {
-				const { id, sku, labels, image, product } = variant;
+				const {
+					id,
+					sku,
+					option_1,
+					option_2,
+					option_3,
+					image,
+					product,
+				} = variant;
 				return {
 					variant: (
 						<ScFlex
@@ -109,7 +118,9 @@ export default ({ product, updateProduct, loading }) => {
 									flex: 1,
 								}}
 							>
-								{labels}
+								{option_1}
+								{option_2}
+								{option_3}
 							</ScText>
 						</ScFlex>
 					),

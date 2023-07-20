@@ -1,0 +1,114 @@
+/**
+ * External dependencies.
+ */
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+export default ({ option, product, updateProduct }) => {
+	const [values, setValues] = useState([{ index: 1, label: '' }]);
+
+	const onChangeOptionValue = async (index, newLabel) => {
+		// update specific option value.
+		const updatedOptionValues = values.map((value, valueIndex) =>
+			valueIndex === index ? { ...value, label: newLabel } : value
+		);
+
+		// Check if the last optionValue has a name, if yes, add a new empty optionValue
+		const lastOptionValue =
+			updatedOptionValues[updatedOptionValues.length - 1];
+		if (lastOptionValue.label !== '') {
+			const newOptionValue = {
+				index: updatedOptionValues.length + 1,
+				label: '',
+			};
+			updatedOptionValues.push(newOptionValue);
+		}
+		setValues(updatedOptionValues);
+	};
+
+	// as the values are changed, we need to add variants.
+	useEffect(() => {
+		updateProduct({
+			...product,
+			variants: values
+				.filter((value) => !!value?.label)
+				.map((value) => {
+					return { option_1: value.label };
+				}),
+		});
+	}, [values]);
+
+	return (values || []).map((optionValue, index) => {
+		return (
+			<div
+				key={index}
+				css={css`
+					padding-top: var(--sc-spacing-xx-small);
+					padding-bottom: var(--sc-spacing-xx-small);
+				`}
+			>
+				<div
+					css={css`
+						width: 100%;
+						display: flex;
+						align-items: center;
+						gap: 1em;
+						justify-content: center;
+					`}
+				>
+					{/* Hide deletebutton for last item */}
+					{index !== values.length - 1 ? (
+						<ScIcon
+							name="drag"
+							slot="prefix"
+							css={css`
+								cursor: grab;
+							`}
+						/>
+					) : (
+						<ScIcon name="empty" slot="prefix" />
+					)}
+
+					<ScInput
+						css={css`
+							width: 100%;
+							focus: {
+								border-color: var(--sc-color-primary);
+							}
+						`}
+						type="text"
+						placeholder={__('Add another value', 'surecart')}
+						value={optionValue.label}
+						onInput={(e) =>
+							onChangeOptionValue(index, e.target.value)
+						}
+					/>
+
+					{index !== values.length - 1 && (
+						<ScButton
+							type="text"
+							css={css`
+								position: absolute;
+								right: 0;
+								hover: {
+									color: var(--sc-color-danger);
+								}
+							`}
+							onClick={() => deleteOptionValue(index)}
+						>
+							<ScIcon name="trash" slot="suffix" />
+						</ScButton>
+					)}
+				</div>
+			</div>
+		);
+	});
+};
