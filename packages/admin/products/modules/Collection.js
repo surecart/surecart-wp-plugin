@@ -3,124 +3,155 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import { ScFormControl, ScSelect, ScTag } from '@surecart/components-react';
+import { ScBlockUi, ScFormControl, ScTag } from '@surecart/components-react';
+import { useState } from '@wordpress/element';
+import ModelSelector from '../../components/ModelSelector';
 
-export default ({ loading, product, updateProduct }) => {
-	const collections = product?.product_collection_ids || [];
+export default ({ productId, loading }) => {
+	const { invalidateResolutionForStore, saveEntityRecord } =
+		useDispatch(coreStore);
+	const [busy, setBusy] = useState(false);
 
 	/**
 	 * Get product collections and make for select.
 	 * Fetch the 100 most recent product collections.
 	 */
-	const { collectionLists, loadingCollectionLists } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product-collection',
-				{
-					per_page: 100,
-				},
-			];
+	const { productCollections, productCollectionIds, loadingCollectionLists } =
+		useSelect(
+			(select) => {
+				const queryArgs = [
+					'surecart',
+					'product-collection',
+					{
+						context: 'edit',
+						per_page: 100,
+						product_ids: [productId],
+					},
+				];
 
-			const allCollectionLists = select(coreStore).getEntityRecords(
-				...queryArgs
-			);
+				const uniqueSet = new Set();
+				const allCollectionLists =
+					select(coreStore).getEntityRecords(...queryArgs) || [];
 
-			return {
-				collectionLists: allCollectionLists ? allCollectionLists.map(
-					(collection) => ({ value: collection.id, label: collection.name })
-				) : [],
-				loadingCollectionLists: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[]
-	);
+				const uniqueCollections = allCollectionLists.filter(
+					(collection) => {
+						const isPresent = uniqueSet.has(collection.id);
+						uniqueSet.add(collection.id);
+						return !isPresent;
+					}
+				);
 
-	const onRemoveCollectionLink = (value) => {
-		updateProduct({
-			product_collection_ids: collections.filter((collection) => collection !== value)
-		});
-	};
-
-	const renderCollectionPill = (collectionSelected) => {
-		const collection = collectionLists.find(
-			(collectionChoice) => collectionChoice.value === collectionSelected
+				return {
+					productCollections: uniqueCollections,
+					productCollectionIds: uniqueCollections.map(
+						(collection) => collection.id
+					),
+					loadingCollectionLists: select(coreStore).isResolving(
+						'getEntityRecords',
+						queryArgs
+					),
+				};
+			},
+			[productId]
 		);
 
+	const updateProductCollections = async (collectionIds) => {
+		setBusy(true);
+		try {
+			await saveEntityRecord(
+				'surecart',
+				'product',
+				{
+					id: productId,
+					product_collections: collectionIds,
+				},
+				{ throwOnError: true }
+			);
+
+			await invalidateResolutionForStore();
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	const renderCollectionPill = (collection) => {
 		if (!collection) return;
 
 		return (
 			<ScTag
-				key={`collection-${collection.value}`}
+				key={`collection-pill-${collection.id}`}
 				pill
 				clearable
-				onScClear={() => onRemoveCollectionLink(collection.value)}
+				onScClear={async () =>
+					await updateProductCollections(
+						productCollectionIds.filter(
+							(id) => id !== collection.id
+						)
+					)
+				}
 			>
-				{collection.label}
+				{collection.name}
 			</ScTag>
 		);
 	};
 
-	const onSelectCollection = (e) => {
-		const value = e.target.value;
-		if (!value) return;
-
-		if (collectionLists.includes(value)) {
-			updateProduct({
-				product_collection_ids: collectionLists.filter((collectionValue) => collectionValue !== value)
-			});
+	const onSelectCollection = async (collectionId) => {
+		if (productCollectionIds.includes(collectionId)) {
+			await updateProductCollections(
+				productCollectionIds.filter((id) => id !== collectionId)
+			);
 		} else {
-			updateProduct({
-				product_collection_ids: [...collections, value]
-			});
+			await updateProductCollections(
+				productCollectionIds.concat(collectionId)
+			);
 		}
 	};
 
-	const collectionChoices = collectionLists
-		.filter((collection) => !collections.includes(collection.value))
-		.map(
-			(collection) => ({
-				...collection,
-				selected: false,
-			})
-		);
-
 	return (
-		<Box loading={loading || loadingCollectionLists} title={__('Collections', 'surecart')}>
+		<Box
+			loading={loading || loadingCollectionLists}
+			title={__('Collections', 'surecart')}
+		>
 			<ScFormControl label={__('Select Product Collections', 'surecart')}>
-				{!!collections.length && (
+				{!!productCollections.length && (
 					<div
 						css={css`
-								display: flex;
-								flex-wrap: wrap;
-								justify-content: flex-start;
-								gap: 0.25em;
-								padding: var(
-									--sc-input-spacing-small
-								);
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: flex-start;
+							gap: 0.25em;
+							padding: var(--sc-input-spacing-small);
 						`}
 					>
-						{collections.map((collection) =>
+						{productCollections.map((collection) =>
 							renderCollectionPill(collection)
 						)}
 					</div>
 				)}
 
-				<ScSelect
-					search
-					closeOnSelect={false}
-					onScChange={onSelectCollection}
-					choices={collectionChoices}
+				<ModelSelector
+					name="product-collection"
+					onSelect={(collectionId) =>
+						onSelectCollection(collectionId)
+					}
+					exclude={productCollectionIds}
 				/>
 			</ScFormControl>
+			{busy && (
+				<ScBlockUi
+					style={{ '--sc-block-ui-opacity': '0.25' }}
+					spinner
+				/>
+			)}
 		</Box>
 	);
 };
