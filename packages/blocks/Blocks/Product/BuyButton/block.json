@@ -85,7 +85,8 @@
 			"icon": "cart",
 			"description": "Add a button to add the product to the cart.",
 			"attributes": {
-				"add_to_cart": true
+				"add_to_cart": true,
+				"text": "Add To Cart"
 			},
 			"isDefault": true,
 			"isActive": ["add_to_cart"],
@@ -97,7 +98,8 @@
 			"icon": "store",
 			"description": "Add a button to buy the product.",
 			"attributes": {
-				"add_to_cart": false
+				"add_to_cart": false,
+				"text": "Buy Now"
 			},
 			"isActive": ["add_to_cart"],
 			"scope": ["inserter", "block", "transform"]
