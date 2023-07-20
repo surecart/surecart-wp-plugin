@@ -35,7 +35,6 @@ import * as customerInvoices from '@blocks/Dashboard/Deprecated/CustomerInvoices
 import * as customerShippingAddress from '@blocks/Dashboard/Deprecated/CustomerShippingAddress';
 import { registerBlocksForTemplates } from './conditional-block-registration';
 
-console.log(checkout?.name);
 // unregister these blocks on product page templates.
 // @todo Refactor when there will be possible to show a block according on a template/post with a Gutenberg API. https://github.com/WordPress/gutenberg/pull/41718
 registerBlocksForTemplates({
