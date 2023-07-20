@@ -117,13 +117,13 @@ class ActivationService {
 	 * @return void
 	 */
 	public function removeOptions() {
-		delete_option( 'surecart_registered_webhooks' );
+		delete_option( 'surecart_registered_webhook' );
+		delete_option( 'surecart_previous_webhook' );
 		delete_option( 'surecart_order-confirmation_page_id' );
 		delete_option( 'surecart_dashboard_page_id' );
 		delete_option( 'surecart_checkout_sc_form_id' );
 		delete_option( 'surecart_use_esm_loader' );
 		delete_option( 'surecart_checkout_page_id' );
-		delete_option( 'sc_webhook_signing_secret' );
 		delete_option( 'sc_api_token' );
 		delete_option( 'sc_uninstall' );
 	}

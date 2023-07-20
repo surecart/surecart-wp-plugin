@@ -21,7 +21,7 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 		$service->shouldReceive('domainMatches')->once()->andReturn(true);
 		$service->shouldReceive('hasSigningSecret')->once()->andReturn(true);
 
-		$this->assertNull($service->maybeCreateWebhook());
+		$this->assertNull($service->maybeCreateWebhooks());
 	}
 
 	public function test_registers_webhooks_if_doesnt_have_signing_secret() {
@@ -39,7 +39,7 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 			)
 		);
 
-		$service->maybeCreateWebhook(); // created.
+		$service->maybeCreateWebhooks(); // created.
 		$this->assertSame($service->getSigningSecret(), 'secret'); // stored signing secret.
 	}
 
@@ -57,7 +57,7 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 			)
 		);
 
-		$service->maybeCreateWebhook(); // created.
+		$service->maybeCreateWebhooks(); // created.
 		$this->assertSame($service->getSigningSecret(), 'secret1'); // stored signing secret.
 	}
 }

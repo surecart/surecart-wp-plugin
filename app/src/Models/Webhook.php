@@ -128,6 +128,24 @@ class Webhook extends Model {
 	}
 
 	/**
+	 * Delete same url webhooks.
+	 *
+	 * @param string $excluded_id Excluded webhook id.
+	 *
+	 * @return void
+	 */
+	protected function removeSameUrlWebhooks( $excluded_id ): void {
+		$webhooks = $this->setPagination( [ 'per_page' => 100 ] )->get();
+		if ( is_array( $webhooks ) && ! empty( $webhooks ) ) {
+			foreach ( $webhooks as $webhook_object ) {
+				if ( $webhook_object->id !== $excluded_id && $this->getListenerUrl() === $webhook_object['url'] ) {
+					$this->delete( $webhook_object->id );
+				}
+			}
+		}
+	}
+
+	/**
 	 * Send test webhook.
 	 *
 	 * @param Webhook $webhook Webhook object.

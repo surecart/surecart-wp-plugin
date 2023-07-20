@@ -17,11 +17,18 @@ class WebhooksHistoryService {
 	protected $webhooks_service;
 
 	/**
-	 * Get all registered webhooks option name.
+	 * Registered Webhook option name.
 	 *
 	 * @var string
 	 */
-	public const WEBHOOK_REGISTERED_ENTRIES = 'surecart_registered_webhooks';
+	public const REGISTERED_WEBHOOK = 'surecart_registered_webhook';
+
+	/**
+	 * Previous Webhook option name.
+	 *
+	 * @var string
+	 */
+	public const PREVIOUS_WEBHOOK = 'surecart_previous_webhook';
 
 	/**
 	 * Listen to domain changes.
@@ -29,128 +36,95 @@ class WebhooksHistoryService {
 	 * @return void
 	 */
 	public function listen(): void {
+		add_action( 'updated_option', [ $this, 'maybeStoreWebhookChange' ], 10, 3 );
 		add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
+	}
+
+	/**
+	 * See if the domain changes, then
+	 * store the change in the database.
+	 *
+	 * @param string $option    Name of the updated option.
+	 * @param mixed  $old_value The old option value.
+	 * @param mixed  $value     The new option value.
+	 * @return void
+	 */
+	public function maybeStoreWebhookChange( $option, $old_value, $value ) {
+		// we only care about our option and if it was updated.
+		if ( self::REGISTERED_WEBHOOK !== $option ) {
+			return;
+		}
+
+		// store the old webhook when this changes.
+		$this->setPreviousWebhook( $old_value );
 	}
 
 	/**
 	 * Save the registered webhook.
 	 *
-	 * Push the webhook to the registered webhooks list.
-	 *
 	 * @param array $webhook The webhook to save.
 	 *
 	 * @return bool
 	 */
-	public function saveRegisteredWebhook( array $webhook ): bool {
-		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
-
-		// If there is already a webhook for this site, remove it.
-		$registered_webhooks = array_filter(
-			$registered_webhooks,
-			function( $registered_webhook ) use ( $webhook ) {
-				return $registered_webhook['url'] !== $webhook['url'];
-			}
-		);
-
-		// Merge the new webhook with the previous webhooks.
-		$webhooks = array_merge( $registered_webhooks, [ $webhook ] );
-
-		// Save the webhooks.
-		return $this->saveRegisteredWebhooks( $webhooks );
+	public function saveRegisteredWebhook( $webhook ): bool {
+		return update_option( self::REGISTERED_WEBHOOK, $webhook );
 	}
 
 	/**
 	 * Get registered webhook.
 	 *
-	 * Filter the registered webhooks to get the webhook for this site.
-	 *
 	 * @return array|null
 	 */
 	public function getRegisteredWebhook() {
-		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
-
-		// If no items, return null.
-		if ( empty( $registered_webhooks ) || ! is_array( $registered_webhooks ) ) {
-			return null;
-		}
-
-		// Get the registered webhook for this site.
-		$webhooks = array_filter(
-			$registered_webhooks,
-			function( $webhook ) {
-				return Webhook::getListenerUrl() === $webhook['url'];
-			}
-		);
-
-		// Return the first webhook.
-		return array_shift( $webhooks );
+		return get_option( self::REGISTERED_WEBHOOK, [] );
 	}
 
 	/**
-	 * Get previous webhook.
+	 * Delete the registered webhook.
+	 *
+	 * @return boolean
+	 */
+	public function deleteRegisteredWebhook(): bool {
+		return delete_option( self::REGISTERED_WEBHOOK );
+	}
+
+	/**
+	 * Store the old domain in the database.
+	 * We do autoload this option so we can check it on every request.
+	 *
+	 * @param string $value The old domain.
+	 * @return boolean
+	 */
+	public function setPreviousWebhook( $value ) {
+		return update_option( self::PREVIOUS_WEBHOOK, $value );
+	}
+
+	/**
+	 * Delete any previous webhooks.
+	 *
+	 * @return boolean
+	 */
+	public function deletePreviousWebhook(): bool {
+		return delete_option( self::PREVIOUS_WEBHOOK );
+	}
+
+	/**
+	 * Get the previous webhook.
 	 *
 	 * @return array|null
 	 */
 	public function getPreviousWebhook() {
-		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
-
-		// If no items, return null.
-		if ( empty( $registered_webhooks ) || ! is_array( $registered_webhooks ) ) {
-			return null;
-		}
-
-		$webhooks = array_filter(
-			$registered_webhooks,
-			function( $webhook ) {
-				$current_domain = $this->getDomain( Webhook::getListenerUrl() );
-				$webhook_domain = $this->getDomain( $webhook['url'] );
-				return Webhook::getListenerUrl() !== $webhook['url'] && $current_domain === $webhook_domain;
-			}
-		);
-
-		return array_shift( $webhooks );
+		return get_option( self::PREVIOUS_WEBHOOK, [] );
 	}
 
 	/**
-	 * Get registered webhooks.
+	 * Does this webhook have multiple domains registered?
 	 *
-	 * @return array
+	 * @return boolean
 	 */
-	public function getRegisteredWebhooks(): array {
-		return get_option( self::WEBHOOK_REGISTERED_ENTRIES, [] );
-	}
-
-	/**
-	 * Save the registered webhooks.
-	 *
-	 * @param array $webhooks The list of webhooks to save.
-	 *
-	 * @return bool
-	 */
-	public function saveRegisteredWebhooks( $webhooks ): bool {
-		return update_option( self::WEBHOOK_REGISTERED_ENTRIES, $webhooks );
-	}
-
-	/**
-	 * Delete registered webhook by id.
-	 *
-	 * @param string $webhook_id The webhook id to delete.
-	 *
-	 * @return bool
-	 */
-	public function deleteRegisteredWebhookById( string $webhook_id ): bool {
-		$registered_webhooks = $this->getRegisteredWebhooks() ?? [];
-
-		if ( ! empty( $registered_webhooks ) ) {
-			foreach ( $registered_webhooks as $key => $registered_webhook ) {
-				if ( $registered_webhook['id'] === $webhook_id ) {
-					unset( $registered_webhooks[ $key ] );
-				}
-			}
-		}
-
-		// After unsetting, save the registered webhooks.
-		return $this->saveRegisteredWebhooks( $registered_webhooks );
+	public function getPreviousDomain() {
+		$webhook = $this->getPreviousWebhook();
+		return $webhook['url'] ?? '';
 	}
 
 	/**
@@ -173,58 +147,38 @@ class WebhooksHistoryService {
 	 * @return void
 	 */
 	public function maybeShowDomainChangeNotice(): void {
-		// Retreive the saved registered webhook.
+		// skip if we've already registered for this domain.
+		if ( $this->domainMatches() ) {
+			return;
+		}
+
 		$webhook = $this->getRegisteredWebhook();
 
-		// If we found a registered webhook for this site, then return.
-		if ( ! empty( $webhook ) && Webhook::getListenerUrl() === $webhook['url'] ) {
+		if ( empty( $webhook['id'] ) || empty( $webhook['url'] ) ) {
 			return;
 		}
 
-		// If no previous webhook, means - user somehow deleted all.
-		$previous_webhook = $this->getPreviousWebhook();
-		if ( empty( $previous_webhook ) ) {
-			$this->renderNotice( [], false );
-			return;
-		}
-
-		// Abstract the domain name from previous webhook and compare with current domain.
-		$is_duplicate = $this->getDomain( $previous_webhook['url'] ) === $this->getDomain( Webhook::getListenerUrl() );
-
-		// Render the notice.
-		$this->renderNotice( $previous_webhook, $is_duplicate );
-	}
-
-	/**
-	 * Get the domain name from the url.
-	 *
-	 * @param string $url The url to get the domain from.
-	 *
-	 * @return string|null
-	 */
-	public function getDomain( string $url ) {
-		return wp_parse_url( $url, PHP_URL_HOST );
+		// if domain does not match, then show notice.
+		$this->renderNotice( $webhook );
 	}
 
 	/**
 	 * Render the notice.
 	 *
-	 * @param array   $previous_webhook The previous webhook.
-	 * @param boolean $is_duplicate     Is the domain duplicate.
+	 * @param array $webhook The webhook.
 	 *
-	 * @return void
+	 * @return string|null
 	 */
-	private function renderNotice( array $previous_webhook, bool $is_duplicate = false ): void {
+	public function renderNotice( array $webhook ) {
 		wp_enqueue_style( 'surecart-webhook-admin-notices' );
 
-		echo \SureCart::render(
+		return \SureCart::render(
 			'admin/notices/webhook-change',
 			[
-				'previous_webhook' => $previous_webhook,
-				'update_url'       => \SureCart::getUrl()->editModel( 'update_webhook', $previous_webhook['id'] ),
+				'previous_webhook' => $webhook,
+				'update_url'       => \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ),
 				'add_url'          => \SureCart::getUrl()->editModel( 'create_webhook', '0' ),
-				'is_duplicate'     => $is_duplicate,
-				'previous_web_url' => $this->getWebsiteUrl( $previous_webhook['url'] ?? '' ),
+				'previous_web_url' => $this->getWebsiteUrl( $webhook['url'] ),
 				'current_web_url'  => $this->getWebsiteUrl( Webhook::getListenerUrl() ),
 			]
 		);
@@ -238,7 +192,16 @@ class WebhooksHistoryService {
 	 * @return string
 	 */
 	private function getWebsiteUrl( string $webhook_endpoint ): string {
+		if ( empty( $webhook_endpoint ) ) {
+			return '';
+		}
+
 		$parsed_url = parse_url( $webhook_endpoint );
+
+		if ( empty( $parsed_url['scheme'] ) || empty( $parsed_url['host'] ) ) {
+			return '';
+		}
+
 		return $parsed_url['scheme'] . '://' . $parsed_url['host'];
 	}
 }

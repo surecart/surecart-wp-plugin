@@ -46,38 +46,11 @@ class WebhooksService {
 	}
 
 	/**
-	 * May be create webhook.
-	 *
-	 * Check if we have previous webhook registered for this site
-	 * but for staging or something else.
+	 * May be Create webhooks for this site.
 	 *
 	 * @return void
 	 */
-	public function maybeCreateWebhook(): void {
-		// Get registered webhooks.
-		$registered_webhooks = $this->domain_service->getRegisteredWebhooks() ?? [];
-
-		// If there is a registered webhook, and the domain matched, then return.
-		$matched = false;
-		foreach ( $registered_webhooks as $registered_webhook ) {
-			if ( $this->domain_service->getDomain( $registered_webhook['url'] ) === $this->domain_service->getDomain( Webhook::getListenerUrl() ) ) {
-				$matched = true;
-			}
-		}
-
-		if ( $matched ) {
-			return;
-		}
-
-		$this->createWebhook();
-	}
-
-	/**
-	 * Create webhooks for this site.
-	 *
-	 * @return void
-	 */
-	public function createWebhook(): void {
+	public function maybeCreateWebhooks(): void {
 		// Check for API key and early return if not.
 		if ( ! $this->hasToken() ) {
 			return;
@@ -85,6 +58,10 @@ class WebhooksService {
 
 		// skip if we've already registered for this domain and has a signing secret saved.
 		if ( $this->domainMatches() && $this->hasSigningSecret() ) {
+			return;
+		} elseif ( ! empty( $this->getRegisteredWebhook()['id'] ) ) {
+			// if domain does not match and we have already a registered webhook, then return.
+			// we would show the notice instead of automatically register a new webhook.
 			return;
 		}
 
@@ -101,13 +78,13 @@ class WebhooksService {
 			);
 		}
 
-		// if successful, update the domain and signing secret.
+		// if successful, update webhook data.
 		if ( ! empty( $registered['signing_secret'] ) ) {
 			$this->saveRegisteredWebhook(
 				[
 					'id'             => $registered['id'],
 					'url'            => $registered['url'],
-					'webhook_events' => $registered['webhook_events'],
+					'webhook_events' => $registered['webhook_events'] ?? [],
 					'signing_secret' => Encryption::encrypt( $registered['signing_secret'] ),
 				]
 			);
@@ -120,12 +97,13 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function maybeClearWebhook(): void {
-		$webhook = Webhook::findExisting();
-		if ( $webhook ) {
+		$webhook = $this->getRegisteredWebhook();
+
+		if ( $webhook && ! empty( $webhook['id'] ) ) {
 			Webhook::delete( $webhook['id'] );
 
-			// Delete this webhook from registered webhooks list.
-			$this->domain_service->deleteRegisteredWebhookById( $webhook['id'] );
+			// Delete the registered webhook.
+			$this->domain_service->deleteRegisteredWebhook();
 		}
 	}
 
@@ -135,11 +113,6 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function verifyWebhooks(): void {
-		// Stop verify webhook checks for every request in development mode.
-		if ( defined( 'SURECART_DEV_MODE' ) && SURECART_DEV_MODE ) {
-			return;
-		}
-
 		$has_webhook_error = Webhook::hasAnyWebhookError();
 
 		// If there is no webhook, then show error notice.
@@ -167,7 +140,7 @@ class WebhooksService {
 	}
 
 	/**
-	 * Show a notice if webhook creation failed.
+	 * Show a notice if webhook creation failed or if connection is not working.
 	 *
 	 * @param  \WP_Error $error Error object.
 	 *
@@ -231,23 +204,12 @@ class WebhooksService {
 	}
 
 	/**
-	 * Get the registered webhooks.
+	 * Delete the previous webhook.
 	 *
-	 * @return array
+	 * @return boolean
 	 */
-	public function getRegisteredWebhooks(): array {
-		return $this->domain_service->getRegisteredWebhooks();
-	}
-
-	/**
-	 * Delete registered webhook by id.
-	 *
-	 * @param string $webhook_id Webhook ID.
-	 *
-	 * @return bool
-	 */
-	public function deleteRegisteredWebhookById( string $webhook_id ): bool {
-		return $this->domain_service->deleteRegisteredWebhookById( $webhook_id );
+	public function deletePreviousWebhook(): bool {
+		return $this->domain_service->deletePreviousWebhook();
 	}
 
 	/**

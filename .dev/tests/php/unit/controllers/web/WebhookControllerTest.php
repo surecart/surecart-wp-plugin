@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Controllers\Rest;
 
+use SureCart\Background\QueueService;
 use SureCart\Controllers\Web\WebhookController;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -20,6 +21,7 @@ class WebhookControllerTest extends SureCartUnitTestCase
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Background\BackgroundServiceProvider::class,
 			]
 		], false);
 	}
@@ -85,6 +87,16 @@ class WebhookControllerTest extends SureCartUnitTestCase
 	 */
 	public function test_receive_should_respond_success() {
 		$controller = new WebhookController();
+
+		$queue = \Mockery::mock(QueueService::class)->makePartial();
+		\SureCart::alias('queue', function () use ($queue) {
+			return $queue;
+		});
+		$queue->shouldReceive('add')
+		->andReturn(
+			do_action('surecart/purchase_created', [])
+		);
+
 		$request = \Mockery::mock(\SureCartCore\Requests\Request\Request::class)->makePartial();
 		$request->shouldReceive('getHeaderLine')->andReturn('');
 		$request->shouldReceive('getParsedBody')->andReturn([

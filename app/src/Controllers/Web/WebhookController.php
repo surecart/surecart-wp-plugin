@@ -39,9 +39,31 @@ class WebhookController {
 	 * @return ResponseInterface
 	 */
 	public function create( $request ) {
-		// We'll create a webhook for this site with signing secret.
-		\SureCart::webhooks()->createWebhook();
-		
+		// We'll create a webhook for this site register the webhooks.
+		$registered = Webhook::register();
+
+		// handle error and show notice to user.
+		if ( is_wp_error( $registered ) ) {
+			add_action(
+				'admin_notices',
+				function() use ( $registered ) {
+					\SureCart::webhooks()->showWebhooksErrorNotice( $registered );
+				}
+			);
+		}
+
+		// if successful, create new webhook data.
+		if ( ! empty( $registered['signing_secret'] ) ) {
+			\SureCart::webhooks()->saveRegisteredWebhook(
+				[
+					'id'             => $registered['id'],
+					'url'            => $registered['url'],
+					'webhook_events' => $registered['webhook_events'] ?? [],
+					'signing_secret' => Encryption::encrypt( $registered['signing_secret'] ),
+				]
+			);
+		}
+
 		return ( new RedirectResponse( $request ) )->back();
 	}
 
@@ -58,6 +80,10 @@ class WebhookController {
 			wp_die( $webhook->get_error_message() );
 		}
 
+		// Check if there is same listener url for other webhook excluding this one.
+		// if yes, then delete that webhook first, because duplicate endpoint is not allowed.
+		Webhook::removeSameUrlWebhooks( $webhook->id );
+
 		$updated = $webhook->update(
 			[
 				'url' => Webhook::getListenerUrl(),
@@ -69,22 +95,19 @@ class WebhookController {
 		}
 
 		// Get the previous webhook.
-		$previousWebhook = \SureCart::webhooks()->getPreviousWebhook();
+		$registered_webhook = \SureCart::webhooks()->getRegisteredWebhook();
 
-		if ( ! $previousWebhook ) {
+		if ( ! $registered_webhook ) {
 			return ( new RedirectResponse( $request ) )->back();
 		}
-
-		// Delete the previous registered webhook.
-		\SureCart::webhooks()->deleteRegisteredWebhookById( $previousWebhook['id'] );
 
 		// Save the updated webhook to webhook history.
 		\SureCart::webhooks()->saveRegisteredWebhook(
 			[
-				'id'  		     => $previousWebhook['id'],
-				'url' 			 => Webhook::getListenerUrl(),
-				'webhook_events' => $previousWebhook['webhook_events'],
-				'signing_secret' => Encryption::encrypt( $previousWebhook['signing_secret'] ),
+				'id'             => $registered_webhook['id'],
+				'url'            => Webhook::getListenerUrl(),
+				'webhook_events' => $registered_webhook['webhook_events'],
+				'signing_secret' => Encryption::encrypt( $registered_webhook['signing_secret'] ),
 			]
 		);
 
@@ -92,7 +115,10 @@ class WebhookController {
 	}
 
 	/**
-	 * Recieve webhook
+	 * Recieve webhook.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return ResponseInterface
 	 */
 	public function receive( $request ) {
 		// get json if sent.
@@ -170,19 +196,14 @@ class WebhookController {
 		$id    = $this->getObjectId( $request['data'] );
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
-		// broadcast the webhook as a background task.
-		// if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
-		// 	do_action( $event, $model, $request );
-		// } else {
-			\SureCart::queue()->add(
-				$event,
-				array(
-					'model'   => $model,
-					'request' => $request,
-				),
-				Webhook::GROUP_NAME
-			);
-		// }
+		\SureCart::queue()->add(
+			$event,
+			array(
+				'model'   => $model,
+				'request' => $request,
+			),
+			Webhook::GROUP_NAME
+		);
 
 		// return data.
 		return [

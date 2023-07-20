@@ -342,7 +342,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		// Processors.
 		\SureCart::route()->get()->where( 'sc_url_var', 'processors', 'tab' )->name( 'settings.processors' )->handle( 'ProcessorsSettings@show' );
 
-		// Export
+		// Export.
 		\SureCart::route()->get()->where( 'sc_url_var', 'export', 'tab' )->name( 'settings.export' )->handle( 'ExportSettings@show' );
 
 		// Cache.

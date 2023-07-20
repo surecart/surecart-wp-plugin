@@ -35,9 +35,9 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		if ( ! empty( $container['surecart.webhooks'] ) ) {
-			$container['surecart.webhooks']->maybeCreateWebhook();
-			$container['surecart.webhooks']->verifyWebhooks();
+			$container['surecart.webhooks']->maybeCreateWebhooks();
 			$container['surecart.webhooks']->listenForDomainChanges();
+			$container['surecart.webhooks']->verifyWebhooks();
 		}
 
 		if ( ! empty( $container['surecart.webhooks_account'] ) ) {

@@ -29,6 +29,7 @@ class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Permissions\RolesServiceProvider::class,
 				\SureCart\Background\BackgroundServiceProvider::class,
+				\SureCart\View\ViewServiceProvider::class,
 			]
 		], false);
 
@@ -37,56 +38,31 @@ class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 		parent::setUp();
 	}
 
-	public function test_webhook_notice_is_shown()
+	public function test_show_webhook_notices_when_domain_changes()
 	{
-		ob_start();
-		$this->service->maybeShowDomainChangeNotice();
-		$result = ob_get_clean();
+		$this->assertEmpty($this->service->getRegisteredWebhook());
+		$this->assertNull($this->service->maybeShowDomainChangeNotice());
 
-		$this->assertStringContainsString('action=create_webhook', $result);
-	}
-
-	public function test_webhook_notice_is_not_shown_if_already_registered()
-	{
 		$this->service->saveRegisteredWebhook(
 			[
 				'id'  		     => 'asdf',
-				'url' 			 => 'http://test.com',
+				'url' 			 => 'https://foo.com',
 				'webhook_events' => ['test'],
 				'signing_secret' => Encryption::encrypt( '1234' ),
 			],
 		);
+		$this->assertSame('asdf', $this->service->getRegisteredWebhook()['id']);
+		$this->assertSame('https://foo.com', $this->service->getRegisteredWebhook()['url']);
 
-		$this->assertCount(1, $this->service->getRegisteredWebhooks());
-
-		ob_start();
-		$this->service->maybeShowDomainChangeNotice();
-		$result = ob_get_clean();
-
-		$this->assertEmpty($result);
-	}
-
-	public function test_webhook_notice_shown_on_url_change()
-	{
-		$this->service->saveRegisteredWebhook(
-			[
-				'id'  		     => 'asdf',
-				'url' 			 => 'https://test.com', // https url, but our current listener url is http
-				'webhook_events' => ['test'],
-				'signing_secret' => Encryption::encrypt( '1234' ),
-			],
-		);
-
-		$this->assertArrayHasKey('id', $this->service->getPreviousWebhook());
-		$this->assertContains('https://test.com', $this->service->getPreviousWebhook()['url']);
+		// change the domain.
+		$mock_service = \Mockery::mock($this->service)->makePartial();
+		$mock_service->shouldReceive('domainMatches')->once()->andReturn(false);
 
 		ob_start();
 		$this->service->maybeShowDomainChangeNotice();
 		$result = ob_get_clean();
 
-		$this->assertStringContainsString('action=ignore_webhook', $result);
-		$this->assertStringContainsString('action=create_webhook', $result);
 		$this->assertStringContainsString('action=update_webhook', $result);
-		$this->assertStringContainsString('action=remove_webhook', $result);
+		$this->assertStringContainsString('action=create_webhook', $result);
 	}
 }
