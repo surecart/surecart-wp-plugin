@@ -1620,7 +1620,6 @@
     "slot": true
   },
   "sc-product-variation-choices": {
-    "is-dummy": true,
     "style": true,
     "id": true,
     "class": true,
