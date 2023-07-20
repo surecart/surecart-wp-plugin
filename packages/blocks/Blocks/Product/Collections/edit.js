@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
@@ -16,6 +16,7 @@ import { ScFlex, ScProductCollectionBadge } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { size, type, pill, collectionCount } = attributes;
+	const blockProps = useBlockProps({});
 
 	return (
 		<Fragment>
@@ -65,26 +66,28 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScFlex gap="1em" justifyContent="flex-start">
-				<ScProductCollectionBadge
-					name="Male"
-					pill={pill}
-					size={size}
-					type={type}
-				/>
-				<ScProductCollectionBadge
-					name="Female"
-					pill={pill}
-					size={size}
-					type={type}
-				/>
-				<ScProductCollectionBadge
-					name="Unisex"
-					pill={pill}
-					size={size}
-					type={type}
-				/>
-			</ScFlex>
+			<div {...blockProps}>
+				<ScFlex gap="1em" justifyContent="flex-start">
+					<ScProductCollectionBadge
+						name="Male"
+						pill={pill}
+						size={size}
+						type={type}
+					/>
+					<ScProductCollectionBadge
+						name="Female"
+						pill={pill}
+						size={size}
+						type={type}
+					/>
+					<ScProductCollectionBadge
+						name="Unisex"
+						pill={pill}
+						size={size}
+						type={type}
+					/>
+				</ScFlex>
+			</div>
 		</Fragment>
 	);
 };
