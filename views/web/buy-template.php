@@ -69,7 +69,8 @@
 			</sc-price-choices>
 			<!-- /wp:surecart/price-selector -->
 		<?php endif; ?>
-
+		
+		<sc-product-variation-choices style="--sc-variation-gap: 12px;"></sc-product-variation-choices>
 
 	</sc-column>
 	<!-- /wp:surecart/column -->

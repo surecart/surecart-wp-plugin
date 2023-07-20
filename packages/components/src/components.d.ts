@@ -3992,6 +3992,10 @@ export interface ScProductSelectedPriceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductSelectedPriceElement;
 }
+export interface ScProductVariationChoicesCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductVariationChoicesElement;
+}
 export interface ScProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProviderElement;
@@ -8688,6 +8692,10 @@ declare namespace LocalJSX {
         "text"?: 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        /**
+          * Error event
+         */
+        "onScError"?: (event: ScProductVariationChoicesCustomEvent<ResponseError>) => void;
     }
     interface ScProse {
     }

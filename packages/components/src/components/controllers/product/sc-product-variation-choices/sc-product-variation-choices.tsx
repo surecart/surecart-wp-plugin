@@ -1,7 +1,12 @@
-import { Component, h, Host, Element } from '@stencil/core';
+import { Component, h, Host, Element, EventEmitter, Event } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
+import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
+import { state as checkoutState } from '@store/checkout';
+import { createOrUpdateCheckout } from '@services/session';
+import { Checkout, ResponseError } from '../../../../types';
+import { getVariantFromValues } from '../../../../functions/util';
 @Component({
   tag: 'sc-product-variation-choices',
   styleUrl: 'sc-product-variation-choices.css',
@@ -10,7 +15,34 @@ import { state } from '@store/product';
 export class ScProductVariationChoices {
   
   @Element() el: HTMLScProductVariationChoicesElement;
- 
+  
+  /** Error event */
+  @Event() scError: EventEmitter<ResponseError>;
+
+  updateCheckout = async (values: { [key: string]: string }) => {
+    
+    if (!values || !checkoutState?.checkout) return;
+
+    const matchedVariant = getVariantFromValues({variants: availableVariants(), values});
+
+    if (!matchedVariant) return;
+
+    try {
+      lockCheckout('variant');
+      checkoutState.checkout = (await createOrUpdateCheckout({
+        id: checkoutState.checkout.id,
+        data: {
+          variant: matchedVariant,
+        },
+      })) as Checkout;
+    } catch (e) {
+      console.error(e);
+      this.scError.emit(e);
+    } finally {
+      unLockCheckout('variant');
+    }
+  }
+  
   render() {  
     
     if ( availableVariants()?.length < 2) return <Host style={{ display: 'none' }}></Host>;
@@ -24,10 +56,12 @@ export class ScProductVariationChoices {
                 part="name__input"
                 value={state.variantValues?.[option.id] || option?.values?.[0]?.value || ''}
                 onScChange={(e: any) => {
-                  state.variantValues = {
+                  const variantValues = {
                     ...state.variantValues,
                     [option?.id]: e?.target?.value
                   };
+                  state.variantValues = variantValues;
+                  this.updateCheckout(variantValues)
                 }}
                 label={option?.name}
                 choices={option?.values}

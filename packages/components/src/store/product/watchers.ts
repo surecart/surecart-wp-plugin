@@ -1,5 +1,6 @@
 import state, { onChange } from './store';
 import { availableVariants } from '@store/product/getters';
+import { getVariantFromValues } from '../../functions/util';
 
 onChange('selectedPrice', value => {
   // update the total when the selected price changes.
@@ -10,22 +11,8 @@ onChange('selectedPrice', value => {
   state.disabled = value?.archived || state.product?.archived;
 });
 
-onChange('variantValues', value => {
-  const variantValueKeys = Object.keys(value);
-
-  let matchedVariant = '';
-
-  const variants = availableVariants();
-
-  for (const variant of variants) {
-    if (
-      variant?.variant_values?.length === variantValueKeys.length &&
-      variantValueKeys.every(key => variant.variant_values.includes(value[key]))
-    ) {
-      matchedVariant = variant.id;
-      break;
-    }
-  }
+onChange('variantValues', values => {
+  const matchedVariant = getVariantFromValues({variants: availableVariants(), values});
   
   if (matchedVariant) {
     state.selectedVariant = matchedVariant;
