@@ -4,6 +4,7 @@ import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
+	TextControl,
 	ToggleControl,
 } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
@@ -14,7 +15,7 @@ import { Fragment } from '@wordpress/element';
 import { ScFlex, ScProductCollectionBadge } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { size, type, pill } = attributes;
+	const { size, type, pill, collectionCount } = attributes;
 
 	return (
 		<Fragment>
@@ -49,6 +50,16 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Pill', 'surecart')}
 							checked={pill}
 							onChange={(pill) => setAttributes({ pill })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Label', 'surecart')}
+							value={collectionCount}
+							onChange={(collectionCount) =>
+								setAttributes({ collectionCount })
+							}
+							type="number"
 						/>
 					</PanelRow>
 				</PanelBody>

@@ -2726,6 +2726,10 @@ export namespace Components {
     }
     interface ScProductCollections {
         /**
+          * Number of collection tags to show
+         */
+        "collectionCount": number;
+        /**
           * Draws a pill-style tag with rounded edges.
          */
         "pill": boolean;
@@ -8389,6 +8393,10 @@ declare namespace LocalJSX {
         "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScProductCollections {
+        /**
+          * Number of collection tags to show
+         */
+        "collectionCount"?: number;
         /**
           * Draws a pill-style tag with rounded edges.
          */

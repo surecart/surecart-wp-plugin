@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property | Attribute | Description                                | Type                                                                     | Default     |
-| -------- | --------- | ------------------------------------------ | ------------------------------------------------------------------------ | ----------- |
-| `pill`   | `pill`    | Draws a pill-style tag with rounded edges. | `boolean`                                                                | `false`     |
-| `size`   | `size`    | Collection tag size                        | `"large" \| "medium" \| "small"`                                         | `'medium'`  |
-| `type`   | `type`    | Collection tag type                        | `"danger" \| "default" \| "info" \| "primary" \| "success" \| "warning"` | `undefined` |
+| Property          | Attribute          | Description                                | Type                                                                     | Default     |
+| ----------------- | ------------------ | ------------------------------------------ | ------------------------------------------------------------------------ | ----------- |
+| `collectionCount` | `collection-count` | Number of collection tags to show          | `number`                                                                 | `undefined` |
+| `pill`            | `pill`             | Draws a pill-style tag with rounded edges. | `boolean`                                                                | `false`     |
+| `size`            | `size`             | Collection tag size                        | `"large" \| "medium" \| "small"`                                         | `'medium'`  |
+| `type`            | `type`             | Collection tag type                        | `"danger" \| "default" \| "info" \| "primary" \| "success" \| "warning"` | `undefined` |
 
 
 ## Dependencies
