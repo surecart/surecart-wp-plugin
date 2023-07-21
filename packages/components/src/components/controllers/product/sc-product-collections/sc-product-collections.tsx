@@ -10,17 +10,8 @@ import { state } from '@store/product';
   shadow: true,
 })
 export class ScProductCollections {
-  /** Collection tag size */
-  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
-
-  /** Draws a pill-style tag with rounded edges. */
-  @Prop({ reflect: true }) pill: boolean = false;
-
   /** Number of collection tags to show*/
   @Prop({ reflect: true }) collectionCount: number;
-
-  /** Collection tag type */
-  @Prop({ reflect: true }) type: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
 
   @State() productCollections: ProductCollection[] = [];
   @State() busy: boolean = false;
@@ -29,7 +20,7 @@ export class ScProductCollections {
     try {
       this.productCollections = (await apiFetch({
         path: addQueryArgs('surecart/v1/product_collections', {
-          per_page: this.collectionCount ,
+          per_page: this.collectionCount,
           product_ids: [state.product?.id],
         }),
       })) as ProductCollection[];
@@ -45,9 +36,9 @@ export class ScProductCollections {
 
   render() {
     return (
-      <sc-flex justifyContent="flex-start">
+      <sc-flex justifyContent="flex-start" part="content">
         {this.productCollections?.map(collection => (
-          <sc-product-collection-badge key={collection.id} size={this.size} pill={this.pill} type={this.type} name={collection.name}></sc-product-collection-badge>
+          <sc-product-collection-badge key={collection.id}>{collection.name}</sc-product-collection-badge>
         ))}
       </sc-flex>
     );

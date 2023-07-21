@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-20T12:39:19",
+  "timestamp": "2023-07-21T12:17:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -22764,120 +22764,23 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "name",
-          "type": "string",
-          "mutable": false,
-          "attr": "name",
-          "reflectToAttr": false,
-          "docs": "Collection name",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "pill",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "pill",
-          "reflectToAttr": true,
-          "docs": "Draws a pill-style tag with rounded edges.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "size",
-          "type": "\"large\" | \"medium\" | \"small\"",
-          "mutable": false,
-          "attr": "size",
-          "reflectToAttr": true,
-          "docs": "Collection tag size",
-          "docsTags": [],
-          "default": "'medium'",
-          "values": [
-            {
-              "value": "large",
-              "type": "string"
-            },
-            {
-              "value": "medium",
-              "type": "string"
-            },
-            {
-              "value": "small",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"danger\" | \"default\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": true,
-          "docs": "Collection tag type",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "danger",
-              "type": "string"
-            },
-            {
-              "value": "default",
-              "type": "string"
-            },
-            {
-              "value": "info",
-              "type": "string"
-            },
-            {
-              "value": "primary",
-              "type": "string"
-            },
-            {
-              "value": "success",
-              "type": "string"
-            },
-            {
-              "value": "warning",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-product-collections"
       ],
-      "dependencies": [
-        "sc-tag"
-      ],
+      "dependencies": [],
       "dependencyGraph": {
-        "sc-product-collection-badge": [
-          "sc-tag"
-        ],
         "sc-product-collections": [
           "sc-product-collection-badge"
         ]
@@ -22907,86 +22810,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "pill",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "pill",
-          "reflectToAttr": true,
-          "docs": "Draws a pill-style tag with rounded edges.",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "size",
-          "type": "\"large\" | \"medium\" | \"small\"",
-          "mutable": false,
-          "attr": "size",
-          "reflectToAttr": true,
-          "docs": "Collection tag size",
-          "docsTags": [],
-          "default": "'medium'",
-          "values": [
-            {
-              "value": "large",
-              "type": "string"
-            },
-            {
-              "value": "medium",
-              "type": "string"
-            },
-            {
-              "value": "small",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"danger\" | \"default\" | \"info\" | \"primary\" | \"success\" | \"warning\"",
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": true,
-          "docs": "Collection tag type",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "danger",
-              "type": "string"
-            },
-            {
-              "value": "default",
-              "type": "string"
-            },
-            {
-              "value": "info",
-              "type": "string"
-            },
-            {
-              "value": "primary",
-              "type": "string"
-            },
-            {
-              "value": "success",
-              "type": "string"
-            },
-            {
-              "value": "warning",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -22994,7 +22817,12 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "content",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [
         "sc-flex",
@@ -23004,9 +22832,6 @@
         "sc-product-collections": [
           "sc-flex",
           "sc-product-collection-badge"
-        ],
-        "sc-product-collection-badge": [
-          "sc-tag"
         ]
       }
     },
@@ -30253,7 +30078,6 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
-        "sc-product-collection-badge",
         "sc-product-item-list",
         "sc-product-price",
         "sc-subscription-details",
@@ -30315,9 +30139,6 @@
           "sc-tag"
         ],
         "sc-premium-tag": [
-          "sc-tag"
-        ],
-        "sc-product-collection-badge": [
           "sc-tag"
         ],
         "sc-product-item-list": [

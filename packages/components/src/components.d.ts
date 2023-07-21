@@ -2707,40 +2707,12 @@ export namespace Components {
     interface ScProductBuyButton {
     }
     interface ScProductCollectionBadge {
-        /**
-          * Collection name
-         */
-        "name": string;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * Collection tag size
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * Collection tag type
-         */
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScProductCollections {
         /**
           * Number of collection tags to show
          */
         "collectionCount": number;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * Collection tag size
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * Collection tag type
-         */
-        "type": 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -8375,40 +8347,12 @@ declare namespace LocalJSX {
     interface ScProductBuyButton {
     }
     interface ScProductCollectionBadge {
-        /**
-          * Collection name
-         */
-        "name"?: string;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * Collection tag size
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * Collection tag type
-         */
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScProductCollections {
         /**
           * Number of collection tags to show
          */
         "collectionCount"?: number;
-        /**
-          * Draws a pill-style tag with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * Collection tag size
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * Collection tag type
-         */
-        "type"?: 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'default';
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
