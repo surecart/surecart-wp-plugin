@@ -5,9 +5,12 @@ import {
 	ScBlockUi,
 	ScFormatNumber,
 	ScDivider,
+	ScAlert,
+	ScChoices,
+	ScChoice,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -18,23 +21,15 @@ import Box from '../../ui/Box';
 
 export default ({ checkout, busy, loading }) => {
 	const [busyShipping, setBusyShipping] = useState(false);
-	const [shippingId, setShippingId] = useState(
-		checkout?.selected_shipping_choice
-	);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const { receiveEntityRecords, invalidateResolutionForStore } =
 		useDispatch(coreStore);
 
-	useEffect(() => {
-		if (shippingId && shippingId !== checkout?.selected_shipping_choice) {
-			onShippingChange(shippingId);
-		}
-	}, [shippingId]);
-
 	const onShippingChange = async (shippingId) => {
 		try {
 			setBusyShipping(true);
+
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -44,15 +39,7 @@ export default ({ checkout, busy, loading }) => {
 			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand: [
-						// expand the checkout and the checkout's required expands.
-						...(expand || []).map((item) => {
-							return item.includes('.')
-								? item
-								: `checkout.${item}`;
-						}),
-						'checkout',
-					],
+					expand,
 				}),
 				data: {
 					selected_shipping_choice: shippingId, // update the shipping choice.
@@ -69,12 +56,9 @@ export default ({ checkout, busy, loading }) => {
 				false,
 				checkout
 			);
-			await invalidateResolutionForStore();
-			createSuccessNotice(__('Shipping updated.', 'surecart'), {
-				type: 'snackbar',
-			});
 		} catch (e) {
 			console.error(e);
+
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart'),
 				{
@@ -86,75 +70,62 @@ export default ({ checkout, busy, loading }) => {
 		}
 	};
 
-	if (
-		!checkout?.selected_shipping_choice_required ||
-		!checkout?.shipping_choices?.data?.length
-	) {
+	if (!checkout?.selected_shipping_choice_required) {
 		return null;
+	}
+
+	if (!checkout?.shipping_choices?.data?.length) {
+		return (
+			<Box title={__('Shipping', 'surecart')} loading={loading}>
+				<ScAlert type="warning" open>
+					{__(
+						'This order has products that are not shippable to this address.',
+						'surecart'
+					)}
+				</ScAlert>
+			</Box>
+		);
 	}
 
 	return (
 		<Box title={__('Shipping', 'surecart')} loading={loading}>
-			<ScRadioGroup onScChange={(e) => setShippingId(e.target.value)}>
+			<ScChoices onScChange={(e) => onShippingChange(e.target.value)}>
 				{(checkout?.shipping_choices?.data || []).map(
 					({ id, amount, currency, shipping_method }, index) => {
-						const isLastElement =
-							index !==
-							checkout?.shipping_choices?.data?.length - 1;
 						return (
 							<>
-								<ScRadio
+								<ScChoice
 									key={id}
 									value={id}
 									checked={
-										shippingId
-											? shippingId === id
-											: checkout?.selected_shipping_choice ===
-											  id
+										checkout?.selected_shipping_choice ===
+										id
 									}
-									style={{
-										padding: '14px',
-										borderBottom: isLastElement
-											? '1px solid #eaeaea'
-											: '',
-									}}
 								>
-									<div
-										style={{
-											display: 'flex',
-											gap: '6em',
-										}}
-									>
-										<div
-											style={{
-												display: 'flex',
-												flexDirection: 'column',
-												gap: '0.6em',
-											}}
-										>
-											<div>{shipping_method?.name}</div>
-											<div>
-												{shipping_method?.description}
-											</div>
-										</div>
-										<div>
-											{0 === amount ? (
-												__('Free', 'surecart')
-											) : (
-												<ScFormatNumber
-													type="currency"
-													currency={currency}
-													value={amount}
-												/>
-											)}
-										</div>
+									{shipping_method?.name}
+
+									<div slot="description">
+										{shipping_method?.description}
 									</div>
-								</ScRadio>
+
+									<div slot="price">
+										{0 === amount ? (
+											__('Free', 'surecart')
+										) : (
+											<ScFormatNumber
+												type="currency"
+												currency={currency}
+												value={amount}
+											/>
+										)}
+									</div>
+								</ScChoice>
 							</>
 						);
 					}
 				)}
-			</ScRadioGroup>
+			</ScChoices>
+
 			{(!!busy || !!loading || !!busyShipping) && <ScBlockUi spinner />}
 		</Box>
 	);

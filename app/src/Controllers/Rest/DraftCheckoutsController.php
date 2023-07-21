@@ -64,6 +64,11 @@ class DraftCheckoutsController extends RestController {
 			return $finalized;
 		}
 
+		// not paid, don't continue.
+		if ( !in_array( $finalized->status, ['paid'] )) {
+			return $finalized;
+		}
+
 		// fetch the checkout with purchases.
 		$checkout = $checkout->where(array_merge(
 			$request->get_query_params(),
@@ -80,18 +85,16 @@ class DraftCheckoutsController extends RestController {
 			return $checkout;
 		}
 
-		// Create a user account for the customer if it doesn't exist.
-		$linked = $this->linkCustomerId( $checkout );
-		if ( is_wp_error( $linked ) ) {
-			return $linked;
-		}
-
 		// purchase created.
 		if ( ! empty( $checkout->purchases->data ) ) {
 			foreach ( $checkout->purchases->data as $purchase ) {
 				if ( empty( $purchase->revoked ) ) {
-					// broadcast the webhook.
-					do_action( 'surecart/purchase_created', $purchase );
+					try {
+						// broadcast the webhook.
+						do_action( 'surecart/purchase_created', $purchase );
+					} catch( \Exception $e) {
+						error_log( $e->getMessage() );
+					}
 				}
 			}
 		}

@@ -33,17 +33,12 @@ export default ({ checkout }) => {
 			// our entity query data.
 			const entityData = ['surecart', 'price', priceID];
 
-			const price = select(coreStore).getEditedEntityRecord(
-				...entityData
-			);
-			const priceLoading = !select(coreStore)?.hasFinishedResolution?.(
-				'getEditedEntityRecord',
-				[...entityData]
-			);
-
 			return {
-				price,
-				priceLoading,
+				price: select(coreStore).getEntityRecord(...entityData),
+				priceLoading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEntityRecord',
+					[...entityData]
+				),
 			};
 		},
 		[priceID]
@@ -121,6 +116,7 @@ export default ({ checkout }) => {
 				<ScIcon name="plus" slot="prefix" />
 				{__('Add Price', 'surecart')}
 			</ScButton>
+
 			<ScDialog
 				label={__('Choose a price', 'surecart')}
 				open={open}
@@ -137,6 +133,7 @@ export default ({ checkout }) => {
 							archived: false,
 						}}
 					/>
+
 					{price?.ad_hoc && (
 						<ScPriceInput
 							label={__('Amount', 'surecart')}
@@ -149,12 +146,15 @@ export default ({ checkout }) => {
 							}}
 						/>
 					)}
+
 					<ScButton type="primary" submit>
 						{__('Add Price', 'surecart')}
 					</ScButton>
+
 					<ScButton type="text" onClick={() => setOpen(false)}>
 						{__('Cancel', 'surecart')}
 					</ScButton>
+
 					{(!!loading || !!priceLoading) && <ScBlockUi spinner />}
 				</ScForm>
 			</ScDialog>

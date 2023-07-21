@@ -10,29 +10,38 @@ import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
-import { useRef, useState } from '@wordpress/element';
+import { useRef, useState, useEffect } from '@wordpress/element';
 import { Modal } from '@wordpress/components';
 
-export default ({ open, onRequestClose, onCreate }) => {
+export default ({ onRequestClose, onCreate }) => {
 	const name = useRef();
 	const [busy, setBusy] = useState(false);
 	const [customer, setCustomer] = useState({
 		live_mode: false, // TODO: Update mode.
 	});
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const { saveEntityRecord } = useDispatch(coreStore);
 
+	// Focus the name input when this is loaded.
+	useEffect(() => {
+		setTimeout(() => {
+			name.current.triggerFocus();
+		}, 50);
+	}, []);
+
+	// Update the customer.
 	const updateNewCustomer = (data) =>
 		setCustomer({
 			...(customer || {}),
 			...data,
 		});
 
+	// Handle form submission.
 	const onSubmit = async () => {
 		try {
 			setBusy(true);
-			const customer = await saveEntityRecord(
+			const created = await saveEntityRecord(
 				'surecart',
 				'customer',
 				customer,
@@ -40,10 +49,11 @@ export default ({ open, onRequestClose, onCreate }) => {
 					throwOnError: true,
 				}
 			);
-			onCreate(customer?.id);
+			onCreate(created?.id);
 			createSuccessNotice(__('Customer created.', 'surecart'), {
 				type: 'snackbar',
 			});
+			onRequestClose();
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -57,68 +67,66 @@ export default ({ open, onRequestClose, onCreate }) => {
 	};
 
 	return (
-		!!open && (
-			<Modal
-				title={__('Add Customer', 'surecart')}
+		<Modal
+			title={__('Add Customer', 'surecart')}
+			css={css`
+				max-width: 500px !important;
+			`}
+			onRequestClose={onRequestClose}
+			shouldCloseOnClickOutside={false}
+		>
+			<ScForm
+				onScFormSubmit={onSubmit}
 				css={css`
-					max-width: 500px !important;
+					--sc-form-row-spacing: var(--sc-spacing-large);
 				`}
-				onRequestClose={onRequestClose}
-				shouldCloseOnClickOutside={false}
 			>
-				<ScForm
-					onScFormSubmit={onSubmit}
+				<ScInput
+					ref={name}
+					label={__('First Name', 'surecart')}
+					onScInput={(e) =>
+						updateNewCustomer({
+							first_name: e.target.value,
+						})
+					}
+					tabIndex="0"
+					autofocus
+				/>
+
+				<ScInput
+					label={__('Last Name', 'surecart')}
+					onScInput={(e) =>
+						updateNewCustomer({ last_name: e.target.value })
+					}
+					tabIndex="0"
+				/>
+
+				<ScInput
+					label={__('Email', 'surecart')}
+					type="email"
+					onScInput={(e) =>
+						updateNewCustomer({ email: e.target.value })
+					}
+					tabIndex="0"
+					required
+				/>
+
+				<div
 					css={css`
-						--sc-form-row-spacing: var(--sc-spacing-large);
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
 					`}
 				>
-					<ScInput
-						ref={name}
-						label={__('First Name', 'surecart')}
-						onScInput={(e) =>
-							updateNewCustomer({
-								first_name: e.target.value,
-							})
-						}
-						tabIndex="0"
-						autofocus
-					/>
-
-					<ScInput
-						label={__('Last Name', 'surecart')}
-						onScInput={(e) =>
-							updateNewCustomer({ last_name: e.target.value })
-						}
-						tabIndex="0"
-					/>
-
-					<ScInput
-						label={__('Email', 'surecart')}
-						type="email"
-						onScInput={(e) =>
-							updateNewCustomer({ email: e.target.value })
-						}
-						tabIndex="0"
-						required
-					/>
-
-					<div
-						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
-						`}
-					>
-						<ScButton type="primary" busy={busy} submit>
-							{__('Create', 'surecart')}
-						</ScButton>
-						<ScButton type="text" onClick={() => setModal(false)}>
-							{__('Cancel', 'surecart')}
-						</ScButton>
-					</div>
-				</ScForm>
-				{busy && <ScBlockUi spinner />}
-			</Modal>
-		)
+					<ScButton type="primary" busy={busy} submit>
+						{__('Create', 'surecart')}
+					</ScButton>
+					<ScButton type="text" onClick={() => setModal(false)}>
+						{__('Cancel', 'surecart')}
+					</ScButton>
+				</div>
+			</ScForm>
+			{busy && <ScBlockUi spinner />}
+		</Modal>
 	);
 };

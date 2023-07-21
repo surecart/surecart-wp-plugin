@@ -33,7 +33,7 @@ export default ({ checkout, loading, busy }) => {
 				throwOnError: true,
 			});
 
-			// get the checkouts endpoint.
+			// get the draft checkouts endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'draft-checkout'

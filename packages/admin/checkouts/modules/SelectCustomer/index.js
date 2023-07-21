@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 import {
 	ScFormControl,
 	ScIcon,
@@ -13,7 +10,7 @@ import { useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState, useRef } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -22,10 +19,8 @@ import Customer from './Customer';
 import CreateCustomer from './CreateCustomer';
 
 export default ({ checkout, busy, loading }) => {
-	const name = useRef();
 	const [busyCustomer, setBusyCustomer] = useState(false);
 	const [modal, setModal] = useState(false);
-	const [newCustomer, setNewCustomer] = useState(null);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -38,7 +33,6 @@ export default ({ checkout, busy, loading }) => {
 				'surecart',
 				'draft-checkout'
 			);
-
 			// update the customer.
 			let data = await apiFetch({
 				method: 'PATCH',
@@ -79,6 +73,7 @@ export default ({ checkout, busy, loading }) => {
 			});
 		} catch (e) {
 			console.error(e);
+
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart'),
 				{
@@ -86,7 +81,6 @@ export default ({ checkout, busy, loading }) => {
 				}
 			);
 		} finally {
-			setModal(false);
 			setBusyCustomer(false);
 		}
 	};
@@ -110,14 +104,7 @@ export default ({ checkout, busy, loading }) => {
 						required
 						prefix={
 							<div slot="prefix">
-								<ScMenuItem
-									onClick={() => {
-										setModal(true);
-										setTimeout(() => {
-											name.current.triggerFocus();
-										}, 50);
-									}}
-								>
+								<ScMenuItem onClick={() => setModal(true)}>
 									<ScIcon slot="prefix" name="plus" />
 									{__('Add New', 'surecart')}
 								</ScMenuItem>
@@ -134,11 +121,12 @@ export default ({ checkout, busy, loading }) => {
 				</ScFormControl>
 			)}
 
-			<CreateCustomer
-				open={modal}
-				onRequestClose={() => setModal(false)}
-				onCreate={onCustomerUpdate}
-			/>
+			{modal && (
+				<CreateCustomer
+					onRequestClose={() => setModal(false)}
+					onCreate={onCustomerUpdate}
+				/>
+			)}
 
 			{(!!busy || !!loading || !!busyCustomer) && <ScBlockUi spinner />}
 		</Box>

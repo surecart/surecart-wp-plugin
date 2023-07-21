@@ -103,14 +103,20 @@ export default () => {
 	const createCheckout = async () => {
 		try {
 			setCheckoutIdLoading(true);
-			const { id } = await saveEntityRecord('surecart', 'checkout', {
-				customer_id: false,
-				live_mode: false, // TODO: Change to live.
-			});
+
+			const { id } = await saveEntityRecord(
+				'surecart',
+				'draft-checkout',
+				{
+					customer_id: false,
+					live_mode: false, // TODO: Change to live.
+				}
+			);
+
 			setCheckoutId(id);
 		} catch (e) {
-			setCheckoutIdLoading(false);
 			console.error(e);
+
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
@@ -135,27 +141,14 @@ export default () => {
 		}
 	};
 
-	const finalizeCheckout = async ({ id, customer_id }) => {
+	const finalizeCheckout = async ({ id }) => {
 		return await apiFetch({
 			method: 'PATCH',
-			path: addQueryArgs(`surecart/v1/checkouts/${id}/finalize`, {
+			path: addQueryArgs(`surecart/v1/draft-checkouts/${id}/finalize`, {
 				manual_payment: paymentID ? false : true,
 				payment_method_id: paymentID,
-				skip_spam_check: true,
-				customer_id: customer_id,
 			}),
 		});
-	};
-
-	/**
-	 * Handle the form submission
-	 */
-	const onSubmit = async () => {
-		// we will be charged.
-		if (paymentID && checkout?.amount_due) {
-			return setConfirmCheckout(true);
-		}
-		saveCheckout();
 	};
 
 	/**
@@ -169,15 +162,14 @@ export default () => {
 				id: checkout?.id,
 				customer_id: customer?.id,
 			});
-			setOrderID(order);
-			setModal(true);
+			window.location.href = `admin.php?page=sc-orders&action=edit&id=${
+				order?.id || order
+			}`;
 			createSuccessNotice(__('Order Created.', 'surecart'), {
 				type: 'snackbar',
 			});
 		} catch (e) {
 			setCheckoutError(e);
-			setIsSaving(false);
-		} finally {
 			setIsSaving(false);
 		}
 	};
@@ -194,15 +186,7 @@ export default () => {
 			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand: [
-						// expand the checkout and the checkout's required expands.
-						...(expand || []).map((item) => {
-							return item.includes('.')
-								? item
-								: `checkout.${item}`;
-						}),
-						'checkout',
-					],
+					expand,
 				}),
 				data: {
 					customer_id: checkout?.customer_id,
@@ -238,11 +222,15 @@ export default () => {
 		}
 	};
 
+	const isDisabled =
+		checkout?.selected_shipping_choice_required &&
+		!checkout?.selected_shipping_choice;
+
 	return (
 		<>
 			<Error error={checkoutError} setError={setCheckoutError} />
 			<UpdateModel
-				onSubmit={onSubmit}
+				onSubmit={() => setConfirmCheckout(true)}
 				title={
 					<div
 						css={css`
@@ -274,7 +262,12 @@ export default () => {
 					</div>
 				}
 				button={
-					<ScButton type="primary" submit loading={isSaving}>
+					<ScButton
+						type="primary"
+						submit
+						loading={isSaving}
+						disabled={isDisabled}
+					>
 						{__('Create Order', 'surecart')}
 					</ScButton>
 				}
@@ -384,12 +377,12 @@ export default () => {
 				</ScDashboardModule>
 			</ScDialog>
 
-			{checkout?.amount_due && checkout?.currency && (
-				<ScDialog
-					open={confirmCheckout}
-					onScRequestClose={() => setConfirmCheckout(false)}
-					label={__('Confirm Charge', 'surecart')}
-				>
+			<ScDialog
+				open={confirmCheckout}
+				onScRequestClose={() => setConfirmCheckout(false)}
+				label={__('Confirm Charge', 'surecart')}
+			>
+				{paymentID && checkout?.amount_due ? (
 					<ScAlert
 						type="warning"
 						title={__('Confirm Charge', 'surecart')}
@@ -401,30 +394,43 @@ export default () => {
 								'surecart'
 							),
 							formatNumber(
-								checkout?.amount_due,
-								checkout?.currency
+								checkout?.amount_due || 0,
+								checkout?.currency || 'usd'
 							)
 						)}
 					</ScAlert>
-					<ScButton
-						slot="footer"
-						type="primary"
-						onClick={() => {
-							setConfirmCheckout(false);
-							saveCheckout();
-						}}
+				) : (
+					<ScAlert
+						type="warning"
+						title={__('Confirm Manual Payment', 'surecart')}
+						open
 					>
-						{__('Create Order', 'surecart')}
-					</ScButton>
-					<ScButton
-						slot="footer"
-						type="text"
-						onClick={() => setConfirmCheckout(false)}
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>
-				</ScDialog>
-			)}
+						{sprintf(
+							__(
+								'This will create an order that requires a manual payment (i.e. cash or check). Once you create this order it is not possible to pay it another way. Do you want to continue?',
+								'surecart'
+							)
+						)}
+					</ScAlert>
+				)}
+				<ScButton
+					slot="footer"
+					type="primary"
+					onClick={() => {
+						setConfirmCheckout(false);
+						saveCheckout();
+					}}
+				>
+					{__('Create Order', 'surecart')}
+				</ScButton>
+				<ScButton
+					slot="footer"
+					type="text"
+					onClick={() => setConfirmCheckout(false)}
+				>
+					{__('Cancel', 'surecart')}
+				</ScButton>
+			</ScDialog>
 		</>
 	);
 };

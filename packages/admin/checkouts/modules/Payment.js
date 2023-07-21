@@ -51,15 +51,7 @@ export default ({
 			const data = await apiFetch({
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, {
-					expand: [
-						// expand the checkout and the checkout's required expands.
-						...(expand || []).map((item) => {
-							return item.includes('.')
-								? item
-								: `checkout.${item}`;
-						}),
-						'checkout',
-					],
+					expand,
 				}),
 				data: {
 					customer_id: checkout?.customer_id,

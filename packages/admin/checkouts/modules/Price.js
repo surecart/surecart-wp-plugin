@@ -156,40 +156,42 @@ export default ({
 				</ScTableCell>
 			</ScTableRow>
 
-			<ScForm
-				onScFormSubmit={(e) => {
-					e.stopImmediatePropagation(); // prevents the page form from submitting.
-					setOpen(false);
-					onChange({ ad_hoc_amount: addHocAmount });
-					setAddHocAmount(false);
-				}}
-			>
-				<ScDialog
-					label={__('Change Amount', 'surecart')}
-					open={open}
-					style={{ '--dialog-body-overflow': 'visible' }}
-					onScRequestClose={() => setOpen(false)}
+			{open && (
+				<ScForm
+					onScFormSubmit={(e) => {
+						e.stopImmediatePropagation(); // prevents the page form from submitting.
+						setOpen(false);
+						onChange({ ad_hoc_amount: addHocAmount });
+						setAddHocAmount(false);
+					}}
 				>
-					<ScPriceInput
-						label={__('Amount', 'surecart')}
-						placeholder={__('Enter an Amount', 'surecart')}
-						currencyCode={price?.currency}
-						value={addHocAmount || ad_hoc_amount || null}
-						onScInput={(e) => setAddHocAmount(e?.target?.value)}
-						required
-					/>
-					<ScButton slot="footer" type="primary" submit>
-						{__('Update', 'surecart')}
-					</ScButton>
-					<ScButton
-						slot="footer"
-						type="text"
-						onClick={() => setOpen(false)}
+					<ScDialog
+						label={__('Change Amount', 'surecart')}
+						open={open}
+						style={{ '--dialog-body-overflow': 'visible' }}
+						onScRequestClose={() => setOpen(false)}
 					>
-						{__('Cancel', 'surecart')}
-					</ScButton>
-				</ScDialog>
-			</ScForm>
+						<ScPriceInput
+							label={__('Amount', 'surecart')}
+							placeholder={__('Enter an Amount', 'surecart')}
+							currencyCode={price?.currency}
+							value={addHocAmount || ad_hoc_amount || null}
+							onScInput={(e) => setAddHocAmount(e?.target?.value)}
+							required
+						/>
+						<ScButton slot="footer" type="primary" submit>
+							{__('Update', 'surecart')}
+						</ScButton>
+						<ScButton
+							slot="footer"
+							type="text"
+							onClick={() => setOpen(false)}
+						>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</ScDialog>
+				</ScForm>
+			)}
 		</>
 	);
 };
