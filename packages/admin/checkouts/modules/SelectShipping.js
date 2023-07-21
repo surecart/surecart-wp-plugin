@@ -125,11 +125,15 @@ export default ({ checkout, busy, loading }) => {
                                     <div>{shipping_method?.description}</div>
                                 </div>
                                 <div>
-                                    <ScFormatNumber
-                                        type="currency"
-                                        currency={currency}
-                                        value={amount}
-                                    />
+                                    {
+                                        0 === amount ? __('Free', 'surecart') : (
+                                            <ScFormatNumber
+                                                type="currency"
+                                                currency={currency}
+                                                value={amount}
+                                            />
+                                        )
+                                    }
                                 </div>
                             </div>
                         </ScRadio>
