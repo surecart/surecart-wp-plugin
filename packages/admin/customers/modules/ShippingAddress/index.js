@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { ScButton, ScFlex } from '@surecart/components-react';
 import { countryChoices } from '@surecart/components';
+import AddressDisplay from '../../../components/AddressDisplay';
 
 export default ({ onEditAddress, shippingAddress, loading }) => {
 	return (
@@ -11,29 +12,10 @@ export default ({ onEditAddress, shippingAddress, loading }) => {
 					flexDirection="column"
 					style={{ gap: 'var(--sc-spacing-x-small)' }}
 				>
-					<span>
-						{shippingAddress?.line_1}{' '}
-						{shippingAddress?.line_2 &&
-							` / ${shippingAddress?.line_2}`}
-					</span>
-					<span>
-						{shippingAddress?.city}
-						{shippingAddress?.state &&
-							`$ - ${shippingAddress?.state}`}
-					</span>
-					<span>{shippingAddress?.postal_code}</span>
-					<span>
-						{
-							countryChoices.find(
-								(countryChoice) =>
-									countryChoice.value ===
-									shippingAddress?.country
-							)?.label
-						}
-					</span>
+					<AddressDisplay address={shippingAddress} />
 				</ScFlex>
 				<ScButton size="small" onClick={onEditAddress}>
-					Edit
+					{__('Edit', 'surecart')}
 				</ScButton>
 			</ScFlex>
 		</Box>
