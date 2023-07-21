@@ -110,6 +110,7 @@ export default ({
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
+
 				{!!checkout?.shipping_amount && (
 					<ScLineItem>
 						<span slot="description">
@@ -127,7 +128,8 @@ export default ({
 						></ScFormatNumber>
 					</ScLineItem>
 				)}
-				{0 !== checkout?.tax_amount && (
+
+				{!!checkout?.tax_amount && (
 					<ScLineItem>
 						<span slot="description">{`${formatTaxDisplay(
 							__('Order Tax', 'surecart')
@@ -144,6 +146,7 @@ export default ({
 						></ScFormatNumber>
 					</ScLineItem>
 				)}
+
 				<ScCouponForm
 					collapsed={true}
 					placeholder={__('Enter Coupon Code', 'surecart')}
@@ -170,6 +173,24 @@ export default ({
 						value={checkout?.total_amount}
 					></ScFormatNumber>
 				</ScLineItem>
+
+				{checkout?.total_amount !== checkout?.amount_due && (
+					<ScLineItem>
+						<span slot="title">
+							{__('Total Due Today', 'surecart')}
+						</span>
+						<ScFormatNumber
+							slot="price"
+							style={{
+								fontWeight: 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
+							type="currency"
+							currency={checkout?.currency}
+							value={checkout?.amount_due}
+						></ScFormatNumber>
+					</ScLineItem>
+				)}
 
 				{!!paymentMethod && (
 					<>
