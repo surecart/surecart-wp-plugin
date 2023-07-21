@@ -174,11 +174,27 @@ export default ({
 					></ScFormatNumber>
 				</ScLineItem>
 
+				{!!checkout?.trial_amount && (
+					<ScLineItem>
+						<span slot="description">
+							{__('Trial', 'surecart')}
+						</span>
+						<ScFormatNumber
+							slot="price"
+							style={{
+								fontWeight: 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
+							type="currency"
+							currency={checkout?.currency}
+							value={checkout?.trial_amount}
+						></ScFormatNumber>
+					</ScLineItem>
+				)}
+
 				{checkout?.total_amount !== checkout?.amount_due && (
 					<ScLineItem>
-						<span slot="title">
-							{__('Total Due Today', 'surecart')}
-						</span>
+						<span slot="title">{__('Amount Due', 'surecart')}</span>
 						<ScFormatNumber
 							slot="price"
 							style={{
