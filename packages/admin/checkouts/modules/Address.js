@@ -34,26 +34,28 @@ export default ({
 						circle
 						onClick={() => {
 							console.log(address);
-							if ( address && 0 !== address?.length )	{
+							if (address && 0 !== address?.length) {
 								setCustomerShippingAddress(address);
 							}
-							setOpen(true)
+							setOpen(true);
 						}}
 					>
 						<ScIcon name="edit" />
 					</ScButton>
 				}
 			>
-				{ (address && 0 !== address?.length) ? 
-					<AddressDisplay address={address} /> : 
-					<span style={{
-						fontStyle: 'italic',
-						color: 'var(--sc-color-gray-500)'	
-					}}
+				{address && 0 !== address?.length ? (
+					<AddressDisplay address={address} />
+				) : (
+					<span
+						style={{
+							fontStyle: 'italic',
+							color: 'var(--sc-color-gray-500)',
+						}}
 					>
 						{__('Nothing to show here.', 'surecart')}
-					</span> 
-				}
+					</span>
+				)}
 				{(!!busy || !!busyCustomer) && <ScBlockUi spinner />}
 			</Box>
 

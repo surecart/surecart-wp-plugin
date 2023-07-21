@@ -23,7 +23,14 @@ import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
 import CollectPayment from './CollectPayment';
 
-export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }) => {
+export default ({
+	checkout,
+	loading,
+	busy,
+	busyPrices,
+	setPaymentID,
+	paymentID,
+}) => {
 	const [busyPayment, setBusyPayment] = useState(false);
 	const [paymentMethod, setPaymentMethod] = useState(false);
 
@@ -103,22 +110,23 @@ export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }
 						value={checkout?.subtotal_amount}
 					></ScFormatNumber>
 				</ScLineItem>
-				{ !!checkout?.shipping_amount && (
-						<ScLineItem>
-							<span slot="description">{__('Shipping', 'surecart')}</span>
-							<ScFormatNumber
-								slot="price"
-								style={{
-									fontWeight: 'var(--sc-font-weight-semibold)',
-									color: 'var(--sc-color-gray-800)',
-								}}
-								type="currency"
-								currency={checkout?.currency}
-								value={checkout?.shipping_amount}
-							></ScFormatNumber>
-						</ScLineItem>
-					)
-				}
+				{!!checkout?.shipping_amount && (
+					<ScLineItem>
+						<span slot="description">
+							{__('Shipping', 'surecart')}
+						</span>
+						<ScFormatNumber
+							slot="price"
+							style={{
+								fontWeight: 'var(--sc-font-weight-semibold)',
+								color: 'var(--sc-color-gray-800)',
+							}}
+							type="currency"
+							currency={checkout?.currency}
+							value={checkout?.shipping_amount}
+						></ScFormatNumber>
+					</ScLineItem>
+				)}
 				{0 !== checkout?.tax_amount && (
 					<ScLineItem>
 						<span slot="description">{`${formatTaxDisplay(
@@ -163,79 +171,83 @@ export default ({ checkout, loading, busy, busyPrices, setPaymentID, paymentID }
 					></ScFormatNumber>
 				</ScLineItem>
 
-				{ !!paymentMethod && (
+				{!!paymentMethod && (
 					<>
-					<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
-					<div
-						style={{ 
-							display: 'flex',
-							width: '100%',
-							justifyContent: 'space-between',
-							alignItems: 'center',
-						}}
-					>
-						<ScPaymentMethod paymentMethod={paymentMethod}/>
+						<ScDivider
+							style={{ '--spacing': 'var(--sc-spacing-small)' }}
+						/>
 						<div
-							style={{ 
+							style={{
 								display: 'flex',
+								width: '100%',
+								justifyContent: 'space-between',
 								alignItems: 'center',
-								gap: '2em'
 							}}
 						>
-							{!!paymentMethod?.card?.exp_month && (
-								<span>
-									{__('Exp.', 'surecart')}
-									{paymentMethod?.card?.exp_month}/
-									{paymentMethod?.card?.exp_year}
-								</span>
-							)}
-							{!!paymentMethod?.paypal_account?.email &&
-								paymentMethod?.paypal_account?.email}
+							<ScPaymentMethod paymentMethod={paymentMethod} />
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: '2em',
+								}}
+							>
+								{!!paymentMethod?.card?.exp_month && (
+									<span>
+										{__('Exp.', 'surecart')}
+										{paymentMethod?.card?.exp_month}/
+										{paymentMethod?.card?.exp_year}
+									</span>
+								)}
+								{!!paymentMethod?.paypal_account?.email &&
+									paymentMethod?.paypal_account?.email}
 
-							<ScDropdown placement="bottom-end">
-								<ScButton 
-									type="text" 
-									slot="trigger" 
-									circle
-								>
-									<ScIcon name="more-horizontal" />
-								</ScButton>
-								<ScMenu>
-									<ScMenuItem
-										onClick={() => {
-											setPaymentID(false);
-											setPaymentMethod(false);
-										}}
-									>
-										<ScIcon
-											slot="prefix"
-											name="trash"
-											style={{
-												opacity: 0.5,
+								<ScDropdown placement="bottom-end">
+									<ScButton type="text" slot="trigger" circle>
+										<ScIcon name="more-horizontal" />
+									</ScButton>
+									<ScMenu>
+										<ScMenuItem
+											onClick={() => {
+												setPaymentID(false);
+												setPaymentMethod(false);
 											}}
-										/>
-										{__('Remove', 'surecart')}
-									</ScMenuItem>
-								</ScMenu>
-							</ScDropdown>
+										>
+											<ScIcon
+												slot="prefix"
+												name="trash"
+												style={{
+													opacity: 0.5,
+												}}
+											/>
+											{__('Remove', 'surecart')}
+										</ScMenuItem>
+									</ScMenu>
+								</ScDropdown>
+							</div>
 						</div>
-					</div>
 					</>
-            	)}
+				)}
 			</>
 		);
 	};
 
 	return (
-		<Box 
-			title={__('Payment', 'surecart')} 
+		<Box
+			title={__('Payment', 'surecart')}
 			loading={loading}
 			footer={
-				<CollectPayment 
-					{...{ checkout, setPaymentID, paymentID, paymentMethod, setPaymentMethod }}
+				<CollectPayment
+					{...{
+						checkout,
+						setPaymentID,
+						paymentID,
+						paymentMethod,
+						setPaymentMethod,
+					}}
 				/>
 			}
-			footerStyle={{ 
+			footerStyle={{
 				justifyContent: 'flex-end',
 			}}
 		>

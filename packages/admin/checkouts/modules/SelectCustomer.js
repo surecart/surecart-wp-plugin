@@ -45,7 +45,7 @@ export default ({ checkout, busy, loading }) => {
 	const customer = checkout?.customer_id ? checkout?.customer : {};
 	const avatarUrl = useAvatar({ email: customer?.email });
 	const { saveEntityRecord } = useDispatch(coreStore);
-	
+
 	const onCustomerUpdate = async (customerID = false) => {
 		try {
 			setBusyCustomer(true);
@@ -200,6 +200,7 @@ export default ({ checkout, busy, loading }) => {
 					<ModelSelector
 						name="customer"
 						placeholder={__('Any Customer', 'surecart')}
+						requestQuery={{ live_mode: true }}
 						prefix={
 							<div slot="prefix">
 								<ScMenuItem

@@ -5,7 +5,13 @@ import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
-import { ScButton, ScBlockUi, ScDialog, ScIcon, ScDashboardModule } from '@surecart/components-react';
+import {
+	ScButton,
+	ScBlockUi,
+	ScDialog,
+	ScIcon,
+	ScDashboardModule,
+} from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
 import Logo from '../templates/Logo';
@@ -31,7 +37,6 @@ export function getEditURL(id) {
 }
 
 export default () => {
-	
 	const [isSaving, setIsSaving] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const [orderID, setOrderID] = useState(null);
@@ -74,7 +79,7 @@ export default () => {
 		},
 		[id, line_items, checkout?.customer, checkout?.customer_id]
 	);
-	
+
 	const customer = checkout?.customer;
 	const line_items = checkout?.line_items;
 
@@ -97,7 +102,7 @@ export default () => {
 			setCheckoutIdLoading(true);
 			const { id } = await saveEntityRecord('surecart', 'checkout', {
 				customer_id: false,
-				live_mode:false
+				live_mode: false,
 			});
 			setCheckoutId(id);
 		} catch (e) {
@@ -146,7 +151,7 @@ export default () => {
 		try {
 			setCheckoutError(false);
 			setIsSaving(true);
-			if ( paymentID ) {
+			if (paymentID) {
 				const r = confirm(
 					__(
 						'Creating this checkout will charge the customer. Are you sure you want to continue?',
@@ -155,7 +160,7 @@ export default () => {
 				);
 				if (!r) return;
 			}
-			const {order} = await finalizeCheckout({
+			const { order } = await finalizeCheckout({
 				id: checkout?.id,
 				customer_id: customer?.id,
 			});
@@ -276,10 +281,7 @@ export default () => {
 							loading={loading}
 						/>
 						<Address
-							label={__(
-								'Shipping & Tax Address',
-								'surecart'
-							)}
+							label={__('Shipping & Tax Address', 'surecart')}
 							address={checkout?.shipping_address}
 							onAddressChange={onAddressChange}
 							loading={loading}
@@ -308,11 +310,11 @@ export default () => {
 
 				{!!checkoutIdLoading && <ScBlockUi spinner />}
 			</UpdateModel>
-			
+
 			<ScDialog
 				open={!!modal}
-				onScRequestClose={e => e.preventDefault()}
-				style={{ '--body-spacing': 'var(--sc-spacing-large)' }} 
+				onScRequestClose={(e) => e.preventDefault()}
+				style={{ '--body-spacing': 'var(--sc-spacing-large)' }}
 				noHeader
 			>
 				<div
@@ -345,7 +347,12 @@ export default () => {
 						text-align: center;
 					`}
 				>
-					<span slot="heading">{__('Your manual order has been successfully created!', 'surecart')}</span>
+					<span slot="heading">
+						{__(
+							'Your manual order has been successfully created!',
+							'surecart'
+						)}
+					</span>
 					<div
 						style={{
 							display: 'flex',
@@ -357,7 +364,7 @@ export default () => {
 						<ScButton
 							size="large"
 							type="primary"
-							href={"admin.php?page=sc-checkouts&action=edit"}
+							href={'admin.php?page=sc-checkouts&action=edit'}
 						>
 							{__('Add New', 'surecart')}
 						</ScButton>

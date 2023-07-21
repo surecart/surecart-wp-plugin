@@ -14,7 +14,7 @@ const expand = [
 	'tax_identifier',
 	'manual_payment_method',
 	'shipping_choices',
-	'shipping_choices.shipping_method'
+	'shipping_choices.shipping_method',
 ];
 
 export default expand;
