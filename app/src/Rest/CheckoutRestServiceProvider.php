@@ -5,6 +5,8 @@ namespace SureCart\Rest;
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\CheckoutsController;
 use SureCart\Form\FormValidationService;
+use SureCart\Models\Form;
+use SureCart\Models\Product;
 use SureCart\Models\User;
 
 /**
