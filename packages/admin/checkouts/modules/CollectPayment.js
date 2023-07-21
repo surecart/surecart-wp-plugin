@@ -36,6 +36,7 @@ export default ({
 						'payment_instrument',
 						'bank_account',
 					],
+					reusable: true,
 					customer_ids: [checkout?.customer_id],
 				},
 			];
