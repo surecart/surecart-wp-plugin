@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-06-15T17:48:11",
+  "timestamp": "2023-07-20T19:32:35",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -22931,6 +22931,23 @@
           "attr": "ajax-pagination",
           "reflectToAttr": false,
           "docs": "Should we paginate?",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collectionEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collection-enabled",
+          "reflectToAttr": false,
+          "docs": "Should allow collection filter",
           "docsTags": [],
           "default": "true",
           "values": [

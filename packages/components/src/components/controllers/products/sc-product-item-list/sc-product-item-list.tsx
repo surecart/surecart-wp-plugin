@@ -71,9 +71,9 @@ export class ScProductItemList {
     total: number;
     total_pages: number;
   } = {
-      total: 0,
-      total_pages: 0,
-    };
+    total: 0,
+    total_pages: 0,
+  };
 
   /** Collections */
   @State() collections: Collection[];
@@ -128,6 +128,7 @@ export class ScProductItemList {
   }
 
   @Watch('sort')
+  @Watch('selectedCollections')
   async handleSortChange() {
     this.currentPage = 1;
     this.updateProducts();
@@ -169,7 +170,7 @@ export class ScProductItemList {
         per_page: this.limit,
         page: this.currentPage,
         sort: this.sort,
-        product_collection_ids: (this.selectedCollections || []).map((collection) => collection.id),
+        product_collection_ids: (this.selectedCollections || []).map(collection => collection.id),
         ...(this.ids?.length ? { ids: this.ids } : {}),
         ...(this.query ? { query: this.query } : {}),
       }),
@@ -184,26 +185,14 @@ export class ScProductItemList {
   }
 
   async fetchCollections() {
-    // const response = (await apiFetch({
-    //   path: addQueryArgs(`surecart/v1/product_collections/`, {
-    //     per_page: 100,
-    //   }),
-    //   parse: false,
-    // })) as Response;
+    const response = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/product_collections/`, {
+        per_page: 100,
+      }),
+      parse: false,
+    })) as Response;
 
-    // console.log(response);
-
-    // this.collections = (await response.json()) as Collection[];
-    this.collections = [
-      {
-        id: "test-id-1",
-        name: "Mens Shoes"
-      },
-      {
-        id: "test-id-2",
-        name: "Womens Shoes"
-      },
-    ] as Collection[];
+    this.collections = (await response.json()) as Collection[];
   }
 
   renderSortName() {
@@ -223,15 +212,15 @@ export class ScProductItemList {
 
   toggleSelectCollection(collection: Collection) {
     // if collection not in selectedCollections, add it, otherwise remove it
-    if (!this.selectedCollections.find((c) => c.id === collection.id)) {
+    if (!this.selectedCollections.find(c => c.id === collection.id)) {
       this.selectedCollections = [...this.selectedCollections, collection];
     } else {
-      this.selectedCollections = this.selectedCollections.filter((c) => c.id !== collection.id);
+      this.selectedCollections = this.selectedCollections.filter(c => c.id !== collection.id);
     }
   }
 
   getCollectionsAfterFiltered() {
-    return this.collections.filter(collection => {
+    return (this.collections ?? []).filter(collection => {
       return !this.selectedCollections.some(selected => selected.id === collection.id);
     });
   }
@@ -262,43 +251,33 @@ export class ScProductItemList {
                     {__('Collections', 'surecart')}
                   </sc-button>
                   <sc-menu>
-                    {
-                      this.getCollectionsAfterFiltered()
-                        .map((collection) => {
-                          return (
-                            <sc-menu-item onClick={() => this.toggleSelectCollection(collection)}>{collection.name}</sc-menu-item>
-                          )
-                        })
-                    }
+                    {this.getCollectionsAfterFiltered().map(collection => {
+                      return <sc-menu-item onClick={() => this.toggleSelectCollection(collection)}>{collection.name}</sc-menu-item>;
+                    })}
 
-                    {
-                      (this.getCollectionsAfterFiltered()?.length === 0) && (
-                        <sc-menu-item disabled>{__('No collections available', 'surecart')}</sc-menu-item>
-                      )
-                    }
+                    {this.getCollectionsAfterFiltered()?.length === 0 && <sc-menu-item disabled>{__('No collections available', 'surecart')}</sc-menu-item>}
                   </sc-menu>
                 </sc-dropdown>
               )}
 
-              {this.collectionEnabled && this.selectedCollections?.length > 0 &&
+              {this.collectionEnabled && this.selectedCollections?.length > 0 && (
                 <div class="product-item-list__search-tag">
-                  <div class="product-item-list__search-label">{__('Filtered collections:', 'surecart')}</div>
-                  {
-                    this.selectedCollections
-                      .map((collection) => (
-                        <sc-tag
-                          clearable
-                          onScClear={() => {
-                            this.toggleSelectCollection(collection);
-                            this.updateProducts();
-                          }}
-                        >
-                          {collection?.name}
-                        </sc-tag>
-                      ))
-                  }
+                  <div class="product-item-list__search-label">
+                    <span style={{ marginLeft: '5px' }}>{__('Filtered collections:', 'surecart')}</span>
+                  </div>
+                  {this.selectedCollections.map(collection => (
+                    <sc-tag
+                      clearable
+                      onScClear={() => {
+                        this.toggleSelectCollection(collection);
+                        this.updateProducts();
+                      }}
+                    >
+                      {collection?.name}
+                    </sc-tag>
+                  ))}
                 </div>
-              }
+              )}
             </div>
             <div class="product-item-list__search">
               {this.searchEnabled &&
@@ -359,42 +338,42 @@ export class ScProductItemList {
         <div class="product-item-list">
           {this.loading
             ? [...Array(this.ids?.length || this.limit || 10)].map(() => (
-              <div class="product-item-list__loader">
-                {this.layoutConfig?.map(layout => {
-                  switch (layout.blockName) {
-                    case 'surecart/product-item-title':
-                      return (
-                        <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
-                          <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
-                        </div>
-                      );
-                    case 'surecart/product-item-image':
-                      return (
-                        <sc-skeleton
-                          style={{
-                            'width': '100%',
-                            'minHeight': '90%',
-                            'aspectRatio': layout.attributes?.ratio ?? '1/1.4',
-                            '--sc-border-radius-pill': '12px',
-                            'display': 'inline-block',
-                          }}
-                        ></sc-skeleton>
-                      );
-                    case 'surecart/product-item-price':
-                      return (
-                        <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
-                          <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
-                        </div>
-                      );
-                    default:
-                      return null;
-                  }
-                })}
-              </div>
-            ))
+                <div class="product-item-list__loader">
+                  {this.layoutConfig?.map(layout => {
+                    switch (layout.blockName) {
+                      case 'surecart/product-item-title':
+                        return (
+                          <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
+                            <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
+                          </div>
+                        );
+                      case 'surecart/product-item-image':
+                        return (
+                          <sc-skeleton
+                            style={{
+                              'width': '100%',
+                              'minHeight': '90%',
+                              'aspectRatio': layout.attributes?.ratio ?? '1/1.4',
+                              '--sc-border-radius-pill': '12px',
+                              'display': 'inline-block',
+                            }}
+                          ></sc-skeleton>
+                        );
+                      case 'surecart/product-item-price':
+                        return (
+                          <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
+                            <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+                          </div>
+                        );
+                      default:
+                        return null;
+                    }
+                  })}
+                </div>
+              ))
             : (this.products || []).map(product => {
-              return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
-            })}
+                return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
+              })}
         </div>
         {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
           <div
