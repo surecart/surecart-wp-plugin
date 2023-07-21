@@ -3,16 +3,15 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
-export default ({ option, product, updateProduct }) => {
+export default ({ option, product, updateProduct, onChangeValue }) => {
 	const [values, setValues] = useState([{ index: 1, label: '' }]);
 
 	const onChangeOptionValue = async (index, newLabel) => {
@@ -44,6 +43,8 @@ export default ({ option, product, updateProduct }) => {
 					return { option_1: value.label };
 				}),
 		});
+
+		onChangeValue(values);
 	}, [values]);
 
 	return (values || []).map((optionValue, index) => {

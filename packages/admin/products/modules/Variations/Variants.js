@@ -119,8 +119,8 @@ export default ({ product, updateProduct, loading }) => {
 								}}
 							>
 								{option_1}
-								{option_2}
-								{option_3}
+								{option_2?.length > 0 && ' / '} {option_2}
+								{option_3?.length > 0 && ' / '} {option_3}
 							</ScText>
 						</ScFlex>
 					),

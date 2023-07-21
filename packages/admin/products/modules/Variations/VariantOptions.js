@@ -3,6 +3,7 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -10,6 +11,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScInput, ScTag } from '@surecart/components-react';
 import VariantOptionValues from './VariantOptionValues';
+import { generateVariants } from './utils';
 
 export default ({ product, updateProduct, loading }) => {
 	// function to update product?.variant_options based on the index.
@@ -27,6 +29,29 @@ export default ({ product, updateProduct, loading }) => {
 			}),
 		});
 	};
+
+	useEffect(() => {
+		// removes all variant values, which label is empty.
+		const updatedVariantOptions = (
+			product?.variant_options?.data ||
+			product?.variant_options ||
+			[]
+		)?.map((variantOption) => {
+			return {
+				...variantOption,
+				values: variantOption?.values?.filter(
+					(value) => value?.label?.length > 0
+				),
+			};
+		});
+
+		const variants = generateVariants(updatedVariantOptions ?? []) ?? [];
+
+		updateProduct({
+			...product,
+			variants,
+		});
+	}, [product?.variant_options]);
 
 	return (
 		<div style={{ marginBotttom: '2rem' }} loading={loading}>
@@ -92,6 +117,14 @@ export default ({ product, updateProduct, loading }) => {
 										option={option}
 										product={product}
 										updateProduct={updateProduct}
+										onChangeValue={(updatedValues) => {
+											updateVariantOption({
+												index,
+												data: {
+													values: updatedValues,
+												},
+											});
+										}}
 									/>
 								</div>
 							</div>

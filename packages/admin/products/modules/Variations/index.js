@@ -76,7 +76,7 @@ export default ({ product, updateProduct, loading }) => {
 						updateProduct({
 							variant_options: [
 								...(product?.variant_options || []),
-								{ name: '', position: 0 },
+								{ name: '', position: 0, values: [] },
 							],
 						})
 					}
