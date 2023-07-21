@@ -136,16 +136,10 @@ export default ({ checkout, loading, busy }) => {
 				<ScTableCell style={{ width: '40%' }} slot="head">
 					<div>{__('Product', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell
-					style={{ width: '20%', textAlign: 'center' }}
-					slot="head"
-				>
+				<ScTableCell style={{ width: '20%' }} slot="head">
 					<div>{__('Quantity', 'surecart')}</div>
 				</ScTableCell>
-				<ScTableCell
-					style={{ width: '20%', textAlign: 'center' }}
-					slot="head"
-				>
+				<ScTableCell style={{ width: '20%' }} slot="head">
 					<div>{__('Total', 'surecart')}</div>
 				</ScTableCell>
 				<ScTableCell style={{ width: '20%' }} slot="head"></ScTableCell>
@@ -157,12 +151,14 @@ export default ({ checkout, loading, busy }) => {
 						quantity,
 						subtotal_amount,
 						ad_hoc_amount,
+						fees,
 					} = line_item;
 
 					return (
 						<Price
 							key={id}
 							price={price}
+							fees={fees?.data || []}
 							quantity={quantity}
 							subtotal_amount={subtotal_amount}
 							ad_hoc_amount={ad_hoc_amount}

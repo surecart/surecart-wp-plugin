@@ -157,11 +157,6 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function finalize_permissions_check( \WP_REST_Request $request ) {
-
-		if ( current_user_can( 'edit_sc_checkouts' ) ) { 
-			return true;
-		}
-
 		// form id or a product id is required.
 		if ( empty( $request['form_id'] ) && empty( $request['product_id'] ) ) {
 			return new \WP_Error( 'form_id_required', esc_html__( 'Form ID is required.', 'surecart' ), [ 'status' => 400 ] );
@@ -253,9 +248,6 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		if ( ! is_null( $request->get_param( 'customer_id' ) ) || ! is_null( $request->get_param( 'customer' ) ) ) {
-			return current_user_can( 'edit_sc_checkouts' );
-		}
 		return true;
 	}
 
@@ -266,7 +258,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return $this->create_item_permissions_check( $request );
+		return true;
 	}
 
 	/**
