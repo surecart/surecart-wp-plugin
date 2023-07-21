@@ -387,6 +387,7 @@ export interface PriceChoice {
   quantity: number;
   enabled: boolean;
   selected?: boolean;
+  variant: string;
 }
 
 export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';

@@ -2941,6 +2941,10 @@ export namespace Components {
         "text": 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        /**
+          * The product id.
+         */
+        "productId": string;
         "type": 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
@@ -8694,9 +8698,13 @@ declare namespace LocalJSX {
     }
     interface ScProductVariationChoices {
         /**
-          * Error event
+          * Toggle line item event
          */
-        "onScError"?: (event: ScProductVariationChoicesCustomEvent<ResponseError>) => void;
+        "onScUpdateLineItem"?: (event: ScProductVariationChoicesCustomEvent<LineItemData>) => void;
+        /**
+          * The product id.
+         */
+        "productId"?: string;
         "type"?: 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {

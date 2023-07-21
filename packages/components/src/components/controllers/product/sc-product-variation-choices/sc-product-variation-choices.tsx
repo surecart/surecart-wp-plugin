@@ -2,10 +2,9 @@ import { Component, h, Host, Element, EventEmitter, Event, Prop } from '@stencil
 import { __ } from '@wordpress/i18n';
 import { availableVariants, availableVariantOptions } from '@store/product/getters';
 import { state } from '@store/product';
-import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { state as checkoutState } from '@store/checkout';
-import { createOrUpdateCheckout } from '@services/session';
-import { Checkout, ResponseError } from '../../../../types';
+import { getLineItemByProductId } from '@store/checkout/getters';
+import { LineItemData } from '../../../../types';
 import { getVariantFromValues } from '../../../../functions/util';
 @Component({
   tag: 'sc-product-variation-choices',
@@ -13,13 +12,21 @@ import { getVariantFromValues } from '../../../../functions/util';
   shadow: true,
 })
 export class ScProductVariationChoices {
+
+  /** The product id. */
+  @Prop() productId: string;
   
   @Prop() type: 'product-page' | 'instant-checkout-page' = 'product-page';
 
   @Element() el: HTMLScProductVariationChoicesElement;
   
-  /** Error event */
-  @Event() scError: EventEmitter<ResponseError>;
+   /** Toggle line item event */
+   @Event() scUpdateLineItem: EventEmitter<LineItemData>;
+
+  /** The line item from state. */
+  lineItem() {
+    return getLineItemByProductId(this.productId);
+  }
 
   availableVariants = availableVariants(this.type);
 
@@ -31,20 +38,7 @@ export class ScProductVariationChoices {
 
     if (!matchedVariant) return;
 
-    try {
-      lockCheckout('variant');
-      checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout.id,
-        data: {
-          variant: matchedVariant,
-        },
-      })) as Checkout;
-    } catch (e) {
-      console.error(e);
-      this.scError.emit(e);
-    } finally {
-      unLockCheckout('variant');
-    }
+    this.scUpdateLineItem.emit({ price_id: this.lineItem()?.price?.id, quantity: 1, variant: matchedVariant });
   }
   
   render() {  

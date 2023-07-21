@@ -72,6 +72,7 @@
 		
 		<sc-product-variation-choices 
 			type="instant-checkout-page"
+			product-id="<?php echo esc_attr( $product->id ); ?>"
 			style="--sc-variation-gap: 12px;"
 		>
 		</sc-product-variation-choices>
