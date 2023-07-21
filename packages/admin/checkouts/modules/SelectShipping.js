@@ -38,7 +38,7 @@ export default ({ checkout, busy, loading }) => {
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'checkout'
+				'draft-checkout'
 			);
 
 			const data = await apiFetch({
@@ -63,7 +63,7 @@ export default ({ checkout, busy, loading }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				data,
 				undefined,
 				false,

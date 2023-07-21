@@ -60,7 +60,7 @@ export default () => {
 				return {};
 			}
 			// our entity query data.
-			const entityData = ['surecart', 'checkout', id, { expand }];
+			const entityData = ['surecart', 'draft-checkout', id, { expand }];
 
 			const checkout = select(coreStore).getEditedEntityRecord(
 				...entityData
@@ -188,7 +188,7 @@ export default () => {
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'checkout'
+				'draft-checkout'
 			);
 
 			const data = await apiFetch({
@@ -215,7 +215,7 @@ export default () => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				data,
 				undefined,
 				false,

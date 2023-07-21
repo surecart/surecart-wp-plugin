@@ -36,7 +36,7 @@ export default ({ checkout, loading, busy }) => {
 			// get the checkouts endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'checkout'
+				'draft-checkout'
 			);
 
 			// fetch the updated checkout.
@@ -49,7 +49,7 @@ export default ({ checkout, loading, busy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				data,
 				undefined,
 				false,
@@ -96,7 +96,7 @@ export default ({ checkout, loading, busy }) => {
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
-				'checkout',
+				'draft-checkout',
 				checkout,
 				undefined,
 				false,
@@ -188,7 +188,7 @@ export default ({ checkout, loading, busy }) => {
 			`}
 		>
 			<Box
-				title={__('Add Prices', 'surecart')}
+				title={__('Products', 'surecart')}
 				loading={loading}
 				footer={<NewPrice checkout={checkout} />}
 			>
