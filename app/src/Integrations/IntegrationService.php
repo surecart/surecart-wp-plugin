@@ -302,6 +302,12 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 				continue;
 			}
 
+			$user = $purchase->getWPUser();
+			if ( ! $user ) {
+				error_log( 'Integration failed. No user found for purchase ' . $purchase->id );
+				continue;
+			}
+
 			$this->$method( $integration, $purchase->getWPUser(), $purchase );
 		}
 	}
