@@ -1,5 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseColorProps as useColorProps,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
@@ -12,11 +16,20 @@ import { Fragment } from '@wordpress/element';
 /**
  * Component Dependencies
  */
-import { ScFlex, ScProductCollectionBadge } from '@surecart/components-react';
+import {
+	ScFlex,
+	ScProductCollectionBadge,
+	ScTag,
+} from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
 	const { size, type, pill, collectionCount } = attributes;
 	const blockProps = useBlockProps({});
+	const colorProps = useColorProps(attributes);
+	const style = {
+		'--sc-tag-primary-color': colorProps.style.backgroundColor,
+		'--sc-tag-primary-background-color': colorProps.style.color,
+	};
 
 	return (
 		<Fragment>
@@ -68,24 +81,15 @@ export default ({ attributes, setAttributes }) => {
 
 			<div {...blockProps}>
 				<ScFlex gap="1em" justifyContent="flex-start">
-					<ScProductCollectionBadge
-						name="Male"
-						pill={pill}
-						size={size}
-						type={type}
-					/>
-					<ScProductCollectionBadge
-						name="Female"
-						pill={pill}
-						size={size}
-						type={type}
-					/>
-					<ScProductCollectionBadge
-						name="Unisex"
-						pill={pill}
-						size={size}
-						type={type}
-					/>
+					<ScTag pill={pill} size={size} style={style}>
+						Male
+					</ScTag>
+					<ScTag pill={pill} size={size} style={style}>
+						Female
+					</ScTag>
+					<ScTag pill={pill} size={size} style={style}>
+						Unisex
+					</ScTag>
 				</ScFlex>
 			</div>
 		</Fragment>
