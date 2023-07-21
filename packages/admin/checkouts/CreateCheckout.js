@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect, select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
@@ -11,6 +11,7 @@ import {
 	ScDialog,
 	ScIcon,
 	ScDashboardModule,
+	ScAlert,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -24,6 +25,7 @@ import SelectShipping from './modules/SelectShipping';
 import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
+import { formatNumber } from '../util';
 
 /**
  * Returns the Model Edit URL.
@@ -40,6 +42,7 @@ export default () => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const [orderID, setOrderID] = useState(null);
+	const [confirmCheckout, setConfirmCheckout] = useState(false);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -102,7 +105,7 @@ export default () => {
 			setCheckoutIdLoading(true);
 			const { id } = await saveEntityRecord('surecart', 'checkout', {
 				customer_id: false,
-				live_mode: false,
+				live_mode: false, // TODO: Change to live.
 			});
 			setCheckoutId(id);
 		} catch (e) {
@@ -148,18 +151,20 @@ export default () => {
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
+		// we will be charged.
+		if (paymentID && checkout?.amount_due) {
+			return setConfirmCheckout(true);
+		}
+		saveCheckout();
+	};
+
+	/**
+	 * Save the checkout.
+	 */
+	const saveCheckout = async () => {
 		try {
 			setCheckoutError(false);
 			setIsSaving(true);
-			if (paymentID) {
-				const r = confirm(
-					__(
-						'Creating this checkout will charge the customer. Are you sure you want to continue?',
-						'surecart'
-					)
-				);
-				if (!r) return;
-			}
 			const { order } = await finalizeCheckout({
 				id: checkout?.id,
 				customer_id: customer?.id,
@@ -378,6 +383,48 @@ export default () => {
 					</div>
 				</ScDashboardModule>
 			</ScDialog>
+
+			{checkout?.amount_due && checkout?.currency && (
+				<ScDialog
+					open={confirmCheckout}
+					onScRequestClose={() => setConfirmCheckout(false)}
+					label={__('Confirm Charge', 'surecart')}
+				>
+					<ScAlert
+						type="warning"
+						title={__('Confirm Charge', 'surecart')}
+						open
+					>
+						{sprintf(
+							__(
+								'This will charge the customer %s. Are you sure you want to continue?',
+								'surecart'
+							),
+							formatNumber(
+								checkout?.amount_due,
+								checkout?.currency
+							)
+						)}
+					</ScAlert>
+					<ScButton
+						slot="footer"
+						type="primary"
+						onClick={() => {
+							setConfirmCheckout(false);
+							saveCheckout();
+						}}
+					>
+						{__('Create Order', 'surecart')}
+					</ScButton>
+					<ScButton
+						slot="footer"
+						type="text"
+						onClick={() => setConfirmCheckout(false)}
+					>
+						{__('Cancel', 'surecart')}
+					</ScButton>
+				</ScDialog>
+			)}
 		</>
 	);
 };
