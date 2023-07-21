@@ -4,6 +4,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useState, useEffect } from '@wordpress/element';
+import SortableList, { SortableItem } from 'react-easy-sort';
+import arrayMove from 'array-move';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -13,6 +15,10 @@ import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
 
 export default ({ option, product, updateProduct, onChangeValue }) => {
 	const [values, setValues] = useState([{ index: 1, label: '' }]);
+
+	const applySort = (oldIndex, newIndex) => {
+		setValues(arrayMove(values, oldIndex, newIndex));
+	};
 
 	const onChangeOptionValue = async (index, newLabel) => {
 		// update specific option value.
@@ -47,69 +53,82 @@ export default ({ option, product, updateProduct, onChangeValue }) => {
 		onChangeValue(values);
 	}, [values]);
 
-	return (values || []).map((optionValue, index) => {
-		return (
-			<div
-				key={index}
-				css={css`
-					padding-top: var(--sc-spacing-xx-small);
-					padding-bottom: var(--sc-spacing-xx-small);
-				`}
-			>
-				<div
-					css={css`
-						width: 100%;
-						display: flex;
-						align-items: center;
-						gap: 1em;
-						justify-content: center;
-					`}
-				>
-					{/* Hide deletebutton for last item */}
-					{index !== values.length - 1 ? (
-						<ScIcon
-							name="drag"
-							slot="prefix"
+	return (
+		<SortableList onSortEnd={applySort}>
+			{(values || []).map((optionValue, index) => {
+				return (
+					<SortableItem key={index}>
+						<div
 							css={css`
-								cursor: grab;
+								padding-top: var(--sc-spacing-xx-small);
+								padding-bottom: var(--sc-spacing-xx-small);
 							`}
-						/>
-					) : (
-						<ScIcon name="empty" slot="prefix" />
-					)}
-
-					<ScInput
-						css={css`
-							width: 100%;
-							focus: {
-								border-color: var(--sc-color-primary);
-							}
-						`}
-						type="text"
-						placeholder={__('Add another value', 'surecart')}
-						value={optionValue.label}
-						onInput={(e) =>
-							onChangeOptionValue(index, e.target.value)
-						}
-					/>
-
-					{index !== values.length - 1 && (
-						<ScButton
-							type="text"
-							css={css`
-								position: absolute;
-								right: 0;
-								hover: {
-									color: var(--sc-color-danger);
-								}
-							`}
-							onClick={() => deleteOptionValue(index)}
 						>
-							<ScIcon name="trash" slot="suffix" />
-						</ScButton>
-					)}
-				</div>
-			</div>
-		);
-	});
+							<div
+								css={css`
+									width: 100%;
+									display: flex;
+									align-items: center;
+									gap: 1em;
+									justify-content: center;
+								`}
+							>
+								{/* Hide deletebutton for last item */}
+								{index !== values.length - 1 ? (
+									<ScIcon
+										name="drag"
+										slot="prefix"
+										css={css`
+											cursor: grab;
+										`}
+									/>
+								) : (
+									<ScIcon name="empty" slot="prefix" />
+								)}
+
+								<ScInput
+									css={css`
+										width: 100%;
+										focus: {
+											border-color: var(
+												--sc-color-primary
+											);
+										}
+									`}
+									type="text"
+									placeholder={__(
+										'Add another value',
+										'surecart'
+									)}
+									value={optionValue.label}
+									onInput={(e) =>
+										onChangeOptionValue(
+											index,
+											e.target.value
+										)
+									}
+								/>
+
+								{index !== values.length - 1 && (
+									<ScButton
+										type="text"
+										css={css`
+											position: absolute;
+											right: 0;
+											hover: {
+												color: var(--sc-color-danger);
+											}
+										`}
+										onClick={() => deleteOptionValue(index)}
+									>
+										<ScIcon name="trash" slot="suffix" />
+									</ScButton>
+								)}
+							</div>
+						</div>
+					</SortableItem>
+				);
+			})}
+		</SortableList>
+	);
 };

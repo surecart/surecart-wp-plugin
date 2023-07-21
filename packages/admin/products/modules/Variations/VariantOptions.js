@@ -111,14 +111,6 @@ export default ({ product, updateProduct, loading }) => {
 										}}
 									/>
 
-									{(values || []).map((value, valueIndex) => {
-										return (
-											<ScTag key={valueIndex}>
-												{value}
-											</ScTag>
-										);
-									})}
-
 									<VariantOptionValues
 										option={option}
 										product={product}
