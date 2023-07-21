@@ -154,7 +154,13 @@ export default ({ checkout, loading, busy }) => {
 				<ScTableCell style={{ width: '20%' }} slot="head"></ScTableCell>
 
 				{(line_items || []).map((line_item) => {
-					const { id, price, quantity, subtotal_amount, ad_hoc_amount } = line_item;
+					const {
+						id,
+						price,
+						quantity,
+						subtotal_amount,
+						ad_hoc_amount,
+					} = line_item;
 
 					return (
 						<Price
