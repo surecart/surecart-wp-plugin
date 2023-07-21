@@ -18,6 +18,7 @@ import {
 
 export default ({
 	price,
+	fees,
 	quantity,
 	onRemove,
 	onChange,
@@ -90,7 +91,7 @@ export default ({
 						</div>
 					</ScFlex>
 				</ScTableCell>
-				<ScTableCell style={{ textAlign: 'center' }}>
+				<ScTableCell>
 					{!!price?.ad_hoc ? (
 						__('--', 'surecart')
 					) : (
@@ -100,15 +101,12 @@ export default ({
 						/>
 					)}
 				</ScTableCell>
-				<ScTableCell style={{ textAlign: 'center' }}>
+				<ScTableCell>
 					<div
 						css={css`
 							display: flex;
 							gap: 10px;
 							align-items: center;
-							${price?.ad_hoc
-								? 'justify-content: center;'
-								: 'padding-left: 17px;'}
 						`}
 					>
 						<ScFormatNumber
@@ -129,6 +127,27 @@ export default ({
 							</ScButton>
 						)}
 					</div>
+					{!!fees?.length && (
+						<div>
+							{(fees || []).map(({ description, amount }) => {
+								return (
+									<div
+										css={css`
+											opacity: 0.65;
+											font-size: 12px;
+										`}
+									>
+										<ScFormatNumber
+											type="currency"
+											currency={price?.currency || 'usd'}
+											value={amount}
+										/>{' '}
+										{description || __('Fee', 'surecart')}
+									</div>
+								);
+							})}
+						</div>
+					)}
 				</ScTableCell>
 				<ScTableCell>
 					<ScButton size="small" onClick={onRemove}>
