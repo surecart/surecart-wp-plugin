@@ -77,7 +77,7 @@ export class ScFormComponentsValidator {
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
 
-    if(this.order?.shipping_address_required){
+    if (this.order?.shipping_address_required) {
       address.showName = true;
       address.required = true;
     }
@@ -115,7 +115,6 @@ export class ScFormComponentsValidator {
     }
     this.hasTaxLine = true;
   }
-
 
   render() {
     return <slot />;
