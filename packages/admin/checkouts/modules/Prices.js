@@ -20,11 +20,8 @@ import { useState } from 'react';
 
 export default ({ checkout, loading, busy }) => {
 	const line_items = checkout?.line_items?.data || [];
-
 	const [busyPrices, setBusyPrices] = useState(false);
-
 	const { createErrorNotice } = useDispatch(noticesStore);
-
 	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
 	const onRemove = async (id) => {
