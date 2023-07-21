@@ -200,7 +200,7 @@ export default ({ checkout, busy, loading }) => {
 					<ModelSelector
 						name="customer"
 						placeholder={__('Any Customer', 'surecart')}
-						requestQuery={{ live_mode: true }}
+						requestQuery={{ live_mode: false }} // TODO: change to live.
 						prefix={
 							<div slot="prefix">
 								<ScMenuItem
