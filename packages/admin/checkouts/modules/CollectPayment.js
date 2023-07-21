@@ -37,6 +37,7 @@ export default ({
 						'bank_account',
 					],
 					reusable: true,
+					live_mode: false, // TODO: change to live.
 					customer_ids: [checkout?.customer_id],
 				},
 			];
