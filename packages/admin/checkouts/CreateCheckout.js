@@ -41,7 +41,6 @@ export function getEditURL(id) {
 export default () => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
-	const [orderID, setOrderID] = useState(null);
 	const [confirmCheckout, setConfirmCheckout] = useState(false);
 	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
@@ -308,74 +307,6 @@ export default () => {
 
 				{!!checkoutIdLoading && <ScBlockUi spinner />}
 			</UpdateModel>
-
-			<ScDialog
-				open={!!modal}
-				onScRequestClose={(e) => e.preventDefault()}
-				style={{ '--body-spacing': 'var(--sc-spacing-large)' }}
-				noHeader
-			>
-				<div
-					style={{
-						display: 'flex',
-						marginBottom: 'var(--sc-spacing-large)',
-						justifyContent: 'center',
-					}}
-				>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							fontSize: '26px',
-							lineHeight: '1',
-							color: 'white',
-							background: 'var(--sc-color-primary-500)',
-							width: '55px',
-							height: '55px',
-							borderRadius: '100%',
-						}}
-					>
-						<ScIcon name="check" />
-					</div>
-				</div>
-				<ScDashboardModule
-					css={css`
-						--sc-dashboard-module-spacing: 1em;
-						text-align: center;
-					`}
-				>
-					<span slot="heading">
-						{__(
-							'Your manual order has been successfully created!',
-							'surecart'
-						)}
-					</span>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							gap: '2em',
-							marginTop: '10px',
-						}}
-					>
-						<ScButton
-							size="large"
-							type="primary"
-							href={'admin.php?page=sc-checkouts&action=edit'}
-						>
-							{__('Add New', 'surecart')}
-						</ScButton>
-						<ScButton
-							size="large"
-							type="link"
-							href={`admin.php?page=sc-orders&action=edit&id=${orderID}`}
-						>
-							{__('Go to Order', 'surecart')}
-						</ScButton>
-					</div>
-				</ScDashboardModule>
-			</ScDialog>
 
 			<ScDialog
 				open={confirmCheckout}
