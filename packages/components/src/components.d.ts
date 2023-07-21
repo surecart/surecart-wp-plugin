@@ -3543,6 +3543,10 @@ export namespace Components {
          */
         "otherLabel": string;
         /**
+          * Required?
+         */
+        "required": boolean;
+        /**
           * Force show the field.
          */
         "show": boolean;
@@ -9378,6 +9382,10 @@ declare namespace LocalJSX {
           * Other zones label
          */
         "otherLabel"?: string;
+        /**
+          * Required?
+         */
+        "required"?: boolean;
         /**
           * Force show the field.
          */

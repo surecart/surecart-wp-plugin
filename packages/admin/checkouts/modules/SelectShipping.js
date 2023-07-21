@@ -1,16 +1,10 @@
-import { css } from '@emotion/core';
 import {
-	ScRadioGroup,
-	ScRadio,
-	ScBlockUi,
 	ScFormatNumber,
-	ScDivider,
 	ScAlert,
 	ScChoices,
 	ScChoice,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -19,16 +13,13 @@ import { useDispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
-export default ({ checkout, busy, loading }) => {
-	const [busyShipping, setBusyShipping] = useState(false);
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
-	const { receiveEntityRecords, invalidateResolutionForStore } =
-		useDispatch(coreStore);
+export default ({ checkout, setBusy, loading }) => {
+	const { createErrorNotice } = useDispatch(noticesStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const onShippingChange = async (shippingId) => {
 		try {
-			setBusyShipping(true);
+			setBusy(true);
 
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
@@ -66,7 +57,7 @@ export default ({ checkout, busy, loading }) => {
 				}
 			);
 		} finally {
-			setBusyShipping(false);
+			setBusy(false);
 		}
 	};
 
@@ -125,8 +116,6 @@ export default ({ checkout, busy, loading }) => {
 					}
 				)}
 			</ScChoices>
-
-			{(!!busy || !!loading || !!busyShipping) && <ScBlockUi spinner />}
 		</Box>
 	);
 };

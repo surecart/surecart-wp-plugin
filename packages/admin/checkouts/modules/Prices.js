@@ -5,28 +5,29 @@ import { __ } from '@wordpress/i18n';
 import Price from './Price';
 import NewPrice from './NewPrice';
 import {
-	ScBlockUi,
+	ScButton,
 	ScEmpty,
+	ScIcon,
 	ScTable,
 	ScTableCell,
 } from '@surecart/components-react';
+import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, select } from '@wordpress/data';
 import expand from '../query';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from 'react';
 
-export default ({ checkout, loading, busy }) => {
+export default ({ checkout, loading, setBusy }) => {
 	const line_items = checkout?.line_items?.data || [];
-	const [busyPrices, setBusyPrices] = useState(false);
+	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { deleteEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 
 	const onRemove = async (id) => {
 		try {
-			setBusyPrices(true);
+			setBusy(true);
 
 			// delete the entity record.
 			await deleteEntityRecord('surecart', 'line_item', id, null, {
@@ -64,13 +65,13 @@ export default ({ checkout, loading, busy }) => {
 				}
 			);
 		} finally {
-			setBusyPrices(false);
+			setBusy(false);
 		}
 	};
 
 	const onChange = async (id, data) => {
 		try {
-			setBusyPrices(true);
+			setBusy(true);
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -111,7 +112,7 @@ export default ({ checkout, loading, busy }) => {
 				}
 			);
 		} finally {
-			setBusyPrices(false);
+			setBusy(false);
 		}
 	};
 
@@ -119,7 +120,11 @@ export default ({ checkout, loading, busy }) => {
 		if (!line_items?.length) {
 			return (
 				<ScEmpty icon="shopping-bag">
-					{__('Add some prices to this order.', 'surecart')}
+					<p>{__('Add some products to this order.', 'surecart')}</p>
+					<ScButton onClick={() => setModal(true)}>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add Product', 'surecart')}
+					</ScButton>
 				</ScEmpty>
 			);
 		}
@@ -190,12 +195,24 @@ export default ({ checkout, loading, busy }) => {
 			<Box
 				title={__('Products', 'surecart')}
 				loading={loading}
-				footer={<NewPrice checkout={checkout} />}
+				footer={
+					!loading &&
+					!!line_items?.length && (
+						<ScButton onClick={() => setModal(true)}>
+							<ScIcon name="plus" slot="prefix" />
+							{__('Add Product', 'surecart')}
+						</ScButton>
+					)
+				}
 			>
 				{renderPrices()}
-
-				{(!!busy || !!busyPrices) && <ScBlockUi spinner />}
 			</Box>
+
+			<NewPrice
+				checkout={checkout}
+				open={modal}
+				onRequestClose={() => setModal(false)}
+			/>
 		</div>
 	);
 };

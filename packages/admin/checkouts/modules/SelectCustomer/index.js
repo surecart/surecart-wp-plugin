@@ -2,7 +2,6 @@ import {
 	ScFormControl,
 	ScIcon,
 	ScMenuItem,
-	ScBlockUi,
 	ScMenuDivider,
 } from '@surecart/components-react';
 import Box from '../../../ui/Box';
@@ -18,21 +17,21 @@ import expand from '../../query';
 import Customer from './Customer';
 import CreateCustomer from './CreateCustomer';
 
-export default ({ checkout, busy, loading }) => {
-	const [busyCustomer, setBusyCustomer] = useState(false);
+export default ({ checkout, setBusy, loading }) => {
 	const [modal, setModal] = useState(false);
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	const onCustomerUpdate = async (customerID = false) => {
 		try {
-			setBusyCustomer(true);
+			setBusy(true);
+
 			// get the checkout endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'draft-checkout'
 			);
+
 			// update the customer.
 			let data = await apiFetch({
 				method: 'PATCH',
@@ -67,10 +66,6 @@ export default ({ checkout, busy, loading }) => {
 				false,
 				checkout
 			);
-
-			createSuccessNotice(__('Customer updated.', 'surecart'), {
-				type: 'snackbar',
-			});
 		} catch (e) {
 			console.error(e);
 
@@ -81,7 +76,7 @@ export default ({ checkout, busy, loading }) => {
 				}
 			);
 		} finally {
-			setBusyCustomer(false);
+			setBusy(false);
 		}
 	};
 
@@ -127,8 +122,6 @@ export default ({ checkout, busy, loading }) => {
 					onCreate={onCustomerUpdate}
 				/>
 			)}
-
-			{(!!busy || !!loading || !!busyCustomer) && <ScBlockUi spinner />}
 		</Box>
 	);
 };

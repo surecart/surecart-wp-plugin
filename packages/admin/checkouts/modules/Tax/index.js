@@ -1,17 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import AddressDisplay from '../../components/AddressDisplay';
-import Box from '../../ui/Box';
+import Box from '../../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScIcon,
 	ScDialog,
-	ScAddress,
+	ScTaxIdInput,
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
-	ScForm,
 } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -19,22 +17,24 @@ import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
-import expand from '../query';
+import TaxIdDisplay from './TaxIdDisplay';
+import expand from '../../query';
 
 export default ({ checkout, loading, busy, setBusy }) => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const [open, setOpen] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const [customerShippingAddress, setCustomerShippingAddress] = useState(
-		checkout?.shipping_address
-	);
+	const [taxId, setTaxId] = useState(checkout?.tax_identifier);
 
 	// local state when shipping address changes.
 	useEffect(() => {
-		setCustomerShippingAddress(checkout?.shipping_address);
-	}, [checkout?.shipping_address]);
+		setTaxId({
+			number: checkout?.tax_identifier?.number,
+			number_type: checkout?.tax_identifier?.number_type,
+		});
+	}, [checkout?.tax_identifier]);
 
-	const onChange = async (shipping_address) => {
+	const onChange = async (tax_identifier) => {
 		try {
 			setBusy(true);
 			// get the line items endpoint.
@@ -47,7 +47,7 @@ export default ({ checkout, loading, busy, setBusy }) => {
 				method: 'PATCH',
 				path: addQueryArgs(`${baseURL}/${checkout?.id}`, { expand }),
 				data: {
-					shipping_address,
+					tax_identifier,
 				},
 			});
 
@@ -78,25 +78,26 @@ export default ({ checkout, loading, busy, setBusy }) => {
 	return (
 		<>
 			<Box
-				title={__('Shipping & Tax Address', 'surecart')}
+				title={__('Tax', 'surecart')}
 				loading={loading}
 				footer={
 					!loading &&
-					!checkout?.shipping_address?.id && (
+					!checkout?.tax_identifier?.id && (
 						<ScButton onClick={() => setOpen(true)}>
-							{__('Add A Shipping Address', 'surecart')}
+							{__('Add A Tax ID', 'surecart')}
 						</ScButton>
 					)
 				}
 			>
-				{!!checkout?.shipping_address?.id && (
+				{!!checkout?.tax_identifier?.id && (
 					<div
 						css={css`
 							display: flex;
 							justify-content: space-between;
 						`}
 					>
-						<AddressDisplay address={checkout?.shipping_address} />
+						<TaxIdDisplay taxId={checkout?.tax_identifier} />
+
 						<ScDropdown placement="bottom-end">
 							<ScButton slot="trigger" type="text" circle>
 								<ScIcon name="more-horizontal" />
@@ -114,42 +115,37 @@ export default ({ checkout, loading, busy, setBusy }) => {
 				)}
 			</Box>
 
-			<ScForm
-				onScFormSubmit={(e) => {
-					e.preventDefault();
-					e.stopImmediatePropagation();
-					onChange(customerShippingAddress);
-				}}
+			<ScDialog
+				label={__('Edit Tax ID', 'surecart')}
+				open={open}
+				style={{ '--dialog-body-overflow': 'visible' }}
+				onScRequestClose={() => setOpen(false)}
 			>
-				<ScDialog
-					label={__('Edit Shipping & Tax Address', 'surecart')}
-					open={open}
-					style={{ '--dialog-body-overflow': 'visible' }}
-					onScRequestClose={() => setOpen(false)}
+				<ScTaxIdInput
+					number={taxId?.number}
+					type={taxId?.number_type}
+					onScInput={(e) => setTaxId(e?.detail)}
+				/>
+
+				<ScButton
+					type="text"
+					onClick={() => setOpen(false)}
+					slot="footer"
 				>
-					<ScAddress
-						showName={true}
-						showLine2={true}
-						required={open}
-						address={customerShippingAddress}
-						onScInputAddress={(e) =>
-							setCustomerShippingAddress(e?.detail)
-						}
-					/>
+					{__('Cancel', 'surecart')}
+				</ScButton>
 
-					<ScButton
-						type="text"
-						onClick={() => setOpen(false)}
-						slot="footer"
-					>
-						{__('Cancel', 'surecart')}
-					</ScButton>
-
-					<ScButton busy={busy} type="primary" submit slot="footer">
-						{__('Update', 'surecart')}
-					</ScButton>
-				</ScDialog>
-			</ScForm>
+				<ScButton
+					busy={busy}
+					type="primary"
+					onClick={() => {
+						onChange(taxId);
+					}}
+					slot="footer"
+				>
+					{__('Update', 'surecart')}
+				</ScButton>
+			</ScDialog>
 		</>
 	);
 };

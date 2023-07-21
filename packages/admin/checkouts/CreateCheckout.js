@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { useDispatch, useSelect, select } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as dataStore } from '@surecart/data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -9,8 +9,6 @@ import {
 	ScButton,
 	ScBlockUi,
 	ScDialog,
-	ScIcon,
-	ScDashboardModule,
 	ScAlert,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
@@ -26,6 +24,7 @@ import Address from './modules/Address';
 import Payment from './modules/Payment';
 import Error from '../components/Error';
 import { formatNumber } from '../util';
+import Tax from './modules/Tax';
 
 /**
  * Returns the Model Edit URL.
@@ -39,20 +38,17 @@ export function getEditURL(id) {
 }
 
 export default () => {
-	const [isSaving, setIsSaving] = useState(false);
 	const [historyId, setHistoryId] = useState(null);
 	const [confirmCheckout, setConfirmCheckout] = useState(false);
-	const { saveEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const [checkoutIdLoading, setCheckoutIdLoading] = useState(false);
 	const id = useSelect((select) => select(dataStore).selectPageId());
-	const [busyCustomer, setBusyCustomer] = useState(false);
+	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
-	const [modal, setModal] = useState(false);
 	const [paymentID, setPaymentID] = useState(false);
 
-	const { checkout, loading, busy, error } = useSelect(
+	const { checkout, loading, error } = useSelect(
 		(select) => {
 			// we don't yet have a checkout.
 			if (!id) {
@@ -72,18 +68,14 @@ export default () => {
 			return {
 				checkout,
 				loading: !checkout?.id && loading,
-				busy: checkout?.id && loading,
 				error: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
 					...entityData
 				),
 			};
 		},
-		[id, line_items, checkout?.customer, checkout?.customer_id]
+		[id]
 	);
-
-	const customer = checkout?.customer;
-	const line_items = checkout?.line_items;
 
 	// we don't yet have a checkout.
 	useEffect(() => {
@@ -101,8 +93,7 @@ export default () => {
 	// create the checkout for the first time.
 	const createCheckout = async () => {
 		try {
-			setCheckoutIdLoading(true);
-
+			setBusy(true);
 			const { id } = await saveEntityRecord(
 				'surecart',
 				'draft-checkout',
@@ -120,7 +111,7 @@ export default () => {
 				e?.message || __('Something went wrong.', 'surecart')
 			);
 		} finally {
-			setCheckoutIdLoading(false);
+			setBusy(false);
 		}
 	};
 
@@ -156,10 +147,9 @@ export default () => {
 	const saveCheckout = async () => {
 		try {
 			setCheckoutError(false);
-			setIsSaving(true);
+			setBusy(true);
 			const { order } = await finalizeCheckout({
 				id: checkout?.id,
-				customer_id: customer?.id,
 			});
 			window.location.href = `admin.php?page=sc-orders&action=edit&id=${
 				order?.id || order
@@ -169,55 +159,7 @@ export default () => {
 			});
 		} catch (e) {
 			setCheckoutError(e);
-			setIsSaving(false);
-		}
-	};
-
-	const onAddressChange = async (address) => {
-		try {
-			setBusyCustomer(true);
-			// get the line items endpoint.
-			const { baseURL } = select(coreStore).getEntityConfig(
-				'surecart',
-				'draft-checkout'
-			);
-
-			const data = await apiFetch({
-				method: 'PATCH',
-				path: addQueryArgs(`${baseURL}/${id}`, {
-					expand,
-				}),
-				data: {
-					customer_id: checkout?.customer_id,
-					shipping_address: {
-						...address,
-					}, // update the address.
-				},
-			});
-
-			// update the checkout in the redux store.
-			receiveEntityRecords(
-				'surecart',
-				'draft-checkout',
-				data,
-				undefined,
-				false,
-				checkout
-			);
-
-			createSuccessNotice(__('Shipping Address updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
-		} finally {
-			setBusyCustomer(false);
+			setBusy(false);
 		}
 	};
 
@@ -264,8 +206,8 @@ export default () => {
 					<ScButton
 						type="primary"
 						submit
-						loading={isSaving}
-						disabled={isDisabled}
+						busy={busy}
+						disabled={isDisabled || busy}
 					>
 						{__('Create Order', 'surecart')}
 					</ScButton>
@@ -274,38 +216,45 @@ export default () => {
 					<>
 						<SelectCustomer
 							checkout={checkout}
-							busy={busy}
+							setBusy={setBusy}
 							loading={loading}
 						/>
 						<Address
-							label={__('Shipping & Tax Address', 'surecart')}
-							address={checkout?.shipping_address}
-							onAddressChange={onAddressChange}
+							checkout={checkout}
 							loading={loading}
 							busy={busy}
-							busyCustomer={busyCustomer}
+							setBusy={setBusy}
 						/>
 						<SelectShipping
 							checkout={checkout}
-							busy={busy}
 							loading={loading}
+							setBusy={setBusy}
+						/>
+						<Tax
+							checkout={checkout}
+							loading={loading}
+							busy={busy}
+							setBusy={setBusy}
 						/>
 					</>
 				}
 			>
-				<Prices checkout={checkout} loading={loading} busy={busy} />
+				<Prices
+					checkout={checkout}
+					loading={loading}
+					setBusy={setBusy}
+				/>
 
 				{!!checkout?.line_items?.data?.length && (
 					<Payment
 						checkout={checkout}
 						loading={loading}
-						busy={busy}
+						setBusy={setBusy}
 						setPaymentID={setPaymentID}
 						paymentID={paymentID}
 					/>
 				)}
-
-				{!!checkoutIdLoading && <ScBlockUi spinner />}
+				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
 
 			<ScDialog

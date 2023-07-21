@@ -12,13 +12,7 @@ import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import DataTable from '../../components/DataTable';
 
-export default ({
-	checkout,
-	setPaymentID,
-	paymentID,
-	paymentMethod,
-	setPaymentMethod,
-}) => {
+export default ({ checkout, setPaymentID, paymentID, setPaymentMethod }) => {
 	const [open, setOpen] = useState(false);
 	const [busy, setBusy] = useState(false);
 
@@ -36,7 +30,7 @@ export default ({
 						'payment_instrument',
 						'bank_account',
 					],
-					reusable: true,
+					reusable: true, // TODO: maybe swap these out.
 					live_mode: false, // TODO: change to live.
 					customer_ids: [checkout?.customer_id],
 				},

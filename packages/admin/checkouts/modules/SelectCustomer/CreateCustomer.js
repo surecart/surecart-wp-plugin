@@ -20,8 +20,7 @@ export default ({ onRequestClose, onCreate }) => {
 		live_mode: false, // TODO: Update mode.
 	});
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	// Focus the name input when this is loaded.
 	useEffect(() => {
@@ -50,9 +49,6 @@ export default ({ onRequestClose, onCreate }) => {
 				}
 			);
 			onCreate(created?.id);
-			createSuccessNotice(__('Customer created.', 'surecart'), {
-				type: 'snackbar',
-			});
 			onRequestClose();
 		} catch (e) {
 			console.error(e);

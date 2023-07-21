@@ -23,25 +23,14 @@ import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
 import CollectPayment from './CollectPayment';
 
-export default ({
-	checkout,
-	loading,
-	busy,
-	busyPrices,
-	setPaymentID,
-	paymentID,
-}) => {
-	const [busyPayment, setBusyPayment] = useState(false);
+export default ({ checkout, loading, setBusy, setPaymentID, paymentID }) => {
 	const [paymentMethod, setPaymentMethod] = useState(false);
-
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
-
 	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const onCouponChange = async (e) => {
 		try {
-			setBusyPayment(true);
+			setBusy(true);
 			// get the line items endpoint.
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -54,7 +43,6 @@ export default ({
 					expand,
 				}),
 				data: {
-					customer_id: checkout?.customer_id,
 					discount: {
 						promotion_code: e?.detail,
 					}, // update the coupon.
@@ -70,10 +58,6 @@ export default ({
 				false,
 				checkout
 			);
-
-			createSuccessNotice(__('Coupon Applied.', 'surecart'), {
-				type: 'snackbar',
-			});
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -83,9 +67,10 @@ export default ({
 				}
 			);
 		} finally {
-			setBusyPayment(false);
+			setBusy(false);
 		}
 	};
+
 	const renderPaymentDetails = () => {
 		return (
 			<>
@@ -281,7 +266,6 @@ export default ({
 			}}
 		>
 			{renderPaymentDetails()}
-			{(!!busy || !!busyPayment || !!busyPrices) && <ScBlockUi spinner />}
 		</Box>
 	);
 };

@@ -16,13 +16,11 @@ import { useDispatch, select, useSelect } from '@wordpress/data';
 import expand from '../query';
 import PriceSelector from '@admin/components/PriceSelector';
 
-export default ({ checkout }) => {
-	const [open, setOpen] = useState(false);
+export default ({ checkout, open, onRequestClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [priceID, setPriceID] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createSuccessNotice, createErrorNotice } =
-		useDispatch(noticesStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	const { price, priceLoading } = useSelect(
 		(select) => {
@@ -91,11 +89,7 @@ export default ({ checkout }) => {
 				checkout
 			);
 
-			createSuccessNotice(__('Product added.', 'surecart'), {
-				type: 'snackbar',
-			});
-
-			setOpen(false);
+			onRequestClose();
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(
@@ -111,53 +105,46 @@ export default ({ checkout }) => {
 	};
 
 	return (
-		<>
-			<ScButton type="primary" onClick={() => setOpen(true)}>
-				<ScIcon name="plus" slot="prefix" />
-				{__('Add Price', 'surecart')}
-			</ScButton>
+		<ScDialog
+			label={__('Choose a price', 'surecart')}
+			open={open}
+			style={{ '--dialog-body-overflow': 'visible' }}
+			onScRequestClose={onRequestClose}
+		>
+			<ScForm onScFormSubmit={onSubmit}>
+				<PriceSelector
+					required
+					value={priceID}
+					ad_hoc={true}
+					onSelect={(price) => setPriceID(price)}
+					requestQuery={{
+						archived: false,
+					}}
+				/>
 
-			<ScDialog
-				label={__('Choose a price', 'surecart')}
-				open={open}
-				style={{ '--dialog-body-overflow': 'visible' }}
-				onScRequestClose={() => setOpen(false)}
-			>
-				<ScForm onScFormSubmit={onSubmit}>
-					<PriceSelector
-						required
-						value={priceID}
-						ad_hoc={true}
-						onSelect={(price) => setPriceID(price)}
-						requestQuery={{
-							archived: false,
+				{price?.ad_hoc && (
+					<ScPriceInput
+						label={__('Amount', 'surecart')}
+						placeholder={__('Enter an Amount', 'surecart')}
+						style={{ flex: 1 }}
+						currencyCode={price?.currency}
+						value={addHocAmount || price?.amount || null}
+						onScInput={(e) => {
+							setAddHocAmount(e.target.value);
 						}}
 					/>
+				)}
 
-					{price?.ad_hoc && (
-						<ScPriceInput
-							label={__('Amount', 'surecart')}
-							placeholder={__('Enter an Amount', 'surecart')}
-							style={{ flex: 1 }}
-							currencyCode={price?.currency}
-							value={addHocAmount || price?.amount || null}
-							onScInput={(e) => {
-								setAddHocAmount(e.target.value);
-							}}
-						/>
-					)}
+				<ScButton type="primary" submit>
+					{__('Add Price', 'surecart')}
+				</ScButton>
 
-					<ScButton type="primary" submit>
-						{__('Add Price', 'surecart')}
-					</ScButton>
+				<ScButton type="text" onClick={onRequestClose}>
+					{__('Cancel', 'surecart')}
+				</ScButton>
 
-					<ScButton type="text" onClick={() => setOpen(false)}>
-						{__('Cancel', 'surecart')}
-					</ScButton>
-
-					{(!!loading || !!priceLoading) && <ScBlockUi spinner />}
-				</ScForm>
-			</ScDialog>
-		</>
+				{(!!loading || !!priceLoading) && <ScBlockUi spinner />}
+			</ScForm>
+		</ScDialog>
 	);
 };

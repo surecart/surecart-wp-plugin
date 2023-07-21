@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-
 import {
 	ScButton,
 	ScCard,
@@ -25,11 +24,9 @@ export default ({ id, onChange }) => {
 			// our entity query data.
 			const entityData = ['surecart', 'customer', id];
 			return {
-				customer: select(coreStore).getEditedEntityRecord(
-					...entityData
-				),
+				customer: select(coreStore).getEntityRecord(...entityData),
 				loading: !select(coreStore)?.hasFinishedResolution?.(
-					'getEditedEntityRecord',
+					'getEntityRecord',
 					[...entityData]
 				),
 			};
