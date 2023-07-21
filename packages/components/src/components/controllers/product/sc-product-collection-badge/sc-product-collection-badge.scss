@@ -7,12 +7,12 @@
   --sc-collection-badge-background-color: var(--sc-color-info-100);
   --sc-collection-badge-color: var(--sc-color-info-700);
   --sc-collection-badge-font-weight: var(--sc-font-weight-bold);
-  --sc-collection-badge-font-size: var(--sc-font-size-small);
+  --sc-collection-badge-font-size: var(--sc-font-size-xx-small);
   --sc-collection-badge-font-style: normal;
   --sc-collection-badge-text-transform: initial;
 }
 
-.tag {
+:host {
   display: flex;
   align-items: center;
   border: none;

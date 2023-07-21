@@ -1456,10 +1456,6 @@
     "slot": true
   },
   "sc-product-collection-badge": {
-    "name": true,
-    "pill": true,
-    "size": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1467,9 +1463,6 @@
   },
   "sc-product-collections": {
     "collection-count": true,
-    "pill": true,
-    "size": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,

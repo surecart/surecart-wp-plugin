@@ -3,32 +3,28 @@ import {
 	InspectorControls,
 	useBlockProps,
 	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
-import {
-	PanelBody,
-	PanelRow,
-	SelectControl,
-	TextControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 /**
  * Component Dependencies
  */
-import {
-	ScFlex,
-	ScProductCollectionBadge,
-	ScTag,
-} from '@surecart/components-react';
+import { ScFlex } from '@surecart/components-react';
+import classNames from 'classnames';
 
 export default ({ attributes, setAttributes }) => {
-	const { size, type, pill, collectionCount } = attributes;
+	const { collectionCount } = attributes;
 	const blockProps = useBlockProps({});
 	const colorProps = useColorProps(attributes);
-	const style = {
-		'--sc-tag-primary-color': colorProps.style.backgroundColor,
-		'--sc-tag-primary-background-color': colorProps.style.color,
+	const spacingProps = useSpacingProps(attributes);
+	const borderProps = useBorderProps(attributes);
+	const fontStyles = {
+		fontFamily: blockProps?.style?.fontFamily,
+		fontWeight: blockProps?.style?.fontWeight,
+		fontStyle: blockProps?.style?.fontStyle,
 	};
 
 	return (
@@ -36,39 +32,8 @@ export default ({ attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
-						<SelectControl
-							label={__('Size', 'surecart')}
-							value={size}
-							onChange={(size) => setAttributes({ size })}
-						>
-							<option value="small">Small</option>
-							<option value="medium">Medium</option>
-							<option value="large">Large</option>
-						</SelectControl>
-					</PanelRow>
-
-					<PanelRow>
-						<SelectControl
-							type={type}
-							label={__('Type', 'surecart')}
-							onChange={(type) => setAttributes({ type })}
-						>
-							<option value="primary">Primary</option>
-							<option value="success">Success</option>
-							<option value="info">Info</option>
-						</SelectControl>
-					</PanelRow>
-
-					<PanelRow>
-						<ToggleControl
-							label={__('Pill', 'surecart')}
-							checked={pill}
-							onChange={(pill) => setAttributes({ pill })}
-						/>
-					</PanelRow>
-					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
+							label={__('Collections to display', 'surecart')}
 							value={collectionCount}
 							onChange={(collectionCount) =>
 								setAttributes({ collectionCount })
@@ -81,15 +46,29 @@ export default ({ attributes, setAttributes }) => {
 
 			<div {...blockProps}>
 				<ScFlex gap="1em" justifyContent="flex-start">
-					<ScTag pill={pill} size={size} style={style}>
-						Male
-					</ScTag>
-					<ScTag pill={pill} size={size} style={style}>
-						Female
-					</ScTag>
-					<ScTag pill={pill} size={size} style={style}>
-						Unisex
-					</ScTag>
+					{['Male', 'Female', 'Unisex'].map((collection) => (
+						<span
+							className={classNames(
+								'sc-product-collection-badge',
+								colorProps.className,
+								spacingProps.className,
+								borderProps.className,
+								{
+									'no-border-radius':
+										attributes.style?.border?.radius === 0,
+								}
+							)}
+							style={{
+								...fontStyles,
+								...colorProps.style,
+								...spacingProps.style,
+								...borderProps.style,
+							}}
+							key={collection}
+						>
+							{collection}
+						</span>
+					))}
 				</ScFlex>
 			</div>
 		</Fragment>
