@@ -32,7 +32,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	useEffect(() => {
 		// removes all variant values, which label is empty.
-		const updatedVariantOptions = (
+		let updatedVariantOptions = (
 			product?.variant_options?.data ||
 			product?.variant_options ||
 			[]
@@ -44,6 +44,12 @@ export default ({ product, updateProduct, loading }) => {
 				),
 			};
 		});
+
+		// Also filter out variant options, which has no values or name.
+		updatedVariantOptions = updatedVariantOptions?.filter(
+			(variantOption) =>
+				variantOption?.values?.length > 0 && variantOption?.name?.length
+		);
 
 		const variants = generateVariants(updatedVariantOptions ?? []) ?? [];
 
