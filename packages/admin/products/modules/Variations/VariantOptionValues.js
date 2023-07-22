@@ -3,18 +3,20 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, memo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
 
-export default ({ option, product, updateProduct, onChangeValue }) => {
-	const [values, setValues] = useState([{ index: 1, label: '' }]);
+export default memo(({ option, product, updateProduct, onChangeValue }) => {
+	const [values, setValues] = useState(
+		option?.values?.length > 0 ? option?.values : [{ index: 1, label: '' }]
+	);
 
 	const applySort = (oldIndex, newIndex) => {
 		setValues(arrayMove(values, oldIndex, newIndex));
@@ -138,4 +140,4 @@ export default ({ option, product, updateProduct, onChangeValue }) => {
 			))}
 		</SortableList>
 	);
-};
+});

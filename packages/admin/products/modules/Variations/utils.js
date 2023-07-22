@@ -1,3 +1,8 @@
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+
 export function generateVariants(variantOptions) {
 	const variants = [];
 
@@ -72,3 +77,43 @@ function prepareVariants(variants) {
 
 	return newVariants;
 }
+
+/**
+ * If any duplicate optionValue.label is found.
+ *
+ * @returns object
+ */
+export const checkOptionValueError = (optionValues = []) => {
+	const optionValuesData = [...optionValues];
+	let error = {
+		message: '',
+	};
+
+	// If optionValues filtered trimmed data is empty, then error.
+	if (
+		optionValuesData.filter((optionValue) => {
+			return optionValue.label !== '';
+		}).length === 0
+	) {
+		error.message = __('Option values are required.', 'surecart');
+	}
+
+	const hasDuplicateValue = optionValuesData.find((optionValue, index) => {
+		return (
+			optionValuesData.findIndex((optionValue2, index2) => {
+				return (
+					optionValue.label === optionValue2.label && index !== index2
+				);
+			}) !== -1
+		);
+	});
+
+	if (hasDuplicateValue) {
+		error.message = __('Option values should not be the same.', 'surecart');
+	}
+
+	return {
+		hasDuplicate: hasDuplicateValue,
+		error,
+	};
+};
