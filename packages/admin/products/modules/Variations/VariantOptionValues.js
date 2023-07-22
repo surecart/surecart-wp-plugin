@@ -53,82 +53,89 @@ export default ({ option, product, updateProduct, onChangeValue }) => {
 		onChangeValue(values);
 	}, [values]);
 
+	const deleteOptionValue = (index) => {
+		const newOptionValues = [...values];
+		newOptionValues.splice(index, 1);
+
+		// update the index of the option values.
+		const updatedOptionValues = newOptionValues.map((value, valueIndex) => {
+			return {
+				...value,
+				index: valueIndex + 1,
+			};
+		});
+		setValues(updatedOptionValues);
+	};
+
 	return (
 		<SortableList onSortEnd={applySort}>
-			{(values || []).map((optionValue, index) => {
-				return (
-					<SortableItem key={index}>
+			{(values || []).map((optionValue, index) => (
+				<SortableItem key={index}>
+					<div
+						css={css`
+							padding-top: var(--sc-spacing-xx-small);
+							padding-bottom: var(--sc-spacing-xx-small);
+						`}
+					>
 						<div
 							css={css`
-								padding-top: var(--sc-spacing-xx-small);
-								padding-bottom: var(--sc-spacing-xx-small);
+								width: 100%;
+								display: flex;
+								align-items: center;
+								gap: 1em;
+								justify-content: center;
 							`}
 						>
-							<div
+							{/* Hide deletebutton for last item */}
+							{index !== values.length - 1 ? (
+								<ScIcon
+									name="drag"
+									slot="prefix"
+									css={css`
+										cursor: grab;
+									`}
+								/>
+							) : (
+								<ScIcon name="empty" slot="prefix" />
+							)}
+
+							<ScInput
 								css={css`
 									width: 100%;
-									display: flex;
-									align-items: center;
-									gap: 1em;
-									justify-content: center;
+									focus: {
+										border-color: var(--sc-color-primary);
+									}
 								`}
-							>
-								{/* Hide deletebutton for last item */}
-								{index !== values.length - 1 ? (
-									<ScIcon
-										name="drag"
-										slot="prefix"
-										css={css`
-											cursor: grab;
-										`}
-									/>
-								) : (
-									<ScIcon name="empty" slot="prefix" />
+								type="text"
+								placeholder={__(
+									'Add another value',
+									'surecart'
 								)}
+								value={optionValue.label}
+								onInput={(e) =>
+									onChangeOptionValue(index, e.target.value)
+								}
+							/>
 
-								<ScInput
+							{index !== values.length - 1 && (
+								<ScButton
+									type="text"
 									css={css`
-										width: 100%;
-										focus: {
-											border-color: var(
-												--sc-color-primary
-											);
+										position: absolute;
+										right: 0;
+										hover: {
+											color: var(--sc-color-danger);
 										}
 									`}
-									type="text"
-									placeholder={__(
-										'Add another value',
-										'surecart'
-									)}
-									value={optionValue.label}
-									onInput={(e) =>
-										onChangeOptionValue(
-											index,
-											e.target.value
-										)
-									}
-								/>
-
-								{index !== values.length - 1 && (
-									<ScButton
-										type="text"
-										css={css`
-											position: absolute;
-											right: 0;
-											hover: {
-												color: var(--sc-color-danger);
-											}
-										`}
-										onClick={() => deleteOptionValue(index)}
-									>
-										<ScIcon name="trash" slot="suffix" />
-									</ScButton>
-								)}
-							</div>
+									onClick={() => deleteOptionValue(index)}
+								>
+									<ScIcon name="trash" slot="suffix" />
+								</ScButton>
+							)}
 						</div>
-					</SortableItem>
-				);
-			})}
+					</div>
+				</SortableItem>
+			))}
 		</SortableList>
 	);
 };

@@ -79,38 +79,48 @@ export default ({ product, updateProduct, loading }) => {
 								margin-bottom: var(--sc-spacing-xx-small);
 							`}
 						>
+							<ScInput
+								type="text"
+								placeholder={__('Option Name', 'surecart')}
+								required
+								label={__('Option Name', 'surecart')}
+								value={option?.name}
+								onScInput={(e) => {
+									updateVariantOption({
+										index,
+										data: {
+											name: e.target.value,
+										},
+									});
+								}}
+							/>
 							<div
 								style={{
 									display: 'flex',
 									alignItems: 'center',
 									gap: '1em',
-									justifyContent: 'space-between',
+									marginTop: '1em',
 									marginBottom: '1em',
 									paddingBottom: '1em',
 									borderBottom:
 										'1px solid var(--sc-color-gray-200)',
 								}}
 							>
-								<div>
-									<ScInput
-										type="text"
-										placeholder={__(
-											'Option Name',
-											'surecart'
-										)}
-										required
-										label={__('Option Name', 'surecart')}
-										value={option?.name}
-										onScInput={(e) => {
-											updateVariantOption({
-												index,
-												data: {
-													name: e.target.value,
-												},
-											});
-										}}
-									/>
-
+								<div
+									style={{
+										flex: 1,
+									}}
+								>
+									<label
+										css={css`
+											display: block;
+											margin-left: 1.6rem;
+											font-weight: 500;
+										`}
+									>
+										{__('Option Values', 'surecart')}{' '}
+										<span style={{ color: 'red' }}>*</span>
+									</label>
 									<VariantOptionValues
 										option={option}
 										product={product}
