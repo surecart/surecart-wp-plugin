@@ -184,7 +184,6 @@ dispatch(coreStore).addEntities([
 			expand: [
 				'variants',
 				'variant_options',
-				'variant_options.variant_values',
 			],
 		},
 	},
@@ -259,24 +258,10 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'variant',
-		kind: 'surecart',
-		label: __('Variant', 'surecart'),
-		baseURL: 'surecart/v1/variants',
-		baseURLParams: { context: 'edit' },
-	},
-	{
 		name: 'variant-option',
 		kind: 'surecart',
 		label: __('Variant Option', 'surecart'),
 		baseURL: 'surecart/v1/variant_options',
-		baseURLParams: { context: 'edit' },
-	},
-	{
-		name: 'variant-value',
-		kind: 'surecart',
-		label: __('Variant Value', 'surecart'),
-		baseURL: 'surecart/v1/variant_values',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

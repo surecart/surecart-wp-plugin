@@ -24,7 +24,7 @@ import DataTable from '../../../components/DataTable';
 
 export default ({ product, updateProduct, loading }) => {
 	const [isDeleting, setIsDeleting] = useState(false);
-	const variants = Array.from(product?.variants || []);
+	const variants = Array.from(product?.variants?.data ?? []);
 	const { deleteEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);

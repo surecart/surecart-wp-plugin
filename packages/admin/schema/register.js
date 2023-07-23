@@ -104,18 +104,8 @@ dispatch(dataStore).registerEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
-		name: 'variant',
-		baseURL: 'surecart/v1/variants',
-		baseURLParams: { context: 'edit' },
-	},
-	{
 		name: 'variant-option',
 		baseURL: 'surecart/v1/variant_options',
-		baseURLParams: { context: 'edit' },
-	},
-	{
-		name: 'variant-value',
-		baseURL: 'surecart/v1/variant_values',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

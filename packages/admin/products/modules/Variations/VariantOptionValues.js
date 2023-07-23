@@ -41,15 +41,18 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 		setValues(updatedOptionValues);
 	};
 
-	// as the values are changed, we need to add variants.
+	// as the values are changed, we need to add in variants.data.
 	useEffect(() => {
 		updateProduct({
 			...product,
-			variants: values
-				.filter((value) => !!value?.label)
-				.map((value) => {
-					return { option_1: value.label };
-				}),
+			variants: {
+				...product.variants,
+				data: values
+					.filter((value) => !!value?.label)
+					.map((value) => {
+						return { option_1: value.label };
+					}),
+			},
 		});
 
 		onChangeValue(values);

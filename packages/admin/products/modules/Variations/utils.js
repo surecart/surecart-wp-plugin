@@ -7,20 +7,6 @@ export function generateVariants(variantOptions) {
 	const variants = [];
 
 	// TODO: Improve this with a recursive function.
-	function generateCombinations(currentVariant, index) {
-		if (index === variantOptions.length) {
-			variants.push({ ...currentVariant });
-			return;
-		}
-
-		const option = variantOptions[index];
-
-		for (let i = 0; i < option.values.length; i++) {
-			currentVariant[option.name] = option.values[i];
-			generateCombinations(currentVariant, index + 1);
-		}
-	}
-
 	// Generate combinations for up to three options
 	if (variantOptions.length === 0) {
 		return variants;

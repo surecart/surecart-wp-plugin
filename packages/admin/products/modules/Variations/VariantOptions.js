@@ -23,28 +23,34 @@ export default ({ product, updateProduct, loading }) => {
 	const updateVariantOption = (action) => {
 		updateProduct({
 			...product,
-			variant_options: product.variant_options.map((item, index) => {
-				if (index !== action.index) {
-					return item;
-				}
-				return {
-					...item,
-					...action.data,
-				};
-			}),
+			variant_options: {
+				...product.variant_options,
+				data: (product?.variant_options?.data ?? []).map(
+					(item, index) => {
+						if (index !== action.index) {
+							return item;
+						}
+						return {
+							...item,
+							...action.data,
+						};
+					}
+				),
+			},
 		});
 	};
 
 	const applyDrag = async (oldIndex, newIndex) => {
 		updateProduct({
 			...product,
-			variant_options: arrayMove(
-				product?.variant_options?.data ||
-					product?.variant_options ||
-					[],
-				oldIndex,
-				newIndex
-			),
+			variant_options: {
+				...product.variant_options,
+				data: arrayMove(
+					product?.variant_options?.data ?? [],
+					oldIndex,
+					newIndex
+				),
+			},
 		});
 	};
 
@@ -57,18 +63,16 @@ export default ({ product, updateProduct, loading }) => {
 
 	useEffect(() => {
 		// removes all variant values, which label is empty.
-		let updatedVariantOptions = (
-			product?.variant_options?.data ||
-			product?.variant_options ||
-			[]
-		)?.map((variantOption) => {
-			return {
-				...variantOption,
-				values: variantOption?.values?.filter(
-					(value) => value?.label?.length > 0
-				),
-			};
-		});
+		let updatedVariantOptions = (product?.variant_options?.data ?? [])?.map(
+			(variantOption) => {
+				return {
+					...variantOption,
+					values: variantOption?.values?.filter(
+						(value) => value?.label?.length > 0
+					),
+				};
+			}
+		);
 
 		// Also filter out variant options, which has no values or name.
 		updatedVariantOptions = updatedVariantOptions?.filter(
@@ -76,11 +80,15 @@ export default ({ product, updateProduct, loading }) => {
 				variantOption?.values?.length > 0 && variantOption?.name?.length
 		);
 
-		const variants = generateVariants(updatedVariantOptions ?? []) ?? [];
+		const variantsData =
+			generateVariants(updatedVariantOptions ?? []) ?? [];
 
 		updateProduct({
 			...product,
-			variants,
+			variants: {
+				...product.variants,
+				data: variantsData,
+			},
 		});
 	}, [product?.variant_options]);
 
@@ -246,8 +254,8 @@ export default ({ product, updateProduct, loading }) => {
 			</div>
 
 			<SortableList onSortEnd={applyDrag}>
-				{Array.isArray(product?.variant_options) &&
-					product?.variant_options.map((option, index) => {
+				{Array.isArray(product?.variant_options?.data ?? []) &&
+					product?.variant_options?.data.map((option, index) => {
 						return (
 							<SortableItem
 								key={`option_${index}`}
