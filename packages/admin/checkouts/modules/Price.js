@@ -160,9 +160,6 @@ export default ({
 						{__('Remove', 'surecart')}
 					</ScButton>
 				</ScTableCell>
-			</ScTableRow>
-
-			{open && (
 				<ScForm
 					onScFormSubmit={(e) => {
 						e.stopImmediatePropagation(); // prevents the page form from submitting.
@@ -197,7 +194,7 @@ export default ({
 						</ScButton>
 					</ScDialog>
 				</ScForm>
-			)}
+			</ScTableRow>
 		</>
 	);
 };
