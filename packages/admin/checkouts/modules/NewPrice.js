@@ -63,7 +63,7 @@ export default ({ checkout, open, onRequestClose }) => {
 				false,
 				checkout
 			);
-
+			setPriceID(false);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
