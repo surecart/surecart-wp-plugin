@@ -183,8 +183,7 @@ export class ScChoice {
       for (let entry of entries) {
         if (entry.contentBoxSize) {
           const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;
-          console.log(contentBoxSize?.inlineSize);
-          setTimeout(() => (this.isStacked = contentBoxSize?.inlineSize < 300), 0);
+          setTimeout(() => (this.isStacked = contentBoxSize?.inlineSize < 350), 0);
         }
       }
     });
