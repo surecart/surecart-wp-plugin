@@ -217,7 +217,11 @@ export default ({ id }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Collection productId={id} />
+					<Collection
+						productId={id}
+						product={product}
+						loading={!hasLoadedProduct}
+					/>
 					<Shipping
 						product={product}
 						updateProduct={editProduct}
