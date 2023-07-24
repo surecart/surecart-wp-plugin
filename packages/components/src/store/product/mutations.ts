@@ -1,7 +1,7 @@
 import { addLineItem } from '../../services/session';
 import state from './store';
 import { getCheckout, setCheckout } from '@store/checkouts';
-import { Checkout } from 'src/types';
+import { Checkout, Product } from 'src/types';
 import { toggleCart } from '@store/ui';
 import { doCartGoogleAnalytics } from '../../functions/google-analytics-cart';
 
@@ -20,17 +20,18 @@ export const submitCartForm = async () => {
       live_mode: state.mode !== 'test',
     });
     setCheckout(checkout as Checkout, state.formId);
-    doCartGoogleAnalytics({
-      currency: state.selectedPrice.currency,
-      value: state.selectedPrice.amount,
-      items: [{
-        item_id: state.product.id,
-        discount: checkout.discount.id,
-        item_name: state.product.name,
-        price: state.selectedPrice.amount,
-        quantity: state.selectedPrice.ad_hoc ? 1 : state.quantity,
-      }],
-    });
+    const newLineItem = checkout.line_items?.data.find((item) => item.price.id === state.selectedPrice?.id);
+    if (newLineItem) {
+      doCartGoogleAnalytics([{
+        item_id: newLineItem.price?.product_id,
+        item_name: (newLineItem.price?.product as Product)?.name,
+        item_variant: newLineItem.price?.name,
+        price: newLineItem.price?.amount,
+        currency: newLineItem.price?.currency,
+        quantity: newLineItem.quantity,
+        discount: newLineItem.discount_amount
+      }]);
+    }
     toggleCart(true);
     state.dialog = null;
   } catch (e) {
