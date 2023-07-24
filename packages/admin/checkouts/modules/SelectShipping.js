@@ -66,6 +66,18 @@ export default ({ checkout, setBusy, loading }) => {
 	}
 
 	if (!checkout?.shipping_choices?.data?.length) {
+		if (!checkout?.shipping_address?.country) {
+			return (
+				<Box title={__('Shipping', 'surecart')} loading={loading}>
+					<ScAlert type="warning" open>
+						{__(
+							'This order requires shipping. Please enter an address.',
+							'surecart'
+						)}
+					</ScAlert>
+				</Box>
+			);
+		}
 		return (
 			<Box title={__('Shipping', 'surecart')} loading={loading}>
 				<ScAlert type="warning" open>

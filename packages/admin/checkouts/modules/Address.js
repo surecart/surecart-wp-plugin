@@ -17,14 +17,14 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { select, useDispatch } from '@wordpress/data';
 import expand from '../query';
+import Error from '../../components/Error';
 
 export default ({ checkout, loading, busy, setBusy }) => {
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const [open, setOpen] = useState(false);
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const [error, setError] = useState(false);
 	const [customerShippingAddress, setCustomerShippingAddress] = useState(
 		checkout?.shipping_address
 	);
@@ -64,12 +64,7 @@ export default ({ checkout, loading, busy, setBusy }) => {
 			setOpen(false);
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+			setError(e);
 		} finally {
 			setBusy(false);
 		}
@@ -127,15 +122,23 @@ export default ({ checkout, loading, busy, setBusy }) => {
 					style={{ '--dialog-body-overflow': 'visible' }}
 					onScRequestClose={() => setOpen(false)}
 				>
-					<ScAddress
-						showName={true}
-						showLine2={true}
-						required={open}
-						address={customerShippingAddress}
-						onScInputAddress={(e) =>
-							setCustomerShippingAddress(e?.detail)
-						}
-					/>
+					<div
+						css={css`
+							display: grid;
+							gap: var(--sc-form-row-spacing);
+						`}
+					>
+						<Error error={error} setError={setError} />
+						<ScAddress
+							showName={true}
+							showLine2={true}
+							required={open}
+							address={customerShippingAddress}
+							onScInputAddress={(e) =>
+								setCustomerShippingAddress(e?.detail)
+							}
+						/>
+					</div>
 
 					<ScButton
 						type="text"

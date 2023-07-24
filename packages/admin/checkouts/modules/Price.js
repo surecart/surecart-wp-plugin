@@ -175,7 +175,9 @@ export default ({
 							label={__('Amount', 'surecart')}
 							placeholder={__('Enter an Amount', 'surecart')}
 							currencyCode={price?.currency}
-							value={addHocAmount || ad_hoc_amount || null}
+							value={
+								addHocAmount || ad_hoc_amount || price?.amount
+							}
 							onScInput={(e) => setAddHocAmount(e?.target?.value)}
 							required
 						/>

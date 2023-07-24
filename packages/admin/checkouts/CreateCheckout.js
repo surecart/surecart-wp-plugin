@@ -239,16 +239,12 @@ export default () => {
 							checkout={checkout}
 							setBusy={setBusy}
 							loading={loading}
+							onSuccess={() => setPaymentMethod(null)}
 						/>
 						<Address
 							checkout={checkout}
 							loading={loading}
 							busy={busy}
-							setBusy={setBusy}
-						/>
-						<SelectShipping
-							checkout={checkout}
-							loading={loading}
 							setBusy={setBusy}
 						/>
 						<Tax
@@ -261,6 +257,12 @@ export default () => {
 				}
 			>
 				<Prices
+					checkout={checkout}
+					loading={loading}
+					setBusy={setBusy}
+				/>
+
+				<SelectShipping
 					checkout={checkout}
 					loading={loading}
 					setBusy={setBusy}
@@ -282,24 +284,25 @@ export default () => {
 			<ScDialog
 				open={confirmCheckout}
 				onScRequestClose={() => setConfirmCheckout(false)}
-				label={__('Confirm Charge', 'surecart')}
+				label={
+					paymentMethod?.id && checkout?.amount_due
+						? __('Confirm Charge', 'surecart')
+						: __('Confirm Manual Payment', 'surecart')
+				}
 			>
 				{paymentMethod?.id && checkout?.amount_due ? (
 					<ScAlert
 						type="warning"
-						title={__('Confirm Charge', 'surecart')}
-						open
-					>
-						{sprintf(
-							__(
-								'This will charge the customer %s. Are you sure you want to continue?',
-								'surecart'
-							),
+						title={sprintf(
+							__('This will charge the customer %s.', 'surecart'),
 							formatNumber(
 								checkout?.amount_due || 0,
 								checkout?.currency || 'usd'
 							)
 						)}
+						open
+					>
+						{__('Are you sure you want to continue?', 'surecart')}
 					</ScAlert>
 				) : (
 					<ScAlert

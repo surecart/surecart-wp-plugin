@@ -17,7 +17,7 @@ import expand from '../../query';
 import Customer from './Customer';
 import CreateCustomer from './CreateCustomer';
 
-export default ({ checkout, setBusy, loading }) => {
+export default ({ checkout, setBusy, loading, onSuccess }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -66,6 +66,8 @@ export default ({ checkout, setBusy, loading }) => {
 				false,
 				checkout
 			);
+
+			onSuccess();
 		} catch (e) {
 			console.error(e);
 

@@ -21,6 +21,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
 import PaymentMethods from './PaymentMethods';
+import { useEffect } from '@wordpress/element';
 
 export default ({
 	checkout,
@@ -227,10 +228,9 @@ export default ({
 									</ScButton>
 									<ScMenu>
 										<ScMenuItem
-											onClick={() => {
-												setPaymentID(false);
-												setPaymentMethod(false);
-											}}
+											onClick={() =>
+												setPaymentMethod(false)
+											}
 										>
 											<ScIcon
 												slot="prefix"

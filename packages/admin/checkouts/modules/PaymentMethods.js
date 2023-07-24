@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import {
+	ScAlert,
 	ScBlockUi,
 	ScButton,
 	ScChoice,
@@ -76,6 +77,12 @@ export default ({
 					required
 					onScChange={(e) => setSelectedPaymentMethod(e.target.value)}
 				>
+					{!loading && !payment_methods?.length && (
+						<ScAlert type="warning" open>
+							{__('No payment methods found.', 'surecart')}
+						</ScAlert>
+					)}
+
 					{(payment_methods || []).map((payment_method) => {
 						return (
 							<ScChoice
@@ -111,7 +118,12 @@ export default ({
 
 				{loading && <ScBlockUi spinner />}
 
-				<ScButton type="primary" submit slot="footer">
+				<ScButton
+					type="primary"
+					submit
+					slot="footer"
+					disabled={!selectedPaymentMethod}
+				>
 					{__('Choose', 'surecart')}
 				</ScButton>
 

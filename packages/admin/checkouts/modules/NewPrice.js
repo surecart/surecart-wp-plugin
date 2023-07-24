@@ -122,7 +122,7 @@ export default ({ checkout, open, onRequestClose }) => {
 					}}
 				/>
 
-				{price?.ad_hoc && (
+				{/* {price?.ad_hoc && (
 					<ScPriceInput
 						label={__('Amount', 'surecart')}
 						placeholder={__('Enter an Amount', 'surecart')}
@@ -133,7 +133,7 @@ export default ({ checkout, open, onRequestClose }) => {
 							setAddHocAmount(e.target.value);
 						}}
 					/>
-				)}
+				)} */}
 
 				<ScButton type="primary" submit>
 					{__('Add Price', 'surecart')}

@@ -121,9 +121,9 @@ export default ({ checkout, loading, setBusy }) => {
 			return (
 				<ScEmpty icon="shopping-bag">
 					<p>{__('Add some products to this order.', 'surecart')}</p>
-					<ScButton onClick={() => setModal(true)}>
+					<ScButton type="primary" onClick={() => setModal(true)}>
 						<ScIcon name="plus" slot="prefix" />
-						{__('Add Product', 'surecart')}
+						{__('Add Products', 'surecart')}
 					</ScButton>
 				</ScEmpty>
 			);
