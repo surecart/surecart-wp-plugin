@@ -79,7 +79,7 @@ export default (props) => {
 	useEffect(() => {
 		if (query === null || isLoading) return;
 		fetchData(pagination);
-	}, [pagination]);
+	}, [pagination.enabled, pagination.page, pagination.per_page, exclude]);
 
 	return (
 		<SelectModel
