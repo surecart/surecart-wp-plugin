@@ -5,9 +5,7 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useState, useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies.
@@ -18,56 +16,12 @@ import VariantOptions from './VariantOptions';
 import Variants from './Variants';
 
 export default ({ product, updateProduct, loading }) => {
-	const [modal, setModal] = useState(false);
-	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const maxVariantOptions = 3;
 
-	// this transforms the response we get from the server to the format we need to send back.
-	useEffect(() => {
-		if (!product?.variant_options?.data) return;
-		receiveEntityRecords('surecart', 'product', [
-			{
-				...product,
-				variant_options: {
-					...product?.variant_options,
-					data: (product?.variant_options?.data ?? []).map(
-						({ id, name, position }) => {
-							return {
-								id,
-								name,
-								position,
-							};
-						}
-					),
-				},
-			},
-		]);
-	}, [product?.variant_options?.data]);
-
-	// function to update product?.variant_options based on the index.
-	const updateVariantOption = (action) => {
-		updateProduct({
-			...product,
-			variant_options: (product?.variant_options?.data ?? []).map(
-				(item, index) => {
-					if (index !== action.index) {
-						return item;
-					}
-					return {
-						...item,
-						...action.item,
-					};
-				}
-			),
-		});
-	};
-
 	const addEmptyVariantOption = () => {
 		// if we have reached the max number of variant options, show a toast and return.
-		if (
-			(product?.variant_options?.data ?? []).length >= maxVariantOptions
-		) {
+		if ((product?.variant_options ?? []).length >= maxVariantOptions) {
 			createErrorNotice(
 				__(
 					'You have reached the maximum number of variant options. Only 3 variant options are allowed.',
@@ -78,13 +32,10 @@ export default ({ product, updateProduct, loading }) => {
 		}
 
 		updateProduct({
-			variant_options: {
+			variant_options: [
 				...product?.variant_options,
-				data: [
-					...(product?.variant_options?.data ?? []),
-					{ name: '', position: 0, values: [] },
-				],
-			},
+				{ name: '', position: 0, values: [] },
+			],
 		});
 	};
 

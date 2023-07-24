@@ -64,7 +64,7 @@ export default ({ onRequestClose, id, product, updateProduct }) => {
 				variant_options: {
 					...(product.variant_options || {}),
 					data: [
-						...(product.variant_options?.data || []),
+						...(product.variant_options || []),
 						{
 							...response,
 							variant_values: {

@@ -5,7 +5,7 @@
 import { css, jsx } from '@emotion/core';
 import { useState, useEffect, memo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import SortableList, { SortableItem } from 'react-easy-sort';
+import SortableList, { SortableItem, SortableKnob } from 'react-easy-sort';
 import arrayMove from 'array-move';
 
 /**
@@ -93,13 +93,15 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 						>
 							{/* Hide deletebutton for last item */}
 							{index !== values.length - 1 ? (
-								<ScIcon
-									name="drag"
-									slot="prefix"
-									css={css`
-										cursor: grab;
-									`}
-								/>
+								<SortableKnob>
+									<ScIcon
+										name="drag"
+										slot="prefix"
+										css={css`
+											cursor: grab;
+										`}
+									/>
+								</SortableKnob>
 							) : (
 								<ScIcon name="empty" slot="prefix" />
 							)}

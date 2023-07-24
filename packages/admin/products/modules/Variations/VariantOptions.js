@@ -4,7 +4,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from '@wordpress/element';
-import SortableList, { SortableItem } from 'react-easy-sort';
+import SortableList, { SortableItem, SortableKnob } from 'react-easy-sort';
 import arrayMove from 'array-move';
 import { __ } from '@wordpress/i18n';
 
@@ -19,38 +19,33 @@ import Error from '../../../components/Error';
 export default ({ product, updateProduct, loading }) => {
 	const [error, setError] = useState(null);
 	const [editingValues, setEditingValues] = useState({});
+
 	// function to update product?.variant_options based on the index.
 	const updateVariantOption = (action) => {
 		updateProduct({
 			...product,
-			variant_options: {
-				...product.variant_options,
-				data: (product?.variant_options?.data ?? []).map(
-					(item, index) => {
-						if (index !== action.index) {
-							return item;
-						}
-						return {
-							...item,
-							...action.data,
-						};
+			variant_options: (product?.variant_options ?? []).map(
+				(item, index) => {
+					if (index !== action.index) {
+						return item;
 					}
-				),
-			},
+					return {
+						...item,
+						...action.data,
+					};
+				}
+			),
 		});
 	};
 
 	const applyDrag = async (oldIndex, newIndex) => {
 		updateProduct({
 			...product,
-			variant_options: {
-				...product.variant_options,
-				data: arrayMove(
-					product?.variant_options?.data ?? [],
-					oldIndex,
-					newIndex
-				),
-			},
+			variant_options: arrayMove(
+				product?.variant_options ?? [],
+				oldIndex,
+				newIndex
+			),
 		});
 	};
 
@@ -63,7 +58,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	useEffect(() => {
 		// removes all variant values, which label is empty and which has no name.
-		let updatedVariantOptions = (product?.variant_options?.data ?? [])
+		let updatedVariantOptions = (product?.variant_options ?? [])
 			?.map((variantOption) => {
 				return {
 					...variantOption,
@@ -79,38 +74,48 @@ export default ({ product, updateProduct, loading }) => {
 			);
 
 		const variantsData =
-			generateVariants(
-				updatedVariantOptions,
-				product?.variants?.data ?? []
-			) ?? [];
+			generateVariants(updatedVariantOptions, product?.variants ?? []) ??
+			[];
 
 		updateProduct({
-			...product,
-			variants: {
-				...product.variants,
-				data: variantsData,
-			},
+			variants: variantsData,
 		});
-	}, [product?.variant_options?.data]);
+	}, [product?.variant_options]);
 
 	const renderEditingVariantOption = (option, index) => {
 		return (
 			<div>
-				<ScInput
-					type="text"
-					placeholder={__('Option Name', 'surecart')}
-					required
-					label={__('Option Name', 'surecart')}
-					value={option?.name}
-					onScInput={(e) => {
-						updateVariantOption({
-							index,
-							data: {
-								name: e.target.value,
-							},
-						});
-					}}
-				/>
+				<div
+					css={css`
+						display: flex;
+						gap: 1em;
+					`}
+				>
+					<SortableKnob>
+						<ScIcon
+							name="drag"
+							slot="prefix"
+							style={{
+								cursor: 'grab',
+							}}
+						/>
+					</SortableKnob>
+					<ScInput
+						type="text"
+						placeholder={__('Option Name', 'surecart')}
+						required
+						label={__('Option Name', 'surecart')}
+						value={option?.name}
+						onScInput={(e) => {
+							updateVariantOption({
+								index,
+								data: {
+									name: e.target.value,
+								},
+							});
+						}}
+					/>
+				</div>
 				<div
 					style={{
 						display: 'flex',
@@ -200,14 +205,16 @@ export default ({ product, updateProduct, loading }) => {
 							marginBottom: '1rem',
 						}}
 					>
-						<ScIcon
-							name="drag"
-							slot="prefix"
-							style={{
-								marginRight: '1rem',
-								cursor: 'grab',
-							}}
-						/>
+						<SortableKnob>
+							<ScIcon
+								name="drag"
+								slot="prefix"
+								style={{
+									marginRight: '1rem',
+									cursor: 'grab',
+								}}
+							/>
+						</SortableKnob>
 
 						<b>{option?.name}</b>
 					</div>
@@ -255,8 +262,8 @@ export default ({ product, updateProduct, loading }) => {
 			</div>
 
 			<SortableList onSortEnd={applyDrag}>
-				{Array.isArray(product?.variant_options?.data ?? []) &&
-					product?.variant_options?.data.map((option, index) => {
+				{Array.isArray(product?.variant_options ?? []) &&
+					product?.variant_options.map((option, index) => {
 						return (
 							<SortableItem
 								key={`option_${index}`}
