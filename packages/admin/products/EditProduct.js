@@ -26,6 +26,7 @@ import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Collection from './modules/Collection';
+import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -216,8 +217,8 @@ export default ({ id }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Collection
-						productId={id}
+					<Collection productId={id} />
+					<Shipping
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

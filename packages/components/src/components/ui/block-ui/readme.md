@@ -47,6 +47,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-shipping-choices](../sc-shipping-choices)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -87,6 +88,7 @@ graph TD;
   sc-payment-methods-list --> sc-block-ui
   sc-product-item-list --> sc-block-ui
   sc-purchase-downloads-list --> sc-block-ui
+  sc-shipping-choices --> sc-block-ui
   sc-subscription --> sc-block-ui
   sc-subscription-ad-hoc-confirm --> sc-block-ui
   sc-subscription-cancel --> sc-block-ui
