@@ -1,7 +1,6 @@
 import Box from '../../ui/Box';
 import { __ } from '@wordpress/i18n';
 import {
-	ScBlockUi,
 	ScFormatNumber,
 	ScLineItem,
 	ScCouponForm,
@@ -21,10 +20,16 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 import { formatTaxDisplay } from '../../util/tax';
-import CollectPayment from './CollectPayment';
+import PaymentMethods from './PaymentMethods';
 
-export default ({ checkout, loading, setBusy, setPaymentID, paymentID }) => {
-	const [paymentMethod, setPaymentMethod] = useState(false);
+export default ({
+	checkout,
+	loading,
+	setBusy,
+	paymentMethod,
+	setPaymentMethod,
+}) => {
+	const [modal, setModal] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
 
@@ -247,25 +252,32 @@ export default ({ checkout, loading, setBusy, setPaymentID, paymentID }) => {
 	};
 
 	return (
-		<Box
-			title={__('Payment', 'surecart')}
-			loading={loading}
-			footer={
-				<CollectPayment
-					{...{
-						checkout,
-						setPaymentID,
-						paymentID,
-						paymentMethod,
-						setPaymentMethod,
-					}}
-				/>
-			}
-			footerStyle={{
-				justifyContent: 'flex-end',
-			}}
-		>
-			{renderPaymentDetails()}
-		</Box>
+		<>
+			<Box
+				title={__('Payment', 'surecart')}
+				loading={loading}
+				footer={
+					<ScButton
+						type="primary"
+						onClick={() => setModal('payment')}
+					>
+						{__('Add Payment Method', 'surecart')}
+					</ScButton>
+				}
+				footerStyle={{
+					justifyContent: 'flex-end',
+				}}
+			>
+				{renderPaymentDetails()}
+			</Box>
+
+			<PaymentMethods
+				open={modal === 'payment'}
+				onRequestClose={() => setModal(null)}
+				customerId={checkout?.customer_id}
+				paymentMethod={paymentMethod}
+				setPaymentMethod={setPaymentMethod}
+			/>
+		</>
 	);
 };

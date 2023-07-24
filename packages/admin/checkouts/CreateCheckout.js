@@ -46,7 +46,7 @@ export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
-	const [paymentID, setPaymentID] = useState(false);
+	const [paymentMethod, setPaymentMethod] = useState(false);
 
 	const { checkout, loading, error } = useSelect(
 		(select) => {
@@ -135,8 +135,8 @@ export default () => {
 		return await apiFetch({
 			method: 'PATCH',
 			path: addQueryArgs(`surecart/v1/draft-checkouts/${id}/finalize`, {
-				manual_payment: paymentID ? false : true,
-				payment_method_id: paymentID,
+				manual_payment: paymentMethod?.id ? false : true,
+				payment_method_id: paymentMethod?.id || null,
 			}),
 		});
 	};
@@ -166,6 +166,27 @@ export default () => {
 	const isDisabled =
 		checkout?.selected_shipping_choice_required &&
 		!checkout?.selected_shipping_choice;
+
+	console.log(checkout?.order);
+
+	if (checkout?.order) {
+		return (
+			<ScAlert
+				type="danger"
+				title={__('Order Complete', 'surecart')}
+				open
+				css={css`
+					margin-top: 20px;
+					margin-right: 20px;
+				`}
+			>
+				{__(
+					'This order has already been created. Please create a new order.',
+					'surecart'
+				)}
+			</ScAlert>
+		);
+	}
 
 	return (
 		<>
@@ -250,10 +271,11 @@ export default () => {
 						checkout={checkout}
 						loading={loading}
 						setBusy={setBusy}
-						setPaymentID={setPaymentID}
-						paymentID={paymentID}
+						paymentMethod={paymentMethod}
+						setPaymentMethod={setPaymentMethod}
 					/>
 				)}
+
 				{busy && <ScBlockUi style={{ zIndex: 9 }} />}
 			</UpdateModel>
 
@@ -262,7 +284,7 @@ export default () => {
 				onScRequestClose={() => setConfirmCheckout(false)}
 				label={__('Confirm Charge', 'surecart')}
 			>
-				{paymentID && checkout?.amount_due ? (
+				{paymentMethod?.id && checkout?.amount_due ? (
 					<ScAlert
 						type="warning"
 						title={__('Confirm Charge', 'surecart')}
