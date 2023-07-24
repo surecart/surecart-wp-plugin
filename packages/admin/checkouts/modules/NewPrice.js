@@ -3,46 +3,22 @@ import {
 	ScButton,
 	ScDialog,
 	ScForm,
-	ScIcon,
-	ScPriceInput,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { store as noticesStore } from '@wordpress/notices';
 import { store as coreStore } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useDispatch, select, useSelect } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
 import expand from '../query';
 import PriceSelector from '@admin/components/PriceSelector';
+import Error from '../../components/Error';
 
 export default ({ checkout, open, onRequestClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [priceID, setPriceID] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const { createErrorNotice } = useDispatch(noticesStore);
-
-	const { price, priceLoading } = useSelect(
-		(select) => {
-			// we don't yet have a price id.
-			if (!priceID) {
-				return {};
-			}
-			// our entity query data.
-			const entityData = ['surecart', 'price', priceID];
-
-			return {
-				price: select(coreStore).getEntityRecord(...entityData),
-				priceLoading: !select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecord',
-					[...entityData]
-				),
-			};
-		},
-		[priceID]
-	);
-
-	const [addHocAmount, setAddHocAmount] = useState(price?.amount);
+	const [error, setError] = useState(false);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -75,7 +51,6 @@ export default ({ checkout, open, onRequestClose }) => {
 					checkout: checkout?.id,
 					price: priceID,
 					quantity: 1,
-					ad_hoc_amount: addHocAmount,
 				},
 			});
 
@@ -92,14 +67,8 @@ export default ({ checkout, open, onRequestClose }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong.', 'surecart'),
-				{
-					type: 'snackbar',
-				}
-			);
+			setError(e);
 		} finally {
-			setAddHocAmount(null);
 			setLoading(false);
 		}
 	};
@@ -112,6 +81,7 @@ export default ({ checkout, open, onRequestClose }) => {
 			onScRequestClose={onRequestClose}
 		>
 			<ScForm onScFormSubmit={onSubmit}>
+				<Error error={error} setError={setError} />
 				<PriceSelector
 					required
 					value={priceID}
@@ -122,19 +92,6 @@ export default ({ checkout, open, onRequestClose }) => {
 					}}
 				/>
 
-				{/* {price?.ad_hoc && (
-					<ScPriceInput
-						label={__('Amount', 'surecart')}
-						placeholder={__('Enter an Amount', 'surecart')}
-						style={{ flex: 1 }}
-						currencyCode={price?.currency}
-						value={addHocAmount || price?.amount || null}
-						onScInput={(e) => {
-							setAddHocAmount(e.target.value);
-						}}
-					/>
-				)} */}
-
 				<ScButton type="primary" submit>
 					{__('Add Price', 'surecart')}
 				</ScButton>
@@ -143,7 +100,7 @@ export default ({ checkout, open, onRequestClose }) => {
 					{__('Cancel', 'surecart')}
 				</ScButton>
 
-				{(!!loading || !!priceLoading) && <ScBlockUi spinner />}
+				{!!loading && <ScBlockUi spinner />}
 			</ScForm>
 		</ScDialog>
 	);
