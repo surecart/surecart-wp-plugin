@@ -55,7 +55,12 @@ export default () => {
 				return {};
 			}
 			// our entity query data.
-			const entityData = ['surecart', 'draft-checkout', id, { expand }];
+			const entityData = [
+				'surecart',
+				'draft-checkout',
+				id,
+				{ expand, refresh_price_versions: true },
+			];
 
 			const checkout = select(coreStore).getEditedEntityRecord(
 				...entityData
@@ -106,7 +111,6 @@ export default () => {
 			setCheckoutId(id);
 		} catch (e) {
 			console.error(e);
-
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
