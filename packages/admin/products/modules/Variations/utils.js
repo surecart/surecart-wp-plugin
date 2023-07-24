@@ -13,13 +13,12 @@ import { __ } from '@wordpress/i18n';
 export function generateVariants(variantOptions, previousVariants = []) {
 	const variants = [];
 
-	// Check variantOptions and previousVariants are array.
-	if (!Array.isArray(variantOptions) || !Array.isArray(previousVariants)) {
-		return variants;
-	}
-
-	// If variantOptions is empty, then return variants.
-	if (variantOptions.length === 0) {
+	// Check parameters are valid.
+	if (
+		!Array.isArray(variantOptions) || // not array.
+		!Array.isArray(previousVariants) || // not array.
+		variantOptions.length === 0 // empty array.
+	) {
 		return variants;
 	}
 
@@ -32,11 +31,11 @@ export function generateVariants(variantOptions, previousVariants = []) {
 			if (previousValue) {
 				variants.push({
 					...previousValue,
-					[`option_1`]: variantOptions[0].values[i],
+					option_1: variantOptions[0].values[i],
 				});
 			} else {
 				variants.push({
-					[`option_1`]: variantOptions[0].values[i],
+					option_1: variantOptions[0].values[i],
 				});
 			}
 		}
@@ -50,13 +49,13 @@ export function generateVariants(variantOptions, previousVariants = []) {
 				if (previousValue) {
 					variants.push({
 						...previousValue,
-						[`option_1`]: variantOptions[0].values[i],
-						[`option_2`]: variantOptions[1].values[j],
+						option_1: variantOptions[0].values[i],
+						option_2: variantOptions[1].values[j],
 					});
 				} else {
 					variants.push({
-						[`option_1`]: variantOptions[0].values[i],
-						[`option_2`]: variantOptions[1].values[j],
+						option_1: variantOptions[0].values[i],
+						option_2: variantOptions[1].values[j],
 					});
 				}
 			}
@@ -78,15 +77,15 @@ export function generateVariants(variantOptions, previousVariants = []) {
 					if (previousValue) {
 						variants.push({
 							...previousValue,
-							[`option_1`]: variantOptions[0].values[i],
-							[`option_2`]: variantOptions[1].values[j],
-							[`option_3`]: variantOptions[2].values[k],
+							option_1: variantOptions[0].values[i],
+							option_2: variantOptions[1].values[j],
+							option_3: variantOptions[2].values[k],
 						});
 					} else {
 						variants.push({
-							[`option_1`]: variantOptions[0].values[i],
-							[`option_2`]: variantOptions[1].values[j],
-							[`option_3`]: variantOptions[2].values[k],
+							option_1: variantOptions[0].values[i],
+							option_2: variantOptions[1].values[j],
+							option_3: variantOptions[2].values[k],
 						});
 					}
 				}
