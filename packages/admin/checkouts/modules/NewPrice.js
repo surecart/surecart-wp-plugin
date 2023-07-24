@@ -1,10 +1,4 @@
-import {
-	ScBlockUi,
-	ScButton,
-	ScDialog,
-	ScForm,
-	ScIcon,
-} from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';

@@ -4,13 +4,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import Price from './Price';
 import NewPrice from './NewPrice';
-import {
-	ScButton,
-	ScEmpty,
-	ScIcon,
-	ScTable,
-	ScTableCell,
-} from '@surecart/components-react';
+import { ScEmpty, ScTable, ScTableCell } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
