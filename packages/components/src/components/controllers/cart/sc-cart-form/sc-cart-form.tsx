@@ -6,7 +6,7 @@ import { convertLineItemsToLineItemData } from '../../../../functions/line-items
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
-import { Checkout, LineItemData, Price, Product } from '../../../../types';
+import { Checkout, LineItemData, Product } from '../../../../types';
 import { doCartGoogleAnalytics } from '../../../../functions/google-analytics-cart';
 
 const query = {
