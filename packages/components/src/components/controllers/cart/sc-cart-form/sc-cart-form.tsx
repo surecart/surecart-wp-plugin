@@ -6,7 +6,7 @@ import { convertLineItemsToLineItemData } from '../../../../functions/line-items
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
-import { Checkout, LineItemData, Product } from '../../../../types';
+import { Checkout, LineItemData, Price, Product } from '../../../../types';
 import { doCartGoogleAnalytics } from '../../../../functions/google-analytics-cart';
 
 const query = {
@@ -80,16 +80,21 @@ export class ScCartForm {
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
-      doCartGoogleAnalytics({
-        currency: order?.currency,
-        value: order?.total_amount,
-        items: order?.line_items?.data?.map((item) => ({
-          item_id: item.id,
-          item_name: (item?.price?.product as Product)?.name || '',
-          price: item?.price?.amount || 0,
-          quantity: item?.quantity || 1,
-        })),
-      })
+
+      const lineItem = order?.line_items?.data?.find(item => item.price?.id === this.priceId);
+      if(!!lineItem){
+         doCartGoogleAnalytics([
+          {
+            item_id: (lineItem?.price as Price)?.product_id || '',
+            item_name: (lineItem?.price?.product as Product)?.name || '',
+            price: lineItem?.price?.amount || 0,
+            quantity: lineItem?.quantity || 1,
+            currency: order?.currency,
+            discount: lineItem?.discount_amount || 0,
+          },
+        ]);
+      }
+
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');

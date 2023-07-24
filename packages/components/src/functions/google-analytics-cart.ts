@@ -1,23 +1,13 @@
-interface AnalyticsData {
-  currency: string;
-  value: number;
-  items: {
-    item_id: string,
-    coupon?: string,
-    discount?: string,
-    item_name: string;
-    price: number;
-    quantity: number;
-    //TODO: include things such as item_variant and item_category(collection)- Kiptoo 10/7/2023
-  }[];
-}
+import { GoogleAnalyticsItem } from "src/types";
 
-export function doCartGoogleAnalytics(data: AnalyticsData) {
+export function doCartGoogleAnalytics(items: GoogleAnalyticsItem[]) {
   if (!window?.dataLayer && !window?.gtag) return;
 
   // handle google analytics script
   if (window?.gtag) {
-    window.gtag('event', 'add_to_cart', data);
+    window.gtag('event', 'add_to_cart', {
+      items: items,
+    });
   }
 
   // handle datalayer
@@ -26,7 +16,9 @@ export function doCartGoogleAnalytics(data: AnalyticsData) {
     window.dataLayer.push({
       event: 'add_to_cart',
       ecommerce: {
-        data: data
+        data: {
+          items: items,
+        }
       },
     });
   }
