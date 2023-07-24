@@ -12,7 +12,7 @@ onChange('selectedPrice', value => {
 });
 
 onChange('variantValues', values => {
-  const matchedVariant = getVariantFromValues({variants: availableVariants(), values});
+  const matchedVariant = getVariantFromValues({variants: availableVariants(), values}); 
   
   if (matchedVariant) {
     state.selectedVariant = matchedVariant;

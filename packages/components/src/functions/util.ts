@@ -53,14 +53,14 @@ export const sortByArray = (item, key, orderArray) =>
     return orderArray.indexOf(a?.[key]) - orderArray.indexOf(b?.[key]);
   });
 
-export const getVariantFromValues = ({variants, values}) => {
+export const getVariantFromValues = ({variants, values}) => { 
   const variantValueKeys = Object.keys(values);
   let matchedVariant = '';
   for (const variant of variants) {
-    const variantValues = (variant?.variant_values?.data || [])?.map(({ id }) => id);
-    if (
-      variantValues.length === variantValueKeys.length &&
-      variantValueKeys.every(key => variantValues.includes(values[key]))
+    const variantValues = ['option_1', 'option_2', 'option_3']
+    .map((option) => variant[option])
+    .filter((value) => value !== null && value !== undefined);    
+    if ( variantValues?.length === variantValueKeys?.length && variantValueKeys.every(key => variantValues.includes(values[key]))
     ) {
       matchedVariant = variant.id;
       break;

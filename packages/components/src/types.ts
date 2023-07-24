@@ -119,7 +119,7 @@ export interface ProductVariant {
   sku: string;
   image: string;
   labels: string;
-  variant_values: Array<string>
+  variants: Array<string>
 }
 export interface Variant {
   id: string;
@@ -133,11 +133,7 @@ export interface Variant {
   sku: string;
   image: string;
   labels: string;
-  variant_values: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<Variant>;
-  }
+  values: Array<string>;
 }
 export interface Bump {
   id: string;
@@ -283,11 +279,7 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Variant>;
-    variant_values: {
-      object: 'list';
-      pagination: Pagination;
-      data: Array<Variant>;
-    }
+    values: Array<string>;
   };
   
   product_medias: {
