@@ -6,17 +6,16 @@ import { state as checkoutState } from '@store/checkout';
  */
 export const availablePrices = () => (state.prices || []).filter(price => !price?.archived).sort((a, b) => a?.position - b?.position); // sort by position
 ;
+console.log(checkoutState?.product);
 
-export const availableVariantOptions = ( type:'product-page' | 'instant-checkout-page' = 'product-page' ) => ( ('product-page' === type && state?.variant_options ? state.variant_options : 'instant-checkout-page' === type && checkoutState?.product?.variant_options?.data ? checkoutState?.product?.variant_options?.data : state?.variant_options) || [])?.sort((a, b) => a?.position - b?.position)?.map( ({id, name, variant_values}) => {
+export const availableVariantOptions = ( type:'product-page' | 'instant-checkout-page' = 'product-page' ) => ( ('product-page' === type && state?.variant_options ? state.variant_options : 'instant-checkout-page' === type && checkoutState?.product?.variant_options?.data ? checkoutState?.product?.variant_options?.data : state?.variant_options) || [])?.map( ({id, name, values}) => {
    
-    variant_values?.data?.sort((a, b) => a?.position - b?.position);
-
     return {
         id,
         name,
-        values: variant_values.data.map(({ label, id }) => ({
+        values: values?.map((label ) => ({
             label,
-            value: id,
+            value: label
         }))
     }
     
