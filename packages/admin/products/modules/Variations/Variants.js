@@ -30,29 +30,61 @@ export default ({ product, updateProduct, loading }) => {
 		useDispatch(noticesStore);
 
 	console.log({ product });
+
 	/**
-	 * On Delete variant, just update the status as draft.
-	 *
-	 * TODO: API could be updated.
+	 * On Delete variant, just update the status as draft for that variant.
 	 *
 	 * @param {object} variant
 	 */
-	const deleteVariant = async (variant) => {
-		try {
-			setIsDeleting(true);
-			await deleteEntityRecord('surecart', 'variant', variant?.id, {
-				throwOnError: true,
-			});
-			createSuccessNotice(__('Deleted.', 'surecart'), {
-				type: 'snackbar',
-			});
-			setIsDeleting(false);
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart')
+	const toggleDelete = async (variant) => {
+		const event = {
+			target: {
+				name: 'status',
+				value: variant?.status === 'draft' ? 'publish' : 'draft',
+			},
+		};
+		updateVariantValue(event, variants.indexOf(variant));
+	};
+
+	const updateVariantValue = (e, index) => {
+		const value = e.target.value;
+		const name = e.target.name;
+
+		updateProduct({
+			variants: {
+				...product?.variants,
+				data: variants.map((variant, index2) => {
+					if (index2 === index) {
+						return {
+							...variant,
+							[name]: value,
+						};
+					}
+					return variant;
+				}),
+			},
+		});
+	};
+
+	const renderVariantName = (variant) => {
+		const { option_1, option_2, option_3, status } = variant;
+
+		if (status !== 'draft') {
+			return (
+				<>
+					{option_1}
+					{option_2?.length > 0 && ' / '} {option_2}
+					{option_3?.length > 0 && ' / '} {option_3}
+				</>
 			);
-			setIsDeleting(false);
+		} else {
+			return (
+				<del style={{ color: 'var(--sc-color-gray-400)' }}>
+					{option_1}
+					{option_2?.length > 0 && ' / '} {option_2}
+					{option_3?.length > 0 && ' / '} {option_3}
+				</del>
+			);
 		}
 	};
 
@@ -65,8 +97,8 @@ export default ({ product, updateProduct, loading }) => {
 					label: __('Variant', 'surecart'),
 					width: '200px',
 				},
-				available: {
-					label: __('Available', 'surecart'),
+				amount: {
+					label: __('Price', 'surecart'),
 					width: '150px',
 				},
 				sku: {
@@ -77,7 +109,7 @@ export default ({ product, updateProduct, loading }) => {
 					label: __('', 'surecart'),
 				},
 			}}
-			items={variants.map((variant) => {
+			items={variants.map((variant, index) => {
 				const {
 					id,
 					sku,
@@ -107,6 +139,7 @@ export default ({ product, updateProduct, loading }) => {
 									name="image"
 									style={{
 										'--color': 'var(--sc-color-gray-600)',
+										disabled: variant.status === 'draft',
 									}}
 								/>
 							</div>
@@ -118,54 +151,26 @@ export default ({ product, updateProduct, loading }) => {
 									flex: 1,
 								}}
 							>
-								{option_1}
-								{option_2?.length > 0 && ' / '} {option_2}
-								{option_3?.length > 0 && ' / '} {option_3}
+								{renderVariantName(variant)}
 							</ScText>
 						</ScFlex>
 					),
-					available: (
+					amount: (
 						<ScInput
 							type="number"
 							min="0"
-							value={variant.available}
-							onChange={(e) => {
-								const value = e.target.value;
-								updateProduct({
-									variants: {
-										data: variants.map((v) => {
-											if (v.id === id) {
-												return {
-													...v,
-													available: value,
-												};
-											}
-											return v;
-										}),
-									},
-								});
-							}}
+							value={variant.amount}
+							name="amount"
+							disabled={variant.status === 'draft'}
+							onScChange={(e) => updateVariantValue(e, index)}
 						/>
 					),
 					sku: (
 						<ScInput
 							value={sku}
-							onChange={(e) => {
-								const value = e.target.value;
-								updateProduct({
-									variants: {
-										data: variants.map((v) => {
-											if (v.id === id) {
-												return {
-													...v,
-													sku: value,
-												};
-											}
-											return v;
-										}),
-									},
-								});
-							}}
+							name="sku"
+							disabled={variant.status === 'draft'}
+							onScChange={(e) => updateVariantValue(e, index)}
 						/>
 					),
 					actions: (
@@ -175,10 +180,10 @@ export default ({ product, updateProduct, loading }) => {
 							</ScButton>
 							<ScMenu>
 								<ScMenuItem
-									onClick={() => deleteVariant(variant)}
+									onClick={() => toggleDelete(variant)}
 								>
-									{isDeleting
-										? __('Deleting...', 'surecart')
+									{variant?.status === 'draft'
+										? __('Activate', 'surecart')
 										: __('Delete', 'surecart')}
 								</ScMenuItem>
 							</ScMenu>
