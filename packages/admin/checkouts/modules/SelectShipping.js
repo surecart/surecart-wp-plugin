@@ -94,37 +94,36 @@ export default ({ checkout, setBusy, loading }) => {
 		<Box title={__('Shipping', 'surecart')} loading={loading}>
 			<ScChoices onScChange={(e) => onShippingChange(e.target.value)}>
 				{(checkout?.shipping_choices?.data || []).map(
-					({ id, amount, currency, shipping_method }, index) => {
+					({ id, amount, currency, shipping_method }) => {
 						return (
-							<>
-								<ScChoice
-									key={id}
-									value={id}
-									checked={
-										checkout?.selected_shipping_choice ===
-										id
-									}
-								>
-									{shipping_method?.name ||
-										__('Shipping', 'surecart')}
+							<ScChoice
+								key={id}
+								value={id}
+								checked={
+									checkout?.selected_shipping_choice === id
+								}
+							>
+								{shipping_method?.name ||
+									__('Shipping', 'surecart')}
 
+								{!!shipping_method?.description && (
 									<div slot="description">
 										{shipping_method?.description}
 									</div>
+								)}
 
-									<div slot="price">
-										{0 === amount ? (
-											__('Free', 'surecart')
-										) : (
-											<ScFormatNumber
-												type="currency"
-												currency={currency}
-												value={amount}
-											/>
-										)}
-									</div>
-								</ScChoice>
-							</>
+								<div slot="price">
+									{!!amount ? (
+										<ScFormatNumber
+											type="currency"
+											currency={currency}
+											value={amount}
+										/>
+									) : (
+										__('Free', 'surecart')
+									)}
+								</div>
+							</ScChoice>
 						);
 					}
 				)}
