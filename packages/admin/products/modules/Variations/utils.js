@@ -18,10 +18,13 @@ export function generateVariants(variantOptions, previousVariants = []) {
 		return variants;
 	}
 
-	// TODO: Improve this with a recursive function.
+	// If variantOptions is empty, then return variants.
 	if (variantOptions.length === 0) {
 		return variants;
-	} else if (variantOptions.length === 1) {
+	}
+
+	// TODO: Improve this with a recursive function.
+	if (variantOptions.length === 1) {
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
 			// For 1 option -->
 			// If index exist in previousVariants, then update the label only
