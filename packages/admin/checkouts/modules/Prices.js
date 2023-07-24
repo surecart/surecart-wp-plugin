@@ -121,10 +121,6 @@ export default ({ checkout, loading, setBusy }) => {
 			return (
 				<ScEmpty icon="shopping-bag">
 					<p>{__('Add some products to this order.', 'surecart')}</p>
-					<ScButton type="primary" onClick={() => setModal(true)}>
-						<ScIcon name="plus" slot="prefix" />
-						{__('Add Products', 'surecart')}
-					</ScButton>
 				</ScEmpty>
 			);
 		}
@@ -196,23 +192,18 @@ export default ({ checkout, loading, setBusy }) => {
 				title={__('Products', 'surecart')}
 				loading={loading}
 				footer={
-					!loading &&
-					!!line_items?.length && (
-						<ScButton onClick={() => setModal(true)}>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Product', 'surecart')}
-						</ScButton>
+					!loading && (
+						<NewPrice
+							checkout={checkout}
+							open={modal}
+							setBusy={setBusy}
+							onRequestClose={() => setModal(false)}
+						/>
 					)
 				}
 			>
 				{renderPrices()}
 			</Box>
-
-			<NewPrice
-				checkout={checkout}
-				open={modal}
-				onRequestClose={() => setModal(false)}
-			/>
 		</div>
 	);
 };
