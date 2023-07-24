@@ -23,7 +23,7 @@ export const submitCartForm = async () => {
     const newLineItem = checkout.line_items?.data.find((item) => item.price.id === state.selectedPrice?.id);
     if (newLineItem) {
       doCartGoogleAnalytics([{
-        item_id: newLineItem.price?.product_id,
+        item_id: (newLineItem.price?.product as Product)?.id,
         item_name: (newLineItem.price?.product as Product)?.name,
         item_variant: newLineItem.price?.name,
         price: newLineItem.price?.amount,

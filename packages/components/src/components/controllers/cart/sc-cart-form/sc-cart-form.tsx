@@ -85,7 +85,7 @@ export class ScCartForm {
       if(!!lineItem){
          doCartGoogleAnalytics([
           {
-            item_id: (lineItem?.price as Price)?.product_id || '',
+            item_id: (lineItem?.price?.product as Product)?.id || '',
             item_name: (lineItem?.price?.product as Product)?.name || '',
             price: lineItem?.price?.amount || 0,
             quantity: lineItem?.quantity || 1,
