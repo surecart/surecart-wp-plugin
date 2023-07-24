@@ -209,4 +209,15 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'delete_sc_products' );
 	}
+
+	public function filter_response_by_context( $model, $context ) {
+		$response = parent::filter_response_by_context( ...func_get_args() );
+
+		if ('edit' === $context ) {
+			$response['variant_options'] = $response['variant_options']->data ?? [];
+			$response['variants'] = $response['variants']->data ?? [];
+		}
+
+		return $response;
+	}
 }
