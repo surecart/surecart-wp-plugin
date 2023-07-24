@@ -2,7 +2,7 @@
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { intervalString } from '../../util/translations';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import {
 	ScButton,
 	ScFlex,
@@ -27,7 +27,13 @@ export default ({
 }) => {
 	const imageUrl = price?.product?.image_url;
 	const [open, setOpen] = useState(false);
-	const [addHocAmount, setAddHocAmount] = useState(ad_hoc_amount);
+	const [addHocAmount, setAddHocAmount] = useState(
+		ad_hoc_amount || price?.amount
+	);
+
+	useEffect(() => {
+		setAddHocAmount(ad_hoc_amount || price?.amount);
+	}, [ad_hoc_amount, price]);
 
 	return (
 		<>
@@ -175,9 +181,7 @@ export default ({
 							label={__('Amount', 'surecart')}
 							placeholder={__('Enter an Amount', 'surecart')}
 							currencyCode={price?.currency}
-							value={
-								addHocAmount || ad_hoc_amount || price?.amount
-							}
+							value={addHocAmount}
 							onScInput={(e) => setAddHocAmount(e?.target?.value)}
 							required
 						/>
