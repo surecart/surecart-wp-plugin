@@ -263,7 +263,7 @@ export default ({ id }) => {
 							loading={!hasLoadedProduct}
 						/>
 
-						<Variations 
+						<Variations
 							productId={id}
 							product={product}
 							updateProduct={editProduct}
@@ -271,7 +271,6 @@ export default ({ id }) => {
 						/>
 					</>
 				)}
-
 
 				<Integrations id={id} />
 
