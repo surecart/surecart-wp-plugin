@@ -105,7 +105,8 @@ export default ({ checkout, setBusy, loading }) => {
 										id
 									}
 								>
-									{shipping_method?.name}
+									{shipping_method?.name ||
+										__('Shipping', 'surecart')}
 
 									<div slot="description">
 										{shipping_method?.description}
