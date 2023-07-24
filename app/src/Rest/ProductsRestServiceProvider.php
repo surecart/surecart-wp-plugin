@@ -210,10 +210,18 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		return current_user_can( 'delete_sc_products' );
 	}
 
+	/**
+	 * If we are editing, let's make sure the data comes back directly.
+	 *
+	 * @param \SureCart\Models\Product $model Product model.
+	 * @param string $context The context of the request.
+	 *
+	 * @return  array The filtered response.
+	 */
 	public function filter_response_by_context( $model, $context ) {
-		$response = parent::filter_response_by_context( ...func_get_args() );
+		$response = parent::filter_response_by_context( $model, $context );
 
-		if ('edit' === $context ) {
+		if ( 'edit' === $context ) {
 			$response['variant_options'] = $response['variant_options']->data ?? [];
 			$response['variants'] = $response['variants']->data ?? [];
 		}
