@@ -23,26 +23,8 @@ import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
-	const {
-		price_id,
-		type,
-		label,
-		size,
-		line_items,
-		backgroundColor,
-		textColor,
-	} = attributes;
-
-	if (!price_id) {
-		return (
-			<div>
-				<PriceSelector
-					ad_hoc={false}
-					onSelect={(price_id) => setAttributes({ price_id })}
-				/>
-			</div>
-		);
-	}
+	const { type, label, size, line_items, backgroundColor, textColor } =
+		attributes;
 
 	const renderButton = () => {
 		if (!line_items || !line_items?.length) {
@@ -148,11 +130,6 @@ export default ({ className, attributes, setAttributes }) => {
 						},
 					]}
 				></PanelColorSettings>
-				<PanelBody title={__('Product Info', 'surecart')}>
-					<PanelRow>
-						<PriceInfo price_id={price_id} />
-					</PanelRow>
-				</PanelBody>
 			</InspectorControls>
 
 			{renderButton()}

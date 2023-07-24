@@ -3,7 +3,7 @@
 exports[`sc-price-input renders 1`] = `
 <sc-price-input size="medium">
   <mock:shadow-root>
-    <sc-input exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" inputmode="decimal" min="0" showlabel="" size="medium" step="0.001" type="number" value="NaN">
+    <sc-input exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" inputmode="decimal" min="0" pattern="^\\d*(\\.\\d{0,2})?$" showlabel="" size="medium" step="0.01" type="text" value="">
       <span slot="prefix" style="opacity: 0.5;">
         $
       </span>

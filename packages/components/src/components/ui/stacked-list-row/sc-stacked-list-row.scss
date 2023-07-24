@@ -23,6 +23,7 @@
   gap: var(--sc-spacing-xx-small);
   padding: var(--sc-spacing-medium) var(--sc-spacing-large);
   transition: background-color var(--sc-transition-fast) ease;
+  border-radius: var(--sc-input-border-radius-medium);
   min-width: 0px;
   min-height: 0px;
 

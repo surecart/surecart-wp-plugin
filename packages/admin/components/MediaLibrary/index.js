@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Fragment, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { DropZone, Button, FormFileUpload } from '@wordpress/components';
@@ -20,6 +20,7 @@ import Error from '../Error';
 import MediaItem from './MediaItem';
 import Preview from './Preview';
 import StorageLimitWarning from '../StorageLimitWarning';
+import ClaimNoticeModal from '../ClaimNoticeModal';
 
 export default ({
 	render,
@@ -293,95 +294,123 @@ export default ({
 			{render({ setOpen })}
 
 			{open && (
-				<Template
-					title={
-						<div
-							css={css`
-								display: flex;
-								align-items: center;
-								gap: 0.5em;
-							`}
-						>
-							<span>{__('SureCart Media', 'surecart')}</span>
-							{isPrivate ? (
-								<ScTag
-									type="warning"
-									style={{ fontSize: '13px' }}
-								>
-									{__('Private', 'surecart')}
-								</ScTag>
-							) : (
-								<ScTag
-									type="success"
-									style={{ fontSize: '13px' }}
-								>
-									{__('Public', 'surecart')}
-								</ScTag>
+				<Fragment>
+					{!!scData?.claim_url ? (
+						<ClaimNoticeModal
+							title={__('Complete Setup!', 'surecart')}
+							bodyText={__(
+								'Please complete setting up your store. Its free and only takes a minute.',
+								'surecart'
 							)}
-						</div>
-					}
-					header={header()}
-					mainContent={mainContent()}
-					onClose={onRequestClose}
-					footer={
-						<div
-							css={css`
-								display: flex;
-								align-items: flex-end;
-								justify-content: space-between;
-								flex: 1 0 0px;
-							`}
-						>
-							{isLowMediaStorage && (
-								<StorageLimitWarning
-									mediaUsageDetails={mediaUsage}
-									mediaUsagePercentage={mediaUsagePercentage}
-								/>
-							)}
-							<Button
-								css={css`
-									margin-left: auto;
-								`}
-								isPrimary
-								disabled={!Object.values(selectedMedia).length}
-								onClick={onChooseClicked}
-							>
-								{__(
-									`Choose ${
-										Object.values(selectedMedia).length > 1
-											? 'images'
-											: 'image'
-									}`,
-									'surecart'
-								)}
-							</Button>
-						</div>
-					}
-					sidebar={
-						!!Object.values(selectedMedia).length && (
-							<div
-								css={css`
-									padding: 15px 0;
-									display: flex;
-									flex-direction: column;
-									gap: 1em;
-								`}
-							>
-								{Object.values(selectedMedia).map((media) => (
-									<Preview
-										media={media}
-										onDeleted={() => {
-											delete selectedMedia[media.id];
-											setSelectedMedia({
-												...selectedMedia,
-											});
-										}}
-									/>
-								))}
-							</div>
-						)
-					}
-				/>
+							onRequestClose={onRequestClose}
+							claimUrl={scData?.claim_url}
+						/>
+					) : (
+						<Template
+							title={
+								<div
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: 0.5em;
+									`}
+								>
+									<span>
+										{__('SureCart Media', 'surecart')}
+									</span>
+									{isPrivate ? (
+										<ScTag
+											type="warning"
+											style={{ fontSize: '13px' }}
+										>
+											{__('Private', 'surecart')}
+										</ScTag>
+									) : (
+										<ScTag
+											type="success"
+											style={{ fontSize: '13px' }}
+										>
+											{__('Public', 'surecart')}
+										</ScTag>
+									)}
+								</div>
+							}
+							header={header()}
+							mainContent={mainContent()}
+							onClose={onRequestClose}
+							footer={
+								<div
+									css={css`
+										display: flex;
+										align-items: flex-end;
+										justify-content: space-between;
+										flex: 1 0 0px;
+									`}
+								>
+									{isLowMediaStorage && (
+										<StorageLimitWarning
+											mediaUsageDetails={mediaUsage}
+											mediaUsagePercentage={
+												mediaUsagePercentage
+											}
+										/>
+									)}
+									<Button
+										css={css`
+											margin-left: auto;
+										`}
+										isPrimary
+										disabled={
+											!Object.values(selectedMedia).length
+										}
+										onClick={onChooseClicked}
+									>
+										{__('Choose', 'surecart')}{' '}
+										{sprintf(
+											_n(
+												'%s file',
+												'%s files',
+												Object.values(selectedMedia || {})
+													.length || 0,
+												'surecart'
+											),
+											Object.values(selectedMedia || {})
+												.length || ''
+										)}
+									</Button>
+								</div>
+							}
+							sidebar={
+								!!Object.values(selectedMedia).length && (
+									<div
+										css={css`
+											padding: 15px 0;
+											display: flex;
+											flex-direction: column;
+											gap: 1em;
+										`}
+									>
+										{Object.values(selectedMedia).map(
+											(media) => (
+												<Preview
+													media={media}
+													onDeleted={() => {
+														delete selectedMedia[
+															media.id
+														];
+														setSelectedMedia({
+															...selectedMedia,
+														});
+													}}
+												/>
+											)
+										)}
+									</div>
+								)
+							}
+						/>
+					)}
+				</Fragment>
 			)}
 		</Fragment>
 	);

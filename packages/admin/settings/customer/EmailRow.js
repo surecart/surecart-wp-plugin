@@ -32,10 +32,12 @@ export default ({
 				href={
 					disabled
 						? `#`
+						: scData?.claim_url
+						? scData?.claim_url
 						: `${scData?.app_url}/notification_templates/:${link}/${model}/${action}/edit`
 				}
-				target="_blank"
 				disabled={disabled}
+				target={scData?.claim_url ? '_self' : '_blank'}
 			>
 				{__('Edit', 'surecart')}
 				<ScIcon
