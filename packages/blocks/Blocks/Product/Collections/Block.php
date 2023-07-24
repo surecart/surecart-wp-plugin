@@ -27,10 +27,7 @@ class Block extends BaseBlock {
 			$style .= $prefix . '-margin-left: ' . $this->getSpacingPresetCssVar( array_key_exists( 'left', $margin ) ? $margin['left'] : '0' ) . ';';
 			$style .= $prefix . '-margin-right: ' . $this->getSpacingPresetCssVar( array_key_exists( 'right', $margin ) ? $margin['right'] : '0' ) . ';';
 		}
-		// aspect ratio.
-		if ( ! empty( $attr['ratio'] ) ) {
-			$style .= $prefix . '-aspect-ratio: ' . $attr['ratio'] . ';';
-		}
+
 		// border width.
 		if ( ! empty( $attr['style']['border']['width'] ) ) {
 			$style .= $prefix . '-border-width: ' . $attr['style']['border']['width'] . ';';

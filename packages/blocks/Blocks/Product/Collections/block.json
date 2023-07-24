@@ -9,15 +9,6 @@
 		"collectionCount": {
 			"type": "number",
 			"default": 4
-		},
-		"color": {
-			"type": "string"
-		},
-		"backgroundColor": {
-			"type": "string"
-		},
-		"gradient": {
-			"type": "string"
 		}
 	},
 	"supports": {
