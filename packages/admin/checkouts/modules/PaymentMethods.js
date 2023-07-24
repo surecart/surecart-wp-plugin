@@ -37,6 +37,7 @@ export default ({
 				{
 					context: 'edit',
 					customer_ids: [customerId],
+					reusable: true,
 					expand: [
 						'card',
 						'payment_instrument',
