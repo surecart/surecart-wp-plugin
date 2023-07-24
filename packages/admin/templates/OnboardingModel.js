@@ -21,8 +21,14 @@ export default ({ children }) => {
 					#wpcontent {
 						margin: 0 !important;
 						padding: 0;
+						position: fixed;
+						top: 0;
+						left: 0;
+						width: 100vw;
+						min-height: 100vh;
+						z-index: 999999;
 					}
-					#wpbody-content {
+					#wpbody-content #app {
 						padding: 0 !important;
 						position: fixed;
 						top: 0;

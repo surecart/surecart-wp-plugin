@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-07-06T16:15:30+00:00\n"
+"POT-Creation-Date: 2023-07-17T19:35:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -2955,7 +2955,7 @@ msgid "One of these products is no longer purchaseable."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:17
-#: src/Support/Errors/Translations/codes.php:30
+#: src/Support/Errors/Translations/codes.php:31
 msgid "Please fill out your address."
 msgstr ""
 
@@ -2976,226 +2976,230 @@ msgid "This payment method cannot be used for subscriptions."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:22
-msgid "You cannot add a one-time product to a subscription."
+msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:23
-msgid "The price cannot be blank."
+msgid "You cannot add a one-time product to a subscription."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:24
-msgid "The compare at price must be greater than the price."
+msgid "The price cannot be blank."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:25
-msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
+msgid "The compare at price must be greater than the price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
-msgid "This promotion code already exists. Please archive the old code or use a different code."
+msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:27
-msgid "There are no processors to make the payment. Please contact us for assistance."
+msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:28
-msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgid "There are no processors to make the payment. Please contact us for assistance."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:29
+msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:30
 msgid "The product image must be an image."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:31
+#: src/Support/Errors/Translations/codes.php:32
 msgid "Please enter a valid tax number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:32
+#: src/Support/Errors/Translations/codes.php:33
 msgid "The prices in this checkout session have changed. Please recheck it before submitting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:33
+#: src/Support/Errors/Translations/codes.php:34
 msgid "This coupon code is invalid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:34
+#: src/Support/Errors/Translations/codes.php:35
 msgid "You cannot enable abandoned checkouts until you have updated your business contact address. Please add an address to your store branding."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:35
+#: src/Support/Errors/Translations/codes.php:36
 msgid "Your postal code is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:36
+#: src/Support/Errors/Translations/codes.php:37
 msgid "This coupon has expired."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:37
+#: src/Support/Errors/Translations/codes.php:38
 msgid "This discount code does not apply to this currency."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:38
+#: src/Support/Errors/Translations/codes.php:39
 msgid "This is not a valid coupon code"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:39
+#: src/Support/Errors/Translations/codes.php:40
 msgid "Please double-check your prefix does not contain any spaces, underscores, dashes or special characters."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:40
+#: src/Support/Errors/Translations/codes.php:41
 msgid "This prefix is too long. Please enter a shorter prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:41
+#: src/Support/Errors/Translations/codes.php:42
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:42
+#: src/Support/Errors/Translations/codes.php:43
 msgid "You can only apply this offer once."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:43
+#: src/Support/Errors/Translations/codes.php:44
 msgid "This product is no longer purchaseable."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:44
+#: src/Support/Errors/Translations/codes.php:45
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:45
+#: src/Support/Errors/Translations/codes.php:46
 msgid "The maximum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:46
+#: src/Support/Errors/Translations/codes.php:47
 msgid "The minimum price must be smaller."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:47
+#: src/Support/Errors/Translations/codes.php:48
 msgid "The maximum price must be greater than the minimum price."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:48
+#: src/Support/Errors/Translations/codes.php:49
 msgid "You are already collecting tax for this zone."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:49
+#: src/Support/Errors/Translations/codes.php:50
 msgid "You cannot enable EU Micro Exemption if your address is outside of the EU."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:50
+#: src/Support/Errors/Translations/codes.php:51
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:51
+#: src/Support/Errors/Translations/codes.php:52
 msgid "You cannot delete this media item because it is currently being used."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:52
+#: src/Support/Errors/Translations/codes.php:53
 msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:53
+#: src/Support/Errors/Translations/codes.php:54
 msgid "We don't currently ship to your address."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:54
+#: src/Support/Errors/Translations/codes.php:55
 msgid "The shipping method name is already in use ."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:55
+#: src/Support/Errors/Translations/codes.php:56
 msgid "The shipping profile name cannot be blank."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:56
+#: src/Support/Errors/Translations/codes.php:57
 msgid "The shipping profile name is too long. Please enter a shorter name."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:57
+#: src/Support/Errors/Translations/codes.php:58
 msgid "The shipping zone name cannot be blank."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:58
+#: src/Support/Errors/Translations/codes.php:59
 msgid "The shipping zone name is already in use."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:59
+#: src/Support/Errors/Translations/codes.php:60
 msgid "The shipping zone name is too long. Please enter a shorter name."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:60
+#: src/Support/Errors/Translations/codes.php:61
 msgid "The selected countries are already used in another shipping zone."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:61
+#: src/Support/Errors/Translations/codes.php:62
 msgid "The selected countries are not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:62
+#: src/Support/Errors/Translations/codes.php:63
 msgid "The shipping method name cannot be blank."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:63
+#: src/Support/Errors/Translations/codes.php:64
 msgid "The shipping method name is too long. Please enter a shorter name."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:64
+#: src/Support/Errors/Translations/codes.php:65
 msgid "The shipping method name is already in use."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:65
+#: src/Support/Errors/Translations/codes.php:66
 msgid "The shipping method description is too long. Please enter a shorter description."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:66
+#: src/Support/Errors/Translations/codes.php:67
 msgid "The shipping rate type cannot be blank."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:67
+#: src/Support/Errors/Translations/codes.php:68
 msgid "The shipping rate type is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:68
+#: src/Support/Errors/Translations/codes.php:69
 msgid "The shipping weight unit cannot be blank."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:69
+#: src/Support/Errors/Translations/codes.php:70
 msgid "The shipping weight unit is not valid."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:70
+#: src/Support/Errors/Translations/codes.php:71
 msgid "The shipping method cannot be blank."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:71
+#: src/Support/Errors/Translations/codes.php:72
 msgid "The maximum weight must be greater than or equal to the minimum weight."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:72
+#: src/Support/Errors/Translations/codes.php:73
 msgid "The maximum weight must be a number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:73
+#: src/Support/Errors/Translations/codes.php:74
 msgid "The minimum weight must be greater than or equal to zero."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:74
+#: src/Support/Errors/Translations/codes.php:75
 msgid "The minimum weight must be a number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:75
+#: src/Support/Errors/Translations/codes.php:76
 msgid "The maximum amount must be greater than or equal to the minimum amount."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:76
+#: src/Support/Errors/Translations/codes.php:77
 msgid "The maximum amount must be a number."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:77
+#: src/Support/Errors/Translations/codes.php:78
 msgid "The minimum amount must be greater than or equal to zero."
 msgstr ""
 
-#: src/Support/Errors/Translations/codes.php:78
+#: src/Support/Errors/Translations/codes.php:79
 msgid "The minimum amount must be a number."
 msgstr ""
 
@@ -5041,8 +5045,8 @@ msgstr ""
 #: sc-invoices-list.js:73
 #: sc-login-form.js:59
 #: sc-login-provider2.js:73
-#: sc-mollie-add-method.js:62
-#: sc-mollie-add-method.js:84
+#: sc-mollie-add-method.js:61
+#: sc-mollie-add-method.js:83
 #: sc-order-confirmation.js:70
 #: sc-order.js:66
 #: sc-order.js:86
@@ -5055,6 +5059,7 @@ msgstr ""
 #: sc-payment-methods-list.js:115
 #: sc-payment-methods-list.js:138
 #: sc-paypal-add-method.js:101
+#: sc-paystack-add-method.js:64
 #: sc-stripe-add-method.js:100
 #: sc-stripe-add-method.js:127
 #: sc-subscription-cancel2.js:51
@@ -5166,8 +5171,9 @@ msgstr ""
 #: Blocks/Dashboard/DashboardPage/Block.php:34
 #: Blocks/Dashboard/DashboardPage/Block.php:42
 #: Controllers/PaymentMethodController.php:154
+#: Blocks/Payment/edit.js:33
 #: sc-order.js:153
-#: sc-payment.js:51
+#: sc-payment.js:67
 msgid "Test Mode"
 msgstr ""
 
@@ -6742,7 +6748,7 @@ msgstr ""
 msgid "Revenue"
 msgstr ""
 
-#: dashboard/components/overview/Overview.js:128
+#: dashboard/components/overview/Overview.js:118
 msgid "Overview"
 msgstr ""
 
@@ -7041,7 +7047,7 @@ msgstr ""
 #: onboarding/components/ProgressIndicator.js:81
 #: Blocks/Form/edit.js:432
 #: sc-cancel-survey2.js:88
-#: sc-order-confirm-provider2.js:110
+#: sc-order-confirm-provider2.js:116
 msgid "Continue"
 msgstr ""
 
@@ -9186,6 +9192,50 @@ msgstr ""
 msgid "Payments that are made outside your online store. When a customer selects a manual payment method, you'll need to approve their order before it can be fulfilled"
 msgstr ""
 
+#: settings/processors/ProcessorItem.js:38
+msgid "Beta"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:57
+msgid "Test Payments Enabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:61
+msgid "Test Payments Disabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:66
+msgid "Live Payments Enabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:70
+msgid "Live Payments Disabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:129
+msgid "Connect with Stripe to accept credit cards and other payment methods."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:190
+msgid "Connect with PayPal to add a PayPal express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:213
+msgid "Connect with Mollie to add a Mollie express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:238
+msgid "Connect with paystack to add a paystack express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:249
+msgid "Processors"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:254
+msgid "Available Processors"
+msgstr ""
+
 #: settings/shipping/method/ShippingMethodForm.js:64
 msgid "Shipping method updated"
 msgstr ""
@@ -11025,15 +11075,17 @@ msgstr ""
 
 #: Controllers/PaymentMethodController.php:148
 #: Controllers/PaymentMethodController.php:153
-#: sc-mollie-add-method.js:102
+#: sc-mollie-add-method.js:101
 msgid "Add Payment Method"
 msgstr ""
 
 #: Controllers/PaymentMethodController.php:178
+#: Controllers/PaymentMethodController.php:208
 #: Blocks/Payment/components/PayPal.js:51
 #: Blocks/Payment/components/Stripe.js:37
-#: sc-payment.js:37
-#: sc-payment.js:41
+#: sc-payment.js:39
+#: sc-payment.js:44
+#: sc-payment.js:57
 msgid "Credit Card"
 msgstr ""
 
@@ -12150,12 +12202,12 @@ msgid "Success! Redirecting..."
 msgstr ""
 
 #: Blocks/Form/edit.js:396
-#: sc-order-confirm-provider2.js:107
+#: sc-order-confirm-provider2.js:113
 msgid "Thanks for your order!"
 msgstr ""
 
 #: Blocks/Form/edit.js:414
-#: sc-order-confirm-provider2.js:107
+#: sc-order-confirm-provider2.js:113
 msgid "Your payment was successful, and your order is complete. A receipt is on its way to your inbox."
 msgstr ""
 
@@ -12257,6 +12309,14 @@ msgstr ""
 msgid "Enable PayPal payment"
 msgstr ""
 
+#: Blocks/Payment/components/Inspector.js:107
+msgid "Paystack"
+msgstr ""
+
+#: Blocks/Payment/components/Inspector.js:108
+msgid "Enable Paystack payment"
+msgstr ""
+
 #. translators: Manual payment method.
 #: Blocks/Payment/components/ManualPaymentMethod.js:20
 #: sc-checkout-mollie-payment2.js:43
@@ -12265,19 +12325,21 @@ msgid "%s selected for check out."
 msgstr ""
 
 #: Blocks/Payment/components/PayPal.js:55
-#: sc-payment.js:41
+#: sc-payment.js:44
+#: sc-payment.js:57
 msgid "Credit Card selected for check out."
 msgstr ""
 
 #: Blocks/Payment/components/PayPal.js:66
 #: Blocks/Payment/components/PayPal.js:95
 #: sc-checkout-mollie-payment2.js:104
-#: sc-payment.js:41
+#: sc-payment.js:44
+#: sc-payment.js:57
 msgid "Another step will appear after submitting your order to complete your purchase details."
 msgstr ""
 
 #: Blocks/Payment/components/PayPal.js:87
-#: sc-payment.js:41
+#: sc-payment.js:44
 msgid "PayPal selected for check out."
 msgstr ""
 
@@ -12285,8 +12347,12 @@ msgstr ""
 msgid "Please preview the form on the front-end to load the Stripe payment element fields."
 msgstr ""
 
-#: Blocks/Payment/edit.js:19
-msgid "Please preview the form on the front-end to load the Stripe payment fields."
+#: Blocks/Payment/edit.js:39
+msgid "No payment processors are enabled for this mode."
+msgstr ""
+
+#: Blocks/Payment/edit.js:46
+msgid "Please preview your form on the front-end to view processors."
 msgstr ""
 
 #: Blocks/PriceChoice/edit.js:79
@@ -15140,6 +15206,7 @@ msgstr ""
 #: sc-paypal-add-method.js:61
 #: sc-paypal-add-method.js:66
 #: sc-paypal-add-method.js:72
+#: sc-paystack-add-method.js:42
 msgid "The payment did not process. Please try again."
 msgstr ""
 
@@ -15231,6 +15298,7 @@ msgstr ""
 #: sc-cart-form.js:129
 #: sc-dashboard-module2.js:17
 #: sc-paypal-add-method.js:108
+#: sc-paystack-add-method.js:71
 #: sc-stripe-add-method.js:132
 #: sc-upcoming-invoice.js:221
 msgid "Error"
@@ -15252,6 +15320,15 @@ msgstr ""
 
 #: sc-checkout-mollie-payment2.js:101
 msgid "No available payment methods"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:43
+msgid "Paystack is not properly set up to make transactions"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:51
+#: sc-paystack-add-method.js:36
+msgid "Paystack transaction could not be finished. Status: %s"
 msgstr ""
 
 #: sc-checkout-unsaved-changes-warning2.js:23
@@ -15398,11 +15475,11 @@ msgstr ""
 msgid "Email or Username"
 msgstr ""
 
-#: sc-mollie-add-method.js:102
+#: sc-mollie-add-method.js:101
 msgid "%s selected."
 msgstr ""
 
-#: sc-mollie-add-method.js:102
+#: sc-mollie-add-method.js:101
 msgid "Another step will appear after submitting your order to add this payment method."
 msgstr ""
 
@@ -15546,12 +15623,28 @@ msgstr ""
 msgid "Are you sure you want to remove this payment method?"
 msgstr ""
 
-#: sc-payment.js:51
-msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
+#: sc-payment.js:67
+msgid "You do not have any processors enabled for this mode and cart. "
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please configure your processors"
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please contact us for payment."
 msgstr ""
 
 #: sc-paypal-add-method.js:79
 msgid "Failed to load the PayPal JS SDK script"
+msgstr ""
+
+#: sc-paystack-add-method.js:71
+msgid "In order to add a new card, we will need to make a small transaction to authenticate it. This is for authentication purposes and will be immediately refunded."
+msgstr ""
+
+#: sc-paystack-add-method.js:71
+msgid "Add New Card"
 msgstr ""
 
 #: sc-premium-tag.js:12
@@ -15683,7 +15776,7 @@ msgstr ""
 
 #: sc-stripe-add-method.js:39
 #: sc-stripe-element.js:43
-#: sc-stripe-payment-element.js:59
+#: sc-stripe-payment-element.js:62
 #: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
 msgstr ""

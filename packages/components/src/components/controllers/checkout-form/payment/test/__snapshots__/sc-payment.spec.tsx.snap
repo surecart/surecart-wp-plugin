@@ -83,7 +83,7 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
 </sc-payment>
 `;
 
-exports[`sc-payment renders no processors 1`] = `
+exports[`sc-payment renders no processors & user does not have \`manage_sc_shop_settings\` capability 1`] = `
 <sc-payment>
   <mock:shadow-root>
     <sc-form-control exportparts="label, help-text, form-control">
@@ -92,7 +92,28 @@ exports[`sc-payment renders no processors 1`] = `
       </div>
       <div theme="container">
         <sc-alert open="" type="info">
-          You do not have any processors enabled for this mode and cart. Please configure your processors.
+          Please contact us for payment.
+        </sc-alert>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment renders no processors & user has \`manage_sc_shop_settings\` capability 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+      </div>
+      <div theme="container">
+        <sc-alert open="" type="info">
+          You do not have any processors enabled for this mode and cart.
+          <a href="https://test.com/admin.php?page=sc-settings&amp;tab=processors" style="color: var(--sc-color-gray-700);">
+            Please configure your processors
+          </a>
+          .
         </sc-alert>
       </div>
     </sc-form-control>
