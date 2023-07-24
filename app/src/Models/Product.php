@@ -152,6 +152,15 @@ class Product extends Model {
 	}
 
 	/**
+	 * Return initial default variant id.
+	 *
+	 * @return array
+	 */
+	public function initialVariantId() {
+		return $this->variants->data[0]->id ?? null;
+	}
+	
+	/**
 	 * Return attached active prices.
 	 *
 	 * @return array
