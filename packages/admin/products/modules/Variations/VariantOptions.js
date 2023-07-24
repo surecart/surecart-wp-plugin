@@ -62,26 +62,27 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	useEffect(() => {
-		// removes all variant values, which label is empty.
-		let updatedVariantOptions = (product?.variant_options?.data ?? [])?.map(
-			(variantOption) => {
+		// removes all variant values, which label is empty and which has no name.
+		let updatedVariantOptions = (product?.variant_options?.data ?? [])
+			?.map((variantOption) => {
 				return {
 					...variantOption,
 					values: variantOption?.values?.filter(
 						(value) => value?.label?.length > 0
 					),
 				};
-			}
-		);
-
-		// Also filter out variant options, which has no values or name.
-		updatedVariantOptions = updatedVariantOptions?.filter(
-			(variantOption) =>
-				variantOption?.values?.length > 0 && variantOption?.name?.length
-		);
+			})
+			.filter(
+				(variantOption) =>
+					variantOption?.values?.length > 0 &&
+					variantOption?.name?.length
+			);
 
 		const variantsData =
-			generateVariants(updatedVariantOptions ?? []) ?? [];
+			generateVariants(
+				updatedVariantOptions,
+				product?.variants?.data ?? []
+			) ?? [];
 
 		updateProduct({
 			...product,
@@ -90,7 +91,7 @@ export default ({ product, updateProduct, loading }) => {
 				data: variantsData,
 			},
 		});
-	}, [product?.variant_options]);
+	}, [product?.variant_options?.data]);
 
 	const renderEditingVariantOption = (option, index) => {
 		return (
