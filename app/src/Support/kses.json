@@ -1455,19 +1455,6 @@
     "class": true,
     "slot": true
   },
-  "sc-product-collection-badge": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-product-collections": {
-    "collection-count": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-product-item": {
     "layout-config": true,
     "product": true,
