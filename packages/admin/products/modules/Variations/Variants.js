@@ -86,32 +86,18 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	};
 
-	const saveVariantImage = async (media) => {
-		return saveEntityRecord(
-			'surecart',
-			'product-media',
-			{
-				product_id: product?.id,
-				media_id: media.id,
-			},
-			{ throwOnError: true }
-		);
-	};
-
 	const onAddMedia = async (media, variant) => {
 		try {
 			setBusy(true);
-			await Promise.resolve(saveVariantImage(media)).then((response) => {
-				const event = {
-					target: {
-						name: 'image',
-						value: response,
-					},
-				};
-				updateVariantValue(event, product?.variants.indexOf(variant));
-				createSuccessNotice(__('Variant Image updated.', 'surecart'), {
-					type: 'snackbar',
-				});
+			const event = {
+				target: {
+					name: 'image',
+					value: media,
+				},
+			};
+			updateVariantValue(event, product?.variants.indexOf(variant));
+			createSuccessNotice(__('Variant Image updated.', 'surecart'), {
+				type: 'snackbar',
 			});
 		} catch (e) {
 			console.error(e);
@@ -125,8 +111,6 @@ export default ({ product, updateProduct, loading }) => {
 				}
 			);
 			setBusy(false);
-		} finally {
-			setBusy(false);
 		}
 	};
 
@@ -139,33 +123,15 @@ export default ({ product, updateProduct, loading }) => {
 		);
 		if (!confirmDeleteMedia) return;
 
-		try {
-			setBusy(true);
-			await deleteEntityRecord('surecart', 'product-media', media?.id, {
-				throwOnError: true,
-			});
-			updateVariantValue(
-				{
-					target: {
-						name: 'image',
-						value: null,
-					},
+		updateVariantValue(
+			{
+				target: {
+					name: 'image',
+					value: null,
 				},
-				product?.variants.indexOf(variant)
-			);
-		} catch (e) {
-			createErrorNotice(
-				__(
-					'Error updating variant image. Please try again.',
-					'surecart'
-				),
-				{
-					type: 'snackbar',
-				}
-			);
-		} finally {
-			setBusy(false);
-		}
+			},
+			product?.variants.indexOf(variant)
+		);
 	};
 
 	return (
@@ -212,10 +178,11 @@ export default ({ product, updateProduct, loading }) => {
 									<div
 										css={css`
 											position: relative;
+											margin-right: 6px;
 										`}
 									>
 										<img
-											src={image?.media?.url}
+											src={image?.url}
 											alt="product image"
 											css={css`
 												width: 1.5rem;
@@ -236,10 +203,7 @@ export default ({ product, updateProduct, loading }) => {
 												}
 											`}
 											onClick={() =>
-												onDeleteMedia(
-													image?.media,
-													variant
-												)
+												onDeleteMedia(image, variant)
 											}
 										/>
 									</div>
