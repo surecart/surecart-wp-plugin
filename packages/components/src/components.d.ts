@@ -1343,6 +1343,10 @@ export namespace Components {
         "order": Checkout;
         "processor": ProcessorName;
     }
+    interface ScFeatureDemoBanner {
+        "buttonText": string;
+        "url": string;
+    }
     interface ScFlex {
         "alignItems": string;
         "columnGap": string;
@@ -4444,6 +4448,12 @@ declare global {
         prototype: HTMLScExpressPaymentElement;
         new (): HTMLScExpressPaymentElement;
     };
+    interface HTMLScFeatureDemoBannerElement extends Components.ScFeatureDemoBanner, HTMLStencilElement {
+    }
+    var HTMLScFeatureDemoBannerElement: {
+        prototype: HTMLScFeatureDemoBannerElement;
+        new (): HTMLScFeatureDemoBannerElement;
+    };
     interface HTMLScFlexElement extends Components.ScFlex, HTMLStencilElement {
     }
     var HTMLScFlexElement: {
@@ -5336,6 +5346,7 @@ declare global {
         "sc-empty": HTMLScEmptyElement;
         "sc-error": HTMLScErrorElement;
         "sc-express-payment": HTMLScExpressPaymentElement;
+        "sc-feature-demo-banner": HTMLScFeatureDemoBannerElement;
         "sc-flex": HTMLScFlexElement;
         "sc-form": HTMLScFormElement;
         "sc-form-components-validator": HTMLScFormComponentsValidatorElement;
@@ -6981,6 +6992,10 @@ declare namespace LocalJSX {
         "hasPaymentOptions"?: boolean;
         "order"?: Checkout;
         "processor"?: ProcessorName;
+    }
+    interface ScFeatureDemoBanner {
+        "buttonText"?: string;
+        "url"?: string;
     }
     interface ScFlex {
         "alignItems"?: string;
@@ -9736,6 +9751,7 @@ declare namespace LocalJSX {
         "sc-empty": ScEmpty;
         "sc-error": ScError;
         "sc-express-payment": ScExpressPayment;
+        "sc-feature-demo-banner": ScFeatureDemoBanner;
         "sc-flex": ScFlex;
         "sc-form": ScForm;
         "sc-form-components-validator": ScFormComponentsValidator;
@@ -9941,6 +9957,7 @@ declare module "@stencil/core" {
             "sc-empty": LocalJSX.ScEmpty & JSXBase.HTMLAttributes<HTMLScEmptyElement>;
             "sc-error": LocalJSX.ScError & JSXBase.HTMLAttributes<HTMLScErrorElement>;
             "sc-express-payment": LocalJSX.ScExpressPayment & JSXBase.HTMLAttributes<HTMLScExpressPaymentElement>;
+            "sc-feature-demo-banner": LocalJSX.ScFeatureDemoBanner & JSXBase.HTMLAttributes<HTMLScFeatureDemoBannerElement>;
             "sc-flex": LocalJSX.ScFlex & JSXBase.HTMLAttributes<HTMLScFlexElement>;
             "sc-form": LocalJSX.ScForm & JSXBase.HTMLAttributes<HTMLScFormElement>;
             "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;

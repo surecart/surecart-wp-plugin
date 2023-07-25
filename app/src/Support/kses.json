@@ -679,6 +679,14 @@
     "class": true,
     "slot": true
   },
+  "sc-feature-demo-banner": {
+    "button-text": true,
+    "url": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-flex": {
     "align-items": true,
     "column-gap": true,

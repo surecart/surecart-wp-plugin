@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-24T14:05:18",
+  "timestamp": "2023-07-25T19:59:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -11320,6 +11320,48 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-feature-demo-banner/sc-feature-demo-banner.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-feature-demo-banner",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "url",
+          "type": "string",
+          "mutable": false,
+          "attr": "url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-feature-demo-banner": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/flex/sc-flex.tsx",
       "encapsulation": "shadow",
       "tag": "sc-flex",
@@ -13725,6 +13767,7 @@
         "sc-downloads-list",
         "sc-drawer",
         "sc-empty",
+        "sc-feature-demo-banner",
         "sc-fulfillments",
         "sc-image-slider",
         "sc-invoices-list",
@@ -13803,6 +13846,9 @@
           "sc-icon"
         ],
         "sc-empty": [
+          "sc-icon"
+        ],
+        "sc-feature-demo-banner": [
           "sc-icon"
         ],
         "sc-fulfillments": [
