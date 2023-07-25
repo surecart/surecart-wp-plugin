@@ -27,7 +27,6 @@ import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import VariablePrice from './modules/Prices/VariablePrice';
 import Variations from './modules/Variations';
-import { processVariationsForSaving } from './modules/Variations/utils';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -51,15 +50,6 @@ export default ({ id }) => {
 	const onSubmit = async (e) => {
 		try {
 			setError(null);
-
-			// process variants to prepare for saving.
-			// if (product?.variants_enabled) {
-			// 	saveEditedEntityRecord(
-			// 		'surecart',
-			// 		'product',
-			// 		processVariationsForSaving(product)
-			// 	);
-			// }
 
 			// build up pending records to save.
 			const dirtyRecords =

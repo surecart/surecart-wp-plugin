@@ -108,7 +108,6 @@ export default ({ product, updateProduct, loading }) => {
 						value: response,
 					},
 				};
-				console.log('event', event);
 				updateVariantValue(event, product?.variants.indexOf(variant));
 				createSuccessNotice(__('Variant Image updated.', 'surecart'), {
 					type: 'snackbar',
@@ -152,7 +151,7 @@ export default ({ product, updateProduct, loading }) => {
 						value: null,
 					},
 				},
-				variants.indexOf(variant)
+				product?.variants.indexOf(variant)
 			);
 		} catch (e) {
 			createErrorNotice(

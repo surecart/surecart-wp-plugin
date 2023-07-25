@@ -168,6 +168,8 @@ export const checkOptionValueError = (optionValues = []) => {
 /**
  * Filter the variations to remove draft variations.
  *
+ * TODO: This function is not used anywhere. Remove after testing with API way.
+ *
  * @param {object} product
  * @returns {object}
  */
