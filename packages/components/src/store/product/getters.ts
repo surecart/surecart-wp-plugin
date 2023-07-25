@@ -5,8 +5,6 @@ import { state as checkoutState } from '@store/checkout';
  * @returns {Price[]} - Returns an array of prices that are not archived
  */
 export const availablePrices = () => (state.prices || []).filter(price => !price?.archived).sort((a, b) => a?.position - b?.position); // sort by position
-;
-console.log(checkoutState?.product);
 
 export const availableVariantOptions = ( type:'product-page' | 'instant-checkout-page' = 'product-page' ) => ( ('product-page' === type && state?.variant_options ? state.variant_options : 'instant-checkout-page' === type && checkoutState?.product?.variant_options?.data ? checkoutState?.product?.variant_options?.data : state?.variant_options) || [])?.map( ({id, name, values}) => {
    

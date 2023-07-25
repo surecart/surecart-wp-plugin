@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies.
+ */
 import { onChange as onChangeCheckout } from '../checkout';
 import { onChange as onChangeProcessor, state as selectedProcessor } from '../selected-processor';
 import { availableManualPaymentMethods, availableMethodTypes, availableProcessors } from './getters';

@@ -61,7 +61,7 @@ exports[`sc-order-bump renders bump with description, cta and image 1`] = `
           </div>
         </div>
       </div>
-      <div slot="footer">
+      <div class="bump__product--wrapper" slot="footer">
         <sc-divider style="--spacing: var(--sc-spacing-medium);"></sc-divider>
         <div class="bump__product">
           <img class="bump__image" src="https://test.com/image.jpg">

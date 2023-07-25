@@ -51,9 +51,9 @@ const store = createStore<Store>(
       price_id: selectedPrice?.id,
       quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
-      variant: '',
+      variant: variants?.length ? variants[0]?.id : '',
     },
-    selectedVariant: '',
+    selectedVariant: variants?.length ? variants[0]?.id : '',
     variantValues: {}
   },
   (newValue, oldValue) => {
