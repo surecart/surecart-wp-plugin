@@ -4,7 +4,6 @@ import state from './store';
  * @returns {Price[]} - Returns an array of prices that are not archived
  */
 export const availablePrices = () => (state.prices || []).filter(price => !price?.archived).sort((a, b) => a?.position - b?.position); // sort by position
-console.log(state.variant_options);
 
 export const availableVariantOptions = () => (state.variant_options || [])?.map( ({id, name, values}) => {
    
