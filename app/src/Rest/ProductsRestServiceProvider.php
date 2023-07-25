@@ -214,7 +214,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 * If we are editing, let's make sure the data comes back directly.
 	 *
 	 * @param \SureCart\Models\Product $model Product model.
-	 * @param string $context The context of the request.
+	 * @param string                   $context The context of the request.
 	 *
 	 * @return  array The filtered response.
 	 */
@@ -222,8 +222,23 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		$response = parent::filter_response_by_context( $model, $context );
 
 		if ( 'edit' === $context ) {
-			$response['variant_options'] = $response['variant_options']->data ?? [];
-			$response['variants'] = $response['variants']->data ?? [];
+			$response['variant_options'] = $response['variant_options']['data'] ?? [];
+			$response['variants']        = $response['variants']['data'] ?? [];
+
+			// Process the variant_options values column. currently its like string[].
+			// Lets make it like {label: string, index: number}[].
+			foreach ( $response['variant_options'] as $index => $variant_option ) {
+				$response['variant_options'][ $index ]['values'] = array_map(
+					function( $value, $value_index ) {
+						return [
+							'label' => $value,
+							'index' => $value_index,
+						];
+					},
+					$variant_option['values'],
+					array_keys( $variant_option['values'] )
+				);
+			}
 		}
 
 		return $response;

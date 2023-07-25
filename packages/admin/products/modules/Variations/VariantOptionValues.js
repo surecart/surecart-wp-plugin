@@ -15,7 +15,9 @@ import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
 
 export default memo(({ option, product, updateProduct, onChangeValue }) => {
 	const [values, setValues] = useState(
-		option?.values?.length > 0 ? option?.values : [{ index: 1, label: '' }]
+		option?.values?.length > 0
+			? option?.values ?? []
+			: [{ index: 1, label: '' }]
 	);
 
 	const applySort = (oldIndex, newIndex) => {

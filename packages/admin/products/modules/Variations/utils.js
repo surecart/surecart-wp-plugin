@@ -164,3 +164,24 @@ export const checkOptionValueError = (optionValues = []) => {
 		error,
 	};
 };
+
+/**
+ * Filter the variations to remove draft variations.
+ *
+ * @param {object} product
+ * @returns {object}
+ */
+export const processVariationsForSaving = (product) => {
+	const { variants } = product;
+
+	if (!variants) {
+		return product;
+	}
+
+	return {
+		...product,
+		variants: (variants ?? []).filter((variation) => {
+			return variation?.status !== 'draft';
+		}),
+	};
+};

@@ -1,7 +1,14 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+
 /**
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScButton,
 	ScDropdown,
@@ -17,8 +24,14 @@ import {
  * Internal dependencies.
  */
 import DataTable from '../../../components/DataTable';
+import Image from './Image';
 
 export default ({ product, updateProduct, loading }) => {
+	const [busy, setBusy] = useState(false);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
+
 	/**
 	 * On Delete variant, just update the status as draft for that variant.
 	 *
@@ -73,10 +86,93 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	};
 
+	const saveVariantImage = async (media) => {
+		return saveEntityRecord(
+			'surecart',
+			'product-media',
+			{
+				product_id: product?.id,
+				media_id: media.id,
+			},
+			{ throwOnError: true }
+		);
+	};
+
+	const onAddMedia = async (media, variant) => {
+		try {
+			setBusy(true);
+			await Promise.resolve(saveVariantImage(media)).then((response) => {
+				const event = {
+					target: {
+						name: 'image',
+						value: response,
+					},
+				};
+				console.log('event', event);
+				updateVariantValue(event, product?.variants.indexOf(variant));
+				createSuccessNotice(__('Variant Image updated.', 'surecart'), {
+					type: 'snackbar',
+				});
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				__(
+					'Error updating variant image. Please try again.',
+					'surecart'
+				),
+				{
+					type: 'snackbar',
+				}
+			);
+			setBusy(false);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	const onDeleteMedia = async (media, variant) => {
+		const confirmDeleteMedia = confirm(
+			__(
+				'Are you sure you wish to delete this variant image? This cannot be undone.',
+				'surecart'
+			)
+		);
+		if (!confirmDeleteMedia) return;
+
+		try {
+			setBusy(true);
+			await deleteEntityRecord('surecart', 'product-media', media?.id, {
+				throwOnError: true,
+			});
+			updateVariantValue(
+				{
+					target: {
+						name: 'image',
+						value: null,
+					},
+				},
+				variants.indexOf(variant)
+			);
+		} catch (e) {
+			createErrorNotice(
+				__(
+					'Error updating variant image. Please try again.',
+					'surecart'
+				),
+				{
+					type: 'snackbar',
+				}
+			);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	return (
 		<DataTable
 			title={__('', 'surecart')}
-			loading={loading}
+			loading={loading | busy}
 			columns={{
 				variant: {
 					label: __('Variant', 'surecart'),
@@ -94,16 +190,8 @@ export default ({ product, updateProduct, loading }) => {
 					label: __('', 'surecart'),
 				},
 			}}
-			items={product?.variants.map((variant, index) => {
-				const {
-					id,
-					sku,
-					option_1,
-					option_2,
-					option_3,
-					image,
-					product,
-				} = variant;
+			items={(product?.variants ?? []).map((variant, index) => {
+				const { id, sku, status, image, product, amount } = variant;
 				return {
 					variant: (
 						<ScFlex
@@ -118,15 +206,60 @@ export default ({ product, updateProduct, loading }) => {
 									border: '1px dotted var(--sc-color-gray-200)',
 									borderRadius: '4px',
 									padding: 'var(--sc-spacing-xx-small)',
+									cursor: 'pointer',
 								}}
 							>
-								<ScIcon
-									name="image"
-									style={{
-										'--color': 'var(--sc-color-gray-600)',
-										disabled: variant.status === 'draft',
-									}}
-								/>
+								{image ? (
+									<div
+										css={css`
+											position: relative;
+										`}
+									>
+										<img
+											src={image?.media?.url}
+											alt="product image"
+											css={css`
+												width: 1.5rem;
+												height: 1.5rem;
+											`}
+										/>
+										<ScIcon
+											name="trash"
+											slot="suffix"
+											css={css`
+												position: absolute;
+												right: -14px;
+												top: -12px;
+												cursor: pointer;
+												opacity: 0.8;
+												&:hover {
+													opacity: 1;
+												}
+											`}
+											onClick={() =>
+												onDeleteMedia(
+													image?.media,
+													variant
+												)
+											}
+										/>
+									</div>
+								) : (
+									<Image
+										variant={variant}
+										product={product}
+										updateProduct={updateProduct}
+										disabled={status === 'draft'}
+										existingMediaIds={
+											image?.length > 0
+												? [image?.media?.id]
+												: []
+										}
+										onAddMedia={(medias) =>
+											onAddMedia(medias, variant)
+										}
+									/>
+								)}
 							</div>
 
 							<ScText
@@ -144,9 +277,9 @@ export default ({ product, updateProduct, loading }) => {
 						<ScInput
 							type="number"
 							min="0"
-							value={variant.amount}
+							value={amount}
 							name="amount"
-							disabled={variant.status === 'draft'}
+							disabled={status === 'draft'}
 							onScChange={(e) => updateVariantValue(e, index)}
 						/>
 					),
@@ -154,7 +287,7 @@ export default ({ product, updateProduct, loading }) => {
 						<ScInput
 							value={sku}
 							name="sku"
-							disabled={variant.status === 'draft'}
+							disabled={status === 'draft'}
 							onScChange={(e) => updateVariantValue(e, index)}
 						/>
 					),
@@ -168,7 +301,7 @@ export default ({ product, updateProduct, loading }) => {
 									onClick={() => toggleDelete(variant)}
 								>
 									{variant?.status === 'draft'
-										? __('Activate', 'surecart')
+										? __('Restore', 'surecart')
 										: __('Delete', 'surecart')}
 								</ScMenuItem>
 							</ScMenu>
