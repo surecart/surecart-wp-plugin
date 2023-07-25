@@ -43,6 +43,7 @@ export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
+	const [liveMode, setLiveMode] = useState(true);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
@@ -54,6 +55,7 @@ export default () => {
 			if (!id) {
 				return {};
 			}
+
 			// our entity query data.
 			const entityData = [
 				'surecart',
@@ -104,7 +106,7 @@ export default () => {
 				'draft-checkout',
 				{
 					customer_id: false,
-					live_mode: false, // TODO: Change to live.
+					live_mode: liveMode,
 				}
 			);
 
@@ -171,8 +173,6 @@ export default () => {
 		checkout?.selected_shipping_choice_required &&
 		!checkout?.selected_shipping_choice;
 
-	console.log(checkout?.order);
-
 	if (checkout?.order) {
 		return (
 			<ScAlert
@@ -194,7 +194,6 @@ export default () => {
 
 	return (
 		<>
-			<Error error={checkoutError} setError={setCheckoutError} />
 			<UpdateModel
 				onSubmit={() => setConfirmCheckout(true)}
 				title={
@@ -243,6 +242,7 @@ export default () => {
 							checkout={checkout}
 							setBusy={setBusy}
 							loading={loading}
+							liveMode={liveMode}
 							onSuccess={() => setPaymentMethod(null)}
 						/>
 						<Address
@@ -260,6 +260,12 @@ export default () => {
 					</>
 				}
 			>
+				<Error
+					error={checkoutError}
+					setError={setCheckoutError}
+					margin="80px"
+				/>
+
 				<Prices
 					checkout={checkout}
 					loading={loading}

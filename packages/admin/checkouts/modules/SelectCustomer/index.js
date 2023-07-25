@@ -3,6 +3,7 @@ import {
 	ScIcon,
 	ScMenuItem,
 	ScMenuDivider,
+	ScButton,
 } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import { useDispatch, select } from '@wordpress/data';
@@ -17,7 +18,7 @@ import expand from '../../query';
 import Customer from './Customer';
 import CreateCustomer from './CreateCustomer';
 
-export default ({ checkout, setBusy, loading, onSuccess }) => {
+export default ({ checkout, setBusy, loading, onSuccess, liveMode }) => {
 	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { receiveEntityRecords } = useDispatch(coreStore);
@@ -83,7 +84,25 @@ export default ({ checkout, setBusy, loading, onSuccess }) => {
 	};
 
 	return (
-		<Box title={__('Customer', 'surecart')} loading={loading}>
+		<Box
+			title={__('Customer', 'surecart')}
+			loading={loading}
+			footer={
+				!!checkout?.customer_id && (
+					<ScButton
+						size="small"
+						target="_blank"
+						href={addQueryArgs('admin.php', {
+							page: 'sc-customers',
+							action: 'edit',
+							id: checkout?.customer_id,
+						})}
+					>
+						{__('View Customer', 'surecart')}
+					</ScButton>
+				)
+			}
+		>
 			{checkout?.customer_id ? (
 				<Customer
 					id={checkout?.customer_id}
@@ -97,7 +116,7 @@ export default ({ checkout, setBusy, loading, onSuccess }) => {
 					<ModelSelector
 						name="customer"
 						placeholder={__('Select a customer', 'surecart')}
-						requestQuery={{ live_mode: false }} // TODO: change to live.
+						requestQuery={{ live_mode: liveMode }}
 						required
 						prefix={
 							<div slot="prefix">
@@ -122,6 +141,7 @@ export default ({ checkout, setBusy, loading, onSuccess }) => {
 				<CreateCustomer
 					onRequestClose={() => setModal(false)}
 					onCreate={onCustomerUpdate}
+					liveMode={liveMode}
 				/>
 			)}
 		</Box>
