@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-25T19:59:41",
+  "timestamp": "2023-07-25T21:41:13",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -11323,10 +11323,28 @@
       "filePath": "./src/components/ui/sc-feature-demo-banner/sc-feature-demo-banner.tsx",
       "encapsulation": "shadow",
       "tag": "sc-feature-demo-banner",
+      "readme": "# sc-feature-demo-banner\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "buttonText",
+          "type": "string",
+          "mutable": false,
+          "attr": "button-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Upgrade Your Plan', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "url",
           "type": "string",
@@ -11335,7 +11353,7 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
-          "default": "''",
+          "default": "'https://app.surecart.com/billing'",
           "values": [
             {
               "type": "string"

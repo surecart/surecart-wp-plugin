@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default |
-| -------- | --------- | ----------- | -------- | ------- |
-| `url`    | `url`     |             | `string` | `''`    |
+| Property     | Attribute     | Description | Type     | Default                               |
+| ------------ | ------------- | ----------- | -------- | ------------------------------------- |
+| `buttonText` | `button-text` |             | `string` | `__('Upgrade Your Plan', 'surecart')` |
+| `url`        | `url`         |             | `string` | `'https://app.surecart.com/billing'`  |
 
 
 ## Dependencies
