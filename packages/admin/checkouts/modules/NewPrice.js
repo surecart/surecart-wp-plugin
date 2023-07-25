@@ -77,7 +77,12 @@ export default ({ checkout, setBusy }) => {
 				archived: false,
 			}}
 		>
-			<ScButton slot="trigger">
+			<ScButton
+				slot="trigger"
+				type={
+					checkout?.line_items?.data?.length ? 'default' : 'primary'
+				}
+			>
 				<ScIcon name="plus" slot="prefix" />
 				{__('Add Product', 'surecart')}
 			</ScButton>
