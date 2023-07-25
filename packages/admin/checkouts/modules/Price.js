@@ -110,70 +110,82 @@ export default ({
 				<ScTableCell>
 					<div
 						css={css`
-							display: flex;
-							gap: 10px;
-							align-items: center;
+							display: grid;
+							gap: 0.5em;
 						`}
 					>
-						<ScFormatNumber
-							type="currency"
-							currency={price?.currency || 'usd'}
-							value={
-								!!price?.ad_hoc && ad_hoc_amount
-									? ad_hoc_amount
-									: subtotal_amount
-							}
-						/>
-						{!!price?.ad_hoc && (
-							<ScButton
-								size="small"
-								onClick={() => setOpen(true)}
-							>
-								<ScIcon name="edit" />
-							</ScButton>
-						)}
-					</div>
-
-					{!!price?.trial_duration_days && (
 						<div
 							css={css`
-								opacity: 0.65;
-								font-size: 12px;
+								display: flex;
+								gap: 10px;
+								align-items: center;
 							`}
 						>
-							{sprintf(
-								_n(
-									'Starting in %s day',
-									'Starting in %s days',
-									price.trial_duration_days,
-									'surecart'
-								),
-								price.trial_duration_days
+							<ScFormatNumber
+								type="currency"
+								currency={price?.currency || 'usd'}
+								value={
+									!!price?.ad_hoc && ad_hoc_amount
+										? ad_hoc_amount
+										: subtotal_amount
+								}
+							/>
+							{!!price?.ad_hoc && (
+								<ScButton
+									size="small"
+									onClick={() => setOpen(true)}
+								>
+									<ScIcon name="edit" />
+								</ScButton>
 							)}
 						</div>
-					)}
 
-					{!!fees?.length && (
-						<div>
-							{(fees || []).map(({ description, amount }) => {
-								return (
-									<div
-										css={css`
-											opacity: 0.65;
-											font-size: 12px;
-										`}
-									>
-										<ScFormatNumber
-											type="currency"
-											currency={price?.currency || 'usd'}
-											value={amount}
-										/>{' '}
-										{description || __('Fee', 'surecart')}
-									</div>
-								);
-							})}
-						</div>
-					)}
+						{!!price?.trial_duration_days && (
+							<div
+								css={css`
+									opacity: 0.65;
+									font-size: 12px;
+									line-height: 1.2;
+								`}
+							>
+								{sprintf(
+									_n(
+										'Starting in %s day',
+										'Starting in %s days',
+										price.trial_duration_days,
+										'surecart'
+									),
+									price.trial_duration_days
+								)}
+							</div>
+						)}
+
+						{!!fees?.length && (
+							<div>
+								{(fees || []).map(({ description, amount }) => {
+									return (
+										<div
+											css={css`
+												opacity: 0.65;
+												font-size: 12px;
+												line-height: 1.2;
+											`}
+										>
+											<ScFormatNumber
+												type="currency"
+												currency={
+													price?.currency || 'usd'
+												}
+												value={amount}
+											/>{' '}
+											{description ||
+												__('Fee', 'surecart')}
+										</div>
+									);
+								})}
+							</div>
+						)}
+					</div>
 				</ScTableCell>
 				<ScTableCell
 					css={css`
