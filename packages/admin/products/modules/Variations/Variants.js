@@ -5,10 +5,6 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import {
 	ScButton,
 	ScDropdown,
@@ -27,11 +23,6 @@ import DataTable from '../../../components/DataTable';
 import Image from './Image';
 
 export default ({ product, updateProduct, loading }) => {
-	const [busy, setBusy] = useState(false);
-	const { createErrorNotice, createSuccessNotice } =
-		useDispatch(noticesStore);
-	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
-
 	/**
 	 * On Delete variant, just update the status as draft for that variant.
 	 *
@@ -87,31 +78,16 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	const onAddMedia = async (media, variant) => {
-		try {
-			setBusy(true);
-			const event = {
-				target: {
-					name: 'image',
-					value: media,
-				},
-			};
-			updateVariantValue(event, product?.variants.indexOf(variant));
-			createSuccessNotice(__('Variant Image updated.', 'surecart'), {
-				type: 'snackbar',
-			});
-		} catch (e) {
-			console.error(e);
-			createErrorNotice(
-				__(
-					'Error updating variant image. Please try again.',
-					'surecart'
-				),
-				{
-					type: 'snackbar',
-				}
-			);
-			setBusy(false);
-		}
+		const event = {
+			target: {
+				name: 'image',
+				value: media,
+			},
+		};
+		updateVariantValue(event, product?.variants.indexOf(variant));
+		createSuccessNotice(__('Variant Image updated.', 'surecart'), {
+			type: 'snackbar',
+		});
 	};
 
 	const onDeleteMedia = async (media, variant) => {
@@ -137,7 +113,7 @@ export default ({ product, updateProduct, loading }) => {
 	return (
 		<DataTable
 			title={__('', 'surecart')}
-			loading={loading | busy}
+			loading={loading}
 			columns={{
 				variant: {
 					label: __('Variant', 'surecart'),
