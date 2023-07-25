@@ -24,7 +24,7 @@ export default ({
 	footer,
 	onSubmit,
 	sidebar,
-	entitled,
+	entitled = true,
 	onError,
 }) => {
 	const modal = useSelect((select) => select(uiStore).showUpgradeModal());
