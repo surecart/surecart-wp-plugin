@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Watch, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -27,6 +27,9 @@ export class ScOrderConfirmProvider {
 
   @State() confirmedCheckout: Checkout;
 
+  /** Checkout status to listen and do payment related stuff. */
+  @Prop() checkoutStatus: string;
+
   /** Success url. */
   @Prop() successUrl: string;
 
@@ -45,10 +48,15 @@ export class ScOrderConfirmProvider {
   /** Error event. */
   @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
-  /** Listen for paid event. This is triggered by Stripe or Paypal elements when payment succeeds. */
-  @Listen('scPaid')
-  handlePaidEvent() {
-    this.confirmOrder();
+  /**
+   * Watch for paid checkout machine state.
+   * This is triggered by Stripe, Paypal or Paystack when payment succeeds.
+   */
+  @Watch('checkoutStatus')
+  handleConfirmOrderEvent() {
+    if (this.checkoutStatus === 'confirming') {
+      this.confirmOrder();
+    }
   }
 
   /** Confirm the order. */

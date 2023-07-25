@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -585,6 +585,8 @@ export namespace Components {
     interface ScCheckoutMolliePayment {
         "method": string;
         "processorId": string;
+    }
+    interface ScCheckoutPaystackPaymentProvider {
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
@@ -1912,6 +1914,10 @@ export namespace Components {
      */
     interface ScOrderConfirmProvider {
         /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus": string;
+        /**
           * Success text for the form.
          */
         "successText": {
@@ -2413,6 +2419,12 @@ export namespace Components {
           * The order.
          */
         "order": Checkout;
+    }
+    interface ScPaystackAddMethod {
+        "currency": string;
+        "customerId": string;
+        "liveMode": boolean;
+        "successUrl": string;
     }
     interface ScPhoneInput {
         /**
@@ -3832,6 +3844,10 @@ export interface ScCheckoutMolliePaymentCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutMolliePaymentElement;
 }
+export interface ScCheckoutPaystackPaymentProviderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutPaystackPaymentProviderElement;
+}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -4239,6 +4255,12 @@ declare global {
     var HTMLScCheckoutMolliePaymentElement: {
         prototype: HTMLScCheckoutMolliePaymentElement;
         new (): HTMLScCheckoutMolliePaymentElement;
+    };
+    interface HTMLScCheckoutPaystackPaymentProviderElement extends Components.ScCheckoutPaystackPaymentProvider, HTMLStencilElement {
+    }
+    var HTMLScCheckoutPaystackPaymentProviderElement: {
+        prototype: HTMLScCheckoutPaystackPaymentProviderElement;
+        new (): HTMLScCheckoutPaystackPaymentProviderElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -4814,6 +4836,12 @@ declare global {
         prototype: HTMLScPaypalButtonsElement;
         new (): HTMLScPaypalButtonsElement;
     };
+    interface HTMLScPaystackAddMethodElement extends Components.ScPaystackAddMethod, HTMLStencilElement {
+    }
+    var HTMLScPaystackAddMethodElement: {
+        prototype: HTMLScPaystackAddMethodElement;
+        new (): HTMLScPaystackAddMethodElement;
+    };
     interface HTMLScPhoneInputElement extends Components.ScPhoneInput, HTMLStencilElement {
     }
     var HTMLScPhoneInputElement: {
@@ -5281,6 +5309,7 @@ declare global {
         "sc-checkout": HTMLScCheckoutElement;
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
+        "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choice-container": HTMLScChoiceContainerElement;
@@ -5375,6 +5404,7 @@ declare global {
         "sc-payment-selected": HTMLScPaymentSelectedElement;
         "sc-paypal-add-method": HTMLScPaypalAddMethodElement;
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
+        "sc-paystack-add-method": HTMLScPaystackAddMethodElement;
         "sc-phone-input": HTMLScPhoneInputElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
@@ -6060,6 +6090,9 @@ declare namespace LocalJSX {
          */
         "onScError"?: (event: ScCheckoutMolliePaymentCustomEvent<ResponseError>) => void;
         "processorId"?: string;
+    }
+    interface ScCheckoutPaystackPaymentProvider {
+        "onScError"?: (event: ScCheckoutPaystackPaymentProviderCustomEvent<ResponseError1>) => void;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -7571,6 +7604,10 @@ declare namespace LocalJSX {
      */
     interface ScOrderConfirmProvider {
         /**
+          * Checkout status to listen and do payment related stuff.
+         */
+        "checkoutStatus"?: string;
+        /**
           * Error event.
          */
         "onScError"?: (event: ScOrderConfirmProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
@@ -8117,6 +8154,12 @@ declare namespace LocalJSX {
           * The order.
          */
         "order"?: Checkout;
+    }
+    interface ScPaystackAddMethod {
+        "currency"?: string;
+        "customerId"?: string;
+        "liveMode"?: boolean;
+        "successUrl"?: string;
     }
     interface ScPhoneInput {
         /**
@@ -9665,6 +9708,7 @@ declare namespace LocalJSX {
         "sc-checkout": ScCheckout;
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
+        "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choice-container": ScChoiceContainer;
@@ -9759,6 +9803,7 @@ declare namespace LocalJSX {
         "sc-payment-selected": ScPaymentSelected;
         "sc-paypal-add-method": ScPaypalAddMethod;
         "sc-paypal-buttons": ScPaypalButtons;
+        "sc-paystack-add-method": ScPaystackAddMethod;
         "sc-phone-input": ScPhoneInput;
         "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
@@ -9869,6 +9914,7 @@ declare module "@stencil/core" {
              */
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
+            "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;
@@ -9973,6 +10019,7 @@ declare module "@stencil/core" {
             "sc-payment-selected": LocalJSX.ScPaymentSelected & JSXBase.HTMLAttributes<HTMLScPaymentSelectedElement>;
             "sc-paypal-add-method": LocalJSX.ScPaypalAddMethod & JSXBase.HTMLAttributes<HTMLScPaypalAddMethodElement>;
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
+            "sc-paystack-add-method": LocalJSX.ScPaystackAddMethod & JSXBase.HTMLAttributes<HTMLScPaystackAddMethodElement>;
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
