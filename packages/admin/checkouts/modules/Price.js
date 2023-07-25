@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { intervalString } from '../../util/translations';
 import { useEffect, useState } from '@wordpress/element';
@@ -133,6 +133,26 @@ export default ({
 							</ScButton>
 						)}
 					</div>
+
+					{!!price?.trial_duration_days && (
+						<div
+							css={css`
+								opacity: 0.65;
+								font-size: 12px;
+							`}
+						>
+							{sprintf(
+								_n(
+									'Starting in %s day',
+									'Starting in %s days',
+									price.trial_duration_days,
+									'surecart'
+								),
+								price.trial_duration_days
+							)}
+						</div>
+					)}
+
 					{!!fees?.length && (
 						<div>
 							{(fees || []).map(({ description, amount }) => {
@@ -155,7 +175,11 @@ export default ({
 						</div>
 					)}
 				</ScTableCell>
-				<ScTableCell>
+				<ScTableCell
+					css={css`
+						text-align: right;
+					`}
+				>
 					<ScButton size="small" onClick={onRemove}>
 						{__('Remove', 'surecart')}
 					</ScButton>
