@@ -13,11 +13,11 @@ import { useDispatch } from '@wordpress/data';
 import { useRef, useState, useEffect } from '@wordpress/element';
 import { Modal } from '@wordpress/components';
 
-export default ({ onRequestClose, onCreate }) => {
+export default ({ onRequestClose, onCreate, liveMode }) => {
 	const name = useRef();
 	const [busy, setBusy] = useState(false);
 	const [customer, setCustomer] = useState({
-		live_mode: false, // TODO: Update mode.
+		live_mode: liveMode,
 	});
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
