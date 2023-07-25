@@ -131,18 +131,18 @@ export class ScStripePaymentElement {
       mode: checkoutState.checkout?.reusable_payment_method_required ? 'subscription' : 'payment',
       amount: checkoutState.checkout?.amount_due,
       currency: checkoutState.checkout?.currency,
-      setupFutureUsage: checkoutState.checkout.reusable_payment_method_required ? 'off_session' : null,
+      setupFutureUsage: checkoutState.checkout?.reusable_payment_method_required ? 'off_session' : null,
       appearance: {
         variables: {
-          colorPrimary: styles.getPropertyValue('--sc-color-primary-500'),
-          colorText: styles.getPropertyValue('--sc-input-label-color'),
-          borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium'),
-          colorBackground: styles.getPropertyValue('--sc-input-background-color'),
-          fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium'),
-          colorLogo: styles.getPropertyValue('--sc-stripe-color-logo'),
-          colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab'),
-          colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected'),
-          colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color'),
+          colorPrimary: styles.getPropertyValue('--sc-color-primary-500') || 'black',
+          colorText: styles.getPropertyValue('--sc-input-label-color') || 'black',
+          borderRadius: styles.getPropertyValue('--sc-input-border-radius-medium') || '4px',
+          colorBackground: styles.getPropertyValue('--sc-input-background-color') || 'white',
+          fontSizeBase: styles.getPropertyValue('--sc-input-font-size-medium') || '16px',
+          colorLogo: styles.getPropertyValue('--sc-stripe-color-logo') || 'light',
+          colorLogoTab: styles.getPropertyValue('--sc-stripe-color-logo-tab') || 'light',
+          colorLogoTabSelected: styles.getPropertyValue('--sc-stripe-color-logo-tab-selected') || 'light',
+          colorTextPlaceholder: styles.getPropertyValue('--sc-input-placeholder-color') || 'black',
         },
         rules: {
           '.Input': {
@@ -156,7 +156,7 @@ export class ScStripePaymentElement {
   /** Update the payment element mode, amount and currency when it changes. */
   createOrUpdateElements() {
     // need an order amount, etc.
-    if (!checkoutState?.checkout?.amount_due) return;
+    if (!checkoutState?.checkout?.payment_method_required) return;
 
     // create the elements if they have not yet been created.
     if (!this.elements) {
