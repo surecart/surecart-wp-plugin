@@ -5,7 +5,11 @@ import ErrorBoundary from '../../components/error-boundary';
 import admin from '../../styles/admin';
 import UnsavedChangesWarning from './UnsavedChangesWarning';
 import { css, jsx, Global } from '@emotion/core';
-import { ScForm, ScProvisionalBanner } from '@surecart/components-react';
+import {
+	ScForm,
+	ScProvisionalBanner,
+	ScFeatureDemoBanner,
+} from '@surecart/components-react';
 import { PostLockedModal } from '@wordpress/editor';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -20,11 +24,45 @@ export default ({
 	footer,
 	onSubmit,
 	sidebar,
+	entitled,
 	onError,
 }) => {
 	const modal = useSelect((select) => select(uiStore).showUpgradeModal());
 	const { setUpgradeModal } = useDispatch(uiStore);
 	const onRequestClose = () => setUpgradeModal(false);
+
+	const banner = () => {
+		// not entitled.
+		if (!entitled) {
+			return (
+				<ScFeatureDemoBanner
+					buttonText={
+						scData?.claim_url
+							? __('Complete Signup', 'surecart')
+							: __('Upgrade Your Plan', 'surecart')
+					}
+				>
+					{scData?.claim_url
+						? __(
+								'This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan.',
+								'surecart'
+						  )
+						: __(
+								'This is a demo of a premium feature. To get this feature, please upgrade your plan.',
+								'surecart'
+						  )}
+				</ScFeatureDemoBanner>
+			);
+		}
+
+		// provisional.
+		if (!!scData?.claim_url) {
+			return <ScProvisionalBanner claim-url={scData?.claim_url} />;
+		}
+
+		// nothing.
+		return null;
+	};
 
 	return (
 		<Fragment>
@@ -42,9 +80,7 @@ export default ({
 			<ErrorBoundary onError={onError}>
 				<UnsavedChangesWarning />
 
-				{!!scData?.claim_url && (
-					<ScProvisionalBanner claim-url={scData?.claim_url} />
-				)}
+				{banner()}
 
 				<ScForm
 					className="sc-model-form"

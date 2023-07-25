@@ -10,6 +10,7 @@ import {
 	ScBlockUi,
 	ScDialog,
 	ScAlert,
+	ScIcon,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -196,6 +197,7 @@ export default () => {
 		<>
 			<UpdateModel
 				onSubmit={() => setConfirmCheckout(true)}
+				entitled={scData.entitlements.invoices}
 				title={
 					<div
 						css={css`
@@ -231,7 +233,11 @@ export default () => {
 						type="primary"
 						submit
 						busy={busy}
-						disabled={isDisabled || busy}
+						disabled={
+							isDisabled ||
+							busy ||
+							!scData?.entitlements?.invoices
+						}
 					>
 						{__('Create Order', 'surecart')}
 					</ScButton>
