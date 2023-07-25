@@ -9,6 +9,7 @@ import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
 import Status from '../components/Status';
 import Url from '../components/Url';
+import EditProductType from './ProductType/EditProductType';
 
 export default ({ product, updateProduct, loading }) => {
 	const tag = document.querySelector('#wp-admin-bar-view-product-page');
@@ -57,6 +58,11 @@ export default ({ product, updateProduct, loading }) => {
 					/>
 				)}
 				<Url product={product} updateProduct={updateProduct} />
+
+				<EditProductType
+					product={product}
+					updateProduct={updateProduct}
+				/>
 			</div>
 		</Box>
 	);
