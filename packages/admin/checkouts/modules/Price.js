@@ -215,7 +215,11 @@ export default ({
 							placeholder={__('Enter an Amount', 'surecart')}
 							currencyCode={price?.currency}
 							value={addHocAmount}
-							onScInput={(e) => setAddHocAmount(e?.target?.value)}
+							min={price?.ad_hoc_min_amount}
+							max={price?.ad_hoc_max_amount}
+							onScInput={(e) => {
+								setAddHocAmount(parseInt(e?.target?.value));
+							}}
 							required
 						/>
 						<ScButton slot="footer" type="primary" submit>
