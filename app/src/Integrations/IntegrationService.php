@@ -304,7 +304,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 
 			$user = $purchase->getWPUser();
 			if ( ! $user ) {
-				throw new \Exception( 'No WordPress user is linked to this customer. This means any integrations will not run. Please link this customer to a WordPress user.' );
+				// throw new \Exception( 'No WordPress user is linked to this customer. This means any integrations will not run. Please link this customer to a WordPress user.' );
 				continue;
 			}
 
