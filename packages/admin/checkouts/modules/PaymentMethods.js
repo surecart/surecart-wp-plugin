@@ -70,7 +70,7 @@ export default ({
 		}
 
 		if (!reusablePaymentMethods?.length) {
-			if (payment_methods) {
+			if (payment_methods?.length) {
 				return (
 					<ScAlert type="warning" open>
 						{__(
