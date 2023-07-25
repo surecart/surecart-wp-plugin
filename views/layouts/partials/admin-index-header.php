@@ -10,7 +10,7 @@ header( 'Expires: 0' );
 <h1 class="wp-heading-inline"><?php echo wp_kses_post( $title ?? '' ); ?></h1>
 
 <?php if ( isset( $new_link ) ) : ?>
-	<a href="<?php echo esc_url( $new_link ); ?>" class="page-title-action">
+	<a href="<?php echo esc_url( $new_link ); ?>" class="page-title-action" data-test-id="add-new-button">
 		<?php esc_html_e( 'Add New', 'surecart' ); ?>
 	</a>
 <?php endif; ?>

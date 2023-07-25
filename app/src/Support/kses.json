@@ -2047,6 +2047,7 @@
     "loading": true,
     "number": true,
     "other-label": true,
+    "required": true,
     "show": true,
     "status": true,
     "type": true,
