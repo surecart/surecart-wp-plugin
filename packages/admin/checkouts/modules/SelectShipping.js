@@ -56,6 +56,13 @@ export default ({ checkout, setBusy, loading }) => {
 					type: 'snackbar',
 				}
 			);
+			(e?.additional_errors || []).map((e) => {
+				if (e?.message) {
+					createErrorNotice(e.message, {
+						type: 'snackbar',
+					});
+				}
+			});
 		} finally {
 			setBusy(false);
 		}

@@ -70,6 +70,13 @@ export default ({ checkout, loading, busy, setBusy }) => {
 					type: 'snackbar',
 				}
 			);
+			(e?.additional_errors || []).map((e) => {
+				if (e?.message) {
+					createErrorNotice(e.message, {
+						type: 'snackbar',
+					});
+				}
+			});
 		} finally {
 			setBusy(false);
 		}

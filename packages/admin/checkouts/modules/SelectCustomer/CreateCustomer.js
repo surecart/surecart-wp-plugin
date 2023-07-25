@@ -58,6 +58,13 @@ export default ({ onRequestClose, onCreate, liveMode }) => {
 					type: 'snackbar',
 				}
 			);
+			(e?.additional_errors || []).map((e) => {
+				if (e?.message) {
+					createErrorNotice(e.message, {
+						type: 'snackbar',
+					});
+				}
+			});
 			setBusy(false);
 		}
 	};

@@ -44,7 +44,7 @@ export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const [liveMode, setLiveMode] = useState(false);
+	const [liveMode, setLiveMode] = useState(true);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
@@ -117,6 +117,13 @@ export default () => {
 			createErrorNotice(
 				e?.message || __('Something went wrong.', 'surecart')
 			);
+			(e?.additional_errors || []).map((e) => {
+				if (e?.message) {
+					createErrorNotice(e.message, {
+						type: 'snackbar',
+					});
+				}
+			});
 		} finally {
 			setBusy(false);
 		}
