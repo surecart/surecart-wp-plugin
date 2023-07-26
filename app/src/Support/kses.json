@@ -305,6 +305,12 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-paystack-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,
@@ -1055,6 +1061,7 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
+    "checkout-status": true,
     "success-text": true,
     "success-url": true,
     "style": true,
@@ -1364,6 +1371,16 @@
     "merchant-initiated": true,
     "mode": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-paystack-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

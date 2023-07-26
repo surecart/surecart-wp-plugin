@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-06-15 20:19\n"
+"PO-Revision-Date: 2023-07-17 22:38\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: ro_RO\n"
@@ -24,9 +24,9 @@ msgstr[0] " și un alt preț."
 msgstr[1] " și %d alte prețuri."
 msgstr[2] " și %d alte prețuri."
 
-#: sc-charges-list.js:110
+#: sc-charges-list.js:112
 msgid "#%s"
-msgstr "#%s"
+msgstr ""
 
 #. translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type
 #: Blocks/Column/edit.js:104
@@ -43,13 +43,22 @@ msgstr "%1d%% redus"
 msgid "%1s of %2s Activations Used"
 msgstr "%1s din %2s activări utilizate"
 
+#: orders/modules/Fulfillment/Fulfilled.js:99
+#: orders/modules/Fulfillment/Unfulfilled.js:49
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 #: subscriptions/show/modules/Details.js:110
 msgid "%d Remaining"
 msgstr "%d rămas(e)"
 
-#: sc-textarea2.js:189
+#: sc-rich-text.js:18842
+#: sc-textarea2.js:183
 msgid "%d characters remaining"
-msgstr "%d caractere rămase"
+msgstr ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
@@ -61,12 +70,12 @@ msgstr[0] "%d zi"
 msgstr[1] "%d zile"
 msgstr[2] "%d zile"
 
-#: sc-product-line-item2.js:24
+#: sc-product-line-item2.js:37
 msgid "%d day free"
 msgid_plural "%d days free"
-msgstr[0] "zi liberă"
-msgstr[1] "zile libere"
-msgstr[2] "zile libere"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:80
 msgid "%d day left in trial"
@@ -75,12 +84,12 @@ msgstr[0] "O zi %d rămasă în perioada de probă"
 msgstr[1] "%d zile rămase în perioada de probă"
 msgstr[2] "%d zile rămase în perioada de probă"
 
-#: price.js:50
+#: price.js:52
 msgid "%d mo"
 msgid_plural "%d months"
-msgstr[0] "1 lună"
-msgstr[1] "%d luni"
-msgstr[2] "%d luni"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
@@ -104,16 +113,30 @@ msgstr[0] "plată"
 msgstr[1] "%d plăți"
 msgstr[2] "%d plăți"
 
-#: price.js:84
+#: price.js:86
 msgid "%d payment remaining"
 msgid_plural "%d payments remaining"
-msgstr[0] "O plată rămasă"
-msgstr[1] "%d plăți rămase"
-msgstr[2] "%d plăți rămase"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: settings/shipping/profile/Products.js:184
+msgid "%d price"
+msgid_plural "%d prices"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: coupons/modules/Product.js:104
 msgid "%d prices"
 msgstr "%d prețuri"
+
+#: settings/shipping/profile/ShippingProfileListItem.js:35
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
@@ -125,12 +148,12 @@ msgstr[0] "%d săptămână"
 msgstr[1] "%d săptămâni"
 msgstr[2] "%d săptămâni"
 
-#: price.js:48
+#: price.js:50
 msgid "%d wk"
 msgid_plural "%d wks"
-msgstr[0] "1 săptămână"
-msgstr[1] "%d săptămâni"
-msgstr[2] "%d săptămâni"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
@@ -142,12 +165,12 @@ msgstr[0] "%d an"
 msgstr[1] "%d ani"
 msgstr[2] "%d ani"
 
-#: price.js:52
+#: price.js:54
 msgid "%d yr"
 msgid_plural "%d yrs"
-msgstr[0] "1 an"
-msgstr[1] "%d ani"
-msgstr[2] "%d ani"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:194
@@ -170,12 +193,13 @@ msgstr "Acum %s"
 msgid "%s can't be blank."
 msgstr "%s nu poate fi gol."
 
-#: sc-purchase-downloads-list2.js:48
+#: components/MediaLibrary/index.js:370
+#: sc-purchase-downloads-list2.js:54
 msgid "%s file"
 msgid_plural "%s files"
-msgstr[0] "fișier"
-msgstr[1] "fișiere"
-msgstr[2] "fișiere"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: field name.
 #: src/Support/Errors/ErrorsTranslationService.php:60
@@ -231,9 +255,9 @@ msgstr "%s reducere"
 msgid "%s selected for check out."
 msgstr "%s selectat(e) pentru plată."
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "%s selected."
-msgstr "%s selectat."
+msgstr ""
 
 #: coupons/Sidebar.js:14
 msgid "%s%% off"
@@ -262,6 +286,14 @@ msgstr "1 oră"
 #: settings/abandoned/util.js:57
 msgid "1 week"
 msgstr "1 săptămână"
+
+#: Blocks/ShippingChoices/edit.js:26
+msgid "1-2 days"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:291
+msgid "1. Create Zone"
+msgstr ""
 
 #: settings/abandoned/util.js:33
 msgid "1.5 Days"
@@ -295,6 +327,10 @@ msgstr "2 zile"
 msgid "2 Hours"
 msgstr "2 ore"
 
+#: settings/shipping/zone/ShippingZoneForm.js:295
+msgid "2. Create Rate"
+msgstr ""
+
 #: Blocks/Columns/variations.js:132
 msgid "25 / 50 / 25"
 msgstr "25 / 50 / 25"
@@ -310,6 +346,10 @@ msgstr "3 zile"
 #: settings/abandoned/util.js:17
 msgid "3 Hours"
 msgstr "3 ore"
+
+#: Blocks/ShippingChoices/edit.js:44
+msgid "3-5 days"
+msgstr ""
 
 #: Blocks/Columns/variations.js:60
 msgid "30 / 70"
@@ -368,9 +408,14 @@ msgctxt "block description"
 msgid "A container to display the product media"
 msgstr "Un container pentru a expune mediile produsului"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "A default payment method will be used as a fallback in case other payment methods get removed from a subscription."
-msgstr "O metodă de plată implicită va fi utilizată ca o soluție de rezervă în cazul în care alte metode de plată sunt eliminate dintr-un abonament."
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:128
+#: settings/shipping/rate/ShippingRateForm.js:320
+msgid "A description to let the customer know the average time it takes for shipping."
+msgstr ""
 
 #: products/modules/AddExternalUrlModal.js:56
 msgid "A display name for file."
@@ -396,9 +441,9 @@ msgstr "O limită a numărului de înregistrări returnate"
 msgid "A link to your privacy policy page."
 msgstr "Un link către pagina politicii de confidențialitate."
 
-#: settings/portal/PortalSettings.js:139
-msgid "A link to your privacy terms page."
-msgstr "Un link către pagina cu termenii de confidențialitate."
+#: settings/account/AccountSettings.js:267
+msgid "A link to your store terms page."
+msgstr ""
 
 #: bumps/CreateBump.js:65
 #: bumps/modules/Name.js:11
@@ -441,8 +486,8 @@ msgid "A single column within a columns block."
 msgstr "O singură coloană în cadrul unui bloc de coloane."
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:83
-msgid "A single product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign."
-msgstr "Un șablon pentru un singur produs îți permite să proiectezi cu ușurință aspectul și stilul paginilor WooCommerce pentru un singur produs și să aplici șablonul respectiv la diferite condiții pe care le atribui."
+msgid "A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign."
+msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
 msgid "A specific product id."
@@ -530,9 +575,10 @@ msgstr "Cont"
 msgid "Account Details"
 msgstr "Detalii cont"
 
+#: sc-wordpress-user-edit.js:61
 #: sc-wordpress-user.js:27
 msgid "Account Email"
-msgstr "Cont Email"
+msgstr ""
 
 #: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:206
@@ -601,6 +647,10 @@ msgstr "Adaugă o condiție"
 #: products/modules/Prices/NewPrice/index.js:103
 msgid "Add A Price"
 msgstr "Adaugă un preț"
+
+#: onboarding/Onboarding.js:166
+msgid "Add A Product"
+msgstr ""
 
 #: coupons/modules/NewRestriction.js:46
 #: coupons/modules/Restrictions.js:31
@@ -728,6 +778,14 @@ msgstr "Adaugă o nouă integrare"
 msgid "Add New Product"
 msgstr "Adaugă un produs nou"
 
+#: settings/shipping/ShippingSettings.js:245
+msgid "Add New Profile"
+msgstr ""
+
+#: settings/shipping/rate/AddShippingRate.js:16
+msgid "Add New Shipping Rate"
+msgstr ""
+
 #: components/SelectProductGroup.js:58
 msgid "Add New Upgrade Group"
 msgstr "Adaugă un nou grup de upgrade"
@@ -759,6 +817,19 @@ msgstr "Adaugă restricție de produs"
 msgid "Add Promotion Code"
 msgstr "Adaugă un cod promoțional"
 
+#: settings/shipping/rate/ShippingRateForm.js:194
+#: settings/shipping/zone/ShippingZone.js:228
+msgid "Add Rate"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:91
+msgid "Add Shipping Method"
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:72
+msgid "Add Shipping Profile"
+msgstr ""
+
 #: Blocks/Donation/edit.js:249
 msgid "Add Suggested Donation Amount"
 msgstr "Adaugă suma sugerată pentru donație"
@@ -781,6 +852,11 @@ msgstr "Buton de adăugare în coș"
 msgid "Add To Cart Button Shortcode"
 msgstr "Shortcode buton Adaugă în coș"
 
+#: orders/modules/Fulfillment/components/AddTracking.js:70
+#: orders/modules/Fulfillment/Fulfilled.js:165
+msgid "Add Tracking"
+msgstr ""
+
 #: src/Integrations/User/UserService.php:57
 msgid "Add User Role"
 msgstr "Adăugați un rol de utilizator"
@@ -788,6 +864,10 @@ msgstr "Adăugați un rol de utilizator"
 #: src/Integrations/User/UserService.php:48
 msgid "Add WordPress User Role"
 msgstr "Adăugați rolul de utilizator WordPress"
+
+#: settings/shipping/zone/ShippingZoneForm.js:265
+msgid "Add Zone"
+msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation description"
@@ -831,6 +911,10 @@ msgstr "Adaugă un titlu..."
 msgid "Add additional information to receipts and invoices."
 msgstr "Adaugă informații suplimentare la chitanțe și facturi."
 
+#: orders/modules/Fulfillment/components/Tracking.js:117
+msgid "Add another tracking number"
+msgstr ""
+
 #: dashboard/components/GetStarted.js:73
 msgid "Add buy and cart buttons"
 msgstr "Adaugă butoane de cumpărare și coș"
@@ -843,6 +927,10 @@ msgstr "Adaugă butoane de coș și de cumpărare pe site-ul tău."
 msgid "Add custom manual tax rates for specific countries."
 msgstr "Adăugați cote de impozitare manuale personalizate pentru anumite țări."
 
+#: settings/shipping/ShippingSettings.js:229
+msgid "Add custom rates or destination restrictions for groups of products."
+msgstr ""
+
 #: src/WordPress/PostTypes/CartPostTypeService.php:214
 msgid "Add new Cart"
 msgstr "Adaugă un coș nou"
@@ -854,6 +942,10 @@ msgstr "Adaugă un nou formular de plată"
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:39
 msgid "Add new SureCart Product"
 msgstr "Adaugă un nou produs SureCart"
+
+#: settings/shipping/profile/Products.js:213
+msgid "Add products to this shipping profile."
+msgstr ""
 
 #: Blocks/Checkbox/edit.js:69
 msgid "Add some checkbox text..."
@@ -910,9 +1002,9 @@ msgstr "Adaugă-ți titlul..."
 msgid "Added"
 msgstr "Adăugat"
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Additional Comments"
-msgstr "Comentarii Suplimentare"
+msgstr ""
 
 #: orders/modules/MetaData.js:16
 msgid "Additional Order Data"
@@ -930,11 +1022,11 @@ msgstr "Date suplimentare ale comenzii"
 msgid "Address"
 msgstr "Adresă"
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:34
-#: sc-order-shipping-address2.js:43
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:41
+#: sc-order-shipping-address2.js:50
 msgid "Address Line 2"
-msgstr "Adresa Linia 2"
+msgstr ""
 
 #: Blocks/Address/edit.js:125
 msgid "Address Placeholder"
@@ -949,6 +1041,10 @@ msgstr "Admin anulează o revocare"
 msgid "Advanced"
 msgstr "Avansat"
 
+#: settings/shipping/profile/ShippingProfile.js:229
+msgid "Advanced Options"
+msgstr ""
+
 #: admin/advanced.php:30
 #: settings/advanced/AdvancedSettings.js:35
 msgid "Advanced Settings"
@@ -958,25 +1054,25 @@ msgstr "Setări avansate"
 msgid "Advanced settings for abandoned checkouts"
 msgstr "Setări avansate pentru plățile abandonate"
 
-#: address.js:17
+#: address.js:14
 msgid "Afghanistan"
-msgstr "Afganistan"
+msgstr ""
 
 #: Blocks/ProductItemList/edit.js:235
 msgid "Ajax Pagination"
 msgstr "Paginare Ajax"
 
-#: address.js:18
+#: address.js:15
 msgid "Albania"
-msgstr "Albania"
+msgstr ""
 
 #: src/Support/Currency.php:240
 msgid "Albanian Lek"
 msgstr "Lek albanez"
 
-#: address.js:19
+#: address.js:16
 msgid "Algeria"
-msgstr "Algeria"
+msgstr ""
 
 #: src/Support/Currency.php:241
 msgid "Algerian Dinar"
@@ -1003,11 +1099,19 @@ msgstr "Toate coșurile"
 msgid "All Checkout Forms"
 msgstr "Toate formularele de plată"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:350
+msgid "All Fulfillments"
+msgstr ""
+
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
 #: Blocks/ProductItemList/modules/EditLayoutConfig.js:13
 msgid "All Products"
 msgstr "Toate produsele"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:386
+msgid "All Shipment Statuses"
+msgstr ""
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:43
 msgid "All SureCart Products"
@@ -1016,6 +1120,15 @@ msgstr "Toate produsele SureCart"
 #: bumps/modules/Conditions.js:39
 msgid "All of these items are in the cart."
 msgstr "Toate aceste articole se află în coș."
+
+#: settings/shipping/ShippingSettings.js:189
+msgid "All products"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:212
+#: settings/shipping/ShippingSettings.js:185
+msgid "All products not in other profiles"
+msgstr ""
 
 #: coupons/modules/Restrictions.js:73
 msgid "Allow Coupon"
@@ -1058,12 +1171,12 @@ msgstr "Permite utilizatorului să sorteze după cele mai noi, în ordine alfabe
 #: sc-product-item-list.js:141
 #: sc-product-item-list.js:150
 msgid "Alphabetical, A-Z"
-msgstr "Alfabetic, A-Z"
+msgstr ""
 
 #: sc-product-item-list.js:143
 #: sc-product-item-list.js:150
 msgid "Alphabetical, Z-A"
-msgstr "Alfabetic, Z-A"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:301
 msgid "Also enable abandoned checkouts in test mode."
@@ -1077,9 +1190,9 @@ msgstr "Afișează întotdeauna coșul de cumpărături (numai în meniu)"
 msgid "Always show cart"
 msgstr "Arată întotdeauna coșul"
 
-#: address.js:20
+#: address.js:17
 msgid "American Samoa"
-msgstr "Samoa Americană"
+msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:14
 #: coupons/modules/Types.js:42
@@ -1136,33 +1249,33 @@ msgstr "Nu se poate genera o factură pentru clientul specificat deoarece nu exi
 msgid "An invoice cannot be generated for the specified subscription as there are no pending invoice items. Check that the correct subscription is being specified or create any necessary invoice items first."
 msgstr "Nu se poate genera o factură pentru abonamentul specificat deoarece nu există elemente de factură în așteptare. Verifică dacă este specificat abonamentul corect sau creează mai întâi elementele de factură necesare."
 
-#: fetch.js:1888
+#: fetch.js:737
 msgid "An unknown error occurred."
-msgstr "A apărut o eroare necunoscută."
+msgstr ""
 
 #: admin/product-groups/index.php:10
 msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
 msgstr "Grupurile de upgrade reprezintă modul în care definești căile de upgrade și downgrade pentru clienții tăi. Acestea se bazează pe produsele pe care aceștia le-au achiziționat anterior."
 
-#: address.js:21
+#: address.js:18
 msgid "Andorra"
-msgstr "Andorra"
+msgstr ""
 
-#: address.js:22
+#: address.js:19
 msgid "Angola"
-msgstr "Angola"
+msgstr ""
 
 #: src/Support/Currency.php:242
 msgid "Angolan Kwanza"
 msgstr "Kwanza angoleză"
 
-#: address.js:23
+#: address.js:20
 msgid "Anguilla"
-msgstr "Anguilla"
+msgstr ""
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "Another step will appear after submitting your order to add this payment method."
-msgstr "După trimiterea comenzii, va apărea un alt pas pentru a adăuga această metodă de plată."
+msgstr ""
 
 #: Blocks/Payment/Block.php:159
 #: Blocks/Payment/Block.php:176
@@ -1179,13 +1292,13 @@ msgstr "Răspuns creat."
 msgid "Answer updated."
 msgstr "Răspuns actualizat."
 
-#: address.js:24
+#: address.js:21
 msgid "Antarctica"
-msgstr "Antarctica"
+msgstr ""
 
-#: address.js:25
+#: address.js:22
 msgid "Antigua and Barbuda"
-msgstr "Antigua și Barbuda"
+msgstr ""
 
 #: coupons/modules/SelectCustomer.js:155
 msgid "Any Customer"
@@ -1270,6 +1383,10 @@ msgstr "Arhivezi acest bump? Acest bump nu va putea fi achiziționat și toate m
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr "Arhivează acest preț? Acest produs nu va putea fi achiziționat și toate modificările nesalvate vor fi pierdute."
 
+#: product-groups/EditProductGroup.js:76
+msgid "Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:55
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
@@ -1306,9 +1423,9 @@ msgstr "Ești sigur că vrei să arhivezi acest cupon? Acesta nu va fi disponibi
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr "Ești sigur că vrei să arhivezi acest produs? Acesta nu va fi disponibil pentru cumpărare."
 
-#: sc-subscription.js:42
+#: sc-subscription.js:70
 msgid "Are you sure you want to cancel the pending update to your plan?"
-msgstr "Sunteți sigur că doriți să anulați actualizarea în așteptare a planului dumneavoastră?"
+msgstr ""
 
 #: Blocks/Form/edit.js:78
 msgid "Are you sure you want to change the template? This will completely replace your current form."
@@ -1317,6 +1434,10 @@ msgstr "Sunteți sigur că doriți să schimbați șablonul? Acest lucru va înl
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:46
 msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
 msgstr "Sunteți sigur că doriți să finalizați acest plan de plată? Acest lucru va elimina orice plăți suplimentare și va marca planul ca fiind complet. Nu puteți anula acest lucru."
+
+#: settings/shipping/profile/DeleteShippingProfile.js:58
+msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
+msgstr ""
 
 #: coupons/EditCoupon.js:234
 msgid "Are you sure you want to delete this coupon?"
@@ -1348,6 +1469,10 @@ msgstr "Ești sigur că vrei să renunți la acest preț?"
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
 msgstr "Ești sigur că vrei să deconectezi de la acest client? În acest fel, acesta va pierde accesul la achizițiile sale."
 
+#: onboarding/components/ConfirmExit.js:9
+msgid "Are you sure you want to leave this page?"
+msgstr ""
+
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:63
 msgid "Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan."
 msgstr "Ești sigur că vrei să plătești abonamentul? Acest lucru va taxa imediat clientul pentru plățile rămase din planul său."
@@ -1373,10 +1498,10 @@ msgstr "Ești sigur că dorești să elimini acest link?"
 msgid "Are you sure you want to remove this logo?"
 msgstr "Ești sigur că vrei să elimini acest logo?"
 
-#: sc-payment-methods-list.js:48
-#: sc-subscription-payment-method.js:80
+#: sc-payment-methods-list.js:182
+#: sc-subscription-payment-method.js:85
 msgid "Are you sure you want to remove this payment method?"
-msgstr "Sunteți sigur că doriți să eliminați această metodă de plată?"
+msgstr ""
 
 #: src/Webhooks/WebhooksHistoryService.php:149
 #: src/Webhooks/WebhooksHistoryService.php:168
@@ -1429,25 +1554,29 @@ msgstr "Ești sigur că dorești să elimini acest link?"
 msgid "Are you sure you wish to resume this subscription?"
 msgstr "Sunteți sigur că doriți să reluați acest abonament?"
 
-#: address.js:26
+#: settings/shipping/zone/ConfirmDeleteZone.js:41
+msgid "Are you sure?"
+msgstr ""
+
+#: address.js:23
 msgid "Argentina"
-msgstr "Argentina"
+msgstr ""
 
 #: src/Support/Currency.php:243
 msgid "Argentine Peso"
 msgstr "Peso argentinian"
 
-#: address.js:27
+#: address.js:24
 msgid "Armenia"
-msgstr "Armenia"
+msgstr ""
 
 #: src/Support/Currency.php:244
 msgid "Armenian Dram"
 msgstr "Dramă armeană"
 
-#: address.js:28
+#: address.js:25
 msgid "Aruba"
-msgstr "Aruba"
+msgstr ""
 
 #: src/Support/Currency.php:245
 msgid "Aruban Florin"
@@ -1529,13 +1658,17 @@ msgstr "Australia"
 msgid "Australian Dollar"
 msgstr "Dolar australian"
 
-#: address.js:30
+#: address.js:27
 msgid "Austria"
-msgstr "Austria"
+msgstr ""
 
 #: bumps/modules/Behavior.js:12
 msgid "Auto Apply Discount"
 msgstr "Acordarea automată a reducerii"
+
+#: products/modules/Shipping.js:115
+msgid "Auto Fulfill"
+msgstr ""
 
 #: Blocks/Product/Media/edit.js:52
 msgid "Auto Height"
@@ -1567,9 +1700,9 @@ msgstr "Disponibil pentru cumpărare"
 msgid "Average Order Value"
 msgstr "Valoarea medie a comenzii"
 
-#: address.js:31
+#: address.js:28
 msgid "Azerbaijan"
-msgstr "Azerbaidjan"
+msgstr ""
 
 #: src/Support/Currency.php:247
 msgid "Azerbaijani Manat"
@@ -1589,17 +1722,17 @@ msgstr "Înapoi la Toate facturile"
 msgid "Background Color"
 msgstr "Culoarea de fundal"
 
-#: address.js:32
+#: address.js:29
 msgid "Bahamas"
-msgstr "Bahamas"
+msgstr ""
 
 #: src/Support/Currency.php:248
 msgid "Bahamian Dollar"
 msgstr "Dolarul bahamian"
 
-#: address.js:33
+#: address.js:30
 msgid "Bahrain"
-msgstr "Bahrain"
+msgstr ""
 
 #: customers/modules/Balance/index.js:16
 msgid "Balance"
@@ -1609,9 +1742,9 @@ msgstr "Balanță"
 msgid "Balance Transactions"
 msgstr "Tranzacții de sold"
 
-#: address.js:34
+#: address.js:31
 msgid "Bangladesh"
-msgstr "Bangladesh"
+msgstr ""
 
 #: src/Support/Currency.php:249
 msgid "Bangladeshi Taka"
@@ -1621,46 +1754,53 @@ msgstr "Taka din Bangladesh"
 msgid "Barbadian Dollar"
 msgstr "Dolarul barbadian"
 
-#: address.js:35
+#: address.js:32
 msgid "Barbados"
-msgstr "Barbados"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:441
+msgid "Based on item weight"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:472
+msgid "Based on order price"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:15
+msgid "Beauty Products"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:41
 msgid "Begins"
 msgstr "Începe"
 
-#: bumps/modules/Behavior.js:7
-#: settings/subscription/SubscriptionSettings.js:184
-msgid "Behavior"
-msgstr "Comportament"
-
-#: address.js:36
+#: address.js:33
 msgid "Belarus"
-msgstr "Belarus"
+msgstr ""
 
 #: src/Support/Currency.php:251
 msgid "Belarusian Ruble"
 msgstr "Rubla belarusă"
 
-#: address.js:37
+#: address.js:34
 msgid "Belgium"
-msgstr "Belgia"
+msgstr ""
 
-#: address.js:38
+#: address.js:35
 msgid "Belize"
-msgstr "Belize"
+msgstr ""
 
 #: src/Support/Currency.php:252
 msgid "Belize Dollar"
 msgstr "Dolarul Belize"
 
-#: address.js:39
+#: address.js:36
 msgid "Benin"
-msgstr "Benin"
+msgstr ""
 
-#: address.js:40
+#: address.js:37
 msgid "Bermuda"
-msgstr "Insulele Bermude"
+msgstr ""
 
 #: src/Support/Currency.php:253
 msgid "Bermudian Dollar"
@@ -1671,9 +1811,9 @@ msgstr "Dolarul bermudean"
 msgid "Beta Features"
 msgstr "Caracteristici beta"
 
-#: address.js:41
+#: address.js:38
 msgid "Bhutan"
-msgstr "Bhutan"
+msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:89
 #: Controllers/CustomerController.php:54
@@ -1714,9 +1854,9 @@ msgstr "Perioadă de facturare"
 msgid "Billing Periods"
 msgstr "Perioade de facturare"
 
-#: sc-customer-edit.js:105
+#: sc-customer-edit.js:110
 msgid "Billing address same as shipping"
-msgstr "Adresa de facturare este aceeași cu cea de expediere"
+msgstr ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:44
 msgid "Bills Now"
@@ -1731,17 +1871,21 @@ msgstr "Facturare la"
 msgid "Block types that the pattern is intended to be used with."
 msgstr "Tipuri de blocuri cu care se intenționează să fie utilizat modelul."
 
-#: address.js:42
+#: address.js:39
 msgid "Bolivia"
-msgstr "Bolivia"
+msgstr ""
 
 #: src/Support/Currency.php:254
 msgid "Bolivian Boliviano"
 msgstr "Bolivian Bolivian"
 
-#: address.js:43
+#: address.js:40
 msgid "Bonaire, Sint Eustatius and Saba"
-msgstr "Bonaire, Saint Eustatius și Saba"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:51
+msgid "Books"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:72
 #: components/UpgradeModal.js:19
@@ -1756,9 +1900,9 @@ msgstr "Margine"
 msgid "Borderless"
 msgstr "Fără margini"
 
-#: address.js:44
+#: address.js:41
 msgid "Bosnia and Herzegovina"
-msgstr "Bosnia și Herțegovina"
+msgstr ""
 
 #: src/Support/Currency.php:255
 msgid "Bosnia and Herzegovina Convertible Mark"
@@ -1772,9 +1916,9 @@ msgstr "Ambele"
 msgid "Both a customer and source ID have been provided, but the source has not been saved to the customer. To create a charge for a customer with a specified source, you must first save the card details."
 msgstr "Au fost furnizate atât ID-ul clientului, cât și cel al sursei, dar sursa nu a fost salvată pentru client. Pentru a crea o taxă pentru un client cu o sursă specificată, trebuie mai întâi să salvați detaliile cardului."
 
-#: address.js:45
+#: address.js:42
 msgid "Botswana"
-msgstr "Botswana"
+msgstr ""
 
 #: src/Support/Currency.php:256
 msgid "Botswana Pula"
@@ -1784,9 +1928,13 @@ msgstr "Pula din Botswana"
 msgid "Bottom Border"
 msgstr "Margine inferioară"
 
-#: address.js:46
+#: address.js:43
 msgid "Bouvet Island"
-msgstr "Insula Bouvet"
+msgstr ""
+
+#: store/add-entities.js:25
+msgid "Brand"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:79
 msgid "Brand Color"
@@ -1796,25 +1944,25 @@ msgstr "Culoarea mărcii"
 msgid "Brand Settings"
 msgstr "Setări de marcă"
 
-#: address.js:47
+#: address.js:44
 msgid "Brazil"
-msgstr "Brazilia"
+msgstr ""
 
 #: src/Support/Currency.php:257
 msgid "Brazilian Real"
 msgstr "Real brazilian"
 
-#: address.js:48
+#: address.js:45
 msgid "British Indian Ocean Territory"
-msgstr "Teritoriul Britanic din Oceanul Indian"
+msgstr ""
 
 #: src/Support/Currency.php:258
 msgid "British Pound"
 msgstr "Lira sterlină britanică"
 
-#: address.js:49
+#: address.js:46
 msgid "Brunei Darussalam"
-msgstr "Brunei Darussalam"
+msgstr ""
 
 #: src/Support/Currency.php:259
 msgid "Brunei Dollar"
@@ -1825,9 +1973,9 @@ msgstr "Dolarul Brunei"
 msgid "BuddyBoss Group"
 msgstr "Grupul BuddyBoss"
 
-#: address.js:50
+#: address.js:47
 msgid "Bulgaria"
-msgstr "Bulgaria"
+msgstr ""
 
 #: src/Support/Currency.php:260
 msgid "Bulgarian Lev"
@@ -1877,13 +2025,13 @@ msgstr "Bumps"
 msgid "Bundle Discount"
 msgstr "Reducere pachet"
 
-#: address.js:51
+#: address.js:48
 msgid "Burkina Faso"
-msgstr "Burkina Faso"
+msgstr ""
 
-#: address.js:52
+#: address.js:49
 msgid "Burundi"
-msgstr "Burundi"
+msgstr ""
 
 #: src/Support/Currency.php:261
 msgid "Burundian Franc"
@@ -1963,6 +2111,10 @@ msgstr "Cumpără-mi o cafea!"
 msgid "By %s"
 msgstr "Până la %s"
 
+#: onboarding/components/InitialSetup.js:88
+msgid "By continuing, you agree to the"
+msgstr ""
+
 #: Controllers/SubscriptionController.php:244
 #: Controllers/SubscriptionController.php:248
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
@@ -1981,9 +2133,9 @@ msgstr "GST Canada"
 msgid "CA GST Label"
 msgstr "Eticheta CA GST"
 
-#: address.js:53
+#: address.js:50
 msgid "Cabo Verde"
-msgstr "Capul Verde"
+msgstr ""
 
 #: layouts/partials/admin-settings-header.php:18
 msgid "Cache cleared."
@@ -1993,17 +2145,17 @@ msgstr "Memoria cache a fost ștearsă."
 msgid "Call to action"
 msgstr "Apel la acțiune"
 
-#: address.js:54
+#: address.js:51
 msgid "Cambodia"
-msgstr "Cambodgia"
+msgstr ""
 
 #: src/Support/Currency.php:262
 msgid "Cambodian Riel"
 msgstr "Riel cambodgian"
 
-#: address.js:55
+#: address.js:52
 msgid "Cameroon"
-msgstr "Camerun"
+msgstr ""
 
 #: Blocks/Dashboard/CustomerDownloads/edit.js:57
 #: Blocks/Dashboard/OrderDownloads/edit.js:55
@@ -2096,14 +2248,14 @@ msgstr "Anulează comanda"
 msgid "Cancel Pending Update"
 msgstr "Anulare actualizare în așteptare"
 
-#: sc-subscription-cancel.js:94
-#: sc-subscription.js:141
+#: sc-subscription-cancel2.js:66
+#: sc-subscription.js:183
 msgid "Cancel Plan"
-msgstr "Anulează planul"
+msgstr ""
 
-#: sc-subscription.js:135
+#: sc-subscription.js:181
 msgid "Cancel Scheduled Update"
-msgstr "Anulare actualizare programată"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:75
 #: components/data-tables/subscriptions-data-table/Cancel.js:124
@@ -2122,9 +2274,13 @@ msgstr "Anulează abonamentele după"
 msgid "Cancel behavior. Either pending or immediate."
 msgstr "Comportamentul de anulare. Fie în așteptare, fie imediat."
 
-#: sc-subscription-cancel.js:94
+#: orders/modules/Fulfillment/Fulfilled.js:155
+msgid "Cancel fulfillment"
+msgstr ""
+
+#: sc-subscription-cancel2.js:66
 msgid "Cancel your plan"
-msgstr "Anulați planul dvs."
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
@@ -2292,9 +2448,9 @@ msgstr "Lista de coșuri"
 msgid "Carts list navigation"
 msgstr "Navigare în lista de coșuri"
 
-#: address.js:57
+#: address.js:54
 msgid "Cayman Islands"
-msgstr "Insulele Cayman"
+msgstr ""
 
 #: src/Support/Currency.php:265
 msgid "Cayman Islands Dollar"
@@ -2304,17 +2460,17 @@ msgstr "Dolarul din Insulele Cayman"
 msgid "Central African Cfa Franc"
 msgstr "Franc Cfa din Africa Centrală"
 
-#: address.js:58
+#: address.js:55
 msgid "Central African Republic"
-msgstr "Republica Centrafricană"
+msgstr ""
 
 #: src/Support/Currency.php:267
 msgid "Cfp Franc"
 msgstr "Cfp Franc"
 
-#: address.js:59
+#: address.js:56
 msgid "Chad"
-msgstr "Ciad"
+msgstr ""
 
 #: bumps/modules/Price.js:46
 #: subscriptions/edit/modules/Price.js:101
@@ -2322,13 +2478,17 @@ msgstr "Ciad"
 msgid "Change"
 msgstr "Schimbare"
 
-#: sc-product-selected-price.js:70
+#: sc-product-selected-price.js:73
 msgid "Change Amount"
-msgstr "Schimbare Sumă"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:217
 msgid "Change Payment Method"
 msgstr "Modifică metoda de plată"
+
+#: subscriptions/edit/modules/Price.js:111
+msgid "Change Price"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:67
 msgid "Change Product"
@@ -2419,9 +2579,9 @@ msgstr "Încasează taxa pentru acest produs"
 msgid "Charges"
 msgstr "Taxe"
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Check your email for a confirmation code"
-msgstr "Verifică-ți e-mailul pentru un cod de confirmare"
+msgstr ""
 
 #: Blocks/Checkbox/block.json
 msgctxt "block title"
@@ -2442,9 +2602,9 @@ msgstr "Bifat în mod implicit"
 msgid "Checked by default"
 msgstr "Bifat în mod implicit"
 
-#: sc-payment-method2.js:19
+#: sc-payment-method2.js:24
 msgid "Checking"
-msgstr "Checking"
+msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:228
 #: store/add-entities.js:39
@@ -2526,17 +2686,17 @@ msgstr "Lista de navigare a formularelor de plată"
 msgid "Checkout Recovery Rate"
 msgstr "Rata de recuperare la plată"
 
-#: address.js:60
+#: address.js:57
 msgid "Chile"
-msgstr "Chile"
+msgstr ""
 
 #: src/Support/Currency.php:268
 msgid "Chilean Peso"
 msgstr "Peso chilian"
 
-#: address.js:61
+#: address.js:58
 msgid "China"
-msgstr "China"
+msgstr ""
 
 #: src/Support/Currency.php:269
 msgid "Chinese Renminbi Yuan"
@@ -2564,9 +2724,9 @@ msgstr "Alege un produs pentru donație"
 msgid "Choose A Starting Design"
 msgstr "Alege un design de pornire"
 
-#: sc-subscription-switch.js:181
+#: sc-subscription-switch.js:190
 msgid "Choose Amount"
-msgstr "Alegeți suma"
+msgstr ""
 
 #: Blocks/Form/components/SelectPrices.js:54
 msgid "Choose An Invoice Product"
@@ -2584,9 +2744,9 @@ msgstr "Alege un formular"
 msgid "Choose a product"
 msgstr "Alege un produs"
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Choose a reason"
-msgstr "Alegeți un motiv"
+msgstr ""
 
 #: subscriptions/edit/modules/Trial.js:24
 msgid "Choose a trial end date"
@@ -2597,6 +2757,10 @@ msgstr "Alege o dată de încheiere a perioadei de probă"
 msgid "Choose a type"
 msgstr "Alege un tip"
 
+#: onboarding/components/StarterTemplates.js:75
+msgid "Choose some example data or start from scratch."
+msgstr ""
+
 #: settings/tax/TaxSettings.js:139
 msgid "Choose the checkout behavior when VAT verification fails."
 msgstr "Alegeți comportamentul la finalizarea comenzii atunci când verificarea TVA eșuează."
@@ -2605,19 +2769,23 @@ msgstr "Alegeți comportamentul la finalizarea comenzii atunci când verificarea
 msgid "Choose the style of order numbers."
 msgstr "Alegeți stilul numerelor de ordine."
 
-#: address.js:62
+#: address.js:59
 msgid "Christmas Island"
-msgstr "Insula Crăciunului"
+msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:32
-#: sc-order-shipping-address2.js:41
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:39
+#: sc-order-shipping-address2.js:48
 msgid "City"
-msgstr "Oraș"
+msgstr ""
 
 #: Blocks/Address/edit.js:116
 msgid "City Placeholder"
 msgstr "Placeholder oraș"
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:162
+msgid "Claim Account"
+msgstr ""
 
 #: layouts/partials/admin-settings-header.php:41
 msgid "Clear Account Cache"
@@ -2636,18 +2804,23 @@ msgstr "Șterge toate datele de testare cu un singur clic."
 msgid "Click here to add some radio text..."
 msgstr "Click aici pentru a adăuga un text radio..."
 
-#: sc-dialog2.js:164
-#: sc-drawer2.js:154
+#. translators: Close this modal window.
+#: sc-dialog2.js:152
+#: sc-drawer2.js:140
 msgid "Close"
-msgstr "Închideți"
+msgstr ""
 
 #: Blocks/Totals/edit.js:101
 msgid "Closed Text"
 msgstr "Text închis"
 
-#: address.js:63
+#: onboarding/components/StarterTemplates.js:20
+msgid "Clothing & Apparel"
+msgstr ""
+
+#: address.js:60
 msgid "Cocos (Keeling) Islands"
-msgstr "Insulele Cocos (Keeling)"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:76
 #: abandoned-checkouts/modules/Coupon.js:37
@@ -2693,9 +2866,9 @@ msgstr "Colectează TVA UE"
 msgid "Collect Tax"
 msgstr "Colectarea impozitului"
 
-#: address.js:64
+#: address.js:61
 msgid "Colombia"
-msgstr "Columbia"
+msgstr ""
 
 #: src/Support/Currency.php:270
 msgid "Colombian Peso"
@@ -2736,9 +2909,9 @@ msgstr "Comerțul pe WordPress nu a fost niciodată mai ușor, mai rapid sau mai
 msgid "Comorian Franc"
 msgstr "Franc comorian"
 
-#: address.js:65
+#: address.js:62
 msgid "Comoros"
-msgstr "Comore"
+msgstr ""
 
 #: products/components/price/parts/ScratchAmount.js:8
 msgid "Compare at price"
@@ -2747,6 +2920,14 @@ msgstr "Comparați la preț"
 #: admin/onboarding/complete.php:69
 msgid "Complete Installation"
 msgstr "Instalare completă"
+
+#: components/ClaimNoticeModal.js:40
+msgid "Complete Setup"
+msgstr ""
+
+#: components/MediaLibrary/index.js:300
+msgid "Complete Setup!"
+msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:114
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
@@ -2758,15 +2939,23 @@ msgstr "Înregistrare completă"
 msgid "Complete Subscription"
 msgstr "Finalizare abonament"
 
-#: sc-subscription-status-badge2.js:60
+#: Blocks/Form/edit.js:449
+msgid "Complete your store setup."
+msgstr ""
+
+#: sc-subscription-status-badge2.js:63
 msgid "Completed"
-msgstr "Completat (Efectuat)"
+msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
 #: settings/advanced/AdvancedSettings.js:137
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr "Elimină complet toate datele plugin-ului atunci când sunt șterse. Acest lucru nu poate fi anulat."
+
+#: settings/shipping/zone/ShippingZone.js:96
+msgid "Condition"
+msgstr ""
 
 #: Blocks/ConditionalForm/edit.js:138
 #: Blocks/ConditionalForm/edit.js:162
@@ -2815,46 +3004,54 @@ msgstr "Confirmă"
 msgid "Confirm Charge"
 msgstr "Confirmă taxa"
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: onboarding/components/ConfirmStoreEmail.js:49
+msgid "Confirm Email for Store Notifications"
+msgstr ""
+
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "Confirm New Password"
-msgstr "Confirmați noua parolă"
+msgstr ""
 
-#: sc-order-password.js:63
+#: sc-order-password.js:74
 msgid "Confirm Password"
-msgstr "Confirmați parola"
+msgstr ""
 
-#: sc-login-form.js:145
+#: onboarding/components/ConfirmStoreDetails.js:38
+msgid "Confirm Store Details"
+msgstr ""
+
+#: sc-login-form.js:147
 msgid "Confirmation code"
-msgstr "Cod de confirmare"
+msgstr ""
 
 #: Blocks/Form/edit.js:338
 msgid "Confirming Payment"
 msgstr "Confirmarea plății"
 
-#: address.js:66
+#: address.js:63
 msgid "Congo"
-msgstr "Congo"
+msgstr ""
 
-#: address.js:67
+#: address.js:64
 msgid "Congo, The Democratic Republic of the"
-msgstr "Republica Democrată Congo"
+msgstr ""
 
 #: src/Support/Currency.php:272
 msgid "Congolese Franc"
 msgstr "Franc congolez"
 
+#: onboarding/components/SetupDone.js:44
+msgid "Congratulations!"
+msgstr ""
+
+#: onboarding/components/InitialSetup.js:78
+msgid "Connect Existing Store"
+msgstr ""
+
 #: customers/modules/User/index.js:203
 msgid "Connect a user"
 msgstr "Conectează un utilizator"
-
-#: admin/processors.php:135
-msgid "Connect with PayPal to add a PayPal express button to your checkout."
-msgstr "Conectează-te cu PayPal pentru a adăuga un buton expres PayPal la finalizarea comenzii."
-
-#: admin/processors.php:57
-msgid "Connect with Stripe to accept credit cards and other payment methods."
-msgstr "Conectează-te cu Stripe pentru a accepta carduri de credit și alte metode de plată."
 
 #: src/Rest/AccountRestServiceProvider.php:115
 #: src/Rest/SettingsRestServiceProvider.php:115
@@ -2897,9 +3094,9 @@ msgstr "Conținut"
 msgid "Continue"
 msgstr "Continuă"
 
-#: address.js:68
+#: address.js:65
 msgid "Cook Islands"
-msgstr "Insulele Cook"
+msgstr ""
 
 #: products/modules/Prices/Price/CopyInput.js:14
 msgid "Copied to clipboard."
@@ -2919,13 +3116,17 @@ msgstr "Copiat!"
 msgid "Copy"
 msgstr "Copiază"
 
+#: orders/modules/Fulfillment/CreateFulfillment.js:276
+msgid "Copy Address"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:210
 msgid "Copy Links"
 msgstr "Copiază linkuri"
 
-#: address.js:69
+#: address.js:66
 msgid "Costa Rica"
-msgstr "Costa Rica"
+msgstr ""
 
 #: src/Support/Currency.php:273
 msgid "Costa Rican Colón"
@@ -2953,9 +3154,9 @@ msgstr "Nu s-a putut crea produsul. Vă rugăm să încercați din nou."
 msgid "Could not download the file."
 msgstr "Nu s-a putut descărca fișierul."
 
-#: sc-session-provider2.js:240
+#: sc-session-provider2.js:189
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
-msgstr "Nu a putut găsi nota de plată. Vă rugăm să ne contactați înainte de a încerca să cumpărați din nou."
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:46
 msgid "Could not start subscription."
@@ -2980,9 +3181,9 @@ msgstr "Țară"
 msgid "Country Placeholder"
 msgstr "Placeholder țară"
 
-#: sc-compact-address2.js:45
+#: sc-compact-address2.js:46
 msgid "Country or region"
-msgstr "Țară sau regiune"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
 msgid "Country-Specific VAT Registrations"
@@ -3044,6 +3245,10 @@ msgstr "Cupoane"
 #: src/Integrations/TutorLMS/TutorLMSService.php:217
 msgid "Course Access"
 msgstr "Acces la curs"
+
+#: onboarding/components/StarterTemplates.js:35
+msgid "Courses"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
 msgid "Cover"
@@ -3125,6 +3330,10 @@ msgstr "Creează un nou bump de comandă"
 msgid "Create New Product"
 msgstr "Creează un produs nou"
 
+#: onboarding/components/InitialSetup.js:63
+msgid "Create New Store"
+msgstr ""
+
 #: products/modules/Prices/NewPrice/index.js:195
 msgid "Create Price"
 msgstr "Creează prețul"
@@ -3153,6 +3362,10 @@ msgstr "Creați utilizatori WordPress"
 #: settings/advanced/components/CustomerSyncModal.js:83
 msgid "Create WordPress users if the user does not yet exist."
 msgstr "Creați utilizatori WordPress dacă utilizatorul nu există încă."
+
+#: settings/shipping/zone/ShippingZones.js:46
+msgid "Create Zone"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Empty.js:77
 msgid "Create a Checkout Form"
@@ -3238,29 +3451,29 @@ msgstr "Card de credit"
 msgid "Credit Card selected for check out."
 msgstr "Card de credit selectat pentru plată."
 
-#: address.js:70
+#: address.js:67
 msgid "Croatia"
-msgstr "Croația"
+msgstr ""
 
 #: src/Support/Currency.php:274
 msgid "Croatian Kuna"
 msgstr "Kuna croată"
 
-#: address.js:71
+#: address.js:68
 msgid "Cuba"
-msgstr "Cuba"
+msgstr ""
 
-#: address.js:72
+#: address.js:69
 msgid "Curaçao"
-msgstr "Curaçao"
+msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:82
 msgid "Current"
 msgstr "Actual"
 
-#: sc-subscription-payment-method.js:147
+#: sc-subscription-payment-method.js:154
 msgid "Current Payment Method"
-msgstr "Metoda de plată curentă"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:113
 #: Controllers/SubscriptionController.php:203
@@ -3291,6 +3504,10 @@ msgstr "Buton personalizat"
 #: bumps/modules/CTA.js:10
 msgid "Custom Call to action"
 msgstr "Apel la acțiune personalizat"
+
+#: settings/shipping/ShippingSettings.js:195
+msgid "Custom Shipping Profiles"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:17
 #: products/components/SelectTemplatePart/create-modal.js:17
@@ -3417,10 +3634,9 @@ msgctxt "block title"
 msgid "Customer Payment Methods"
 msgstr "Metode de plată pentru client"
 
-#: layouts/partials/admin-settings-sidebar.php:40
-#: settings/portal/PortalSettings.js:39
+#: settings/subscription/SubscriptionSettings.js:297
 msgid "Customer Portal"
-msgstr "Portalul clienților"
+msgstr ""
 
 #: products/modules/Advanced.js:27
 msgid "Customer Purchase Limit"
@@ -3503,10 +3719,30 @@ msgstr "Clienții vor putea schimba planurile tarifare de pe portalul cliențilo
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr "Clienții vor introduce acest cod de reducere la plată. Lasă acest spațiu gol și vom genera unul pentru tine."
 
+#: settings/shipping/zone/ShippingZone.js:79
+msgid "Customers won't be able to complete checkout for products in this zone."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:194
+msgid "Customers won't see this."
+msgstr ""
+
+#: products/modules/Shipping.js:101
+msgid "Customers won’t enter shipping details at checkout."
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:79
+msgid "Customers won’t see this."
+msgstr ""
+
 #: dashboard/components/GetStarted.js:85
 #: dashboard/components/GetStarted.js:91
 msgid "Customize"
 msgstr "Personalizează"
+
+#: onboarding/components/ConfirmStoreDetails.js:39
+msgid "Customize and configure your store settings."
+msgstr ""
 
 #: dashboard/components/GetStarted.js:86
 msgid "Customize forms"
@@ -3528,21 +3764,21 @@ msgstr "Personalizează lățimea pentru toate elementele care sunt alocate colo
 msgid "Customize your checkout forms with a no-code experience."
 msgstr "Personalizează-ți formularele de platăt cu o experiență fără cod."
 
-#: address.js:73
+#: address.js:70
 msgid "Cyprus"
-msgstr "Cipru"
+msgstr ""
 
 #: src/Support/Currency.php:275
 msgid "Czech Koruna"
 msgstr "Coroana cehă"
 
-#: address.js:74
+#: address.js:71
 msgid "Czechia"
-msgstr "Cehia"
+msgstr ""
 
-#: address.js:75
+#: address.js:72
 msgid "Côte d'Ivoire"
-msgstr "Coasta de Fildeș"
+msgstr ""
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:11
 #: dashboard/components/overview/parts/ReportByDropdown.js:24
@@ -3683,9 +3919,13 @@ msgstr "Șablon implicit"
 msgid "Delete"
 msgstr "Șterge"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Delete Payment Method"
-msgstr "Șterge metoda de plată"
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:54
+msgid "Delete Shipping Profile"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:191
 msgid "Delete Update"
@@ -3718,9 +3958,16 @@ msgstr "Șters."
 msgid "Deleting This is Restricted"
 msgstr "Ștergerea este restricționată"
 
-#: address.js:76
+#: src/Controllers/Admin/Orders/OrdersListTable.php:390
+#: orders/modules/Fulfillment/components/StatusDropdown.js:21
+#: sc-fulfillment-shipping-status-badge2.js:9
+#: sc-order-shipment-badge2.js:10
+msgid "Delivered"
+msgstr ""
+
+#: address.js:73
 msgid "Denmark"
-msgstr "Danemarca"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:80
 #: products/components/SelectTemplatePart/create-modal.js:84
@@ -3751,6 +3998,10 @@ msgstr "Detalii"
 #: src/Rest/BlockPatternsRestServiceProvider.php:219
 msgid "Determines whether the pattern is visible in inserter."
 msgstr "Determină dacă modelul este vizibil în inserator."
+
+#: products/modules/Shipping.js:85
+msgid "Digital product or service"
+msgstr ""
 
 #: coupons/components/DisableModal.js:27
 #: settings/processors/ManualPaymentMethod.js:136
@@ -3810,9 +4061,9 @@ msgstr "Setări pentru reduceri"
 msgid "Discounts"
 msgstr "Reduceri"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Dismiss"
-msgstr "Omite"
+msgstr ""
 
 #: src/WordPress/Admin/Notices/AdminNoticesService.php:159
 msgid "Dismiss Notice"
@@ -4021,6 +4272,11 @@ msgctxt "block description"
 msgid "Display the cart subtotal"
 msgstr "Afișează subtotalul coșului"
 
+#: Blocks/ShippingChoices/block.json
+msgctxt "block description"
+msgid "Display the list of shipping choices"
+msgstr ""
+
 #: Blocks/Product/Description/block.json
 msgctxt "block description"
 msgid "Display the product description"
@@ -4030,6 +4286,11 @@ msgstr "Afișați descrierea produsului"
 msgctxt "block description"
 msgid "Display the session totals."
 msgstr "Afișați totalurile sesiunilor."
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block description"
+msgid "Display the shipping amount"
+msgstr ""
 
 #: Blocks/StoreLogo/block.json
 msgctxt "block description"
@@ -4041,9 +4302,9 @@ msgctxt "block description"
 msgid "Display your order bumps."
 msgstr "Afișează bump-urile comenzii."
 
-#: sc-pagination2.js:37
+#: sc-pagination2.js:40
 msgid "Displaying %1d to %2d of %3d items"
-msgstr "Afișarea de la %1d la %2d din %3d elemente"
+msgstr ""
 
 #: Blocks/Dashboard/CustomerSubscriptions/block.json
 msgctxt "block description"
@@ -4231,25 +4492,25 @@ msgctxt "block title"
 msgid "Divider"
 msgstr "Separator"
 
-#: address.js:77
+#: address.js:74
 msgid "Djibouti"
-msgstr "Djibouti"
+msgstr ""
 
 #: src/Support/Currency.php:277
 msgid "Djiboutian Franc"
 msgstr "Franc jiboutian"
 
-#: address.js:78
+#: address.js:75
 msgid "Dominica"
-msgstr "Dominica"
+msgstr ""
 
 #: src/Support/Currency.php:278
 msgid "Dominican Peso"
 msgstr "Peso dominican"
 
-#: address.js:79
+#: address.js:76
 msgid "Dominican Republic"
-msgstr "Republica Dominicană"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:130
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
@@ -4279,10 +4540,6 @@ msgstr "Nu creați o comandă abandonată dacă toate produsele din comandă au 
 #: settings/abandoned/util.js:9
 msgid "Don't send"
 msgstr "Nu trimiteți"
-
-#: src/Controllers/Admin/Onboarding.php:46
-msgid "Donation"
-msgstr "Donație"
 
 #: Blocks/Donation/block.json
 msgctxt "block title"
@@ -4327,9 +4584,9 @@ msgstr "Descarcă chitanța"
 msgid "Download Receipt / Invoice"
 msgstr "Descarcă chitanța / factura"
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Download Receipt/Invoice"
-msgstr "Descărcare chitanță/factură"
+msgstr ""
 
 #: products/modules/Downloads.js:58
 msgid "Download added."
@@ -4363,9 +4620,9 @@ msgstr "Ciornă"
 msgid "Dry run the sync."
 msgstr "Rulează sincronizarea în regim de probă."
 
-#: sc-checkout.js:187
+#: sc-checkout.js:203
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
-msgstr "Din cauza restricțiilor procesorului, pe pagină este permis un singur formular de plată."
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:121
 msgid "Duplicate"
@@ -4374,6 +4631,11 @@ msgstr "Duplicat"
 #: coupons/Sidebar.js:75
 msgid "Duration"
 msgstr "Durată"
+
+#: settings/shipping/method/ShippingMethodForm.js:127
+#: settings/shipping/rate/ShippingRateForm.js:319
+msgid "E.g. 1-2 days"
+msgstr ""
 
 #: orders/modules/TaxInfo.js:10
 #: tax.js:19
@@ -4392,9 +4654,13 @@ msgstr "Setări TVA UE"
 msgid "East Caribbean Dollar"
 msgstr "Dolarul din Caraibe de Est"
 
-#: address.js:80
+#: Blocks/ShippingChoices/edit.js:43
+msgid "Economy"
+msgstr ""
+
+#: address.js:77
 msgid "Ecuador"
-msgstr "Ecuador"
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:281
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:262
@@ -4414,6 +4680,10 @@ msgstr "Editează."
 #: licenses/modules/Activations/Activation.js:137
 msgid "Edit Activation"
 msgstr "Editează activarea"
+
+#: subscriptions/edit/modules/Price.js:105
+msgid "Edit Amount"
+msgstr ""
 
 #: bumps/EditBump.js:173
 msgid "Edit Bump"
@@ -4473,6 +4743,14 @@ msgstr "Editează grupul de produse"
 msgid "Edit Promotion Code"
 msgstr "Editează codul promoțional"
 
+#: settings/shipping/method/ShippingMethodForm.js:90
+msgid "Edit Shipping Method"
+msgstr ""
+
+#: settings/shipping/rate/EditShippingRate.js:17
+msgid "Edit Shipping Rate"
+msgstr ""
+
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:394
 #: subscriptions/edit/EditSubscription.js:227
 msgid "Edit Subscription"
@@ -4481,6 +4759,14 @@ msgstr "Editarea abonamentului"
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:41
 msgid "Edit SureCart Product"
 msgstr "Editează produsul SureCart"
+
+#: orders/modules/Fulfillment/components/AddTracking.js:69
+msgid "Edit Tracking"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:264
+msgid "Edit Zone"
+msgstr ""
 
 #: products/components/SelectTemplate/form.js:125
 #: products/components/SelectTemplatePart/form.js:145
@@ -4491,22 +4777,26 @@ msgstr "Editează șablonul"
 msgid "Edit the layout of each product"
 msgstr "Editați aspectul fiecărui produs"
 
+#: orders/modules/Fulfillment/Fulfilled.js:144
+msgid "Edit tracking"
+msgstr ""
+
 #: Blocks/CartItems/edit.js:44
 #: Blocks/LineItems/edit.js:36
 msgid "Editable"
 msgstr "Editabil"
 
-#: address.js:81
+#: address.js:78
 msgid "Egypt"
-msgstr "Egipt"
+msgstr ""
 
 #: src/Support/Currency.php:280
 msgid "Egyptian Pound"
 msgstr "Liră egipteană"
 
-#: address.js:82
+#: address.js:79
 msgid "El Salvador"
-msgstr "El Salvador"
+msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
 #: coupons/modules/CustomerSelector.js:132
@@ -4538,9 +4828,13 @@ msgstr "Email trimis"
 msgid "Email Status"
 msgstr "Stare e-mail"
 
-#: sc-login-provider2.js:79
+#: settings/customer/CustomerSettings.js:307
+msgid "Email Verification Code"
+msgstr ""
+
+#: sc-login-provider2.js:83
 msgid "Email or Username"
-msgstr "Email sau nume de utilizator"
+msgstr ""
 
 #: src/Rest/CustomerLinksRestServiceProvider.php:59
 msgid "Email or username for the request"
@@ -4573,6 +4867,10 @@ msgstr "Activează plata prin PayPal"
 #: settings/account/AccountSettings.js:260
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr "Activează protecția anti-spam Recaptcha pe formularele de plată."
+
+#: settings/shipping/ShippingSettings.js:146
+msgid "Enable Shipping Rates"
+msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:65
 msgid "Enable Stripe payment"
@@ -4626,6 +4924,10 @@ msgstr "Activat în modul de testare"
 #: Blocks/Payment/components/Inspector.js:42
 msgid "Enabled Processors"
 msgstr "Procesatoare activate"
+
+#: settings/shipping/ShippingSettings.js:148
+msgid "Enabling shipping rates allows you to charge shipping costs and restrict purchase areas."
+msgstr ""
 
 #: coupons/modules/Limits.js:72
 msgid "End Date"
@@ -4697,6 +4999,10 @@ msgstr "Introdu un număr de telefon"
 msgid "Enter coupon code"
 msgstr "Introduceți codul de cupon"
 
+#: onboarding/components/ConfirmStoreEmail.js:61
+msgid "Enter email address"
+msgstr ""
+
 #: licenses/modules/Details/index.js:56
 msgid "Enter the number of unique activations for this key. Leave blank for infinite."
 msgstr "Introdu numărul de activări unice pentru această cheie. Lasă gol pentru infinit."
@@ -4731,26 +5037,25 @@ msgstr "Introdu cheia de licență"
 msgid "Enter your license key to activate your plan on thie store."
 msgstr "Introdu cheia de licență pentru a vă activa planul în acest magazin."
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "Enter your password"
-msgstr "Introduceți parola dvs."
+msgstr ""
 
-#: address.js:83
+#: address.js:80
 msgid "Equatorial Guinea"
-msgstr "Guineea Ecuatorială"
+msgstr ""
 
-#: address.js:84
+#: address.js:81
 msgid "Eritrea"
-msgstr "Eritreea"
+msgstr ""
 
-#: sc-cart-form.js:128
-#: sc-dashboard-module2.js:16
-#: sc-login-form.js:106
-#: sc-paypal-add-method.js:103
-#: sc-stripe-add-method.js:128
-#: sc-upcoming-invoice.js:208
+#: sc-cart-form.js:129
+#: sc-dashboard-module2.js:17
+#: sc-paypal-add-method.js:108
+#: sc-stripe-add-method.js:132
+#: sc-upcoming-invoice.js:221
 msgid "Error"
-msgstr "Eroare"
+msgstr ""
 
 #: abandoned-checkouts/components/Link.js:35
 #: licenses/modules/Details/Copy.js:16
@@ -4769,19 +5074,19 @@ msgstr "Eroare."
 
 #: sc-line-item-tax2.js:18
 msgid "Estimated %s"
-msgstr "Estimat %s"
+msgstr ""
 
-#: address.js:85
+#: address.js:82
 msgid "Estonia"
-msgstr "Estonia"
+msgstr ""
 
-#: address.js:86
+#: address.js:83
 msgid "Eswatini"
-msgstr "Eswatini"
+msgstr ""
 
-#: address.js:87
+#: address.js:84
 msgid "Ethiopia"
-msgstr "Etiopia"
+msgstr ""
 
 #: src/Support/Currency.php:281
 msgid "Ethiopian Birr"
@@ -4798,7 +5103,7 @@ msgstr "Uniunea Europeană"
 
 #: sc-product-price-choices.js:26
 msgid "Every"
-msgstr "La fiecare"
+msgstr ""
 
 #: Blocks/CartItems/edit.js:72
 #: Blocks/CartItems/edit.js:81
@@ -4827,14 +5132,18 @@ msgstr "Expirat"
 msgid "Export CSV"
 msgstr "Export CSV"
 
+#: Blocks/ShippingChoices/edit.js:34
+msgid "Express"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block title"
 msgid "Express Payment"
 msgstr "Plată expres"
 
-#: sc-stripe-payment-request2.js:287
+#: sc-stripe-payment-request2.js:286
 msgid "Express Payment"
-msgstr "Plata Expres"
+msgstr ""
 
 #: products/modules/Downloads.js:146
 msgid "External Link"
@@ -4857,9 +5166,17 @@ msgstr "Nu s-a reușit anularea abonamentului."
 msgid "Failed to create refund."
 msgstr "Nu s-a reușit crearea rambursării."
 
-#: sc-paypal-add-method.js:74
+#: settings/shipping/rate/ShippingRateForm.js:141
+msgid "Failed to create shipping method"
+msgstr ""
+
+#: onboarding/Onboarding.js:102
+msgid "Failed to create store. Please try again."
+msgstr ""
+
+#: sc-paypal-add-method.js:79
 msgid "Failed to load the PayPal JS SDK script"
-msgstr "Nu s-a reușit încărcarea scriptului PayPal JS SDK"
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:10
 msgid "Failed to save coupon."
@@ -4883,35 +5200,43 @@ msgstr "Nu s-a reușit renunțarea la anularea abonamentului."
 msgid "Failed to update. Please check for errors and try again."
 msgstr "Nu s-a reușit actualizarea. Te rugăm să verifici dacă există erori și să încerci din nou."
 
-#: address.js:88
+#: address.js:85
 msgid "Falkland Islands (Malvinas)"
-msgstr "Insulele Falkland (Malvine)"
+msgstr ""
 
 #: src/Support/Currency.php:283
 msgid "Falkland Pound"
 msgstr "Liră Falkland"
 
+#: settings/shipping/zone/ShippingZone.js:183
+msgid "Fallback"
+msgstr ""
+
 #: settings/tax/TaxSettings.js:97
 msgid "Fallback Rate"
 msgstr "Rata alternativă"
 
-#: address.js:89
+#: settings/shipping/zone/FallbackZone.js:33
+msgid "Fallback Zone"
+msgstr ""
+
+#: address.js:86
 msgid "Faroe Islands"
-msgstr "Insulele Feroe"
+msgstr ""
 
 #: products/modules/Image/ImageDisplay.js:43
 msgid "Featured"
 msgstr "Recomandate"
 
-#: sc-customer-firstname.js:50
-#: sc-customer-lastname.js:47
-#: sc-customer-name.js:47
+#: sc-customer-firstname.js:46
+#: sc-customer-lastname.js:43
+#: sc-customer-name.js:42
 msgid "Field must not be empty."
-msgstr "Câmpul nu trebuie să fie gol."
+msgstr ""
 
-#: address.js:90
+#: address.js:87
 msgid "Fiji"
-msgstr "Fiji"
+msgstr ""
 
 #: src/Support/Currency.php:284
 msgid "Fijian Dollar"
@@ -4928,6 +5253,20 @@ msgstr "Nume de fișier"
 #: src/Rest/ProductsRestServiceProvider.php:53
 msgid "Files attached to the product."
 msgstr "Fișiere atașate la produs."
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:436
+msgid "Filter"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:346
+msgid "Filter by fulfillment"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:382
+msgid "Filter by shipment"
+msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:222
 #: src/WordPress/PostTypes/FormPostTypeService.php:215
@@ -4957,9 +5296,9 @@ msgstr "Găsește un produs..."
 msgid "Fingerprint"
 msgstr "Amprentă digitală"
 
-#: address.js:91
+#: address.js:88
 msgid "Finland"
-msgstr "Finlanda"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:114
 msgid "First Email Delay"
@@ -4988,6 +5327,11 @@ msgstr "Ajutor pentru prenume"
 msgid "First Name Label"
 msgstr "Etichetă prenume"
 
+#: settings/shipping/profile/ShippingProfile.js:176
+#: settings/shipping/zone/ShippingZones.js:79
+msgid "First create a shipping zone (where you ship to) and then a shipping rate (the cost to ship there)."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:242
 msgid "First email sent when a checkout is abandoned."
 msgstr "Primul e-mail trimis atunci când o plată este abandonată."
@@ -5004,6 +5348,11 @@ msgstr "Fix"
 #: settings/abandoned/Coupon.js:72
 msgid "Fixed Discount"
 msgstr "Reducere fixă"
+
+#: settings/shipping/rate/ShippingRateCondition.js:53
+#: settings/shipping/rate/ShippingRateForm.js:421
+msgid "Flat Rate"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:279
 msgid "Floating Icon"
@@ -5067,9 +5416,9 @@ msgstr "Titlu formular"
 msgid "Forms"
 msgstr "Formulare"
 
-#: address.js:92
+#: address.js:89
 msgid "France"
-msgstr "Franța"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:125
 msgid "Fraudulent"
@@ -5099,17 +5448,50 @@ msgstr "Zile de probă gratuite"
 msgid "Free Trial Ends"
 msgstr "Perioada de probă gratuită se încheie"
 
-#: address.js:93
+#: address.js:90
 msgid "French Guiana"
-msgstr "Guiana Franceză"
+msgstr ""
 
-#: address.js:94
+#: address.js:91
 msgid "French Polynesia"
-msgstr "Polinezia Franceză"
+msgstr ""
 
-#: address.js:95
+#: address.js:92
 msgid "French Southern Territories"
-msgstr "Teritoriile australe şi antarctice franceze"
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:162
+#: orders/modules/Fulfillment/CreateFulfillment.js:341
+#: orders/modules/Fulfillment/Unfulfilled.js:75
+#: orders/modules/Fulfillment/Unfulfilled.js:87
+msgid "Fulfill Item"
+msgid_plural "Fulfill Items"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:352
+#: orders/modules/Fulfillment/Fulfilled.js:90
+#: sc-order-fulfillment-badge.js:8
+msgid "Fulfilled"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:204
+msgid "Fulfilled on"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:104
+#: store/add-entities.js:88
+msgid "Fulfillment"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:52
+msgid "Fulfillment canceled."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:130
+msgid "Fulfillment created."
+msgstr ""
 
 #: Blocks/CustomerDashboardButton/edit.js:50
 #: Blocks/Submit/edit.js:37
@@ -5124,10 +5506,6 @@ msgstr "Nume Complet"
 #: Blocks/Columns/edit.js:125
 msgid "Full vertical height"
 msgstr "Înălțime verticală totală"
-
-#: settings/portal/PortalSettings.js:50
-msgid "Functionality"
-msgstr "Funcționalitate"
 
 #: settings/abandoned/AbandonedSettings.js:278
 msgid "GDPR Message"
@@ -5833,29 +6211,29 @@ msgstr "Numărul GST"
 msgid "GST Registration"
 msgstr "Înregistrarea GST"
 
-#: address.js:96
+#: address.js:93
 msgid "Gabon"
-msgstr "Gabon"
+msgstr ""
 
-#: address.js:97
+#: address.js:94
 msgid "Gambia"
-msgstr "Gambia"
+msgstr ""
 
 #: src/Support/Currency.php:285
 msgid "Gambian Dalasi"
 msgstr "Dalasi Gambian"
 
-#: address.js:98
+#: address.js:95
 msgid "Georgia"
-msgstr "Georgia"
+msgstr ""
 
 #: src/Support/Currency.php:286
 msgid "Georgian Lari"
 msgstr "Lari georgian"
 
-#: address.js:99
+#: address.js:96
 msgid "Germany"
-msgstr "Germania"
+msgstr ""
 
 #: admin/onboarding/show.php:69
 #: dashboard/components/LearnMore.js:53
@@ -5882,13 +6260,13 @@ msgstr "Începe prin a selecta un formular sau începe să creezi un formular no
 msgid "Get started with SureCart"
 msgstr "Începe cu SureCart"
 
-#: address.js:100
+#: address.js:97
 msgid "Ghana"
-msgstr "Ghana"
+msgstr ""
 
-#: address.js:101
+#: address.js:98
 msgid "Gibraltar"
-msgstr "Gibraltar"
+msgstr ""
 
 #: src/Support/Currency.php:287
 msgid "Gibraltar Pound"
@@ -5911,17 +6289,17 @@ msgstr "Înapoi."
 msgid "Grace Period"
 msgstr "Perioada de grație"
 
-#: address.js:102
+#: address.js:99
 msgid "Greece"
-msgstr "Grecia"
+msgstr ""
 
-#: address.js:103
+#: address.js:100
 msgid "Greenland"
-msgstr "Groenlanda"
+msgstr ""
 
-#: address.js:104
+#: address.js:101
 msgid "Grenada"
-msgstr "Grenada"
+msgstr ""
 
 #: src/Integrations/BuddyBoss/BuddyBossService.php:55
 #: src/Integrations/LearnDashGroup/LearnDashGroupService.php:55
@@ -5938,45 +6316,45 @@ msgstr "Numele grupului"
 msgid "Grow your store worry-free."
 msgstr "Dezvoltă-ți magazinul fără griji."
 
-#: address.js:105
+#: address.js:102
 msgid "Guadeloupe"
-msgstr "Guadelupa"
+msgstr ""
 
-#: address.js:107
+#: address.js:103
 msgid "Guatemala"
-msgstr "Guatemala"
+msgstr ""
 
 #: src/Support/Currency.php:288
 msgid "Guatemalan Quetzal"
 msgstr "Quetzal guatemalez"
 
-#: address.js:108
+#: address.js:104
 msgid "Guernsey"
-msgstr "Guernsey"
+msgstr ""
 
-#: address.js:109
+#: address.js:105
 msgid "Guinea"
-msgstr "Guineea"
+msgstr ""
 
-#: address.js:110
+#: address.js:106
 msgid "Guinea-Bissau"
-msgstr "Guineea-Bissau"
+msgstr ""
 
 #: src/Support/Currency.php:289
 msgid "Guinean Franc"
 msgstr "Franc guineean"
 
-#: address.js:111
+#: address.js:107
 msgid "Guyana"
-msgstr "Guyana"
+msgstr ""
 
 #: src/Support/Currency.php:290
 msgid "Guyanese Dollar"
 msgstr "Dolarul guyanez"
 
-#: address.js:112
+#: address.js:108
 msgid "Haiti"
-msgstr "Haiti"
+msgstr ""
 
 #: src/Support/Currency.php:291
 msgid "Haitian Gourde"
@@ -5991,9 +6369,9 @@ msgstr "Textul antetului"
 msgid "Heading %d"
 msgstr "Titlu %d"
 
-#: address.js:113
+#: address.js:109
 msgid "Heard Island and McDonald Islands"
-msgstr "Insula Heard şi Insulele McDonald"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:85
 #: Blocks/Checkbox/components/Inspector.js:39
@@ -6019,9 +6397,9 @@ msgstr "Ascunde %d prețuri arhivate"
 msgid "Hide %d Archived Promotion Codes"
 msgstr "Ascunde %d coduri promoționale arhivate"
 
-#: address.js:114
+#: address.js:110
 msgid "Holy See (Vatican City State)"
-msgstr "Sfântul Scaun (Statul Vatican)"
+msgstr ""
 
 #: web/no-customer.php:8
 msgid "Home"
@@ -6031,17 +6409,17 @@ msgstr "Acasă"
 msgid "Honduran Lempira"
 msgstr "Lempira honduriană"
 
-#: address.js:115
+#: address.js:111
 msgid "Honduras"
-msgstr "Honduras"
+msgstr ""
 
 #: settings/account/AccountSettings.js:242
 msgid "Honeypot"
 msgstr "Honeypot"
 
-#: address.js:116
+#: address.js:112
 msgid "Hong Kong"
-msgstr "Hong Kong"
+msgstr ""
 
 #: src/Support/Currency.php:293
 msgid "Hong Kong Dollar"
@@ -6055,9 +6433,9 @@ msgstr "Cum să adaugi butoane"
 msgid "Hungarian Forint"
 msgstr "Forint maghiar"
 
-#: address.js:117
+#: address.js:113
 msgid "Hungary"
-msgstr "Ungaria"
+msgstr ""
 
 #. translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
 #: src/Controllers/Web/BuyPageController.php:214
@@ -6086,9 +6464,9 @@ msgstr "De exemplu, transport gratuit pentru toate comenzile..."
 msgid "I.E. Pay with cash upon delivery."
 msgstr "De exemplu, plătiți cu numerar la livrare."
 
-#: address.js:118
+#: address.js:114
 msgid "Iceland"
-msgstr "Islanda"
+msgstr ""
 
 #: src/Support/Currency.php:295
 msgid "Icelandic Króna"
@@ -6187,9 +6565,9 @@ msgstr "În cazul în care se solicită taxe sau transport pentru finalizarea co
 msgid "If there are errors in the checkout, they will display here."
 msgstr "În cazul în care există erori în procesul de plată, acestea vor fi afișate aici."
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "If you change your mind, you can renew your subscription."
-msgstr "Dacă vă răzgândiți, vă puteți reînnoi abonamentul."
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:39
 msgid "If you do business in Australia, you may be required to collect GST on sales in Australia."
@@ -6274,23 +6652,23 @@ msgstr "Inactiv"
 
 #: sc-subscription-status-badge2.js:50
 msgid "Incomplete"
-msgstr "Incomplet"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:71
 msgid "Increase quantity"
 msgstr "Crește cantitatea"
 
-#: address.js:119
+#: address.js:115
 msgid "India"
-msgstr "India"
+msgstr ""
 
 #: src/Support/Currency.php:296
 msgid "Indian Rupee"
 msgstr "Rupie indiană"
 
-#: address.js:120
+#: address.js:116
 msgid "Indonesia"
-msgstr "Indonezia"
+msgstr ""
 
 #: src/Support/Currency.php:297
 msgid "Indonesian Rupiah"
@@ -6391,6 +6769,10 @@ msgstr "Token API invalid"
 msgid "Invalid API token."
 msgstr "Token API invalid."
 
+#: onboarding/components/ConfirmStoreEmail.js:26
+msgid "Invalid email address!"
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:13
 msgid "Invalid promotion code."
 msgstr "Cod promoțional invalid."
@@ -6417,9 +6799,9 @@ msgstr "Factură"
 msgid "Invoice Details"
 msgstr "Detalii factură"
 
-#: sc-invoices-list.js:140
+#: sc-invoices-list.js:142
 msgid "Invoice History"
-msgstr "Istoricul facturilor"
+msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
 #: admin/invoices/index.php:21
@@ -6436,25 +6818,25 @@ msgstr "Facturi și chitanțe"
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr "Facturile sunt similare comenzilor, dar sunt utilizate pentru plăți și modificări de plan pentru abonamentele active. În viitor, vei putea crea o factură pe care să o trimiți."
 
-#: address.js:121
+#: address.js:117
 msgid "Iran, Islamic Republic of"
-msgstr "Republica Islamică a Iranului"
+msgstr ""
 
-#: address.js:122
+#: address.js:118
 msgid "Iraq"
-msgstr "Irak"
+msgstr ""
 
-#: address.js:123
+#: address.js:119
 msgid "Ireland"
-msgstr "Irlanda"
+msgstr ""
 
-#: address.js:124
+#: address.js:120
 msgid "Isle of Man"
-msgstr "Insula Man"
+msgstr ""
 
-#: address.js:125
+#: address.js:121
 msgid "Israel"
-msgstr "Israel"
+msgstr ""
 
 #: src/Support/Currency.php:298
 msgid "Israeli New Sheqel"
@@ -6496,9 +6878,9 @@ msgstr "Se pare că folosești coloane de înălțime completă. Ai dorit să sc
 msgid "It must be greater than the largest existing order number."
 msgstr "Acesta trebuie să fie mai mare decât cel mai mare număr de ordine existent."
 
-#: address.js:126
+#: address.js:122
 msgid "Italy"
-msgstr "Italia"
+msgstr ""
 
 #: customers/modules/Purchases.js:38
 #: invoices/modules/Purchases.js:31
@@ -6514,29 +6896,29 @@ msgstr "Element"
 msgid "Items"
 msgstr "Elemente"
 
-#: address.js:127
+#: address.js:123
 msgid "Jamaica"
-msgstr "Jamaica"
+msgstr ""
 
 #: src/Support/Currency.php:299
 msgid "Jamaican Dollar"
 msgstr "Dolar jamaican"
 
-#: address.js:128
+#: address.js:124
 msgid "Japan"
-msgstr "Japonia"
+msgstr ""
 
 #: src/Support/Currency.php:300
 msgid "Japanese Yen"
 msgstr "Yen japonez"
 
-#: address.js:129
+#: address.js:125
 msgid "Jersey"
-msgstr "Jersey"
+msgstr ""
 
-#: address.js:130
+#: address.js:126
 msgid "Jordan"
-msgstr "Jordan"
+msgstr ""
 
 #: admin/onboarding/complete.php:56
 msgid "Just one last step!"
@@ -6558,25 +6940,25 @@ msgstr "Justifică elementele stânga"
 msgid "Justify items right"
 msgstr "Justifică elementele dreapta"
 
-#: address.js:131
+#: address.js:127
 msgid "Kazakhstan"
-msgstr "Kazahstan"
+msgstr ""
 
 #: src/Support/Currency.php:301
 msgid "Kazakhstani Tenge"
 msgstr "Tenge kazahă"
 
-#: sc-subscription-cancel2.js:56
+#: sc-subscription-cancel2.js:66
 msgid "Keep My Plan"
-msgstr "Păstrați Planul Meu"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:197
 msgid "Keep Update"
 msgstr "Păstrează actualizarea"
 
-#: address.js:132
+#: address.js:128
 msgid "Kenya"
-msgstr "Kenya"
+msgstr ""
 
 #: src/Support/Currency.php:302
 msgid "Kenyan Shilling"
@@ -6587,17 +6969,17 @@ msgstr "Șiling kenyan"
 msgid "Key"
 msgstr "Cheie"
 
-#: address.js:133
+#: address.js:129
 msgid "Kiribati"
-msgstr "Kiribati"
+msgstr ""
 
-#: address.js:134
+#: address.js:130
 msgid "Kuwait"
-msgstr "Kuweit"
+msgstr ""
 
-#: address.js:135
+#: address.js:131
 msgid "Kyrgyzstan"
-msgstr "Kârgâzstan"
+msgstr ""
 
 #: src/Support/Currency.php:303
 msgid "Kyrgyzstani Som"
@@ -6651,9 +7033,9 @@ msgstr "Peisaj"
 msgid "Lao Kip"
 msgstr "Lao Kip"
 
-#: address.js:136
+#: address.js:132
 msgid "Lao People's Democratic Republic"
-msgstr "Republica Democrată Populară Laos"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:127
 #: Blocks/BuyButton/edit.js:112
@@ -6701,11 +7083,11 @@ msgstr "Săptămâna trecută"
 #: sc-product-item-list.js:137
 #: sc-product-item-list.js:150
 msgid "Latest"
-msgstr "Cele mai recente"
+msgstr ""
 
-#: address.js:137
+#: address.js:133
 msgid "Latvia"
-msgstr "Letonia"
+msgstr ""
 
 #: Blocks/Column/edit.js:134
 msgid "Layout"
@@ -6736,17 +7118,17 @@ msgstr "Lasă acest spațiu gol și vom genera unul pentru tine."
 msgid "Lebanese Pound"
 msgstr "Liră libaneză"
 
-#: address.js:138
+#: address.js:134
 msgid "Lebanon"
-msgstr "Liban"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:188
 msgid "Left"
 msgstr "Stânga"
 
-#: address.js:139
+#: address.js:135
 msgid "Lesotho"
-msgstr "Lesotho"
+msgstr ""
 
 #: src/Support/Currency.php:306
 msgid "Lesotho Loti"
@@ -6757,17 +7139,17 @@ msgctxt "block description"
 msgid "Lets the customer update payment methods."
 msgstr "Permite clientului să actualizeze metodele de plată."
 
-#: address.js:140
+#: address.js:136
 msgid "Liberia"
-msgstr "Liberia"
+msgstr ""
 
 #: src/Support/Currency.php:307
 msgid "Liberian Dollar"
 msgstr "Dolarul liberian"
 
-#: address.js:141
+#: address.js:137
 msgid "Libya"
-msgstr "Libia"
+msgstr ""
 
 #: licenses/modules/Details/index.js:28
 #: store/add-entities.js:96
@@ -6799,9 +7181,9 @@ msgstr "Licențe"
 msgid "Licensing"
 msgstr "Licențiere"
 
-#: address.js:142
+#: address.js:138
 msgid "Liechtenstein"
-msgstr "Liechtenstein"
+msgstr ""
 
 #: subscriptions/shared/EndDate.js:9
 #: subscriptions/show/modules/Details.js:18
@@ -6865,6 +7247,10 @@ msgctxt "block title"
 msgid "Line Items"
 msgstr "Elemente individuale"
 
+#: store/add-entities.js:131
+msgid "Line Items"
+msgstr ""
+
 #: products/modules/BuyLink.js:273
 msgid "Link"
 msgstr "Link"
@@ -6889,9 +7275,9 @@ msgstr "Link eliminat."
 msgid "Links and Shortcodes"
 msgstr "Link-uri și Shortcodes"
 
-#: address.js:143
+#: address.js:139
 msgid "Lithuania"
-msgstr "Lituania"
+msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/WordPress/PostTypes/FormPostTypeService.php:321
@@ -6899,16 +7285,6 @@ msgstr "Lituania"
 #: Blocks/Form/components/Mode.js:37
 msgid "Live"
 msgstr "Live"
-
-#: admin/processors.php:65
-#: admin/processors.php:143
-msgid "Live Payments Enabled"
-msgstr "Plățile live sunt activate"
-
-#: admin/processors.php:70
-#: admin/processors.php:148
-msgid "Live Payments Not Enabled"
-msgstr "Plățile live nu sunt activate"
 
 #: components/data-tables/PaginationFooter.js:16
 #: subscriptions/show/modules/Invoices.js:50
@@ -6939,13 +7315,13 @@ msgstr "Deconectare"
 msgid "Login"
 msgstr "Autentificare"
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Login to your account"
-msgstr "Conectați-vă la contul dvs."
+msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Login with Code"
-msgstr "Autentificare cu cod"
+msgstr ""
 
 #: settings/brand/Logo.js:110
 msgid "Logo"
@@ -6965,29 +7341,25 @@ msgstr "Buton de deconectare"
 msgid "Logout button settings"
 msgstr "Setări pentru butonul de deconectare"
 
-#: address.js:144
+#: address.js:140
 msgid "Luxembourg"
-msgstr "Luxemburg"
+msgstr ""
 
 #: src/Support/Currency.php:308
 msgid "Macanese Pataca"
 msgstr "Pataca macaneză"
 
-#: address.js:145
+#: address.js:141
 msgid "Macao"
-msgstr "Macao"
+msgstr ""
 
 #: src/Support/Currency.php:309
 msgid "Macedonian Denar"
 msgstr "Denar macedonean"
 
-#: address.js:146
+#: address.js:142
 msgid "Madagascar"
-msgstr "Madagascar"
-
-#: settings/customer/CustomerSettings.js:277
-msgid "Magic Sign In"
-msgstr "Conectare Magic"
+msgstr ""
 
 #: customers/modules/PaymentMethods/Actions.js:87
 #: sc-payment-methods-list.js:131
@@ -7006,41 +7378,45 @@ msgstr "Efectuează plăți de testare cu acest produs."
 msgid "Malagasy Ariary"
 msgstr "Ariary malgașă"
 
-#: address.js:147
+#: address.js:143
 msgid "Malawi"
-msgstr "Malawi"
+msgstr ""
 
 #: src/Support/Currency.php:311
 msgid "Malawian Kwacha"
 msgstr "Kwacha malawian"
 
-#: address.js:148
+#: address.js:144
 msgid "Malaysia"
-msgstr "Malaezia"
+msgstr ""
 
 #: src/Support/Currency.php:312
 msgid "Malaysian Ringgit"
 msgstr "Ringgit malaezian"
 
-#: address.js:149
+#: address.js:145
 msgid "Maldives"
-msgstr "Maldive"
+msgstr ""
 
 #: src/Support/Currency.php:313
 msgid "Maldivian Rufiyaa"
 msgstr "Rufiyaa din Maldive"
 
-#: address.js:150
+#: address.js:146
 msgid "Mali"
-msgstr "Mali"
+msgstr ""
 
-#: address.js:151
+#: address.js:147
 msgid "Malta"
-msgstr "Malta"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:155
 msgid "Manage Scheduled Update"
 msgstr "Gestionează actualizarea programată"
+
+#: settings/shipping/profile/ShippingProfile.js:131
+msgid "Manage Shipping Profile"
+msgstr ""
 
 #: products/components/SelectTemplatePart/index.js:99
 msgid "Manage all template parts"
@@ -7102,34 +7478,34 @@ msgstr "Metode de plată manuală"
 msgid "Manually sync your WordPress install with SureCart."
 msgstr "Sincronizează manual instalarea WordPress cu SureCart."
 
+#: orders/Order.js:112
+msgid "Mark As Paid"
+msgstr ""
+
 #: orders/modules/OrderStatusConfirmModal.js:85
 msgid "Mark Paid"
 msgstr "Marchează ca plătită"
-
-#: orders/Order.js:154
-msgid "Mark as Paid"
-msgstr "Marchează ca fiind plătit(ă)"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:354
 msgctxt "comment"
 msgid "Mark as spam"
 msgstr "Marchează ca spam"
 
-#: address.js:152
+#: address.js:148
 msgid "Marshall Islands"
-msgstr "Insulele Marshall"
+msgstr ""
 
-#: address.js:153
+#: address.js:149
 msgid "Martinique"
-msgstr "Martinica"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:127
 msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
 msgstr "Potrivește toți clienții SureCart cu utilizatorii WordPress. Acest lucru este util dacă ai migrat de la o altă platformă de comerț electronic."
 
-#: address.js:154
+#: address.js:150
 msgid "Mauritania"
-msgstr "Mauritania"
+msgstr ""
 
 #: src/Support/Currency.php:314
 msgid "Mauritanian Ouguiya"
@@ -7139,9 +7515,9 @@ msgstr "Ouguiya mauritană"
 msgid "Mauritian Rupee"
 msgstr "Rupia mauritiană"
 
-#: address.js:155
+#: address.js:151
 msgid "Mauritius"
-msgstr "Mauritius"
+msgstr ""
 
 #: components/MediaLibrary/index.js:182
 msgid "Max"
@@ -7159,17 +7535,21 @@ msgstr "Preț maxim"
 msgid "Maximum height"
 msgstr "Înălțime maximă"
 
-#: address.js:156
+#: settings/shipping/rate/ShippingRateForm.js:248
+msgid "Maximum weight"
+msgstr ""
+
+#: address.js:152
 msgid "Mayotte"
-msgstr "Mayotte"
+msgstr ""
 
 #: store/add-entities.js:103
 msgid "Media"
 msgstr "Media"
 
-#: fetch.js:1958
+#: fetch.js:807
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
-msgstr "Încărcarea media a eșuat. Dacă este o fotografie sau o imagine mare, vă rugăm să o reduceți și să încercați din nou."
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:123
 #: Blocks/BuyButton/edit.js:108
@@ -7235,21 +7615,25 @@ msgstr "Metoda \"%s\" nu este implementată.  Trebuie să fie suprascrisă în s
 msgid "Mexican Peso"
 msgstr "Peso mexican"
 
-#: address.js:157
+#: address.js:153
 msgid "Mexico"
-msgstr "Mexic"
+msgstr ""
 
 #: settings/tax-region/RegionSettings.js:90
 msgid "Micro-Business Exemption"
 msgstr "Scutire pentru microîntreprinderi"
 
-#: address.js:158
+#: address.js:154
 msgid "Micronesia, Federated States of"
-msgstr "Statele Federate ale Microneziei"
+msgstr ""
 
 #: products/components/price/parts/AdHoc.js:29
 msgid "Minimum Price"
 msgstr "Preț minim"
+
+#: settings/shipping/rate/ShippingRateForm.js:236
+msgid "Minimum weight"
+msgstr ""
 
 #: products/modules/Prices/Price/Header.js:269
 msgid "Miscellaneous"
@@ -7259,9 +7643,9 @@ msgstr "Diverse"
 msgid "Mode"
 msgstr "Mod"
 
-#: address.js:159
+#: address.js:155
 msgid "Moldova"
-msgstr "Moldova"
+msgstr ""
 
 #: src/Support/Currency.php:317
 msgid "Moldovan Leu"
@@ -7271,21 +7655,21 @@ msgstr "Leu moldovenesc"
 msgid "Mollie"
 msgstr "Mollie"
 
-#: address.js:160
+#: address.js:156
 msgid "Monaco"
-msgstr "Monaco"
+msgstr ""
 
-#: address.js:161
+#: address.js:157
 msgid "Mongolia"
-msgstr "Mongolia"
+msgstr ""
 
 #: src/Support/Currency.php:318
 msgid "Mongolian Tögrög"
 msgstr "Tögrög mongolez"
 
-#: address.js:162
+#: address.js:158
 msgid "Montenegro"
-msgstr "Muntenegru"
+msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:92
 #: util.js:39
@@ -7302,17 +7686,17 @@ msgstr "Lunar"
 msgid "Monthly, Basic Plan, etc."
 msgstr "Lunar, Plan de bază, etc."
 
-#: address.js:163
+#: address.js:159
 msgid "Montserrat"
-msgstr "Montserrat"
+msgstr ""
 
 #: src/Support/Currency.php:319
 msgid "Moroccan Dirham"
 msgstr "Dirham marocan"
 
-#: address.js:164
+#: address.js:160
 msgid "Morocco"
-msgstr "Maroc"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:366
 msgid "Move to Trash"
@@ -7322,9 +7706,21 @@ msgstr "Mută la coșul de gunoi"
 msgid "Mozambican Metical"
 msgstr "Metical mozambican"
 
-#: address.js:165
+#: address.js:161
 msgid "Mozambique"
-msgstr "Mozambic"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:30
+msgid "Musical Instruments"
+msgstr ""
+
+#: sc-price-input2.js:51
+msgid "Must be %d or less."
+msgstr ""
+
+#: sc-price-input2.js:47
+msgid "Must be %d or more."
+msgstr ""
 
 #: src/Support/Errors/Translations/types.php:21
 msgid "Must be accepted."
@@ -7361,9 +7757,9 @@ msgstr "Trebuie să fie mai mic(ă)."
 msgid "My website domain has permanently changed. Remove webhook for %s"
 msgstr "Domeniul site-ului meu s-a schimbat definitiv. Șterge webhook pentru %s"
 
-#: address.js:166
+#: address.js:162
 msgid "Myanmar"
-msgstr "Myanmar"
+msgstr ""
 
 #: src/Support/Currency.php:321
 msgid "Myanmar Kyat"
@@ -7404,31 +7800,31 @@ msgstr "Alege Prețul."
 msgid "Name Your Price"
 msgstr "Numește-ți prețul"
 
-#: sc-address2.js:105
-#: sc-order-shipping-address2.js:30
-#: sc-order-shipping-address2.js:39
+#: sc-address2.js:102
+#: sc-order-shipping-address2.js:37
+#: sc-order-shipping-address2.js:46
 msgid "Name or Company Name"
-msgstr "Numele sau denumirea companiei"
+msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:239
 msgid "Name your own price"
 msgstr "Alege propriul preț"
 
-#: address.js:167
+#: address.js:163
 msgid "Namibia"
-msgstr "Namibia"
+msgstr ""
 
 #: src/Support/Currency.php:322
 msgid "Namibian Dollar"
 msgstr "Dolarul namibian"
 
-#: address.js:168
+#: address.js:164
 msgid "Nauru"
-msgstr "Nauru"
+msgstr ""
 
-#: address.js:169
+#: address.js:165
 msgid "Nepal"
-msgstr "Nepal"
+msgstr ""
 
 #: src/Support/Currency.php:323
 msgid "Nepalese Rupee"
@@ -7446,17 +7842,17 @@ msgstr "Blocurile îmbinate vor umple lățimea acestui container. Comută pentr
 msgid "Net Payment"
 msgstr "Plată netă"
 
-#: address.js:170
+#: address.js:166
 msgid "Netherlands"
-msgstr "Olanda"
+msgstr ""
 
 #: src/Support/Currency.php:324
 msgid "Netherlands Antillean Gulden"
 msgstr "Gulden din Antilele olandeze"
 
-#: address.js:171
+#: address.js:167
 msgid "New Caledonia"
-msgstr "Noua Caledonie"
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:71
 msgid "New Cancellation Reason"
@@ -7478,10 +7874,10 @@ msgstr "Formular Nou"
 msgid "New Order"
 msgstr "Comandă nouă"
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "New Password"
-msgstr "Parolă nouă"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:360
 #: sc-upcoming-invoice.js:208
@@ -7508,13 +7904,17 @@ msgstr "Noul dolar taiwanez"
 msgid "New Upgrade Group"
 msgstr "Grup nou de upgrade"
 
-#: address.js:172
+#: address.js:168
 msgid "New Zealand"
-msgstr "Noua Zeelandă"
+msgstr ""
 
 #: src/Support/Currency.php:326
 msgid "New Zealand Dollar"
 msgstr "Dolarul neozeelandez"
+
+#: settings/shipping/profile/Products.js:238
+msgid "New products are added to this profile."
+msgstr ""
 
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:107
@@ -7540,41 +7940,49 @@ msgstr "Pagina următoare"
 msgid "Next retry:"
 msgstr "Următoarea încercare:"
 
-#: address.js:173
+#: Blocks/ShippingChoices/edit.js:35
+msgid "Next-day delivery"
+msgstr ""
+
+#: address.js:169
 msgid "Nicaragua"
-msgstr "Nicaragua"
+msgstr ""
 
 #: src/Support/Currency.php:327
 msgid "Nicaraguan Córdoba"
 msgstr "Cordoba din Nicaragua"
 
-#: address.js:174
+#: address.js:170
 msgid "Niger"
-msgstr "Niger"
+msgstr ""
 
-#: address.js:175
+#: address.js:171
 msgid "Nigeria"
-msgstr "Nigeria"
+msgstr ""
 
 #: src/Support/Currency.php:328
 msgid "Nigerian Naira"
 msgstr "Naira nigeriană"
 
-#: address.js:176
+#: address.js:172
 msgid "Niue"
-msgstr "Niue"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:139
 msgid "No Reason Provided"
 msgstr "Nici un motiv furnizat"
 
-#: sc-customer-email.js:79
-msgid "No Thanks"
-msgstr "Nu, mulțumesc."
+#: orders/modules/Fulfillment/components/StatusDropdown.js:90
+msgid "No Shipping Required"
+msgstr ""
 
-#: sc-checkout-mollie-payment2.js:97
+#: sc-customer-email.js:89
+msgid "No Thanks"
+msgstr ""
+
+#: sc-checkout-mollie-payment2.js:101
 msgid "No available payment methods"
-msgstr "Nu există metode de plată disponibile"
+msgstr ""
 
 #: subscriptions/show/modules/Periods.js:96
 msgid "No billing periods"
@@ -7623,6 +8031,10 @@ msgstr "Nu s-au găsit elemente"
 msgid "No licenses found."
 msgstr "Nu s-au găsit licențe."
 
+#: settings/shipping/rate/ShippingRateForm.js:222
+msgid "No limit"
+msgstr ""
+
 #: settings/processors/ManualPaymentMethods.js:47
 msgid "No manual payment methods."
 msgstr "Nu există metode de plată manuală."
@@ -7666,6 +8078,28 @@ msgstr "Niciun produs"
 msgid "No products found."
 msgstr "Nu s-au găsit produse."
 
+#: settings/shipping/profile/Products.js:357
+msgid "No products in this profile."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:174
+#: settings/shipping/ShippingSettings.js:130
+#: settings/shipping/zone/ShippingZone.js:77
+msgid "No shipping rates"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:58
+msgid "No shipping rates available for customers to choose from."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:303
+msgid "No shipping required."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:74
+msgid "No shipping zones or rates"
+msgstr ""
+
 #: src/Support/Blocks/TemplateUtilityService.php:197
 msgid "No theme is defined for this template."
 msgstr "Nu este definită o temă pentru acest șablon."
@@ -7688,25 +8122,25 @@ msgstr "Nu s-a găsit nimic."
 msgid "None of these items are in the cart."
 msgstr "Nici unul dintre aceste articole nu se află în coș."
 
-#: address.js:177
+#: address.js:173
 msgid "Norfolk Island"
-msgstr "Insula Norfolk"
+msgstr ""
 
-#: address.js:178
+#: address.js:174
 msgid "North Korea"
-msgstr "Coreea de Nord"
+msgstr ""
 
-#: address.js:179
+#: address.js:175
 msgid "North Macedonia"
-msgstr "Macedonia de Nord"
+msgstr ""
 
-#: address.js:180
+#: address.js:176
 msgid "Northern Mariana Islands"
-msgstr "Insulele Mariane de Nord"
+msgstr ""
 
-#: address.js:181
+#: address.js:177
 msgid "Norway"
-msgstr "Norvegia"
+msgstr ""
 
 #: src/Support/Currency.php:329
 msgid "Norwegian Krone"
@@ -7734,6 +8168,13 @@ msgstr "Nu a fost răscumpărat"
 msgid "Not Scheduled"
 msgstr "Neprogramat"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:387
+#: orders/modules/Fulfillment/components/StatusDropdown.js:19
+#: sc-fulfillment-shipping-status-badge2.js:7
+#: sc-order-shipment-badge2.js:7
+msgid "Not Shipped"
+msgstr ""
+
 #: src/Support/Errors/Translations/types.php:15
 msgid "Not a number"
 msgstr "Nu este un număr"
@@ -7756,9 +8197,9 @@ msgstr "Notă: Dacă bifați această opțiune, se va afișa textul de confirmar
 msgid "Note: Redemption limits are not applied in test mode."
 msgstr "Notă: Limitele de răscumpărare nu se aplică în modul de testare."
 
-#: sc-select2.js:2060
+#: sc-select2.js:2068
 msgid "Nothing Found"
-msgstr "Nimic nu a fost găsit"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:91
 #: settings/customer/CustomerSettings.js:50
@@ -7820,15 +8261,16 @@ msgstr "OK"
 #: sc-product-item-list.js:139
 #: sc-product-item-list.js:150
 msgid "Oldest"
-msgstr "Cel mai vechi"
+msgstr ""
 
-#: address.js:182
+#: address.js:178
 msgid "Oman"
-msgstr "Oman"
+msgstr ""
 
 #: sc-order-confirmation-details.js:33
+#: sc-order-fulfillment-badge.js:9
 msgid "On Hold"
-msgstr "În așteptare"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:202
 msgid "On the final email"
@@ -7950,7 +8392,7 @@ msgstr "Comandă"
 
 #: sc-order-confirmation-details.js:44
 msgid "Order #%s"
-msgstr "Comanda #%s"
+msgstr ""
 
 #: bumps/CreateBump.js:60
 #: bumps/modules/Price.js:29
@@ -8026,18 +8468,18 @@ msgstr "Numerotarea comenzilor"
 msgid "Order Numbers Counter"
 msgstr "Contor de numere de ordine"
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Order Status"
-msgstr "Starea comenzii"
+msgstr ""
 
-#: sc-order-summary.js:50
+#: sc-order-summary.js:53
 msgid "Order Summary"
-msgstr "Sumarul comenzii"
+msgstr ""
 
 #: sc-order-confirmation.js:111
-#: sc-order.js:107
+#: sc-order.js:115
 msgid "Order not found."
-msgstr "Comanda nu a fost găsită."
+msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
@@ -8057,6 +8499,10 @@ msgstr "Comenzi"
 #: settings/order/OrderProtocol.js:40
 msgid "Orders & Receipts"
 msgstr "Comenzi și chitanțe"
+
+#: onboarding/components/StarterTemplates.js:40
+msgid "Organic Food"
+msgstr ""
 
 #: orders/modules/TaxInfo.js:11
 #: orders/modules/TaxInfo.js:23
@@ -8109,45 +8555,50 @@ msgstr "Mărimea fontului de paginare"
 msgid "Paid"
 msgstr "Plătit"
 
-#: address.js:183
+#: address.js:179
 msgid "Pakistan"
-msgstr "Pakistan"
+msgstr ""
 
 #: src/Support/Currency.php:330
 msgid "Pakistani Rupee"
 msgstr "Rupie pakistaneză"
 
-#: address.js:184
+#: address.js:180
 msgid "Palau"
-msgstr "Palau"
+msgstr ""
 
-#: address.js:185
+#: address.js:181
 msgid "Palestine, State of"
-msgstr "Palestina"
+msgstr ""
 
-#: address.js:186
+#: address.js:182
 msgid "Panama"
-msgstr "Panama"
+msgstr ""
 
 #: src/Support/Currency.php:331
 msgid "Panamanian Balboa"
 msgstr "Balboa panamez"
 
-#: address.js:187
+#: address.js:183
 msgid "Papua New Guinea"
-msgstr "Papua Noua Guinee"
+msgstr ""
 
 #: src/Support/Currency.php:332
 msgid "Papua New Guinean Kina"
 msgstr "Kina din Papua Noua Guinee"
 
-#: address.js:188
+#: address.js:184
 msgid "Paraguay"
-msgstr "Paraguay"
+msgstr ""
 
 #: src/Support/Currency.php:333
 msgid "Paraguayan Guaraní"
 msgstr "Guaraní paraguayan"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:353
+#: sc-order-fulfillment-badge.js:11
+msgid "Partially Fulfilled"
+msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:30
 #: sc-charges-list.js:85
@@ -8155,6 +8606,11 @@ msgstr "Guaraní paraguayan"
 #: sc-orders-list.js:112
 msgid "Partially Refunded"
 msgstr "Parțial rambursat"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:389
+#: sc-order-shipment-badge2.js:9
+msgid "Partially Shipped"
+msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:71
 #: sc-login-provider2.js:79
@@ -8182,20 +8638,20 @@ msgstr "Etichetă pentru confirmarea parolei"
 msgid "Password Confirmation Placeholder"
 msgstr "Placeholder pentru confirmarea parolei"
 
-#: sc-order-password.js:43
+#: sc-order-password.js:42
 msgid "Password does not match."
-msgstr "Parola nu se potrivește."
+msgstr ""
 
-#: sc-password-nag.js:62
-#: sc-wordpress-password-edit.js:34
-msgid "Passwords do not match."
-msgstr "Parolele nu se potrivesc."
-
-#: sc-order-password.js:50
 #: sc-password-nag.js:71
-#: sc-wordpress-password-edit.js:43
+#: sc-wordpress-password-edit.js:44
+msgid "Passwords do not match."
+msgstr ""
+
+#: sc-order-password.js:48
+#: sc-password-nag.js:74
+#: sc-wordpress-password-edit.js:47
 msgid "Passwords should at least 6 characters and contain one special character."
-msgstr "Parolele trebuie să aibă cel puțin 6 caractere și să conțină un caracter special."
+msgstr ""
 
 #: sc-subscription-status-badge2.js:56
 msgid "Past Due"
@@ -8210,9 +8666,13 @@ msgstr "Pauză"
 msgid "Pause Subscription"
 msgstr "Pauză Abonament"
 
-#: sc-subscription-status-badge2.js:47
+#: sc-subscription-status-badge2.js:46
 msgid "Pauses"
-msgstr "Pauze"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:285
+msgid "Pay Off"
+msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:275
 msgid "Pay Off Subscription"
@@ -8246,9 +8706,10 @@ msgctxt "block title"
 msgid "Payment"
 msgstr "Plată"
 
+#: orders/modules/LineItems/index.js:26
 #: sc-order-status-badge2.js:37
 msgid "Payment Failed"
-msgstr "Plată eșuată"
+msgstr ""
 
 #: orders/modules/PaymentFailures.js:17
 msgid "Payment Failures"
@@ -8291,9 +8752,9 @@ msgstr "Procesatori de plăți"
 msgid "Payment Type"
 msgstr "Tipul de plată"
 
-#: sc-session-provider2.js:257
+#: sc-session-provider2.js:256
 msgid "Payment canceled. Please try again."
-msgstr "Plata a fost anulată. Vă rugăm să încercați din nou."
+msgstr ""
 
 #: settings/processors/CreateEditPaymentMethod.js:108
 msgid "Payment instructions"
@@ -8324,9 +8785,11 @@ msgstr "Reîncercarea plății a avut succes!"
 msgid "Payment retry window in weeks."
 msgstr "Fereastra de reîncercare a plății în săptămâni."
 
-#: sc-session-provider2.js:233
+#: sc-session-provider2.js:183
+#: sc-session-provider2.js:250
+#: sc-session-provider2.js:260
 msgid "Payment unsuccessful. Please try again."
-msgstr "Plata a eșuat. Vă rugăm să încercați din nou."
+msgstr ""
 
 #: products/components/price/Multiple.js:37
 #: subscriptions/show/modules/Details.js:107
@@ -8413,21 +8876,29 @@ msgstr "Ștergi permanent acest bump de comandă? Nu poți anula această acțiu
 msgid "Permanently delete this price? You cannot undo this action."
 msgstr "Ștergi definitiv acest preț? Nu poți anula această acțiune."
 
-#: address.js:189
+#: product-groups/EditProductGroup.js:55
+msgid "Permanently delete this product group? You cannot undo this action."
+msgstr ""
+
+#: address.js:185
 msgid "Peru"
-msgstr "Peru"
+msgstr ""
 
 #: src/Support/Currency.php:334
 msgid "Peruvian Sol"
 msgstr "Sol peruvian"
 
+#: onboarding/components/StarterTemplates.js:45
+msgid "Pet Supplies"
+msgstr ""
+
 #: src/Support/Currency.php:335
 msgid "Philippine Peso"
 msgstr "Peso filipinez"
 
-#: address.js:190
+#: address.js:186
 msgid "Philippines"
-msgstr "Filipine"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:164
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
@@ -8440,9 +8911,13 @@ msgctxt "block title"
 msgid "Phone"
 msgstr "Telefon"
 
-#: address.js:191
+#: products/modules/Shipping.js:41
+msgid "Physical product"
+msgstr ""
+
+#: address.js:187
 msgid "Pitcairn"
-msgstr "Pitcairn"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:97
 msgid "Placed By"
@@ -8471,6 +8946,10 @@ msgstr "Placeholder"
 msgid "Plan"
 msgstr "Plan"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:236
+msgid "Plan Renewal"
+msgstr ""
+
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
 msgid "Plan Status"
 msgstr "Starea Planului"
@@ -8483,21 +8962,31 @@ msgstr "Planuri"
 msgid "Please add at least one product."
 msgstr "Te rugăm să adaugi cel puțin un produs."
 
-#: sc-choice2.js:55
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose at least one."
-msgstr "Vă rugăm să alegeți cel puțin una."
+msgstr ""
 
 #: components/DatePicker.js:39
 msgid "Please choose date to continue."
 msgstr "Vă rugăm să alegeți data pentru a continua."
 
-#: sc-choice2.js:55
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose one."
-msgstr "Vă rugăm să alegeți una."
+msgstr ""
 
 #: settings/account/AccountSettings.js:270
 msgid "Please clear checkout page cache after changing this setting."
 msgstr "Te rugăm să ștergi memoria cache a paginii de plată după modificarea acestei setări."
+
+#: components/MediaLibrary/index.js:301
+msgid "Please complete setting up your store. Its free and only takes a minute."
+msgstr ""
+
+#: Blocks/Form/edit.js:450
+msgid "Please complete your store to enable live mode. It's free!"
+msgstr ""
 
 #: src/Request/RequestService.php:208
 msgid "Please connect your site to SureCart."
@@ -8534,17 +9023,21 @@ msgstr "Vă rugăm să previzualizați formularul din front-end pentru a încăr
 msgid "Please refresh the page and try again."
 msgstr "Vă rugăm să reîmprospătați pagina și să încercați din nou."
 
-#: sc-form-state-provider2.js:125
+#: sc-form-state-provider2.js:48
 msgid "Please refresh the page."
-msgstr "Vă rugăm să reîmprospătați pagina."
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:123
+msgid "Please select a shipping method"
+msgstr ""
 
 #: admin/plugin.php:68
 msgid "Plugin Settings"
 msgstr "Setări plugin"
 
-#: address.js:192
+#: address.js:188
 msgid "Poland"
-msgstr "Polonia"
+msgstr ""
 
 #: src/Support/Currency.php:336
 msgid "Polish Złoty"
@@ -8554,9 +9047,9 @@ msgstr "Złot polonez"
 msgid "Portrait"
 msgstr "Portret"
 
-#: address.js:193
+#: address.js:189
 msgid "Portugal"
-msgstr "Portugalia"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:171
 msgid "Position of cart button"
@@ -8566,12 +9059,12 @@ msgstr "Poziția butonului de coș"
 msgid "Postal Code Placeholder"
 msgstr "Placeholder cod poștal"
 
-#: sc-address2.js:108
-#: sc-compact-address2.js:102
-#: sc-order-shipping-address2.js:35
-#: sc-order-shipping-address2.js:44
+#: sc-address2.js:105
+#: sc-compact-address2.js:115
+#: sc-order-shipping-address2.js:42
+#: sc-order-shipping-address2.js:51
 msgid "Postal Code/Zip"
-msgstr "Cod poștal/Zip"
+msgstr ""
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:297
 msgid "Potential Checkout Recovery Rate"
@@ -8589,9 +9082,9 @@ msgstr "Venituri potențiale recuperate"
 msgid "Potential Revenue Recovery Rate"
 msgstr "Rata potențială de recuperare a veniturilor"
 
-#: products/components/price/parts/Trial.js:16
+#: sc-premium-tag.js:12
 msgid "Premium"
-msgstr "Premium"
+msgstr ""
 
 #: bumps/modules/Preview.js:17
 msgid "Preview"
@@ -8673,6 +9166,10 @@ msgstr "Prețuri"
 msgid "Primary Button"
 msgstr "Buton principal"
 
+#: onboarding/components/StarterTemplates.js:25
+msgid "Printable Merchandise"
+msgstr ""
+
 #: bumps/modules/Priority.js:7
 msgid "Priority"
 msgstr "Prioritate"
@@ -8682,6 +9179,10 @@ msgstr "Prioritate"
 #: Controllers/SubscriptionController.php:244
 msgid "Privacy Policy"
 msgstr "Politica de confidențialitate"
+
+#: settings/account/AccountSettings.js:273
+msgid "Privacy Policy Page"
+msgstr ""
 
 #: components/MediaLibrary/index.js:287
 #: components/MediaLibrary/MediaItem.js:93
@@ -8710,11 +9211,6 @@ msgstr "Prelucrare plată..."
 msgid "Processor"
 msgstr "Procesator"
 
-#: admin/processors.php:30
-#: layouts/partials/admin-settings-sidebar.php:48
-msgid "Processors"
-msgstr "Procesatori"
-
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
 #: src/Support/Errors/Translations/attributes.php:17
@@ -8736,6 +9232,10 @@ msgstr "Produs"
 #: settings/customer/CustomerSettings.js:332
 msgid "Product Access"
 msgstr "Accesul la produs"
+
+#: settings/customer/CustomerSettings.js:123
+msgid "Product Access Emails"
+msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation title"
@@ -8823,10 +9323,20 @@ msgstr "Numele produsului"
 msgid "Product Options"
 msgstr "Opțiuni de produs"
 
+#: src/Controllers/Admin/Products/ProductsListTable.php:104
+#: products/components/Status/index.js:25
+#: products/components/Status/index.js:64
+msgid "Product Page"
+msgstr ""
+
 #: Blocks/Product/Price/block.json
 msgctxt "block title"
 msgid "Product Price"
 msgstr "Prețul produsului"
+
+#: bumps/modules/NewCondition.js:79
+msgid "Product Price"
+msgstr ""
 
 #: Blocks/Product/PriceChoices/block.json
 msgctxt "block title"
@@ -8852,6 +9362,10 @@ msgctxt "block title"
 msgid "Product Title"
 msgstr "Titlul produsului"
 
+#: settings/shipping/profile/Products.js:122
+msgid "Product added"
+msgstr ""
+
 #: product-groups/modules/NewProduct.js:37
 msgid "Product added."
 msgstr "Produs adăugat."
@@ -8862,6 +9376,18 @@ msgstr "Produs adăugat."
 #: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product archived."
 msgstr "Produs arhivat."
+
+#: product-groups/EditProductGroup.js:85
+msgid "Product group archived."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:64
+msgid "Product group deleted."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:86
+msgid "Product group un-archived."
+msgstr ""
 
 #: product-groups/EditProductGroup.js:35
 msgid "Product group updated."
@@ -8874,6 +9400,10 @@ msgstr "Produsul sau abonamentul este achiziționat"
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
 msgid "Product purchase is revoked or subscription cancels"
 msgstr "Achiziția produsului este revocată sau abonamentul este anulat"
+
+#: settings/shipping/profile/Products.js:101
+msgid "Product removed"
+msgstr ""
 
 #: product-groups/modules/Product.js:34
 msgid "Product removed."
@@ -8922,6 +9452,10 @@ msgstr "Produse per pagină"
 #: settings/export/ExportSettings.js:31
 msgid "Products/Prices"
 msgstr "Produse/Prețuri"
+
+#: settings/shipping/profile/ShippingProfile.js:183
+msgid "Profile Details"
+msgstr ""
 
 #: store/add-entities.js:180
 msgid "Promotion"
@@ -8975,9 +9509,13 @@ msgstr "Oferiți o reducere pentru a păstra un abonament."
 msgid "Province"
 msgstr "Provincie"
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:108
 msgid "Province/Region"
-msgstr "Provincie/Regiune"
+msgstr ""
+
+#: store/add-entities.js:159
+msgid "Provisional Accounts"
+msgstr ""
 
 #: components/MediaLibrary/index.js:294
 #: components/MediaLibrary/MediaItem.js:91
@@ -9008,6 +9546,10 @@ msgstr "Poate fi achiziționat"
 msgid "Purchase"
 msgstr "Cumpărare"
 
+#: settings/subscription/SubscriptionSettings.js:201
+msgid "Purchase Behavior"
+msgstr ""
+
 #: settings/subscription/SubscriptionSettings.js:244
 msgid "Purchase Revoke Behavior"
 msgstr "Comportamentul de revocare a achiziției"
@@ -9020,9 +9562,9 @@ msgstr "Achiziții"
 msgid "Purchases syncing happens in both directions. For example, access is automatically revoked during a subscription cancellation or expiration."
 msgstr "Sincronizarea achizițiilor se face în ambele direcții. De exemplu, accesul este revocat automat în timpul anulării sau expirării unui abonament."
 
-#: address.js:195
+#: address.js:190
 msgid "Qatar"
-msgstr "Qatar"
+msgstr ""
 
 #: src/Support/Currency.php:337
 msgid "Qatari Riyal"
@@ -9034,9 +9576,15 @@ msgstr "Riyal qatariot"
 msgid "Qty"
 msgstr "Cantitate"
 
-#: sc-product-line-item2.js:29
+#: sc-product-line-item2.js:44
 msgid "Qty:"
-msgstr "Cantitate:"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:284
+#: orders/modules/Fulfillment/Unfulfilled.js:108
+#: sc-fulfillments.js:65
+msgid "Qty: %d"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:17
@@ -9064,6 +9612,10 @@ msgstr "Text radio"
 #: settings/order/OrderProtocol.js:89
 msgid "Random Numbers And Letters"
 msgstr "Numere și litere aleatorii"
+
+#: settings/shipping/profile/ShippingProfileListItem.js:48
+msgid "Rates for"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:111
 #: orders/modules/PaymentFailures.js:25
@@ -9185,9 +9737,9 @@ msgstr "Respinge comanda și afișează o eroare."
 msgid "Remaining Payments"
 msgstr "Plăți rămase"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Reminder"
-msgstr "Memento"
+msgstr ""
 
 #: Blocks/CartItems/edit.js:31
 #: Blocks/LineItems/edit.js:23
@@ -9316,6 +9868,10 @@ msgstr "Reset"
 msgid "Rest Of The World"
 msgstr "Restul lumii"
 
+#: settings/shipping/zone/FallbackZone.js:19
+msgid "Rest Of The World Fallback Zone"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:358
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:64
 msgid "Restore"
@@ -9329,9 +9885,9 @@ msgstr "Restaurează la..."
 msgid "Restore Now"
 msgstr "Restaurează acum"
 
-#: sc-subscription.js:171
+#: sc-subscription.js:181
 msgid "Restore Plan"
-msgstr "Restabilește Planul"
+msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:122
 msgid "Restore Subscription"
@@ -9415,9 +9971,9 @@ msgstr "Revocat"
 msgid "Right"
 msgstr "Dreapta"
 
-#: address.js:196
+#: address.js:191
 msgid "Romania"
-msgstr "România"
+msgstr ""
 
 #: src/Support/Currency.php:338
 msgid "Romanian Leu"
@@ -9439,69 +9995,69 @@ msgstr "Rulează orice acțiune de sincronizare a achizițiilor."
 msgid "Run purchase actions"
 msgstr "Executați acțiuni de cumpărare"
 
-#: address.js:197
+#: address.js:192
 msgid "Russian Federation"
-msgstr "Federația Rusă"
+msgstr ""
 
 #: src/Support/Currency.php:339
 msgid "Russian Ruble"
 msgstr "Rubla rusească"
 
-#: address.js:198
+#: address.js:193
 msgid "Rwanda"
-msgstr "Rwanda"
+msgstr ""
 
 #: src/Support/Currency.php:340
 msgid "Rwandan Franc"
 msgstr "Franc rwandez"
 
-#: address.js:199
+#: address.js:194
 msgid "Réunion"
-msgstr "Réunion"
+msgstr ""
 
-#: address.js:200
+#: address.js:195
 msgid "Saint Barthélemy"
-msgstr "Saint Barthélemy"
+msgstr ""
 
-#: address.js:201
+#: address.js:196
 msgid "Saint Helena, Ascension and Tristan da Cunha"
-msgstr "Saint Helena, Ascension și Tristan da Cunha"
+msgstr ""
 
 #: src/Support/Currency.php:341
 msgid "Saint Helenian Pound"
 msgstr "Libra Sfânta Elena"
 
-#: address.js:202
+#: address.js:197
 msgid "Saint Kitts and Nevis"
-msgstr "Saint Kitts și Nevis"
+msgstr ""
 
-#: address.js:203
+#: address.js:198
 msgid "Saint Lucia"
-msgstr "Saint Lucia"
+msgstr ""
 
-#: address.js:204
+#: address.js:199
 msgid "Saint Martin (French part)"
-msgstr "Saint Martin (partea franceză)"
+msgstr ""
 
-#: address.js:205
+#: address.js:200
 msgid "Saint Pierre and Miquelon"
-msgstr "Saint Pierre și Miquelon"
+msgstr ""
 
-#: address.js:206
+#: address.js:201
 msgid "Saint Vincent and the Grenadines"
-msgstr "Saint Vincent și Grenadine"
+msgstr ""
 
 #: sc-product-price.js:30
 msgid "Sale"
-msgstr "Vânzare"
+msgstr ""
 
 #: Blocks/Product/Price/edit.js:33
 msgid "Sale Text"
 msgstr "Text de vânzare"
 
-#: address.js:207
+#: address.js:202
 msgid "Samoa"
-msgstr "Samoa"
+msgstr ""
 
 #: src/Support/Currency.php:342
 msgid "Samoan Tala"
@@ -9517,17 +10073,17 @@ msgstr "Samoană Tala"
 msgid "Sample Data"
 msgstr "Date de probă"
 
-#: address.js:208
+#: address.js:203
 msgid "San Marino"
-msgstr "San Marino"
+msgstr ""
 
-#: address.js:209
+#: address.js:204
 msgid "Sao Tome and Principe"
-msgstr "Sao Tome și Principe"
+msgstr ""
 
-#: address.js:210
+#: address.js:205
 msgid "Saudi Arabia"
-msgstr "Arabia Saudită"
+msgstr ""
 
 #: src/Support/Currency.php:343
 msgid "Saudi Riyal"
@@ -9544,9 +10100,9 @@ msgstr "Riyal saudit"
 msgid "Save"
 msgstr "Salvează"
 
-#: sc-order-bump2.js:61
+#: sc-order-bump2.js:72
 msgid "Save %s%%"
-msgstr "Salvează %s%%"
+msgstr ""
 
 #: customers/EditCustomer.js:97
 msgid "Save Customer"
@@ -9564,9 +10120,9 @@ msgstr "Salvare licență"
 msgid "Save Order Bump"
 msgstr "Salvează bump comandă"
 
-#: sc-stripe-add-method.js:128
+#: sc-stripe-add-method.js:132
 msgid "Save Payment Method"
-msgstr "Salvați metoda de plată"
+msgstr ""
 
 #: products/EditProduct.js:147
 msgid "Save Product"
@@ -9601,9 +10157,13 @@ msgstr "Rata economisită prin cupon"
 msgid "Saved."
 msgstr "Salvat."
 
-#: sc-payment-method2.js:22
+#: settings/shipping/profile/ShippingProfile.js:111
+msgid "Saving failed."
+msgstr ""
+
+#: sc-payment-method2.js:27
 msgid "Savings"
-msgstr "Economii"
+msgstr ""
 
 #: abandoned-checkouts/modules/Schedule.js:14
 msgid "Schedule"
@@ -9675,7 +10235,7 @@ msgstr "Caută produse"
 
 #: sc-product-item-list.js:151
 msgid "Search Results:"
-msgstr "Rezultatele căutării:"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
 #: admin/subscriptions/index.php:28
@@ -9753,6 +10313,10 @@ msgstr "Securizat"
 msgid "Secure Storage"
 msgstr "Stocare securizată"
 
+#: settings/shipping/rate/ShippingRateForm.js:340
+msgid "Select"
+msgstr ""
+
 #: coupons/modules/NewRestriction.js:139
 msgid "Select A Customer"
 msgstr "Selectează un client"
@@ -9768,6 +10332,10 @@ msgstr "Alege un preț"
 msgid "Select A Product"
 msgstr "Alege un produs"
 
+#: onboarding/components/StarterTemplates.js:74
+msgid "Select A Starting Point"
+msgstr ""
+
 #: components/data-tables/charges-data-table/Refund.js:174
 msgid "Select All"
 msgstr "Selectați Toate"
@@ -9780,6 +10348,11 @@ msgstr "Selectează o integrare"
 #: coupons/modules/NewRestriction.js:149
 msgid "Select An Upgrade Group"
 msgstr "Alege un grup de upgrade"
+
+#: settings/shipping/zone/ShippingZoneForm.js:191
+#: settings/shipping/zone/ShippingZoneForm.js:225
+msgid "Select Countries"
+msgstr ""
 
 #: src/Integrations/Elementor/ReusableFormWidget.php:110
 #: Blocks/CheckoutForm/components/Empty.js:192
@@ -9802,9 +10375,9 @@ msgstr "Alege tema"
 msgid "Select Theme (Beta)"
 msgstr "Alege tema (beta)"
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:115
 msgid "Select Your Country"
-msgstr "Selectați țara dvs."
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:174
 msgid "Select a Form Template"
@@ -9818,9 +10391,9 @@ msgstr "Alege un formular de plată"
 msgid "Select a form"
 msgstr "Alege un formular"
 
-#: sc-subscription-payment.js:115
+#: sc-subscription-payment.js:120
 msgid "Select a payment method"
-msgstr "Selectați o metodă de plată"
+msgstr ""
 
 #: components/SelectPrice.js:64
 msgid "Select a price"
@@ -9852,6 +10425,10 @@ msgstr "Alege o pictogramă"
 #: components/SelectProductGroup.js:44
 msgid "Select an upgrade group"
 msgstr "Alege un grup de upgrade"
+
+#: settings/shipping/zone/ShippingZoneForm.js:99
+msgid "Select at least one country to create zone."
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:113
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:90
@@ -9905,6 +10482,10 @@ msgstr "Alegeți poziția butonului de coș, adică stânga sau dreapta, unde va
 msgid "Select the menu(s) where the cart icon will appear."
 msgstr "Selectați meniul (meniurile) în care va apărea pictograma coșului."
 
+#: sc-select2.js:2066
+msgid "Select..."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:106
 msgid "Send a general order confirmation email to your customers when an order is paid. These emails include a breakdown of the order, and a link to a page where they can download their invoice and receipt."
 msgstr "Trimite un e-mail general de confirmare a comenzii către clienții tăi atunci când o comandă este plătită. Aceste e-mailuri includ o defalcare a comenzii și un link către o pagină de unde pot descărca factura și chitanța."
@@ -9913,9 +10494,13 @@ msgstr "Trimite un e-mail general de confirmare a comenzii către clienții tăi
 msgid "Send a general subscription cancellation confirmation email to your customers when subscription canceled."
 msgstr "Trimite un e-mail general de confirmare a anulării abonamentului către clienții tăi atunci când abonamentul este anulat."
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Send a login code"
-msgstr "Trimiteți un cod de autentificare"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:125
+msgid "Send a product access email to your customer when a purchase has done for a licensed downloadable product."
+msgstr ""
 
 #: settings/customer/CustomerSettings.js:124
 msgid "Send a quick reminder when a refund is created for a customer. These emails contain the amount and payment method being refunded."
@@ -9937,9 +10522,9 @@ msgstr "Trimiteți un e-mail despre achiziția clienților chiar și atunci cân
 msgid "Sender Name"
 msgstr "Numele expeditorului"
 
-#: address.js:211
+#: address.js:206
 msgid "Senegal"
-msgstr "Senegal"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
 #: abandoned-checkouts/modules/Details.js:13
@@ -9998,9 +10583,9 @@ msgstr "Se trimite la crearea unei comenzi."
 msgid "Sequential"
 msgstr "Secvențial"
 
-#: address.js:212
+#: address.js:207
 msgid "Serbia"
-msgstr "Serbia"
+msgstr ""
 
 #: src/Support/Currency.php:344
 msgid "Serbian Dinar"
@@ -10011,9 +10596,9 @@ msgctxt "block title"
 msgid "Session Info"
 msgstr "Informații sesiune"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Set A Password"
-msgstr "Setați o parolă"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:80
 #: Blocks/ProductItemImage/edit.js:97
@@ -10036,10 +10621,6 @@ msgstr "Stabilește un apel la acțiune personalizată pentru bump."
 msgid "Set a maximum height"
 msgstr "Setați o înălțime maximă"
 
-#: settings/portal/PortalSettings.js:117
-msgid "Set additional customer portal details for your store."
-msgstr "Setează detalii suplimentare ale portalului pentru clienți pentru magazinul tău."
-
 #: products/modules/integrations/IntegrationHelp.js:79
 msgid "Set it and forget it."
 msgstr "Setează-l și uită-l."
@@ -10047,6 +10628,14 @@ msgstr "Setează-l și uită-l."
 #: products/modules/Prices/index.js:94
 msgid "Set up pricing for your product."
 msgstr "Stabilește prețurile pentru produsul tău."
+
+#: settings/shipping/ShippingSettings.js:157
+msgid "Set where you ship and how much you charge for shipping."
+msgstr ""
+
+#: onboarding/components/SetupProgress.js:56
+msgid "Setting up your store..."
+msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:115
@@ -10074,6 +10663,10 @@ msgstr "Setări actualizate."
 msgid "Setup"
 msgstr "Configurare"
 
+#: dashboard/Dashboard.js:82
+msgid "Setup Complete!"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:59
 #: sc-price-choice.js:811
 msgid "Setup Fee"
@@ -10091,13 +10684,42 @@ msgstr "Valoarea taxei de instalare"
 msgid "Setup fee name"
 msgstr "Denumirea taxei de instalare"
 
-#: address.js:213
+#: address.js:208
 msgid "Seychelles"
-msgstr "Seychelles"
+msgstr ""
 
 #: src/Support/Currency.php:345
 msgid "Seychellois Rupee"
 msgstr "Rupie seychelloise"
+
+#: sc-fulfillments.js:60
+msgid "Shipment"
+msgid_plural "Shipments"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:388
+#: orders/modules/Fulfillment/components/StatusDropdown.js:20
+#: sc-fulfillment-shipping-status-badge2.js:8
+#: sc-order-shipment-badge2.js:8
+msgid "Shipped"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:105
+#: layouts/partials/admin-settings-sidebar.php:66
+#: abandoned-checkouts/modules/LineItems/index.js:110
+#: orders/modules/LineItems/index.js:262
+#: products/modules/Shipping.js:25
+#: settings/shipping/ShippingSettings.js:120
+#: subscriptions/show/modules/LineItems/index.js:105
+#: sc-line-item-shipping2.js:26
+#: sc-order-confirmation-totals2.js:35
+#: sc-shipping-choices2.js:54
+#: sc-shipping-choices2.js:56
+#: sc-subscription-next-payment2.js:101
+msgid "Shipping"
+msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:138
 #: orders/Sidebar.js:17
@@ -10116,9 +10738,108 @@ msgctxt "block title"
 msgid "Shipping Address"
 msgstr "Adresa de expediere"
 
+#: Blocks/LineItemShipping/edit.js:29
+msgid "Shipping Amount"
+msgstr ""
+
+#: Blocks/ShippingChoices/edit.js:55
+msgid "Shipping Choices"
+msgstr ""
+
+#: Blocks/ShippingChoices/block.json
+msgctxt "block title"
+msgid "Shipping Choices"
+msgstr ""
+
 #: Blocks/ConditionalForm/translations.js:9
 msgid "Shipping Country"
 msgstr "Țara de livrare"
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block title"
+msgid "Shipping Line Item"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:336
+#: store/add-entities.js:278
+msgid "Shipping Method"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:107
+msgid "Shipping Methods"
+msgstr ""
+
+#: store/add-entities.js:257
+msgid "Shipping Profile"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:156
+msgid "Shipping Profiles"
+msgstr ""
+
+#: store/add-entities.js:250
+msgid "Shipping Protocol"
+msgstr ""
+
+#: store/add-entities.js:271
+msgid "Shipping Rate"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:140
+msgid "Shipping Settings"
+msgstr ""
+
+#: products/modules/Shipping.js:45
+msgid "Shipping Weight"
+msgstr ""
+
+#: store/add-entities.js:264
+msgid "Shipping Zone"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:35
+msgid "Shipping Zones & Rates"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:69
+msgid "Shipping method added"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:81
+msgid "Shipping method removed"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:64
+msgid "Shipping method updated"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:128
+msgid "Shipping methods represent the different speeds or classes of shipping that your store offers."
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:36
+msgid "Shipping profile deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:152
+msgid "Shipping rate added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZone.js:57
+msgid "Shipping rate deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:147
+msgid "Shipping rate updated"
+msgstr ""
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:29
+msgid "Shipping zone deleted"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:36
+msgid "Shipping zones are geographic regions where you ship products."
+msgstr ""
 
 #: src/Routing/PermalinkServiceProvider.php:33
 msgid "Shop"
@@ -10165,6 +10886,10 @@ msgstr "Arată oferta bump dacă"
 msgid "Show Currency Code"
 msgstr "Afișează codul monedei"
 
+#: Blocks/ShippingChoices/edit.js:65
+msgid "Show Description"
+msgstr ""
+
 #: settings/account/components/CartSettings.js:255
 msgid "Show Floating Cart Icon"
 msgstr "Arată pictograma coș plutitor"
@@ -10185,9 +10910,9 @@ msgstr "Arată prețul"
 msgid "Show Price Amount"
 msgstr "Afișează valoarea prețului"
 
-#: sc-order-summary.js:20
+#: sc-order-summary.js:21
 msgid "Show Summary"
-msgstr "Arată un sumarul"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:257
 msgid "Show a floating cart icon in the bottom corner of your site, if there are items in the cart."
@@ -10239,9 +10964,9 @@ msgstr "Afișați câmpul \"nume sau denumirea societății\" în formular.Afiș
 msgid "Show total due in button text."
 msgstr "Afișați totalul datorat în textul butonului."
 
-#: address.js:214
+#: address.js:209
 msgid "Sierra Leone"
-msgstr "Sierra Leone"
+msgstr ""
 
 #: src/Support/Currency.php:346
 msgid "Sierra Leonean Leone"
@@ -10259,17 +10984,17 @@ msgstr "Simplu"
 msgid "Since SureCart's integrations are native, there's no need to worry about the complexity of growing your store."
 msgstr "Deoarece integrările SureCart sunt native, nu trebuie să îți faci griji cu privire la complexitatea creșterii magazinului tău."
 
-#: address.js:215
+#: address.js:210
 msgid "Singapore"
-msgstr "Singapore"
+msgstr ""
 
 #: src/Support/Currency.php:347
 msgid "Singapore Dollar"
 msgstr "Dolarul Singapore"
 
-#: address.js:216
+#: address.js:211
 msgid "Sint Maarten (Dutch part)"
-msgstr "Sint Maarten (partea olandeză)"
+msgstr ""
 
 #: components/MediaLibrary/Preview.js:110
 #: Blocks/BuyButton/edit.js:91
@@ -10287,13 +11012,13 @@ msgstr "Ignorați link-ul"
 msgid "Slider Height"
 msgstr "Înălțimea sliderului"
 
-#: address.js:217
+#: address.js:212
 msgid "Slovakia"
-msgstr "Slovacia"
+msgstr ""
 
-#: address.js:218
+#: address.js:213
 msgid "Slovenia"
-msgstr "Slovenia"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:119
 #: Blocks/BuyButton/edit.js:104
@@ -10303,9 +11028,9 @@ msgstr "Slovenia"
 msgid "Small"
 msgstr "Mic"
 
-#: address.js:219
+#: address.js:214
 msgid "Solomon Islands"
-msgstr "Insulele Solomon"
+msgstr ""
 
 #: src/Support/Currency.php:348
 msgid "Solomon Islands Dollar"
@@ -10315,9 +11040,9 @@ msgstr "Dolarul din Insulele Solomon"
 msgid "Somali Shilling"
 msgstr "Șiling somalez"
 
-#: address.js:220
+#: address.js:215
 msgid "Somalia"
-msgstr "Somalia"
+msgstr ""
 
 #: src/Middleware/NonceMiddleware.php:26
 msgid "Something is wrong with the provided link."
@@ -10405,12 +11130,16 @@ msgstr "Ceva a mers prost."
 
 #: paypal-buttons.js:144
 msgid "Something went wrong. Please contact us for payment."
-msgstr "Ceva a fost în neregulă. Vă rugăm să ne contactați pentru plată."
+msgstr ""
 
 #: components/MediaLibrary/index.js:136
 #: settings/processors/CreateEditPaymentMethod.js:53
 msgid "Something went wrong. Please try again."
 msgstr "Ceva a mers prost. Te rugăm să încerci din nou."
+
+#: sc-shipping-choices2.js:54
+msgid "Sorry, we are not able to ship to your address."
+msgstr ""
 
 #: src/Rest/ProductsRestServiceProvider.php:153
 #: src/Rest/ProductsRestServiceProvider.php:171
@@ -10426,27 +11155,27 @@ msgstr "Ne pare rău, nu aveți permisiunea de a vizualiza modelele de formulare
 msgid "Sort"
 msgstr "Sortare"
 
-#: address.js:221
+#: address.js:216
 msgid "South Africa"
-msgstr "Africa de Sud"
+msgstr ""
 
 #: src/Support/Currency.php:350
 msgid "South African Rand"
 msgstr "Rand sud-african"
 
-#: address.js:222
+#: address.js:217
 msgid "South Georgia and the South Sandwich Islands"
-msgstr "Georgia de Sud și Insulele Sandwich de Sud"
+msgstr ""
 
-#: address.js:223
+#: address.js:218
 msgid "South Korea"
-msgstr "Coreea de Sud"
+msgstr ""
 
 #: src/Support/Currency.php:351
 msgid "South Korean Won"
 msgstr "Won sud-coreean"
 
-#: address.js:224
+#: address.js:219
 msgid "South Sudan"
 msgstr "Sudanul de Sud"
 
@@ -10454,7 +11183,7 @@ msgstr "Sudanul de Sud"
 msgid "Spacing"
 msgstr "Spațiere"
 
-#: address.js:225
+#: address.js:220
 msgid "Spain"
 msgstr "Spania"
 
@@ -10466,7 +11195,7 @@ msgstr "Protecție și securitate împotriva spam-ului"
 msgid "Square"
 msgstr "Pătrat"
 
-#: address.js:226
+#: address.js:221
 msgid "Sri Lanka"
 msgstr "Sri Lanka"
 
@@ -10490,6 +11219,18 @@ msgstr "Setări avansate ale editorului de blocuri independent."
 msgid "Standalone Editor top bar."
 msgstr "Bara de sus a editorului independent."
 
+#: Blocks/ShippingChoices/edit.js:25
+msgid "Standard"
+msgstr ""
+
+#: sc-shipping-choices2.js:58
+msgid "Standard Shipping"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:10
+msgid "Start From Scratch"
+msgstr ""
+
 #: settings/order/OrderProtocol.js:99
 msgid "Start Order Number At"
 msgstr "Numărul de ordine de început de la"
@@ -10506,12 +11247,13 @@ msgstr "Începe sincronizarea"
 msgid "Started"
 msgstr "A început"
 
-#: sc-price-choice.js:811
+#: sc-price-choice-container2.js:58
+#: sc-price-choice.js:813
 msgid "Starting in %s day"
 msgid_plural "Starting in %s days"
-msgstr[0] "Începe în 1 zi"
-msgstr[1] "Începe în %s zile"
-msgstr[2] "Începe în %s zile"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: settings/tax-region/RegistrationForm.js:24
 #: sc-compact-address2.js:102
@@ -10526,11 +11268,11 @@ msgstr "Placeholder stat"
 msgid "State Sales Tax Registrations"
 msgstr "Înregistrări de stat pentru taxa pe vânzări"
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:36
-#: sc-order-shipping-address2.js:45
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:43
+#: sc-order-shipping-address2.js:52
 msgid "State/Province/Region"
-msgstr "Stat/Provincie/Regiune"
+msgstr ""
 
 #: store/add-entities.js:201
 msgid "Statistic"
@@ -10566,6 +11308,10 @@ msgstr "Starea definește vizibilitatea publică a paginii produsului."
 #: products/components/Availability/index.js:61
 msgid "Status defines whether a product is purchasable."
 msgstr "Statutul definește dacă un produs poate fi cumpărat sau nu."
+
+#: orders/modules/Fulfillment/components/StatusDropdown.js:66
+msgid "Status updated."
+msgstr ""
 
 #: Blocks/Column/edit.js:144
 #: Blocks/Column/edit.js:146
@@ -10633,12 +11379,12 @@ msgstr "Stripe"
 msgid "Stripe Fraud Monitoring"
 msgstr "Monitorizarea fraudei Stripe"
 
-#: sc-stripe-add-method.js:35
-#: sc-stripe-element.js:38
-#: sc-stripe-payment-element.js:51
-#: sc-stripe-payment-request2.js:60
+#: sc-stripe-add-method.js:39
+#: sc-stripe-element.js:43
+#: sc-stripe-payment-element.js:59
+#: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
-msgstr "Stripe nu a putut fi încărcat"
+msgstr ""
 
 #: Blocks/Form/edit.js:227
 msgid "Style"
@@ -10657,9 +11403,9 @@ msgstr "Trimiterea comenzii"
 msgid "Submitting Order..."
 msgstr "Trimit comanda..."
 
-#: sc-checkout.js:194
+#: sc-checkout.js:210
 msgid "Submitting order..."
-msgstr "Trimiterea comenzii..."
+msgstr ""
 
 #: Blocks/Product/PriceChoices/edit.js:115
 msgid "Subscribe and Save"
@@ -10836,14 +11582,14 @@ msgstr "Text de succes"
 
 #: sc-password-nag.js:96
 msgid "Success!"
-msgstr "Succes!"
+msgstr ""
 
 #: Blocks/Form/edit.js:355
 #: sc-checkout.js:194
 msgid "Success! Redirecting..."
 msgstr "Succes! Redirecționare..."
 
-#: address.js:227
+#: address.js:222
 msgid "Sudan"
 msgstr "Sudan"
 
@@ -10997,7 +11743,7 @@ msgstr "Obiect produs SureCart"
 msgid "SureCart webhooks could not be created."
 msgstr "Webhook-urile SureCart nu au putut fi create."
 
-#: address.js:228
+#: address.js:223
 msgid "Suriname"
 msgstr "Surinam"
 
@@ -11009,7 +11755,7 @@ msgstr "Dolarul surinamez"
 msgid "Survey Answers"
 msgstr "Răspunsuri la sondaj"
 
-#: address.js:229
+#: address.js:224
 msgid "Svalbard and Jan Mayen"
 msgstr "Svalbard și Jan Mayen"
 
@@ -11017,7 +11763,7 @@ msgstr "Svalbard și Jan Mayen"
 msgid "Swazi Lilangeni"
 msgstr "Lilangeni Swazi"
 
-#: address.js:230
+#: address.js:225
 msgid "Sweden"
 msgstr "Suedia"
 
@@ -11047,7 +11793,7 @@ msgstr "Treci la modul live."
 msgid "Switch to test mode."
 msgstr "Treci la modul de testare."
 
-#: address.js:231
+#: address.js:226
 msgid "Switzerland"
 msgstr "Elveția"
 
@@ -11063,9 +11809,9 @@ msgstr "Sincronizează achizițiile cu pluginurile pe care le folosești deja."
 msgid "Syncing"
 msgstr "Se sincronizează"
 
-#: address.js:232
+#: address.js:227
 msgid "Syrian Arab Republic"
-msgstr "Republica Arabă Siriană"
+msgstr ""
 
 #: src/Support/Currency.php:357
 msgid "São Tomé and Príncipe Dobra"
@@ -11084,19 +11830,19 @@ msgctxt "block title"
 msgid "Tabbed Customer Dashboard"
 msgstr "Tablou de bord pentru clienți cu file"
 
-#: address.js:233
+#: address.js:228
 msgid "Taiwan"
 msgstr "Taiwan"
 
-#: address.js:234
+#: address.js:229
 msgid "Tajikistan"
-msgstr "Tadjikistan"
+msgstr ""
 
 #: src/Support/Currency.php:358
 msgid "Tajikistani Somoni"
 msgstr "Somoni tadjikistani"
 
-#: address.js:235
+#: address.js:230
 msgid "Tanzania"
 msgstr "Tanzania"
 
@@ -11158,10 +11904,6 @@ msgstr "Înregistrare fiscală"
 msgid "Tax Zone"
 msgstr "Zona fiscală"
 
-#: products/modules/Tax.js:68
-msgid "Tax and Shipping"
-msgstr "Taxe și transport"
-
 #: subscriptions/show/modules/Tax.js:37
 msgid "Tax disabled."
 msgstr "Impozit dezactivat."
@@ -11179,9 +11921,9 @@ msgstr "Impozitul este calculat și aplicat automat la comenzi. Asigurați-vă c
 msgid "Tax is included"
 msgstr "Taxa este inclusă"
 
-#: sc-line-item-tax2.js:20
+#: sc-line-item-tax2.js:22
 msgid "Tax:"
-msgstr "Taxe:"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:44
 #: settings/tax/TaxSettings.js:36
@@ -11210,6 +11952,10 @@ msgstr "Șabloanele definesc modul în care acest produs este afișat atunci câ
 #: Controllers/SubscriptionController.php:248
 msgid "Terms"
 msgstr "Termeni"
+
+#: settings/account/AccountSettings.js:259
+msgid "Terms Page"
+msgstr ""
 
 #: settings/portal/PortalSettings.js:131
 msgid "Terms of Service"
@@ -11242,21 +11988,6 @@ msgstr "Test"
 #: sc-payment.js:72
 msgid "Test Mode"
 msgstr "Mod de test"
-
-#: admin/processors.php:66
-#: admin/processors.php:144
-msgid "Test Payment Not Enabled"
-msgstr "Plata de testare nu este activată"
-
-#: admin/processors.php:69
-#: admin/processors.php:147
-msgid "Test Payments Enabled"
-msgstr "Plățile de testare activate"
-
-#: admin/processors.php:62
-#: admin/processors.php:140
-msgid "Test and Live Payments Enabled"
-msgstr "Plăți de testare și live sunt activate"
 
 #: Blocks/Form/Block.php:144
 msgid "Test and live mode API keys, requests, and objects are only available within the mode they are in."
@@ -11293,7 +12024,7 @@ msgstr "Textarea"
 msgid "Thai Baht"
 msgstr "Baht thailandez"
 
-#: address.js:236
+#: address.js:231
 msgid "Thailand"
 msgstr "Thailanda"
 
@@ -11658,6 +12389,14 @@ msgstr "Ultima încercare de plată pentru PaymentIntent a eșuat. Verifică pro
 msgid "The line items for the session."
 msgstr "Elementele pentru sesiune."
 
+#: src/Support/Errors/Translations/codes.php:76
+msgid "The maximum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:75
+msgid "The maximum amount must be greater than or equal to the minimum amount."
+msgstr ""
+
 #: Blocks/Form/Block.php:124
 msgid "The maximum number of subscriptions for a customer has been reached. Contact us if you are receiving this error."
 msgstr "A fost atins numărul maxim de abonamente pentru un client. Contactați-ne dacă primiți această eroare."
@@ -11670,9 +12409,33 @@ msgstr "Prețul maxim trebuie să fie mai mare decât prețul minim."
 msgid "The maximum price must be smaller."
 msgstr "Prețul maxim trebuie să fie mai mic."
 
+#: src/Support/Errors/Translations/codes.php:72
+msgid "The maximum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:71
+msgid "The maximum weight must be greater than or equal to the minimum weight."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:78
+msgid "The minimum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:77
+msgid "The minimum amount must be greater than or equal to zero."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:44
 msgid "The minimum price must be smaller."
 msgstr "Prețul minim trebuie să fie mai mic."
+
+#: src/Support/Errors/Translations/codes.php:74
+msgid "The minimum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:73
+msgid "The minimum weight must be greater than or equal to zero."
+msgstr ""
 
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:125
 msgid "The model to get integration providers for."
@@ -11754,11 +12517,11 @@ msgstr "Lățimea ferestrei de vizualizare a modelului pentru previzualizarea in
 #: paypal-buttons.js:89
 #: paypal-buttons.js:103
 #: paypal-buttons.js:109
-#: sc-paypal-add-method.js:56
 #: sc-paypal-add-method.js:61
-#: sc-paypal-add-method.js:67
+#: sc-paypal-add-method.js:66
+#: sc-paypal-add-method.js:72
 msgid "The payment did not process. Please try again."
-msgstr "Plata nu a fost procesată. Vă rugăm să încercați din nou."
+msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:124
 msgid "The phone number that will be shown to customers for support, on invoices, etc."
@@ -11795,6 +12558,10 @@ msgstr "Prioritatea acestui bump în raport cu alte bump-uri. Cu cât numărul e
 #: src/Support/Errors/Translations/codes.php:27
 msgid "The product image must be an image."
 msgstr "Imaginea produsului trebuie să fie o imagine."
+
+#: settings/shipping/profile/AddShippingProfile.js:36
+msgid "The profile name is required."
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:132
 msgid "The prompt that will appear when you request more information."
@@ -11833,9 +12600,77 @@ msgstr "Cererea conține unul sau mai mulți parametri neașteptați. Elimină-i
 msgid "The request timed out. Try again later."
 msgstr "Solicitarea a expirat. Încearcă din nou mai târziu."
 
-#: fetch.js:1845
+#: fetch.js:694
 msgid "The response is not a valid JSON response."
-msgstr "Răspunsul nu este un răspuns JSON valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:60
+msgid "The selected countries are already used in another shipping zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:61
+msgid "The selected countries are not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:70
+msgid "The shipping method cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:65
+msgid "The shipping method description is too long. Please enter a shorter description."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:62
+msgid "The shipping method name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:54
+msgid "The shipping method name is already in use ."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:64
+msgid "The shipping method name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:63
+msgid "The shipping method name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:55
+msgid "The shipping profile name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:56
+msgid "The shipping profile name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:66
+msgid "The shipping rate type cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:67
+msgid "The shipping rate type is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:68
+msgid "The shipping weight unit cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:69
+msgid "The shipping weight unit is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:57
+msgid "The shipping zone name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:58
+msgid "The shipping zone name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:59
+msgid "The shipping zone name is too long. Please enter a shorter name."
+msgstr ""
 
 #: Blocks/Form/Block.php:139
 msgid "The source cannot be used because it is not in the correct state (e.g., a charge request is trying to use a source with a pending, failed, or consumed source). Check the status of the source you are attempting to use."
@@ -11911,9 +12746,10 @@ msgstr "Site-ul web care va fi afișat clienților pentru asistență, pe factur
 msgid "Theme Layout"
 msgstr "Layout-ul temei"
 
-#: sc-product-line-item2.js:24
+#. translators: 30 days free, Then $99 per month.
+#: sc-product-line-item2.js:39
 msgid "Then"
-msgstr "Apoi"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:181
 msgid "There are no cancellation reasons for this period."
@@ -11955,6 +12791,10 @@ msgstr "Luna aceasta"
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:222
 msgid "This Week"
 msgstr "Săptămâna aceasta"
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:43
+msgid "This action cannot be undone."
+msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:132
 msgid "This action will re-enable associated access."
@@ -12038,6 +12878,10 @@ msgstr "Nu se potrivește"
 msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr "Această descărcare nu poate fi eliminată sau arhivată atunci când este setată ca versiune curentă."
 
+#: onboarding/components/ConfirmStoreEmail.js:53
+msgid "This email is used for store notifications, such as new orders, payment failures and other store emails."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 msgid "This form has been deleted or is unavailable."
 msgstr "Acest formular a fost șters sau nu este disponibil."
@@ -12058,9 +12902,9 @@ msgstr "Aceasta este o listă pentru toate planurile de abonament. Abonamentele 
 msgid "This is a physical product"
 msgstr "Acesta este un produs fizic"
 
-#: sc-order-submit.js:46
+#: sc-order-submit.js:57
 msgid "This is a secure, encrypted payment."
-msgstr "Aceasta este o plată securizată și criptată."
+msgstr ""
 
 #: licenses/modules/Activations/Activation.js:162
 msgid "This is a unique identifier for the license. For example, a website url."
@@ -12122,7 +12966,7 @@ msgstr "Această metodă de creare a plăților Bitcoin nu mai este acceptată. 
 
 #: sc-order-confirmation.js:111
 msgid "This order could not be found. Please try again."
-msgstr "Această comandă nu a putut fi găsită. Vă rugăm să încercați din nou."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
 msgid "This payment method cannot be used for subscriptions."
@@ -12136,17 +12980,17 @@ msgstr "Acest prefix este prea lung. Te rugăm să introduci un prefix mai scurt
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr "Acest prefix este prea scurt. Te rugăm să introduci un prefix mai lung."
 
-#: sc-custom-order-price-input.js:72
+#: sc-custom-order-price-input.js:74
 msgid "This price has been archived."
-msgstr "Acest preț a fost arhivat."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:42
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr "Acest preț este utilizat în prezent în abonamente sau sesiuni de plată. Te rugăm să arhivezi prețul și să creezi altul."
 
-#: sc-price-choice.js:782
+#: sc-price-choice.js:776
 msgid "This product has been archived."
-msgstr "Acest produs a fost arhivat."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
 msgid "This product has prices that are currently being used. Please archive the product instead if it is not already archived."
@@ -12156,10 +13000,10 @@ msgstr "Acest produs are prețuri care sunt utilizate în prezent. Te rugăm să
 msgid "This product is invalid."
 msgstr "Acest produs este invalid."
 
-#: sc-error2.js:25
-#: sc-form-error-provider2.js:42
+#: sc-checkout-form-errors2.js:17
+#: sc-error2.js:24
 msgid "This product is no longer purchasable."
-msgstr "Acest produs nu mai poate fi achiziționat."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:41
 msgid "This product is no longer purchaseable."
@@ -12171,10 +13015,6 @@ msgstr "Acest produs nu mai poate fi achiziționat."
 msgid "This product is not available for purchase."
 msgstr "Acest produs nu este disponibil pentru cumpărare."
 
-#: products/modules/Tax.js:71
-msgid "This product requires shipping"
-msgstr "Acest produs necesită transport"
-
 #: src/Support/Errors/Translations/codes.php:24
 msgid "This promotion code already exists. Please archive the old code or use a different code."
 msgstr "Acest cod promoțional există deja. Te rugăm să arhivezi vechiul cod sau să folosești un alt cod."
@@ -12183,9 +13023,9 @@ msgstr "Acest cod promoțional există deja. Te rugăm să arhivezi vechiul cod 
 msgid "This should be your live storefront URL."
 msgstr "Acesta ar trebui să fie URL-ul magazinului tău live."
 
-#: sc-subscription.js:117
+#: sc-subscription.js:163
 msgid "This subscription does not exist."
-msgstr "Acest abonament nu există."
+msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:129
 msgid "This subscription is going to be paused on %s. When would you like the subscription to be restored?"
@@ -12248,6 +13088,10 @@ msgstr "Astfel, abonamentul va fi activat din nou și va fi taxat imediat client
 msgid "This will save any changes on the page. Do you want to save your changes?"
 msgstr "Aceasta va salva toate modificările efectuate pe pagină. Vrei să-ți salvezi modificările?"
 
+#: settings/shipping/zone/FallbackZone.js:20
+msgid "This zone is optionally used for regions that are not included in any other shipping zone."
+msgstr ""
+
 #: settings/subscription/SubscriptionSettings.js:168
 msgid "Three Weeks"
 msgstr "Trei săptămâni"
@@ -12272,9 +13116,9 @@ msgstr "Perioada de timp"
 msgid "Time Zone"
 msgstr "Fus orar"
 
-#: address.js:237
+#: address.js:232
 msgid "Timor-Leste"
-msgstr "Timorul de Est"
+msgstr ""
 
 #: Blocks/Card/edit.js:28
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:22
@@ -12317,17 +13161,25 @@ msgstr "Pentru a adăuga produse, apăsați butonul \"Adaugă produse\"."
 msgid "To adjust your abandoned checkout notifications,"
 msgstr "Pentru a ajusta notificările de plată abandonată,"
 
+#: settings/shipping/profile/Products.js:397
+msgid "To charge different rates for only certain products, create a new profile in"
+msgstr ""
+
 #: products/modules/Tax.js:48
 msgid "To charge tax, please set up your tax information on the settings page."
 msgstr "Pentru a percepe taxe, te rugăm să configurezi informațiile fiscale pe pagina de setări."
+
+#: settings/shipping/ShippingSettings.js:132
+msgid "To complete the shipping setup, please add shipping rates to a shipping profile below."
+msgstr ""
 
 #: settings/account/AccountSettings.js:324
 msgid "To get your Recaptcha keys"
 msgstr "Pentru a obține cheile Recaptcha"
 
-#: sc-subscription-switch.js:196
+#: sc-subscription-switch.js:205
 msgid "To make changes to your payment plan, please contact us."
-msgstr "Pentru a face modificări la planul de plată, vă rugăm să ne contactați."
+msgstr ""
 
 #: src/WordPress/Pages/PageService.php:39
 #: src/WordPress/Pages/PageService.php:65
@@ -12356,17 +13208,17 @@ msgstr "Comutează arhiva cupoanelor"
 msgid "Toggle Product Archive"
 msgstr "Schimbă arhiva de produse"
 
-#: address.js:238
+#: address.js:233
 msgid "Togo"
-msgstr "Togo"
+msgstr ""
 
-#: address.js:239
+#: address.js:234
 msgid "Tokelau"
-msgstr "Tokelau"
+msgstr ""
 
-#: address.js:240
+#: address.js:235
 msgid "Tonga"
-msgstr "Tonga"
+msgstr ""
 
 #: src/Support/Currency.php:361
 msgid "Tongan Paʻanga"
@@ -12470,6 +13322,19 @@ msgstr "Totaluri"
 msgid "Tracking Confirmation"
 msgstr "Confirmare de urmărire"
 
+#: orders/modules/Fulfillment/components/Tracking.js:74
+msgid "Tracking Link"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/Tracking.js:61
+#: orders/modules/Fulfillment/Fulfilled.js:249
+#: sc-fulfillments.js:63
+msgid "Tracking number"
+msgid_plural "Tracking numbers"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
 #: Blocks/Form/Block.php:146
 msgid "Transfers and payouts on behalf of a Standard connected account are not allowed."
 msgstr "Nu sunt permise transferurile și plățile în numele unui cont conectat Standard."
@@ -12488,37 +13353,41 @@ msgstr "Încercarea se încheie la"
 msgid "Trialing"
 msgstr "Încercare"
 
-#: address.js:241
+#: address.js:236
 msgid "Trinidad and Tobago"
-msgstr "Trinidad și Tobago"
+msgstr ""
 
 #: src/Support/Currency.php:362
 msgid "Trinidad and Tobago Dollar"
 msgstr "Dolarul Trinidad și Tobago"
 
-#: address.js:242
+#: address.js:237
 msgid "Tunisia"
-msgstr "Tunisia"
+msgstr ""
 
-#: address.js:243
+#: address.js:238
 msgid "Turkey"
-msgstr "Turcia"
+msgstr ""
 
 #: src/Support/Currency.php:363
 msgid "Turkish Lira"
 msgstr "Lira turcească"
 
-#: address.js:244
+#: address.js:239
 msgid "Turkmenistan"
-msgstr "Turkmenistan"
+msgstr ""
 
-#: address.js:245
+#: address.js:240
 msgid "Turks and Caicos Islands"
-msgstr "Insulele Turks și Caicos"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:104
 msgid "Turn on abandoned cart for your store."
 msgstr "Activează opțiunea coș abandonat pentru magazinul tău."
+
+#: products/modules/Shipping.js:117
+msgid "Turn this off if you do not wish to automatically fulfill this product when an order is placed."
+msgstr ""
 
 #: settings/subscription-preservation/PreservationSettings.js:194
 msgid "Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active."
@@ -12533,9 +13402,9 @@ msgstr "Curs TutorLMS"
 msgid "Tutorial"
 msgstr "Tutorial"
 
-#: address.js:246
+#: address.js:241
 msgid "Tuvalu"
-msgstr "Tuvalu"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:192
 msgid "Two Column"
@@ -12599,17 +13468,17 @@ msgstr "URL"
 msgid "URL Slug"
 msgstr "Slug URL"
 
-#: address.js:247
+#: address.js:242
 msgid "Uganda"
-msgstr "Uganda"
+msgstr ""
 
 #: src/Support/Currency.php:364
 msgid "Ugandan Shilling"
 msgstr "Șiling ugandez"
 
-#: address.js:248
+#: address.js:243
 msgid "Ukraine"
-msgstr "Ucraina"
+msgstr ""
 
 #: src/Support/Currency.php:365
 msgid "Ukrainian Hryvnia"
@@ -12645,6 +13514,10 @@ msgstr "Dezarhivezi acest bump? Asta va face ca produsul să poată fi achiziți
 msgid "Un-Archive this price? This will make the product purchaseable again."
 msgstr "Dezarhivează acest preț? Acest lucru va face ca produsul să poată fi achiziționat din nou."
 
+#: product-groups/EditProductGroup.js:75
+msgid "Un-Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:348
 msgid "Unapprove"
 msgstr "Dezaprobă"
@@ -12653,6 +13526,12 @@ msgstr "Dezaprobă"
 #: Blocks/Product/BuyButton/Block.php:117
 msgid "Unavailable For Purchase"
 msgstr "Indisponibil pentru cumpărare"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:351
+#: orders/modules/Fulfillment/Unfulfilled.js:40
+#: sc-order-fulfillment-badge.js:7
+msgid "Unfulfilled"
+msgstr ""
 
 #: admin/advanced.php:63
 #: admin/plugin.php:106
@@ -12705,9 +13584,9 @@ msgstr "Dezinstalare"
 msgid "Unique identifier for the object."
 msgstr "Identificator unic pentru obiect."
 
-#: address.js:249
+#: address.js:244
 msgid "United Arab Emirates"
-msgstr "Emiratele Arabe Unite"
+msgstr ""
 
 #: src/Support/Currency.php:366
 msgid "United Arab Emirates Dirham"
@@ -12729,9 +13608,13 @@ msgstr "Statele Unite ale Americii"
 msgid "United States Dollar"
 msgstr "Dolarul Statelor Unite ale Americii"
 
-#: address.js:252
+#: address.js:247
 msgid "United States Minor Outlying Islands"
-msgstr "Insulele periferice minore ale Statelor Unite"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:185
+msgid "United States,  United Kingdom, Global ..."
+msgstr ""
 
 #: orders/modules/Refunds.js:59
 msgid "Unknown"
@@ -12754,9 +13637,9 @@ msgstr "Deblocați caracteristicile de creștere a veniturilor atunci când face
 msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr "Deblochează funcțiile de creștere a veniturilor atunci când îți actualizezi planul!"
 
-#: sc-subscription-status-badge2.js:62
+#: sc-subscription-status-badge2.js:65
 msgid "Unpaid"
-msgstr "Neplătit"
+msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:78
 msgid "Unrevoke"
@@ -12807,9 +13690,9 @@ msgstr "Actualizare"
 msgid "Update Account Details"
 msgstr "Actualizează detaliile contului"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update All Subscriptions"
-msgstr "Actualizează toate abonamentele"
+msgstr ""
 
 #: sc-subscription-switch.js:178
 msgid "Update Amount"
@@ -12824,9 +13707,9 @@ msgstr "Actualizarea detaliilor de facturare"
 msgid "Update Coupon"
 msgstr "Actualizare cupon"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update Default Payment Method"
-msgstr "Actualizează metoda de plată implicită"
+msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:245
 msgid "Update Immediately"
@@ -12857,22 +13740,26 @@ msgstr "Actualizează metoda de plată"
 msgid "Update Plan"
 msgstr "Actualizează planul"
 
-#: sc-subscription-details2.js:107
+#: sc-subscription-details2.js:109
 msgid "Update Scheduled"
-msgstr "Actualizare programată"
+msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:253
 #: subscriptions/show/ShowSubscription.js:141
 msgid "Update Subscription"
 msgstr "Actualizează abonamentul"
 
+#: subscriptions/edit/modules/Modals/UpdatePrice.js:28
+msgid "Update Subscription Price"
+msgstr ""
+
 #: admin/connection-invalid.php:25
 msgid "Update Your Connection"
 msgstr "Actualizează-ți conexiunea"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update all existing subscriptions to use this payment method"
-msgstr "Actualizați toate abonamentele existente pentru a utiliza această metodă de plată"
+msgstr ""
 
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:30
 msgid "Update canceled."
@@ -12905,17 +13792,17 @@ msgstr "Grup de upgrade"
 msgid "Upgrade Groups"
 msgstr "Grupuri de upgrade"
 
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Upgrade Now"
-msgstr "Actualizați Acum"
+msgstr ""
 
 #: settings/upgrade/UpgradeSettings.js:57
 msgid "Upgrade This Store"
 msgstr "Actualizează acest magazin"
 
-#: layouts/partials/admin-settings-sidebar.php:76
-msgid "Upgrade To Pro"
-msgstr "Upgrade la Pro"
+#: layouts/partials/admin-settings-sidebar.php:94
+msgid "Upgrade To Premium"
+msgstr ""
 
 #: components/UpgradeModal.js:39
 msgid "Upgrade Your Plan"
@@ -12927,8 +13814,12 @@ msgid "Upgrade behavior. Either pending or immediate."
 msgstr "Comportamentul de upgrade. Fie în așteptare, fie imediat."
 
 #: settings/upgrade/UpgradeSettings.js:37
-msgid "Upgrade to Pro"
-msgstr "Upgrade la Pro"
+msgid "Upgrade to Premium"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:118
+msgid "Upgrade to SureCart Premium to add unlimited shipping methods."
+msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:88
 #: settings/subscription/SubscriptionSettings.js:89
@@ -12947,9 +13838,9 @@ msgstr "Încarcă media"
 msgid "Url Slug"
 msgstr "Url Slug"
 
-#: address.js:253
+#: address.js:248
 msgid "Uruguay"
-msgstr "Uruguay"
+msgstr ""
 
 #: src/Support/Currency.php:368
 msgid "Uruguayan Peso"
@@ -13007,15 +13898,15 @@ msgstr "Utilizator conectat."
 msgid "User disconnected."
 msgstr "Utilizator deconectat."
 
-#: sc-wordpress-password-edit.js:26
-#: sc-wordpress-user-edit.js:28
+#: sc-wordpress-password-edit.js:30
+#: sc-wordpress-user-edit.js:31
 #: sc-wordpress-user.js:30
 msgid "User not found."
-msgstr "Utilizatorul nu a fost găsit."
+msgstr ""
 
-#: sc-login-form.js:150
+#: sc-login-form.js:152
 msgid "Username or Email Address"
-msgstr "Nume de utilizator sau adresă de e-mail"
+msgstr ""
 
 #: coupons/modules/Limits.js:89
 msgid "Users must redeem this coupon by:"
@@ -13026,18 +13917,18 @@ msgstr "Utilizatorii trebuie să răscumpere acest cupon până la:"
 msgid "Uses"
 msgstr "Utilizări"
 
-#: address.js:254
+#: address.js:249
 msgid "Uzbekistan"
-msgstr "Uzbekistan"
+msgstr ""
 
 #: src/Support/Currency.php:369
 msgid "Uzbekistan Som"
 msgstr "Uzbekistan Som"
 
-#: tax.js:14
-#: tax.js:18
+#: tax.js:11
+#: tax.js:15
 msgid "VAT Number"
-msgstr "Număr de TVA"
+msgstr ""
 
 #: settings/tax/TaxSettings.js:129
 msgid "VAT Number Verification Failure"
@@ -13077,30 +13968,30 @@ msgstr "Valabilitate"
 msgid "Value"
 msgstr "Valoare"
 
-#: address.js:255
+#: address.js:250
 msgid "Vanuatu"
-msgstr "Vanuatu"
+msgstr ""
 
 #: src/Support/Currency.php:370
 msgid "Vanuatu Vatu"
 msgstr "Vanuatu Vatu"
 
-#: address.js:256
+#: address.js:251
 msgid "Venezuela"
-msgstr "Venezuela"
+msgstr ""
 
-#: sc-login-form.js:92
+#: sc-login-form.js:94
 msgid "Verification code is not valid. Please try again."
-msgstr "Codul de verificare nu este valid. Vă rugăm să încercați din nou."
+msgstr ""
 
 #. translators: Version number.
 #: layouts/partials/admin-settings-header.php:50
 msgid "Version %s"
 msgstr "Versiunea %s"
 
-#: address.js:257
+#: address.js:252
 msgid "Vietnam"
-msgstr "Vietnam"
+msgstr ""
 
 #: src/Support/Currency.php:371
 msgid "Vietnamese Đồng"
@@ -13152,6 +14043,10 @@ msgstr "Vezi factura"
 msgid "View License"
 msgstr "Vezi licență"
 
+#: onboarding/Onboarding.js:182
+msgid "View My Store"
+msgstr ""
+
 #: abandoned-checkouts/modules/LineItems/index.js:33
 #: components/data-tables/charges-data-table/index.js:157
 #: orders/Order.js:131
@@ -13189,29 +14084,42 @@ msgstr "Vezi tot"
 msgid "View charge on "
 msgstr "Vezi taxa pe "
 
-#: address.js:258
+#: address.js:253
 msgid "Virgin Islands, British"
-msgstr "Insulele Virgine, Britanice"
+msgstr ""
 
-#: address.js:259
+#: address.js:254
 msgid "Virgin Islands, U.S."
-msgstr "Insulele Virgine, S.U.A."
+msgstr ""
 
-#: sc-order-status-badge2.js:41
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit Store"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit SureCart Store"
+msgstr ""
+
+#: orders/modules/LineItems/index.js:29
+#: sc-order-status-badge2.js:43
 msgid "Void"
-msgstr "Vid"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:335
 msgid "Wait for a period of time after a customer has made a purchase to send other abandoned checkouts."
 msgstr "Așteptați o perioadă de timp după ce un client a făcut o achiziție pentru a trimite alte cereri de plată abandonate."
 
-#: address.js:260
+#: address.js:255
 msgid "Wallis and Futuna"
-msgstr "Wallis și Futuna"
+msgstr ""
 
 #: admin/coming-soon.php:50
 msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
 msgstr "În prezent, lucrăm la funcțiile noastre Pro. Te rugăm să revii când vom lansa noi funcții de economisire a veniturilor și a timpului."
+
+#: src/Support/Errors/Translations/codes.php:53
+msgid "We don't currently ship to your address."
+msgstr ""
 
 #: products/modules/Image/AddUrlImage.js:74
 msgid "We recommend that you optimize your images before linking them to your products."
@@ -13235,25 +14143,29 @@ msgstr "Săptămână"
 msgid "Weekly"
 msgstr "Săptămânal"
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Welcome"
-msgstr "Bine ați venit"
+msgstr ""
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Welcome back!"
-msgstr "Bine ați revenit!"
+msgstr ""
 
 #: admin/onboarding/install.php:48
 msgid "Welcome to SureCart!"
 msgstr "Bun venit la SureCart!"
 
+#: onboarding/components/InitialSetup.js:22
+msgid "Welcome, Let’s Setup Your Online Store"
+msgstr ""
+
 #: src/Support/Currency.php:372
 msgid "West African Cfa Franc"
 msgstr "West African Cfa Franc"
 
-#: address.js:261
+#: address.js:256
 msgid "Western Sahara"
-msgstr "Sahara Occidentală"
+msgstr ""
 
 #: admin/invoices/index.php:8
 msgid "What are Invoices?"
@@ -13311,6 +14223,10 @@ msgstr "Dacă clienții pot sau nu pot modifica cantitățile de abonamente din 
 msgid "Whether or not customers can make subscription changes from the customer portal."
 msgstr "Dacă clienții pot sau nu pot efectua modificări ale abonamentului din portalul clienților."
 
+#: src/Rest/ShippingProtocolRestServiceProvider.php:87
+msgid "Whether or not shipping is enabled"
+msgstr ""
+
 #: src/Rest/BumpRestServiceProvider.php:83
 msgid "Whether or not this bump is currently enabled and being shown to customers."
 msgstr "Dacă acest bump este sau nu activat în prezent și este afișat clienților."
@@ -13361,9 +14277,9 @@ msgstr "An"
 msgid "Yearly"
 msgstr "Anual"
 
-#: address.js:262
+#: address.js:257
 msgid "Yemen"
-msgstr "Yemen"
+msgstr ""
 
 #: src/Support/Currency.php:373
 msgid "Yemeni Rial"
@@ -13372,6 +14288,10 @@ msgstr "Yemeni Rial"
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:216
 msgid "Yesterday"
 msgstr "Ieri"
+
+#: onboarding/components/InitialSetup.js:33
+msgid "You are a few clicks away from adding e-commerce to your website. SureCart is a cloud powered e-commerce platform that is easy to use, lightweight, and lightning fast."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:46
 msgid "You are already collecting tax for this zone."
@@ -13389,9 +14309,13 @@ msgstr "Nu ești un client în modul de testare."
 msgid "You are not currently a customer."
 msgstr "Nu ești în prezent client."
 
-#: fetch.js:2076
+#: fetch.js:925
 msgid "You are probably offline."
-msgstr "Probabil că sunteți offline."
+msgstr ""
+
+#: onboarding/components/ConfirmStoreDetails.js:46
+msgid "You can always change this later."
+msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:84
 msgid "You can create multiple single product templates, and assign each to different types of products, enabling a custom design for each group of similar products."
@@ -13430,17 +14354,17 @@ msgstr "Nu poți activa comenzile abandonate până când nu îți actualizezi a
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr "Nu poți activa taxele decât dacă este furnizată o adresă fiscală validă"
 
-#: sc-subscription-payment-method.js:41
+#: sc-subscription-payment-method.js:46
 msgid "You do not have any payment methods."
-msgstr "Nu aveți nicio metodă de plată."
+msgstr ""
 
-#: sc-payment.js:46
+#: sc-payment.js:51
 msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
-msgstr "Nu aveți niciun procesator activat pentru acest mod și coș. Vă rugăm să vă configurați procesatoarele."
+msgstr ""
 
-#: sc-stripe-payment-request2.js:172
+#: sc-stripe-payment-request2.js:171
 msgid "You do not have any wallets set up in your browser."
-msgstr "Nu aveți niciun portofel configurat în browser."
+msgstr ""
 
 #: src/Middleware/ArchiveModelMiddleware.php:28
 #: src/Middleware/EditModelMiddleware.php:28
@@ -13455,26 +14379,26 @@ msgstr "Nu ai permisiunea de a face acest lucru."
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
 msgstr "Nu ai înregistrări de TVA specifice fiecărei țări. Dacă ești înregistrat în cadrul ghișeului unic, atunci nu trebuie să creezi înregistrări fiscale specifice fiecărei țări. În caz contrar, adaugă o înregistrare fiscală pentru a începe să colectezi taxe."
 
-#: sc-purchase-downloads-list2.js:30
+#: sc-purchase-downloads-list2.js:34
 msgid "You don't have any downloads."
-msgstr "Nu aveți nici o descărcare."
+msgstr ""
 
-#: sc-invoices-list.js:117
+#: sc-invoices-list.js:119
 msgid "You don't have any invoices."
-msgstr "Nu aveți nicio factură."
+msgstr ""
 
 #: dashboard/components/RecentOrders.js:68
 #: sc-orders-list.js:121
 msgid "You don't have any orders."
 msgstr "Nu ai nicio comandă."
 
-#: sc-payment-methods-list.js:123
+#: sc-payment-methods-list.js:148
 msgid "You don't have any saved payment methods."
-msgstr "Nu aveți nicio metodă de plată salvată."
+msgstr ""
 
-#: sc-subscriptions-list.js:107
+#: sc-subscriptions-list.js:110
 msgid "You don't have any subscriptions."
-msgstr "Nu aveți niciun abonament."
+msgstr ""
 
 #: settings/subscription-preservation/Reasons.js:109
 msgid "You don't have any survey answers. Please add at least one to collect cancellation feedback."
@@ -13488,26 +14412,30 @@ msgstr "Nu ai niciun fel de înregistrare fiscală. Adaugă o înregistrare fisc
 msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
 msgstr "Ai solicitat deja un cod în ultimele 60 de secunde. Te rugăm să aștepți înainte de a solicita din nou."
 
-#: sc-login-provider2.js:76
-msgid "You have logged in successfully."
-msgstr "V-ați autentificat cu succes."
+#: src/Models/ProvisionalAccount.php:45
+msgid "You have already set up your store."
+msgstr ""
 
-#: sc-charges-list.js:90
-#: sc-subscription-payment.js:105
+#: sc-login-provider2.js:80
+msgid "You have logged in successfully."
+msgstr ""
+
+#: sc-charges-list.js:92
+#: sc-subscription-payment.js:110
 msgid "You have no saved payment methods."
-msgstr "Nu aveți nicio metodă de plată salvată."
+msgstr ""
 
 #: web/dashboard/orders/show.php:42
 msgid "You have not been charged for this order."
 msgstr "Nu ai fost taxat pentru această comandă."
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "You have not yet set a password. Please set a password for your account."
-msgstr "Nu ați setat încă o parolă. Vă rugăm să setați o parolă pentru contul dumneavoastră."
+msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:96
 msgid "You have successfully set your password."
-msgstr "Ați reușit să vă setați parola."
+msgstr ""
 
 #: components/unsaved-changes-warning/index.js:40
 #: templates/UpdateModel/UnsavedChangesWarning.js:38
@@ -13522,18 +14450,18 @@ msgstr "Trebuie să introduci o sumă cuprinsă între %1$s și %2$s"
 msgid "You must first purchase something to access your dashboard."
 msgstr "Mai întâi trebuie să cumperi ceva pentru a avea acces la tabloul de bord."
 
-#: sc-stripe-payment-request2.js:166
+#: sc-stripe-payment-request2.js:165
 msgid "You must serve this page over HTTPS to display express payment buttons."
-msgstr "Trebuie să serviți această pagină prin HTTPS pentru a afișa butoanele de plată expres."
+msgstr ""
 
-#: sc-customer-email.js:81
+#: sc-customer-email.js:91
 msgid "You won't receive further emails from us."
-msgstr "Nu veți mai primi alte e-mailuri de la noi."
+msgstr ""
 
-#: sc-upcoming-invoice.js:169
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:182
+#: sc-upcoming-invoice.js:184
 msgid "You'll be switched to this plan"
-msgstr "Vei fi trecut la acest plan"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:62
 msgid "You're not collecting GST in Australia. Add a tax registration to start collecting tax."
@@ -13559,9 +14487,9 @@ msgstr "Cheia API este incorectă. Te rugăm să verifici dacă este corectă ș
 msgid "Your Connect platform is attempting to share an unverified bank account with a connected account."
 msgstr "Platforma Connect încearcă să partajeze un cont bancar neverificat cu un cont conectat."
 
-#: sc-order-summary.js:64
+#: sc-order-summary.js:81
 msgid "Your cart is empty."
-msgstr "Coșul dumneavoastră este gol."
+msgstr ""
 
 #: customers/modules/Details.js:61
 msgid "Your customer's email address."
@@ -13605,50 +14533,50 @@ msgstr "Adresa ta de e-mail și coșul de cumpărături sunt salvate pentru a pu
 msgid "Your name"
 msgstr "Numele dumneavoastră"
 
-#: sc-subscription-next-payment2.js:92
+#: sc-subscription-next-payment2.js:97
 msgid "Your next payment is"
-msgstr "Următoarea dvs. plată este"
+msgstr ""
 
-#: sc-subscription-details2.js:83
+#: sc-subscription-details2.js:87
 msgid "Your next payment is on"
-msgstr "Următoarea dumneavoastră plată este pe"
+msgstr ""
 
-#: sc-checkout-unsaved-changes-warning2.js:24
+#: sc-checkout-unsaved-changes-warning2.js:23
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
-msgstr "Plata dumneavoastră este în curs de procesare. Ieșirea din această pagină ar putea cauza o eroare în comanda dumneavoastră. Vă rugăm să nu părăsiți această pagină."
+msgstr ""
 
 #: Blocks/Form/edit.js:398
 #: sc-order-confirm-provider2.js:70
 msgid "Your payment was successful, and your order is complete. A receipt is on its way to your inbox."
 msgstr "Plata a fost efectuată cu succes, iar comanda ta este completă. O chitanță este în drum spre căsuța ta poștală."
 
-#: sc-subscription-details2.js:80
-#: sc-subscription.js:109
+#: sc-subscription-details2.js:84
+#: sc-subscription.js:155
 msgid "Your plan begins on"
-msgstr "Planul dumneavoastră începe pe"
+msgstr ""
 
-#: sc-subscription-details2.js:83
-#: sc-subscription.js:112
+#: sc-subscription-details2.js:87
+#: sc-subscription.js:158
 msgid "Your plan renews on"
-msgstr "Planul dumneavoastră se reînnoiește pe"
+msgstr ""
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "Your plan switches to"
-msgstr "Planul tău trece la"
+msgstr ""
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled immediately. You cannot change your mind."
-msgstr "Planul dvs. va fi anulat imediat. Nu vă puteți răzgândi."
+msgstr ""
 
-#: sc-subscription-details2.js:68
-#: sc-subscription.js:106
+#: sc-subscription-details2.js:72
+#: sc-subscription.js:152
 msgid "Your plan will be canceled on"
-msgstr "Planul dvs. va fi anulat la data de"
+msgstr ""
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
-msgstr "Planul dvs. va fi anulat, dar este încă disponibil până la sfârșitul perioadei de facturare pe"
+msgstr ""
 
 #: Blocks/Form/Block.php:122
 msgid "Your platform attempted to create a custom account in a country that is not yet supported. Make sure that users can only sign up in countries supported by custom accounts."
@@ -13679,21 +14607,41 @@ msgstr "Spațiul tău de stocare este redus"
 msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
 msgstr "Magazinul tău nu pare să folosească o conexiune securizată. Este necesară o conexiune securizată (https) pentru a utiliza SureCart pentru a procesa tranzacții live."
 
+#: onboarding/components/SetupDone.js:45
+msgid "Your store has been created."
+msgstr ""
+
+#: dashboard/Dashboard.js:88
+msgid "Your store is now connected to SureCart."
+msgstr ""
+
 #: settings/tax-region/TaxRegionSettings.js:55
 msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
 msgstr "Va trebui să colectezi taxe pe vânzări dacă îndeplinești anumite cerințe de stat, cunoscute și sub numele de nexus. Pentru a începe să colectezi taxele, trebuie să te înregistrezi la autoritatea fiscală de stat corespunzătoare."
 
-#: address.js:263
+#: address.js:258
 msgid "Zambia"
-msgstr "Zambia"
+msgstr ""
 
 #: src/Support/Currency.php:374
 msgid "Zambian Kwacha"
 msgstr "Zambian Kwacha"
 
-#: address.js:264
+#: address.js:259
 msgid "Zimbabwe"
-msgstr "Zimbabwe"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:181
+msgid "Zone Name"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:117
+msgid "Zone added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:111
+msgid "Zone updated"
+msgstr ""
 
 #. translators: Visible only in the front end, this warning takes the place of a faulty block.
 #: Blocks/CheckoutForm/Block.php:39
@@ -13726,6 +14674,10 @@ msgctxt "block keyword"
 msgid "amount"
 msgstr "suma"
 
+#: onboarding/components/InitialSetup.js:98
+msgid "and"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "android"
@@ -13736,9 +14688,9 @@ msgctxt "block keyword"
 msgid "apple"
 msgstr "apple"
 
-#: sc-upcoming-invoice.js:169
+#: sc-upcoming-invoice.js:182
 msgid "at the end of your billing cycle on"
-msgstr "la sfârșitul ciclului de facturare pe"
+msgstr ""
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -13915,9 +14867,9 @@ msgstr[0] "zi"
 msgstr[1] "%d zile"
 msgstr[2] "%d zile"
 
-#: sc-quantity-select2.js:60
+#: sc-quantity-select2.js:66
 msgid "decrease number"
-msgstr "micșorați numărul"
+msgstr ""
 
 #: Blocks/Product/Description/block.json
 msgctxt "block keyword"
@@ -14017,6 +14969,11 @@ msgctxt "block keyword"
 msgid "form"
 msgstr "formular"
 
+#: products/modules/Shipping.js:20
+#: settings/shipping/rate/ShippingRateForm.js:39
+msgid "g"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "google"
@@ -14045,17 +15002,17 @@ msgctxt "block keyword"
 msgid "image"
 msgstr "imagine"
 
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:184
 msgid "immediately"
-msgstr "imediat"
+msgstr ""
 
-#: sc-line-item-tax2.js:33
+#: sc-line-item-tax2.js:37
 msgid "included"
-msgstr "inclus"
+msgstr ""
 
-#: sc-quantity-select2.js:60
+#: sc-quantity-select2.js:66
 msgid "increase number"
-msgstr "măriți numărul"
+msgstr ""
 
 #: Blocks/Input/block.json
 #: Blocks/Password/block.json
@@ -14102,10 +15059,20 @@ msgctxt "block keyword"
 msgid "item"
 msgstr "articol"
 
+#: products/modules/Shipping.js:18
+#: settings/shipping/rate/ShippingRateForm.js:37
+msgid "kg"
+msgstr ""
+
 #: Blocks/LastName/block.json
 msgctxt "block keyword"
 msgid "last-name"
 msgstr "nume"
+
+#: products/modules/Shipping.js:17
+#: settings/shipping/rate/ShippingRateForm.js:36
+msgid "lb"
+msgstr ""
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -14173,12 +15140,12 @@ msgctxt "block keyword"
 msgid "meta"
 msgstr "meta"
 
-#: price.js:50
+#: price.js:52
 msgid "mo"
 msgid_plural "%d mos"
-msgstr[0] "1 lună"
-msgstr[1] "%d luni"
-msgstr[2] "%d luni"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
@@ -14247,10 +15214,14 @@ msgstr "notifications@surecart.com"
 msgid "of"
 msgstr "din"
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
+#: orders/modules/Fulfillment/CreateFulfillment.js:216
+msgid "of %d"
+msgstr ""
+
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "on"
-msgstr "pe"
+msgstr ""
 
 #: util/translations.js:7
 #: util/translations.js:56
@@ -14261,9 +15232,9 @@ msgstr "pe"
 msgid "once"
 msgstr "o dată"
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "or"
-msgstr "sau"
+msgstr ""
 
 #: components/MediaLibrary/index.js:178
 msgid "or drag and drop a file to upload."
@@ -14274,6 +15245,11 @@ msgstr "sau trage și fixează un fișier pentru a-l încărca."
 msgctxt "Page slug"
 msgid "order-confirmation"
 msgstr "confirmare de comandă"
+
+#: products/modules/Shipping.js:19
+#: settings/shipping/rate/ShippingRateForm.js:38
+msgid "oz"
+msgstr ""
 
 #: Blocks/Password/block.json
 msgctxt "block keyword"
@@ -14358,17 +15334,21 @@ msgctxt "block keyword"
 msgid "shipping"
 msgstr "expediere"
 
+#: settings/shipping/profile/Products.js:407
+msgid "shipping settings"
+msgstr ""
+
 #: src/WordPress/Pages/PageSeeder.php:90
 msgctxt "Shop page slug"
 msgid "shop"
 msgstr "magazin"
 
-#: sc-product-line-item2.js:30
+#: sc-product-line-item2.js:39
 msgid "starting in %d day"
 msgid_plural "starting in %d days"
-msgstr[0] "începe în 1 zi"
-msgstr[1] "începe în %d zile"
-msgstr[2] "începe în %d zile"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: Blocks/StoreLogo/block.json
 msgctxt "block keyword"
@@ -14504,12 +15484,12 @@ msgstr[0] "săptămână"
 msgstr[1] "%d săptămâni"
 msgstr[2] "%d săptămâni"
 
-#: price.js:48
+#: price.js:50
 msgid "wk"
 msgid_plural "%d wks"
-msgstr[0] "1 săptămână"
-msgstr[1] "%d săptămâni"
-msgstr[2] "%d săptămâni"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
@@ -14521,13 +15501,13 @@ msgstr[0] "an"
 msgstr[1] "%d ani"
 msgstr[2] "%d ani"
 
-#: price.js:52
+#: price.js:54
 msgid "yr"
 msgid_plural "%d yrs"
-msgstr[0] "1 an"
-msgstr[1] "%d ani"
-msgstr[2] "%d ani"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
-#: address.js:265
+#: address.js:260
 msgid "Åland Islands"
-msgstr "Insulele Åland"
+msgstr ""
