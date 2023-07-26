@@ -19,6 +19,7 @@ export default ({
 	onNew,
 	ad_hoc,
 	loading,
+	includeVariants = true,
 }) => {
 	const selectRef = useRef();
 	const findProduct = throttle(
@@ -78,7 +79,7 @@ export default ({
 					.map((price) => {
 						const variants = product?.variants?.data || [];
 						
-						if ( ! variants.length) {
+						if ( ! includeVariants || ! variants.length) {
 							return {
 								value: price.id,
 								label: price?.ad_hoc
@@ -93,12 +94,13 @@ export default ({
 						return variants
 							.sort((a, b) => a?.position - b?.position)
 							.map((variant) => {
+								const variantLabel = [variant?.option_1, variant?.option_2, variant?.option_3].filter(Boolean).join(' / ');
 								return {
 									value: price.id,
 									label: price?.ad_hoc
 										? __('Name Your Price', 'surecart')
 										: formatNumber(price.amount, price.currency),
-									suffix: `${variant?.labels ? `(${variant?.labels}) ` : ''} ${intervalString(price, { showOnce: true })}`,
+									suffix: `(${variantLabel}) ${intervalString(price, { showOnce: true })}`,
 									variant_id: variant?.id,
 									
 								};
