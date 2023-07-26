@@ -6,7 +6,7 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { generateVariants } from '../utils';
+import { generateVariants, getDiffingVariants } from '../utils';
 
 // generateVariants tests
 test.describe('generateVariants', () => {
@@ -226,6 +226,214 @@ test.describe('generateVariants', () => {
 					option_3: 'Silver',
 					position: 7,
 					index: 7,
+				},
+			])
+		);
+	});
+});
+
+test.describe('getDiffingVariants', () => {
+	test('should return diffing variants for option 1', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '1', label: 'Red' },
+					{ index: '2', label: 'Blue' },
+				],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const diffingVariants = getDiffingVariants(variants, [
+			{
+				option_1: 'Blue',
+				position: 1,
+				index: 1,
+			},
+		]);
+
+		// Check if variants are generated correctly
+		expect(diffingVariants).toEqual(
+			expect.arrayContaining([
+				{
+					option_1: 'Red',
+				},
+			])
+		);
+	});
+
+	test('should return diffing variants for option 2', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '0', label: 'Red' },
+					{ index: '1', label: 'Blue' },
+					{ index: '2', label: 'Green' },
+				],
+			},
+			{
+				name: 'Size',
+				values: [
+					{ index: '0', label: 'Small' },
+					{ index: '1', label: 'Large' },
+				],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const diffingVariants = getDiffingVariants(variants, [
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+				position: 0,
+				index: 0,
+			},
+			{
+				option_1: 'Red',
+				option_2: 'Large',
+				position: 1,
+				index: 1,
+			},
+			{
+				option_1: 'Blue',
+				option_2: 'Large',
+				position: 2,
+				index: 2,
+			},
+		]);
+
+		// Check if variants are generated correctly - Blue, Small should be missing
+		expect(diffingVariants).toEqual(
+			expect.arrayContaining([
+				{
+					option_1: 'Blue',
+					option_2: 'Small',
+				},
+				{
+					option_1: 'Green',
+					option_2: 'Small',
+				},
+				{
+					option_1: 'Green',
+					option_2: 'Large',
+				},
+			])
+		);
+	});
+
+	test('should return diffing variants for option 3', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '0', label: 'Red' },
+					{ index: '1', label: 'Blue' },
+					{ index: '2', label: 'Green' },
+				],
+			},
+			{
+				name: 'Size',
+				values: [
+					{ index: '0', label: 'Small' },
+					{ index: '1', label: 'Large' },
+				],
+			},
+			{
+				name: 'Material',
+				values: [
+					{ index: '0', label: 'Gold' },
+					{ index: '1', label: 'Silver' },
+				],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const diffingVariants = getDiffingVariants(variants, [
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+				option_3: 'Gold',
+				position: 0,
+				index: 0,
+			},
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+				option_3: 'Silver',
+				position: 1,
+				index: 1,
+			},
+			{
+				option_1: 'Red',
+				option_2: 'Large',
+				option_3: 'Gold',
+				position: 2,
+				index: 2,
+			},
+			{
+				option_1: 'Red',
+				option_2: 'Large',
+				option_3: 'Silver',
+				position: 3,
+				index: 3,
+			},
+			{
+				option_1: 'Blue',
+				option_2: 'Small',
+				option_3: 'Gold',
+				position: 4,
+				index: 4,
+			},
+			{
+				option_1: 'Blue',
+				option_2: 'Small',
+				option_3: 'Silver',
+				position: 5,
+				index: 5,
+			},
+			{
+				option_1: 'Blue',
+				option_2: 'Large',
+				option_3: 'Gold',
+				position: 6,
+				index: 6,
+			},
+			{
+				option_1: 'Blue',
+				option_2: 'Large',
+				option_3: 'Silver',
+				position: 7,
+				index: 7,
+			},
+		]);
+
+		// Check if variants are generated correctly - Blue, Small, Gold should be missing
+		expect(diffingVariants).toEqual(
+			expect.arrayContaining([
+				{
+					option_1: 'Green',
+					option_2: 'Small',
+					option_3: 'Gold',
+				},
+				{
+					option_1: 'Green',
+					option_2: 'Small',
+					option_3: 'Silver',
+				},
+				{
+					option_1: 'Green',
+					option_2: 'Large',
+					option_3: 'Gold',
+				},
+				{
+					option_1: 'Green',
+					option_2: 'Large',
+					option_3: 'Silver',
 				},
 			])
 		);

@@ -125,6 +125,127 @@ function prepareVariants(variants) {
 }
 
 /**
+ * Get diffing variants from variants and previousVariants.
+ *
+ * @param {Array} variants
+ * @param {Array} previousVariants
+ * @returns {Array}
+ */
+export const getDiffingVariants = (variants, previousVariants) => {
+	const diffingVariants = [];
+	let variantNestedLength = 1;
+
+	// Get the nested length of variants first.
+	for (const { option_2, option_3, index } of variants) {
+		if (index === 0) {
+			variantNestedLength = option_3 ? 3 : option_2 ? 2 : 1;
+		}
+	}
+
+	// Handle 1 option: If option_1 of variants didn't found in previousVariants,
+	// then add it to diffingVariants.
+	if (variantNestedLength === 1) {
+		for (const variant of variants) {
+			if (
+				!previousVariants.find(
+					(prevVariant) => prevVariant?.option_1 === variant?.option_1
+				)
+			) {
+				diffingVariants.push(variant);
+			}
+		}
+	}
+
+	// Handle 2 options: If option_1 and option_2 of variants didn't found in previousVariants,
+	// then add it to diffingVariants.
+	if (variantNestedLength === 2) {
+		for (const variant of variants) {
+			if (
+				!previousVariants.find(
+					(prevVariant) =>
+						(prevVariant?.option_1 === variant?.option_1 &&
+							prevVariant?.option_2 === variant.option_2) ||
+						(prevVariant?.option_1 === variant?.option_2 &&
+							prevVariant?.option_2 === variant.option_1)
+				)
+			) {
+				diffingVariants.push(variant);
+			}
+		}
+	}
+
+	// Handle 3 options: If option_1, option_2 and option_3 of variants didn't found in previousVariants,
+	// then add it to diffingVariants.
+	if (variantNestedLength === 3) {
+		for (const variant of variants) {
+			if (
+				!previousVariants.find(
+					(prevVariant) =>
+						(prevVariant?.option_1 === variant?.option_1 &&
+							prevVariant?.option_2 === variant.option_2 &&
+							prevVariant?.option_3 === variant.option_3) ||
+						(prevVariant?.option_1 === variant?.option_1 &&
+							prevVariant?.option_2 === variant.option_3 &&
+							prevVariant?.option_3 === variant.option_2) ||
+						(prevVariant?.option_1 === variant?.option_2 &&
+							prevVariant?.option_2 === variant.option_1 &&
+							prevVariant?.option_3 === variant.option_3) ||
+						(prevVariant?.option_1 === variant?.option_2 &&
+							prevVariant?.option_2 === variant.option_3 &&
+							prevVariant?.option_3 === variant.option_1) ||
+						(prevVariant?.option_1 === variant?.option_3 &&
+							prevVariant?.option_2 === variant.option_1 &&
+							prevVariant?.option_3 === variant.option_2) ||
+						(prevVariant?.option_1 === variant?.option_3 &&
+							prevVariant?.option_2 === variant.option_2 &&
+							prevVariant?.option_3 === variant.option_1)
+				)
+			) {
+				diffingVariants.push(variant);
+			}
+		}
+	}
+
+	// Keep only option_1, option_2 and option_3 in diffingVariants
+	// and remove other keys from variant
+	return diffingVariants.map((variant) => {
+		let newVariant = {
+			option_1: variant.option_1,
+		};
+
+		if (variantNestedLength >= 2) {
+			newVariant.option_2 = variant.option_2;
+		}
+
+		if (variantNestedLength === 3) {
+			newVariant.option_3 = variant.option_3;
+		}
+
+		return newVariant;
+	});
+};
+
+/**
+ * Store deleted variants in localStorage.
+ *
+ * @param {Array} variants
+ */
+export function trackDeletedVariants(variants) {
+	localStorage.setItem('surecart_deleted_variants', JSON.stringify(variants));
+}
+
+/**
+ * Get deleted variants from localStorage.
+ *
+ * @returns {Array}
+ */
+export function getDeletedVariants() {
+	return JSON.parse(
+		localStorage.getItem('surecart_deleted_variants') ?? '[]'
+	);
+}
+
+/**
  * If any duplicate optionValue.label is found.
  *
  * @returns object
