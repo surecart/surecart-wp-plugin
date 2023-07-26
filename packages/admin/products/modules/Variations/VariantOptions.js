@@ -56,6 +56,15 @@ export default ({ product, updateProduct, loading }) => {
 		});
 	};
 
+	// For first time load, we need to add all variant options to editingValues.
+	useEffect(() => {
+		const editingValuesData = {};
+		(product?.variant_options ?? []).forEach((_, index) => {
+			editingValuesData[index] = false;
+		});
+		setEditingValues(editingValuesData);
+	}, []);
+
 	useEffect(() => {
 		// removes all variant values, which label is empty and which has no name.
 		let updatedVariantOptions = (product?.variant_options ?? [])
