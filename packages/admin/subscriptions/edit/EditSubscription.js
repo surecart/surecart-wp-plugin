@@ -176,6 +176,7 @@ export default () => {
 				quantity,
 				purge_pending_update: true,
 				price,
+				id
 			},
 		});
 	};
