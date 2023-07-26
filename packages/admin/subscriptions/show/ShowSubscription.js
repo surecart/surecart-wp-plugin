@@ -78,6 +78,7 @@ export default () => {
 				),
 				data: {
 					purge_pending_update: false,
+					id
 				},
 			});
 			setUpcoming(response);
