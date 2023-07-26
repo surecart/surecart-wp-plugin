@@ -100,26 +100,4 @@ class Block extends BaseBlock {
 		<?php
 		return ob_get_clean();
 	}
-
-	/**
-	 * Get the block style variables
-	 *
-	 * @param array $attributes Block attributes.
-	 *
-	 * @return string
-	 */
-	// public function getStyleVars( $attributes ) {
-	// $style = '';
-
-	// if ( ! empty( $attributes['backgroundColor'] ) ) {
-	// $text_color = ! empty( $attributes['backgroundColor'] ) ? $this->getColorPresetCssVar( $attributes['backgroundColor'] ) : $attributes['style']['color']['background'];
-	// $style     .= $prefix . '-background-color: ' . $text_color . ';';
-	// }
-
-	// if ( ! empty( $attributes['textColor'] ) ) {
-	// $style .= '--sc-collection-badge-color: ' . $attributes['textColor'] . ';';
-	// }
-
-	// return $style;
-	// }
 }
