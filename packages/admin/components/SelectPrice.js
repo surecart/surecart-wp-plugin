@@ -88,10 +88,9 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
-				console.log(e);
 				onSelect({
 					price_id: e?.target?.value,
-					variant_id: e?.detail?.variant_id
+					...(includeVariants && { variant_id: e?.detail?.variant_id })
 				});
 			}}
 			choices={choices}
