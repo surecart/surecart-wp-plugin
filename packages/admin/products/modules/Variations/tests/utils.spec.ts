@@ -1,4 +1,11 @@
+/**
+ * External dependencies.
+ */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+
+/**
+ * Internal dependencies.
+ */
 import { generateVariants } from '../utils';
 
 // generateVariants tests

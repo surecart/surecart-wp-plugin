@@ -10,7 +10,7 @@ import { useDispatch } from '@wordpress/data';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton, ScIcon, ScTooltip } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import VariantOptions from './VariantOptions';
 import Variants from './Variants';
@@ -50,19 +50,44 @@ export default ({ product, updateProduct, loading }) => {
 			</div>
 
 			<div>
-				<ScButton
-					type={
-						(product?.variant_options ?? []).length
-							? 'text'
-							: 'default'
+				<ScTooltip
+					text={
+						(product?.variant_options ?? []).length >=
+						maxVariantOptions
+							? __(
+									'You have reached the maximum number of variant options. Only 3 variant options are allowed.',
+									'surecart'
+							  )
+							: null
 					}
-					onClick={addEmptyVariantOption}
+					type="info"
+					css={css`
+						display: block;
+					`}
 				>
-					<ScIcon name="plus" slot="prefix" />
-					{!(product?.variant_options ?? []).length
-						? __('Add Options Like Size or Color', 'surecart')
-						: __('Add More Options', 'surecart')}
-				</ScButton>
+					<div>
+						<ScButton
+							type={
+								(product?.variant_options ?? []).length
+									? 'text'
+									: 'default'
+							}
+							onClick={addEmptyVariantOption}
+							disabled={
+								(product?.variant_options ?? []).length >=
+								maxVariantOptions
+							}
+						>
+							<ScIcon name="plus" slot="prefix" />
+							{!(product?.variant_options ?? []).length
+								? __(
+										'Add Options Like Size or Color',
+										'surecart'
+								  )
+								: __('Add More Options', 'surecart')}
+						</ScButton>
+					</div>
+				</ScTooltip>
 			</div>
 
 			{!!product?.variants && (

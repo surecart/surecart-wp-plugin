@@ -72,7 +72,6 @@ export function generateVariants(variantOptions, previousVariants = []) {
 						j * variantOptions[2]?.values.length +
 						k;
 					const previousValue = previousVariants[prevIndex] ?? null;
-					console.log('previousValue', previousValue);
 
 					if (previousValue) {
 						variants.push({
