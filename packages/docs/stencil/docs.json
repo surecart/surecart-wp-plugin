@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-06T16:14:51",
+  "timestamp": "2023-07-26T18:42:53",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -30844,6 +30844,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": false,
+          "docs": "Whether tax input is required",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,

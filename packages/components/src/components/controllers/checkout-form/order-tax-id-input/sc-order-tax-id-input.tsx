@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
@@ -43,6 +43,8 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
+  @State() taxIdRequired: boolean = false;
+
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
     data: Partial<Checkout>;
@@ -77,6 +79,14 @@ export class ScOrderTaxIdInput {
     }
   }
 
+  updateTaxIdRequired (taxIdentifierType: string){
+    this.taxIdRequired = taxIdentifierType === 'eu_vat' && this.taxProtocol?.eu_vat_required;
+  }
+
+  componentDidLoad() {
+    this.updateTaxIdRequired(this.order?.tax_identifier?.number_type);
+  }
+
   render() {
     return (
       <sc-tax-id-input
@@ -89,13 +99,14 @@ export class ScOrderTaxIdInput {
         onScChange={e => {
           e.stopImmediatePropagation();
           this.maybeUpdateOrder(e.detail);
+          this.updateTaxIdRequired(e.detail.number_type);
         }}
         otherLabel={this.otherLabel}
         caGstLabel={this.caGstLabel}
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
-        required={this.taxProtocol?.eu_vat_required}
+        required={this.taxIdRequired}
       ></sc-tax-id-input>
     );
   }
