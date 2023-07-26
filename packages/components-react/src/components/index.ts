@@ -124,6 +124,7 @@ export const ScOrderSummary = /*@__PURE__*/createReactComponent<JSX.ScOrderSumma
 export const ScOrderTaxIdInput = /*@__PURE__*/createReactComponent<JSX.ScOrderTaxIdInput, HTMLScOrderTaxIdInputElement>('sc-order-tax-id-input');
 export const ScOrdersList = /*@__PURE__*/createReactComponent<JSX.ScOrdersList, HTMLScOrdersListElement>('sc-orders-list');
 export const ScPagination = /*@__PURE__*/createReactComponent<JSX.ScPagination, HTMLScPaginationElement>('sc-pagination');
+export const ScPassword = /*@__PURE__*/createReactComponent<JSX.ScPassword, HTMLScPasswordElement>('sc-password');
 export const ScPasswordNag = /*@__PURE__*/createReactComponent<JSX.ScPasswordNag, HTMLScPasswordNagElement>('sc-password-nag');
 export const ScPayment = /*@__PURE__*/createReactComponent<JSX.ScPayment, HTMLScPaymentElement>('sc-payment');
 export const ScPaymentMethod = /*@__PURE__*/createReactComponent<JSX.ScPaymentMethod, HTMLScPaymentMethodElement>('sc-payment-method');
