@@ -96,7 +96,7 @@ class SubscriptionsController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
-	 * @return \WP_REST_Response
+	 * @return \WP_REST_Response|\SureCart\Models\Model|WP_Error
 	 */
 	public function upcomingPeriod( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class( $request['id'] ), $request );
@@ -111,11 +111,11 @@ class SubscriptionsController extends RestController {
 	/**
 	 * Pays off all remaining periods for a subscription.
 	 *
-	 * @param \WP_REST_Request $request Rest Request
+	 * @param \WP_REST_Request $request Rest Request.
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function payOff(\WP_REST_Request $request){
+	public function payOff( \WP_REST_Request $request ) {
 		$model = $this->middleware( new $this->class(), $request );
 		if ( is_wp_error( $model ) ) {
 			return $model;
