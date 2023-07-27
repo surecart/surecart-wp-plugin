@@ -75,23 +75,23 @@ export default ({ customerId, isDefault, paymentMethod }) => {
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-end">
 			{isDefault && <ScTag type="info">Default</ScTag>}
-			<ScDropdown placement="bottom-end" disabled={isSaving}>
-				<ScButton type="text" circle slot="trigger">
-					<ScIcon name="more-horizontal" />
-				</ScButton>
-				<ScMenu>
-					{!isDefault && (
+			{!isDefault && (
+				<ScDropdown placement="bottom-end" disabled={isSaving}>
+					<ScButton type="text" circle slot="trigger">
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
 						<ScMenuItem
 							onClick={() => setDefault(paymentMethod?.id)}
 						>
 							{__('Make Default', 'surecart')}
 						</ScMenuItem>
-					)}
-					<ScMenuItem onClick={() => setModal(true)}>
-						{__('Delete', 'surecart')}
-					</ScMenuItem>
-				</ScMenu>
-			</ScDropdown>
+						<ScMenuItem onClick={() => setModal(true)}>
+							{__('Delete', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
+			)}
 			{!!modal && (
 				<ConfirmDelete
 					paymentMethod={paymentMethod}
