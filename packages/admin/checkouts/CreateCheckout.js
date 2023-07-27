@@ -10,7 +10,6 @@ import {
 	ScBlockUi,
 	ScDialog,
 	ScAlert,
-	ScIcon,
 } from '@surecart/components-react';
 import Prices from './modules/Prices';
 import UpdateModel from '../templates/UpdateModel';
@@ -44,7 +43,7 @@ export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const [liveMode, setLiveMode] = useState(true);
+	const [liveMode, setLiveMode] = useState(false);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
