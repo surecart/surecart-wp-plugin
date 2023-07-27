@@ -127,6 +127,22 @@ class AdminMenuPageService {
 				content: "";
 				width: calc(100% + 26px);
 			}
+			.toplevel_page_sc-dashboard,
+			.surecart_page_sc-settings,
+			.surecart_page_sc-orders,
+			.surecart_page_sc-abandoned-checkouts,
+			.surecart_page_sc-products,
+			.surecart_page_sc-product-groups,
+			.surecart_page_sc-bumps,
+			.surecart_page_sc-coupons,
+			.surecart_page_sc-licenses,
+			.surecart_page_sc-subscriptions,
+			.surecart_page_sc-cancellation-insights,
+			.surecart_page_sc-customers {
+				#wpbody-content > .notice {
+					display: none;
+				}
+			}
 		</style>';
 	}
 
