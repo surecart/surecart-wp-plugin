@@ -11,7 +11,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScIcon, ScInput, ScTag } from '@surecart/components-react';
+import {
+	ScButton,
+	ScFormControl,
+	ScIcon,
+	ScInput,
+	ScTag,
+} from '@surecart/components-react';
 import VariantOptionValues from './VariantOptionValues';
 import {
 	checkOptionValueError,
@@ -145,31 +151,29 @@ export default ({ product, updateProduct, loading }) => {
 					/>
 				</div>
 				<div
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						gap: '1em',
-						marginTop: '1em',
-						marginBottom: '1em',
-						paddingBottom: '1em',
-						borderBottom: '1px solid var(--sc-color-gray-200)',
-					}}
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 1em;
+						margin-top: 1em;
+						margin-bottom: 1em;
+						padding-bottom: 1em;
+						border-bottom: 1px solid var(--sc-color-gray-200);
+					`}
 				>
 					<div
 						style={{
 							flex: 1,
 						}}
 					>
-						<label
+						<ScFormControl
 							css={css`
-								display: block;
 								margin-left: 1.6rem;
-								font-weight: 500;
+								display: inline-block;
 							`}
-						>
-							{__('Option Values', 'surecart')}{' '}
-							<span style={{ color: 'red' }}>*</span>
-						</label>
+							label={__('Option Values', 'surecart')}
+							required
+						/>
 						<VariantOptionValues
 							option={option}
 							product={product}
