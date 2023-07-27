@@ -84,75 +84,84 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 				gap: 1em;
 			`}
 		>
-			{(values || []).map((optionValue, index) => (
-				<SortableItem key={index}>
-					<div
-						css={css`
-							width: 100%;
-							display: flex;
-							align-items: center;
-							gap: 1em;
-							justify-content: center;
-						`}
-					>
-						{/* Hide if no value */}
-						{!!optionValue.label ? (
-							<SortableKnob>
-								<ScIcon
-									name="drag"
-									slot="prefix"
-									css={css`
-										cursor: grab;
-									`}
-								/>
-							</SortableKnob>
-						) : (
-							<ScIcon name="empty" slot="prefix" />
-						)}
-
-						<ScInput
+			{(values || []).map((optionValue, index, array) => {
+				const isLastItem = index === array.length - 1;
+				return (
+					<SortableItem key={index}>
+						<div
 							css={css`
 								width: 100%;
-								focus: {
-									border-color: var(--sc-color-primary);
-								}
+								display: flex;
+								align-items: center;
+								gap: 1em;
+								justify-content: center;
 							`}
-							type="text"
-							placeholder={__('Add another value', 'surecart')}
-							value={optionValue.label}
-							onKeyDown={(e) => {
-								// if we deleted everything, and the label is already blank, delete this.
-								if (
-									e.key === 'Backspace' &&
-									!optionValue.label
-								) {
-									deleteOptionValue(index); // delete option values
-								}
-							}}
-							onInput={(e) =>
-								onChangeOptionValue(index, e.target.value)
-							}
 						>
-							{optionValue?.label && (
-								<ScIcon
-									css={css`
-										cursor: pointer;
-										transition: color
-											var(--sc-transition-medium)
-											ease-in-out;
-										&:hover {
-											color: var(--sc-color-danger-500);
-										}
-									`}
-									onClick={() => deleteOptionValue(index)}
-									slot="suffix"
-									name="trash"
-								/>
+							{/* Hide if last item */}
+							{isLastItem ? (
+								<ScIcon name="empty" slot="prefix" />
+							) : (
+								<SortableKnob>
+									<ScIcon
+										name="drag"
+										slot="prefix"
+										css={css`
+											cursor: grab;
+										`}
+									/>
+								</SortableKnob>
 							)}
-						</ScInput>
-					</div>
-				</SortableItem>
-			))}
+
+							<ScInput
+								css={css`
+									width: 100%;
+									focus: {
+										border-color: var(--sc-color-primary);
+									}
+								`}
+								type="text"
+								placeholder={
+									isLastItem
+										? __('Add another value', 'surecart')
+										: null
+								}
+								value={optionValue.label}
+								onKeyDown={(e) => {
+									// if we deleted everything, and the label is already blank, delete this.
+									if (
+										e.key === 'Backspace' &&
+										!optionValue.label
+									) {
+										deleteOptionValue(index); // delete option values
+									}
+								}}
+								onInput={(e) =>
+									onChangeOptionValue(index, e.target.value)
+								}
+							>
+								{!isLastItem && (
+									<ScIcon
+										css={css`
+											cursor: pointer;
+											transition: color
+												var(--sc-transition-medium)
+												ease-in-out;
+											&:hover {
+												color: var(
+													--sc-color-danger-500
+												);
+											}
+										`}
+										onClick={() => deleteOptionValue(index)}
+										slot="suffix"
+										name="trash"
+									/>
+								)}
+							</ScInput>
+						</div>
+					</SortableItem>
+				);
+			})}
 		</SortableList>
 	);
 });
