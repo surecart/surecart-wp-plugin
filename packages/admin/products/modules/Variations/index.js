@@ -40,16 +40,29 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box title={__('Variants', 'surecart')} loading={loading}>
-			<div>
-				<VariantOptions
-					onRequestClose={() => setModal(false)}
-					product={product}
-					updateProduct={updateProduct}
-				/>
-			</div>
+		<Box
+			title={__('Variants', 'surecart')}
+			loading={loading}
+			css={css`
+				* {
+					box-sizing: border-box;
+				}
+				.components-card-body {
+					padding: 0;
+				}
+			`}
+		>
+			<VariantOptions
+				onRequestClose={() => setModal(false)}
+				product={product}
+				updateProduct={updateProduct}
+			/>
 
-			<div>
+			<div
+				css={css`
+					padding: 12px 24px;
+				`}
+			>
 				<ScTooltip
 					text={
 						(product?.variant_options ?? []).length >=
@@ -61,32 +74,24 @@ export default ({ product, updateProduct, loading }) => {
 							: null
 					}
 					type="info"
-					css={css`
-						display: block;
-					`}
 				>
-					<div>
-						<ScButton
-							type={
-								(product?.variant_options ?? []).length
-									? 'text'
-									: 'default'
-							}
-							onClick={addEmptyVariantOption}
-							disabled={
-								(product?.variant_options ?? []).length >=
-								maxVariantOptions
-							}
-						>
-							<ScIcon name="plus" slot="prefix" />
-							{!(product?.variant_options ?? []).length
-								? __(
-										'Add Options Like Size or Color',
-										'surecart'
-								  )
-								: __('Add More Options', 'surecart')}
-						</ScButton>
-					</div>
+					<ScButton
+						type={
+							(product?.variant_options ?? []).length
+								? 'link'
+								: 'default'
+						}
+						onClick={addEmptyVariantOption}
+						disabled={
+							(product?.variant_options ?? []).length >=
+							maxVariantOptions
+						}
+					>
+						<ScIcon name="plus" slot="prefix" />
+						{!(product?.variant_options ?? []).length
+							? __('Add Options Like Size or Color', 'surecart')
+							: __('Add More Options', 'surecart')}
+					</ScButton>
 				</ScTooltip>
 			</div>
 

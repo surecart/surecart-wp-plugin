@@ -13,6 +13,7 @@ import {
 	ScInput,
 	ScMenu,
 	ScMenuItem,
+	ScPriceInput,
 	ScText,
 } from '@surecart/components-react';
 
@@ -213,10 +214,11 @@ export default ({ product, updateProduct, loading }) => {
 						</ScFlex>
 					),
 					amount: (
-						<ScInput
+						<ScPriceInput
 							type="number"
 							min="0"
 							value={amount}
+							currency={product?.currency}
 							name="amount"
 							disabled={status === 'draft'}
 							onScChange={(e) => updateVariantValue(e, index)}

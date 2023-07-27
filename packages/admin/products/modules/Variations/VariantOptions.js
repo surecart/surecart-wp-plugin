@@ -118,7 +118,12 @@ export default ({ product, updateProduct, loading }) => {
 
 	const renderEditingVariantOption = (option, index) => {
 		return (
-			<div>
+			<div
+				css={css`
+					display: grid;
+					gap: 24px;
+				`}
+			>
 				<div
 					css={css`
 						display: flex;
@@ -155,10 +160,6 @@ export default ({ product, updateProduct, loading }) => {
 						display: flex;
 						align-items: center;
 						gap: 1em;
-						margin-top: 1em;
-						margin-bottom: 1em;
-						padding-bottom: 1em;
-						border-bottom: 1px solid var(--sc-color-gray-200);
 					`}
 				>
 					<div
@@ -220,15 +221,12 @@ export default ({ product, updateProduct, loading }) => {
 	const renderEditedVariantOption = (option, index) => {
 		return (
 			<div
-				style={{
-					display: 'flex',
-					alignItems: 'center',
-					gap: '1em',
-					justifyContent: 'space-between',
-					marginBottom: '1em',
-					paddingBottom: '1em',
-					borderBottom: '1px solid var(--sc-color-gray-200)',
-				}}
+				css={css`
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					gap: 1em;
+				`}
 			>
 				<div>
 					<div
@@ -308,13 +306,10 @@ export default ({ product, updateProduct, loading }) => {
 								<div
 									key={index}
 									css={css`
-										padding-top: var(--sc-spacing-xx-small);
-										padding-bottom: var(
-											--sc-spacing-xx-small
-										);
-										margin-bottom: var(
-											--sc-spacing-xx-small
-										);
+										padding: 24px;
+										background: white;
+										border-bottom: 1px solid
+											var(--sc-color-gray-200);
 									`}
 								>
 									{typeof editingValues[index] ===
