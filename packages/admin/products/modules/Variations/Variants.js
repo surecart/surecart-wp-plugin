@@ -113,6 +113,9 @@ export default ({ product, updateProduct, loading }) => {
 
 	return (
 		<DataTable
+			css={css`
+				border-top: 1px solid var(--sc-color-gray-200);
+			`}
 			title={__('', 'surecart')}
 			loading={loading}
 			columns={{

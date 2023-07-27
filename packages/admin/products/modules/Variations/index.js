@@ -75,23 +75,28 @@ export default ({ product, updateProduct, loading }) => {
 					}
 					type="info"
 				>
-					<ScButton
-						type={
-							(product?.variant_options ?? []).length
-								? 'link'
-								: 'default'
-						}
-						onClick={addEmptyVariantOption}
-						disabled={
-							(product?.variant_options ?? []).length >=
-							maxVariantOptions
-						}
-					>
-						<ScIcon name="plus" slot="prefix" />
-						{!(product?.variant_options ?? []).length
-							? __('Add Options Like Size or Color', 'surecart')
-							: __('Add More Options', 'surecart')}
-					</ScButton>
+					<span>
+						<ScButton
+							type={
+								(product?.variant_options ?? []).length
+									? 'link'
+									: 'default'
+							}
+							onClick={addEmptyVariantOption}
+							disabled={
+								(product?.variant_options ?? []).length >=
+								maxVariantOptions
+							}
+						>
+							<ScIcon name="plus" slot="prefix" />
+							{!(product?.variant_options ?? []).length
+								? __(
+										'Add Options Like Size or Color',
+										'surecart'
+								  )
+								: __('Add More Options', 'surecart')}
+						</ScButton>
+					</span>
 				</ScTooltip>
 			</div>
 

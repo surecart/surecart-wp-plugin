@@ -273,7 +273,10 @@ export default ({ product, updateProduct, loading }) => {
 				</div>
 
 				<div>
-					<ScButton onClick={() => changeEditingValues(index, true)}>
+					<ScButton
+						size="small"
+						onClick={() => changeEditingValues(index, true)}
+					>
 						{__('Edit', 'surecart')}
 					</ScButton>
 				</div>
