@@ -2307,6 +2307,81 @@ export namespace Components {
         "totalPages": number;
         "totalShowing": number;
     }
+    interface ScPassword {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation": boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp": string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel": string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder": string;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * The name for the input.
+         */
+        "name": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * Sets focus on the input.
+         */
+        "triggerFocus": (options?: FocusOptions) => Promise<void>;
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface ScPasswordNag {
         /**
           * Ensures strong password validation.
@@ -4800,6 +4875,12 @@ declare global {
         prototype: HTMLScPaginationElement;
         new (): HTMLScPaginationElement;
     };
+    interface HTMLScPasswordElement extends Components.ScPassword, HTMLStencilElement {
+    }
+    var HTMLScPasswordElement: {
+        prototype: HTMLScPasswordElement;
+        new (): HTMLScPasswordElement;
+    };
     interface HTMLScPasswordNagElement extends Components.ScPasswordNag, HTMLStencilElement {
     }
     var HTMLScPasswordNagElement: {
@@ -5403,6 +5484,7 @@ declare global {
         "sc-order-tax-id-input": HTMLScOrderTaxIdInputElement;
         "sc-orders-list": HTMLScOrdersListElement;
         "sc-pagination": HTMLScPaginationElement;
+        "sc-password": HTMLScPasswordElement;
         "sc-password-nag": HTMLScPasswordNagElement;
         "sc-payment": HTMLScPaymentElement;
         "sc-payment-method": HTMLScPaymentMethodElement;
@@ -8039,6 +8121,76 @@ declare namespace LocalJSX {
         "totalPages"?: number;
         "totalShowing"?: number;
     }
+    interface ScPassword {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * The input's password confirmation attribute.
+         */
+        "confirmation"?: boolean;
+        /**
+          * The input's confirmation help text.
+         */
+        "confirmationHelp"?: string;
+        /**
+          * The input's confirmation label text.
+         */
+        "confirmationLabel"?: string;
+        /**
+          * The input's confirmation placeholder text.
+         */
+        "confirmationPlaceholder"?: string;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Ensures strong password validation.
+         */
+        "enableValidation"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * The name for the input.
+         */
+        "name"?: string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface ScPasswordNag {
         /**
           * Ensures strong password validation.
@@ -9808,6 +9960,7 @@ declare namespace LocalJSX {
         "sc-order-tax-id-input": ScOrderTaxIdInput;
         "sc-orders-list": ScOrdersList;
         "sc-pagination": ScPagination;
+        "sc-password": ScPassword;
         "sc-password-nag": ScPasswordNag;
         "sc-payment": ScPayment;
         "sc-payment-method": ScPaymentMethod;
@@ -10024,6 +10177,7 @@ declare module "@stencil/core" {
             "sc-order-tax-id-input": LocalJSX.ScOrderTaxIdInput & JSXBase.HTMLAttributes<HTMLScOrderTaxIdInputElement>;
             "sc-orders-list": LocalJSX.ScOrdersList & JSXBase.HTMLAttributes<HTMLScOrdersListElement>;
             "sc-pagination": LocalJSX.ScPagination & JSXBase.HTMLAttributes<HTMLScPaginationElement>;
+            "sc-password": LocalJSX.ScPassword & JSXBase.HTMLAttributes<HTMLScPasswordElement>;
             "sc-password-nag": LocalJSX.ScPasswordNag & JSXBase.HTMLAttributes<HTMLScPasswordNagElement>;
             "sc-payment": LocalJSX.ScPayment & JSXBase.HTMLAttributes<HTMLScPaymentElement>;
             "sc-payment-method": LocalJSX.ScPaymentMethod & JSXBase.HTMLAttributes<HTMLScPaymentMethodElement>;
