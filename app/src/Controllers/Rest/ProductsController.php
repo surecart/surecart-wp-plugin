@@ -16,6 +16,13 @@ class ProductsController extends RestController {
 	protected $class = Product::class;
 
 	/**
+	 * Always fetch with variants and variant options.
+	 *
+	 * @var array
+	 */
+	protected $with = [ 'variants', 'variant_options' ];
+
+	/**
 	 * Edit model.
 	 *
 	 * Filter out variations which statuses are draft.
