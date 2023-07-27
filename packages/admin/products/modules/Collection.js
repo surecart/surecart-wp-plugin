@@ -1,81 +1,47 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-import { useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
 import { ScBlockUi, ScFormControl, ScTag } from '@surecart/components-react';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import ModelSelector from '../../components/ModelSelector';
 
-export default ({ productId, loading }) => {
-	const { invalidateResolutionForStore, saveEntityRecord } =
-		useDispatch(coreStore);
+export default ({ productId, product, loading }) => {
+	const [productCollections, setProductCollections] = useState([]);
+	const [productCollectionIds, setProductCollectionIds] = useState([]);
 	const [busy, setBusy] = useState(false);
 
-	/**
-	 * Get product collections and make for select.
-	 * Fetch the 100 most recent product collections.
-	 */
-	const { productCollections, productCollectionIds, loadingCollectionLists } =
-		useSelect(
-			(select) => {
-				const queryArgs = [
-					'surecart',
-					'product-collection',
-					{
-						context: 'edit',
-						per_page: 100,
-						product_ids: [productId],
-					},
-				];
-
-				const uniqueSet = new Set();
-				const allCollectionLists =
-					select(coreStore).getEntityRecords(...queryArgs) || [];
-
-				const uniqueCollections = allCollectionLists.filter(
-					(collection) => {
-						const isPresent = uniqueSet.has(collection.id);
-						uniqueSet.add(collection.id);
-						return !isPresent;
-					}
-				);
-
-				return {
-					productCollections: uniqueCollections,
-					productCollectionIds: uniqueCollections.map(
-						(collection) => collection.id
-					),
-					loadingCollectionLists: select(coreStore).isResolving(
-						'getEntityRecords',
-						queryArgs
-					),
-				};
-			},
-			[productId]
-		);
+	useEffect(() => {
+		if (product?.product_collections?.data) {
+			setProductCollections(product?.product_collections?.data);
+			setProductCollectionIds(
+				product?.product_collections?.data?.map((c) => c.id)
+			);
+		}
+	}, [product?.product_collections?.data]);
 
 	const updateProductCollections = async (collectionIds) => {
 		setBusy(true);
 		try {
-			await saveEntityRecord(
-				'surecart',
-				'product',
-				{
-					id: productId,
+			const newProduct = await apiFetch({
+				path: addQueryArgs(`/surecart/v1/products/${productId}`, {
+					expand: ['product_collections'],
+				}),
+				method: 'PATCH',
+				data: {
 					product_collections: collectionIds,
 				},
-				{ throwOnError: true }
+			});
+			setProductCollections(newProduct?.product_collections?.data || []);
+			setProductCollectionIds(
+				newProduct?.product_collections?.data?.map((c) => c.id) || []
 			);
-
-			await invalidateResolutionForStore();
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -117,10 +83,7 @@ export default ({ productId, loading }) => {
 	};
 
 	return (
-		<Box
-			loading={loading || loadingCollectionLists}
-			title={__('Collections', 'surecart')}
-		>
+		<Box loading={loading} title={__('Collections', 'surecart')}>
 			<ScFormControl label={__('Select Product Collections', 'surecart')}>
 				{!!productCollections.length && (
 					<div

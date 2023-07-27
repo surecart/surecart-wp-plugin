@@ -15,6 +15,13 @@
 | `value`    | `value`    | The selected value of the control.                                                                                                                                                                            | `string`  | `''`        |
 
 
+## Events
+
+| Event      | Description | Type                  |
+| ---------- | ----------- | --------------------- |
+| `scChange` |             | `CustomEvent<string>` |
+
+
 ## Methods
 
 ### `reportValidity() => Promise<boolean>`
@@ -33,8 +40,22 @@ Type: `Promise<boolean>`
 | Part      | Description |
 | --------- | ----------- |
 | `"base"`  |             |
+| `"items"` |             |
 | `"label"` |             |
 
+
+## Dependencies
+
+### Used by
+
+ - [sc-shipping-choices](../sc-shipping-choices)
+
+### Graph
+```mermaid
+graph TD;
+  sc-shipping-choices --> sc-radio-group
+  style sc-radio-group fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
