@@ -43,7 +43,7 @@ export default () => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
-	const [liveMode, setLiveMode] = useState(false);
+	const [liveMode, setLiveMode] = useState(true);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [busy, setBusy] = useState(false);
 	const [checkoutError, setCheckoutError] = useState(false);
