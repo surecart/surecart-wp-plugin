@@ -11,7 +11,7 @@ import arrayMove from 'array-move';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
+import { ScIcon, ScInput } from '@surecart/components-react';
 
 export default memo(({ option, product, updateProduct, onChangeValue }) => {
 	const [values, setValues] = useState(
@@ -29,19 +29,21 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 		const updatedOptionValues = values.map((value, valueIndex) =>
 			valueIndex === index ? { ...value, label: newLabel } : value
 		);
-
-		// Check if the last optionValue has a name, if yes, add a new empty optionValue
-		const lastOptionValue =
-			updatedOptionValues[updatedOptionValues.length - 1];
-		if (lastOptionValue.label !== '') {
-			const newOptionValue = {
-				index: updatedOptionValues.length + 1,
-				label: '',
-			};
-			updatedOptionValues.push(newOptionValue);
-		}
 		setValues(updatedOptionValues);
 	};
+
+	// we always want an empty value at the end.
+	useEffect(() => {
+		const hasEmpty = values.some((value) => !value?.label);
+		if (!hasEmpty) {
+			setValues([
+				...values,
+				{
+					label: '',
+				},
+			]);
+		}
+	}, [values]);
 
 	// as the values are changed, we need to add in variants.data.
 	useEffect(() => {
@@ -75,73 +77,79 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 	};
 
 	return (
-		<SortableList onSortEnd={applySort}>
+		<SortableList
+			onSortEnd={applySort}
+			css={css`
+				display: grid;
+				gap: 1em;
+			`}
+		>
 			{(values || []).map((optionValue, index) => (
 				<SortableItem key={index}>
 					<div
 						css={css`
-							padding-top: var(--sc-spacing-xx-small);
-							padding-bottom: var(--sc-spacing-xx-small);
+							width: 100%;
+							display: flex;
+							align-items: center;
+							gap: 1em;
+							justify-content: center;
 						`}
 					>
-						<div
+						{/* Hide if no value */}
+						{!!optionValue.label ? (
+							<SortableKnob>
+								<ScIcon
+									name="drag"
+									slot="prefix"
+									css={css`
+										cursor: grab;
+									`}
+								/>
+							</SortableKnob>
+						) : (
+							<ScIcon name="empty" slot="prefix" />
+						)}
+
+						<ScInput
 							css={css`
 								width: 100%;
-								display: flex;
-								align-items: center;
-								gap: 1em;
-								justify-content: center;
-							`}
-						>
-							{/* Hide deletebutton for last item */}
-							{index !== values.length - 1 ? (
-								<SortableKnob>
-									<ScIcon
-										name="drag"
-										slot="prefix"
-										css={css`
-											cursor: grab;
-										`}
-									/>
-								</SortableKnob>
-							) : (
-								<ScIcon name="empty" slot="prefix" />
-							)}
-
-							<ScInput
-								css={css`
-									width: 100%;
-									focus: {
-										border-color: var(--sc-color-primary);
-									}
-								`}
-								type="text"
-								placeholder={__(
-									'Add another value',
-									'surecart'
-								)}
-								value={optionValue.label}
-								onInput={(e) =>
-									onChangeOptionValue(index, e.target.value)
+								focus: {
+									border-color: var(--sc-color-primary);
 								}
-							/>
-
-							{index !== values.length - 1 && (
-								<ScButton
-									type="text"
+							`}
+							type="text"
+							placeholder={__('Add another value', 'surecart')}
+							value={optionValue.label}
+							onKeyDown={(e) => {
+								// if we deleted everything, and the label is already blank, delete this.
+								if (
+									e.key === 'Backspace' &&
+									!optionValue.label
+								) {
+									deleteOptionValue(index); // delete option values
+								}
+							}}
+							onInput={(e) =>
+								onChangeOptionValue(index, e.target.value)
+							}
+						>
+							{optionValue?.label && (
+								<ScIcon
 									css={css`
-										position: absolute;
-										right: 0;
-										hover: {
-											color: var(--sc-color-danger);
+										cursor: pointer;
+										transition: color
+											var(--sc-transition-medium)
+											ease-in-out;
+										&:hover {
+											color: var(--sc-color-danger-500);
 										}
 									`}
 									onClick={() => deleteOptionValue(index)}
-								>
-									<ScIcon name="trash" slot="suffix" />
-								</ScButton>
+									slot="suffix"
+									name="trash"
+								/>
 							)}
-						</div>
+						</ScInput>
 					</div>
 				</SortableItem>
 			))}
