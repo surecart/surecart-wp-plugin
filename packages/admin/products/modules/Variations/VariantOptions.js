@@ -13,7 +13,14 @@ import { __ } from '@wordpress/i18n';
  */
 import { ScButton, ScIcon, ScInput, ScTag } from '@surecart/components-react';
 import VariantOptionValues from './VariantOptionValues';
-import { checkOptionValueError, generateVariants } from './utils';
+import {
+	checkOptionValueError,
+	generateVariants,
+	getDeletedVariants,
+	getDiffingVariants,
+	getExlcudedVariants,
+	trackDeletedVariants,
+} from './utils';
 import Error from '../../../components/Error';
 
 export default ({ product, updateProduct, loading }) => {
@@ -65,9 +72,21 @@ export default ({ product, updateProduct, loading }) => {
 		setEditingValues(editingValuesData);
 	}, []);
 
+	// For first time load, get the diffing variants and save to local storage.
+	useEffect(() => {
+		const variantsData =
+			generateVariants(product?.variant_options ?? [], []) ?? [];
+
+		const diffingVariants = getDiffingVariants(
+			variantsData,
+			product?.variants ?? []
+		);
+		trackDeletedVariants(diffingVariants);
+	}, []);
+
 	useEffect(() => {
 		// removes all variant values, which label is empty and which has no name.
-		let updatedVariantOptions = (product?.variant_options ?? [])
+		const updatedVariantOptions = (product?.variant_options ?? [])
 			?.map((variantOption) => {
 				return {
 					...variantOption,
@@ -87,7 +106,7 @@ export default ({ product, updateProduct, loading }) => {
 			[];
 
 		updateProduct({
-			variants: variantsData,
+			variants: getExlcudedVariants(variantsData, getDeletedVariants()),
 		});
 	}, [product?.variant_options]);
 

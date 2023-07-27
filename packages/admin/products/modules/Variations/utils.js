@@ -8,16 +8,22 @@ import { __ } from '@wordpress/i18n';
  *
  * @param {Array} variantOptions
  * @param {Array} previousVariants
+ * @param {string} changeType - option_deleted | option_sorted | option_value_renamed | option_value_deleted | option_value_sorted
+ *
  * @return {Array}
  */
-export function generateVariants(variantOptions, previousVariants = []) {
+export function generateVariants(
+	variantOptions,
+	previousVariants = [],
+	changeType = 'option_value_renamed'
+) {
 	const variants = [];
 
 	// Check parameters are valid.
 	if (
-		!Array.isArray(variantOptions) || // not array.
-		!Array.isArray(previousVariants) || // not array.
-		variantOptions.length === 0 // empty array.
+		!Array.isArray(variantOptions) ||
+		!Array.isArray(previousVariants) ||
+		variantOptions.length === 0
 	) {
 		return variants;
 	}
@@ -116,13 +122,90 @@ function prepareVariants(variants) {
 	}
 
 	// Append position by index.
-	for (const [index, variant] of newVariants.entries()) {
+	return sortVariants(newVariants);
+}
+
+export const sortVariants = (variants) => {
+	for (const [index, variant] of variants.entries()) {
 		variant.position = index;
 		variant.index = index;
 	}
 
-	return newVariants;
-}
+	return variants;
+};
+
+export const getExlcudedVariants = (variants, deletedVariants) => {
+	const excludedVariants = [];
+
+	if (deletedVariants.length === 0) {
+		return variants;
+	}
+
+	const variantNestedLength = getNestedVariantLength(variants);
+	if (variantNestedLength === 1) {
+		for (const variant of variants) {
+			// remove if option_1 of variant found in deletedVariants
+			if (
+				!deletedVariants.find(
+					(deletedVariant) =>
+						deletedVariant?.option_1 === variant?.option_1
+				)
+			) {
+				excludedVariants.push(variant);
+			}
+		}
+	}
+
+	if (variantNestedLength === 2) {
+		for (const variant of variants) {
+			// remove if option_1 and option_2 of variant found in deletedVariants
+			if (
+				!deletedVariants.find(
+					(deletedVariant) =>
+						(deletedVariant?.option_1 === variant?.option_1 &&
+							deletedVariant?.option_2 === variant.option_2) ||
+						(deletedVariant?.option_1 === variant?.option_2 &&
+							deletedVariant?.option_2 === variant.option_1)
+				)
+			) {
+				excludedVariants.push(variant);
+			}
+		}
+	}
+
+	if (variantNestedLength === 3) {
+		for (const variant of variants) {
+			// remove if option_1, option_2 and option_3 of variant found in deletedVariants
+			if (
+				!deletedVariants.find(
+					(deletedVariant) =>
+						(deletedVariant?.option_1 === variant?.option_1 &&
+							deletedVariant?.option_2 === variant.option_2 &&
+							deletedVariant?.option_3 === variant.option_3) ||
+						(deletedVariant?.option_1 === variant?.option_1 &&
+							deletedVariant?.option_2 === variant.option_3 &&
+							deletedVariant?.option_3 === variant.option_2) ||
+						(deletedVariant?.option_1 === variant?.option_2 &&
+							deletedVariant?.option_2 === variant.option_1 &&
+							deletedVariant?.option_3 === variant.option_3) ||
+						(deletedVariant?.option_1 === variant?.option_2 &&
+							deletedVariant?.option_2 === variant.option_3 &&
+							deletedVariant?.option_3 === variant.option_1) ||
+						(deletedVariant?.option_1 === variant?.option_3 &&
+							deletedVariant?.option_2 === variant.option_1 &&
+							deletedVariant?.option_3 === variant.option_2) ||
+						(deletedVariant?.option_1 === variant?.option_3 &&
+							deletedVariant?.option_2 === variant.option_2 &&
+							deletedVariant?.option_3 === variant.option_1)
+				)
+			) {
+				excludedVariants.push(variant);
+			}
+		}
+	}
+
+	return sortVariants(excludedVariants);
+};
 
 /**
  * Get diffing variants from variants and previousVariants.
@@ -132,15 +215,13 @@ function prepareVariants(variants) {
  * @returns {Array}
  */
 export const getDiffingVariants = (variants, previousVariants) => {
-	const diffingVariants = [];
-	let variantNestedLength = 1;
-
-	// Get the nested length of variants first.
-	for (const { option_2, option_3, index } of variants) {
-		if (index === 0) {
-			variantNestedLength = option_3 ? 3 : option_2 ? 2 : 1;
-		}
+	// Stop if previousVariants is empty.
+	if (!previousVariants || previousVariants?.length === 0) {
+		return variants;
 	}
+
+	const diffingVariants = [];
+	const variantNestedLength = getNestedVariantLength(variants);
 
 	// Handle 1 option: If option_1 of variants didn't found in previousVariants,
 	// then add it to diffingVariants.
@@ -223,6 +304,24 @@ export const getDiffingVariants = (variants, previousVariants) => {
 
 		return newVariant;
 	});
+};
+
+/**
+ * Get nested variant length.
+ *
+ * @param {Array} variants
+ * @returns {number}
+ */
+export const getNestedVariantLength = (variants = []) => {
+	let variantNestedLength = 1;
+
+	(variants ?? []).forEach(({ option_2, option_3 }, index) => {
+		if (index === 0) {
+			variantNestedLength = option_3 ? 3 : option_2 ? 2 : 1;
+		}
+	});
+
+	return variantNestedLength;
 };
 
 /**

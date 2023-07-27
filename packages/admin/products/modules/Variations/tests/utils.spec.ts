@@ -6,7 +6,12 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import { generateVariants, getDiffingVariants } from '../utils';
+import {
+	generateVariants,
+	getDiffingVariants,
+	getExlcudedVariants,
+	getNestedVariantLength,
+} from '../utils';
 
 // generateVariants tests
 test.describe('generateVariants', () => {
@@ -325,7 +330,7 @@ test.describe('getDiffingVariants', () => {
 		);
 	});
 
-	test('should return diffing variants for option 3', () => {
+	test('should return diffing variants for option 3 - 3-2-2', () => {
 		const options = [
 			{
 				name: 'Color',
@@ -434,6 +439,263 @@ test.describe('getDiffingVariants', () => {
 					option_1: 'Green',
 					option_2: 'Large',
 					option_3: 'Silver',
+				},
+			])
+		);
+	});
+
+	test('should return diffing variants for option 3 - 2-1-1', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '0', label: 'Red' },
+					{ index: '1', label: 'Blue' },
+				],
+			},
+			{
+				name: 'Size',
+				values: [{ index: '0', label: 'Small' }],
+			},
+			{
+				name: 'Material',
+				values: [{ index: '0', label: 'Gold' }],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const diffingVariants = getDiffingVariants(variants, [
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+				option_3: 'Gold',
+				position: 0,
+				index: 0,
+			},
+			{
+				option_1: 'Blue',
+				option_2: 'Small',
+				option_3: 'Gold',
+				position: 1,
+				index: 1,
+			},
+		]);
+
+		// Check if variants are generated correctly - Nothing missing
+		expect(diffingVariants).toEqual(expect.arrayContaining([]));
+	});
+});
+
+test.describe('getNestedVariantLength', () => {
+	test('should return 1 for 1 option variants', () => {
+		const variants = [
+			{
+				option_1: 'Red',
+			},
+			{
+				option_1: 'Blue',
+			},
+		];
+
+		// Check if variants are generated correctly
+		expect(getNestedVariantLength(variants)).toEqual(1);
+	});
+
+	test('should return 2 for 2 option variants', () => {
+		const variants = [
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+			},
+			{
+				option_1: 'Red',
+				option_2: 'Large',
+			},
+		];
+
+		expect(getNestedVariantLength(variants)).toEqual(2);
+	});
+
+	test('should return 3 for 3 option variants', () => {
+		const variants = [
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+				option_3: 'Gold',
+			},
+			{
+				option_1: 'Red',
+				option_2: 'Small',
+				option_3: 'Silver',
+			},
+		];
+
+		expect(getNestedVariantLength(variants)).toEqual(3);
+	});
+});
+
+test.describe('getExcludeVariants', () => {
+	test('should return exclude variants for option 1', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '0', label: 'Red' },
+					{ index: '1', label: 'Blue' },
+				],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const excludeVariants = getExlcudedVariants(variants, [
+			{ option_1: 'Red' },
+		]);
+
+		// Check if variants are generated correctly
+		expect(excludeVariants).toEqual(
+			expect.arrayContaining([
+				{
+					option_1: 'Blue',
+					index: 0,
+					position: 0,
+				},
+			])
+		);
+	});
+
+	test('should return exclude variants for option 2', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '0', label: 'Red' },
+					{ index: '1', label: 'Blue' },
+				],
+			},
+			{
+				name: 'Size',
+				values: [
+					{ index: '0', label: 'Small' },
+					{ index: '1', label: 'Large' },
+				],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const excludeVariants = getExlcudedVariants(variants, [
+			{ option_1: 'Red', option_2: 'Small' },
+		]);
+
+		// Check if variants are generated correctly
+		expect(excludeVariants).toEqual(
+			expect.arrayContaining([
+				{
+					option_1: 'Red',
+					option_2: 'Large',
+					index: 0,
+					position: 0,
+				},
+				{
+					option_1: 'Blue',
+					option_2: 'Small',
+					index: 1,
+					position: 1,
+				},
+				{
+					option_1: 'Blue',
+					option_2: 'Large',
+					index: 2,
+					position: 2,
+				},
+			])
+		);
+	});
+
+	test('should return exclude variants for option 3', () => {
+		const options = [
+			{
+				name: 'Color',
+				values: [
+					{ index: '0', label: 'Red' },
+					{ index: '1', label: 'Blue' },
+				],
+			},
+			{
+				name: 'Size',
+				values: [
+					{ index: '0', label: 'Small' },
+					{ index: '1', label: 'Large' },
+				],
+			},
+			{
+				name: 'Material',
+				values: [
+					{ index: '0', label: 'Cotton' },
+					{ index: '1', label: 'Polyester' },
+				],
+			},
+		];
+
+		const variants = generateVariants(options, []);
+
+		const excludeVariants = getExlcudedVariants(variants, [
+			{ option_1: 'Red', option_2: 'Small', option_3: 'Cotton' },
+		]);
+
+		// Check if variants are generated correctly
+		expect(excludeVariants).toEqual(
+			expect.arrayContaining([
+				{
+					option_1: 'Red',
+					option_2: 'Small',
+					option_3: 'Polyester',
+					index: 0,
+					position: 0,
+				},
+				{
+					option_1: 'Red',
+					option_2: 'Large',
+					option_3: 'Cotton',
+					index: 1,
+					position: 1,
+				},
+				{
+					option_1: 'Red',
+					option_2: 'Large',
+					option_3: 'Polyester',
+					index: 2,
+					position: 2,
+				},
+				{
+					option_1: 'Blue',
+					option_2: 'Small',
+					option_3: 'Cotton',
+					index: 3,
+					position: 3,
+				},
+				{
+					option_1: 'Blue',
+					option_2: 'Small',
+					option_3: 'Polyester',
+					index: 4,
+					position: 4,
+				},
+				{
+					option_1: 'Blue',
+					option_2: 'Large',
+					option_3: 'Cotton',
+					index: 5,
+					position: 5,
+				},
+				{
+					option_1: 'Blue',
+					option_2: 'Large',
+					option_3: 'Polyester',
+					index: 6,
+					position: 6,
 				},
 			])
 		);
