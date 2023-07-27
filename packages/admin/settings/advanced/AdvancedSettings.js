@@ -8,7 +8,7 @@ import {
 	ScIcon,
 	ScSwitch,
 	ScInput,
-	ScAlert
+	ScAlert,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
@@ -26,9 +26,9 @@ export default () => {
 		'settings'
 	);
 	const [modal, setModal] = useState(null);
-	
+
 	const [showNotice, setShowNotice] = useState(false);
-	
+
 	// honeypot.
 	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
 		'root',
@@ -176,7 +176,7 @@ export default () => {
 					</div>
 				</div>
 			</SettingsBox>
-			
+
 			<SettingsBox
 				title={__('Spam Protection & Security', 'surecart')}
 				description={__(
@@ -316,6 +316,26 @@ export default () => {
 					</span>
 				</ScSwitch> */}
 			</SettingsBox>
+
+			<SettingsBox
+				title={__('Migrate To SureCart', 'surecart')}
+				description={__(
+					'Migrate your data from another eCommerce platform to SureCart.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+				noButton={true}
+			>
+				<ScButton
+					href={'https://surecart.com/migrate-to-surecart/'}
+					target="_blank"
+					outline
+				>
+					{__('Start Migration Process', 'surecart')}
+					<ScIcon name="external-link" slot="suffix" />
+				</ScButton>
+			</SettingsBox>
+
 			<SettingsBox
 				title={__('Clear Test Data', 'surecart')}
 				description={__(

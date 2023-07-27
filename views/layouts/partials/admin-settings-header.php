@@ -20,6 +20,51 @@
 			z-index: 9989	;
 		}
 	}
+
+	.sc-migrate {
+		background: var(--sc-color-gray-900);
+		color: var(--sc-color-gray-300);
+		padding: var(--sc-spacing-x-small);
+		text-align: center;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+
+	.sc-migrate-content {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1em;
+	}
+
+	.sc-migrate-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25em;
+	}
+
+	.sc-migrate-link,
+	.sc-migrate-link:hover,
+	.sc-migrate-link:visited,
+	.sc-migrate-link:focus,
+	.sc-migrate__close,
+	.sc-migrate__close:hover,
+	.sc-migrate__close:visited,
+	.sc-migrate__close:focus {
+		color: white;
+		text-decoration: none;
+	}
+
+	.sc-migrate-link sc-icon {
+		width: 14px;
+		height: 14px;
+	}
+
+	.sc-migrate__close {
+		position: absolute;
+		top: 7px;
+		right: 7px;
+	}
 </style>
 <div class="sc-settings-header-container">
 	<?php if ( ! empty( $_GET['status'] ) && 'cache_cleared' === sanitize_text_field( wp_unslash( $_GET['status'] ) ) ) : ?>
@@ -28,6 +73,31 @@
 
 	<?php if ( ! empty( $claim_url ) ) : ?>
 		<sc-provisional-banner claim-url="<?php echo esc_url( $claim_url ); ?>"></sc-provisional-banner>
+	<?php elseif ( ! \SureCart::notices()->isDismissed( 'migrate_to_surecart' ) ) : ?>
+		<div class="sc-migrate" data-dismissible="disable-done-notice-forever">
+			<div class="sc-migrate-content">
+				<?php esc_html_e( 'Coming from another eCommerce platform? Migrate your data to SureCart.', 'surecart' ); ?>
+				<a class="sc-migrate-link" target="_blank" href="https://surecart.com/migrate-to-surecart/">
+					<?php esc_html_e( 'Start Migration Process', 'surecart' ); ?>
+					<sc-icon name="arrow-right"></sc-icon>
+				</a>
+			</div>
+			<a href="
+			<?php
+			echo esc_url(
+				add_query_arg(
+					[
+						'surecart_action' => 'dismiss_notices',
+						'surecart_notice' => sanitize_text_field( 'migrate_to_surecart' ),
+						'surecart_nonce'  => wp_create_nonce( 'surecart_notice_nonce' ),
+					]
+				)
+			);
+			?>
+			" class="sc-migrate__close">
+				<sc-icon name="x"></sc-icon>
+			</a>
+		</div>
 	<?php endif; ?>
 
 	<div id="sc-settings-header">
