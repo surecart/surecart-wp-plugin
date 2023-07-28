@@ -42,6 +42,33 @@ export default ({ product, updateProduct, loading }) => {
 		});
 	};
 
+	/**
+	 * If variant options has minimum a name and value,
+	 * then show add variant button
+	 */
+	const renderAddNewVariantButton = () => {
+		return (
+			product?.variant_options?.[0]?.name &&
+			product?.variant_options[0]?.values?.[0]?.label &&
+			!loading && (
+				<div
+					css={css`
+						margin: -12px 0px;
+					`}
+				>
+					<ScButton
+						type="link"
+						onClick={() => setModal(true)}
+						disabled={loading}
+					>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add variant', 'surecart')}
+					</ScButton>
+				</div>
+			)
+		);
+	};
+
 	return (
 		<Box
 			title={__('Variants', 'surecart')}
@@ -54,18 +81,7 @@ export default ({ product, updateProduct, loading }) => {
 					padding: 0;
 				}
 			`}
-			header_action={
-				<div>
-					<ScButton
-						type="link"
-						onClick={() => setModal(true)}
-						disabled={loading}
-					>
-						<ScIcon name="plus" slot="prefix" />
-						{__('Add variant', 'surecart')}
-					</ScButton>
-				</div>
-			}
+			header_action={renderAddNewVariantButton()}
 		>
 			<VariantOptions product={product} updateProduct={updateProduct} />
 
