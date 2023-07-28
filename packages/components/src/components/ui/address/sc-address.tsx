@@ -72,6 +72,9 @@ export class ScAddress {
   /** Is this required? */
   @Prop({ reflect: true }) required: boolean = false;
 
+  /** Is the name required */
+  @Prop() requireName: boolean = false;
+
   /** Should we show the city field? */
   @State() showCity: boolean = true;
 
@@ -157,6 +160,7 @@ export class ScAddress {
               name={this.names?.name}
               squared-bottom
               disabled={this.disabled}
+              required={this.requireName}
             />
           )}
 
