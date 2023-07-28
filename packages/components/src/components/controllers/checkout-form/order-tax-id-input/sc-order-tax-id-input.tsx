@@ -43,7 +43,7 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
-  @State() taxIdRequired: boolean = false;
+  @State() required: boolean;
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
@@ -65,6 +65,7 @@ export class ScOrderTaxIdInput {
   }
 
   async maybeUpdateOrder(tax_identifier) {
+    this.updateTaxRequired(tax_identifier?.number_type);
     try {
       lockCheckout('tax_identifier');
       checkoutState.checkout = (await createOrUpdateCheckout({
@@ -79,12 +80,12 @@ export class ScOrderTaxIdInput {
     }
   }
 
-  updateTaxIdRequired (taxIdentifierType: string){
-    this.taxIdRequired = taxIdentifierType === 'eu_vat' && this.taxProtocol?.eu_vat_required;
+  componentDidLoad() {
+    this.updateTaxRequired(this.order?.tax_identifier?.number_type);
   }
 
-  componentDidLoad() {
-    this.updateTaxIdRequired(this.order?.tax_identifier?.number_type);
+  updateTaxRequired(taxIdentifierType: string) {
+    this.required = this.taxProtocol?.eu_vat_required && taxIdentifierType === 'eu_vat';
   }
 
   render() {
@@ -99,14 +100,13 @@ export class ScOrderTaxIdInput {
         onScChange={e => {
           e.stopImmediatePropagation();
           this.maybeUpdateOrder(e.detail);
-          this.updateTaxIdRequired(e.detail.number_type);
         }}
         otherLabel={this.otherLabel}
         caGstLabel={this.caGstLabel}
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
-        required={this.taxIdRequired}
+        required={this.required}
       ></sc-tax-id-input>
     );
   }
