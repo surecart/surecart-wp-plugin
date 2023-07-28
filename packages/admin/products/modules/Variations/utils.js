@@ -28,12 +28,17 @@ export const generateVariants = (
 		return variants;
 	}
 
-	// TODO: Improve this with a recursive function.
 	if (variantOptions.length === 1) {
+		// For 1 option
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
-			// For 1 option -->
-			// If index exist in previousVariants, then update the label only
-			const previousValue = previousVariants[i] ?? null;
+			const previousValue = findPreviousValue(
+				variantOptions,
+				previousVariants,
+				i,
+				changeType,
+				1
+			);
+
 			if (previousValue) {
 				variants.push({
 					...previousValue,
@@ -48,9 +53,16 @@ export const generateVariants = (
 	} else if (variantOptions.length === 2) {
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
 			for (let j = 0; j < variantOptions[1].values.length; j++) {
-				// If index exist in previousVariants, then update the label only
-				const prevIndex = i * variantOptions[1]?.values.length + j;
-				const previousValue = previousVariants[prevIndex] ?? null;
+				const previousValue = findPreviousValue(
+					variantOptions,
+					previousVariants,
+					{
+						i,
+						j,
+					},
+					changeType,
+					2
+				);
 
 				if (previousValue) {
 					variants.push({
@@ -70,14 +82,17 @@ export const generateVariants = (
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
 			for (let j = 0; j < variantOptions[1].values.length; j++) {
 				for (let k = 0; k < variantOptions[2].values.length; k++) {
-					// If index exist in previousVariants, then update the label only
-					const prevIndex =
-						i *
-							variantOptions[1]?.values.length *
-							variantOptions[2]?.values.length +
-						j * variantOptions[2]?.values.length +
-						k;
-					const previousValue = previousVariants[prevIndex] ?? null;
+					const previousValue = findPreviousValue(
+						variantOptions,
+						previousVariants,
+						{
+							i,
+							j,
+							k,
+						},
+						changeType,
+						3
+					);
 
 					if (previousValue) {
 						variants.push({
@@ -99,6 +114,101 @@ export const generateVariants = (
 	}
 
 	return prepareVariants(variants);
+};
+
+/**
+ * Find previous value from previousVariants.
+ *
+ * @param {Array} variantOptions
+ * @param {Array} previousVariants
+ * @param {mixed} index
+ * @param {String} changeType
+ * @param {Number} nestedLength
+ * @returns
+ */
+const findPreviousValue = (
+	variantOptions,
+	previousVariants,
+	index,
+	changeType,
+	nestedLength = 1
+) => {
+	// For renaming, If index exist in previousVariants, then update the label only
+	if (changeType === 'option_value_renamed') {
+		if (nestedLength == 1) {
+			return previousVariants[index] ?? null;
+		}
+
+		if (nestedLength == 2) {
+			const { i, j } = index;
+			const prevIndex = i * variantOptions[1]?.values.length + j;
+			return previousVariants[prevIndex] ?? null;
+		}
+
+		if (nestedLength == 3) {
+			const { i, j, k } = index;
+			const prevIndex =
+				i *
+					variantOptions[1]?.values.length *
+					variantOptions[2]?.values.length +
+				j * variantOptions[2]?.values.length +
+				k;
+			return previousVariants[prevIndex] ?? null;
+		}
+	}
+
+	if (nestedLength == 1) {
+		const option1Value = variantOptions[0]?.values?.[index]?.label;
+		return (
+			previousVariants.find(
+				({ option_1 }) => option_1 === option1Value
+			) ?? null
+		);
+	}
+
+	if (nestedLength == 2) {
+		const { i, j } = index;
+		const option1Value = variantOptions[0]?.values?.[i]?.label;
+		const option2Value = variantOptions[1]?.values?.[j]?.label;
+		return (
+			previousVariants.find(
+				({ option_1, option_2 }) =>
+					(option_1 === option1Value && option_2 === option2Value) ||
+					(option_1 === option2Value && option_2 === option1Value)
+			) ?? null
+		);
+	}
+
+	if (nestedLength === 3) {
+		const { i, j, k } = index;
+		const option1Value = variantOptions[0]?.values?.[i]?.label;
+		const option2Value = variantOptions[1]?.values?.[j]?.label;
+		const option3Value = variantOptions[2]?.values?.[k]?.label;
+
+		return (
+			previousVariants.find(
+				({ option_1, option_2, option_3 }) =>
+					(option_1 === option1Value &&
+						option_2 === option2Value &&
+						option_3 === option3Value) ||
+					(option_1 === option1Value &&
+						option_2 === option3Value &&
+						option_3 === option2Value) ||
+					(option_1 === option2Value &&
+						option_2 === option1Value &&
+						option_3 === option3Value) ||
+					(option_1 === option2Value &&
+						option_2 === option3Value &&
+						option_3 === option1Value) ||
+					(option_1 === option3Value &&
+						option_2 === option1Value &&
+						option_3 === option2Value) ||
+					(option_1 === option3Value &&
+						option_2 === option2Value &&
+						option_3 === option1Value)
+			) ?? null
+		);
+	}
 };
 
 /**

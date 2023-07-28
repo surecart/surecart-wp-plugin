@@ -14,6 +14,7 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScFormControl,
+	ScFlex,
 	ScIcon,
 	ScInput,
 	ScTag,
@@ -32,6 +33,7 @@ import Error from '../../../components/Error';
 export default ({ product, updateProduct, loading }) => {
 	const [error, setError] = useState(null);
 	const [editingValues, setEditingValues] = useState({});
+	const [changeType, setChangeType] = useState('option_value_renamed');
 
 	// function to update product?.variant_options based on the index.
 	const updateVariantOption = (action) => {
@@ -52,6 +54,7 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	const applyDrag = async (oldIndex, newIndex) => {
+		setChangeType('option_sorted');
 		updateProduct({
 			...product,
 			variant_options: arrayMove(
@@ -107,14 +110,27 @@ export default ({ product, updateProduct, loading }) => {
 					variantOption?.name?.length
 			);
 
-		const variantsData =
-			generateVariants(updatedVariantOptions, product?.variants ?? []) ??
-			[];
+		const variantsData = generateVariants(
+			updatedVariantOptions,
+			product?.variants ?? [],
+			changeType
+		);
 
 		updateProduct({
 			variants: getExlcudedVariants(variantsData, getDeletedVariants()),
 		});
 	}, [product?.variant_options]);
+
+	const deleteVariantOption = (index) => {
+		setChangeType('option_deleted');
+
+		const variantOptions = [...product?.variant_options];
+		variantOptions.splice(index, 1);
+		updateProduct({
+			...product,
+			variant_options: variantOptions,
+		});
+	};
 
 	const renderEditingVariantOption = (option, index) => {
 		return (
@@ -139,21 +155,37 @@ export default ({ product, updateProduct, loading }) => {
 							}}
 						/>
 					</SortableKnob>
-					<ScInput
-						type="text"
-						placeholder={__('Option Name', 'surecart')}
-						required
-						label={__('Option Name', 'surecart')}
-						value={option?.name}
-						onScInput={(e) => {
-							updateVariantOption({
-								index,
-								data: {
-									name: e.target.value,
-								},
-							});
-						}}
-					/>
+					<ScFlex justifyContent="center" alignItems="center">
+						<ScInput
+							type="text"
+							placeholder={__('Option Name', 'surecart')}
+							required
+							label={__('Option Name', 'surecart')}
+							value={option?.name}
+							onScInput={(e) => {
+								updateVariantOption({
+									index,
+									data: {
+										name: e.target.value,
+									},
+								});
+							}}
+						/>
+
+						<ScButton
+							type="text"
+							onClick={() => deleteVariantOption(index)}
+						>
+							<ScIcon
+								name="trash"
+								slot="prefix"
+								style={{
+									marginLeft: '1rem',
+									marginTop: '1rem',
+								}}
+							/>
+						</ScButton>
+					</ScFlex>
 				</div>
 				<div
 					css={css`
@@ -179,7 +211,8 @@ export default ({ product, updateProduct, loading }) => {
 							option={option}
 							product={product}
 							updateProduct={updateProduct}
-							onChangeValue={(updatedValues) => {
+							onChangeValue={(updatedValues, changeTypeValue) => {
+								setChangeType(changeTypeValue);
 								updateVariantOption({
 									index,
 									data: {

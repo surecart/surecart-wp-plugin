@@ -14,6 +14,7 @@ import arrayMove from 'array-move';
 import { ScIcon, ScInput } from '@surecart/components-react';
 
 export default memo(({ option, product, updateProduct, onChangeValue }) => {
+	const [changeType, setChangeType] = useState('option_value_renamed');
 	const [values, setValues] = useState(
 		option?.values?.length > 0
 			? option?.values ?? []
@@ -21,10 +22,14 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 	);
 
 	const applySort = (oldIndex, newIndex) => {
+		setChangeType('option_value_sorted');
+
 		setValues(arrayMove(values, oldIndex, newIndex));
 	};
 
 	const onChangeOptionValue = async (index, newLabel) => {
+		setChangeType('option_value_renamed');
+
 		// update specific option value.
 		const updatedOptionValues = values.map((value, valueIndex) =>
 			valueIndex === index ? { ...value, label: newLabel } : value
@@ -59,10 +64,12 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 			},
 		});
 
-		onChangeValue(values);
+		onChangeValue(values, changeType);
 	}, [values]);
 
 	const deleteOptionValue = (index) => {
+		setChangeType('option_value_deleted');
+
 		const newOptionValues = [...values];
 		newOptionValues.splice(index, 1);
 
