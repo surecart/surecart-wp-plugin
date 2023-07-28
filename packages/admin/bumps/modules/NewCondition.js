@@ -76,7 +76,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 					unselect={false}
 					choices={[
 						{
-							label: __('Price', 'surecart'),
+							label: __('Product Price', 'surecart'),
 							value: 'price_ids',
 						},
 						{

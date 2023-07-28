@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.1.1
+Stable tag: 2.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,6 +243,47 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.3.0 - July 17th, 2023 =
+* New: Paystack processor support for African merchants.
+* Improvement: Better notice for how to conntect processors on checkout form.
+* Improvement: Hide admin notices during onboarding.
+* Fix: Issue with dashboard date being in UTC time.
+* Fix: Mobile stacking of order bump.
+* Fix: Stripe Payment element showing a notice when the amount on the checkout form is 0.
+
+= 2.2.1 - July 6th, 2023 =
+* Improvement: Improve loading performance of Stripe Payment Element by using deferred payment intents.
+* Fix: Thank you pages that redirect to the homepage being redirected to the blog page instead.
+* Fix: Change button text for media library to account for non-image files.
+* Fix: Validation issue with price input not allowing refunds to be fully refunded.
+
+= 2.2.0 - July 5th, 2023 =
+* New: Shipping and fulfillment support! Add custom shipping rates, location restrictions, tracking and fulfillment.
+* Improvement: Rearrange SureCart settings and combine some sections.
+
+= 2.1.4 - June 28, 2023 =
+* Improvement: Add filter to skip page and form seeding.
+* Fix: Compare at price cannot be cleared due to firefox fix in previous version.
+* Fix: Fix conflict with Bricks Builder shop page dropdown width.
+* Fix: Disallow SureCart Products to be selected as menu items as this is not currently supported.
+
+= 2.1.3 - June 21, 2023 =
+* Improvement: Make subscription saver description text darker to better comply with accessiblity.
+* Fix: Coupon redemption dates incorrect on admin.
+* Fix: Conflict with WooCommerce permalinks and SureCart permalinks.
+* Fix: Quantity selector missing from line items on instant checkout page.
+* Fix: Display of some zero decimal currencies.
+
+= 2.1.2 - June 15, 2023 =
+* Improvement: Update wording in order bump condition selector.
+* Improvement: Updated translations.
+* Fix: Product pages not showing up in WordPress sitemap.
+* Fix: Firstname, Lastname always being required by default.
+* Fix: Floating cart not enabled by default.
+* Fix: Issue with incomplete store setups not able to make test checkouts.
+* Fix: Decimal point issue on adding prices in newest version of Firefox.
+
+
 = 2.1.1 - June 14, 2023 =
 * HotFix: Processors not showing for some users on instant checkout pages.
 
@@ -258,6 +299,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 2.0.1 - June 7, 2023 =
 * New: Archive and delete option on upgrade groups.
 * New: Ability to disable purchase/download emails.
+* New: Cancel orders and manually mark orders as paid.
 * Improvement: Improved UI when updating subscription price on admin subscription page.
 * Improvement: Rename "Status" to "Product Page" to clarify product status.
 * Improvement: Truncate mobile line items to max of 3 lines.

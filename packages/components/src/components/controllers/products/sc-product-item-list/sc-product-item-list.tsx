@@ -184,7 +184,7 @@ export class ScProductItemList {
           <div class="product-item-list__header">
             <div class="product-item-list__sort">
               {this.sortEnabled && (
-                <sc-dropdown style={{ '--panel-width': '15rem' }}>
+                <sc-dropdown style={{ '--panel-width': '15em' }}>
                   <sc-button type="text" caret slot="trigger">
                     {this.renderSortName()}
                   </sc-button>

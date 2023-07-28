@@ -3,7 +3,7 @@
 
 # API token
 # You can create token at Personal profile page at https://lokalise.com/profile
-token: e1c5d56e76eed354d35ff3de97470173c78afdc8
+token: 0d0330c9f10d5f309e44be7b43dca2ef41cfef9e
 
 # Default Project ID
 # If set, used for all endpoints requiring project-id flag.

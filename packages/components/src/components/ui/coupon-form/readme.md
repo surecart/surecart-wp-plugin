@@ -73,7 +73,6 @@
 - [sc-button](../button)
 - [sc-alert](../alert)
 - [sc-block-ui](../block-ui)
-- [sc-form-control](../form-control)
 
 ### Graph
 ```mermaid
@@ -86,7 +85,6 @@ graph TD;
   sc-coupon-form --> sc-button
   sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
-  sc-coupon-form --> sc-form-control
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner

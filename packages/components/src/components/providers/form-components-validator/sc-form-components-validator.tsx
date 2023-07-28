@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-
+import { state as checkoutState } from '@store/checkout';
 import { Checkout, TaxProtocol } from '../../../types';
 
 @Component({
@@ -34,20 +34,36 @@ export class ScFormComponentsValidator {
   /** Is there a bump line? */
   @State() hasBumpLine: boolean;
 
+  /** Is there shipping choices */
+  @State() hasShippingChoices: boolean;
+  /** Is there a shipping amount */
+  @State() hasShippingAmount: boolean;
+
   @Watch('order')
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
+
     // make sure to add the address field if it's not there.
     if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled || this?.order?.shipping_address_required) {
       this.addAddressField();
     }
+
     // add order bumps.
     if (this?.order?.recommended_bumps?.data?.length) {
       this.addBumps();
     }
     if (!!this.order?.tax_amount) {
       this.addTaxLine();
+    }
+
+    // add shipping choices.
+    if (checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required) {
+      this.addShippingChoices();
+    }
+
+    if (!!this.order?.shipping_amount) {
+      this.addShippingAmount();
     }
   }
 
@@ -56,6 +72,8 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
+    this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
+    this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -114,6 +132,30 @@ export class ScFormComponentsValidator {
       total.parentNode.insertBefore(tax, total);
     }
     this.hasTaxLine = true;
+  }
+
+  addShippingChoices() {
+    if (this.hasShippingChoices) return;
+
+    const payment = this.el.querySelector('sc-payment');
+    const shippingChoices = document.createElement('sc-shipping-choices');
+    payment.parentNode.insertBefore(shippingChoices, payment);
+    this.hasShippingChoices = true;
+  }
+
+  addShippingAmount() {
+    if (this.hasShippingAmount) return;
+
+    let insertBeforeElement: Element = this.el.querySelector('sc-line-item-tax');
+    const total = this.el.querySelector('sc-line-item-total[total=total]');
+
+    if (!insertBeforeElement) {
+      insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER' ? total.previousElementSibling : total;
+    }
+
+    const shippingAmount = document.createElement('sc-line-item-shipping');
+    insertBeforeElement.parentNode.insertBefore(shippingAmount, insertBeforeElement);
+    this.hasShippingAmount = true;
   }
 
   render() {

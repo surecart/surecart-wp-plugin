@@ -40,7 +40,9 @@
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-details](../customer-details)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
  - [sc-mollie-add-method](../sc-mollie-add-method)
@@ -78,7 +80,9 @@ graph TD;
   sc-custom-order-price-input --> sc-skeleton
   sc-customer-details --> sc-skeleton
   sc-donation-choices --> sc-skeleton
+  sc-fulfillments --> sc-skeleton
   sc-invoices-list --> sc-skeleton
+  sc-line-item-shipping --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
   sc-mollie-add-method --> sc-skeleton

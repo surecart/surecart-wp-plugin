@@ -42,7 +42,6 @@
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-cart-header](../../controllers/cart/cart-header)
  - [sc-cart-icon](../sc-cart-icon)
- - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
@@ -50,6 +49,7 @@
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
  - [sc-empty](../empty)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-image-slider](../sc-image-slider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
@@ -93,7 +93,6 @@ graph TD;
   sc-cart-form-submit --> sc-icon
   sc-cart-header --> sc-icon
   sc-cart-icon --> sc-icon
-  sc-cart-submit --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
   sc-customer-details --> sc-icon
@@ -101,6 +100,7 @@ graph TD;
   sc-downloads-list --> sc-icon
   sc-drawer --> sc-icon
   sc-empty --> sc-icon
+  sc-fulfillments --> sc-icon
   sc-image-slider --> sc-icon
   sc-invoices-list --> sc-icon
   sc-login-form --> sc-icon
