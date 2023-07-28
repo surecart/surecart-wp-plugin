@@ -16,11 +16,20 @@ class ProductsController extends RestController {
 	protected $class = Product::class;
 
 	/**
-	 * Always fetch with variants and variant options.
+	 * Run some middleware to run before request.
 	 *
-	 * @var array
+	 * @param \SureCart\Models\Model $class Model class instance.
+	 * @param \WP_REST_Request       $request Request object.
+	 *
+	 * @return \SureCart\Models\Model
 	 */
-	protected $with = [ 'variants', 'variant_options' ];
+	protected function middleware( $class, \WP_REST_Request $request ) {
+		// if we are in edit context, we want to fetch the variants and variant options.
+		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
+			$class->with( [ 'variants', 'variant_options' ] );
+		}
+		return parent::middleware( $class, $request );
+	}
 
 	/**
 	 * Edit model.
