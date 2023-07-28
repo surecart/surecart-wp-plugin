@@ -4,6 +4,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 
@@ -14,8 +15,10 @@ import { ScButton, ScIcon, ScTooltip } from '@surecart/components-react';
 import Box from '../../../ui/Box';
 import VariantOptions from './VariantOptions';
 import Variants from './Variants';
+import NewVariant from './NewVariant';
 
 export default ({ product, updateProduct, loading }) => {
+	const [modal, setModal] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const maxVariantOptions = 3;
 
@@ -51,12 +54,29 @@ export default ({ product, updateProduct, loading }) => {
 					padding: 0;
 				}
 			`}
+			header_action={
+				<div>
+					<ScButton
+						type="link"
+						onClick={() => setModal(true)}
+						disabled={loading}
+					>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add variant', 'surecart')}
+					</ScButton>
+				</div>
+			}
 		>
-			<VariantOptions
-				onRequestClose={() => setModal(false)}
-				product={product}
-				updateProduct={updateProduct}
-			/>
+			<VariantOptions product={product} updateProduct={updateProduct} />
+
+			{modal && (
+				<NewVariant
+					product={product}
+					updateProduct={updateProduct}
+					loading={loading}
+					onRequestClose={() => setModal(false)}
+				/>
+			)}
 
 			<div
 				css={css`

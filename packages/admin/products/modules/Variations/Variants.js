@@ -201,7 +201,15 @@ export default ({ product, updateProduct, loading }) => {
 										onAddMedia={(medias) =>
 											onAddMedia(medias, variant)
 										}
-									/>
+									>
+										<ScIcon
+											name="image"
+											style={{
+												'--color':
+													'var(--sc-color-gray-600)',
+											}}
+										/>
+									</Image>
 								)}
 							</div>
 

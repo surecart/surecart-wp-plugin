@@ -9,10 +9,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScIcon } from '@surecart/components-react';
 import MediaLibrary from '../../../components/MediaLibrary';
 
-export default ({ onAddMedia, existingMediaIds = [], disabled }) => {
+export default ({ onAddMedia, existingMediaIds = [], children }) => {
 	return (
 		<MediaLibrary
 			onSelect={onAddMedia}
@@ -40,13 +39,7 @@ export default ({ onAddMedia, existingMediaIds = [], disabled }) => {
 						`}
 						onClick={() => setOpen(true)}
 					>
-						<ScIcon
-							name="image"
-							style={{
-								'--color': 'var(--sc-color-gray-600)',
-								disabled: disabled,
-							}}
-						/>
+						{children}
 					</div>
 				);
 			}}
