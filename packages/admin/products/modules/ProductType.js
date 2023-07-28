@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScFlex } from '@surecart/components-react';
+import { ScFlex, ScFormControl } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ variantsEnabled, setVariantsEnabled }) => {
@@ -22,16 +22,11 @@ export default ({ variantsEnabled, setVariantsEnabled }) => {
 					padding: 1rem 3rem 1rem 1rem;
 					cursor: pointer;
 					color: var(--sc-input-label-color);
-					font-family: var(--sc-font-sans);
-					font-size: var(--sc-font-size-medium);
-					font-weight: var(--sc-font-weight-normal);
 					transition: border-color 0.2s ease-in-out;
 				`}
 			>
-				<label
+				<ScFormControl
 					css={css`
-						color: var(--sc-color-black);
-						font-size: var(--sc-font-size-large);
 						display: block;
 						margin-bottom: 1rem;
 					`}
@@ -39,7 +34,8 @@ export default ({ variantsEnabled, setVariantsEnabled }) => {
 					{isVariant
 						? __('Variation options', 'surecart')
 						: __('Price options', 'surecart')}
-				</label>
+				</ScFormControl>
+
 				<span
 					css={css`
 						color: rgb(107, 114, 128);
