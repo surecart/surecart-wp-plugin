@@ -15,6 +15,9 @@ import { Address, Checkout, TaxStatus } from '../../../../types';
 export class ScOrderShippingAddress {
   private input: HTMLScAddressElement | HTMLScCompactAddressElement;
 
+  /** Checkout object */
+  @Prop() checkout: Checkout;
+
   /** Label for the field. */
   @Prop() label: string;
 
@@ -81,6 +84,9 @@ export class ScOrderShippingAddress {
     state: null,
   };
 
+  /** Whether to require the name in the address */
+  @State() requireName: boolean = false;
+
   /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('shippingAddress')
   handleCustomerAddressChange(val, old) {
@@ -122,9 +128,16 @@ export class ScOrderShippingAddress {
 
   @Watch('shippingEnabled')
   @Watch('taxEnabled')
+  @Watch('checkout')
   handleRequirementChange() {
-    if (this.shippingEnabled || this.taxEnabled) {
+    if (this.shippingEnabled || this.taxEnabled || this.checkout?.shipping_address_required) {
       this.required = true;
+
+      if (this.checkout?.shipping_address_required) {
+        this.full = true;
+        this.requireName = true;
+        this.showName = true;
+      }
     }
   }
 
@@ -148,6 +161,7 @@ export class ScOrderShippingAddress {
           loading={this.loading}
           address={this.address}
           show-name={this.showName}
+          require-name={this.requireName}
           onScChangeAddress={e => this.updateAddressState(e.detail)}
         ></sc-address>
       );
@@ -174,4 +188,4 @@ export class ScOrderShippingAddress {
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled', 'checkout'], false);
