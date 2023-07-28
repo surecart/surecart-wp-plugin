@@ -110,10 +110,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/subscription-preservation/index.js'
 		),
-		['admin/settings/portal']: path.resolve(
-			__dirname,
-			'packages/admin/settings/portal/index.js'
-		),
 		['admin/settings/processors']: path.resolve(
 			__dirname,
 			'packages/admin/settings/processors/index.js'
@@ -153,6 +149,14 @@ module.exports = {
 		['admin/settings/upgrade']: path.resolve(
 			__dirname,
 			'packages/admin/settings/upgrade/index.js'
+		),
+		['admin/settings/shipping']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/index.js'
+		),
+		['admin/settings/shipping/profile']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/profile/index.js'
 		),
 
 		/**

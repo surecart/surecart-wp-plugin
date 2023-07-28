@@ -7,7 +7,6 @@ import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -30,25 +29,25 @@ import SaveButton from '../templates/SaveButton';
 import Image from './modules/Image';
 import Box from '../ui/Box';
 import Publishing from './modules/Publishing';
+import useSave from '../../admin/settings/UseSave';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
-	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { editEntityRecord, saveEntityRecord } = useDispatch(coreStore);
+	const { editEntityRecord } = useDispatch(coreStore);
+	const { save } = useSave();
 
-	const { productCollection, isLoading, isDeleting, isSaving, saveError, loadError } =
+	const { productCollection, isLoading, isDeleting, saveError, loadError } =
 		useSelect((select) => {
 			const entityData = ['surecart', 'product-collection', id];
 
 			return {
-				productCollection: select(coreStore).getEditedEntityRecord(...entityData),
+				productCollection: select(coreStore).getEditedEntityRecord(
+					...entityData
+				),
 				isLoading: select(coreStore)?.isResolving?.(
 					'getEditedEntityRecord',
 					[...entityData]
-				),
-				isSaving: select(coreStore)?.isSavingEntityRecord?.(
-					...entityData
 				),
 				isDeleting: select(coreStore)?.isDeletingEntityRecord?.(
 					...entityData
@@ -59,7 +58,7 @@ export default ({ id }) => {
 				loadError: select(coreStore)?.getResolutionError?.(
 					'getEditedEntityRecord',
 					...entityData
-				)
+				),
 			};
 		});
 
@@ -68,22 +67,10 @@ export default ({ id }) => {
 	 */
 	const onSubmit = async (e) => {
 		e.preventDefault();
-
 		try {
 			setError(null);
-			await saveEntityRecord(
-				'surecart',
-				'product-collection',
-				{
-					id,
-					...productCollection,
-				},
-				{
-					throwOnError: true,
-				}
-			);
-			createSuccessNotice(__('Collection updated.', 'surecart'), {
-				type: 'snackbar',
+			await save({
+				successMessage: __('Collection updated.', 'surecart'),
 			});
 		} catch (e) {
 			console.error(e);
@@ -102,7 +89,7 @@ export default ({ id }) => {
 				height: '35px',
 				display: 'inline-block',
 			}}
-		></ScSkeleton>
+		/>
 	) : (
 		<div
 			css={css`
@@ -121,9 +108,7 @@ export default ({ id }) => {
 					</ScMenuItem>
 				</ScMenu>
 			</ScDropdown>
-			<SaveButton busy={isDeleting || isSaving}>
-				{__('Save Collection', 'surecart')}
-			</SaveButton>
+			<SaveButton>{__('Save Collection', 'surecart')}</SaveButton>
 		</div>
 	);
 

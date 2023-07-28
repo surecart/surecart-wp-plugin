@@ -14,8 +14,12 @@ import Box from '../../ui/Box';
 import Url from '../components/Url';
 
 export default ({ productCollection, updateProductCollection, loading }) => {
-	const tag = document.querySelector('#wp-admin-bar-view-product-collection-page');
-	const link = document.querySelector('#wp-admin-bar-view-product-collection-page a');
+	const tag = document.querySelector(
+		'#wp-admin-bar-view-product-collection-page'
+	);
+	const link = document.querySelector(
+		'#wp-admin-bar-view-product-collection-page a'
+	);
 
 	// keep the admin bar page link in sync with url.
 	useEffect(() => {
@@ -33,15 +37,12 @@ export default ({ productCollection, updateProductCollection, loading }) => {
 	return (
 		<Box
 			loading={loading}
-			title={
-				<div>
-					{__('Publishing', 'surecart')}
-				</div>
-			}
+			title={<div>{__('Publishing', 'surecart')}</div>}
 		>
-			<div>
-				<Url collection={productCollection} updateCollection={updateProductCollection} />
-			</div>
+			<Url
+				collection={productCollection}
+				updateCollection={updateProductCollection}
+			/>
 		</Box>
 	);
 };

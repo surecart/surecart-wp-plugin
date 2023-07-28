@@ -1,32 +1,33 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from '@wordpress/element';
+import { useRef, useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { ScInput } from '@surecart/components-react';
+import { useEffect } from 'react';
 
-export default ({
-	baseUrl,
-	name,
-	value,
-	onChange,
-	onCustomized,
-	hideReset = false,
-	...props
-}) => {
+export default ({ baseUrl, name, value, onChange, onCustomized, ...props }) => {
 	const [isEditing, seIsEditing] = useState(false);
 	const [isEdited, setIsEdited] = useState(false);
 	const [customSlug, setCustomSlug] = useState('');
+	const input = useRef(null);
 
 	const onStartEditing = () => {
 		seIsEditing(true);
 		setIsEdited(false);
 	};
 
+	useEffect(() => {
+		if (isEditing) {
+			setTimeout(() => input.current.triggerFocus(), 100);
+		}
+	}, [isEditing]);
+
 	const onSlugChange = (e) => {
 		if (!isEdited) {
 			onChange(e.target.value);
 		} else {
-			changeOnCustomized(true)
+			changeOnCustomized(true);
 			setCustomSlug(e.target.value);
 		}
 	};
@@ -48,56 +49,57 @@ export default ({
 		}
 	};
 
-	const onReset = () => {
-		seIsEditing(false);
-		setIsEdited(false);
-		setCustomSlug('');
-		changeOnCustomized(false);
-	};
-
 	return (
 		<div>
 			<strong>{__('Permalink', 'surecart')}: </strong>
-			{!isEditing &&
+			{!isEditing && (
 				<>
-					<Button variant="link" isSmall onClick={onStartEditing} area-label={__('Edit', 'surecart')}>
+					<Button
+						variant="link"
+						isSmall
+						onClick={onStartEditing}
+						area-label={__('Edit', 'surecart')}
+					>
 						{baseUrl}/{customSlug || value}
 					</Button>
-					<Button variant="link" isSmall onClick={onStartEditing} area-label={__('Edit', 'surecart')}>
+					<Button
+						variant="link"
+						isSmall
+						onClick={onStartEditing}
+						area-label={__('Edit', 'surecart')}
+					>
 						<sc-icon name="edit" size="small" />
 					</Button>
 				</>
-			}
+			)}
 
-			{
-				isEditing &&
-				<>
-					<span>{baseUrl}/
-						<input
-							className="sc-product-slug hydrated"
-							onChange={onSlugChange}
-							css={css`
-								border: 0;
-								border-bottom: 1px solid var(--sc-color-gray-500);
-								min-width: 300px;
-							`}
-							value={customSlug || value}
-							name={name}
-							{...props}
-						/>
+			{isEditing && (
+				<ScInput
+					ref={input}
+					onInput={onSlugChange}
+					value={customSlug || value}
+					name={name}
+					{...props}
+				>
+					<span
+						slot="prefix"
+						css={css`
+							opacity: 0.75;
+						`}
+					>
+						{baseUrl}/
 					</span>
 
-					<Button variant={'primary'} isSmall onClick={onOk}>
+					<Button
+						variant={'primary'}
+						isSmall
+						onClick={onOk}
+						slot="suffix"
+					>
 						{__('Ok', 'surecart')}
 					</Button>
-
-					{!hideReset &&
-						<Button variant={'link'} isSmall onClick={onReset}>
-							{__('Reset', 'surecart')}
-						</Button>
-					}
-				</>
-			}
+				</ScInput>
+			)}
 		</div>
 	);
 };

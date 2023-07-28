@@ -9,7 +9,12 @@ import { Button } from '@wordpress/components';
 import { ScFormControl } from '@surecart/components-react';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ label, productCollection, updateProductCollection, showLabel = false }) => {
+export default ({
+	label,
+	productCollection,
+	updateProductCollection,
+	showLabel = false,
+}) => {
 	const onSelectMedia = (media) => {
 		return updateProductCollection({
 			media_id: media?.id,
@@ -17,7 +22,7 @@ export default ({ label, productCollection, updateProductCollection, showLabel =
 		});
 	};
 
-	const onRemoveMedia = (media) => {
+	const onRemoveMedia = () => {
 		const confirmedRemoveImage = confirm(
 			__('Are you sure you want to remove this image?', 'surecart')
 		);
@@ -68,17 +73,15 @@ export default ({ label, productCollection, updateProductCollection, showLabel =
 							<MediaLibrary
 								onSelect={onSelectMedia}
 								isPrivate={false}
-								render={({ setOpen }) => {
-									return (
-										<Button
-											variant="primary"
-											onClick={() => setOpen(true)}
-										>
-											{__('Replace', 'surecart')}
-										</Button>
-									);
-								}}
-							></MediaLibrary>
+								render={({ setOpen }) => (
+									<Button
+										variant="primary"
+										onClick={() => setOpen(true)}
+									>
+										{__('Replace', 'surecart')}
+									</Button>
+								)}
+							/>
 							<Button variant="tertiary" onClick={onRemoveMedia}>
 								{__('Remove', 'surecart')}
 							</Button>
@@ -93,17 +96,19 @@ export default ({ label, productCollection, updateProductCollection, showLabel =
 				<MediaLibrary
 					onSelect={onSelectMedia}
 					isPrivate={false}
-					render={({ setOpen }) => {
-						return (
-							<Button isPrimary onClick={() => setOpen(true)}>
-								{__('Add Image', 'surecart')}
-							</Button>
-						);
-					}}
-				></MediaLibrary>
+					render={({ setOpen }) => (
+						<Button isPrimary onClick={() => setOpen(true)}>
+							{__('Add Image', 'surecart')}
+						</Button>
+					)}
+				/>
 			</ScFormControl>
 		);
 	};
 
-	return <ScFormControl label={label} showLabel={showLabel}>{renderContent()}</ScFormControl>;
+	return (
+		<ScFormControl label={label} showLabel={showLabel}>
+			{renderContent()}
+		</ScFormControl>
+	);
 };

@@ -13,7 +13,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScForm, ScInput, ScRichText } from '@surecart/components-react';
+import {
+	ScButton,
+	ScForm,
+	ScInput,
+	ScRichText,
+} from '@surecart/components-react';
 import Error from '../components/Error';
 import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
@@ -69,10 +74,7 @@ export default ({ id, setId }) => {
 
 	return (
 		<CreateTemplate id={id}>
-			<Error
-				error={error}
-				setError={setError}
-			/>
+			<Error error={error} setError={setError} />
 
 			<Box
 				title={__('Create Collection', 'surecart')}
@@ -94,9 +96,7 @@ export default ({ id, setId }) => {
 								'A name for your product collection.',
 								'surecart'
 							)}
-							onScChange={(e) => {
-								setName(e.target.value);
-							}}
+							onScInput={(e) => setName(e.target.value)}
 							value={name}
 							name="name"
 							required
@@ -112,16 +112,17 @@ export default ({ id, setId }) => {
 						/>
 						<ScRichText
 							label={__('Description', 'surecart')}
-							placeholder={__('Enter a description...', 'surecart')}
+							placeholder={__(
+								'Enter a description...',
+								'surecart'
+							)}
 							help={__(
 								'A short description for your product collection.',
 								'surecart'
 							)}
 							style={{ '--sc-rich-text-max-height': '200px' }}
 							maxlength={2500}
-							onScInput={(e) => {
-								setDescription(e.target.value);
-							}}
+							onScInput={(e) => setDescription(e.target.value)}
 							value={description}
 							name="description"
 						/>
