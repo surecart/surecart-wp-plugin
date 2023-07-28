@@ -94,6 +94,11 @@ export class ScFormComponentsValidator {
     const payment = this.el.querySelector('sc-payment');
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
+
+    if (this.order?.shipping_address_required) {
+      address.required = true;
+    }
+
     payment.parentNode.insertBefore(address, payment);
     this.hasAddress = true;
   }
