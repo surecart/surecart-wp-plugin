@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Generate variant combinations for up to three options
@@ -26,6 +26,16 @@ export const generateVariants = (
 		variantOptions.length === 0
 	) {
 		return variants;
+	}
+
+	// If variantOptions length and previousVariants length are different,
+	// then changeType should be option_added instead of option_value_renamed.
+	// Cause, rename will walk thorugh index which would not be the case for add.
+	if (
+		variantOptions.length !== getNestedVariantLength(previousVariants) &&
+		changeType === 'option_value_renamed'
+	) {
+		changeType = 'option_added';
 	}
 
 	if (variantOptions.length === 1) {
@@ -372,6 +382,108 @@ export const processVariationsForSaving = (product) => {
 			return variation?.status !== 'draft';
 		}),
 	};
+};
+
+/**
+ * Validate new variant before adding.
+ *
+ * @param {Array} variants
+ * @param {Object} variant
+ * @returns {String | null}
+ */
+export const validateVariant = (variants, variant) => {
+	const { option_1, option_2, option_3 } = variant;
+	const variantNestedLength = getNestedVariantLength(variants);
+
+	// Check options are given or not.
+	if (!option_1) {
+		return sprintf(
+			/* translators: %s: Option 1 name */
+			__('%s is required.', 'surecart'),
+			option_1
+		);
+	}
+
+	if (variantNestedLength >= 2 && !option_2) {
+		return sprintf(
+			/* translators: %s: Option 2 name */
+			__('%s is required.', 'surecart'),
+			option_2
+		);
+	}
+
+	if (variantNestedLength === 3 && !option_3) {
+		return sprintf(
+			/* translators: %s: Option 3 name */
+			__('%s is required.', 'surecart'),
+			option_3
+		);
+	}
+
+	// Check if option values are already exists.
+	if (variantNestedLength === 1) {
+		const option1Value = variants.find(
+			({ option_1: option1 }) => option1 === option_1
+		);
+		if (option1Value) {
+			return sprintf(
+				/* translators: %s: Option 1 name */
+				__('%s variant already exists.', 'surecart'),
+				option_1
+			);
+		}
+	}
+
+	if (variantNestedLength === 2) {
+		const option2Value = variants.find(
+			({ option_1: option1, option_2: option2 }) =>
+				(option1 === option_1 && option2 === option_2) ||
+				(option1 === option_2 && option2 === option_1)
+		);
+		if (option2Value) {
+			return sprintf(
+				/* translators: %1s: Option 1 name %2s: Option 2 name */
+				__('%1s / %2s variant already exists.', 'surecart'),
+				option_1,
+				option_2
+			);
+		}
+	}
+
+	if (variantNestedLength === 3) {
+		const option3Value = variants.find(
+			({ option_1: option1, option_2: option2, option_3: option3 }) =>
+				(option1 === option_1 &&
+					option2 === option_2 &&
+					option3 === option_3) ||
+				(option1 === option_1 &&
+					option2 === option_3 &&
+					option3 === option_2) ||
+				(option1 === option_2 &&
+					option2 === option_1 &&
+					option3 === option_3) ||
+				(option1 === option_2 &&
+					option2 === option_3 &&
+					option3 === option_1) ||
+				(option1 === option_3 &&
+					option2 === option_1 &&
+					option3 === option_2) ||
+				(option1 === option_3 &&
+					option2 === option_2 &&
+					option3 === option_1)
+		);
+		if (option3Value) {
+			return sprintf(
+				/* translators: %1s: Option 1 name %2s: Option 2 name %3s: Option 3 name */
+				__('%1s / %2s / %3s variant already exists.', 'surecart'),
+				option_1,
+				option_2,
+				option_3
+			);
+		}
+	}
+
+	return null;
 };
 
 /**
