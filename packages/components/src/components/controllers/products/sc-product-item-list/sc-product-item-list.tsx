@@ -1,7 +1,13 @@
+/**
+ * External dependencies.
+ */
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies.
+ */
 import { Collection, Product } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 
@@ -83,7 +89,11 @@ export class ScProductItemList {
 
   componentWillLoad() {
     this.getProducts();
-    this.getCollections();
+
+    if (this.collectionEnabled) {
+      this.getCollections();
+    }
+
     this.selectedCollections = [];
   }
 
@@ -121,7 +131,14 @@ export class ScProductItemList {
   // Fetch all collections
   async getCollections() {
     try {
-      await this.fetchCollections();
+      const response = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/product_collections/`, {
+          per_page: 100,
+        }),
+        parse: false,
+      })) as Response;
+
+      this.collections = (await response.json()) as Collection[];
     } catch (error) {
       console.error(error);
     }
@@ -184,17 +201,6 @@ export class ScProductItemList {
     this.products = (await response.json()) as Product[];
   }
 
-  async fetchCollections() {
-    const response = (await apiFetch({
-      path: addQueryArgs(`surecart/v1/product_collections/`, {
-        per_page: 100,
-      }),
-      parse: false,
-    })) as Response;
-
-    this.collections = (await response.json()) as Collection[];
-  }
-
   renderSortName() {
     switch (this.sort) {
       case 'created_at:desc':
@@ -245,22 +251,22 @@ export class ScProductItemList {
                 </sc-dropdown>
               )}
 
-              {this.collectionEnabled && (
+              {this.collectionEnabled && (this.collections ?? []).length > 0 && (
                 <sc-dropdown style={{ '--panel-width': '15rem' }}>
                   <sc-button type="text" caret slot="trigger">
                     {__('Collections', 'surecart')}
                   </sc-button>
                   <sc-menu>
-                    {this.getCollectionsAfterFiltered().map(collection => {
+                    {(this.collections ?? []).map(collection => {
                       return <sc-menu-item onClick={() => this.toggleSelectCollection(collection)}>{collection.name}</sc-menu-item>;
                     })}
 
-                    {this.getCollectionsAfterFiltered()?.length === 0 && <sc-menu-item disabled>{__('No collections available', 'surecart')}</sc-menu-item>}
+                    {(this.collections ?? [])?.length === 0 && <sc-menu-item disabled>{__('No collections available', 'surecart')}</sc-menu-item>}
                   </sc-menu>
                 </sc-dropdown>
               )}
 
-              {this.collectionEnabled && this.selectedCollections?.length > 0 && (
+              {this.collectionEnabled && this.selectedCollections.length > 0 && (
                 <div class="product-item-list__search-tag">
                   <div class="product-item-list__search-label">
                     <span style={{ marginLeft: '5px' }}>{__('Filtered collections:', 'surecart')}</span>
