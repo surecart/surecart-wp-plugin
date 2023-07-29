@@ -1,12 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
-import { ScFormControl } from '@surecart/components-react';
+import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({
@@ -16,9 +15,9 @@ export default ({
 	showLabel = false,
 }) => {
 	const onSelectMedia = (media) => {
-		return updateProductCollection({
-			media_id: media?.id,
-			image_url: media?.url,
+		updateProductCollection({
+			image_id: media?.id,
+			image: media,
 		});
 	};
 
@@ -28,13 +27,13 @@ export default ({
 		);
 		if (!confirmedRemoveImage) return;
 		return updateProductCollection({
-			media_id: null,
-			image_url: null,
+			image_id: null,
+			image: null,
 		});
 	};
 
 	const renderContent = () => {
-		if (productCollection?.image_url) {
+		if (productCollection?.image?.url) {
 			return (
 				<div
 					css={css`
@@ -43,7 +42,7 @@ export default ({
 					`}
 				>
 					<img
-						src={productCollection?.image_url}
+						src={productCollection?.image?.url}
 						alt="image"
 						css={css`
 							width: 100%;
@@ -74,17 +73,17 @@ export default ({
 								onSelect={onSelectMedia}
 								isPrivate={false}
 								render={({ setOpen }) => (
-									<Button
-										variant="primary"
+									<ScButton
+										type="primary"
 										onClick={() => setOpen(true)}
 									>
 										{__('Replace', 'surecart')}
-									</Button>
+									</ScButton>
 								)}
 							/>
-							<Button variant="tertiary" onClick={onRemoveMedia}>
+							<ScButton onClick={onRemoveMedia}>
 								{__('Remove', 'surecart')}
-							</Button>
+							</ScButton>
 						</div>
 					</div>
 				</div>
@@ -97,9 +96,10 @@ export default ({
 					onSelect={onSelectMedia}
 					isPrivate={false}
 					render={({ setOpen }) => (
-						<Button isPrimary onClick={() => setOpen(true)}>
+						<ScButton type="primary" onClick={() => setOpen(true)}>
+							<ScIcon name="plus" slot="prefix" />
 							{__('Add Image', 'surecart')}
-						</Button>
+						</ScButton>
 					)}
 				/>
 			</ScFormControl>
