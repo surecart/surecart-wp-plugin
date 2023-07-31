@@ -18,7 +18,7 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		// we can skip this for localhost..
+		// we can skip this for localhost.
 		if ( $this->isLocalHost() ) {
 			return;
 		}
@@ -31,7 +31,9 @@ class WebhooksService {
 	}
 
 	/**
-	 * May be show a notice to the user that the domain has changed.
+	 * Maybe show a notice to the user that the domain has changed.
+	 *
+	 * This will prompt them to take action to either update the webhook or create a new webhook.
 	 *
 	 * @return string|null
 	 */
