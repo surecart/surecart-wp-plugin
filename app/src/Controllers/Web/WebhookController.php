@@ -4,7 +4,6 @@ namespace SureCart\Controllers\Web;
 
 use SureCart\Models\Webhook;
 use SureCart\Support\Encryption;
-use SureCart\Webhooks\WebhooksHistoryService;
 use SureCartCore\Responses\RedirectResponse;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
