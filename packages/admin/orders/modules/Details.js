@@ -8,6 +8,7 @@ import {
 	ScOrderStatusBadge,
 	ScSkeleton,
 	ScTag,
+	ScOrderFulfillmentBadge,
 } from '@surecart/components-react';
 
 export default ({ order, checkout, loading }) => {
@@ -50,22 +51,21 @@ export default ({ order, checkout, loading }) => {
 					`}
 				>
 					<h1>#{order?.number}</h1>
-					{!checkout?.live_mode && (
-						<ScTag type="warning">
-							{__('Test Mode', 'surecart')}
-						</ScTag>
-					)}
+					<ScOrderStatusBadge status={order?.status} pill />
+					<ScOrderFulfillmentBadge
+						status={order?.fulfillment_status}
+						pill
+					/>
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
 					formatTime(order.updated_at)
 				)}
 			</div>
-			<div>
-				<ScOrderStatusBadge
-					status={order?.status || checkout?.status}
-				/>
-			</div>
+
+			{!checkout?.live_mode && (
+				<ScTag type="warning">{__('Test Mode', 'surecart')}</ScTag>
+			)}
 		</div>
 	);
 };

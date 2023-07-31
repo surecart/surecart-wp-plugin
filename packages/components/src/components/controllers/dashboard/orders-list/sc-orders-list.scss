@@ -5,6 +5,12 @@
   display: grid;
   gap: 0.75em;
 
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: var(--sc-spacing-x-small);
+  }
+
   &__heading {
     display: flex;
     flex-wrap: wrap;
@@ -31,12 +37,12 @@
 .order__row {
   color: var(--sc-color-gray-800);
   text-decoration: none;
-  display:grid;
-  align-items:center;
+  display: grid;
+  align-items: center;
   justify-content: space-between;
   gap: 0;
   grid-template-columns: 1fr 1fr 1fr auto;
-  margin:0;
+  margin: 0;
   padding: var(--sc-spacing-small) var(--sc-spacing-large);
 
   &:not(:last-child) {
@@ -53,5 +59,4 @@
 }
 
 .order__row {
-
 }

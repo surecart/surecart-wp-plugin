@@ -80,7 +80,7 @@ class ProductDocument extends Single_Base {
 	protected static function get_site_editor_tooltip_data() {
 		return [
 			'title'     => esc_html__( 'What is a Single Product Template?', 'elementor-pro' ),
-			'content'   => esc_html__( 'A single product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign.', 'elementor-pro' ),
+			'content'   => esc_html__( 'A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign.', 'elementor-pro' ),
 			'tip'       => esc_html__( 'You can create multiple single product templates, and assign each to different types of products, enabling a custom design for each group of similar products.', 'elementor-pro' ),
 			'docs'      => 'https://go.elementor.com/app-theme-builder-product',
 			'video_url' => 'https://www.youtube.com/embed/PjhoB1RWkBM',
