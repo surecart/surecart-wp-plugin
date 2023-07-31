@@ -22,6 +22,16 @@ class AccountService {
 	protected $cache_key = 'surecart_account';
 
 	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		// clear account cache when account is updated.
+		\add_action( 'surecart/account_updated', [ $this, 'clearCache' ] );
+	}
+
+	/**
 	 * We get the account when the service is loaded.
 	 * Since this is loaded in a service container, its
 	 * cached so it only fetches once, no matter how many calls.
