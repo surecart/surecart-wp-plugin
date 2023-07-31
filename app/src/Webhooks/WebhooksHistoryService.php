@@ -36,27 +36,7 @@ class WebhooksHistoryService {
 	 * @return void
 	 */
 	public function listen(): void {
-		add_action( 'updated_option', [ $this, 'maybeStoreWebhookChange' ], 10, 3 );
 		add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
-	}
-
-	/**
-	 * See if the domain changes, then
-	 * store the change in the database.
-	 *
-	 * @param string $option    Name of the updated option.
-	 * @param mixed  $old_value The old option value.
-	 * @param mixed  $value     The new option value.
-	 * @return void
-	 */
-	public function maybeStoreWebhookChange( $option, $old_value, $value ) {
-		// we only care about our option and if it was updated.
-		if ( self::REGISTERED_WEBHOOK !== $option ) {
-			return;
-		}
-
-		// store the old webhook when this changes.
-		$this->setPreviousWebhook( $old_value );
 	}
 
 	/**
@@ -86,45 +66,6 @@ class WebhooksHistoryService {
 	 */
 	public function deleteRegisteredWebhook(): bool {
 		return delete_option( self::REGISTERED_WEBHOOK );
-	}
-
-	/**
-	 * Store the old domain in the database.
-	 * We do autoload this option so we can check it on every request.
-	 *
-	 * @param string $value The old domain.
-	 * @return boolean
-	 */
-	public function setPreviousWebhook( $value ) {
-		return update_option( self::PREVIOUS_WEBHOOK, $value );
-	}
-
-	/**
-	 * Delete any previous webhooks.
-	 *
-	 * @return boolean
-	 */
-	public function deletePreviousWebhook(): bool {
-		return delete_option( self::PREVIOUS_WEBHOOK );
-	}
-
-	/**
-	 * Get the previous webhook.
-	 *
-	 * @return array|null
-	 */
-	public function getPreviousWebhook() {
-		return get_option( self::PREVIOUS_WEBHOOK, [] );
-	}
-
-	/**
-	 * Does this webhook have multiple domains registered?
-	 *
-	 * @return boolean
-	 */
-	public function getPreviousDomain() {
-		$webhook = $this->getPreviousWebhook();
-		return $webhook['url'] ?? '';
 	}
 
 	/**
