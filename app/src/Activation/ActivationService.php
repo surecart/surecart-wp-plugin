@@ -1,6 +1,8 @@
 <?php
 namespace SureCart\Activation;
 
+use SureCart\Models\RegisteredWebhook;
+
 /**
  * Service for plugin activation.
  */
@@ -59,8 +61,8 @@ class ActivationService {
 	 * @return void
 	 */
 	public function deactivate() {
-		// Clear webhooks.
-		\SureCart::webhooks()->maybeClearWebhook();
+		// clear webhooks.
+		RegisteredWebhook::delete();
 	}
 
 	/**

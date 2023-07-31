@@ -2,8 +2,8 @@
 
 namespace SureCart\Controllers\Web;
 
+use SureCart\Models\RegisteredWebhook;
 use SureCart\Models\Webhook;
-use SureCart\Support\Encryption;
 use SureCartCore\Responses\RedirectResponse;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
@@ -39,26 +39,17 @@ class WebhookController {
 	 */
 	public function create( $request ) {
 		// We'll create a webhook for this site register the webhooks.
-		$registered = Webhook::register();
+		$registered = RegisteredWebhook::create();
 
 		// handle error and show notice to user.
 		if ( is_wp_error( $registered ) ) {
-			add_action(
-				'admin_notices',
-				function() use ( $registered ) {
-					\SureCart::webhooks()->showWebhooksErrorNotice( $registered );
-				}
-			);
-		}
-
-		// if successful, create new webhook data.
-		if ( ! empty( $registered['signing_secret'] ) ) {
-			\SureCart::webhooks()->saveRegisteredWebhook(
+			// show notice.
+			\SureCart::notices()->add(
 				[
-					'id'             => $registered['id'],
-					'url'            => $registered['url'],
-					'webhook_events' => $registered['webhook_events'] ?? [],
-					'signing_secret' => Encryption::encrypt( $registered['signing_secret'] ),
+					'name'  => 'webhooks_registration_error',
+					'type'  => 'warning',
+					'title' => esc_html__( 'SureCart Webhook Creation Error', 'surecart' ),
+					'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $registered->get_error_messages() ?? [] ) ) ),
 				]
 			);
 		}
@@ -73,43 +64,21 @@ class WebhookController {
 	 * @return ResponseInterface
 	 */
 	public function update( $request ) {
-		// Update the webhook url and signing secret.
-		$webhook = Webhook::find( $request->query( 'id' ) );
+		// Find the registered webhook.
+		$webhook = RegisteredWebhook::find();
 		if ( is_wp_error( $webhook ) ) {
-			wp_die( $webhook->get_error_message() );
+			wp_die( wp_kses_post( $webhook->get_error_message() ) );
 		}
 
-		// Check if there is same listener url for other webhook excluding this one.
-		// if yes, then delete that webhook first, because duplicate endpoint is not allowed.
-		Webhook::removeSameUrlWebhooks( $webhook->id );
+		// update webhook.
+		$updated = RegisteredWebhook::update();
 
-		$updated = $webhook->update(
-			[
-				'url' => Webhook::getListenerUrl(),
-			]
-		);
-
+		// handle error.
 		if ( is_wp_error( $updated ) ) {
-			wp_die( $updated->get_error_message() );
+			wp_die( wp_kses_post( $updated->get_error_message() ) );
 		}
 
-		// Get the previous webhook.
-		$registered_webhook = \SureCart::webhooks()->getRegisteredWebhook();
-
-		if ( ! $registered_webhook ) {
-			return ( new RedirectResponse( $request ) )->back();
-		}
-
-		// Save the updated webhook to webhook history.
-		\SureCart::webhooks()->saveRegisteredWebhook(
-			[
-				'id'             => $registered_webhook['id'],
-				'url'            => Webhook::getListenerUrl(),
-				'webhook_events' => $registered_webhook['webhook_events'],
-				'signing_secret' => Encryption::encrypt( $registered_webhook['signing_secret'] ),
-			]
-		);
-
+		// redirect back.
 		return ( new RedirectResponse( $request ) )->back();
 	}
 
@@ -201,7 +170,7 @@ class WebhookController {
 				'model'   => $model,
 				'request' => $request,
 			),
-			Webhook::GROUP_NAME
+			'surecart-webhooks'
 		);
 
 		// return data.

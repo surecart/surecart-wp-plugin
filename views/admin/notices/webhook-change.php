@@ -1,21 +1,39 @@
 <div class="notice notice-warning surecart-webhook-change-notice">
 	<div class="breadcrumbs">
 		<img style="display: block" src="<?php echo esc_url( trailingslashit( plugin_dir_url( SURECART_PLUGIN_FILE ) ) . 'images/logo.svg' ); ?>" alt="SureCart" width="125">
-		<span>〉</span>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="16"
+			height="16"
+			viewBox="0 0 24 24"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			>
+			<polyline points="9 18 15 12 9 6" />
+		</svg>
 		<span><?php esc_html_e( 'Safe Mode', 'surecart' ); ?></span>
 	</div>
 	<h1><?php esc_html_e( 'Safe Mode has been activated', 'surecart' ); ?></h1>
 	<p class="description">
 		<?php
 		esc_html_e(
-			'Your site is in Safe Mode because you have 2 SureCart stores that appear to be duplicates. 
-		Two sites that are telling SureCart they\'re the same site.',
+			'Your site is in Safe Mode because you have 2 SureCart stores that appear to be duplicates.',
+			'surecart'
+		);
+		?>
+		<br />
+		<?php
+		esc_html_e(
+			'Two sites that are telling SureCart they are the same site.',
 			'surecart'
 		);
 		?>
 		<a href="https://docs.surecart.com/article/what-is-safe-mode" target="_blank" class="learn-more-safe-mode">
 			<?php esc_html_e( 'Learn more about Safe Mode.', 'surecart' ); ?>
-		</a>  
+		</a>
 	</p>
 	<div class="webhook-cards">
 		<div class="webhook-card">

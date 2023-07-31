@@ -1,16 +1,21 @@
 .surecart-webhook-change-notice {
 	padding: 2rem;
+	max-width: 1440px;
 
 	.breadcrumbs {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		gap: 0.75em;
 		margin-bottom: 1rem;
 	}
 
 	h1 {
 		font-size: 24px;
 		color: #000;
+	}
+
+	h2 {
+		margin: 0 0 1em 0;
 	}
 
 	.description {
@@ -26,7 +31,7 @@
 
 	.webhook-cards {
 		display: flex;
-		align-items: center;
+		align-items: stretch;
 		gap: 2rem;
 		margin-top: 1.5rem;
 
@@ -39,15 +44,15 @@
 			padding: 2rem;
 		}
 
-        // Mobile view
-        @media (max-width: 768px) {
-            flex-direction: column;
-            gap: 1rem;
+		// Mobile view
+		@media (max-width: 768px) {
+			flex-direction: column;
+			gap: 1rem;
 
-            .webhook-card {
-                width: 100%;
-            }
-        }
+			.webhook-card {
+				width: 100%;
+			}
+		}
 	}
 
 	.webhook-links {
@@ -85,6 +90,7 @@
 		.webhook-action-link {
 			width: 100%;
 			text-align: center;
+			margin-top: auto;
 
 			a {
 				display: block;
