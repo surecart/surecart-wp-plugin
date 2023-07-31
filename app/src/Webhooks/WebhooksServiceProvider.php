@@ -15,8 +15,8 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.webhooks'] = function () use ( $container ) {
-			return new WebhooksService( new WebhooksHistoryService() );
+		$container['surecart.webhooks'] = function () {
+			return new WebhooksService();
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
