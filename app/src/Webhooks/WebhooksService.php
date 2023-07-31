@@ -19,9 +19,9 @@ class WebhooksService {
 	 */
 	public function bootstrap() {
 		// we can skip this for localhost.
-		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) ) {
-			return;
-		}
+		// if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) ) {
+		// return;
+		// }
 		// maybe create webhooks if they are not yet created.
 		\add_action( 'admin_init', [ $this, 'maybeCreate' ] );
 		// verify existing webhooks are functioning properly.
@@ -163,11 +163,11 @@ class WebhooksService {
 
 		// Show the grace period notice.
 		if ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
-			$message    = [];
-			$message[0] = $webhook->erroring_grace_period_ends_at > time() ? esc_html__( 'Your SureCart webhook connection is being monitored due to errors. This can cause issues with any of your SureCart integrations.', 'surecart' ) : esc_html__( 'Your SureCart webhook connection was disabled due to repeated errors. This can cause issues with any of your SureCart integrations.', 'surecart' );
-			$message[1] = $webhook->erroring_grace_period_ends_at > time() ? sprintf( wp_kses( 'These errors will automatically attempt to be retried, however, we will disable this in <strong>%s</strong> if it continues to fail.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( wp_kses( 'It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
-			$message[1] = $message[1] . ' ' . __( 'If you have already fixed this you can dismiss this notice.', 'surecart' );
-			$message[2] = '<p><a href="https://app.surecart.com/developer" class="button" target="_blank">' . esc_html__( 'Troubleshoot Connection', 'surecart' ) . '</a></p>';
+			$message   = [];
+			$message[] = $webhook->erroring_grace_period_ends_at > time() ? esc_html__( 'Your SureCart webhook connection is being monitored due to errors. This can cause issues with any of your SureCart integrations.', 'surecart' ) : esc_html__( 'Your SureCart webhook connection was disabled due to repeated errors. This can cause issues with any of your SureCart integrations.', 'surecart' );
+			$message[] = $webhook->erroring_grace_period_ends_at > time() ? sprintf( wp_kses( 'These errors will automatically attempt to be retried, however, we will disable this in <strong>%s</strong> if it continues to fail.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( wp_kses( 'It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
+			$message[] = __( 'If you have already fixed this you can dismiss this notice.', 'surecart' );
+			$message[] = '<p><a href="https://app.surecart.com/developer" class="button" target="_blank">' . esc_html__( 'Troubleshoot Connection', 'surecart' ) . '</a></p>';
 
 			return \SureCart::notices()->add(
 				[
