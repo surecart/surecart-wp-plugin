@@ -24,6 +24,7 @@ export default ({ variantsEnabled, setVariantsEnabled }) => {
 					color: var(--sc-input-label-color);
 					transition: border-color 0.2s ease-in-out;
 				`}
+				className={`sc-product-type-${isVariant ? 'variant' : 'multi-price'}`}
 			>
 				<ScFormControl
 					css={css`
