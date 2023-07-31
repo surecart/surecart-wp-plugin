@@ -93,6 +93,31 @@ class RegisteredWebhook extends Webhook {
 	}
 
 	/**
+	 * Delete the model.
+	 *
+	 * @return $this|false
+	 */
+	protected function delete( $id = 0 ) {
+		$id = $this->registration()->get()['id'] ?? null;
+
+		if ( ! $id ) {
+			return false;
+		}
+
+		// delete webhook.
+		$webhook = parent::delete( $id );
+
+		if ( is_wp_error( $webhook ) ) {
+			return $webhook;
+		}
+
+		// delete registration.
+		$this->registration()->delete();
+
+		return $this;
+	}
+
+	/**
 	 * Stores the registrationd webhook data in the WP options table.
 	 *
 	 * @return \SureCart\Models\WebhookRegistration;
