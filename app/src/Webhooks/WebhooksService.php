@@ -27,6 +27,25 @@ class WebhooksService {
 	}
 
 	/**
+	 * Bootstrap the integration.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		\add_action( 'admin_init', [ $this, 'verifyWebhooks' ] );
+		\add_action( 'surecart/account_updated', [ $this, 'clearAccountCache' ], 10, 2 );
+	}
+
+	/**
+	 * Clear account transient cache.
+	 *
+	 * @return void
+	 */
+	public function clearAccountCache() {
+		delete_transient( 'surecart_account' );
+	}
+
+	/**
 	 * Listen for domain changes.
 	 *
 	 * @return function
@@ -110,20 +129,51 @@ class WebhooksService {
 	/**
 	 * Verify webhooks.
 	 *
-	 * @return void
+	 * @return function
 	 */
-	public function verifyWebhooks(): void {
-		$has_webhook_error = Webhook::hasAnyWebhookError();
+	public function verifyWebhooks() {
+		$webhook = Webhook::current();
 
-		// If there is no webhook, then show error notice.
-		if ( $has_webhook_error ) {
-			add_action(
-				'admin_notices',
-				function() {
-					$this->showWebhooksErrorNotice( new \WP_Error( 'webhook_error', __( 'Connection is not working.', 'surecart' ) ) );
-				}
+		if ( is_wp_error( $webhook ) ) {
+			// not created, this is recreated elsewhere, so let's ignore it.
+			if ( 'webhook_endpoint.not_found' === $webhook->get_error_code() ) {
+				return;
+			}
+			// handle other errors.
+			return \SureCart::notices()->add(
+				[
+					'name'  => 'webhooks_general_error',
+					'type'  => 'error',
+					'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
+					'text'  => $webhook->get_error_message(),
+				]
 			);
-			return;
+		}
+
+		// If webhook is not created, show notice.
+		// This should not happen, but just in case.
+		if ( ! $webhook || empty( $webhook['id'] ) ) {
+			return \SureCart::notices()->add(
+				[
+					'name'  => 'webhooks_not_created',
+					'type'  => 'error',
+					'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
+					'text'  => esc_html__( 'Webhooks cannot be created.', 'surecart' ),
+				]
+			);
+		}
+
+		// Show the grace period notice.
+		if ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+			$message = $webhook->erroring_grace_period_ends_at > time() ? sprintf( esc_html__( 'Your SureCart connection is experiencing errors. We will disable the integrations connection in %s.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( esc_html__( 'Your SureCart connection is experiencing errors. It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
+			return \SureCart::notices()->add(
+				[
+					'name'  => 'webhooks_erroring_grace_period_' . $webhook->erroring_grace_period_ends_at,
+					'type'  => 'warning',
+					'title' => esc_html__( 'SureCart Webhook Connection', 'surecart' ),
+					'text'  => $message . '<p><a href="#" class="button">Troubleshoot Connection</a></p>',
+				]
+			);
 		}
 	}
 
@@ -192,24 +242,6 @@ class WebhooksService {
 	 */
 	public function getRegisteredWebhook() {
 		return $this->domain_service->getRegisteredWebhook();
-	}
-
-	/**
-	 * Get previous webhook.
-	 *
-	 * @return array|null
-	 */
-	public function getPreviousWebhook() {
-		return $this->domain_service->getPreviousWebhook();
-	}
-
-	/**
-	 * Delete the previous webhook.
-	 *
-	 * @return boolean
-	 */
-	public function deletePreviousWebhook(): bool {
-		return $this->domain_service->deletePreviousWebhook();
 	}
 
 	/**
