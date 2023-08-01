@@ -3,7 +3,6 @@
 namespace SureCart\Controllers\Web;
 
 use SureCart\Models\RegisteredWebhook;
-use SureCart\Models\Webhook;
 use SureCartCore\Responses\RedirectResponse;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
 
@@ -164,13 +163,12 @@ class WebhookController {
 		$id    = $this->getObjectId( $request['data'] );
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
-		\SureCart::queue()->add(
-			$event,
-			array(
-				'model'   => $model,
-				'request' => $request,
-			),
-			'surecart-webhooks'
+		\SureCart::async()->data(
+			[
+				'event' => $event,
+				'id'    => $id,
+				'model' => $model->toArray(),
+			]
 		);
 
 		// return data.
