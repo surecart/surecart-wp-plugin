@@ -50,9 +50,11 @@ class Block extends BaseBlock {
 		$sc_form_id         = $attributes['id'];
 		$wrapper_attributes = get_block_wrapper_attributes( [ 'class' => $attributes['textalign'] ?? '' ] );
 		
-		// If Spectra Blocks are present in the form, enqueue the assets.
-		$post_assets_instance = new \UAGB_Post_Assets( $sc_form_id );
-		$post_assets_instance->enqueue_scripts();
+		if ( class_exists( '\UAGB_Post_Assets' ) ) {
+			// If Spectra Blocks are present in the form, enqueue the assets.
+			$post_assets_instance = new \UAGB_Post_Assets( $sc_form_id );
+			$post_assets_instance->enqueue_scripts();
+		}
 		
 		$result             = do_blocks( $form->post_content );
 		unset( $seen_forms[ $attributes['id'] ] );
