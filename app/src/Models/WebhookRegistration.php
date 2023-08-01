@@ -16,6 +16,13 @@ class WebhookRegistration {
 	public const REGISTERED_WEBHOOK_KEY = 'surecart_registered_webhook';
 
 	/**
+	 * Deprecated Registered Webhook option name.
+	 *
+	 * @var string
+	 */
+	public const DEPRECATED_WEBHOOK_KEY = 'ce_registered_webhook';
+
+	/**
 	 * Save the registered webhook.
 	 *
 	 * @param array $webhook The webhook to save.
@@ -40,7 +47,7 @@ class WebhookRegistration {
 	 * @return array|null
 	 */
 	public function get() {
-		return new Webhook( get_option( self::REGISTERED_WEBHOOK_KEY, [] ) );
+		return new Webhook( get_option( self::REGISTERED_WEBHOOK_KEY, get_option( self::DEPRECATED_WEBHOOK_KEY, [] ) ) );
 	}
 
 	/**
