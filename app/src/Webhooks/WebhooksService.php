@@ -19,9 +19,9 @@ class WebhooksService {
 	 */
 	public function bootstrap() {
 		// we can skip this for localhost.
-		// if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) ) {
-		// return;
-		// }
+		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) ) {
+			return;
+		}
 		// maybe create webhooks if they are not yet created.
 		\add_action( 'admin_init', [ $this, 'maybeCreate' ] );
 		// verify existing webhooks are functioning properly.
