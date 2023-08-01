@@ -28,7 +28,6 @@ class ProductTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	/** @group failing */
 	public function test_can_create_price()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
