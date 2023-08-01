@@ -163,14 +163,23 @@ class WebhookController {
 		$id    = $this->getObjectId( $request['data'] );
 		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
-		\SureCart::queue()->add(
-			$event,
-			array(
-				'model'   => $model,
-				'request' => $request,
-			),
-			'surecart-webhooks'
-		)->run(); // run immediately.
+		// dispatch an async request.
+		\SureCart::async()->data(
+			[
+				'event'   => $event,
+				'id'      => $id,
+				'request' => $model->toArray(),
+			]
+		)->dispatch();
+
+		// \SureCart::queue()->add(
+		// $event,
+		// array(
+		// 'model'   => $model,
+		// 'request' => $request,
+		// ),
+		// 'surecart-webhooks'
+		// )->run(); // run immediately.
 
 		// return data.
 		return [

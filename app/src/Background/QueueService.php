@@ -16,7 +16,7 @@ class QueueService {
 	 * @param string $group The group to assign this job to.
 	 * @return string $this.
 	 */
-	public function add( $hook, $args = array(), $group = '' ) {
+	public function async( $hook, $args = array(), $group = '' ) {
 		\as_enqueue_async_action( $hook, $args, $group );
 		return $this;
 	}
