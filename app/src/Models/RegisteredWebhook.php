@@ -75,8 +75,9 @@ class RegisteredWebhook extends Webhook {
 		$webhook = parent::update(
 			array_merge(
 				[
-					'id'  => $id,
-					'url' => $this->getListenerUrl(),
+					'id'             => $id,
+					'url'            => $this->getListenerUrl(),
+					'webhook_events' => \SureCart::config()->webhook_events,
 				],
 				$attributes
 			)
