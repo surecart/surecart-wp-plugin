@@ -170,10 +170,7 @@ class RegisteredWebhook extends Webhook {
 	 * @return string
 	 */
 	protected function getSigningSecret() {
-		// Get the registered webhook.
-		$webhook = $this->get();
-		// Return the signing secret from the registered webhook.
-		return Encryption::decrypt( $webhook['signing_secret'] ?? '' );
+		return $this->registration()->get()->signing_secret;
 	}
 
 	/**
