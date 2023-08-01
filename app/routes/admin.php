@@ -98,6 +98,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
+| Checkouts
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-checkouts' )
+->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Checkouts\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CheckoutsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CheckoutsController@edit' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
 | Invoices
 |--------------------------------------------------------------------------
 */

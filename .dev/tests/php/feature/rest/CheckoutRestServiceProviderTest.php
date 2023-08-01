@@ -293,6 +293,49 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		$this->assertSame(200, $response->get_status());
 	}
 
+	public function test_must_have_orders_permissions_create_order_with_customer_id()
+	{
+		// mock the requests in the container
+		$requests =  \Mockery::mock(RequestService::class);
+		\SureCart::alias('request', function () use ($requests) {
+			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
+		});
+		$requests->shouldReceive('makeRequest')->andReturn(['email' => 'test@test.com']);
+
+		// works without customer id.
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts');
+		$response = rest_do_request($request);
+		$this->assertSame(200, $response->get_status());
+
+		// not authenticated.
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts');
+		$request->set_param('customer_id', 'asdfasdf');
+		$response = rest_do_request($request);
+		$this->assertSame(401, $response->get_status());
+
+		// customer not authenticated.
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts');
+		$request->set_param('customer', 'asdfasdf');
+		$response = rest_do_request($request);
+		$this->assertSame(401, $response->get_status());
+
+		// missing permission
+		$user = self::factory()->user->create_and_get();
+		wp_set_current_user($user->ID);
+		$request = new WP_REST_Request('POST', '/surecart/v1/checkouts');
+		$request->set_param('customer_id', 'asdfasdf');
+		$response = rest_do_request($request);
+		$this->assertSame(403, $response->get_status());
+
+		// should succeed with the cap.
+		$user = self::factory()->user->create_and_get();
+		$user->add_cap('edit_sc_checkouts');
+		wp_set_current_user($user->ID);
+		$request = new WP_REST_Request('PATCH', '/surecart/v1/checkouts/test/manually_pay');
+		$response = rest_do_request($request);
+		$this->assertSame(200, $response->get_status());
+	}
+
 	public function test_confirm_creates_live_user()
 	{
 		// mock the requests in the container
