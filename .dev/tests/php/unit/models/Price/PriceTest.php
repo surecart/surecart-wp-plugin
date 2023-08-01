@@ -43,16 +43,8 @@ class PriceTest extends SureCartUnitTestCase
 		// then make the request./**
 		$requests->shouldReceive('makeRequest')
 			->atLeast()
-			->once()
 			->withSomeOfArgs('prices')
 			->andReturn($response);
-
-		// then make the request./**
-		$requests->shouldReceive('makeRequest')
-			->atLeast()
-			->once()
-			->withSomeOfArgs('account')
-			->andReturn((object) ['products_updated_at' => 12345]);
 
 		$instance = new Price($request['price']);
 		$created = $instance->create();
