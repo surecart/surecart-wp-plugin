@@ -44,6 +44,7 @@ return [
 		\SureCart\Support\Errors\ErrorsServiceProvider::class,
 		\SureCart\Activation\ActivationServiceProvider::class,
 		\SureCart\Background\BackgroundServiceProvider::class,
+		\SureCart\Collections\CollectionsServiceProvider::class,
 
 		// REST providers.
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
