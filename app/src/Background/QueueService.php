@@ -14,10 +14,11 @@ class QueueService {
 	 * @param string $hook The hook to trigger.
 	 * @param array  $args Arguments to pass when the hook triggers.
 	 * @param string $group The group to assign this job to.
-	 * @return string The action ID.
+	 * @return string $this.
 	 */
 	public function add( $hook, $args = array(), $group = '' ) {
-		return $this->scheduleSingle( time(), $hook, $args, $group );
+		\as_enqueue_async_action( $hook, $args, $group );
+		return $this;
 	}
 
 	/**
@@ -27,10 +28,11 @@ class QueueService {
 	 * @param string $hook The hook to trigger.
 	 * @param array  $args Arguments to pass when the hook triggers.
 	 * @param string $group The group to assign this job to.
-	 * @return string The action ID.
+	 * @return string $this.
 	 */
 	public function scheduleSingle( $timestamp, $hook, $args = array(), $group = '' ) {
-		return \as_schedule_single_action( $timestamp, $hook, $args, $group );
+		\as_schedule_single_action( $timestamp, $hook, $args, $group );
+		return $this;
 	}
 
 	/**
@@ -41,10 +43,11 @@ class QueueService {
 	 * @param string $hook The hook to trigger.
 	 * @param array  $args Arguments to pass when the hook triggers.
 	 * @param string $group The group to assign this job to.
-	 * @return string The action ID.
+	 * @return string $this.
 	 */
 	public function scheduleRecurring( $timestamp, $interval_in_seconds, $hook, $args = array(), $group = '' ) {
-		return \as_schedule_recurring_action( $timestamp, $interval_in_seconds, $hook, $args, $group );
+		\as_schedule_recurring_action( $timestamp, $interval_in_seconds, $hook, $args, $group );
+		return $this;
 	}
 
 	/**
@@ -65,10 +68,11 @@ class QueueService {
 	 * @param string $hook The hook to trigger.
 	 * @param array  $args Arguments to pass when the hook triggers.
 	 * @param string $group The group to assign this job to.
-	 * @return string The action ID
+	 * @return string $this
 	 */
 	public function scheduleCron( $timestamp, $cron_schedule, $hook, $args = array(), $group = '' ) {
-		return \as_schedule_cron_action( $timestamp, $cron_schedule, $hook, $args, $group );
+		\as_schedule_cron_action( $timestamp, $cron_schedule, $hook, $args, $group );
+		return $this;
 	}
 
 	/**
@@ -89,6 +93,7 @@ class QueueService {
 	 */
 	public function cancel( $hook, $args = array(), $group = '' ) {
 		\as_unschedule_action( $hook, $args, $group );
+		return $this;
 	}
 
 	/**
@@ -100,6 +105,7 @@ class QueueService {
 	 */
 	public function cancelAll( $hook, $args = array(), $group = '' ) {
 		\as_unschedule_all_actions( $hook, $args, $group );
+		return $this;
 	}
 
 	/**
@@ -112,7 +118,6 @@ class QueueService {
 	 * @return DateTime|null The date and time for the next occurrence, or null if there is no pending, scheduled action for the given hook.
 	 */
 	public function getNext( $hook, $args = null, $group = '' ) {
-
 		$next_timestamp = as_next_scheduled_action( $hook, $args, $group );
 
 		if ( is_numeric( $next_timestamp ) ) {
@@ -145,5 +150,14 @@ class QueueService {
 	 */
 	public function search( $args = array(), $return_format = OBJECT ) {
 		return \as_get_scheduled_actions( $args, $return_format );
+	}
+
+	/**
+	 * Run the queue immedidately.
+	 *
+	 * @return void
+	 */
+	public function run() {
+		do_action( 'action_scheduler_run_queue', 'SureCart Async Request' );
 	}
 }
