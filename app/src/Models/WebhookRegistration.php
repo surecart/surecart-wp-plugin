@@ -48,7 +48,7 @@ class WebhookRegistration {
 	 */
 	public function get() {
 		$webhook = get_option( self::REGISTERED_WEBHOOK_KEY, get_option( self::DEPRECATED_WEBHOOK_KEY, [] ) );
-		if ( empty( $webhook ) ) {
+		if ( empty( $webhook['signing_secret'] ) ) {
 			return null;
 		}
 		$webhook['signing_secret'] = Encryption::decrypt( $webhook['signing_secret'] );
