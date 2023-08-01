@@ -3,7 +3,6 @@
 namespace SureCart\Models;
 
 use SureCart\Support\Encryption;
-use SureCart\Support\Server;
 use SureCart\Support\URL;
 
 /**

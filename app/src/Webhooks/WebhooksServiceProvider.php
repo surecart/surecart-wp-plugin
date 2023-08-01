@@ -2,6 +2,7 @@
 
 namespace SureCart\Webhooks;
 
+use SureCart\Models\RegisteredWebhook;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -16,7 +17,7 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 */
 	public function register( $container ) {
 		$container['surecart.webhooks'] = function () {
-			return new WebhooksService();
+			return new WebhooksService( new RegisteredWebhook() );
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];

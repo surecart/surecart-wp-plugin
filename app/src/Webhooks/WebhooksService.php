@@ -3,7 +3,6 @@
 namespace SureCart\Webhooks;
 
 use SureCart\Models\ApiToken;
-use SureCart\Models\RegisteredWebhook;
 use SureCart\Support\Encryption;
 use SureCart\Support\Server;
 use SureCart\Support\URL;
@@ -12,6 +11,22 @@ use SureCart\Support\URL;
  * Webhooks service.
  */
 class WebhooksService {
+	/**
+	 * The registered webhook.
+	 *
+	 * @var \SureCart\Models\RegisteredWebhook
+	 */
+	protected $webhook;
+
+	/**
+	 * Get the registered webhook.
+	 *
+	 * @param \SureCart\Models\RegisteredWebhook $webhook The registered webhook.
+	 */
+	public function __construct( \SureCart\Models\RegisteredWebhook $webhook ) {
+		$this->webhook = $webhook;
+	}
+
 	/**
 	 * Bootstrap the integration.
 	 *
@@ -38,7 +53,7 @@ class WebhooksService {
 	 * @return string|null
 	 */
 	public function maybeShowDomainChangeNotice() {
-		$webhook = RegisteredWebhook::get();
+		$webhook = $this->webhook->get();
 
 		// let's handle the error elsewhere.
 		if ( is_wp_error( $webhook ) || empty( $webhook['id'] ) || empty( $webhook['url'] ) ) {
@@ -46,7 +61,7 @@ class WebhooksService {
 		}
 
 		// the domain matches, so everything is good.
-		if ( RegisteredWebhook::currentDomainMatches() ) {
+		if ( $this->webhook->currentDomainMatches() ) {
 			return;
 		}
 
@@ -59,7 +74,7 @@ class WebhooksService {
 				'update_url'       => \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ),
 				'add_url'          => \SureCart::getUrl()->editModel( 'create_webhook', '0' ),
 				'previous_web_url' => URL::getSchemeAndHttpHost( $webhook['url'] ),
-				'current_web_url'  => URL::getSchemeAndHttpHost( RegisteredWebhook::getListenerUrl() ),
+				'current_web_url'  => URL::getSchemeAndHttpHost( $this->webhook->getListenerUrl() ),
 			]
 		);
 	}
@@ -85,7 +100,7 @@ class WebhooksService {
 		}
 
 		// get the saved webhook.
-		$registered = RegisteredWebhook::registration()->get();
+		$registered = $this->webhook->get();
 
 		// We have one registered already.
 		if ( ! empty( $registered->id ) ) {
@@ -93,7 +108,7 @@ class WebhooksService {
 		}
 
 		// register the webhooks.
-		$registered = RegisteredWebhook::create();
+		$registered = $this->webhook->create();
 
 		// handle error and show notice to user.
 		if ( is_wp_error( $registered ) ) {
@@ -105,6 +120,7 @@ class WebhooksService {
 					'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $registered->get_error_messages() ?? [] ) ) ),
 				]
 			);
+			return;
 		}
 
 		// send a test.
@@ -117,7 +133,7 @@ class WebhooksService {
 	 * @return boolean
 	 */
 	public function isLocalHost() {
-		return ( new Server( RegisteredWebhook::getListenerUrl() ) )->isLocalHost();
+		return ( new Server( $this->webhook->getListenerUrl() ) )->isLocalHost();
 	}
 
 	/**
@@ -126,13 +142,13 @@ class WebhooksService {
 	 * @return function
 	 */
 	public function verify() {
-		$webhook = RegisteredWebhook::get();
+		$webhook = $this->webhook->get();
 
 		if ( is_wp_error( $webhook ) ) {
 			// not found, let's recreate one.
 			if ( 'webhook_endpoint.not_found' === $webhook->get_error_code() ) {
 				// delete saved.
-				RegisteredWebhook::registration()->delete();
+				$this->webhook->registration()->delete();
 				// create.
 				return $this->maybeCreate();
 			}
@@ -150,7 +166,7 @@ class WebhooksService {
 
 		// If webhook is not created, show notice.
 		// This should not happen, but just in case.
-		if ( ! $webhook || empty( $webhook['id'] ) ) {
+		if ( ! $webhook || empty( $webhook->id ) ) {
 			return \SureCart::notices()->add(
 				[
 					'name'  => 'webhooks_not_created',
@@ -187,7 +203,7 @@ class WebhooksService {
 	 */
 	public function getSigningSecret() {
 		// Get the registered webhook.
-		$webhook = RegisteredWebhook::get();
+		$webhook = $this->webhook->get();
 		// Return the signing secret from the registered webhook.
 		return Encryption::decrypt( $webhook['signing_secret'] ?? '' );
 	}
