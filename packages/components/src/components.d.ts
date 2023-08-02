@@ -2796,6 +2796,10 @@ export namespace Components {
          */
         "collectionEnabled": boolean;
         /**
+          * Show for a specific collection
+         */
+        "collectionId": string | null;
+        /**
           * Limit to a set of ids.
          */
         "ids": string[];
@@ -8525,6 +8529,10 @@ declare namespace LocalJSX {
           * Should allow collection filter
          */
         "collectionEnabled"?: boolean;
+        /**
+          * Show for a specific collection
+         */
+        "collectionId"?: string | null;
         /**
           * Limit to a set of ids.
          */

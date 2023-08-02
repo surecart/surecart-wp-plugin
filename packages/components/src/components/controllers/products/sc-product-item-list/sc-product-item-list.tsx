@@ -41,6 +41,9 @@ export class ScProductItemList {
   /** Should allow collection filter */
   @Prop() collectionEnabled: boolean = true;
 
+  /** Show for a specific collection */
+  @Prop() collectionId: string | null = null;
+
   /** Should we paginate? */
   @Prop() paginationEnabled: boolean = true;
 
@@ -179,6 +182,12 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
+    const collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
+
+    if (this.collectionId) {
+      collectionIds.push(this.collectionId);
+    }
+
     const response = (await apiFetch({
       path: addQueryArgs(`surecart/v1/products/`, {
         expand: ['prices', 'product_medias', 'product_media.media'],
@@ -187,7 +196,7 @@ export class ScProductItemList {
         per_page: this.limit,
         page: this.currentPage,
         sort: this.sort,
-        product_collection_ids: (this.selectedCollections || []).map(collection => collection.id),
+        product_collection_ids: collectionIds,
         ...(this.ids?.length ? { ids: this.ids } : {}),
         ...(this.query ? { query: this.query } : {}),
       }),

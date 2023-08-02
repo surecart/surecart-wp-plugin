@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-20T19:32:35",
+  "timestamp": "2023-08-02T13:30:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -23551,6 +23551,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collectionId",
+          "type": "string",
+          "mutable": false,
+          "attr": "collection-id",
+          "reflectToAttr": false,
+          "docs": "Show for a specific collection",
+          "docsTags": [],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
