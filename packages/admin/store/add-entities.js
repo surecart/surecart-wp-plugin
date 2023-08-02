@@ -83,6 +83,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit', expand: ['media'] },
 	},
 	{
+		name: 'draft-checkout',
+		kind: 'surecart',
+		label: __('Draft Checkout', 'surecart'),
+		baseURL: 'surecart/v1/draft-checkouts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'fulfillment',
 		kind: 'surecart',
 		label: __('Fulfillment', 'surecart'),
