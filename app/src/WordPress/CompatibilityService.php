@@ -20,9 +20,7 @@ class CompatibilityService {
 	 */
 	public function bootstrap() {
 		// UAG fix.
-		if ( ! class_exists( '\UAGB_Post_Assets' ) ) {
-			add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
-		}
+		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
 	}
 
 	/**
@@ -33,6 +31,11 @@ class CompatibilityService {
 	 * @return array
 	 */
 	public function maybeEnqueueUAGBAssets( $parsed_block ) {
+		// UAGB must be activated.
+		if ( ! class_exists( '\UAGB_Post_Assets' ) ) {
+			return $parsed_block;
+		}
+
 		// must be our checkout form block.
 		if ( 'surecart/checkout-form' !== $parsed_block['blockName'] ) {
 			return $parsed_block;
