@@ -18,6 +18,7 @@
 | `loading`    | `loading`      | Is this loading?      | `boolean`                           | `undefined`                    |
 | `number`     | `number`       | Tax ID Number         | `string`                            | `null`                         |
 | `otherLabel` | `other-label`  | Other zones label     | `string`                            | `__('Tax ID', 'surecart')`     |
+| `required`   | `required`     | Required?             | `boolean`                           | `false`                        |
 | `show`       | `show`         | Force show the field. | `boolean`                           | `false`                        |
 | `status`     | `status`       | The status            | `"invalid" \| "unknown" \| "valid"` | `'unknown'`                    |
 | `type`       | `type`         | Type of tax id        | `string`                            | `'other'`                      |
