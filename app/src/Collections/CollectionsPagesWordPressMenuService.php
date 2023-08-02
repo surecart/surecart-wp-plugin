@@ -87,11 +87,11 @@ class CollectionsPagesWordPressMenuService {
 				<span class="list-controls">
 					<label>
 						<input type="checkbox" class="select-all" />
-						<?php esc_html_e( 'Select all', 'woocommerce' ); ?>
+						<?php esc_html_e( 'Select all', 'surecart' ); ?>
 					</label>
 				</span>
 				<span class="add-to-menu">
-					<button type="submit" class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to menu', 'woocommerce' ); ?>" name="add-post-type-menu-item" id="submit-posttype-sc-collections"><?php esc_html_e( 'Add to menu', 'woocommerce' ); ?></button>
+					<button type="submit" class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to menu', 'surecart' ); ?>" name="add-post-type-menu-item" id="submit-posttype-sc-collections"><?php esc_html_e( 'Add to menu', 'surecart' ); ?></button>
 					<span class="spinner"></span>
 				</span>
 			</p>
