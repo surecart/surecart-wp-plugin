@@ -468,9 +468,9 @@ export namespace Components {
     }
     interface ScCheckout {
         /**
-          * The abandoned checkout return url.
+          * Is abandoned checkout enabled.
          */
-        "abandonedCheckoutReturnUrl": string;
+        "abandonedCheckoutEnabled": boolean;
         /**
           * Alignment
          */
@@ -5956,9 +5956,9 @@ declare namespace LocalJSX {
     }
     interface ScCheckout {
         /**
-          * The abandoned checkout return url.
+          * Is abandoned checkout enabled.
          */
-        "abandonedCheckoutReturnUrl"?: string;
+        "abandonedCheckoutEnabled"?: boolean;
         /**
           * Alignment
          */
