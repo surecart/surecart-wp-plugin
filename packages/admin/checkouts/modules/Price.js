@@ -24,12 +24,15 @@ export default ({
 	onChange,
 	subtotal_amount,
 	ad_hoc_amount,
+	variant_options
 }) => {
 	const imageUrl = price?.product?.image_url;
 	const [open, setOpen] = useState(false);
 	const [addHocAmount, setAddHocAmount] = useState(
 		ad_hoc_amount || price?.amount
 	);
+	
+	const variantLabel = variant_options?.filter(Boolean)?.join(' / ');
 
 	useEffect(() => {
 		setAddHocAmount(ad_hoc_amount || price?.amount);
@@ -83,6 +86,17 @@ export default ({
 						<div>
 							<div>
 								<strong>{price?.product?.name}</strong>
+								{variant_options?.length && (
+									<span
+										css={css`
+											opacity: 0.65;
+											font-size: 12px;
+											line-height: 1.2;
+										`}
+									>
+										{ ` (${variantLabel}) ` }
+									</span>
+								)}
 							</div>
 							<ScFormatNumber
 								type="currency"
