@@ -233,6 +233,8 @@ class Block extends BaseBlock {
 				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
 				'searchEnabled'        => $attributes['search_enabled'],
 				'sortEnabled'          => $attributes['sort_enabled'],
+				'collectionEnabled'    => false,
+				'collectionId'         => get_query_var( 'sc_collection_page_id' ) ?? '',
 			]
 		);
 
