@@ -131,6 +131,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'search_enabled'     => false,
 				'pagination_enabled' => true,
 				'ajax_pagination'    => true,
+				'collection_enabled' => true,
 				'limit'              => 10,
 			]
 		);
