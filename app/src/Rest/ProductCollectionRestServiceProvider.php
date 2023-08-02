@@ -65,17 +65,22 @@ class ProductCollectionRestServiceProvider extends RestServiceProvider implement
 	}
 
 	/**
-	 * You can list product collections if you have the ids.
+	 * You can get the product collection for edit context with permission
+	 * and for view context make it public.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( ! empty( $request['ids'] ) && true !== $request['archived'] ) {
-			return true;
+		if ( 'edit' === $request['context'] && ! current_user_can( 'edit_sc_products' ) ) {
+			return new \WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit product collections.', 'surecart' ),
+				array( 'status' => rest_authorization_required_code() )
+			);
 		}
 
-		return current_user_can( 'read_sc_products' );
+		return true;
 	}
 
 	/**

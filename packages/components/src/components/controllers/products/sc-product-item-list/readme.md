@@ -10,6 +10,7 @@
 | Property               | Attribute                | Description                                               | Type                                        | Default             |
 | ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ------------------- |
 | `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `collectionEnabled`    | `collection-enabled`     | Should allow collection filter                            | `boolean`                                   | `true`              |
 | `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`         |
 | `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`         |
 | `limit`                | `limit`                  |                                                           | `number`                                    | `15`                |

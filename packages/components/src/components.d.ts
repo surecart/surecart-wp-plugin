@@ -2792,6 +2792,10 @@ export namespace Components {
          */
         "ajaxPagination": boolean;
         /**
+          * Should allow collection filter
+         */
+        "collectionEnabled": boolean;
+        /**
           * Limit to a set of ids.
          */
         "ids": string[];
@@ -8517,6 +8521,10 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "ajaxPagination"?: boolean;
+        /**
+          * Should allow collection filter
+         */
+        "collectionEnabled"?: boolean;
         /**
           * Limit to a set of ids.
          */

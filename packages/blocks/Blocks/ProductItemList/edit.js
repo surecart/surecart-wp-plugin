@@ -49,6 +49,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		style,
 		sort_enabled,
 		search_enabled,
+		collection_enabled,
 		pagination_enabled,
 		ajax_pagination,
 		pagination_auto_scroll,
@@ -285,6 +286,16 @@ export default ({ attributes, setAttributes, clientId }) => {
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Collection', 'surecart')}
+							help={__('Show collection filtering.', 'surecart')}
+							checked={collection_enabled}
+							onChange={(collection_enabled) =>
+								setAttributes({ collection_enabled })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 				<PanelBody>
 					<PanelRow>
@@ -401,6 +412,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 								paginationAlignment={pagination_alignment}
 								sortEnabled={sort_enabled}
 								searchEnabled={search_enabled}
+								collectionEnabled={collection_enabled}
 								paginationEnabled={pagination_enabled}
 							/>
 						)}
