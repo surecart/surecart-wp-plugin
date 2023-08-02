@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.3.1
+Stable tag: 2.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,17 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.4.0 - July 19th, 2023 =
+* New: Manual Orders - create orders on behalf of customers from the admin.
+* New: Strong password option. Enforce the creation of strong passwords for customers.
+* Improvement: Product page selected price now shows interval, fees and trials.
+* Improvement: Ability to disable change the secure notice text below the submit button on forms.
+* Fix: Order bump mobile fixes.
+* Fix: Issue with php8 REMOTE_ADDR notice.
+* Fix: Issue with product modified_date_gmt for use in SEO plugin metadata.
+* Fix: Issue with $0 price amount not being added to cart on product page.
+* Fix: Issue with slide out cart z-index not being high enough for some themes.
 
 = 2.3.1 - July 19th, 2023 =
 * Fix: Stripe Payment Element (beta) not loading under certain conditions during free trial with payment required.
