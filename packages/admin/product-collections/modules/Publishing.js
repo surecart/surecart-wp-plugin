@@ -12,6 +12,7 @@ import { useEffect } from '@wordpress/element';
  */
 import Box from '../../ui/Box';
 import Url from '../components/Url';
+import SelectTemplate from '../components/SelectTemplate';
 
 export default ({ productCollection, updateProductCollection, loading }) => {
 	const tag = document.querySelector(
@@ -43,6 +44,15 @@ export default ({ productCollection, updateProductCollection, loading }) => {
 				collection={productCollection}
 				updateCollection={updateProductCollection}
 			/>
+
+			{scData?.is_block_theme ? (
+				<SelectTemplate
+					collection={productCollection}
+					updateCollection={updateProductCollection}
+				/>
+			) : (
+				<>For Non-FSE - TODO</>
+			)}
 		</Box>
 	);
 };
