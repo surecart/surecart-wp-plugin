@@ -402,6 +402,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 								sortEnabled={sort_enabled}
 								searchEnabled={search_enabled}
 								paginationEnabled={pagination_enabled}
+								collectionEnabled={false}
 							/>
 						)}
 					</Disabled>
