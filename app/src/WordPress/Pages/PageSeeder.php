@@ -41,6 +41,7 @@ class PageSeeder {
 		$this->createPages();
 		$this->createCartPost();
 		$this->createShopPage();
+		$this->createCollectionPage();
 	}
 
 	/**
@@ -96,6 +97,29 @@ class PageSeeder {
 		);
 
 		$this->createPosts( $shop );
+	}
+
+	/**
+	 * Create collection page.
+	 *
+	 * @return void
+	 */
+	public function createCollectionPage() {
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/collection.php';
+
+		$collection = apply_filters(
+			'surecart/create_collection',
+			[
+				'collection' => [
+					'name'      => _x( 'collection', 'Collection page slug', 'surecart' ),
+					'title'     => _x( 'Collection', 'Collection page title', 'surecart' ),
+					'content'   => $pattern['content'],
+					'post_type' => 'page',
+				],
+			]
+		);
+
+		$this->createPosts( $collection );
 	}
 
 	/**
