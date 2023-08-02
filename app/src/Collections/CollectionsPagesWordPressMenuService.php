@@ -59,6 +59,11 @@ class CollectionsPagesWordPressMenuService {
 
 		$collections = ProductCollection::get();
 
+		if ( empty( $collections ) || ! is_array( $collections ) ) {
+			esc_html_e( 'No product collections added.', 'surecart' );
+			return;
+		}
+
 		?>
 		<div id="posttype-sc-collections" class="posttypediv">
 			<div id="tabs-panel-sc-collections" class="tabs-panel tabs-panel-active">
@@ -74,7 +79,7 @@ class CollectionsPagesWordPressMenuService {
 							</label>
 							<input type="hidden" class="menu-item-type" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-type]" value="custom" />
 							<input type="hidden" class="menu-item-title" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-title]" value="<?php echo esc_attr( $name ); ?>" />
-							<input type="hidden" class="menu-item-url" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-url]" value="<?php echo esc_url( get_site_url( null, 'collections/' . $collection->slug ) ); ?>" />
+							<input type="hidden" class="menu-item-url" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-url]" value="<?php echo esc_url( $collection->permalink ); ?>" />
 							<input type="hidden" class="menu-item-classes" name="menu-item[<?php echo esc_attr( $i ); ?>][menu-item-classes]" />
 						</li>
 						<?php
