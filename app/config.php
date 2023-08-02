@@ -46,6 +46,7 @@ return [
 		\SureCart\Background\BackgroundServiceProvider::class,
 
 		// REST providers.
+		\SureCart\Rest\SiteHealthRestServiceProvider::class,
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
 		\SureCart\Rest\AbandonedCheckoutProtocolRestServiceProvider::class,
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
@@ -358,7 +359,7 @@ return [
 	/**
 	 * Webhook events we gonna proceed.
 	 */
-	'webhook_events'		 => [
+	'webhook_events'         => [
 		// 'cancellation_act.updated',
 		// 'customer.created',
 		// 'customer.updated',

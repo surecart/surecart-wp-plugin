@@ -11,26 +11,6 @@ use SureCartVendors\Psr\Http\Message\ResponseInterface;
  */
 class WebhookController {
 	/**
-	 * Map object names to their models.
-	 *
-	 * @var array
-	 */
-	protected $models = [
-		'charge'       => \SureCart\Models\Charge::class,
-		'coupon'       => \SureCart\Models\Coupon::class,
-		'customer'     => \SureCart\Models\Customer::class,
-		'purchase'     => \SureCart\Models\Purchase::class,
-		'price'        => \SureCart\Models\Price::class,
-		'product'      => \SureCart\Models\Product::class,
-		'period'       => \SureCart\Models\Period::class,
-		'order'        => \SureCart\Models\Order::class,
-		'refund'       => \SureCart\Models\Refund::class,
-		'subscription' => \SureCart\Models\Subscription::class,
-		'invoice'      => \SureCart\Models\Invoice::class,
-		'account'      => \SureCart\Models\Account::class,
-	];
-
-	/**
 	 * Create new webhook for this site.
 	 *
 	 * @param \SureCartCore\Requests\RequestInterface $request Request.
@@ -95,15 +75,12 @@ class WebhookController {
 			$body = $request->getParsedBody();
 		}
 
-		// the model does not exist.
-		if ( empty( $this->models[ $body['data']['object']['object'] ] ) ) {
-			return \SureCart::json(
-				[
-					'event_triggered' => 'none',
-				]
-			)
-			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
-			->withStatus( 200 );
+		// validate body.
+		if ( empty( $body['type'] ) ) {
+			return new \WP_Error( 'missing_type', 'Missing type.' );
+		}
+		if ( empty( $body['data'] ) ) {
+			return new \WP_Error( 'missing_data', 'Missing data.' );
 		}
 
 		// perform the action.
@@ -151,35 +128,18 @@ class WebhookController {
 	 * @return array|\WP_Error
 	 */
 	public function doAction( $request ) {
-		if ( empty( $request['type'] ) ) {
-			return new \WP_Error( 'missing_type', 'Missing type.' );
-		}
-		if ( empty( $request['data'] ) ) {
-			return new \WP_Error( 'missing_data', 'Missing data.' );
-		}
-
 		// create the event name.
 		$event = $this->createEventName( $request['type'] );
 		$id    = $this->getObjectId( $request['data'] );
-		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
 		// dispatch an async request.
 		\SureCart::async()->data(
 			[
 				'event'   => $event,
 				'id'      => $id,
-				'request' => $model->toArray(),
+				'request' => $request,
 			]
 		)->dispatch();
-
-		// \SureCart::queue()->add(
-		// $event,
-		// array(
-		// 'model'   => $model,
-		// 'request' => $request,
-		// ),
-		// 'surecart-webhooks'
-		// )->run(); // run immediately.
 
 		// return data.
 		return [
@@ -207,7 +167,7 @@ class WebhookController {
 	 * @return string
 	 */
 	public function getObjectId( $data ) {
-		return $data->object->id ?? '';
+		return $data['object']['id'] ?? '';
 	}
 
 	/**

@@ -27,9 +27,9 @@ class WebhooksMiddleware {
 	public function handle( RequestInterface $request, Closure $next ) {
 		$this->request = $request;
 
-		if ( ! $this->verifySignature( $request ) ) {
-			return \SureCart::json( [ 'error' => 'Invalid signature' ] )->withStatus( 403 );
-		}
+		// if ( ! $this->verifySignature( $request ) ) {
+		// return \SureCart::json( [ 'error' => 'Invalid signature' ] )->withStatus( 403 );
+		// }
 
 		return $next( $request );
 	}

@@ -21,13 +21,19 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new PluginService( $c[ SURECART_APPLICATION_KEY ] );
 		};
 
-		$container['surecart.actions']        = function() {
+		$container['surecart.actions'] = function() {
 			return new ActionsService();
 		};
+
 		$container['surecart.config.setting'] = function( $c ) {
 			return json_decode( json_encode( $c[ SURECART_CONFIG_KEY ] ) );
 		};
-		$container['surecart.sitemaps']       = function() {
+
+		$container['surecart.health'] = function() {
+			return new HealthService();
+		};
+
+		$container['surecart.sitemaps'] = function() {
 			return new SitemapsService();
 		};
 
@@ -35,6 +41,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 		$app->alias( 'plugin', 'surecart.plugin' );
 		$app->alias( 'actions', 'surecart.actions' );
 		$app->alias( 'config', 'surecart.config.setting' );
+		$app->alias( 'healthCheck', 'surecart.health' );
 	}
 
 	/**
@@ -42,6 +49,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sitemaps']->bootstrap();
+		$container['surecart.health']->bootstrap();
 	}
 
 	/**
