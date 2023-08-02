@@ -13,7 +13,7 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/product-collections';
+	protected $handle = 'surecart/scripts/admin/product_collections';
 
 	/**
 	 * Script path.
@@ -23,7 +23,7 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 	protected $path = 'admin/product-collections';
 
 	/**
-	 * Add the app url to the data.
+	 * Add the api url to the data.
 	 */
 	public function __construct() {
 		$this->data['api_url'] = \SureCart::requests()->getBaseUrl();
