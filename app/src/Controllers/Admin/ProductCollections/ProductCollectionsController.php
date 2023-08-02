@@ -39,6 +39,10 @@ class ProductCollectionsController {
 				wp_die( implode( ' ', array_map( 'esc_html', $product_collection->get_error_messages() ) ) );
 			}
 
+			if ( ! empty( $product_collection ) ) {
+				$this->preloadAPIRequests( $product_collection );
+			}
+
 			// add product collection link.
 			add_action(
 				'admin_bar_menu',
@@ -60,5 +64,44 @@ class ProductCollectionsController {
 
 		// return view.
 		return '<div id="app"></div>';
+	}
+
+	/**
+	 * Preload API Requests.
+	 *
+	 * @param \SureCart\Models\ProductCollection $product_collection The product collection.
+	 *
+	 * @return void
+	 */
+	public function preloadAPIRequests( ProductCollection $product_collection ): void {
+		$preload_paths = array(
+			array( '/wp/v2/templates', 'OPTIONS' ),
+			'/wp/v2/settings',
+			'/wp/v2/types/wp_template?context=edit',
+			'/wp/v2/types/wp_template-part?context=edit',
+			'/wp/v2/templates?context=edit&per_page=-1',
+			'/wp/v2/template-parts?context=edit&per_page=-1',
+			'/wp/v2/users/me',
+			'/wp/v2/types?context=view',
+			'/wp/v2/types?context=edit',
+			'/wp/v2/templates/' . $product_collection->template_id . '?context=edit',
+			'/wp/v2/template-parts/' . $product_collection->template_part_id . '?context=edit',
+			'/surecart/v1/product-collections/' . $product_collection->id . '?context=edit',
+		);
+
+		wp_add_inline_script(
+			'wp-api-fetch',
+			sprintf(
+				'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );',
+				wp_json_encode(
+					array_reduce(
+						$preload_paths,
+						'rest_preload_api_request',
+						array()
+					)
+				)
+			),
+			'after'
+		);
 	}
 }
