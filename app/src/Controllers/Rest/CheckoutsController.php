@@ -30,9 +30,8 @@ class CheckoutsController extends RestController {
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
 		// if abandoned checkout is enabled, set the return url.
-		if ( ! empty( $request->get_param( 'abandoned_checkout_enabled' ) === null ) ) {
-			$request->set_param( 'abandoned_checkout_return_url', esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) );
-		}
+		$request->set_param( 'abandoned_checkout_return_url', ! empty( $request->get_param( 'abandoned_checkout_enabled' ) ) ? esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) : null );
+
 		return $this->maybeSetUser( $class, $request );
 	}
 
