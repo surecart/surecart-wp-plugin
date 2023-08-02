@@ -127,7 +127,7 @@ abstract class AdminModelEditController {
 		$this->data['home_url']             = untrailingslashit( get_home_url() );
 		$this->data['buy_page_slug']        = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug']    = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
-		$this->data['collection_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_collection_page' ) );
+		$this->data['collection_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) );
 		$this->data['is_block_theme']       = \SureCart::utility()->blockTemplates()->isFSETheme();
 		$this->data['claim_url']            = ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '';
 
