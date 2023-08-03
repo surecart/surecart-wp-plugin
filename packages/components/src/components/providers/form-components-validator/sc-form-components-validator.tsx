@@ -45,7 +45,7 @@ export class ScFormComponentsValidator {
     if (this.disabled) return;
 
     // make sure to add the address field if it's not there.
-    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled) {
+    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled || checkoutState?.checkout?.shipping_address_required) {
       this.addAddressField();
     }
 
