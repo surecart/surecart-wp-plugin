@@ -92,9 +92,10 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 			->once()
 			->andReturn(new \WP_Error('error', 'Error happened'));
 
+		// still no errors since we will ignore it.
 		$errors = $controller->validate([], $request);
 		$this->assertWPError($errors);
-		$this->assertTrue($errors->has_errors());
+		$this->assertFalse($errors->has_errors());
 	}
 
 	public function test_finalize()
