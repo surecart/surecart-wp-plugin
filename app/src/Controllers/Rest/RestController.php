@@ -49,7 +49,7 @@ abstract class RestController {
 			$model = $model->with( $this->with );
 		}
 
-		return $model->where( $request->get_query_params() )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return $model->where( $request->get_query_params() )->create( $request->get_json_params() );
 	}
 
 	/**
@@ -126,7 +126,7 @@ abstract class RestController {
 			$model = $model->with( $this->with );
 		}
 
-		return $model->where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return $model->where( $request->get_query_params() )->update( $request->get_json_params() );
 	}
 
 	/**

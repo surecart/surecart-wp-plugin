@@ -95,6 +95,9 @@ export class ScSubscriptionPaymentMethod {
       this.busy = true;
       (await apiFetch({
         path: `surecart/v1/payment_methods/${method?.id}/detach`,
+        data: {
+          id: method?.id
+        },
         method: 'PATCH',
       })) as PaymentMethod;
       // remove from view.

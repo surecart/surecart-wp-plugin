@@ -36,6 +36,9 @@ export class ScSubscriptionCancel {
           },
         }),
         method: 'PATCH',
+        data: {
+          id: this.subscription?.id
+        },
       });
       this.scCancelled.emit();
     } catch (e) {

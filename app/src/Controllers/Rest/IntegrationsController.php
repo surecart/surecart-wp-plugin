@@ -103,8 +103,7 @@ class IntegrationsController extends RestController {
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-
-		return $model->where( $request->get_query_params() )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return $model->where( $request->get_query_params() )->update( $request->get_json_params() );
 	}
 
 	/**

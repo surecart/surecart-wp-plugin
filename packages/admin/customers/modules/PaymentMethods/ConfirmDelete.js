@@ -22,6 +22,9 @@ export default ({ onRequestClose, paymentMethod }) => {
 			setError(null);
 			await apiFetch({
 				path: `surecart/v1/payment_methods/${paymentMethod?.id}/detach`,
+				data: {
+					id: paymentMethod?.id
+				},
 				method: 'PATCH',
 			});
 			createSuccessNotice(__('Payment method deleted.', 'surecart'), {

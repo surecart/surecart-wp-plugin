@@ -34,6 +34,9 @@ export default ({ subscription, children }) => {
 						],
 					}
 				),
+				data: {
+					id: subscription.id
+				},
 				method: 'PATCH',
 			});
 			if (result.id) {
