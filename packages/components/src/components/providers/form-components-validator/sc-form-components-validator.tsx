@@ -95,7 +95,7 @@ export class ScFormComponentsValidator {
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
 
-    if (this.order?.shipping_address_required) {
+    if (checkoutState.checkout?.shipping_address_required) {
       address.required = true;
     }
 
