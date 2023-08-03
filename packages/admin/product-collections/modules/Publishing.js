@@ -13,8 +13,9 @@ import { useEffect } from '@wordpress/element';
 import Box from '../../ui/Box';
 import Url from '../components/Url';
 import SelectTemplate from '../components/SelectTemplate';
+import SelectTemplatePart from '../components/SelectTemplatePart';
 
-export default ({ productCollection, updateProductCollection, loading }) => {
+export default ({ collection, updateCollection, loading }) => {
 	const tag = document.querySelector(
 		'#wp-admin-bar-view-product-collection-page'
 	);
@@ -27,31 +28,31 @@ export default ({ productCollection, updateProductCollection, loading }) => {
 		if (!link || !tag) {
 			return;
 		}
-		if (productCollection?.slug) {
+		if (collection?.slug) {
 			tag.classList.remove('hidden');
-			link.href = `${scData?.home_url}/${scData?.collection_page_slug}/${productCollection?.slug}`;
+			link.href = collection.permalink;
 		} else {
 			tag.classList.add('hidden');
 		}
-	}, [productCollection]);
+	}, [collection]);
 
 	return (
 		<Box
 			loading={loading}
 			title={<div>{__('Publishing', 'surecart')}</div>}
 		>
-			<Url
-				collection={productCollection}
-				updateCollection={updateProductCollection}
-			/>
+			<Url collection={collection} updateCollection={updateCollection} />
 
 			{scData?.is_block_theme ? (
 				<SelectTemplate
-					collection={productCollection}
-					updateCollection={updateProductCollection}
+					collection={collection}
+					updateCollection={updateCollection}
 				/>
 			) : (
-				<>For Non-FSE - TODO</>
+				<SelectTemplatePart
+					collection={collection}
+					updateCollection={updateCollection}
+				/>
 			)}
 		</Box>
 	);

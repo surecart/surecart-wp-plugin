@@ -46,16 +46,16 @@ class TemplateUtilityService {
 		$this->templates_directory      = $templates_directory;
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
-			'single-product'  => [
+			'single-product'       => [
 				'title'       => _x( 'SureCart Product', 'Template name', 'surecart' ),
 				'description' => __( 'Displays a single surecart product.', 'surecart' ),
 			],
-			'product-info'    => [
+			'product-info'         => [
 				'title'       => _x( 'Product Info', 'Template name', 'surecart' ),
 				'description' => __( 'Displays the product info.', 'surecart' ),
 			],
-			'product-archive' => [
-				'title'       => _x( 'SureCart Collection', 'Template name', 'surecart' ),
+			'product-archive-part' => [
+				'title'       => _x( 'Product archive', 'Template name', 'surecart' ),
 				'description' => __( 'Displays surecart product archive for collection.', 'surecart' ),
 			],
 		];
