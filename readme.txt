@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.4.0
+Stable tag: 2.4.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,14 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.4.1 - August 3rd, 2023 =
+* Improvement: Prevent admin notices on SureCart pages.
+* Improvement: Update library dependencies.
+* Improvement: Added additional security enhancements.
+* Fix: PHP notice with form shortcodes and Divi.
+* Fix: Issue with some Spectra blocks not loading inside forms.
+* Fix: Make sure checkout line items are sorted by added at date.
 
 = 2.4.0 - July 19th, 2023 =
 * New: Manual Orders - create orders on behalf of customers from the admin.
