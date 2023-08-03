@@ -23,7 +23,8 @@ class PaymentMethodsController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function detach( \WP_REST_Request $request ) {
-		$payment_method = new $this->class( [ 'id' => $request['id'] ] );return $payment_method->where( $request->get_query_params() )
+		$payment_method = new $this->class( [ 'id' => $request['id'] ] );
+		return $payment_method->where( $request->get_query_params() )
 			->detach( $request->get_json_params() );
 	}
 }
