@@ -1,9 +1,6 @@
 # ce-line-items
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -18,14 +15,12 @@
 | `removable`       | `removable`         |             | `boolean`                  | `undefined` |
 | `removeLineItems` | `remove-line-items` |             | `boolean`                  | `true`      |
 
-
 ## Events
 
 | Event              | Description           | Type                        |
 | ------------------ | --------------------- | --------------------------- |
 | `scRemoveLineItem` | Remove the line item. | `CustomEvent<LineItemData>` |
 | `scUpdateLineItem` | Update the line item. | `CustomEvent<LineItemData>` |
-
 
 ## Shadow Parts
 
@@ -51,6 +46,38 @@
 | `"line-item__title"`               | The line item title               |
 | `"product-line-item"`              | The product line item             |
 
+## Example Styling
+
+Here are sample styles that you can use to modify the parts of the shadow parts above:
+
+1. To style the line item background color and padding:
+
+```css
+sc-line-items::part(line-item){
+  background-color: var(--sc-color-info-50);
+  padding: var(--sc-spacing-medium);
+  border-radius: 10px;
+}
+```
+
+2. To style the line item image border color and border radius:
+
+```css
+sc-line-items::part(line-item__image){
+  border:1px solid var(--sc-color-info-400);
+  border-radius: 10px;
+}
+```
+
+3. To style the line item title, price amount and price description color:
+
+  ```css
+  sc-line-items::part(line-item__title),
+  sc-line-items::part(line-item__price-amount),
+  sc-line-items::part(line-item__price-description){
+    color: var(--sc-color-info-400);
+  }
+  ```
 
 ## Dependencies
 
@@ -61,6 +88,7 @@
 - [sc-product-line-item](../../../ui/product-line-item)
 
 ### Graph
+
 ```mermaid
 graph TD;
   sc-line-items --> sc-line-item
