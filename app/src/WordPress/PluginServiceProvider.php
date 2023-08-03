@@ -37,6 +37,10 @@ class PluginServiceProvider implements ServiceProviderInterface {
 			return new SitemapsService();
 		};
 
+		$container['surecart.compatibility'] = function() {
+			return new CompatibilityService();
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'plugin', 'surecart.plugin' );
 		$app->alias( 'actions', 'surecart.actions' );
@@ -50,6 +54,7 @@ class PluginServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.sitemaps']->bootstrap();
 		$container['surecart.health']->bootstrap();
+		$container['surecart.compatibility']->bootstrap();
 	}
 
 	/**
