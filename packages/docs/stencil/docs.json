@@ -11320,6 +11320,66 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-feature-demo-banner/sc-feature-demo-banner.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-feature-demo-banner",
+      "readme": "# sc-feature-demo-banner\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "buttonText",
+          "type": "string",
+          "mutable": false,
+          "attr": "button-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Upgrade Your Plan', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "mutable": false,
+          "attr": "url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'https://app.surecart.com/billing'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-feature-demo-banner": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/flex/sc-flex.tsx",
       "encapsulation": "shadow",
       "tag": "sc-flex",
@@ -13725,6 +13785,7 @@
         "sc-downloads-list",
         "sc-drawer",
         "sc-empty",
+        "sc-feature-demo-banner",
         "sc-fulfillments",
         "sc-image-slider",
         "sc-invoices-list",
@@ -13803,6 +13864,9 @@
           "sc-icon"
         ],
         "sc-empty": [
+          "sc-icon"
+        ],
+        "sc-feature-demo-banner": [
           "sc-icon"
         ],
         "sc-fulfillments": [
@@ -31031,6 +31095,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Required?",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
