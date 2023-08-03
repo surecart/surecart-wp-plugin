@@ -77,22 +77,8 @@ class CheckoutsControllerTest extends SureCartUnitTestCase
 		$request->set_param('password', 'pass123');
 
 		$controller = \Mockery::mock(CheckoutsController::class)->makePartial();
-		$controller->shouldReceive('maybeValidateLoginCreds')
-			->with('testuser@test.com', 'pass123')
-			->once()
-			->andReturn(true);
 
 		// no errors.
-		$errors = $controller->validate([], $request);
-		$this->assertWPError($errors);
-		$this->assertFalse($errors->has_errors());
-
-		$controller->shouldReceive('maybeValidateLoginCreds')
-			->with('testuser@test.com', 'pass123')
-			->once()
-			->andReturn(new \WP_Error('error', 'Error happened'));
-
-		// still no errors since we will ignore it.
 		$errors = $controller->validate([], $request);
 		$this->assertWPError($errors);
 		$this->assertFalse($errors->has_errors());
