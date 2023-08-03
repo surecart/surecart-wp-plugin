@@ -44,7 +44,7 @@ class AdminMenuPageService {
 	 * 
 	 * @return void
 	 */
-	public function removeAdminNotices() {
+	public function removeAdminNotices(): void {
 		$pages_to_hide_notices_from = apply_filters( 'surecart_admin_notice_hidden_pages', array(
 			'toplevel_page_sc-dashboard',
 			'surecart_page_sc-settings',
@@ -60,7 +60,7 @@ class AdminMenuPageService {
 			'surecart_page_sc-customers'
 		) );
 		
-		if ( ! in_array( get_current_screen()->id, $pages_to_hide_notices_from ) || empty( $_GET[ 'action' ] ) || 'edit' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) ) {
+		if ( ! in_array( get_current_screen()->id, $pages_to_hide_notices_from, true ) || empty( $_GET[ 'action' ] ) || 'edit' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) ) {
 			return;
 		}
 		
