@@ -8,14 +8,9 @@ import { __ } from '@wordpress/i18n';
 import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({
-	label,
-	productCollection,
-	updateProductCollection,
-	showLabel = false,
-}) => {
+export default ({ label, collection, updateCollection, showLabel = false }) => {
 	const onSelectMedia = (media) => {
-		updateProductCollection({
+		updateCollection({
 			image_id: media?.id,
 			image: media,
 		});
@@ -26,14 +21,14 @@ export default ({
 			__('Are you sure you want to remove this image?', 'surecart')
 		);
 		if (!confirmedRemoveImage) return;
-		return updateProductCollection({
+		return updateCollection({
 			image_id: null,
 			image: null,
 		});
 	};
 
 	const renderContent = () => {
-		if (productCollection?.image?.url) {
+		if (collection?.image?.url) {
 			return (
 				<div
 					css={css`
@@ -42,7 +37,7 @@ export default ({
 					`}
 				>
 					<img
-						src={productCollection?.image?.url}
+						src={collection?.image?.url}
 						alt="image"
 						css={css`
 							width: 100%;

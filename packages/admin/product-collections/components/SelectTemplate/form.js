@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/react';
 
 /**
- * WordPress dependencies
+ * External dependencies.
  */
 import { useState } from '@wordpress/element';
 import { __experimentalInspectorPopoverHeader as InspectorPopoverHeader } from '@wordpress/block-editor';
@@ -14,7 +14,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import CollectionTemplateCreateModal from './create-modal';
 import { getTemplateTitle } from '../../../products/utility';
@@ -81,7 +81,8 @@ export default function CollectionTemplateForm({
 			<InspectorPopoverHeader
 				title={__('Template')}
 				help={__(
-					'Templates define the way this product is displayed when viewing your site.'
+					'Templates define the way product archive page is displayed when viewing your site.',
+					'surecart'
 				)}
 				actions={
 					canCreate && [
@@ -98,7 +99,7 @@ export default function CollectionTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				hideLabelFromVision
-				label={__('Template')}
+				label={__('Template', 'surecart')}
 				value={selected?.id || 'surecart/surecart//product-archive'}
 				options={options}
 				onChange={(slug) => {
@@ -123,7 +124,7 @@ export default function CollectionTemplateForm({
 							canvas: 'edit',
 						})}
 					>
-						{__('Edit template')}
+						{__('Edit template', 'surecart')}
 					</Button>
 				</p>
 			)}

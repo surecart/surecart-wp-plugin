@@ -1,6 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { Button, Dropdown, PanelRow, Spinner } from '@wordpress/components';
+
+/**
+ * External dependencies.
+ */
+import { Button, Dropdown, PanelRow } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { useMemo, useState } from '@wordpress/element';
@@ -8,7 +12,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 import CollectionTemplateForm from './form';
 import { getTemplateTitle } from '../../../products/utility';
