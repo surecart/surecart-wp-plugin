@@ -34,7 +34,8 @@
 			"type": "string"
 		},
 		"width": {
-			"type": "number"
+			"type": "number",
+			"default": 100
 		}
 	},
 	"supports": {

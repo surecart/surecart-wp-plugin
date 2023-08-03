@@ -21,21 +21,6 @@ import { __ } from '@wordpress/i18n';
 
 const ALLOWED_BLOCKS = [buttonBlockName];
 
-const DEFAULT_BLOCK = {
-	name: buttonBlockName,
-	attributesToCopy: [
-		'backgroundColor',
-		'border',
-		'className',
-		'fontFamily',
-		'fontSize',
-		'gradient',
-		'style',
-		'textColor',
-		'width',
-	],
-};
-
 export default ({ attributes, className }) => {
 	const { fontSize, layout, style } = attributes;
 	const blockProps = useBlockProps({
@@ -60,6 +45,7 @@ export default ({ attributes, className }) => {
 					className: preferredStyle && `is-style-${preferredStyle}`,
 					text: __('Add To Cart', 'surecart'),
 					add_to_cart: true,
+					width: 100,
 				},
 			],
 			[
@@ -68,6 +54,8 @@ export default ({ attributes, className }) => {
 					className: preferredStyle && `is-style-${preferredStyle}`,
 					text: __('Buy Now', 'surecart'),
 					add_to_cart: false,
+					width: 100,
+					style: 'outline',
 				},
 			],
 		],
