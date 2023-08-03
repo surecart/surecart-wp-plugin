@@ -34,6 +34,32 @@ class AdminMenuPageService {
 		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 31 );
 		}
+		
+		add_action( 'admin_head', [ $this, 'remove_all_admin_notices' ], 1 );
+		
+	}
+
+	public function remove_all_admin_notices() {
+		$pages_to_hide_notices_from = array(
+			'toplevel_page_sc-dashboard',
+			'surecart_page_sc-settings',
+			'surecart_page_sc-orders',
+			'surecart_page_sc-abandoned-checkouts',
+			'surecart_page_sc-products',
+			'surecart_page_sc-product-groups',
+			'surecart_page_sc-bumps',
+			'surecart_page_sc-coupons',
+			'surecart_page_sc-licenses',
+			'surecart_page_sc-subscriptions',
+			'surecart_page_sc-cancellation-insights',
+			'surecart_page_sc-customers'
+		);
+		
+		if ( ! in_array( get_current_screen()->id, $pages_to_hide_notices_from ) || empty( $_GET[ 'action' ] ) || 'edit' === sanitize_text_field( $_GET[ 'action' ] ) ) {
+			return;
+		}
+		
+		remove_all_actions( 'admin_notices' );
 	}
 
 	/**
@@ -126,22 +152,6 @@ class AdminMenuPageService {
 				margin: 13px -15px 8px;
 				content: "";
 				width: calc(100% + 26px);
-			}
-			.toplevel_page_sc-dashboard,
-			.surecart_page_sc-settings,
-			.surecart_page_sc-orders,
-			.surecart_page_sc-abandoned-checkouts,
-			.surecart_page_sc-products,
-			.surecart_page_sc-product-groups,
-			.surecart_page_sc-bumps,
-			.surecart_page_sc-coupons,
-			.surecart_page_sc-licenses,
-			.surecart_page_sc-subscriptions,
-			.surecart_page_sc-cancellation-insights,
-			.surecart_page_sc-customers {
-				#wpbody-content > .notice {
-					display: none;
-				}
 			}
 		</style>';
 	}
