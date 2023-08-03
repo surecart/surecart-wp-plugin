@@ -116,7 +116,7 @@ export class ScProductItemList {
   }
 
   getBaseUrl() {
-    const baseUrl = 'surecart/v1/products/';
+    const baseUrl = 'surecart/v1/products';
     const isIFramed = window?.location?.href === 'about:srcdoc';
 
     return !isIFramed ? baseUrl : '/wp-json/' + baseUrl;
