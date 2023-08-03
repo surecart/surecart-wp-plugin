@@ -115,13 +115,6 @@ export class ScProductItemList {
     window.location.replace(newUrl);
   }
 
-  getBaseUrl() {
-    const baseUrl = 'surecart/v1/products';
-    const isIFramed = window?.location?.href === 'about:srcdoc';
-
-    return !isIFramed ? baseUrl : '/wp-json/' + baseUrl;
-  }
-
   // Fetch all products
   async getProducts() {
     const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
@@ -197,7 +190,7 @@ export class ScProductItemList {
     }
 
     const response = (await apiFetch({
-      path: addQueryArgs(this.getBaseUrl(), {
+      path: addQueryArgs('surecart/v1/products', {
         expand: ['prices', 'product_medias', 'product_media.media'],
         archived: false,
         status: ['published'],
