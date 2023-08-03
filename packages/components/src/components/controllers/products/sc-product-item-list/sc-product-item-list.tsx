@@ -115,6 +115,13 @@ export class ScProductItemList {
     window.location.replace(newUrl);
   }
 
+  getBaseUrl() {
+    const baseUrl = 'surecart/v1/products/';
+    const isIFramed = window?.location?.href === 'about:srcdoc';
+
+    return !isIFramed ? baseUrl : '/wp-json/' + baseUrl;
+  }
+
   // Fetch all products
   async getProducts() {
     const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
@@ -182,14 +189,15 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
-    const collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
+    let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
 
+    // If we have a collectionId, we should only fetch products from that collection.
     if (this.collectionId) {
-      collectionIds.push(this.collectionId);
+      collectionIds = [this.collectionId];
     }
 
     const response = (await apiFetch({
-      path: addQueryArgs(`surecart/v1/products/`, {
+      path: addQueryArgs(this.getBaseUrl(), {
         expand: ['prices', 'product_medias', 'product_media.media'],
         archived: false,
         status: ['published'],

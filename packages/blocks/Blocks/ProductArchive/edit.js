@@ -57,9 +57,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 	} = attributes;
 	const blockProps = useBlockProps();
 
-	function togglePreview() {
-		setIsEditing((flag) => !flag);
-	}
+	const togglePreview = () => {
+		setIsEditing(!isEditing);
+	};
 
 	const block = useSelect((select) =>
 		select(blockEditorStore)
@@ -198,36 +198,24 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<Notice
 							status="warning"
 							isDismissible={false}
-							css={css`
-								margin-bottom: 20px;
-							`}
+							style={{
+								margin: '10px 0',
+							}}
 						>
 							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
+								'This column count exceeds the recommended amount and may cause visual breakage.',
+								'surecart'
 							)}
 						</Notice>
 					)}
 					<RangeControl
-						label={
-							pagination_enabled
-								? __('Products Per Page', 'surecart')
-								: __('Limit', 'surecart')
-						}
+						label={__('Limit', 'surecart')}
 						value={limit}
 						onChange={(limit) => setAttributes({ limit })}
 						step={1}
 						min={1}
 						max={40}
 					/>
-					<PanelRow>
-						<ToggleControl
-							label={__('Paginate', 'surecart')}
-							checked={pagination_enabled}
-							onChange={(pagination_enabled) =>
-								setAttributes({ pagination_enabled })
-							}
-						/>
-					</PanelRow>
 					{pagination_enabled && (
 						<>
 							<PanelRow>
@@ -364,49 +352,46 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<div
-					css={css`
-						display: ${isEditing ? 'block' : 'none'};
-					`}
-				>
+				{isEditing ? (
 					<EditLayoutConfig
 						attributes={attributes}
 						onDone={togglePreview}
 					/>
-				</div>
-				<div
-					css={css`
-						padding: 0.88rem;
-						display: ${!isEditing ? 'block' : 'none'};
-					`}
-				>
-					<Disabled>
-						{layoutConfig && (
-							<ScProductItemList
-								style={{
-									'border-style': 'none',
-									'--sc-product-item-list-column': columns,
-									'--sc-pagination-font-size':
-										pagination_size,
-									'--sc-product-item-list-gap':
-										getSpacingPresetCssVar(
-											style?.spacing?.blockGap
-										) || '40px',
-									...getVars('item', productBlockAttr),
-									...getConfigStyles(layoutConfig),
-								}}
-								ids={ids}
-								limit={limit}
-								layoutConfig={layoutConfig}
-								paginationAlignment={pagination_alignment}
-								sortEnabled={sort_enabled}
-								searchEnabled={search_enabled}
-								paginationEnabled={pagination_enabled}
-								collectionEnabled={false}
-							/>
-						)}
-					</Disabled>
-				</div>
+				) : (
+					<div
+						css={css`
+							padding: 0.88rem;
+						`}
+					>
+						<Disabled>
+							{layoutConfig && (
+								<ScProductItemList
+									style={{
+										'border-style': 'none',
+										'--sc-product-item-list-column':
+											columns,
+										'--sc-pagination-font-size':
+											pagination_size,
+										'--sc-product-item-list-gap':
+											getSpacingPresetCssVar(
+												style?.spacing?.blockGap
+											) || '40px',
+										...getVars('item', productBlockAttr),
+										...getConfigStyles(layoutConfig),
+									}}
+									ids={ids}
+									limit={limit}
+									layoutConfig={layoutConfig}
+									paginationAlignment={pagination_alignment}
+									sortEnabled={sort_enabled}
+									searchEnabled={search_enabled}
+									paginationEnabled={pagination_enabled}
+									collectionEnabled={false}
+								/>
+							)}
+						</Disabled>
+					</div>
+				)}
 			</div>
 		</Fragment>
 	);
