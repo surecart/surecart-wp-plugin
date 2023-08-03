@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-07-17 22:38\n"
+"PO-Revision-Date: 2023-08-03 22:49\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: id_ID\n"
@@ -20,11 +20,11 @@ msgstr "Pada akhir periode saat ini"
 #: src/Controllers/Admin/Products/ProductsListTable.php:248
 msgid " and %d other price."
 msgid_plural " and %d other prices."
-msgstr[0] ""
+msgstr[0] "dan %d harga lainnya"
 
 #: sc-charges-list.js:112
 msgid "#%s"
-msgstr ""
+msgstr "#%s"
 
 #. translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type
 #: Blocks/Column/edit.js:104
@@ -34,179 +34,161 @@ msgstr "%1$s (%2$d dari %3$d)"
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:313
 #: price.js:13
-#, fuzzy
 msgid "%1d%% off"
-msgstr ""
+msgstr "%1d%% rabat"
 
 #: licenses/modules/Activations/index.js:100
-#, fuzzy
 msgid "%1s of %2s Activations Used"
-msgstr ""
+msgstr "%1s dari %2s Aktifasi Terpakai"
 
 #: orders/modules/Fulfillment/Fulfilled.js:99
 #: orders/modules/Fulfillment/Unfulfilled.js:49
 msgid "%d Item"
 msgid_plural "%d Items"
-msgstr[0] ""
+msgstr[0] "%d Item"
 
 #: subscriptions/show/modules/Details.js:110
-#, fuzzy
 msgid "%d Remaining"
-msgstr ""
+msgstr "%d Tersisa"
 
 #: sc-rich-text.js:18842
 #: sc-textarea2.js:183
 msgid "%d characters remaining"
-msgstr ""
+msgstr "%d karakter tersisa"
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
 #: util/translations.js:14
 #: price.js:35
-#, fuzzy
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
+msgstr[0] "%d hari"
 
 #: sc-product-line-item2.js:37
 msgid "%d day free"
 msgid_plural "%d days free"
-msgstr[0] ""
+msgstr[0] "%d hari gratis"
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:80
-#, fuzzy
 msgid "%d day left in trial"
 msgid_plural "%d days left in trial"
-msgstr[0] ""
+msgstr[0] "%d hari percobaan tersisa"
 
 #: price.js:52
 msgid "%d mo"
 msgid_plural "%d months"
-msgstr[0] ""
+msgstr[0] "%d bulan"
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
 #: util/translations.js:28
 #: price.js:39
-#, fuzzy
 msgid "%d month"
 msgid_plural "%d months"
-msgstr[0] ""
+msgstr[0] "%d bulan"
 
 #: coupons/Sidebar.js:33
-#, fuzzy
 msgid "%d months"
-msgstr ""
+msgstr "%d bulan"
 
 #: util/translations.js:79
 #: price.js:81
 msgid "%d payment"
 msgid_plural "%d payments"
-msgstr[0] ""
+msgstr[0] "%d pembayaran"
 
 #: price.js:86
 msgid "%d payment remaining"
 msgid_plural "%d payments remaining"
-msgstr[0] ""
+msgstr[0] "%d pembayaran tersisa"
 
 #: settings/shipping/profile/Products.js:184
 msgid "%d price"
 msgid_plural "%d prices"
-msgstr[0] ""
+msgstr[0] "%d harga"
 
 #: coupons/modules/Product.js:104
-#, fuzzy
 msgid "%d prices"
-msgstr ""
+msgstr "%d harga"
 
 #: settings/shipping/profile/ShippingProfileListItem.js:35
 msgid "%d product"
 msgid_plural "%d products"
-msgstr[0] ""
+msgstr[0] "%d produk"
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
 #: util/translations.js:21
 #: price.js:37
-#, fuzzy
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
+msgstr[0] "%d minggu"
 
 #: price.js:50
 msgid "%d wk"
 msgid_plural "%d wks"
-msgstr[0] ""
+msgstr[0] "%d mg"
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
 #: util/translations.js:35
 #: price.js:41
-#, fuzzy
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
+msgstr[0] "%d tahun"
 
 #: price.js:54
 msgid "%d yr"
 msgid_plural "%d yrs"
-msgstr[0] ""
+msgstr[0] "%d th"
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:194
 #: abandoned-checkouts/modules/Coupon.js:25
-#, fuzzy
 msgid "%d%% off"
-msgstr ""
+msgstr "%d%% rabat"
 
 #: settings/tax-region/TaxRegionSettings.js:147
-#, fuzzy
 msgid "%s Tax Region"
-msgstr ""
+msgstr "%s Wilayah Pajak"
 
 #. translators: %s: human-readable time difference
 #: src/Support/TimeDate.php:75
-#, fuzzy
 msgctxt "%s = human-readable time difference"
 msgid "%s ago"
-msgstr ""
+msgstr "%s yang lalu"
 
 #. translators: attribute.
 #: src/Support/Errors/Translations/types-replaceable.php:12
-#, fuzzy
 msgid "%s can't be blank."
-msgstr ""
+msgstr "%s tidak bolah kosong"
 
 #: components/MediaLibrary/index.js:370
 #: sc-purchase-downloads-list2.js:54
 msgid "%s file"
 msgid_plural "%s files"
-msgstr[0] ""
+msgstr[0] "%d file"
 
 #. translators: field name.
 #: src/Support/Errors/ErrorsTranslationService.php:60
 #: src/Support/Errors/Translations/types-replaceable.php:10
-#, fuzzy
 msgid "%s is invalid."
-msgstr ""
+msgstr "%s tidak sah"
 
 #. translators: attribute.
 #: src/Support/Errors/Translations/types-replaceable.php:20
-#, fuzzy
 msgid "%s is no longer purchasable."
-msgstr ""
+msgstr "%s sudah tidak dapat dibeli"
 
 #. translators: attribute.
 #: src/Support/Errors/Translations/types-replaceable.php:16
-#, fuzzy
 msgid "%s is not available with subscriptions."
-msgstr ""
+msgstr "%s tidak tersedia dengan langganan"
 
 #. translators: attribute.
 #: src/Support/Errors/Translations/types-replaceable.php:18
-#, fuzzy
 msgid "%s is too high."
-msgstr ""
+msgstr "%s terlalu tinggi"
 
 #: components/data-tables/OrdersDataTable.js:56
 #: Blocks/Dashboard/CustomerCharges/edit.js:66
@@ -216,223 +198,198 @@ msgstr ""
 #: Blocks/Dashboard/CustomerOrders/edit.js:120
 #: sc-invoices-list.js:125
 #: sc-orders-list.js:134
-#, fuzzy
 msgid "%s item"
 msgid_plural "%s items"
-msgstr[0] ""
+msgstr[0] "%s item"
 
 #. translators: attribute.
 #: src/Support/Errors/Translations/types-replaceable.php:14
-#, fuzzy
 msgid "%s must be a number."
-msgstr ""
+msgstr "%s harus berupa angka"
 
 #: products/modules/integrations/Integration.js:153
-#, fuzzy
 msgid "%s not found"
-msgstr ""
+msgstr "%s tidak ditemukan"
 
 #: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:26
-#, fuzzy
 msgid "%s off"
-msgstr ""
+msgstr "%s rabat"
 
 #. translators: Manual payment method.
 #: Blocks/Payment/Block.php:228
 #: Blocks/Payment/components/ManualPaymentMethod.js:20
-#, fuzzy
 msgid "%s selected for check out."
-msgstr ""
+msgstr "%s dipilih untuk pembayaran"
 
 #: sc-mollie-add-method.js:102
 msgid "%s selected."
-msgstr ""
+msgstr "%s dipilih"
 
 #: coupons/Sidebar.js:14
-#, fuzzy
 msgid "%s%% off"
-msgstr ""
+msgstr "%s%% rabat"
 
 #: Blocks/SessionDetail/edit.js:83
-#, fuzzy
 msgid "(Not in this example order, but will be conditionally displayed)"
-msgstr ""
+msgstr "(Tidak dalam urutan contoh ini, tapi akan ditampilkan secara kondisional)"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:345
-#, fuzzy
 msgid "(no title)"
-msgstr ""
+msgstr "(tanpa judul)"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:283
-#, fuzzy
 msgid "+ %d more"
+msgstr "+ %d lagi"
+
+#: checkouts/modules/Price.js:102
+msgid "--"
 msgstr ""
 
 #: settings/abandoned/util.js:29
-#, fuzzy
 msgid "1 Day"
-msgstr ""
+msgstr "1 Hari"
 
 #: settings/abandoned/util.js:9
-#, fuzzy
 msgid "1 Hour"
-msgstr ""
+msgstr "1 Jam"
 
 #: settings/abandoned/util.js:57
-#, fuzzy
 msgid "1 week"
-msgstr ""
+msgstr "1 minggu"
 
 #: Blocks/ShippingChoices/edit.js:26
 msgid "1-2 days"
-msgstr ""
+msgstr "1-2 hari"
 
 #: settings/shipping/zone/ShippingZoneForm.js:291
 msgid "1. Create Zone"
-msgstr ""
+msgstr "1. Buat Zona"
 
 #: settings/abandoned/util.js:33
-#, fuzzy
 msgid "1.5 Days"
-msgstr ""
+msgstr "1,5 Hari"
 
 #: Blocks/Columns/variations.js:17
-#, fuzzy
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:95
 msgid "10:16"
-msgstr ""
+msgstr "10:16"
 
 #: settings/abandoned/util.js:25
-#, fuzzy
 msgid "12 Hours"
-msgstr ""
+msgstr "12 Jam"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:69
 msgid "16:10"
-msgstr ""
+msgstr "16:10"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:73
 msgid "16:9"
-msgstr ""
+msgstr "16:9"
 
 #: settings/abandoned/util.js:37
-#, fuzzy
 msgid "2 Days"
-msgstr ""
+msgstr "2 Hari"
 
 #: settings/abandoned/util.js:13
-#, fuzzy
 msgid "2 Hours"
-msgstr ""
+msgstr "2 Jam"
 
 #: settings/shipping/zone/ShippingZoneForm.js:295
 msgid "2. Create Rate"
-msgstr ""
+msgstr "2. Buat Kurs"
 
 #: Blocks/Columns/variations.js:132
-#, fuzzy
 msgid "25 / 50 / 25"
-msgstr ""
+msgstr "25 / 50 / 25"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:107
 msgid "2:3"
-msgstr ""
+msgstr "2:3"
 
 #: settings/abandoned/util.js:41
-#, fuzzy
 msgid "3 Days"
-msgstr ""
+msgstr "3 Hari"
 
 #: settings/abandoned/util.js:17
-#, fuzzy
 msgid "3 Hours"
-msgstr ""
+msgstr "3 Jam"
 
 #: Blocks/ShippingChoices/edit.js:44
 msgid "3-5 days"
-msgstr ""
+msgstr "3-5 hari"
 
 #: Blocks/Columns/variations.js:60
-#, fuzzy
 msgid "30 / 70"
-msgstr ""
+msgstr "30 / 70"
 
 #: Blocks/Columns/variations.js:108
-#, fuzzy
 msgid "33 / 33 / 33"
-msgstr ""
+msgstr "33 / 33 / 33"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:81
 msgid "3:2"
-msgstr ""
+msgstr "3:2"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:103
 msgid "3:4"
-msgstr ""
+msgstr "3:4"
 
 #: settings/abandoned/util.js:45
-#, fuzzy
 msgid "4 Days"
-msgstr ""
+msgstr "4 Hari"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:77
 msgid "4:3"
-msgstr ""
+msgstr "4:3"
 
 #: settings/abandoned/util.js:49
-#, fuzzy
 msgid "5 Days"
-msgstr ""
+msgstr "5 Hari"
 
 #: Blocks/Columns/variations.js:38
-#, fuzzy
 msgid "50 / 50"
-msgstr ""
+msgstr "50 / 50"
 
 #: settings/abandoned/util.js:53
-#, fuzzy
 msgid "6 Days"
-msgstr ""
+msgstr "6 Hari"
 
 #: settings/abandoned/util.js:21
-#, fuzzy
 msgid "6 Hours"
-msgstr ""
+msgstr "6 Jam"
 
 #: admin/abandoned-orders/cta-banner.php:102
-#, fuzzy
 msgid "69% of shoppers abandon their checkouts before completing a purchase. Recover lost revenue with automated, high-converting emails."
-msgstr ""
+msgstr "69% pembeli meninggalkan checkout mereka sebelum menyelesaikan pembayaran. Pulihkan pendapatan yang hilang dengan email otomatis dengan konversi tinggi."
 
 #: Blocks/Columns/variations.js:84
-#, fuzzy
 msgid "70 / 30"
-msgstr ""
+msgstr "70 / 30"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:99
 msgid "9:16"
-msgstr ""
+msgstr "9:16"
 
 #: Blocks/Product/Media/block.json
 msgctxt "block description"
 msgid "A container to display the product media"
-msgstr ""
+msgstr "Wadah untuk menampilkan media produk"
 
 #: sc-payment-methods-list.js:182
 msgid "A default payment method will be used as a fallback in case other payment methods get removed from a subscription."
-msgstr ""
+msgstr "Metode pembayaran default akan digunakan sebagai pengganti jika metode pembayaran lain dihapus dari langganan."
 
 #: settings/shipping/method/ShippingMethodForm.js:128
 #: settings/shipping/rate/ShippingRateForm.js:320
 msgid "A description to let the customer know the average time it takes for shipping."
-msgstr ""
+msgstr "Deskripsi untuk memberi tahu pelanggan waktu rata-rata yang diperlukan untuk pengiriman."
 
 #: products/modules/AddExternalUrlModal.js:56
 msgid "A display name for file."
-msgstr ""
+msgstr "Nama tampilan untuk file."
 
 #: src/Rest/ActivationRestServiceProvider.php:93
 #: src/Rest/DownloadRestServiceProvider.php:77
@@ -443,93 +400,80 @@ msgstr ""
 #: src/Rest/PriceRestServiceProvider.php:102
 #: src/Rest/ProductsRestServiceProvider.php:137
 #: src/Rest/StatisticRestServiceProvider.php:76
-#, fuzzy
 msgid "A limit on the number of items to be returned, between 1 and 100."
-msgstr ""
+msgstr "Batas jumlah item yang akan dikembalikan, antara 1 dan 100."
 
 #: src/Rest/ProductMediaRestServiceProvider.php:101
 msgid "A limit on the number of records returned"
-msgstr ""
+msgstr "Batas jumlah rekaman yang dikembalikan"
 
 #: settings/portal/PortalSettings.js:153
-#, fuzzy
 msgid "A link to your privacy policy page."
-msgstr ""
+msgstr "Tautan ke halaman kebijakan privasi Anda."
 
 #: settings/account/AccountSettings.js:267
 msgid "A link to your store terms page."
-msgstr ""
+msgstr "Tautan ke halaman ketentuan toko Anda."
 
 #: bumps/CreateBump.js:65
 #: bumps/modules/Name.js:11
-#, fuzzy
 msgid "A name for this bump that will be visible to customers."
-msgstr ""
+msgstr "Nama untuk penawaran ini yang akan terlihat oleh pelanggan."
 
 #: src/Rest/BumpRestServiceProvider.php:93
 #: bumps/modules/Name.js:18
-#, fuzzy
 msgid "A name for this bump that will be visible to customers. If empty, the product name will be used."
-msgstr ""
+msgstr "Nama untuk penawaran ini yang akan terlihat oleh pelanggan. Jika kosong, nama produk akan digunakan."
 
 #: product-groups/modules/Details.js:28
-#, fuzzy
 msgid "A name for your product group."
-msgstr ""
+msgstr "Nama untuk grup produk Anda."
 
 #: product-groups/CreateProductGroup.js:57
-#, fuzzy
 msgid "A name for your product group. It is not shown to customers."
-msgstr ""
+msgstr "Nama untuk grup produk Anda. Tidak ditampilkan kepada pelanggan."
 
 #: products/CreateProduct.js:56
 #: products/modules/Details.js:19
-#, fuzzy
 msgid "A name for your product."
-msgstr ""
+msgstr "Nama untuk produk Anda."
 
 #: src/Support/Errors/Translations/codes.php:23
-#, fuzzy
 msgid "A price with this currency and recurring interval already exists. Please create a new product to create this price."
-msgstr ""
+msgstr "Harga dengan mata uang ini dan interval berulang sudah ada. Harap buat produk baru untuk membuat harga ini."
 
 #: products/modules/integrations/SelectIntegration.js:67
-#, fuzzy
 msgid "A product purchase will be automatically synced with this item."
-msgstr ""
+msgstr "Pembelian produk akan disinkronkan secara otomatis dengan item ini."
 
 #: products/modules/Details.js:31
 msgid "A short description for your product that is displayed on product and instant checkouts."
-msgstr ""
+msgstr "Deskripsi singkat untuk produk Anda yang ditampilkan di halaman produk dan pembayaran instan."
 
 #: Blocks/Column/block.json
-#, fuzzy
 msgctxt "block description"
 msgid "A single column within a columns block."
-msgstr ""
+msgstr "Satu kolom dalam blok kolom."
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:83
 msgid "A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign."
-msgstr ""
+msgstr "Templat produk tunggal memungkinkan Anda merancang tata letak dan gaya halaman produk tunggal SureCart dengan mudah, dan menerapkan templat itu ke berbagai kondisi yang Anda tetapkan."
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
-#, fuzzy
 msgid "A specific product id."
-msgstr ""
+msgstr "ID produk yang spesifik."
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductNameDataField.php:38
-#, fuzzy
 msgid "A specific product name."
-msgstr ""
+msgstr "Nama produk yang spesifik."
 
 #: products/modules/AddExternalUrlModal.js:65
 msgid "A valid file URL."
-msgstr ""
+msgstr "URL file yang sah."
 
 #: tax.js:10
-#, fuzzy
 msgid "ABN Number"
-msgstr ""
+msgstr "Nomer ABN"
 
 #: Blocks/ConditionalForm/conditions.js:284
 #: Blocks/ConditionalForm/rules.js:219
@@ -537,125 +481,106 @@ msgid "AND"
 msgstr "DAN"
 
 #: settings/connection/ConnectionSettings.js:54
-#, fuzzy
 msgid "API Token"
-msgstr ""
+msgstr "Token API"
 
 #: orders/modules/TaxInfo.js:8
 #: tax.js:11
-#, fuzzy
 msgid "AU ABN"
-msgstr ""
+msgstr "AU ABN"
 
 #: Blocks/TaxIdInput/edit.js:32
 msgid "AU ABN Label"
-msgstr ""
+msgstr "Label AU ABN"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:195
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:126
-#, fuzzy
 msgid "Abandoned"
-msgstr ""
+msgstr "Terbengkalai"
 
 #: layouts/partials/admin-settings-sidebar.php:25
 #: abandoned-checkouts/AbandonedCheckout.js:112
 #: settings/abandoned/AbandonedSettings.js:79
-#, fuzzy
 msgid "Abandoned Checkout"
-msgstr ""
+msgstr "Pembayaran yang terbengkalai"
 
 #: settings/customer/CustomerSettings.js:241
-#, fuzzy
 msgid "Abandoned Checkout #1"
-msgstr ""
+msgstr "Pembayaran yang terbengkalai #1"
 
 #: settings/customer/CustomerSettings.js:253
-#, fuzzy
 msgid "Abandoned Checkout #2"
-msgstr ""
+msgstr "Pembayaran yang terbengkalai #2"
 
 #: settings/customer/CustomerSettings.js:265
-#, fuzzy
 msgid "Abandoned Checkout #3"
-msgstr ""
+msgstr "Pembayaran yang terbengkalai #3"
 
 #: settings/abandoned/AbandonedSettings.js:160
-#, fuzzy
 msgid "Abandoned Checkout Discount"
-msgstr ""
+msgstr "Diskon untuk pembayaran yang terbengkalai"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutViewController.php:22
 #: admin/abandoned-orders/index.php:13
 #: store/add-entities.js:117
-#, fuzzy
 msgid "Abandoned Checkouts"
-msgstr ""
+msgstr "Pembayaran yang terbengkalai"
 
 #: settings/tax/TaxSettings.js:160
-#, fuzzy
 msgid "Accept the order and apply reverse charge."
-msgstr ""
+msgstr "Terima pesanan dan terapkan reverse charge."
 
 #: settings/tax/TaxSettings.js:153
-#, fuzzy
 msgid "Accept the order but don’t apply reverse charge."
-msgstr ""
+msgstr "Terima pesanan tetapi jangan terapkan reverse charge."
 
 #: src/Controllers/Web/DashboardController.php:77
 msgid "Account"
-msgstr ""
+msgstr "Akun"
 
 #: Controllers/UserController.php:32
 #: Controllers/UserController.php:64
 #: sc-wordpress-user-edit.js:58
 #: sc-wordpress-user.js:33
-#, fuzzy
 msgid "Account Details"
-msgstr ""
+msgstr "Detail Akun"
 
 #: sc-wordpress-user-edit.js:61
 #: sc-wordpress-user.js:27
 msgid "Account Email"
-msgstr ""
+msgstr "Email Akun"
 
 #: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:206
-#, fuzzy
 msgid "Actions"
-msgstr ""
+msgstr "Tindakan"
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:73
-#, fuzzy
 msgid "Activate"
-msgstr ""
+msgstr "Aktifkan"
 
 #: store/add-entities.js:18
-#, fuzzy
 msgid "Activation"
-msgstr ""
+msgstr "Aktifasi"
 
 #: licenses/modules/Details/index.js:47
 #: products/modules/Licensing.js:63
-#, fuzzy
 msgid "Activation Limit"
-msgstr ""
+msgstr "Batas Aktifasi"
 
 #: licenses/modules/Activations/Activation.js:78
-#, fuzzy
 msgid "Activation deleted."
-msgstr ""
+msgstr "Aktifasi dihapus"
 
 #: licenses/modules/Activations/Activation.js:102
-#, fuzzy
 msgid "Activation updated."
-msgstr ""
+msgstr "Aktifasi diperbarui"
 
 #: licenses/modules/Activations/index.js:94
 #: sc-licenses-list.js:54
 #: sc-subscription-details2.js:107
-#, fuzzy
 msgid "Activations"
-msgstr ""
+msgstr "Aktifasi"
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:54
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:236
@@ -667,46 +592,47 @@ msgstr ""
 #: util.js:44
 #: sc-licenses-list.js:30
 #: sc-subscription-status-badge2.js:54
-#, fuzzy
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:47
 #: sc-payment-methods-list.js:154
-#, fuzzy
 msgid "Add"
-msgstr ""
+msgstr "Tambahkan"
 
 #: Blocks/Donation/edit.js:267
-#, fuzzy
 msgid "Add  Amount"
-msgstr ""
+msgstr "Tambahkan Jumlah"
 
 #: controls/AddPriceUI.js:59
-#, fuzzy
 msgid "Add A Buy Link"
-msgstr ""
+msgstr "Tambahkan Tautan Pembelian"
 
 #: bumps/modules/Conditions.js:28
 #: bumps/modules/NewCondition.js:42
-#, fuzzy
 msgid "Add A Condition"
-msgstr ""
+msgstr "Tambahkan Kondisi"
 
 #: products/modules/Prices/index.js:103
 #: products/modules/Prices/NewPrice/index.js:103
-#, fuzzy
 msgid "Add A Price"
-msgstr ""
+msgstr "Tambahkan Harga"
 
 #: onboarding/Onboarding.js:166
 msgid "Add A Product"
-msgstr ""
+msgstr "Tambahkan Produk"
 
 #: coupons/modules/NewRestriction.js:46
 #: coupons/modules/Restrictions.js:31
-#, fuzzy
 msgid "Add A Restriction"
+msgstr "Tambahkan Batasan"
+
+#: checkouts/modules/Address.js:82
+msgid "Add A Shipping Address"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:94
+msgid "Add A Tax ID"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:34
@@ -717,113 +643,95 @@ msgstr ""
 #: Blocks/Dashboard/CustomerSubscriptions/edit.js:43
 #: Blocks/Dashboard/OrderDownloads/edit.js:32
 #: Blocks/Dashboard/WordPressAccount/edit.js:34
-#, fuzzy
 msgid "Add A Title…"
-msgstr ""
+msgstr "Tambahkan Judul"
 
 #: Blocks/Donation/edit.js:216
-#, fuzzy
 msgid "Add Amount"
-msgstr ""
+msgstr "Tambahkan Jumlah"
 
 #: Blocks/ConditionalForm/selectors/SelectCoupons/index.js:91
-#, fuzzy
 msgid "Add Another Coupon"
-msgstr ""
+msgstr "Tambahkan Kupon Lain"
 
 #: products/modules/Prices/index.js:58
-#, fuzzy
 msgid "Add Another Price"
-msgstr ""
+msgstr "Tambah Harga Lain"
 
 #: Blocks/ConditionalForm/selectors/SelectProcessors/index.js:115
 msgid "Add Another Processor"
 msgstr "Tambahkan Prosesor Lain"
 
 #: product-groups/components/SelectProduct.js:50
-#, fuzzy
 msgid "Add Another Product"
-msgstr ""
+msgstr "Tambahkan Produk Lain"
 
 #: bumps/modules/NewCondition.js:164
-#, fuzzy
 msgid "Add Condition"
-msgstr ""
+msgstr "Tambahkan Kondisi"
 
 #: Blocks/ConditionalForm/edit.js:169
-#, fuzzy
 msgid "Add Conditions"
-msgstr ""
+msgstr "Tambahkan Kondisi"
 
 #: Blocks/Totals/edit.js:52
 #: sc-upcoming-invoice.js:203
-#, fuzzy
 msgid "Add Coupon Code"
-msgstr ""
+msgstr "Tambahkan Kode Kupon"
 
 #: coupons/modules/CustomerSelector.js:96
 #: coupons/modules/SelectCustomer.js:185
-#, fuzzy
 msgid "Add Customer"
-msgstr ""
+msgstr "Tambahkan Pelanggan"
 
 #: products/modules/Downloads.js:93
-#, fuzzy
 msgid "Add Downloads"
-msgstr ""
+msgstr "Tambahkan Unduhan"
 
 #: products/modules/AddExternalUrlModal.js:30
 msgid "Add External Link"
-msgstr ""
+msgstr "Tambahkan Tautan Eksternal"
 
 #: coupons/modules/NewRestriction.js:182
-#, fuzzy
 msgid "Add Filter"
-msgstr ""
+msgstr "Tambahkan Filter"
 
 #: subscriptions/edit/modules/Trial.js:23
-#, fuzzy
 msgid "Add Free Trial"
-msgstr ""
+msgstr "Tambahkan Uji Coba Gratis"
 
 #: products/modules/Image/AddImage.js:58
 msgid "Add From URL"
-msgstr ""
+msgstr "Tambahkan Dari URL"
 
 #: products/modules/Image.js:98
 #: settings/brand/Logo.js:100
-#, fuzzy
 msgid "Add Image"
-msgstr ""
+msgstr "Tambahkan Gambar"
 
 #: products/modules/integrations/NewIntegration.js:59
 #: products/modules/integrations/NewIntegration.js:103
-#, fuzzy
 msgid "Add Integration"
-msgstr ""
+msgstr "Tambahkan Integrasi"
 
 #: components/UrlSelect.js:172
 #: controls/AddPriceUI.js:94
-#, fuzzy
 msgid "Add Link"
-msgstr ""
+msgstr "Tambahkan Tautan"
 
 #: components/MediaLibrary/template.js:21
-#, fuzzy
 msgid "Add Media"
-msgstr ""
+msgstr "Tambahkan Media"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:213
-#, fuzzy
 msgctxt "Cart"
 msgid "Add New"
-msgstr ""
+msgstr "Tambah Baru"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:206
-#, fuzzy
 msgctxt "Checkout Form"
 msgid "Add New"
-msgstr ""
+msgstr "Tambah Baru"
 
 #: layouts/partials/admin-index-header.php:14
 #: coupons/modules/CustomerSelector.js:77
@@ -831,44 +739,43 @@ msgstr ""
 #: settings/processors/ManualPaymentMethods.js:80
 #: sc-subscription-payment-method.js:138
 #: sc-subscription-payment-method.js:157
-#, fuzzy
 msgid "Add New"
-msgstr ""
+msgstr "Tambah Baru"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:38
 msgctxt "SureCart Product"
 msgid "Add New"
-msgstr ""
+msgstr "Tambah Baru"
+
+#: sc-paystack-add-method.js:71
+msgid "Add New Card"
+msgstr "Tambahkan Kartu Baru"
 
 #: products/modules/integrations/Integrations.js:57
-#, fuzzy
 msgid "Add New Integration"
-msgstr ""
+msgstr "Tambahkan Integrasi Baru"
 
 #: components/SelectPrice.js:78
 #: components/SelectPrice.js:116
-#, fuzzy
 msgid "Add New Product"
-msgstr ""
+msgstr "Tambahkan Produk Baru"
 
 #: settings/shipping/ShippingSettings.js:245
 msgid "Add New Profile"
-msgstr ""
+msgstr "Tambahkan Profil Baru"
 
 #: settings/shipping/rate/AddShippingRate.js:16
 msgid "Add New Shipping Rate"
-msgstr ""
+msgstr "Tambahkan Tarif Pengiriman Baru"
 
 #: components/SelectProductGroup.js:58
-#, fuzzy
 msgid "Add New Upgrade Group"
-msgstr ""
+msgstr "Tambahkan Grup Upgrade Baru"
 
 #: Controllers/PaymentMethodController.php:106
 #: Controllers/PaymentMethodController.php:111
-#, fuzzy
 msgid "Add Payment Method"
-msgstr ""
+msgstr "Tambahkan Metode Pembayaran"
 
 #: product-groups/modules/NewProduct.js:59
 #: product-groups/modules/NewProduct.js:75
@@ -877,191 +784,170 @@ msgstr ""
 #: Blocks/CheckoutForm/components/SelectProductModal.js:92
 #: Blocks/CheckoutForm/components/SelectProductModal.js:139
 #: components/PriceChoices.js:81
-#, fuzzy
 msgid "Add Product"
-msgstr ""
+msgstr "Tambahkan Produk"
 
 #: products/modules/Image/AddUrlImage.js:56
 msgid "Add Product Image"
-msgstr ""
+msgstr "Tambahkan Gambar Produk"
 
 #: coupons/modules/ProductRestrictions.js:36
-#, fuzzy
 msgid "Add Product Restriction"
-msgstr ""
+msgstr "Tambahkan Batasan Produk"
 
 #: coupons/modules/Codes.js:59
-#, fuzzy
 msgid "Add Promotion Code"
-msgstr ""
+msgstr "Tambahkan Kode Promosi"
 
 #: settings/shipping/rate/ShippingRateForm.js:194
 #: settings/shipping/zone/ShippingZone.js:228
 msgid "Add Rate"
-msgstr ""
+msgstr "Tambahkan Tarif"
 
 #: settings/shipping/method/ShippingMethodForm.js:91
 msgid "Add Shipping Method"
-msgstr ""
+msgstr "Tambahkan Metode Pengiriman"
 
 #: settings/shipping/profile/AddShippingProfile.js:72
 msgid "Add Shipping Profile"
-msgstr ""
+msgstr "Tambahkan Profil Pengiriman"
 
 #: Blocks/Donation/edit.js:249
-#, fuzzy
 msgid "Add Suggested Donation Amount"
-msgstr ""
+msgstr "Tambahkan Jumlah Donasi yang Disarankan"
 
 #: products/components/SelectTemplate/form.js:89
 #: products/components/SelectTemplatePart/form.js:81
 msgid "Add Template"
-msgstr ""
+msgstr "Tambahkan Templat"
 
 #: Blocks/AddToCartButton/Block.php:95
-#, fuzzy
 msgid "Add To Cart"
-msgstr ""
+msgstr "Masukkan ke keranjang"
 
 #: Blocks/AddToCartButton/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Add To Cart Button"
-msgstr ""
+msgstr "Tombol Tambahkan ke Keranjang"
 
 #: products/modules/Prices/Price/Header.js:261
-#, fuzzy
 msgid "Add To Cart Button Shortcode"
-msgstr ""
+msgstr "Shortcode untuk Tombol Tambahkan ke Keranjang"
 
 #: orders/modules/Fulfillment/components/AddTracking.js:70
 #: orders/modules/Fulfillment/Fulfilled.js:165
 msgid "Add Tracking"
-msgstr ""
+msgstr "Tambahkan Pelacakan"
 
 #: src/Integrations/User/UserService.php:57
-#, fuzzy
 msgid "Add User Role"
-msgstr ""
+msgstr "Tambahkan Peran Pengguna"
 
 #: src/Integrations/User/UserService.php:48
-#, fuzzy
 msgid "Add WordPress User Role"
-msgstr ""
+msgstr "Tambahkan Peran Pengguna WordPress"
 
 #: settings/shipping/zone/ShippingZoneForm.js:265
 msgid "Add Zone"
-msgstr ""
+msgstr "Tambahkan Zona"
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation description"
 msgid "Add a button to add the product to the cart."
-msgstr ""
+msgstr "Tambahkan tombol untuk menambahkan produk ke keranjang."
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block description"
 msgid "Add a buy now or add to cart button."
-msgstr ""
+msgstr "Tambah tombol beli sekarang atau tambahkan ke keranjang."
 
 #: Blocks/CheckoutForm/components/Empty.js:174
-#, fuzzy
 msgid "Add a checkout form"
-msgstr ""
+msgstr "Tambahkan formulir pembayaran"
 
 #: bumps/modules/Description.js:18
-#, fuzzy
 msgid "Add a descirption that will get your customers excited about the offer."
-msgstr ""
+msgstr "Tambahkan deskripsi yang akan membuat pelanggan Anda tertarik dengan penawaran tersebut."
 
 #: bumps/modules/Description.js:10
-#, fuzzy
 msgid "Add a description"
-msgstr ""
+msgstr "Tambahkan deskripsi"
 
 #: settings/abandoned/AbandonedSettings.js:162
-#, fuzzy
 msgid "Add a discount incentive for abandoned cart."
-msgstr ""
+msgstr "Tambahkan insentif diskon untuk keranjang yang terbengkalai."
 
 #: Blocks/Dashboard/DashboardTab/edit.js:117
-#, fuzzy
 msgid "Add a tab name"
-msgstr ""
+msgstr "Tambahkan nama tab"
 
 #: products/modules/SearchEngine.js:62
 msgid "Add a title and description to see how this product might appear in a search engine listing"
-msgstr ""
+msgstr "Tambahkan judul dan deskripsi untuk melihat bagaimana produk ini muncul di daftar mesin pencari"
 
 #: Blocks/CartHeader/edit.js:39
-#, fuzzy
 msgid "Add a title…"
-msgstr ""
+msgstr "Tambahkan judul…"
 
 #: settings/order/OrderProtocol.js:118
-#, fuzzy
 msgid "Add additional information to receipts and invoices."
-msgstr ""
+msgstr "Tambahkan informasi tambahan ke kuitansi dan faktur."
 
 #: orders/modules/Fulfillment/components/Tracking.js:117
 msgid "Add another tracking number"
-msgstr ""
+msgstr "Tambahkan nomor pelacakan lain"
 
 #: dashboard/components/GetStarted.js:73
-#, fuzzy
 msgid "Add buy and cart buttons"
-msgstr ""
+msgstr "Tambahkan tombol beli dan keranjang"
 
 #: dashboard/components/GetStarted.js:74
-#, fuzzy
 msgid "Add cart and buy buttons to your site."
-msgstr ""
+msgstr "Tambahkan keranjang dan tombol beli ke situs Anda."
 
 #: settings/tax-region/TaxRegionSettings.js:66
-#, fuzzy
 msgid "Add custom manual tax rates for specific countries."
-msgstr ""
+msgstr "Tambahkan tarif pajak manual khusus untuk negara tertentu."
 
 #: settings/shipping/ShippingSettings.js:229
 msgid "Add custom rates or destination restrictions for groups of products."
-msgstr ""
+msgstr "Tambahkan tarif khusus atau batasan tujuan untuk grup produk."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:214
-#, fuzzy
 msgid "Add new Cart"
-msgstr ""
+msgstr "Tambahkan Keranjang baru"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:207
-#, fuzzy
 msgid "Add new Checkout Form"
-msgstr ""
+msgstr "Tambahkan Formulir Pembayaran baru"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:39
 msgid "Add new SureCart Product"
-msgstr ""
+msgstr "Tambahkan Produk SureCart baru"
 
 #: settings/shipping/profile/Products.js:213
 msgid "Add products to this shipping profile."
-msgstr ""
+msgstr "Tambahkan produk ke profil pengiriman ini."
 
 #: Blocks/Checkbox/edit.js:69
-#, fuzzy
 msgid "Add some checkbox text..."
-msgstr ""
+msgstr "Tambahkan beberapa teks kotak centang..."
 
 #: bumps/modules/Conditions.js:87
-#, fuzzy
 msgid "Add some conditions to display this bump."
+msgstr "Tambahkan beberapa kondisi untuk menampilkan penawaran ini."
+
+#: checkouts/modules/Prices.js:117
+msgid "Add some products to this order."
 msgstr ""
 
 #: product-groups/modules/Products.js:53
-#, fuzzy
 msgid "Add some products to this upgrade group. A customer who has purchased one of these products can switch between others in this group."
-msgstr ""
+msgstr "Tambahkan beberapa produk ke dalam grup upgrade ini. Seorang pelanggan yang telah membeli salah satu dari produk ini dapat beralih di antara produk lainnya dalam grup ini."
 
 #: Blocks/Switch/edit.js:69
-#, fuzzy
 msgid "Add some text..."
-msgstr ""
+msgstr "Tambahkan beberapa teks..."
 
 #: Blocks/AddToCartButton/edit.js:210
 #: Blocks/Button/edit.js:20
@@ -1071,53 +957,44 @@ msgstr ""
 #: Blocks/LogoutButton/edit.js:71
 #: Blocks/OrderConfirmationCustomer/edit.js:37
 #: Blocks/Submit/edit.js:121
-#, fuzzy
 msgid "Add text…"
-msgstr ""
+msgstr "Tambahkan teks..."
 
 #: src/Integrations/User/UserService.php:66
-#, fuzzy
 msgid "Add the user role of the user who purchased the product."
-msgstr ""
+msgstr "Tambahkan peran pengguna dari pengguna yang membeli produk."
 
 #: products/modules/Upgrades.js:78
-#, fuzzy
 msgid "Add this product to a group with others you want the purchaser to switch between."
-msgstr ""
+msgstr "Tambahkan produk ini ke grup dengan produk lain yang Anda ingin pembeli beralih di antaranya."
 
 #: Blocks/Card/edit.js:57
-#, fuzzy
 msgid "Add title…"
-msgstr ""
+msgstr "Tambahkan judul…"
 
 #: admin/connection-invalid.php:37
-#, fuzzy
 msgid "Add your API token to connect to SureCart."
-msgstr ""
+msgstr "Tambahkan token API Anda untuk terhubung ke SureCart."
 
 #: Blocks/Heading/edit.js:57
-#, fuzzy
 msgid "Add your description..."
-msgstr ""
+msgstr "Tambahkan deskripsi Anda..."
 
 #: Blocks/Heading/edit.js:46
-#, fuzzy
 msgid "Add your title..."
-msgstr ""
+msgstr "Tambahkan judul Anda..."
 
 #: components/MediaLibrary/Preview.js:117
-#, fuzzy
 msgid "Added"
-msgstr ""
+msgstr "Ditambahkan"
 
 #: sc-cancel-survey2.js:88
 msgid "Additional Comments"
-msgstr ""
+msgstr "Komentar tambahan"
 
 #: orders/modules/MetaData.js:16
-#, fuzzy
 msgid "Additional Order Data"
-msgstr ""
+msgstr "Data Pesanan Tambahan"
 
 #: abandoned-checkouts/modules/Address.js:10
 #: invoices/modules/Address.js:7
@@ -1128,71 +1005,64 @@ msgstr ""
 #: sc-form-components-validator2.js:79
 #: sc-order-shipping-address2.js:33
 #: sc-order-shipping-address2.js:42
-#, fuzzy
 msgid "Address"
-msgstr ""
+msgstr "Alamat"
 
 #: sc-address2.js:105
 #: sc-order-shipping-address2.js:41
 #: sc-order-shipping-address2.js:50
 msgid "Address Line 2"
-msgstr ""
+msgstr "Alamat Baris 2"
 
 #: Blocks/Address/edit.js:125
-#, fuzzy
 msgid "Address Placeholder"
-msgstr ""
+msgstr "Placeholder Alamat"
 
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseInvokedTrigger.php:66
-#, fuzzy
 msgid "Admin unrevokes a purchase"
-msgstr ""
+msgstr "Admin membatalkan pembelian"
 
 #: layouts/partials/admin-settings-sidebar.php:63
 #: products/modules/Advanced.js:7
-#, fuzzy
 msgid "Advanced"
-msgstr ""
+msgstr "Lanjutan"
 
 #: settings/shipping/profile/ShippingProfile.js:229
 msgid "Advanced Options"
-msgstr ""
+msgstr "Opsi Lanjutan"
 
 #: admin/advanced.php:30
 #: settings/advanced/AdvancedSettings.js:35
-#, fuzzy
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Pengaturan Lanjutan"
 
 #: settings/abandoned/AbandonedSettings.js:285
 msgid "Advanced settings for abandoned checkouts"
-msgstr ""
+msgstr "Setelan lanjutan untuk pembayaran yang terbengkalai"
 
 #: address.js:14
 msgid "Afghanistan"
-msgstr ""
+msgstr "Afghanistan"
 
 #: Blocks/ProductItemList/edit.js:235
 msgid "Ajax Pagination"
-msgstr ""
+msgstr "Paginasi Ajax"
 
 #: address.js:15
 msgid "Albania"
-msgstr ""
+msgstr "Albania"
 
 #: src/Support/Currency.php:240
-#, fuzzy
 msgid "Albanian Lek"
-msgstr ""
+msgstr "Lek Albania"
 
 #: address.js:16
 msgid "Algeria"
-msgstr ""
+msgstr "Algeria"
 
 #: src/Support/Currency.php:241
-#, fuzzy
 msgid "Algerian Dinar"
-msgstr ""
+msgstr "Dinar Algeria"
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:42
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:56
@@ -1200,128 +1070,115 @@ msgstr ""
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:63
 #: src/Controllers/Admin/Products/ProductsListTable.php:56
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:60
-#, fuzzy
 msgid "All"
-msgstr ""
+msgstr "Semua"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:86
-#, fuzzy
 msgid "All Cancellation Attempts"
-msgstr ""
+msgstr "Semua Upaya Pembatalan"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:218
-#, fuzzy
 msgid "All Carts"
-msgstr ""
+msgstr "Semua Keranjang"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:211
-#, fuzzy
 msgid "All Checkout Forms"
-msgstr ""
+msgstr "Semua Formulir Pembayaran"
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:350
 msgid "All Fulfillments"
-msgstr ""
+msgstr "Semua Penyelesaian"
 
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
 #: Blocks/ProductItemList/modules/EditLayoutConfig.js:13
 msgid "All Products"
-msgstr ""
+msgstr "Semua Produk"
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:386
 msgid "All Shipment Statuses"
-msgstr ""
+msgstr "Semua Status Pengiriman"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:43
 msgid "All SureCart Products"
-msgstr ""
+msgstr "Semua Produk SureCart"
 
 #: bumps/modules/Conditions.js:39
-#, fuzzy
 msgid "All of these items are in the cart."
-msgstr ""
+msgstr "Semua item ini ada di keranjang."
 
 #: settings/shipping/ShippingSettings.js:189
 msgid "All products"
-msgstr ""
+msgstr "Semua produk"
 
 #: settings/shipping/profile/Products.js:212
 #: settings/shipping/ShippingSettings.js:185
 msgid "All products not in other profiles"
-msgstr ""
+msgstr "All products not in other profiles"
 
 #: coupons/modules/Restrictions.js:73
-#, fuzzy
 msgid "Allow Coupon"
-msgstr ""
+msgstr "Semua Kupon"
 
 #: settings/portal/PortalSettings.js:105
-#, fuzzy
 msgid "Allow Subscription Cancellations"
-msgstr ""
+msgstr "Izinkan Pembatalan Langganan"
 
 #: settings/portal/PortalSettings.js:67
-#, fuzzy
 msgid "Allow Subscription Changes"
-msgstr ""
+msgstr "Izinkan Perubahan Langganan"
 
 #: settings/portal/PortalSettings.js:86
-#, fuzzy
 msgid "Allow Subscription Quantity Changes"
-msgstr ""
+msgstr "Izinkan Perubahan Jumlah Langganan"
 
 #: Blocks/Donation/edit.js:169
-#, fuzzy
 msgid "Allow custom amount to be entered"
-msgstr ""
+msgstr "Izinkan untuk memasukkan jumlah khusus"
 
 #: products/components/price/parts/AdHoc.js:14
-#, fuzzy
 msgid "Allow customers to pay what they want"
-msgstr ""
+msgstr "Izinkan pelanggan membayar sesuai keinginan mereka"
 
 #: Blocks/CartItems/edit.js:45
 #: Blocks/LineItems/edit.js:37
-#, fuzzy
 msgid "Allow line item quantities to be editable."
-msgstr ""
+msgstr "Izinkan mengedit baris jumlah item diedit."
 
 #: Blocks/CartItems/edit.js:32
 #: Blocks/LineItems/edit.js:24
-#, fuzzy
 msgid "Allow line items to be removed."
-msgstr ""
+msgstr "Izinkan menghilangkan baris item"
 
 #: Blocks/ProductItemList/edit.js:268
 msgid "Allow the user to sort by newest, alphabetical and more."
-msgstr ""
+msgstr "Izinkan pengguna mengurutkan berdasarkan yang terbaru, berdasarkan abjad, dan lainnya."
 
 #: sc-product-item-list.js:141
 #: sc-product-item-list.js:150
 msgid "Alphabetical, A-Z"
-msgstr ""
+msgstr "Abjad, A-Z"
 
 #: sc-product-item-list.js:143
 #: sc-product-item-list.js:150
 msgid "Alphabetical, Z-A"
-msgstr ""
+msgstr "Abjad, Z-A"
 
 #: settings/abandoned/AbandonedSettings.js:301
 msgid "Also enable abandoned checkouts in test mode."
-msgstr ""
+msgstr "Aktifkan juga pembayaran yang terbengkalai dalam mode uji coba."
 
 #: settings/account/components/CartSettings.js:202
 msgid "Always Show Cart (Menu Only)"
-msgstr ""
+msgstr "Selalu Tampilkan Keranjang (Hanya Menu)"
 
 #: Blocks/CartMenuButton/edit.js:70
 msgid "Always show cart"
-msgstr ""
+msgstr "Selalu tampilkan keranjang"
 
 #: address.js:17
 msgid "American Samoa"
-msgstr ""
+msgstr "Samoa Amerika"
 
 #: src/Support/Errors/Translations/attributes.php:14
 #: coupons/modules/Types.js:42
@@ -1337,181 +1194,154 @@ msgstr ""
 #: Blocks/AddToCartButton/Block.php:81
 #: Blocks/Donation/edit.js:258
 #: Blocks/DonationAmount/edit.js:34
-#, fuzzy
 msgid "Amount"
-msgstr ""
+msgstr "Jumlah"
 
 #: src/Rest/BumpRestServiceProvider.php:78
-#, fuzzy
 msgid "Amount (in the currency of the price) that will be taken off line items associated with this bump."
-msgstr ""
+msgstr "Jumlah (dalam mata uang harga) yang akan diambil dari item baris yang terkait dengan penawaran ini."
 
 #: subscriptions/show/modules/LineItems/index.js:127
-#, fuzzy
 msgid "Amount Due"
-msgstr ""
+msgstr "Jumlah Terutang"
 
 #: src/Support/Errors/Translations/attributes.php:12
 #: coupons/modules/Types.js:87
 #: settings/abandoned/Coupon.js:102
-#, fuzzy
 msgid "Amount Off"
-msgstr ""
+msgstr "Jumlah Rabat"
 
 #: invoices/modules/LineItems.js:71
-#, fuzzy
 msgid "Amount Paid"
-msgstr ""
+msgstr "Jumlah Terbayar"
 
 #: orders/modules/Refunds.js:77
-#, fuzzy
 msgid "Amount Refunded"
-msgstr ""
+msgstr "Jumlah yang Dikembalikan"
 
 #: products/modules/integrations/Integration.js:83
-#, fuzzy
 msgid "An error occurred"
-msgstr ""
+msgstr "Terjadi kesalahan"
 
 #: Blocks/Form/Block.php:169
-#, fuzzy
 msgid "An error occurred while processing the card. Check the card details are correct or use a different card."
-msgstr ""
+msgstr "Terjadi kesalahan saat memproses kartu. Periksa apakah detail kartu sudah benar atau gunakan kartu lain."
 
 #: Blocks/Form/Block.php:140
-#, fuzzy
 msgid "An invoice cannot be generated for the specified customer as there are no pending invoice items. Check that the correct customer is being specified or create any necessary invoice items first."
-msgstr ""
+msgstr "Faktur tidak dapat dibuat untuk pelanggan yang ditentukan karena tidak ada item faktur yang menunggu keputusan. Pastikan pelanggan yang benar telah ditentukan atau buat item faktur yang diperlukan terlebih dahulu."
 
 #: Blocks/Form/Block.php:141
-#, fuzzy
 msgid "An invoice cannot be generated for the specified subscription as there are no pending invoice items. Check that the correct subscription is being specified or create any necessary invoice items first."
-msgstr ""
+msgstr "Faktur tidak dapat dibuat untuk langganan yang ditentukan karena tidak ada item faktur yang tertunda. Pastikan langganan yang benar telah ditentukan atau buat item faktur yang diperlukan terlebih dahulu."
 
 #: fetch.js:737
 msgid "An unknown error occurred."
-msgstr ""
+msgstr "Terjadi kesalahan yang tidak diketahui."
 
 #: admin/product-groups/index.php:10
-#, fuzzy
 msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
-msgstr ""
+msgstr "Grup upgrade adalah cara Anda menentukan jalur upgrade dan downgrade untuk pelanggan Anda. Ini didasarkan pada produk yang telah mereka beli sebelumnya."
 
 #: address.js:18
 msgid "Andorra"
-msgstr ""
+msgstr "Andorra"
 
 #: address.js:19
 msgid "Angola"
-msgstr ""
+msgstr "Angola"
 
 #: src/Support/Currency.php:242
-#, fuzzy
 msgid "Angolan Kwanza"
-msgstr ""
+msgstr "Kwanza Angola"
 
 #: address.js:20
 msgid "Anguilla"
-msgstr ""
+msgstr "Anguila"
 
 #: sc-mollie-add-method.js:102
 msgid "Another step will appear after submitting your order to add this payment method."
-msgstr ""
+msgstr "Langkah lain akan muncul setelah mengirimkan pesanan Anda untuk menambahkan metode pembayaran ini."
 
 #: Blocks/Payment/Block.php:159
 #: Blocks/Payment/Block.php:176
 #: Blocks/Payment/components/PayPal.js:66
 #: Blocks/Payment/components/PayPal.js:95
-#, fuzzy
 msgid "Another step will appear after submitting your order to complete your purchase details."
-msgstr ""
+msgstr "Langkah lain akan muncul setelah mengirimkan pesanan Anda untuk melengkapi detail pembelian Anda."
 
 #: settings/subscription-preservation/EditReason.js:46
-#, fuzzy
 msgid "Answer created."
-msgstr ""
+msgstr "Jawaban dibuat."
 
 #: settings/subscription-preservation/EditReason.js:45
-#, fuzzy
 msgid "Answer updated."
-msgstr ""
+msgstr "Jawaban diperbarui."
 
 #: address.js:21
 msgid "Antarctica"
-msgstr ""
+msgstr "Antartika"
 
 #: address.js:22
 msgid "Antigua and Barbuda"
-msgstr ""
+msgstr "Antigua dan Barbuda"
 
 #: coupons/modules/SelectCustomer.js:155
-#, fuzzy
 msgid "Any Customer"
-msgstr ""
+msgstr "Setiap Pelanggan"
 
 #: bumps/modules/Conditions.js:46
-#, fuzzy
 msgid "Any of these items are in the cart."
-msgstr ""
+msgstr "Salah satu item ini ada di keranjang."
 
 #: components/filters/product/ProductFilter.js:33
-#, fuzzy
 msgid "Any price"
-msgstr ""
+msgstr "Harga apapun"
 
 #: admin/connection-invalid.php:39
 #: admin/connection.php:48
 #: admin/plugin.php:82
-#, fuzzy
 msgid "Api Token"
-msgstr ""
+msgstr "Token Api"
 
 #: admin/onboarding/complete.php:67
-#, fuzzy
 msgid "Api token"
-msgstr ""
+msgstr "Token Api"
 
 #: Blocks/Dashboard/CustomerDownloads/edit.js:83
 #: Blocks/Dashboard/OrderDownloads/edit.js:81
-#, fuzzy
 msgid "Application UI Icon Pack"
-msgstr ""
+msgstr "Paket Ikon UI Aplikasi"
 
 #: customers/modules/Balance/ViewTransactions.js:59
-#, fuzzy
 msgid "Applied"
-msgstr ""
+msgstr "Diterapkan"
 
 #: abandoned-checkouts/modules/LineItems/index.js:76
 #: orders/modules/LineItems/index.js:167
 #: subscriptions/show/modules/LineItems/index.js:76
 #: sc-order.js:127
 #: sc-upcoming-invoice.js:203
-#, fuzzy
 msgid "Applied Balance"
-msgstr ""
+msgstr "Saldo yang diterapkan"
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:65
-#, fuzzy
 msgid "Applied to balance"
-msgstr ""
+msgstr "Diterapkan pada saldo"
 
 #: dashboard/DatePicker.js:24
 #: components/ColorPopup.js:83
 #: sc-order-coupon-form.js:35
-#, fuzzy
 msgid "Apply"
-msgstr ""
+msgstr "Terapkan"
 
 #: Blocks/Totals/edit.js:53
-#, fuzzy
 msgid "Apply Coupon"
-msgstr ""
+msgstr "Terapkan Kupon"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:351
-#, fuzzy
 msgid "Approve"
-msgstr ""
+msgstr "Setujui"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:295
 #: src/Controllers/Admin/Customers/CustomersListTable.php:166
@@ -1524,28 +1354,24 @@ msgstr ""
 #: products/components/product/ActionsDropdown.js:30
 #: products/modules/Prices/Price/Header.js:176
 #: products/modules/SingleDownload.js:269
-#, fuzzy
 msgid "Archive"
-msgstr ""
+msgstr "Arsip"
 
 #: products/EditProduct.js:108
-#, fuzzy
 msgid "Archive %s? This product will not be purchaseable and all unsaved changes will be lost."
-msgstr ""
+msgstr "Arsipkan %s? Produk ini tidak dapat dibeli dan semua perubahan yang belum disimpan akan hilang."
 
 #: bumps/EditBump.js:103
-#, fuzzy
 msgid "Archive this bump? This bump will not be purchaseable and all unsaved changes will be lost."
-msgstr ""
+msgstr "Arsipkan penawaran ini? Penawaran ini tidak dapat dibeli dan semua perubahan yang belum disimpan akan hilang."
 
 #: products/modules/Prices/Price/index.js:70
-#, fuzzy
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
-msgstr ""
+msgstr "Arsipkan harga ini? Produk ini tidak dapat dibeli dan semua perubahan yang belum disimpan akan hilang."
 
 #: product-groups/EditProductGroup.js:76
 msgid "Archive this product group?"
-msgstr ""
+msgstr "Arsipkan grup produk ini?"
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:55
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
@@ -1557,233 +1383,203 @@ msgstr ""
 #: products/modules/Prices/Price/Header.js:200
 #: products/modules/SingleDownload.js:230
 #: util.js:42
-#, fuzzy
 msgid "Archived"
-msgstr ""
+msgstr "Diarsipkan"
 
 #: coupons/Sidebar.js:109
 #: products/Sidebar.js:57
-#, fuzzy
 msgid "Archived On"
-msgstr ""
+msgstr "Diarsipkan Pada"
 
 #: coupons/modules/Code.js:58
-#, fuzzy
 msgid "Archived."
-msgstr ""
+msgstr "Diarsipkan."
 
 #: products/modules/Image/ConfirmDeleteImage.js:45
 msgid "Are you sure you want remove this product image?"
-msgstr ""
+msgstr "Yakin ingin menghapus gambar produk ini?"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:296
-#, fuzzy
 msgid "Are you sure you want to archive this coupon? This will be unavailable for purchase."
-msgstr ""
+msgstr "Yakin ingin mengarsipkan kupon ini? Ini tidak akan tersedia untuk dibeli."
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:167
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:166
 #: src/Controllers/Admin/Products/ProductsListTable.php:332
-#, fuzzy
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
-msgstr ""
+msgstr "Yakin ingin mengarsipkan produk ini? Ini tidak akan tersedia untuk dibeli."
 
 #: sc-subscription.js:70
 msgid "Are you sure you want to cancel the pending update to your plan?"
-msgstr ""
+msgstr "Anda yakin ingin membatalkan pembaruan yang tertunda untuk paket Anda?"
 
 #: Blocks/Form/edit.js:78
-#, fuzzy
 msgid "Are you sure you want to change the template? This will completely replace your current form."
-msgstr ""
+msgstr "Anda yakin ingin mengubah template? Ini akan menggantikan keseluruhan formulir Anda saat ini."
 
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:46
-#, fuzzy
 msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
+msgstr "Yakin ingin menyelesaikan paket pembayaran ini? Ini akan meniadakan pembayaran tambahan apa pun dan menandai paket sebagai selesai. Anda tidak dapat membatalkan ini."
+
+#: checkouts/CreateCheckout.js:328
+msgid "Are you sure you want to continue?"
 msgstr ""
 
 #: settings/shipping/profile/DeleteShippingProfile.js:58
 msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
-msgstr ""
+msgstr "Yakin ingin menghapus profil pengiriman? Menghapus profil pengiriman akan menghapus tarif dan zona pengiriman yang terkait."
 
 #: coupons/EditCoupon.js:234
-#, fuzzy
 msgid "Are you sure you want to delete this coupon?"
-msgstr ""
+msgstr "Yakin ingin menghapus kupon ini?"
 
 #: customers/modules/PaymentMethods/ConfirmDelete.js:50
 #: settings/processors/ManualPaymentMethod.js:29
-#, fuzzy
 msgid "Are you sure you want to delete this payment method?"
-msgstr ""
+msgstr "Yakin ingin menghapus metode pembayaran ini?"
 
 #: coupons/modules/Code.js:193
-#, fuzzy
 msgid "Are you sure you want to delete this promotion code?"
-msgstr ""
+msgstr "Yakin ingin menghapus kode promosi ini?"
 
 #: settings/subscription-preservation/Reason.js:29
-#, fuzzy
 msgid "Are you sure you want to delete this?"
-msgstr ""
+msgstr "Yakin ingin menghapus ini?"
 
 #: bumps/modules/NewCondition.js:23
 #: coupons/modules/NewRestriction.js:27
-#, fuzzy
 msgid "Are you sure you want to discard this condition?"
-msgstr ""
+msgstr "Yakin ingin membuang kondisi ini?"
 
 #: products/modules/Prices/NewPrice/index.js:37
-#, fuzzy
 msgid "Are you sure you want to discard this price?"
-msgstr ""
+msgstr "Yakin ingin membuang harga ini?"
 
 #: customers/modules/User/index.js:74
-#, fuzzy
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
-msgstr ""
+msgstr "Yakin ingin memutuskan sambungan ini dari pelanggan ini? Hal ini akan menyebabkan mereka kehilangan akses ke pembelian."
 
 #: onboarding/components/ConfirmExit.js:9
 msgid "Are you sure you want to leave this page?"
-msgstr ""
+msgstr "Yakin ingin keluar dari halaman ini?"
 
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:63
 msgid "Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan."
-msgstr ""
+msgstr "Anda yakin ingin melunasi langganan? Ini akan segera membebankan sisa pembayaran pada paket mereka kepada pelanggan."
 
 #: products/modules/SingleDownload.js:61
-#, fuzzy
 msgid "Are you sure you want to remove the download from this product?"
-msgstr ""
+msgstr "Yakin ingin menghapus unduhan dari produk ini?"
 
 #: licenses/modules/Activations/Activation.js:62
 #: licenses/modules/Activations/index.js:48
-#, fuzzy
 msgid "Are you sure you want to remove this activation? This site will no longer get updates."
-msgstr ""
+msgstr "Yakin ingin menghapus aktivasi ini? Situs ini tidak akan mendapatkan update lagi."
 
 #: products/modules/integrations/Integration.js:70
-#, fuzzy
 msgid "Are you sure you want to remove this integration? This will affect existing customers who have purchased this product."
-msgstr ""
+msgstr "Yakin ingin menghapus integrasi ini? Hal ini akan mempengaruhi pelanggan yang sudah membeli produk ini."
 
 #: formats/ShowPrice.js:114
-#, fuzzy
 msgid "Are you sure you want to remove this link?"
-msgstr ""
+msgstr "Yakin ingin menghapus tautan ini?"
 
 #: settings/brand/Logo.js:20
-#, fuzzy
 msgid "Are you sure you want to remove this logo?"
-msgstr ""
+msgstr "Yakin ingin menghapus logo ini?"
 
 #: sc-payment-methods-list.js:182
 #: sc-subscription-payment-method.js:85
 msgid "Are you sure you want to remove this payment method?"
-msgstr ""
+msgstr "Yakin ingin menghapus metode pembayaran ini?"
 
 #: src/Webhooks/WebhooksHistoryService.php:149
 #: src/Webhooks/WebhooksHistoryService.php:168
-#, fuzzy
 msgid "Are you sure you want to remove this webhook?"
-msgstr ""
+msgstr "Anda yakin ingin menghapus webhook ini?"
 
 #: products/modules/SingleDownload.js:32
-#, fuzzy
 msgid "Are you sure you want to replace the file in this download? This may push out a new release to everyone."
-msgstr ""
+msgstr "Yakin ingin mengganti file dalam unduhan ini? Ini mungkin mendorong rilis baru untuk semua orang."
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:296
-#, fuzzy
 msgid "Are you sure you want to restore this coupon? This will be be available to purchase."
-msgstr ""
+msgstr "Yakin ingin memulihkan kupon ini? Ini akan dapat dibeli."
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:167
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:166
 #: src/Controllers/Admin/Products/ProductsListTable.php:332
-#, fuzzy
 msgid "Are you sure you want to restore this product? This will be be available to purchase."
-msgstr ""
+msgstr "Yakin ingin memulihkan produk ini? Ini akan dapat dibeli."
 
 #: subscriptions/show/modules/modals/RetryPaymentModal.js:78
-#, fuzzy
 msgid "Are you sure you want to retry the payment? This will attempt to charge the customer."
-msgstr ""
+msgstr "Yakin ingin mencoba lagi pembayaran? Ini akan berusaha untuk menagih pelanggan."
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:15
-#, fuzzy
 msgid "Are you sure you want to start the subscription? This will immediately charge the customer."
-msgstr ""
+msgstr "Yakin ingin memulai langganan? Ini akan segera membebankan biaya kepada pelanggan."
 
 #: orders/modules/OrderCancelConfirmModal.js:58
 msgid "Are you sure you wish to cancel the order?"
-msgstr ""
+msgstr "Yakin ingin membatalkan pesanan?"
 
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:48
-#, fuzzy
 msgid "Are you sure you wish to cancel the pending update?"
-msgstr ""
+msgstr "Yakin ingin membatalkan pembaruan yang tertunda?"
 
 #: components/MediaLibrary/Preview.js:52
-#, fuzzy
 msgid "Are you sure you wish to delete this media item? This cannot be undone."
-msgstr ""
+msgstr "Yakin ingin menghapus item media ini? Tindakan ini tidak dapat diurungkan."
 
 #: orders/modules/OrderStatusConfirmModal.js:71
-#, fuzzy
 msgid "Are you sure you wish to mark the order as paid?"
-msgstr ""
+msgstr "Yakin ingin menandai pesanan sebagai sudah dibayar?"
 
 #: components/UrlSelect.js:74
-#, fuzzy
 msgid "Are you sure you wish to remove this link?"
-msgstr ""
+msgstr "Yakin ingin menghapus tautan ini?"
 
 #: subscriptions/show/modules/modals/DontCancelModal.js:48
-#, fuzzy
 msgid "Are you sure you wish to resume this subscription?"
-msgstr ""
+msgstr "Yakin ingin melanjutkan langganan ini?"
 
 #: settings/shipping/zone/ConfirmDeleteZone.js:41
 msgid "Are you sure?"
-msgstr ""
+msgstr "Anda yakin?"
 
 #: address.js:23
 msgid "Argentina"
-msgstr ""
+msgstr "Argentina"
 
 #: src/Support/Currency.php:243
-#, fuzzy
 msgid "Argentine Peso"
-msgstr ""
+msgstr "Peso Argentina"
 
 #: address.js:24
 msgid "Armenia"
-msgstr ""
+msgstr "Armenia"
 
 #: src/Support/Currency.php:244
-#, fuzzy
 msgid "Armenian Dram"
-msgstr ""
+msgstr "Dram Armenia"
 
 #: address.js:25
 msgid "Aruba"
-msgstr ""
+msgstr "Aruba"
 
 #: src/Support/Currency.php:245
-#, fuzzy
 msgid "Aruban Florin"
-msgstr ""
+msgstr "Florin Aruba"
 
 #: Blocks/ProductItemImage/aspect-ratio-dropdown.js:40
 #: Blocks/ProductItemImage/edit.js:84
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Rasio Aspek"
 
 #: orders/modules/PaymentFailures.js:28
-#, fuzzy
 msgid "Attempt"
-msgstr ""
+msgstr "Percobaan"
 
 #: Blocks/Address/edit.js:39
 #: Blocks/AddToCartButton/edit.js:65
@@ -1839,209 +1635,195 @@ msgstr ""
 #: Blocks/Textarea/edit.js:25
 #: Blocks/Total/edit.js:12
 #: Blocks/Totals/edit.js:74
-#, fuzzy
 msgid "Attributes"
-msgstr ""
+msgstr "Atribut"
 
 #: settings/tax-region/TaxRegionSettings.js:23
 #: settings/tax/TaxSettings.js:184
 #: address.js:29
-#, fuzzy
 msgid "Australia"
-msgstr ""
+msgstr "Australia"
 
 #: src/Support/Currency.php:246
-#, fuzzy
 msgid "Australian Dollar"
-msgstr ""
+msgstr "Dolar Australia"
 
 #: address.js:27
 msgid "Austria"
-msgstr ""
+msgstr "Austria"
 
 #: bumps/modules/Behavior.js:12
-#, fuzzy
 msgid "Auto Apply Discount"
-msgstr ""
+msgstr "Diskon Diterapkan Otomatis"
 
 #: products/modules/Shipping.js:115
 msgid "Auto Fulfill"
-msgstr ""
+msgstr "Penyelesaian Otomatis"
 
 #: Blocks/Product/Media/edit.js:52
 msgid "Auto Height"
-msgstr ""
+msgstr "Tinggi Otomatis"
 
 #: settings/tax-region/RegistrationForm.js:181
 #: settings/tax-region/TaxRegionSettings.js:246
-#, fuzzy
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatis"
 
 #: admin/cancellation-insights/cta-banner.php:103
 msgid "Automatically lower your subscription cancellation while making customers happy and saving more revenue with Subscription Saver."
-msgstr ""
+msgstr "Secara otomatis menurunkan tingkat pembatalan langganan sekaligus membuat pelanggan senang dan menghemat lebih banyak pendapatan dengan Penghemat Langganan."
 
 #: products/components/Availability/index.js:25
 #: products/components/Availability/index.js:60
 msgid "Availability"
-msgstr ""
+msgstr "Ketersediaan"
 
 #: products/components/Availability/index.js:75
 msgid "Available For Purchase"
-msgstr ""
+msgstr "Tersedia untuk pembelian"
+
+#: settings/processors/ProcessorSettings.js:254
+msgid "Available Processors"
+msgstr "Prosesor yang Tersedia"
 
 #: products/Sidebar.js:40
-#, fuzzy
 msgid "Available for purchase"
-msgstr ""
+msgstr "Tersedia untuk pembelian"
 
 #: dashboard/components/overview/charts/AverageOrderValue.js:25
-#, fuzzy
 msgid "Average Order Value"
-msgstr ""
+msgstr "Nilai Pesanan Rata-Rata"
 
 #: address.js:28
 msgid "Azerbaijan"
-msgstr ""
+msgstr "Azerbaijan"
 
 #: src/Support/Currency.php:247
-#, fuzzy
 msgid "Azerbaijani Manat"
-msgstr ""
+msgstr "Manat Azerbaijan"
 
 #: Blocks/Form/components/Setup.js:66
-#, fuzzy
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #: invoices/Invoice.js:65
-#, fuzzy
 msgid "Back to All Invoices"
-msgstr ""
+msgstr "Kembali ke Semua Faktur"
 
 #: Blocks/AddToCartButton/edit.js:163
 #: Blocks/BuyButton/edit.js:143
 #: components/CartInspectorControls.js:24
-#, fuzzy
 msgid "Background Color"
-msgstr ""
+msgstr "Warna latar belakang"
 
 #: address.js:29
 msgid "Bahamas"
-msgstr ""
+msgstr "Bahama"
 
 #: src/Support/Currency.php:248
-#, fuzzy
 msgid "Bahamian Dollar"
-msgstr ""
+msgstr "Dolar Bahama"
 
 #: address.js:30
 msgid "Bahrain"
-msgstr ""
+msgstr "Bahrain"
 
 #: customers/modules/Balance/index.js:16
-#, fuzzy
 msgid "Balance"
-msgstr ""
+msgstr "Saldo"
 
 #: customers/modules/Balance/ViewTransactions.js:169
-#, fuzzy
 msgid "Balance Transactions"
-msgstr ""
+msgstr "Saldo Transaksi"
 
 #: address.js:31
 msgid "Bangladesh"
-msgstr ""
+msgstr "Bangladesh"
 
 #: src/Support/Currency.php:249
-#, fuzzy
 msgid "Bangladeshi Taka"
-msgstr ""
+msgstr "Taka Bangladesh"
 
 #: src/Support/Currency.php:250
-#, fuzzy
 msgid "Barbadian Dollar"
-msgstr ""
+msgstr "Dolar Barbados"
 
 #: address.js:32
 msgid "Barbados"
-msgstr ""
+msgstr "Barbados"
 
 #: settings/shipping/rate/ShippingRateForm.js:441
 msgid "Based on item weight"
-msgstr ""
+msgstr "Berdasarkan berat barang"
 
 #: settings/shipping/rate/ShippingRateForm.js:472
 msgid "Based on order price"
-msgstr ""
+msgstr "Berdasarkan harga pesanan"
 
 #: onboarding/components/StarterTemplates.js:15
 msgid "Beauty Products"
-msgstr ""
+msgstr "Produk kecantikan"
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:41
-#, fuzzy
 msgid "Begins"
-msgstr ""
+msgstr "Dimulai"
 
 #: address.js:33
 msgid "Belarus"
-msgstr ""
+msgstr "Belarusia"
 
 #: src/Support/Currency.php:251
-#, fuzzy
 msgid "Belarusian Ruble"
-msgstr ""
+msgstr "Rubel Belarusia"
 
 #: address.js:34
 msgid "Belgium"
-msgstr ""
+msgstr "Belgia"
 
 #: address.js:35
 msgid "Belize"
-msgstr ""
+msgstr "Belize"
 
 #: src/Support/Currency.php:252
-#, fuzzy
 msgid "Belize Dollar"
-msgstr ""
+msgstr "Dolar Belize"
 
 #: address.js:36
 msgid "Benin"
-msgstr ""
+msgstr "Benin"
 
 #: address.js:37
 msgid "Bermuda"
-msgstr ""
+msgstr "Bermuda"
 
 #: src/Support/Currency.php:253
-#, fuzzy
 msgid "Bermudian Dollar"
-msgstr ""
+msgstr "Dolar Bermuda"
+
+#: settings/processors/ProcessorItem.js:38
+msgid "Beta"
+msgstr "Beta"
 
 #: admin/advanced.php:52
 #: settings/advanced/AdvancedSettings.js:91
-#, fuzzy
 msgid "Beta Features"
-msgstr ""
+msgstr "Fitur Beta"
 
 #: address.js:38
 msgid "Bhutan"
-msgstr ""
+msgstr "Bhutan"
 
 #: src/Controllers/Web/DashboardController.php:89
 #: Controllers/CustomerController.php:54
 #: Controllers/CustomerController.php:106
 #: Controllers/PaymentMethodController.php:145
 msgid "Billing"
-msgstr ""
+msgstr "Tagihan"
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:71
 #: sc-customer-edit.js:105
-#, fuzzy
 msgid "Billing Address"
-msgstr ""
+msgstr "Alamat Penagihan"
 
 #: Blocks/ConditionalForm/translations.js:8
 msgid "Billing Country"
@@ -2049,260 +1831,223 @@ msgstr "Negara Penagihan"
 
 #: Controllers/CustomerController.php:65
 #: sc-order-confirmation-customer.js:31
-#, fuzzy
 msgid "Billing Details"
-msgstr ""
+msgstr "Detail Penagihan"
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:55
 #: sc-customer-edit.js:90
 #: sc-wordpress-user-edit.js:58
-#, fuzzy
 msgid "Billing Email"
-msgstr ""
+msgstr "Email Penagihan"
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:50
-#, fuzzy
 msgid "Billing Name"
-msgstr ""
+msgstr "Nama Penagihan"
 
 #: store/add-entities.js:145
-#, fuzzy
 msgid "Billing Period"
-msgstr ""
+msgstr "Periode Penagihan"
 
 #: subscriptions/show/modules/Periods.js:76
-#, fuzzy
 msgid "Billing Periods"
-msgstr ""
+msgstr "Periode Penagihan"
 
 #: sc-customer-edit.js:110
 msgid "Billing address same as shipping"
-msgstr ""
+msgstr "Alamat penagihan sama dengan alamat pengiriman"
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:44
-#, fuzzy
 msgid "Bills Now"
-msgstr ""
+msgstr "Tagihan Sekarang"
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:47
 #: subscriptions/show/modules/LineItems/index.js:26
-#, fuzzy
 msgid "Bills on"
-msgstr ""
+msgstr "Tagihan pada"
 
 #: src/Rest/BlockPatternsRestServiceProvider.php:195
-#, fuzzy
 msgid "Block types that the pattern is intended to be used with."
-msgstr ""
+msgstr "Jenis blok yang polanya dimaksudkan untuk digunakan."
 
 #: address.js:39
 msgid "Bolivia"
-msgstr ""
+msgstr "Bolivia"
 
 #: src/Support/Currency.php:254
-#, fuzzy
 msgid "Bolivian Boliviano"
-msgstr ""
+msgstr "Boliviano Bolivia"
 
 #: address.js:40
 msgid "Bonaire, Sint Eustatius and Saba"
-msgstr ""
+msgstr "Bonaire, Sint Eustatius dan Saba"
 
 #: onboarding/components/StarterTemplates.js:51
 msgid "Books"
-msgstr ""
+msgstr "Buku"
 
 #: layouts/partials/admin-settings-sidebar.php:72
 #: components/UpgradeModal.js:19
-#, fuzzy
 msgid "Boost Your Revenue"
-msgstr ""
+msgstr "Tingkatkan Pendapatan Anda"
 
 #: components/CartInspectorControls.js:46
-#, fuzzy
 msgid "Border"
-msgstr ""
+msgstr "Garis tepi"
 
 #: Blocks/Card/edit.js:35
-#, fuzzy
 msgid "Borderless"
-msgstr ""
+msgstr "Tanpa garis tepi"
 
 #: address.js:41
 msgid "Bosnia and Herzegovina"
-msgstr ""
+msgstr "Bosnia dan Herzegovina"
 
 #: src/Support/Currency.php:255
-#, fuzzy
 msgid "Bosnia and Herzegovina Convertible Mark"
-msgstr ""
+msgstr "Mark Konversi Bosnia dan Herzegovina"
 
 #: settings/account/components/CartSettings.js:287
 msgid "Both"
-msgstr ""
+msgstr "Keduanya"
 
 #: Blocks/Form/Block.php:145
-#, fuzzy
 msgid "Both a customer and source ID have been provided, but the source has not been saved to the customer. To create a charge for a customer with a specified source, you must first save the card details."
-msgstr ""
+msgstr "Pelanggan dan ID sumber telah diberikan, tetapi sumber belum disimpan ke pelanggan. Untuk membuat tagihan bagi pelanggan dengan sumber yang ditentukan, Anda harus terlebih dahulu menyimpan detail kartu."
 
 #: address.js:42
 msgid "Botswana"
-msgstr ""
+msgstr "Botswana"
 
 #: src/Support/Currency.php:256
-#, fuzzy
 msgid "Botswana Pula"
-msgstr ""
+msgstr "Pula Botswana"
 
 #: components/CartInspectorControls.js:49
-#, fuzzy
 msgid "Bottom Border"
-msgstr ""
+msgstr "Garis tepi bagian bawah"
 
 #: address.js:43
 msgid "Bouvet Island"
-msgstr ""
+msgstr "Pulau Bouvet"
 
 #: store/add-entities.js:25
 msgid "Brand"
-msgstr ""
+msgstr "Merek"
 
 #: settings/brand/BrandSettings.js:79
-#, fuzzy
 msgid "Brand Color"
-msgstr ""
+msgstr "Warna Merek"
 
 #: settings/brand/BrandSettings.js:61
-#, fuzzy
 msgid "Brand Settings"
-msgstr ""
+msgstr "Pengaturan Merek"
 
 #: address.js:44
 msgid "Brazil"
-msgstr ""
+msgstr "Brazil"
 
 #: src/Support/Currency.php:257
-#, fuzzy
 msgid "Brazilian Real"
-msgstr ""
+msgstr "Real Brazil"
 
 #: address.js:45
 msgid "British Indian Ocean Territory"
-msgstr ""
+msgstr "Teritori Samudera Hindia Inggris"
 
 #: src/Support/Currency.php:258
-#, fuzzy
 msgid "British Pound"
-msgstr ""
+msgstr "Pound Inggris"
 
 #: address.js:46
 msgid "Brunei Darussalam"
-msgstr ""
+msgstr "Brunei Darussalam"
 
 #: src/Support/Currency.php:259
-#, fuzzy
 msgid "Brunei Dollar"
-msgstr ""
+msgstr "Dolar Brunei"
 
 #: src/Integrations/BuddyBoss/BuddyBossService.php:46
 #: src/Integrations/BuddyBoss/BuddyBossService.php:122
-#, fuzzy
 msgid "BuddyBoss Group"
-msgstr ""
+msgstr "Grup BuddyBoss"
 
 #: address.js:47
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgaria"
 
 #: src/Support/Currency.php:260
-#, fuzzy
 msgid "Bulgarian Lev"
-msgstr ""
+msgstr "Lev Bulgaria"
 
 #: store/add-entities.js:25
-#, fuzzy
 msgid "Bump"
-msgstr ""
+msgstr "Penawaran"
 
 #: bumps/modules/Description.js:17
-#, fuzzy
 msgid "Bump Description"
-msgstr ""
+msgstr "Deskripsi Penawaran"
 
 #: Blocks/BumpLineItem/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Bump Discount"
-msgstr ""
+msgstr "Diskon Penawaran"
 
 #: bumps/modules/Name.js:17
-#, fuzzy
 msgid "Bump Name"
-msgstr ""
+msgstr "Nama Penawaran"
 
 #: bumps/modules/Priority.js:9
-#, fuzzy
 msgid "Bump Priority (1-5)"
-msgstr ""
+msgstr "Prioritas Penawaran (1-5)"
 
 #: bumps/EditBump.js:115
-#, fuzzy
 msgid "Bump archived."
-msgstr ""
+msgstr "Arsip Penawaran"
 
 #: bumps/EditBump.js:85
-#, fuzzy
 msgid "Bump deleted."
-msgstr ""
+msgstr "Penawaran Dihapus"
 
 #: bumps/EditBump.js:116
-#, fuzzy
 msgid "Bump un-archived."
-msgstr ""
+msgstr "Penawaran urung diarsipkan"
 
 #: src/Controllers/Admin/Bumps/BumpsController.php:24
 #: admin/bumps/index.php:8
-#, fuzzy
 msgid "Bumps"
-msgstr ""
+msgstr "Penawaran"
 
 #: Blocks/BumpLineItem/edit.js:26
 #: sc-line-item-bump2.js:21
 #: sc-order-confirmation-totals2.js:35
-#, fuzzy
 msgid "Bundle Discount"
-msgstr ""
+msgstr "Diskon Bundel"
 
 #: address.js:48
 msgid "Burkina Faso"
-msgstr ""
+msgstr "Burkina Faso"
 
 #: address.js:49
 msgid "Burundi"
-msgstr ""
+msgstr "Burundi"
 
 #: src/Support/Currency.php:261
-#, fuzzy
 msgid "Burundian Franc"
-msgstr ""
+msgstr "Franc Burundi"
 
 #: Blocks/BuyButton/edit.js:127
 #: Blocks/CustomerDashboardButton/edit.js:93
-#, fuzzy
 msgid "Button"
-msgstr ""
+msgstr "Tombol"
 
 #: Blocks/Button/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Button"
-msgstr ""
+msgstr "Tombol"
 
 #: Blocks/AddToCartButton/edit.js:106
-#, fuzzy
 msgid "Button Size"
-msgstr ""
+msgstr "Ukuran Tombol"
 
 #: Blocks/AddToCartButton/edit.js:97
 #: Blocks/BuyButton/edit.js:84
@@ -2311,14 +2056,12 @@ msgstr ""
 #: Blocks/Coupon/edit.js:52
 #: Blocks/CustomerDashboardButton/edit.js:34
 #: Blocks/Submit/edit.js:30
-#, fuzzy
 msgid "Button Text"
-msgstr ""
+msgstr "Teks Tombol"
 
 #: Blocks/AddToCartButton/edit.js:134
-#, fuzzy
 msgid "Button Type"
-msgstr ""
+msgstr "Tipe Tombol"
 
 #: Blocks/AddToCartButton/edit.js:209
 #: Blocks/Button/edit.js:19
@@ -2328,141 +2071,121 @@ msgstr ""
 #: Blocks/LogoutButton/edit.js:70
 #: Blocks/OrderConfirmationCustomer/edit.js:36
 #: Blocks/Submit/edit.js:120
-#, fuzzy
 msgid "Button text"
-msgstr ""
+msgstr "Teks Tombol"
 
 #: Blocks/Product/BuyButton/edit.js:44
 msgid "Button width"
-msgstr ""
+msgstr "Lebar Tombol"
 
 #: Blocks/BuyButton/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Buy Button"
-msgstr ""
+msgstr "Tombol Beli"
 
 #: products/modules/Prices/Price/Header.js:265
-#, fuzzy
 msgid "Buy Button Shortcode"
-msgstr ""
+msgstr "Shortcode Tombol Beli"
 
 #: products/modules/Prices/Price/Header.js:252
 #: controls/index.js:82
 #: formats/index.js:24
 #: formats/ShowPrice.js:87
-#, fuzzy
 msgid "Buy Link"
-msgstr ""
+msgstr "Tautan Pembelian"
 
 #: Blocks/AddToCartButton/Block.php:63
 #: Blocks/BuyButton/Block.php:35
-#, fuzzy
 msgid "Buy Now"
-msgstr ""
+msgstr "Beli Sekarang"
 
 #: Blocks/DonationAmount/edit.js:23
-#, fuzzy
 msgid "Buy me coffee!"
-msgstr ""
+msgstr "Belikan saya kopi!"
 
 #. translators: Customer name.
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:212
 #: src/Controllers/Admin/Orders/OrdersListTable.php:269
-#, fuzzy
 msgid "By %s"
-msgstr ""
+msgstr "Oleh %s"
 
 #: onboarding/components/InitialSetup.js:88
 msgid "By continuing, you agree to the"
-msgstr ""
+msgstr "Dengan melanjutkan, berarti Anda menyetujui"
 
 #: Controllers/SubscriptionController.php:244
 #: Controllers/SubscriptionController.php:248
-#, fuzzy
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
-msgstr ""
+msgstr "Dengan memperbarui atau membatalkan paket Anda, Anda menyetujui <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
 
 #: Controllers/SubscriptionController.php:240
-#, fuzzy
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a> and <a href=\"%3$3s\" target=\"_blank\">%4$4s</a>"
-msgstr ""
+msgstr "Dengan memperbarui atau membatalkan paket Anda, Anda menyetujui <a href=\"%1$1s\" target=\"_blank\">%2$2s</a> dan <a href=\"%3$3s\" target=\"_blank\">%4$4s</a>"
 
 #: orders/modules/TaxInfo.js:7
 #: tax.js:7
-#, fuzzy
 msgid "CA GST"
-msgstr ""
+msgstr "CA GST"
 
 #: Blocks/TaxIdInput/edit.js:22
 msgid "CA GST Label"
-msgstr ""
+msgstr "Label CA GST"
 
 #: address.js:50
 msgid "Cabo Verde"
-msgstr ""
+msgstr "Cabo Verde"
 
 #: layouts/partials/admin-settings-header.php:18
-#, fuzzy
 msgid "Cache cleared."
-msgstr ""
+msgstr "Cache dihapus."
 
 #: bumps/modules/CTA.js:17
-#, fuzzy
 msgid "Call to action"
-msgstr ""
+msgstr "Ajakan bertindak"
 
 #: address.js:51
 msgid "Cambodia"
-msgstr ""
+msgstr "Kamboja"
 
 #: src/Support/Currency.php:262
-#, fuzzy
 msgid "Cambodian Riel"
-msgstr ""
+msgstr "Riel Kamboja"
 
 #: address.js:52
 msgid "Cameroon"
-msgstr ""
+msgstr "Kamerun"
 
 #: Blocks/Dashboard/CustomerDownloads/edit.js:57
 #: Blocks/Dashboard/OrderDownloads/edit.js:55
-#, fuzzy
 msgid "Camping & Hiking Icons"
-msgstr ""
+msgstr "Ikon Berkemah & Mendaki"
 
 #: settings/subscription-preservation/EditReason.js:26
-#, fuzzy
 msgid "Can you tell us a little more?"
-msgstr ""
+msgstr "Bisakah Anda memberi tahu kami sedikit lagi?"
 
 #: src/Support/Errors/Translations/types.php:12
-#, fuzzy
 msgid "Can't be blank."
-msgstr ""
+msgstr "Tidak boleh kosong."
 
 #: src/Support/Errors/Translations/types.php:11
-#, fuzzy
 msgid "Can't be empty."
-msgstr ""
+msgstr "Tidak boleh kosong."
 
 #: settings/tax-region/TaxRegionSettings.js:26
 #: settings/tax/TaxSettings.js:189
 #: address.js:56
-#, fuzzy
 msgid "Canada"
-msgstr ""
+msgstr "Kanada"
 
 #: settings/tax-region/RegionSettings.js:9
 #: settings/tax-region/TaxRegionSettings.js:32
-#, fuzzy
 msgid "Canada GST/HST"
-msgstr ""
+msgstr "GST/HST Kanada"
 
 #: src/Support/Currency.php:263
-#, fuzzy
 msgid "Canadian Dollar"
-msgstr ""
+msgstr "Dolar Kanada"
 
 #: bumps/CreateBump.js:87
 #: bumps/modules/NewCondition.js:167
@@ -2507,33 +2230,30 @@ msgstr ""
 #: controls/AddPriceUI.js:89
 #: formats/AddPriceUI.js:113
 #: sc-password-nag.js:86
-#, fuzzy
 msgid "Cancel"
-msgstr ""
+msgstr "Batalkan"
 
 #: settings/subscription-preservation/PreservationSettings.js:269
-#, fuzzy
 msgid "Cancel Link"
-msgstr ""
+msgstr "Tautan Pembatalan"
 
 #: orders/modules/OrderCancelConfirmModal.js:72
 #: orders/Order.js:68
 msgid "Cancel Order"
-msgstr ""
+msgstr "Batalkan Pesanan"
 
 #: subscriptions/show/ShowSubscription.js:214
-#, fuzzy
 msgid "Cancel Pending Update"
-msgstr ""
+msgstr "Batalkan Update Tertunda"
 
 #: sc-subscription-cancel2.js:66
 #: sc-subscription.js:183
 msgid "Cancel Plan"
-msgstr ""
+msgstr "Batalkan Paket"
 
 #: sc-subscription.js:181
 msgid "Cancel Scheduled Update"
-msgstr ""
+msgstr "Batalkan Update Terjadwal"
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:75
 #: components/data-tables/subscriptions-data-table/Cancel.js:124
@@ -2541,431 +2261,369 @@ msgstr ""
 #: components/subscriptions/Cancel.js:86
 #: subscriptions/show/modules/modals/CancelSubscriptionModal.js:115
 #: subscriptions/show/ShowSubscription.js:97
-#, fuzzy
 msgid "Cancel Subscription"
-msgstr ""
+msgstr "Batalkan Langganan"
 
 #: settings/subscription/SubscriptionSettings.js:149
-#, fuzzy
 msgid "Cancel Subscriptions After"
-msgstr ""
+msgstr "Batalkan Langganan Setelah"
 
 #: src/Rest/SubscriptionProtocolRestServiceProvider.php:101
-#, fuzzy
 msgid "Cancel behavior. Either pending or immediate."
-msgstr ""
+msgstr "Perilaku Pembatalan. Baik yang tertunda atau segera."
 
 #: orders/modules/Fulfillment/Fulfilled.js:155
 msgid "Cancel fulfillment"
-msgstr ""
+msgstr "Batalkan Penyelesaian"
 
 #: sc-subscription-cancel2.js:66
 msgid "Cancel your plan"
-msgstr ""
+msgstr "Batalkan paket anda"
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
 #: sc-subscription-status-badge2.js:58
-#, fuzzy
 msgid "Canceled"
-msgstr ""
+msgstr "Dibatalkan"
 
 #: store/add-entities.js:32
-#, fuzzy
 msgid "Cancellation Acts"
-msgstr ""
+msgstr "Tindakan Pembatalan"
 
 #: admin/cancellation-insights/index.php:24
 #: cancellation-insights/CancellationInsights.js:215
-#, fuzzy
 msgid "Cancellation Attempts"
-msgstr ""
+msgstr "Upaya Pembatalan"
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
-#, fuzzy
 msgid "Cancellation Insights"
-msgstr ""
+msgstr "Informasi Pembatalan"
 
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:50
 #: store/add-entities.js:39
-#, fuzzy
 msgid "Cancellation Reason"
-msgstr ""
+msgstr "Alasan Pembatalan"
 
 #: settings/subscription-preservation/PreservationSettings.js:170
-#, fuzzy
 msgid "Cancellation Survey"
-msgstr ""
+msgstr "Survei Pembatalan"
 
 #: settings/subscription-preservation/PreservationSettings.js:171
-#, fuzzy
 msgid "Cancellation survey options."
-msgstr ""
+msgstr "Pilihan survei pembatalan."
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:133
-#, fuzzy
 msgid "Cancellations"
-msgstr ""
+msgstr "Pembatalan"
 
 #: settings/subscription/SubscriptionSettings.js:114
 #: settings/subscription/SubscriptionSettings.js:115
-#, fuzzy
 msgid "Cancellations Happen"
-msgstr ""
+msgstr "Terjadi Pembatalan"
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:26
 #: sc-subscription-status-badge2.js:46
-#, fuzzy
 msgid "Cancels"
-msgstr ""
+msgstr "Dibatalkan"
 
 #: subscriptions/shared/EndDate.js:23
 #: subscriptions/show/modules/Details.js:32
-#, fuzzy
 msgid "Cancels on"
-msgstr ""
+msgstr "Dibatalkan pada"
 
 #: src/Support/Currency.php:264
-#, fuzzy
 msgid "Cape Verdean Escudo"
-msgstr ""
+msgstr "Escudo Tanjung Verde"
 
 #: Blocks/Card/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Card"
-msgstr ""
+msgstr "Kartu"
 
 #: Blocks/Card/edit.js:56
-#, fuzzy
 msgid "Card Title"
-msgstr ""
+msgstr "Judul Kartu"
 
 #: src/Cart/CartService.php:51
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:134
-#, fuzzy
 msgid "Cart"
-msgstr ""
+msgstr "Keranjang"
 
 #: src/WordPress/Pages/PageSeeder.php:67
 #: src/WordPress/PostTypes/CartPostTypeService.php:190
-#, fuzzy
 msgctxt "Cart title"
 msgid "Cart"
-msgstr ""
+msgstr "Keranjang"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:212
-#, fuzzy
 msgctxt "post type singular name"
 msgid "Cart"
-msgstr ""
+msgstr "Keranjang"
 
 #: Blocks/Cart/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart"
-msgstr ""
+msgstr "Keranjang"
 
 #: Blocks/CartBumpLineItem/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Bump Line Item"
-msgstr ""
+msgstr "Baris Penawaran Keranjang"
 
 #: Blocks/CartCoupon/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Coupon"
-msgstr ""
+msgstr "Kupon Keranjang"
 
 #: Blocks/CartHeader/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Header"
-msgstr ""
+msgstr "Tajuk Keranjang"
 
 #: settings/account/components/CartSettings.js:270
 msgid "Cart Icon Type"
-msgstr ""
+msgstr "Tipe Ikon Keranjang"
 
 #: Blocks/CartItems/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Items"
-msgstr ""
+msgstr "Item Keranjang"
 
 #: Blocks/CartMenuButton/block.json
 msgctxt "block title"
 msgid "Cart Menu Icon"
-msgstr ""
+msgstr "Ikon Menu Keranjang"
 
 #: Blocks/CartMessage/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Message"
-msgstr ""
+msgstr "Pesan Keranjang"
 
 #: abandoned-checkouts/components/Link.js:43
-#, fuzzy
 msgid "Cart Recovery Link"
-msgstr ""
+msgstr "Tautan Pemulihan Keranjang"
 
 #: Blocks/CartSubmit/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Submit Button"
-msgstr ""
+msgstr "Tombol Kirim Keranjang"
 
 #: Blocks/CartSubtotal/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Cart Subtotal"
-msgstr ""
+msgstr "Subtotal Keranjang"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:226
-#, fuzzy
 msgid "Cart published privately."
-msgstr ""
+msgstr "Keranjang diterbitkan secara privat."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:225
-#, fuzzy
 msgid "Cart published."
-msgstr ""
+msgstr "Keranjang diterbitkan."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:227
-#, fuzzy
 msgid "Cart reverted to draft."
-msgstr ""
+msgstr "Keranjang dikembalikan ke draf."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:228
-#, fuzzy
 msgid "Cart scheduled."
-msgstr ""
+msgstr "Keranjang dijadwalkan."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:229
-#, fuzzy
 msgid "Cart updated."
-msgstr ""
+msgstr "Keranjang diperbarui."
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:211
-#, fuzzy
 msgctxt "post type general name"
 msgid "Carts"
-msgstr ""
+msgstr "Keranjang"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:224
-#, fuzzy
 msgid "Carts list"
-msgstr ""
+msgstr "Daftar keranjang"
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:223
-#, fuzzy
 msgid "Carts list navigation"
-msgstr ""
+msgstr "Navigasi daftar keranjang"
 
 #: address.js:54
 msgid "Cayman Islands"
-msgstr ""
+msgstr "Pulau cayman"
 
 #: src/Support/Currency.php:265
-#, fuzzy
 msgid "Cayman Islands Dollar"
-msgstr ""
+msgstr "Dolar Pulau cayman"
 
 #: src/Support/Currency.php:266
-#, fuzzy
 msgid "Central African Cfa Franc"
-msgstr ""
+msgstr "Cfa Franc Afrika Tengah"
 
 #: address.js:55
 msgid "Central African Republic"
-msgstr ""
+msgstr "Republik Afrika Tengah"
 
 #: src/Support/Currency.php:267
-#, fuzzy
 msgid "Cfp Franc"
-msgstr ""
+msgstr "Cfp Franc"
 
 #: address.js:56
 msgid "Chad"
-msgstr ""
+msgstr "Chad"
 
 #: bumps/modules/Price.js:46
 #: subscriptions/edit/modules/Price.js:101
 #: subscriptions/show/modules/CurrentPlan.js:80
-#, fuzzy
 msgid "Change"
-msgstr ""
+msgstr "Ubah"
 
 #: sc-product-selected-price.js:73
 msgid "Change Amount"
-msgstr ""
+msgstr "Ubah Jumlah"
 
 #: Controllers/SubscriptionController.php:217
-#, fuzzy
 msgid "Change Payment Method"
-msgstr ""
+msgstr "Ubah Metode Pembayaran"
 
 #: subscriptions/edit/modules/Price.js:111
 msgid "Change Price"
-msgstr ""
+msgstr "Ubah Harga"
 
 #: components/subscriptions/CancelPendingUpdate.js:67
-#, fuzzy
 msgid "Change Product"
-msgstr ""
+msgstr "Ubah Produk"
 
 #: components/subscriptions/CancelPendingUpdate.js:62
-#, fuzzy
 msgid "Change Product And Increase Quantity"
-msgstr ""
+msgstr "Ubah Produk Dan Tambah Kuantitas"
 
 #: components/subscriptions/CancelPendingUpdate.js:65
-#, fuzzy
 msgid "Change Product Decrease Quantity"
-msgstr ""
+msgstr "Ubah Produk Kurangi Kuantitas"
 
 #: subscriptions/show/ShowSubscription.js:313
 msgid "Change Renewal Date"
-msgstr ""
+msgstr "Ubah Tanggal Perpanjangan"
 
 #. translators: %s: Current post status.
 #: products/components/Status/index.js:102
 msgid "Change Status: %s"
-msgstr ""
+msgstr "Ubah Status: %s"
 
 #: Blocks/Form/edit.js:222
-#, fuzzy
 msgid "Change Template"
-msgstr ""
+msgstr "Ubah Templat"
 
 #: Blocks/Columns/edit.js:122
 msgid "Change Template to Full Height"
-msgstr ""
+msgstr "Ubah Templat menjadi Tinggi Penuh"
 
 #. translators: %s: Current post URL.
 #: products/components/Availability/index.js:106
 #: products/components/Url/index.js:78
 msgid "Change URL: %s"
-msgstr ""
+msgstr "Ubah URL: %s"
 
 #: settings/account/AccountSettings.js:267
 msgid "Change cart settings."
-msgstr ""
+msgstr "Ubah pengaturan keranjang."
 
 #: Blocks/Product/Title/heading-level-dropdown.js:42
 msgid "Change heading level"
-msgstr ""
+msgstr "Ubah tingkatan tajuk"
 
 #: settings/tax/TaxSettings.js:85
-#, fuzzy
 msgid "Change how your store manages EU VAT collection and validation."
-msgstr ""
+msgstr "Ubah cara toko Anda mengelola pengumpulan dan validasi PPN UE."
 
 #: settings/account/AccountSettings.js:175
-#, fuzzy
 msgid "Change this if you want the store to be in a different time zone than your server."
-msgstr ""
+msgstr "Ubah ini jika Anda ingin toko berada di zona waktu yang berbeda dari server Anda."
 
 #: settings/account/AccountSettings.js:232
-#, fuzzy
 msgid "Change your checkout spam protection and security settings."
-msgstr ""
+msgstr "Ubah setelan perlindungan dan keamanan spam pembayaran Anda."
 
 #: admin/advanced.php:42
 #: admin/plugin.php:96
 #: settings/advanced/AdvancedSettings.js:47
-#, fuzzy
 msgid "Change your plugin performance settings."
-msgstr ""
+msgstr "Ubah setelan performa plugin Anda."
 
 #: admin/advanced.php:64
 #: admin/plugin.php:107
 #: settings/advanced/AdvancedSettings.js:120
-#, fuzzy
 msgid "Change your plugin uninstall settings."
-msgstr ""
+msgstr "Ubah pengaturan uninstall plugin Anda."
 
 #: invoices/modules/Charges.js:13
 #: invoices/store/entities.js:54
 #: orders/modules/Charges.js:60
 #: store/add-entities.js:32
-#, fuzzy
 msgid "Charge"
-msgstr ""
+msgstr "Biaya"
 
 #: products/components/price/parts/Trial.js:65
 msgid "Charge setup fee during free trial"
-msgstr ""
+msgstr "Bebankan biaya setup selama uji coba gratis"
 
 #: products/modules/Tax.js:16
 #: products/modules/Tax.js:58
-#, fuzzy
 msgid "Charge tax on this product"
-msgstr ""
+msgstr "Bebankan pajak untuk produk ini"
 
 #: components/data-tables/charges-data-table/index.js:87
 #: customers/modules/Charges.js:60
 #: settings/export/ExportSettings.js:15
-#, fuzzy
 msgid "Charges"
-msgstr ""
+msgstr "Biaya"
 
 #: sc-login-form.js:147
 msgid "Check your email for a confirmation code"
-msgstr ""
+msgstr "Periksa email Anda untuk mendapatkan kode konfirmasi"
 
 #: Blocks/Checkbox/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Checkbox"
-msgstr ""
+msgstr "Kotak centang"
 
 #: Blocks/Checkbox/edit.js:68
-#, fuzzy
 msgid "Checkbox Text"
-msgstr ""
+msgstr "Teks Kotak centang"
 
 #: Blocks/PriceChoice/edit.js:70
-#, fuzzy
 msgid "Checked By Default"
-msgstr ""
+msgstr "Dicentang Secara Default"
 
 #: Blocks/Checkbox/edit.js:52
 #: Blocks/Radio/edit.js:37
 #: Blocks/Switch/edit.js:50
-#, fuzzy
 msgid "Checked by default"
-msgstr ""
+msgstr "Dicentang Secara Default"
 
 #: sc-payment-method2.js:24
 msgid "Checking"
-msgstr ""
+msgstr "Memeriksa"
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:228
 #: store/add-entities.js:39
-#, fuzzy
 msgid "Checkout"
-msgstr ""
+msgstr "Pembayaran"
 
 #: src/Install/InstallService.php:26
 #: src/WordPress/Pages/PageSeeder.php:90
-#, fuzzy
 msgctxt "Form title"
 msgid "Checkout"
-msgstr ""
+msgstr "Pembayaran"
 
 #: src/Install/InstallService.php:125
 #: src/WordPress/Pages/PageSeeder.php:116
-#, fuzzy
 msgctxt "Page title"
 msgid "Checkout"
-msgstr ""
+msgstr "Pembayaran"
 
 #: abandoned-checkouts/modules/LineItems/index.js:21
-#, fuzzy
 msgid "Checkout Details"
-msgstr ""
+msgstr "Detail Pembayaran"
 
 #: Blocks/CheckoutErrors/block.json
 msgctxt "block title"
@@ -2976,295 +2634,257 @@ msgstr "Kesalahan Pembayaran"
 #: src/Integrations/Beaver/BeaverFormModule.php:67
 #: src/Integrations/Elementor/ReusableFormWidget.php:42
 #: src/Integrations/Elementor/ReusableFormWidget.php:101
-#, fuzzy
 msgid "Checkout Form"
-msgstr ""
+msgstr "Formulir Pembayaran"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:205
-#, fuzzy
 msgctxt "post type singular name"
 msgid "Checkout Form"
-msgstr ""
+msgstr "Formulir Pembayaran"
 
 #: Blocks/CheckoutForm/block.json
-#, fuzzy
 msgctxt "block title"
 msgid "Checkout Form"
-msgstr ""
+msgstr "Formulir Pembayaran"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:219
-#, fuzzy
 msgid "Checkout Form published privately."
-msgstr ""
+msgstr "Formulir Pembayaran diterbitkan secara privat."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:218
-#, fuzzy
 msgid "Checkout Form published."
-msgstr ""
+msgstr "Formulir Pembayaran diterbitkan."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:220
-#, fuzzy
 msgid "Checkout Form reverted to draft."
-msgstr ""
+msgstr "Formulir Pembayaran dikembalikan ke draf."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:221
-#, fuzzy
 msgid "Checkout Form scheduled."
-msgstr ""
+msgstr "Formulir Pembayaran terjadwal."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:222
-#, fuzzy
 msgid "Checkout Form updated."
-msgstr ""
+msgstr "Formulir Pembayaran diperbarui."
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:204
-#, fuzzy
 msgctxt "post type general name"
 msgid "Checkout Forms"
-msgstr ""
+msgstr "Formulir Pembayaran"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:217
-#, fuzzy
 msgid "Checkout Forms list"
-msgstr ""
+msgstr "Daftar Formulir Pembayaran"
 
 #: src/WordPress/PostTypes/FormPostTypeService.php:216
-#, fuzzy
 msgid "Checkout Forms list navigation"
-msgstr ""
+msgstr "Navigasi daftar Formulir Pembayaran"
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:296
-#, fuzzy
 msgid "Checkout Recovery Rate"
+msgstr "Tingkat Pemulihan Pembayaran"
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:164
+msgid "Checkouts"
 msgstr ""
 
 #: address.js:57
 msgid "Chile"
-msgstr ""
+msgstr "Chili"
 
 #: src/Support/Currency.php:268
-#, fuzzy
 msgid "Chilean Peso"
-msgstr ""
+msgstr "Peso Chili"
 
 #: address.js:58
 msgid "China"
-msgstr ""
+msgstr "Cina"
 
 #: src/Support/Currency.php:269
-#, fuzzy
 msgid "Chinese Renminbi Yuan"
-msgstr ""
+msgstr "Renminbi Yuan Cina"
 
 #: components/DatePicker.js:74
 #: components/MediaLibrary/index.js:328
 #: Blocks/CheckoutForm/components/Empty.js:147
-#, fuzzy
 msgid "Choose"
-msgstr ""
+msgstr "Pilih"
 
 #: settings/brand/BrandSettings.js:122
-#, fuzzy
 msgid "Choose \"Dark\" if your theme already has a dark background."
-msgstr ""
+msgstr "Pilih \"Gelap\" jika tema Anda sudah memiliki latar belakang gelap."
 
 #: Blocks/Form/components/SelectPrices.js:57
-#, fuzzy
 msgid "Choose A  Product"
-msgstr ""
+msgstr "Pilih Produk"
 
 #: Blocks/Form/components/SelectPrices.js:51
-#, fuzzy
 msgid "Choose A Donation Product"
-msgstr ""
+msgstr "Pilih Produk Donasi"
 
 #: Blocks/Form/components/ChooseDesign.js:20
-#, fuzzy
 msgid "Choose A Starting Design"
-msgstr ""
+msgstr "Pilih Desain Awal"
 
 #: sc-subscription-switch.js:190
 msgid "Choose Amount"
-msgstr ""
+msgstr "Pilih Jumlah"
 
 #: Blocks/Form/components/SelectPrices.js:54
-#, fuzzy
 msgid "Choose An Invoice Product"
-msgstr ""
+msgstr "Pilih Produk Faktur"
 
 #: bumps/modules/NewCondition.js:74
-#, fuzzy
 msgid "Choose An Item"
-msgstr ""
+msgstr "Pilih Item"
 
 #: Blocks/CheckoutForm/components/SelectForm.js:49
-#, fuzzy
 msgid "Choose a form"
-msgstr ""
+msgstr "Pilih formulir"
 
 #: product-groups/modules/NewProduct.js:62
-#, fuzzy
 msgid "Choose a product"
-msgstr ""
+msgstr "Pilih produk"
 
 #: sc-cancel-survey2.js:88
 msgid "Choose a reason"
-msgstr ""
+msgstr "Pilih alasan"
 
 #: subscriptions/edit/modules/Trial.js:24
-#, fuzzy
 msgid "Choose a trial end date"
-msgstr ""
+msgstr "Pilih tanggal akhir uji coba"
 
 #: coupons/modules/Types.js:50
 #: settings/abandoned/Coupon.js:65
-#, fuzzy
 msgid "Choose a type"
-msgstr ""
+msgstr "Pilih tipe"
 
 #: onboarding/components/StarterTemplates.js:75
 msgid "Choose some example data or start from scratch."
-msgstr ""
+msgstr "Pilih beberapa contoh data atau mulai dari awal."
 
 #: settings/tax/TaxSettings.js:139
-#, fuzzy
 msgid "Choose the checkout behavior when VAT verification fails."
-msgstr ""
+msgstr "Pilih perilaku pembayaran saat verifikasi PPN gagal."
 
 #: settings/order/OrderProtocol.js:74
-#, fuzzy
 msgid "Choose the style of order numbers."
-msgstr ""
+msgstr "Pilih model nomor urut."
 
 #: address.js:59
 msgid "Christmas Island"
-msgstr ""
+msgstr "Christmas Island"
 
 #: sc-address2.js:105
 #: sc-order-shipping-address2.js:39
 #: sc-order-shipping-address2.js:48
 msgid "City"
-msgstr ""
+msgstr "Kota"
 
 #: Blocks/Address/edit.js:116
-#, fuzzy
 msgid "City Placeholder"
-msgstr ""
+msgstr "Placeholder Kota"
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:162
 msgid "Claim Account"
-msgstr ""
+msgstr "Klaim Akun"
 
 #: layouts/partials/admin-settings-header.php:41
-#, fuzzy
 msgid "Clear Account Cache"
-msgstr ""
+msgstr "Hapus Cache Akun"
 
 #: settings/account/AccountSettings.js:358
 #: settings/account/AccountSettings.js:372
-#, fuzzy
 msgid "Clear Test Data"
-msgstr ""
+msgstr "Hapus Data Pengujian"
 
 #: settings/account/AccountSettings.js:359
-#, fuzzy
 msgid "Clear out all of your test data with one-click."
-msgstr ""
+msgstr "Hapus semua data pengujian Anda dengan satu klik."
 
 #: Blocks/Radio/edit.js:58
-#, fuzzy
 msgid "Click here to add some radio text..."
-msgstr ""
+msgstr "Klik di sini untuk menambahkan teks radio ..."
 
 #. translators: Close this modal window.
 #: sc-dialog2.js:152
 #: sc-drawer2.js:140
 msgid "Close"
-msgstr ""
+msgstr "Tutup"
 
 #: Blocks/Totals/edit.js:101
-#, fuzzy
 msgid "Closed Text"
-msgstr ""
+msgstr "Teks Tertutup"
 
 #: onboarding/components/StarterTemplates.js:20
 msgid "Clothing & Apparel"
-msgstr ""
+msgstr "Busana & Pakaian"
 
 #: address.js:60
 msgid "Cocos (Keeling) Islands"
-msgstr ""
+msgstr "Kepulauan Cocos (Keeling)."
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:76
 #: abandoned-checkouts/modules/Coupon.js:37
 #: coupons/modules/EditPromotionCode.js:94
-#, fuzzy
 msgid "Code"
-msgstr ""
+msgstr "Kode"
 
 #: Blocks/CartCoupon/edit.js:44
 #: Blocks/Coupon/edit.js:38
 msgid "Collapsed"
-msgstr ""
+msgstr "Diciutkan"
 
 #: Blocks/Totals/edit.js:89
-#, fuzzy
 msgid "Collapsed By Default"
-msgstr ""
+msgstr "Diciutkan secara default"
 
 #: Blocks/Totals/edit.js:107
 msgid "Collapsed On Mobile"
 msgstr "Diciutkan pada Seluler"
 
 #: Blocks/Totals/edit.js:77
-#, fuzzy
 msgid "Collapsible"
-msgstr ""
+msgstr "Dapat diciutkan"
 
 #: Blocks/CollapsibleRow/block.json
 msgctxt "block title"
 msgid "Collapsible Row"
-msgstr ""
+msgstr "Baris yg dapat diciutkan"
 
 #: settings/tax-region/RegionSettings.js:25
-#, fuzzy
 msgid "Collect Canada GST/HST"
-msgstr ""
+msgstr "Ambil GST/HST Kanada"
 
 #: settings/tax-region/RegionSettings.js:54
 #: settings/tax-region/RegionSettings.js:70
-#, fuzzy
 msgid "Collect EU VAT"
-msgstr ""
+msgstr "Ambil PPN UE"
 
 #: settings/tax-region/RegistrationDialog.js:17
 #: settings/tax-region/RegistrationForm.js:206
 #: settings/tax-region/TaxRegionSettings.js:188
 #: subscriptions/show/modules/Tax.js:60
-#, fuzzy
 msgid "Collect Tax"
-msgstr ""
+msgstr "Ambil Pajak"
 
 #: address.js:61
 msgid "Colombia"
-msgstr ""
+msgstr "Kolumbia"
 
 #: src/Support/Currency.php:270
-#, fuzzy
 msgid "Colombian Peso"
-msgstr ""
+msgstr "Peso Kolumbia"
 
 #: Blocks/AddToCartButton/edit.js:157
 #: Blocks/BuyButton/edit.js:138
 #: components/CartInspectorControls.js:18
-#, fuzzy
 msgid "Color Settings"
-msgstr ""
+msgstr "Pengaturan Warna"
 
 #: Blocks/Column/edit.js:130
-#, fuzzy
 msgid "Column settings"
-msgstr ""
+msgstr "Pengaturan kolom"
 
 #: Blocks/Columns/edit.js:98
 #: Blocks/PriceSelector/edit.js:122
@@ -3329,6 +2949,10 @@ msgstr ""
 #: subscriptions/show/ShowSubscription.js:113
 #, fuzzy
 msgid "Complete Subscription"
+msgstr ""
+
+#: sc-provisional-banner.js:14
+msgid "Complete your store setup to go live."
 msgstr ""
 
 #: Blocks/Form/edit.js:449
@@ -3407,6 +3031,11 @@ msgstr ""
 msgid "Confirm Email for Store Notifications"
 msgstr ""
 
+#: checkouts/CreateCheckout.js:313
+#: checkouts/CreateCheckout.js:333
+msgid "Confirm Manual Payment"
+msgstr ""
+
 #: sc-password-nag.js:98
 #: sc-wordpress-password-edit.js:72
 msgid "Confirm New Password"
@@ -3453,6 +3082,22 @@ msgstr ""
 #: customers/modules/User/index.js:203
 #, fuzzy
 msgid "Connect a user"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:213
+msgid "Connect with Mollie to add a Mollie express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:190
+msgid "Connect with PayPal to add a PayPal express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:129
+msgid "Connect with Stripe to accept credit cards and other payment methods."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:238
+msgid "Connect with paystack to add a paystack express button to your checkout."
 msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:115
@@ -3779,6 +3424,12 @@ msgstr ""
 
 #: onboarding/components/InitialSetup.js:63
 msgid "Create New Store"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:232
+#: checkouts/CreateCheckout.js:249
+#: checkouts/CreateCheckout.js:352
+msgid "Create Order"
 msgstr ""
 
 #: products/modules/Prices/NewPrice/index.js:195
@@ -5253,6 +4904,10 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
+#: store/add-entities.js:88
+msgid "Draft Checkout"
+msgstr ""
+
 #: src/Rest/CustomerRestServiceProvider.php:90
 msgid "Dry run the sync."
 msgstr ""
@@ -5399,6 +5054,10 @@ msgstr ""
 msgid "Edit Promotion Code"
 msgstr ""
 
+#: checkouts/modules/Address.js:120
+msgid "Edit Shipping & Tax Address"
+msgstr ""
+
 #: settings/shipping/method/ShippingMethodForm.js:90
 msgid "Edit Shipping Method"
 msgstr ""
@@ -5415,6 +5074,10 @@ msgstr ""
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:41
 msgid "Edit SureCart Product"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:126
+msgid "Edit Tax ID"
 msgstr ""
 
 #: orders/modules/Fulfillment/components/AddTracking.js:69
@@ -5531,6 +5194,10 @@ msgstr ""
 #: Blocks/Payment/components/Inspector.js:75
 #, fuzzy
 msgid "Enable PayPal payment"
+msgstr ""
+
+#: Blocks/Payment/components/Inspector.js:108
+msgid "Enable Paystack payment"
 msgstr ""
 
 #: settings/account/AccountSettings.js:260
@@ -5659,6 +5326,10 @@ msgstr ""
 msgid "Enter An Amount"
 msgstr ""
 
+#: checkouts/modules/Payment.js:141
+msgid "Enter Coupon Code"
+msgstr ""
+
 #: src/Routing/PermalinksSettingsService.php:86
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
@@ -5677,6 +5348,10 @@ msgstr ""
 #: settings/brand/BrandSettings.js:173
 #, fuzzy
 msgid "Enter a website URL"
+msgstr ""
+
+#: checkouts/modules/Price.js:215
+msgid "Enter an Amount"
 msgstr ""
 
 #: settings/brand/BrandSettings.js:159
@@ -5951,6 +5626,10 @@ msgstr ""
 
 #: products/modules/Image/ImageDisplay.js:43
 msgid "Featured"
+msgstr ""
+
+#: checkouts/modules/Price.js:182
+msgid "Fee"
 msgstr ""
 
 #: sc-customer-firstname.js:46
@@ -7644,6 +7323,10 @@ msgstr ""
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
+#: sc-paystack-add-method.js:71
+msgid "In order to add a new card, we will need to make a small transaction to authenticate it. This is for authentication purposes and will be immediately refunded."
+msgstr ""
+
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: licenses/modules/Details/index.js:20
 #: sc-licenses-list.js:36
@@ -8378,6 +8061,14 @@ msgstr ""
 #: Blocks/Form/components/Mode.js:37
 #, fuzzy
 msgid "Live"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:70
+msgid "Live Payments Disabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:66
+msgid "Live Payments Enabled"
 msgstr ""
 
 #: components/data-tables/PaginationFooter.js:16
@@ -9267,6 +8958,14 @@ msgstr ""
 msgid "No order bumps found."
 msgstr ""
 
+#: checkouts/modules/PaymentMethods.js:86
+msgid "No payment methods found."
+msgstr ""
+
+#: Blocks/Payment/edit.js:39
+msgid "No payment processors are enabled for this mode."
+msgstr ""
+
 #: src/Controllers/Admin/Customers/CustomersListTable.php:119
 #: src/Controllers/Admin/Products/ProductsListTable.php:222
 #: src/Controllers/Admin/Products/ProductsListTable.php:242
@@ -9675,6 +9374,10 @@ msgstr ""
 msgid "Order Canceled."
 msgstr ""
 
+#: checkouts/CreateCheckout.js:188
+msgid "Order Complete"
+msgstr ""
+
 #: src/WordPress/Pages/PageService.php:69
 #: settings/customer/CustomerSettings.js:285
 #, fuzzy
@@ -9702,6 +9405,10 @@ msgstr ""
 #, fuzzy
 msgctxt "block title"
 msgid "Order Confirmation Line Items"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:171
+msgid "Order Created."
 msgstr ""
 
 #: web/dashboard/orders/show.php:15
@@ -9743,6 +9450,10 @@ msgstr ""
 
 #: sc-order-summary.js:53
 msgid "Order Summary"
+msgstr ""
+
+#: checkouts/modules/Payment.js:124
+msgid "Order Tax"
 msgstr ""
 
 #: sc-order-confirmation.js:111
@@ -9934,10 +9645,18 @@ msgstr ""
 msgid "Passwords do not match."
 msgstr ""
 
+#: sc-order-password.js:96
+msgid "Passwords must contain a special character."
+msgstr ""
+
 #: sc-order-password.js:48
 #: sc-password-nag.js:74
 #: sc-wordpress-password-edit.js:47
 msgid "Passwords should at least 6 characters and contain one special character."
+msgstr ""
+
+#: sc-order-password.js:91
+msgid "Passwords should at least 6 characters."
 msgstr ""
 
 #: sc-subscription-status-badge2.js:56
@@ -10120,6 +9839,19 @@ msgstr ""
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr ""
 
+#: Blocks/Payment/components/Inspector.js:107
+msgid "Paystack"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:43
+msgid "Paystack is not properly set up to make transactions"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:51
+#: sc-paystack-add-method.js:36
+msgid "Paystack transaction could not be finished. Status: %s"
+msgstr ""
+
 #: orders/modules/Refunds.js:46
 #, fuzzy
 msgid "Pending"
@@ -10291,6 +10023,10 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:33
+msgid "Please add a valid address with necessary shipping information."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:15
 #, fuzzy
 msgid "Please add at least one product."
@@ -10323,8 +10059,16 @@ msgstr ""
 msgid "Please complete your store to enable live mode. It's free!"
 msgstr ""
 
+#: sc-payment.js:70
+msgid "Please configure your processors"
+msgstr ""
+
 #: src/Request/RequestService.php:208
 msgid "Please connect your site to SureCart."
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please contact us for payment."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:37
@@ -10355,8 +10099,8 @@ msgstr ""
 msgid "Please preview the form on the front-end to load the Stripe payment element fields."
 msgstr ""
 
-#: Blocks/Payment/edit.js:19
-msgid "Please preview the form on the front-end to load the Stripe payment fields."
+#: Blocks/Payment/edit.js:46
+msgid "Please preview your form on the front-end to view processors."
 msgstr ""
 
 #: licenses/modules/Activations/Activation.js:85
@@ -10366,6 +10110,10 @@ msgstr ""
 
 #: sc-form-state-provider2.js:48
 msgid "Please refresh the page."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:19
+msgid "Please select a customer."
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:123
@@ -10580,6 +10328,10 @@ msgstr ""
 #: store/add-entities.js:159
 #, fuzzy
 msgid "Processor"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:249
+msgid "Processors"
 msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
@@ -11830,6 +11582,10 @@ msgstr ""
 msgid "Secure"
 msgstr ""
 
+#: Blocks/Submit/edit.js:89
+msgid "Secure Payment Text"
+msgstr ""
+
 #: products/modules/Downloads.js:131
 msgid "Secure Storage"
 msgstr ""
@@ -11909,6 +11665,10 @@ msgstr ""
 msgid "Select Your Country"
 msgstr ""
 
+#: checkouts/modules/SelectCustomer/index.js:119
+msgid "Select a Customer"
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Setup.js:174
 #, fuzzy
 msgid "Select a Form Template"
@@ -11917,6 +11677,10 @@ msgstr ""
 #: Blocks/CheckoutForm/components/Empty.js:130
 #, fuzzy
 msgid "Select a checkout form"
+msgstr ""
+
+#: checkouts/modules/SelectCustomer/index.js:124
+msgid "Select a customer"
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:52
@@ -12544,6 +12308,10 @@ msgstr ""
 msgid "Show product image"
 msgstr ""
 
+#: Blocks/Submit/edit.js:79
+msgid "Show secure notice."
+msgstr ""
+
 #: products/modules/BuyLink.js:162
 msgid "Show store logo"
 msgstr ""
@@ -12593,6 +12361,10 @@ msgstr ""
 
 #: address.js:211
 msgid "Sint Maarten (Dutch part)"
+msgstr ""
+
+#: Blocks/Password/edit.js:53
+msgid "Site Settings"
 msgstr ""
 
 #: components/MediaLibrary/Preview.js:110
@@ -12875,6 +12647,11 @@ msgid "Starting in %s day"
 msgid_plural "Starting in %s days"
 msgstr[0] ""
 
+#: sc-product-price.js:40
+msgid "Starting in %s day."
+msgid_plural "Starting in %s days."
+msgstr[0] ""
+
 #: settings/tax-region/RegistrationForm.js:24
 #: sc-compact-address2.js:102
 #, fuzzy
@@ -13022,6 +12799,10 @@ msgstr ""
 #: sc-stripe-payment-element.js:59
 #: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:308
+msgid "Strong Password Validation"
 msgstr ""
 
 #: Blocks/Form/edit.js:227
@@ -13709,6 +13490,14 @@ msgstr ""
 msgid "Test Mode"
 msgstr ""
 
+#: settings/processors/ProcessorSettings.js:61
+msgid "Test Payments Disabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:57
+msgid "Test Payments Enabled"
+msgstr ""
+
 #: Blocks/Form/Block.php:144
 #, fuzzy
 msgid "Test and live mode API keys, requests, and objects are only available within the mode they are in."
@@ -14351,6 +14140,10 @@ msgstr ""
 msgid "The payment did not process. Please try again."
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:22
+msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
+msgstr ""
+
 #: src/Rest/BrandRestServiceProvider.php:124
 #, fuzzy
 msgid "The phone number that will be shown to customers for support, on invoices, etc."
@@ -14739,6 +14532,10 @@ msgstr ""
 msgid "This coupon will not be usable and all unsaved changes will be lost."
 msgstr ""
 
+#: checkouts/modules/PaymentMethods.js:76
+msgid "This customer does not have any payment methods that are reusable. This means we cannot charge this customer without them entering their payment details again. Please ask the customer to add a payment method to their account, or use a manual payment method."
+msgstr ""
+
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:81
 #, fuzzy
 msgid "This customer's most recent checkout that has been abandoned."
@@ -14768,6 +14565,10 @@ msgstr ""
 msgid "This email is used for store notifications, such as new orders, payment failures and other store emails."
 msgstr ""
 
+#: settings/advanced/AdvancedSettings.js:310
+msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 #, fuzzy
 msgid "This form has been deleted or is unavailable."
@@ -14781,6 +14582,18 @@ msgstr ""
 #: settings/brand/BrandSettings.js:143
 #, fuzzy
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
+msgstr ""
+
+#: templates/UpdateModel/index.js:46
+msgid "This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan."
+msgstr ""
+
+#: templates/UpdateModel/index.js:50
+msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
+msgstr ""
+
+#: sc-feature-demo-banner.js:15
+msgid "This is a feature demo. In order to use it, you must upgrade your plan."
 msgstr ""
 
 #: admin/subscriptions/index.php:9
@@ -14870,6 +14683,18 @@ msgstr ""
 
 #: sc-order-confirmation.js:111
 msgid "This order could not be found. Please try again."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:195
+msgid "This order has already been created. Please create a new order."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:91
+msgid "This order has products that are not shippable to this address."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:80
+msgid "This order requires shipping. Please enter an address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
@@ -14989,6 +14814,14 @@ msgstr ""
 
 #: settings/advanced/components/CustomerSyncModal.js:72
 msgid "This will change your user data on your install. We recommend creating a backup of your site before running this."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:320
+msgid "This will charge the customer %s."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:337
+msgid "This will create an order that requires a manual payment (i.e. cash or check). Once you create this order it is not possible to pay it another way. Do you want to continue?"
 msgstr ""
 
 #: settings/account/AccountSettings.js:281
@@ -16429,6 +16262,10 @@ msgstr ""
 msgid "You can only apply this offer once."
 msgstr ""
 
+#: Blocks/Password/edit.js:40
+msgid "You can override the global password validation by going to the advanced settings."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:20
 #, fuzzy
 msgid "You cannot add a one-time product to a subscription."
@@ -16463,8 +16300,8 @@ msgstr ""
 msgid "You do not have any payment methods."
 msgstr ""
 
-#: sc-payment.js:51
-msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
+#: sc-payment.js:67
+msgid "You do not have any processors enabled for this mode and cart. "
 msgstr ""
 
 #: sc-stripe-payment-request2.js:171
