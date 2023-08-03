@@ -63,6 +63,9 @@ export class ScPaypalAddMethod {
                 const intent = (await apiFetch({
                   method: 'PATCH',
                   path: `surecart/v1/payment_intents/${this.paymentIntent?.id}/capture`,
+                  data: {
+                    id: this.paymentIntent?.id,
+                  }
                 })) as PaymentIntent;
                 if (['succeeded', 'pending', 'requires_approval'].includes(intent?.status)) {
                   window.location.assign(this.successUrl);
