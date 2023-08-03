@@ -34,37 +34,6 @@ class AdminMenuPageService {
 		if ( apply_filters( 'surecart_show_admin_bar_visit_store', true ) ) {
 			add_action( 'admin_bar_menu', array( $this, 'adminBarMenu' ), 31 );
 		}
-		
-		add_action( 'admin_head', [ $this, 'removeAdminNotices' ], 1 );
-		
-	}
-
-	/**
-	 * Removed all Admin Notices from SureCart Pages.
-	 * 
-	 * @return void
-	 */
-	public function removeAdminNotices(): void {
-		$pages_to_hide_notices_from = apply_filters( 'surecart_admin_notice_hidden_pages', array(
-			'toplevel_page_sc-dashboard',
-			'surecart_page_sc-settings',
-			'surecart_page_sc-orders',
-			'surecart_page_sc-abandoned-checkouts',
-			'surecart_page_sc-products',
-			'surecart_page_sc-product-groups',
-			'surecart_page_sc-bumps',
-			'surecart_page_sc-coupons',
-			'surecart_page_sc-licenses',
-			'surecart_page_sc-subscriptions',
-			'surecart_page_sc-cancellation-insights',
-			'surecart_page_sc-customers'
-		) );
-		
-		if ( ! in_array( get_current_screen()->id, $pages_to_hide_notices_from, true ) || empty( $_GET[ 'action' ] ) || 'edit' === sanitize_text_field( wp_unslash( $_GET[ 'action' ] ) ) ) {
-			return;
-		}
-		
-		remove_all_actions( 'admin_notices' );
 	}
 
 	/**
