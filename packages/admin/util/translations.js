@@ -59,7 +59,7 @@ export const intervalCountString = (
 	prefix,
 	fallback = __('once', 'surecart')
 ) => {
-	if (!price.recurring_interval_count || !price.recurring_interval) {
+	if (!price.recurring_interval_count || !price.recurring_interval || 1 === price?.recurring_period_count) {
 		return '';
 	}
 	return translateInterval(

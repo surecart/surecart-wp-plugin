@@ -102,7 +102,7 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
 };
 
 export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart'), abbreviate = false) => {
-  if (!price.recurring_interval_count || !price.recurring_interval) {
+  if (!price.recurring_interval_count || !price.recurring_interval || 1 === price?.recurring_period_count) {
     return '';
   }
   if (abbreviate) {
