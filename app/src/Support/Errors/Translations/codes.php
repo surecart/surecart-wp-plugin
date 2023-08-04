@@ -77,4 +77,6 @@ return [
 	'shipping_rate.max_amount.not_a_number'             => __( 'The maximum amount must be a number.', 'surecart' ),
 	'shipping_rate.min_amount.greater_than_or_equal_to' => __( 'The minimum amount must be greater than or equal to zero.', 'surecart' ),
 	'shipping_rate.min_amount.not_a_number'             => __( 'The minimum amount must be a number.', 'surecart' ),
+	'payment_method.invalid'                            => __( 'This payment method is not valid or reusable.', 'surecart' ),
+	'customer.default_payment_method.invalid'           => __( 'This payment method is not valid or reusable.', 'surecart' ),
 ];

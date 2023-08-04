@@ -65,6 +65,7 @@ export default ({ customerId, isDefault, paymentMethod }) => {
 			// invalidate page.
 			await invalidateResolutionForStore();
 		} catch (e) {
+			console.error(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart'),
 				{ type: 'snackbar' }
