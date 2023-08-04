@@ -70,6 +70,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-groups/index.js'
 		),
+		['admin/product-collections']: path.resolve(
+			__dirname,
+			'packages/admin/product-collections/index.js'
+		),
 		['admin/bumps']: path.resolve(
 			__dirname,
 			'packages/admin/bumps/index.js'

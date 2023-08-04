@@ -85,13 +85,13 @@ export default (props) => {
 	useEffect(() => {
 		if (query === null || isLoading) return;
 		fetchData(pagination);
-	}, [pagination.per_page, pagination.page, query]);
+	}, [pagination.per_page, pagination.page, query, exclude]);
 
 	useEffect(() => {
 		if (fetchOnLoad) {
 			setQuery('');
 		}
-	}, [fetchOnLoad]);
+	}, [fetchOnLoad.enabled, pagination.page, pagination.per_page]);
 
 	return (
 		<SelectModel

@@ -265,6 +265,15 @@ export type Products = {
   [id: string]: Product;
 };
 
+export interface Collection extends Object {
+  id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Coupon extends Model {
   id: string;
   object: 'coupon';

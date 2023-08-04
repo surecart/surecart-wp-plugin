@@ -46,13 +46,17 @@ class TemplateUtilityService {
 		$this->templates_directory      = $templates_directory;
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
-			'single-product' => [
+			'single-product'       => [
 				'title'       => _x( 'SureCart Product', 'Template name', 'surecart' ),
 				'description' => __( 'Displays a single surecart product.', 'surecart' ),
 			],
-			'product-info'   => [
+			'product-info'         => [
 				'title'       => _x( 'Product Info', 'Template name', 'surecart' ),
 				'description' => __( 'Displays the product info.', 'surecart' ),
+			],
+			'product-archive-part' => [
+				'title'       => _x( 'Product archive', 'Template name', 'surecart' ),
+				'description' => __( 'Displays surecart product archive for collection.', 'surecart' ),
 			],
 		];
 	}
@@ -213,7 +217,7 @@ class TemplateUtilityService {
 		$template->status         = $post->post_status;
 		$template->has_theme_file = $has_theme_file;
 		$template->is_custom      = false;
-		$template->post_types     = array( 'sc_product' ); // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = array( 'sc_product', 'sc_collection' ); // Don't appear in any Edit Post template selector dropdown.
 
 		if ( 'wp_template_part' === $post->post_type ) {
 			$type_terms = get_the_terms( $post, 'wp_template_part_area' );
@@ -330,7 +334,7 @@ class TemplateUtilityService {
 		$template->has_theme_file = true;
 		$template->origin         = $template_file->source;
 		$template->is_custom      = false; // Templates loaded from the filesystem aren't custom, ones that have been edited and loaded from the DB are.
-		$template->post_types     = [ 'sc_product' ]; // Don't appear in any Edit Post template selector dropdown.
+		$template->post_types     = [ 'sc_product', 'sc_collection' ]; // Don't appear in any Edit Post template selector dropdown.
 		$template->area           = 'uncategorized';
 		return $template;
 	}
@@ -385,7 +389,7 @@ class TemplateUtilityService {
 			'source'      => $template_is_from_theme ? 'theme' : 'plugin',
 			'title'       => $this->getBlockTemplateTitle( $template_slug ),
 			'description' => $this->getBlockTemplateDescription( $template_slug ),
-			'post_types'  => array( 'sc_product' ), // Don't appear in any Edit Post template selector dropdown.
+			'post_types'  => array( 'sc_product', 'sc_collection' ), // Don't appear in any Edit Post template selector dropdown.
 		);
 
 		return (object) $new_template_item;

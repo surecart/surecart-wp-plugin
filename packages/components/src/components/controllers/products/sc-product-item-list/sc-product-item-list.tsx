@@ -1,8 +1,14 @@
+/**
+ * External dependencies.
+ */
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-import { Product } from '../../../../types';
+/**
+ * Internal dependencies.
+ */
+import { Collection, Product } from '../../../../types';
 import apiFetch from '../../../../functions/fetch';
 
 export type LayoutConfig = {
@@ -31,6 +37,12 @@ export class ScProductItemList {
 
   /** Should allow search */
   @Prop() sortEnabled: boolean = true;
+
+  /** Should allow collection filter */
+  @Prop() collectionEnabled: boolean = true;
+
+  /** Show for a specific collection */
+  @Prop() collectionId: string | null = null;
 
   /** Should we paginate? */
   @Prop() paginationEnabled: boolean = true;
@@ -72,8 +84,20 @@ export class ScProductItemList {
     total_pages: 0,
   };
 
+  /** Collections */
+  @State() collections: Collection[];
+
+  /** Selected collections */
+  @State() selectedCollections: Collection[];
+
   componentWillLoad() {
     this.getProducts();
+
+    if (this.collectionEnabled) {
+      this.getCollections();
+    }
+
+    this.selectedCollections = [];
   }
 
   // Append URL if no 'product-page' found
@@ -107,7 +131,24 @@ export class ScProductItemList {
     }
   }
 
+  // Fetch all collections
+  async getCollections() {
+    try {
+      const response = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/product_collections/`, {
+          per_page: 100,
+        }),
+        parse: false,
+      })) as Response;
+
+      this.collections = (await response.json()) as Collection[];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   @Watch('sort')
+  @Watch('selectedCollections')
   async handleSortChange() {
     this.currentPage = 1;
     this.updateProducts();
@@ -141,14 +182,22 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
+    let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
+
+    // If we have a collectionId, we should only fetch products from that collection.
+    if (this.collectionId) {
+      collectionIds = [this.collectionId];
+    }
+
     const response = (await apiFetch({
-      path: addQueryArgs(`surecart/v1/products/`, {
+      path: addQueryArgs('surecart/v1/products', {
         expand: ['prices', 'product_medias', 'product_media.media'],
         archived: false,
         status: ['published'],
         per_page: this.limit,
         page: this.currentPage,
         sort: this.sort,
+        product_collection_ids: collectionIds,
         ...(this.ids?.length ? { ids: this.ids } : {}),
         ...(this.query ? { query: this.query } : {}),
       }),
@@ -177,10 +226,25 @@ export class ScProductItemList {
     }
   }
 
+  toggleSelectCollection(collection: Collection) {
+    // if collection not in selectedCollections, add it, otherwise remove it
+    if (!this.selectedCollections.find(c => c.id === collection.id)) {
+      this.selectedCollections = [...this.selectedCollections, collection];
+    } else {
+      this.selectedCollections = this.selectedCollections.filter(c => c.id !== collection.id);
+    }
+  }
+
+  getCollectionsAfterFiltered() {
+    return (this.collections ?? []).filter(collection => {
+      return !this.selectedCollections.some(selected => selected.id === collection.id);
+    });
+  }
+
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
-        {(this.searchEnabled || this.sortEnabled) && (
+        {(this.searchEnabled || this.sortEnabled || this.collectionEnabled) && (
           <div class="product-item-list__header">
             <div class="product-item-list__sort">
               {this.sortEnabled && (
@@ -195,6 +259,40 @@ export class ScProductItemList {
                     <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
                   </sc-menu>
                 </sc-dropdown>
+              )}
+
+              {this.collectionEnabled && (this.collections ?? []).length > 0 && (
+                <sc-dropdown style={{ '--panel-width': '15rem' }}>
+                  <sc-button type="text" caret slot="trigger">
+                    {__('Collections', 'surecart')}
+                  </sc-button>
+                  <sc-menu>
+                    {(this.collections ?? []).map(collection => {
+                      return <sc-menu-item onClick={() => this.toggleSelectCollection(collection)}>{collection.name}</sc-menu-item>;
+                    })}
+
+                    {(this.collections ?? [])?.length === 0 && <sc-menu-item disabled>{__('No collections available', 'surecart')}</sc-menu-item>}
+                  </sc-menu>
+                </sc-dropdown>
+              )}
+
+              {this.collectionEnabled && this.selectedCollections.length > 0 && (
+                <div class="product-item-list__search-tag">
+                  <div class="product-item-list__search-label">
+                    <span style={{ marginLeft: '5px' }}>{__('Filtered collections:', 'surecart')}</span>
+                  </div>
+                  {this.selectedCollections.map(collection => (
+                    <sc-tag
+                      clearable
+                      onScClear={() => {
+                        this.toggleSelectCollection(collection);
+                        this.updateProducts();
+                      }}
+                    >
+                      {collection?.name}
+                    </sc-tag>
+                  ))}
+                </div>
               )}
             </div>
             <div class="product-item-list__search">
