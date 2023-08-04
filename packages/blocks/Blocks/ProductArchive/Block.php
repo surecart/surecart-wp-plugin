@@ -219,6 +219,9 @@ class Block extends BaseBlock {
 			}
 		}
 
+		$query_collection_id = get_query_var( 'sc_collection_page_id' );
+		$collection_id       = $query_collection_id ? $query_collection_id : $attributes['collection_id'] ?? '';
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -234,7 +237,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => $attributes['search_enabled'],
 				'sortEnabled'          => $attributes['sort_enabled'],
 				'collectionEnabled'    => false,
-				'collectionId'         => get_query_var( 'sc_collection_page_id' ) ?? null,
+				'collectionId'         => $collection_id,
 			]
 		);
 

@@ -135,6 +135,22 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'limit'              => 10,
 			]
 		);
+
+		// Product archive page.
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_archive',
+			'surecart/product-archive',
+			[
+				'collection_id'      => '', // mendatory.
+				'columns'            => 4,
+				'sort_enabled'       => false,
+				'search_enabled'     => false,
+				'pagination_enabled' => true,
+				'ajax_pagination'    => true,
+				'limit'              => 10,
+			]
+		);
+
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_description',
 			\SureCartBlocks\Blocks\Product\Description\Block::class,
