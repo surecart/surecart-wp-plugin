@@ -18,7 +18,7 @@ class CollectionsPagesWordPressMenuService {
 	}
 
 	/**
-	 * Adds the meta box container
+	 * Adds the meta box container.
 	 *
 	 * @return void
 	 */
@@ -42,7 +42,7 @@ class CollectionsPagesWordPressMenuService {
 	}
 
 	/**
-	 * Show the Meta Menu settings
+	 * Show the Meta Menu settings.
 	 *
 	 * @return void
 	 */
@@ -52,7 +52,7 @@ class CollectionsPagesWordPressMenuService {
 
 	/**
 	 * Render the collection pages menu options.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function renderCollectionPagesMenuOptions(): void {
