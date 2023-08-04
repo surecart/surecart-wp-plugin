@@ -325,7 +325,7 @@ export default ({ product, updateProduct, loading }) => {
 			</div>
 
 			<SortableList onSortEnd={applyDrag}>
-				{Array.isArray(product?.variant_options ?? []) &&
+				{Array.isArray(product?.variant_options) &&
 					product?.variant_options.map((option, index) => {
 						return (
 							<SortableItem

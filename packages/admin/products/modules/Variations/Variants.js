@@ -4,7 +4,13 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScButton,
 	ScDropdown,
@@ -15,15 +21,27 @@ import {
 	ScMenuItem,
 	ScPriceInput,
 	ScText,
+	ScTooltip,
 } from '@surecart/components-react';
-
-/**
- * Internal dependencies.
- */
 import DataTable from '../../../components/DataTable';
 import Image from './Image';
 
 export default ({ product, updateProduct, loading }) => {
+	const { prices } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'price',
+				{ context: 'edit', product_ids: [product?.id], per_page: 100 },
+			];
+
+			return {
+				prices: select(coreStore).getEntityRecords(...queryArgs),
+			};
+		},
+		[product?.id]
+	);
+
 	/**
 	 * On Delete variant, just update the status as draft for that variant.
 	 *
@@ -108,6 +126,35 @@ export default ({ product, updateProduct, loading }) => {
 				},
 			},
 			product?.variants.indexOf(variant)
+		);
+	};
+
+	const renderAmount = (variant, index) => {
+		if (prices?.length > 1) {
+			return (
+				<ScTooltip
+					text={__(
+						'Product has multiple prices. Keep only one price to maintain variable product wise pricing.',
+						'surecart'
+					)}
+				>
+					<ScButton type="warning" size="small">
+						{__('Inactive', 'surecart')}
+					</ScButton>
+				</ScTooltip>
+			);
+		}
+
+		return (
+			<ScPriceInput
+				type="number"
+				min="0"
+				value={variant?.amount}
+				currency={product?.currency}
+				name="amount"
+				disabled={variant?.status === 'draft'}
+				onScChange={(e) => updateVariantValue(e, index)}
+			/>
 		);
 	};
 
@@ -224,17 +271,7 @@ export default ({ product, updateProduct, loading }) => {
 							</ScText>
 						</ScFlex>
 					),
-					amount: (
-						<ScPriceInput
-							type="number"
-							min="0"
-							value={amount}
-							currency={product?.currency}
-							name="amount"
-							disabled={status === 'draft'}
-							onScChange={(e) => updateVariantValue(e, index)}
-						/>
-					),
+					amount: renderAmount(variant, index),
 					sku: (
 						<ScInput
 							value={sku}
