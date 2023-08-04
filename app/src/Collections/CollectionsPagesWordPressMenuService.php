@@ -13,8 +13,8 @@ class CollectionsPagesWordPressMenuService {
 	 *
 	 * @return void
 	 */
-	public function bootstrap() {
-		add_action( 'admin_init', array( $this, 'register_nav_meta_box' ), 9 );
+	public function bootstrap(): void {
+		add_action( 'admin_init', [ $this, 'registerNavMetaBox' ], 9 );
 	}
 
 	/**
@@ -22,7 +22,7 @@ class CollectionsPagesWordPressMenuService {
 	 *
 	 * @return void
 	 */
-	public function register_nav_meta_box() {
+	public function registerNavMetaBox(): void {
 		global $pagenow;
 
 		if ( ! current_user_can( 'edit_theme_options' ) ) {
@@ -33,7 +33,7 @@ class CollectionsPagesWordPressMenuService {
 			add_meta_box(
 				'sc_collections_meta_box',
 				__( 'SureCart Collections', 'surecart' ),
-				array( $this, 'metabox_contents' ),
+				[ $this, 'metaBoxContents' ],
 				'nav-menus',
 				'side',
 				'high'
@@ -46,8 +46,8 @@ class CollectionsPagesWordPressMenuService {
 	 *
 	 * @return void
 	 */
-	public function metabox_contents() {
-		$this->render_collection_pages_menu_options();
+	public function metaBoxContents(): void {
+		$this->renderCollectionPagesMenuOptions();
 	}
 
 	/**
@@ -55,7 +55,7 @@ class CollectionsPagesWordPressMenuService {
 	 * 
 	 * @return void
 	 */
-	public function render_collection_pages_menu_options() {
+	public function renderCollectionPagesMenuOptions(): void {
 
 		$collections = ProductCollection::get();
 
