@@ -367,7 +367,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 							{layoutConfig && (
 								<ScProductItemList
 									style={{
-										'border-style': 'none',
+										borderStyle: 'none',
 										'--sc-product-item-list-column':
 											columns,
 										'--sc-pagination-font-size':
