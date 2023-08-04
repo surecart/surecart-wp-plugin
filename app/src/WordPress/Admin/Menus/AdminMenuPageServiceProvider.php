@@ -18,7 +18,7 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 		$container['surecart.admin.menus'] = function () {
 			return new AdminMenuPageService();
 		};
-		$container['surecart.collections.pages.wp.menu'] = function () {
+		$container['surecart.collection_pages.menus'] = function () {
 			return new CollectionsPagesWordPressMenuService();
 		};
 	}
@@ -31,6 +31,6 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.admin.menus']->bootstrap();
-		$container['surecart.collections.pages.wp.menu']->bootstrap();
+		$container['surecart.collection_pages.menus']->bootstrap();
 	}
 }
