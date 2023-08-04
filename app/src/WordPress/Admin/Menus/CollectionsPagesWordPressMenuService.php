@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCart\Collections;
+namespace SureCart\WordPress\Admin\Menus;
 
 use SureCart\Models\ProductCollection;
 
@@ -56,7 +56,6 @@ class CollectionsPagesWordPressMenuService {
 	 * @return void
 	 */
 	public function renderCollectionPagesMenuOptions(): void {
-
 		$collections = ProductCollection::get();
 
 		if ( empty( $collections ) || ! is_array( $collections ) ) {
