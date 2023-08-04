@@ -1,0 +1,17 @@
+.sc-product-collection-badge{
+  display: flex;
+  align-items: center;
+  border: none;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  font-weight:  var(--sc-font-weight-bold);
+  font-size: var(--sc-font-size-small);
+  font-style:  normal;
+  padding:var(--sc-spacing-xx-small);
+  border-radius:  var(--sc-border-radius-small);
+  border:  1px solid  var(--sc-color-info-200);
+  background-color:  var(--sc-color-info-100);
+  color:  var(--sc-color-info-700);
+}

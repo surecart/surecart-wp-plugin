@@ -1,0 +1,51 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-collection-badges",
+	"title": "Product Collection Badges",
+	"description": "Displays product collection selector for a product.",
+	"category": "surecart",
+	"keywords": ["collection", "form", "product"],
+	"attributes": {
+		"collectionCount": {
+			"type": "number",
+			"default": 4
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["left", "right"]
+		},
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
+		"__experimentalBorder": {
+			"width": true,
+			"color": true,
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true,
+				"color": true,
+				"width": true
+			}
+		}
+	},
+	"style": "file:./style.css"
+}

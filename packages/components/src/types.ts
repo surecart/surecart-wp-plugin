@@ -1012,3 +1012,15 @@ export interface Rule {
   operator: NumberOperators | ArrayOperators;
   value: string | string[] | { value: string }[];
 }
+
+export interface ProductCollection {
+  id: string;
+  object: string;
+  name: string;
+  description?: string;
+  position?: number;
+  slug: string;
+  image?: string;
+  products_count: number;
+  products?: Product[];
+}
