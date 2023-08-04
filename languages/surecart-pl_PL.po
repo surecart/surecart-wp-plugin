@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-07-17 22:38\n"
+"PO-Revision-Date: 2023-08-03 22:49\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: pl_PL\n"
@@ -320,6 +320,10 @@ msgstr "(bez tytułu)"
 #, fuzzy
 msgid "+ %d more"
 msgstr "+ %d więcej"
+
+#: checkouts/modules/Price.js:102
+msgid "--"
+msgstr ""
 
 #: settings/abandoned/util.js:29
 #, fuzzy
@@ -763,6 +767,14 @@ msgstr ""
 msgid "Add A Restriction"
 msgstr "Dodaj ograniczenie"
 
+#: checkouts/modules/Address.js:82
+msgid "Add A Shipping Address"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:94
+msgid "Add A Tax ID"
+msgstr ""
+
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:34
 #: Blocks/Dashboard/CustomerDownloads/edit.js:34
 #: Blocks/Dashboard/CustomerInvoices/edit.js:34
@@ -893,6 +905,10 @@ msgstr "Dodaj nowe"
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:38
 msgctxt "SureCart Product"
 msgid "Add New"
+msgstr ""
+
+#: sc-paystack-add-method.js:71
+msgid "Add New Card"
 msgstr ""
 
 #: products/modules/integrations/Integrations.js:57
@@ -1107,6 +1123,10 @@ msgstr "Dodaj trochę tekstu w polu wyboru..."
 #, fuzzy
 msgid "Add some conditions to display this bump."
 msgstr "Dodaj kilka warunków, aby wyświetlić to wypukłość."
+
+#: checkouts/modules/Prices.js:117
+msgid "Add some products to this order."
+msgstr ""
 
 #: product-groups/modules/Products.js:53
 #, fuzzy
@@ -1657,6 +1677,10 @@ msgstr "Czy na pewno chcesz zmienić szablon? To całkowicie zastąpi Twój obec
 msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
 msgstr "Czy na pewno chcesz zakończyć ten plan płatności? Wyeliminuje to wszelkie dodatkowe płatności i oznaczy plan jako zakończony. Nie można tego cofnąć."
 
+#: checkouts/CreateCheckout.js:328
+msgid "Are you sure you want to continue?"
+msgstr ""
+
 #: settings/shipping/profile/DeleteShippingProfile.js:58
 msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
 msgstr ""
@@ -1946,6 +1970,10 @@ msgstr ""
 msgid "Available For Purchase"
 msgstr ""
 
+#: settings/processors/ProcessorSettings.js:254
+msgid "Available Processors"
+msgstr ""
+
 #: products/Sidebar.js:40
 #, fuzzy
 msgid "Available for purchase"
@@ -2074,6 +2102,10 @@ msgstr ""
 #, fuzzy
 msgid "Bermudian Dollar"
 msgstr "dolar bermudzki"
+
+#: settings/processors/ProcessorItem.js:38
+msgid "Beta"
+msgstr ""
 
 #: admin/advanced.php:52
 #: settings/advanced/AdvancedSettings.js:91
@@ -3095,6 +3127,10 @@ msgstr "Nawigacja po liście formularzy kasy"
 msgid "Checkout Recovery Rate"
 msgstr "Współczynnik odzyskiwania kasy"
 
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:164
+msgid "Checkouts"
+msgstr ""
+
 #: address.js:57
 msgid "Chile"
 msgstr ""
@@ -3389,6 +3425,10 @@ msgstr "Dokończ rejestrację"
 msgid "Complete Subscription"
 msgstr "Pełna subskrypcja"
 
+#: sc-provisional-banner.js:14
+msgid "Complete your store setup to go live."
+msgstr ""
+
 #: Blocks/Form/edit.js:449
 msgid "Complete your store setup."
 msgstr ""
@@ -3466,6 +3506,11 @@ msgstr ""
 msgid "Confirm Email for Store Notifications"
 msgstr ""
 
+#: checkouts/CreateCheckout.js:313
+#: checkouts/CreateCheckout.js:333
+msgid "Confirm Manual Payment"
+msgstr ""
+
 #: sc-password-nag.js:98
 #: sc-wordpress-password-edit.js:72
 msgid "Confirm New Password"
@@ -3513,6 +3558,22 @@ msgstr ""
 #, fuzzy
 msgid "Connect a user"
 msgstr "Połącz użytkownika"
+
+#: settings/processors/ProcessorSettings.js:213
+msgid "Connect with Mollie to add a Mollie express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:190
+msgid "Connect with PayPal to add a PayPal express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:129
+msgid "Connect with Stripe to accept credit cards and other payment methods."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:238
+msgid "Connect with paystack to add a paystack express button to your checkout."
+msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:115
 #: src/Rest/SettingsRestServiceProvider.php:115
@@ -3839,6 +3900,12 @@ msgstr "Utwórz nowy produkt"
 
 #: onboarding/components/InitialSetup.js:63
 msgid "Create New Store"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:232
+#: checkouts/CreateCheckout.js:249
+#: checkouts/CreateCheckout.js:352
+msgid "Create Order"
 msgstr ""
 
 #: products/modules/Prices/NewPrice/index.js:195
@@ -5316,6 +5383,10 @@ msgstr "Pliki do pobrania"
 msgid "Draft"
 msgstr "Projekt"
 
+#: store/add-entities.js:88
+msgid "Draft Checkout"
+msgstr ""
+
 #: src/Rest/CustomerRestServiceProvider.php:90
 msgid "Dry run the sync."
 msgstr ""
@@ -5463,6 +5534,10 @@ msgstr "Edytuj grupę produktów"
 msgid "Edit Promotion Code"
 msgstr "Edytuj kod promocyjny"
 
+#: checkouts/modules/Address.js:120
+msgid "Edit Shipping & Tax Address"
+msgstr ""
+
 #: settings/shipping/method/ShippingMethodForm.js:90
 msgid "Edit Shipping Method"
 msgstr ""
@@ -5479,6 +5554,10 @@ msgstr "Edytuj subskrypcję"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:41
 msgid "Edit SureCart Product"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:126
+msgid "Edit Tax ID"
 msgstr ""
 
 #: orders/modules/Fulfillment/components/AddTracking.js:69
@@ -5596,6 +5675,10 @@ msgstr ""
 #, fuzzy
 msgid "Enable PayPal payment"
 msgstr "Włączenie płatności PayPal"
+
+#: Blocks/Payment/components/Inspector.js:108
+msgid "Enable Paystack payment"
+msgstr ""
 
 #: settings/account/AccountSettings.js:260
 #, fuzzy
@@ -5723,6 +5806,10 @@ msgstr "Wpisz kwotę"
 msgid "Enter An Amount"
 msgstr "Wprowadź kwotę"
 
+#: checkouts/modules/Payment.js:141
+msgid "Enter Coupon Code"
+msgstr ""
+
 #: src/Routing/PermalinksSettingsService.php:86
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
@@ -5742,6 +5829,10 @@ msgstr "Wprowadź tytuł dla swojego formularza"
 #, fuzzy
 msgid "Enter a website URL"
 msgstr "Wprowadź adres URL strony internetowej"
+
+#: checkouts/modules/Price.js:215
+msgid "Enter an Amount"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:159
 #, fuzzy
@@ -6015,6 +6106,10 @@ msgstr ""
 
 #: products/modules/Image/ImageDisplay.js:43
 msgid "Featured"
+msgstr ""
+
+#: checkouts/modules/Price.js:182
+msgid "Fee"
 msgstr ""
 
 #: sc-customer-firstname.js:46
@@ -7713,6 +7808,10 @@ msgstr "Ważne"
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr "W odpowiednich jurysdykcjach podatkowych, Twój NIP będzie widoczny na fakturach. Jeśli nie masz jeszcze swojego numeru NIP, możesz go wprowadzić później."
 
+#: sc-paystack-add-method.js:71
+msgid "In order to add a new card, we will need to make a small transaction to authenticate it. This is for authentication purposes and will be immediately refunded."
+msgstr ""
+
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: licenses/modules/Details/index.js:20
 #: sc-licenses-list.js:36
@@ -8449,6 +8548,14 @@ msgstr ""
 #, fuzzy
 msgid "Live"
 msgstr "Na żywo"
+
+#: settings/processors/ProcessorSettings.js:70
+msgid "Live Payments Disabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:66
+msgid "Live Payments Enabled"
+msgstr ""
 
 #: components/data-tables/PaginationFooter.js:16
 #: subscriptions/show/modules/Invoices.js:50
@@ -9338,6 +9445,14 @@ msgstr "Nie podano nazwy"
 msgid "No order bumps found."
 msgstr "Nie znaleziono nierównych zamówień."
 
+#: checkouts/modules/PaymentMethods.js:86
+msgid "No payment methods found."
+msgstr ""
+
+#: Blocks/Payment/edit.js:39
+msgid "No payment processors are enabled for this mode."
+msgstr ""
+
 #: src/Controllers/Admin/Customers/CustomersListTable.php:119
 #: src/Controllers/Admin/Products/ProductsListTable.php:222
 #: src/Controllers/Admin/Products/ProductsListTable.php:242
@@ -9746,6 +9861,10 @@ msgstr "Zamówienie Zderzaki"
 msgid "Order Canceled."
 msgstr ""
 
+#: checkouts/CreateCheckout.js:188
+msgid "Order Complete"
+msgstr ""
+
 #: src/WordPress/Pages/PageService.php:69
 #: settings/customer/CustomerSettings.js:285
 #, fuzzy
@@ -9774,6 +9893,10 @@ msgstr "E-maile potwierdzające zamówienie"
 msgctxt "block title"
 msgid "Order Confirmation Line Items"
 msgstr "Pozycje linii potwierdzenia zamówienia"
+
+#: checkouts/CreateCheckout.js:171
+msgid "Order Created."
+msgstr ""
 
 #: web/dashboard/orders/show.php:15
 #: orders/modules/LineItems/index.js:62
@@ -9814,6 +9937,10 @@ msgstr ""
 
 #: sc-order-summary.js:53
 msgid "Order Summary"
+msgstr ""
+
+#: checkouts/modules/Payment.js:124
+msgid "Order Tax"
 msgstr ""
 
 #: sc-order-confirmation.js:111
@@ -10005,10 +10132,18 @@ msgstr ""
 msgid "Passwords do not match."
 msgstr ""
 
+#: sc-order-password.js:96
+msgid "Passwords must contain a special character."
+msgstr ""
+
 #: sc-order-password.js:48
 #: sc-password-nag.js:74
 #: sc-wordpress-password-edit.js:47
 msgid "Passwords should at least 6 characters and contain one special character."
+msgstr ""
+
+#: sc-order-password.js:91
+msgid "Passwords should at least 6 characters."
 msgstr ""
 
 #: sc-subscription-status-badge2.js:56
@@ -10191,6 +10326,19 @@ msgstr "Wypłaty zostały wyłączone na podłączonym koncie. Sprawdź status p
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr "Paypal przygląda się bliżej tej płatności. Jest to wymagane w przypadku niektórych płatności i zwykle trwa do 3 dni roboczych."
 
+#: Blocks/Payment/components/Inspector.js:107
+msgid "Paystack"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:43
+msgid "Paystack is not properly set up to make transactions"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:51
+#: sc-paystack-add-method.js:36
+msgid "Paystack transaction could not be finished. Status: %s"
+msgstr ""
+
 #: orders/modules/Refunds.js:46
 #, fuzzy
 msgid "Pending"
@@ -10362,6 +10510,10 @@ msgstr "Status planu"
 msgid "Plans"
 msgstr "Plany"
 
+#: src/Support/Errors/Translations/codes.php:33
+msgid "Please add a valid address with necessary shipping information."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:15
 #, fuzzy
 msgid "Please add at least one product."
@@ -10394,8 +10546,16 @@ msgstr ""
 msgid "Please complete your store to enable live mode. It's free!"
 msgstr ""
 
+#: sc-payment.js:70
+msgid "Please configure your processors"
+msgstr ""
+
 #: src/Request/RequestService.php:208
 msgid "Please connect your site to SureCart."
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please contact us for payment."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:37
@@ -10426,8 +10586,8 @@ msgstr "Podaj swój adres."
 msgid "Please preview the form on the front-end to load the Stripe payment element fields."
 msgstr "Proszę o podgląd formularza na froncie, aby załadować pola elementów płatności Stripe."
 
-#: Blocks/Payment/edit.js:19
-msgid "Please preview the form on the front-end to load the Stripe payment fields."
+#: Blocks/Payment/edit.js:46
+msgid "Please preview your form on the front-end to view processors."
 msgstr ""
 
 #: licenses/modules/Activations/Activation.js:85
@@ -10437,6 +10597,10 @@ msgstr "Odśwież stronę i spróbuj ponownie."
 
 #: sc-form-state-provider2.js:48
 msgid "Please refresh the page."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:19
+msgid "Please select a customer."
 msgstr ""
 
 #: settings/shipping/rate/ShippingRateForm.js:123
@@ -10652,6 +10816,10 @@ msgstr "Przetwarzanie płatności..."
 #, fuzzy
 msgid "Processor"
 msgstr "Procesor"
+
+#: settings/processors/ProcessorSettings.js:249
+msgid "Processors"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
@@ -11903,6 +12071,10 @@ msgstr "Sekcje"
 msgid "Secure"
 msgstr ""
 
+#: Blocks/Submit/edit.js:89
+msgid "Secure Payment Text"
+msgstr ""
+
 #: products/modules/Downloads.js:131
 msgid "Secure Storage"
 msgstr ""
@@ -11982,6 +12154,10 @@ msgstr "Wybierz temat (Beta)"
 msgid "Select Your Country"
 msgstr ""
 
+#: checkouts/modules/SelectCustomer/index.js:119
+msgid "Select a Customer"
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Setup.js:174
 #, fuzzy
 msgid "Select a Form Template"
@@ -11991,6 +12167,10 @@ msgstr "Wybierz szablon formularza"
 #, fuzzy
 msgid "Select a checkout form"
 msgstr "Wybierz formularz kasowy"
+
+#: checkouts/modules/SelectCustomer/index.js:124
+msgid "Select a customer"
+msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:52
 #, fuzzy
@@ -12622,6 +12802,10 @@ msgstr ""
 msgid "Show product image"
 msgstr ""
 
+#: Blocks/Submit/edit.js:79
+msgid "Show secure notice."
+msgstr ""
+
 #: products/modules/BuyLink.js:162
 msgid "Show store logo"
 msgstr ""
@@ -12671,6 +12855,10 @@ msgstr "Dolar singapurski"
 
 #: address.js:211
 msgid "Sint Maarten (Dutch part)"
+msgstr ""
+
+#: Blocks/Password/edit.js:53
+msgid "Site Settings"
 msgstr ""
 
 #: components/MediaLibrary/Preview.js:110
@@ -12956,6 +13144,14 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
+#: sc-product-price.js:40
+msgid "Starting in %s day."
+msgid_plural "Starting in %s days."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
 #: settings/tax-region/RegistrationForm.js:24
 #: sc-compact-address2.js:102
 #, fuzzy
@@ -13105,6 +13301,10 @@ msgstr "Monitorowanie oszustw w Stripe"
 #: sc-stripe-payment-element.js:59
 #: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:308
+msgid "Strong Password Validation"
 msgstr ""
 
 #: Blocks/Form/edit.js:227
@@ -13794,6 +13994,14 @@ msgstr "Test"
 msgid "Test Mode"
 msgstr "Tryb testowania"
 
+#: settings/processors/ProcessorSettings.js:61
+msgid "Test Payments Disabled"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:57
+msgid "Test Payments Enabled"
+msgstr ""
+
 #: Blocks/Form/Block.php:144
 #, fuzzy
 msgid "Test and live mode API keys, requests, and objects are only available within the mode they are in."
@@ -14436,6 +14644,10 @@ msgstr "Szerokość rzutni wzoru dla podglądu insertera."
 msgid "The payment did not process. Please try again."
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:22
+msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
+msgstr ""
+
 #: src/Rest/BrandRestServiceProvider.php:124
 #, fuzzy
 msgid "The phone number that will be shown to customers for support, on invoices, etc."
@@ -14824,6 +15036,10 @@ msgstr "Ten kupon jest nieważny. Sprawdź to jeszcze raz i spróbuj ponownie."
 msgid "This coupon will not be usable and all unsaved changes will be lost."
 msgstr "Ten kupon nie będzie można wykorzystać, a wszystkie niezapisane zmiany zostaną utracone."
 
+#: checkouts/modules/PaymentMethods.js:76
+msgid "This customer does not have any payment methods that are reusable. This means we cannot charge this customer without them entering their payment details again. Please ask the customer to add a payment method to their account, or use a manual payment method."
+msgstr ""
+
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:81
 #, fuzzy
 msgid "This customer's most recent checkout that has been abandoned."
@@ -14853,6 +15069,10 @@ msgstr "Tego pobrania nie można usunąć ani zarchiwizować, jeśli jest ustawi
 msgid "This email is used for store notifications, such as new orders, payment failures and other store emails."
 msgstr ""
 
+#: settings/advanced/AdvancedSettings.js:310
+msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 #, fuzzy
 msgid "This form has been deleted or is unavailable."
@@ -14867,6 +15087,18 @@ msgstr "Ten formularz jest niedostępny lub został usunięty."
 #, fuzzy
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr "Informacje te pomagają klientom rozpoznać Twoją firmę i skontaktować się z Tobą w razie potrzeby. Będą one widoczne na fakturach/pokwitowaniach i wszelkich e-mailach, które muszą być zgodne z CAN-SPAM (np. e-maile o porzuconych zamówieniach)."
+
+#: templates/UpdateModel/index.js:46
+msgid "This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan."
+msgstr ""
+
+#: templates/UpdateModel/index.js:50
+msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
+msgstr ""
+
+#: sc-feature-demo-banner.js:15
+msgid "This is a feature demo. In order to use it, you must upgrade your plan."
+msgstr ""
 
 #: admin/subscriptions/index.php:9
 #, fuzzy
@@ -14956,6 +15188,18 @@ msgstr "Ta metoda tworzenia płatności Bitcoin nie jest już obsługiwana. Pros
 
 #: sc-order-confirmation.js:111
 msgid "This order could not be found. Please try again."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:195
+msgid "This order has already been created. Please create a new order."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:91
+msgid "This order has products that are not shippable to this address."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:80
+msgid "This order requires shipping. Please enter an address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
@@ -15075,6 +15319,14 @@ msgstr ""
 
 #: settings/advanced/components/CustomerSyncModal.js:72
 msgid "This will change your user data on your install. We recommend creating a backup of your site before running this."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:320
+msgid "This will charge the customer %s."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:337
+msgid "This will create an order that requires a manual payment (i.e. cash or check). Once you create this order it is not possible to pay it another way. Do you want to continue?"
 msgstr ""
 
 #: settings/account/AccountSettings.js:281
@@ -16518,6 +16770,10 @@ msgstr "Możesz to znaleźć na pulpicie nawigacyjnym google Recaptcha."
 msgid "You can only apply this offer once."
 msgstr "Możesz skorzystać z tej oferty tylko raz."
 
+#: Blocks/Password/edit.js:40
+msgid "You can override the global password validation by going to the advanced settings."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:20
 #, fuzzy
 msgid "You cannot add a one-time product to a subscription."
@@ -16552,8 +16808,8 @@ msgstr "Nie możesz włączyć podatków, jeśli nie zostanie podany prawidłowy
 msgid "You do not have any payment methods."
 msgstr ""
 
-#: sc-payment.js:51
-msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
+#: sc-payment.js:67
+msgid "You do not have any processors enabled for this mode and cart. "
 msgstr ""
 
 #: sc-stripe-payment-request2.js:171

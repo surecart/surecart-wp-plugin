@@ -1,0 +1,36 @@
+:host {
+  display: block;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sc-spacing-xxx-small);
+
+  &__amounts {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sc-spacing-xx-small);
+  }
+
+  &__scratch {
+    text-decoration: line-through;
+    opacity: 0.75;
+  }
+
+  &__interval {
+    font-size: min(var(--sc-font-size-small), 16px);
+    opacity: 0.75;
+  }
+
+  &__details {
+    font-size: min(var(--sc-font-size-small), 16px);
+    opacity: 0.75;
+  }
+
+  &__sale-badge {
+    font-size: min(1em, 14px);
+    align-self: center;
+  }
+}
