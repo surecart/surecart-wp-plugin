@@ -54,7 +54,6 @@ export default ({ open, onRequestClose, currentPeriodEndAt }) => {
 				}),
 				data: {
 					restore_at: Date.parse(pauseUntil) / 1000,
-					id
 				},
 			});
 

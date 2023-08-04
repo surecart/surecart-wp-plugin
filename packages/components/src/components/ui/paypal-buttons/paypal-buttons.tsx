@@ -135,9 +135,6 @@ export class ScPaypalButtons {
           const intent = (await apiFetch({
             method: 'PATCH',
             path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id || this.order?.payment_intent}/capture`,
-            data: {
-              id: this.order?.payment_intent?.id || this.order?.payment_intent,
-            }
           })) as PaymentIntent;
           if (['succeeded', 'processing'].includes(intent?.status)) {
             this.scSetState.emit('PAID');
