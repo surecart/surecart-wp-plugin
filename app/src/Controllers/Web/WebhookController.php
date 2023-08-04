@@ -133,7 +133,7 @@ class WebhookController {
 		$id    = $this->getObjectId( $request['data'] );
 
 		// set a transient so we can keep track of failed webhook requests.
-		set_transient( 'surecart_webhook_process_' . $request['id'], $request, 5 * MINUTE_IN_SECONDS );
+		set_transient( 'surecart_webhook_process_' . $request['id'], $request, 15 * DAY_IN_SECONDS );
 
 		// dispatch an async request.
 		\SureCart::async()->data(
