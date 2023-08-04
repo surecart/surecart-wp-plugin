@@ -49,7 +49,6 @@ class AsyncWebhookService extends AsyncRequest {
 	 * during the async request.
 	 */
 	protected function handle() {
-		error_log( print_r( $_POST, 1 ) );
 		// get the event name.
 		$event = esc_html( $_POST['event'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( empty( $event ) ) {
@@ -67,10 +66,11 @@ class AsyncWebhookService extends AsyncRequest {
 		// get model.
 		$class = $this->models[ esc_html( $_POST['request']['data']['object']['object'] ?? '' ) ] ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
-		error_log( print_r( $event, 1 ) );
-		error_log( print_r( $id, 1 ) );
-		error_log( print_r( new $class( $_POST['data']['object'] ?? [] ), 1 ) );
-
 		do_action( $event, $id, new $class( $_POST['request']['data']['object'] ?? [] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		// delete the transient if the webhook action was successful.
+		if ( ! empty( $_POST['request']['id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			delete_transient( 'surecart_webhook_process_' . $_POST['request']['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		}
 	}
 }

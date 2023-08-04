@@ -29,19 +29,24 @@ class HealthService {
 		$debug_info['surecart'] = array(
 			'label'  => __( 'SureCart', 'surecart' ),
 			'fields' => array(
-				'api'      => array(
+				'api'                 => array(
 					'label'   => __( 'API Connectivity', 'surecart' ),
 					'value'   => (bool) ApiToken::get() ? __( 'Connected', 'surecart' ) : __( 'Not connected', 'surecart' ),
 					'private' => false,
 				),
-				'store_id' => array(
+				'store_id'            => array(
 					'label'   => __( 'Store ID', 'surecart' ),
 					'value'   => \SureCart::account()->id,
 					'private' => false,
 				),
-				'url'      => array(
+				'url'                 => array(
 					'label'   => __( 'Store URL', 'surecart' ),
 					'value'   => \SureCart::account()->url,
+					'private' => false,
+				),
+				'webhooks_processing' => array(
+					'label'   => __( 'Webhooks Processing', 'surecart' ),
+					'value'   => ! empty( \SureCart::webhooks()->getFailedWebhookProcesses() ) ? __( 'Error', 'surecart' ) : __( 'Working', 'surecart' ),
 					'private' => false,
 				),
 			),
@@ -66,8 +71,12 @@ class HealthService {
 
 		$is_localhost = ( new Server( get_home_url() ) )->isLocalHost();
 		// if ( ! $is_localhost ) {
+			$tests['direct']['surecart_webhook_test'] = array(
+				'label' => __( 'SureCart', 'neve' ) . ' ' . __( 'Webhooks Processing', 'surecart' ),
+				'test'  => [ $this, 'webhooksProcessingTest' ],
+			);
 			$tests['async']['surecart_webhooks_test'] = array(
-				'label'             => __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks', 'surecart' ),
+				'label'             => __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks Connection', 'surecart' ),
 				'test'              => rest_url( 'surecart/v1/site-health/webhooks' ),
 				'has_rest'          => true,
 				'async_direct_test' => [ $this, 'webhooksTest' ],
@@ -102,6 +111,30 @@ class HealthService {
 	}
 
 	/**
+	 * Check that webhooks are processing normally.
+	 *
+	 * @return array
+	 */
+	public function webhooksProcessingTest() {
+		$failed_processes = \SureCart::webhooks()->getFailedWebhookProcesses();
+		$has_errors       = count( $failed_processes ) > 0;
+
+		return array(
+			'label'       => $has_errors ? __( 'SureCart Webhooks Processing Error', 'surecart' ) : __( 'SureCart Webhooks Processing', 'surecart' ),
+			'status'      => $has_errors ? 'critical' : 'good',
+			'badge'       => array(
+				'label' => __( 'SureCart', 'surecart' ),
+				'color' => $has_errors ? 'red' : 'blue',
+			),
+			'description' => sprintf(
+				'<p>%s</p>',
+				$has_errors ? __( 'Some of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing', 'surecart' ) : __( 'Webhook processing is working normally.', 'surecart' )
+			),
+			'test'        => 'surecart_webhooks_processing_test',
+		);
+	}
+
+	/**
 	 * Neve API test pretty response
 	 *
 	 * @return array
@@ -112,37 +145,38 @@ class HealthService {
 
 		$webhook = RegisteredWebhook::get();
 
+		// Defaults.
 		$description = __( 'Webhooks are working normally.', 'surecart' );
 		$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks', 'surecart' );
-		if ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
-			$label = __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks', 'surecart' ) . ' ' . __( 'Error', 'surecart' );
-			if ( $webhook->erroring_grace_period_ends_at > time() ) {
-				$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks are being monitored for errors.', 'surecart' );
-				$description = __( 'Webhooks are being monitored for errors.', 'surecart' );
-			} else {
-				$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'Webhooks have been disabled due to repeated errors.', 'surecart' );
-				$description = __( 'Webhooks are have been disabled due to repeated errors.', 'surecart' );
-			}
+		$status      = 'good';
+
+		if ( empty( $webhook->enabled ) ) {
+			$status      = 'critical';
+			$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'webhook is disabled.', 'surecart' );
+			$description = __( 'The SureCart webhook is currently disabled which can cause issues with integrations. This can happen automatically due to repeated errors, or could have been disabled manually. Please re-enable the webhook and troubleshoot the issue if integrations are important to your store.', 'surecart' );
+		} elseif ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+			$status      = 'critical';
+			$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'webhook connection is being monitored for errors.', 'surecart' );
+			$description = __( 'The SureCart webhook has received repeated errors. This will eventually lead to the webhook being deactivated. Please troubleshoot the issue if integrations are important to your store.', 'surecart' );
 		}
 
 		return array(
 			'label'       => $label,
-			'status'      => ! empty( $webhook->erroring_grace_period_ends_at ) ? 'critical' : 'good',
+			'status'      => $status,
 			'badge'       => array(
 				'label' => __( 'SureCart', 'surecart' ),
-				'color' => ! empty( $webhook->erroring_grace_period_ends_at ) ? 'red' : 'blue',
+				'color' => 'critical' === $status ? 'red' : 'blue',
 			),
 			'description' => sprintf(
 				'<p>%s</p>',
 				$description
 			),
-			'actions'     => sprintf(
+			'actions'     => 'critical' === $status ? sprintf(
 				'<a href="%s" class="button" target="_blank">%s</a>',
 				esc_url( untrailingslashit( SURECART_APP_URL ) . '/developer' ),
 				__( 'Troubleshoot Connection', 'surecart' )
-			),
+			) : '',
 			'test'        => 'surecart_webhooks_test',
 		);
 	}
-
 }

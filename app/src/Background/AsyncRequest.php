@@ -7,7 +7,6 @@ namespace SureCart\Background;
  * @abstract
  */
 abstract class AsyncRequest {
-
 	/**
 	 * Prefix
 	 *
