@@ -1,7 +1,7 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-collections",
-	"title": "Product Collections",
+	"name": "surecart/product-collection-badges",
+	"title": "Product Collection Badges",
 	"description": "Displays product collection selector for a product.",
 	"category": "surecart",
 	"keywords": ["collection", "form", "product"],

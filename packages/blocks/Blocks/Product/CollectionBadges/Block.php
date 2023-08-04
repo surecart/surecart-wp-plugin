@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Product\Collections;
+namespace SureCartBlocks\Blocks\Product\CollectionBadges;
 
 use SureCart\Models\ProductCollection;
 use SureCartBlocks\Blocks\BaseBlock;
