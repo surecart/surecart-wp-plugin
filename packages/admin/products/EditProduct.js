@@ -26,6 +26,7 @@ import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Variations from './modules/Variations';
+import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -230,6 +231,11 @@ export default ({ id }) => {
 						id={id}
 						product={product}
 						onToggleArchiveProduct={onToggleArchiveProduct}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Shipping
+						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>

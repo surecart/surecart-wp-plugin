@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { Fragment, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { DropZone, Button, FormFileUpload } from '@wordpress/components';
@@ -365,14 +365,17 @@ export default ({
 										}
 										onClick={onChooseClicked}
 									>
-										{__(
-											`Choose ${
-												Object.values(selectedMedia)
-													.length > 1
-													? 'images'
-													: 'image'
-											}`,
-											'surecart'
+										{__('Choose', 'surecart')}{' '}
+										{sprintf(
+											_n(
+												'%s file',
+												'%s files',
+												Object.values(selectedMedia || {})
+													.length || 0,
+												'surecart'
+											),
+											Object.values(selectedMedia || {})
+												.length || ''
 										)}
 									</Button>
 								</div>

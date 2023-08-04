@@ -14,6 +14,7 @@ export default ({
 	loading,
 	footer,
 	className,
+	footerStyle = {},
 }) => {
 	const hasChildren = () => {
 		if (!children) {
@@ -42,7 +43,7 @@ export default ({
 			isBorderless={isBorderLess}
 			className={className}
 		>
-			{!!title && (
+			{('' !== title || header_action) && (
 				<CardHeader
 					isBorderless={!hasDivider}
 					css={css`
@@ -97,7 +98,7 @@ export default ({
 					)}
 				</CardBody>
 			)}
-			{!!footer && <CardFooter>{footer}</CardFooter>}
+			{!!footer && <CardFooter style={footerStyle}>{footer}</CardFooter>}
 		</Card>
 	);
 };

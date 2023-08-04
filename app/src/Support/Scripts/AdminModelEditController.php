@@ -96,6 +96,9 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
+		// remove admin notices.
+		remove_all_actions( 'admin_notices' );
+
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'admin_head',
@@ -135,6 +138,9 @@ abstract class AdminModelEditController {
 		}
 		if ( in_array( 'tax_protocol', $this->with_data ) ) {
 			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
+		}
+		if ( in_array( 'shipping_protocol', $this->with_data ) ) {
+			$this->data['shipping_protocol'] = \SureCart::account()->shipping_protocol;
 		}
 		if ( in_array( 'checkout_page_url', $this->with_data ) ) {
 			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();

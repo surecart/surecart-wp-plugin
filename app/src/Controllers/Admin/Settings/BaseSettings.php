@@ -49,7 +49,6 @@ abstract class BaseSettings {
 			'customer_notification_protocol' => __( 'Notifications', 'surecart' ),
 			'subscription_protocol'          => __( 'Subscriptions', 'surecart' ),
 			'subscription_preservation'      => __( 'Subscription Saver', 'surecart' ),
-			'portal_protocol'                => __( 'Customer Portal', 'surecart' ),
 			'tax_protocol'                   => __( 'Taxes', 'surecart' ),
 			'processors'                     => __( 'Payment Processors', 'surecart' ),
 			'export'                         => __( 'Data Export', 'surecart' ),
@@ -65,6 +64,9 @@ abstract class BaseSettings {
 	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		// don't show admin notices on settings pages.
+		remove_all_actions( 'admin_notices' );
+
 		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
 
 		return \SureCart::view( $this->template )->with(
@@ -133,6 +135,7 @@ abstract class BaseSettings {
 				'supported_currencies' => Currency::getSupportedCurrencies(),
 				'app_url'              => defined( 'SURECART_APP_URL' ) ? untrailingslashit( SURECART_APP_URL ) : 'https://app.surecart.com',
 				'api_url'              => \SureCart::requests()->getBaseUrl(),
+				'currency'             => \SureCart::account()->currency,
 				'time_zones'           => TimeDate::timezoneOptions(),
 				'entitlements'         => \SureCart::account()->entitlements,
 				'brand_color'          => \SureCart::account()->brand->color ?? null,

@@ -5356,6 +5356,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@paystack/inline-js@npm:^2.13":
+  version: 2.13.0
+  resolution: "@paystack/inline-js@npm:2.13.0"
+  checksum: 1ef9fd244341c753daca388e968258734b48a28e2c7e061279b72f80a9169830bc239bdb4082f267a88f1d46b6c30f57b5d2bc87a1baeb9f2c905334cab4aa24
+  languageName: node
+  linkType: hard
+
 "@playwright/test@npm:^1.33.0":
   version: 1.34.2
   resolution: "@playwright/test@npm:1.34.2"
@@ -7225,6 +7232,7 @@ __metadata:
     "@emotion/native": ^10.0.22
     "@emotion/react": ^11.7.1
     "@emotion/styled": ^10.0.23
+    "@paystack/inline-js": ^2.13
     "@playwright/test": ^1.33.0
     "@rails/activestorage": ^6.1.4-1
     "@wordpress/babel-preset-default": ^6.2.0

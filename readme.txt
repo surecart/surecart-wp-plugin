@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.2
-Stable tag: 2.1.4
+Stable tag: 2.4.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,6 +243,48 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.4.1 - August 3rd, 2023 =
+* Improvement: Prevent admin notices on SureCart pages.
+* Improvement: Update library dependencies.
+* Improvement: Added additional security enhancements.
+* Fix: PHP notice with form shortcodes and Divi.
+* Fix: Issue with some Spectra blocks not loading inside forms.
+* Fix: Make sure checkout line items are sorted by added at date.
+
+= 2.4.0 - July 19th, 2023 =
+* New: Manual Orders - create orders on behalf of customers from the admin.
+* New: Strong password option. Enforce the creation of strong passwords for customers.
+* Improvement: Product page selected price now shows interval, fees and trials.
+* Improvement: Ability to disable change the secure notice text below the submit button on forms.
+* Fix: Order bump mobile fixes.
+* Fix: Issue with php8 REMOTE_ADDR notice.
+* Fix: Issue with product modified_date_gmt for use in SEO plugin metadata.
+* Fix: Issue with $0 price amount not being added to cart on product page.
+* Fix: Issue with slide out cart z-index not being high enough for some themes.
+
+= 2.3.1 - July 19th, 2023 =
+* Fix: Stripe Payment Element (beta) not loading under certain conditions during free trial with payment required.
+* Fix: Issue with post_modified_gmt and post_date_gmt not accurate for product pages.
+* Fix: PHP notice for PHP 8 if REMOTE_ADDR is not set.
+
+= 2.3.0 - July 17th, 2023 =
+* New: Paystack processor support for African merchants.
+* Improvement: Better notice for how to conntect processors on checkout form.
+* Improvement: Hide admin notices during onboarding.
+* Fix: Issue with dashboard date being in UTC time.
+* Fix: Mobile stacking of order bump.
+* Fix: Stripe Payment Element (beta) showing a notice when the amount on the checkout form is 0.
+
+= 2.2.1 - July 6th, 2023 =
+* Improvement: Improve loading performance of Stripe Payment Element (beta) by using deferred payment intents.
+* Fix: Thank you pages that redirect to the homepage being redirected to the blog page instead.
+* Fix: Change button text for media library to account for non-image files.
+* Fix: Validation issue with price input not allowing refunds to be fully refunded.
+
+= 2.2.0 - July 5th, 2023 =
+* New: Shipping and fulfillment support! Add custom shipping rates, location restrictions, tracking and fulfillment.
+* Improvement: Rearrange SureCart settings and combine some sections.
+
 = 2.1.4 - June 28, 2023 =
 * Improvement: Add filter to skip page and form seeding.
 * Fix: Compare at price cannot be cleared due to firefox fix in previous version.
@@ -445,7 +487,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Update payment plan wording to be more clear about number of payments.
 * Improvement: RTL improvements.
 * Improvement: Tax ID Input field - allow labels to be editable.
-* Improvement: Stripe Payment Element now will inherit name, address, email fields for payment types that require it.
+* Improvement: Stripe Payment Element (beta) now will inherit name, address, email fields for payment types that require it.
 * Improvement: Product/Price/Customer select dropdowns now paginate.
 * Improvement: Prevent cart posts from being misconfigured.
 * Improvement: Prevent "Store Checkout" forms and pages from being misconfigured.
@@ -644,7 +686,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Add Dutch notifications and invoice language.
 * Fix: Issue with default country selection in address block not initializing with new checkout.
 * Fix: Prevent false positive notice from Sucuri for our honeypot field.
-* Fix: Issue with Stripe Payment Element redirect processors not working on iOS devices.
+* Fix: Issue with Stripe Payment Element (beta) redirect processors not working on iOS devices.
 
 = 1.1.19  - Novermber 2, 2022 =
 * Improvement: WordPress 6.1 Compatibility.

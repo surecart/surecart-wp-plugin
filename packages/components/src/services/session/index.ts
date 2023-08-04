@@ -27,14 +27,15 @@ export const expand = [
   'staged_payment_intents',
   'tax_identifier',
   'manual_payment_method',
+  'shipping_choices',
+  'shipping_choice.shipping_method',
 ];
 
 /** Default data we send with every request. */
 export const withDefaultData = (data: { metadata?: any } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
-  abandoned_checkout_return_url: checkoutState.abandonedCheckoutReturnUrl || null,
-  abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled && !!checkoutState.abandonedCheckoutReturnUrl,
+  abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
   metadata: {
     ...(data?.metadata || {}),
     ...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),

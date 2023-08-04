@@ -1,11 +1,12 @@
-import { Component, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { Component, h, Prop, Fragment } from '@stencil/core';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
 import { state } from '@store/product';
+import { intervalString } from '../../../../functions/price';
 
 @Component({
   tag: 'sc-product-price',
-  styleUrl: 'sc-product-price.css',
+  styleUrl: 'sc-product-price.scss',
   shadow: true,
 })
 export class ScProductPrice {
@@ -19,7 +20,7 @@ export class ScProductPrice {
     return <sc-price-range prices={state.prices} />;
   }
 
-  renderPrice(price) {
+  renderPrice(price: Price) {
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
     }
@@ -29,17 +30,51 @@ export class ScProductPrice {
     }
 
     return (
-      <div class="price">
-        {!!price?.scratch_amount && (
-          <sc-format-number class="scratch-price" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
-        )}
-        <sc-format-number type="currency" value={price?.amount} currency={price?.currency} />
-        {!!price?.scratch_amount && (
-          <sc-tag type="primary" pill class="sale-badge">
-            {this.saleText || __('Sale', 'surecart')}
-          </sc-tag>
-        )}
-      </div>
+      <Fragment>
+        <div class="price">
+          <div class="price__amounts">
+            {!!price?.scratch_amount && (
+              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
+            )}
+
+            <sc-format-number class="price__amount" type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
+
+            <div class="price__interval">
+              {intervalString(price, {
+                showOnce: true,
+                abbreviate: false,
+                labels: {
+                  interval: '/',
+                  period:
+                    /** translators: used as in time period: "for 3 months" */
+                    __('for', 'surecart'),
+                },
+              })}
+            </div>
+
+            {!!price?.scratch_amount && (
+              <sc-tag type="primary" pill class="price__sale-badge">
+                {this.saleText || __('Sale', 'surecart')}
+              </sc-tag>
+            )}
+          </div>
+
+          {(!!price?.trial_duration_days || (!!price?.setup_fee_enabled && price?.setup_fee_amount)) && (
+            <div class="price__details">
+              {!!price?.trial_duration_days && (
+                <span class="price__trial">{sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)} </span>
+              )}
+
+              {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
+                <span class="price__setup-fee">
+                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
+                  {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      </Fragment>
     );
   }
 

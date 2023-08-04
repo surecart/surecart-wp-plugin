@@ -27,7 +27,6 @@ export default ({ id, setId }) => {
 				'product',
 				{
 					name,
-					variants_enabled: variantsEnabled,
 					auto_fulfill_enabled: true,
 				},
 				{ throwOnError: true }

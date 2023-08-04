@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-06-15 20:19\n"
+"PO-Revision-Date: 2023-08-03 22:49\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: el_GR\n"
@@ -24,8 +24,7 @@ msgid_plural " and %d other prices."
 msgstr[0] ""
 msgstr[1] ""
 
-#: sc-charges-list.js:110
-#, fuzzy
+#: sc-charges-list.js:112
 msgid "#%s"
 msgstr ""
 
@@ -45,14 +44,22 @@ msgstr "% έκπτωση"
 msgid "%1s of %2s Activations Used"
 msgstr ""
 
+#: orders/modules/Fulfillment/Fulfilled.js:99
+#: orders/modules/Fulfillment/Unfulfilled.js:49
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] ""
+msgstr[1] ""
+
 #: subscriptions/show/modules/Details.js:110
 #, fuzzy
 msgid "%d Remaining"
 msgstr ""
 
-#: sc-textarea2.js:189
+#: sc-rich-text.js:18842
+#: sc-textarea2.js:183
 msgid "%d characters remaining"
-msgstr "%d χαρακτήρες απομένουν"
+msgstr ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
@@ -64,11 +71,11 @@ msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sc-product-line-item2.js:24
+#: sc-product-line-item2.js:37
 msgid "%d day free"
 msgid_plural "%d days free"
-msgstr[0] "%s μέρα δωρεάν"
-msgstr[1] "%s μέρες δωρεάν"
+msgstr[0] ""
+msgstr[1] ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:80
 #, fuzzy
@@ -77,11 +84,11 @@ msgid_plural "%d days left in trial"
 msgstr[0] ""
 msgstr[1] ""
 
-#: price.js:50
+#: price.js:52
 msgid "%d mo"
 msgid_plural "%d months"
-msgstr[0] "%d μήνα"
-msgstr[1] "%d μήνες"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
@@ -105,16 +112,28 @@ msgid_plural "%d payments"
 msgstr[0] "%d πληρωμή"
 msgstr[1] "%d πληρωμές"
 
-#: price.js:84
+#: price.js:86
 msgid "%d payment remaining"
 msgid_plural "%d payments remaining"
-msgstr[0] "%d πληρωμή απομένει"
-msgstr[1] "%d πληρωμές απομένουν"
+msgstr[0] ""
+msgstr[1] ""
+
+#: settings/shipping/profile/Products.js:184
+msgid "%d price"
+msgid_plural "%d prices"
+msgstr[0] ""
+msgstr[1] ""
 
 #: coupons/modules/Product.js:104
 #, fuzzy
 msgid "%d prices"
 msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:35
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
@@ -126,11 +145,11 @@ msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: price.js:48
+#: price.js:50
 msgid "%d wk"
 msgid_plural "%d wks"
-msgstr[0] "%d εβδομάδα"
-msgstr[1] "%d εβδομάδες"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
@@ -142,11 +161,11 @@ msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: price.js:52
+#: price.js:54
 msgid "%d yr"
 msgid_plural "%d yrs"
-msgstr[0] "%d χρόνο"
-msgstr[1] "%d χρόνια"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:194
@@ -173,11 +192,12 @@ msgstr ""
 msgid "%s can't be blank."
 msgstr ""
 
-#: sc-purchase-downloads-list2.js:48
+#: components/MediaLibrary/index.js:370
+#: sc-purchase-downloads-list2.js:54
 msgid "%s file"
 msgid_plural "%s files"
-msgstr[0] "%s αρχείο"
-msgstr[1] "%s αρχεία"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: field name.
 #: src/Support/Errors/ErrorsTranslationService.php:60
@@ -240,7 +260,7 @@ msgstr "% έκπτωση"
 msgid "%s selected for check out."
 msgstr ""
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "%s selected."
 msgstr ""
 
@@ -264,6 +284,10 @@ msgstr ""
 msgid "+ %d more"
 msgstr ""
 
+#: checkouts/modules/Price.js:102
+msgid "--"
+msgstr ""
+
 #: settings/abandoned/util.js:29
 #, fuzzy
 msgid "1 Day"
@@ -277,6 +301,14 @@ msgstr ""
 #: settings/abandoned/util.js:57
 #, fuzzy
 msgid "1 week"
+msgstr ""
+
+#: Blocks/ShippingChoices/edit.js:26
+msgid "1-2 days"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:291
+msgid "1. Create Zone"
 msgstr ""
 
 #: settings/abandoned/util.js:33
@@ -315,6 +347,10 @@ msgstr ""
 msgid "2 Hours"
 msgstr ""
 
+#: settings/shipping/zone/ShippingZoneForm.js:295
+msgid "2. Create Rate"
+msgstr ""
+
 #: Blocks/Columns/variations.js:132
 msgid "25 / 50 / 25"
 msgstr "25 / 50 / 25"
@@ -331,6 +367,10 @@ msgstr ""
 #: settings/abandoned/util.js:17
 #, fuzzy
 msgid "3 Hours"
+msgstr ""
+
+#: Blocks/ShippingChoices/edit.js:44
+msgid "3-5 days"
 msgstr ""
 
 #: Blocks/Columns/variations.js:60
@@ -395,8 +435,13 @@ msgctxt "block description"
 msgid "A container to display the product media"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "A default payment method will be used as a fallback in case other payment methods get removed from a subscription."
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:128
+#: settings/shipping/rate/ShippingRateForm.js:320
+msgid "A description to let the customer know the average time it takes for shipping."
 msgstr ""
 
 #: products/modules/AddExternalUrlModal.js:56
@@ -425,9 +470,8 @@ msgstr ""
 msgid "A link to your privacy policy page."
 msgstr ""
 
-#: settings/portal/PortalSettings.js:139
-#, fuzzy
-msgid "A link to your privacy terms page."
+#: settings/account/AccountSettings.js:267
+msgid "A link to your store terms page."
 msgstr ""
 
 #: bumps/CreateBump.js:65
@@ -478,7 +522,7 @@ msgid "A single column within a columns block."
 msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:83
-msgid "A single product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign."
+msgid "A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign."
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
@@ -582,9 +626,10 @@ msgstr ""
 msgid "Account Details"
 msgstr ""
 
+#: sc-wordpress-user-edit.js:61
 #: sc-wordpress-user.js:27
 msgid "Account Email"
-msgstr "Email Λογαριασμού"
+msgstr ""
 
 #: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:206
@@ -667,10 +712,22 @@ msgstr ""
 msgid "Add A Price"
 msgstr ""
 
+#: onboarding/Onboarding.js:166
+msgid "Add A Product"
+msgstr ""
+
 #: coupons/modules/NewRestriction.js:46
 #: coupons/modules/Restrictions.js:31
 #, fuzzy
 msgid "Add A Restriction"
+msgstr ""
+
+#: checkouts/modules/Address.js:82
+msgid "Add A Shipping Address"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:94
+msgid "Add A Tax ID"
 msgstr ""
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:34
@@ -802,6 +859,10 @@ msgctxt "SureCart Product"
 msgid "Add New"
 msgstr ""
 
+#: sc-paystack-add-method.js:71
+msgid "Add New Card"
+msgstr ""
+
 #: products/modules/integrations/Integrations.js:57
 #, fuzzy
 msgid "Add New Integration"
@@ -811,6 +872,14 @@ msgstr ""
 #: components/SelectPrice.js:116
 #, fuzzy
 msgid "Add New Product"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:245
+msgid "Add New Profile"
+msgstr ""
+
+#: settings/shipping/rate/AddShippingRate.js:16
+msgid "Add New Shipping Rate"
 msgstr ""
 
 #: components/SelectProductGroup.js:58
@@ -849,6 +918,19 @@ msgstr ""
 msgid "Add Promotion Code"
 msgstr ""
 
+#: settings/shipping/rate/ShippingRateForm.js:194
+#: settings/shipping/zone/ShippingZone.js:228
+msgid "Add Rate"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:91
+msgid "Add Shipping Method"
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:72
+msgid "Add Shipping Profile"
+msgstr ""
+
 #: Blocks/Donation/edit.js:249
 #, fuzzy
 msgid "Add Suggested Donation Amount"
@@ -875,6 +957,11 @@ msgstr ""
 msgid "Add To Cart Button Shortcode"
 msgstr ""
 
+#: orders/modules/Fulfillment/components/AddTracking.js:70
+#: orders/modules/Fulfillment/Fulfilled.js:165
+msgid "Add Tracking"
+msgstr ""
+
 #: src/Integrations/User/UserService.php:57
 #, fuzzy
 msgid "Add User Role"
@@ -883,6 +970,10 @@ msgstr ""
 #: src/Integrations/User/UserService.php:48
 #, fuzzy
 msgid "Add WordPress User Role"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:265
+msgid "Add Zone"
 msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
@@ -933,6 +1024,10 @@ msgstr ""
 msgid "Add additional information to receipts and invoices."
 msgstr ""
 
+#: orders/modules/Fulfillment/components/Tracking.js:117
+msgid "Add another tracking number"
+msgstr ""
+
 #: dashboard/components/GetStarted.js:73
 #, fuzzy
 msgid "Add buy and cart buttons"
@@ -946,6 +1041,10 @@ msgstr ""
 #: settings/tax-region/TaxRegionSettings.js:66
 msgid "Add custom manual tax rates for specific countries."
 msgstr "Προσθήκη προσαρμοσμένων φορολογικών συντελεστών για συγκεκριμένες χώρες."
+
+#: settings/shipping/ShippingSettings.js:229
+msgid "Add custom rates or destination restrictions for groups of products."
+msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:214
 #, fuzzy
@@ -961,6 +1060,10 @@ msgstr ""
 msgid "Add new SureCart Product"
 msgstr ""
 
+#: settings/shipping/profile/Products.js:213
+msgid "Add products to this shipping profile."
+msgstr ""
+
 #: Blocks/Checkbox/edit.js:69
 #, fuzzy
 msgid "Add some checkbox text..."
@@ -969,6 +1072,10 @@ msgstr ""
 #: bumps/modules/Conditions.js:87
 #, fuzzy
 msgid "Add some conditions to display this bump."
+msgstr ""
+
+#: checkouts/modules/Prices.js:117
+msgid "Add some products to this order."
 msgstr ""
 
 #: product-groups/modules/Products.js:53
@@ -1028,9 +1135,9 @@ msgstr ""
 msgid "Added"
 msgstr ""
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Additional Comments"
-msgstr "Επιπλέον Σχόλια"
+msgstr ""
 
 #: orders/modules/MetaData.js:16
 msgid "Additional Order Data"
@@ -1049,10 +1156,9 @@ msgstr "Πρόσθετα δεδομένα παραγγελίας"
 msgid "Address"
 msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:34
-#: sc-order-shipping-address2.js:43
-#, fuzzy
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:41
+#: sc-order-shipping-address2.js:50
 msgid "Address Line 2"
 msgstr ""
 
@@ -1072,6 +1178,10 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
+#: settings/shipping/profile/ShippingProfile.js:229
+msgid "Advanced Options"
+msgstr ""
+
 #: admin/advanced.php:30
 #: settings/advanced/AdvancedSettings.js:35
 #, fuzzy
@@ -1082,8 +1192,7 @@ msgstr ""
 msgid "Advanced settings for abandoned checkouts"
 msgstr ""
 
-#: address.js:17
-#, fuzzy
+#: address.js:14
 msgid "Afghanistan"
 msgstr ""
 
@@ -1091,8 +1200,7 @@ msgstr ""
 msgid "Ajax Pagination"
 msgstr ""
 
-#: address.js:18
-#, fuzzy
+#: address.js:15
 msgid "Albania"
 msgstr ""
 
@@ -1101,8 +1209,7 @@ msgstr ""
 msgid "Albanian Lek"
 msgstr ""
 
-#: address.js:19
-#, fuzzy
+#: address.js:16
 msgid "Algeria"
 msgstr ""
 
@@ -1135,10 +1242,18 @@ msgstr ""
 msgid "All Checkout Forms"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:350
+msgid "All Fulfillments"
+msgstr ""
+
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
 #: Blocks/ProductItemList/modules/EditLayoutConfig.js:13
 msgid "All Products"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:386
+msgid "All Shipment Statuses"
 msgstr ""
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:43
@@ -1148,6 +1263,15 @@ msgstr ""
 #: bumps/modules/Conditions.js:39
 #, fuzzy
 msgid "All of these items are in the cart."
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:189
+msgid "All products"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:212
+#: settings/shipping/ShippingSettings.js:185
+msgid "All products not in other profiles"
 msgstr ""
 
 #: coupons/modules/Restrictions.js:73
@@ -1199,12 +1323,12 @@ msgstr ""
 #: sc-product-item-list.js:141
 #: sc-product-item-list.js:150
 msgid "Alphabetical, A-Z"
-msgstr "Αλφαβητικά, Α-Ω"
+msgstr ""
 
 #: sc-product-item-list.js:143
 #: sc-product-item-list.js:150
 msgid "Alphabetical, Z-A"
-msgstr "Αλφαβητικά, Ω-Α"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:301
 msgid "Also enable abandoned checkouts in test mode."
@@ -1218,8 +1342,7 @@ msgstr ""
 msgid "Always show cart"
 msgstr "Το καλάθι να εμφανίζεται πάντα."
 
-#: address.js:20
-#, fuzzy
+#: address.js:17
 msgid "American Samoa"
 msgstr ""
 
@@ -1288,8 +1411,7 @@ msgstr ""
 msgid "An invoice cannot be generated for the specified subscription as there are no pending invoice items. Check that the correct subscription is being specified or create any necessary invoice items first."
 msgstr ""
 
-#: fetch.js:1888
-#, fuzzy
+#: fetch.js:737
 msgid "An unknown error occurred."
 msgstr ""
 
@@ -1298,13 +1420,11 @@ msgstr ""
 msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
 msgstr ""
 
-#: address.js:21
-#, fuzzy
+#: address.js:18
 msgid "Andorra"
 msgstr ""
 
-#: address.js:22
-#, fuzzy
+#: address.js:19
 msgid "Angola"
 msgstr ""
 
@@ -1313,12 +1433,11 @@ msgstr ""
 msgid "Angolan Kwanza"
 msgstr ""
 
-#: address.js:23
-#, fuzzy
+#: address.js:20
 msgid "Anguilla"
 msgstr ""
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "Another step will appear after submitting your order to add this payment method."
 msgstr ""
 
@@ -1338,13 +1457,11 @@ msgstr "Η απάντηση δημιουργήθηκε."
 msgid "Answer updated."
 msgstr "Η απάντηση ανανεώθηκε."
 
-#: address.js:24
-#, fuzzy
+#: address.js:21
 msgid "Antarctica"
 msgstr ""
 
-#: address.js:25
-#, fuzzy
+#: address.js:22
 msgid "Antigua and Barbuda"
 msgstr ""
 
@@ -1447,6 +1564,10 @@ msgstr ""
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr ""
 
+#: product-groups/EditProductGroup.js:76
+msgid "Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:55
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
@@ -1488,8 +1609,7 @@ msgstr ""
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr ""
 
-#: sc-subscription.js:42
-#, fuzzy
+#: sc-subscription.js:70
 msgid "Are you sure you want to cancel the pending update to your plan?"
 msgstr ""
 
@@ -1500,6 +1620,14 @@ msgstr "Είστε σίγουροι ότι θέλετε να αλλάξετε τ
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:46
 #, fuzzy
 msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:328
+msgid "Are you sure you want to continue?"
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:58
+msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
 msgstr ""
 
 #: coupons/EditCoupon.js:234
@@ -1538,6 +1666,10 @@ msgstr ""
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
 msgstr ""
 
+#: onboarding/components/ConfirmExit.js:9
+msgid "Are you sure you want to leave this page?"
+msgstr ""
+
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:63
 msgid "Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan."
 msgstr ""
@@ -1568,10 +1700,10 @@ msgstr ""
 msgid "Are you sure you want to remove this logo?"
 msgstr ""
 
-#: sc-payment-methods-list.js:48
-#: sc-subscription-payment-method.js:80
+#: sc-payment-methods-list.js:182
+#: sc-subscription-payment-method.js:85
 msgid "Are you sure you want to remove this payment method?"
-msgstr "Είστε σίγουροι πως θέλετε να αφαιρέσετε τη συγκεκριμένη μέθοδο πληρωμής;"
+msgstr ""
 
 #: src/Webhooks/WebhooksHistoryService.php:149
 #: src/Webhooks/WebhooksHistoryService.php:168
@@ -1635,8 +1767,11 @@ msgstr ""
 msgid "Are you sure you wish to resume this subscription?"
 msgstr ""
 
-#: address.js:26
-#, fuzzy
+#: settings/shipping/zone/ConfirmDeleteZone.js:41
+msgid "Are you sure?"
+msgstr ""
+
+#: address.js:23
 msgid "Argentina"
 msgstr ""
 
@@ -1645,8 +1780,7 @@ msgstr ""
 msgid "Argentine Peso"
 msgstr ""
 
-#: address.js:27
-#, fuzzy
+#: address.js:24
 msgid "Armenia"
 msgstr ""
 
@@ -1655,8 +1789,7 @@ msgstr ""
 msgid "Armenian Dram"
 msgstr ""
 
-#: address.js:28
-#, fuzzy
+#: address.js:25
 msgid "Aruba"
 msgstr ""
 
@@ -1745,14 +1878,17 @@ msgstr ""
 msgid "Australian Dollar"
 msgstr ""
 
-#: address.js:30
-#, fuzzy
+#: address.js:27
 msgid "Austria"
 msgstr ""
 
 #: bumps/modules/Behavior.js:12
 msgid "Auto Apply Discount"
 msgstr "Αυτόματη Εφαρμογή Έκπτωσης"
+
+#: products/modules/Shipping.js:115
+msgid "Auto Fulfill"
+msgstr ""
 
 #: Blocks/Product/Media/edit.js:52
 msgid "Auto Height"
@@ -1776,6 +1912,10 @@ msgstr ""
 msgid "Available For Purchase"
 msgstr ""
 
+#: settings/processors/ProcessorSettings.js:254
+msgid "Available Processors"
+msgstr ""
+
 #: products/Sidebar.js:40
 #, fuzzy
 msgid "Available for purchase"
@@ -1786,8 +1926,7 @@ msgstr ""
 msgid "Average Order Value"
 msgstr ""
 
-#: address.js:31
-#, fuzzy
+#: address.js:28
 msgid "Azerbaijan"
 msgstr ""
 
@@ -1813,8 +1952,7 @@ msgstr ""
 msgid "Background Color"
 msgstr ""
 
-#: address.js:32
-#, fuzzy
+#: address.js:29
 msgid "Bahamas"
 msgstr ""
 
@@ -1823,8 +1961,7 @@ msgstr ""
 msgid "Bahamian Dollar"
 msgstr ""
 
-#: address.js:33
-#, fuzzy
+#: address.js:30
 msgid "Bahrain"
 msgstr ""
 
@@ -1838,8 +1975,7 @@ msgstr ""
 msgid "Balance Transactions"
 msgstr ""
 
-#: address.js:34
-#, fuzzy
+#: address.js:31
 msgid "Bangladesh"
 msgstr ""
 
@@ -1853,9 +1989,20 @@ msgstr ""
 msgid "Barbadian Dollar"
 msgstr ""
 
-#: address.js:35
-#, fuzzy
+#: address.js:32
 msgid "Barbados"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:441
+msgid "Based on item weight"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:472
+msgid "Based on order price"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:15
+msgid "Beauty Products"
 msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:41
@@ -1863,27 +2010,20 @@ msgstr ""
 msgid "Begins"
 msgstr ""
 
-#: bumps/modules/Behavior.js:7
-#: settings/subscription/SubscriptionSettings.js:184
-#, fuzzy
-msgid "Behavior"
-msgstr ""
-
-#: address.js:36
+#: address.js:33
 msgid "Belarus"
-msgstr "Λευκορωσία"
+msgstr ""
 
 #: src/Support/Currency.php:251
 #, fuzzy
 msgid "Belarusian Ruble"
 msgstr ""
 
-#: address.js:37
+#: address.js:34
 msgid "Belgium"
-msgstr "Βέλγιο"
+msgstr ""
 
-#: address.js:38
-#, fuzzy
+#: address.js:35
 msgid "Belize"
 msgstr ""
 
@@ -1892,13 +2032,11 @@ msgstr ""
 msgid "Belize Dollar"
 msgstr ""
 
-#: address.js:39
-#, fuzzy
+#: address.js:36
 msgid "Benin"
 msgstr ""
 
-#: address.js:40
-#, fuzzy
+#: address.js:37
 msgid "Bermuda"
 msgstr ""
 
@@ -1907,15 +2045,19 @@ msgstr ""
 msgid "Bermudian Dollar"
 msgstr ""
 
+#: settings/processors/ProcessorItem.js:38
+msgid "Beta"
+msgstr ""
+
 #: admin/advanced.php:52
 #: settings/advanced/AdvancedSettings.js:91
 #, fuzzy
 msgid "Beta Features"
 msgstr ""
 
-#: address.js:41
+#: address.js:38
 msgid "Bhutan"
-msgstr "Μπουτάν"
+msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:89
 #: Controllers/CustomerController.php:54
@@ -1962,8 +2104,7 @@ msgstr ""
 msgid "Billing Periods"
 msgstr ""
 
-#: sc-customer-edit.js:105
-#, fuzzy
+#: sc-customer-edit.js:110
 msgid "Billing address same as shipping"
 msgstr ""
 
@@ -1983,8 +2124,7 @@ msgstr ""
 msgid "Block types that the pattern is intended to be used with."
 msgstr ""
 
-#: address.js:42
-#, fuzzy
+#: address.js:39
 msgid "Bolivia"
 msgstr ""
 
@@ -1993,9 +2133,12 @@ msgstr ""
 msgid "Bolivian Boliviano"
 msgstr ""
 
-#: address.js:43
-#, fuzzy
+#: address.js:40
 msgid "Bonaire, Sint Eustatius and Saba"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:51
+msgid "Books"
 msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:72
@@ -2014,8 +2157,7 @@ msgstr ""
 msgid "Borderless"
 msgstr ""
 
-#: address.js:44
-#, fuzzy
+#: address.js:41
 msgid "Bosnia and Herzegovina"
 msgstr ""
 
@@ -2033,8 +2175,7 @@ msgstr "Και τα δύο"
 msgid "Both a customer and source ID have been provided, but the source has not been saved to the customer. To create a charge for a customer with a specified source, you must first save the card details."
 msgstr ""
 
-#: address.js:45
-#, fuzzy
+#: address.js:42
 msgid "Botswana"
 msgstr ""
 
@@ -2048,9 +2189,12 @@ msgstr ""
 msgid "Bottom Border"
 msgstr ""
 
-#: address.js:46
-#, fuzzy
+#: address.js:43
 msgid "Bouvet Island"
+msgstr ""
+
+#: store/add-entities.js:25
+msgid "Brand"
 msgstr ""
 
 #: settings/brand/BrandSettings.js:79
@@ -2063,17 +2207,16 @@ msgstr ""
 msgid "Brand Settings"
 msgstr ""
 
-#: address.js:47
+#: address.js:44
 msgid "Brazil"
-msgstr "Βραζιλία"
+msgstr ""
 
 #: src/Support/Currency.php:257
 #, fuzzy
 msgid "Brazilian Real"
 msgstr ""
 
-#: address.js:48
-#, fuzzy
+#: address.js:45
 msgid "British Indian Ocean Territory"
 msgstr ""
 
@@ -2082,8 +2225,7 @@ msgstr ""
 msgid "British Pound"
 msgstr ""
 
-#: address.js:49
-#, fuzzy
+#: address.js:46
 msgid "Brunei Darussalam"
 msgstr ""
 
@@ -2098,8 +2240,7 @@ msgstr ""
 msgid "BuddyBoss Group"
 msgstr ""
 
-#: address.js:50
-#, fuzzy
+#: address.js:47
 msgid "Bulgaria"
 msgstr ""
 
@@ -2162,13 +2303,11 @@ msgstr ""
 msgid "Bundle Discount"
 msgstr ""
 
-#: address.js:51
-#, fuzzy
+#: address.js:48
 msgid "Burkina Faso"
 msgstr ""
 
-#: address.js:52
-#, fuzzy
+#: address.js:49
 msgid "Burundi"
 msgstr ""
 
@@ -2263,6 +2402,10 @@ msgstr ""
 msgid "By %s"
 msgstr ""
 
+#: onboarding/components/InitialSetup.js:88
+msgid "By continuing, you agree to the"
+msgstr ""
+
 #: Controllers/SubscriptionController.php:244
 #: Controllers/SubscriptionController.php:248
 #, fuzzy
@@ -2284,8 +2427,7 @@ msgstr ""
 msgid "CA GST Label"
 msgstr ""
 
-#: address.js:53
-#, fuzzy
+#: address.js:50
 msgid "Cabo Verde"
 msgstr ""
 
@@ -2299,8 +2441,7 @@ msgstr ""
 msgid "Call to action"
 msgstr ""
 
-#: address.js:54
-#, fuzzy
+#: address.js:51
 msgid "Cambodia"
 msgstr ""
 
@@ -2309,8 +2450,7 @@ msgstr ""
 msgid "Cambodian Riel"
 msgstr ""
 
-#: address.js:55
-#, fuzzy
+#: address.js:52
 msgid "Cameroon"
 msgstr ""
 
@@ -2413,13 +2553,12 @@ msgstr "Ακύρωση Παραγγελίας"
 msgid "Cancel Pending Update"
 msgstr ""
 
-#: sc-subscription-cancel.js:94
-#: sc-subscription.js:141
+#: sc-subscription-cancel2.js:66
+#: sc-subscription.js:183
 msgid "Cancel Plan"
-msgstr "Ακύρωση Προγράμματος"
+msgstr ""
 
-#: sc-subscription.js:135
-#, fuzzy
+#: sc-subscription.js:181
 msgid "Cancel Scheduled Update"
 msgstr ""
 
@@ -2443,9 +2582,13 @@ msgstr ""
 msgid "Cancel behavior. Either pending or immediate."
 msgstr ""
 
-#: sc-subscription-cancel.js:94
+#: orders/modules/Fulfillment/Fulfilled.js:155
+msgid "Cancel fulfillment"
+msgstr ""
+
+#: sc-subscription-cancel2.js:66
 msgid "Cancel your plan"
-msgstr "Ακύρωσε το πρόγραμμά σου"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
@@ -2642,8 +2785,7 @@ msgstr ""
 msgid "Carts list navigation"
 msgstr ""
 
-#: address.js:57
-#, fuzzy
+#: address.js:54
 msgid "Cayman Islands"
 msgstr ""
 
@@ -2657,8 +2799,7 @@ msgstr ""
 msgid "Central African Cfa Franc"
 msgstr ""
 
-#: address.js:58
-#, fuzzy
+#: address.js:55
 msgid "Central African Republic"
 msgstr ""
 
@@ -2667,9 +2808,9 @@ msgstr ""
 msgid "Cfp Franc"
 msgstr ""
 
-#: address.js:59
+#: address.js:56
 msgid "Chad"
-msgstr "Τσαντ"
+msgstr ""
 
 #: bumps/modules/Price.js:46
 #: subscriptions/edit/modules/Price.js:101
@@ -2678,13 +2819,17 @@ msgstr "Τσαντ"
 msgid "Change"
 msgstr ""
 
-#: sc-product-selected-price.js:70
+#: sc-product-selected-price.js:73
 msgid "Change Amount"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:217
 #, fuzzy
 msgid "Change Payment Method"
+msgstr ""
+
+#: subscriptions/edit/modules/Price.js:111
+msgid "Change Price"
 msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:67
@@ -2788,9 +2933,9 @@ msgstr ""
 msgid "Charges"
 msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Check your email for a confirmation code"
-msgstr "Έλεγξε το email σου για τον κωδικό επιβεβαίωσης"
+msgstr ""
 
 #: Blocks/Checkbox/block.json
 #, fuzzy
@@ -2815,8 +2960,7 @@ msgstr ""
 msgid "Checked by default"
 msgstr ""
 
-#: sc-payment-method2.js:19
-#, fuzzy
+#: sc-payment-method2.js:24
 msgid "Checking"
 msgstr ""
 
@@ -2914,18 +3058,22 @@ msgstr ""
 msgid "Checkout Recovery Rate"
 msgstr ""
 
-#: address.js:60
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:164
+msgid "Checkouts"
+msgstr ""
+
+#: address.js:57
 msgid "Chile"
-msgstr "Χιλή"
+msgstr ""
 
 #: src/Support/Currency.php:268
 #, fuzzy
 msgid "Chilean Peso"
 msgstr ""
 
-#: address.js:61
+#: address.js:58
 msgid "China"
-msgstr "Κίνα"
+msgstr ""
 
 #: src/Support/Currency.php:269
 #, fuzzy
@@ -2959,9 +3107,9 @@ msgstr ""
 msgid "Choose A Starting Design"
 msgstr ""
 
-#: sc-subscription-switch.js:181
+#: sc-subscription-switch.js:190
 msgid "Choose Amount"
-msgstr "Επίλεξε Ποσό"
+msgstr ""
 
 #: Blocks/Form/components/SelectPrices.js:54
 #, fuzzy
@@ -2983,9 +3131,9 @@ msgstr ""
 msgid "Choose a product"
 msgstr ""
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Choose a reason"
-msgstr "Διάλεξε έναν λόγο"
+msgstr ""
 
 #: subscriptions/edit/modules/Trial.js:24
 #, fuzzy
@@ -2998,6 +3146,10 @@ msgstr ""
 msgid "Choose a type"
 msgstr ""
 
+#: onboarding/components/StarterTemplates.js:75
+msgid "Choose some example data or start from scratch."
+msgstr ""
+
 #: settings/tax/TaxSettings.js:139
 #, fuzzy
 msgid "Choose the checkout behavior when VAT verification fails."
@@ -3008,20 +3160,23 @@ msgstr ""
 msgid "Choose the style of order numbers."
 msgstr ""
 
-#: address.js:62
-#, fuzzy
+#: address.js:59
 msgid "Christmas Island"
 msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:32
-#: sc-order-shipping-address2.js:41
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:39
+#: sc-order-shipping-address2.js:48
 msgid "City"
-msgstr "Πόλη"
+msgstr ""
 
 #: Blocks/Address/edit.js:116
 #, fuzzy
 msgid "City Placeholder"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:162
+msgid "Claim Account"
 msgstr ""
 
 #: layouts/partials/admin-settings-header.php:41
@@ -3045,18 +3200,22 @@ msgstr ""
 msgid "Click here to add some radio text..."
 msgstr ""
 
-#: sc-dialog2.js:164
-#: sc-drawer2.js:154
+#. translators: Close this modal window.
+#: sc-dialog2.js:152
+#: sc-drawer2.js:140
 msgid "Close"
-msgstr "Κλείσιμο"
+msgstr ""
 
 #: Blocks/Totals/edit.js:101
 #, fuzzy
 msgid "Closed Text"
 msgstr ""
 
-#: address.js:63
-#, fuzzy
+#: onboarding/components/StarterTemplates.js:20
+msgid "Clothing & Apparel"
+msgstr ""
+
+#: address.js:60
 msgid "Cocos (Keeling) Islands"
 msgstr ""
 
@@ -3110,9 +3269,9 @@ msgstr ""
 msgid "Collect Tax"
 msgstr ""
 
-#: address.js:64
+#: address.js:61
 msgid "Colombia"
-msgstr "Κολομβία"
+msgstr ""
 
 #: src/Support/Currency.php:270
 #, fuzzy
@@ -3158,8 +3317,7 @@ msgstr ""
 msgid "Comorian Franc"
 msgstr ""
 
-#: address.js:65
-#, fuzzy
+#: address.js:62
 msgid "Comoros"
 msgstr ""
 
@@ -3171,6 +3329,14 @@ msgstr ""
 #: admin/onboarding/complete.php:69
 #, fuzzy
 msgid "Complete Installation"
+msgstr ""
+
+#: components/ClaimNoticeModal.js:40
+msgid "Complete Setup"
+msgstr ""
+
+#: components/MediaLibrary/index.js:300
+msgid "Complete Setup!"
 msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:114
@@ -3185,15 +3351,27 @@ msgstr ""
 msgid "Complete Subscription"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:60
+#: sc-provisional-banner.js:14
+msgid "Complete your store setup to go live."
+msgstr ""
+
+#: Blocks/Form/edit.js:449
+msgid "Complete your store setup."
+msgstr ""
+
+#: sc-subscription-status-badge2.js:63
 msgid "Completed"
-msgstr "Ολοκληρωμένο"
+msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
 #: settings/advanced/AdvancedSettings.js:137
 #, fuzzy
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZone.js:96
+msgid "Condition"
 msgstr ""
 
 #: Blocks/ConditionalForm/edit.js:138
@@ -3245,31 +3423,42 @@ msgstr ""
 msgid "Confirm Charge"
 msgstr "Επιβεβαίωση Χρέωσης"
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: onboarding/components/ConfirmStoreEmail.js:49
+msgid "Confirm Email for Store Notifications"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:313
+#: checkouts/CreateCheckout.js:333
+msgid "Confirm Manual Payment"
+msgstr ""
+
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "Confirm New Password"
-msgstr "Επιβεβαίωσε τον κωδικό πρόσβασης"
+msgstr ""
 
-#: sc-order-password.js:63
+#: sc-order-password.js:74
 msgid "Confirm Password"
-msgstr "Επιβεβαίωσε τον κωδικό πρόσβασης"
+msgstr ""
 
-#: sc-login-form.js:145
+#: onboarding/components/ConfirmStoreDetails.js:38
+msgid "Confirm Store Details"
+msgstr ""
+
+#: sc-login-form.js:147
 msgid "Confirmation code"
-msgstr "Κωδικός επιβεβαίωσης"
+msgstr ""
 
 #: Blocks/Form/edit.js:338
 #, fuzzy
 msgid "Confirming Payment"
 msgstr ""
 
-#: address.js:66
-#, fuzzy
+#: address.js:63
 msgid "Congo"
 msgstr ""
 
-#: address.js:67
-#, fuzzy
+#: address.js:64
 msgid "Congo, The Democratic Republic of the"
 msgstr ""
 
@@ -3278,19 +3467,33 @@ msgstr ""
 msgid "Congolese Franc"
 msgstr ""
 
+#: onboarding/components/SetupDone.js:44
+msgid "Congratulations!"
+msgstr ""
+
+#: onboarding/components/InitialSetup.js:78
+msgid "Connect Existing Store"
+msgstr ""
+
 #: customers/modules/User/index.js:203
 #, fuzzy
 msgid "Connect a user"
 msgstr ""
 
-#: admin/processors.php:135
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:213
+msgid "Connect with Mollie to add a Mollie express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:190
 msgid "Connect with PayPal to add a PayPal express button to your checkout."
 msgstr ""
 
-#: admin/processors.php:57
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:129
 msgid "Connect with Stripe to accept credit cards and other payment methods."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:238
+msgid "Connect with paystack to add a paystack express button to your checkout."
 msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:115
@@ -3340,8 +3543,7 @@ msgstr ""
 msgid "Continue"
 msgstr "Συνέχεια"
 
-#: address.js:68
-#, fuzzy
+#: address.js:65
 msgid "Cook Islands"
 msgstr ""
 
@@ -3366,14 +3568,18 @@ msgstr ""
 msgid "Copy"
 msgstr ""
 
+#: orders/modules/Fulfillment/CreateFulfillment.js:276
+msgid "Copy Address"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:210
 #, fuzzy
 msgid "Copy Links"
 msgstr ""
 
-#: address.js:69
+#: address.js:66
 msgid "Costa Rica"
-msgstr "Κόστα Ρίκα"
+msgstr ""
 
 #: src/Support/Currency.php:273
 #, fuzzy
@@ -3406,9 +3612,9 @@ msgstr ""
 msgid "Could not download the file."
 msgstr ""
 
-#: sc-session-provider2.js:240
+#: sc-session-provider2.js:189
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
-msgstr "Δε βρέθηκε η ολοκλήρωση της παραγγελίας. Παρακαλούμε επικοινωνήστε μαζί μας πριν επιχειρήσετε να πραγματοποιήσετε ξανά μια αγορά."
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:46
 #, fuzzy
@@ -3437,9 +3643,9 @@ msgstr ""
 msgid "Country Placeholder"
 msgstr ""
 
-#: sc-compact-address2.js:45
+#: sc-compact-address2.js:46
 msgid "Country or region"
-msgstr "Χώρα ή περιοχή"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
 #, fuzzy
@@ -3510,6 +3716,10 @@ msgstr ""
 #: src/Integrations/TutorLMS/TutorLMSService.php:217
 #, fuzzy
 msgid "Course Access"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:35
+msgid "Courses"
 msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
@@ -3605,6 +3815,16 @@ msgstr ""
 msgid "Create New Product"
 msgstr ""
 
+#: onboarding/components/InitialSetup.js:63
+msgid "Create New Store"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:232
+#: checkouts/CreateCheckout.js:249
+#: checkouts/CreateCheckout.js:352
+msgid "Create Order"
+msgstr ""
+
 #: products/modules/Prices/NewPrice/index.js:195
 #, fuzzy
 msgid "Create Price"
@@ -3635,6 +3855,10 @@ msgstr ""
 
 #: settings/advanced/components/CustomerSyncModal.js:83
 msgid "Create WordPress users if the user does not yet exist."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:46
+msgid "Create Zone"
 msgstr ""
 
 #: Blocks/CheckoutForm/components/Empty.js:77
@@ -3733,21 +3957,20 @@ msgstr ""
 msgid "Credit Card selected for check out."
 msgstr ""
 
-#: address.js:70
+#: address.js:67
 msgid "Croatia"
-msgstr "Κροατία"
+msgstr ""
 
 #: src/Support/Currency.php:274
 #, fuzzy
 msgid "Croatian Kuna"
 msgstr ""
 
-#: address.js:71
+#: address.js:68
 msgid "Cuba"
-msgstr "Κούβα"
+msgstr ""
 
-#: address.js:72
-#, fuzzy
+#: address.js:69
 msgid "Curaçao"
 msgstr ""
 
@@ -3756,9 +3979,9 @@ msgstr ""
 msgid "Current"
 msgstr ""
 
-#: sc-subscription-payment-method.js:147
+#: sc-subscription-payment-method.js:154
 msgid "Current Payment Method"
-msgstr "Τρέχουσα Μέθοδος Πληρωμής"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:113
 #: Controllers/SubscriptionController.php:203
@@ -3793,6 +4016,10 @@ msgstr ""
 #: bumps/modules/CTA.js:10
 #, fuzzy
 msgid "Custom Call to action"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:195
+msgid "Custom Shipping Profiles"
 msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:17
@@ -3942,9 +4169,7 @@ msgctxt "block title"
 msgid "Customer Payment Methods"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:40
-#: settings/portal/PortalSettings.js:39
-#, fuzzy
+#: settings/subscription/SubscriptionSettings.js:297
 msgid "Customer Portal"
 msgstr ""
 
@@ -4045,10 +4270,30 @@ msgstr ""
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr ""
 
+#: settings/shipping/zone/ShippingZone.js:79
+msgid "Customers won't be able to complete checkout for products in this zone."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:194
+msgid "Customers won't see this."
+msgstr ""
+
+#: products/modules/Shipping.js:101
+msgid "Customers won’t enter shipping details at checkout."
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:79
+msgid "Customers won’t see this."
+msgstr ""
+
 #: dashboard/components/GetStarted.js:85
 #: dashboard/components/GetStarted.js:91
 #, fuzzy
 msgid "Customize"
+msgstr ""
+
+#: onboarding/components/ConfirmStoreDetails.js:39
+msgid "Customize and configure your store settings."
 msgstr ""
 
 #: dashboard/components/GetStarted.js:86
@@ -4075,21 +4320,20 @@ msgstr ""
 msgid "Customize your checkout forms with a no-code experience."
 msgstr ""
 
-#: address.js:73
+#: address.js:70
 msgid "Cyprus"
-msgstr "Κύπρος"
+msgstr ""
 
 #: src/Support/Currency.php:275
 #, fuzzy
 msgid "Czech Koruna"
 msgstr ""
 
-#: address.js:74
+#: address.js:71
 msgid "Czechia"
 msgstr ""
 
-#: address.js:75
-#, fuzzy
+#: address.js:72
 msgid "Côte d'Ivoire"
 msgstr ""
 
@@ -4250,9 +4494,13 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Delete Payment Method"
-msgstr "Διαγραφή Μεθόδου Πληρωμής"
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:54
+msgid "Delete Shipping Profile"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:191
 #, fuzzy
@@ -4291,9 +4539,16 @@ msgstr ""
 msgid "Deleting This is Restricted"
 msgstr ""
 
-#: address.js:76
+#: src/Controllers/Admin/Orders/OrdersListTable.php:390
+#: orders/modules/Fulfillment/components/StatusDropdown.js:21
+#: sc-fulfillment-shipping-status-badge2.js:9
+#: sc-order-shipment-badge2.js:10
+msgid "Delivered"
+msgstr ""
+
+#: address.js:73
 msgid "Denmark"
-msgstr "Δανία"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:80
 #: products/components/SelectTemplatePart/create-modal.js:84
@@ -4328,6 +4583,10 @@ msgstr ""
 #: src/Rest/BlockPatternsRestServiceProvider.php:219
 #, fuzzy
 msgid "Determines whether the pattern is visible in inserter."
+msgstr ""
+
+#: products/modules/Shipping.js:85
+msgid "Digital product or service"
 msgstr ""
 
 #: coupons/components/DisableModal.js:27
@@ -4399,8 +4658,7 @@ msgstr ""
 msgid "Discounts"
 msgstr ""
 
-#: sc-password-nag.js:86
-#, fuzzy
+#: sc-password-nag.js:98
 msgid "Dismiss"
 msgstr ""
 
@@ -4642,6 +4900,11 @@ msgctxt "block description"
 msgid "Display the cart subtotal"
 msgstr ""
 
+#: Blocks/ShippingChoices/block.json
+msgctxt "block description"
+msgid "Display the list of shipping choices"
+msgstr ""
+
 #: Blocks/Product/Description/block.json
 msgctxt "block description"
 msgid "Display the product description"
@@ -4651,6 +4914,11 @@ msgstr ""
 #, fuzzy
 msgctxt "block description"
 msgid "Display the session totals."
+msgstr ""
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block description"
+msgid "Display the shipping amount"
 msgstr ""
 
 #: Blocks/StoreLogo/block.json
@@ -4664,8 +4932,7 @@ msgctxt "block description"
 msgid "Display your order bumps."
 msgstr ""
 
-#: sc-pagination2.js:37
-#, fuzzy
+#: sc-pagination2.js:40
 msgid "Displaying %1d to %2d of %3d items"
 msgstr ""
 
@@ -4882,8 +5149,7 @@ msgctxt "block title"
 msgid "Divider"
 msgstr ""
 
-#: address.js:77
-#, fuzzy
+#: address.js:74
 msgid "Djibouti"
 msgstr ""
 
@@ -4892,8 +5158,7 @@ msgstr ""
 msgid "Djiboutian Franc"
 msgstr ""
 
-#: address.js:78
-#, fuzzy
+#: address.js:75
 msgid "Dominica"
 msgstr ""
 
@@ -4902,8 +5167,7 @@ msgstr ""
 msgid "Dominican Peso"
 msgstr ""
 
-#: address.js:79
-#, fuzzy
+#: address.js:76
 msgid "Dominican Republic"
 msgstr ""
 
@@ -4936,11 +5200,6 @@ msgstr ""
 #: settings/abandoned/AbandonedSettings.js:127
 #: settings/abandoned/util.js:9
 msgid "Don't send"
-msgstr ""
-
-#: src/Controllers/Admin/Onboarding.php:46
-#, fuzzy
-msgid "Donation"
 msgstr ""
 
 #: Blocks/Donation/block.json
@@ -4995,8 +5254,7 @@ msgstr ""
 msgid "Download Receipt / Invoice"
 msgstr ""
 
-#: sc-order.js:145
-#, fuzzy
+#: sc-order.js:153
 msgid "Download Receipt/Invoice"
 msgstr ""
 
@@ -5034,12 +5292,15 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
+#: store/add-entities.js:88
+msgid "Draft Checkout"
+msgstr ""
+
 #: src/Rest/CustomerRestServiceProvider.php:90
 msgid "Dry run the sync."
 msgstr ""
 
-#: sc-checkout.js:187
-#, fuzzy
+#: sc-checkout.js:203
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
 msgstr ""
 
@@ -5051,6 +5312,11 @@ msgstr ""
 #: coupons/Sidebar.js:75
 #, fuzzy
 msgid "Duration"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:127
+#: settings/shipping/rate/ShippingRateForm.js:319
+msgid "E.g. 1-2 days"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:10
@@ -5073,9 +5339,13 @@ msgstr ""
 msgid "East Caribbean Dollar"
 msgstr ""
 
-#: address.js:80
+#: Blocks/ShippingChoices/edit.js:43
+msgid "Economy"
+msgstr ""
+
+#: address.js:77
 msgid "Ecuador"
-msgstr "Ισημερινός"
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:281
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:262
@@ -5096,6 +5366,10 @@ msgstr ""
 #: licenses/modules/Activations/Activation.js:137
 #, fuzzy
 msgid "Edit Activation"
+msgstr ""
+
+#: subscriptions/edit/modules/Price.js:105
+msgid "Edit Amount"
 msgstr ""
 
 #: bumps/EditBump.js:173
@@ -5167,6 +5441,18 @@ msgstr ""
 msgid "Edit Promotion Code"
 msgstr ""
 
+#: checkouts/modules/Address.js:120
+msgid "Edit Shipping & Tax Address"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:90
+msgid "Edit Shipping Method"
+msgstr ""
+
+#: settings/shipping/rate/EditShippingRate.js:17
+msgid "Edit Shipping Rate"
+msgstr ""
+
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:394
 #: subscriptions/edit/EditSubscription.js:227
 #, fuzzy
@@ -5175,6 +5461,18 @@ msgstr ""
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:41
 msgid "Edit SureCart Product"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:126
+msgid "Edit Tax ID"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/AddTracking.js:69
+msgid "Edit Tracking"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:264
+msgid "Edit Zone"
 msgstr ""
 
 #: products/components/SelectTemplate/form.js:125
@@ -5186,24 +5484,28 @@ msgstr ""
 msgid "Edit the layout of each product"
 msgstr ""
 
+#: orders/modules/Fulfillment/Fulfilled.js:144
+msgid "Edit tracking"
+msgstr ""
+
 #: Blocks/CartItems/edit.js:44
 #: Blocks/LineItems/edit.js:36
 #, fuzzy
 msgid "Editable"
 msgstr ""
 
-#: address.js:81
+#: address.js:78
 msgid "Egypt"
-msgstr "Αίγυπτος"
+msgstr ""
 
 #: src/Support/Currency.php:280
 #, fuzzy
 msgid "Egyptian Pound"
 msgstr ""
 
-#: address.js:82
+#: address.js:79
 msgid "El Salvador"
-msgstr "Ελ Σαλβαδόρ"
+msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
 #: coupons/modules/CustomerSelector.js:132
@@ -5241,8 +5543,11 @@ msgstr ""
 msgid "Email Status"
 msgstr ""
 
-#: sc-login-provider2.js:79
-#, fuzzy
+#: settings/customer/CustomerSettings.js:307
+msgid "Email Verification Code"
+msgstr ""
+
+#: sc-login-provider2.js:83
 msgid "Email or Username"
 msgstr ""
 
@@ -5277,9 +5582,17 @@ msgstr ""
 msgid "Enable PayPal payment"
 msgstr ""
 
+#: Blocks/Payment/components/Inspector.js:108
+msgid "Enable Paystack payment"
+msgstr ""
+
 #: settings/account/AccountSettings.js:260
 #, fuzzy
 msgid "Enable Recaptcha spam protection on checkout forms."
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:146
+msgid "Enable Shipping Rates"
 msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:65
@@ -5346,6 +5659,10 @@ msgstr ""
 msgid "Enabled Processors"
 msgstr ""
 
+#: settings/shipping/ShippingSettings.js:148
+msgid "Enabling shipping rates allows you to charge shipping costs and restrict purchase areas."
+msgstr ""
+
 #: coupons/modules/Limits.js:72
 #, fuzzy
 msgid "End Date"
@@ -5395,6 +5712,10 @@ msgstr ""
 msgid "Enter An Amount"
 msgstr ""
 
+#: checkouts/modules/Payment.js:141
+msgid "Enter Coupon Code"
+msgstr ""
+
 #: src/Routing/PermalinksSettingsService.php:86
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
@@ -5414,6 +5735,10 @@ msgstr "Εισάγετε έναν τίτλο για τη φόρμα σας"
 msgid "Enter a website URL"
 msgstr ""
 
+#: checkouts/modules/Price.js:215
+msgid "Enter an Amount"
+msgstr ""
+
 #: settings/brand/BrandSettings.js:159
 #, fuzzy
 msgid "Enter an email"
@@ -5427,6 +5752,10 @@ msgstr ""
 #: sc-coupon-form2.js:73
 #, fuzzy
 msgid "Enter coupon code"
+msgstr ""
+
+#: onboarding/components/ConfirmStoreEmail.js:61
+msgid "Enter email address"
 msgstr ""
 
 #: licenses/modules/Details/index.js:56
@@ -5471,28 +5800,25 @@ msgstr ""
 msgid "Enter your license key to activate your plan on thie store."
 msgstr ""
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "Enter your password"
-msgstr "Πληκτρολογήστε τον κωδικό σας"
+msgstr ""
 
-#: address.js:83
-#, fuzzy
+#: address.js:80
 msgid "Equatorial Guinea"
 msgstr ""
 
-#: address.js:84
-#, fuzzy
+#: address.js:81
 msgid "Eritrea"
 msgstr ""
 
-#: sc-cart-form.js:128
-#: sc-dashboard-module2.js:16
-#: sc-login-form.js:106
-#: sc-paypal-add-method.js:103
-#: sc-stripe-add-method.js:128
-#: sc-upcoming-invoice.js:208
+#: sc-cart-form.js:129
+#: sc-dashboard-module2.js:17
+#: sc-paypal-add-method.js:108
+#: sc-stripe-add-method.js:132
+#: sc-upcoming-invoice.js:221
 msgid "Error"
-msgstr "Σφάλμα"
+msgstr ""
 
 #: abandoned-checkouts/components/Link.js:35
 #: licenses/modules/Details/Copy.js:16
@@ -5513,22 +5839,20 @@ msgid "Error."
 msgstr ""
 
 #: sc-line-item-tax2.js:18
-#, fuzzy
 msgid "Estimated %s"
 msgstr ""
 
-#: address.js:85
+#: address.js:82
 msgid "Estonia"
-msgstr "Εσθονία"
+msgstr ""
 
-#: address.js:86
-#, fuzzy
+#: address.js:83
 msgid "Eswatini"
 msgstr ""
 
-#: address.js:87
+#: address.js:84
 msgid "Ethiopia"
-msgstr "Αιθιοπία"
+msgstr ""
 
 #: src/Support/Currency.php:281
 #, fuzzy
@@ -5548,7 +5872,7 @@ msgstr ""
 
 #: sc-product-price-choices.js:26
 msgid "Every"
-msgstr "Κάθε"
+msgstr ""
 
 #: Blocks/CartItems/edit.js:72
 #: Blocks/CartItems/edit.js:81
@@ -5581,14 +5905,17 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
+#: Blocks/ShippingChoices/edit.js:34
+msgid "Express"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 #, fuzzy
 msgctxt "block title"
 msgid "Express Payment"
 msgstr ""
 
-#: sc-stripe-payment-request2.js:287
-#, fuzzy
+#: sc-stripe-payment-request2.js:286
 msgid "Express Payment"
 msgstr ""
 
@@ -5617,8 +5944,15 @@ msgstr ""
 msgid "Failed to create refund."
 msgstr ""
 
-#: sc-paypal-add-method.js:74
-#, fuzzy
+#: settings/shipping/rate/ShippingRateForm.js:141
+msgid "Failed to create shipping method"
+msgstr ""
+
+#: onboarding/Onboarding.js:102
+msgid "Failed to create store. Please try again."
+msgstr ""
+
+#: sc-paypal-add-method.js:79
 msgid "Failed to load the PayPal JS SDK script"
 msgstr ""
 
@@ -5649,8 +5983,7 @@ msgstr ""
 msgid "Failed to update. Please check for errors and try again."
 msgstr ""
 
-#: address.js:88
-#, fuzzy
+#: address.js:85
 msgid "Falkland Islands (Malvinas)"
 msgstr ""
 
@@ -5659,12 +5992,19 @@ msgstr ""
 msgid "Falkland Pound"
 msgstr ""
 
+#: settings/shipping/zone/ShippingZone.js:183
+msgid "Fallback"
+msgstr ""
+
 #: settings/tax/TaxSettings.js:97
 msgid "Fallback Rate"
 msgstr "Συντελεστής Προεπιλογής"
 
-#: address.js:89
-#, fuzzy
+#: settings/shipping/zone/FallbackZone.js:33
+msgid "Fallback Zone"
+msgstr ""
+
+#: address.js:86
 msgid "Faroe Islands"
 msgstr ""
 
@@ -5672,14 +6012,17 @@ msgstr ""
 msgid "Featured"
 msgstr ""
 
-#: sc-customer-firstname.js:50
-#: sc-customer-lastname.js:47
-#: sc-customer-name.js:47
-msgid "Field must not be empty."
-msgstr "Το πεδίο δεν μπορεί να είναι κενό."
+#: checkouts/modules/Price.js:182
+msgid "Fee"
+msgstr ""
 
-#: address.js:90
-#, fuzzy
+#: sc-customer-firstname.js:46
+#: sc-customer-lastname.js:43
+#: sc-customer-name.js:42
+msgid "Field must not be empty."
+msgstr ""
+
+#: address.js:87
 msgid "Fiji"
 msgstr ""
 
@@ -5701,6 +6044,20 @@ msgstr ""
 #: src/Rest/ProductsRestServiceProvider.php:53
 #, fuzzy
 msgid "Files attached to the product."
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:436
+msgid "Filter"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:346
+msgid "Filter by fulfillment"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:382
+msgid "Filter by shipment"
 msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:222
@@ -5737,9 +6094,9 @@ msgstr ""
 msgid "Fingerprint"
 msgstr ""
 
-#: address.js:91
+#: address.js:88
 msgid "Finland"
-msgstr "Φινλανδία"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:114
 #, fuzzy
@@ -5773,6 +6130,11 @@ msgstr ""
 msgid "First Name Label"
 msgstr ""
 
+#: settings/shipping/profile/ShippingProfile.js:176
+#: settings/shipping/zone/ShippingZones.js:79
+msgid "First create a shipping zone (where you ship to) and then a shipping rate (the cost to ship there)."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:242
 #, fuzzy
 msgid "First email sent when a checkout is abandoned."
@@ -5791,6 +6153,11 @@ msgstr ""
 #: settings/abandoned/Coupon.js:72
 #, fuzzy
 msgid "Fixed Discount"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateCondition.js:53
+#: settings/shipping/rate/ShippingRateForm.js:421
+msgid "Flat Rate"
 msgstr ""
 
 #: settings/account/components/CartSettings.js:279
@@ -5864,9 +6231,9 @@ msgstr "Όνομα Φόρμας"
 msgid "Forms"
 msgstr ""
 
-#: address.js:92
+#: address.js:89
 msgid "France"
-msgstr "Γαλλία"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:125
 #, fuzzy
@@ -5900,19 +6267,48 @@ msgstr ""
 msgid "Free Trial Ends"
 msgstr ""
 
-#: address.js:93
-#, fuzzy
+#: address.js:90
 msgid "French Guiana"
 msgstr ""
 
-#: address.js:94
-#, fuzzy
+#: address.js:91
 msgid "French Polynesia"
 msgstr ""
 
-#: address.js:95
-#, fuzzy
+#: address.js:92
 msgid "French Southern Territories"
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:162
+#: orders/modules/Fulfillment/CreateFulfillment.js:341
+#: orders/modules/Fulfillment/Unfulfilled.js:75
+#: orders/modules/Fulfillment/Unfulfilled.js:87
+msgid "Fulfill Item"
+msgid_plural "Fulfill Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:352
+#: orders/modules/Fulfillment/Fulfilled.js:90
+#: sc-order-fulfillment-badge.js:8
+msgid "Fulfilled"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:204
+msgid "Fulfilled on"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:104
+#: store/add-entities.js:88
+msgid "Fulfillment"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:52
+msgid "Fulfillment canceled."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:130
+msgid "Fulfillment created."
 msgstr ""
 
 #: Blocks/CustomerDashboardButton/edit.js:50
@@ -5929,11 +6325,6 @@ msgstr "Πλήρες Όνομα"
 #: Blocks/Columns/edit.js:125
 msgid "Full vertical height"
 msgstr "Πλήρες κάθετο ύψος"
-
-#: settings/portal/PortalSettings.js:50
-#, fuzzy
-msgid "Functionality"
-msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:278
 #, fuzzy
@@ -6815,13 +7206,11 @@ msgstr ""
 msgid "GST Registration"
 msgstr ""
 
-#: address.js:96
-#, fuzzy
+#: address.js:93
 msgid "Gabon"
 msgstr ""
 
-#: address.js:97
-#, fuzzy
+#: address.js:94
 msgid "Gambia"
 msgstr ""
 
@@ -6830,18 +7219,18 @@ msgstr ""
 msgid "Gambian Dalasi"
 msgstr ""
 
-#: address.js:98
+#: address.js:95
 msgid "Georgia"
-msgstr "Γεωργία"
+msgstr ""
 
 #: src/Support/Currency.php:286
 #, fuzzy
 msgid "Georgian Lari"
 msgstr ""
 
-#: address.js:99
+#: address.js:96
 msgid "Germany"
-msgstr "Γερμανία"
+msgstr ""
 
 #: admin/onboarding/show.php:69
 #: dashboard/components/LearnMore.js:53
@@ -6873,13 +7262,11 @@ msgstr "Ξεκινήστε επιλέγοντας μια φόρμα ή ξεκι�
 msgid "Get started with SureCart"
 msgstr ""
 
-#: address.js:100
-#, fuzzy
+#: address.js:97
 msgid "Ghana"
 msgstr ""
 
-#: address.js:101
-#, fuzzy
+#: address.js:98
 msgid "Gibraltar"
 msgstr ""
 
@@ -6906,17 +7293,15 @@ msgstr ""
 msgid "Grace Period"
 msgstr ""
 
-#: address.js:102
+#: address.js:99
 msgid "Greece"
-msgstr "Ελλάδα"
+msgstr ""
 
-#: address.js:103
-#, fuzzy
+#: address.js:100
 msgid "Greenland"
 msgstr ""
 
-#: address.js:104
-#, fuzzy
+#: address.js:101
 msgid "Grenada"
 msgstr ""
 
@@ -6938,13 +7323,11 @@ msgstr ""
 msgid "Grow your store worry-free."
 msgstr ""
 
-#: address.js:105
-#, fuzzy
+#: address.js:102
 msgid "Guadeloupe"
 msgstr ""
 
-#: address.js:107
-#, fuzzy
+#: address.js:103
 msgid "Guatemala"
 msgstr ""
 
@@ -6953,17 +7336,15 @@ msgstr ""
 msgid "Guatemalan Quetzal"
 msgstr ""
 
-#: address.js:108
-#, fuzzy
+#: address.js:104
 msgid "Guernsey"
 msgstr ""
 
-#: address.js:109
+#: address.js:105
 msgid "Guinea"
-msgstr "Γουινέα"
+msgstr ""
 
-#: address.js:110
-#, fuzzy
+#: address.js:106
 msgid "Guinea-Bissau"
 msgstr ""
 
@@ -6972,8 +7353,7 @@ msgstr ""
 msgid "Guinean Franc"
 msgstr ""
 
-#: address.js:111
-#, fuzzy
+#: address.js:107
 msgid "Guyana"
 msgstr ""
 
@@ -6982,9 +7362,9 @@ msgstr ""
 msgid "Guyanese Dollar"
 msgstr ""
 
-#: address.js:112
+#: address.js:108
 msgid "Haiti"
-msgstr "Αϊτή"
+msgstr ""
 
 #: src/Support/Currency.php:291
 #, fuzzy
@@ -7001,8 +7381,7 @@ msgstr ""
 msgid "Heading %d"
 msgstr ""
 
-#: address.js:113
-#, fuzzy
+#: address.js:109
 msgid "Heard Island and McDonald Islands"
 msgstr ""
 
@@ -7033,8 +7412,7 @@ msgstr ""
 msgid "Hide %d Archived Promotion Codes"
 msgstr ""
 
-#: address.js:114
-#, fuzzy
+#: address.js:110
 msgid "Holy See (Vatican City State)"
 msgstr ""
 
@@ -7048,18 +7426,18 @@ msgstr ""
 msgid "Honduran Lempira"
 msgstr ""
 
-#: address.js:115
+#: address.js:111
 msgid "Honduras"
-msgstr "Ονδούρας"
+msgstr ""
 
 #: settings/account/AccountSettings.js:242
 #, fuzzy
 msgid "Honeypot"
 msgstr ""
 
-#: address.js:116
+#: address.js:112
 msgid "Hong Kong"
-msgstr "Χονγκ Κονγκ"
+msgstr ""
 
 #: src/Support/Currency.php:293
 #, fuzzy
@@ -7076,9 +7454,9 @@ msgstr ""
 msgid "Hungarian Forint"
 msgstr ""
 
-#: address.js:117
+#: address.js:113
 msgid "Hungary"
-msgstr "Ουγγαρία"
+msgstr ""
 
 #. translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
 #: src/Controllers/Web/BuyPageController.php:214
@@ -7110,9 +7488,9 @@ msgstr ""
 msgid "I.E. Pay with cash upon delivery."
 msgstr ""
 
-#: address.js:118
+#: address.js:114
 msgid "Iceland"
-msgstr "Ισλανδία"
+msgstr ""
 
 #: src/Support/Currency.php:295
 #, fuzzy
@@ -7231,8 +7609,7 @@ msgstr ""
 msgid "If there are errors in the checkout, they will display here."
 msgstr "Αν υπάρχουν σφάλματα κατά την ολοκλήρωση της παραγγελίας, θα εμφανιστούν εδώ."
 
-#: sc-subscription-cancel.js:88
-#, fuzzy
+#: sc-subscription-cancel2.js:60
 msgid "If you change your mind, you can renew your subscription."
 msgstr ""
 
@@ -7321,6 +7698,10 @@ msgstr ""
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
+#: sc-paystack-add-method.js:71
+msgid "In order to add a new card, we will need to make a small transaction to authenticate it. This is for authentication purposes and will be immediately refunded."
+msgstr ""
+
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: licenses/modules/Details/index.js:20
 #: sc-licenses-list.js:36
@@ -7329,7 +7710,6 @@ msgid "Inactive"
 msgstr ""
 
 #: sc-subscription-status-badge2.js:50
-#, fuzzy
 msgid "Incomplete"
 msgstr ""
 
@@ -7338,18 +7718,18 @@ msgstr ""
 msgid "Increase quantity"
 msgstr ""
 
-#: address.js:119
+#: address.js:115
 msgid "India"
-msgstr "Ινδία"
+msgstr ""
 
 #: src/Support/Currency.php:296
 #, fuzzy
 msgid "Indian Rupee"
 msgstr ""
 
-#: address.js:120
+#: address.js:116
 msgid "Indonesia"
-msgstr "Ινδονησία"
+msgstr ""
 
 #: src/Support/Currency.php:297
 #, fuzzy
@@ -7469,6 +7849,10 @@ msgstr ""
 msgid "Invalid API token."
 msgstr ""
 
+#: onboarding/components/ConfirmStoreEmail.js:26
+msgid "Invalid email address!"
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:13
 #, fuzzy
 msgid "Invalid promotion code."
@@ -7501,8 +7885,7 @@ msgstr ""
 msgid "Invoice Details"
 msgstr ""
 
-#: sc-invoices-list.js:140
-#, fuzzy
+#: sc-invoices-list.js:142
 msgid "Invoice History"
 msgstr ""
 
@@ -7524,26 +7907,25 @@ msgstr ""
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr ""
 
-#: address.js:121
+#: address.js:117
 msgid "Iran, Islamic Republic of"
-msgstr "Ιράν"
+msgstr ""
 
-#: address.js:122
+#: address.js:118
 msgid "Iraq"
-msgstr "Ιράκ"
+msgstr ""
 
-#: address.js:123
+#: address.js:119
 msgid "Ireland"
-msgstr "Ιρλανδία"
+msgstr ""
 
-#: address.js:124
-#, fuzzy
+#: address.js:120
 msgid "Isle of Man"
 msgstr ""
 
-#: address.js:125
+#: address.js:121
 msgid "Israel"
-msgstr "Ισραήλ"
+msgstr ""
 
 #: src/Support/Currency.php:298
 #, fuzzy
@@ -7594,9 +7976,9 @@ msgstr ""
 msgid "It must be greater than the largest existing order number."
 msgstr ""
 
-#: address.js:126
+#: address.js:122
 msgid "Italy"
-msgstr "Ιταλία"
+msgstr ""
 
 #: customers/modules/Purchases.js:38
 #: invoices/modules/Purchases.js:31
@@ -7614,32 +7996,31 @@ msgstr ""
 msgid "Items"
 msgstr ""
 
-#: address.js:127
+#: address.js:123
 msgid "Jamaica"
-msgstr "Τζαμάικα"
+msgstr ""
 
 #: src/Support/Currency.php:299
 #, fuzzy
 msgid "Jamaican Dollar"
 msgstr ""
 
-#: address.js:128
+#: address.js:124
 msgid "Japan"
-msgstr "Ιαπωνία"
+msgstr ""
 
 #: src/Support/Currency.php:300
 #, fuzzy
 msgid "Japanese Yen"
 msgstr ""
 
-#: address.js:129
-#, fuzzy
+#: address.js:125
 msgid "Jersey"
 msgstr ""
 
-#: address.js:130
+#: address.js:126
 msgid "Jordan"
-msgstr "Ιορδανία"
+msgstr ""
 
 #: admin/onboarding/complete.php:56
 #, fuzzy
@@ -7662,8 +8043,7 @@ msgstr ""
 msgid "Justify items right"
 msgstr ""
 
-#: address.js:131
-#, fuzzy
+#: address.js:127
 msgid "Kazakhstan"
 msgstr ""
 
@@ -7672,18 +8052,18 @@ msgstr ""
 msgid "Kazakhstani Tenge"
 msgstr ""
 
-#: sc-subscription-cancel2.js:56
+#: sc-subscription-cancel2.js:66
 msgid "Keep My Plan"
-msgstr "Διατήρηση του προγράμματός μου"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:197
 #, fuzzy
 msgid "Keep Update"
 msgstr ""
 
-#: address.js:132
+#: address.js:128
 msgid "Kenya"
-msgstr "Κένυα"
+msgstr ""
 
 #: src/Support/Currency.php:302
 #, fuzzy
@@ -7696,17 +8076,15 @@ msgstr ""
 msgid "Key"
 msgstr ""
 
-#: address.js:133
-#, fuzzy
+#: address.js:129
 msgid "Kiribati"
 msgstr ""
 
-#: address.js:134
+#: address.js:130
 msgid "Kuwait"
-msgstr "Κουβέιτ"
+msgstr ""
 
-#: address.js:135
-#, fuzzy
+#: address.js:131
 msgid "Kyrgyzstan"
 msgstr ""
 
@@ -7768,8 +8146,7 @@ msgstr ""
 msgid "Lao Kip"
 msgstr ""
 
-#: address.js:136
-#, fuzzy
+#: address.js:132
 msgid "Lao People's Democratic Republic"
 msgstr ""
 
@@ -7827,11 +8204,11 @@ msgstr ""
 #: sc-product-item-list.js:137
 #: sc-product-item-list.js:150
 msgid "Latest"
-msgstr "Νεότερο"
+msgstr ""
 
-#: address.js:137
+#: address.js:133
 msgid "Latvia"
-msgstr "Λετονία"
+msgstr ""
 
 #: Blocks/Column/edit.js:134
 msgid "Layout"
@@ -7868,8 +8245,7 @@ msgstr ""
 msgid "Lebanese Pound"
 msgstr ""
 
-#: address.js:138
-#, fuzzy
+#: address.js:134
 msgid "Lebanon"
 msgstr ""
 
@@ -7877,8 +8253,7 @@ msgstr ""
 msgid "Left"
 msgstr "Αριστερά"
 
-#: address.js:139
-#, fuzzy
+#: address.js:135
 msgid "Lesotho"
 msgstr ""
 
@@ -7893,8 +8268,7 @@ msgctxt "block description"
 msgid "Lets the customer update payment methods."
 msgstr ""
 
-#: address.js:140
-#, fuzzy
+#: address.js:136
 msgid "Liberia"
 msgstr ""
 
@@ -7903,8 +8277,7 @@ msgstr ""
 msgid "Liberian Dollar"
 msgstr ""
 
-#: address.js:141
-#, fuzzy
+#: address.js:137
 msgid "Libya"
 msgstr ""
 
@@ -7944,8 +8317,7 @@ msgstr ""
 msgid "Licensing"
 msgstr ""
 
-#: address.js:142
-#, fuzzy
+#: address.js:138
 msgid "Liechtenstein"
 msgstr ""
 
@@ -8024,6 +8396,10 @@ msgctxt "block title"
 msgid "Line Items"
 msgstr ""
 
+#: store/add-entities.js:131
+msgid "Line Items"
+msgstr ""
+
 #: products/modules/BuyLink.js:273
 msgid "Link"
 msgstr ""
@@ -8050,9 +8426,9 @@ msgstr ""
 msgid "Links and Shortcodes"
 msgstr ""
 
-#: address.js:143
+#: address.js:139
 msgid "Lithuania"
-msgstr "Λιθουανία"
+msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/WordPress/PostTypes/FormPostTypeService.php:321
@@ -8062,16 +8438,12 @@ msgstr "Λιθουανία"
 msgid "Live"
 msgstr ""
 
-#: admin/processors.php:65
-#: admin/processors.php:143
-#, fuzzy
-msgid "Live Payments Enabled"
+#: settings/processors/ProcessorSettings.js:70
+msgid "Live Payments Disabled"
 msgstr ""
 
-#: admin/processors.php:70
-#: admin/processors.php:148
-#, fuzzy
-msgid "Live Payments Not Enabled"
+#: settings/processors/ProcessorSettings.js:66
+msgid "Live Payments Enabled"
 msgstr ""
 
 #: components/data-tables/PaginationFooter.js:16
@@ -8108,13 +8480,13 @@ msgstr "Αποσύνδεση"
 msgid "Login"
 msgstr ""
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Login to your account"
-msgstr "Συνδεθείτε στον λογαριασμό σας"
+msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Login with Code"
-msgstr "Είσοδος με κωδικό"
+msgstr ""
 
 #: settings/brand/Logo.js:110
 #, fuzzy
@@ -8137,8 +8509,7 @@ msgstr "Κουμπί Αποσύνδεσης"
 msgid "Logout button settings"
 msgstr ""
 
-#: address.js:144
-#, fuzzy
+#: address.js:140
 msgid "Luxembourg"
 msgstr ""
 
@@ -8147,8 +8518,7 @@ msgstr ""
 msgid "Macanese Pataca"
 msgstr ""
 
-#: address.js:145
-#, fuzzy
+#: address.js:141
 msgid "Macao"
 msgstr ""
 
@@ -8157,13 +8527,8 @@ msgstr ""
 msgid "Macedonian Denar"
 msgstr ""
 
-#: address.js:146
+#: address.js:142
 msgid "Madagascar"
-msgstr "Μαδαγασκάρη"
-
-#: settings/customer/CustomerSettings.js:277
-#, fuzzy
-msgid "Magic Sign In"
 msgstr ""
 
 #: customers/modules/PaymentMethods/Actions.js:87
@@ -8185,8 +8550,7 @@ msgstr ""
 msgid "Malagasy Ariary"
 msgstr ""
 
-#: address.js:147
-#, fuzzy
+#: address.js:143
 msgid "Malawi"
 msgstr ""
 
@@ -8195,35 +8559,39 @@ msgstr ""
 msgid "Malawian Kwacha"
 msgstr ""
 
-#: address.js:148
+#: address.js:144
 msgid "Malaysia"
-msgstr "Μαλαισία"
+msgstr ""
 
 #: src/Support/Currency.php:312
 #, fuzzy
 msgid "Malaysian Ringgit"
 msgstr ""
 
-#: address.js:149
+#: address.js:145
 msgid "Maldives"
-msgstr "Μαλδίβες"
+msgstr ""
 
 #: src/Support/Currency.php:313
 #, fuzzy
 msgid "Maldivian Rufiyaa"
 msgstr ""
 
-#: address.js:150
+#: address.js:146
 msgid "Mali"
-msgstr "Μάλι"
+msgstr ""
 
-#: address.js:151
+#: address.js:147
 msgid "Malta"
-msgstr "Μάλτα"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:155
 #, fuzzy
 msgid "Manage Scheduled Update"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:131
+msgid "Manage Shipping Profile"
 msgstr ""
 
 #: products/components/SelectTemplatePart/index.js:99
@@ -8297,14 +8665,13 @@ msgstr ""
 msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
+#: orders/Order.js:112
+msgid "Mark As Paid"
+msgstr ""
+
 #: orders/modules/OrderStatusConfirmModal.js:85
 #, fuzzy
 msgid "Mark Paid"
-msgstr ""
-
-#: orders/Order.js:154
-#, fuzzy
-msgid "Mark as Paid"
 msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:354
@@ -8313,21 +8680,21 @@ msgctxt "comment"
 msgid "Mark as spam"
 msgstr ""
 
-#: address.js:152
+#: address.js:148
 msgid "Marshall Islands"
-msgstr "Νήσοι Μάρσαλ"
+msgstr ""
 
-#: address.js:153
+#: address.js:149
 msgid "Martinique"
-msgstr "Μαρτινίκα"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:127
 msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
 msgstr ""
 
-#: address.js:154
+#: address.js:150
 msgid "Mauritania"
-msgstr "Μαυριτανία"
+msgstr ""
 
 #: src/Support/Currency.php:314
 #, fuzzy
@@ -8339,9 +8706,9 @@ msgstr ""
 msgid "Mauritian Rupee"
 msgstr ""
 
-#: address.js:155
+#: address.js:151
 msgid "Mauritius"
-msgstr "Μαυρίκιος"
+msgstr ""
 
 #: components/MediaLibrary/index.js:182
 #, fuzzy
@@ -8361,8 +8728,11 @@ msgstr ""
 msgid "Maximum height"
 msgstr "Μέγιστο ύψος"
 
-#: address.js:156
-#, fuzzy
+#: settings/shipping/rate/ShippingRateForm.js:248
+msgid "Maximum weight"
+msgstr ""
+
+#: address.js:152
 msgid "Mayotte"
 msgstr ""
 
@@ -8371,9 +8741,9 @@ msgstr ""
 msgid "Media"
 msgstr ""
 
-#: fetch.js:1958
+#: fetch.js:807
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
-msgstr "Το ανέβασμα πολυμέσων απέτυχε. Αν πρόκειται για φωτογραφία ή μεγάλη εικόνα, μειώστε το μέγεθος και προσπαθήστε ξανά."
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:123
 #: Blocks/BuyButton/edit.js:108
@@ -8449,8 +8819,7 @@ msgstr ""
 msgid "Mexican Peso"
 msgstr ""
 
-#: address.js:157
-#, fuzzy
+#: address.js:153
 msgid "Mexico"
 msgstr ""
 
@@ -8459,14 +8828,17 @@ msgstr ""
 msgid "Micro-Business Exemption"
 msgstr ""
 
-#: address.js:158
-#, fuzzy
+#: address.js:154
 msgid "Micronesia, Federated States of"
 msgstr ""
 
 #: products/components/price/parts/AdHoc.js:29
 #, fuzzy
 msgid "Minimum Price"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:236
+msgid "Minimum weight"
 msgstr ""
 
 #: products/modules/Prices/Price/Header.js:269
@@ -8479,8 +8851,7 @@ msgstr ""
 msgid "Mode"
 msgstr ""
 
-#: address.js:159
-#, fuzzy
+#: address.js:155
 msgid "Moldova"
 msgstr ""
 
@@ -8493,23 +8864,22 @@ msgstr ""
 msgid "Mollie"
 msgstr ""
 
-#: address.js:160
-#, fuzzy
+#: address.js:156
 msgid "Monaco"
 msgstr ""
 
-#: address.js:161
+#: address.js:157
 msgid "Mongolia"
-msgstr "Μογγολία"
+msgstr ""
 
 #: src/Support/Currency.php:318
 #, fuzzy
 msgid "Mongolian Tögrög"
 msgstr ""
 
-#: address.js:162
+#: address.js:158
 msgid "Montenegro"
-msgstr "Μαυροβούνιο"
+msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:92
 #: util.js:39
@@ -8528,8 +8898,7 @@ msgstr ""
 msgid "Monthly, Basic Plan, etc."
 msgstr ""
 
-#: address.js:163
-#, fuzzy
+#: address.js:159
 msgid "Montserrat"
 msgstr ""
 
@@ -8538,9 +8907,9 @@ msgstr ""
 msgid "Moroccan Dirham"
 msgstr ""
 
-#: address.js:164
+#: address.js:160
 msgid "Morocco"
-msgstr "Μαρόκο"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:366
 #, fuzzy
@@ -8552,9 +8921,21 @@ msgstr ""
 msgid "Mozambican Metical"
 msgstr ""
 
-#: address.js:165
+#: address.js:161
 msgid "Mozambique"
-msgstr "Μοζαμβίκη"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:30
+msgid "Musical Instruments"
+msgstr ""
+
+#: sc-price-input2.js:51
+msgid "Must be %d or less."
+msgstr ""
+
+#: sc-price-input2.js:47
+msgid "Must be %d or more."
+msgstr ""
 
 #: src/Support/Errors/Translations/types.php:21
 #, fuzzy
@@ -8599,9 +8980,9 @@ msgstr ""
 msgid "My website domain has permanently changed. Remove webhook for %s"
 msgstr ""
 
-#: address.js:166
+#: address.js:162
 msgid "Myanmar"
-msgstr "Μιανμάρ"
+msgstr ""
 
 #: src/Support/Currency.php:321
 #, fuzzy
@@ -8647,33 +9028,33 @@ msgstr ""
 msgid "Name Your Price"
 msgstr ""
 
-#: sc-address2.js:105
-#: sc-order-shipping-address2.js:30
-#: sc-order-shipping-address2.js:39
+#: sc-address2.js:102
+#: sc-order-shipping-address2.js:37
+#: sc-order-shipping-address2.js:46
 msgid "Name or Company Name"
-msgstr "Όνομα ή Όνομα Εταιρείας"
+msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:239
 #, fuzzy
 msgid "Name your own price"
 msgstr ""
 
-#: address.js:167
+#: address.js:163
 msgid "Namibia"
-msgstr "Ναμίμπια"
+msgstr ""
 
 #: src/Support/Currency.php:322
 #, fuzzy
 msgid "Namibian Dollar"
 msgstr ""
 
-#: address.js:168
+#: address.js:164
 msgid "Nauru"
-msgstr "Ναούρου"
+msgstr ""
 
-#: address.js:169
+#: address.js:165
 msgid "Nepal"
-msgstr "Νεπάλ"
+msgstr ""
 
 #: src/Support/Currency.php:323
 #, fuzzy
@@ -8693,18 +9074,18 @@ msgstr ""
 msgid "Net Payment"
 msgstr ""
 
-#: address.js:170
+#: address.js:166
 msgid "Netherlands"
-msgstr "Ολλανδία"
+msgstr ""
 
 #: src/Support/Currency.php:324
 #, fuzzy
 msgid "Netherlands Antillean Gulden"
 msgstr ""
 
-#: address.js:171
+#: address.js:167
 msgid "New Caledonia"
-msgstr "Νέα Καληδονία"
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:71
 msgid "New Cancellation Reason"
@@ -8729,10 +9110,10 @@ msgstr "Νέα Φόρμα"
 msgid "New Order"
 msgstr ""
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "New Password"
-msgstr "Νέος κωδικός πρόσβασης"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:360
 #: sc-upcoming-invoice.js:208
@@ -8764,13 +9145,17 @@ msgstr ""
 msgid "New Upgrade Group"
 msgstr ""
 
-#: address.js:172
+#: address.js:168
 msgid "New Zealand"
-msgstr "Νέα Ζηλανδία"
+msgstr ""
 
 #: src/Support/Currency.php:326
 #, fuzzy
 msgid "New Zealand Dollar"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:238
+msgid "New products are added to this profile."
 msgstr ""
 
 #: ui/PrevNextButtons.js:37
@@ -8801,30 +9186,33 @@ msgstr ""
 msgid "Next retry:"
 msgstr ""
 
-#: address.js:173
+#: Blocks/ShippingChoices/edit.js:35
+msgid "Next-day delivery"
+msgstr ""
+
+#: address.js:169
 msgid "Nicaragua"
-msgstr "Νικαράγουα"
+msgstr ""
 
 #: src/Support/Currency.php:327
 #, fuzzy
 msgid "Nicaraguan Córdoba"
 msgstr ""
 
-#: address.js:174
+#: address.js:170
 msgid "Niger"
-msgstr "Νίγηρας"
+msgstr ""
 
-#: address.js:175
+#: address.js:171
 msgid "Nigeria"
-msgstr "Νιγηρία"
+msgstr ""
 
 #: src/Support/Currency.php:328
 #, fuzzy
 msgid "Nigerian Naira"
 msgstr ""
 
-#: address.js:176
-#, fuzzy
+#: address.js:172
 msgid "Niue"
 msgstr ""
 
@@ -8832,13 +9220,17 @@ msgstr ""
 msgid "No Reason Provided"
 msgstr "Δεν Δόθηκε Λόγος"
 
-#: sc-customer-email.js:79
-msgid "No Thanks"
-msgstr "Όχι, ευχαριστώ"
+#: orders/modules/Fulfillment/components/StatusDropdown.js:90
+msgid "No Shipping Required"
+msgstr ""
 
-#: sc-checkout-mollie-payment2.js:97
+#: sc-customer-email.js:89
+msgid "No Thanks"
+msgstr ""
+
+#: sc-checkout-mollie-payment2.js:101
 msgid "No available payment methods"
-msgstr "Δεν υπάρχουν διαθέσιμες μέθοδοι πληρωμών"
+msgstr ""
 
 #: subscriptions/show/modules/Periods.js:96
 #, fuzzy
@@ -8897,6 +9289,10 @@ msgstr ""
 msgid "No licenses found."
 msgstr ""
 
+#: settings/shipping/rate/ShippingRateForm.js:222
+msgid "No limit"
+msgstr ""
+
 #: settings/processors/ManualPaymentMethods.js:47
 #, fuzzy
 msgid "No manual payment methods."
@@ -8931,6 +9327,14 @@ msgstr ""
 msgid "No order bumps found."
 msgstr ""
 
+#: checkouts/modules/PaymentMethods.js:86
+msgid "No payment methods found."
+msgstr ""
+
+#: Blocks/Payment/edit.js:39
+msgid "No payment processors are enabled for this mode."
+msgstr ""
+
 #: src/Controllers/Admin/Customers/CustomersListTable.php:119
 #: src/Controllers/Admin/Products/ProductsListTable.php:222
 #: src/Controllers/Admin/Products/ProductsListTable.php:242
@@ -8947,6 +9351,28 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:173
 #, fuzzy
 msgid "No products found."
+msgstr ""
+
+#: settings/shipping/profile/Products.js:357
+msgid "No products in this profile."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:174
+#: settings/shipping/ShippingSettings.js:130
+#: settings/shipping/zone/ShippingZone.js:77
+msgid "No shipping rates"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:58
+msgid "No shipping rates available for customers to choose from."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:303
+msgid "No shipping required."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:74
+msgid "No shipping zones or rates"
 msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:197
@@ -8974,27 +9400,25 @@ msgstr ""
 msgid "None of these items are in the cart."
 msgstr ""
 
-#: address.js:177
-#, fuzzy
+#: address.js:173
 msgid "Norfolk Island"
 msgstr ""
 
-#: address.js:178
+#: address.js:174
 msgid "North Korea"
-msgstr "Βόρεια Κορέα"
+msgstr ""
 
-#: address.js:179
+#: address.js:175
 msgid "North Macedonia"
-msgstr "Βόρεια Μακεδονία"
+msgstr ""
 
-#: address.js:180
-#, fuzzy
+#: address.js:176
 msgid "Northern Mariana Islands"
 msgstr ""
 
-#: address.js:181
+#: address.js:177
 msgid "Norway"
-msgstr "Νορβηγία"
+msgstr ""
 
 #: src/Support/Currency.php:329
 #, fuzzy
@@ -9026,6 +9450,13 @@ msgstr ""
 msgid "Not Scheduled"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:387
+#: orders/modules/Fulfillment/components/StatusDropdown.js:19
+#: sc-fulfillment-shipping-status-badge2.js:7
+#: sc-order-shipment-badge2.js:7
+msgid "Not Shipped"
+msgstr ""
+
 #: src/Support/Errors/Translations/types.php:15
 #, fuzzy
 msgid "Not a number"
@@ -9052,8 +9483,7 @@ msgstr ""
 msgid "Note: Redemption limits are not applied in test mode."
 msgstr ""
 
-#: sc-select2.js:2060
-#, fuzzy
+#: sc-select2.js:2068
 msgid "Nothing Found"
 msgstr ""
 
@@ -9126,14 +9556,14 @@ msgstr ""
 #: sc-product-item-list.js:139
 #: sc-product-item-list.js:150
 msgid "Oldest"
-msgstr "Παλαιότερο"
+msgstr ""
 
-#: address.js:182
+#: address.js:178
 msgid "Oman"
-msgstr "Ομάν"
+msgstr ""
 
 #: sc-order-confirmation-details.js:33
-#, fuzzy
+#: sc-order-fulfillment-badge.js:9
 msgid "On Hold"
 msgstr ""
 
@@ -9279,7 +9709,6 @@ msgid "Order"
 msgstr ""
 
 #: sc-order-confirmation-details.js:44
-#, fuzzy
 msgid "Order #%s"
 msgstr ""
 
@@ -9310,6 +9739,10 @@ msgstr ""
 msgid "Order Canceled."
 msgstr "Παραγγελία Ακυρώθηκε."
 
+#: checkouts/CreateCheckout.js:188
+msgid "Order Complete"
+msgstr ""
+
 #: src/WordPress/Pages/PageService.php:69
 #: settings/customer/CustomerSettings.js:285
 #, fuzzy
@@ -9337,6 +9770,10 @@ msgstr ""
 #, fuzzy
 msgctxt "block title"
 msgid "Order Confirmation Line Items"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:171
+msgid "Order Created."
 msgstr ""
 
 #: web/dashboard/orders/show.php:15
@@ -9372,18 +9809,22 @@ msgstr ""
 msgid "Order Numbers Counter"
 msgstr ""
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Order Status"
-msgstr "Κατάσταση Παραγγελίας"
+msgstr ""
 
-#: sc-order-summary.js:50
+#: sc-order-summary.js:53
 msgid "Order Summary"
-msgstr "Σύνοψη Παραγγελίας"
+msgstr ""
+
+#: checkouts/modules/Payment.js:124
+msgid "Order Tax"
+msgstr ""
 
 #: sc-order-confirmation.js:111
-#: sc-order.js:107
+#: sc-order.js:115
 msgid "Order not found."
-msgstr "Η παραγγελία δεν βρέθηκε."
+msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
@@ -9404,6 +9845,10 @@ msgstr ""
 #: settings/order/OrderProtocol.js:40
 #, fuzzy
 msgid "Orders & Receipts"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:40
+msgid "Organic Food"
 msgstr ""
 
 #: orders/modules/TaxInfo.js:11
@@ -9462,48 +9907,53 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: address.js:183
+#: address.js:179
 msgid "Pakistan"
-msgstr "Πακιστάν"
+msgstr ""
 
 #: src/Support/Currency.php:330
 #, fuzzy
 msgid "Pakistani Rupee"
 msgstr ""
 
-#: address.js:184
+#: address.js:180
 msgid "Palau"
 msgstr ""
 
-#: address.js:185
+#: address.js:181
 msgid "Palestine, State of"
-msgstr "Παλαιστίνη"
+msgstr ""
 
-#: address.js:186
+#: address.js:182
 msgid "Panama"
-msgstr "Παναμάς"
+msgstr ""
 
 #: src/Support/Currency.php:331
 #, fuzzy
 msgid "Panamanian Balboa"
 msgstr ""
 
-#: address.js:187
+#: address.js:183
 msgid "Papua New Guinea"
-msgstr "Παπούα Νέα Γουινέα"
+msgstr ""
 
 #: src/Support/Currency.php:332
 #, fuzzy
 msgid "Papua New Guinean Kina"
 msgstr ""
 
-#: address.js:188
+#: address.js:184
 msgid "Paraguay"
-msgstr "Παραγουάη"
+msgstr ""
 
 #: src/Support/Currency.php:333
 #, fuzzy
 msgid "Paraguayan Guaraní"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:353
+#: sc-order-fulfillment-badge.js:11
+msgid "Partially Fulfilled"
 msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:30
@@ -9512,6 +9962,11 @@ msgstr ""
 #: sc-orders-list.js:112
 #, fuzzy
 msgid "Partially Refunded"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:389
+#: sc-order-shipment-badge2.js:9
+msgid "Partially Shipped"
 msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:71
@@ -9545,21 +10000,27 @@ msgstr ""
 msgid "Password Confirmation Placeholder"
 msgstr ""
 
-#: sc-order-password.js:43
-#, fuzzy
+#: sc-order-password.js:42
 msgid "Password does not match."
 msgstr ""
 
-#: sc-password-nag.js:62
-#: sc-wordpress-password-edit.js:34
-#, fuzzy
+#: sc-password-nag.js:71
+#: sc-wordpress-password-edit.js:44
 msgid "Passwords do not match."
 msgstr ""
 
-#: sc-order-password.js:50
-#: sc-password-nag.js:71
-#: sc-wordpress-password-edit.js:43
+#: sc-order-password.js:96
+msgid "Passwords must contain a special character."
+msgstr ""
+
+#: sc-order-password.js:48
+#: sc-password-nag.js:74
+#: sc-wordpress-password-edit.js:47
 msgid "Passwords should at least 6 characters and contain one special character."
+msgstr ""
+
+#: sc-order-password.js:91
+msgid "Passwords should at least 6 characters."
 msgstr ""
 
 #: sc-subscription-status-badge2.js:56
@@ -9576,9 +10037,13 @@ msgstr "Παύση"
 msgid "Pause Subscription"
 msgstr "Παύση Συνδρομής"
 
-#: sc-subscription-status-badge2.js:47
+#: sc-subscription-status-badge2.js:46
 msgid "Pauses"
-msgstr "Παύσεις"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:285
+msgid "Pay Off"
+msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:275
 msgid "Pay Off Subscription"
@@ -9617,9 +10082,10 @@ msgctxt "block title"
 msgid "Payment"
 msgstr ""
 
+#: orders/modules/LineItems/index.js:26
 #: sc-order-status-badge2.js:37
 msgid "Payment Failed"
-msgstr "Αποτυχημένη Πληρωμή"
+msgstr ""
 
 #: orders/modules/PaymentFailures.js:17
 #, fuzzy
@@ -9669,9 +10135,9 @@ msgstr ""
 msgid "Payment Type"
 msgstr ""
 
-#: sc-session-provider2.js:257
+#: sc-session-provider2.js:256
 msgid "Payment canceled. Please try again."
-msgstr "Η πληρωμή ακυρώθηκε. Παρακαλώ προσπαθήστε ξανά."
+msgstr ""
 
 #: settings/processors/CreateEditPaymentMethod.js:108
 #, fuzzy
@@ -9708,8 +10174,9 @@ msgstr ""
 msgid "Payment retry window in weeks."
 msgstr ""
 
-#: sc-session-provider2.js:233
-#, fuzzy
+#: sc-session-provider2.js:183
+#: sc-session-provider2.js:250
+#: sc-session-provider2.js:260
 msgid "Payment unsuccessful. Please try again."
 msgstr ""
 
@@ -9733,6 +10200,19 @@ msgstr ""
 #: sc-order-confirmation.js:95
 #, fuzzy
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
+msgstr ""
+
+#: Blocks/Payment/components/Inspector.js:107
+msgid "Paystack"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:43
+msgid "Paystack is not properly set up to make transactions"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:51
+#: sc-paystack-add-method.js:36
+msgid "Paystack transaction could not be finished. Status: %s"
 msgstr ""
 
 #: orders/modules/Refunds.js:46
@@ -9816,13 +10296,21 @@ msgstr ""
 msgid "Permanently delete this price? You cannot undo this action."
 msgstr ""
 
-#: address.js:189
+#: product-groups/EditProductGroup.js:55
+msgid "Permanently delete this product group? You cannot undo this action."
+msgstr ""
+
+#: address.js:185
 msgid "Peru"
-msgstr "Περού"
+msgstr ""
 
 #: src/Support/Currency.php:334
 #, fuzzy
 msgid "Peruvian Sol"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:45
+msgid "Pet Supplies"
 msgstr ""
 
 #: src/Support/Currency.php:335
@@ -9830,8 +10318,7 @@ msgstr ""
 msgid "Philippine Peso"
 msgstr ""
 
-#: address.js:190
-#, fuzzy
+#: address.js:186
 msgid "Philippines"
 msgstr ""
 
@@ -9847,8 +10334,11 @@ msgctxt "block title"
 msgid "Phone"
 msgstr "Τηλέφωνο"
 
-#: address.js:191
-#, fuzzy
+#: products/modules/Shipping.js:41
+msgid "Physical product"
+msgstr ""
+
+#: address.js:187
 msgid "Pitcairn"
 msgstr ""
 
@@ -9882,6 +10372,10 @@ msgstr ""
 msgid "Plan"
 msgstr ""
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:236
+msgid "Plan Renewal"
+msgstr ""
+
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
 #, fuzzy
 msgid "Plan Status"
@@ -9892,13 +10386,17 @@ msgstr ""
 msgid "Plans"
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:33
+msgid "Please add a valid address with necessary shipping information."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:15
 #, fuzzy
 msgid "Please add at least one product."
 msgstr ""
 
-#: sc-choice2.js:55
-#, fuzzy
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose at least one."
 msgstr ""
 
@@ -9906,8 +10404,8 @@ msgstr ""
 msgid "Please choose date to continue."
 msgstr "Παρακαλώ επιλέξτε ημερομηνία για να συνεχίσετε."
 
-#: sc-choice2.js:55
-#, fuzzy
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose one."
 msgstr ""
 
@@ -9916,8 +10414,24 @@ msgstr ""
 msgid "Please clear checkout page cache after changing this setting."
 msgstr ""
 
+#: components/MediaLibrary/index.js:301
+msgid "Please complete setting up your store. Its free and only takes a minute."
+msgstr ""
+
+#: Blocks/Form/edit.js:450
+msgid "Please complete your store to enable live mode. It's free!"
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please configure your processors"
+msgstr ""
+
 #: src/Request/RequestService.php:208
 msgid "Please connect your site to SureCart."
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please contact us for payment."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:37
@@ -9948,8 +10462,8 @@ msgstr ""
 msgid "Please preview the form on the front-end to load the Stripe payment element fields."
 msgstr ""
 
-#: Blocks/Payment/edit.js:19
-msgid "Please preview the form on the front-end to load the Stripe payment fields."
+#: Blocks/Payment/edit.js:46
+msgid "Please preview your form on the front-end to view processors."
 msgstr ""
 
 #: licenses/modules/Activations/Activation.js:85
@@ -9957,9 +10471,16 @@ msgstr ""
 msgid "Please refresh the page and try again."
 msgstr ""
 
-#: sc-form-state-provider2.js:125
-#, fuzzy
+#: sc-form-state-provider2.js:48
 msgid "Please refresh the page."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:19
+msgid "Please select a customer."
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:123
+msgid "Please select a shipping method"
 msgstr ""
 
 #: admin/plugin.php:68
@@ -9967,9 +10488,9 @@ msgstr ""
 msgid "Plugin Settings"
 msgstr ""
 
-#: address.js:192
+#: address.js:188
 msgid "Poland"
-msgstr "Πολωνία"
+msgstr ""
 
 #: src/Support/Currency.php:336
 #, fuzzy
@@ -9980,9 +10501,9 @@ msgstr ""
 msgid "Portrait"
 msgstr ""
 
-#: address.js:193
+#: address.js:189
 msgid "Portugal"
-msgstr "Πορτογαλία"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:171
 msgid "Position of cart button"
@@ -9993,12 +10514,12 @@ msgstr "Θέση κουμπιού καλαθιού"
 msgid "Postal Code Placeholder"
 msgstr ""
 
-#: sc-address2.js:108
-#: sc-compact-address2.js:102
-#: sc-order-shipping-address2.js:35
-#: sc-order-shipping-address2.js:44
+#: sc-address2.js:105
+#: sc-compact-address2.js:115
+#: sc-order-shipping-address2.js:42
+#: sc-order-shipping-address2.js:51
 msgid "Postal Code/Zip"
-msgstr "Ταχυδρομικός Κωδικός"
+msgstr ""
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:297
 #, fuzzy
@@ -10020,8 +10541,7 @@ msgstr ""
 msgid "Potential Revenue Recovery Rate"
 msgstr ""
 
-#: products/components/price/parts/Trial.js:16
-#, fuzzy
+#: sc-premium-tag.js:12
 msgid "Premium"
 msgstr ""
 
@@ -10120,6 +10640,10 @@ msgstr ""
 msgid "Primary Button"
 msgstr ""
 
+#: onboarding/components/StarterTemplates.js:25
+msgid "Printable Merchandise"
+msgstr ""
+
 #: bumps/modules/Priority.js:7
 #, fuzzy
 msgid "Priority"
@@ -10130,6 +10654,10 @@ msgstr ""
 #: Controllers/SubscriptionController.php:244
 #, fuzzy
 msgid "Privacy Policy"
+msgstr ""
+
+#: settings/account/AccountSettings.js:273
+msgid "Privacy Policy Page"
 msgstr ""
 
 #: components/MediaLibrary/index.js:287
@@ -10165,9 +10693,7 @@ msgstr ""
 msgid "Processor"
 msgstr ""
 
-#: admin/processors.php:30
-#: layouts/partials/admin-settings-sidebar.php:48
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:249
 msgid "Processors"
 msgstr ""
 
@@ -10195,6 +10721,10 @@ msgstr ""
 msgid "Product Access"
 msgstr ""
 
+#: settings/customer/CustomerSettings.js:123
+msgid "Product Access Emails"
+msgstr ""
+
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation title"
 msgid "Product Add To Cart Button"
@@ -10213,7 +10743,7 @@ msgstr ""
 #: Blocks/Product/Description/block.json
 msgctxt "block title"
 msgid "Product Description"
-msgstr ""
+msgstr "Περιγραφή Προϊόντος"
 
 #: store/add-entities.js:166
 #, fuzzy
@@ -10287,8 +10817,18 @@ msgstr ""
 msgid "Product Options"
 msgstr ""
 
+#: src/Controllers/Admin/Products/ProductsListTable.php:104
+#: products/components/Status/index.js:25
+#: products/components/Status/index.js:64
+msgid "Product Page"
+msgstr ""
+
 #: Blocks/Product/Price/block.json
 msgctxt "block title"
+msgid "Product Price"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:79
 msgid "Product Price"
 msgstr ""
 
@@ -10317,6 +10857,10 @@ msgctxt "block title"
 msgid "Product Title"
 msgstr "Τίτλος Προϊόντος"
 
+#: settings/shipping/profile/Products.js:122
+msgid "Product added"
+msgstr ""
+
 #: product-groups/modules/NewProduct.js:37
 #, fuzzy
 msgid "Product added."
@@ -10328,6 +10872,18 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsController.php:66
 #, fuzzy
 msgid "Product archived."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:85
+msgid "Product group archived."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:64
+msgid "Product group deleted."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:86
+msgid "Product group un-archived."
 msgstr ""
 
 #: product-groups/EditProductGroup.js:35
@@ -10343,6 +10899,10 @@ msgstr ""
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
 #, fuzzy
 msgid "Product purchase is revoked or subscription cancels"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:101
+msgid "Product removed"
 msgstr ""
 
 #: product-groups/modules/Product.js:34
@@ -10397,6 +10957,10 @@ msgstr ""
 #: settings/export/ExportSettings.js:31
 #, fuzzy
 msgid "Products/Prices"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:183
+msgid "Profile Details"
 msgstr ""
 
 #: store/add-entities.js:180
@@ -10462,9 +11026,13 @@ msgstr "Δώστε έκπτωση για να διατηρήσετε μια συ
 msgid "Province"
 msgstr ""
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:108
 msgid "Province/Region"
-msgstr "Νομός/Περιοχή"
+msgstr ""
+
+#: store/add-entities.js:159
+msgid "Provisional Accounts"
+msgstr ""
 
 #: components/MediaLibrary/index.js:294
 #: components/MediaLibrary/MediaItem.js:91
@@ -10498,6 +11066,10 @@ msgstr ""
 msgid "Purchase"
 msgstr ""
 
+#: settings/subscription/SubscriptionSettings.js:201
+msgid "Purchase Behavior"
+msgstr ""
+
 #: settings/subscription/SubscriptionSettings.js:244
 msgid "Purchase Revoke Behavior"
 msgstr "Συμπεριφορά ανάκλησης αγοράς"
@@ -10512,9 +11084,9 @@ msgstr ""
 msgid "Purchases syncing happens in both directions. For example, access is automatically revoked during a subscription cancellation or expiration."
 msgstr ""
 
-#: address.js:195
+#: address.js:190
 msgid "Qatar"
-msgstr "Κατάρ"
+msgstr ""
 
 #: src/Support/Currency.php:337
 #, fuzzy
@@ -10528,9 +11100,15 @@ msgstr ""
 msgid "Qty"
 msgstr ""
 
-#: sc-product-line-item2.js:29
+#: sc-product-line-item2.js:44
 msgid "Qty:"
-msgstr "Ποσότητα:"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:284
+#: orders/modules/Fulfillment/Unfulfilled.js:108
+#: sc-fulfillments.js:65
+msgid "Qty: %d"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:17
@@ -10562,6 +11140,10 @@ msgstr ""
 #: settings/order/OrderProtocol.js:89
 #, fuzzy
 msgid "Random Numbers And Letters"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:48
+msgid "Rates for"
 msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:111
@@ -10709,9 +11291,9 @@ msgstr ""
 msgid "Remaining Payments"
 msgstr ""
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Reminder"
-msgstr "Υπενθύμιση"
+msgstr ""
 
 #: Blocks/CartItems/edit.js:31
 #: Blocks/LineItems/edit.js:23
@@ -10858,6 +11440,10 @@ msgstr ""
 msgid "Rest Of The World"
 msgstr "Υπόλοιπες Χώρες"
 
+#: settings/shipping/zone/FallbackZone.js:19
+msgid "Rest Of The World Fallback Zone"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:358
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:64
 #, fuzzy
@@ -10872,9 +11458,9 @@ msgstr ""
 msgid "Restore Now"
 msgstr ""
 
-#: sc-subscription.js:171
+#: sc-subscription.js:181
 msgid "Restore Plan"
-msgstr "Αποκατάσταση Προγράμματος"
+msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:122
 #, fuzzy
@@ -10969,9 +11555,9 @@ msgstr ""
 msgid "Right"
 msgstr "Δεξιά"
 
-#: address.js:196
+#: address.js:191
 msgid "Romania"
-msgstr "Ρουμανία"
+msgstr ""
 
 #: src/Support/Currency.php:338
 #, fuzzy
@@ -10995,36 +11581,33 @@ msgstr ""
 msgid "Run purchase actions"
 msgstr ""
 
-#: address.js:197
+#: address.js:192
 msgid "Russian Federation"
-msgstr "Ρωσία"
+msgstr ""
 
 #: src/Support/Currency.php:339
 #, fuzzy
 msgid "Russian Ruble"
 msgstr ""
 
-#: address.js:198
+#: address.js:193
 msgid "Rwanda"
-msgstr "Ρουάντα"
+msgstr ""
 
 #: src/Support/Currency.php:340
 #, fuzzy
 msgid "Rwandan Franc"
 msgstr ""
 
-#: address.js:199
-#, fuzzy
+#: address.js:194
 msgid "Réunion"
 msgstr ""
 
-#: address.js:200
-#, fuzzy
+#: address.js:195
 msgid "Saint Barthélemy"
 msgstr ""
 
-#: address.js:201
-#, fuzzy
+#: address.js:196
 msgid "Saint Helena, Ascension and Tristan da Cunha"
 msgstr ""
 
@@ -11033,42 +11616,37 @@ msgstr ""
 msgid "Saint Helenian Pound"
 msgstr ""
 
-#: address.js:202
-#, fuzzy
+#: address.js:197
 msgid "Saint Kitts and Nevis"
 msgstr ""
 
-#: address.js:203
-#, fuzzy
+#: address.js:198
 msgid "Saint Lucia"
 msgstr ""
 
-#: address.js:204
-#, fuzzy
+#: address.js:199
 msgid "Saint Martin (French part)"
 msgstr ""
 
-#: address.js:205
-#, fuzzy
+#: address.js:200
 msgid "Saint Pierre and Miquelon"
 msgstr ""
 
-#: address.js:206
-#, fuzzy
+#: address.js:201
 msgid "Saint Vincent and the Grenadines"
 msgstr ""
 
 #: sc-product-price.js:30
 msgid "Sale"
-msgstr "Πώληση"
+msgstr ""
 
 #: Blocks/Product/Price/edit.js:33
 msgid "Sale Text"
 msgstr ""
 
-#: address.js:207
+#: address.js:202
 msgid "Samoa"
-msgstr "Σαμόα"
+msgstr ""
 
 #: src/Support/Currency.php:342
 #, fuzzy
@@ -11086,18 +11664,17 @@ msgstr ""
 msgid "Sample Data"
 msgstr ""
 
-#: address.js:208
+#: address.js:203
 msgid "San Marino"
-msgstr "Σαν Μαρίνο"
+msgstr ""
 
-#: address.js:209
-#, fuzzy
+#: address.js:204
 msgid "Sao Tome and Principe"
 msgstr ""
 
-#: address.js:210
+#: address.js:205
 msgid "Saudi Arabia"
-msgstr "Σαουδική Αραβία"
+msgstr ""
 
 #: src/Support/Currency.php:343
 #, fuzzy
@@ -11116,8 +11693,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: sc-order-bump2.js:61
-#, fuzzy
+#: sc-order-bump2.js:72
 msgid "Save %s%%"
 msgstr ""
 
@@ -11141,8 +11717,7 @@ msgstr ""
 msgid "Save Order Bump"
 msgstr ""
 
-#: sc-stripe-add-method.js:128
-#, fuzzy
+#: sc-stripe-add-method.js:132
 msgid "Save Payment Method"
 msgstr ""
 
@@ -11185,8 +11760,11 @@ msgstr ""
 msgid "Saved."
 msgstr ""
 
-#: sc-payment-method2.js:22
-#, fuzzy
+#: settings/shipping/profile/ShippingProfile.js:111
+msgid "Saving failed."
+msgstr ""
+
+#: sc-payment-method2.js:27
 msgid "Savings"
 msgstr ""
 
@@ -11272,7 +11850,7 @@ msgstr ""
 
 #: sc-product-item-list.js:151
 msgid "Search Results:"
-msgstr "Αποτελέσματα αναζήτησης:"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:45
 #: admin/subscriptions/index.php:28
@@ -11356,9 +11934,17 @@ msgstr ""
 msgid "Secure"
 msgstr "Ασφαλές"
 
+#: Blocks/Submit/edit.js:89
+msgid "Secure Payment Text"
+msgstr ""
+
 #: products/modules/Downloads.js:131
 msgid "Secure Storage"
 msgstr "Ασφαλές Αποθηκευτικός Χώρος"
+
+#: settings/shipping/rate/ShippingRateForm.js:340
+msgid "Select"
+msgstr ""
 
 #: coupons/modules/NewRestriction.js:139
 #, fuzzy
@@ -11378,6 +11964,10 @@ msgstr ""
 msgid "Select A Product"
 msgstr ""
 
+#: onboarding/components/StarterTemplates.js:74
+msgid "Select A Starting Point"
+msgstr ""
+
 #: components/data-tables/charges-data-table/Refund.js:174
 msgid "Select All"
 msgstr "Επιλογή Όλων"
@@ -11391,6 +11981,11 @@ msgstr ""
 #: coupons/modules/NewRestriction.js:149
 #, fuzzy
 msgid "Select An Upgrade Group"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:191
+#: settings/shipping/zone/ShippingZoneForm.js:225
+msgid "Select Countries"
 msgstr ""
 
 #: src/Integrations/Elementor/ReusableFormWidget.php:110
@@ -11417,9 +12012,13 @@ msgstr ""
 msgid "Select Theme (Beta)"
 msgstr ""
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:115
 msgid "Select Your Country"
-msgstr "Επίλεξε τη χώρα σου"
+msgstr ""
+
+#: checkouts/modules/SelectCustomer/index.js:119
+msgid "Select a Customer"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:174
 #, fuzzy
@@ -11430,14 +12029,18 @@ msgstr ""
 msgid "Select a checkout form"
 msgstr "Επιλέξτε μια φόρμα πληρωμής"
 
+#: checkouts/modules/SelectCustomer/index.js:124
+msgid "Select a customer"
+msgstr ""
+
 #: src/Integrations/Beaver/BeaverFormModule.php:52
 #, fuzzy
 msgid "Select a form"
 msgstr ""
 
-#: sc-subscription-payment.js:115
+#: sc-subscription-payment.js:120
 msgid "Select a payment method"
-msgstr "Επίλεξε μέθοδο πληρωμής"
+msgstr ""
 
 #: components/SelectPrice.js:64
 #, fuzzy
@@ -11475,6 +12078,10 @@ msgstr ""
 #: components/SelectProductGroup.js:44
 #, fuzzy
 msgid "Select an upgrade group"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:99
+msgid "Select at least one country to create zone."
 msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:113
@@ -11534,6 +12141,10 @@ msgstr "Επιλέξτε τη θέση για το κουμπί καλαθιού
 msgid "Select the menu(s) where the cart icon will appear."
 msgstr "Επιλέξτε το μενού στο οποίο θέλετε να εμφανίζεται το εικονίδιο του καλαθιού."
 
+#: sc-select2.js:2066
+msgid "Select..."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:106
 #, fuzzy
 msgid "Send a general order confirmation email to your customers when an order is paid. These emails include a breakdown of the order, and a link to a page where they can download their invoice and receipt."
@@ -11544,9 +12155,13 @@ msgstr ""
 msgid "Send a general subscription cancellation confirmation email to your customers when subscription canceled."
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Send a login code"
-msgstr "Αποστολή κωδικού εισόδου"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:125
+msgid "Send a product access email to your customer when a purchase has done for a licensed downloadable product."
+msgstr ""
 
 #: settings/customer/CustomerSettings.js:124
 #, fuzzy
@@ -11572,9 +12187,9 @@ msgstr "Στείλτε το email παραγγελίας στους πελάτε
 msgid "Sender Name"
 msgstr ""
 
-#: address.js:211
+#: address.js:206
 msgid "Senegal"
-msgstr "Σενεγάλη"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
 #: abandoned-checkouts/modules/Details.js:13
@@ -11647,9 +12262,9 @@ msgstr ""
 msgid "Sequential"
 msgstr ""
 
-#: address.js:212
+#: address.js:207
 msgid "Serbia"
-msgstr "Σερβία"
+msgstr ""
 
 #: src/Support/Currency.php:344
 #, fuzzy
@@ -11662,9 +12277,9 @@ msgctxt "block title"
 msgid "Session Info"
 msgstr ""
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Set A Password"
-msgstr "Όρισε έναν κωδικό πρόσβασης"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:80
 #: Blocks/ProductItemImage/edit.js:97
@@ -11689,11 +12304,6 @@ msgstr ""
 msgid "Set a maximum height"
 msgstr "Όρισε το μέγιστο ύψος"
 
-#: settings/portal/PortalSettings.js:117
-#, fuzzy
-msgid "Set additional customer portal details for your store."
-msgstr ""
-
 #: products/modules/integrations/IntegrationHelp.js:79
 #, fuzzy
 msgid "Set it and forget it."
@@ -11702,6 +12312,14 @@ msgstr ""
 #: products/modules/Prices/index.js:94
 #, fuzzy
 msgid "Set up pricing for your product."
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:157
+msgid "Set where you ship and how much you charge for shipping."
+msgstr ""
+
+#: onboarding/components/SetupProgress.js:56
+msgid "Setting up your store..."
 msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
@@ -11733,6 +12351,10 @@ msgstr ""
 msgid "Setup"
 msgstr ""
 
+#: dashboard/Dashboard.js:82
+msgid "Setup Complete!"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:59
 #: sc-price-choice.js:811
 msgid "Setup Fee"
@@ -11750,13 +12372,41 @@ msgstr ""
 msgid "Setup fee name"
 msgstr ""
 
-#: address.js:213
+#: address.js:208
 msgid "Seychelles"
-msgstr "Σεϋχέλλες"
+msgstr ""
 
 #: src/Support/Currency.php:345
 #, fuzzy
 msgid "Seychellois Rupee"
+msgstr ""
+
+#: sc-fulfillments.js:60
+msgid "Shipment"
+msgid_plural "Shipments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:388
+#: orders/modules/Fulfillment/components/StatusDropdown.js:20
+#: sc-fulfillment-shipping-status-badge2.js:8
+#: sc-order-shipment-badge2.js:8
+msgid "Shipped"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:105
+#: layouts/partials/admin-settings-sidebar.php:66
+#: abandoned-checkouts/modules/LineItems/index.js:110
+#: orders/modules/LineItems/index.js:262
+#: products/modules/Shipping.js:25
+#: settings/shipping/ShippingSettings.js:120
+#: subscriptions/show/modules/LineItems/index.js:105
+#: sc-line-item-shipping2.js:26
+#: sc-order-confirmation-totals2.js:35
+#: sc-shipping-choices2.js:54
+#: sc-shipping-choices2.js:56
+#: sc-subscription-next-payment2.js:101
+msgid "Shipping"
 msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:138
@@ -11779,9 +12429,108 @@ msgctxt "block title"
 msgid "Shipping Address"
 msgstr ""
 
+#: Blocks/LineItemShipping/edit.js:29
+msgid "Shipping Amount"
+msgstr ""
+
+#: Blocks/ShippingChoices/edit.js:55
+msgid "Shipping Choices"
+msgstr ""
+
+#: Blocks/ShippingChoices/block.json
+msgctxt "block title"
+msgid "Shipping Choices"
+msgstr ""
+
 #: Blocks/ConditionalForm/translations.js:9
 msgid "Shipping Country"
 msgstr "Χώρα Αποστολής"
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block title"
+msgid "Shipping Line Item"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:336
+#: store/add-entities.js:278
+msgid "Shipping Method"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:107
+msgid "Shipping Methods"
+msgstr ""
+
+#: store/add-entities.js:257
+msgid "Shipping Profile"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:156
+msgid "Shipping Profiles"
+msgstr ""
+
+#: store/add-entities.js:250
+msgid "Shipping Protocol"
+msgstr ""
+
+#: store/add-entities.js:271
+msgid "Shipping Rate"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:140
+msgid "Shipping Settings"
+msgstr ""
+
+#: products/modules/Shipping.js:45
+msgid "Shipping Weight"
+msgstr ""
+
+#: store/add-entities.js:264
+msgid "Shipping Zone"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:35
+msgid "Shipping Zones & Rates"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:69
+msgid "Shipping method added"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:81
+msgid "Shipping method removed"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:64
+msgid "Shipping method updated"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:128
+msgid "Shipping methods represent the different speeds or classes of shipping that your store offers."
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:36
+msgid "Shipping profile deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:152
+msgid "Shipping rate added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZone.js:57
+msgid "Shipping rate deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:147
+msgid "Shipping rate updated"
+msgstr ""
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:29
+msgid "Shipping zone deleted"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:36
+msgid "Shipping zones are geographic regions where you ship products."
+msgstr ""
 
 #: src/Routing/PermalinkServiceProvider.php:33
 msgid "Shop"
@@ -11835,6 +12584,10 @@ msgstr ""
 msgid "Show Currency Code"
 msgstr ""
 
+#: Blocks/ShippingChoices/edit.js:65
+msgid "Show Description"
+msgstr ""
+
 #: settings/account/components/CartSettings.js:255
 msgid "Show Floating Cart Icon"
 msgstr "Προβολή Πλωτού Εικονιδίου Καλαθιού"
@@ -11858,8 +12611,7 @@ msgstr ""
 msgid "Show Price Amount"
 msgstr ""
 
-#: sc-order-summary.js:20
-#, fuzzy
+#: sc-order-summary.js:21
 msgid "Show Summary"
 msgstr ""
 
@@ -11904,6 +12656,10 @@ msgstr ""
 msgid "Show product image"
 msgstr ""
 
+#: Blocks/Submit/edit.js:79
+msgid "Show secure notice."
+msgstr ""
+
 #: products/modules/BuyLink.js:162
 msgid "Show store logo"
 msgstr ""
@@ -11918,9 +12674,9 @@ msgstr ""
 msgid "Show total due in button text."
 msgstr ""
 
-#: address.js:214
+#: address.js:209
 msgid "Sierra Leone"
-msgstr "Σιέρα Λεόνε"
+msgstr ""
 
 #: src/Support/Currency.php:346
 #, fuzzy
@@ -11942,18 +12698,21 @@ msgstr ""
 msgid "Since SureCart's integrations are native, there's no need to worry about the complexity of growing your store."
 msgstr ""
 
-#: address.js:215
+#: address.js:210
 msgid "Singapore"
-msgstr "Σιγκαπούρη"
+msgstr ""
 
 #: src/Support/Currency.php:347
 #, fuzzy
 msgid "Singapore Dollar"
 msgstr ""
 
-#: address.js:216
-#, fuzzy
+#: address.js:211
 msgid "Sint Maarten (Dutch part)"
+msgstr ""
+
+#: Blocks/Password/edit.js:53
+msgid "Site Settings"
 msgstr ""
 
 #: components/MediaLibrary/Preview.js:110
@@ -11973,13 +12732,13 @@ msgstr "Παράλειψη Συνδέσμου"
 msgid "Slider Height"
 msgstr ""
 
-#: address.js:217
+#: address.js:212
 msgid "Slovakia"
-msgstr "Σλοβακία"
+msgstr ""
 
-#: address.js:218
+#: address.js:213
 msgid "Slovenia"
-msgstr "Σλοβενία"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:119
 #: Blocks/BuyButton/edit.js:104
@@ -11990,9 +12749,9 @@ msgstr "Σλοβενία"
 msgid "Small"
 msgstr ""
 
-#: address.js:219
+#: address.js:214
 msgid "Solomon Islands"
-msgstr "Νήσοι Σολομώντος"
+msgstr ""
 
 #: src/Support/Currency.php:348
 #, fuzzy
@@ -12004,9 +12763,9 @@ msgstr ""
 msgid "Somali Shilling"
 msgstr ""
 
-#: address.js:220
+#: address.js:215
 msgid "Somalia"
-msgstr "Σομαλία"
+msgstr ""
 
 #: src/Middleware/NonceMiddleware.php:26
 #, fuzzy
@@ -12096,7 +12855,6 @@ msgid "Something went wrong."
 msgstr ""
 
 #: paypal-buttons.js:144
-#, fuzzy
 msgid "Something went wrong. Please contact us for payment."
 msgstr ""
 
@@ -12104,6 +12862,10 @@ msgstr ""
 #: settings/processors/CreateEditPaymentMethod.js:53
 #, fuzzy
 msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: sc-shipping-choices2.js:54
+msgid "Sorry, we are not able to ship to your address."
 msgstr ""
 
 #: src/Rest/ProductsRestServiceProvider.php:153
@@ -12122,40 +12884,40 @@ msgstr ""
 msgid "Sort"
 msgstr ""
 
-#: address.js:221
+#: address.js:216
 msgid "South Africa"
-msgstr "Νότια Αφρική"
+msgstr ""
 
 #: src/Support/Currency.php:350
 #, fuzzy
 msgid "South African Rand"
 msgstr ""
 
-#: address.js:222
+#: address.js:217
 msgid "South Georgia and the South Sandwich Islands"
-msgstr "Νότια Γεωργία και Νότιες Σάντουιτς Νήσοι"
+msgstr ""
 
-#: address.js:223
+#: address.js:218
 msgid "South Korea"
-msgstr "Νότια Κορέα"
+msgstr ""
 
 #: src/Support/Currency.php:351
 #, fuzzy
 msgid "South Korean Won"
 msgstr ""
 
-#: address.js:224
+#: address.js:219
 msgid "South Sudan"
-msgstr "Νότιο Σουδάν"
+msgstr ""
 
 #: components/CartInspectorControls.js:33
 #, fuzzy
 msgid "Spacing"
 msgstr ""
 
-#: address.js:225
+#: address.js:220
 msgid "Spain"
-msgstr "Ισπανία"
+msgstr ""
 
 #: settings/account/AccountSettings.js:231
 #, fuzzy
@@ -12166,9 +12928,9 @@ msgstr ""
 msgid "Square"
 msgstr ""
 
-#: address.js:226
+#: address.js:221
 msgid "Sri Lanka"
-msgstr "Σρι Λάνκα"
+msgstr ""
 
 #: src/Support/Currency.php:352
 #, fuzzy
@@ -12194,6 +12956,18 @@ msgstr ""
 msgid "Standalone Editor top bar."
 msgstr ""
 
+#: Blocks/ShippingChoices/edit.js:25
+msgid "Standard"
+msgstr ""
+
+#: sc-shipping-choices2.js:58
+msgid "Standard Shipping"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:10
+msgid "Start From Scratch"
+msgstr ""
+
 #: settings/order/OrderProtocol.js:99
 #, fuzzy
 msgid "Start Order Number At"
@@ -12213,11 +12987,18 @@ msgstr ""
 msgid "Started"
 msgstr ""
 
-#: sc-price-choice.js:811
+#: sc-price-choice-container2.js:58
+#: sc-price-choice.js:813
 msgid "Starting in %s day"
 msgid_plural "Starting in %s days"
-msgstr[0] "Ξεκινάει σε %d μέρα"
-msgstr[1] "Ξεκινάει σε %d μέρες"
+msgstr[0] ""
+msgstr[1] ""
+
+#: sc-product-price.js:40
+msgid "Starting in %s day."
+msgid_plural "Starting in %s days."
+msgstr[0] ""
+msgstr[1] ""
 
 #: settings/tax-region/RegistrationForm.js:24
 #: sc-compact-address2.js:102
@@ -12235,10 +13016,9 @@ msgstr ""
 msgid "State Sales Tax Registrations"
 msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:36
-#: sc-order-shipping-address2.js:45
-#, fuzzy
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:43
+#: sc-order-shipping-address2.js:52
 msgid "State/Province/Region"
 msgstr ""
 
@@ -12277,6 +13057,10 @@ msgstr ""
 
 #: products/components/Availability/index.js:61
 msgid "Status defines whether a product is purchasable."
+msgstr ""
+
+#: orders/modules/Fulfillment/components/StatusDropdown.js:66
+msgid "Status updated."
 msgstr ""
 
 #: Blocks/Column/edit.js:144
@@ -12356,12 +13140,15 @@ msgstr ""
 msgid "Stripe Fraud Monitoring"
 msgstr ""
 
-#: sc-stripe-add-method.js:35
-#: sc-stripe-element.js:38
-#: sc-stripe-payment-element.js:51
-#: sc-stripe-payment-request2.js:60
-#, fuzzy
+#: sc-stripe-add-method.js:39
+#: sc-stripe-element.js:43
+#: sc-stripe-payment-element.js:59
+#: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:308
+msgid "Strong Password Validation"
 msgstr ""
 
 #: Blocks/Form/edit.js:227
@@ -12385,8 +13172,7 @@ msgstr ""
 msgid "Submitting Order..."
 msgstr ""
 
-#: sc-checkout.js:194
-#, fuzzy
+#: sc-checkout.js:210
 msgid "Submitting order..."
 msgstr ""
 
@@ -12595,7 +13381,7 @@ msgstr ""
 
 #: sc-password-nag.js:96
 msgid "Success!"
-msgstr "Επιτυχία!"
+msgstr ""
 
 #: Blocks/Form/edit.js:355
 #: sc-checkout.js:194
@@ -12603,9 +13389,9 @@ msgstr "Επιτυχία!"
 msgid "Success! Redirecting..."
 msgstr ""
 
-#: address.js:227
+#: address.js:222
 msgid "Sudan"
-msgstr "Σουδάν"
+msgstr ""
 
 #: coupons/Sidebar.js:52
 #: products/Sidebar.js:34
@@ -12768,9 +13554,9 @@ msgstr ""
 msgid "SureCart webhooks could not be created."
 msgstr ""
 
-#: address.js:228
+#: address.js:223
 msgid "Suriname"
-msgstr "Σουρινάμ"
+msgstr ""
 
 #: src/Support/Currency.php:353
 #, fuzzy
@@ -12781,8 +13567,7 @@ msgstr ""
 msgid "Survey Answers"
 msgstr "Απαντήσεις Έρευνας"
 
-#: address.js:229
-#, fuzzy
+#: address.js:224
 msgid "Svalbard and Jan Mayen"
 msgstr ""
 
@@ -12791,9 +13576,9 @@ msgstr ""
 msgid "Swazi Lilangeni"
 msgstr ""
 
-#: address.js:230
+#: address.js:225
 msgid "Sweden"
-msgstr "Σουηδία"
+msgstr ""
 
 #: src/Support/Currency.php:355
 #, fuzzy
@@ -12827,9 +13612,9 @@ msgstr ""
 msgid "Switch to test mode."
 msgstr ""
 
-#: address.js:231
+#: address.js:226
 msgid "Switzerland"
-msgstr "Ελβετία"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:135
 msgid "Sync Customers"
@@ -12844,9 +13629,9 @@ msgstr ""
 msgid "Syncing"
 msgstr ""
 
-#: address.js:232
+#: address.js:227
 msgid "Syrian Arab Republic"
-msgstr "Συρία"
+msgstr ""
 
 #: src/Support/Currency.php:357
 #, fuzzy
@@ -12868,22 +13653,22 @@ msgctxt "block title"
 msgid "Tabbed Customer Dashboard"
 msgstr ""
 
-#: address.js:233
+#: address.js:228
 msgid "Taiwan"
-msgstr "Ταϊβάν"
+msgstr ""
 
-#: address.js:234
+#: address.js:229
 msgid "Tajikistan"
-msgstr "Τατζικιστάν"
+msgstr ""
 
 #: src/Support/Currency.php:358
 #, fuzzy
 msgid "Tajikistani Somoni"
 msgstr ""
 
-#: address.js:235
+#: address.js:230
 msgid "Tanzania"
-msgstr "Τανζανία"
+msgstr ""
 
 #: src/Support/Currency.php:359
 #, fuzzy
@@ -12952,11 +13737,6 @@ msgstr ""
 msgid "Tax Zone"
 msgstr ""
 
-#: products/modules/Tax.js:68
-#, fuzzy
-msgid "Tax and Shipping"
-msgstr ""
-
 #: subscriptions/show/modules/Tax.js:37
 #, fuzzy
 msgid "Tax disabled."
@@ -12977,9 +13757,9 @@ msgstr "Ο φόρος υπολογίζεται αυτόματα και εφαρ�
 msgid "Tax is included"
 msgstr ""
 
-#: sc-line-item-tax2.js:20
+#: sc-line-item-tax2.js:22
 msgid "Tax:"
-msgstr "Φόρος:"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:44
 #: settings/tax/TaxSettings.js:36
@@ -13009,6 +13789,10 @@ msgstr ""
 #: Controllers/SubscriptionController.php:248
 #, fuzzy
 msgid "Terms"
+msgstr ""
+
+#: settings/account/AccountSettings.js:259
+msgid "Terms Page"
 msgstr ""
 
 #: settings/portal/PortalSettings.js:131
@@ -13045,22 +13829,12 @@ msgstr "Δοκιμή"
 msgid "Test Mode"
 msgstr ""
 
-#: admin/processors.php:66
-#: admin/processors.php:144
-#, fuzzy
-msgid "Test Payment Not Enabled"
+#: settings/processors/ProcessorSettings.js:61
+msgid "Test Payments Disabled"
 msgstr ""
 
-#: admin/processors.php:69
-#: admin/processors.php:147
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:57
 msgid "Test Payments Enabled"
-msgstr ""
-
-#: admin/processors.php:62
-#: admin/processors.php:140
-#, fuzzy
-msgid "Test and Live Payments Enabled"
 msgstr ""
 
 #: Blocks/Form/Block.php:144
@@ -13105,9 +13879,9 @@ msgstr ""
 msgid "Thai Baht"
 msgstr ""
 
-#: address.js:236
+#: address.js:231
 msgid "Thailand"
-msgstr "Ταϊλάνδη"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:203
 #: Blocks/Form/components/Setup.js:85
@@ -13546,6 +14320,14 @@ msgstr ""
 msgid "The line items for the session."
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:76
+msgid "The maximum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:75
+msgid "The maximum amount must be greater than or equal to the minimum amount."
+msgstr ""
+
 #: Blocks/Form/Block.php:124
 #, fuzzy
 msgid "The maximum number of subscriptions for a customer has been reached. Contact us if you are receiving this error."
@@ -13561,9 +14343,33 @@ msgstr ""
 msgid "The maximum price must be smaller."
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:72
+msgid "The maximum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:71
+msgid "The maximum weight must be greater than or equal to the minimum weight."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:78
+msgid "The minimum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:77
+msgid "The minimum amount must be greater than or equal to zero."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:44
 #, fuzzy
 msgid "The minimum price must be smaller."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:74
+msgid "The minimum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:73
+msgid "The minimum weight must be greater than or equal to zero."
 msgstr ""
 
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:125
@@ -13661,11 +14467,14 @@ msgstr ""
 #: paypal-buttons.js:89
 #: paypal-buttons.js:103
 #: paypal-buttons.js:109
-#: sc-paypal-add-method.js:56
 #: sc-paypal-add-method.js:61
-#: sc-paypal-add-method.js:67
-#, fuzzy
+#: sc-paypal-add-method.js:66
+#: sc-paypal-add-method.js:72
 msgid "The payment did not process. Please try again."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:22
+msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
 msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:124
@@ -13713,6 +14522,10 @@ msgstr ""
 msgid "The product image must be an image."
 msgstr ""
 
+#: settings/shipping/profile/AddShippingProfile.js:36
+msgid "The profile name is required."
+msgstr ""
+
 #: settings/subscription-preservation/EditReason.js:132
 msgid "The prompt that will appear when you request more information."
 msgstr "Το μήνυμα που θα εμφανιστεί όταν ζητήσετε περισσότερες πληροφορίες."
@@ -13758,9 +14571,76 @@ msgstr ""
 msgid "The request timed out. Try again later."
 msgstr ""
 
-#: fetch.js:1845
-#, fuzzy
+#: fetch.js:694
 msgid "The response is not a valid JSON response."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:60
+msgid "The selected countries are already used in another shipping zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:61
+msgid "The selected countries are not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:70
+msgid "The shipping method cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:65
+msgid "The shipping method description is too long. Please enter a shorter description."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:62
+msgid "The shipping method name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:54
+msgid "The shipping method name is already in use ."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:64
+msgid "The shipping method name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:63
+msgid "The shipping method name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:55
+msgid "The shipping profile name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:56
+msgid "The shipping profile name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:66
+msgid "The shipping rate type cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:67
+msgid "The shipping rate type is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:68
+msgid "The shipping weight unit cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:69
+msgid "The shipping weight unit is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:57
+msgid "The shipping zone name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:58
+msgid "The shipping zone name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:59
+msgid "The shipping zone name is too long. Please enter a shorter name."
 msgstr ""
 
 #: Blocks/Form/Block.php:139
@@ -13851,9 +14731,10 @@ msgstr ""
 msgid "Theme Layout"
 msgstr ""
 
-#: sc-product-line-item2.js:24
+#. translators: 30 days free, Then $99 per month.
+#: sc-product-line-item2.js:39
 msgid "Then"
-msgstr "Τότε"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:181
 msgid "There are no cancellation reasons for this period."
@@ -13903,6 +14784,10 @@ msgstr ""
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:222
 #, fuzzy
 msgid "This Week"
+msgstr ""
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:43
+msgid "This action cannot be undone."
 msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:132
@@ -13977,6 +14862,10 @@ msgstr ""
 msgid "This coupon will not be usable and all unsaved changes will be lost."
 msgstr ""
 
+#: checkouts/modules/PaymentMethods.js:76
+msgid "This customer does not have any payment methods that are reusable. This means we cannot charge this customer without them entering their payment details again. Please ask the customer to add a payment method to their account, or use a manual payment method."
+msgstr ""
+
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:81
 #, fuzzy
 msgid "This customer's most recent checkout that has been abandoned."
@@ -14002,6 +14891,14 @@ msgstr ""
 msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr ""
 
+#: onboarding/components/ConfirmStoreEmail.js:53
+msgid "This email is used for store notifications, such as new orders, payment failures and other store emails."
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:310
+msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 #, fuzzy
 msgid "This form has been deleted or is unavailable."
@@ -14017,6 +14914,18 @@ msgstr ""
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
+#: templates/UpdateModel/index.js:46
+msgid "This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan."
+msgstr ""
+
+#: templates/UpdateModel/index.js:50
+msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
+msgstr ""
+
+#: sc-feature-demo-banner.js:15
+msgid "This is a feature demo. In order to use it, you must upgrade your plan."
+msgstr ""
+
 #: admin/subscriptions/index.php:9
 #, fuzzy
 msgid "This is a list for all your subscription plans. Subscriptions represent recurring payment plans for your users."
@@ -14027,7 +14936,7 @@ msgstr ""
 msgid "This is a physical product"
 msgstr ""
 
-#: sc-order-submit.js:46
+#: sc-order-submit.js:57
 msgid "This is a secure, encrypted payment."
 msgstr ""
 
@@ -14103,8 +15012,19 @@ msgid "This method for creating Bitcoin payments is not supported anymore. Pleas
 msgstr ""
 
 #: sc-order-confirmation.js:111
-#, fuzzy
 msgid "This order could not be found. Please try again."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:195
+msgid "This order has already been created. Please create a new order."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:91
+msgid "This order has products that are not shippable to this address."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:80
+msgid "This order requires shipping. Please enter an address."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
@@ -14122,8 +15042,7 @@ msgstr ""
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr ""
 
-#: sc-custom-order-price-input.js:72
-#, fuzzy
+#: sc-custom-order-price-input.js:74
 msgid "This price has been archived."
 msgstr ""
 
@@ -14132,7 +15051,7 @@ msgstr ""
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr ""
 
-#: sc-price-choice.js:782
+#: sc-price-choice.js:776
 msgid "This product has been archived."
 msgstr ""
 
@@ -14145,9 +15064,8 @@ msgstr ""
 msgid "This product is invalid."
 msgstr ""
 
-#: sc-error2.js:25
-#: sc-form-error-provider2.js:42
-#, fuzzy
+#: sc-checkout-form-errors2.js:17
+#: sc-error2.js:24
 msgid "This product is no longer purchasable."
 msgstr ""
 
@@ -14162,11 +15080,6 @@ msgstr ""
 msgid "This product is not available for purchase."
 msgstr ""
 
-#: products/modules/Tax.js:71
-#, fuzzy
-msgid "This product requires shipping"
-msgstr ""
-
 #: src/Support/Errors/Translations/codes.php:24
 #, fuzzy
 msgid "This promotion code already exists. Please archive the old code or use a different code."
@@ -14177,8 +15090,7 @@ msgstr ""
 msgid "This should be your live storefront URL."
 msgstr ""
 
-#: sc-subscription.js:117
-#, fuzzy
+#: sc-subscription.js:163
 msgid "This subscription does not exist."
 msgstr ""
 
@@ -14234,6 +15146,14 @@ msgstr ""
 msgid "This will change your user data on your install. We recommend creating a backup of your site before running this."
 msgstr ""
 
+#: checkouts/CreateCheckout.js:320
+msgid "This will charge the customer %s."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:337
+msgid "This will create an order that requires a manual payment (i.e. cash or check). Once you create this order it is not possible to pay it another way. Do you want to continue?"
+msgstr ""
+
 #: settings/account/AccountSettings.js:281
 msgid "This will enable slide-out cart. If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages."
 msgstr ""
@@ -14250,6 +15170,10 @@ msgstr ""
 #: customers/modules/PaymentMethods/Actions.js:44
 #, fuzzy
 msgid "This will save any changes on the page. Do you want to save your changes?"
+msgstr ""
+
+#: settings/shipping/zone/FallbackZone.js:20
+msgid "This zone is optionally used for regions that are not included in any other shipping zone."
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:168
@@ -14279,9 +15203,9 @@ msgstr ""
 msgid "Time Zone"
 msgstr ""
 
-#: address.js:237
+#: address.js:232
 msgid "Timor-Leste"
-msgstr "Τιμόρ-Λέστε"
+msgstr ""
 
 #: Blocks/Card/edit.js:28
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:22
@@ -14327,9 +15251,17 @@ msgstr "Για να προσθέσετε κάποια προϊόντα, επιλ
 msgid "To adjust your abandoned checkout notifications,"
 msgstr ""
 
+#: settings/shipping/profile/Products.js:397
+msgid "To charge different rates for only certain products, create a new profile in"
+msgstr ""
+
 #: products/modules/Tax.js:48
 #, fuzzy
 msgid "To charge tax, please set up your tax information on the settings page."
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:132
+msgid "To complete the shipping setup, please add shipping rates to a shipping profile below."
 msgstr ""
 
 #: settings/account/AccountSettings.js:324
@@ -14337,8 +15269,7 @@ msgstr ""
 msgid "To get your Recaptcha keys"
 msgstr ""
 
-#: sc-subscription-switch.js:196
-#, fuzzy
+#: sc-subscription-switch.js:205
 msgid "To make changes to your payment plan, please contact us."
 msgstr ""
 
@@ -14373,17 +15304,17 @@ msgstr ""
 msgid "Toggle Product Archive"
 msgstr ""
 
-#: address.js:238
+#: address.js:233
 msgid "Togo"
-msgstr "Τόγκο"
+msgstr ""
 
-#: address.js:239
+#: address.js:234
 msgid "Tokelau"
-msgstr "Τοκελάου"
+msgstr ""
 
-#: address.js:240
+#: address.js:235
 msgid "Tonga"
-msgstr "Τόνγκα"
+msgstr ""
 
 #: src/Support/Currency.php:361
 #, fuzzy
@@ -14505,6 +15436,18 @@ msgstr ""
 msgid "Tracking Confirmation"
 msgstr ""
 
+#: orders/modules/Fulfillment/components/Tracking.js:74
+msgid "Tracking Link"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/Tracking.js:61
+#: orders/modules/Fulfillment/Fulfilled.js:249
+#: sc-fulfillments.js:63
+msgid "Tracking number"
+msgid_plural "Tracking numbers"
+msgstr[0] ""
+msgstr[1] ""
+
 #: Blocks/Form/Block.php:146
 #, fuzzy
 msgid "Transfers and payouts on behalf of a Standard connected account are not allowed."
@@ -14526,39 +15469,43 @@ msgstr ""
 msgid "Trialing"
 msgstr "Σε Δοκιμή"
 
-#: address.js:241
+#: address.js:236
 msgid "Trinidad and Tobago"
-msgstr "Τρινιντάντ και Τομπάγκο"
+msgstr ""
 
 #: src/Support/Currency.php:362
 #, fuzzy
 msgid "Trinidad and Tobago Dollar"
 msgstr ""
 
-#: address.js:242
+#: address.js:237
 msgid "Tunisia"
-msgstr "Τυνησία"
+msgstr ""
 
-#: address.js:243
+#: address.js:238
 msgid "Turkey"
-msgstr "Τουρκία"
+msgstr ""
 
 #: src/Support/Currency.php:363
 #, fuzzy
 msgid "Turkish Lira"
 msgstr ""
 
-#: address.js:244
+#: address.js:239
 msgid "Turkmenistan"
-msgstr "Τουρκμενιστάν"
+msgstr ""
 
-#: address.js:245
+#: address.js:240
 msgid "Turks and Caicos Islands"
-msgstr "Τερκς και Κέικος"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:104
 #, fuzzy
 msgid "Turn on abandoned cart for your store."
+msgstr ""
+
+#: products/modules/Shipping.js:117
+msgid "Turn this off if you do not wish to automatically fulfill this product when an order is placed."
 msgstr ""
 
 #: settings/subscription-preservation/PreservationSettings.js:194
@@ -14576,9 +15523,9 @@ msgstr ""
 msgid "Tutorial"
 msgstr ""
 
-#: address.js:246
+#: address.js:241
 msgid "Tuvalu"
-msgstr "Τουβαλού"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:192
 #, fuzzy
@@ -14650,18 +15597,18 @@ msgstr ""
 msgid "URL Slug"
 msgstr ""
 
-#: address.js:247
+#: address.js:242
 msgid "Uganda"
-msgstr "Ουγκάντα"
+msgstr ""
 
 #: src/Support/Currency.php:364
 #, fuzzy
 msgid "Ugandan Shilling"
 msgstr ""
 
-#: address.js:248
+#: address.js:243
 msgid "Ukraine"
-msgstr "Ουκρανία"
+msgstr ""
 
 #: src/Support/Currency.php:365
 #, fuzzy
@@ -14703,6 +15650,10 @@ msgstr ""
 msgid "Un-Archive this price? This will make the product purchaseable again."
 msgstr ""
 
+#: product-groups/EditProductGroup.js:75
+msgid "Un-Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:348
 #, fuzzy
 msgid "Unapprove"
@@ -14711,6 +15662,12 @@ msgstr ""
 #: products/components/Availability/index.js:85
 #: Blocks/Product/BuyButton/Block.php:117
 msgid "Unavailable For Purchase"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:351
+#: orders/modules/Fulfillment/Unfulfilled.js:40
+#: sc-order-fulfillment-badge.js:7
+msgid "Unfulfilled"
 msgstr ""
 
 #: admin/advanced.php:63
@@ -14766,9 +15723,9 @@ msgstr ""
 msgid "Unique identifier for the object."
 msgstr ""
 
-#: address.js:249
+#: address.js:244
 msgid "United Arab Emirates"
-msgstr "Ηνωμένα Αραβικά Εμιράτα"
+msgstr ""
 
 #: src/Support/Currency.php:366
 #, fuzzy
@@ -14794,9 +15751,13 @@ msgstr ""
 msgid "United States Dollar"
 msgstr ""
 
-#: address.js:252
+#: address.js:247
 msgid "United States Minor Outlying Islands"
-msgstr "Απομακρυσμένες Νησίδες των Ηνωμένων Πολιτειών"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:185
+msgid "United States,  United Kingdom, Global ..."
+msgstr ""
 
 #: orders/modules/Refunds.js:59
 #, fuzzy
@@ -14823,9 +15784,9 @@ msgstr ""
 msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:62
+#: sc-subscription-status-badge2.js:65
 msgid "Unpaid"
-msgstr "Απλήρωτο"
+msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:78
 #, fuzzy
@@ -14882,9 +15843,9 @@ msgstr ""
 msgid "Update Account Details"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update All Subscriptions"
-msgstr "Ενημέρωση Όλων Των Συνδρομών"
+msgstr ""
 
 #: sc-subscription-switch.js:178
 #, fuzzy
@@ -14902,9 +15863,9 @@ msgstr ""
 msgid "Update Coupon"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update Default Payment Method"
-msgstr "Ενημέρωση Προεπιλεγμένης Μεθόδου Πληρωμής"
+msgstr ""
 
 #: subscriptions/edit/EditSubscription.js:245
 #, fuzzy
@@ -14940,8 +15901,7 @@ msgstr ""
 msgid "Update Plan"
 msgstr ""
 
-#: sc-subscription-details2.js:107
-#, fuzzy
+#: sc-subscription-details2.js:109
 msgid "Update Scheduled"
 msgstr ""
 
@@ -14951,14 +15911,18 @@ msgstr ""
 msgid "Update Subscription"
 msgstr ""
 
+#: subscriptions/edit/modules/Modals/UpdatePrice.js:28
+msgid "Update Subscription Price"
+msgstr ""
+
 #: admin/connection-invalid.php:25
 #, fuzzy
 msgid "Update Your Connection"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update all existing subscriptions to use this payment method"
-msgstr "Ενημέρωση όλων των υπαρχόντων συνδρομών ώστε να χρησιμοποιούν αυτήν την μέθοδο πληρωμής"
+msgstr ""
 
 #: subscriptions/show/modules/modals/CancelUpdateModal.js:30
 #, fuzzy
@@ -14997,18 +15961,17 @@ msgstr ""
 msgid "Upgrade Groups"
 msgstr ""
 
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Upgrade Now"
-msgstr "Αναβάθμιση Τώρα"
+msgstr ""
 
 #: settings/upgrade/UpgradeSettings.js:57
 #, fuzzy
 msgid "Upgrade This Store"
 msgstr ""
 
-#: layouts/partials/admin-settings-sidebar.php:76
-#, fuzzy
-msgid "Upgrade To Pro"
+#: layouts/partials/admin-settings-sidebar.php:94
+msgid "Upgrade To Premium"
 msgstr ""
 
 #: components/UpgradeModal.js:39
@@ -15023,8 +15986,11 @@ msgid "Upgrade behavior. Either pending or immediate."
 msgstr ""
 
 #: settings/upgrade/UpgradeSettings.js:37
-#, fuzzy
-msgid "Upgrade to Pro"
+msgid "Upgrade to Premium"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:118
+msgid "Upgrade to SureCart Premium to add unlimited shipping methods."
 msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:88
@@ -15048,9 +16014,9 @@ msgstr ""
 msgid "Url Slug"
 msgstr ""
 
-#: address.js:253
+#: address.js:248
 msgid "Uruguay"
-msgstr "Ουρουγουάη"
+msgstr ""
 
 #: src/Support/Currency.php:368
 #, fuzzy
@@ -15119,15 +16085,15 @@ msgstr ""
 msgid "User disconnected."
 msgstr ""
 
-#: sc-wordpress-password-edit.js:26
-#: sc-wordpress-user-edit.js:28
+#: sc-wordpress-password-edit.js:30
+#: sc-wordpress-user-edit.js:31
 #: sc-wordpress-user.js:30
 msgid "User not found."
-msgstr "Ο χρήστης δεν βρέθηκε."
+msgstr ""
 
-#: sc-login-form.js:150
+#: sc-login-form.js:152
 msgid "Username or Email Address"
-msgstr "Όνομα χρήστη ή διεύθυνση email"
+msgstr ""
 
 #: coupons/modules/Limits.js:89
 #, fuzzy
@@ -15140,18 +16106,17 @@ msgstr ""
 msgid "Uses"
 msgstr ""
 
-#: address.js:254
+#: address.js:249
 msgid "Uzbekistan"
-msgstr "Ουζμπεκιστάν"
+msgstr ""
 
 #: src/Support/Currency.php:369
 #, fuzzy
 msgid "Uzbekistan Som"
 msgstr ""
 
-#: tax.js:14
-#: tax.js:18
-#, fuzzy
+#: tax.js:11
+#: tax.js:15
 msgid "VAT Number"
 msgstr ""
 
@@ -15201,22 +16166,22 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: address.js:255
+#: address.js:250
 msgid "Vanuatu"
-msgstr "Βανουάτου"
+msgstr ""
 
 #: src/Support/Currency.php:370
 #, fuzzy
 msgid "Vanuatu Vatu"
 msgstr ""
 
-#: address.js:256
+#: address.js:251
 msgid "Venezuela"
-msgstr "Βενεζουέλα"
+msgstr ""
 
-#: sc-login-form.js:92
+#: sc-login-form.js:94
 msgid "Verification code is not valid. Please try again."
-msgstr "Ο κωδικός επαλήθευσης δεν είναι έγκυρος. Παρακαλώ δοκίμασε ξανά."
+msgstr ""
 
 #. translators: Version number.
 #: layouts/partials/admin-settings-header.php:50
@@ -15224,9 +16189,9 @@ msgstr "Ο κωδικός επαλήθευσης δεν είναι έγκυρο�
 msgid "Version %s"
 msgstr ""
 
-#: address.js:257
+#: address.js:252
 msgid "Vietnam"
-msgstr "Βιετνάμ"
+msgstr ""
 
 #: src/Support/Currency.php:371
 #, fuzzy
@@ -15288,6 +16253,10 @@ msgstr ""
 msgid "View License"
 msgstr ""
 
+#: onboarding/Onboarding.js:182
+msgid "View My Store"
+msgstr ""
+
 #: abandoned-checkouts/modules/LineItems/index.js:33
 #: components/data-tables/charges-data-table/index.js:157
 #: orders/Order.js:131
@@ -15330,16 +16299,24 @@ msgstr ""
 msgid "View charge on "
 msgstr ""
 
-#: address.js:258
+#: address.js:253
 msgid "Virgin Islands, British"
-msgstr "Βρετανικές Παρθένοι Νήσοι"
+msgstr ""
 
-#: address.js:259
+#: address.js:254
 msgid "Virgin Islands, U.S."
-msgstr "Αμερικανικές Παρθένοι Νήσοι"
+msgstr ""
 
-#: sc-order-status-badge2.js:41
-#, fuzzy
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit Store"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit SureCart Store"
+msgstr ""
+
+#: orders/modules/LineItems/index.js:29
+#: sc-order-status-badge2.js:43
 msgid "Void"
 msgstr ""
 
@@ -15347,13 +16324,17 @@ msgstr ""
 msgid "Wait for a period of time after a customer has made a purchase to send other abandoned checkouts."
 msgstr ""
 
-#: address.js:260
+#: address.js:255
 msgid "Wallis and Futuna"
-msgstr "Ουαλίς και Φουτουνά"
+msgstr ""
 
 #: admin/coming-soon.php:50
 #, fuzzy
 msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:53
+msgid "We don't currently ship to your address."
 msgstr ""
 
 #: products/modules/Image/AddUrlImage.js:74
@@ -15382,17 +16363,21 @@ msgstr ""
 msgid "Weekly"
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Welcome"
-msgstr "Καλώς ήρθες"
+msgstr ""
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Welcome back!"
-msgstr "Καλωσορίσατε πίσω!"
+msgstr ""
 
 #: admin/onboarding/install.php:48
 #, fuzzy
 msgid "Welcome to SureCart!"
+msgstr ""
+
+#: onboarding/components/InitialSetup.js:22
+msgid "Welcome, Let’s Setup Your Online Store"
 msgstr ""
 
 #: src/Support/Currency.php:372
@@ -15400,9 +16385,9 @@ msgstr ""
 msgid "West African Cfa Franc"
 msgstr ""
 
-#: address.js:261
+#: address.js:256
 msgid "Western Sahara"
-msgstr "Δυτική Σαχάρα"
+msgstr ""
 
 #: admin/invoices/index.php:8
 #, fuzzy
@@ -15471,6 +16456,10 @@ msgstr ""
 msgid "Whether or not customers can make subscription changes from the customer portal."
 msgstr ""
 
+#: src/Rest/ShippingProtocolRestServiceProvider.php:87
+msgid "Whether or not shipping is enabled"
+msgstr ""
+
 #: src/Rest/BumpRestServiceProvider.php:83
 #, fuzzy
 msgid "Whether or not this bump is currently enabled and being shown to customers."
@@ -15529,9 +16518,9 @@ msgstr ""
 msgid "Yearly"
 msgstr ""
 
-#: address.js:262
+#: address.js:257
 msgid "Yemen"
-msgstr "Υεμένη"
+msgstr ""
 
 #: src/Support/Currency.php:373
 #, fuzzy
@@ -15541,6 +16530,10 @@ msgstr ""
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:216
 #, fuzzy
 msgid "Yesterday"
+msgstr ""
+
+#: onboarding/components/InitialSetup.js:33
+msgid "You are a few clicks away from adding e-commerce to your website. SureCart is a cloud powered e-commerce platform that is easy to use, lightweight, and lightning fast."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:46
@@ -15563,9 +16556,12 @@ msgstr ""
 msgid "You are not currently a customer."
 msgstr ""
 
-#: fetch.js:2076
-#, fuzzy
+#: fetch.js:925
 msgid "You are probably offline."
+msgstr ""
+
+#: onboarding/components/ConfirmStoreDetails.js:46
+msgid "You can always change this later."
 msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:84
@@ -15581,6 +16577,10 @@ msgstr ""
 #: src/Support/Errors/Translations/codes.php:40
 #, fuzzy
 msgid "You can only apply this offer once."
+msgstr ""
+
+#: Blocks/Password/edit.js:40
+msgid "You can override the global password validation by going to the advanced settings."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
@@ -15613,16 +16613,15 @@ msgstr ""
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr ""
 
-#: sc-subscription-payment-method.js:41
+#: sc-subscription-payment-method.js:46
 msgid "You do not have any payment methods."
-msgstr "Δεν έχεις κάποια μέθοδο πληρωμής."
-
-#: sc-payment.js:46
-msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:172
-#, fuzzy
+#: sc-payment.js:67
+msgid "You do not have any processors enabled for this mode and cart. "
+msgstr ""
+
+#: sc-stripe-payment-request2.js:171
 msgid "You do not have any wallets set up in your browser."
 msgstr ""
 
@@ -15642,13 +16641,11 @@ msgstr ""
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
 msgstr ""
 
-#: sc-purchase-downloads-list2.js:30
-#, fuzzy
+#: sc-purchase-downloads-list2.js:34
 msgid "You don't have any downloads."
 msgstr ""
 
-#: sc-invoices-list.js:117
-#, fuzzy
+#: sc-invoices-list.js:119
 msgid "You don't have any invoices."
 msgstr ""
 
@@ -15658,14 +16655,13 @@ msgstr ""
 msgid "You don't have any orders."
 msgstr ""
 
-#: sc-payment-methods-list.js:123
-#, fuzzy
+#: sc-payment-methods-list.js:148
 msgid "You don't have any saved payment methods."
 msgstr ""
 
-#: sc-subscriptions-list.js:107
+#: sc-subscriptions-list.js:110
 msgid "You don't have any subscriptions."
-msgstr "Δεν έχεις συνδρομές."
+msgstr ""
 
 #: settings/subscription-preservation/Reasons.js:109
 msgid "You don't have any survey answers. Please add at least one to collect cancellation feedback."
@@ -15681,13 +16677,16 @@ msgstr ""
 msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
 msgstr ""
 
-#: sc-login-provider2.js:76
-msgid "You have logged in successfully."
-msgstr "Έχετε συνδεθεί επιτυχώς."
+#: src/Models/ProvisionalAccount.php:45
+msgid "You have already set up your store."
+msgstr ""
 
-#: sc-charges-list.js:90
-#: sc-subscription-payment.js:105
-#, fuzzy
+#: sc-login-provider2.js:80
+msgid "You have logged in successfully."
+msgstr ""
+
+#: sc-charges-list.js:92
+#: sc-subscription-payment.js:110
 msgid "You have no saved payment methods."
 msgstr ""
 
@@ -15696,14 +16695,13 @@ msgstr ""
 msgid "You have not been charged for this order."
 msgstr ""
 
-#: sc-password-nag.js:86
-#, fuzzy
+#: sc-password-nag.js:98
 msgid "You have not yet set a password. Please set a password for your account."
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:96
 msgid "You have successfully set your password."
-msgstr "Ο κωδικός πρόσβασης ορίστηκε με επιτυχία."
+msgstr ""
 
 #: components/unsaved-changes-warning/index.js:40
 #: templates/UpdateModel/UnsavedChangesWarning.js:38
@@ -15721,18 +16719,16 @@ msgstr ""
 msgid "You must first purchase something to access your dashboard."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:166
+#: sc-stripe-payment-request2.js:165
 msgid "You must serve this page over HTTPS to display express payment buttons."
-msgstr "Πρέπει να παρέχετε αυτή τη σελίδα μέσω HTTPS για να εμφανίσετε τα κουμπιά πληρωμής εξπρές."
+msgstr ""
 
-#: sc-customer-email.js:81
-#, fuzzy
+#: sc-customer-email.js:91
 msgid "You won't receive further emails from us."
 msgstr ""
 
-#: sc-upcoming-invoice.js:169
-#: sc-upcoming-invoice.js:171
-#, fuzzy
+#: sc-upcoming-invoice.js:182
+#: sc-upcoming-invoice.js:184
 msgid "You'll be switched to this plan"
 msgstr ""
 
@@ -15766,9 +16762,9 @@ msgstr ""
 msgid "Your Connect platform is attempting to share an unverified bank account with a connected account."
 msgstr ""
 
-#: sc-order-summary.js:64
+#: sc-order-summary.js:81
 msgid "Your cart is empty."
-msgstr "Το καλάθι σου είναι άδειο."
+msgstr ""
 
 #: customers/modules/Details.js:61
 #, fuzzy
@@ -15819,52 +16815,48 @@ msgstr ""
 msgid "Your name"
 msgstr "Το όνομά σας"
 
-#: sc-subscription-next-payment2.js:92
+#: sc-subscription-next-payment2.js:97
 msgid "Your next payment is"
-msgstr "Η επόμενη πληρωμή είναι"
+msgstr ""
 
-#: sc-subscription-details2.js:83
+#: sc-subscription-details2.js:87
 msgid "Your next payment is on"
-msgstr "Η επόμενη πληρωμή είναι στις"
+msgstr ""
 
-#: sc-checkout-unsaved-changes-warning2.js:24
+#: sc-checkout-unsaved-changes-warning2.js:23
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
-msgstr "Η πληρωμή σας επεξεργάζεται. Η έξοδος από αυτή τη σελίδα μπορεί να προκαλέσει σφάλμα στην παραγγελία σας. Παρακαλούμε μην απομακρυνθείτε από αυτή τη σελίδα."
+msgstr ""
 
 #: Blocks/Form/edit.js:398
 #: sc-order-confirm-provider2.js:70
 msgid "Your payment was successful, and your order is complete. A receipt is on its way to your inbox."
 msgstr ""
 
-#: sc-subscription-details2.js:80
-#: sc-subscription.js:109
+#: sc-subscription-details2.js:84
+#: sc-subscription.js:155
 msgid "Your plan begins on"
-msgstr "Το πρόγραμμά σου ξεκινάει στις"
+msgstr ""
 
-#: sc-subscription-details2.js:83
-#: sc-subscription.js:112
+#: sc-subscription-details2.js:87
+#: sc-subscription.js:158
 msgid "Your plan renews on"
-msgstr "Το πρόγραμμά σου ανανεώνεται στις"
+msgstr ""
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
-#, fuzzy
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "Your plan switches to"
 msgstr ""
 
-#: sc-subscription-cancel.js:88
-#, fuzzy
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled immediately. You cannot change your mind."
 msgstr ""
 
-#: sc-subscription-details2.js:68
-#: sc-subscription.js:106
-#, fuzzy
+#: sc-subscription-details2.js:72
+#: sc-subscription.js:152
 msgid "Your plan will be canceled on"
 msgstr ""
 
-#: sc-subscription-cancel.js:88
-#, fuzzy
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
 msgstr ""
 
@@ -15903,23 +16895,43 @@ msgstr ""
 msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
 msgstr ""
 
+#: onboarding/components/SetupDone.js:45
+msgid "Your store has been created."
+msgstr ""
+
+#: dashboard/Dashboard.js:88
+msgid "Your store is now connected to SureCart."
+msgstr ""
+
 #: settings/tax-region/TaxRegionSettings.js:55
 #, fuzzy
 msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
 msgstr ""
 
-#: address.js:263
+#: address.js:258
 msgid "Zambia"
-msgstr "Ζάμπια"
+msgstr ""
 
 #: src/Support/Currency.php:374
 #, fuzzy
 msgid "Zambian Kwacha"
 msgstr ""
 
-#: address.js:264
+#: address.js:259
 msgid "Zimbabwe"
-msgstr "Ζιμπάμπουε"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:181
+msgid "Zone Name"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:117
+msgid "Zone added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:111
+msgid "Zone updated"
+msgstr ""
 
 #. translators: Visible only in the front end, this warning takes the place of a faulty block.
 #: Blocks/CheckoutForm/Block.php:39
@@ -15958,6 +16970,10 @@ msgctxt "block keyword"
 msgid "amount"
 msgstr ""
 
+#: onboarding/components/InitialSetup.js:98
+msgid "and"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 #, fuzzy
 msgctxt "block keyword"
@@ -15970,8 +16986,7 @@ msgctxt "block keyword"
 msgid "apple"
 msgstr ""
 
-#: sc-upcoming-invoice.js:169
-#, fuzzy
+#: sc-upcoming-invoice.js:182
 msgid "at the end of your billing cycle on"
 msgstr ""
 
@@ -16165,8 +17180,7 @@ msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sc-quantity-select2.js:60
-#, fuzzy
+#: sc-quantity-select2.js:66
 msgid "decrease number"
 msgstr ""
 
@@ -16281,6 +17295,11 @@ msgctxt "block keyword"
 msgid "form"
 msgstr ""
 
+#: products/modules/Shipping.js:20
+#: settings/shipping/rate/ShippingRateForm.js:39
+msgid "g"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 #, fuzzy
 msgctxt "block keyword"
@@ -16313,17 +17332,15 @@ msgctxt "block keyword"
 msgid "image"
 msgstr "εικόνα"
 
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:184
 msgid "immediately"
-msgstr "αμέσως"
+msgstr ""
 
-#: sc-line-item-tax2.js:33
-#, fuzzy
+#: sc-line-item-tax2.js:37
 msgid "included"
 msgstr ""
 
-#: sc-quantity-select2.js:60
-#, fuzzy
+#: sc-quantity-select2.js:66
 msgid "increase number"
 msgstr ""
 
@@ -16373,10 +17390,20 @@ msgctxt "block keyword"
 msgid "item"
 msgstr "αντικείμενο"
 
+#: products/modules/Shipping.js:18
+#: settings/shipping/rate/ShippingRateForm.js:37
+msgid "kg"
+msgstr ""
+
 #: Blocks/LastName/block.json
 #, fuzzy
 msgctxt "block keyword"
 msgid "last-name"
+msgstr ""
+
+#: products/modules/Shipping.js:17
+#: settings/shipping/rate/ShippingRateForm.js:36
+msgid "lb"
 msgstr ""
 
 #: Blocks/BumpLineItem/block.json
@@ -16450,11 +17477,11 @@ msgctxt "block keyword"
 msgid "meta"
 msgstr ""
 
-#: price.js:50
+#: price.js:52
 msgid "mo"
 msgid_plural "%d mos"
-msgstr[0] "μήνα"
-msgstr[1] "%d μήνες"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: number of months
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:263
@@ -16530,9 +17557,12 @@ msgstr ""
 msgid "of"
 msgstr ""
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
-#, fuzzy
+#: orders/modules/Fulfillment/CreateFulfillment.js:216
+msgid "of %d"
+msgstr ""
+
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "on"
 msgstr ""
 
@@ -16546,9 +17576,9 @@ msgstr ""
 msgid "once"
 msgstr ""
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "or"
-msgstr "ή"
+msgstr ""
 
 #: components/MediaLibrary/index.js:178
 #, fuzzy
@@ -16560,6 +17590,11 @@ msgstr ""
 #, fuzzy
 msgctxt "Page slug"
 msgid "order-confirmation"
+msgstr ""
+
+#: products/modules/Shipping.js:19
+#: settings/shipping/rate/ShippingRateForm.js:38
+msgid "oz"
 msgstr ""
 
 #: Blocks/Password/block.json
@@ -16654,16 +17689,20 @@ msgctxt "block keyword"
 msgid "shipping"
 msgstr ""
 
+#: settings/shipping/profile/Products.js:407
+msgid "shipping settings"
+msgstr ""
+
 #: src/WordPress/Pages/PageSeeder.php:90
 msgctxt "Shop page slug"
 msgid "shop"
 msgstr ""
 
-#: sc-product-line-item2.js:30
+#: sc-product-line-item2.js:39
 msgid "starting in %d day"
 msgid_plural "starting in %d days"
-msgstr[0] "Ξεκινάει σε %d μέρα"
-msgstr[1] "Ξεκινάει σε %d μέρες"
+msgstr[0] ""
+msgstr[1] ""
 
 #: Blocks/StoreLogo/block.json
 msgctxt "block keyword"
@@ -16813,11 +17852,11 @@ msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: price.js:48
+#: price.js:50
 msgid "wk"
 msgid_plural "%d wks"
-msgstr[0] "εβδομάδα"
-msgstr[1] "%d εβδομάδες"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: number of yearls
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:269
@@ -16829,12 +17868,12 @@ msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: price.js:52
+#: price.js:54
 msgid "yr"
 msgid_plural "%d yrs"
-msgstr[0] "χρόνο"
-msgstr[1] "%d χρόνια"
+msgstr[0] ""
+msgstr[1] ""
 
-#: address.js:265
+#: address.js:260
 msgid "Åland Islands"
-msgstr "Νήσοι Ώλαντ"
+msgstr ""

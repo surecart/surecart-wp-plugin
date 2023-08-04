@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method, Host } from '@stencil/core';
+import { Component, Prop, h, Host, Method } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
@@ -8,8 +8,7 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScOrderPassword {
-  private input: HTMLScInputElement;
-  private confirmInput: HTMLScInputElement;
+  private input: HTMLScPasswordElement;
 
   @Prop() loggedIn: boolean;
 
@@ -66,41 +65,7 @@ export class ScOrderPassword {
 
   @Method()
   async reportValidity() {
-    if (this.loggedIn) return true;
-
-    this.input?.setCustomValidity?.('');
-    this.confirmInput?.setCustomValidity?.('');
-
-    // confirmation is enabled.
-    if (this.confirmation) {
-      if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
-        this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
-      }
-    }
-
-    if (this.enableValidation) {
-      const validPassword = this.validatePassword(this.input?.value);
-      if (!validPassword) {
-        this.input.setCustomValidity(__('Passwords should at least 6 characters and contain one special character.', 'surecart'));
-      }
-    }
-
-    const valid = await this.input.reportValidity();
-    if (!valid) {
-      return false;
-    }
-
-    if (this.confirmInput) {
-      return this.confirmInput.reportValidity();
-    }
-
-    return valid;
-  }
-
-  validatePassword(password: string) {
-    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
-    if (regex.test(password)) return true;
-    return false;
+    return this.input?.reportValidity?.();
   }
 
   render() {
@@ -108,40 +73,25 @@ export class ScOrderPassword {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
-    // if (this.emailExists) {
-    //   return <Host style={{ display: 'none' }}></Host>;
-    // }
-
     return (
-      <div class="password">
-        <sc-input
-          ref={el => (this.input = el as HTMLScInputElement)}
-          label={this.label}
-          help={this.help}
-          autofocus={this.autofocus}
-          placeholder={this.placeholder}
-          showLabel={this.showLabel}
-          size={this.size ? this.size : 'medium'}
-          type="password"
-          name="password"
-          value={this.value}
-          required={this.required}
-          disabled={this.disabled}
-        ></sc-input>
-        {this.confirmation && (
-          <sc-input
-            ref={el => (this.confirmInput = el as HTMLScInputElement)}
-            label={this.confirmationLabel ?? __('Confirm Password', 'surecart')}
-            help={this.confirmationHelp}
-            placeholder={this.confirmationPlaceholder}
-            size={this.size ? this.size : 'medium'}
-            type="password"
-            value={this.value}
-            required={this.required}
-            disabled={this.disabled}
-          ></sc-input>
-        )}
-      </div>
+      <sc-password
+        label={this.label}
+        help={this.help}
+        autofocus={this.autofocus}
+        placeholder={this.placeholder}
+        showLabel={this.showLabel}
+        size={this.size ? this.size : 'medium'}
+        name="password"
+        ref={el => (this.input = el as HTMLScPasswordElement)}
+        value={this.value}
+        required={this.required}
+        disabled={this.disabled}
+        enableValidation={this.enableValidation}
+        confirmationHelp={this.confirmationHelp}
+        confirmationLabel={this.confirmationLabel}
+        confirmationPlaceholder={this.confirmationPlaceholder}
+        confirmation={this.confirmation}
+      />
     );
   }
 }
