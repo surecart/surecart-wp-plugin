@@ -22,7 +22,8 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
-				\SureCart\WordPress\PluginServiceProvider::class
+				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Webhooks\WebhooksServiceProvider::class,
 			]
 		], false);
 
@@ -164,25 +165,5 @@ class WebhookServiceTest extends SureCartUnitTestCase {
 
 		// verify.
 		$service->verify();
-	}
-
-	/**
-	 * @group failing
-	 */
-	public function test_should_keep_track_of_failed_webhook_processes() {
-		$webhook = \Mockery::mock(RegisteredWebhook::class)->shouldAllowMockingProtectedMethods();
-
-		// create a random webhook.
-		set_transient( 'surecart_webhook_somethingelse', ['id' => 'testid'], MINUTE_IN_SECONDS );
-		// this should be empty.
-		$this->assertEmpty((new WebhooksService($webhook))->getFailedWebhookProcesses());
-
-		// hasn't been long enough.
-		set_transient( 'surecart_webhook_process_testid', ['id' => 'testid', 'created_at' => time() ], MINUTE_IN_SECONDS );
-		$this->assertEmpty((new WebhooksService($webhook))->getFailedWebhookProcesses());
-
-		// more than 5 minutes.
-		set_transient( 'surecart_webhook_process_testid', ['id' => 'testid', 'created_at' => time() - (11 * MINUTE_IN_SECONDS) ], MINUTE_IN_SECONDS );
-		$this->assertNotEmpty((new WebhooksService($webhook))->getFailedWebhookProcesses());
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace SureCart\Controllers\Web;
 
+use SureCart\Models\IncomingWebhook;
 use SureCart\Models\RegisteredWebhook;
 use SureCartCore\Responses\RedirectResponse;
 use SureCartVendors\Psr\Http\Message\ResponseInterface;
@@ -82,12 +83,38 @@ class WebhookController {
 		if ( empty( $body['data'] ) ) {
 			return new \WP_Error( 'missing_data', 'Missing data.' );
 		}
+		if ( empty( $body['id'] ) ) {
+			return new \WP_Error( 'missing_id', 'Missing id.' );
+		}
 
-		// perform the action.
-		$action = $this->doAction( $body );
+		// make sure we don't have a duplicate webhook.
+		$webhook = IncomingWebhook::where( 'webhook_id', $body['id'] )->first();
+		if ( ! empty( $webhook->id ) ) {
+			return new \WP_Error( 'duplicate_webhook', 'Duplicate webhook.' );
+		}
+
+		// create incoming webhook.
+		$incoming = IncomingWebhook::create(
+			[
+				'webhook_id' => $body['id'],
+				'data'       => $body,
+				'source'     => 'surecart',
+			]
+		);
+
+		if ( is_wp_error( $incoming ) ) {
+			return $incoming;
+		}
+
+		// dispatch an async request.
+		\SureCart::async()->data(
+			[
+				'id' => $body['id'],
+			]
+		)->dispatch();
 
 		// handle the response.
-		return $this->handleResponse( $action );
+		return $this->handleResponse( $incoming->toArray() );
 	}
 
 	/**
@@ -118,68 +145,5 @@ class WebhookController {
 		)
 		->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
 		->withStatus( 200 );
-	}
-
-	/**
-	 * Perform the action.
-	 *
-	 * @param object $request Request.
-	 *
-	 * @return array|\WP_Error
-	 */
-	public function doAction( $request ) {
-		// create the event name.
-		$event = $this->createEventName( $request['type'] );
-		$id    = $this->getObjectId( $request['data'] );
-
-		// set a transient so we can keep track of failed webhook requests.
-		set_transient( 'surecart_webhook_process_' . $request['id'], $request, 15 * DAY_IN_SECONDS );
-
-		// dispatch an async request.
-		\SureCart::async()->data(
-			[
-				'event'   => $event,
-				'id'      => $id,
-				'request' => $request,
-			]
-		)->dispatch();
-
-		// return data.
-		return [
-			'event'   => $event,
-			'id'      => $id,
-			'request' => $request,
-		];
-	}
-
-	/**
-	 * Replace our dot notation webhook with underscore.
-	 *
-	 * @param string $type The event type.
-	 * @return string
-	 */
-	public function createEventName( $type = '' ) {
-		$type = str_replace( '.', '_', $type );
-		return "surecart/$type";
-	}
-
-	/**
-	 * Get the first object property in data.
-	 *
-	 * @param object $data Request data.
-	 * @return string
-	 */
-	public function getObjectId( $data ) {
-		return $data['object']['id'] ?? '';
-	}
-
-	/**
-	 * Find the object name.
-	 *
-	 * @param object|array $data Request data.
-	 * @return string
-	 */
-	public function getObjectName( $data ) {
-		return array_key_first( (array) $data );
 	}
 }

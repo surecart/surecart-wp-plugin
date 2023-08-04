@@ -46,7 +46,7 @@ class HealthService {
 				),
 				'webhooks_processing' => array(
 					'label'   => __( 'Webhooks Processing', 'surecart' ),
-					'value'   => ! empty( \SureCart::webhooks()->getFailedWebhookProcesses() ) ? __( 'Error', 'surecart' ) : __( 'Working', 'surecart' ),
+					'value'   => ! empty( \SureCart::webhooks()->processing()->expired() ) ? __( 'Error', 'surecart' ) : __( 'Working', 'surecart' ),
 					'private' => false,
 				),
 			),
@@ -116,7 +116,7 @@ class HealthService {
 	 * @return array
 	 */
 	public function webhooksProcessingTest() {
-		$failed_processes = \SureCart::webhooks()->getFailedWebhookProcesses();
+		$failed_processes = \SureCart::webhooks()->processing()->expired();
 		$has_errors       = count( $failed_processes ) > 0;
 
 		return array(

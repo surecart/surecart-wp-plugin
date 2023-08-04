@@ -193,5 +193,5 @@ abstract class AsyncRequest {
 	 * Override this method to perform any actions required
 	 * during the async request.
 	 */
-	abstract protected function handle();
+	abstract public function handle();
 }

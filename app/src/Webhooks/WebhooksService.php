@@ -3,9 +3,11 @@
 namespace SureCart\Webhooks;
 
 use SureCart\Models\ApiToken;
+use SureCart\Models\IncomingWebhook;
 use SureCart\Support\Encryption;
 use SureCart\Support\Server;
 use SureCart\Support\URL;
+use SureCart\Webhooks\WebhookProcessService;
 
 /**
  * Webhooks service.
@@ -43,6 +45,13 @@ class WebhooksService {
 		\add_action( 'admin_init', [ $this, 'verify' ] );
 		// listen for any domain changes and show notice.
 		\add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
+	}
+
+	/**
+	 * Incoming webhook processing.
+	 */
+	public function incoming() {
+		return new IncomingWebhook();
 	}
 
 	/**
@@ -225,41 +234,5 @@ class WebhooksService {
 			do_action( $event, $model );
 			set_transient( 'surecart_webhook_' . $event . $model->id, true, HOUR_IN_SECONDS );
 		}
-	}
-
-	/**
-	 * Get any failed webhook processes from transients.
-	 *
-	 * @return array
-	 */
-	public function getFailedWebhookProcesses() {
-		global $wpdb;
-
-		// Get webhook processes that have not yet been processed.
-		// These are deleted when they are processed so we should not have to many hanging items.
-		// However, we will only fetch the last 30.
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->options WHERE `option_name` LIKE %s LIMIT 30",
-				$wpdb->esc_like( '_transient_surecart_webhook_process_' ) . '%'
-			),
-			ARRAY_A
-		);
-
-		// Unserialize the option value.
-		foreach ( $results as $key => $result ) {
-			$results[ $key ]['option_value'] = maybe_unserialize( $result['option_value'] );
-		}
-
-		// only return items that have been created more than 10 minutes ago.
-		// we can assume the async process should not take more than 10 minutes.
-		return array_filter(
-			$results,
-			function( $result ) {
-				$created_at = $result['option_value']['created_at'];
-				$time_diff  = time() - $created_at;
-				return $time_diff > 10 * MINUTE_IN_SECONDS;
-			}
-		);
 	}
 }

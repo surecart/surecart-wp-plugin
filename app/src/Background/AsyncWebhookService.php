@@ -2,6 +2,8 @@
 
 namespace SureCart\Background;
 
+use SureCart\Models\IncomingWebhook;
+
 /**
  * SureCart Queue
  *
@@ -14,18 +16,19 @@ class AsyncWebhookService extends AsyncRequest {
 	 * @var array
 	 */
 	protected $models = [
-		'charge'       => \SureCart\Models\Charge::class,
-		'coupon'       => \SureCart\Models\Coupon::class,
-		'customer'     => \SureCart\Models\Customer::class,
-		'purchase'     => \SureCart\Models\Purchase::class,
-		'price'        => \SureCart\Models\Price::class,
-		'product'      => \SureCart\Models\Product::class,
-		'period'       => \SureCart\Models\Period::class,
-		'order'        => \SureCart\Models\Order::class,
-		'refund'       => \SureCart\Models\Refund::class,
-		'subscription' => \SureCart\Models\Subscription::class,
-		'invoice'      => \SureCart\Models\Invoice::class,
-		'account'      => \SureCart\Models\Account::class,
+		'charge'           => \SureCart\Models\Charge::class,
+		'coupon'           => \SureCart\Models\Coupon::class,
+		'customer'         => \SureCart\Models\Customer::class,
+		'purchase'         => \SureCart\Models\Purchase::class,
+		'price'            => \SureCart\Models\Price::class,
+		'product'          => \SureCart\Models\Product::class,
+		'period'           => \SureCart\Models\Period::class,
+		'order'            => \SureCart\Models\Order::class,
+		'refund'           => \SureCart\Models\Refund::class,
+		'subscription'     => \SureCart\Models\Subscription::class,
+		'invoice'          => \SureCart\Models\Invoice::class,
+		'account'          => \SureCart\Models\Account::class,
+		'webhook_endpoint' => \SureCart\Models\WebhookEndpoint::class,
 	];
 
 	/**
@@ -45,32 +48,61 @@ class AsyncWebhookService extends AsyncRequest {
 	/**
 	 * Handle a dispatched request.
 	 *
-	 * Override this method to perform any actions required
-	 * during the async request.
+	 * @param integer $id The webhook process id.
+	 * @return void
+	 * @throws \Exception If no id is specified.
 	 */
-	protected function handle() {
+	public function handle( $id = 0 ) {
+		// get the webhook.
+		$id = $id ? $id : $_POST['id']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
 		// get the event name.
-		$event = esc_html( $_POST['event'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( empty( $event ) ) {
-			error_log( 'Webhoooks: no event' );
-			return;
+		if ( empty( $id ) ) {
+			throw new \Exception( 'No id specified for webhook' );
 		}
 
-		// get the id of the model.
-		$id = esc_html( $_POST['id'] ?? '' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( empty( $id ) ) {
-			error_log( 'Webhoooks: no id' );
-			return;
+		// find the webhook.
+		$webhook = IncomingWebhook::find( $id );
+
+		// get WP error and throw exception.
+		if ( is_wp_error( $webhook ) ) {
+			throw new \Exception( $webhook->get_error_message() );
 		}
+
+		// get the event name.
+		if ( empty( $webhook->data->type ) ) {
+			throw new \Exception( 'No event specified for webhook' );
+		}
+
+		$object_name = $webhook->data->data->object->object ?? '';
 
 		// get model.
-		$class = $this->models[ esc_html( $_POST['request']['data']['object']['object'] ?? '' ) ] ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$class = $this->models[ $object_name ] ?? null;
 
-		do_action( $event, $id, new $class( $_POST['request']['data']['object'] ?? [] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-
-		// delete the transient if the webhook action was successful.
-		if ( ! empty( $_POST['request']['id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			delete_transient( 'surecart_webhook_process_' . $_POST['request']['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// We don't have a model. That's okay since we only subscribe to specific items.
+		if ( empty( $class ) ) {
+			$webhook->update( [ 'processed' => current_time( 'mysql' ) ] );
+			return;
 		}
+
+		// do the action.
+		do_action( $this->createEventName( $webhook->data->type ), new $class( $webhook->data->data->object ), $webhook->data ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		// update as processed.
+		$webhook->update( [ 'processed' => current_time( 'mysql' ) ] );
+
+		// update.
+		return $webhook;
+	}
+
+		/**
+		 * Replace our dot notation webhook with underscore.
+		 *
+		 * @param string $type The event type.
+		 * @return string
+		 */
+	public function createEventName( $type = '' ) {
+		$type = str_replace( '.', '_', $type );
+		return "surecart/$type";
 	}
 }
