@@ -278,14 +278,12 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				{product?.variants_enabled && (
-					<Variations
-						productId={id}
-						product={product}
-						updateProduct={editProduct}
-						loading={!hasLoadedProduct}
-					/>
-				)}
+				<Variations
+					productId={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
 
 				<Integrations id={id} />
 
