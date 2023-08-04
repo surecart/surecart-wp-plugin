@@ -70,7 +70,7 @@ class HealthService {
 		);
 
 		$is_localhost = ( new Server( get_home_url() ) )->isLocalHost();
-		// if ( ! $is_localhost ) {
+		if ( ! $is_localhost ) {
 			$tests['direct']['surecart_webhook_test'] = array(
 				'label' => __( 'SureCart', 'neve' ) . ' ' . __( 'Webhooks Processing', 'surecart' ),
 				'test'  => [ $this, 'webhooksProcessingTest' ],
@@ -81,7 +81,7 @@ class HealthService {
 				'has_rest'          => true,
 				'async_direct_test' => [ $this, 'webhooksTest' ],
 			);
-			// }
+		}
 
 			return $tests;
 	}
@@ -155,9 +155,11 @@ class HealthService {
 			$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'webhook is disabled.', 'surecart' );
 			$description = __( 'The SureCart webhook is currently disabled which can cause issues with integrations. This can happen automatically due to repeated errors, or could have been disabled manually. Please re-enable the webhook and troubleshoot the issue if integrations are important to your store.', 'surecart' );
 		} elseif ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
-			$status      = 'critical';
-			$label       = __( 'SureCart', 'surecart' ) . ' ' . __( 'webhook connection is being monitored for errors.', 'surecart' );
-			$description = __( 'The SureCart webhook has received repeated errors. This will eventually lead to the webhook being deactivated. Please troubleshoot the issue if integrations are important to your store.', 'surecart' );
+			$status       = 'critical';
+			$label        = __( 'SureCart', 'surecart' ) . ' ' . __( 'webhook connection is being monitored for errors.', 'surecart' );
+			$description  = __( 'The SureCart webhook has received repeated errors.', 'surecart' );
+			$description .= ' ' . $webhook->erroring_grace_period_ends_at > time() ? sprintf( wp_kses( 'These errors will automatically attempt to be retried, however, we will disable this in <strong>%s</strong> if it continues to fail.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( wp_kses( 'It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
+			$description .= ' ' . __( 'Please troubleshoot the issue if integrations are important to your store.', 'surecart' );
 		}
 
 		return array(
