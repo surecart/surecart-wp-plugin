@@ -7,7 +7,7 @@ const DefaultValue: {
   price_ids: Array<string>;
   selectedPriceIds?: Array<string>;
   total: number;
-  processor: 'stripe' | 'paypal';
+  processor: 'stripe' | 'paypal' | 'paystack';
   stripePublishableKey?: string;
 } = {
   loading: false,
