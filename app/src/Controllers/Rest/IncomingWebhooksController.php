@@ -56,9 +56,9 @@ class IncomingWebhooksController {
 
 		// processed is false.
 		if ( false === $request->get_param( 'processed' ) ) {
-			$webhook = $webhook->whereNull( 'processed' );
+			$webhook = $webhook->whereNull( 'processed_at' );
 		} elseif ( ! empty( $request->get_param( 'processed' ) ) ) {
-			$webhook = $webhook->whereNotNull( 'processed' );
+			$webhook = $webhook->whereNotNull( 'processed_at' );
 		}
 
 		// webhook ids.

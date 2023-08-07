@@ -26,23 +26,7 @@ class IncomingWebhook extends DatabaseModel {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [ 'id', 'webhook_id', 'processed', 'data', 'source', 'created_at', 'updated_at', 'deleted_at' ];
-
-	/**
-	 * Unserialize the data when getting it.
-	 */
-	protected function getDataAttribute() {
-		return maybe_unserialize( maybe_unserialize( $this->attributes['data'] ) );
-	}
-
-	/**
-	 * Serialize the data when setting it.
-	 *
-	 * @param mixed $value The value to set.
-	 */
-	protected function setDataAttribute( $value ) {
-		$this->attributes['data'] = maybe_serialize( $value );
-	}
+	protected $fillable = [ 'id', 'webhook_id', 'processed_at', 'data', 'source', 'created_at', 'updated_at', 'deleted_at' ];
 
 	/**
 	 * Has this been processed?
@@ -50,6 +34,16 @@ class IncomingWebhook extends DatabaseModel {
 	 * @return boolean
 	 */
 	protected function getProcessedAttribute() {
-		return (bool) $this->attributes['processed'];
+		return ! empty( $this->attributes['processed_at'] );
+	}
+
+	/**
+	 * Serialize the data when setting it.
+	 *
+	 * @param mixed $value The value to set.
+	 */
+	protected function setProcessedAttribute( $value ) {
+		$this->attributes['processed_at'] = ! empty( $value ) ? current_time( 'mysql' ) : null;
+		$this->attributes['processed']    = ! empty( $value );
 	}
 }

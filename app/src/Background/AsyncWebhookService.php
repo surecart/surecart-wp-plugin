@@ -81,7 +81,7 @@ class AsyncWebhookService extends AsyncRequest {
 
 		// We don't have a model. That's okay since we only subscribe to specific items.
 		if ( empty( $class ) ) {
-			$webhook->update( [ 'processed' => current_time( 'mysql' ) ] );
+			$webhook->update( [ 'processed_at' => current_time( 'mysql' ) ] );
 			return;
 		}
 
@@ -89,18 +89,18 @@ class AsyncWebhookService extends AsyncRequest {
 		do_action( $this->createEventName( $webhook->data->type ), new $class( $webhook->data->data->object ), $webhook->data ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		// update as processed.
-		$webhook->update( [ 'processed' => current_time( 'mysql' ) ] );
+		$webhook->update( [ 'processed_at' => current_time( 'mysql' ) ] );
 
 		// update.
 		return $webhook;
 	}
 
-		/**
-		 * Replace our dot notation webhook with underscore.
-		 *
-		 * @param string $type The event type.
-		 * @return string
-		 */
+	/**
+	 * Replace our dot notation webhook with underscore.
+	 *
+	 * @param string $type The event type.
+	 * @return string
+	 */
 	public function createEventName( $type = '' ) {
 		$type = str_replace( '.', '_', $type );
 		return "surecart/$type";
