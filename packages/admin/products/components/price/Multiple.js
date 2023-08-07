@@ -8,12 +8,14 @@ import AdHoc from './parts/AdHoc';
 import Amount from './parts/Amount';
 import ScratchAmount from './parts/ScratchAmount';
 import Trial from './parts/Trial';
+import LimitedTimeSubscription from './parts/LimitedTimeSubscription';
 
 export default ({ price, updatePrice }) => {
 	return (
 		<>
 			<Amount price={price} updatePrice={updatePrice} />
 			{!price?.id && (
+				<>
 				<ScInput
 					label={__('Number of Payments', 'surecart')}
 					className="sc-payment-number"
@@ -32,6 +34,13 @@ export default ({ price, updatePrice }) => {
 				>
 					<span slot="suffix">{__('Payments', 'surecart')}</span>
 				</ScInput>
+				{
+					!! price?.recurring_period_count && (
+						<LimitedTimeSubscription price={price} updatePrice={updatePrice} />
+					)
+
+				}
+				</>
 			)}
 			<ScratchAmount price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
