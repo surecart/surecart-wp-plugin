@@ -29,6 +29,17 @@ class IncomingWebhook extends DatabaseModel {
 	protected $fillable = [ 'id', 'webhook_id', 'processed_at', 'data', 'source', 'created_at', 'updated_at', 'deleted_at' ];
 
 	/**
+	 * Force `data` to be an object.
+	 *
+	 * @param array|object $value The value to set.
+	 *
+	 * @return void
+	 */
+	public function setDataAttribute( $value ) {
+		$this->attributes['data'] = json_decode( wp_json_encode( $value ) );
+	}
+
+	/**
 	 * Has this been processed?
 	 *
 	 * @return boolean
