@@ -33,16 +33,16 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 			'source' => 'surecart'
 		]);
 
-		$this->assertSame($created->webhook_id,'testid');
-		$this->assertSame( $created->data,['foo' => 'bar']);
-		$this->assertSame( $created->source,'surecart');
+		$this->assertEquals( $created->webhook_id,'testid' );
+		$this->assertEquals( $created->data,(object)['foo' => 'bar']);
+		$this->assertEquals( $created->source,'surecart');
 		$this->assertFalse($created->processed);
 		$this->assertNotEmpty($created->id);
 		$this->assertNotEmpty($created->created_at);
 
 		$found = IncomingWebhook::find($created->id);
-		$this->assertSame($found->webhook_id,'testid');
-		$this->assertSame( $found->data,['foo' => 'bar']);
+		$this->assertEquals($found->webhook_id,'testid');
+		$this->assertEquals( $found->data,(object)['foo' => 'bar']);
 		$this->assertFalse($found->processed);
 		$this->assertNotEmpty($found->id);
 		$this->assertNotEmpty($found->created_at);
@@ -52,7 +52,7 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 			'data' => [
 				'foo' => 'bar2'
 			],
-			'processed' => current_time( 'mysql' )
+			'processed' => true
 		]);
 
 		 // get and paginate.
@@ -63,12 +63,12 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 
 		// find where.
 		$find = IncomingWebhook::where('webhook_id','testid2')->first();
-		$this->assertSame($find->webhook_id,'testid2');
-		$this->assertSame($find->data['foo'],'bar2');
+		$this->assertEquals($find->webhook_id,'testid2');
+		$this->assertEquals($find->data->foo,'bar2');
 
 		// find unprocessed
-		$find_model = IncomingWebhook::whereNull('processed')->first();
-		$this->assertSame($find_model->webhook_id,'testid');
+		$find_model = IncomingWebhook::whereNull('processed_at')->first();
+		$this->assertEquals($find_model->webhook_id,'testid');
 
 		$updated = IncomingWebhook::where('webhook_id', 'testid2')->update([
 			'processed' => null
