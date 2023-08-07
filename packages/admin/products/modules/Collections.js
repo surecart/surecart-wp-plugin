@@ -1,5 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -35,12 +39,15 @@ export default ({ productId, product, loading }) => {
 				}),
 				method: 'PATCH',
 				data: {
-					product_collections: collectionIds,
+					product_collection_ids: collectionIds,
 				},
 			});
-			setProductCollections(updatedProduct?.product_collections?.data || []);
+			setProductCollections(
+				updatedProduct?.product_collections?.data || []
+			);
 			setProductCollectionIds(
-				updatedProduct?.product_collections?.data?.map((c) => c.id) || []
+				updatedProduct?.product_collections?.data?.map((c) => c.id) ||
+					[]
 			);
 		} catch (error) {
 			console.log(error);
