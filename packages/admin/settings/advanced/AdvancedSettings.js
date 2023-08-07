@@ -9,20 +9,14 @@ import {
 	ScSwitch,
 	ScInput,
 	ScAlert,
-	ScEmpty,
-	ScFormatDate,
-	ScTag,
 } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
-import { store as coreStore } from '@wordpress/core-data';
 import useSave from '../UseSave';
 import CustomerSyncModal from './components/CustomerSyncModal';
 import { useEntityProp } from '@wordpress/core-data';
-import apiFetch from '@wordpress/api-fetch';
-import { useSelect } from '@wordpress/data';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -33,36 +27,6 @@ export default () => {
 	);
 	const [modal, setModal] = useState(null);
 	const [showNotice, setShowNotice] = useState(false);
-
-	const retry = async (id) => {
-		try {
-			const response = await apiFetch({
-				method: 'POST',
-				path: `/surecart/v1/incoming_webhooks/${id}/retry/`,
-			});
-			receiveEntityRecords('surecart', 'incoming_webhook', response);
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
-	const { webhooks, loadingWebhooks } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'incoming_webhook',
-			{
-				per_page: 5,
-				page: 1,
-			},
-		];
-		return {
-			webhooks: select(coreStore).getEntityRecords(...queryArgs),
-			loadingWebhooks: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
-		};
-	});
 
 	// honeypot.
 	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
@@ -319,49 +283,6 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
-			</SettingsBox>
-
-			<SettingsBox
-				title={__('Webhook Processing Logs', 'surecart')}
-				loading={loadingWebhooks}
-				noButton
-			>
-				{!webhooks?.length && (
-					<ScEmpty>
-						{__(
-							'No webhooks are currently logged yet.',
-							'surecart'
-						)}
-					</ScEmpty>
-				)}
-				{(webhooks || []).map((webhook) => (
-					<div key={webhook.id}>
-						<ScFormatDate
-							value={webhook?.created_at}
-							month="short"
-							day="numeric"
-							hour="numeric"
-							minute="numeric"
-						/>{' '}
-						{webhook?.processed ? (
-							<ScTag type="success" size="small">
-								{__('Processed', 'surecart')}
-							</ScTag>
-						) : (
-							<ScTag type="danger" size="small">
-								{__('Not Processed', 'surecart')}
-							</ScTag>
-						)}
-						{!webhook?.processed && (
-							<ScButton
-								size="small"
-								onClick={() => retry(webhook?.id)}
-							>
-								{__('Retry', 'surecart')}
-							</ScButton>
-						)}
-					</div>
-				))}
 			</SettingsBox>
 
 			<SettingsBox

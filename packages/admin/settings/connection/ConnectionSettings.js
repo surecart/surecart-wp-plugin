@@ -1,11 +1,12 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScInput } from '@surecart/components-react';
+import { ScBlockUi, ScInput } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
+import IncomingWebhooks from './IncomingWebhooks';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -58,6 +59,8 @@ export default () => {
 					onScInput={(e) => editItem({ api_token: e.target.value })}
 				/>
 			</SettingsBox>
+
+			{item?.api_token && <IncomingWebhooks />}
 		</SettingsTemplate>
 	);
 };
