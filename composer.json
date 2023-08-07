@@ -15,7 +15,7 @@
 		"pimple/pimple": "^3.2",
 		"guzzlehttp/psr7": "^1.5",
 		"typisttech/imposter-plugin": "^0.6.2",
-		"sultann/wp-query-builder": "^1.0",
+		"sultann/wp-query-builder": "^1.0.2",
 		"woocommerce/action-scheduler": "^3.6"
 	},
 	"require-dev": {
