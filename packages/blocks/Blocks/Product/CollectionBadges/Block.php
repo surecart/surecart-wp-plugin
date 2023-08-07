@@ -39,7 +39,7 @@ class Block extends BaseBlock {
 			<sc-flex justify-content="flex-start" flex-wrap="wrap">
 				<?php foreach ( $collections as $collection ) : ?>
 					<a href="<?php echo esc_attr( $collection->permalink ); ?>"
-						class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
+						class="sc-product-collection-badge <?php echo esc_url( $classes ); ?>"
 						style="<?php echo esc_attr( $styles ); ?>"
 					>
 						<?php echo esc_html( $collection->name ); ?>
