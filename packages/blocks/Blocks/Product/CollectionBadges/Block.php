@@ -38,11 +38,12 @@ class Block extends BaseBlock {
 		ob_start(); ?>
 			<sc-flex justify-content="flex-start" flex-wrap="wrap">
 				<?php foreach ( $collections as $collection ) : ?>
-					<span
-					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
-					style="<?php echo esc_attr( $styles ); ?>"
+					<a href="<?php echo esc_attr( $collection->permalink ); ?>"
+						class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
+						style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<?php echo $collection->name; ?></span>
+						<?php echo esc_html( $collection->name ); ?>
+					</a>
 				<?php endforeach; ?>
 			</sc-flex>
 		<?php
