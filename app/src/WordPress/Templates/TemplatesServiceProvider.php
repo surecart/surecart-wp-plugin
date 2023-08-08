@@ -37,12 +37,11 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 		};
 
 		$container['surecart.templates.collection'] = function( $c ) {
-			return new TemplatesService(
+			return new CollectionTemplatesService(
 				$c,
 				[
 					'pages/template-surecart-collection.php' => esc_html__( 'SureCart Layout', 'surecart' ),
 				],
-				'sc_collection'
 			);
 		};
 

@@ -7,7 +7,7 @@ namespace SureCart\Controllers\Web;
 use SureCart\Models\Form;
 
 /**
- * Handles webhooks
+ * Handles Frontend Collection Pages.
  */
 class CollectionPageController extends BasePageController {
 	/**

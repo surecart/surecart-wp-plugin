@@ -245,7 +245,7 @@ class TemplatesService {
 	/**
 	 * Add the templates. to the existing templates.
 	 *
-	 * @param array $posts_templates
+	 * @param array $posts_templates Existing templates.
 	 *
 	 * @return array
 	 */
