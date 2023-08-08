@@ -80,9 +80,6 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 	 * @group failing
 	 */
 	public function test_can_fetch_older_than_30_days() {
-		// delete all.
-		IncomingWebhook::whereNotNull('created_at')->delete();
-
 		$date = new \DateTime();
 		$date->modify('-31 days');
 		$timestamp = $date->format('Y-m-d H:i:s');
@@ -111,7 +108,7 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 		$older = IncomingWebhook::where('created_at', '<', $date->modify('-30 days')->format('Y-m-d H:i:s'))->get();
 		$this->assertCount(1, $older);
 
-		$deleted = IncomingWebhook::where('created_at', '<', $date->modify('-30 days')->format('Y-m-d H:i:s'))->delete();
+		$deleted = IncomingWebhook::deleteExpired( '30 days' );
 		$this->assertNotEmpty($deleted);
 		$this->assertNotWPError($deleted);
 

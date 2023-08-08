@@ -57,4 +57,17 @@ class IncomingWebhook extends DatabaseModel {
 		$this->attributes['processed_at'] = ! empty( $value ) ? current_time( 'mysql' ) : null;
 		$this->attributes['processed']    = ! empty( $value );
 	}
+
+	/**
+	 * Delete expired incoming webhooks.
+	 *
+	 * @param integer $time_ago The number of days ago to delete.
+	 *
+	 * @return integer The number of rows deleted.
+	 */
+	protected function deleteExpired( $time_ago = '30 days' ) {
+		global $wpdb;
+		$date = new \DateTime();
+		return $wpdb->query( $wpdb->prepare( 'DELETE FROM wp_surecart_incoming_webhooks WHERE created_at < %s', [ $date->modify( '-' . $time_ago )->format( 'Y-m-d H:i:s' ) ] ) );
+	}
 }

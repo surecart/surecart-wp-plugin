@@ -54,7 +54,7 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function deleteOldWebhookProcesses() {
-		IncomingWebhook::where( 'created_at', '<', ( new \DateTime() )->modify( '-30 days' )->format( 'Y-m-d H:i:s' ) )->delete();
+		IncomingWebhook::deleteExpired( apply_filters( 'surecart/webhook/processes/log_expiration', '30 days' ) );
 	}
 
 	/**
