@@ -13,6 +13,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useState } from 'react';
 import ConfirmDelete from './ConfirmDelete';
+import { createErrorString } from '../../../util';
 
 export default ({ customerId, isDefault, paymentMethod }) => {
 	const [modal, setModal] = useState(false);
@@ -66,10 +67,7 @@ export default ({ customerId, isDefault, paymentMethod }) => {
 			await invalidateResolutionForStore();
 		} catch (e) {
 			console.error(e);
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{ type: 'snackbar' }
-			);
+			createErrorNotice(createErrorString(e), { type: 'snackbar' });
 		}
 	};
 

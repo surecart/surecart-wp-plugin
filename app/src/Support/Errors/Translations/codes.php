@@ -81,4 +81,5 @@ return [
 	'shipping_rate.min_amount.not_a_number'             => __( 'The minimum amount must be a number.', 'surecart' ),
 	'payment_method.invalid'                            => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'customer.default_payment_method.invalid'           => __( 'This payment method is not valid or reusable.', 'surecart' ),
+	'payment_method.not_detachable'                     => __( 'This payment method cannot be deleted because there are no other valid or reusable saved payment methods available.', 'surecart' ),
 ];
