@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-25T21:41:13",
+  "timestamp": "2023-08-01T18:09:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -14887,13 +14887,11 @@
         "sc-licenses-list",
         "sc-login-form",
         "sc-login-provider",
-        "sc-order-password",
-        "sc-password-nag",
+        "sc-password",
         "sc-price-input",
         "sc-product-item-list",
         "sc-select",
         "sc-tax-id-input",
-        "sc-wordpress-password-edit",
         "sc-wordpress-user-edit"
       ],
       "dependencies": [
@@ -14939,10 +14937,7 @@
         "sc-login-provider": [
           "sc-input"
         ],
-        "sc-order-password": [
-          "sc-input"
-        ],
-        "sc-password-nag": [
+        "sc-password": [
           "sc-input"
         ],
         "sc-price-input": [
@@ -14955,9 +14950,6 @@
           "sc-input"
         ],
         "sc-tax-id-input": [
-          "sc-input"
-        ],
-        "sc-wordpress-password-edit": [
           "sc-input"
         ],
         "sc-wordpress-user-edit": [
@@ -18467,10 +18459,13 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-input"
+        "sc-password"
       ],
       "dependencyGraph": {
         "sc-order-password": [
+          "sc-password"
+        ],
+        "sc-password": [
           "sc-input"
         ],
         "sc-input": [
@@ -20248,6 +20243,365 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-password/sc-password.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-password",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "The input's autofocus attribute.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmation",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "confirmation",
+          "reflectToAttr": true,
+          "docs": "The input's password confirmation attribute.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmationHelp",
+          "type": "string",
+          "mutable": false,
+          "attr": "confirmation-help",
+          "reflectToAttr": false,
+          "docs": "The input's confirmation help text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmationLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "confirmation-label",
+          "reflectToAttr": false,
+          "docs": "The input's confirmation label text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "confirmationPlaceholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "confirmation-placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's confirmation placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": true,
+          "docs": "Disables the input.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "enableValidation",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "enable-validation",
+          "reflectToAttr": true,
+          "docs": "Ensures strong password validation.",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "help",
+          "type": "string",
+          "mutable": false,
+          "attr": "help",
+          "reflectToAttr": false,
+          "docs": "The input's help text.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The input's label.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "mutable": false,
+          "attr": "name",
+          "reflectToAttr": false,
+          "docs": "The name for the input.",
+          "docsTags": [],
+          "default": "'password'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style input with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "mutable": false,
+          "attr": "placeholder",
+          "reflectToAttr": false,
+          "docs": "The input's placeholder text.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "readonly",
+          "reflectToAttr": true,
+          "docs": "Makes the input readonly.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "required",
+          "reflectToAttr": true,
+          "docs": "Makes the input a required field.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Should we show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The input's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "mutable": true,
+          "attr": "value",
+          "reflectToAttr": false,
+          "docs": "The input's value attribute.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "name": "triggerFocus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "signature": "triggerFocus(options?: FocusOptions) => Promise<void>",
+          "parameters": [],
+          "docs": "Sets focus on the input.",
+          "docsTags": []
+        }
+      ],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-order-password",
+        "sc-password-nag",
+        "sc-wordpress-password-edit"
+      ],
+      "dependencies": [
+        "sc-input"
+      ],
+      "dependencyGraph": {
+        "sc-password": [
+          "sc-input"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-order-password": [
+          "sc-password"
+        ],
+        "sc-password-nag": [
+          "sc-password"
+        ],
+        "sc-wordpress-password-edit": [
+          "sc-password"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/dashboard/sc-password-nag/sc-password-nag.tsx",
       "encapsulation": "shadow",
       "tag": "sc-password-nag",
@@ -20355,7 +20709,7 @@
         "sc-icon",
         "sc-card",
         "sc-form",
-        "sc-input",
+        "sc-password",
         "sc-flex",
         "sc-block-ui"
       ],
@@ -20367,7 +20721,7 @@
           "sc-icon",
           "sc-card",
           "sc-form",
-          "sc-input",
+          "sc-password",
           "sc-flex",
           "sc-block-ui"
         ],
@@ -20379,6 +20733,9 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-password": [
+          "sc-input"
         ],
         "sc-input": [
           "sc-form-control"
@@ -32964,7 +33321,7 @@
         "sc-dashboard-module",
         "sc-card",
         "sc-form",
-        "sc-input",
+        "sc-password",
         "sc-button",
         "sc-block-ui"
       ],
@@ -32973,7 +33330,7 @@
           "sc-dashboard-module",
           "sc-card",
           "sc-form",
-          "sc-input",
+          "sc-password",
           "sc-button",
           "sc-block-ui"
         ],
@@ -32982,6 +33339,9 @@
         ],
         "sc-alert": [
           "sc-icon"
+        ],
+        "sc-password": [
+          "sc-input"
         ],
         "sc-input": [
           "sc-form-control"
