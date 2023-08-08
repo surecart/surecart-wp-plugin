@@ -4,7 +4,7 @@ import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
-import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
+import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors, getOtherAvailableProcessors } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
@@ -42,11 +42,12 @@ export class ScPayment {
   }
 
   renderStripe(processor) {
+    let title = getOtherAvailableProcessors('stripe') ? __('Credit Card - via Stripe', 'surecart') : __('Credit Card', 'surecart');
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="stripe" card={this.stripePaymentElement}>
         <span slot="summary" class="sc-payment-toggle-summary">
           <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-          <span>{__('Credit Card', 'surecart')}</span>
+          <span>{title}</span>
         </span>
 
         <div class="sc-payment__stripe-card-element">
@@ -57,8 +58,9 @@ export class ScPayment {
   }
 
   renderPayPal(processor) {
-    const stripe = getAvailableProcessor('stripe');
-    const paystack = getAvailableProcessor('paystack');
+
+    let title = getOtherAvailableProcessors('paypal') ? __('Credit Card - via Paypal', 'surecart') : __('Credit Card', 'surecart');
+
     return (
       <Fragment>
         <sc-payment-method-choice key={processor?.id} processor-id="paypal">
@@ -74,32 +76,27 @@ export class ScPayment {
           </sc-card>
         </sc-payment-method-choice>
 
-        {!stripe && !paystack && (
-          <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
-            <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-              <span>{__('Credit Card', 'surecart')}</span>
-            </span>
+        <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
+          <span slot="summary" class="sc-payment-toggle-summary">
+            <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+            <span>{title}</span>
+          </span>
 
-            <sc-card>
-              <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-                <sc-icon name="credit-card" slot="icon" style={{ fontSize: '24px' }}></sc-icon>
-                {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
-              </sc-payment-selected>
-            </sc-card>
-          </sc-payment-method-choice>
-        )}
+          <sc-card>
+            <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+              <sc-icon name="credit-card" slot="icon" style={{ fontSize: '24px' }}></sc-icon>
+              {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+            </sc-payment-selected>
+          </sc-card>
+        </sc-payment-method-choice>
       </Fragment>
     );
   }
 
   renderPaystack(processor) {
-    // If stripe is used, then no need to show this, as we'll only show one card at a time.
-    const stripe = getAvailableProcessor('stripe');
-    if (!!stripe) {
-      return;
-    }
 
+    let title = getOtherAvailableProcessors('paystack') ? __('Credit Card - via Paystack', 'surecart') : __('Credit Card', 'surecart');
+    
     // if system currency is not in the supported currency list, then stop.
     if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
       return;
@@ -109,7 +106,7 @@ export class ScPayment {
       <sc-payment-method-choice key={processor?.id} processor-id="paystack">
         <span slot="summary" class="sc-payment-toggle-summary">
           <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-          <span>{__('Credit Card', 'surecart')}</span>
+          <span>{title}</span>
         </span>
 
         <sc-card>
