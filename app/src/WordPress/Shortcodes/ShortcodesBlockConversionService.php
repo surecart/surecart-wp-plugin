@@ -38,16 +38,20 @@ class ShortcodesBlockConversionService {
 	 * @return string
 	 */
 	public function convert( $name, $block, $defaults = [] ) {
+
+		$attributes = shortcode_atts(
+			$defaults,
+			$this->attributes,
+			$name
+		);
+
 		return apply_filters(
 			'surecart/shortcode/render',
 			( new $block() )->render(
-				shortcode_atts(
-					$defaults,
-					$this->attributes,
-					$name
-				),
+				$attributes,
 				do_shortcode( $this->content )
 			),
+			$attributes,
 			$name
 		);
 	}
