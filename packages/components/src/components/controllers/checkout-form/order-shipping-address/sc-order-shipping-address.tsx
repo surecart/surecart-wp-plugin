@@ -141,6 +141,14 @@ export class ScOrderShippingAddress {
     }
   }
 
+  @Watch('checkout')
+  @Watch('requireName')
+  handleCheckoutChange() {
+    if (this.requireName && !!this.checkout?.name && !this.address?.name) {
+      this.address.name = this.checkout?.name;
+    }
+  }
+
   render() {
     if (this.shippingEnabled || this.full) {
       return (
