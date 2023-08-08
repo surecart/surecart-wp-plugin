@@ -7,7 +7,6 @@ use SureCart\Models\IncomingWebhook;
 use SureCart\Support\Encryption;
 use SureCart\Support\Server;
 use SureCart\Support\URL;
-use SureCart\Webhooks\WebhookProcessService;
 
 /**
  * Webhooks service.
@@ -35,6 +34,8 @@ class WebhooksService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// delete any old webhook processes.
+		add_action( 'delete_expired_transients', [ $this, 'deleteOldWebhhookProcesses' ] );
 		// we can skip this for localhost.
 		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) ) {
 			return;
@@ -48,10 +49,12 @@ class WebhooksService {
 	}
 
 	/**
-	 * Incoming webhook processing.
+	 * Delete any webhook processes older than 30 days.
+	 *
+	 * @return void
 	 */
-	public function incoming() {
-		return new IncomingWebhook();
+	public function deleteOldWebhookProcesses() {
+		IncomingWebhook::where( 'created_at', '<', ( new \DateTime() )->modify( '-30 days' )->format( 'Y-m-d H:i:s' ) )->delete();
 	}
 
 	/**
@@ -215,24 +218,5 @@ class WebhooksService {
 		$webhook = $this->webhook->get();
 		// Return the signing secret from the registered webhook.
 		return Encryption::decrypt( $webhook['signing_secret'] ?? '' );
-	}
-
-	/**
-	 * Broadcast the php hook.
-	 * This sets the webhook in a transient so that
-	 * it is not accidentally broadcasted twice.
-	 *
-	 * @param string $event Event name.
-	 * @param mixed  $model Model.
-	 *
-	 * @return void
-	 */
-	public function broadcast( $event, $model ): void {
-		$webhook = get_transient( 'surecart_webhook_' . $event . $model->id, false );
-		if ( false === $webhook ) {
-			// perform the action.
-			do_action( $event, $model );
-			set_transient( 'surecart_webhook_' . $event . $model->id, true, HOUR_IN_SECONDS );
-		}
 	}
 }

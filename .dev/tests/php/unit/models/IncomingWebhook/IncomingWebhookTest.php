@@ -19,7 +19,6 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 
 	/**
 	 * @group integration
-	 * @group failing
 	 */
 	public function test_crud() {
 		$not_found = IncomingWebhook::find(1);
@@ -75,5 +74,48 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 		]);
 		$this->assertNotWPError($updated);
 		$this->assertFalse($updated->processed);
+	}
+
+	/**
+	 * @group failing
+	 */
+	public function test_can_fetch_older_than_30_days() {
+		// delete all.
+		IncomingWebhook::whereNotNull('created_at')->delete();
+
+		$date = new \DateTime();
+		$date->modify('-31 days');
+		$timestamp = $date->format('Y-m-d H:i:s');
+
+		IncomingWebhook::create([
+			'webhook_id' => 'testid2',
+			'data' => [
+				'foo' => 'bar2'
+			],
+			'created_at' => $timestamp
+		]);
+
+		$date = new \DateTime();
+		$date->modify('-25 days');
+		$timestamp = $date->format('Y-m-d H:i:s');
+
+		IncomingWebhook::create([
+			'webhook_id' => 'testid4',
+			'data' => [
+				'foo' => 'bar2'
+			],
+			'created_at' => $timestamp
+		]);
+
+		$date = new \DateTime();
+		$older = IncomingWebhook::where('created_at', '<', $date->modify('-30 days')->format('Y-m-d H:i:s'))->get();
+		$this->assertCount(1, $older);
+
+		$deleted = IncomingWebhook::where('created_at', '<', $date->modify('-30 days')->format('Y-m-d H:i:s'))->delete();
+		$this->assertNotEmpty($deleted);
+		$this->assertNotWPError($deleted);
+
+		$all = IncomingWebhook::get();
+		$this->assertCount(1, $all);
 	}
 }

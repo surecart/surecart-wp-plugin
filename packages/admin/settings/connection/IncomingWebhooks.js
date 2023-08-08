@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import {
 	ScButton,
 	ScFormatDate,
@@ -10,6 +10,11 @@ import {
 	ScEmpty,
 	ScDialog,
 	ScBlockUi,
+	ScButtonGroup,
+	ScIcon,
+	ScDropdown,
+	ScMenu,
+	ScMenuItem,
 } from '@surecart/components-react';
 import SettingsBox from '../SettingsBox';
 import apiFetch from '@wordpress/api-fetch';
@@ -18,9 +23,18 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import DataTable from '../../components/DataTable';
 
+const filters = {
+	failed: __('Failed', 'surecart'),
+	succeeded: __('Succeeded', 'surecart'),
+	all: __('All', 'surecart'),
+};
+
 export default () => {
 	const [details, setDetails] = useState(null);
 	const [retrying, setRetrying] = useState(false);
+	const [page, setPage] = useState(1);
+	const [perPage, setPerPage] = useState(10);
+	const [filter, setFilter] = useState('failed');
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
@@ -47,24 +61,37 @@ export default () => {
 		}
 	};
 
-	const { webhooks, loadingWebhooks } = useSelect((select) => {
-		const queryArgs = [
-			'surecart',
-			'incoming_webhook',
-			{
-				processed: false,
-				per_page: 30,
-				page: 1,
-			},
-		];
-		return {
-			webhooks: select(coreStore).getEntityRecords(...queryArgs),
-			loadingWebhooks: select(coreStore).isResolving(
-				'getEntityRecords',
-				queryArgs
-			),
-		};
-	});
+	const { webhooks, loadingWebhooks } = useSelect(
+		(select) => {
+			const processed =
+				filter === 'all'
+					? undefined
+					: filter === 'failed'
+					? false
+					: true;
+			const queryArgs = [
+				'surecart',
+				'incoming_webhook',
+				{
+					processed,
+					per_page: perPage,
+					page,
+				},
+			];
+			return {
+				webhooks: select(coreStore).getEntityRecords(...queryArgs),
+				loadingWebhooks: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[page, filter]
+	);
+
+	useEffect(() => {
+		setPage(1);
+	}, [filter]);
 
 	return (
 		<SettingsBox
@@ -78,96 +105,168 @@ export default () => {
 			wrapperTag="div"
 		>
 			{!!webhooks?.length ? (
-				<ScCard noPadding>
-					<DataTable
-						columns={{
-							event: {
-								label: __('Event', 'surecart'),
-							},
-							date: {
-								label: __('Date', 'surecart'),
-							},
-							status: {
-								label: __('Status', 'surecart'),
-								width: '150px',
-							},
-							actions: {
-								width: '150px',
-							},
-						}}
-						empty={__('None found.', 'surecart')}
-						items={(webhooks || []).map(
-							({
-								id,
-								webhook_id,
-								data,
-								created_at,
-								processed,
-							}) => {
-								return {
-									event: (
-										<div>
+				<>
+					<ScDropdown>
+						<ScButton slot="trigger" type="text" caret>
+							{filters[filter]}
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem
+								onClick={() => setFilter('all')}
+								checked={'all' === filter}
+							>
+								{filters['all']}
+							</ScMenuItem>
+							<ScMenuItem
+								onClick={() => setFilter('failed')}
+								checked={'failed' === filter}
+							>
+								{filters['failed']}
+							</ScMenuItem>
+							<ScMenuItem
+								onClick={() => setFilter('succeeded')}
+								checked={'succeeded' === filter}
+							>
+								{filters['succeeded']}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+
+					<ScCard noPadding>
+						<DataTable
+							columns={{
+								event: {
+									label: __('Event', 'surecart'),
+								},
+								date: {
+									label: __('Date', 'surecart'),
+								},
+								status: {
+									label: __('Status', 'surecart'),
+									width: '150px',
+								},
+								actions: {
+									width: '150px',
+								},
+							}}
+							empty={__('None found.', 'surecart')}
+							items={(webhooks || []).map(
+								({
+									id,
+									webhook_id,
+									data,
+									created_at,
+									processed,
+								}) => {
+									return {
+										event: (
 											<div>
-												<strong>{data?.type}</strong>
+												<div>
+													<strong>
+														{data?.type}
+													</strong>
+												</div>
+												<div
+													css={css`
+														opacity: 0.5;
+													`}
+												>
+													{webhook_id}
+												</div>
 											</div>
+										),
+										key: id,
+										date: (
+											<ScFormatDate
+												value={created_at}
+												month="short"
+												day="numeric"
+												hour="numeric"
+												minute="numeric"
+											/>
+										),
+										status: processed ? (
+											<ScTag type="success" size="small">
+												{__('Processed', 'surecart')}
+											</ScTag>
+										) : (
+											<ScTag type="danger" size="small">
+												{__(
+													'Not Processed',
+													'surecart'
+												)}
+											</ScTag>
+										),
+										actions: (
 											<div
 												css={css`
-													opacity: 0.5;
+													display: flex;
+													flex-wrap: wrap;
+													justify-content: flex-end;
+													gap: 0.5em;
 												`}
 											>
-												{webhook_id}
+												<ScButton
+													size="small"
+													onClick={() =>
+														setDetails(data)
+													}
+												>
+													{__(
+														'View Details',
+														'surecart'
+													)}
+												</ScButton>
+												{!processed && (
+													<ScButton
+														size="small"
+														onClick={() =>
+															retry(id)
+														}
+													>
+														{__(
+															'Retry',
+															'surecart'
+														)}
+													</ScButton>
+												)}
 											</div>
-										</div>
-									),
-									key: id,
-									date: (
-										<ScFormatDate
-											value={created_at}
-											month="short"
-											day="numeric"
-											hour="numeric"
-											minute="numeric"
-										/>
-									),
-									status: processed ? (
-										<ScTag type="success" size="small">
-											{__('Processed', 'surecart')}
-										</ScTag>
-									) : (
-										<ScTag type="danger" size="small">
-											{__('Not Processed', 'surecart')}
-										</ScTag>
-									),
-									actions: (
-										<div
-											css={css`
-												display: flex;
-												flex-wrap: wrap;
-												justify-content: flex-end;
-												gap: 0.5em;
-											`}
-										>
-											<ScButton
-												size="small"
-												onClick={() => setDetails(data)}
-											>
-												{__('View Details', 'surecart')}
-											</ScButton>
-											{/* {!processed && ( */}
-											<ScButton
-												size="small"
-												onClick={() => retry(id)}
-											>
-												{__('Retry', 'surecart')}
-											</ScButton>
-											{/* )} */}
-										</div>
-									),
-								};
-							}
-						)}
-					/>
-				</ScCard>
+										),
+									};
+								}
+							)}
+						/>
+					</ScCard>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							margin-top: var(--sc-spacing-large);
+						`}
+					>
+						<ScButtonGroup>
+							<ScButton
+								disabled={page === 1}
+								onClick={(e) => {
+									e.preventDefault();
+									setPage(page - 1);
+								}}
+							>
+								<ScIcon name="chevron-left" />
+							</ScButton>
+							<ScButton
+								disabled={webhooks?.length < perPage}
+								onClick={(e) => {
+									e.preventDefault();
+									setPage(page + 1);
+								}}
+							>
+								<ScIcon name="chevron-right" />
+							</ScButton>
+						</ScButtonGroup>
+					</div>
+				</>
 			) : (
 				<ScCard>
 					<ScEmpty icon="check">
