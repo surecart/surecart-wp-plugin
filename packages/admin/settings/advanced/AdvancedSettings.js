@@ -318,9 +318,9 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Migrate To SureCart', 'surecart')}
+				title={__('Migration', 'surecart')}
 				description={__(
-					'Migrate your data from another eCommerce platform to SureCart.',
+					'Looking to migrate from another ecommerce platform?',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
@@ -331,7 +331,7 @@ export default () => {
 					target="_blank"
 					outline
 				>
-					{__('Start Migration Process', 'surecart')}
+					{__('Contact Us', 'surecart')}
 					<ScIcon name="external-link" slot="suffix" />
 				</ScButton>
 			</SettingsBox>
