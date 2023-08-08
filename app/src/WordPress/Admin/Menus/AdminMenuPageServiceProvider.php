@@ -15,7 +15,7 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.admin.menus'] = function () {
+		$container['surecart.admin.menus']            = function () {
 			return new AdminMenuPageService();
 		};
 		$container['surecart.collection_pages.menus'] = function () {
