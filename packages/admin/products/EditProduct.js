@@ -25,8 +25,8 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
-import Collection from './modules/Collection';
 import Shipping from './modules/Shipping';
+import Collections from './modules/Collections';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -42,9 +42,7 @@ export default ({ id }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id, {
-		expand: ['product_collections'],
-	});
+	} = useEntity('product', id);
 
 	/**
 	 * Handle the form submission
@@ -217,9 +215,10 @@ export default ({ id }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Collection
+					<Collections
 						productId={id}
 						product={product}
+						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 					<Shipping

@@ -35,6 +35,7 @@ export default (props) => {
 			label: !!display ? display(item) : item.name,
 			value: item.id,
 			disabled: exclude.includes(item.id),
+			checked: exclude.includes(item.id),
 		}));
 	};
 
