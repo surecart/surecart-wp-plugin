@@ -73,14 +73,17 @@ export default ({ product, updateProduct, loading }) => {
 		<Box
 			title={__('Variants', 'surecart')}
 			loading={loading}
-			css={css`
-				* {
-					box-sizing: border-box;
-				}
-				.components-card-body {
-					padding: 0;
-				}
-			`}
+			css={
+				!loading &&
+				css`
+					* {
+						box-sizing: border-box;
+					}
+					.components-card-body {
+						padding: 0;
+					}
+				`
+			}
 			header_action={renderAddNewVariantButton()}
 		>
 			<VariantOptions product={product} updateProduct={updateProduct} />
@@ -100,6 +103,7 @@ export default ({ product, updateProduct, loading }) => {
 				`}
 			>
 				<ScTooltip
+					type="text"
 					text={
 						(product?.variant_options ?? []).length >=
 						maxVariantOptions
@@ -109,7 +113,6 @@ export default ({ product, updateProduct, loading }) => {
 							  )
 							: null
 					}
-					type="info"
 				>
 					<span>
 						<ScButton
