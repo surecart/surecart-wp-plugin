@@ -243,6 +243,24 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
 				$response['variant_options'] = $this->getProcessedVariantOptions( $response->variant_options );
 			}
+
+			// Add stock value as initial_stock.
+			if ( 'array' === gettype( $response ) && isset( $response['stock'] ) ) {
+				$response['initial_stock'] = $response['stock'];
+			} elseif ( 'object' === gettype( $response ) && isset( $response->stock ) ) {
+				$response->initial_stock = $response->stock;
+			}
+
+			// For variants, add stock value as initial_stock.
+			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
+				foreach ( $response['variants'] as $index => $variant ) {
+					$response['variants'][ $index ]['initial_stock'] = $variant['stock'];
+				}
+			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
+				foreach ( $response->variants as $index => $variant ) {
+					$response->variants[ $index ]->initial_stock = $variant->stock;
+				}
+			}
 		}
 
 		return $response;
