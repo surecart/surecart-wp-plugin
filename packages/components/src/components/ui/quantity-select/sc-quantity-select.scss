@@ -107,6 +107,7 @@
 
   &.quantity--allow-negative {
     width: auto !important;
+    height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
   }
 }
 
