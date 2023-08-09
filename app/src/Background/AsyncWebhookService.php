@@ -58,19 +58,22 @@ class AsyncWebhookService extends AsyncRequest {
 
 		// get the event name.
 		if ( empty( $id ) ) {
+			error_log( 'No id specified for webhook' );
 			throw new \Exception( 'No id specified for webhook' );
 		}
 
 		// find the webhook.
-		$webhook = IncomingWebhook::where( 'webhook_id', $id )->first();
+		$webhook = IncomingWebhook::find( $id );
 
 		// get WP error and throw exception.
 		if ( is_wp_error( $webhook ) ) {
+			error_log( 'SureCart Webhook Processing Error (' . esc_html( $id ) . ') ' . $webhook->get_error_message() );
 			throw new \Exception( $webhook->get_error_message() );
 		}
 
 		// get the event name.
 		if ( empty( $webhook->data->type ) ) {
+			error_log( 'No event specified for webhook' );
 			throw new \Exception( 'No event specified for webhook' );
 		}
 
