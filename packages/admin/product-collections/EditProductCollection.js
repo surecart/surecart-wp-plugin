@@ -37,12 +37,12 @@ export default ({ id }) => {
 	const { editEntityRecord } = useDispatch(coreStore);
 	const { save } = useSave();
 
-	const { productCollection, isLoading, isDeleting, saveError, loadError } =
+	const { collection, isLoading, isDeleting, saveError, loadError } =
 		useSelect((select) => {
 			const entityData = ['surecart', 'product-collection', id];
 
 			return {
-				productCollection: select(coreStore).getEditedEntityRecord(
+				collection: select(coreStore).getEditedEntityRecord(
 					...entityData
 				),
 				isLoading: select(coreStore)?.isResolving?.(
@@ -78,7 +78,7 @@ export default ({ id }) => {
 		}
 	};
 
-	const updateProductCollection = (data) => {
+	const updateCollection = (data) => {
 		editEntityRecord('surecart', 'product-collection', id, data);
 	};
 
@@ -149,16 +149,16 @@ export default ({ id }) => {
 			sidebar={
 				<>
 					<Publishing
-						productCollection={productCollection}
-						updateProductCollection={updateProductCollection}
+						collection={collection}
+						updateCollection={updateCollection}
 						loading={isLoading}
 					/>
 
 					<Box title={__('Image', 'surecart')} loading={isLoading}>
 						<Image
 							label={__('Image', 'surecart')}
-							productCollection={productCollection}
-							updateProductCollection={updateProductCollection}
+							collection={collection}
+							updateCollection={updateCollection}
 							loading={isLoading}
 						/>
 					</Box>
@@ -172,14 +172,14 @@ export default ({ id }) => {
 				/>
 
 				<Details
-					productCollection={productCollection}
-					updateProductCollection={updateProductCollection}
+					collection={collection}
+					updateCollection={updateCollection}
 					loading={isLoading}
 				/>
 
 				{modal === 'delete' && (
 					<DeleteModal
-						deleteItem={productCollection}
+						deleteItem={collection}
 						deletingItem={isDeleting}
 						onClose={() => setModal(null)}
 						setError={setError}

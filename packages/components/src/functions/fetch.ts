@@ -3,9 +3,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 apiFetch.fetchAllMiddleware = null;
 
-if (window?.scData?.root_url) {
-  apiFetch.use(apiFetch.createRootURLMiddleware(window?.scData?.root_url));
-}
+apiFetch.use(apiFetch.createRootURLMiddleware(window?.parent?.scData?.root_url || window?.scData?.root_url));
 
 if (window?.scData?.nonce) {
   // @ts-ignore

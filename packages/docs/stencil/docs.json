@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-06T16:14:51",
+  "timestamp": "2023-08-02T13:30:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -23617,6 +23617,40 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collectionEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collection-enabled",
+          "reflectToAttr": false,
+          "docs": "Should allow collection filter",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collectionId",
+          "type": "string",
+          "mutable": false,
+          "attr": "collection-id",
+          "reflectToAttr": false,
+          "docs": "Show for a specific collection",
+          "docsTags": [],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

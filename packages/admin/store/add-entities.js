@@ -219,9 +219,9 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'product-collection',
 		kind: 'surecart',
-		label: __( 'Collections', 'surecart' ),
+		label: __('Collections', 'surecart'),
 		baseURL: 'surecart/v1/product_collections',
-		baseURLParams: { context: 'edit' },
+		baseURLParams: { context: 'edit', expand: ['media'] },
 	},
 	{
 		name: 'price',

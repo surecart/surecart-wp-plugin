@@ -146,6 +146,7 @@ class ProductCollectionsListTable extends ListTable {
 		echo $this->row_actions(
 			[
 				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ) . '" aria-label="' . esc_attr__( 'Edit Collection', 'surecart' ) . '">' . esc_attr__( 'Edit', 'surecart' ) . '</a>',
+				'view' => '<a href="' . esc_url( $collection->permalink ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '" target="_blank">' . esc_html__( 'View', 'surecart' ) . '</a>',
 			],
 		);
 		return ob_get_clean();

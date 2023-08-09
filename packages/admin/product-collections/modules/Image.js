@@ -1,24 +1,18 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
 
 /**
  * Internal dependencies.
  */
-import { ScFormControl } from '@surecart/components-react';
+import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({
-	label,
-	productCollection,
-	updateProductCollection,
-	showLabel = false,
-}) => {
+export default ({ label, collection, updateCollection, showLabel = false }) => {
 	const onSelectMedia = (media) => {
-		return updateProductCollection({
-			media_id: media?.id,
-			image_url: media?.url,
+		updateCollection({
+			image_id: media?.id,
+			image: media,
 		});
 	};
 
@@ -27,14 +21,14 @@ export default ({
 			__('Are you sure you want to remove this image?', 'surecart')
 		);
 		if (!confirmedRemoveImage) return;
-		return updateProductCollection({
-			media_id: null,
-			image_url: null,
+		return updateCollection({
+			image_id: null,
+			image: null,
 		});
 	};
 
 	const renderContent = () => {
-		if (productCollection?.image_url) {
+		if (collection?.image?.url) {
 			return (
 				<div
 					css={css`
@@ -43,7 +37,7 @@ export default ({
 					`}
 				>
 					<img
-						src={productCollection?.image_url}
+						src={collection?.image?.url}
 						alt="image"
 						css={css`
 							width: 100%;
@@ -74,17 +68,17 @@ export default ({
 								onSelect={onSelectMedia}
 								isPrivate={false}
 								render={({ setOpen }) => (
-									<Button
-										variant="primary"
+									<ScButton
+										type="primary"
 										onClick={() => setOpen(true)}
 									>
 										{__('Replace', 'surecart')}
-									</Button>
+									</ScButton>
 								)}
 							/>
-							<Button variant="tertiary" onClick={onRemoveMedia}>
+							<ScButton onClick={onRemoveMedia}>
 								{__('Remove', 'surecart')}
-							</Button>
+							</ScButton>
 						</div>
 					</div>
 				</div>
@@ -97,9 +91,10 @@ export default ({
 					onSelect={onSelectMedia}
 					isPrivate={false}
 					render={({ setOpen }) => (
-						<Button isPrimary onClick={() => setOpen(true)}>
+						<ScButton type="primary" onClick={() => setOpen(true)}>
+							<ScIcon name="plus" slot="prefix" />
 							{__('Add Image', 'surecart')}
-						</Button>
+						</ScButton>
 					)}
 				/>
 			</ScFormControl>

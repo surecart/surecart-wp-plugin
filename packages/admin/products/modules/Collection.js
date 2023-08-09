@@ -3,13 +3,13 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
 import { ScBlockUi, ScFormControl, ScTag } from '@surecart/components-react';
-import { useEffect, useState } from '@wordpress/element';
 import ModelSelector from '../../components/ModelSelector';
 
 export default ({ productId, product, loading }) => {
@@ -29,7 +29,7 @@ export default ({ productId, product, loading }) => {
 	const updateProductCollections = async (collectionIds) => {
 		setBusy(true);
 		try {
-			const newProduct = await apiFetch({
+			const updatedProduct = await apiFetch({
 				path: addQueryArgs(`/surecart/v1/products/${productId}`, {
 					expand: ['product_collections'],
 				}),
@@ -38,9 +38,9 @@ export default ({ productId, product, loading }) => {
 					product_collections: collectionIds,
 				},
 			});
-			setProductCollections(newProduct?.product_collections?.data || []);
+			setProductCollections(updatedProduct?.product_collections?.data || []);
 			setProductCollectionIds(
-				newProduct?.product_collections?.data?.map((c) => c.id) || []
+				updatedProduct?.product_collections?.data?.map((c) => c.id) || []
 			);
 		} catch (error) {
 			console.log(error);

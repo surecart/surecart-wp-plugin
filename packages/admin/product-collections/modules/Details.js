@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { ScInput, ScRichText } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
-export default ({ id, productCollection, updateProductCollection, loading }) => {
+export default ({ id, collection, updateCollection, loading }) => {
 	return (
 		<Box
 			title={
@@ -27,13 +27,10 @@ export default ({ id, productCollection, updateProductCollection, loading }) => 
 				<ScInput
 					label={__('Name', 'surecart')}
 					className="sc-collection-name hydrated"
-					help={__(
-						'A name for your product collection.',
-						'surecart'
-					)}
-					value={productCollection?.name}
+					help={__('A name for your product collection.', 'surecart')}
+					value={collection?.name}
 					onScInput={(e) => {
-						updateProductCollection({ name: e.target.value });
+						updateCollection({ name: e.target.value });
 					}}
 					name="name"
 					required
@@ -48,9 +45,9 @@ export default ({ id, productCollection, updateProductCollection, loading }) => 
 					style={{ '--sc-rich-text-max-height': '200px' }}
 					maxlength={2500}
 					onScInput={(e) => {
-						updateProductCollection({ description: e.target.value });
+						updateCollection({ description: e.target.value });
 					}}
-					value={productCollection?.description}
+					value={collection?.description}
 					name="description"
 				/>
 			</div>

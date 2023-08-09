@@ -13,7 +13,7 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/product-collections';
+	protected $handle = 'surecart/scripts/admin/product_collections';
 
 	/**
 	 * Script path.
@@ -21,4 +21,23 @@ class ProductCollectionsScriptsController extends AdminModelEditController {
 	 * @var string
 	 */
 	protected $path = 'admin/product-collections';
+
+	/**
+	 * Add the api url to the data.
+	 */
+	public function __construct() {
+		$this->data['api_url'] = \SureCart::requests()->getBaseUrl();
+	}
+
+	/**
+	 * Enqueue the scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue(): void {
+		$available_templates              = wp_get_theme()->get_page_templates( null, 'sc_collection' );
+		$available_templates['']          = apply_filters( 'default_page_template_title', __( 'Theme Layout' ), 'rest-api' );
+		$this->data['availableTemplates'] = $available_templates;
+		parent::enqueue();
+	}
 }

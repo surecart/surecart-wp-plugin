@@ -9,6 +9,13 @@ use SureCart\Models\ProductCollection;
  */
 class ProductCollectionsController extends RestController {
 	/**
+	 * Always fetch with these subcollections.
+	 *
+	 * @var array
+	 */
+	protected $with = [ 'image' ];
+
+	/**
 	 * Class to make the requests.
 	 *
 	 * @var string

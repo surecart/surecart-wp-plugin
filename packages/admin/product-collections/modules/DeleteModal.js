@@ -11,21 +11,20 @@ import { Modal } from '@wordpress/components';
  */
 import { ScButton, ScFlex } from '@surecart/components-react';
 
-export default ({
-	deleteItem,
-	deletingItem,
-	setError,
-	onClose = () => { },
-}) => {
+export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { deleteEntityRecord} = useDispatch(coreStore);
+	const { deleteEntityRecord } = useDispatch(coreStore);
 
 	/**
 	 * Handle the delete action.
 	 */
 	const deleteCollection = async () => {
 		try {
-			await deleteEntityRecord('surecart', 'product-collection', deleteItem?.id);
+			await deleteEntityRecord(
+				'surecart',
+				'product-collection',
+				deleteItem?.id
+			);
 			createSuccessNotice(__('Collection deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
@@ -65,4 +64,4 @@ export default ({
 			</ScFlex>
 		</Modal>
 	);
-}
+};

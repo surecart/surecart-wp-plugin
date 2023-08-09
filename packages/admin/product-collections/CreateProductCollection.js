@@ -117,7 +117,7 @@ export default ({ id, setId }) => {
 								'surecart'
 							)}
 							help={__(
-								'A short description for your product collection.',
+								'A short description for your product collection. This will be displayed on the collection page.',
 								'surecart'
 							)}
 							style={{ '--sc-rich-text-max-height': '200px' }}
