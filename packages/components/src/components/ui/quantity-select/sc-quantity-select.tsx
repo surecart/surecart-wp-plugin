@@ -25,6 +25,7 @@ export class ScQuantitySelect {
   @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
+  @Prop() allowEmpty: boolean = false;
 
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
@@ -43,21 +44,22 @@ export class ScQuantitySelect {
   @Event() scBlur: EventEmitter<void>;
 
   componentWillLoad() {
-    if (!this.quantity) {
+    if (!this.quantity && !this.allowEmpty) {
       this.quantity = this.min;
     }
   }
 
   decrease() {
     if (this.disabled) return;
-    this.quantity = Math.max(this.quantity - 1, this.min);
+    this.quantity = this.allowEmpty ? this.quantity - 1 : Math.max(this.quantity - 1, this.min);
+    
     this.scChange.emit(this.quantity);
     this.scInput.emit(this.quantity);
   }
 
   increase() {
     if (this.disabled) return;
-    this.quantity = Math.min(this.quantity + 1, this.max);
+    this.quantity = this.allowEmpty ? this.quantity + 1 : Math.min(this.quantity + 1, this.max);
     this.scChange.emit(this.quantity);
     this.scInput.emit(this.quantity);
   }

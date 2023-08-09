@@ -1701,6 +1701,7 @@
     "slot": true
   },
   "sc-quantity-select": {
+    "allow-empty": true,
     "click-el": true,
     "disabled": true,
     "has-focus": true,
