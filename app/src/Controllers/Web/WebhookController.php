@@ -111,22 +111,32 @@ class WebhookController {
 		if ( is_wp_error( $incoming ) ) {
 			return \SureCart::json(
 				[
-					'error'            => $incoming->get_error_message(),
+					'error' => $incoming->get_error_message(),
 				]
 			)
 			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
 			->withStatus( 500 );
 		}
 
+		if ( empty( $incoming->id ) ) {
+			return \SureCart::json(
+				[
+					'error' => 'Failed to create webhook.',
+				]
+			)
+			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+			->withStatus( 400 );
+		}
+
 		// dispatch an async request.
 		\SureCart::async()->data(
 			[
-				'id' => $body['id'],
+				'id' => $incoming->id,
 			]
 		)->dispatch();
 
 		// handle the response.
-		return $this->handleResponse( $incoming->toArray() );
+		return $this->handleResponse( $incoming->id, $incoming->toArray() );
 	}
 
 	/**
@@ -135,7 +145,7 @@ class WebhookController {
 	 * @param array|\WP_Error $data Data.
 	 * @return function
 	 */
-	public function handleResponse( $data ) {
+	public function handleResponse( $id, $data ) {
 		// handle the response.
 		if ( is_wp_error( $data ) ) {
 			return \SureCart::json( [ $data->get_error_code() => $data->get_error_message() ] )
@@ -151,6 +161,7 @@ class WebhookController {
 
 		return \SureCart::json(
 			[
+				'process_id'      => $id,
 				'event_triggered' => $data['event'] ?? 'none',
 				'data'            => $data,
 			]
