@@ -19,21 +19,25 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product                                     = get_query_var( 'surecart_current_product' );
-		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
-
+		$product = get_query_var( 'surecart_current_product' );
 		if ( empty( $product ) ) {
 			return '';
 		}
 
-		$max_collection_count = (int) $attributes['collectionCount'];
-		$collections          = ProductCollection::where(
+		// only fetch the number of collections we need.
+		$collections = ProductCollection::where(
 			[
 				'product_ids' => [ $product->id ],
+				'limit'       => (int) $attributes['collectionCount'],
 			]
 		)->get();
 
-		$collections = array_splice( $collections, 0, $max_collection_count );
+		// we don't have the collections.
+		if ( empty( $collections ) ) {
+			return '';
+		}
+
+		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
 		ob_start(); ?>
 			<sc-flex justify-content="flex-start" flex-wrap="wrap">
@@ -42,7 +46,7 @@ class Block extends BaseBlock {
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<?php echo $collection->name; ?></span>
+					<?php echo wp_kses_post( $collection->name ); ?></span>
 				<?php endforeach; ?>
 			</sc-flex>
 		<?php
