@@ -14,16 +14,21 @@ export default ({ onRequestClose, paymentMethod }) => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { invalidateResolutionForStore } = useDispatch(coreStore);
+	const { deleteEntityRecord, invalidateResolutionForStore } = useDispatch(coreStore);
 
 	const onDelete = async () => {
 		try {
 			setBusy(true);
 			setError(null);
-			await apiFetch({
-				path: `surecart/v1/payment_methods/${paymentMethod?.id}/detach`,
-				method: 'PATCH',
-			});
+			await deleteEntityRecord(
+				'surecart',
+				'payment_method',
+				paymentMethod?.id,
+				{},
+				{ 
+					throwOnError: true 
+				}
+			);
 			createSuccessNotice(__('Payment method deleted.', 'surecart'), {
 				type: 'snackbar',
 			});

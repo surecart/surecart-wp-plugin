@@ -30,7 +30,7 @@ class PaymentMethodsRestServiceProvider extends RestServiceProvider implements R
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'find' ];
+	protected $methods = [ 'index', 'find', 'delete' ];
 
 		/**
 		 * Register REST Routes
