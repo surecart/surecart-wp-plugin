@@ -54,7 +54,6 @@ export class ScQuantitySelect {
   }
 
   decrease() {
-    console.log('allowNegative', this.quantity);
     if (this.disabled) return;
     this.quantity = this.allowNegative ? this.quantity - 1 : Math.max(this.quantity - 1, this.min);
 

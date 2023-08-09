@@ -22,7 +22,7 @@ import {
 import Box from '../../../ui/Box';
 import StockAdjustmentModal from './StockAdjustment';
 
-export default ({ product, updateProduct, loading, setStock }) => {
+export default ({ product, updateProduct, loading }) => {
 	const [model, setModel] = useState(false);
 
 	return (
@@ -48,7 +48,11 @@ export default ({ product, updateProduct, loading, setStock }) => {
 							<ScFlex alignItems="center">
 								<ScQuantitySelect
 									quantity={product?.stock}
-									onScChange={(e) => setStock(e.detail)}
+									onScChange={(e) =>
+										updateProduct({
+											stock: e.detail,
+										})
+									}
 									allowNegative={true}
 								/>
 								<ScTooltip

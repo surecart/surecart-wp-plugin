@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
@@ -28,6 +28,7 @@ import Tax from './modules/Tax';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
+import useStockChange from './modules/Inventory/use-stock-change';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -45,58 +46,14 @@ export default ({ id }) => {
 		productError,
 	} = useEntity('product', id);
 
-	const [loaded, setLoaded] = useState(false);
-	const [stock, setStock] = useState(product?.stock);
 	/**
-	 * For the first time load, set the loaded to true,
-	 * to keep track of the initial stock.
+	 * Handle stock change Logics.
 	 */
-	useEffect(() => {
-		if (
-			product?.stock !== undefined &&
-			product?.stock_adjustment === undefined &&
-			!loaded
-		) {
-			setLoaded(true);
-		}
-	}, [product?.stock, product?.stock_adjustment, loaded]);
-
-	/**
-	 * For first time load, set the initial stock.
-	 * Also if once product is saved, set the initial stock to the current stock.
-	 */
-	useEffect(() => {
-		if (loaded) {
-			editProduct({
-				initial_stock: product?.stock || 0,
-			});
-		}
-	}, [loaded]);
-
-	/**
-	 * If stock has changed, calculate the stock adjustment.
-	 * This is used to calculate the stock adjustment.
-	 */
-	useEffect(() => {
-		if (stock) {
-			editProduct({
-				stock,
-				stock_adjustment:
-					parseInt(stock) - parseInt(product?.initial_stock),
-			});
-		}
-	}, [stock]);
-
-	/**
-	 * If product is saved, set the initial stock to the current stock.
-	 */
-	useEffect(() => {
-		if (savingProduct && product?.stock !== undefined) {
-			editProduct({
-				initial_stock: product?.stock || 0,
-			});
-		}
-	}, [savingProduct]);
+	useStockChange({
+		product,
+		editProduct,
+		savingProduct,
+	});
 
 	/**
 	 * Handle the form submission
@@ -333,11 +290,9 @@ export default ({ id }) => {
 				/>
 
 				<Inventory
-					productId={id}
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}
-					setStock={setStock}
 				/>
 
 				<Variations
