@@ -6,14 +6,22 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import Box from '../../../ui/Box';
-import { ScFormControl } from '@surecart/components-react';
+import {
+	ScDialog,
+	ScFormControl,
+	ScIcon,
+	ScMenuDivider,
+	ScMenuItem,
+} from '@surecart/components-react';
 import ModelSelector from '../../../components/ModelSelector';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import Collection from './Collection';
+import NewCollection from './NewCollection';
 
 export default ({ product, updateProduct, loading }) => {
+	const [modal, setModal] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	// when product collections come in, update the product collection ids for updating later.
@@ -41,7 +49,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	return (
 		<Box loading={loading} title={__('Collections', 'surecart')}>
-			<ScFormControl label={__('Select Product Collections', 'surecart')}>
+			<ScFormControl label={__('Collections', 'surecart')}>
 				<div
 					css={css`
 						display: grid;
@@ -49,13 +57,24 @@ export default ({ product, updateProduct, loading }) => {
 					`}
 				>
 					<ModelSelector
-						placeholder={__('Add a product collection', 'surecart')}
+						placeholder={__(
+							'Add this product to a collection...',
+							'surecart'
+						)}
 						name="product-collection"
 						onSelect={(collectionId) =>
 							toggleCollection(collectionId)
 						}
 						exclude={product?.product_collection_ids}
-					/>
+					>
+						<div slot="prefix">
+							<ScMenuItem onClick={() => setModal('new')}>
+								<ScIcon slot="prefix" name="plus" />
+								{__('Add New', 'surecart')}
+							</ScMenuItem>
+							<ScMenuDivider />
+						</div>
+					</ModelSelector>
 					{!!product?.product_collection_ids?.length && (
 						<div
 							css={css`
@@ -76,6 +95,12 @@ export default ({ product, updateProduct, loading }) => {
 					)}
 				</div>
 			</ScFormControl>
+
+			<NewCollection
+				open={'new' === modal}
+				onRequestClose={() => setModal(false)}
+				onCreate={(collection) => toggleCollection(collection.id)}
+			/>
 		</Box>
 	);
 };

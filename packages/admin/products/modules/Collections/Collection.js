@@ -1,6 +1,6 @@
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { ScTag } from '@surecart/components-react';
+import { ScSkeleton, ScTag } from '@surecart/components-react';
 
 export default ({ id, onRemove }) => {
 	const collection = useSelect(
@@ -14,7 +14,9 @@ export default ({ id, onRemove }) => {
 	);
 
 	if (!collection?.name) {
-		return null;
+		return (
+			<ScSkeleton style={{ width: '80px', height: '20px' }}></ScSkeleton>
+		);
 	}
 
 	return (
