@@ -77,10 +77,9 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 							css={css`
 								margin-top: 0.3rem;
 							`}
-							allowEmpty={true}
+							allowNegative={true}
 							quantity={stockAdjustment}
 							onScChange={(e) => setStockAdjustment(e.detail)}
-							min={-10000} /* Almost Any negative number */
 						/>
 					</ScFormControl>
 					<div

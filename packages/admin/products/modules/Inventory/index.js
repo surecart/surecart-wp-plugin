@@ -49,10 +49,7 @@ export default ({ product, updateProduct, loading, setStock }) => {
 								<ScQuantitySelect
 									quantity={product?.stock}
 									onScChange={(e) => setStock(e.detail)}
-									allowEmpty={true}
-									min={
-										-10000
-									} /* Almost Any negative number */
+									allowNegative={true}
 								/>
 								<ScTooltip
 									type="text"

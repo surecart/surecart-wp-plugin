@@ -25,7 +25,7 @@ export class ScQuantitySelect {
   @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
-  @Prop() allowEmpty: boolean = false;
+  @Prop() allowNegative: boolean = false;
 
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
@@ -44,22 +44,27 @@ export class ScQuantitySelect {
   @Event() scBlur: EventEmitter<void>;
 
   componentWillLoad() {
-    if (!this.quantity && !this.allowEmpty) {
+    if (this.allowNegative) {
+      return;
+    }
+
+    if (!this.quantity) {
       this.quantity = this.min;
     }
   }
 
   decrease() {
+    console.log('allowNegative', this.quantity);
     if (this.disabled) return;
-    this.quantity = this.allowEmpty ? this.quantity - 1 : Math.max(this.quantity - 1, this.min);
-    
+    this.quantity = this.allowNegative ? this.quantity - 1 : Math.max(this.quantity - 1, this.min);
+
     this.scChange.emit(this.quantity);
     this.scInput.emit(this.quantity);
   }
 
   increase() {
     if (this.disabled) return;
-    this.quantity = this.allowEmpty ? this.quantity + 1 : Math.min(this.quantity + 1, this.max);
+    this.quantity = this.allowNegative ? this.quantity + 1 : Math.min(this.quantity + 1, this.max);
     this.scChange.emit(this.quantity);
     this.scInput.emit(this.quantity);
   }
@@ -94,6 +99,9 @@ export class ScQuantitySelect {
           'quantity--focused': this.hasFocus,
           'quantity--disabled': this.disabled,
           'quantity--is-rtl': isRtl(),
+
+          // allow negative
+          'quantity--allow-negative': this.allowNegative,
         }}
       >
         <span
@@ -101,14 +109,28 @@ export class ScQuantitySelect {
           role="button"
           aria-label={__('decrease number', 'surecart')}
           class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
-          onClick={() => this.quantity > this.min && this.decrease()}
+          onClick={() => {
+            if (this.allowNegative) {
+              this.decrease();
+              return;
+            }
+
+            if (this.quantity > this.min) {
+              this.decrease();
+            }
+          }}
         >
           <sc-icon name="minus" exportparts="base:minus__icon"></sc-icon>
         </span>
 
         <input
           part="input"
-          class="input__control"
+          class={{
+            'input__control': true,
+
+            // allow negative
+            'input__control--allow-negative': this.allowNegative,
+          }}
           ref={el => (this.input = el as HTMLInputElement)}
           step="1"
           type="number"
@@ -133,7 +155,16 @@ export class ScQuantitySelect {
           role="button"
           aria-label={__('increase number', 'surecart')}
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
-          onClick={() => this.quantity < this.max && this.increase()}
+          onClick={() => {
+            if (this.allowNegative) {
+              this.increase();
+              return;
+            }
+
+            if (this.quantity < this.max) {
+              this.increase();
+            }
+          }}
         >
           <sc-icon name="plus" exportparts="base:plus__icon"></sc-icon>
         </span>
