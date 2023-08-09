@@ -62,7 +62,7 @@ class AsyncWebhookService extends AsyncRequest {
 		}
 
 		// find the webhook.
-		$webhook = IncomingWebhook::find( $id );
+		$webhook = IncomingWebhook::where('webhook_id', $id )->first();
 
 		// get WP error and throw exception.
 		if ( is_wp_error( $webhook ) ) {
