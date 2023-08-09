@@ -60,7 +60,7 @@ class IncomingWebhook {
 			$this->name,
 			'
             id bigint(20) unsigned NOT NULL auto_increment,
-			webhook_id varchar(155) NOT NULL UNIQUE,
+			webhook_id varchar(155) NOT NULL,
 			data longtext NOT NULL,
 			processed_at TIMESTAMP NULL,
 			source varchar(155) NOT NULL DEFAULT "surecart",

@@ -4,6 +4,7 @@ namespace SureCart\WordPress;
 
 use SureCart\Models\Account;
 use SureCart\Models\ApiToken;
+use SureCart\Models\IncomingWebhook;
 use SureCart\Models\RegisteredWebhook;
 use SureCart\Support\Server;
 
@@ -26,6 +27,7 @@ class HealthService {
 	 * @return array
 	 */
 	public function debugInfo( $debug_info ) {
+		$total_failed           = IncomingWebhook::whereNull( 'processed_at' )->andWhere( 'created_at', '<', ( new \DateTime() )->modify( '-30 minutes' )->format( 'Y-m-d H:i:s' ) )->count();
 		$debug_info['surecart'] = array(
 			'label'  => __( 'SureCart', 'surecart' ),
 			'fields' => array(
@@ -46,7 +48,7 @@ class HealthService {
 				),
 				'webhooks_processing' => array(
 					'label'   => __( 'Webhooks Processing', 'surecart' ),
-					'value'   => ! empty( \SureCart::webhooks()->processing()->expired() ) ? __( 'Error', 'surecart' ) : __( 'Working', 'surecart' ),
+					'value'   => ! empty( $total_failed ) ? sprintf( __( '%d Unprocessed webhooks', 'surecart' ), $total_failed ) : __( 'Working', 'surecart' ),
 					'private' => false,
 				),
 			),
@@ -70,7 +72,7 @@ class HealthService {
 		);
 
 		$is_localhost = ( new Server( get_home_url() ) )->isLocalHost();
-		if ( ! $is_localhost ) {
+		// if ( ! $is_localhost ) {
 			$tests['direct']['surecart_webhook_test'] = array(
 				'label' => __( 'SureCart', 'neve' ) . ' ' . __( 'Webhooks Processing', 'surecart' ),
 				'test'  => [ $this, 'webhooksProcessingTest' ],
@@ -81,7 +83,7 @@ class HealthService {
 				'has_rest'          => true,
 				'async_direct_test' => [ $this, 'webhooksTest' ],
 			);
-		}
+			// }
 
 			return $tests;
 	}
@@ -116,8 +118,8 @@ class HealthService {
 	 * @return array
 	 */
 	public function webhooksProcessingTest() {
-		$failed_processes = \SureCart::webhooks()->processing()->expired();
-		$has_errors       = count( $failed_processes ) > 0;
+		$total_failed = IncomingWebhook::whereNull( 'processed_at' )->andWhere( 'created_at', '<', ( new \DateTime() )->modify( '-30 minutes' )->format( 'Y-m-d H:i:s' ) )->count();
+		$has_errors   = ! empty( $total_failed );
 
 		return array(
 			'label'       => $has_errors ? __( 'SureCart Webhooks Processing Error', 'surecart' ) : __( 'SureCart Webhooks Processing', 'surecart' ),
@@ -128,8 +130,13 @@ class HealthService {
 			),
 			'description' => sprintf(
 				'<p>%s</p>',
-				$has_errors ? __( 'Some of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing', 'surecart' ) : __( 'Webhook processing is working normally.', 'surecart' )
+				$has_errors ? sprintf( __( '%d of your webhooks failed to process on your site. Please check your error logs to make sure errors did not occur in webhook processing.', 'surecart' ), (int) $total_failed ) : __( 'Webhook processing is working normally.', 'surecart' )
 			),
+			'actions'     => $has_errors ? sprintf(
+				'<a href="%s" class="button" target="_blank">%s</a>',
+				esc_url( admin_url( 'admin.php?page=sc-settings&tab=connection' ) ),
+				__( 'Troubleshoot Connection', 'surecart' )
+			) : '',
 			'test'        => 'surecart_webhooks_processing_test',
 		);
 	}

@@ -90,7 +90,13 @@ class WebhookController {
 		// make sure we don't have a duplicate webhook.
 		$webhook = IncomingWebhook::where( 'webhook_id', $body['id'] )->first();
 		if ( ! empty( $webhook->id ) ) {
-			return new \WP_Error( 'duplicate_webhook', 'Duplicate webhook.' );
+			return \SureCart::json(
+				[
+					'status' => 'already_handled',
+				]
+			)
+			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+			->withStatus( 200 );
 		}
 
 		// create incoming webhook.
@@ -103,7 +109,13 @@ class WebhookController {
 		);
 
 		if ( is_wp_error( $incoming ) ) {
-			return $incoming;
+			return \SureCart::json(
+				[
+					'error'            => $incoming->get_error_message(),
+				]
+			)
+			->withHeader( 'X-SURECART-WP-PLUGIN-VERSION', \SureCart::plugin()->version() )
+			->withStatus( 500 );
 		}
 
 		// dispatch an async request.
