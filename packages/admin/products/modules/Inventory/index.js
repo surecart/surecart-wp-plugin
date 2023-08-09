@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -24,6 +24,18 @@ import StockAdjustmentModal from './StockAdjustment';
 
 export default ({ product, updateProduct, loading }) => {
 	const [model, setModel] = useState(false);
+
+	/**
+	 * If stock has changed, calculate the stock adjustment.
+	 */
+	useEffect(() => {
+		if (product?.stock !== undefined) {
+			updateProduct({
+				stock_adjustment:
+					parseInt(product?.stock) - parseInt(product?.initial_stock),
+			});
+		}
+	}, [product?.stock]);
 
 	return (
 		<Box title={__('Inventory', 'surecart')} loading={loading}>
@@ -102,7 +114,6 @@ export default ({ product, updateProduct, loading }) => {
 					onRequestClose={() => setModel(false)}
 					product={product}
 					updateProduct={updateProduct}
-					initialStock={product?.initial_stock}
 					loading={loading}
 				/>
 			)}

@@ -28,7 +28,6 @@ import Tax from './modules/Tax';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
-import useStockChange from './modules/Inventory/use-stock-change';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -45,15 +44,6 @@ export default ({ id }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
-
-	/**
-	 * Handle stock change Logics.
-	 */
-	useStockChange({
-		product,
-		editProduct,
-		savingProduct,
-	});
 
 	/**
 	 * Handle the form submission

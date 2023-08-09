@@ -27,19 +27,13 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		if (isNaN(stockAdjustment) || stockAdjustment === '') {
-			updateProduct({
-				stock_adjustment: stockAdjustment,
-				stock: product?.initial_stock,
-			});
-		} else {
-			updateProduct({
-				stock_adjustment: undefined,
-				stock:
-					parseInt(product?.initial_stock) +
-					parseInt(stockAdjustment),
-			});
-		}
+		updateProduct({
+			stock:
+				isNaN(stockAdjustment) || stockAdjustment === ''
+					? product?.initial_stock
+					: parseInt(product?.initial_stock) +
+					  parseInt(stockAdjustment),
+		});
 		onRequestClose();
 	};
 
@@ -106,7 +100,6 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
-					{loading && <sc-block-ui></sc-block-ui>}
 				</ScForm>
 			</Modal>
 		</Fragment>

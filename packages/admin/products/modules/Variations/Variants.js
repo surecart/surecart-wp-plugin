@@ -48,7 +48,7 @@ export default ({ product, updateProduct, loading }) => {
 	 *
 	 * @param {object} variant
 	 */
-	const toggleDelete = async (variant) => {
+	const toggleDelete = (variant) => {
 		const event = {
 			target: {
 				name: 'status',
@@ -57,22 +57,6 @@ export default ({ product, updateProduct, loading }) => {
 		};
 		updateVariantValue(event, product?.variants.indexOf(variant));
 	};
-
-	useEffect(() => {
-		if (product?.variants?.length > 0) {
-			// Get total stock adjustment by summing all variants stock_adjustment
-			const totalStockAdjustment = product?.variants.reduce(
-				(total, variant) =>
-					parseInt(total || 0) +
-					(variant.stock_adjustment || variant.stock || 0),
-				0
-			);
-
-			updateProduct({
-				stock: totalStockAdjustment,
-			});
-		}
-	}, [product?.variants]);
 
 	const updateVariantValue = (e, index) => {
 		const value = e.target.value;
@@ -86,7 +70,8 @@ export default ({ product, updateProduct, loading }) => {
 				};
 
 				if (name === 'stock') {
-					newVariant['stock_adjustment'] = parseInt(value);
+					newVariant['stock_adjustment'] =
+						value - variant.initial_stock || 0;
 				}
 
 				return newVariant;
