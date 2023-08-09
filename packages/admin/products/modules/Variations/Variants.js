@@ -4,6 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
+import { useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -57,20 +58,44 @@ export default ({ product, updateProduct, loading }) => {
 		updateVariantValue(event, product?.variants.indexOf(variant));
 	};
 
+	useEffect(() => {
+		if (product?.variants?.length > 0) {
+			// Get total stock adjustment by summing all variants stock_adjustment
+			const totalStockAdjustment = product?.variants.reduce(
+				(total, variant) =>
+					parseInt(total || 0) +
+					(variant.stock_adjustment || variant.stock || 0),
+				0
+			);
+
+			updateProduct({
+				stock: totalStockAdjustment,
+			});
+		}
+	}, [product?.variants]);
+
 	const updateVariantValue = (e, index) => {
 		const value = e.target.value;
 		const name = e.target.name;
 
-		updateProduct({
-			variants: product?.variants.map((variant, index2) => {
-				if (index2 === index) {
-					return {
-						...variant,
-						[name]: value,
-					};
+		const allVariants = product?.variants.map((variant, index2) => {
+			if (index2 === index) {
+				let newVariant = {
+					...variant,
+					[name]: value,
+				};
+
+				if (name === 'stock') {
+					newVariant['stock_adjustment'] = parseInt(value);
 				}
-				return variant;
-			}),
+
+				return newVariant;
+			}
+			return variant;
+		});
+
+		updateProduct({
+			variants: allVariants,
 		});
 	};
 
@@ -133,8 +158,9 @@ export default ({ product, updateProduct, loading }) => {
 		if (prices?.length > 1) {
 			return (
 				<ScTooltip
+					type="text"
 					text={__(
-						'Product has multiple prices. Keep only one price to maintain variable product wise pricing.',
+						'Product has multiple prices. Please keep only one price to maintain variant wise pricing.',
 						'surecart'
 					)}
 				>
@@ -158,6 +184,40 @@ export default ({ product, updateProduct, loading }) => {
 		);
 	};
 
+	const getColumns = () => {
+		let columns = {
+			variant: {
+				label: __('Variant', 'surecart'),
+				width: '200px',
+			},
+			amount: {
+				label: __('Price', 'surecart'),
+				width: '150px',
+			},
+		};
+
+		if (!!product?.stock_enabled) {
+			columns = {
+				...columns,
+				stock: {
+					label: __('Stock qty', 'surecart'),
+					width: '150px',
+				},
+			};
+		}
+
+		return {
+			...columns,
+			sku: {
+				label: __('SKU', 'surecart'),
+				width: '150px',
+			},
+			actions: {
+				label: __('', 'surecart'),
+			},
+		};
+	};
+
 	return (
 		<DataTable
 			css={css`
@@ -165,25 +225,9 @@ export default ({ product, updateProduct, loading }) => {
 			`}
 			title={__('', 'surecart')}
 			loading={loading}
-			columns={{
-				variant: {
-					label: __('Variant', 'surecart'),
-					width: '200px',
-				},
-				amount: {
-					label: __('Price', 'surecart'),
-					width: '150px',
-				},
-				sku: {
-					label: __('SKU', 'surecart'),
-					width: '150px',
-				},
-				actions: {
-					label: __('', 'surecart'),
-				},
-			}}
+			columns={getColumns()}
 			items={(product?.variants ?? []).map((variant, index) => {
-				const { id, sku, status, image, product, amount } = variant;
+				const { id, sku, status, image, product, stock } = variant;
 				return {
 					variant: (
 						<ScFlex
@@ -272,6 +316,16 @@ export default ({ product, updateProduct, loading }) => {
 						</ScFlex>
 					),
 					amount: renderAmount(variant, index),
+					stock: (
+						<ScInput
+							value={stock ?? 0}
+							name="stock"
+							disabled={status === 'draft'}
+							onScChange={(e) => {
+								updateVariantValue(e, index);
+							}}
+						/>
+					),
 					sku: (
 						<ScInput
 							value={sku}
