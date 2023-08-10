@@ -64,6 +64,7 @@ export default ({ product, updateProduct, loading }) => {
 							toggleCollection(collectionId)
 						}
 						exclude={product?.product_collection_ids}
+						style={{ width: '100%' }}
 					>
 						<div slot="prefix">
 							<ScMenuItem onClick={() => setModal('new')}>
