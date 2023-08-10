@@ -263,7 +263,7 @@
     "slot": true
   },
   "sc-checkout": {
-    "abandoned-checkout-return-url": true,
+    "abandoned-checkout-enabled": true,
     "alignment": true,
     "currency-code": true,
     "customer": true,
