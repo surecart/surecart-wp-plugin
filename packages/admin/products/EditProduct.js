@@ -27,7 +27,6 @@ import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
-import Collections from './modules/Collections';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
