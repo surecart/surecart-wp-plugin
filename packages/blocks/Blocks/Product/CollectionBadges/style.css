@@ -15,3 +15,9 @@
   border-color: var(--sc-tag-default-border-color, var(--sc-color-gray-200));
   color: var(--sc-tag-default-color, var(--sc-color-gray-700));
 }
+
+.sc-product-collection-badge:hover,
+.sc-product-collection-badge:active,
+.sc-product-collection-badge:visited {
+  color: var(--sc-tag-default-color, var(--sc-color-gray-700));
+}

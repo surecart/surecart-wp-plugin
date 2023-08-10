@@ -42,11 +42,12 @@ class Block extends BaseBlock {
 		ob_start(); ?>
 			<sc-flex justify-content="flex-start" flex-wrap="wrap">
 				<?php foreach ( $collections as $collection ) : ?>
-					<span
+					<a
+					href="<?php echo esc_url( $collection->permalink ); ?>"
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<?php echo wp_kses_post( $collection->name ); ?></span>
+					<?php echo wp_kses_post( $collection->name ); ?></a>
 				<?php endforeach; ?>
 			</sc-flex>
 		<?php
