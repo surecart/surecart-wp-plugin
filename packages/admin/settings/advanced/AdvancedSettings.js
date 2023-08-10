@@ -26,7 +26,9 @@ export default () => {
 		'settings'
 	);
 	const [modal, setModal] = useState(null);
+
 	const [showNotice, setShowNotice] = useState(false);
+
 	// honeypot.
 	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
 		'root',
@@ -314,6 +316,26 @@ export default () => {
 					</span>
 				</ScSwitch>
 			</SettingsBox>
+
+			<SettingsBox
+				title={__('Migration', 'surecart')}
+				description={__(
+					'Looking to migrate from another ecommerce platform?',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+				noButton={true}
+			>
+				<ScButton
+					href={'https://surecart.com/migrate-to-surecart/'}
+					target="_blank"
+					outline
+				>
+					{__('Contact Us', 'surecart')}
+					<ScIcon name="external-link" slot="suffix" />
+				</ScButton>
+			</SettingsBox>
+
 			<SettingsBox
 				title={__('Clear Test Data', 'surecart')}
 				description={__(
