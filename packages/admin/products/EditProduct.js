@@ -27,6 +27,7 @@ import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
+import Collections from './modules/Collections';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -42,9 +43,7 @@ export default ({ id }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id, {
-		expand: ['product_collections'],
-	});
+	} = useEntity('product', id);
 
 	/**
 	 * Handle the form submission
@@ -217,17 +216,18 @@ export default ({ id }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Collections
-						productId={id}
-						product={product}
-						loading={!hasLoadedProduct}
-					/>
 					<Shipping
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collections
+						productId={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

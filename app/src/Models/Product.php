@@ -95,11 +95,11 @@ class Product extends Model {
 	/**
 	 * Set the product collections attribute
 	 *
-	 * @param array $value Product collections.
+	 * @param object $value Product collections.
 	 * @return void
 	 */
 	public function setProductCollectionsAttribute( $value ) {
-		$this->setRelation( 'product_collections', $value, ProductCollection::class );
+		$this->setCollection( 'product_collections', $value, ProductCollection::class );
 	}
 
 
