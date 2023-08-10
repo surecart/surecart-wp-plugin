@@ -241,32 +241,6 @@ export class ScProductItemList {
     });
   }
 
-  // TODO: Remove this code, after investigation why
-  // this.layoutConfig is undefined here, but passing from editor as array.
-  getLayoutConfig() {
-    if (this.layoutConfig) return this.layoutConfig;
-
-    // Return default one.
-    return [
-      {
-        blockName: 'surecart/product-item-image',
-        attributes: { src: '', sizing: 'cover', ratio: '1/1.33', style: { border: { radius: '6px' }, spacing: { margin: { bottom: '16px' } } } },
-      },
-      {
-        blockName: 'surecart/product-item-title',
-        attributes: {
-          title: 'Product Title',
-          align: 'left',
-          style: { typography: { fontWeight: '400', fontSize: '14px', lineHeight: '1.2' }, spacing: { margin: { bottom: '10px' } }, color: { text: '#374151' } },
-        },
-      },
-      {
-        blockName: 'surecart/product-item-price',
-        attributes: { align: 'left', range: false, style: { color: { text: '#111827' }, typography: { fontSize: '18px', fontWeight: '500' } } },
-      },
-    ];
-  }
-
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
@@ -381,7 +355,7 @@ export class ScProductItemList {
           {this.loading
             ? [...Array(this.products?.length || this.limit || 10)].map(() => (
                 <div class="product-item-list__loader">
-                  {(this.getLayoutConfig() || []).map(layout => {
+                  {(this.layoutConfig || []).map(layout => {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
                         return (
