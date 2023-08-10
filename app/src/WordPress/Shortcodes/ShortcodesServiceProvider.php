@@ -136,10 +136,10 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		// Product archive page.
+		// Product collection page.
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
-			'sc_product_archive',
-			'surecart/product-archive',
+			'sc_product_collection',
+			'surecart/product-collection',
 			[
 				'collection_id'      => '', // mendatory.
 				'columns'            => 4,

@@ -25,7 +25,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 				'product-collection',
 				deleteItem?.id
 			);
-			createSuccessNotice(__('Collection deleted.', 'surecart'), {
+			createSuccessNotice(__('Product collection deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 			window.location.assign('admin.php?page=sc-product-collections');
@@ -37,7 +37,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 
 	return (
 		<Modal
-			title={__('Delete this collection?', 'surecart')}
+			title={__('Delete this product collection?', 'surecart')}
 			css={css`
 				max-width: 500px !important;
 			`}
@@ -46,7 +46,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 		>
 			<p>
 				{__(
-					'Are you sure you want to delete this collection?',
+					'Are you sure you want to delete this product collection?',
 					'surecart'
 				)}
 			</p>

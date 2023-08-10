@@ -81,7 +81,7 @@ export default function CollectionTemplateForm({
 			<InspectorPopoverHeader
 				title={__('Template')}
 				help={__(
-					'Templates define the way product archive page is displayed when viewing your site.',
+					'Templates define the way product collection page is displayed when viewing your site.',
 					'surecart'
 				)}
 				actions={
@@ -100,7 +100,7 @@ export default function CollectionTemplateForm({
 				__nextHasNoMarginBottom
 				hideLabelFromVision
 				label={__('Template', 'surecart')}
-				value={selected?.id || 'surecart/surecart//product-archive'}
+				value={selected?.id || 'surecart/surecart//product-collection'}
 				options={options}
 				onChange={(slug) => {
 					updateCollection({
@@ -120,7 +120,7 @@ export default function CollectionTemplateForm({
 							postType: 'wp_template',
 							postId:
 								selected?.id ||
-								'surecart/surecart//product-archive',
+								'surecart/surecart//product-collection',
 							canvas: 'edit',
 						})}
 					>

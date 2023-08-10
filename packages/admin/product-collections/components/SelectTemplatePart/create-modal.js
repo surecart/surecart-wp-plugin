@@ -14,7 +14,7 @@ import {
 import { cleanForSlug } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-const DEFAULT_TITLE = __('Custom Product Archive Page', 'surecart');
+const DEFAULT_TITLE = __('Custom Product collection page', 'surecart');
 
 export default function PostTemplateCreateModal({
 	onClose,
@@ -80,7 +80,7 @@ export default function PostTemplateCreateModal({
 						placeholder={DEFAULT_TITLE}
 						disabled={isBusy}
 						help={__(
-							'Describe the template, e.g. "Men\'s Watches". A custom template can be manually applied to product archive page.',
+							'Describe the template, e.g. "Men\'s Watches". A custom template can be manually applied to product collection page.',
 							'surecart'
 						)}
 					/>

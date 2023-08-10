@@ -72,7 +72,7 @@ export default function PostTemplateForm({
 			<InspectorPopoverHeader
 				title={__('Template')}
 				help={__(
-					'Templates define the way product archive page is displayed when viewing your site.',
+					'Templates define the way product collection page is displayed when viewing your site.',
 					'surecart'
 				)}
 				actions={
@@ -114,7 +114,7 @@ export default function PostTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				label={__('Template', 'surecart')}
-				value={template?.id || 'surecart/surecart//product-archive-part'}
+				value={template?.id || 'surecart/surecart//product-collection-part'}
 				options={(parts ?? []).map((part) => {
 					return {
 						value: part?.id,
@@ -139,7 +139,7 @@ export default function PostTemplateForm({
 							postType: 'wp_template_part',
 							postId:
 								template?.id ||
-								'surecart/surecart//product-archive-part',
+								'surecart/surecart//product-collection-part',
 							canvas: 'edit',
 						})}
 					>

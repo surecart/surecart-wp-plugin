@@ -27,22 +27,22 @@ class Block extends BaseBlock {
 		}
 
 		$max_collection_count = (int) $attributes['collectionCount'];
-		$collections          = ProductCollection::where(
+		$product_collections  = ProductCollection::where(
 			[
 				'product_ids' => [ $product->id ],
 			]
 		)->get();
 
-		$collections = array_splice( $collections, 0, $max_collection_count );
+		$product_collections = array_splice( $product_collections, 0, $max_collection_count );
 
 		ob_start(); ?>
 			<sc-flex justify-content="flex-start" flex-wrap="wrap">
-				<?php foreach ( $collections as $collection ) : ?>
-					<a href="<?php echo esc_attr( $collection->permalink ); ?>"
+				<?php foreach ( $product_collections as $product_collection ) : ?>
+					<a href="<?php echo esc_attr( $product_collection->permalink ); ?>"
 						class="sc-product-collection-badge <?php echo esc_url( $classes ); ?>"
 						style="<?php echo esc_attr( $styles ); ?>"
 					>
-						<?php echo esc_html( $collection->name ); ?>
+						<?php echo esc_html( $product_collection->name ); ?>
 					</a>
 				<?php endforeach; ?>
 			</sc-flex>

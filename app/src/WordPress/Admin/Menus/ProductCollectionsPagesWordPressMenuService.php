@@ -5,9 +5,9 @@ namespace SureCart\WordPress\Admin\Menus;
 use SureCart\Models\ProductCollection;
 
 /**
- * Service for collection pages in WordPress menu related functions.
+ * Service for product collection pages in WordPress menu related functions.
  */
-class CollectionsPagesWordPressMenuService {
+class ProductCollectionsPagesWordPressMenuService {
 	/**
 	 * Bootstrap any actions.
 	 *
@@ -32,7 +32,7 @@ class CollectionsPagesWordPressMenuService {
 		if ( 'nav-menus.php' === $pagenow ) {
 			add_meta_box(
 				'sc_collections_meta_box',
-				__( 'SureCart Collections', 'surecart' ),
+				__( 'SureCart Product collections', 'surecart' ),
 				[ $this, 'metaBoxContents' ],
 				'nav-menus',
 				'side',

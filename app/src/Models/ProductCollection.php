@@ -81,7 +81,7 @@ class ProductCollection extends Model {
 		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
 			return $this->attributes['metadata']->wp_template_part_id;
 		}
-		return 'surecart/surecart//product-archive-part';
+		return 'surecart/surecart//product-collection-part';
 	}
 
 	/**
@@ -93,13 +93,13 @@ class ProductCollection extends Model {
 		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
 			// we have a php file, switch to default.
 			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
-				return 'surecart/surecart//product-archive';
+				return 'surecart/surecart//product-collection';
 			}
 
 			// this is acceptable.
 			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'surecart/surecart//product-archive';
+		return 'surecart/surecart//product-collection';
 	}
 
 	/**

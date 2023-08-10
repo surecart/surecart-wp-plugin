@@ -14,7 +14,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { cleanForSlug } from '@wordpress/url';
 
-const DEFAULT_TITLE = __('Custom Product Archive Page', 'surecart');
+const DEFAULT_TITLE = __('Custom Product collection page', 'surecart');
 
 export default function CollectionTemplateCreateModal({
 	onClose,

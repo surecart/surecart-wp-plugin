@@ -70,7 +70,7 @@ export default ({ id }) => {
 		try {
 			setError(null);
 			await save({
-				successMessage: __('Collection updated.', 'surecart'),
+				successMessage: __('Product collection updated.', 'surecart'),
 			});
 		} catch (e) {
 			console.error(e);
@@ -139,7 +139,7 @@ export default ({ id }) => {
 						</sc-breadcrumb>
 						<sc-breadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
-								{__('Edit Collection', 'surecart')}
+								{__('Edit Product collection', 'surecart')}
 							</sc-flex>
 						</sc-breadcrumb>
 					</sc-breadcrumbs>

@@ -1,11 +1,11 @@
 <?php
 
-namespace SureCartBlocks\Blocks\ProductArchive;
+namespace SureCartBlocks\Blocks\ProductCollection;
 
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
- * Product Archive block.
+ * Product Collection block.
  */
 class Block extends BaseBlock {
 	/**
