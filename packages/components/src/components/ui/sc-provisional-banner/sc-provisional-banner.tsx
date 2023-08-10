@@ -1,4 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-provisional-banner',
@@ -13,9 +14,9 @@ export class ScProvisionalBanner {
     return (
       <div class={{ 'sc-banner': true }}>
         <p>
-          Complete your store setup to go live.
+          {__('Complete your store setup to go live.', 'surecart')}
           <a href={this.claimUrl}>
-            Complete Setup <sc-icon name="arrow-right"></sc-icon>
+            {__('Complete Setup', 'surecart')} <sc-icon name="arrow-right"></sc-icon>
           </a>
         </p>
       </div>

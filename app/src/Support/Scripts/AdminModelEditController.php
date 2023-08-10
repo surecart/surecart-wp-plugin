@@ -96,6 +96,9 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
+		// remove admin notices.
+		remove_all_actions( 'admin_notices' );
+
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'admin_head',

@@ -263,7 +263,7 @@
     "slot": true
   },
   "sc-checkout": {
-    "abandoned-checkout-return-url": true,
+    "abandoned-checkout-enabled": true,
     "alignment": true,
     "currency-code": true,
     "customer": true,
@@ -300,6 +300,12 @@
   "sc-checkout-mollie-payment": {
     "method": true,
     "processor-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-paystack-payment-provider": {
     "style": true,
     "id": true,
     "class": true,
@@ -668,6 +674,14 @@
     "has-payment-options": true,
     "order": true,
     "processor": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-feature-demo-banner": {
+    "button-text": true,
+    "url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1055,6 +1069,7 @@
     "slot": true
   },
   "sc-order-confirm-provider": {
+    "checkout-status": true,
     "success-text": true,
     "success-url": true,
     "style": true,
@@ -1286,6 +1301,29 @@
     "class": true,
     "slot": true
   },
+  "sc-password": {
+    "autofocus": true,
+    "confirmation": true,
+    "confirmation-help": true,
+    "confirmation-label": true,
+    "confirmation-placeholder": true,
+    "disabled": true,
+    "enable-validation": true,
+    "help": true,
+    "label": true,
+    "name": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-password-nag": {
     "enable-validation": true,
     "open": true,
@@ -1364,6 +1402,16 @@
     "merchant-initiated": true,
     "mode": true,
     "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-paystack-add-method": {
+    "currency": true,
+    "customer-id": true,
+    "live-mode": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2030,6 +2078,7 @@
     "loading": true,
     "number": true,
     "other-label": true,
+    "required": true,
     "show": true,
     "status": true,
     "type": true,
