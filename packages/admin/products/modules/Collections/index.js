@@ -8,8 +8,6 @@ import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import {
 	ScButton,
-	ScDialog,
-	ScFormControl,
 	ScIcon,
 	ScMenuDivider,
 	ScMenuItem,
@@ -37,6 +35,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	// toggle collection (add or remmove id from `product_collection_ids`)
 	const toggleCollection = async (collectionId) => {
+		if (!collectionId) return;
 		updateProduct({
 			product_collection_ids: (
 				product?.product_collection_ids || []
