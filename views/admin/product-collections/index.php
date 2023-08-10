@@ -3,7 +3,7 @@
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Product collections', 'surecart' ),
+			'title'    => __( 'Product Collections', 'surecart' ),
 			'new_link' => \SureCart::getUrl()->edit( 'product_collection' ),
 		]
 	);

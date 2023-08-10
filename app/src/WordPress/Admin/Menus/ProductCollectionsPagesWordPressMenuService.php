@@ -32,7 +32,7 @@ class ProductCollectionsPagesWordPressMenuService {
 		if ( 'nav-menus.php' === $pagenow ) {
 			add_meta_box(
 				'sc_collections_meta_box',
-				__( 'SureCart Product collections', 'surecart' ),
+				__( 'SureCart Product Collections', 'surecart' ),
 				[ $this, 'metaBoxContents' ],
 				'nav-menus',
 				'side',

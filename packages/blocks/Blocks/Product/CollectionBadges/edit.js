@@ -33,7 +33,10 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Product collections to display', 'surecart')}
+							label={__(
+								'Product Collections to display',
+								'surecart'
+							)}
 							value={collectionCount}
 							onChange={(collectionCount) =>
 								setAttributes({ collectionCount })

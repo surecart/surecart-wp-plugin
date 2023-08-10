@@ -72,7 +72,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 						],
 						[
 							'value' => 'product-collections',
-							'label' => __( 'Product collections', 'surecart' ),
+							'label' => __( 'Product Collections', 'surecart' ),
 						],
 					],
 				]

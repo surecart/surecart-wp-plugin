@@ -23,7 +23,7 @@ import {
 import { useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 
-import EditLayoutConfig from './modules/EditLayoutConfig';
+import EditLayoutConfig from '../ProductItemList/modules/EditLayoutConfig';
 import { ScFormControl, ScProductItemList } from '@surecart/components-react';
 
 import {
@@ -354,6 +354,11 @@ export default ({ attributes, setAttributes, clientId }) => {
 			<div {...blockProps}>
 				{isEditing ? (
 					<EditLayoutConfig
+						label={__('Product Collection', 'surecart')}
+						description={__(
+							'Display your products from a collection in a grid.',
+							'surecart'
+						)}
 						attributes={attributes}
 						onDone={togglePreview}
 					/>
