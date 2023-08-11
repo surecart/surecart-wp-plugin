@@ -26,6 +26,7 @@ export default () => {
 		'settings'
 	);
 	const [modal, setModal] = useState(null);
+
 	const [showNotice, setShowNotice] = useState(false);
 
 	// honeypot.
@@ -314,6 +315,25 @@ export default () => {
 						</ScButton>
 					</div>
 				</div>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Migration', 'surecart')}
+				description={__(
+					'Looking to migrate from another ecommerce platform?',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+				noButton={true}
+			>
+				<ScButton
+					href={'https://surecart.com/migrate-to-surecart/'}
+					target="_blank"
+					outline
+				>
+					{__('Contact Us', 'surecart')}
+					<ScIcon name="external-link" slot="suffix" />
+				</ScButton>
 			</SettingsBox>
 
 			<SettingsBox
