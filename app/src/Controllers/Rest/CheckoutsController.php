@@ -29,6 +29,9 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
+		// if abandoned checkout is enabled, set the return url.
+		$request->set_param( 'abandoned_checkout_return_url', ! empty( $request->get_param( 'abandoned_checkout_enabled' ) ) ? esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) : null );
+
 		return $this->maybeSetUser( $class, $request );
 	}
 
@@ -260,10 +263,10 @@ class CheckoutsController extends RestController {
 		$errors = new \WP_Error();
 
 		// check if they are trying to sign in.
-		$valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		if ( is_wp_error( $valid_login ) ) {
-			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
-		}
+		// $valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
+		// if ( is_wp_error( $valid_login ) ) {
+		// $errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
+		// }
 
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );

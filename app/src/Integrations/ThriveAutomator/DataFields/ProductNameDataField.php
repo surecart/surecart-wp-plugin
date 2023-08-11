@@ -89,6 +89,6 @@ class ProductNameDataField extends Data_Field {
 	 * @return array
 	 */
 	public static function primary_key() {
-		return [ ProductDataObject::get_id() ];
+		return ProductDataObject::get_id();
 	}
 }

@@ -34,23 +34,26 @@ export default ({ className, attributes, setAttributes, isSelected }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				{/* <Card size="small">
+				<Card size="small">
 					<CardBody size="small">
 						<p>
-							You can override the global password validation by
-							going to the site settings.
+							{__(
+								'You can override the global password validation by going to the advanced settings.',
+								'surecart'
+							)}
 						</p>
 						<Button
 							variant="primary"
 							isSmall
 							href={addQueryArgs('admin.php', {
 								page: 'sc-settings',
+								tab: 'advanced',
 							})}
 						>
-							Site Settings
+							{__('Site Settings', 'surecart')} &rarr;
 						</Button>
 					</CardBody>
-				</Card> */}
+				</Card>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<ToggleControl

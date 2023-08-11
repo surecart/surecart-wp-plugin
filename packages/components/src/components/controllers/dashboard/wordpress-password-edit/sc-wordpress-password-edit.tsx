@@ -33,13 +33,7 @@ export class ScWordPressPasswordEdit {
     this.loading = true;
     this.error = '';
     try {
-      const { password, password_confirm } = await e.target.getFormJson();
-      if (password !== password_confirm) {
-        throw { message: __('Passwords do not match.', 'surecart') };
-      }
-      if (this.enableValidation && !this.validatePassword(password)) {
-        throw { message: __('Passwords should at least 6 characters and contain one special character.', 'surecart') };
-      }
+      const { password } = await e.target.getFormJson();
       await apiFetch({
         path: `wp/v2/users/me`,
         method: 'PATCH',
@@ -68,8 +62,7 @@ export class ScWordPressPasswordEdit {
         <slot name="end" slot="end" />
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-            <sc-input label={__('New Password', 'surecart')} name="password" type="password" required />
-            <sc-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
+            <sc-password enableValidation={this.enableValidation} label={__('New Password', 'surecart')} name="password" confirmation={true} required />
             <div>
               <sc-button type="primary" full submit>
                 {__('Update Password', 'surecart')}

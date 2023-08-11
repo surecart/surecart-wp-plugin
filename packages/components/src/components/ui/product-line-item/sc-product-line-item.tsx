@@ -39,7 +39,7 @@ export class ScProductLineItem {
   @Prop() name: string;
 
   /** Product variant label */
-  @Prop() variantLabel: string;
+  @Prop() variantLabel: string = '';
 
   /** Quantity */
   @Prop() quantity: number;
@@ -141,7 +141,7 @@ export class ScProductLineItem {
             </div>
             {!!this.variantLabel && (
               <div class="item__variant" part="variant">
-                <slot name="variant">({this?.variantLabel})</slot>
+                <slot name="variant">({this.variantLabel})</slot>
               </div>
             )}
             {this.editable && (
