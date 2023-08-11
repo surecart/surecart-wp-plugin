@@ -3,7 +3,7 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test.describe('surecart/product-price-choices', () => {
+test.describe('surecart/product-variant-choices', () => {
 	test.beforeEach(async ({ admin, editor }) => {
 		await admin.visitSiteEditor({
 			postId: 'surecart/surecart//product-info',
@@ -12,10 +12,11 @@ test.describe('surecart/product-price-choices', () => {
 		await editor.canvas.click('body');
 	});
 
-	test('Should render Logout button', async ({ editor, page }) => {
+	test('Should render Variant Choices Block', async ({ editor, page }) => {
 		await editor.setContent('');
-		await editor.insertBlock({ name: 'surecart/product-price-choices' });
+		await editor.insertBlock({ name: 'surecart/product-variant-choices' });
 
-		// TODO: Add assertions.
+		const content = await editor.getEditedPostContent();
+		expect(content).toBe(`<!-- wp:surecart/product-variant-choices /-->`);
 	});
 });

@@ -165,7 +165,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
-		\SureCartBlocks\Blocks\Product\Variants\Block::class,
+		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
@@ -218,7 +218,7 @@ return [
 		'surecart/product-media'             => [],
 		'surecart/product-buy-buttons'       => [ 'sc-product-buy-button', 'sc-button' ],
 		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
-		'surecart/product-variants' => [ 'sc-product-variation-choices' ],
+		'surecart/product-variant-choices'          => [ 'sc-product-variation-choices' ],
 		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
 	],
 

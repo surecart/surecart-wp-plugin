@@ -55,10 +55,12 @@ export const sortByArray = (item, key, orderArray) =>
 
 export const getVariantFromValues = ({variants, values}) => { 
   const variantValueKeys = Object.keys(values);
+
   for (const variant of variants) {
     const variantValues = ['option_1', 'option_2', 'option_3']
     .map((option) => variant[option])
-    .filter((value) => value !== null && value !== undefined);    
+    .filter((value) => value !== null && value !== undefined);   
+     
     if ( variantValues?.length === variantValueKeys?.length && variantValueKeys.every(key => variantValues.includes(values[key]))
     ) {
      return variant.id;

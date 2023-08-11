@@ -1,6 +1,6 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-variants",
+	"name": "surecart/product-variant-choices",
 	"title": "Product Variants",
 	"description": "Displays possible choices for product variants.",
 	"category": "surecart",
@@ -15,9 +15,10 @@
 		"reusable": false,
 		"html": false,
 		"multiple": false,
-		"attributes" : {
+		"attributes": {
 			"gap": {
-				"type": "string"
+				"type": "string",
+				"default": "12px"
 			}
 		},
 		"spacing": {
