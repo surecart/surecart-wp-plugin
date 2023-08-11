@@ -15,15 +15,11 @@ export default ({ checkout, setBusy }) => {
 	useEffect(() => {
 		const { priceId, variantId } = price;
 		if (priceId) {
-			if ( variantId ) {
-				onSubmit( priceId, variantId );
-			} else {
-				onSubmit(priceId);
-			}
+			onSubmit( priceId, variantId ?? null );
 		}
 	}, [price]);
 
-	const onSubmit = async (priceId, variantId = false) => {
+	const onSubmit = async (priceId, variantId = null) => {
 		try {
 			setBusy(true);
 
