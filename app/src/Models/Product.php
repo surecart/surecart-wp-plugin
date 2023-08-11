@@ -102,7 +102,6 @@ class Product extends Model {
 		$this->setCollection( 'product_collections', $value, ProductCollection::class );
 	}
 
-
 	/**
 	 * Set the product attribute
 	 *
