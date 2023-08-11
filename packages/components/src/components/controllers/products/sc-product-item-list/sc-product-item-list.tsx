@@ -59,6 +59,9 @@ export class ScProductItemList {
   /** Busy indicator */
   @State() busy: boolean = false;
 
+  /** Error notice. */
+  @State() error: string;
+
   /* Current page */
   @State() currentPage: number = 1;
 
@@ -118,7 +121,9 @@ export class ScProductItemList {
       this.busy = true;
       await this.fetchProducts();
     } catch (error) {
+      console.log('error');
       console.error(error);
+      this.error = error.message || __('An unknown error occurred.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -163,7 +168,11 @@ export class ScProductItemList {
       this.products = (await response.json()) as Product[];
     } catch (response) {
       // we will want to handle nonce error if we are bypassing the apiFetch parser.
-      await handleNonceError(response).then(() => this.fetchProducts());
+      await handleNonceError(response)
+        .then(() => this.fetchProducts())
+        .catch(error => {
+          this.error = error.message || __('An unknown error occurred.', 'surecart');
+        });
     }
   }
 
@@ -185,6 +194,11 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
+        {this.error && (
+          <sc-alert type="danger" open>
+            {this.error}
+          </sc-alert>
+        )}
         {(this.searchEnabled || this.sortEnabled) && (
           <div class="product-item-list__header">
             <div class="product-item-list__sort">

@@ -41,12 +41,16 @@ export const parseJsonAndNormalizeError = response => {
     message: __('The response is not a valid JSON response.', 'surecart'),
   };
 
+  if (response?.code && response?.message) {
+    throw response;
+  }
+
   if (!response || !response.json) {
-    return invalidJsonError;
+    throw invalidJsonError;
   }
 
   return response.json().catch(() => {
-    return invalidJsonError;
+    throw invalidJsonError;
   });
 };
 
@@ -55,8 +59,8 @@ export const handleNonceError = async response => {
   const error = await parseJsonAndNormalizeError(response);
 
   if (error.code !== 'rest_cookie_invalid_nonce') {
-    console.error(error);
-    return error;
+    // console.error(error);
+    throw error;
   }
 
   // If the nonce is invalid, refresh it and try again.
