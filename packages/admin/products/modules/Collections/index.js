@@ -7,8 +7,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Box from '../../../ui/Box';
 import {
-	ScDialog,
-	ScFormControl,
+	ScButton,
 	ScIcon,
 	ScMenuDivider,
 	ScMenuItem,
@@ -36,6 +35,7 @@ export default ({ product, updateProduct, loading }) => {
 
 	// toggle collection (add or remmove id from `product_collection_ids`)
 	const toggleCollection = async (collectionId) => {
+		if (!collectionId) return;
 		updateProduct({
 			product_collection_ids: (
 				product?.product_collection_ids || []
@@ -48,14 +48,11 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	return (
-		<Box loading={loading} title={__('Collections', 'surecart')}>
-			<ScFormControl label={__('Collections', 'surecart')}>
-				<div
-					css={css`
-						display: grid;
-						gap: 0.5em;
-					`}
-				>
+		<>
+			<Box
+				loading={loading}
+				title={__('Collections', 'surecart')}
+				footer={
 					<ModelSelector
 						placeholder={__(
 							'Add this product to a collection...',
@@ -66,6 +63,7 @@ export default ({ product, updateProduct, loading }) => {
 							toggleCollection(collectionId)
 						}
 						exclude={product?.product_collection_ids}
+						style={{ width: '100%' }}
 					>
 						<div slot="prefix">
 							<ScMenuItem onClick={() => setModal('new')}>
@@ -74,33 +72,38 @@ export default ({ product, updateProduct, loading }) => {
 							</ScMenuItem>
 							<ScMenuDivider />
 						</div>
-					</ModelSelector>
-					{!!product?.product_collection_ids?.length && (
-						<div
-							css={css`
-								display: flex;
-								flex-wrap: wrap;
-								justify-content: flex-start;
-								gap: 0.25em;
-							`}
-						>
-							{product?.product_collection_ids.map((id) => (
-								<Collection
-									key={id}
-									id={id}
-									onRemove={() => toggleCollection(id)}
-								/>
-							))}
-						</div>
-					)}
-				</div>
-			</ScFormControl>
 
+						<ScButton slot="trigger">
+							<ScIcon name="plus" slot="prefix" />
+							{__('Add To Collection', 'surecart')}
+						</ScButton>
+					</ModelSelector>
+				}
+			>
+				{!!product?.product_collection_ids?.length && (
+					<div
+						css={css`
+							display: flex;
+							flex-wrap: wrap;
+							justify-content: flex-start;
+							gap: 0.25em;
+						`}
+					>
+						{product?.product_collection_ids.map((id) => (
+							<Collection
+								key={id}
+								id={id}
+								onRemove={() => toggleCollection(id)}
+							/>
+						))}
+					</div>
+				)}
+			</Box>
 			<NewCollection
 				open={'new' === modal}
 				onRequestClose={() => setModal(false)}
 				onCreate={(collection) => toggleCollection(collection.id)}
 			/>
-		</Box>
+		</>
 	);
 };
