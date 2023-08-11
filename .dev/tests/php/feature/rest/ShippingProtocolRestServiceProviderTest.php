@@ -24,7 +24,7 @@ class ShippingProtocolRestServiceProviderTest extends SureCartUnitTestCase
         //Set up an app instance with whatever stubs and mocks we need before every test.
         \SureCart::make()->bootstrap([
             'providers' => [
-				PluginServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class,
 				AccountServiceProvider::class,
                 ShippingProtocolRestServiceProvider::class,
                 RequestServiceProvider::class,
