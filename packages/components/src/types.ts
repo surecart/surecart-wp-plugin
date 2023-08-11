@@ -79,7 +79,6 @@ export interface ChoiceItem extends Object {
   choices?: ChoiceItem[];
   suffix?: string;
   icon?: string;
-  tag?: string;
 }
 
 export type ChoiceType = 'all' | 'single' | 'multiple';

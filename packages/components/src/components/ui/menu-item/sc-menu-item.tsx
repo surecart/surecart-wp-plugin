@@ -77,7 +77,6 @@ export class ScMenuItem {
         <span part="label" class="menu-item__label">
           <slot></slot>
         </span>
-        <slot name="tag"></slot>
         <span part="suffix" class="menu-item__suffix">
           <slot name="suffix"></slot>
         </span>
