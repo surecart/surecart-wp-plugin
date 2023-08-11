@@ -1549,6 +1549,18 @@
     "class": true,
     "slot": true
   },
+  "sc-product-collection-description": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-collection-title": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-item": {
     "layout-config": true,
     "product": true,

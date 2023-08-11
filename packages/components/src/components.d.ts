@@ -2868,6 +2868,10 @@ export namespace Components {
     }
     interface ScProductBuyButton {
     }
+    interface ScProductCollectionDescription {
+    }
+    interface ScProductCollectionTitle {
+    }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
         "product": Product;
@@ -4991,6 +4995,18 @@ declare global {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
     };
+    interface HTMLScProductCollectionDescriptionElement extends Components.ScProductCollectionDescription, HTMLStencilElement {
+    }
+    var HTMLScProductCollectionDescriptionElement: {
+        prototype: HTMLScProductCollectionDescriptionElement;
+        new (): HTMLScProductCollectionDescriptionElement;
+    };
+    interface HTMLScProductCollectionTitleElement extends Components.ScProductCollectionTitle, HTMLStencilElement {
+    }
+    var HTMLScProductCollectionTitleElement: {
+        prototype: HTMLScProductCollectionTitleElement;
+        new (): HTMLScProductCollectionTitleElement;
+    };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
     var HTMLScProductItemElement: {
@@ -5510,6 +5526,8 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
+        "sc-product-collection-description": HTMLScProductCollectionDescriptionElement;
+        "sc-product-collection-title": HTMLScProductCollectionTitleElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
@@ -8725,6 +8743,10 @@ declare namespace LocalJSX {
     }
     interface ScProductBuyButton {
     }
+    interface ScProductCollectionDescription {
+    }
+    interface ScProductCollectionTitle {
+    }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
         "product"?: Product;
@@ -9994,6 +10016,8 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-buy-button": ScProductBuyButton;
+        "sc-product-collection-description": ScProductCollectionDescription;
+        "sc-product-collection-title": ScProductCollectionTitle;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
@@ -10211,6 +10235,8 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
+            "sc-product-collection-description": LocalJSX.ScProductCollectionDescription & JSXBase.HTMLAttributes<HTMLScProductCollectionDescriptionElement>;
+            "sc-product-collection-title": LocalJSX.ScProductCollectionTitle & JSXBase.HTMLAttributes<HTMLScProductCollectionTitleElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;
