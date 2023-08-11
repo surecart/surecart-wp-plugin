@@ -1,0 +1,11 @@
+.product-collection-description {
+  padding-top: var(--sc-product-collection-description-padding-top, 0);
+  padding-bottom: var(--sc-product-collection-description-padding-bottom, 0);
+  margin-top: var(--sc-product-collection-description-margin-top, 0);
+  margin-bottom: var(--sc-product-collection-description-margin-bottom, 0);
+  font-size: var(--sc-product-collection-description-font-size);
+  text-align: var(--sc-product-collection-description-align);
+  font-weight: var(--sc-product-collection-description-font-weight);
+  color: var(--sc-product-collection-description-text-color);
+  line-height: 1.2;
+}
