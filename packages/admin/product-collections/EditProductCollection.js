@@ -30,6 +30,7 @@ import Image from './modules/Image';
 import Box from '../ui/Box';
 import Publishing from './modules/Publishing';
 import useSave from '../../admin/settings/UseSave';
+import Products from './modules/Products';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -162,6 +163,8 @@ export default ({ id }) => {
 							loading={isLoading}
 						/>
 					</Box>
+
+					<Products collectionId={id} />
 				</>
 			}
 		>
