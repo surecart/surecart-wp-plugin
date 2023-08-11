@@ -30,8 +30,7 @@ export class ScProductVariationChoices {
 
   availableVariants = availableVariants(this.type);
 
-  updateCheckout = async (values: { [key: string]: string }) => {
-  
+  maybeUpdateLineItems = (values: { [key: string]: string }) => {
     if (!values || !checkoutState?.checkout) return;
 
     const matchedVariant = getVariantFromValues({variants: this.availableVariants, values});
@@ -59,7 +58,7 @@ export class ScProductVariationChoices {
                     [option?.id]: e?.target?.value
                   };
                   state.variantValues = variantValues;
-                  this.updateCheckout(variantValues);
+                  this.maybeUpdateLineItems(variantValues);
                 }}
                 label={option?.name}
                 choices={option?.values}
