@@ -3,11 +3,14 @@
 namespace SureCart\Models;
 
 use SureCart\Support\Currency;
+use SureCart\Support\Contracts\PageModel;
 
 /**
  * Holds Product Collection data.
  */
-class ProductCollection extends Model {
+class ProductCollection extends Model implements PageModel {
+	use Traits\HasImageSizes;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -77,7 +80,7 @@ class ProductCollection extends Model {
 	 *
 	 * @return string|false
 	 */
-	public function getTemplatePartIdAttribute() {
+	public function getTemplatePartIdAttribute(): string {
 		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
 			return $this->attributes['metadata']->wp_template_part_id;
 		}
@@ -89,7 +92,7 @@ class ProductCollection extends Model {
 	 *
 	 * @return string|false
 	 */
-	public function getTemplateIdAttribute() {
+	public function getTemplateIdAttribute(): string {
 		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
 			// we have a php file, switch to default.
 			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
@@ -107,7 +110,7 @@ class ProductCollection extends Model {
 	 *
 	 * @return string|false
 	 */
-	public function getPermalinkAttribute() {
+	public function getPermalinkAttribute(): string {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
@@ -174,5 +177,23 @@ class ProductCollection extends Model {
 			],
 			$this
 		);
+	}
+
+	/**
+	 * Get the page title for SEO.
+	 *
+	 * @return string
+	 */
+	public function getPageTitleAttribute(): string {
+		return $this->attributes['name'];
+	}
+
+	/**
+	 * Get the page description for SEO.
+	 *
+	 * @return string
+	 */
+	public function getMetaDescriptionAttribute(): string {
+		return $this->attributes['description'];
 	}
 }
