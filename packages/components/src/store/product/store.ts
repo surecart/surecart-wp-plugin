@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
-import { Price, Product, Variant, ProductVariant } from 'src/types';
+import { Price, Product, VariantOption, ProductVariant } from 'src/types';
 
 interface Store {
   formId: number;
@@ -8,7 +8,7 @@ interface Store {
   product: Product;
   prices: Price[];
   variants: ProductVariant[];
-  variant_options: Variant[];
+  variant_options: VariantOption[];
   quantity: number;
   selectedPrice: Price;
   total: number;

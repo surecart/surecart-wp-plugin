@@ -126,7 +126,7 @@ export interface ProductVariant {
   labels: string;
   variants: Array<string>
 }
-export interface Variant {
+export interface VariantOption {
   id: string;
   object: string;
   name: string;
@@ -135,8 +135,6 @@ export interface Variant {
   updated_at: number;
   created_at: number;
   label: string;
-  sku: string;
-  image: string;
   labels: string;
   values: Array<string>;
 }
@@ -283,8 +281,7 @@ export interface Product extends Object {
   variant_options: {
     object: 'list';
     pagination: Pagination;
-    data: Array<Variant>;
-    values: Array<string>;
+    data: Array<VariantOption>;
   };
   
   product_medias: {

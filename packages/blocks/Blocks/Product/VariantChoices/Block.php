@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Product\Variants;
+namespace SureCartBlocks\Blocks\Product\VariantChoices;
 
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 			type="product-page"
 			style="
 				<?php echo esc_attr( $styles ); ?>
-				<?php echo '--sc-variation-gap: ' . $attributes['gap'] ?>
+				<?php echo '--sc-variation-gap: ' . esc_attr( $attributes['gap'] ) ?>
 			"
 		>
 		</sc-product-variation-choices>
