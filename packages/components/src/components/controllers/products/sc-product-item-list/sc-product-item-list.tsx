@@ -3,7 +3,7 @@ import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 import { Product } from '../../../../types';
-import apiFetch from '../../../../functions/fetch';
+import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
   blockName: string;
@@ -141,25 +141,30 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
-    const response = (await apiFetch({
-      path: addQueryArgs(`surecart/v1/products/`, {
-        expand: ['prices', 'product_medias', 'product_media.media'],
-        archived: false,
-        status: ['published'],
-        per_page: this.limit,
-        page: this.currentPage,
-        sort: this.sort,
-        ...(this.ids?.length ? { ids: this.ids } : {}),
-        ...(this.query ? { query: this.query } : {}),
-      }),
-      parse: false,
-    })) as Response;
-    this.currentQuery = this.query;
-    this.pagination = {
-      total: parseInt(response.headers.get('X-WP-Total')),
-      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
-    };
-    this.products = (await response.json()) as Product[];
+    try {
+      const response = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/products/`, {
+          expand: ['prices', 'product_medias', 'product_media.media'],
+          archived: false,
+          status: ['published'],
+          per_page: this.limit,
+          page: this.currentPage,
+          sort: this.sort,
+          ...(this.ids?.length ? { ids: this.ids } : {}),
+          ...(this.query ? { query: this.query } : {}),
+        }),
+        parse: false,
+      })) as Response;
+      this.currentQuery = this.query;
+      this.pagination = {
+        total: parseInt(response.headers.get('X-WP-Total')),
+        total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
+      };
+      this.products = (await response.json()) as Product[];
+    } catch (response) {
+      // we will want to handle nonce error if we are bypassing the apiFetch parser.
+      await handleNonceError(response).then(() => this.fetchProducts());
+    }
   }
 
   renderSortName() {
