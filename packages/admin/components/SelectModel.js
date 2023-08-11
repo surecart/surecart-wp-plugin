@@ -19,6 +19,7 @@ export default ({
 	prefix,
 	loading,
 	children,
+	style,
 	onScrollEnd = () => {},
 	...props
 }) => {
@@ -43,6 +44,7 @@ export default ({
 			name={name}
 			position={position}
 			onScOpen={onFetch}
+			style={style}
 			onScClose={onClose}
 			onScSearch={(e) => findItem(e.detail)}
 			onScChange={(e) => {
