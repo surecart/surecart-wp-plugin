@@ -42,7 +42,9 @@ export default ({ product, updateProduct, loading }) => {
 				</div>
 			}
 			header_action={
-				<Featured product={product} updateProduct={updateProduct} />
+				!loading && (
+					<Featured product={product} updateProduct={updateProduct} />
+				)
 			}
 		>
 			<div>
