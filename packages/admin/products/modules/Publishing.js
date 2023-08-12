@@ -2,13 +2,13 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
-
 import Box from '../../ui/Box';
 import Availability from '../components/Availability';
 import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
 import Status from '../components/Status';
 import Url from '../components/Url';
+import Featured from './Featured';
 
 export default ({ product, updateProduct, loading }) => {
 	const tag = document.querySelector('#wp-admin-bar-view-product-page');
@@ -40,6 +40,9 @@ export default ({ product, updateProduct, loading }) => {
 				>
 					{__('Publishing', 'surecart')}
 				</div>
+			}
+			header_action={
+				<Featured product={product} updateProduct={updateProduct} />
 			}
 		>
 			<div>
