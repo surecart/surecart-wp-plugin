@@ -37,7 +37,7 @@ export default ({ product, updateProduct }) => {
 						slot="prefix"
 						name="star"
 						css={css`
-							--sc-icon-stroke-width: 4px;
+							--sc-icon-stroke-width: 3px;
 							cursor: pointer;
 						`}
 					/>
