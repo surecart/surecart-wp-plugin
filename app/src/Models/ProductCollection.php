@@ -194,6 +194,6 @@ class ProductCollection extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getMetaDescriptionAttribute(): string {
-		return $this->attributes['description'];
+		return $this->attributes['description'] ?? '';
 	}
 }
