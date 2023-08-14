@@ -67,7 +67,7 @@ export default ({
 	const limitedTimeSubscription = () => {
 		return (
 			<>
-				{ 'cancel' === price?.recurring_end_behavior && (
+				{'cancel' === price?.recurring_end_behavior && (
 					<>
 						{' '}
 						<sc-tag type="default" size="small">
