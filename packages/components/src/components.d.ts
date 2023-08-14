@@ -2980,6 +2980,10 @@ export namespace Components {
           * Trial duration days
          */
         "trialDurationDays": number;
+        /**
+          * Product variant label
+         */
+        "variantLabel": string;
     }
     interface ScProductPrice {
         "prices": Price[];
@@ -8846,6 +8850,10 @@ declare namespace LocalJSX {
           * Trial duration days
          */
         "trialDurationDays"?: number;
+        /**
+          * Product variant label
+         */
+        "variantLabel"?: string;
     }
     interface ScProductPrice {
         "prices"?: Price[];

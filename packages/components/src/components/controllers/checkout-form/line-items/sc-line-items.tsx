@@ -90,7 +90,7 @@ export class ScLineItems {
         </sc-line-item>
       );
     }
-
+    
     return (
       <div class="line-items">
         {(this.order?.line_items?.data || []).map(item => {
@@ -100,6 +100,7 @@ export class ScLineItems {
                 key={item.id}
                 imageUrl={(item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
+                variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}
                 removable={this.isRemovable()}

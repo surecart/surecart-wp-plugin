@@ -1612,6 +1612,7 @@
     "scratch-amount": true,
     "setup-fee-trial-enabled": true,
     "trial-duration-days": true,
+    "variant-label": true,
     "style": true,
     "id": true,
     "class": true,

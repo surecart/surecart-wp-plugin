@@ -387,6 +387,7 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+  variant_options: Array<string>;
 }
 
 export interface DeletedItem {

@@ -38,6 +38,9 @@ export class ScProductLineItem {
   /** Product name */
   @Prop() name: string;
 
+  /** Product variant label */
+  @Prop() variantLabel: string = '';
+
   /** Quantity */
   @Prop() quantity: number;
 
@@ -136,6 +139,11 @@ export class ScProductLineItem {
             <div class="item__title" part="title">
               <slot name="title">{this.name}</slot>
             </div>
+            {!!this.variantLabel && (
+              <div class="item__variant" part="variant">
+                <slot name="variant">({this.variantLabel})</slot>
+              </div>
+            )}
             {this.editable && (
               <sc-quantity-select
                 max={this.max || Infinity}
