@@ -8,7 +8,7 @@ import AdHoc from './parts/AdHoc';
 import Amount from './parts/Amount';
 import ScratchAmount from './parts/ScratchAmount';
 import Trial from './parts/Trial';
-import LimitedTimeSubscription from './parts/LimitedTimeSubscription';
+import EndAtBehavior from './parts/EndAtBehavior';
 
 export default ({ price, updatePrice }) => {
 	return (
@@ -37,7 +37,7 @@ export default ({ price, updatePrice }) => {
 						<span slot="suffix">{__('Payments', 'surecart')}</span>
 					</ScInput>
 					{!!price?.recurring_period_count && (
-						<LimitedTimeSubscription
+						<EndAtBehavior
 							price={price}
 							updatePrice={updatePrice}
 						/>
