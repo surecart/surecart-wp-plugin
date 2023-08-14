@@ -147,6 +147,7 @@ export default ({ checkout, loading, setBusy }) => {
 						subtotal_amount,
 						ad_hoc_amount,
 						fees,
+						variant_options
 					} = line_item;
 
 					return (
@@ -160,6 +161,7 @@ export default ({ checkout, loading, setBusy }) => {
 							onRemove={() => onRemove(id)}
 							onChange={(data) => onChange(id, data)}
 							checkout={checkout}
+							variant_options={variant_options}
 						/>
 					);
 				})}

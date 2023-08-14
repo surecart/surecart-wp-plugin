@@ -9,16 +9,17 @@ import expand from '../query';
 import PriceSelector from '@admin/components/PriceSelector';
 
 export default ({ checkout, setBusy }) => {
-	const [priceID, setPriceID] = useState(false);
+	const [price, setPrice] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	useEffect(() => {
-		if (priceID) {
-			onSubmit(priceID);
+		const { priceId, variantId } = price;
+		if (priceId) {
+			onSubmit( priceId, variantId ?? null );
 		}
-	}, [priceID]);
+	}, [price]);
 
-	const onSubmit = async (priceID) => {
+	const onSubmit = async (priceId, variantId = null) => {
 		try {
 			setBusy(true);
 
@@ -44,8 +45,9 @@ export default ({ checkout, setBusy }) => {
 				}),
 				data: {
 					checkout: checkout?.id,
-					price: priceID,
+					price: priceId,
 					quantity: 1,
+					variant: variantId
 				},
 			});
 
@@ -58,7 +60,7 @@ export default ({ checkout, setBusy }) => {
 				false,
 				checkout
 			);
-			setPriceID(false);
+			setPrice(false);
 		} catch (e) {
 			console.error(e);
 			setError(e);
@@ -70,9 +72,16 @@ export default ({ checkout, setBusy }) => {
 	return (
 		<PriceSelector
 			required
-			value={priceID}
+			value={price?.priceId}
 			ad_hoc={true}
-			onSelect={(price) => setPriceID(price)}
+			onSelect={({price_id, variant_id}) => {
+				setPrice(
+					{
+						priceId: price_id,
+						variantId: variant_id
+					}
+				)
+			}}
 			requestQuery={{
 				archived: false,
 			}}
