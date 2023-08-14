@@ -72,7 +72,7 @@ class HealthService {
 		);
 
 		$is_localhost = ( new Server( get_home_url() ) )->isLocalHost();
-		// if ( ! $is_localhost ) {
+		if ( ! $is_localhost ) {
 			$tests['direct']['surecart_webhook_test'] = array(
 				'label' => __( 'SureCart', 'neve' ) . ' ' . __( 'Webhooks Processing', 'surecart' ),
 				'test'  => [ $this, 'webhooksProcessingTest' ],
@@ -83,7 +83,7 @@ class HealthService {
 				'has_rest'          => true,
 				'async_direct_test' => [ $this, 'webhooksTest' ],
 			);
-			// }
+		}
 
 			return $tests;
 	}
