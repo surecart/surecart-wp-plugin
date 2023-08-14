@@ -43,7 +43,7 @@ export default ({
 			isBorderless={isBorderLess}
 			className={className}
 		>
-			{ ('' !== title || header_action ) &&
+			{('' !== title || header_action) && (
 				<CardHeader
 					isBorderless={!hasDivider}
 					css={css`
@@ -62,7 +62,7 @@ export default ({
 					</sc-text>
 					{header_action}
 				</CardHeader>
-			}
+			)}
 			{(loading || hasChildren()) && (
 				<CardBody
 					css={css`

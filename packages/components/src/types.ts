@@ -55,7 +55,7 @@ declare global {
       admin_url: string;
       user_permissions: {
         manage_sc_shop_settings: boolean;
-      }
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -227,6 +227,29 @@ export interface Activation {
   updated_at: number;
 }
 
+export interface Variant {
+  id: string;
+  object: 'variant';
+  image?: string | Media;
+  option_1?: string | null;
+  option_2?: string | null;
+  option_3?: string | null;
+  position: number;
+  product: string | Product;
+  sku?: string | null;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface VariantOption {
+  id: string;
+  name: string;
+  position: number;
+  values: Array<string | { value: string }>;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Product extends Object {
   id: string;
   name: string;
@@ -256,6 +279,16 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Download>;
+  };
+  variants: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Variant>;
+  };
+  variant_options: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<VariantOption>;
   };
   created_at: number;
   updated_at: number;

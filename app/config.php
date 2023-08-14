@@ -104,6 +104,9 @@ return [
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
+		\SureCart\Rest\VariantsRestServiceProvider::class,
+		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
+		\SureCart\Rest\VariantValuesRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,

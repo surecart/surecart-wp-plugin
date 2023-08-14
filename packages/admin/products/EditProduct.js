@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -25,12 +25,13 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const {
 		product,
 		saveProduct,
@@ -49,6 +50,25 @@ export default ({ id }) => {
 	const onSubmit = async (e) => {
 		try {
 			setError(null);
+
+			// get draft prices.
+			const { prices } = select(coreStore).getEditedEntityRecord(
+				'surecart',
+				'product',
+				id
+			);
+
+			// save pending prices.
+			const pendingPrices = [];
+			(prices || []).forEach((price) => {
+				pendingPrices.push(
+					saveEntityRecord('surecart', 'price', {
+						product: id,
+						...price,
+					})
+				);
+			});
+			await Promise.all(pendingPrices);
 
 			// build up pending records to save.
 			const dirtyRecords =
@@ -252,6 +272,13 @@ export default ({ id }) => {
 				/>
 
 				<Prices
+					productId={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Variations
 					productId={id}
 					product={product}
 					updateProduct={editProduct}
