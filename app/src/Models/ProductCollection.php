@@ -26,20 +26,6 @@ class ProductCollection extends Model implements PageModel {
 	protected $object_name = 'product_collection';
 
 	/**
-	 * Is this cachable.
-	 *
-	 * @var boolean
-	 */
-	protected $cachable = true;
-
-	/**
-	 * Clear cache when products are updated.
-	 *
-	 * @var string
-	 */
-	protected $cache_key = 'product_collections_updated_at';
-
-	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
