@@ -8,7 +8,7 @@ import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
 import Status from '../components/Status';
 import Url from '../components/Url';
-import Featured from './Featured';
+import { ScSwitch } from '@surecart/components-react';
 
 export default ({ product, updateProduct, loading }) => {
 	const tag = document.querySelector('#wp-admin-bar-view-product-page');
@@ -43,7 +43,24 @@ export default ({ product, updateProduct, loading }) => {
 			}
 			header_action={
 				!loading && (
-					<Featured product={product} updateProduct={updateProduct} />
+					<ScSwitch
+						css={css`
+							min-width: initial !important;
+						`}
+						style={{
+							'--width': '18px',
+							'--height': '10px',
+							'--thumb-size': '8px',
+						}}
+						checked={product?.featured}
+						onScChange={(e) =>
+							updateProduct({
+								featured: e.target.checked,
+							})
+						}
+					>
+						{__('Featured', 'surecart')}
+					</ScSwitch>
 				)
 			}
 		>
