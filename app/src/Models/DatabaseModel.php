@@ -555,7 +555,12 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 		);
 
 		$this->query = $this->getQuery();
-		$this->query->page( $args['page'], $args['per_page'] );
+
+		$size   = (int) $args['per_page'];
+		$limit  = (int) $size;
+		$offset = (int) $size * ( ( (int) $args['page'] ) - 1 );
+
+		$this->query->limit( $offset, $limit );
 
 		return $this;
 	}
