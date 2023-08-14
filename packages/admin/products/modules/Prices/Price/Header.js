@@ -63,21 +63,6 @@ export default ({
 		);
 	};
 
-	const limitedTimeSubscription = () => {
-		return (
-			<>
-				{'cancel' === price?.recurring_end_behavior && (
-					<>
-						{' '}
-						<sc-tag type="default" size="small">
-							{__('Limited Time Subscription', 'surecart')}
-						</sc-tag>
-					</>
-				)}
-			</>
-		);
-	};
-
 	const priceType = () => {
 		if (!price?.id) return;
 		if (price?.recurring_interval) {
@@ -121,7 +106,6 @@ export default ({
 					{priceType()}
 					{trial()}
 					{setupFee()}
-					{limitedTimeSubscription()}
 				</div>
 
 				<div
