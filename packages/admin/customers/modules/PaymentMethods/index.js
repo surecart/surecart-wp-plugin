@@ -56,7 +56,7 @@ export default ({ customerId }) => {
 						width: '100px',
 					},
 				}}
-				items={paymentMethods?.filter((item) => item?.reusable).map((item) => {
+				items={paymentMethods?.filter((item) => item?.reusable)?.map((item) => {
 					return {
 						method: <ScPaymentMethod paymentMethod={item} />,
 						exp: (
