@@ -44,7 +44,7 @@ export default ({
 
 		const queryArgs = {
 			query,
-			expand: ['prices'],
+			expand: ['prices', 'variants'],
 			page: pagination.page,
 			per_page: pagination.per_page,
 			...requestQuery,

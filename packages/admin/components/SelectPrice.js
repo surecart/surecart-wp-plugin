@@ -20,6 +20,7 @@ export default ({
 	ad_hoc = true,
 	loading,
 	onScrollEnd = () => {},
+	includeVariants = true,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -44,14 +45,32 @@ export default ({
 					return true;
 				})
 				.map((price) => {
-					return {
-						value: price?.id,
-						label: `${formatNumber(price.amount, price.currency)}${
-							price?.archived ? ' (Archived)' : ''
-						}`,
-						suffix: intervalString(price, { showOnce: true }),
-					};
-				}),
+					const variants = product?.variants?.data || [];
+
+					if ( ! includeVariants || ! variants.length) {
+						return {
+							value: price.id,
+							label: `${formatNumber(price.amount, price.currency)}${
+								price?.archived ? ' (Archived)' : ''
+							}`,
+							suffix: intervalString(price, { showOnce: true }),
+						};
+					}
+
+					return variants
+					.sort((a, b) => a?.position - b?.position)
+					.map((variant) => {
+							const variantLabel = [variant?.option_1, variant?.option_2, variant?.option_3].filter(Boolean).join(' / ');
+							return {
+								value: price.id,
+								label: `${formatNumber(price.amount, price.currency)}${
+									price?.archived ? ' (Archived)' : ''
+								}`,
+								suffix: `(${variantLabel}) ${intervalString(price, { showOnce: true })}`,
+								variant_id: variant?.id,
+							};
+					});
+				}).flat(),
 		};
 	});
 
@@ -70,7 +89,10 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
-				onSelect(e.target.value);
+				onSelect({
+					price_id: e?.target?.value,
+					...(includeVariants && { variant_id: e?.detail?.variant_id })
+				});
 			}}
 			choices={choices}
 			onScScrollEnd={onScrollEnd}

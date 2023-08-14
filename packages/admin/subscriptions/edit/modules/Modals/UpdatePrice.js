@@ -35,7 +35,7 @@ export default ({
 				open={open}
 				required
 				value={price}
-				onSelect={(price) => setPrice(price)}
+				onSelect={({price_id}) => setPrice(price_id)}
 				requestQuery={{
 					archived: false,
 					recurring: true,
