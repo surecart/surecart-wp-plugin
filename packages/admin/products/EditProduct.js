@@ -27,6 +27,7 @@ import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Variations from './modules/Variations';
 import Shipping from './modules/Shipping';
+import Inventory from './modules/Inventory';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -273,6 +274,12 @@ export default ({ id }) => {
 
 				<Prices
 					productId={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Inventory
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

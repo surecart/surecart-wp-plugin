@@ -1710,6 +1710,7 @@
     "slot": true
   },
   "sc-quantity-select": {
+    "allow-negative": true,
     "click-el": true,
     "disabled": true,
     "has-focus": true,

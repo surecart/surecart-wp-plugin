@@ -12,8 +12,7 @@
   max-width: 35px;
   background-color: var(--sc-input-control-background-color, var(--sc-color-white));
   color: var(--sc-input-control-color, var(--sc-color-black));
-  -moz-appearance:textfield;
-
+  -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -43,6 +42,10 @@
   &:focus {
     outline: none;
   }
+
+  &.input__control--allow-negative {
+    max-width: 100% !important;
+  }
 }
 
 .quantity--trigger {
@@ -65,7 +68,8 @@
   border-radius: var(--border-radius);
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &:hover:not(.quantity--disabled) {
     background-color: var(--sc-input-background-color-hover);
@@ -99,6 +103,11 @@
         color: var(--sc-input-placeholder-color-disabled);
       }
     }
+  }
+
+  &.quantity--allow-negative {
+    width: auto !important;
+    height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
   }
 }
 

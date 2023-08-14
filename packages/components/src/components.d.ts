@@ -3063,6 +3063,7 @@ export namespace Components {
         "requestNonce": string;
     }
     interface ScQuantitySelect {
+        "allowNegative": boolean;
         "clickEl"?: HTMLElement;
         "disabled": boolean;
         /**
@@ -8951,6 +8952,7 @@ declare namespace LocalJSX {
         "requestNonce"?: string;
     }
     interface ScQuantitySelect {
+        "allowNegative"?: boolean;
         "clickEl"?: HTMLElement;
         "disabled"?: boolean;
         /**
