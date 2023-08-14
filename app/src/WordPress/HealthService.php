@@ -85,7 +85,7 @@ class HealthService {
 			);
 		}
 
-			return $tests;
+		return $tests;
 	}
 
 	/**
