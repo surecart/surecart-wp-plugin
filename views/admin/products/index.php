@@ -33,5 +33,9 @@
 	?>
 
 	<?php $table->search_form( __( 'Search Products', 'surecart' ), 'sc-search-products' ); ?>
-	<?php $table->display(); ?>
+
+	<form id="products-filter" method="get">
+		<?php $table->views(); ?>
+		<?php $table->display(); ?>
+	</form>
 </div>
