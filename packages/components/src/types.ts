@@ -124,7 +124,7 @@ export interface ProductVariant {
   sku: string;
   image: string;
   labels: string;
-  variants: Array<string>
+  variants: Array<string>;
 }
 export interface VariantOption {
   id: string;
@@ -136,7 +136,7 @@ export interface VariantOption {
   created_at: number;
   label: string;
   labels: string;
-  values: Array<string>;
+  values: Array<string | { value: string }>;
 }
 export interface Bump {
   id: string;
@@ -267,15 +267,6 @@ export interface Variant {
   updated_at: number;
 }
 
-export interface VariantOption {
-  id: string;
-  name: string;
-  position: number;
-  values: Array<string | { value: string }>;
-  created_at: number;
-  updated_at: number;
-}
-
 export interface Product extends Object {
   id: string;
   name: string;
@@ -296,17 +287,16 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Price>;
   };
-  variants:{
+  variants: {
     object: 'list';
     pagination: Pagination;
     data: Array<ProductVariant>;
-  }
+  };
   variant_options: {
     object: 'list';
     pagination: Pagination;
     data: Array<VariantOption>;
   };
-  
   product_medias: {
     object: 'list';
     pagination: Pagination;
@@ -316,16 +306,6 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Download>;
-  };
-  variants: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<Variant>;
-  };
-  variant_options: {
-    object: 'list';
-    pagination: Pagination;
-    data: Array<VariantOption>;
   };
   created_at: number;
   updated_at: number;
