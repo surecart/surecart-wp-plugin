@@ -127,15 +127,15 @@ class ProductsListTable extends ListTable {
 	public function column_product_collections( $product ) {
 		$product_collections = $product->product_collections->data ?? [];
 
-		// this has no prices.
+		// this has no collection.
 		if ( empty( $product_collections ) || ! is_array( $product_collections ) ) {
-			return '<sc-tag type="warning">' . esc_html__( 'No Collection', 'surecart' ) . '</sc-tag>';
+			return '-';
 		}
 
 		$product_collections_tags = [];
 
 		foreach ( $product_collections as $product_collection ) {
-			$product_collections_tags[] = '<sc-tag><a style="color: var(--sc-color-gray-700)" href="' . admin_url( 'admin.php?page=sc-product-collections&action=edit&id=' . $product_collection['id'] ) . '">' . $product_collection['name'] . '</a></sc-tag>';
+			$product_collections_tags[] = '<sc-tag><a style="color: var(--sc-color-gray-700)" href="' . admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) . '">' . $product_collection['name'] . '</a></sc-tag>';
 		}
 
 		return implode( ' ', $product_collections_tags );
@@ -173,7 +173,7 @@ class ProductsListTable extends ListTable {
 	 * @return Array
 	 */
 	private function table_data() {
-		return Product::where(
+		$product_query = Product::where(
 			[
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
@@ -183,7 +183,18 @@ class ProductsListTable extends ListTable {
 				'prices',
 				'product_collections',
 			]
-		)->paginate(
+		);
+
+		// Check if there is any sc_collection in the query, then filter it.
+		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$product_query->where(
+				[
+					'product_collection_ids' => [ sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ],  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				]
+			);
+		}
+
+		return $product_query->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'products' ),
 				'page'     => $this->get_pagenum(),
