@@ -92,7 +92,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
 		return [
@@ -153,7 +153,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
@@ -162,7 +162,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_sortable_columns() {
 		return array( 'title' => array( 'title', false ) );
@@ -171,7 +171,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function table_data() {
 		$product_query = Product::where(
