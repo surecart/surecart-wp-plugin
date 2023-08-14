@@ -7,7 +7,6 @@ import {
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
-	ScFormatNumber,
 	ScIcon,
 	ScDialog,
 	ScForm,
