@@ -112,7 +112,7 @@ export const intervalCountString = (price: Price, prefix, fallback = __('once', 
 };
 
 export const periodCountString = (price: Price, abbreviate = false) => {
-  if (!price?.recurring_period_count) {
+  if (!price?.recurring_period_count || 1 === price?.recurring_period_count) {
     return '';
   }
   if (abbreviate) {

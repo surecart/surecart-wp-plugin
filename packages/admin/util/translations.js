@@ -71,7 +71,7 @@ export const intervalCountString = (
 };
 
 export const periodCountString = (price) => {
-	if (!price?.recurring_period_count) {
+	if (!price?.recurring_period_count || 1 === price?.recurring_period_count) {
 		return '';
 	}
 
