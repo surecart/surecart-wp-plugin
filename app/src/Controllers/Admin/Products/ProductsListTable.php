@@ -96,13 +96,14 @@ class ProductsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'         => __( 'Name', 'surecart' ),
+			'name'                => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
-			'price'        => __( 'Price', 'surecart' ),
+			'price'               => __( 'Price', 'surecart' ),
 			// 'type'         => __( 'Type', 'surecart' ),
-			'integrations' => __( 'Integrations', 'surecart' ),
-			'status'       => __( 'Product Page', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
+			'integrations'        => __( 'Integrations', 'surecart' ),
+			'status'              => __( 'Product Page', 'surecart' ),
+			'product_collections' => __( 'Collections', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -116,6 +117,28 @@ class ProductsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
+	}
+
+	/**
+	 * Show collections as tags.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_product_collections( $product ) {
+		$product_collections = $product->product_collections->data ?? [];
+
+		// this has no prices.
+		if ( empty( $product_collections ) || ! is_array( $product_collections ) ) {
+			return '<sc-tag type="warning">' . esc_html__( 'No Collection', 'surecart' ) . '</sc-tag>';
+		}
+
+		$product_collections_tags = [];
+
+		foreach ( $product_collections as $product_collection ) {
+			$product_collections_tags[] = '<sc-tag><a style="color: var(--sc-color-gray-700)" href="' . admin_url( 'admin.php?page=sc-product-collections&action=edit&id=' . $product_collection['id'] ) . '">' . $product_collection['name'] . '</a></sc-tag>';
+		}
+
+		return implode( ' ', $product_collections_tags );
 	}
 
 	/**
@@ -158,6 +181,7 @@ class ProductsListTable extends ListTable {
 		)->with(
 			[
 				'prices',
+				'product_collections',
 			]
 		)->paginate(
 			[
