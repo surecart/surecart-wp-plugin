@@ -447,13 +447,13 @@ class ProductsListTable extends ListTable {
 			 *                          'top' or 'bottom' for WP_Posts_List_Table,
 			 *                          'bar' for WP_Media_List_Table.
 			 */
-			do_action( 'restrict_manage_product_collections', $this->screen->post_type, $which );
+			do_action( 'restrict_manage_products', $this->screen->post_type, $which );
 
 			$output = ob_get_clean();
 
 			if ( ! empty( $output ) ) {
 				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				submit_button( __( 'Filter', 'surecart' ), '', 'filter_action', false, array( 'id' => 'filter-by-fulfillment-submit' ) );
+				submit_button( __( 'Filter', 'surecart' ), '', 'filter_action', false, array( 'id' => 'filter-by-collection-submit' ) );
 			}
 		}
 		?>
