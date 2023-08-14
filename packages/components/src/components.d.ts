@@ -3036,6 +3036,11 @@ export namespace Components {
         "text": 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        /**
+          * The product id.
+         */
+        "productId": string;
+        "type": 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
     }
@@ -4094,6 +4099,10 @@ export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
 export interface ScProductSelectedPriceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductSelectedPriceElement;
+}
+export interface ScProductVariationChoicesCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductVariationChoicesElement;
 }
 export interface ScProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -8910,6 +8919,15 @@ declare namespace LocalJSX {
         "text"?: 'name' | 'description';
     }
     interface ScProductVariationChoices {
+        /**
+          * Toggle line item event
+         */
+        "onScUpdateLineItem"?: (event: ScProductVariationChoicesCustomEvent<LineItemData>) => void;
+        /**
+          * The product id.
+         */
+        "productId"?: string;
+        "type"?: 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
     }

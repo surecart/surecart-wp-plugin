@@ -76,6 +76,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 						'id'         => $selected_price->id,
 						'product_id' => $product->id,
 						'quantity'   => 1,
+						'variant'    => $product->variants->data[0]->id ?? ''
 					],
 				],
 				'product' => $product,

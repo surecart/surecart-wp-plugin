@@ -452,12 +452,13 @@ export class ScSessionProvider {
     if (this.prices.some(p => !p?.id)) {
       return;
     }
-
+    
     // add prices that are passed into this component.
     return this.prices.map(price => {
       return {
         price_id: price.id,
         quantity: price.quantity,
+        variant: price.variant,
       };
     });
   }
