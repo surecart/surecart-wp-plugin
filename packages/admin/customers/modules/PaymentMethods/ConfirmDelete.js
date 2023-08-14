@@ -7,14 +7,14 @@ import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 import Error from '../../../components/Error';
 import { ScButton } from '@surecart/components-react';
-import apiFetch from '@wordpress/api-fetch';
 import { useState } from 'react';
 
 export default ({ onRequestClose, paymentMethod }) => {
 	const [busy, setBusy] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { deleteEntityRecord, invalidateResolutionForStore } = useDispatch(coreStore);
+	const { deleteEntityRecord, invalidateResolutionForStore } =
+		useDispatch(coreStore);
 
 	const onDelete = async () => {
 		try {
@@ -25,8 +25,8 @@ export default ({ onRequestClose, paymentMethod }) => {
 				'payment_method',
 				paymentMethod?.id,
 				{},
-				{ 
-					throwOnError: true 
+				{
+					throwOnError: true,
 				}
 			);
 			createSuccessNotice(__('Payment method deleted.', 'surecart'), {
