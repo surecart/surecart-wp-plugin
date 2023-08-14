@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
-import { ScButton, ScEmpty, ScFlex, ScIcon } from '@surecart/components-react';
+import { ScButton, ScEmpty, ScFlex } from '@surecart/components-react';
 import AddressDisplay from '../../../components/AddressDisplay';
 
 export default ({ onEditAddress, shippingAddress, loading }) => {
