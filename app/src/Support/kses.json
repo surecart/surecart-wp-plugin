@@ -1667,6 +1667,12 @@
     "class": true,
     "slot": true
   },
+  "sc-product-variation-choices": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-prose": {
     "style": true,
     "id": true,

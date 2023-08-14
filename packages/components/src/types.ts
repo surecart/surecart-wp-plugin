@@ -112,6 +112,32 @@ export interface Price {
   metadata: { [key: string]: string };
 }
 
+export interface ProductVariant {
+  id: string;
+  object: string;
+  name: string;
+  position: number;
+  product: Product | string;
+  updated_at: number;
+  created_at: number;
+  label: string;
+  sku: string;
+  image: string;
+  labels: string;
+  variants: Array<string>
+}
+export interface VariantOption {
+  id: string;
+  object: string;
+  name: string;
+  position: number;
+  product: Product | string;
+  updated_at: number;
+  created_at: number;
+  label: string;
+  labels: string;
+  values: Array<string>;
+}
 export interface Bump {
   id: string;
   object: 'bump';
@@ -270,6 +296,17 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Price>;
   };
+  variants:{
+    object: 'list';
+    pagination: Pagination;
+    data: Array<ProductVariant>;
+  }
+  variant_options: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<VariantOption>;
+  };
+  
   product_medias: {
     object: 'list';
     pagination: Pagination;
@@ -320,6 +357,7 @@ export interface LineItemData extends Object {
   bump?: string;
   quantity: number;
   ad_hoc_amount?: number;
+  variant?: string;
 }
 
 export type LineItemsData = {
@@ -603,6 +641,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  variant: string;
 }
 
 export interface ShippingMethod {

@@ -100,6 +100,7 @@ Type: `Promise<void>`
 
  - [sc-address](../address)
  - [sc-compact-address](../sc-compact-address)
+ - [sc-product-variation-choices](../../controllers/product/sc-product-variation-choices)
 
 ### Depends on
 
@@ -127,6 +128,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-address --> sc-select
   sc-compact-address --> sc-select
+  sc-product-variation-choices --> sc-select
   style sc-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

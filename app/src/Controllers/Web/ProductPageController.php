@@ -18,7 +18,8 @@ class ProductPageController extends ProductTypePageController {
 		$id = get_query_var( 'sc_product_page_id' );
 
 		// fetch the product by id/slug.
-		$this->product = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $id );
+		$this->product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $id );
+		
 		if ( is_wp_error( $this->product ) ) {
 			return $this->handleError( $this->product );
 		}

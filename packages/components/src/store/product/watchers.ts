@@ -1,4 +1,6 @@
 import state, { onChange } from './store';
+import { availableVariants } from '@store/product/getters';
+import { getVariantFromValues } from '../../functions/util';
 
 onChange('selectedPrice', value => {
   // update the total when the selected price changes.
@@ -9,8 +11,17 @@ onChange('selectedPrice', value => {
   state.disabled = value?.archived || state.product?.archived;
 });
 
+onChange('variantValues', values => {
+  const matchedVariant = getVariantFromValues({variants: availableVariants(), values}); 
+  
+  if (matchedVariant) {
+    state.selectedVariant = matchedVariant;
+  }
+});
+
 // update the line item when any of these change.
 onChange('selectedPrice', () => setLineItem());
+onChange('selectedVariant', () => setLineItem());
 onChange('adHocAmount', () => setLineItem());
 onChange('quantity', () => setLineItem());
 
@@ -19,5 +30,6 @@ const setLineItem = () => {
     price_id: state.selectedPrice?.id,
     quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
     ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+    variant: state.selectedVariant,
   };
 };
