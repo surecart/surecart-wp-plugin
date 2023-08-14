@@ -2,24 +2,22 @@
 import { css, jsx } from '@emotion/core';
 import { select, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import Box from '../../ui/Box';
 import {
 	ScButton,
 	ScButtonGroup,
 	ScCard,
-	ScDropdown,
 	ScIcon,
-	ScMenu,
-	ScMenuItem,
 	ScStackedList,
 	ScStackedListRow,
 	ScTag,
 } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
-import Product from './Product';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from '@wordpress/element';
+
+import Box from '../../ui/Box';
+import Product from './Product';
 
 export default ({ collectionId }) => {
 	const [products, setProducts] = useState([]);
@@ -119,6 +117,24 @@ export default ({ collectionId }) => {
 							</ScStackedListRow>
 						);
 					})}
+
+					{!loading && !products.length && (
+						<ScStackedListRow>
+							<div
+								css={css`
+									display: flex;
+									justify-content: center;
+									align-items: center;
+									flex-direction: column;
+									padding: 0.5em;
+									color: var(--sc-color-gray-500);
+								`}
+							>
+								<ScIcon name="box" size="large" />
+								<p>{__('No products added.', 'surecart')}</p>
+							</div>
+						</ScStackedListRow>
+					)}
 				</ScCard>
 			</ScStackedList>
 		</Box>
