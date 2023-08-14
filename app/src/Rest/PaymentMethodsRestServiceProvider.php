@@ -3,7 +3,6 @@
 namespace SureCart\Rest;
 
 use SureCart\Controllers\Rest\PaymentMethodsController;
-use SureCart\Models\User;
 use SureCart\Rest\RestServiceInterface;
 
 /**
