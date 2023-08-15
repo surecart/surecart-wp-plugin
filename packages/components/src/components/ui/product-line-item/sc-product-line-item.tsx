@@ -39,7 +39,7 @@ export class ScProductLineItem {
   @Prop() name: string;
 
   /** Price name */
-  @Prop() priceName: string;
+  @Prop() priceName?: string;
 
   /** Quantity */
   @Prop() quantity: number;

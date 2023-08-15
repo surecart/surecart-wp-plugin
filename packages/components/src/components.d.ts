@@ -2963,7 +2963,7 @@ export namespace Components {
         /**
           * Price name
          */
-        "priceName": string;
+        "priceName"?: string;
         /**
           * Quantity
          */
