@@ -20,9 +20,9 @@ interface PageModel {
 	/**
 	 * Get the page permalink attribute
 	 *
-	 * @return string
+	 * @return string|false
 	 */
-	public function getPermalinkAttribute(): string;
+	public function getPermalinkAttribute(): string|false;
 
 	/**
 	 * Get the template id.

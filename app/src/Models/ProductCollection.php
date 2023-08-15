@@ -109,7 +109,7 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @return string|false
 	 */
-	public function getPermalinkAttribute(): string {
+	public function getPermalinkAttribute(): string|false {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
