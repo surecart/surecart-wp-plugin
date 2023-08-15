@@ -127,7 +127,7 @@ class ProductsListTable extends ListTable {
 		$product_collections = $product->product_collections->data ?? [];
 
 		// this has no collection.
-		if ( empty( $product_collections ) || ! is_array( $product_collections ) ) {
+		if ( empty( $product_collections ) ) {
 			return '-';
 		}
 
