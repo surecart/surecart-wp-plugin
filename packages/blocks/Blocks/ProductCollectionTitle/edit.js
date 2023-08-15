@@ -1,36 +1,50 @@
 /**
- * External dependencies.
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
+ * WordPress dependencies
  */
 import {
-	AlignmentToolbar,
+	AlignmentControl,
 	BlockControls,
 	useBlockProps,
 } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
-import { ScProductCollectionTitle } from '@surecart/components-react';
+import HeadingLevelDropdown from './heading-level-dropdown';
 
-export default ({ attributes, setAttributes }) => {
-	const { title, align } = attributes;
-	const blockProps = useBlockProps();
+export default ({ attributes: { level, textAlign }, setAttributes }) => {
+	const TagName = 0 === level ? 'p' : 'h' + level;
+
+	const blockProps = useBlockProps({
+		className: classnames({
+			[`has-text-align-${textAlign}`]: textAlign,
+		}),
+	});
 
 	return (
 		<>
-			<BlockControls>
-				<AlignmentToolbar
-					value={align}
-					onChange={(value) => setAttributes({ align: value })}
+			<BlockControls group="block">
+				<HeadingLevelDropdown
+					selectedLevel={level}
+					onChange={(newLevel) => setAttributes({ level: newLevel })}
+				/>
+				<AlignmentControl
+					value={textAlign}
+					onChange={(nextAlign) => {
+						setAttributes({ textAlign: nextAlign });
+					}}
 				/>
 			</BlockControls>
-			<div {...blockProps}>
-				<ScProductCollectionTitle
-					style={{ '--sc-product-collection-title-align': align }}
-				>
-					{title}
-				</ScProductCollectionTitle>
-			</div>
+
+			<TagName {...blockProps}>
+				{__('Collection Title', 'surecart')}
+			</TagName>
 		</>
 	);
 };

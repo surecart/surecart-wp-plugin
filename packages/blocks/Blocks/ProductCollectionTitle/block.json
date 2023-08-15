@@ -1,34 +1,54 @@
 {
-	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 2,
 	"name": "surecart/product-collection-title",
-	"title": "Collection Title",
-	"description": "Displays the collection title.",
+	"title": "Product Collection Title",
+	"description": "Displays the product collection title.",
 	"category": "surecart",
-	"keywords": ["collection", "title", "list"],
-	"ancestor": ["surecart/product-collection"],
+	"keywords": ["title", "collection", "product"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	},
 	"attributes": {
-		"title": {
+		"textAlign": {
 			"type": "string"
 		},
-		"align": {
-			"type": "string"
+		"level": {
+			"type": "number",
+			"default": 2
 		}
 	},
 	"supports": {
+		"align": ["wide", "full"],
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
 		"spacing": {
-			"padding": true,
-			"margin": ["top", "bottom"]
+			"margin": true,
+			"padding": true
 		},
 		"typography": {
 			"fontSize": true,
 			"lineHeight": true,
-			"__experimentalFontWeight": true
-		},
-		"color": {
-			"text": true,
-			"background": false,
-			"enableContrastChecker": true
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
 		}
 	}
 }
