@@ -82,7 +82,7 @@ export default ({
 						)}
 						<div>
 							<div>
-								<strong>{price?.product?.name}</strong>
+								<strong>{`${price?.product?.name} ${price?.name ? `- ${price.name}` : ''}`}</strong>
 							</div>
 							<ScFormatNumber
 								type="currency"
