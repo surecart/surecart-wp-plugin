@@ -51,4 +51,11 @@ interface PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplatePartAttribute();
+
+	/**
+	 * Must return a schema array.
+	 *
+	 * @return array
+	 */
+	public function getJsonSchemaArray(): array;
 }
