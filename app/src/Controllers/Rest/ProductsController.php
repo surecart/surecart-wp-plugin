@@ -24,9 +24,9 @@ class ProductsController extends RestController {
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// if we are in edit context, we want to fetch the variants and variant options.
+		// if we are in edit context, we want to fetch the variants, variant options and prices.
 		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
-			$class->with( [ 'variants', 'variant_options' ] );
+			$class->with( [ 'variants', 'variant_options', 'prices' ] );
 		}
 		return parent::middleware( $class, $request );
 	}
