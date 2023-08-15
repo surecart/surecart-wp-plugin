@@ -1,37 +1,41 @@
 /**
- * External dependencies.
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
+ * WordPress dependencies
  */
 import {
-	AlignmentToolbar,
+	AlignmentControl,
 	BlockControls,
 	useBlockProps,
 } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies.
- */
-import { ScProductCollectionDescription } from '@surecart/components-react';
-
-export default ({ attributes, setAttributes }) => {
-	const { title, align } = attributes;
-	const blockProps = useBlockProps();
+export default ({ attributes: { textAlign }, setAttributes }) => {
+	const blockProps = useBlockProps({
+		className: classnames({
+			[`has-text-align-${textAlign}`]: textAlign,
+		}),
+	});
 
 	return (
 		<>
-			<BlockControls>
-				<AlignmentToolbar
-					value={align}
-					onChange={(value) => setAttributes({ align: value })}
+			<BlockControls group="block">
+				<AlignmentControl
+					value={textAlign}
+					onChange={(nextAlign) => {
+						setAttributes({ textAlign: nextAlign });
+					}}
 				/>
 			</BlockControls>
+
 			<div {...blockProps}>
-				<ScProductCollectionDescription
-					style={{
-						'--sc-product-collection-description-align': align,
-					}}
-				>
-					{title}
-				</ScProductCollectionDescription>
+				{__(
+					'Explore our curated selection of premium, eco-friendly kitchenware designed to elevate your cooking experience.',
+					'surecart'
+				)}
 			</div>
 		</>
 	);

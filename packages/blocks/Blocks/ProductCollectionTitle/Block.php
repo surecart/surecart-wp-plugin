@@ -18,7 +18,6 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$collection = get_query_var( 'surecart_current_collection' );
-		var_dump( 'render' );
 		if ( empty( $collection ) ) {
 			return '';
 		}
