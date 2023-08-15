@@ -136,7 +136,7 @@ export interface VariantOption {
   created_at: number;
   label: string;
   labels: string;
-  values: Array<string | { value: string }>;
+  values: Array<string>;
 }
 export interface Bump {
   id: string;
