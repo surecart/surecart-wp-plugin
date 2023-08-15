@@ -31,7 +31,7 @@ class CheckEmailController extends RestController {
 			sprintf(
 					/* translators: %s: User name. */
 				__( 'The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead.', 'surecart' ),
-				$request->get_param( 'login' )
+				esc_html( $request->get_param( 'login' ) )
 			)
 		);
 	}
