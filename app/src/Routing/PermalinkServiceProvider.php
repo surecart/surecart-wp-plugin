@@ -61,11 +61,11 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 		$container['surecart.settings.permalinks.collection'] = function() {
 			return new PermalinkSettingService(
 				[
-					'slug'        => 'collection',
-					'label'       => __( 'SureCart Product Collection Permalinks', 'surecart' ),
+					'slug'                => 'collection',
+					'label'               => __( 'SureCart Product Collection Permalinks', 'surecart' ),
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
-					'options'     => [
+					'description'         => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'options'             => [
 						[
 							'value' => 'collections',
 							'label' => __( 'Default', 'surecart' ),
@@ -75,6 +75,7 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 							'label' => __( 'Product Collections', 'surecart' ),
 						],
 					],
+					'sample_preview_text' => 'sample-collection',
 				]
 			);
 		};
