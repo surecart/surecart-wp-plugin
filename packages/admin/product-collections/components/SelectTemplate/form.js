@@ -32,7 +32,8 @@ export default function CollectionTemplateForm({
 			const templates = (getEntityRecords(...selectorArgs) || []).filter(
 				(template) => {
 					return (
-						template.theme === 'surecart/surecart' ||
+						template.id ===
+							'surecart/surecart//product-collection' ||
 						template.slug.includes('sc-collections')
 					);
 				}

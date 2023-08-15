@@ -34,7 +34,8 @@ export default function PostTemplateForm({
 				}) || []
 			).filter((template) => {
 				return (
-					template.theme === 'surecart/surecart' ||
+					template.id ===
+						'surecart/surecart//product-collection-part' ||
 					template.slug.includes('sc-part-products-archive')
 				);
 			});
@@ -114,7 +115,9 @@ export default function PostTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				label={__('Template', 'surecart')}
-				value={template?.id || 'surecart/surecart//product-collection-part'}
+				value={
+					template?.id || 'surecart/surecart//product-collection-part'
+				}
 				options={(parts ?? []).map((part) => {
 					return {
 						value: part?.id,
