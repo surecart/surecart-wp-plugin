@@ -89,8 +89,27 @@ export class ScFormComponentsValidator {
     this.handleOrderChange();
   }
 
+  handleShippingAddressRequired(){
+    if(!checkoutState.checkout?.shipping_address_required) return;
+
+    const customerName = this.el.querySelector('sc-customer-name');
+    if(!!customerName) {
+      customerName.required = true;
+      return
+    }
+
+    const address = this.el.querySelector('sc-order-shipping-address');
+    address.required = true;
+    address.requireName = true;
+    address.showName = true;
+  }
+
   addAddressField() {
-    if (this.hasAddress) return;
+    if(this.hasAddress ) {
+      this.handleShippingAddressRequired();
+      return
+    }
+
     const payment = this.el.querySelector('sc-payment');
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
@@ -100,6 +119,7 @@ export class ScFormComponentsValidator {
     }
 
     payment.parentNode.insertBefore(address, payment);
+    this.handleShippingAddressRequired();
     this.hasAddress = true;
   }
 

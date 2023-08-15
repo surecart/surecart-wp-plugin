@@ -1190,7 +1190,6 @@
     "slot": true
   },
   "sc-order-shipping-address": {
-    "checkout": true,
     "city-placeholder": true,
     "country-placeholder": true,
     "default-country": true,
@@ -1202,6 +1201,7 @@
     "name-placeholder": true,
     "placeholders": true,
     "postal-code-placeholder": true,
+    "require-name": true,
     "required": true,
     "shipping-address": true,
     "shipping-enabled": true,

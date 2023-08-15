@@ -2101,10 +2101,6 @@ export namespace Components {
         "status": OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        /**
-          * Checkout object
-         */
-        "checkout": Checkout;
         "cityPlaceholder": string;
         "countryPlaceholder": string;
         /**
@@ -2135,6 +2131,10 @@ export namespace Components {
         "placeholders": Partial<Address>;
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
+        /**
+          * Whether to require the name in the address
+         */
+        "requireName": boolean;
         /**
           * Is this required (defaults to false)
          */
@@ -7799,10 +7799,6 @@ declare namespace LocalJSX {
         "status"?: OrderShipmentStatus;
     }
     interface ScOrderShippingAddress {
-        /**
-          * Checkout object
-         */
-        "checkout"?: Checkout;
         "cityPlaceholder"?: string;
         "countryPlaceholder"?: string;
         /**
@@ -7839,6 +7835,10 @@ declare namespace LocalJSX {
          */
         "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
+        /**
+          * Whether to require the name in the address
+         */
+        "requireName"?: boolean;
         /**
           * Is this required (defaults to false)
          */
