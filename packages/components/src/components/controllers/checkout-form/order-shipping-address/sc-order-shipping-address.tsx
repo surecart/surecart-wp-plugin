@@ -15,9 +15,6 @@ import { Address, Checkout, TaxStatus } from '../../../../types';
 export class ScOrderShippingAddress {
   private input: HTMLScAddressElement | HTMLScCompactAddressElement;
 
-  /** Checkout object */
-  @Prop() checkout: Checkout;
-
   /** Label for the field. */
   @Prop() label: string;
 
@@ -57,6 +54,9 @@ export class ScOrderShippingAddress {
   /** Default country for address */
   @Prop() defaultCountry: string;
 
+  /** Whether to require the name in the address */
+  @Prop() requireName: boolean = false;
+
   /** Placeholder values. */
   @Prop() placeholders: Partial<Address> = {
     name: __('Name or Company Name', 'surecart'),
@@ -84,8 +84,6 @@ export class ScOrderShippingAddress {
     state: null,
   };
 
-  /** Whether to require the name in the address */
-  @State() requireName: boolean = false;
 
   /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('shippingAddress')
@@ -128,24 +126,9 @@ export class ScOrderShippingAddress {
 
   @Watch('shippingEnabled')
   @Watch('taxEnabled')
-  @Watch('checkout')
   handleRequirementChange() {
-    if (this.shippingEnabled || this.taxEnabled || this.checkout?.shipping_address_required) {
+    if (this.shippingEnabled || this.taxEnabled ) {
       this.required = true;
-
-      if (this.checkout?.shipping_address_required) {
-        this.full = true;
-        this.requireName = true;
-        this.showName = true;
-      }
-    }
-  }
-
-  @Watch('checkout')
-  @Watch('requireName')
-  handleCheckoutChange() {
-    if (this.requireName && !!this.checkout?.name && !this.address?.name) {
-      this.address.name = this.checkout?.name;
     }
   }
 
@@ -196,4 +179,4 @@ export class ScOrderShippingAddress {
   }
 }
 
-openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled', 'checkout'], false);
+openWormhole(ScOrderShippingAddress, ['shippingAddress', 'loading', 'taxStatus', 'taxEnabled', 'shippingEnabled'], false);
