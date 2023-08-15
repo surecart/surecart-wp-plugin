@@ -9,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { Collection, Product } from '../../../../types';
-import apiFetch from '../../../../functions/fetch';
+import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
   blockName: string;
@@ -70,6 +70,9 @@ export class ScProductItemList {
 
   /** Busy indicator */
   @State() busy: boolean = false;
+
+  /** Error notice. */
+  @State() error: string;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -156,7 +159,9 @@ export class ScProductItemList {
       this.busy = true;
       await this.fetchProducts();
     } catch (error) {
+      console.log('error');
       console.error(error);
+      this.error = error.message || __('An unknown error occurred.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -179,6 +184,7 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
+
     let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
 
     // If we have a collectionId, we should only fetch products from that collection.
@@ -186,26 +192,35 @@ export class ScProductItemList {
       collectionIds = [this.collectionId];
     }
 
-    const response = (await apiFetch({
-      path: addQueryArgs('surecart/v1/products', {
-        expand: ['prices', 'product_medias', 'product_media.media'],
-        archived: false,
-        status: ['published'],
-        per_page: this.limit,
-        page: this.currentPage,
-        sort: this.sort,
-        product_collection_ids: collectionIds,
-        ...(this.ids?.length ? { ids: this.ids } : {}),
-        ...(this.query ? { query: this.query } : {}),
-      }),
-      parse: false,
-    })) as Response;
-    this.currentQuery = this.query;
-    this.pagination = {
-      total: parseInt(response.headers.get('X-WP-Total')),
-      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
-    };
-    this.products = (await response.json()) as Product[];
+    try {
+      const response = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/products/`, {
+          expand: ['prices', 'product_medias', 'product_media.media'],
+          archived: false,
+          status: ['published'],
+          per_page: this.limit,
+          page: this.currentPage,
+          sort: this.sort,
+          product_collection_ids: collectionIds,
+          ...(this.ids?.length ? { ids: this.ids } : {}),
+          ...(this.query ? { query: this.query } : {}),
+        }),
+        parse: false,
+      })) as Response;
+      this.currentQuery = this.query;
+      this.pagination = {
+        total: parseInt(response.headers.get('X-WP-Total')),
+        total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
+      };
+      this.products = (await response.json()) as Product[];
+    } catch (response) {
+      // we will want to handle nonce error if we are bypassing the apiFetch parser.
+      await handleNonceError(response)
+        .then(() => this.fetchProducts())
+        .catch(error => {
+          this.error = error.message || __('An unknown error occurred.', 'surecart');
+        });
+    }
   }
 
   renderSortName() {
@@ -241,7 +256,12 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
-        {(this.searchEnabled || this.sortEnabled || this.collectionEnabled) && (
+        {this.error && (
+          <sc-alert type="danger" open>
+            {this.error}
+          </sc-alert>
+        )}
+         {(this.searchEnabled || this.sortEnabled || this.collectionEnabled) && (
           <div class="product-item-list__header">
             <div class="product-item-list__controls">
               <div class="product-item-list__sort">
