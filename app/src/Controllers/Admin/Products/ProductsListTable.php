@@ -99,9 +99,9 @@ class ProductsListTable extends ListTable {
 			'name'         => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
 			'price'        => __( 'Price', 'surecart' ),
-			// 'type'         => __( 'Type', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
 			'status'       => __( 'Product Page', 'surecart' ),
+			'featured'     => __( 'Featured', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 		];
 	}
@@ -278,6 +278,24 @@ class ProductsListTable extends ListTable {
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
+	/**
+	 * Published column
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_featured( $product ) {
+		ob_start();
+		?>
+		<?php if ( $product->featured ) : ?>
+			<sc-icon name="star" style="--sc-icon-fill: currentColor;"></sc-icon>
+		<?php else : ?>
+			<sc-icon name="star"></sc-icon>
+		<?php endif; ?>
+		<?php
+		return ob_get_clean();
+	}
 
 	/**
 	 * Published column
