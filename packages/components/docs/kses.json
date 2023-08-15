@@ -1544,6 +1544,7 @@
     "slot": true
   },
   "sc-product-buy-button": {
+    "is-out-of-stock": true,
     "style": true,
     "id": true,
     "class": true,

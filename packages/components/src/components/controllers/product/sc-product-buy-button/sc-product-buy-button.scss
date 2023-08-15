@@ -38,4 +38,10 @@ sc-product-buy-button {
       visibility: visible;
     }
   }
+
+  &.is-out-of-stock {
+    [data-text] {
+      opacity: 0.6;
+    }
+  }
 }

@@ -2867,6 +2867,10 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductBuyButton {
+        /**
+          * Whether the product is out of stock.
+         */
+        "isOutOfStock": boolean;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -8739,6 +8743,10 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductBuyButton {
+        /**
+          * Whether the product is out of stock.
+         */
+        "isOutOfStock"?: boolean;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
