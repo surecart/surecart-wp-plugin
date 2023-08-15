@@ -1,8 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 3,
-	"name": "surecart/product-archive",
-	"title": "Product Archive",
+	"name": "surecart/product-collection",
+	"title": "Product Collections",
 	"description": "Display a list of products for a collection.",
 	"category": "surecart",
 	"keywords": [

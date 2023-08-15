@@ -25,7 +25,7 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
-import Collection from './modules/Collection';
+import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
@@ -42,9 +42,7 @@ export default ({ id }) => {
 		deletingProduct,
 		savingProduct,
 		productError,
-	} = useEntity('product', id, {
-		expand: ['product_collections'],
-	});
+	} = useEntity('product', id);
 
 	/**
 	 * Handle the form submission
@@ -217,17 +215,18 @@ export default ({ id }) => {
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
-					<Collection
-						productId={id}
-						product={product}
-						loading={!hasLoadedProduct}
-					/>
 					<Shipping
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
 					/>
 					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collections
+						productId={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

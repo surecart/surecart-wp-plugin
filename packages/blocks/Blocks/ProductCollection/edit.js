@@ -21,9 +21,9 @@ import {
 	__experimentalUnitControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { Fragment, useEffect, useState } from '@wordpress/element';
+import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 
-import EditLayoutConfig from './modules/EditLayoutConfig';
+import EditLayoutConfig from '../ProductItemList/modules/EditLayoutConfig';
 import { ScFormControl, ScProductItemList } from '@surecart/components-react';
 
 import {
@@ -42,6 +42,7 @@ const UnitControl = __stableUnitControl
 export default ({ attributes, setAttributes, clientId }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [layoutConfig, setLayoutConfig] = useState(null);
+	const list = useRef(null);
 	const {
 		columns,
 		limit,
@@ -167,6 +168,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 			}));
 		setLayoutConfig(layoutConfig);
 	}, [block]);
+
+	// update layoutconfig in component.
+	// this is needed to pass an object to the component inside the iframe.
+	useEffect(() => {
+		if (!list.current) return;
+		list.current.layoutConfig = layoutConfig;
+	}, [layoutConfig, isEditing]);
 
 	return (
 		<Fragment>
@@ -354,6 +362,11 @@ export default ({ attributes, setAttributes, clientId }) => {
 			<div {...blockProps}>
 				{isEditing ? (
 					<EditLayoutConfig
+						label={__('Product Collection', 'surecart')}
+						description={__(
+							'Display your products from a collection in a grid.',
+							'surecart'
+						)}
 						attributes={attributes}
 						onDone={togglePreview}
 					/>
@@ -366,8 +379,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 						<Disabled>
 							{layoutConfig && (
 								<ScProductItemList
+									ref={list}
 									style={{
-										'border-style': 'none',
+										borderStyle: 'none',
 										'--sc-product-item-list-column':
 											columns,
 										'--sc-pagination-font-size':
@@ -381,7 +395,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 									}}
 									ids={ids}
 									limit={limit}
-									layoutConfig={layoutConfig}
 									paginationAlignment={pagination_alignment}
 									sortEnabled={sort_enabled}
 									searchEnabled={search_enabled}

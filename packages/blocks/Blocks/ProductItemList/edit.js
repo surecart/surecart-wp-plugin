@@ -381,6 +381,11 @@ export default ({ attributes, setAttributes, clientId }) => {
 					`}
 				>
 					<EditLayoutConfig
+						label={__('All Products', 'surecart')}
+						description={__(
+							'Display all products from your store as a grid.',
+							'surecart'
+						)}
 						attributes={attributes}
 						onDone={togglePreview}
 					/>
@@ -395,7 +400,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						{layoutConfig && (
 							<ScProductItemList
 								style={{
-									'border-style': 'none',
+									borderStyle: 'none',
 									'--sc-product-item-list-column': columns,
 									'--sc-pagination-font-size':
 										pagination_size,

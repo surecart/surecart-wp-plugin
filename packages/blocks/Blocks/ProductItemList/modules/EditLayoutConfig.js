@@ -8,9 +8,9 @@ import { InnerBlocks } from '@wordpress/block-editor';
 const PRODUCT_BLOCKS = [['surecart/product-item']];
 const ALLOWED_BLOCKS = ['surecart/product-item'];
 
-export default function EditLayoutConfig({ onDone }) {
+export default function EditLayoutConfig({ label, description, onDone }) {
 	return (
-		<Placeholder icon={grid} label={__('All Products', 'surecart')}>
+		<Placeholder icon={grid} label={label}>
 			<div
 				css={css`
 					display: flex;
@@ -18,10 +18,7 @@ export default function EditLayoutConfig({ onDone }) {
 					flex: 1 0 0px;
 				`}
 			>
-				{__(
-					'Display all products from your store as a grid.',
-					'surecart'
-				)}
+				{description}
 				<div
 					css={css`
 						margin-top: 1.4rem;

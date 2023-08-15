@@ -8,7 +8,7 @@ use SureCart\Controllers\Rest\ProductCollectionsController;
 /**
  * Service provider for Product Collection Rest Requests
  */
-class ProductCollectionRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class ProductCollectionsRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *

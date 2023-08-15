@@ -28,6 +28,7 @@ abstract class BasePageController {
 
 	/**
 	 * Enqueue scripts.
+	 * Add data for specific store by overriding this method.
 	 *
 	 * @return void
 	 */
@@ -40,8 +41,6 @@ abstract class BasePageController {
 				'store' => (object) [],
 			]
 		);
-
-		// add data for specific store by overriding this method.
 	}
 
 	/**

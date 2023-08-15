@@ -36,7 +36,7 @@ export default function SelectTemplatePart({ collection, updateCollection }) {
 					'postType',
 					'wp_template_part',
 					collection?.metadata?.wp_template_part_id ||
-						'surecart/surecart//product-archive-part'
+						'surecart/surecart//product-collection-part'
 				)
 			);
 		},

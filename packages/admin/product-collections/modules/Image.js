@@ -11,8 +11,8 @@ import MediaLibrary from '../../components/MediaLibrary';
 export default ({ label, collection, updateCollection, showLabel = false }) => {
 	const onSelectMedia = (media) => {
 		updateCollection({
-			image_id: media?.id,
-			image: media,
+			image_id: media?.id, // TODO: Remove this once get image attribute working.
+			image_media: media,
 		});
 	};
 
@@ -22,13 +22,13 @@ export default ({ label, collection, updateCollection, showLabel = false }) => {
 		);
 		if (!confirmedRemoveImage) return;
 		return updateCollection({
+			image_media: null,
 			image_id: null,
-			image: null,
 		});
 	};
 
 	const renderContent = () => {
-		if (collection?.image?.url) {
+		if (collection?.image_media?.url || collection?.image?.url) {
 			return (
 				<div
 					css={css`
@@ -37,7 +37,10 @@ export default ({ label, collection, updateCollection, showLabel = false }) => {
 					`}
 				>
 					<img
-						src={collection?.image?.url}
+						src={
+							collection?.image_media?.url ||
+							collection?.image?.url
+						}
 						alt="image"
 						css={css`
 							width: 100%;

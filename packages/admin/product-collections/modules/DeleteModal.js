@@ -9,7 +9,7 @@ import { Modal } from '@wordpress/components';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScFlex } from '@surecart/components-react';
+import { ScAlert, ScButton, ScFlex } from '@surecart/components-react';
 
 export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -25,7 +25,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 				'product-collection',
 				deleteItem?.id
 			);
-			createSuccessNotice(__('Collection deleted.', 'surecart'), {
+			createSuccessNotice(__('Product collection deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 			window.location.assign('admin.php?page=sc-product-collections');
@@ -37,7 +37,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 
 	return (
 		<Modal
-			title={__('Delete this collection?', 'surecart')}
+			title={__('Delete this product collection?', 'surecart')}
 			css={css`
 				max-width: 500px !important;
 			`}
@@ -46,10 +46,28 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 		>
 			<p>
 				{__(
-					'Are you sure you want to delete this collection?',
+					'Are you sure you want to delete this product collection?',
+					'surecart'
+				)}{' '}
+				{__('This action cannot be undone.', 'surecart')}
+			</p>
+			<ScAlert
+				type="warning"
+				open
+				css={css`
+					margin-top: 10px;
+					margin-bottom: 10px;
+				`}
+			>
+				{__(
+					'Deleting a product collection does not delete the products in that collection.',
+					'surecart'
+				)}{' '}
+				{__(
+					'Instead, the products will be removed from the collection.',
 					'surecart'
 				)}
-			</p>
+			</ScAlert>
 			<ScFlex alignItems="center" justifyContent="flex-start">
 				<ScButton
 					type="primary"

@@ -32,12 +32,12 @@ class Block extends BaseBlock {
 			showLabel="<?php echo esc_attr( $attributes['showLabel'] ?? true ); ?>"
 			size="<?php echo esc_attr( $attributes['size'] ?? 'medium' ); ?>"
 			value="<?php echo esc_attr( $attributes['value'] ?? '' ); ?>"
-			required="<?php echo esc_attr( $attributes['required'] ?? false ); ?>"
+			required="<?php echo esc_attr( ! empty( $attributes['required'] ) ? 'true' : 'false' ); ?>"
 			confirmation="<?php echo esc_attr( $attributes['confirmation'] ? 'true' : 'false' ); ?>"
 			confirmation-label="<?php echo esc_attr( $attributes['confirmation_label'] ?? '' ); ?>"
 			confirmation-placeholder="<?php echo esc_attr( $attributes['confirmation_placeholder'] ?? '' ); ?>"
 			confirmation-help="<?php echo esc_attr( $attributes['confirmation_help'] ?? '' ); ?>"
-			enable-validation="false"
+			enable-validation="<?php echo get_option( 'surecart_password_validation_enabled', true ) ? 'true' : 'false'; ?>"
 		>
 		</sc-order-password>
 

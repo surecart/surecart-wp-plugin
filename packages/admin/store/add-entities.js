@@ -83,6 +83,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit', expand: ['media'] },
 	},
 	{
+		name: 'draft-checkout',
+		kind: 'surecart',
+		label: __('Draft Checkout', 'surecart'),
+		baseURL: 'surecart/v1/draft-checkouts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'fulfillment',
 		kind: 'surecart',
 		label: __('Fulfillment', 'surecart'),
@@ -219,7 +226,7 @@ dispatch(coreStore).addEntities([
 	{
 		name: 'product-collection',
 		kind: 'surecart',
-		label: __('Collections', 'surecart'),
+		label: __('Product Collections', 'surecart'),
 		baseURL: 'surecart/v1/product_collections',
 		baseURLParams: { context: 'edit', expand: ['media'] },
 	},

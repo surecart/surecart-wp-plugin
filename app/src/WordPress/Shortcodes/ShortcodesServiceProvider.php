@@ -136,10 +136,10 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		// Product archive page.
+		// Product collection page.
 		$container['surecart.shortcodes']->registerBlockShortcodeByName(
-			'sc_product_archive',
-			'surecart/product-archive',
+			'sc_product_collection',
+			'surecart/product-collection',
 			[
 				'collection_id'      => '', // mendatory.
 				'columns'            => 4,
@@ -216,9 +216,11 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @param  array  $atts Shortcode attributes.
 	 * @param  string $content Shortcode content.
+	 * @param  string $name Shortcode tag.
+	 *
 	 * @return string Shortcode output.
 	 */
-	public function formShortcode( $atts ) {
+	public function formShortcode( $atts, $content, $name ) {
 		$atts = shortcode_atts(
 			[
 				'id' => null,
@@ -244,7 +246,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			return __( 'This form is not available or has been deleted.', 'surecart' );
 		}
 
-		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $form );
+		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $name, $form );
 	}
 
 	/**

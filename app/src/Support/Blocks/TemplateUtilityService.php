@@ -54,9 +54,9 @@ class TemplateUtilityService {
 				'title'       => _x( 'Product Info', 'Template name', 'surecart' ),
 				'description' => __( 'Displays the product info.', 'surecart' ),
 			],
-			'product-archive-part' => [
-				'title'       => _x( 'Product archive', 'Template name', 'surecart' ),
-				'description' => __( 'Displays surecart product archive for collection.', 'surecart' ),
+			'product-collection-part' => [
+				'title'       => _x( 'Product Collection', 'Template name', 'surecart' ),
+				'description' => __( 'Displays surecart products list for a collection.', 'surecart' ),
 			],
 		];
 	}

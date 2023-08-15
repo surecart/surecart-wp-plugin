@@ -7,7 +7,7 @@ namespace SureCart\Controllers\Web;
 use SureCart\Models\Form;
 
 /**
- * Handles webhooks
+ * Handles Frontend Collection Pages.
  */
 class CollectionPageController extends BasePageController {
 	/**
@@ -58,7 +58,7 @@ class CollectionPageController extends BasePageController {
 	public function filters(): void {
 		parent::filters();
 
-		// add edit collection link.
+		// add edit product collection link.
 		add_action( 'admin_bar_menu', [ $this, 'addEditCollectionLink' ], 99 );
 
 		// add data needed for collection to load.
@@ -80,7 +80,7 @@ class CollectionPageController extends BasePageController {
 	}
 
 	/**
-	 * Add edit collection link.
+	 * Add edit product collection link.
 	 *
 	 * @param \WP_Admin_Bar $wp_admin_bar Admin bar.
 	 *
@@ -90,7 +90,7 @@ class CollectionPageController extends BasePageController {
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit-collection',
-				'title' => __( 'Edit Collection', 'surecart' ),
+				'title' => __( 'Edit Product collection', 'surecart' ),
 				'href'  => esc_url( \SureCart::getUrl()->edit( 'product_collections', $this->model->id ) ),
 			]
 		);

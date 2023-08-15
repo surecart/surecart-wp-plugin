@@ -43,7 +43,6 @@ export class ScMollieAddMethod {
           currency: this.currency,
         },
       });
-      console.log(this.paymentIntent);
       if (this.paymentIntent.processor_data?.mollie?.checkout_url) {
         window.location.assign(this.paymentIntent.processor_data?.mollie?.checkout_url);
       }
