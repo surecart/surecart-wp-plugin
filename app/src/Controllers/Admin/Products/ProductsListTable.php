@@ -98,9 +98,7 @@ class ProductsListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
-			// 'description' => __( 'Description', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
-			// 'type'         => __( 'Type', 'surecart' ),
 			'integrations'        => __( 'Integrations', 'surecart' ),
 			'status'              => __( 'Product Page', 'surecart' ),
 			'product_collections' => __( 'Collections', 'surecart' ),
@@ -136,7 +134,7 @@ class ProductsListTable extends ListTable {
 		$product_collections_tags = [];
 
 		foreach ( $product_collections as $product_collection ) {
-			$product_collections_tags[] = '<sc-tag><a style="color: var(--sc-color-gray-700)" href="' . admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) . '">' . $product_collection['name'] . '</a></sc-tag>';
+			$product_collections_tags[] = '<a href="' . admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) . '"><sc-tag>' . $product_collection['name'] . '</sc-tag></a>';
 		}
 
 		return implode( ' ', $product_collections_tags );
