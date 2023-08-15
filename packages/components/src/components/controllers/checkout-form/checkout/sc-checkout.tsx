@@ -86,8 +86,8 @@ export class ScCheckout {
   /** Can we remove line items? */
   @Prop() removeLineItems: boolean = true;
 
-  /** The abandoned checkout return url. */
-  @Prop() abandonedCheckoutReturnUrl: string;
+  /** Is abandoned checkout enabled. */
+  @Prop() abandonedCheckoutEnabled: boolean;
 
   /** Use the Stripe payment element. */
   @Prop() stripePaymentElement: boolean = false;
@@ -207,7 +207,7 @@ export class ScCheckout {
     checkoutState.product = this.product || null;
     checkoutState.currencyCode = this.currencyCode;
     checkoutState.groupId = this.el.id;
-    checkoutState.abandonedCheckoutReturnUrl = this.abandonedCheckoutReturnUrl;
+    checkoutState.abandonedCheckoutEnabled = this.abandonedCheckoutEnabled;
     userState.loggedIn = this.loggedIn;
     userState.email = this.customer?.email;
     userState.name = this.customer?.name;

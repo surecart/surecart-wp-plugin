@@ -64,6 +64,9 @@ abstract class BaseSettings {
 	 * @return function
 	 */
 	public function show( \SureCartCore\Requests\RequestInterface $request ) {
+		// don't show admin notices on settings pages.
+		remove_all_actions( 'admin_notices' );
+
 		add_action( 'admin_enqueue_scripts', [ $this, 'showScripts' ] );
 
 		return \SureCart::view( $this->template )->with(
