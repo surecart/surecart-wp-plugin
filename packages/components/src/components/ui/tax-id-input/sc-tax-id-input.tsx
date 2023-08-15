@@ -14,9 +14,6 @@ export class ScTaxIdInput {
   /** Force show the field. */
   @Prop() show: boolean = false;
 
-  /** Required? */
-  @Prop({ reflect: true }) required: boolean = false;
-
   /** Type of tax id */
   @Prop({ mutable: true }) type: string = 'other';
 
@@ -48,7 +45,7 @@ export class ScTaxIdInput {
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
   /** Whether tax input is required */
-  @Prop() required: boolean = false;
+  @Prop({ reflect: true }) required: boolean = false;
 
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
@@ -106,7 +103,6 @@ export class ScTaxIdInput {
         <sc-input
           label={zones?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
-          required={this.required}
           value={this.number}
           onScInput={(e: any) => {
             e.stopImmediatePropagation();
