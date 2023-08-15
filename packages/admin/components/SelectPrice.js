@@ -16,6 +16,7 @@ export default ({
 	onQuery,
 	onFetch,
 	onNew,
+	children,
 	ad_hoc = true,
 	loading,
 	onScrollEnd = () => {},
@@ -86,6 +87,7 @@ export default ({
 					></ScDivider>
 				</span>
 			)}
+			{children}
 		</ScSelect>
 	);
 };

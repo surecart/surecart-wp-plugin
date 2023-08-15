@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: SureCart WP\n"
-"PO-Revision-Date: 2023-06-15 20:19\n"
+"PO-Revision-Date: 2023-08-03 22:49\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: ja\n"
@@ -23,9 +23,9 @@ msgid " and %d other price."
 msgid_plural " and %d other prices."
 msgstr[0] ""
 
-#: sc-charges-list.js:110
+#: sc-charges-list.js:112
 msgid "#%s"
-msgstr "#%s"
+msgstr ""
 
 #. translators: 1: Block label (i.e. "Block: Column"), 2: Position of the selected block, 3: Total number of sibling blocks of the same type
 #: Blocks/Column/edit.js:104
@@ -45,13 +45,20 @@ msgstr "%1d %%オフ"
 msgid "%1s of %2s Activations Used"
 msgstr "% %2sのアクティベーションのうち%1sが使用されました"
 
+#: orders/modules/Fulfillment/Fulfilled.js:99
+#: orders/modules/Fulfillment/Unfulfilled.js:49
+msgid "%d Item"
+msgid_plural "%d Items"
+msgstr[0] ""
+
 #: subscriptions/show/modules/Details.js:110
 msgid "%d Remaining"
 msgstr "残り%d"
 
-#: sc-textarea2.js:189
+#: sc-rich-text.js:18842
+#: sc-textarea2.js:183
 msgid "%d characters remaining"
-msgstr "あと%d文字必要です"
+msgstr ""
 
 #. translators: number of days.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:251
@@ -62,10 +69,10 @@ msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d日"
 
-#: sc-product-line-item2.js:24
+#: sc-product-line-item2.js:37
 msgid "%d day free"
 msgid_plural "%d days free"
-msgstr[0] "%d日無料"
+msgstr[0] ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:80
 #, fuzzy
@@ -73,7 +80,7 @@ msgid "%d day left in trial"
 msgid_plural "%d days left in trial"
 msgstr[0] ""
 
-#: price.js:50
+#: price.js:52
 msgid "%d mo"
 msgid_plural "%d months"
 msgstr[0] ""
@@ -98,15 +105,25 @@ msgid "%d payment"
 msgid_plural "%d payments"
 msgstr[0] ""
 
-#: price.js:84
+#: price.js:86
 msgid "%d payment remaining"
 msgid_plural "%d payments remaining"
+msgstr[0] ""
+
+#: settings/shipping/profile/Products.js:184
+msgid "%d price"
+msgid_plural "%d prices"
 msgstr[0] ""
 
 #: coupons/modules/Product.js:104
 #, fuzzy
 msgid "%d prices"
 msgstr "%d価格"
+
+#: settings/shipping/profile/ShippingProfileListItem.js:35
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] ""
 
 #. translators: number of weeks.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:257
@@ -117,7 +134,7 @@ msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] "%d週間"
 
-#: price.js:48
+#: price.js:50
 msgid "%d wk"
 msgid_plural "%d wks"
 msgstr[0] ""
@@ -131,7 +148,7 @@ msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d年"
 
-#: price.js:52
+#: price.js:54
 msgid "%d yr"
 msgid_plural "%d yrs"
 msgstr[0] ""
@@ -161,10 +178,11 @@ msgstr "%s前"
 msgid "%s can't be blank."
 msgstr "%sを空白にすることはできません。"
 
-#: sc-purchase-downloads-list2.js:48
+#: components/MediaLibrary/index.js:370
+#: sc-purchase-downloads-list2.js:54
 msgid "%s file"
 msgid_plural "%s files"
-msgstr[0] "%s個"
+msgstr[0] ""
 
 #. translators: field name.
 #: src/Support/Errors/ErrorsTranslationService.php:60
@@ -225,7 +243,7 @@ msgstr "%sオフ"
 msgid "%s selected for check out."
 msgstr ""
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "%s selected."
 msgstr ""
 
@@ -249,6 +267,10 @@ msgstr "（タイトルなし）"
 msgid "+ %d more"
 msgstr "+ %d件以上"
 
+#: checkouts/modules/Price.js:102
+msgid "--"
+msgstr ""
+
 #: settings/abandoned/util.js:29
 #, fuzzy
 msgid "1 Day"
@@ -263,6 +285,14 @@ msgstr "1時間"
 #, fuzzy
 msgid "1 week"
 msgstr "1週間"
+
+#: Blocks/ShippingChoices/edit.js:26
+msgid "1-2 days"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:291
+msgid "1. Create Zone"
+msgstr ""
 
 #: settings/abandoned/util.js:33
 #, fuzzy
@@ -300,6 +330,10 @@ msgstr "2日"
 msgid "2 Hours"
 msgstr "2時間"
 
+#: settings/shipping/zone/ShippingZoneForm.js:295
+msgid "2. Create Rate"
+msgstr ""
+
 #: Blocks/Columns/variations.js:132
 msgid "25 / 50 / 25"
 msgstr "25 / 50 / 25"
@@ -317,6 +351,10 @@ msgstr "3日"
 #, fuzzy
 msgid "3 Hours"
 msgstr "3時間"
+
+#: Blocks/ShippingChoices/edit.js:44
+msgid "3-5 days"
+msgstr ""
 
 #: Blocks/Columns/variations.js:60
 msgid "30 / 70"
@@ -380,8 +418,13 @@ msgctxt "block description"
 msgid "A container to display the product media"
 msgstr ""
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "A default payment method will be used as a fallback in case other payment methods get removed from a subscription."
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:128
+#: settings/shipping/rate/ShippingRateForm.js:320
+msgid "A description to let the customer know the average time it takes for shipping."
 msgstr ""
 
 #: products/modules/AddExternalUrlModal.js:56
@@ -409,9 +452,9 @@ msgstr ""
 msgid "A link to your privacy policy page."
 msgstr "プライバシーポリシーページのURLを入力。"
 
-#: settings/portal/PortalSettings.js:139
-msgid "A link to your privacy terms page."
-msgstr "利用規約ページのURLを入力。"
+#: settings/account/AccountSettings.js:267
+msgid "A link to your store terms page."
+msgstr ""
 
 #: bumps/CreateBump.js:65
 #: bumps/modules/Name.js:11
@@ -460,7 +503,7 @@ msgid "A single column within a columns block."
 msgstr "カラムブロック内に1カラム"
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:83
-msgid "A single product template allows you to easily design the layout and style of WooCommerce single product pages, and apply that template to various conditions that you assign."
+msgid "A single product template allows you to easily design the layout and style of SureCart single product pages, and apply that template to various conditions that you assign."
 msgstr ""
 
 #: src/Integrations/ThriveAutomator/DataFields/ProductIDDataField.php:38
@@ -556,9 +599,10 @@ msgstr ""
 msgid "Account Details"
 msgstr "アカウント詳細"
 
+#: sc-wordpress-user-edit.js:61
 #: sc-wordpress-user.js:27
 msgid "Account Email"
-msgstr "アカウントメール"
+msgstr ""
 
 #: orders/Order.js:146
 #: subscriptions/show/ShowSubscription.js:206
@@ -637,11 +681,23 @@ msgstr "条件を追加"
 msgid "Add A Price"
 msgstr "価格を追加"
 
+#: onboarding/Onboarding.js:166
+msgid "Add A Product"
+msgstr ""
+
 #: coupons/modules/NewRestriction.js:46
 #: coupons/modules/Restrictions.js:31
 #, fuzzy
 msgid "Add A Restriction"
 msgstr "制限を追加"
+
+#: checkouts/modules/Address.js:82
+msgid "Add A Shipping Address"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:94
+msgid "Add A Tax ID"
+msgstr ""
 
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:34
 #: Blocks/Dashboard/CustomerDownloads/edit.js:34
@@ -767,6 +823,10 @@ msgctxt "SureCart Product"
 msgid "Add New"
 msgstr ""
 
+#: sc-paystack-add-method.js:71
+msgid "Add New Card"
+msgstr ""
+
 #: products/modules/integrations/Integrations.js:57
 #, fuzzy
 msgid "Add New Integration"
@@ -777,6 +837,14 @@ msgstr "新しい統合を追加"
 #, fuzzy
 msgid "Add New Product"
 msgstr "新製品を追加"
+
+#: settings/shipping/ShippingSettings.js:245
+msgid "Add New Profile"
+msgstr ""
+
+#: settings/shipping/rate/AddShippingRate.js:16
+msgid "Add New Shipping Rate"
+msgstr ""
 
 #: components/SelectProductGroup.js:58
 #, fuzzy
@@ -813,6 +881,19 @@ msgstr "商品制限を追加"
 msgid "Add Promotion Code"
 msgstr "プロモーション コードを追加"
 
+#: settings/shipping/rate/ShippingRateForm.js:194
+#: settings/shipping/zone/ShippingZone.js:228
+msgid "Add Rate"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:91
+msgid "Add Shipping Method"
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:72
+msgid "Add Shipping Profile"
+msgstr ""
+
 #: Blocks/Donation/edit.js:249
 #, fuzzy
 msgid "Add Suggested Donation Amount"
@@ -837,6 +918,11 @@ msgstr "カートに追加ボタン"
 msgid "Add To Cart Button Shortcode"
 msgstr "カートに入れるボタンのショートコード"
 
+#: orders/modules/Fulfillment/components/AddTracking.js:70
+#: orders/modules/Fulfillment/Fulfilled.js:165
+msgid "Add Tracking"
+msgstr ""
+
 #: src/Integrations/User/UserService.php:57
 #, fuzzy
 msgid "Add User Role"
@@ -846,6 +932,10 @@ msgstr "ユーザー役割を追加"
 #, fuzzy
 msgid "Add WordPress User Role"
 msgstr "WordPress ユーザーロールを追加"
+
+#: settings/shipping/zone/ShippingZoneForm.js:265
+msgid "Add Zone"
+msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation description"
@@ -892,6 +982,10 @@ msgstr "タイトルを追加..."
 msgid "Add additional information to receipts and invoices."
 msgstr "領収書と請求書に追加情報を追加する。"
 
+#: orders/modules/Fulfillment/components/Tracking.js:117
+msgid "Add another tracking number"
+msgstr ""
+
 #: dashboard/components/GetStarted.js:73
 #, fuzzy
 msgid "Add buy and cart buttons"
@@ -905,6 +999,10 @@ msgstr "サイトにカートと購入ボタンを追加します。"
 #: settings/tax-region/TaxRegionSettings.js:66
 msgid "Add custom manual tax rates for specific countries."
 msgstr "特定の国向けにカスタムマニュアル税率を追加する"
+
+#: settings/shipping/ShippingSettings.js:229
+msgid "Add custom rates or destination restrictions for groups of products."
+msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:214
 #, fuzzy
@@ -920,6 +1018,10 @@ msgstr "新しいチェックアウト フォームを追加"
 msgid "Add new SureCart Product"
 msgstr ""
 
+#: settings/shipping/profile/Products.js:213
+msgid "Add products to this shipping profile."
+msgstr ""
+
 #: Blocks/Checkbox/edit.js:69
 msgid "Add some checkbox text..."
 msgstr "チェックボックスのテキストを追加..."
@@ -928,6 +1030,10 @@ msgstr "チェックボックスのテキストを追加..."
 #, fuzzy
 msgid "Add some conditions to display this bump."
 msgstr "このバンプを表示するには、いくつかの条件を追加します。"
+
+#: checkouts/modules/Prices.js:117
+msgid "Add some products to this order."
+msgstr ""
 
 #: product-groups/modules/Products.js:53
 #, fuzzy
@@ -980,9 +1086,9 @@ msgstr "タイトルを追加..."
 msgid "Added"
 msgstr "追加した"
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Additional Comments"
-msgstr "追加コメント"
+msgstr ""
 
 #: orders/modules/MetaData.js:16
 msgid "Additional Order Data"
@@ -1001,11 +1107,11 @@ msgstr "追加の注文データ"
 msgid "Address"
 msgstr "住所"
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:34
-#: sc-order-shipping-address2.js:43
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:41
+#: sc-order-shipping-address2.js:50
 msgid "Address Line 2"
-msgstr "その他（アパートやマンションなど）"
+msgstr ""
 
 #: Blocks/Address/edit.js:125
 msgid "Address Placeholder"
@@ -1022,6 +1128,10 @@ msgstr "管理者が購入の取り消しを取り消す"
 msgid "Advanced"
 msgstr "高度"
 
+#: settings/shipping/profile/ShippingProfile.js:229
+msgid "Advanced Options"
+msgstr ""
+
 #: admin/advanced.php:30
 #: settings/advanced/AdvancedSettings.js:35
 #, fuzzy
@@ -1032,26 +1142,26 @@ msgstr "高度な設定"
 msgid "Advanced settings for abandoned checkouts"
 msgstr ""
 
-#: address.js:17
+#: address.js:14
 msgid "Afghanistan"
-msgstr "アフガニスタン"
+msgstr ""
 
 #: Blocks/ProductItemList/edit.js:235
 msgid "Ajax Pagination"
 msgstr ""
 
-#: address.js:18
+#: address.js:15
 msgid "Albania"
-msgstr "アルバニア"
+msgstr ""
 
 #: src/Support/Currency.php:240
 #, fuzzy
 msgid "Albanian Lek"
 msgstr "アルバニアレク"
 
-#: address.js:19
+#: address.js:16
 msgid "Algeria"
-msgstr "アルジェリア"
+msgstr ""
 
 #: src/Support/Currency.php:241
 #, fuzzy
@@ -1082,10 +1192,18 @@ msgstr "すべてのカート"
 msgid "All Checkout Forms"
 msgstr "すべてのチェックアウト フォーム"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:350
+msgid "All Fulfillments"
+msgstr ""
+
 #: src/Integrations/Elementor/Conditions/Conditions.php:47
 #: src/Integrations/Elementor/Conditions/ProductCondition.php:46
 #: Blocks/ProductItemList/modules/EditLayoutConfig.js:13
 msgid "All Products"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:386
+msgid "All Shipment Statuses"
 msgstr ""
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:43
@@ -1096,6 +1214,15 @@ msgstr ""
 #, fuzzy
 msgid "All of these items are in the cart."
 msgstr "これらの商品はすべてカートに入っています。"
+
+#: settings/shipping/ShippingSettings.js:189
+msgid "All products"
+msgstr ""
+
+#: settings/shipping/profile/Products.js:212
+#: settings/shipping/ShippingSettings.js:185
+msgid "All products not in other profiles"
+msgstr ""
 
 #: coupons/modules/Restrictions.js:73
 #, fuzzy
@@ -1159,9 +1286,9 @@ msgstr ""
 msgid "Always show cart"
 msgstr ""
 
-#: address.js:20
+#: address.js:17
 msgid "American Samoa"
-msgstr "アメリカ領サモア"
+msgstr ""
 
 #: src/Support/Errors/Translations/attributes.php:14
 #: coupons/modules/Types.js:42
@@ -1228,33 +1355,33 @@ msgstr ""
 msgid "An invoice cannot be generated for the specified subscription as there are no pending invoice items. Check that the correct subscription is being specified or create any necessary invoice items first."
 msgstr ""
 
-#: fetch.js:1888
+#: fetch.js:737
 msgid "An unknown error occurred."
-msgstr "不明なエラーが発生しました。"
+msgstr ""
 
 #: admin/product-groups/index.php:10
 #, fuzzy
 msgid "An upgrade groups is how you define upgrade and downgrade paths for your customers. It is based on products they have previously purchased."
 msgstr "アップグレード グループは、顧客のアップグレード パスとダウングレード パスを定義する方法です。これは、以前に購入した製品に基づいています。"
 
-#: address.js:21
+#: address.js:18
 msgid "Andorra"
-msgstr "アンドラ"
+msgstr ""
 
-#: address.js:22
+#: address.js:19
 msgid "Angola"
-msgstr "アンゴラ"
+msgstr ""
 
 #: src/Support/Currency.php:242
 #, fuzzy
 msgid "Angolan Kwanza"
 msgstr "アンゴラクワンザ"
 
-#: address.js:23
+#: address.js:20
 msgid "Anguilla"
-msgstr "アンギラ"
+msgstr ""
 
-#: sc-mollie-add-method.js:92
+#: sc-mollie-add-method.js:102
 msgid "Another step will appear after submitting your order to add this payment method."
 msgstr ""
 
@@ -1274,13 +1401,13 @@ msgstr "回答が作成されました。"
 msgid "Answer updated."
 msgstr "回答が更新されました。"
 
-#: address.js:24
+#: address.js:21
 msgid "Antarctica"
-msgstr "南極大陸"
+msgstr ""
 
-#: address.js:25
+#: address.js:22
 msgid "Antigua and Barbuda"
-msgstr "アンティグア・バーブーダ"
+msgstr ""
 
 #: coupons/modules/SelectCustomer.js:155
 #, fuzzy
@@ -1379,6 +1506,10 @@ msgstr "このバンプをアーカイブしますか？このバンプは購入
 msgid "Archive this price? This product will not be purchaseable and all unsaved changes will be lost."
 msgstr "この価格をアーカイブしますか？この製品は購入できなくなり、保存されていない変更はすべて失われます。"
 
+#: product-groups/EditProductGroup.js:76
+msgid "Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:55
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:62
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
@@ -1420,8 +1551,7 @@ msgstr "このクーポンをアーカイブしてもよろしいですか？こ
 msgid "Are you sure you want to archive this product? This will be unavailable for purchase."
 msgstr "この商品をアーカイブしてもよろしいですか?こちらは購入不可となります。"
 
-#: sc-subscription.js:42
-#, fuzzy
+#: sc-subscription.js:70
 msgid "Are you sure you want to cancel the pending update to your plan?"
 msgstr ""
 
@@ -1432,6 +1562,14 @@ msgstr "本当にテンプレートを変更しますか？現在のフォーム
 #: subscriptions/show/modules/modals/CompleteSubscriptionModal.js:46
 #, fuzzy
 msgid "Are you sure you want to complete this payment plan? This will eliminate any additional payments and mark the plan as complete. You cannot undo this."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:328
+msgid "Are you sure you want to continue?"
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:58
+msgid "Are you sure you want to delete shipping profile? Deleting the shipping profile will remove associated shipping rates and shipping zones."
 msgstr ""
 
 #: coupons/EditCoupon.js:234
@@ -1470,6 +1608,10 @@ msgstr "この価格を破棄してもよろしいですか？"
 msgid "Are you sure you want to disconnect this from this customer? This will cause them to lose access to their purchases."
 msgstr "この顧客との接続を切断してもよろしいですか?これにより、購入したものにアクセスできなくなります。"
 
+#: onboarding/components/ConfirmExit.js:9
+msgid "Are you sure you want to leave this page?"
+msgstr ""
+
 #: subscriptions/show/modules/modals/PayOffSubscriptionModal.js:63
 msgid "Are you sure you want to pay off subscription? This will immediately charge the customer the remaining payments on their plan."
 msgstr ""
@@ -1498,10 +1640,10 @@ msgstr "このリンクを削除しますか？"
 msgid "Are you sure you want to remove this logo?"
 msgstr "本当にこのロゴを削除しますか？"
 
-#: sc-payment-methods-list.js:48
-#: sc-subscription-payment-method.js:80
+#: sc-payment-methods-list.js:182
+#: sc-subscription-payment-method.js:85
 msgid "Are you sure you want to remove this payment method?"
-msgstr "本当にこのお支払い方法を削除しますか？"
+msgstr ""
 
 #: src/Webhooks/WebhooksHistoryService.php:149
 #: src/Webhooks/WebhooksHistoryService.php:168
@@ -1560,27 +1702,31 @@ msgstr "このリンクを削除しますか？"
 msgid "Are you sure you wish to resume this subscription?"
 msgstr "本当にこの定期購読を再開しますか？"
 
-#: address.js:26
+#: settings/shipping/zone/ConfirmDeleteZone.js:41
+msgid "Are you sure?"
+msgstr ""
+
+#: address.js:23
 msgid "Argentina"
-msgstr "アルゼンチン"
+msgstr ""
 
 #: src/Support/Currency.php:243
 #, fuzzy
 msgid "Argentine Peso"
 msgstr "アルゼンチンペソ"
 
-#: address.js:27
+#: address.js:24
 msgid "Armenia"
-msgstr "アルメニア"
+msgstr ""
 
 #: src/Support/Currency.php:244
 #, fuzzy
 msgid "Armenian Dram"
 msgstr "アルメニアのドラム"
 
-#: address.js:28
+#: address.js:25
 msgid "Aruba"
-msgstr "アルバ"
+msgstr ""
 
 #: src/Support/Currency.php:245
 #, fuzzy
@@ -1665,13 +1811,17 @@ msgstr "オーストラリア"
 msgid "Australian Dollar"
 msgstr "オーストラリアドル"
 
-#: address.js:30
+#: address.js:27
 msgid "Austria"
-msgstr "オーストラリア"
+msgstr ""
 
 #: bumps/modules/Behavior.js:12
 msgid "Auto Apply Discount"
 msgstr "割引の自動適用"
+
+#: products/modules/Shipping.js:115
+msgid "Auto Fulfill"
+msgstr ""
 
 #: Blocks/Product/Media/edit.js:52
 msgid "Auto Height"
@@ -1695,6 +1845,10 @@ msgstr ""
 msgid "Available For Purchase"
 msgstr ""
 
+#: settings/processors/ProcessorSettings.js:254
+msgid "Available Processors"
+msgstr ""
+
 #: products/Sidebar.js:40
 #, fuzzy
 msgid "Available for purchase"
@@ -1705,9 +1859,9 @@ msgstr "購入可能"
 msgid "Average Order Value"
 msgstr "平均注文額"
 
-#: address.js:31
+#: address.js:28
 msgid "Azerbaijan"
-msgstr "アゼルバイジャン"
+msgstr ""
 
 #: src/Support/Currency.php:247
 #, fuzzy
@@ -1729,18 +1883,18 @@ msgstr "すべての請求書に戻る"
 msgid "Background Color"
 msgstr "背景色"
 
-#: address.js:32
+#: address.js:29
 msgid "Bahamas"
-msgstr "バハマ"
+msgstr ""
 
 #: src/Support/Currency.php:248
 #, fuzzy
 msgid "Bahamian Dollar"
 msgstr "バハマドル"
 
-#: address.js:33
+#: address.js:30
 msgid "Bahrain"
-msgstr "バーレーン"
+msgstr ""
 
 #: customers/modules/Balance/index.js:16
 #, fuzzy
@@ -1752,9 +1906,9 @@ msgstr "バランス"
 msgid "Balance Transactions"
 msgstr "残高取引"
 
-#: address.js:34
+#: address.js:31
 msgid "Bangladesh"
-msgstr "バングラデシュ"
+msgstr ""
 
 #: src/Support/Currency.php:249
 #, fuzzy
@@ -1766,55 +1920,65 @@ msgstr "バングラデシュ・タカ"
 msgid "Barbadian Dollar"
 msgstr "バルバドスドル"
 
-#: address.js:35
+#: address.js:32
 msgid "Barbados"
-msgstr "バルバドス"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:441
+msgid "Based on item weight"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:472
+msgid "Based on order price"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:15
+msgid "Beauty Products"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/subscription-item.js:41
 #, fuzzy
 msgid "Begins"
 msgstr "始まる"
 
-#: bumps/modules/Behavior.js:7
-#: settings/subscription/SubscriptionSettings.js:184
-#, fuzzy
-msgid "Behavior"
-msgstr "行動"
-
-#: address.js:36
+#: address.js:33
 msgid "Belarus"
-msgstr "ベラルーシ"
+msgstr ""
 
 #: src/Support/Currency.php:251
 #, fuzzy
 msgid "Belarusian Ruble"
 msgstr "ベラルーシ ルーブル"
 
-#: address.js:37
+#: address.js:34
 msgid "Belgium"
-msgstr "ベルギー"
+msgstr ""
 
-#: address.js:38
+#: address.js:35
 msgid "Belize"
-msgstr "ベリーズ"
+msgstr ""
 
 #: src/Support/Currency.php:252
 #, fuzzy
 msgid "Belize Dollar"
 msgstr "ベリーズドル"
 
-#: address.js:39
+#: address.js:36
 msgid "Benin"
-msgstr "ベナン"
+msgstr ""
 
-#: address.js:40
+#: address.js:37
 msgid "Bermuda"
-msgstr "バミューダ"
+msgstr ""
 
 #: src/Support/Currency.php:253
 #, fuzzy
 msgid "Bermudian Dollar"
 msgstr "バミューダドル"
+
+#: settings/processors/ProcessorItem.js:38
+msgid "Beta"
+msgstr ""
 
 #: admin/advanced.php:52
 #: settings/advanced/AdvancedSettings.js:91
@@ -1822,9 +1986,9 @@ msgstr "バミューダドル"
 msgid "Beta Features"
 msgstr "ベータ機能"
 
-#: address.js:41
+#: address.js:38
 msgid "Bhutan"
-msgstr "ブータン"
+msgstr ""
 
 #: src/Controllers/Web/DashboardController.php:89
 #: Controllers/CustomerController.php:54
@@ -1865,9 +2029,9 @@ msgstr "請求周期"
 msgid "Billing Periods"
 msgstr "請求期間"
 
-#: sc-customer-edit.js:105
+#: sc-customer-edit.js:110
 msgid "Billing address same as shipping"
-msgstr "請求先住所と発送先住所は同じ"
+msgstr ""
 
 #: subscriptions/edit/modules/UpcomingPeriod.js:44
 msgid "Bills Now"
@@ -1883,18 +2047,22 @@ msgstr "請求日："
 msgid "Block types that the pattern is intended to be used with."
 msgstr "パターンが使用されることを意図しているブロック タイプ。"
 
-#: address.js:42
+#: address.js:39
 msgid "Bolivia"
-msgstr "ボリビア"
+msgstr ""
 
 #: src/Support/Currency.php:254
 #, fuzzy
 msgid "Bolivian Boliviano"
 msgstr "ボリビアのボリビアーノ"
 
-#: address.js:43
+#: address.js:40
 msgid "Bonaire, Sint Eustatius and Saba"
-msgstr "ボネール、シント・ユースタティウスおよびサバ"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:51
+msgid "Books"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:72
 #: components/UpgradeModal.js:19
@@ -1910,9 +2078,9 @@ msgstr "ボーダー"
 msgid "Borderless"
 msgstr "ボーダー無し"
 
-#: address.js:44
+#: address.js:41
 msgid "Bosnia and Herzegovina"
-msgstr "ボスニア・ヘルツェゴビナ"
+msgstr ""
 
 #: src/Support/Currency.php:255
 #, fuzzy
@@ -1928,9 +2096,9 @@ msgstr ""
 msgid "Both a customer and source ID have been provided, but the source has not been saved to the customer. To create a charge for a customer with a specified source, you must first save the card details."
 msgstr ""
 
-#: address.js:45
+#: address.js:42
 msgid "Botswana"
-msgstr "ボツワナ"
+msgstr ""
 
 #: src/Support/Currency.php:256
 #, fuzzy
@@ -1941,9 +2109,13 @@ msgstr "ボツワナ プラ"
 msgid "Bottom Border"
 msgstr "ボタンボーダー"
 
-#: address.js:46
+#: address.js:43
 msgid "Bouvet Island"
-msgstr "ブーベ島"
+msgstr ""
+
+#: store/add-entities.js:25
+msgid "Brand"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:79
 msgid "Brand Color"
@@ -1953,27 +2125,27 @@ msgstr "ブランドカラー"
 msgid "Brand Settings"
 msgstr "ブランド設定"
 
-#: address.js:47
+#: address.js:44
 msgid "Brazil"
-msgstr "ブラジル"
+msgstr ""
 
 #: src/Support/Currency.php:257
 #, fuzzy
 msgid "Brazilian Real"
 msgstr "ブラジルレアル"
 
-#: address.js:48
+#: address.js:45
 msgid "British Indian Ocean Territory"
-msgstr "イギリス領インド洋地域"
+msgstr ""
 
 #: src/Support/Currency.php:258
 #, fuzzy
 msgid "British Pound"
 msgstr "英国ポンド"
 
-#: address.js:49
+#: address.js:46
 msgid "Brunei Darussalam"
-msgstr "ブルネイ ダルサラーム"
+msgstr ""
 
 #: src/Support/Currency.php:259
 #, fuzzy
@@ -1985,9 +2157,9 @@ msgstr "ブルネイ・ドル"
 msgid "BuddyBoss Group"
 msgstr "BuddyBossグループ"
 
-#: address.js:50
+#: address.js:47
 msgid "Bulgaria"
-msgstr "ブルガリア"
+msgstr ""
 
 #: src/Support/Currency.php:260
 #, fuzzy
@@ -2045,13 +2217,13 @@ msgstr "バンプ"
 msgid "Bundle Discount"
 msgstr "バンドル割引"
 
-#: address.js:51
+#: address.js:48
 msgid "Burkina Faso"
-msgstr "ブルキナファソ"
+msgstr ""
 
-#: address.js:52
+#: address.js:49
 msgid "Burundi"
-msgstr "ブルンジ"
+msgstr ""
 
 #: src/Support/Currency.php:261
 #, fuzzy
@@ -2135,6 +2307,10 @@ msgstr ""
 msgid "By %s"
 msgstr "By %s"
 
+#: onboarding/components/InitialSetup.js:88
+msgid "By continuing, you agree to the"
+msgstr ""
+
 #: Controllers/SubscriptionController.php:244
 #: Controllers/SubscriptionController.php:248
 msgid "By updating or canceling your plan, you agree to the <a href=\"%1$1s\" target=\"_blank\">%2$2s</a>"
@@ -2154,9 +2330,9 @@ msgstr "CA GST"
 msgid "CA GST Label"
 msgstr ""
 
-#: address.js:53
+#: address.js:50
 msgid "Cabo Verde"
-msgstr "カーボベルデ"
+msgstr ""
 
 #: layouts/partials/admin-settings-header.php:18
 #, fuzzy
@@ -2168,18 +2344,18 @@ msgstr "キャッシュがクリアされました。"
 msgid "Call to action"
 msgstr "アクションの呼び出し"
 
-#: address.js:54
+#: address.js:51
 msgid "Cambodia"
-msgstr "カンボジア"
+msgstr ""
 
 #: src/Support/Currency.php:262
 #, fuzzy
 msgid "Cambodian Riel"
 msgstr "カンボジア リエル"
 
-#: address.js:55
+#: address.js:52
 msgid "Cameroon"
-msgstr "カメルーン"
+msgstr ""
 
 #: Blocks/Dashboard/CustomerDownloads/edit.js:57
 #: Blocks/Dashboard/OrderDownloads/edit.js:55
@@ -2277,14 +2453,14 @@ msgstr ""
 msgid "Cancel Pending Update"
 msgstr "保留中の更新をキャンセル"
 
-#: sc-subscription-cancel.js:94
-#: sc-subscription.js:141
+#: sc-subscription-cancel2.js:66
+#: sc-subscription.js:183
 msgid "Cancel Plan"
-msgstr "プランをキャンセル"
+msgstr ""
 
-#: sc-subscription.js:135
+#: sc-subscription.js:181
 msgid "Cancel Scheduled Update"
-msgstr "予定されている更新をキャンセル"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:75
 #: components/data-tables/subscriptions-data-table/Cancel.js:124
@@ -2305,9 +2481,13 @@ msgstr ""
 msgid "Cancel behavior. Either pending or immediate."
 msgstr "行動をキャンセルします。保留中または即時。"
 
-#: sc-subscription-cancel.js:94
+#: orders/modules/Fulfillment/Fulfilled.js:155
+msgid "Cancel fulfillment"
+msgstr ""
+
+#: sc-subscription-cancel2.js:66
 msgid "Cancel your plan"
-msgstr "プランをキャンセル"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:62
 #: orders/modules/Refunds.js:56
@@ -2492,9 +2672,9 @@ msgstr "カート一覧"
 msgid "Carts list navigation"
 msgstr "カート一覧のナビゲーション"
 
-#: address.js:57
+#: address.js:54
 msgid "Cayman Islands"
-msgstr "ケイマン諸島"
+msgstr ""
 
 #: src/Support/Currency.php:265
 #, fuzzy
@@ -2506,18 +2686,18 @@ msgstr "ケイマン諸島ドル"
 msgid "Central African Cfa Franc"
 msgstr "中央アフリカ Cfa フラン"
 
-#: address.js:58
+#: address.js:55
 msgid "Central African Republic"
-msgstr "中央アフリカ共和国"
+msgstr ""
 
 #: src/Support/Currency.php:267
 #, fuzzy
 msgid "Cfp Franc"
 msgstr "Cfpフラン"
 
-#: address.js:59
+#: address.js:56
 msgid "Chad"
-msgstr "チャド"
+msgstr ""
 
 #: bumps/modules/Price.js:46
 #: subscriptions/edit/modules/Price.js:101
@@ -2526,13 +2706,17 @@ msgstr "チャド"
 msgid "Change"
 msgstr "変化"
 
-#: sc-product-selected-price.js:70
+#: sc-product-selected-price.js:73
 msgid "Change Amount"
 msgstr ""
 
 #: Controllers/SubscriptionController.php:217
 msgid "Change Payment Method"
 msgstr "お支払い方法を変更"
+
+#: subscriptions/edit/modules/Price.js:111
+msgid "Change Price"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:67
 #, fuzzy
@@ -2632,9 +2816,9 @@ msgstr "この商品に税金を請求する"
 msgid "Charges"
 msgstr "料金"
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Check your email for a confirmation code"
-msgstr "メールで確認コードをチェックしてください"
+msgstr ""
 
 #: Blocks/Checkbox/block.json
 msgctxt "block title"
@@ -2655,8 +2839,7 @@ msgstr "デフォルトでチェック"
 msgid "Checked by default"
 msgstr "デフォルトでチェック"
 
-#: sc-payment-method2.js:19
-#, fuzzy
+#: sc-payment-method2.js:24
 msgid "Checking"
 msgstr ""
 
@@ -2755,18 +2938,22 @@ msgstr "チェックアウト フォーム リストのナビゲーション"
 msgid "Checkout Recovery Rate"
 msgstr "チェックアウト回収率"
 
-#: address.js:60
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:164
+msgid "Checkouts"
+msgstr ""
+
+#: address.js:57
 msgid "Chile"
-msgstr "チリ"
+msgstr ""
 
 #: src/Support/Currency.php:268
 #, fuzzy
 msgid "Chilean Peso"
 msgstr "チリペソ"
 
-#: address.js:61
+#: address.js:58
 msgid "China"
-msgstr "中国"
+msgstr ""
 
 #: src/Support/Currency.php:269
 #, fuzzy
@@ -2797,9 +2984,9 @@ msgstr ""
 msgid "Choose A Starting Design"
 msgstr ""
 
-#: sc-subscription-switch.js:181
+#: sc-subscription-switch.js:190
 msgid "Choose Amount"
-msgstr "数量を選択"
+msgstr ""
 
 #: Blocks/Form/components/SelectPrices.js:54
 #, fuzzy
@@ -2820,9 +3007,9 @@ msgstr "フォームを選択"
 msgid "Choose a product"
 msgstr "製品を選択"
 
-#: sc-cancel-survey2.js:82
+#: sc-cancel-survey2.js:88
 msgid "Choose a reason"
-msgstr "理由を選択"
+msgstr ""
 
 #: subscriptions/edit/modules/Trial.js:24
 msgid "Choose a trial end date"
@@ -2834,6 +3021,10 @@ msgstr "トライアルの終了日を選択"
 msgid "Choose a type"
 msgstr "タイプを選択"
 
+#: onboarding/components/StarterTemplates.js:75
+msgid "Choose some example data or start from scratch."
+msgstr ""
+
 #: settings/tax/TaxSettings.js:139
 msgid "Choose the checkout behavior when VAT verification fails."
 msgstr "VATの認証に失敗した際、どんなアクションを取るか選択してください。"
@@ -2842,19 +3033,23 @@ msgstr "VATの認証に失敗した際、どんなアクションを取るか選
 msgid "Choose the style of order numbers."
 msgstr "注文番号のスタイルを選択する。"
 
-#: address.js:62
+#: address.js:59
 msgid "Christmas Island"
-msgstr "クリスマス島"
+msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:32
-#: sc-order-shipping-address2.js:41
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:39
+#: sc-order-shipping-address2.js:48
 msgid "City"
-msgstr "市区町村"
+msgstr ""
 
 #: Blocks/Address/edit.js:116
 msgid "City Placeholder"
 msgstr "市区町村のプレースホルダー"
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:162
+msgid "Claim Account"
+msgstr ""
 
 #: layouts/partials/admin-settings-header.php:41
 #, fuzzy
@@ -2874,18 +3069,23 @@ msgstr "ワンクリックで、全てのテストデータが削除できます
 msgid "Click here to add some radio text..."
 msgstr "ここをクリックしてラジオテキストを追加..."
 
-#: sc-dialog2.js:164
-#: sc-drawer2.js:154
+#. translators: Close this modal window.
+#: sc-dialog2.js:152
+#: sc-drawer2.js:140
 msgid "Close"
-msgstr "閉じる"
+msgstr ""
 
 #: Blocks/Totals/edit.js:101
 msgid "Closed Text"
 msgstr "非公開テキスト"
 
-#: address.js:63
+#: onboarding/components/StarterTemplates.js:20
+msgid "Clothing & Apparel"
+msgstr ""
+
+#: address.js:60
 msgid "Cocos (Keeling) Islands"
-msgstr "ココス (キーリング) 諸島"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:76
 #: abandoned-checkouts/modules/Coupon.js:37
@@ -2933,9 +3133,9 @@ msgstr "EU VATを徴収する"
 msgid "Collect Tax"
 msgstr ""
 
-#: address.js:64
+#: address.js:61
 msgid "Colombia"
-msgstr "コロンビア"
+msgstr ""
 
 #: src/Support/Currency.php:270
 #, fuzzy
@@ -2981,9 +3181,9 @@ msgstr "WordPress でのコマースは、かつてないほど簡単、高速�
 msgid "Comorian Franc"
 msgstr "コモロフラン"
 
-#: address.js:65
+#: address.js:62
 msgid "Comoros"
-msgstr "コモロ"
+msgstr ""
 
 #: products/components/price/parts/ScratchAmount.js:8
 #, fuzzy
@@ -2994,6 +3194,14 @@ msgstr "価格で比較"
 #, fuzzy
 msgid "Complete Installation"
 msgstr "完全なインストール"
+
+#: components/ClaimNoticeModal.js:40
+msgid "Complete Setup"
+msgstr ""
+
+#: components/MediaLibrary/index.js:300
+msgid "Complete Setup!"
+msgstr ""
 
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:114
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:124
@@ -3007,9 +3215,17 @@ msgstr "サインアップを完了する"
 msgid "Complete Subscription"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:60
+#: sc-provisional-banner.js:14
+msgid "Complete your store setup to go live."
+msgstr ""
+
+#: Blocks/Form/edit.js:449
+msgid "Complete your store setup."
+msgstr ""
+
+#: sc-subscription-status-badge2.js:63
 msgid "Completed"
-msgstr "完了"
+msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
@@ -3017,6 +3233,10 @@ msgstr "完了"
 #, fuzzy
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr "削除時にすべてのプラグイン データを完全に削除します。これは、元に戻すことはできません。"
+
+#: settings/shipping/zone/ShippingZone.js:96
+msgid "Condition"
+msgstr ""
 
 #: Blocks/ConditionalForm/edit.js:138
 #: Blocks/ConditionalForm/edit.js:162
@@ -3067,50 +3287,77 @@ msgstr "確認"
 msgid "Confirm Charge"
 msgstr ""
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: onboarding/components/ConfirmStoreEmail.js:49
+msgid "Confirm Email for Store Notifications"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:313
+#: checkouts/CreateCheckout.js:333
+msgid "Confirm Manual Payment"
+msgstr ""
+
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "Confirm New Password"
-msgstr "パスワード（確認用）"
+msgstr ""
 
-#: sc-order-password.js:63
+#: sc-order-password.js:74
 msgid "Confirm Password"
-msgstr "確認パスワード"
+msgstr ""
 
-#: sc-login-form.js:145
+#: onboarding/components/ConfirmStoreDetails.js:38
+msgid "Confirm Store Details"
+msgstr ""
+
+#: sc-login-form.js:147
 msgid "Confirmation code"
-msgstr "確認コード"
+msgstr ""
 
 #: Blocks/Form/edit.js:338
 msgid "Confirming Payment"
 msgstr "お支払いの確認"
 
-#: address.js:66
+#: address.js:63
 msgid "Congo"
-msgstr "コンゴ"
+msgstr ""
 
-#: address.js:67
+#: address.js:64
 msgid "Congo, The Democratic Republic of the"
-msgstr "コンゴ民主共和国"
+msgstr ""
 
 #: src/Support/Currency.php:272
 #, fuzzy
 msgid "Congolese Franc"
 msgstr "コンゴフラン"
 
+#: onboarding/components/SetupDone.js:44
+msgid "Congratulations!"
+msgstr ""
+
+#: onboarding/components/InitialSetup.js:78
+msgid "Connect Existing Store"
+msgstr ""
+
 #: customers/modules/User/index.js:203
 #, fuzzy
 msgid "Connect a user"
 msgstr "ユーザーを接続する"
 
-#: admin/processors.php:135
-#, fuzzy
-msgid "Connect with PayPal to add a PayPal express button to your checkout."
-msgstr "PayPal に接続して、チェックアウトに PayPal エクスプレス ボタンを追加します。"
+#: settings/processors/ProcessorSettings.js:213
+msgid "Connect with Mollie to add a Mollie express button to your checkout."
+msgstr ""
 
-#: admin/processors.php:57
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:190
+msgid "Connect with PayPal to add a PayPal express button to your checkout."
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:129
 msgid "Connect with Stripe to accept credit cards and other payment methods."
-msgstr "Stripe に接続して、クレジット カードやその他の支払い方法を受け入れます。"
+msgstr ""
+
+#: settings/processors/ProcessorSettings.js:238
+msgid "Connect with paystack to add a paystack express button to your checkout."
+msgstr ""
 
 #: src/Rest/AccountRestServiceProvider.php:115
 #: src/Rest/SettingsRestServiceProvider.php:115
@@ -3158,9 +3405,9 @@ msgstr ""
 msgid "Continue"
 msgstr "続ける"
 
-#: address.js:68
+#: address.js:65
 msgid "Cook Islands"
-msgstr "クック諸島"
+msgstr ""
 
 #: products/modules/Prices/Price/CopyInput.js:14
 #, fuzzy
@@ -3183,14 +3430,18 @@ msgstr "コピーしました！"
 msgid "Copy"
 msgstr "コピー"
 
+#: orders/modules/Fulfillment/CreateFulfillment.js:276
+msgid "Copy Address"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:210
 #, fuzzy
 msgid "Copy Links"
 msgstr "リンクをコピー"
 
-#: address.js:69
+#: address.js:66
 msgid "Costa Rica"
-msgstr "コスタリカ"
+msgstr ""
 
 #: src/Support/Currency.php:273
 #, fuzzy
@@ -3221,9 +3472,9 @@ msgstr ""
 msgid "Could not download the file."
 msgstr "ファイルをダウンロードできませんでした。"
 
-#: sc-session-provider2.js:240
+#: sc-session-provider2.js:189
 msgid "Could not find checkout. Please contact us before attempting to purchase again."
-msgstr "決済が見つかりませんでした。再度購入する前に、お問い合わせください。"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/StartPlan.js:46
 msgid "Could not start subscription."
@@ -3248,9 +3499,9 @@ msgstr "国"
 msgid "Country Placeholder"
 msgstr "国のプレースホルダー"
 
-#: sc-compact-address2.js:45
+#: sc-compact-address2.js:46
 msgid "Country or region"
-msgstr "国もしくは地域"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:33
 #, fuzzy
@@ -3320,6 +3571,10 @@ msgstr "クーポン"
 #, fuzzy
 msgid "Course Access"
 msgstr "コースへのアクセス"
+
+#: onboarding/components/StarterTemplates.js:35
+msgid "Courses"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:115
 msgid "Cover"
@@ -3411,6 +3666,16 @@ msgstr "新規注文バンプの作成"
 msgid "Create New Product"
 msgstr "新しい製品を作成する"
 
+#: onboarding/components/InitialSetup.js:63
+msgid "Create New Store"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:232
+#: checkouts/CreateCheckout.js:249
+#: checkouts/CreateCheckout.js:352
+msgid "Create Order"
+msgstr ""
+
 #: products/modules/Prices/NewPrice/index.js:195
 #, fuzzy
 msgid "Create Price"
@@ -3441,6 +3706,10 @@ msgstr ""
 
 #: settings/advanced/components/CustomerSyncModal.js:83
 msgid "Create WordPress users if the user does not yet exist."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:46
+msgid "Create Zone"
 msgstr ""
 
 #: Blocks/CheckoutForm/components/Empty.js:77
@@ -3538,31 +3807,31 @@ msgstr "クレジットカード"
 msgid "Credit Card selected for check out."
 msgstr ""
 
-#: address.js:70
+#: address.js:67
 msgid "Croatia"
-msgstr "クロアチア"
+msgstr ""
 
 #: src/Support/Currency.php:274
 #, fuzzy
 msgid "Croatian Kuna"
 msgstr "クロアチアクーナ"
 
-#: address.js:71
+#: address.js:68
 msgid "Cuba"
-msgstr "キューバ"
+msgstr ""
 
-#: address.js:72
+#: address.js:69
 msgid "Curaçao"
-msgstr "キュラソー"
+msgstr ""
 
 #: subscriptions/edit/modules/PaymentMethod/EditPaymentMethod.js:82
 #, fuzzy
 msgid "Current"
 msgstr ""
 
-#: sc-subscription-payment-method.js:147
+#: sc-subscription-payment-method.js:154
 msgid "Current Payment Method"
-msgstr "現在のお支払い方法"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:113
 #: Controllers/SubscriptionController.php:203
@@ -3596,6 +3865,10 @@ msgstr "カスタムボタン"
 #, fuzzy
 msgid "Custom Call to action"
 msgstr "カスタム行動を促すフレーズ"
+
+#: settings/shipping/ShippingSettings.js:195
+msgid "Custom Shipping Profiles"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:17
 #: products/components/SelectTemplatePart/create-modal.js:17
@@ -3730,11 +4003,9 @@ msgctxt "block title"
 msgid "Customer Payment Methods"
 msgstr "顧客のお支払い方法"
 
-#: layouts/partials/admin-settings-sidebar.php:40
-#: settings/portal/PortalSettings.js:39
-#, fuzzy
+#: settings/subscription/SubscriptionSettings.js:297
 msgid "Customer Portal"
-msgstr "カスタマーポータル"
+msgstr ""
 
 #: products/modules/Advanced.js:27
 #, fuzzy
@@ -3822,11 +4093,31 @@ msgstr "顧客はダッシュボードから料金プランを切り替えるこ
 msgid "Customers will enter this discount code at checkout. Leave this blank and we will generate one for you."
 msgstr "お客様はチェックアウト時にこの割引コードを入力します。これを空白のままにすると、作成されます。"
 
+#: settings/shipping/zone/ShippingZone.js:79
+msgid "Customers won't be able to complete checkout for products in this zone."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:194
+msgid "Customers won't see this."
+msgstr ""
+
+#: products/modules/Shipping.js:101
+msgid "Customers won’t enter shipping details at checkout."
+msgstr ""
+
+#: settings/shipping/profile/AddShippingProfile.js:79
+msgid "Customers won’t see this."
+msgstr ""
+
 #: dashboard/components/GetStarted.js:85
 #: dashboard/components/GetStarted.js:91
 #, fuzzy
 msgid "Customize"
 msgstr "カスタマイズ"
+
+#: onboarding/components/ConfirmStoreDetails.js:39
+msgid "Customize and configure your store settings."
+msgstr ""
 
 #: dashboard/components/GetStarted.js:86
 #, fuzzy
@@ -3851,22 +4142,22 @@ msgstr ""
 msgid "Customize your checkout forms with a no-code experience."
 msgstr "ノーコード エクスペリエンスでチェックアウト フォームをカスタマイズします。"
 
-#: address.js:73
+#: address.js:70
 msgid "Cyprus"
-msgstr "キプロス"
+msgstr ""
 
 #: src/Support/Currency.php:275
 #, fuzzy
 msgid "Czech Koruna"
 msgstr "チェココルナ"
 
-#: address.js:74
+#: address.js:71
 msgid "Czechia"
-msgstr "チェコ"
+msgstr ""
 
-#: address.js:75
+#: address.js:72
 msgid "Côte d'Ivoire"
-msgstr "コートジボワール"
+msgstr ""
 
 #: dashboard/components/overview/parts/ReportByDropdown.js:11
 #: dashboard/components/overview/parts/ReportByDropdown.js:24
@@ -4019,8 +4310,12 @@ msgstr ""
 msgid "Delete"
 msgstr "消去"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Delete Payment Method"
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:54
+msgid "Delete Shipping Profile"
 msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:191
@@ -4060,9 +4355,16 @@ msgstr "削除しました。"
 msgid "Deleting This is Restricted"
 msgstr ""
 
-#: address.js:76
+#: src/Controllers/Admin/Orders/OrdersListTable.php:390
+#: orders/modules/Fulfillment/components/StatusDropdown.js:21
+#: sc-fulfillment-shipping-status-badge2.js:9
+#: sc-order-shipment-badge2.js:10
+msgid "Delivered"
+msgstr ""
+
+#: address.js:73
 msgid "Denmark"
-msgstr "デンマーク"
+msgstr ""
 
 #: products/components/SelectTemplate/create-modal.js:80
 #: products/components/SelectTemplatePart/create-modal.js:84
@@ -4096,6 +4398,10 @@ msgstr "詳細"
 #, fuzzy
 msgid "Determines whether the pattern is visible in inserter."
 msgstr "インサーターでパターンを表示するかどうかを決定します。"
+
+#: products/modules/Shipping.js:85
+msgid "Digital product or service"
+msgstr ""
 
 #: coupons/components/DisableModal.js:27
 #: settings/processors/ManualPaymentMethod.js:136
@@ -4164,8 +4470,7 @@ msgstr "割引設定"
 msgid "Discounts"
 msgstr "割引"
 
-#: sc-password-nag.js:86
-#, fuzzy
+#: sc-password-nag.js:98
 msgid "Dismiss"
 msgstr ""
 
@@ -4380,6 +4685,11 @@ msgctxt "block description"
 msgid "Display the cart subtotal"
 msgstr "カートの小計を表示する"
 
+#: Blocks/ShippingChoices/block.json
+msgctxt "block description"
+msgid "Display the list of shipping choices"
+msgstr ""
+
 #: Blocks/Product/Description/block.json
 msgctxt "block description"
 msgid "Display the product description"
@@ -4389,6 +4699,11 @@ msgstr ""
 msgctxt "block description"
 msgid "Display the session totals."
 msgstr "セッションの合計を表示する。"
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block description"
+msgid "Display the shipping amount"
+msgstr ""
 
 #: Blocks/StoreLogo/block.json
 msgctxt "block description"
@@ -4400,8 +4715,7 @@ msgctxt "block description"
 msgid "Display your order bumps."
 msgstr "セット商品を表示"
 
-#: sc-pagination2.js:37
-#, fuzzy
+#: sc-pagination2.js:40
 msgid "Displaying %1d to %2d of %3d items"
 msgstr ""
 
@@ -4595,27 +4909,27 @@ msgctxt "block title"
 msgid "Divider"
 msgstr "区切り線"
 
-#: address.js:77
+#: address.js:74
 msgid "Djibouti"
-msgstr "ジブチ"
+msgstr ""
 
 #: src/Support/Currency.php:277
 #, fuzzy
 msgid "Djiboutian Franc"
 msgstr "ジブチフラン"
 
-#: address.js:78
+#: address.js:75
 msgid "Dominica"
-msgstr "ドミニカ"
+msgstr ""
 
 #: src/Support/Currency.php:278
 #, fuzzy
 msgid "Dominican Peso"
 msgstr "ドミニカ ペソ"
 
-#: address.js:79
+#: address.js:76
 msgid "Dominican Republic"
-msgstr "ドミニカ共和国"
+msgstr ""
 
 #: components/data-tables/subscriptions-data-table/Cancel.js:130
 #: components/data-tables/subscriptions-data-table/subscription-item.js:117
@@ -4646,11 +4960,6 @@ msgstr ""
 #: settings/abandoned/util.js:9
 msgid "Don't send"
 msgstr ""
-
-#: src/Controllers/Admin/Onboarding.php:46
-#, fuzzy
-msgid "Donation"
-msgstr "寄付"
 
 #: Blocks/Donation/block.json
 msgctxt "block title"
@@ -4701,9 +5010,9 @@ msgstr "領収書をダウンロード"
 msgid "Download Receipt / Invoice"
 msgstr "領収書/請求書のダウンロード"
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Download Receipt/Invoice"
-msgstr "レシート/請求書をダウンロード"
+msgstr ""
 
 #: products/modules/Downloads.js:58
 #, fuzzy
@@ -4738,13 +5047,17 @@ msgstr "ダウンロード"
 msgid "Draft"
 msgstr "下書き"
 
+#: store/add-entities.js:88
+msgid "Draft Checkout"
+msgstr ""
+
 #: src/Rest/CustomerRestServiceProvider.php:90
 msgid "Dry run the sync."
 msgstr ""
 
-#: sc-checkout.js:187
+#: sc-checkout.js:203
 msgid "Due to processor restrictions, only one checkout form is allowed on the page."
-msgstr "プロセッサーの制限のため、ページには1つの決済フォームしか表示できません。"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:121
 #, fuzzy
@@ -4755,6 +5068,11 @@ msgstr "複製"
 #, fuzzy
 msgid "Duration"
 msgstr "間隔"
+
+#: settings/shipping/method/ShippingMethodForm.js:127
+#: settings/shipping/rate/ShippingRateForm.js:319
+msgid "E.g. 1-2 days"
+msgstr ""
 
 #: orders/modules/TaxInfo.js:10
 #: tax.js:19
@@ -4776,9 +5094,13 @@ msgstr ""
 msgid "East Caribbean Dollar"
 msgstr "東カリブドル"
 
-#: address.js:80
+#: Blocks/ShippingChoices/edit.js:43
+msgid "Economy"
+msgstr ""
+
+#: address.js:77
 msgid "Ecuador"
-msgstr "エクアドル"
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:281
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:262
@@ -4800,6 +5122,10 @@ msgstr "編集"
 #, fuzzy
 msgid "Edit Activation"
 msgstr "アクティベーションを編集"
+
+#: subscriptions/edit/modules/Price.js:105
+msgid "Edit Amount"
+msgstr ""
 
 #: bumps/EditBump.js:173
 #, fuzzy
@@ -4869,6 +5195,18 @@ msgstr "商品グループの編集"
 msgid "Edit Promotion Code"
 msgstr "プロモーション コードの編集"
 
+#: checkouts/modules/Address.js:120
+msgid "Edit Shipping & Tax Address"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:90
+msgid "Edit Shipping Method"
+msgstr ""
+
+#: settings/shipping/rate/EditShippingRate.js:17
+msgid "Edit Shipping Rate"
+msgstr ""
+
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:394
 #: subscriptions/edit/EditSubscription.js:227
 msgid "Edit Subscription"
@@ -4876,6 +5214,18 @@ msgstr "定期購読の編集"
 
 #: src/WordPress/PostTypes/ProductPagePostTypeService.php:41
 msgid "Edit SureCart Product"
+msgstr ""
+
+#: checkouts/modules/Tax/index.js:126
+msgid "Edit Tax ID"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/AddTracking.js:69
+msgid "Edit Tracking"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:264
+msgid "Edit Zone"
 msgstr ""
 
 #: products/components/SelectTemplate/form.js:125
@@ -4887,23 +5237,27 @@ msgstr ""
 msgid "Edit the layout of each product"
 msgstr ""
 
+#: orders/modules/Fulfillment/Fulfilled.js:144
+msgid "Edit tracking"
+msgstr ""
+
 #: Blocks/CartItems/edit.js:44
 #: Blocks/LineItems/edit.js:36
 msgid "Editable"
 msgstr "編集可能"
 
-#: address.js:81
+#: address.js:78
 msgid "Egypt"
-msgstr "エジプト"
+msgstr ""
 
 #: src/Support/Currency.php:280
 #, fuzzy
 msgid "Egyptian Pound"
 msgstr "エジプトポンド"
 
-#: address.js:82
+#: address.js:79
 msgid "El Salvador"
-msgstr "エルサルバドル"
+msgstr ""
 
 #: src/Controllers/Admin/Customers/CustomersListTable.php:50
 #: coupons/modules/CustomerSelector.js:132
@@ -4939,9 +5293,13 @@ msgstr "メール送信済み"
 msgid "Email Status"
 msgstr "メールステータス"
 
-#: sc-login-provider2.js:79
+#: settings/customer/CustomerSettings.js:307
+msgid "Email Verification Code"
+msgstr ""
+
+#: sc-login-provider2.js:83
 msgid "Email or Username"
-msgstr "メールアドレスもしくはユーザー名"
+msgstr ""
 
 #: src/Rest/CustomerLinksRestServiceProvider.php:59
 #, fuzzy
@@ -4973,9 +5331,17 @@ msgstr ""
 msgid "Enable PayPal payment"
 msgstr "PayPal支払いを有効化"
 
+#: Blocks/Payment/components/Inspector.js:108
+msgid "Enable Paystack payment"
+msgstr ""
+
 #: settings/account/AccountSettings.js:260
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr "決済フォームでリキャプチャによるスパム対策が有効化されます。"
+
+#: settings/shipping/ShippingSettings.js:146
+msgid "Enable Shipping Rates"
+msgstr ""
 
 #: Blocks/Payment/components/Inspector.js:65
 msgid "Enable Stripe payment"
@@ -5039,6 +5405,10 @@ msgstr ""
 msgid "Enabled Processors"
 msgstr "有効化されたプロセッサー"
 
+#: settings/shipping/ShippingSettings.js:148
+msgid "Enabling shipping rates allows you to charge shipping costs and restrict purchase areas."
+msgstr ""
+
 #: coupons/modules/Limits.js:72
 #, fuzzy
 msgid "End Date"
@@ -5087,6 +5457,10 @@ msgstr ""
 msgid "Enter An Amount"
 msgstr ""
 
+#: checkouts/modules/Payment.js:141
+msgid "Enter Coupon Code"
+msgstr ""
+
 #: src/Routing/PermalinksSettingsService.php:86
 msgid "Enter a custom base to use. A base must be set or WordPress will use default instead."
 msgstr ""
@@ -5104,6 +5478,10 @@ msgstr "フォームにタイトルを記入"
 msgid "Enter a website URL"
 msgstr "ウェブサイトのURLを入力"
 
+#: checkouts/modules/Price.js:215
+msgid "Enter an Amount"
+msgstr ""
+
 #: settings/brand/BrandSettings.js:159
 msgid "Enter an email"
 msgstr "メールアドレスを入力"
@@ -5115,6 +5493,10 @@ msgstr "電話番号を入力"
 #: sc-coupon-form2.js:73
 msgid "Enter coupon code"
 msgstr "クーポンコードの入力"
+
+#: onboarding/components/ConfirmStoreEmail.js:61
+msgid "Enter email address"
+msgstr ""
 
 #: licenses/modules/Details/index.js:56
 #, fuzzy
@@ -5154,26 +5536,25 @@ msgstr "ライセンスキーを入力してください"
 msgid "Enter your license key to activate your plan on thie store."
 msgstr "このストアでプランを有効化するためにライセンスキーを入力してください。"
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "Enter your password"
-msgstr "パスワードを入力"
+msgstr ""
 
-#: address.js:83
+#: address.js:80
 msgid "Equatorial Guinea"
-msgstr "赤道ギニア"
+msgstr ""
 
-#: address.js:84
+#: address.js:81
 msgid "Eritrea"
-msgstr "エリトリア"
+msgstr ""
 
-#: sc-cart-form.js:128
-#: sc-dashboard-module2.js:16
-#: sc-login-form.js:106
-#: sc-paypal-add-method.js:103
-#: sc-stripe-add-method.js:128
-#: sc-upcoming-invoice.js:208
+#: sc-cart-form.js:129
+#: sc-dashboard-module2.js:17
+#: sc-paypal-add-method.js:108
+#: sc-stripe-add-method.js:132
+#: sc-upcoming-invoice.js:221
 msgid "Error"
-msgstr "エラー"
+msgstr ""
 
 #: abandoned-checkouts/components/Link.js:35
 #: licenses/modules/Details/Copy.js:16
@@ -5194,21 +5575,20 @@ msgid "Error."
 msgstr "エラー。"
 
 #: sc-line-item-tax2.js:18
-#, fuzzy
 msgid "Estimated %s"
 msgstr ""
 
-#: address.js:85
+#: address.js:82
 msgid "Estonia"
-msgstr "エストニア"
+msgstr ""
 
-#: address.js:86
+#: address.js:83
 msgid "Eswatini"
-msgstr "エスワティニ"
+msgstr ""
 
-#: address.js:87
+#: address.js:84
 msgid "Ethiopia"
-msgstr "エチオピア"
+msgstr ""
 
 #: src/Support/Currency.php:281
 #, fuzzy
@@ -5258,14 +5638,18 @@ msgstr "期限切れ"
 msgid "Export CSV"
 msgstr "CSVで書き出し"
 
+#: Blocks/ShippingChoices/edit.js:34
+msgid "Express"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block title"
 msgid "Express Payment"
 msgstr "エクスプレスペイメント"
 
-#: sc-stripe-payment-request2.js:287
+#: sc-stripe-payment-request2.js:286
 msgid "Express Payment"
-msgstr "エクスプレスペイメント"
+msgstr ""
 
 #: products/modules/Downloads.js:146
 msgid "External Link"
@@ -5290,9 +5674,17 @@ msgstr "定期購読をキャンセルできませんでした。"
 msgid "Failed to create refund."
 msgstr "払い戻しを作成できませんでした。"
 
-#: sc-paypal-add-method.js:74
+#: settings/shipping/rate/ShippingRateForm.js:141
+msgid "Failed to create shipping method"
+msgstr ""
+
+#: onboarding/Onboarding.js:102
+msgid "Failed to create store. Please try again."
+msgstr ""
+
+#: sc-paypal-add-method.js:79
 msgid "Failed to load the PayPal JS SDK script"
-msgstr "PayPalのJS SDKスクリプトのロードに失敗しました。"
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:10
 #, fuzzy
@@ -5318,37 +5710,49 @@ msgstr "定期購読のキャンセルを解除できませんでした。"
 msgid "Failed to update. Please check for errors and try again."
 msgstr "更新できませんでした。エラーがないか確認して、もう一度やり直してください。"
 
-#: address.js:88
+#: address.js:85
 msgid "Falkland Islands (Malvinas)"
-msgstr "フォークランド諸島 (マルビナス)"
+msgstr ""
 
 #: src/Support/Currency.php:283
 #, fuzzy
 msgid "Falkland Pound"
 msgstr "フォークランド・ポンド"
 
+#: settings/shipping/zone/ShippingZone.js:183
+msgid "Fallback"
+msgstr ""
+
 #: settings/tax/TaxSettings.js:97
 #, fuzzy
 msgid "Fallback Rate"
 msgstr ""
 
-#: address.js:89
+#: settings/shipping/zone/FallbackZone.js:33
+msgid "Fallback Zone"
+msgstr ""
+
+#: address.js:86
 msgid "Faroe Islands"
-msgstr "フェロー諸島"
+msgstr ""
 
 #: products/modules/Image/ImageDisplay.js:43
 msgid "Featured"
 msgstr ""
 
-#: sc-customer-firstname.js:50
-#: sc-customer-lastname.js:47
-#: sc-customer-name.js:47
+#: checkouts/modules/Price.js:182
+msgid "Fee"
+msgstr ""
+
+#: sc-customer-firstname.js:46
+#: sc-customer-lastname.js:43
+#: sc-customer-name.js:42
 msgid "Field must not be empty."
 msgstr ""
 
-#: address.js:90
+#: address.js:87
 msgid "Fiji"
-msgstr "フィジー"
+msgstr ""
 
 #: src/Support/Currency.php:284
 #, fuzzy
@@ -5369,6 +5773,20 @@ msgstr "ファイル名"
 #, fuzzy
 msgid "Files attached to the product."
 msgstr "製品に添付されているファイル。"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:436
+msgid "Filter"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:346
+msgid "Filter by fulfillment"
+msgstr ""
+
+#. translators: Hidden accessibility text.
+#: src/Controllers/Admin/Orders/OrdersListTable.php:382
+msgid "Filter by shipment"
+msgstr ""
 
 #: src/WordPress/PostTypes/CartPostTypeService.php:222
 #: src/WordPress/PostTypes/FormPostTypeService.php:215
@@ -5403,9 +5821,9 @@ msgstr "製品を探す..."
 msgid "Fingerprint"
 msgstr "指紋"
 
-#: address.js:91
+#: address.js:88
 msgid "Finland"
-msgstr "フィンランド"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:114
 #, fuzzy
@@ -5436,6 +5854,11 @@ msgstr "氏名（名）のへプル"
 msgid "First Name Label"
 msgstr "名のラベル"
 
+#: settings/shipping/profile/ShippingProfile.js:176
+#: settings/shipping/zone/ShippingZones.js:79
+msgid "First create a shipping zone (where you ship to) and then a shipping rate (the cost to ship there)."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:242
 msgid "First email sent when a checkout is abandoned."
 msgstr "カゴ落ちしてから1通目のメールです。"
@@ -5454,6 +5877,11 @@ msgstr "修理済み"
 #, fuzzy
 msgid "Fixed Discount"
 msgstr "定額割引"
+
+#: settings/shipping/rate/ShippingRateCondition.js:53
+#: settings/shipping/rate/ShippingRateForm.js:421
+msgid "Flat Rate"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:279
 msgid "Floating Icon"
@@ -5520,9 +5948,9 @@ msgstr "フォームタイトル"
 msgid "Forms"
 msgstr "フォーム"
 
-#: address.js:92
+#: address.js:89
 msgid "France"
-msgstr "フランス"
+msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:125
 #, fuzzy
@@ -5556,17 +5984,48 @@ msgstr "無料お試し日"
 msgid "Free Trial Ends"
 msgstr ""
 
-#: address.js:93
+#: address.js:90
 msgid "French Guiana"
-msgstr "フランス領ギアナ"
+msgstr ""
 
-#: address.js:94
+#: address.js:91
 msgid "French Polynesia"
-msgstr "フランス領ポリネシア"
+msgstr ""
 
-#: address.js:95
+#: address.js:92
 msgid "French Southern Territories"
-msgstr "フランス領南方領土"
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:162
+#: orders/modules/Fulfillment/CreateFulfillment.js:341
+#: orders/modules/Fulfillment/Unfulfilled.js:75
+#: orders/modules/Fulfillment/Unfulfilled.js:87
+msgid "Fulfill Item"
+msgid_plural "Fulfill Items"
+msgstr[0] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:352
+#: orders/modules/Fulfillment/Fulfilled.js:90
+#: sc-order-fulfillment-badge.js:8
+msgid "Fulfilled"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:204
+msgid "Fulfilled on"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:104
+#: store/add-entities.js:88
+msgid "Fulfillment"
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:52
+msgid "Fulfillment canceled."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:130
+msgid "Fulfillment created."
+msgstr ""
 
 #: Blocks/CustomerDashboardButton/edit.js:50
 #: Blocks/Submit/edit.js:37
@@ -5581,11 +6040,6 @@ msgstr "フルネーム"
 #: Blocks/Columns/edit.js:125
 msgid "Full vertical height"
 msgstr "高さを画面幅いっぱい"
-
-#: settings/portal/PortalSettings.js:50
-#, fuzzy
-msgid "Functionality"
-msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:278
 #, fuzzy
@@ -6466,31 +6920,31 @@ msgstr "GST番号"
 msgid "GST Registration"
 msgstr ""
 
-#: address.js:96
+#: address.js:93
 msgid "Gabon"
-msgstr "ガボン"
+msgstr ""
 
-#: address.js:97
+#: address.js:94
 msgid "Gambia"
-msgstr "ガンビア"
+msgstr ""
 
 #: src/Support/Currency.php:285
 #, fuzzy
 msgid "Gambian Dalasi"
 msgstr "ガンビア ダラシ"
 
-#: address.js:98
+#: address.js:95
 msgid "Georgia"
-msgstr "ジョージア"
+msgstr ""
 
 #: src/Support/Currency.php:286
 #, fuzzy
 msgid "Georgian Lari"
 msgstr "グルジア ラリ"
 
-#: address.js:99
+#: address.js:96
 msgid "Germany"
-msgstr "ドイツ"
+msgstr ""
 
 #: admin/onboarding/show.php:69
 #: dashboard/components/LearnMore.js:53
@@ -6521,13 +6975,13 @@ msgstr "フォームを選択するか、新しいフォームを作成する。
 msgid "Get started with SureCart"
 msgstr "シュアカートを始めよう"
 
-#: address.js:100
+#: address.js:97
 msgid "Ghana"
-msgstr "ガーナ"
+msgstr ""
 
-#: address.js:101
+#: address.js:98
 msgid "Gibraltar"
-msgstr "ジブラルタル"
+msgstr ""
 
 #: src/Support/Currency.php:287
 #, fuzzy
@@ -6551,17 +7005,17 @@ msgstr "戻る"
 msgid "Grace Period"
 msgstr ""
 
-#: address.js:102
+#: address.js:99
 msgid "Greece"
-msgstr "ギリシャ"
+msgstr ""
 
-#: address.js:103
+#: address.js:100
 msgid "Greenland"
-msgstr "グリーンランド"
+msgstr ""
 
-#: address.js:104
+#: address.js:101
 msgid "Grenada"
-msgstr "グレナダ"
+msgstr ""
 
 #: src/Integrations/BuddyBoss/BuddyBossService.php:55
 #: src/Integrations/LearnDashGroup/LearnDashGroupService.php:55
@@ -6581,48 +7035,48 @@ msgstr "グループ名"
 msgid "Grow your store worry-free."
 msgstr "安心してお店を育ててください。"
 
-#: address.js:105
+#: address.js:102
 msgid "Guadeloupe"
-msgstr "グアドループ"
+msgstr ""
 
-#: address.js:107
+#: address.js:103
 msgid "Guatemala"
-msgstr "グアテマラ"
+msgstr ""
 
 #: src/Support/Currency.php:288
 #, fuzzy
 msgid "Guatemalan Quetzal"
 msgstr "グアテマラのケツァール"
 
-#: address.js:108
+#: address.js:104
 msgid "Guernsey"
-msgstr "ガーンジー"
+msgstr ""
 
-#: address.js:109
+#: address.js:105
 msgid "Guinea"
-msgstr "ギニア"
+msgstr ""
 
-#: address.js:110
+#: address.js:106
 msgid "Guinea-Bissau"
-msgstr "ギニアビサウ"
+msgstr ""
 
 #: src/Support/Currency.php:289
 #, fuzzy
 msgid "Guinean Franc"
 msgstr "ギニアフラン"
 
-#: address.js:111
+#: address.js:107
 msgid "Guyana"
-msgstr "ガイアナ"
+msgstr ""
 
 #: src/Support/Currency.php:290
 #, fuzzy
 msgid "Guyanese Dollar"
 msgstr "ガイアナドル"
 
-#: address.js:112
+#: address.js:108
 msgid "Haiti"
-msgstr "ハイチ"
+msgstr ""
 
 #: src/Support/Currency.php:291
 #, fuzzy
@@ -6638,9 +7092,9 @@ msgstr "ヘッダーテキスト"
 msgid "Heading %d"
 msgstr ""
 
-#: address.js:113
+#: address.js:109
 msgid "Heard Island and McDonald Islands"
-msgstr "ハード島とマクドナルド諸島"
+msgstr ""
 
 #: layouts/partials/admin-settings-sidebar.php:85
 #: Blocks/Checkbox/components/Inspector.js:39
@@ -6669,9 +7123,9 @@ msgstr "%d件のアーカイブ価格を非表示"
 msgid "Hide %d Archived Promotion Codes"
 msgstr "%d個のアーカイブ済みプロモーション コードを非表示"
 
-#: address.js:114
+#: address.js:110
 msgid "Holy See (Vatican City State)"
-msgstr "ローマ教皇庁 (バチカン)"
+msgstr ""
 
 #: web/no-customer.php:8
 #, fuzzy
@@ -6683,17 +7137,17 @@ msgstr "家"
 msgid "Honduran Lempira"
 msgstr "ホンジュラス レンピラ"
 
-#: address.js:115
+#: address.js:111
 msgid "Honduras"
-msgstr "ホンジュラス"
+msgstr ""
 
 #: settings/account/AccountSettings.js:242
 msgid "Honeypot"
 msgstr "ハニーポット"
 
-#: address.js:116
+#: address.js:112
 msgid "Hong Kong"
-msgstr "香港"
+msgstr ""
 
 #: src/Support/Currency.php:293
 #, fuzzy
@@ -6710,9 +7164,9 @@ msgstr "ボタンの追加方法"
 msgid "Hungarian Forint"
 msgstr "ハンガリーフォリント"
 
-#: address.js:117
+#: address.js:113
 msgid "Hungary"
-msgstr "ハンガリー"
+msgstr ""
 
 #. translators: %1$1s is the store name, %2$2s is the opening anchor tag, %3$3s is the closing anchor tag.
 #: src/Controllers/Web/BuyPageController.php:214
@@ -6744,9 +7198,9 @@ msgstr ""
 msgid "I.E. Pay with cash upon delivery."
 msgstr ""
 
-#: address.js:118
+#: address.js:114
 msgid "Iceland"
-msgstr "アイスランド"
+msgstr ""
 
 #: src/Support/Currency.php:295
 #, fuzzy
@@ -6862,9 +7316,9 @@ msgstr "税金や送料を徴収する場合、住所のフィールドは自動
 msgid "If there are errors in the checkout, they will display here."
 msgstr "決済でエラーが起こった場合、ここに表示されます。"
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "If you change your mind, you can renew your subscription."
-msgstr "更新もできます。"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:39
 #, fuzzy
@@ -6951,6 +7405,10 @@ msgstr ""
 msgid "In applicable tax jurisdictions, your tax ID will show on invoices. If you don't have your tax ID number yet, you can enter it later."
 msgstr ""
 
+#: sc-paystack-add-method.js:71
+msgid "In order to add a new card, we will need to make a small transaction to authenticate it. This is for authentication purposes and will be immediately refunded."
+msgstr ""
+
 #: src/Controllers/Admin/Licenses/LicensesListTable.php:127
 #: licenses/modules/Details/index.js:20
 #: sc-licenses-list.js:36
@@ -6960,25 +7418,25 @@ msgstr "非活性"
 
 #: sc-subscription-status-badge2.js:50
 msgid "Incomplete"
-msgstr "未完了"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:71
 #, fuzzy
 msgid "Increase quantity"
 msgstr "量を増やす"
 
-#: address.js:119
+#: address.js:115
 msgid "India"
-msgstr "インド"
+msgstr ""
 
 #: src/Support/Currency.php:296
 #, fuzzy
 msgid "Indian Rupee"
 msgstr "インドルピー"
 
-#: address.js:120
+#: address.js:116
 msgid "Indonesia"
-msgstr "インドネシア"
+msgstr ""
 
 #: src/Support/Currency.php:297
 #, fuzzy
@@ -7090,6 +7548,10 @@ msgstr "無効な API トークン"
 msgid "Invalid API token."
 msgstr ""
 
+#: onboarding/components/ConfirmStoreEmail.js:26
+msgid "Invalid email address!"
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:13
 #, fuzzy
 msgid "Invalid promotion code."
@@ -7121,9 +7583,9 @@ msgstr "請求書"
 msgid "Invoice Details"
 msgstr "請求の詳細"
 
-#: sc-invoices-list.js:140
+#: sc-invoices-list.js:142
 msgid "Invoice History"
-msgstr "請求履歴"
+msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesViewController.php:21
 #: admin/invoices/index.php:21
@@ -7141,25 +7603,25 @@ msgstr "請求書と領収書"
 msgid "Invoices are similar to orders, but are used for payments and plan changes on active subscriptions. In the future you will be able to create an invoice to send out."
 msgstr "請求書は注文に似ていますが、有効な定期購読の支払いとプランの変更に使用されます。将来的には、送信する請求書を作成できるようになります。"
 
-#: address.js:121
+#: address.js:117
 msgid "Iran, Islamic Republic of"
-msgstr "イラン・イスラム共和国"
+msgstr ""
 
-#: address.js:122
+#: address.js:118
 msgid "Iraq"
-msgstr "イラク"
+msgstr ""
 
-#: address.js:123
+#: address.js:119
 msgid "Ireland"
-msgstr "アイルランド"
+msgstr ""
 
-#: address.js:124
+#: address.js:120
 msgid "Isle of Man"
-msgstr "マン島"
+msgstr ""
 
-#: address.js:125
+#: address.js:121
 msgid "Israel"
-msgstr "イスラエル"
+msgstr ""
 
 #: src/Support/Currency.php:298
 #, fuzzy
@@ -7210,9 +7672,9 @@ msgstr ""
 msgid "It must be greater than the largest existing order number."
 msgstr ""
 
-#: address.js:126
+#: address.js:122
 msgid "Italy"
-msgstr "イタリア"
+msgstr ""
 
 #: customers/modules/Purchases.js:38
 #: invoices/modules/Purchases.js:31
@@ -7230,31 +7692,31 @@ msgstr "アイテム"
 msgid "Items"
 msgstr "アイテム"
 
-#: address.js:127
+#: address.js:123
 msgid "Jamaica"
-msgstr "ジャマイカ"
+msgstr ""
 
 #: src/Support/Currency.php:299
 #, fuzzy
 msgid "Jamaican Dollar"
 msgstr "ジャマイカドル"
 
-#: address.js:128
+#: address.js:124
 msgid "Japan"
-msgstr "日本"
+msgstr ""
 
 #: src/Support/Currency.php:300
 #, fuzzy
 msgid "Japanese Yen"
 msgstr "日本円"
 
-#: address.js:129
+#: address.js:125
 msgid "Jersey"
-msgstr "ジャージー"
+msgstr ""
 
-#: address.js:130
+#: address.js:126
 msgid "Jordan"
-msgstr "ヨルダン"
+msgstr ""
 
 #: admin/onboarding/complete.php:56
 #, fuzzy
@@ -7277,27 +7739,27 @@ msgstr ""
 msgid "Justify items right"
 msgstr ""
 
-#: address.js:131
+#: address.js:127
 msgid "Kazakhstan"
-msgstr "カザフスタン"
+msgstr ""
 
 #: src/Support/Currency.php:301
 #, fuzzy
 msgid "Kazakhstani Tenge"
 msgstr "カザフスタン テンゲ"
 
-#: sc-subscription-cancel2.js:56
+#: sc-subscription-cancel2.js:66
 msgid "Keep My Plan"
-msgstr "プランを保持する"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:197
 #, fuzzy
 msgid "Keep Update"
 msgstr "更新を続ける"
 
-#: address.js:132
+#: address.js:128
 msgid "Kenya"
-msgstr "ケニア"
+msgstr ""
 
 #: src/Support/Currency.php:302
 #, fuzzy
@@ -7309,17 +7771,17 @@ msgstr "ケニアシリング"
 msgid "Key"
 msgstr "キー"
 
-#: address.js:133
+#: address.js:129
 msgid "Kiribati"
-msgstr "キリバス"
+msgstr ""
 
-#: address.js:134
+#: address.js:130
 msgid "Kuwait"
-msgstr "クエート"
+msgstr ""
 
-#: address.js:135
+#: address.js:131
 msgid "Kyrgyzstan"
-msgstr "キルギスタン"
+msgstr ""
 
 #: src/Support/Currency.php:303
 #, fuzzy
@@ -7375,9 +7837,9 @@ msgstr ""
 msgid "Lao Kip"
 msgstr "ラオ・キップ"
 
-#: address.js:136
+#: address.js:132
 msgid "Lao People's Democratic Republic"
-msgstr "ラオス人民民主共和国"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:127
 #: Blocks/BuyButton/edit.js:112
@@ -7432,9 +7894,9 @@ msgstr "先週"
 msgid "Latest"
 msgstr ""
 
-#: address.js:137
+#: address.js:133
 msgid "Latvia"
-msgstr "ラトビア"
+msgstr ""
 
 #: Blocks/Column/edit.js:134
 msgid "Layout"
@@ -7470,17 +7932,17 @@ msgstr "これを空白のままにすると、作成されます。"
 msgid "Lebanese Pound"
 msgstr "レバノン ポンド"
 
-#: address.js:138
+#: address.js:134
 msgid "Lebanon"
-msgstr "レバノン"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:188
 msgid "Left"
 msgstr ""
 
-#: address.js:139
+#: address.js:135
 msgid "Lesotho"
-msgstr "レソト"
+msgstr ""
 
 #: src/Support/Currency.php:306
 #, fuzzy
@@ -7492,18 +7954,18 @@ msgctxt "block description"
 msgid "Lets the customer update payment methods."
 msgstr "顧客がお支払い方法を更新できるようにする。"
 
-#: address.js:140
+#: address.js:136
 msgid "Liberia"
-msgstr "リベリア"
+msgstr ""
 
 #: src/Support/Currency.php:307
 #, fuzzy
 msgid "Liberian Dollar"
 msgstr "リベリアドル"
 
-#: address.js:141
+#: address.js:137
 msgid "Libya"
-msgstr "リビア"
+msgstr ""
 
 #: licenses/modules/Details/index.js:28
 #: store/add-entities.js:96
@@ -7540,9 +8002,9 @@ msgstr "ライセンス"
 msgid "Licensing"
 msgstr "ライセンス"
 
-#: address.js:142
+#: address.js:138
 msgid "Liechtenstein"
-msgstr "リヒテンシュタイン"
+msgstr ""
 
 #: subscriptions/shared/EndDate.js:9
 #: subscriptions/show/modules/Details.js:18
@@ -7615,6 +8077,10 @@ msgctxt "block title"
 msgid "Line Items"
 msgstr "商品項目"
 
+#: store/add-entities.js:131
+msgid "Line Items"
+msgstr ""
+
 #: products/modules/BuyLink.js:273
 msgid "Link"
 msgstr ""
@@ -7640,9 +8106,9 @@ msgstr "リンクが削除されました。"
 msgid "Links and Shortcodes"
 msgstr "リンクとショートコード"
 
-#: address.js:143
+#: address.js:139
 msgid "Lithuania"
-msgstr "リトアニア"
+msgstr ""
 
 #: src/Controllers/Admin/ProductGroups/ProductGroupsListTable.php:183
 #: src/WordPress/PostTypes/FormPostTypeService.php:321
@@ -7652,17 +8118,13 @@ msgstr "リトアニア"
 msgid "Live"
 msgstr "ライブ"
 
-#: admin/processors.php:65
-#: admin/processors.php:143
-#, fuzzy
-msgid "Live Payments Enabled"
-msgstr "ライブ支払いが有効"
+#: settings/processors/ProcessorSettings.js:70
+msgid "Live Payments Disabled"
+msgstr ""
 
-#: admin/processors.php:70
-#: admin/processors.php:148
-#, fuzzy
-msgid "Live Payments Not Enabled"
-msgstr "ライブ支払いが有効になっていません"
+#: settings/processors/ProcessorSettings.js:66
+msgid "Live Payments Enabled"
+msgstr ""
 
 #: components/data-tables/PaginationFooter.js:16
 #: subscriptions/show/modules/Invoices.js:50
@@ -7697,13 +8159,13 @@ msgstr ""
 msgid "Login"
 msgstr "ログイン"
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Login to your account"
-msgstr "アカウントにログイン"
+msgstr ""
 
-#: sc-login-form.js:145
+#: sc-login-form.js:147
 msgid "Login with Code"
-msgstr "コードでログイン"
+msgstr ""
 
 #: settings/brand/Logo.js:110
 msgid "Logo"
@@ -7724,31 +8186,27 @@ msgstr "ログアウトボタン"
 msgid "Logout button settings"
 msgstr "ログアウトボタンの設定"
 
-#: address.js:144
+#: address.js:140
 msgid "Luxembourg"
-msgstr "ルクセンブルク"
+msgstr ""
 
 #: src/Support/Currency.php:308
 #, fuzzy
 msgid "Macanese Pataca"
 msgstr "マカオ パタカ"
 
-#: address.js:145
+#: address.js:141
 msgid "Macao"
-msgstr "マカオ"
+msgstr ""
 
 #: src/Support/Currency.php:309
 #, fuzzy
 msgid "Macedonian Denar"
 msgstr "マケドニア・ディナール"
 
-#: address.js:146
+#: address.js:142
 msgid "Madagascar"
-msgstr "マダガスカル"
-
-#: settings/customer/CustomerSettings.js:277
-msgid "Magic Sign In"
-msgstr "マジックサインイン"
+msgstr ""
 
 #: customers/modules/PaymentMethods/Actions.js:87
 #: sc-payment-methods-list.js:131
@@ -7769,45 +8227,49 @@ msgstr ""
 msgid "Malagasy Ariary"
 msgstr "マダガスカル・アリアリ"
 
-#: address.js:147
+#: address.js:143
 msgid "Malawi"
-msgstr "マラウイ"
+msgstr ""
 
 #: src/Support/Currency.php:311
 #, fuzzy
 msgid "Malawian Kwacha"
 msgstr "マラウイ クワチャ"
 
-#: address.js:148
+#: address.js:144
 msgid "Malaysia"
-msgstr "マレーシア"
+msgstr ""
 
 #: src/Support/Currency.php:312
 #, fuzzy
 msgid "Malaysian Ringgit"
 msgstr "マレーシアリンギット"
 
-#: address.js:149
+#: address.js:145
 msgid "Maldives"
-msgstr "モルディブ"
+msgstr ""
 
 #: src/Support/Currency.php:313
 #, fuzzy
 msgid "Maldivian Rufiyaa"
 msgstr "モルディブのルフィア"
 
-#: address.js:150
+#: address.js:146
 msgid "Mali"
-msgstr "マリ"
+msgstr ""
 
-#: address.js:151
+#: address.js:147
 msgid "Malta"
-msgstr "マルタ"
+msgstr ""
 
 #: components/subscriptions/CancelPendingUpdate.js:155
 #, fuzzy
 msgid "Manage Scheduled Update"
 msgstr "スケジュールされた更新の管理"
+
+#: settings/shipping/profile/ShippingProfile.js:131
+msgid "Manage Shipping Profile"
+msgstr ""
 
 #: products/components/SelectTemplatePart/index.js:99
 msgid "Manage all template parts"
@@ -7872,15 +8334,14 @@ msgstr "手動支払い方法"
 msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
+#: orders/Order.js:112
+msgid "Mark As Paid"
+msgstr ""
+
 #: orders/modules/OrderStatusConfirmModal.js:85
 #, fuzzy
 msgid "Mark Paid"
 msgstr "有料マーク"
-
-#: orders/Order.js:154
-#, fuzzy
-msgid "Mark as Paid"
-msgstr "支払い済としてマーク"
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:354
 #, fuzzy
@@ -7888,21 +8349,21 @@ msgctxt "comment"
 msgid "Mark as spam"
 msgstr "スパムとしてマーク"
 
-#: address.js:152
+#: address.js:148
 msgid "Marshall Islands"
-msgstr "マーシャル諸島"
+msgstr ""
 
-#: address.js:153
+#: address.js:149
 msgid "Martinique"
-msgstr "マルティニーク"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:127
 msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
 msgstr ""
 
-#: address.js:154
+#: address.js:150
 msgid "Mauritania"
-msgstr "モーリタニア"
+msgstr ""
 
 #: src/Support/Currency.php:314
 #, fuzzy
@@ -7914,9 +8375,9 @@ msgstr "モーリタニア ウギア"
 msgid "Mauritian Rupee"
 msgstr "モーリシャスルピー"
 
-#: address.js:155
+#: address.js:151
 msgid "Mauritius"
-msgstr "モーリシャス"
+msgstr ""
 
 #: components/MediaLibrary/index.js:182
 #, fuzzy
@@ -7936,17 +8397,21 @@ msgstr "最高価格"
 msgid "Maximum height"
 msgstr "最大の高さ"
 
-#: address.js:156
+#: settings/shipping/rate/ShippingRateForm.js:248
+msgid "Maximum weight"
+msgstr ""
+
+#: address.js:152
 msgid "Mayotte"
-msgstr "マヨット"
+msgstr ""
 
 #: store/add-entities.js:103
 msgid "Media"
 msgstr "メディア"
 
-#: fetch.js:1958
+#: fetch.js:807
 msgid "Media upload failed. If this is a photo or a large image, please scale it down and try again."
-msgstr "メディアがアップロードできませんでした。これが写真、もしくは大きい画像であれば、容量を小さくしてもう一度お試しください。"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:123
 #: Blocks/BuyButton/edit.js:108
@@ -8018,23 +8483,27 @@ msgstr "メソッド「 %s 」は実装されていません。サブクラス�
 msgid "Mexican Peso"
 msgstr "メキシコペソ"
 
-#: address.js:157
+#: address.js:153
 msgid "Mexico"
-msgstr "メキシコ"
+msgstr ""
 
 #: settings/tax-region/RegionSettings.js:90
 #, fuzzy
 msgid "Micro-Business Exemption"
 msgstr ""
 
-#: address.js:158
+#: address.js:154
 msgid "Micronesia, Federated States of"
-msgstr "ミクロネシア連邦"
+msgstr ""
 
 #: products/components/price/parts/AdHoc.js:29
 #, fuzzy
 msgid "Minimum Price"
 msgstr "最低価格"
+
+#: settings/shipping/rate/ShippingRateForm.js:236
+msgid "Minimum weight"
+msgstr ""
 
 #: products/modules/Prices/Price/Header.js:269
 #, fuzzy
@@ -8046,9 +8515,9 @@ msgstr "その他"
 msgid "Mode"
 msgstr "モード"
 
-#: address.js:159
+#: address.js:155
 msgid "Moldova"
-msgstr "モルドバ"
+msgstr ""
 
 #: src/Support/Currency.php:317
 #, fuzzy
@@ -8059,22 +8528,22 @@ msgstr "モルドバ・レイ"
 msgid "Mollie"
 msgstr ""
 
-#: address.js:160
+#: address.js:156
 msgid "Monaco"
-msgstr "モナコ"
+msgstr ""
 
-#: address.js:161
+#: address.js:157
 msgid "Mongolia"
-msgstr "モンゴル"
+msgstr ""
 
 #: src/Support/Currency.php:318
 #, fuzzy
 msgid "Mongolian Tögrög"
 msgstr "モンゴルのトグログ"
 
-#: address.js:162
+#: address.js:158
 msgid "Montenegro"
-msgstr "モンテネグロ"
+msgstr ""
 
 #: products/components/price/parts/RecurringAmount.js:92
 #: util.js:39
@@ -8093,18 +8562,18 @@ msgstr "毎月"
 msgid "Monthly, Basic Plan, etc."
 msgstr ""
 
-#: address.js:163
+#: address.js:159
 msgid "Montserrat"
-msgstr "モントセラト"
+msgstr ""
 
 #: src/Support/Currency.php:319
 #, fuzzy
 msgid "Moroccan Dirham"
 msgstr "モロッコディルハム"
 
-#: address.js:164
+#: address.js:160
 msgid "Morocco"
-msgstr "モロッコ"
+msgstr ""
 
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:366
 #, fuzzy
@@ -8116,9 +8585,21 @@ msgstr "ゴミ箱に移動"
 msgid "Mozambican Metical"
 msgstr "モザンビーク メティカル"
 
-#: address.js:165
+#: address.js:161
 msgid "Mozambique"
-msgstr "モザンビーク"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:30
+msgid "Musical Instruments"
+msgstr ""
+
+#: sc-price-input2.js:51
+msgid "Must be %d or less."
+msgstr ""
+
+#: sc-price-input2.js:47
+msgid "Must be %d or more."
+msgstr ""
 
 #: src/Support/Errors/Translations/types.php:21
 #, fuzzy
@@ -8163,9 +8644,9 @@ msgstr "小さくする必要があります。"
 msgid "My website domain has permanently changed. Remove webhook for %s"
 msgstr "ウェブサイトのドメインが完全に変更されました。 %s Webhook を削除"
 
-#: address.js:166
+#: address.js:162
 msgid "Myanmar"
-msgstr "ミャンマー"
+msgstr ""
 
 #: src/Support/Currency.php:321
 #, fuzzy
@@ -8209,32 +8690,32 @@ msgstr ""
 msgid "Name Your Price"
 msgstr "料金に名前をつける"
 
-#: sc-address2.js:105
-#: sc-order-shipping-address2.js:30
-#: sc-order-shipping-address2.js:39
+#: sc-address2.js:102
+#: sc-order-shipping-address2.js:37
+#: sc-order-shipping-address2.js:46
 msgid "Name or Company Name"
-msgstr "お名前もしくは会社名"
+msgstr ""
 
 #: src/Controllers/Admin/Products/ProductsListTable.php:239
 msgid "Name your own price"
 msgstr "料金に名前を付ける"
 
-#: address.js:167
+#: address.js:163
 msgid "Namibia"
-msgstr "ナミビア"
+msgstr ""
 
 #: src/Support/Currency.php:322
 #, fuzzy
 msgid "Namibian Dollar"
 msgstr "ナミビアドル"
 
-#: address.js:168
+#: address.js:164
 msgid "Nauru"
-msgstr "ナウル"
+msgstr ""
 
-#: address.js:169
+#: address.js:165
 msgid "Nepal"
-msgstr "ネパール"
+msgstr ""
 
 #: src/Support/Currency.php:323
 #, fuzzy
@@ -8254,18 +8735,18 @@ msgstr ""
 msgid "Net Payment"
 msgstr "ネット支払い"
 
-#: address.js:170
+#: address.js:166
 msgid "Netherlands"
-msgstr "オランダ"
+msgstr ""
 
 #: src/Support/Currency.php:324
 #, fuzzy
 msgid "Netherlands Antillean Gulden"
 msgstr "オランダ領アンティル グルデン"
 
-#: address.js:171
+#: address.js:167
 msgid "New Caledonia"
-msgstr "ニューカレドニア"
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:71
 msgid "New Cancellation Reason"
@@ -8289,10 +8770,10 @@ msgstr "新しいフォーム"
 msgid "New Order"
 msgstr "新規の注文"
 
-#: sc-password-nag.js:86
-#: sc-wordpress-password-edit.js:59
+#: sc-password-nag.js:98
+#: sc-wordpress-password-edit.js:72
 msgid "New Password"
-msgstr "新しいパスワード"
+msgstr ""
 
 #: Controllers/SubscriptionController.php:360
 #: sc-upcoming-invoice.js:208
@@ -8322,14 +8803,18 @@ msgstr "新台湾ドル"
 msgid "New Upgrade Group"
 msgstr "新しいアップグレード グループ"
 
-#: address.js:172
+#: address.js:168
 msgid "New Zealand"
-msgstr "ニュージーランド"
+msgstr ""
 
 #: src/Support/Currency.php:326
 #, fuzzy
 msgid "New Zealand Dollar"
 msgstr "ニュージーランドドル"
+
+#: settings/shipping/profile/Products.js:238
+msgid "New products are added to this profile."
+msgstr ""
 
 #: ui/PrevNextButtons.js:37
 #: Blocks/CheckoutForm/components/Empty.js:107
@@ -8356,41 +8841,49 @@ msgstr "次のページ"
 msgid "Next retry:"
 msgstr "次の再試行："
 
-#: address.js:173
+#: Blocks/ShippingChoices/edit.js:35
+msgid "Next-day delivery"
+msgstr ""
+
+#: address.js:169
 msgid "Nicaragua"
-msgstr "ニカラグア"
+msgstr ""
 
 #: src/Support/Currency.php:327
 #, fuzzy
 msgid "Nicaraguan Córdoba"
 msgstr "ニカラグア コルドバ"
 
-#: address.js:174
+#: address.js:170
 msgid "Niger"
-msgstr "ニジェール"
+msgstr ""
 
-#: address.js:175
+#: address.js:171
 msgid "Nigeria"
-msgstr "ナイジェリア"
+msgstr ""
 
 #: src/Support/Currency.php:328
 #, fuzzy
 msgid "Nigerian Naira"
 msgstr "ナイジェリア ナイラ"
 
-#: address.js:176
+#: address.js:172
 msgid "Niue"
-msgstr "ニウエ"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:139
 msgid "No Reason Provided"
 msgstr "理由がありません"
 
-#: sc-customer-email.js:79
-msgid "No Thanks"
-msgstr "いいえ、結構です"
+#: orders/modules/Fulfillment/components/StatusDropdown.js:90
+msgid "No Shipping Required"
+msgstr ""
 
-#: sc-checkout-mollie-payment2.js:97
+#: sc-customer-email.js:89
+msgid "No Thanks"
+msgstr ""
+
+#: sc-checkout-mollie-payment2.js:101
 msgid "No available payment methods"
 msgstr ""
 
@@ -8449,6 +8942,10 @@ msgstr "項目は見つかりませんでした"
 msgid "No licenses found."
 msgstr "ライセンスが見つかりません。"
 
+#: settings/shipping/rate/ShippingRateForm.js:222
+msgid "No limit"
+msgstr ""
+
 #: settings/processors/ManualPaymentMethods.js:47
 msgid "No manual payment methods."
 msgstr "手動支払い方法はありません。"
@@ -8481,6 +8978,14 @@ msgstr "名前がありません"
 msgid "No order bumps found."
 msgstr "オーダー バンプは見つかりませんでした。"
 
+#: checkouts/modules/PaymentMethods.js:86
+msgid "No payment methods found."
+msgstr ""
+
+#: Blocks/Payment/edit.js:39
+msgid "No payment processors are enabled for this mode."
+msgstr ""
+
 #: src/Controllers/Admin/Customers/CustomersListTable.php:119
 #: src/Controllers/Admin/Products/ProductsListTable.php:222
 #: src/Controllers/Admin/Products/ProductsListTable.php:242
@@ -8498,6 +9003,28 @@ msgstr "商品がありません"
 #, fuzzy
 msgid "No products found."
 msgstr "商品が見つかりません。"
+
+#: settings/shipping/profile/Products.js:357
+msgid "No products in this profile."
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfile.js:174
+#: settings/shipping/ShippingSettings.js:130
+#: settings/shipping/zone/ShippingZone.js:77
+msgid "No shipping rates"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:58
+msgid "No shipping rates available for customers to choose from."
+msgstr ""
+
+#: orders/modules/Fulfillment/CreateFulfillment.js:303
+msgid "No shipping required."
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:74
+msgid "No shipping zones or rates"
+msgstr ""
 
 #: src/Support/Blocks/TemplateUtilityService.php:197
 msgid "No theme is defined for this template."
@@ -8524,25 +9051,25 @@ msgstr "何も見つかりませんでした。"
 msgid "None of these items are in the cart."
 msgstr "これらのアイテムはいずれもカートにありません。"
 
-#: address.js:177
+#: address.js:173
 msgid "Norfolk Island"
-msgstr "ノーフォーク島"
+msgstr ""
 
-#: address.js:178
+#: address.js:174
 msgid "North Korea"
-msgstr "北朝鮮"
+msgstr ""
 
-#: address.js:179
+#: address.js:175
 msgid "North Macedonia"
-msgstr "北マケドニア"
+msgstr ""
 
-#: address.js:180
+#: address.js:176
 msgid "Northern Mariana Islands"
-msgstr "北マリアナ諸島"
+msgstr ""
 
-#: address.js:181
+#: address.js:177
 msgid "Norway"
-msgstr "ノルウェイ"
+msgstr ""
 
 #: src/Support/Currency.php:329
 #, fuzzy
@@ -8574,6 +9101,13 @@ msgstr "未利用"
 msgid "Not Scheduled"
 msgstr "予定なし"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:387
+#: orders/modules/Fulfillment/components/StatusDropdown.js:19
+#: sc-fulfillment-shipping-status-badge2.js:7
+#: sc-order-shipment-badge2.js:7
+msgid "Not Shipped"
+msgstr ""
+
 #: src/Support/Errors/Translations/types.php:15
 #, fuzzy
 msgid "Not a number"
@@ -8600,9 +9134,9 @@ msgstr "注: これをチェックすると、チェックアウト フォーム
 msgid "Note: Redemption limits are not applied in test mode."
 msgstr ""
 
-#: sc-select2.js:2060
+#: sc-select2.js:2068
 msgid "Nothing Found"
-msgstr "何も見つかりませんでした。"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:91
 #: settings/customer/CustomerSettings.js:50
@@ -8675,13 +9209,14 @@ msgstr "わかった"
 msgid "Oldest"
 msgstr ""
 
-#: address.js:182
+#: address.js:178
 msgid "Oman"
-msgstr "オマーン"
+msgstr ""
 
 #: sc-order-confirmation-details.js:33
+#: sc-order-fulfillment-badge.js:9
 msgid "On Hold"
-msgstr "保留中"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:202
 #, fuzzy
@@ -8824,7 +9359,7 @@ msgstr "注文"
 
 #: sc-order-confirmation-details.js:44
 msgid "Order #%s"
-msgstr "ご注文#%s"
+msgstr ""
 
 #: bumps/CreateBump.js:60
 #: bumps/modules/Price.js:29
@@ -8852,6 +9387,10 @@ msgstr "セット商品"
 msgid "Order Canceled."
 msgstr ""
 
+#: checkouts/CreateCheckout.js:188
+msgid "Order Complete"
+msgstr ""
+
 #: src/WordPress/Pages/PageService.php:69
 #: settings/customer/CustomerSettings.js:285
 #, fuzzy
@@ -8877,6 +9416,10 @@ msgstr "注文確認メール"
 #, fuzzy
 msgctxt "block title"
 msgid "Order Confirmation Line Items"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:171
+msgid "Order Created."
 msgstr ""
 
 #: web/dashboard/orders/show.php:15
@@ -8909,18 +9452,22 @@ msgstr ""
 msgid "Order Numbers Counter"
 msgstr "注文番号カウンター"
 
-#: sc-order.js:145
+#: sc-order.js:153
 msgid "Order Status"
-msgstr "注文ステータス"
+msgstr ""
 
-#: sc-order-summary.js:50
+#: sc-order-summary.js:53
 msgid "Order Summary"
 msgstr ""
 
+#: checkouts/modules/Payment.js:124
+msgid "Order Tax"
+msgstr ""
+
 #: sc-order-confirmation.js:111
-#: sc-order.js:107
+#: sc-order.js:115
 msgid "Order not found."
-msgstr "ご注文は見つかりませんでした。"
+msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersViewController.php:21
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:125
@@ -8942,6 +9489,10 @@ msgstr "注文"
 #, fuzzy
 msgid "Orders & Receipts"
 msgstr "注文と領収書"
+
+#: onboarding/components/StarterTemplates.js:40
+msgid "Organic Food"
+msgstr ""
 
 #: orders/modules/TaxInfo.js:11
 #: orders/modules/TaxInfo.js:23
@@ -8998,49 +9549,54 @@ msgstr ""
 msgid "Paid"
 msgstr "有料"
 
-#: address.js:183
+#: address.js:179
 msgid "Pakistan"
-msgstr "パキスタン"
+msgstr ""
 
 #: src/Support/Currency.php:330
 #, fuzzy
 msgid "Pakistani Rupee"
 msgstr "パキスタン ルピー"
 
-#: address.js:184
+#: address.js:180
 msgid "Palau"
-msgstr "パラオ"
+msgstr ""
 
-#: address.js:185
+#: address.js:181
 msgid "Palestine, State of"
-msgstr "パレスチナ"
+msgstr ""
 
-#: address.js:186
+#: address.js:182
 msgid "Panama"
-msgstr "パナマ"
+msgstr ""
 
 #: src/Support/Currency.php:331
 #, fuzzy
 msgid "Panamanian Balboa"
 msgstr "パナマバルボア"
 
-#: address.js:187
+#: address.js:183
 msgid "Papua New Guinea"
-msgstr "パプアニューギニア"
+msgstr ""
 
 #: src/Support/Currency.php:332
 #, fuzzy
 msgid "Papua New Guinean Kina"
 msgstr "パプア ニューギニア キナ"
 
-#: address.js:188
+#: address.js:184
 msgid "Paraguay"
-msgstr "パラグアイ"
+msgstr ""
 
 #: src/Support/Currency.php:333
 #, fuzzy
 msgid "Paraguayan Guaraní"
 msgstr "パラグアイ グアラニ"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:353
+#: sc-order-fulfillment-badge.js:11
+msgid "Partially Fulfilled"
+msgstr ""
 
 #: components/data-tables/charges-data-table/index.js:30
 #: sc-charges-list.js:85
@@ -9049,6 +9605,11 @@ msgstr "パラグアイ グアラニ"
 #, fuzzy
 msgid "Partially Refunded"
 msgstr "一部返金済み"
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:389
+#: sc-order-shipment-badge2.js:9
+msgid "Partially Shipped"
+msgstr ""
 
 #: src/Rest/LoginRestServiceProvider.php:71
 #: sc-login-provider2.js:79
@@ -9077,19 +9638,27 @@ msgstr "確認用パスワードのレベル"
 msgid "Password Confirmation Placeholder"
 msgstr "パスワード（確認用）のプレースホールダー"
 
-#: sc-order-password.js:43
+#: sc-order-password.js:42
 msgid "Password does not match."
-msgstr "パスワードが合致しません。"
+msgstr ""
 
-#: sc-password-nag.js:62
-#: sc-wordpress-password-edit.js:34
-msgid "Passwords do not match."
-msgstr "パスワードが合致しません。"
-
-#: sc-order-password.js:50
 #: sc-password-nag.js:71
-#: sc-wordpress-password-edit.js:43
+#: sc-wordpress-password-edit.js:44
+msgid "Passwords do not match."
+msgstr ""
+
+#: sc-order-password.js:96
+msgid "Passwords must contain a special character."
+msgstr ""
+
+#: sc-order-password.js:48
+#: sc-password-nag.js:74
+#: sc-wordpress-password-edit.js:47
 msgid "Passwords should at least 6 characters and contain one special character."
+msgstr ""
+
+#: sc-order-password.js:91
+msgid "Passwords should at least 6 characters."
 msgstr ""
 
 #: sc-subscription-status-badge2.js:56
@@ -9106,8 +9675,12 @@ msgstr ""
 msgid "Pause Subscription"
 msgstr ""
 
-#: sc-subscription-status-badge2.js:47
+#: sc-subscription-status-badge2.js:46
 msgid "Pauses"
+msgstr ""
+
+#: subscriptions/show/ShowSubscription.js:285
+msgid "Pay Off"
 msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:275
@@ -9145,9 +9718,10 @@ msgctxt "block title"
 msgid "Payment"
 msgstr "お支払い"
 
+#: orders/modules/LineItems/index.js:26
 #: sc-order-status-badge2.js:37
 msgid "Payment Failed"
-msgstr "お支払いの失敗"
+msgstr ""
 
 #: orders/modules/PaymentFailures.js:17
 #, fuzzy
@@ -9195,7 +9769,7 @@ msgstr ""
 msgid "Payment Type"
 msgstr "払いの種類"
 
-#: sc-session-provider2.js:257
+#: sc-session-provider2.js:256
 msgid "Payment canceled. Please try again."
 msgstr ""
 
@@ -9231,9 +9805,11 @@ msgstr "お支払いの再試行が成功しました！"
 msgid "Payment retry window in weeks."
 msgstr "支払いの再試行期間 (週単位)。"
 
-#: sc-session-provider2.js:233
+#: sc-session-provider2.js:183
+#: sc-session-provider2.js:250
+#: sc-session-provider2.js:260
 msgid "Payment unsuccessful. Please try again."
-msgstr "お支払いが失敗しました。もう一度、お試しください。"
+msgstr ""
 
 #: products/components/price/Multiple.js:37
 #: subscriptions/show/modules/Details.js:107
@@ -9255,6 +9831,19 @@ msgstr ""
 #, fuzzy
 msgid "Paypal is taking a closer look at this payment. It’s required for some payments and normally takes up to 3 business days."
 msgstr "Paypal はこの支払いを詳しく調べています。一部の支払いには必要で、通常は最大 3 営業日かかります。"
+
+#: Blocks/Payment/components/Inspector.js:107
+msgid "Paystack"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:43
+msgid "Paystack is not properly set up to make transactions"
+msgstr ""
+
+#: sc-checkout-paystack-payment-provider2.js:51
+#: sc-paystack-add-method.js:36
+msgid "Paystack transaction could not be finished. Status: %s"
+msgstr ""
 
 #: orders/modules/Refunds.js:46
 #, fuzzy
@@ -9335,23 +9924,31 @@ msgstr "このオーダー バンプを完全に削除しますか?この操作�
 msgid "Permanently delete this price? You cannot undo this action."
 msgstr "この価格を完全に削除しますか？この操作を元に戻すことはできません。"
 
-#: address.js:189
+#: product-groups/EditProductGroup.js:55
+msgid "Permanently delete this product group? You cannot undo this action."
+msgstr ""
+
+#: address.js:185
 msgid "Peru"
-msgstr "ペルー"
+msgstr ""
 
 #: src/Support/Currency.php:334
 #, fuzzy
 msgid "Peruvian Sol"
 msgstr "ペルーのソル"
 
+#: onboarding/components/StarterTemplates.js:45
+msgid "Pet Supplies"
+msgstr ""
+
 #: src/Support/Currency.php:335
 #, fuzzy
 msgid "Philippine Peso"
 msgstr "フィリピンペソ"
 
-#: address.js:190
+#: address.js:186
 msgid "Philippines"
-msgstr "フィリピン"
+msgstr ""
 
 #: settings/brand/BrandSettings.js:164
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:82
@@ -9364,9 +9961,13 @@ msgctxt "block title"
 msgid "Phone"
 msgstr ""
 
-#: address.js:191
+#: products/modules/Shipping.js:41
+msgid "Physical product"
+msgstr ""
+
+#: address.js:187
 msgid "Pitcairn"
-msgstr "ピトケアン諸島"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:97
 msgid "Placed By"
@@ -9396,6 +9997,10 @@ msgstr "プレースホルダー"
 msgid "Plan"
 msgstr "プラン"
 
+#: src/Controllers/Admin/Orders/OrdersListTable.php:236
+msgid "Plan Renewal"
+msgstr ""
+
 #: src/Controllers/Admin/CancellationInsights/CancellationInsightsListTable.php:52
 msgid "Plan Status"
 msgstr "プランのステータス"
@@ -9405,30 +10010,52 @@ msgstr "プランのステータス"
 msgid "Plans"
 msgstr ""
 
+#: src/Support/Errors/Translations/codes.php:33
+msgid "Please add a valid address with necessary shipping information."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:15
 #, fuzzy
 msgid "Please add at least one product."
 msgstr "少なくとも 1 つの商品を追加してください。"
 
-#: sc-choice2.js:55
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose at least one."
-msgstr "少なくとも1つは選択してください。"
+msgstr ""
 
 #: components/DatePicker.js:39
 msgid "Please choose date to continue."
 msgstr ""
 
-#: sc-choice2.js:55
+#: sc-choice-container2.js:42
+#: sc-choice2.js:49
 msgid "Please choose one."
-msgstr "1つお選びください。"
+msgstr ""
 
 #: settings/account/AccountSettings.js:270
 #, fuzzy
 msgid "Please clear checkout page cache after changing this setting."
 msgstr ""
 
+#: components/MediaLibrary/index.js:301
+msgid "Please complete setting up your store. Its free and only takes a minute."
+msgstr ""
+
+#: Blocks/Form/edit.js:450
+msgid "Please complete your store to enable live mode. It's free!"
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please configure your processors"
+msgstr ""
+
 #: src/Request/RequestService.php:208
 msgid "Please connect your site to SureCart."
+msgstr ""
+
+#: sc-payment.js:70
+msgid "Please contact us for payment."
 msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:37
@@ -9458,8 +10085,8 @@ msgstr "住所を入力してください。"
 msgid "Please preview the form on the front-end to load the Stripe payment element fields."
 msgstr "フロントエンドでフォームをプレビューしStripe決済のフィールドをロードしてください。"
 
-#: Blocks/Payment/edit.js:19
-msgid "Please preview the form on the front-end to load the Stripe payment fields."
+#: Blocks/Payment/edit.js:46
+msgid "Please preview your form on the front-end to view processors."
 msgstr ""
 
 #: licenses/modules/Activations/Activation.js:85
@@ -9467,18 +10094,26 @@ msgstr ""
 msgid "Please refresh the page and try again."
 msgstr "ページを更新して、もう一度お試しください。"
 
-#: sc-form-state-provider2.js:125
+#: sc-form-state-provider2.js:48
 msgid "Please refresh the page."
-msgstr "ページをリフレッシュしてください。"
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:19
+msgid "Please select a customer."
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:123
+msgid "Please select a shipping method"
+msgstr ""
 
 #: admin/plugin.php:68
 #, fuzzy
 msgid "Plugin Settings"
 msgstr "プラグイン設定"
 
-#: address.js:192
+#: address.js:188
 msgid "Poland"
-msgstr "ポーランド"
+msgstr ""
 
 #: src/Support/Currency.php:336
 #, fuzzy
@@ -9489,9 +10124,9 @@ msgstr "ポーランドズウォティ"
 msgid "Portrait"
 msgstr ""
 
-#: address.js:193
+#: address.js:189
 msgid "Portugal"
-msgstr "ポルトガル"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:171
 msgid "Position of cart button"
@@ -9501,12 +10136,12 @@ msgstr ""
 msgid "Postal Code Placeholder"
 msgstr "郵便番号のプレースホルダー"
 
-#: sc-address2.js:108
-#: sc-compact-address2.js:102
-#: sc-order-shipping-address2.js:35
-#: sc-order-shipping-address2.js:44
+#: sc-address2.js:105
+#: sc-compact-address2.js:115
+#: sc-order-shipping-address2.js:42
+#: sc-order-shipping-address2.js:51
 msgid "Postal Code/Zip"
-msgstr "郵便番号"
+msgstr ""
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:297
 #, fuzzy
@@ -9528,10 +10163,9 @@ msgstr "回収可能な収益"
 msgid "Potential Revenue Recovery Rate"
 msgstr "潜在的な収益回収率"
 
-#: products/components/price/parts/Trial.js:16
-#, fuzzy
+#: sc-premium-tag.js:12
 msgid "Premium"
-msgstr "プレミアム"
+msgstr ""
 
 #: bumps/modules/Preview.js:17
 msgid "Preview"
@@ -9623,6 +10257,10 @@ msgstr "価格"
 msgid "Primary Button"
 msgstr "1つ目のボタン"
 
+#: onboarding/components/StarterTemplates.js:25
+msgid "Printable Merchandise"
+msgstr ""
+
 #: bumps/modules/Priority.js:7
 #, fuzzy
 msgid "Priority"
@@ -9633,6 +10271,10 @@ msgstr "優先順位"
 #: Controllers/SubscriptionController.php:244
 msgid "Privacy Policy"
 msgstr "プライバシーポリシー"
+
+#: settings/account/AccountSettings.js:273
+msgid "Privacy Policy Page"
+msgstr ""
 
 #: components/MediaLibrary/index.js:287
 #: components/MediaLibrary/MediaItem.js:93
@@ -9664,11 +10306,9 @@ msgstr "お支払いを処理中です..."
 msgid "Processor"
 msgstr "プロセッサー"
 
-#: admin/processors.php:30
-#: layouts/partials/admin-settings-sidebar.php:48
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:249
 msgid "Processors"
-msgstr "プロセッサ"
+msgstr ""
 
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:106
 #: src/Integrations/ThriveAutomator/DataFields/ProductDataField.php:109
@@ -9691,6 +10331,10 @@ msgstr "商品"
 #: settings/customer/CustomerSettings.js:332
 msgid "Product Access"
 msgstr "商品アクセス"
+
+#: settings/customer/CustomerSettings.js:123
+msgid "Product Access Emails"
+msgstr ""
 
 #: Blocks/Product/BuyButton/block.json
 msgctxt "block variation title"
@@ -9781,8 +10425,18 @@ msgstr "商品名"
 msgid "Product Options"
 msgstr "商品の選択肢"
 
+#: src/Controllers/Admin/Products/ProductsListTable.php:104
+#: products/components/Status/index.js:25
+#: products/components/Status/index.js:64
+msgid "Product Page"
+msgstr ""
+
 #: Blocks/Product/Price/block.json
 msgctxt "block title"
+msgid "Product Price"
+msgstr ""
+
+#: bumps/modules/NewCondition.js:79
 msgid "Product Price"
 msgstr ""
 
@@ -9811,6 +10465,10 @@ msgctxt "block title"
 msgid "Product Title"
 msgstr ""
 
+#: settings/shipping/profile/Products.js:122
+msgid "Product added"
+msgstr ""
+
 #: product-groups/modules/NewProduct.js:37
 #, fuzzy
 msgid "Product added."
@@ -9822,6 +10480,18 @@ msgstr "製品が追加されました。"
 #: src/Controllers/Admin/Products/ProductsController.php:66
 msgid "Product archived."
 msgstr "商品がアーカイブされました。"
+
+#: product-groups/EditProductGroup.js:85
+msgid "Product group archived."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:64
+msgid "Product group deleted."
+msgstr ""
+
+#: product-groups/EditProductGroup.js:86
+msgid "Product group un-archived."
+msgstr ""
 
 #: product-groups/EditProductGroup.js:35
 #, fuzzy
@@ -9835,6 +10505,10 @@ msgstr "商品または定期購読が購入されました"
 #: src/Integrations/ThriveAutomator/Triggers/PurchaseRevokedTrigger.php:66
 msgid "Product purchase is revoked or subscription cancels"
 msgstr "商品の購入が取り消された、または定期購読がキャンセルされた"
+
+#: settings/shipping/profile/Products.js:101
+msgid "Product removed"
+msgstr ""
 
 #: product-groups/modules/Product.js:34
 #, fuzzy
@@ -9886,6 +10560,10 @@ msgstr ""
 #: settings/export/ExportSettings.js:31
 msgid "Products/Prices"
 msgstr "商品/価格"
+
+#: settings/shipping/profile/ShippingProfile.js:183
+msgid "Profile Details"
+msgstr ""
 
 #: store/add-entities.js:180
 msgid "Promotion"
@@ -9947,9 +10625,13 @@ msgstr "定期購読を継続してもらうために割引を提供する。"
 msgid "Province"
 msgstr "都道府県"
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:108
 msgid "Province/Region"
-msgstr "都道府県"
+msgstr ""
+
+#: store/add-entities.js:159
+msgid "Provisional Accounts"
+msgstr ""
 
 #: components/MediaLibrary/index.js:294
 #: components/MediaLibrary/MediaItem.js:91
@@ -9983,6 +10665,10 @@ msgstr ""
 msgid "Purchase"
 msgstr "購入"
 
+#: settings/subscription/SubscriptionSettings.js:201
+msgid "Purchase Behavior"
+msgstr ""
+
 #: settings/subscription/SubscriptionSettings.js:244
 msgid "Purchase Revoke Behavior"
 msgstr "購入取り消し後のアクション"
@@ -9996,9 +10682,9 @@ msgstr "購入"
 msgid "Purchases syncing happens in both directions. For example, access is automatically revoked during a subscription cancellation or expiration."
 msgstr "購入の同期は双方向で行われます。たとえば、定期購読のキャンセルまたは有効期限が切れると、アクセスは自動的に取り消されます。"
 
-#: address.js:195
+#: address.js:190
 msgid "Qatar"
-msgstr "カタール"
+msgstr ""
 
 #: src/Support/Currency.php:337
 #, fuzzy
@@ -10011,9 +10697,15 @@ msgstr "カタールリヤル"
 msgid "Qty"
 msgstr "数量"
 
-#: sc-product-line-item2.js:29
+#: sc-product-line-item2.js:44
 msgid "Qty:"
-msgstr "数量："
+msgstr ""
+
+#: orders/modules/Fulfillment/Fulfilled.js:284
+#: orders/modules/Fulfillment/Unfulfilled.js:108
+#: sc-fulfillments.js:65
+msgid "Qty: %d"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/PriceChoices.js:57
 #: components/PriceChoices.js:17
@@ -10042,6 +10734,10 @@ msgstr "ラジオテキスト"
 #: settings/order/OrderProtocol.js:89
 #, fuzzy
 msgid "Random Numbers And Letters"
+msgstr ""
+
+#: settings/shipping/profile/ShippingProfileListItem.js:48
+msgid "Rates for"
 msgstr ""
 
 #: components/data-tables/charges-data-table/Refund.js:111
@@ -10182,9 +10878,9 @@ msgstr "注文を却下しエラ〜メッセージを表示する。"
 msgid "Remaining Payments"
 msgstr "残りの支払い"
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Reminder"
-msgstr "リマインダー"
+msgstr ""
 
 #: Blocks/CartItems/edit.js:31
 #: Blocks/LineItems/edit.js:23
@@ -10326,6 +11022,10 @@ msgstr "リセット"
 msgid "Rest Of The World"
 msgstr "その他の地域"
 
+#: settings/shipping/zone/FallbackZone.js:19
+msgid "Rest Of The World Fallback Zone"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:358
 #: subscriptions/show/modules/modals/RestoreSubscriptionModal.js:64
 #, fuzzy
@@ -10340,9 +11040,9 @@ msgstr ""
 msgid "Restore Now"
 msgstr ""
 
-#: sc-subscription.js:171
+#: sc-subscription.js:181
 msgid "Restore Plan"
-msgstr "プランを復活させる"
+msgstr ""
 
 #: subscriptions/show/ShowSubscription.js:122
 msgid "Restore Subscription"
@@ -10434,9 +11134,9 @@ msgstr "取り消された"
 msgid "Right"
 msgstr ""
 
-#: address.js:196
+#: address.js:191
 msgid "Romania"
-msgstr "ルーマニア"
+msgstr ""
 
 #: src/Support/Currency.php:338
 #, fuzzy
@@ -10459,60 +11159,60 @@ msgstr ""
 msgid "Run purchase actions"
 msgstr ""
 
-#: address.js:197
+#: address.js:192
 msgid "Russian Federation"
-msgstr "ロシア連邦"
+msgstr ""
 
 #: src/Support/Currency.php:339
 #, fuzzy
 msgid "Russian Ruble"
 msgstr "ロシアルーブル"
 
-#: address.js:198
+#: address.js:193
 msgid "Rwanda"
-msgstr "ルワンダ"
+msgstr ""
 
 #: src/Support/Currency.php:340
 #, fuzzy
 msgid "Rwandan Franc"
 msgstr "ルワンダフラン"
 
-#: address.js:199
+#: address.js:194
 msgid "Réunion"
-msgstr "レユニオン"
+msgstr ""
 
-#: address.js:200
+#: address.js:195
 msgid "Saint Barthélemy"
-msgstr "サン・バルテルミー"
+msgstr ""
 
-#: address.js:201
+#: address.js:196
 msgid "Saint Helena, Ascension and Tristan da Cunha"
-msgstr "セントヘレナ・アセンションおよびトリスタンダクーニャ"
+msgstr ""
 
 #: src/Support/Currency.php:341
 #, fuzzy
 msgid "Saint Helenian Pound"
 msgstr "セントヘレニアポンド"
 
-#: address.js:202
+#: address.js:197
 msgid "Saint Kitts and Nevis"
-msgstr "セントクリストファー・ネイビス"
+msgstr ""
 
-#: address.js:203
+#: address.js:198
 msgid "Saint Lucia"
-msgstr "セントルシア"
+msgstr ""
 
-#: address.js:204
+#: address.js:199
 msgid "Saint Martin (French part)"
-msgstr "サン・マルタン島"
+msgstr ""
 
-#: address.js:205
+#: address.js:200
 msgid "Saint Pierre and Miquelon"
-msgstr "サンピエール島・ミクロン島"
+msgstr ""
 
-#: address.js:206
+#: address.js:201
 msgid "Saint Vincent and the Grenadines"
-msgstr "セントビンセントおよびグレナディーン諸島"
+msgstr ""
 
 #: sc-product-price.js:30
 msgid "Sale"
@@ -10522,9 +11222,9 @@ msgstr ""
 msgid "Sale Text"
 msgstr ""
 
-#: address.js:207
+#: address.js:202
 msgid "Samoa"
-msgstr "サモア"
+msgstr ""
 
 #: src/Support/Currency.php:342
 #, fuzzy
@@ -10541,17 +11241,17 @@ msgstr "サモア タラ"
 msgid "Sample Data"
 msgstr "サンプルデータ"
 
-#: address.js:208
+#: address.js:203
 msgid "San Marino"
-msgstr "サン・マリノ"
+msgstr ""
 
-#: address.js:209
+#: address.js:204
 msgid "Sao Tome and Principe"
-msgstr "サントメ・プリンシペ"
+msgstr ""
 
-#: address.js:210
+#: address.js:205
 msgid "Saudi Arabia"
-msgstr "サウジアラビア"
+msgstr ""
 
 #: src/Support/Currency.php:343
 #, fuzzy
@@ -10570,8 +11270,7 @@ msgstr "サウジリヤル"
 msgid "Save"
 msgstr "保存"
 
-#: sc-order-bump2.js:61
-#, fuzzy
+#: sc-order-bump2.js:72
 msgid "Save %s%%"
 msgstr ""
 
@@ -10595,9 +11294,9 @@ msgstr "ライセンスを保存"
 msgid "Save Order Bump"
 msgstr "保存注文バンプ"
 
-#: sc-stripe-add-method.js:128
+#: sc-stripe-add-method.js:132
 msgid "Save Payment Method"
-msgstr "お支払い方法を保存"
+msgstr ""
 
 #: products/EditProduct.js:147
 #, fuzzy
@@ -10638,8 +11337,11 @@ msgstr "クーポンによって継続された割合"
 msgid "Saved."
 msgstr "保存しました。"
 
-#: sc-payment-method2.js:22
-#, fuzzy
+#: settings/shipping/profile/ShippingProfile.js:111
+msgid "Saving failed."
+msgstr ""
+
+#: sc-payment-method2.js:27
 msgid "Savings"
 msgstr ""
 
@@ -10804,8 +11506,16 @@ msgstr "セクション"
 msgid "Secure"
 msgstr ""
 
+#: Blocks/Submit/edit.js:89
+msgid "Secure Payment Text"
+msgstr ""
+
 #: products/modules/Downloads.js:131
 msgid "Secure Storage"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:340
+msgid "Select"
 msgstr ""
 
 #: coupons/modules/NewRestriction.js:139
@@ -10826,6 +11536,10 @@ msgstr "価格を選択"
 msgid "Select A Product"
 msgstr "商品を選択してください"
 
+#: onboarding/components/StarterTemplates.js:74
+msgid "Select A Starting Point"
+msgstr ""
+
 #: components/data-tables/charges-data-table/Refund.js:174
 msgid "Select All"
 msgstr "全てを選択"
@@ -10840,6 +11554,11 @@ msgstr "統合を選択"
 #, fuzzy
 msgid "Select An Upgrade Group"
 msgstr "アップグレード グループの選択"
+
+#: settings/shipping/zone/ShippingZoneForm.js:191
+#: settings/shipping/zone/ShippingZoneForm.js:225
+msgid "Select Countries"
+msgstr ""
 
 #: src/Integrations/Elementor/ReusableFormWidget.php:110
 #: Blocks/CheckoutForm/components/Empty.js:192
@@ -10863,9 +11582,13 @@ msgstr "テーマを選択"
 msgid "Select Theme (Beta)"
 msgstr "テーマを選択（ベータ版）"
 
-#: sc-compact-address2.js:102
+#: sc-compact-address2.js:115
 msgid "Select Your Country"
-msgstr "国を選択してください。"
+msgstr ""
+
+#: checkouts/modules/SelectCustomer/index.js:119
+msgid "Select a Customer"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:174
 msgid "Select a Form Template"
@@ -10875,14 +11598,18 @@ msgstr "フォームのテンプレートを選択"
 msgid "Select a checkout form"
 msgstr "決済フォームを選択"
 
+#: checkouts/modules/SelectCustomer/index.js:124
+msgid "Select a customer"
+msgstr ""
+
 #: src/Integrations/Beaver/BeaverFormModule.php:52
 #, fuzzy
 msgid "Select a form"
 msgstr "フォームを選択"
 
-#: sc-subscription-payment.js:115
+#: sc-subscription-payment.js:120
 msgid "Select a payment method"
-msgstr "お支払い方法を選択"
+msgstr ""
 
 #: components/SelectPrice.js:64
 #, fuzzy
@@ -10920,6 +11647,10 @@ msgstr "アイコンを選択"
 #, fuzzy
 msgid "Select an upgrade group"
 msgstr "アップグレード グループの選択"
+
+#: settings/shipping/zone/ShippingZoneForm.js:99
+msgid "Select at least one country to create zone."
+msgstr ""
 
 #: src/Controllers/Admin/Bumps/BumpsListTable.php:113
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:90
@@ -10976,6 +11707,10 @@ msgstr ""
 msgid "Select the menu(s) where the cart icon will appear."
 msgstr ""
 
+#: sc-select2.js:2066
+msgid "Select..."
+msgstr ""
+
 #: settings/customer/CustomerSettings.js:106
 #, fuzzy
 msgid "Send a general order confirmation email to your customers when an order is paid. These emails include a breakdown of the order, and a link to a page where they can download their invoice and receipt."
@@ -10986,9 +11721,13 @@ msgstr ""
 msgid "Send a general subscription cancellation confirmation email to your customers when subscription canceled."
 msgstr ""
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Send a login code"
-msgstr "ログインコードを送信"
+msgstr ""
+
+#: settings/customer/CustomerSettings.js:125
+msgid "Send a product access email to your customer when a purchase has done for a licensed downloadable product."
+msgstr ""
 
 #: settings/customer/CustomerSettings.js:124
 #, fuzzy
@@ -11012,9 +11751,9 @@ msgstr "注文料金が無料でも顧客に注文メールを送信"
 msgid "Sender Name"
 msgstr "送信者名"
 
-#: address.js:211
+#: address.js:206
 msgid "Senegal"
-msgstr "セネガル"
+msgstr ""
 
 #: src/Controllers/Admin/Abandoned/AbandonedCheckoutListTable.php:44
 #: abandoned-checkouts/modules/Details.js:13
@@ -11074,9 +11813,9 @@ msgstr "注文が作成された際に送信されます。"
 msgid "Sequential"
 msgstr "順次"
 
-#: address.js:212
+#: address.js:207
 msgid "Serbia"
-msgstr "セルビア"
+msgstr ""
 
 #: src/Support/Currency.php:344
 #, fuzzy
@@ -11089,9 +11828,9 @@ msgctxt "block title"
 msgid "Session Info"
 msgstr ""
 
-#: sc-password-nag.js:86
+#: sc-password-nag.js:98
 msgid "Set A Password"
-msgstr "パスワードを設定"
+msgstr ""
 
 #: Blocks/ProductItemImage/edit.js:80
 #: Blocks/ProductItemImage/edit.js:97
@@ -11116,11 +11855,6 @@ msgstr "バンプのカスタム コール トゥ アクションを設定しま
 msgid "Set a maximum height"
 msgstr "最大の高さを設定"
 
-#: settings/portal/PortalSettings.js:117
-#, fuzzy
-msgid "Set additional customer portal details for your store."
-msgstr ""
-
 #: products/modules/integrations/IntegrationHelp.js:79
 #, fuzzy
 msgid "Set it and forget it."
@@ -11130,6 +11864,14 @@ msgstr "設定して忘れてください。"
 #, fuzzy
 msgid "Set up pricing for your product."
 msgstr "製品の価格を設定します。"
+
+#: settings/shipping/ShippingSettings.js:157
+msgid "Set where you ship and how much you charge for shipping."
+msgstr ""
+
+#: onboarding/components/SetupProgress.js:56
+msgid "Setting up your store..."
+msgstr ""
 
 #: src/Integrations/Beaver/BeaverFormModule.php:60
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:115
@@ -11160,6 +11902,10 @@ msgstr "設定が更新されました。"
 msgid "Setup"
 msgstr "設定"
 
+#: dashboard/Dashboard.js:82
+msgid "Setup Complete!"
+msgstr ""
+
 #: products/modules/Prices/Price/Header.js:59
 #: sc-price-choice.js:811
 msgid "Setup Fee"
@@ -11177,14 +11923,41 @@ msgstr ""
 msgid "Setup fee name"
 msgstr ""
 
-#: address.js:213
+#: address.js:208
 msgid "Seychelles"
-msgstr "セーシェル"
+msgstr ""
 
 #: src/Support/Currency.php:345
 #, fuzzy
 msgid "Seychellois Rupee"
 msgstr "セーシェル ルピー"
+
+#: sc-fulfillments.js:60
+msgid "Shipment"
+msgid_plural "Shipments"
+msgstr[0] ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:388
+#: orders/modules/Fulfillment/components/StatusDropdown.js:20
+#: sc-fulfillment-shipping-status-badge2.js:8
+#: sc-order-shipment-badge2.js:8
+msgid "Shipped"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:105
+#: layouts/partials/admin-settings-sidebar.php:66
+#: abandoned-checkouts/modules/LineItems/index.js:110
+#: orders/modules/LineItems/index.js:262
+#: products/modules/Shipping.js:25
+#: settings/shipping/ShippingSettings.js:120
+#: subscriptions/show/modules/LineItems/index.js:105
+#: sc-line-item-shipping2.js:26
+#: sc-order-confirmation-totals2.js:35
+#: sc-shipping-choices2.js:54
+#: sc-shipping-choices2.js:56
+#: sc-subscription-next-payment2.js:101
+msgid "Shipping"
+msgstr ""
 
 #: abandoned-checkouts/AbandonedCheckout.js:138
 #: orders/Sidebar.js:17
@@ -11205,9 +11978,108 @@ msgctxt "block title"
 msgid "Shipping Address"
 msgstr "配送先住所"
 
+#: Blocks/LineItemShipping/edit.js:29
+msgid "Shipping Amount"
+msgstr ""
+
+#: Blocks/ShippingChoices/edit.js:55
+msgid "Shipping Choices"
+msgstr ""
+
+#: Blocks/ShippingChoices/block.json
+msgctxt "block title"
+msgid "Shipping Choices"
+msgstr ""
+
 #: Blocks/ConditionalForm/translations.js:9
 msgid "Shipping Country"
 msgstr "発送地域"
+
+#: Blocks/LineItemShipping/block.json
+msgctxt "block title"
+msgid "Shipping Line Item"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:336
+#: store/add-entities.js:278
+msgid "Shipping Method"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:107
+msgid "Shipping Methods"
+msgstr ""
+
+#: store/add-entities.js:257
+msgid "Shipping Profile"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:156
+msgid "Shipping Profiles"
+msgstr ""
+
+#: store/add-entities.js:250
+msgid "Shipping Protocol"
+msgstr ""
+
+#: store/add-entities.js:271
+msgid "Shipping Rate"
+msgstr ""
+
+#: settings/shipping/ShippingSettings.js:140
+msgid "Shipping Settings"
+msgstr ""
+
+#: products/modules/Shipping.js:45
+msgid "Shipping Weight"
+msgstr ""
+
+#: store/add-entities.js:264
+msgid "Shipping Zone"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:35
+msgid "Shipping Zones & Rates"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:69
+msgid "Shipping method added"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:81
+msgid "Shipping method removed"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethodForm.js:64
+msgid "Shipping method updated"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:128
+msgid "Shipping methods represent the different speeds or classes of shipping that your store offers."
+msgstr ""
+
+#: settings/shipping/profile/DeleteShippingProfile.js:36
+msgid "Shipping profile deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:152
+msgid "Shipping rate added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZone.js:57
+msgid "Shipping rate deleted"
+msgstr ""
+
+#: settings/shipping/rate/ShippingRateForm.js:147
+msgid "Shipping rate updated"
+msgstr ""
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:29
+msgid "Shipping zone deleted"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZones.js:36
+msgid "Shipping zones are geographic regions where you ship products."
+msgstr ""
 
 #: src/Routing/PermalinkServiceProvider.php:33
 msgid "Shop"
@@ -11261,6 +12133,10 @@ msgstr "次の場合にバンプ オファーを表示"
 msgid "Show Currency Code"
 msgstr "通貨コードを表示"
 
+#: Blocks/ShippingChoices/edit.js:65
+msgid "Show Description"
+msgstr ""
+
 #: settings/account/components/CartSettings.js:255
 msgid "Show Floating Cart Icon"
 msgstr ""
@@ -11282,9 +12158,9 @@ msgstr ""
 msgid "Show Price Amount"
 msgstr ""
 
-#: sc-order-summary.js:20
+#: sc-order-summary.js:21
 msgid "Show Summary"
-msgstr "サマリーを表示"
+msgstr ""
 
 #: settings/account/components/CartSettings.js:257
 msgid "Show a floating cart icon in the bottom corner of your site, if there are items in the cart."
@@ -11324,6 +12200,10 @@ msgstr ""
 msgid "Show product image"
 msgstr ""
 
+#: Blocks/Submit/edit.js:79
+msgid "Show secure notice."
+msgstr ""
+
 #: products/modules/BuyLink.js:162
 msgid "Show store logo"
 msgstr ""
@@ -11336,9 +12216,9 @@ msgstr "フォームに「名前もしくは会社名」のフィールドを表
 msgid "Show total due in button text."
 msgstr "ボタンテキストに合計金額を表示する。"
 
-#: address.js:214
+#: address.js:209
 msgid "Sierra Leone"
-msgstr "シエラレオネ"
+msgstr ""
 
 #: src/Support/Currency.php:346
 #, fuzzy
@@ -11359,18 +12239,22 @@ msgstr "シンプル"
 msgid "Since SureCart's integrations are native, there's no need to worry about the complexity of growing your store."
 msgstr "SureCart の統合はネイティブであるため、ストアの成長の複雑さについて心配する必要はありません。"
 
-#: address.js:215
+#: address.js:210
 msgid "Singapore"
-msgstr "シンガポール"
+msgstr ""
 
 #: src/Support/Currency.php:347
 #, fuzzy
 msgid "Singapore Dollar"
 msgstr "シンガポールドル"
 
-#: address.js:216
+#: address.js:211
 msgid "Sint Maarten (Dutch part)"
-msgstr "シント・マールテン"
+msgstr ""
+
+#: Blocks/Password/edit.js:53
+msgid "Site Settings"
+msgstr ""
 
 #: components/MediaLibrary/Preview.js:110
 #: Blocks/BuyButton/edit.js:91
@@ -11389,13 +12273,13 @@ msgstr "リンクをスキップ"
 msgid "Slider Height"
 msgstr ""
 
-#: address.js:217
+#: address.js:212
 msgid "Slovakia"
-msgstr "スロバキア"
+msgstr ""
 
-#: address.js:218
+#: address.js:213
 msgid "Slovenia"
-msgstr "スロベニア"
+msgstr ""
 
 #: Blocks/AddToCartButton/edit.js:119
 #: Blocks/BuyButton/edit.js:104
@@ -11405,9 +12289,9 @@ msgstr "スロベニア"
 msgid "Small"
 msgstr "小"
 
-#: address.js:219
+#: address.js:214
 msgid "Solomon Islands"
-msgstr "ソロモン諸島"
+msgstr ""
 
 #: src/Support/Currency.php:348
 #, fuzzy
@@ -11419,9 +12303,9 @@ msgstr "ソロモン諸島ドル"
 msgid "Somali Shilling"
 msgstr "ソマリア シリング"
 
-#: address.js:220
+#: address.js:215
 msgid "Somalia"
-msgstr "ソマリア"
+msgstr ""
 
 #: src/Middleware/NonceMiddleware.php:26
 #, fuzzy
@@ -11512,13 +12396,17 @@ msgstr "エラーが発生しました。"
 
 #: paypal-buttons.js:144
 msgid "Something went wrong. Please contact us for payment."
-msgstr "何かがうまくいきませんでした。お支払いについてお問い合わせください。"
+msgstr ""
 
 #: components/MediaLibrary/index.js:136
 #: settings/processors/CreateEditPaymentMethod.js:53
 #, fuzzy
 msgid "Something went wrong. Please try again."
 msgstr "エラーが発生しました。もう一度やり直してください。"
+
+#: sc-shipping-choices2.js:54
+msgid "Sorry, we are not able to ship to your address."
+msgstr ""
 
 #: src/Rest/ProductsRestServiceProvider.php:153
 #: src/Rest/ProductsRestServiceProvider.php:171
@@ -11536,39 +12424,39 @@ msgstr "申し訳ありませんが、登録されているフォーム パタ�
 msgid "Sort"
 msgstr ""
 
-#: address.js:221
+#: address.js:216
 msgid "South Africa"
-msgstr "南アフリカ"
+msgstr ""
 
 #: src/Support/Currency.php:350
 #, fuzzy
 msgid "South African Rand"
 msgstr "南アフリカランド"
 
-#: address.js:222
+#: address.js:217
 msgid "South Georgia and the South Sandwich Islands"
-msgstr "サウスジョージア・サウスサンドウィッチ諸島"
+msgstr ""
 
-#: address.js:223
+#: address.js:218
 msgid "South Korea"
-msgstr "韓国"
+msgstr ""
 
 #: src/Support/Currency.php:351
 #, fuzzy
 msgid "South Korean Won"
 msgstr "韓国ウォン"
 
-#: address.js:224
+#: address.js:219
 msgid "South Sudan"
-msgstr "南スーダン"
+msgstr ""
 
 #: components/CartInspectorControls.js:33
 msgid "Spacing"
 msgstr "スペース"
 
-#: address.js:225
+#: address.js:220
 msgid "Spain"
-msgstr "スペイン"
+msgstr ""
 
 #: settings/account/AccountSettings.js:231
 msgid "Spam Protection & Security"
@@ -11578,9 +12466,9 @@ msgstr "スパム対策とセキュリティ設定"
 msgid "Square"
 msgstr ""
 
-#: address.js:226
+#: address.js:221
 msgid "Sri Lanka"
-msgstr "スリランカ"
+msgstr ""
 
 #: src/Support/Currency.php:352
 #, fuzzy
@@ -11606,6 +12494,18 @@ msgstr "スタンドアロン ブロック エディタの詳細設定。"
 msgid "Standalone Editor top bar."
 msgstr "スタンドアロン エディタのトップ バー。"
 
+#: Blocks/ShippingChoices/edit.js:25
+msgid "Standard"
+msgstr ""
+
+#: sc-shipping-choices2.js:58
+msgid "Standard Shipping"
+msgstr ""
+
+#: onboarding/components/StarterTemplates.js:10
+msgid "Start From Scratch"
+msgstr ""
+
 #: settings/order/OrderProtocol.js:99
 #, fuzzy
 msgid "Start Order Number At"
@@ -11625,9 +12525,15 @@ msgstr ""
 msgid "Started"
 msgstr ""
 
-#: sc-price-choice.js:811
+#: sc-price-choice-container2.js:58
+#: sc-price-choice.js:813
 msgid "Starting in %s day"
 msgid_plural "Starting in %s days"
+msgstr[0] ""
+
+#: sc-product-price.js:40
+msgid "Starting in %s day."
+msgid_plural "Starting in %s days."
 msgstr[0] ""
 
 #: settings/tax-region/RegistrationForm.js:24
@@ -11644,11 +12550,11 @@ msgstr "都道府県のプレースホルダー"
 msgid "State Sales Tax Registrations"
 msgstr ""
 
-#: sc-address2.js:108
-#: sc-order-shipping-address2.js:36
-#: sc-order-shipping-address2.js:45
+#: sc-address2.js:105
+#: sc-order-shipping-address2.js:43
+#: sc-order-shipping-address2.js:52
 msgid "State/Province/Region"
-msgstr "都道府県"
+msgstr ""
 
 #: store/add-entities.js:201
 #, fuzzy
@@ -11685,6 +12591,10 @@ msgstr ""
 
 #: products/components/Availability/index.js:61
 msgid "Status defines whether a product is purchasable."
+msgstr ""
+
+#: orders/modules/Fulfillment/components/StatusDropdown.js:66
+msgid "Status updated."
 msgstr ""
 
 #: Blocks/Column/edit.js:144
@@ -11761,12 +12671,16 @@ msgstr "Stripe"
 msgid "Stripe Fraud Monitoring"
 msgstr ""
 
-#: sc-stripe-add-method.js:35
-#: sc-stripe-element.js:38
-#: sc-stripe-payment-element.js:51
-#: sc-stripe-payment-request2.js:60
+#: sc-stripe-add-method.js:39
+#: sc-stripe-element.js:43
+#: sc-stripe-payment-element.js:59
+#: sc-stripe-payment-request2.js:59
 msgid "Stripe could not be loaded"
-msgstr "Stripeがロードできませんでした"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:308
+msgid "Strong Password Validation"
+msgstr ""
 
 #: Blocks/Form/edit.js:227
 msgid "Style"
@@ -11785,9 +12699,9 @@ msgstr "注文の提出"
 msgid "Submitting Order..."
 msgstr "ご注文を提出しています..."
 
-#: sc-checkout.js:194
+#: sc-checkout.js:210
 msgid "Submitting order..."
-msgstr "注文を提出中..."
+msgstr ""
 
 #: Blocks/Product/PriceChoices/edit.js:115
 msgid "Subscribe and Save"
@@ -11983,9 +12897,9 @@ msgstr ""
 msgid "Success! Redirecting..."
 msgstr "成功しました！リダイレクト中です..."
 
-#: address.js:227
+#: address.js:222
 msgid "Sudan"
-msgstr "スーダン"
+msgstr ""
 
 #: coupons/Sidebar.js:52
 #: products/Sidebar.js:34
@@ -12147,9 +13061,9 @@ msgstr "SureCart商品オブジェクト"
 msgid "SureCart webhooks could not be created."
 msgstr "SureCart Webhook を作成できませんでした。"
 
-#: address.js:228
+#: address.js:223
 msgid "Suriname"
-msgstr "スリナム"
+msgstr ""
 
 #: src/Support/Currency.php:353
 #, fuzzy
@@ -12160,18 +13074,18 @@ msgstr "スリナムドル"
 msgid "Survey Answers"
 msgstr "アンケートの回答"
 
-#: address.js:229
+#: address.js:224
 msgid "Svalbard and Jan Mayen"
-msgstr "スヴァールバル諸島およびヤンマイエン島"
+msgstr ""
 
 #: src/Support/Currency.php:354
 #, fuzzy
 msgid "Swazi Lilangeni"
 msgstr "スワジ語リランゲニ"
 
-#: address.js:230
+#: address.js:225
 msgid "Sweden"
-msgstr "スウェーデン"
+msgstr ""
 
 #: src/Support/Currency.php:355
 #, fuzzy
@@ -12201,9 +13115,9 @@ msgstr "ライブモードに切り替える。"
 msgid "Switch to test mode."
 msgstr "テストモードに切り替える。"
 
-#: address.js:231
+#: address.js:226
 msgid "Switzerland"
-msgstr "スイス"
+msgstr ""
 
 #: settings/advanced/AdvancedSettings.js:135
 msgid "Sync Customers"
@@ -12218,9 +13132,9 @@ msgstr "既に使用しているプラグインと購入を同期します。"
 msgid "Syncing"
 msgstr ""
 
-#: address.js:232
+#: address.js:227
 msgid "Syrian Arab Republic"
-msgstr "シリア"
+msgstr ""
 
 #: src/Support/Currency.php:357
 #, fuzzy
@@ -12240,22 +13154,22 @@ msgctxt "block title"
 msgid "Tabbed Customer Dashboard"
 msgstr ""
 
-#: address.js:233
+#: address.js:228
 msgid "Taiwan"
-msgstr "台湾"
+msgstr ""
 
-#: address.js:234
+#: address.js:229
 msgid "Tajikistan"
-msgstr "タジキスタン"
+msgstr ""
 
 #: src/Support/Currency.php:358
 #, fuzzy
 msgid "Tajikistani Somoni"
 msgstr "タジキスタン・ソモニ"
 
-#: address.js:235
+#: address.js:230
 msgid "Tanzania"
-msgstr "タンザニア"
+msgstr ""
 
 #: src/Support/Currency.php:359
 #, fuzzy
@@ -12322,11 +13236,6 @@ msgstr ""
 msgid "Tax Zone"
 msgstr ""
 
-#: products/modules/Tax.js:68
-#, fuzzy
-msgid "Tax and Shipping"
-msgstr "税金と送料"
-
 #: subscriptions/show/modules/Tax.js:37
 msgid "Tax disabled."
 msgstr "税金が無効になりました。"
@@ -12345,7 +13254,7 @@ msgstr "税金は自動計算され、注文に適用されます。税金を徴
 msgid "Tax is included"
 msgstr "税込"
 
-#: sc-line-item-tax2.js:20
+#: sc-line-item-tax2.js:22
 msgid "Tax:"
 msgstr ""
 
@@ -12377,6 +13286,10 @@ msgstr ""
 #: Controllers/SubscriptionController.php:248
 msgid "Terms"
 msgstr "規約"
+
+#: settings/account/AccountSettings.js:259
+msgid "Terms Page"
+msgstr ""
 
 #: settings/portal/PortalSettings.js:131
 msgid "Terms of Service"
@@ -12411,23 +13324,13 @@ msgstr "テスト"
 msgid "Test Mode"
 msgstr "テストモード"
 
-#: admin/processors.php:66
-#: admin/processors.php:144
-#, fuzzy
-msgid "Test Payment Not Enabled"
-msgstr "テスト支払いが有効になっていません"
+#: settings/processors/ProcessorSettings.js:61
+msgid "Test Payments Disabled"
+msgstr ""
 
-#: admin/processors.php:69
-#: admin/processors.php:147
-#, fuzzy
+#: settings/processors/ProcessorSettings.js:57
 msgid "Test Payments Enabled"
-msgstr "テスト支払い有効"
-
-#: admin/processors.php:62
-#: admin/processors.php:140
-#, fuzzy
-msgid "Test and Live Payments Enabled"
-msgstr "テストとライブ支払いが有効"
+msgstr ""
 
 #: Blocks/Form/Block.php:144
 msgid "Test and live mode API keys, requests, and objects are only available within the mode they are in."
@@ -12465,9 +13368,9 @@ msgstr "テキストエリア"
 msgid "Thai Baht"
 msgstr "タイバーツ"
 
-#: address.js:236
+#: address.js:231
 msgid "Thailand"
-msgstr "タイ"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:203
 #: Blocks/Form/components/Setup.js:85
@@ -12891,6 +13794,14 @@ msgstr ""
 msgid "The line items for the session."
 msgstr "セッションのラインアイテム。"
 
+#: src/Support/Errors/Translations/codes.php:76
+msgid "The maximum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:75
+msgid "The maximum amount must be greater than or equal to the minimum amount."
+msgstr ""
+
 #: Blocks/Form/Block.php:124
 #, fuzzy
 msgid "The maximum number of subscriptions for a customer has been reached. Contact us if you are receiving this error."
@@ -12906,10 +13817,34 @@ msgstr "最高価格は最低価格より高くなければなりません。"
 msgid "The maximum price must be smaller."
 msgstr "最大価格は小さくする必要があります。"
 
+#: src/Support/Errors/Translations/codes.php:72
+msgid "The maximum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:71
+msgid "The maximum weight must be greater than or equal to the minimum weight."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:78
+msgid "The minimum amount must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:77
+msgid "The minimum amount must be greater than or equal to zero."
+msgstr ""
+
 #: src/Support/Errors/Translations/codes.php:44
 #, fuzzy
 msgid "The minimum price must be smaller."
 msgstr "最低価格を小さくする必要があります。"
+
+#: src/Support/Errors/Translations/codes.php:74
+msgid "The minimum weight must be a number."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:73
+msgid "The minimum weight must be greater than or equal to zero."
+msgstr ""
 
 #: src/Rest/IntegrationProvidersRestServiceProvider.php:125
 #, fuzzy
@@ -13005,11 +13940,15 @@ msgstr "インサータ プレビューのパターン ビューポートの幅�
 #: paypal-buttons.js:89
 #: paypal-buttons.js:103
 #: paypal-buttons.js:109
-#: sc-paypal-add-method.js:56
 #: sc-paypal-add-method.js:61
-#: sc-paypal-add-method.js:67
+#: sc-paypal-add-method.js:66
+#: sc-paypal-add-method.js:72
 msgid "The payment did not process. Please try again."
-msgstr "お支払いが処理できませんでした。もう一度お試しください。"
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:22
+msgid "The payment method is not valid (chargeable fingerprint blank). Please double-check it and try again."
+msgstr ""
 
 #: src/Rest/BrandRestServiceProvider.php:124
 #, fuzzy
@@ -13054,6 +13993,10 @@ msgstr "他のバンプに対するこのバンプの優先順位。数値が大
 #, fuzzy
 msgid "The product image must be an image."
 msgstr "商品画像はイメージである必要があります。"
+
+#: settings/shipping/profile/AddShippingProfile.js:36
+msgid "The profile name is required."
+msgstr ""
 
 #: settings/subscription-preservation/EditReason.js:132
 #, fuzzy
@@ -13101,9 +14044,77 @@ msgstr ""
 msgid "The request timed out. Try again later."
 msgstr ""
 
-#: fetch.js:1845
+#: fetch.js:694
 msgid "The response is not a valid JSON response."
-msgstr "有効なJSONレスポンスではありません。"
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:60
+msgid "The selected countries are already used in another shipping zone."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:61
+msgid "The selected countries are not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:70
+msgid "The shipping method cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:65
+msgid "The shipping method description is too long. Please enter a shorter description."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:62
+msgid "The shipping method name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:54
+msgid "The shipping method name is already in use ."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:64
+msgid "The shipping method name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:63
+msgid "The shipping method name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:55
+msgid "The shipping profile name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:56
+msgid "The shipping profile name is too long. Please enter a shorter name."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:66
+msgid "The shipping rate type cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:67
+msgid "The shipping rate type is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:68
+msgid "The shipping weight unit cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:69
+msgid "The shipping weight unit is not valid."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:57
+msgid "The shipping zone name cannot be blank."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:58
+msgid "The shipping zone name is already in use."
+msgstr ""
+
+#: src/Support/Errors/Translations/codes.php:59
+msgid "The shipping zone name is too long. Please enter a shorter name."
+msgstr ""
 
 #: Blocks/Form/Block.php:139
 #, fuzzy
@@ -13192,9 +14203,10 @@ msgstr "サポート、請求書などで顧客に表示される Web サイト�
 msgid "Theme Layout"
 msgstr ""
 
-#: sc-product-line-item2.js:24
+#. translators: 30 days free, Then $99 per month.
+#: sc-product-line-item2.js:39
 msgid "Then"
-msgstr "そして"
+msgstr ""
 
 #: cancellation-insights/CancellationReasonStats.js:181
 msgid "There are no cancellation reasons for this period."
@@ -13243,6 +14255,10 @@ msgstr "今月"
 #, fuzzy
 msgid "This Week"
 msgstr "今週"
+
+#: settings/shipping/zone/ConfirmDeleteZone.js:43
+msgid "This action cannot be undone."
+msgstr ""
 
 #: subscriptions/show/modules/modals/ConfirmRevokeModal.js:132
 msgid "This action will re-enable associated access."
@@ -13315,6 +14331,10 @@ msgstr "このクーポンは無効です。もう一度確認してから、も
 msgid "This coupon will not be usable and all unsaved changes will be lost."
 msgstr "このクーポンは使用できなくなり、保存されていない変更はすべて失われます。"
 
+#: checkouts/modules/PaymentMethods.js:76
+msgid "This customer does not have any payment methods that are reusable. This means we cannot charge this customer without them entering their payment details again. Please ask the customer to add a payment method to their account, or use a manual payment method."
+msgstr ""
+
 #: src/Rest/AbandonedCheckoutRestServiceProvider.php:81
 #, fuzzy
 msgid "This customer's most recent checkout that has been abandoned."
@@ -13340,6 +14360,14 @@ msgstr "これは一致しません"
 msgid "This download cannot be removed or archived when it is set as the current release."
 msgstr "このダウンロードは、現在のリリースとして設定されている場合、削除またはアーカイブできません。"
 
+#: onboarding/components/ConfirmStoreEmail.js:53
+msgid "This email is used for store notifications, such as new orders, payment failures and other store emails."
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:310
+msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
+msgstr ""
+
 #: Blocks/CheckoutForm/components/Edit.js:91
 msgid "This form has been deleted or is unavailable."
 msgstr "このフォームは削除されたか利用できません。"
@@ -13354,6 +14382,18 @@ msgstr "このフォームは利用できないか、削除されています。
 msgid "This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails)."
 msgstr ""
 
+#: templates/UpdateModel/index.js:46
+msgid "This is a demo of a premium feature. To get this feature, complete your setup and upgrade your plan."
+msgstr ""
+
+#: templates/UpdateModel/index.js:50
+msgid "This is a demo of a premium feature. To get this feature, please upgrade your plan."
+msgstr ""
+
+#: sc-feature-demo-banner.js:15
+msgid "This is a feature demo. In order to use it, you must upgrade your plan."
+msgstr ""
+
 #: admin/subscriptions/index.php:9
 msgid "This is a list for all your subscription plans. Subscriptions represent recurring payment plans for your users."
 msgstr "これは、すべての定期購読プランのリストです。定期購読は、ユーザーの定期的な支払いプランを表します。"
@@ -13363,7 +14403,7 @@ msgstr "これは、すべての定期購読プランのリストです。定期
 msgid "This is a physical product"
 msgstr "これは物理的な製品です"
 
-#: sc-order-submit.js:46
+#: sc-order-submit.js:57
 msgid "This is a secure, encrypted payment."
 msgstr ""
 
@@ -13440,7 +14480,19 @@ msgstr ""
 
 #: sc-order-confirmation.js:111
 msgid "This order could not be found. Please try again."
-msgstr "このご注文は見つかりませんでした。もう一度お確かめください。"
+msgstr ""
+
+#: checkouts/CreateCheckout.js:195
+msgid "This order has already been created. Please create a new order."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:91
+msgid "This order has products that are not shippable to this address."
+msgstr ""
+
+#: checkouts/modules/SelectShipping.js:80
+msgid "This order requires shipping. Please enter an address."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
 msgid "This payment method cannot be used for subscriptions."
@@ -13456,17 +14508,17 @@ msgstr "このプレフィックスは長すぎます。プレフィックスを
 msgid "This prefix is too short. Please enter a longer prefix."
 msgstr "このプレフィックスは短すぎます。より長いプレフィックスを入力してください。"
 
-#: sc-custom-order-price-input.js:72
+#: sc-custom-order-price-input.js:74
 msgid "This price has been archived."
-msgstr "この料金はアーカイブに追加されました。"
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:42
 msgid "This price is currently being used in subscriptions or checkout sessions. Please archive the price and create another one."
 msgstr "この価格は現在、定期購読またはチェックアウトセッションで使用されています。価格をアーカイブして、別の価格を作成してください。"
 
-#: sc-price-choice.js:782
+#: sc-price-choice.js:776
 msgid "This product has been archived."
-msgstr "この商品はアーカイブに追加されました。"
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:26
 #, fuzzy
@@ -13477,10 +14529,10 @@ msgstr "この製品には、現在使用されている価格があります。
 msgid "This product is invalid."
 msgstr ""
 
-#: sc-error2.js:25
-#: sc-form-error-provider2.js:42
+#: sc-checkout-form-errors2.js:17
+#: sc-error2.js:24
 msgid "This product is no longer purchasable."
-msgstr "この商品は購入できません。"
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:41
 #, fuzzy
@@ -13493,11 +14545,6 @@ msgstr "この製品は購入できなくなりました。"
 msgid "This product is not available for purchase."
 msgstr ""
 
-#: products/modules/Tax.js:71
-#, fuzzy
-msgid "This product requires shipping"
-msgstr "この商品は送料が必要です"
-
 #: src/Support/Errors/Translations/codes.php:24
 #, fuzzy
 msgid "This promotion code already exists. Please archive the old code or use a different code."
@@ -13507,9 +14554,9 @@ msgstr "このプロモーション コードは既に存在します。古い�
 msgid "This should be your live storefront URL."
 msgstr "これはライブ状態のサイトトップのURLである必要があります。"
 
-#: sc-subscription.js:117
+#: sc-subscription.js:163
 msgid "This subscription does not exist."
-msgstr "この定期購読は存在しません。"
+msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:129
 msgid "This subscription is going to be paused on %s. When would you like the subscription to be restored?"
@@ -13560,6 +14607,14 @@ msgstr ""
 msgid "This will change your user data on your install. We recommend creating a backup of your site before running this."
 msgstr ""
 
+#: checkouts/CreateCheckout.js:320
+msgid "This will charge the customer %s."
+msgstr ""
+
+#: checkouts/CreateCheckout.js:337
+msgid "This will create an order that requires a manual payment (i.e. cash or check). Once you create this order it is not possible to pay it another way. Do you want to continue?"
+msgstr ""
+
 #: settings/account/AccountSettings.js:281
 msgid "This will enable slide-out cart. If you do not wish to use the cart, you can disable this to prevent cart scripts from loading on your pages."
 msgstr ""
@@ -13577,6 +14632,10 @@ msgstr ""
 #, fuzzy
 msgid "This will save any changes on the page. Do you want to save your changes?"
 msgstr "これにより、ページの変更が保存されます。変更を保存しますか?"
+
+#: settings/shipping/zone/FallbackZone.js:20
+msgid "This zone is optionally used for regions that are not included in any other shipping zone."
+msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:168
 msgid "Three Weeks"
@@ -13603,9 +14662,9 @@ msgstr ""
 msgid "Time Zone"
 msgstr "タイムゾーン"
 
-#: address.js:237
+#: address.js:232
 msgid "Timor-Leste"
-msgstr "東ティモール"
+msgstr ""
 
 #: Blocks/Card/edit.js:28
 #: Blocks/Dashboard/CustomerBillingDetails/edit.js:22
@@ -13650,19 +14709,27 @@ msgstr ""
 msgid "To adjust your abandoned checkout notifications,"
 msgstr "放棄されたチェックアウト通知を調整するには、"
 
+#: settings/shipping/profile/Products.js:397
+msgid "To charge different rates for only certain products, create a new profile in"
+msgstr ""
+
 #: products/modules/Tax.js:48
 #, fuzzy
 msgid "To charge tax, please set up your tax information on the settings page."
 msgstr "税金を請求するには、設定ページで税金情報を設定してください。"
+
+#: settings/shipping/ShippingSettings.js:132
+msgid "To complete the shipping setup, please add shipping rates to a shipping profile below."
+msgstr ""
 
 #: settings/account/AccountSettings.js:324
 #, fuzzy
 msgid "To get your Recaptcha keys"
 msgstr ""
 
-#: sc-subscription-switch.js:196
+#: sc-subscription-switch.js:205
 msgid "To make changes to your payment plan, please contact us."
-msgstr "お支払いプランを変更する場合は、私たちにご連絡ください。"
+msgstr ""
 
 #: src/WordPress/Pages/PageService.php:39
 #: src/WordPress/Pages/PageService.php:65
@@ -13694,17 +14761,17 @@ msgstr "クーポンのアーカイブを切り替え"
 msgid "Toggle Product Archive"
 msgstr "商品アーカイブの切り替え"
 
-#: address.js:238
+#: address.js:233
 msgid "Togo"
-msgstr "トーゴ"
+msgstr ""
 
-#: address.js:239
+#: address.js:234
 msgid "Tokelau"
-msgstr "トケラウ"
+msgstr ""
 
-#: address.js:240
+#: address.js:235
 msgid "Tonga"
-msgstr "トンガ"
+msgstr ""
 
 #: src/Support/Currency.php:361
 #, fuzzy
@@ -13822,6 +14889,17 @@ msgstr "合計"
 msgid "Tracking Confirmation"
 msgstr "追跡確認"
 
+#: orders/modules/Fulfillment/components/Tracking.js:74
+msgid "Tracking Link"
+msgstr ""
+
+#: orders/modules/Fulfillment/components/Tracking.js:61
+#: orders/modules/Fulfillment/Fulfilled.js:249
+#: sc-fulfillments.js:63
+msgid "Tracking number"
+msgid_plural "Tracking numbers"
+msgstr[0] ""
+
 #: Blocks/Form/Block.php:146
 #, fuzzy
 msgid "Transfers and payouts on behalf of a Standard connected account are not allowed."
@@ -13841,40 +14919,44 @@ msgstr "トライアル終了日："
 msgid "Trialing"
 msgstr "トライアル"
 
-#: address.js:241
+#: address.js:236
 msgid "Trinidad and Tobago"
-msgstr "トリニダード・トバゴ"
+msgstr ""
 
 #: src/Support/Currency.php:362
 #, fuzzy
 msgid "Trinidad and Tobago Dollar"
 msgstr "トリニダード・トバゴ・ドル"
 
-#: address.js:242
+#: address.js:237
 msgid "Tunisia"
-msgstr "チュニジア"
+msgstr ""
 
-#: address.js:243
+#: address.js:238
 msgid "Turkey"
-msgstr "トルコ"
+msgstr ""
 
 #: src/Support/Currency.php:363
 #, fuzzy
 msgid "Turkish Lira"
 msgstr "トルコリラ"
 
-#: address.js:244
+#: address.js:239
 msgid "Turkmenistan"
-msgstr "トルクメニスタン"
+msgstr ""
 
-#: address.js:245
+#: address.js:240
 msgid "Turks and Caicos Islands"
-msgstr "タークス・カイコス諸島"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:104
 #, fuzzy
 msgid "Turn on abandoned cart for your store."
 msgstr "ストアの放棄されたカートをオンにします。"
+
+#: products/modules/Shipping.js:117
+msgid "Turn this off if you do not wish to automatically fulfill this product when an order is placed."
+msgstr ""
 
 #: settings/subscription-preservation/PreservationSettings.js:194
 msgid "Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active."
@@ -13891,9 +14973,9 @@ msgstr "TutorLMSコース"
 msgid "Tutorial"
 msgstr "チュートリアル"
 
-#: address.js:246
+#: address.js:241
 msgid "Tuvalu"
-msgstr "ツバル"
+msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:192
 msgid "Two Column"
@@ -13963,18 +15045,18 @@ msgstr ""
 msgid "URL Slug"
 msgstr ""
 
-#: address.js:247
+#: address.js:242
 msgid "Uganda"
-msgstr "ウガンダ"
+msgstr ""
 
 #: src/Support/Currency.php:364
 #, fuzzy
 msgid "Ugandan Shilling"
 msgstr "ウガンダ シリング"
 
-#: address.js:248
+#: address.js:243
 msgid "Ukraine"
-msgstr "ウクライナ"
+msgstr ""
 
 #: src/Support/Currency.php:365
 #, fuzzy
@@ -14016,6 +15098,10 @@ msgstr "このバンプをアーカイブ解除しますか?これにより、�
 msgid "Un-Archive this price? This will make the product purchaseable again."
 msgstr "この価格のアーカイブを解除しますか?これにより、製品が再び購入可能になります。"
 
+#: product-groups/EditProductGroup.js:75
+msgid "Un-Archive this product group?"
+msgstr ""
+
 #: src/Controllers/Admin/Coupons/CouponsListTable.php:348
 #, fuzzy
 msgid "Unapprove"
@@ -14024,6 +15110,12 @@ msgstr "承認しない"
 #: products/components/Availability/index.js:85
 #: Blocks/Product/BuyButton/Block.php:117
 msgid "Unavailable For Purchase"
+msgstr ""
+
+#: src/Controllers/Admin/Orders/OrdersListTable.php:351
+#: orders/modules/Fulfillment/Unfulfilled.js:40
+#: sc-order-fulfillment-badge.js:7
+msgid "Unfulfilled"
 msgstr ""
 
 #: admin/advanced.php:63
@@ -14079,9 +15171,9 @@ msgstr "アンインストール"
 msgid "Unique identifier for the object."
 msgstr "オブジェクトの一意の識別子。"
 
-#: address.js:249
+#: address.js:244
 msgid "United Arab Emirates"
-msgstr "アラブ首長国連邦"
+msgstr ""
 
 #: src/Support/Currency.php:366
 #, fuzzy
@@ -14105,9 +15197,13 @@ msgstr "アメリカ"
 msgid "United States Dollar"
 msgstr "米ドル"
 
-#: address.js:252
+#: address.js:247
 msgid "United States Minor Outlying Islands"
-msgstr "合衆国領有小離島"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:185
+msgid "United States,  United Kingdom, Global ..."
+msgstr ""
 
 #: orders/modules/Refunds.js:59
 #, fuzzy
@@ -14134,9 +15230,9 @@ msgstr "Pro にアップグレードすると、収益向上機能のロック�
 msgid "Unlock revenue boosting features when you upgrade your plan!"
 msgstr "プランをアップグレードすると、収益向上機能のロックが解除されます!"
 
-#: sc-subscription-status-badge2.js:62
+#: sc-subscription-status-badge2.js:65
 msgid "Unpaid"
-msgstr "未払い"
+msgstr ""
 
 #: components/data-tables/purchases-data-table/RevokeToggleButton.js:78
 #, fuzzy
@@ -14191,7 +15287,7 @@ msgstr "アップデート"
 msgid "Update Account Details"
 msgstr "アカウント情報の更新"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update All Subscriptions"
 msgstr ""
 
@@ -14209,7 +15305,7 @@ msgstr "請求情報を更新"
 msgid "Update Coupon"
 msgstr "クーポンを更新"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update Default Payment Method"
 msgstr ""
 
@@ -14242,8 +15338,7 @@ msgstr "支払い方法を更新する"
 msgid "Update Plan"
 msgstr "プランを更新"
 
-#: sc-subscription-details2.js:107
-#, fuzzy
+#: sc-subscription-details2.js:109
 msgid "Update Scheduled"
 msgstr ""
 
@@ -14252,12 +15347,16 @@ msgstr ""
 msgid "Update Subscription"
 msgstr "定期購読を更新"
 
+#: subscriptions/edit/modules/Modals/UpdatePrice.js:28
+msgid "Update Subscription Price"
+msgstr ""
+
 #: admin/connection-invalid.php:25
 #, fuzzy
 msgid "Update Your Connection"
 msgstr "接続を更新する"
 
-#: sc-payment-methods-list.js:179
+#: sc-payment-methods-list.js:182
 msgid "Update all existing subscriptions to use this payment method"
 msgstr ""
 
@@ -14296,18 +15395,17 @@ msgstr "グループのアップグレード"
 msgid "Upgrade Groups"
 msgstr "グループのアップグレード"
 
-#: sc-upgrade-required.js:23
+#: sc-upgrade-required.js:25
 msgid "Upgrade Now"
-msgstr "今すぐアップグレードする"
+msgstr ""
 
 #: settings/upgrade/UpgradeSettings.js:57
 msgid "Upgrade This Store"
 msgstr "このストアをアップグレード"
 
-#: layouts/partials/admin-settings-sidebar.php:76
-#, fuzzy
-msgid "Upgrade To Pro"
-msgstr "プロ仕様にアップグレードする"
+#: layouts/partials/admin-settings-sidebar.php:94
+msgid "Upgrade To Premium"
+msgstr ""
 
 #: components/UpgradeModal.js:39
 #, fuzzy
@@ -14321,8 +15419,12 @@ msgid "Upgrade behavior. Either pending or immediate."
 msgstr "アップグレードの動作。保留中または即時。"
 
 #: settings/upgrade/UpgradeSettings.js:37
-msgid "Upgrade to Pro"
-msgstr "有料版にアップグレード"
+msgid "Upgrade to Premium"
+msgstr ""
+
+#: settings/shipping/method/ShippingMethods.js:118
+msgid "Upgrade to SureCart Premium to add unlimited shipping methods."
+msgstr ""
 
 #: settings/subscription/SubscriptionSettings.js:88
 #: settings/subscription/SubscriptionSettings.js:89
@@ -14342,9 +15444,9 @@ msgstr "メディアのアップロード"
 msgid "Url Slug"
 msgstr "URLスラッグ"
 
-#: address.js:253
+#: address.js:248
 msgid "Uruguay"
-msgstr "ウルグアイ"
+msgstr ""
 
 #: src/Support/Currency.php:368
 #, fuzzy
@@ -14412,15 +15514,15 @@ msgstr "ユーザーが接続されました。"
 msgid "User disconnected."
 msgstr "ユーザーが切断されました。"
 
-#: sc-wordpress-password-edit.js:26
-#: sc-wordpress-user-edit.js:28
+#: sc-wordpress-password-edit.js:30
+#: sc-wordpress-user-edit.js:31
 #: sc-wordpress-user.js:30
 msgid "User not found."
-msgstr "ユーザーが見つかりません。"
+msgstr ""
 
-#: sc-login-form.js:150
+#: sc-login-form.js:152
 msgid "Username or Email Address"
-msgstr "ユーザー名もしくはメールアドレス"
+msgstr ""
 
 #: coupons/modules/Limits.js:89
 #, fuzzy
@@ -14433,19 +15535,19 @@ msgstr "ユーザーは、このクーポンを次の方法で引き換える必
 msgid "Uses"
 msgstr "用途"
 
-#: address.js:254
+#: address.js:249
 msgid "Uzbekistan"
-msgstr "ウズベキスタン"
+msgstr ""
 
 #: src/Support/Currency.php:369
 #, fuzzy
 msgid "Uzbekistan Som"
 msgstr "ウズベキスタン・ソム"
 
-#: tax.js:14
-#: tax.js:18
+#: tax.js:11
+#: tax.js:15
 msgid "VAT Number"
-msgstr "VAT番号"
+msgstr ""
 
 #: settings/tax/TaxSettings.js:129
 msgid "VAT Number Verification Failure"
@@ -14490,22 +15592,22 @@ msgstr "有効"
 msgid "Value"
 msgstr ""
 
-#: address.js:255
+#: address.js:250
 msgid "Vanuatu"
-msgstr "バヌアツ"
+msgstr ""
 
 #: src/Support/Currency.php:370
 #, fuzzy
 msgid "Vanuatu Vatu"
 msgstr "バヌアツ バツ"
 
-#: address.js:256
+#: address.js:251
 msgid "Venezuela"
-msgstr "ベネズエラ"
+msgstr ""
 
-#: sc-login-form.js:92
+#: sc-login-form.js:94
 msgid "Verification code is not valid. Please try again."
-msgstr "認証コードは無効です。もう一度お試しください。"
+msgstr ""
 
 #. translators: Version number.
 #: layouts/partials/admin-settings-header.php:50
@@ -14513,9 +15615,9 @@ msgstr "認証コードは無効です。もう一度お試しください。"
 msgid "Version %s"
 msgstr "バージョン%s"
 
-#: address.js:257
+#: address.js:252
 msgid "Vietnam"
-msgstr "ベトナム"
+msgstr ""
 
 #: src/Support/Currency.php:371
 #, fuzzy
@@ -14576,6 +15678,10 @@ msgstr "請求書を表示"
 msgid "View License"
 msgstr "ライセンスを表示"
 
+#: onboarding/Onboarding.js:182
+msgid "View My Store"
+msgstr ""
+
 #: abandoned-checkouts/modules/LineItems/index.js:33
 #: components/data-tables/charges-data-table/index.js:157
 #: orders/Order.js:131
@@ -14617,30 +15723,43 @@ msgstr "全てを表示"
 msgid "View charge on "
 msgstr "料金を表示"
 
-#: address.js:258
+#: address.js:253
 msgid "Virgin Islands, British"
-msgstr "イギリス領バージン諸島"
+msgstr ""
 
-#: address.js:259
+#: address.js:254
 msgid "Virgin Islands, U.S."
-msgstr "アメリカ領ヴァージン諸島"
+msgstr ""
 
-#: sc-order-status-badge2.js:41
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit Store"
+msgstr ""
+
+#: src/WordPress/Admin/Menus/AdminMenuPageService.php:65
+msgid "Visit SureCart Store"
+msgstr ""
+
+#: orders/modules/LineItems/index.js:29
+#: sc-order-status-badge2.js:43
 msgid "Void"
-msgstr "無効"
+msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:335
 msgid "Wait for a period of time after a customer has made a purchase to send other abandoned checkouts."
 msgstr ""
 
-#: address.js:260
+#: address.js:255
 msgid "Wallis and Futuna"
-msgstr "ウォリス・フツナ"
+msgstr ""
 
 #: admin/coming-soon.php:50
 #, fuzzy
 msgid "We are currently working on our Pro features. Please check back once we release new revenue and time saving features."
 msgstr "現在、Pro 機能の開発に取り組んでいます。新しい収益と時間の節約機能がリリースされたら、もう一度確認してください。"
+
+#: src/Support/Errors/Translations/codes.php:53
+msgid "We don't currently ship to your address."
+msgstr ""
 
 #: products/modules/Image/AddUrlImage.js:74
 msgid "We recommend that you optimize your images before linking them to your products."
@@ -14667,27 +15786,31 @@ msgstr "週"
 msgid "Weekly"
 msgstr "毎週"
 
-#: sc-login-form.js:148
+#: sc-login-form.js:150
 msgid "Welcome"
-msgstr "ようこそ"
+msgstr ""
 
-#: sc-login-provider2.js:76
+#: sc-login-provider2.js:80
 msgid "Welcome back!"
-msgstr "ようこそ！"
+msgstr ""
 
 #: admin/onboarding/install.php:48
 #, fuzzy
 msgid "Welcome to SureCart!"
 msgstr "SureCartへようこそ！"
 
+#: onboarding/components/InitialSetup.js:22
+msgid "Welcome, Let’s Setup Your Online Store"
+msgstr ""
+
 #: src/Support/Currency.php:372
 #, fuzzy
 msgid "West African Cfa Franc"
 msgstr "西アフリカCFAフラン"
 
-#: address.js:261
+#: address.js:256
 msgid "Western Sahara"
-msgstr "西サハラ"
+msgstr ""
 
 #: admin/invoices/index.php:8
 #, fuzzy
@@ -14748,6 +15871,10 @@ msgstr "顧客がダッシュボードから定期購読の数量を変更でき
 msgid "Whether or not customers can make subscription changes from the customer portal."
 msgstr "顧客がダッシュボードから定期購読を変更できるかどうか。"
 
+#: src/Rest/ShippingProtocolRestServiceProvider.php:87
+msgid "Whether or not shipping is enabled"
+msgstr ""
+
 #: src/Rest/BumpRestServiceProvider.php:83
 #, fuzzy
 msgid "Whether or not this bump is currently enabled and being shown to customers."
@@ -14804,9 +15931,9 @@ msgstr "年"
 msgid "Yearly"
 msgstr "毎年"
 
-#: address.js:262
+#: address.js:257
 msgid "Yemen"
-msgstr "イエメン"
+msgstr ""
 
 #: src/Support/Currency.php:373
 #, fuzzy
@@ -14817,6 +15944,10 @@ msgstr "イエメンリアル"
 #, fuzzy
 msgid "Yesterday"
 msgstr "昨日"
+
+#: onboarding/components/InitialSetup.js:33
+msgid "You are a few clicks away from adding e-commerce to your website. SureCart is a cloud powered e-commerce platform that is easy to use, lightweight, and lightning fast."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:46
 #, fuzzy
@@ -14835,9 +15966,13 @@ msgstr "テストモードの顧客ではありません。"
 msgid "You are not currently a customer."
 msgstr "現在、顧客ではありません。"
 
-#: fetch.js:2076
+#: fetch.js:925
 msgid "You are probably offline."
-msgstr "おそらくオフラインになっています。"
+msgstr ""
+
+#: onboarding/components/ConfirmStoreDetails.js:46
+msgid "You can always change this later."
+msgstr ""
 
 #: src/Integrations/Elementor/Documents/ProductDocument.php:84
 msgid "You can create multiple single product templates, and assign each to different types of products, enabling a custom design for each group of similar products."
@@ -14853,6 +15988,10 @@ msgstr ""
 #, fuzzy
 msgid "You can only apply this offer once."
 msgstr "このオファーを適用できるのは 1 回だけです。"
+
+#: Blocks/Password/edit.js:40
+msgid "You can override the global password validation by going to the advanced settings."
+msgstr ""
 
 #: src/Support/Errors/Translations/codes.php:20
 msgid "You cannot add a one-time product to a subscription."
@@ -14882,17 +16021,17 @@ msgstr "会社の連絡先住所を更新するまで、放棄されたチェッ
 msgid "You cannot enable taxes unless a valid tax address is provided"
 msgstr "有効な納税者住所が提供されない限り、税金を有効にすることはできません"
 
-#: sc-subscription-payment-method.js:41
+#: sc-subscription-payment-method.js:46
 msgid "You do not have any payment methods."
-msgstr "保存されたお支払い方法がありません。"
-
-#: sc-payment.js:46
-msgid "You do not have any processors enabled for this mode and cart. Please configure your processors."
 msgstr ""
 
-#: sc-stripe-payment-request2.js:172
+#: sc-payment.js:67
+msgid "You do not have any processors enabled for this mode and cart. "
+msgstr ""
+
+#: sc-stripe-payment-request2.js:171
 msgid "You do not have any wallets set up in your browser."
-msgstr "ブラウザに保存されているお支払い情報はありません。"
+msgstr ""
 
 #: src/Middleware/ArchiveModelMiddleware.php:28
 #: src/Middleware/EditModelMiddleware.php:28
@@ -14909,13 +16048,13 @@ msgstr "これをする許可がありません。"
 msgid "You don't have any country-specific VAT registrations. If you're registered under one-stop shop then you don't need to create country-specific tax registrations. If you're not, add a tax registration to start collecting tax."
 msgstr ""
 
-#: sc-purchase-downloads-list2.js:30
+#: sc-purchase-downloads-list2.js:34
 msgid "You don't have any downloads."
-msgstr "ダウンロードできるものはありません。"
+msgstr ""
 
-#: sc-invoices-list.js:117
+#: sc-invoices-list.js:119
 msgid "You don't have any invoices."
-msgstr "請求書はありません。"
+msgstr ""
 
 #: dashboard/components/RecentOrders.js:68
 #: sc-orders-list.js:121
@@ -14923,13 +16062,13 @@ msgstr "請求書はありません。"
 msgid "You don't have any orders."
 msgstr "注文はありません。"
 
-#: sc-payment-methods-list.js:123
+#: sc-payment-methods-list.js:148
 msgid "You don't have any saved payment methods."
-msgstr "保存済みのお支払い方法はありません。"
+msgstr ""
 
-#: sc-subscriptions-list.js:107
+#: sc-subscriptions-list.js:110
 msgid "You don't have any subscriptions."
-msgstr "契約している定期購読はありません。"
+msgstr ""
 
 #: settings/subscription-preservation/Reasons.js:109
 msgid "You don't have any survey answers. Please add at least one to collect cancellation feedback."
@@ -14945,28 +16084,31 @@ msgstr ""
 msgid "You have already requested a code in the last 60 seconds. Please wait before requesting again."
 msgstr "過去 60 秒間に既にコードを要求しています。再度リクエストする前にお待ちください。"
 
-#: sc-login-provider2.js:76
-msgid "You have logged in successfully."
-msgstr "無事にログインできました。"
+#: src/Models/ProvisionalAccount.php:45
+msgid "You have already set up your store."
+msgstr ""
 
-#: sc-charges-list.js:90
-#: sc-subscription-payment.js:105
+#: sc-login-provider2.js:80
+msgid "You have logged in successfully."
+msgstr ""
+
+#: sc-charges-list.js:92
+#: sc-subscription-payment.js:110
 msgid "You have no saved payment methods."
-msgstr "保存済みのお支払い方法はありません。"
+msgstr ""
 
 #: web/dashboard/orders/show.php:42
 #, fuzzy
 msgid "You have not been charged for this order."
 msgstr "この注文に対する請求はありません。"
 
-#: sc-password-nag.js:86
-#, fuzzy
+#: sc-password-nag.js:98
 msgid "You have not yet set a password. Please set a password for your account."
 msgstr ""
 
-#: sc-password-nag.js:84
+#: sc-password-nag.js:96
 msgid "You have successfully set your password."
-msgstr "パスワードが設定できました。"
+msgstr ""
 
 #: components/unsaved-changes-warning/index.js:40
 #: templates/UpdateModel/UnsavedChangesWarning.js:38
@@ -14984,18 +16126,18 @@ msgstr "%1$sから%2$sまでの金額を入力してください"
 msgid "You must first purchase something to access your dashboard."
 msgstr "ダッシュボードにアクセスするには、まず何かを購入する必要があります。"
 
-#: sc-stripe-payment-request2.js:166
+#: sc-stripe-payment-request2.js:165
 msgid "You must serve this page over HTTPS to display express payment buttons."
-msgstr "エクスプレスペイメントボタンを表示するためにはHTTPSの対応が必要です。"
+msgstr ""
 
-#: sc-customer-email.js:81
+#: sc-customer-email.js:91
 msgid "You won't receive further emails from us."
-msgstr "これ以上メールを受け取ることはありません。"
+msgstr ""
 
-#: sc-upcoming-invoice.js:169
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:182
+#: sc-upcoming-invoice.js:184
 msgid "You'll be switched to this plan"
-msgstr "このプランに変更になります"
+msgstr ""
 
 #: settings/tax-region/TaxRegionSettings.js:62
 #, fuzzy
@@ -15027,9 +16169,9 @@ msgstr "API キーが正しくありません。正しいことを再確認し�
 msgid "Your Connect platform is attempting to share an unverified bank account with a connected account."
 msgstr ""
 
-#: sc-order-summary.js:64
+#: sc-order-summary.js:81
 msgid "Your cart is empty."
-msgstr "カートは空です。"
+msgstr ""
 
 #: customers/modules/Details.js:61
 #, fuzzy
@@ -15080,50 +16222,50 @@ msgstr "この注文に関するリマインダー メールを送信できる�
 msgid "Your name"
 msgstr ""
 
-#: sc-subscription-next-payment2.js:92
+#: sc-subscription-next-payment2.js:97
 msgid "Your next payment is"
-msgstr "次回のお支払い："
+msgstr ""
 
-#: sc-subscription-details2.js:83
+#: sc-subscription-details2.js:87
 msgid "Your next payment is on"
-msgstr "次回のお支払日："
+msgstr ""
 
-#: sc-checkout-unsaved-changes-warning2.js:24
+#: sc-checkout-unsaved-changes-warning2.js:23
 msgid "Your payment is processing. Exiting this page could cause an error in your order. Please do not navigate away from this page."
-msgstr "お支払いが処理中です。ページを離れるとエラーが発生する可能性があるため、このページから離れないでください。"
+msgstr ""
 
 #: Blocks/Form/edit.js:398
 #: sc-order-confirm-provider2.js:70
 msgid "Your payment was successful, and your order is complete. A receipt is on its way to your inbox."
 msgstr ""
 
-#: sc-subscription-details2.js:80
-#: sc-subscription.js:109
+#: sc-subscription-details2.js:84
+#: sc-subscription.js:155
 msgid "Your plan begins on"
-msgstr "プランの開始日："
+msgstr ""
 
-#: sc-subscription-details2.js:83
-#: sc-subscription.js:112
+#: sc-subscription-details2.js:87
+#: sc-subscription.js:158
 msgid "Your plan renews on"
-msgstr "プランの更新日："
+msgstr ""
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "Your plan switches to"
-msgstr "変更後のプラン："
+msgstr ""
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled immediately. You cannot change your mind."
-msgstr "プランはすぐにキャンセルされます。変更はできませんので、ご注意ください。"
+msgstr ""
 
-#: sc-subscription-details2.js:68
-#: sc-subscription.js:106
+#: sc-subscription-details2.js:72
+#: sc-subscription.js:152
 msgid "Your plan will be canceled on"
-msgstr "プランのキャンセル日："
+msgstr ""
 
-#: sc-subscription-cancel.js:88
+#: sc-subscription-cancel2.js:60
 msgid "Your plan will be canceled, but is still available until the end of your billing period on"
-msgstr "プランはキャンセルされますが、次回の請求日までご利用いただけます："
+msgstr ""
 
 #: Blocks/Form/Block.php:122
 #, fuzzy
@@ -15160,23 +16302,43 @@ msgstr "ストレージ容量が不足しています"
 msgid "Your store does not appear to be using a secure connection. A secure connection (https) is required to use SureCart to process live transactions."
 msgstr "あなたのストアは安全な接続を使用していないようです。 SureCart を使用してライブ トランザクションを処理するには、安全な接続 (https) が必要です。"
 
+#: onboarding/components/SetupDone.js:45
+msgid "Your store has been created."
+msgstr ""
+
+#: dashboard/Dashboard.js:88
+msgid "Your store is now connected to SureCart."
+msgstr ""
+
 #: settings/tax-region/TaxRegionSettings.js:55
 #, fuzzy
 msgid "You’ll need to collect sales tax if you meet certain state requirements, also known as nexus. To start collecting tax, you need to register with the appropriate state tax authority."
 msgstr ""
 
-#: address.js:263
+#: address.js:258
 msgid "Zambia"
-msgstr "ザンビア"
+msgstr ""
 
 #: src/Support/Currency.php:374
 #, fuzzy
 msgid "Zambian Kwacha"
 msgstr "ザンビアクワチャ"
 
-#: address.js:264
+#: address.js:259
 msgid "Zimbabwe"
-msgstr "ジンバブエ"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:181
+msgid "Zone Name"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:117
+msgid "Zone added"
+msgstr ""
+
+#: settings/shipping/zone/ShippingZoneForm.js:111
+msgid "Zone updated"
+msgstr ""
 
 #. translators: Visible only in the front end, this warning takes the place of a faulty block.
 #: Blocks/CheckoutForm/Block.php:39
@@ -15213,6 +16375,10 @@ msgctxt "block keyword"
 msgid "amount"
 msgstr ""
 
+#: onboarding/components/InitialSetup.js:98
+msgid "and"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "android"
@@ -15223,8 +16389,7 @@ msgctxt "block keyword"
 msgid "apple"
 msgstr "Apple"
 
-#: sc-upcoming-invoice.js:169
-#, fuzzy
+#: sc-upcoming-invoice.js:182
 msgid "at the end of your billing cycle on"
 msgstr ""
 
@@ -15407,8 +16572,7 @@ msgid "day"
 msgid_plural "%d days"
 msgstr[0] "%d日"
 
-#: sc-quantity-select2.js:60
-#, fuzzy
+#: sc-quantity-select2.js:66
 msgid "decrease number"
 msgstr ""
 
@@ -15511,6 +16675,11 @@ msgctxt "block keyword"
 msgid "form"
 msgstr "フォーム"
 
+#: products/modules/Shipping.js:20
+#: settings/shipping/rate/ShippingRateForm.js:39
+msgid "g"
+msgstr ""
+
 #: Blocks/ExpressPayment/block.json
 msgctxt "block keyword"
 msgid "google"
@@ -15540,16 +16709,15 @@ msgctxt "block keyword"
 msgid "image"
 msgstr "画像"
 
-#: sc-upcoming-invoice.js:171
+#: sc-upcoming-invoice.js:184
 msgid "immediately"
-msgstr "すぐに"
+msgstr ""
 
-#: sc-line-item-tax2.js:33
-#, fuzzy
+#: sc-line-item-tax2.js:37
 msgid "included"
 msgstr ""
 
-#: sc-quantity-select2.js:60
+#: sc-quantity-select2.js:66
 msgid "increase number"
 msgstr ""
 
@@ -15598,10 +16766,20 @@ msgctxt "block keyword"
 msgid "item"
 msgstr ""
 
+#: products/modules/Shipping.js:18
+#: settings/shipping/rate/ShippingRateForm.js:37
+msgid "kg"
+msgstr ""
+
 #: Blocks/LastName/block.json
 msgctxt "block keyword"
 msgid "last-name"
 msgstr "姓"
+
+#: products/modules/Shipping.js:17
+#: settings/shipping/rate/ShippingRateForm.js:36
+msgid "lb"
+msgstr ""
 
 #: Blocks/BumpLineItem/block.json
 msgctxt "block keyword"
@@ -15670,7 +16848,7 @@ msgctxt "block keyword"
 msgid "meta"
 msgstr "メタ"
 
-#: price.js:50
+#: price.js:52
 msgid "mo"
 msgid_plural "%d mos"
 msgstr[0] ""
@@ -15746,10 +16924,14 @@ msgstr "notifications@surecart.com"
 msgid "of"
 msgstr "の"
 
-#: sc-subscription-details2.js:75
-#: sc-subscription-details2.js:77
+#: orders/modules/Fulfillment/CreateFulfillment.js:216
+msgid "of %d"
+msgstr ""
+
+#: sc-subscription-details2.js:79
+#: sc-subscription-details2.js:81
 msgid "on"
-msgstr "："
+msgstr ""
 
 #: util/translations.js:7
 #: util/translations.js:56
@@ -15761,9 +16943,9 @@ msgstr "："
 msgid "once"
 msgstr ""
 
-#: sc-login-form.js:100
+#: sc-login-form.js:150
 msgid "or"
-msgstr "もしくは"
+msgstr ""
 
 #: components/MediaLibrary/index.js:178
 #, fuzzy
@@ -15776,6 +16958,11 @@ msgstr "または、ファイルをドラッグ アンド ドロップしてア�
 msgctxt "Page slug"
 msgid "order-confirmation"
 msgstr "注文の確認"
+
+#: products/modules/Shipping.js:19
+#: settings/shipping/rate/ShippingRateForm.js:38
+msgid "oz"
+msgstr ""
 
 #: Blocks/Password/block.json
 msgctxt "block keyword"
@@ -15862,12 +17049,16 @@ msgctxt "block keyword"
 msgid "shipping"
 msgstr "配送"
 
+#: settings/shipping/profile/Products.js:407
+msgid "shipping settings"
+msgstr ""
+
 #: src/WordPress/Pages/PageSeeder.php:90
 msgctxt "Shop page slug"
 msgid "shop"
 msgstr ""
 
-#: sc-product-line-item2.js:30
+#: sc-product-line-item2.js:39
 msgid "starting in %d day"
 msgid_plural "starting in %d days"
 msgstr[0] ""
@@ -16005,7 +17196,7 @@ msgid "week"
 msgid_plural "%d weeks"
 msgstr[0] "%d週間"
 
-#: price.js:48
+#: price.js:50
 msgid "wk"
 msgid_plural "%d wks"
 msgstr[0] ""
@@ -16019,11 +17210,11 @@ msgid "year"
 msgid_plural "%d years"
 msgstr[0] "%d年"
 
-#: price.js:52
+#: price.js:54
 msgid "yr"
 msgid_plural "%d yrs"
 msgstr[0] ""
 
-#: address.js:265
+#: address.js:260
 msgid "Åland Islands"
-msgstr "オーランド諸島"
+msgstr ""

@@ -464,12 +464,14 @@ export class ScSelectDropdown {
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}
           >
-            <div class="trigger" slot="trigger">
-              <div class="select__value">
-                <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
+            <slot name="trigger" slot="trigger">
+              <div class="trigger">
+                <div class="select__value">
+                  <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
+                </div>
+                <sc-icon exportparts="base:caret" class="select__caret" name="chevron-down" />
               </div>
-              <sc-icon exportparts="base:caret" class="select__caret" name="chevron-down" />
-            </div>
+            </slot>
 
             {this.search && (
               <sc-input
