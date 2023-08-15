@@ -134,14 +134,11 @@ export class ScProductItemList {
   // Fetch all collections
   async getCollections() {
     try {
-      const response = (await apiFetch({
+      this.collections = (await apiFetch({
         path: addQueryArgs(`surecart/v1/product_collections/`, {
           per_page: 100,
         }),
-        parse: false,
-      })) as Response;
-
-      this.collections = (await response.json()) as Collection[];
+      })) as Collection[];
     } catch (error) {
       console.error(error);
     }
