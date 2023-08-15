@@ -38,6 +38,9 @@ export class ScProductLineItem {
   /** Product name */
   @Prop() name: string;
 
+  /** Price name */
+  @Prop() priceName: string;
+
   /** Quantity */
   @Prop() quantity: number;
 
@@ -134,7 +137,7 @@ export class ScProductLineItem {
           {!!this.imageUrl && <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />}
           <div class="item__text" part="text">
             <div class="item__title" part="title">
-              <slot name="title">{this.name}</slot>
+              <slot name="title">{`${this.name} ${this?.priceName ? `- ${this.priceName}` : ''}`}</slot>
             </div>
             {this.editable && (
               <sc-quantity-select

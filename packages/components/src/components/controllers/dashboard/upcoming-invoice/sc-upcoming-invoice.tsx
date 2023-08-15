@@ -232,6 +232,7 @@ export class ScUpcomingInvoice {
           <sc-product-line-item
             imageUrl={(item.price?.product as Product)?.image_url}
             name={(item.price?.product as Product)?.name}
+            priceName={item?.price?.name}
             editable={this.quantityUpdatesEnabled}
             removable={false}
             quantity={item?.quantity}

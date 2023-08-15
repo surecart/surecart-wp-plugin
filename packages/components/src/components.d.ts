@@ -2961,6 +2961,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Price name
+         */
+        "priceName": string;
+        /**
           * Quantity
          */
         "quantity": number;
@@ -8817,6 +8821,10 @@ declare namespace LocalJSX {
           * Emitted when the quantity changes.
          */
         "onScUpdateQuantity"?: (event: ScProductLineItemCustomEvent<number>) => void;
+        /**
+          * Price name
+         */
+        "priceName"?: string;
         /**
           * Quantity
          */

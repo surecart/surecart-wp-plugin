@@ -100,6 +100,7 @@ export class ScLineItems {
                 key={item.id}
                 imageUrl={(item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
+                priceName={item?.price?.name}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}
                 removable={this.isRemovable()}

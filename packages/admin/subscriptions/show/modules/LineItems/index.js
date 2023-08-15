@@ -43,6 +43,7 @@ export default ({ period, loading }) => {
 								key={item.id}
 								imageUrl={item?.price?.product?.image_url}
 								name={item?.price?.product?.name}
+								priceName={item?.price?.name}
 								editable={false}
 								removable={false}
 								fees={item?.fees?.data}
