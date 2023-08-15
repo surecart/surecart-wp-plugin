@@ -21,6 +21,7 @@ export default ({ customerId }) => {
 						'bank_account',
 					],
 					customer_ids: [customerId],
+					reusable: true,
 				},
 			];
 			return {
@@ -56,7 +57,7 @@ export default ({ customerId }) => {
 						width: '100px',
 					},
 				}}
-				items={paymentMethods?.filter((item) => item?.reusable)?.map((item) => {
+				items={paymentMethods?.map((item) => {
 					return {
 						method: <ScPaymentMethod paymentMethod={item} />,
 						exp: (
