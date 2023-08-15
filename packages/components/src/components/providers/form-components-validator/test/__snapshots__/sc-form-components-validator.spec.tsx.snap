@@ -20,6 +20,27 @@ exports[`sc-form-components-validator appends missing address field if shipping_
 </sc-form-components-validator>
 `;
 
+exports[`sc-form-components-validator appends missing address field if shipping_address_required with shipping address required, showName and requireName 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-order-shipping-address></sc-order-shipping-address>
+  <sc-payment></sc-payment>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator appends missing address field with shipping address required, customer name required in sc-customer-name 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-customer-name></sc-customer-name>
+  <sc-order-shipping-address></sc-order-shipping-address>
+  <sc-payment></sc-payment>
+</sc-form-components-validator>
+`;
+
 exports[`sc-form-components-validator appends missing tax id input if required 1`] = `
 <sc-form-components-validator>
   <mock:shadow-root>
@@ -27,6 +48,29 @@ exports[`sc-form-components-validator appends missing tax id input if required 1
   </mock:shadow-root>
   <sc-order-shipping-address></sc-order-shipping-address>
   <sc-order-tax-id-input></sc-order-tax-id-input>
+  <sc-payment></sc-payment>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator makes the address field required, requireName and showName if sc-customer-name is absent 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-order-shipping-address></sc-order-shipping-address>
+  <sc-payment></sc-payment>
+  <sc-address></sc-address>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator makes the sc-customer-name required if address field is already present 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-address></sc-address>
+  <sc-customer-name></sc-customer-name>
+  <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
 </sc-form-components-validator>
 `;
