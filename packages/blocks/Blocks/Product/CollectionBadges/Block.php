@@ -24,13 +24,8 @@ class Block extends BaseBlock {
 			return '';
 		}
 
-		// only fetch the number of collections we need.
-		$collections = ProductCollection::where(
-			[
-				'product_ids' => [ $product->id ],
-				'limit'       => (int) $attributes['collectionCount'],
-			]
-		)->get();
+		// get the collections expanded on the product.
+		$collections = $product->product_collections->data ?? [];
 
 		// we don't have the collections.
 		if ( empty( $collections ) ) {
