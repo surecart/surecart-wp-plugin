@@ -61,7 +61,7 @@ export default ({ id }) => {
 
 			// save pending prices.
 			const pendingPrices = [];
-			(prices || []).forEach((price) => {
+			(Array.isArray(prices) ? prices : []).forEach((price) => {
 				pendingPrices.push(
 					saveEntityRecord('surecart', 'price', {
 						product: id,

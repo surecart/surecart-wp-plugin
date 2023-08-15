@@ -12,6 +12,7 @@ import {
 	Button,
 	ButtonGroup,
 	PanelBody,
+	PanelRow,
 	TextControl,
 } from '@wordpress/components';
 import {
@@ -26,8 +27,6 @@ import {
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
 import { isKeyboardEvent } from '@wordpress/keycodes';
-import { createBlock } from '@wordpress/blocks';
-import { ScButton } from '@surecart/components-react';
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
@@ -65,7 +64,7 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
-	const { textAlign, style, text, width } = attributes;
+	const { textAlign, style, text, width, outOfStockText } = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -143,6 +142,18 @@ export default (props) => {
 				/>
 			</BlockControls>
 			<InspectorControls>
+				<PanelBody title={__('Text settings', 'surecart')}>
+					<PanelRow>
+						<TextControl
+							label={__('Out of stock label', 'surecart')}
+							value={outOfStockText}
+							onChange={(value) =>
+								setAttributes({ outOfStockText: value })
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+
 				<WidthPanel
 					selectedWidth={width}
 					setAttributes={setAttributes}

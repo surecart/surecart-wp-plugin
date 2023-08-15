@@ -98,6 +98,10 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 
 		$product = get_query_var( 'surecart_current_product' );
+
+		$product_has_stock = $product->hasStock();
+
+		// die( var_dump( $product_has_stock ) );
 		if ( empty( $product ) ) {
 			return '';
 		}
@@ -112,10 +116,16 @@ class Block extends BaseBlock {
 			<sc-product-buy-button
 				<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
 				class="wp-block-button <?php echo esc_attr( $width_class ); ?>"
-				button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
+				button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
+				is-out-of-stock="<?php echo esc_attr( $product_has_stock ? 'false' : 'true' ); ?>"
+			>
 				<a class="wp-block-button__link wp-element-button sc-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-					<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
-					<sc-spinner data-loader></sc-spinner>
+					<?php if( $product_has_stock ): ?>	
+						<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
+						<sc-spinner data-loader></sc-spinner>
+					<?php else: ?>
+						<span data-text><?php echo wp_kses_post( $attributes['outOfStockText'] ); ?></span>
+					<?php endif; ?>
 				</a>
 			</sc-product-buy-button>
 		</div>

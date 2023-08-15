@@ -12,6 +12,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"outOfStockText": {
+			"type": "string",
+			"default": "Out of Stock"
+		},
 		"textAlign": {
 			"type": "string"
 		},
