@@ -162,7 +162,6 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
-		// \SureCartBlocks\Blocks\Product\Info\Block::class,
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
@@ -172,6 +171,8 @@ return [
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Product\CollectionBadges\Block::class,
 
+		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
+		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 	],
 
 	/** Which components to preload for each block. */
