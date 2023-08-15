@@ -241,7 +241,7 @@ class SubscriptionsListTable extends ListTable {
 		echo esc_html( $this->getInterval( $interval, $count ) );
 		if ( null !== $period_count ) {
 			if ( 1 === $period_count ) {
-				echo esc_html( __( ' (one time)', 'surecart' ) );
+				echo ' ' . esc_html( __( '(one time)', 'surecart' ) );
 			} else {
 				echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
 			}
