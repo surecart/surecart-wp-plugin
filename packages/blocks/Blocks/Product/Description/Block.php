@@ -25,7 +25,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$product = get_query_var( 'surecart_current_product' );
-		if ( empty( $product ) ) {
+		if ( empty( $product->description ) ) {
 			return '';
 		}
 		ob_start(); ?>
