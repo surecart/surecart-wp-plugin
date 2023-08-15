@@ -13,7 +13,6 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false,
 		"spacing": {
 			"margin": true,
 			"padding": true

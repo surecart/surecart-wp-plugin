@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-01T18:09:44",
+  "timestamp": "2023-07-18T20:29:05",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -23914,7 +23914,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "addToCart",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "add-to-cart",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -25033,6 +25050,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "addToCart",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "add-to-cart",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "buttonText",
           "type": "string",

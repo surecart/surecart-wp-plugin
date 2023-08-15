@@ -3,6 +3,7 @@ import state from './store';
 import { getCheckout, setCheckout } from '@store/checkouts';
 import { Checkout } from 'src/types';
 import { toggleCart } from '@store/ui';
+import { addQueryArgs } from '@wordpress/url';
 
 export const submitCartForm = async () => {
   if (!state.selectedPrice?.id) return;
@@ -13,8 +14,8 @@ export const submitCartForm = async () => {
       checkout: getCheckout(state?.formId, state.mode),
       data: {
         price: state.selectedPrice?.id,
-        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
       live_mode: state.mode !== 'test',
     });
@@ -27,4 +28,20 @@ export const submitCartForm = async () => {
   } finally {
     state.busy = false;
   }
+};
+
+export const getProductBuyLink = url => {
+  if (!state.selectedPrice?.id) return;
+  if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
+
+  return addQueryArgs(url, {
+    line_items: [
+      {
+        price: state.selectedPrice?.id,
+        quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+      },
+    ],
+    no_cart: true,
+  });
 };
