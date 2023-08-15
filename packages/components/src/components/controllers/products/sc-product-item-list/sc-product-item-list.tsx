@@ -388,7 +388,7 @@ export class ScProductItemList {
                 </div>
               ))
             : (this.products || []).map(product => {
-                return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.getLayoutConfig()}></sc-product-item>;
+                return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
               })}
         </div>
         {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
