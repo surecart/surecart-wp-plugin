@@ -14,6 +14,9 @@ export class ScTaxIdInput {
   /** Force show the field. */
   @Prop() show: boolean = false;
 
+  /** Required? */
+  @Prop({ reflect: true }) required: boolean = false;
+
   /** Type of tax id */
   @Prop({ mutable: true }) type: string = 'other';
 
@@ -103,6 +106,7 @@ export class ScTaxIdInput {
         <sc-input
           label={zones?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
+          required={this.required}
           value={this.number}
           onScInput={(e: any) => {
             e.stopImmediatePropagation();
