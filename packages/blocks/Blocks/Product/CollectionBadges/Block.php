@@ -19,31 +19,30 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product                                     = get_query_var( 'surecart_current_product' );
-		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
-
+		$product = get_query_var( 'surecart_current_product' );
 		if ( empty( $product ) ) {
 			return '';
 		}
 
-		$max_collection_count = (int) $attributes['collectionCount'];
-		$product_collections  = ProductCollection::where(
-			[
-				'product_ids' => [ $product->id ],
-			]
-		)->get();
+		// get the collections expanded on the product.
+		$collections = $product->product_collections->data ?? [];
 
-		$product_collections = array_splice( $product_collections, 0, $max_collection_count );
+		// we don't have the collections.
+		if ( empty( $collections ) ) {
+			return '';
+		}
+
+		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
 		ob_start(); ?>
 			<sc-flex justify-content="flex-start" flex-wrap="wrap">
-				<?php foreach ( $product_collections as $product_collection ) : ?>
-					<a href="<?php echo esc_attr( $product_collection->permalink ); ?>"
-						class="sc-product-collection-badge <?php echo esc_url( $classes ); ?>"
-						style="<?php echo esc_attr( $styles ); ?>"
+				<?php foreach ( $collections as $collection ) : ?>
+					<a
+					href="<?php echo esc_url( $collection->permalink ); ?>"
+					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
+					style="<?php echo esc_attr( $styles ); ?>"
 					>
-						<?php echo esc_html( $product_collection->name ); ?>
-					</a>
+					<?php echo wp_kses_post( $collection->name ); ?></a>
 				<?php endforeach; ?>
 			</sc-flex>
 		<?php
