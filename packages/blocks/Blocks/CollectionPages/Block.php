@@ -17,11 +17,6 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-		ob_start(); ?>
-
-		Collection Pages Block
-
-		<?php
-		return ob_get_clean();
+		return '';
 	}
 }

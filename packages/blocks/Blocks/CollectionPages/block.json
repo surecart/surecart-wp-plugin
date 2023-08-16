@@ -12,10 +12,5 @@
 		"html": false,
 		"className": false
 	},
-	"attributes": {
-		"label": {
-			"type": "string",
-			"default": "Collection Pages"
-		}
-	}
+	"attributes": {}
 }
