@@ -90,7 +90,7 @@ export class ScLineItems {
         </sc-line-item>
       );
     }
-    
+
     return (
       <div class="line-items">
         {(this.order?.line_items?.data || []).map(item => {
