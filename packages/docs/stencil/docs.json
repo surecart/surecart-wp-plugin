@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-07-18T20:29:05",
+  "timestamp": "2023-08-16T16:31:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -675,6 +675,7 @@
         "sc-paypal-add-method",
         "sc-paystack-add-method",
         "sc-price-choice",
+        "sc-product-item-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
         "sc-subscription-switch",
@@ -742,6 +743,9 @@
           "sc-alert"
         ],
         "sc-price-choice": [
+          "sc-alert"
+        ],
+        "sc-product-item-list": [
           "sc-alert"
         ],
         "sc-stripe-add-method": [
@@ -4219,16 +4223,16 @@
       "usage": {},
       "props": [
         {
-          "name": "abandonedCheckoutReturnUrl",
-          "type": "string",
+          "name": "abandonedCheckoutEnabled",
+          "type": "boolean",
           "mutable": false,
-          "attr": "abandoned-checkout-return-url",
+          "attr": "abandoned-checkout-enabled",
           "reflectToAttr": false,
-          "docs": "The abandoned checkout return url.",
+          "docs": "Is abandoned checkout enabled.",
           "docsTags": [],
           "values": [
             {
-              "type": "string"
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -15749,9 +15753,90 @@
       "filePath": "./src/components/controllers/checkout-form/line-items/sc-line-items.tsx",
       "encapsulation": "shadow",
       "tag": "sc-line-items",
-      "readme": "# ce-line-items\n\n\n",
+      "readme": "# ce-line-items\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The component base"
+        },
+        {
+          "name": "part",
+          "text": "line-item - The line item"
+        },
+        {
+          "name": "part",
+          "text": "product-line-item - The product line item"
+        },
+        {
+          "name": "part",
+          "text": "line-item__image - The line item image"
+        },
+        {
+          "name": "part",
+          "text": "line-item__text - The line item text"
+        },
+        {
+          "name": "part",
+          "text": "line-item__title - The line item title"
+        },
+        {
+          "name": "part",
+          "text": "line-item__suffix - The line item suffix"
+        },
+        {
+          "name": "part",
+          "text": "line-item__price - The line item price"
+        },
+        {
+          "name": "part",
+          "text": "line-item__price-amount - The line item price amount"
+        },
+        {
+          "name": "part",
+          "text": "line-item__price-description - The line item price description"
+        },
+        {
+          "name": "part",
+          "text": "line-item__price-scratch - The line item price scratch"
+        },
+        {
+          "name": "part",
+          "text": "line-item__static-quantity - The line item static quantity"
+        },
+        {
+          "name": "part",
+          "text": "line-item__remove-icon - The line item remove icon"
+        },
+        {
+          "name": "part",
+          "text": "line-item__quantity - The line item quantity"
+        },
+        {
+          "name": "part",
+          "text": "line-item__quantity-minus - The line item quantity minus"
+        },
+        {
+          "name": "part",
+          "text": "line-item__quantity-minus-icon - The line item quantity minus icon"
+        },
+        {
+          "name": "part",
+          "text": "line-item__quantity-plus - The line item quantity plus"
+        },
+        {
+          "name": "part",
+          "text": "line-item__quantity-plus-icon - The line item quantity plus icon"
+        },
+        {
+          "name": "part",
+          "text": "line-item__quantity-input - The line item quantity input"
+        },
+        {
+          "name": "part",
+          "text": "line-item__price-description - The line item price description"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -15907,7 +15992,84 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The component base"
+        },
+        {
+          "name": "line-item",
+          "docs": "The line item"
+        },
+        {
+          "name": "line-item__image",
+          "docs": "The line item image"
+        },
+        {
+          "name": "line-item__price",
+          "docs": "The line item price"
+        },
+        {
+          "name": "line-item__price-amount",
+          "docs": "The line item price amount"
+        },
+        {
+          "name": "line-item__price-description",
+          "docs": "The line item price description"
+        },
+        {
+          "name": "line-item__price-scratch",
+          "docs": "The line item price scratch"
+        },
+        {
+          "name": "line-item__quantity",
+          "docs": "The line item quantity"
+        },
+        {
+          "name": "line-item__quantity-input",
+          "docs": "The line item quantity input"
+        },
+        {
+          "name": "line-item__quantity-minus",
+          "docs": "The line item quantity minus"
+        },
+        {
+          "name": "line-item__quantity-minus-icon",
+          "docs": "The line item quantity minus icon"
+        },
+        {
+          "name": "line-item__quantity-plus",
+          "docs": "The line item quantity plus"
+        },
+        {
+          "name": "line-item__quantity-plus-icon",
+          "docs": "The line item quantity plus icon"
+        },
+        {
+          "name": "line-item__remove-icon",
+          "docs": "The line item remove icon"
+        },
+        {
+          "name": "line-item__static-quantity",
+          "docs": "The line item static quantity"
+        },
+        {
+          "name": "line-item__suffix",
+          "docs": "The line item suffix"
+        },
+        {
+          "name": "line-item__text",
+          "docs": "The line item text"
+        },
+        {
+          "name": "line-item__title",
+          "docs": "The line item title"
+        },
+        {
+          "name": "product-line-item",
+          "docs": "The product line item"
+        }
+      ],
       "dependents": [],
       "dependencies": [
         "sc-line-item",
@@ -20246,6 +20408,7 @@
       "filePath": "./src/components/ui/sc-password/sc-password.tsx",
       "encapsulation": "shadow",
       "tag": "sc-password",
+      "readme": "# sc-password\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -24132,6 +24295,23 @@
           "required": false
         },
         {
+          "name": "featured",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "featured",
+          "reflectToAttr": false,
+          "docs": "Show only featured products.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "ids",
           "type": "string[]",
           "mutable": false,
@@ -24305,6 +24485,7 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-alert",
         "sc-dropdown",
         "sc-button",
         "sc-menu",
@@ -24320,6 +24501,7 @@
       ],
       "dependencyGraph": {
         "sc-product-item-list": [
+          "sc-alert",
           "sc-dropdown",
           "sc-button",
           "sc-menu",
@@ -24332,6 +24514,9 @@
           "sc-product-item",
           "sc-pagination",
           "sc-block-ui"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
@@ -24474,63 +24659,79 @@
       "docsTags": [
         {
           "name": "part",
-          "text": "base - The elements base wrapper."
+          "text": "base - The component base"
         },
         {
           "name": "part",
-          "text": "text - The text wrapper."
+          "text": "product-line-item - The product line item"
         },
         {
           "name": "part",
-          "text": "title - The product title."
+          "text": "image - The product image"
         },
         {
           "name": "part",
-          "text": "static-quantity - The statically displayed quantity."
+          "text": "text - The product text"
         },
         {
           "name": "part",
-          "text": "quantity__base - The quantity base wrapper."
+          "text": "title - The product title"
         },
         {
           "name": "part",
-          "text": "input - The input control."
+          "text": "suffix - The product suffix"
         },
         {
           "name": "part",
-          "text": "minus - The minus control."
+          "text": "price - The product price"
         },
         {
           "name": "part",
-          "text": "minus-icon - The minus icon."
+          "text": "price__amount - The product price amount"
         },
         {
           "name": "part",
-          "text": "plus - The plus control."
+          "text": "price__description - The product price description"
         },
         {
           "name": "part",
-          "text": "plus-icon - The plus icon."
+          "text": "price__scratch - The product price scratch"
         },
         {
           "name": "part",
-          "text": "remove-icon__base - The remove icon base wrapper."
+          "text": "static-quantity - The product static quantity"
         },
         {
           "name": "part",
-          "text": "price - The price wrapper."
+          "text": "remove-icon__base - The product remove icon"
         },
         {
           "name": "part",
-          "text": "price__amount - The price amount."
+          "text": "quantity - The product quantity"
         },
         {
           "name": "part",
-          "text": "price__description - The price description."
+          "text": "quantity__minus - The product quantity minus"
         },
         {
           "name": "part",
-          "text": "suffix - The suffix items."
+          "text": "quantity__minus-icon - The product quantity minus icon"
+        },
+        {
+          "name": "part",
+          "text": "quantity__plus - The product quantity plus"
+        },
+        {
+          "name": "part",
+          "text": "quantity__plus-icon - The product quantity plus icon"
+        },
+        {
+          "name": "part",
+          "text": "quantity__input - The product quantity input"
+        },
+        {
+          "name": "part",
+          "text": "line-item__price-description - The line item price description"
         }
       ],
       "usage": {},
@@ -24788,75 +24989,79 @@
       "parts": [
         {
           "name": "base",
-          "docs": "The elements base wrapper."
+          "docs": "The component base"
         },
         {
           "name": "image",
-          "docs": ""
+          "docs": "The product image"
         },
         {
-          "name": "input",
-          "docs": "The input control."
-        },
-        {
-          "name": "minus",
-          "docs": "The minus control."
-        },
-        {
-          "name": "minus-icon",
-          "docs": "The minus icon."
-        },
-        {
-          "name": "plus",
-          "docs": "The plus control."
-        },
-        {
-          "name": "plus-icon",
-          "docs": "The plus icon."
+          "name": "line-item__price-description",
+          "docs": "The line item price description"
         },
         {
           "name": "price",
-          "docs": "The price wrapper."
+          "docs": "The product price"
         },
         {
           "name": "price__amount",
-          "docs": "The price amount."
+          "docs": "The product price amount"
         },
         {
           "name": "price__description",
-          "docs": "The price description."
+          "docs": "The product price description"
         },
         {
           "name": "price__scratch",
-          "docs": ""
+          "docs": "The product price scratch"
         },
         {
           "name": "product-line-item",
-          "docs": ""
+          "docs": "The product line item"
         },
         {
-          "name": "quantity__base",
-          "docs": "The quantity base wrapper."
+          "name": "quantity",
+          "docs": "The product quantity"
+        },
+        {
+          "name": "quantity__input",
+          "docs": "The product quantity input"
+        },
+        {
+          "name": "quantity__minus",
+          "docs": "The product quantity minus"
+        },
+        {
+          "name": "quantity__minus-icon",
+          "docs": "The product quantity minus icon"
+        },
+        {
+          "name": "quantity__plus",
+          "docs": "The product quantity plus"
+        },
+        {
+          "name": "quantity__plus-icon",
+          "docs": "The product quantity plus icon"
         },
         {
           "name": "remove-icon__base",
-          "docs": "The remove icon base wrapper."
+          "docs": "The product remove icon"
         },
         {
           "name": "static-quantity",
-          "docs": "The statically displayed quantity."
+          "docs": "The product static quantity"
         },
         {
           "name": "suffix",
-          "docs": "The suffix items."
+          "docs": "The product suffix"
         },
         {
           "name": "text",
-          "docs": "The text wrapper."
+          "docs": "The product text"
         },
         {
           "name": "title",
-          "docs": "The product title."
+          "docs": "The product title"
         }
       ],
       "dependents": [

@@ -2884,6 +2884,10 @@ export namespace Components {
          */
         "ajaxPagination": boolean;
         /**
+          * Show only featured products.
+         */
+        "featured": boolean;
+        /**
           * Limit to a set of ids.
          */
         "ids": string[];
@@ -8734,6 +8738,10 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "ajaxPagination"?: boolean;
+        /**
+          * Show only featured products.
+         */
+        "featured"?: boolean;
         /**
           * Limit to a set of ids.
          */
