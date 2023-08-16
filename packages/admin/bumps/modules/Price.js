@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
 import PriceSelector from '../../components/PriceSelector';
 import useEntity from '../../hooks/useEntity';
 import Box from '../../ui/Box';
-import { intervalString } from '../../util/translations';
+import { intervalString, productNameWithPrice } from '../../util/translations';
 import ModelRow from '../components/ModelRow';
 
 export default ({ loading, bump, updateBump }) => {
@@ -49,7 +49,7 @@ export default ({ loading, bump, updateBump }) => {
 								}
 							>
 								<div>
-									<strong>{price?.product?.name}</strong>
+									<strong>{productNameWithPrice(price)}</strong>
 								</div>
 								<ScFormatNumber
 									type="currency"
