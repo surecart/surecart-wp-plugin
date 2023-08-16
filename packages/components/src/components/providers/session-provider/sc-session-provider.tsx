@@ -403,6 +403,13 @@ export class ScSessionProvider {
       return;
     }
 
+    // If got Product out of stock error, then fetch the checkout again.
+    if (e?.additional_errors?.[0]?.code === 'checkout.product.out_of_stock') {
+      this.fetch();
+      updateFormState('REJECT');
+      return;
+    }
+
     if (['order.invalid_status_transition'].includes(e?.code)) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
@@ -452,7 +459,7 @@ export class ScSessionProvider {
     if (this.prices.some(p => !p?.id)) {
       return;
     }
-    
+
     // add prices that are passed into this component.
     return this.prices.map(price => {
       return {
