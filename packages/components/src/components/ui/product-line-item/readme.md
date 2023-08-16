@@ -35,26 +35,27 @@
 
 ## Shadow Parts
 
-| Part                   | Description                        |
-| ---------------------- | ---------------------------------- |
-| `"base"`               | The elements base wrapper.         |
-| `"image"`              |                                    |
-| `"input"`              | The input control.                 |
-| `"minus"`              | The minus control.                 |
-| `"minus-icon"`         | The minus icon.                    |
-| `"plus"`               | The plus control.                  |
-| `"plus-icon"`          | The plus icon.                     |
-| `"price"`              | The price wrapper.                 |
-| `"price__amount"`      | The price amount.                  |
-| `"price__description"` | The price description.             |
-| `"price__scratch"`     |                                    |
-| `"product-line-item"`  |                                    |
-| `"quantity__base"`     | The quantity base wrapper.         |
-| `"remove-icon__base"`  | The remove icon base wrapper.      |
-| `"static-quantity"`    | The statically displayed quantity. |
-| `"suffix"`             | The suffix items.                  |
-| `"text"`               | The text wrapper.                  |
-| `"title"`              | The product title.                 |
+| Part                             | Description                     |
+| -------------------------------- | ------------------------------- |
+| `"base"`                         | The component base              |
+| `"image"`                        | The product image               |
+| `"line-item__price-description"` | The line item price description |
+| `"price"`                        | The product price               |
+| `"price__amount"`                | The product price amount        |
+| `"price__description"`           | The product price description   |
+| `"price__scratch"`               | The product price scratch       |
+| `"product-line-item"`            | The product line item           |
+| `"quantity"`                     | The product quantity            |
+| `"quantity__input"`              | The product quantity input      |
+| `"quantity__minus"`              | The product quantity minus      |
+| `"quantity__minus-icon"`         | The product quantity minus icon |
+| `"quantity__plus"`               | The product quantity plus       |
+| `"quantity__plus-icon"`          | The product quantity plus icon  |
+| `"remove-icon__base"`            | The product remove icon         |
+| `"static-quantity"`              | The product static quantity     |
+| `"suffix"`                       | The product suffix              |
+| `"text"`                         | The product text                |
+| `"title"`                        | The product title               |
 
 
 ## Dependencies
