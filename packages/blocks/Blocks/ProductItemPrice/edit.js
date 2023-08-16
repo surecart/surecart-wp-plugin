@@ -39,7 +39,7 @@ export default ({ attributes, setAttributes }) => {
 					<ToggleControl
 						label={__('Price Range', 'surecart')}
 						help={__(
-							'Show a range of prices if multiple prices are available.',
+							'Show a range of prices if multiple prices are available or has variable products.',
 							'surecart'
 						)}
 						checked={range}

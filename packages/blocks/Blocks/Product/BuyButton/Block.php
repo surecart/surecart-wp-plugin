@@ -99,12 +99,11 @@ class Block extends BaseBlock {
 
 		$product = get_query_var( 'surecart_current_product' );
 
-		$product_has_stock = $product->hasStock();
-
-		// die( var_dump( $product_has_stock ) );
 		if ( empty( $product ) ) {
 			return '';
 		}
+
+		$product_has_stock = $product->hasStock();
 
 		// set width class.
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';

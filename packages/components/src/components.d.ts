@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+import { LineItemData as LineItemData1, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+export { LineItemData as LineItemData1, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -2919,6 +2919,14 @@ export namespace Components {
         "sortEnabled": boolean;
     }
     interface ScProductItemPrice {
+        /**
+          * Has variant?
+         */
+        "hasVariant": boolean;
+        /**
+          * Product metrics
+         */
+        "metrics": ProductMetrics;
         "prices": Price1[];
         /**
           * Show price range?
@@ -8795,6 +8803,14 @@ declare namespace LocalJSX {
         "sortEnabled"?: boolean;
     }
     interface ScProductItemPrice {
+        /**
+          * Has variant?
+         */
+        "hasVariant"?: boolean;
+        /**
+          * Product metrics
+         */
+        "metrics"?: ProductMetrics;
         "prices"?: Price1[];
         /**
           * Show price range?

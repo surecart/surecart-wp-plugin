@@ -267,6 +267,13 @@ export interface Variant {
   updated_at: number;
 }
 
+export interface ProductMetrics {
+  currency: string;
+  max_price_amount: number;
+  min_price_amount: number;
+  prices_count: number;
+}
+
 export interface Product extends Object {
   id: string;
   name: string;
@@ -279,6 +286,7 @@ export interface Product extends Object {
   tax_category: string;
   tax_enabled: boolean;
   purchase_limit: number;
+  metrics: ProductMetrics;
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';

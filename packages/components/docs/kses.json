@@ -1585,6 +1585,8 @@
     "slot": true
   },
   "sc-product-item-price": {
+    "has-variant": true,
+    "metrics": true,
     "prices": true,
     "range": true,
     "style": true,
