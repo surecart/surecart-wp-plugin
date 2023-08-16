@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-08-01T18:10:30+00:00\n"
+"POT-Creation-Date: 2023-08-16T15:40:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 
@@ -49,6 +49,8 @@ msgstr ""
 
 #: src/Cart/CartService.php:187
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:174
+#: cart.php:6
+#: shop.php:6
 #: settings/brand/BrandSettings.js:216
 msgid "Cart"
 msgstr ""
@@ -574,7 +576,7 @@ msgstr ""
 #: bumps/modules/Conditions.js:79
 #: coupons/modules/Restrictions.js:66
 #: customers/EditCustomer.js:116
-#: settings/advanced/AdvancedSettings.js:163
+#: settings/advanced/AdvancedSettings.js:165
 #: settings/export/ExportSettings.js:23
 msgid "Customers"
 msgstr ""
@@ -635,6 +637,7 @@ msgid "Search Invoices"
 msgstr ""
 
 #: src/Controllers/Admin/Invoices/InvoicesListTable.php:63
+#: forms/invoice.php:6
 #: invoices/store/entities.js:62
 #: store/add-entities.js:124
 msgid "Invoice"
@@ -816,6 +819,7 @@ msgid "Plan Renewal"
 msgstr ""
 
 #: src/Controllers/Admin/Orders/OrdersListTable.php:239
+#: forms/checkout.php:6
 #: store/add-entities.js:60
 msgid "Checkout"
 msgstr ""
@@ -1206,16 +1210,16 @@ msgstr ""
 msgid "The username <strong>%s</strong> is not registered on this site. If you are unsure of your username, try your email address instead."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:271
+#: src/Controllers/Rest/CheckoutsController.php:274
 msgid "Invalid request. Please try again."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:350
+#: src/Controllers/Rest/CheckoutsController.php:353
 msgid "This product is invalid."
 msgstr ""
 
-#: src/Controllers/Rest/CheckoutsController.php:355
-#: src/Controllers/Rest/CheckoutsController.php:372
+#: src/Controllers/Rest/CheckoutsController.php:358
+#: src/Controllers/Rest/CheckoutsController.php:375
 #: src/Middleware/CheckoutRedirectMiddleware.php:42
 msgid "This product is not available for purchase."
 msgstr ""
@@ -1378,7 +1382,7 @@ msgstr ""
 #: src/Integrations/Beaver/BeaverFormModule.php:60
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:152
 #: src/WordPress/Admin/Menus/AdminMenuPageService.php:177
-#: layouts/partials/admin-settings-header.php:38
+#: layouts/partials/admin-settings-header.php:108
 #: Blocks/CartMenuButton/edit.js:31
 #: Blocks/StoreLogo/edit.js:150
 msgid "Settings"
@@ -2199,6 +2203,7 @@ msgstr ""
 
 #: src/Routing/PermalinkServiceProvider.php:29
 #: src/Routing/PermalinkServiceProvider.php:50
+#: forms/default.php:6
 #: products/utility.js:8
 #: Blocks/CheckoutForm/components/Setup.js:184
 #: Blocks/Dashboard/CustomerPaymentMethods/edit.js:82
@@ -4146,11 +4151,13 @@ msgid "Store Checkout"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:124
+#: dashboard/customer-dashboard.php:6
 #: Blocks/Confirmation/edit.js:20
 msgid "Customer Dashboard"
 msgstr ""
 
 #: src/WordPress/Pages/PageService.php:128
+#: confirmation/order-confirmation.php:6
 #: settings/customer/CustomerSettings.js:315
 msgid "Order Confirmation"
 msgstr ""
@@ -4412,7 +4419,7 @@ msgstr ""
 msgid "Add To Cart"
 msgstr ""
 
-#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:227
+#: src/WordPress/Shortcodes/ShortcodesServiceProvider.php:229
 msgid "This form is not available or has been deleted."
 msgstr ""
 
@@ -4456,7 +4463,7 @@ msgstr ""
 
 #: admin/advanced.php:30
 #: settings/abandoned/AbandonedSettings.js:284
-#: settings/advanced/AdvancedSettings.js:82
+#: settings/advanced/AdvancedSettings.js:84
 msgid "Advanced Settings"
 msgstr ""
 
@@ -4471,35 +4478,35 @@ msgstr ""
 
 #: admin/advanced.php:41
 #: admin/plugin.php:95
-#: settings/advanced/AdvancedSettings.js:93
+#: settings/advanced/AdvancedSettings.js:95
 msgid "Performance"
 msgstr ""
 
 #: admin/advanced.php:42
 #: admin/plugin.php:96
-#: settings/advanced/AdvancedSettings.js:94
+#: settings/advanced/AdvancedSettings.js:96
 msgid "Change your plugin performance settings."
 msgstr ""
 
 #: admin/advanced.php:45
 #: admin/plugin.php:99
-#: settings/advanced/AdvancedSettings.js:109
+#: settings/advanced/AdvancedSettings.js:111
 msgid "Use JavaScript ESM Loader"
 msgstr ""
 
 #: admin/advanced.php:46
 #: admin/plugin.php:100
-#: settings/advanced/AdvancedSettings.js:111
+#: settings/advanced/AdvancedSettings.js:113
 msgid "This can slightly increase page load speed, but may require you to enable CORS headers for .js files on your CDN. Please check your checkout forms after you enable this option in a private browser window."
 msgstr ""
 
 #: admin/advanced.php:52
-#: settings/advanced/AdvancedSettings.js:120
+#: settings/advanced/AdvancedSettings.js:122
 msgid "Beta Features"
 msgstr ""
 
 #: admin/advanced.php:53
-#: settings/advanced/AdvancedSettings.js:121
+#: settings/advanced/AdvancedSettings.js:123
 msgid "Opt-in to some beta features of the plugin."
 msgstr ""
 
@@ -4508,31 +4515,31 @@ msgid "Use the Stripe Payment Element"
 msgstr ""
 
 #: admin/advanced.php:57
-#: settings/advanced/AdvancedSettings.js:139
+#: settings/advanced/AdvancedSettings.js:141
 msgid "Use Stripe's Payment Element instead of the Card Element in all forms."
 msgstr ""
 
 #: admin/advanced.php:63
 #: admin/plugin.php:106
-#: settings/advanced/AdvancedSettings.js:337
+#: settings/advanced/AdvancedSettings.js:359
 msgid "Uninstall"
 msgstr ""
 
 #: admin/advanced.php:64
 #: admin/plugin.php:107
-#: settings/advanced/AdvancedSettings.js:338
+#: settings/advanced/AdvancedSettings.js:360
 msgid "Change your plugin uninstall settings."
 msgstr ""
 
 #: admin/advanced.php:67
 #: admin/plugin.php:110
-#: settings/advanced/AdvancedSettings.js:353
+#: settings/advanced/AdvancedSettings.js:375
 msgid "Remove Plugin Data"
 msgstr ""
 
 #: admin/advanced.php:68
 #: admin/plugin.php:111
-#: settings/advanced/AdvancedSettings.js:355
+#: settings/advanced/AdvancedSettings.js:377
 msgid "Completely remove all plugin data when deleted. This cannot be undone."
 msgstr ""
 
@@ -4708,20 +4715,30 @@ msgstr ""
 msgid "This user is not a customer."
 msgstr ""
 
-#: layouts/partials/admin-settings-header.php:26
+#: layouts/partials/admin-settings-header.php:71
 msgid "Cache cleared."
 msgstr ""
 
-#: layouts/partials/admin-settings-header.php:57
+#: layouts/partials/admin-settings-header.php:79
+#: settings/advanced/AdvancedSettings.js:322
+msgid "Looking to migrate from another ecommerce platform?"
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:81
+#: settings/advanced/AdvancedSettings.js:334
+msgid "Contact Us"
+msgstr ""
+
+#: layouts/partials/admin-settings-header.php:127
 msgid "Clear Account Cache"
 msgstr ""
 
-#: layouts/partials/admin-settings-header.php:60
+#: layouts/partials/admin-settings-header.php:130
 msgid "SureCart Status"
 msgstr ""
 
 #. translators: Version number.
-#: layouts/partials/admin-settings-header.php:66
+#: layouts/partials/admin-settings-header.php:136
 msgid "Version %s"
 msgstr ""
 
@@ -4765,6 +4782,7 @@ msgid "Help"
 msgstr ""
 
 #: layouts/partials/customer-dashboard/dashboard-navigation.php:53
+#: pages/template-surecart-dashboard.php:117
 msgid "Log Out"
 msgstr ""
 
@@ -4851,6 +4869,33 @@ msgstr ""
 
 #: web/no-customer.php:8
 msgid "Home"
+msgstr ""
+
+#: forms/donation.php:6
+msgid "Donation"
+msgstr ""
+
+#: forms/full-page.php:6
+msgid "Full Page"
+msgstr ""
+
+#: forms/sections.php:6
+#: Blocks/CheckoutForm/components/Setup.js:188
+msgid "Sections"
+msgstr ""
+
+#: forms/simple.php:6
+#: Blocks/CheckoutForm/components/Setup.js:196
+msgid "Simple"
+msgstr ""
+
+#: forms/two-column.php:6
+#: Blocks/CheckoutForm/components/Setup.js:192
+msgid "Two Column"
+msgstr ""
+
+#: pages/template-surecart-dashboard.php:80
+msgid "Back Home"
 msgstr ""
 
 #: abandoned-checkouts-stats/AbandonedCheckoutStats.js:158
@@ -7093,7 +7138,7 @@ msgid "Back"
 msgstr ""
 
 #: onboarding/components/ProgressIndicator.js:81
-#: Blocks/Form/edit.js:432
+#: Blocks/Form/edit.js:431
 msgid "Continue"
 msgstr ""
 
@@ -7838,7 +7883,7 @@ msgstr ""
 #: settings/shipping/rate/ShippingRateForm.js:318
 #: settings/subscription-preservation/PreservationSettings.js:239
 #: settings/subscription-preservation/PreservationSettings.js:286
-#: Blocks/Form/edit.js:412
+#: Blocks/Form/edit.js:411
 #: Blocks/Heading/edit.js:33
 #: Blocks/Heading/edit.js:56
 #: Blocks/PriceChoice/edit.js:70
@@ -8294,7 +8339,7 @@ msgstr ""
 
 #: settings/abandoned/AbandonedSettings.js:62
 #: settings/account/AccountSettings.js:69
-#: settings/advanced/AdvancedSettings.js:72
+#: settings/advanced/AdvancedSettings.js:74
 #: settings/brand/BrandSettings.js:71
 #: settings/connection/ConnectionSettings.js:25
 #: settings/customer/CustomerSettings.js:36
@@ -8605,103 +8650,107 @@ msgstr ""
 msgid "Enter a website URL"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:137
+#: settings/advanced/AdvancedSettings.js:139
 msgid "Use The Stripe Payment Element"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:148
+#: settings/advanced/AdvancedSettings.js:150
 msgid "Syncing"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:149
+#: settings/advanced/AdvancedSettings.js:151
 msgid "Manually sync your WordPress install with SureCart."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:164
+#: settings/advanced/AdvancedSettings.js:166
 msgid "Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:172
+#: settings/advanced/AdvancedSettings.js:174
 msgid "Sync Customers"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:179
+#: settings/advanced/AdvancedSettings.js:181
 msgid "Spam Protection & Security"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:180
+#: settings/advanced/AdvancedSettings.js:182
 msgid "Change your checkout spam protection and security settings."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:190
+#: settings/advanced/AdvancedSettings.js:192
 msgid "Honeypot"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:192
+#: settings/advanced/AdvancedSettings.js:194
 msgid "This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:206
+#: settings/advanced/AdvancedSettings.js:208
 msgid "Recaptcha v3"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:208
+#: settings/advanced/AdvancedSettings.js:210
 msgid "Enable Recaptcha spam protection on checkout forms."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:217
+#: settings/advanced/AdvancedSettings.js:219
 msgid "Important"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:218
+#: settings/advanced/AdvancedSettings.js:220
 msgid "Please clear checkout page cache after changing this setting."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:239
-#: settings/advanced/AdvancedSettings.js:240
+#: settings/advanced/AdvancedSettings.js:241
+#: settings/advanced/AdvancedSettings.js:242
 msgid "reCaptcha Site Key"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:248
-#: settings/advanced/AdvancedSettings.js:264
+#: settings/advanced/AdvancedSettings.js:250
+#: settings/advanced/AdvancedSettings.js:266
 msgid "You can find this on your google Recaptcha dashboard."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:255
-#: settings/advanced/AdvancedSettings.js:256
+#: settings/advanced/AdvancedSettings.js:257
+#: settings/advanced/AdvancedSettings.js:258
 msgid "reCaptcha Secret Key"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:272
+#: settings/advanced/AdvancedSettings.js:274
 msgid "To get your Recaptcha keys"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:277
+#: settings/advanced/AdvancedSettings.js:279
 msgid "register a new site and choose v3."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:295
+#: settings/advanced/AdvancedSettings.js:297
 msgid "Stripe Fraud Monitoring"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:297
+#: settings/advanced/AdvancedSettings.js:299
 msgid "This will load stripe.js on every page to help with Fraud monitoring."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:308
+#: settings/advanced/AdvancedSettings.js:310
 msgid "Strong Password Validation"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:310
+#: settings/advanced/AdvancedSettings.js:312
 msgid "This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character."
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:318
-#: settings/advanced/AdvancedSettings.js:332
+#: settings/advanced/AdvancedSettings.js:321
+msgid "Migration"
+msgstr ""
+
+#: settings/advanced/AdvancedSettings.js:340
+#: settings/advanced/AdvancedSettings.js:354
 msgid "Clear Test Data"
 msgstr ""
 
-#: settings/advanced/AdvancedSettings.js:319
+#: settings/advanced/AdvancedSettings.js:341
 msgid "Clear out all of your test data with one-click."
 msgstr ""
 
@@ -9731,7 +9780,7 @@ msgstr ""
 #: Blocks/Dashboard/OrderDownloads/edit.js:31
 #: Blocks/Dashboard/WordPressAccount/edit.js:22
 #: Blocks/Dashboard/WordPressAccount/edit.js:33
-#: Blocks/Form/edit.js:394
+#: Blocks/Form/edit.js:393
 #: Blocks/Heading/edit.js:26
 #: Blocks/Heading/edit.js:45
 #: Blocks/OrderConfirmationCustomer/edit.js:27
@@ -11237,7 +11286,7 @@ msgstr ""
 #: Blocks/CartSubmit/edit.js:84
 #: Blocks/Coupon/edit.js:63
 #: Blocks/CustomerDashboardButton/edit.js:34
-#: Blocks/Form/edit.js:430
+#: Blocks/Form/edit.js:429
 #: Blocks/Submit/edit.js:44
 msgid "Button Text"
 msgstr ""
@@ -11575,18 +11624,6 @@ msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:174
 msgid "Select a Form Template"
-msgstr ""
-
-#: Blocks/CheckoutForm/components/Setup.js:188
-msgid "Sections"
-msgstr ""
-
-#: Blocks/CheckoutForm/components/Setup.js:192
-msgid "Two Column"
-msgstr ""
-
-#: Blocks/CheckoutForm/components/Setup.js:196
-msgid "Simple"
 msgstr ""
 
 #: Blocks/CheckoutForm/components/Setup.js:203
@@ -12103,60 +12140,60 @@ msgstr ""
 msgid "The this is the space between the rows of form elements."
 msgstr ""
 
-#: Blocks/Form/edit.js:318
+#: Blocks/Form/edit.js:317
 msgid "Loading Text"
 msgstr ""
 
-#: Blocks/Form/edit.js:323
+#: Blocks/Form/edit.js:322
 msgid "Submitting Order"
 msgstr ""
 
-#: Blocks/Form/edit.js:325
+#: Blocks/Form/edit.js:324
 msgid "Submitting Order..."
 msgstr ""
 
-#: Blocks/Form/edit.js:338
+#: Blocks/Form/edit.js:337
 msgid "Processing Payment"
 msgstr ""
 
-#: Blocks/Form/edit.js:340
+#: Blocks/Form/edit.js:339
 msgid "Processing payment..."
 msgstr ""
 
-#: Blocks/Form/edit.js:356
+#: Blocks/Form/edit.js:355
 msgid "Confirming Payment"
 msgstr ""
 
-#: Blocks/Form/edit.js:358
+#: Blocks/Form/edit.js:357
 msgid "Finalizing order..."
 msgstr ""
 
-#: Blocks/Form/edit.js:371
-#: Blocks/Form/edit.js:389
+#: Blocks/Form/edit.js:370
+#: Blocks/Form/edit.js:388
 msgid "Success Text"
 msgstr ""
 
-#: Blocks/Form/edit.js:373
+#: Blocks/Form/edit.js:372
 msgid "Success! Redirecting..."
 msgstr ""
 
-#: Blocks/Form/edit.js:396
+#: Blocks/Form/edit.js:395
 msgid "Thanks for your order!"
 msgstr ""
 
-#: Blocks/Form/edit.js:414
+#: Blocks/Form/edit.js:413
 msgid "Your payment was successful, and your order is complete. A receipt is on its way to your inbox."
 msgstr ""
 
-#: Blocks/Form/edit.js:449
+#: Blocks/Form/edit.js:448
 msgid "Complete your store setup."
 msgstr ""
 
-#: Blocks/Form/edit.js:450
+#: Blocks/Form/edit.js:449
 msgid "Please complete your store to enable live mode. It's free!"
 msgstr ""
 
-#: Blocks/Form/edit.js:513
+#: Blocks/Form/edit.js:512
 msgid "Form"
 msgstr ""
 
