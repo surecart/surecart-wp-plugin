@@ -16,9 +16,6 @@ export class ScProductItemPrice {
   /** Product metrics */
   @Prop() metrics: ProductMetrics;
 
-  /** Has variant? */
-  @Prop() hasVariant: boolean = false;
-
   componentWillLoad() {
     // If min-max price is different, then generate a price range.
     if (this.range && this.metrics?.min_price_amount !== this.metrics?.max_price_amount) {

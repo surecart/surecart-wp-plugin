@@ -2929,10 +2929,6 @@ export namespace Components {
     }
     interface ScProductItemPrice {
         /**
-          * Has variant?
-         */
-        "hasVariant": boolean;
-        /**
           * Product metrics
          */
         "metrics": ProductMetrics;
@@ -8839,10 +8835,6 @@ declare namespace LocalJSX {
         "sortEnabled"?: boolean;
     }
     interface ScProductItemPrice {
-        /**
-          * Has variant?
-         */
-        "hasVariant"?: boolean;
         /**
           * Product metrics
          */
