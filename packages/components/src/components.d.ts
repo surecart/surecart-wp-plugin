@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Checkout as Checkout1, LineItemData, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Checkout as Checkout1, LineItemData, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -587,6 +587,15 @@ export namespace Components {
         "processorId": string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    /**
+     * This component listens for stock requirements and displays a dialog to the user.
+     */
+    interface ScCheckoutStockAlert {
+        /**
+          * The current order.
+         */
+        "order": Checkout1;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
@@ -3953,6 +3962,10 @@ export interface ScCheckoutPaystackPaymentProviderCustomEvent<T> extends CustomE
     detail: T;
     target: HTMLScCheckoutPaystackPaymentProviderElement;
 }
+export interface ScCheckoutStockAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutStockAlertElement;
+}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -4370,6 +4383,15 @@ declare global {
     var HTMLScCheckoutPaystackPaymentProviderElement: {
         prototype: HTMLScCheckoutPaystackPaymentProviderElement;
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
+    };
+    /**
+     * This component listens for stock requirements and displays a dialog to the user.
+     */
+    interface HTMLScCheckoutStockAlertElement extends Components.ScCheckoutStockAlert, HTMLStencilElement {
+    }
+    var HTMLScCheckoutStockAlertElement: {
+        prototype: HTMLScCheckoutStockAlertElement;
+        new (): HTMLScCheckoutStockAlertElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -5431,6 +5453,7 @@ declare global {
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
+        "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choice-container": HTMLScChoiceContainerElement;
@@ -6217,6 +6240,19 @@ declare namespace LocalJSX {
     interface ScCheckoutPaystackPaymentProvider {
         "onScError"?: (event: ScCheckoutPaystackPaymentProviderCustomEvent<ResponseError1>) => void;
     }
+    /**
+     * This component listens for stock requirements and displays a dialog to the user.
+     */
+    interface ScCheckoutStockAlert {
+        /**
+          * Toggle line item event
+         */
+        "onScUpdateLineItem"?: (event: ScCheckoutStockAlertCustomEvent<LineItemData>) => void;
+        /**
+          * The current order.
+         */
+        "order"?: Checkout1;
+    }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
     }
@@ -6499,7 +6535,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScCustomOrderPriceInputCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScCustomOrderPriceInputCustomEvent<LineItemData1>) => void;
         /**
           * Input placeholder.
          */
@@ -6986,15 +7022,15 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScAddLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
+        "onScAddLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * The price id for the fields.
          */
@@ -7620,11 +7656,11 @@ declare namespace LocalJSX {
         /**
           * Remove the line item.
          */
-        "onScRemoveLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScLineItemsCustomEvent<LineItemData1>) => void;
         /**
           * Update the line item.
          */
-        "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData1>) => void;
         "order"?: Checkout;
         "prices"?: Prices;
         "removable"?: boolean;
@@ -7634,7 +7670,7 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onScUpdateLineItems"?: (event: ScLineItemsProviderCustomEvent<Array<LineItemData>>) => void;
+        "onScUpdateLineItems"?: (event: ScLineItemsProviderCustomEvent<Array<LineItemData1>>) => void;
         /**
           * Order Object
          */
@@ -7702,11 +7738,11 @@ declare namespace LocalJSX {
         /**
           * Add line item event
          */
-        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Remove line item event
          */
-        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Should we show the controls
          */
@@ -8531,11 +8567,11 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData1>) => void;
         /**
           * Session
          */
@@ -8628,11 +8664,11 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Session
          */
@@ -8934,7 +8970,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScProductSelectedPriceCustomEvent<LineItemData1>) => void;
+        "onScUpdateLineItem"?: (event: ScProductSelectedPriceCustomEvent<LineItemData>) => void;
         /**
           * The product id.
          */
@@ -8947,7 +8983,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScProductVariationChoicesCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScProductVariationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * The product id.
          */
@@ -9936,6 +9972,7 @@ declare namespace LocalJSX {
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
+        "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choice-container": ScChoiceContainer;
@@ -10144,6 +10181,10 @@ declare module "@stencil/core" {
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
+            /**
+             * This component listens for stock requirements and displays a dialog to the user.
+             */
+            "sc-checkout-stock-alert": LocalJSX.ScCheckoutStockAlert & JSXBase.HTMLAttributes<HTMLScCheckoutStockAlertElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;

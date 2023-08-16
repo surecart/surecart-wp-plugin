@@ -283,6 +283,8 @@ export class ScCheckout {
       >
         {/* Handles unsaved changes warning depending on checkout state */}
         <sc-checkout-unsaved-changes-warning state={this.checkoutState} />
+        <sc-checkout-stock-alert order={checkoutState.checkout} />
+
         {/* Univers provider */}
         <Universe.Provider state={this.state()}>
           {/** Handles login form prompts. */}
