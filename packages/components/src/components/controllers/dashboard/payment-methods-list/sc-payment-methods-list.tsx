@@ -181,16 +181,15 @@ export class ScPaymentMethodsList {
             {typeof customer !== 'string' && customer?.default_payment_method === id && <sc-tag type="info">{__('Default', 'surecart')}</sc-tag>}
             {!live_mode && <sc-tag type="warning">{__('Test', 'surecart')}</sc-tag>}
           </sc-flex>
-
+          {typeof customer !== 'string' && customer?.default_payment_method !== id && (
           <sc-dropdown placement="bottom-end" slot="suffix">
             <sc-icon name="more-horizontal" slot="trigger"></sc-icon>
             <sc-menu>
-              {typeof customer !== 'string' && customer?.default_payment_method !== id && (
                 <sc-menu-item onClick={() => (this.editPaymentMethod = paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>
-              )}
-              <sc-menu-item onClick={() => (this.deletePaymentMethod = paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>
+                <sc-menu-item onClick={() => (this.deletePaymentMethod = paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>
             </sc-menu>
           </sc-dropdown>
+          )}
         </sc-stacked-list-row>
       );
     });
