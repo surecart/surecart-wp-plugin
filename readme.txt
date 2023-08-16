@@ -243,6 +243,15 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.5.0 - August 17th, 2023 =
+* New: Buy now button on product pages.
+* New: Featured products. Mark products as featured and optionally show them on product lists.
+* New: Automatic Google Analytics "Add To Cart" event.
+* Improvement: improve line items exported parts.
+* Fix: Instant checkout pages mode changing should recreate a new checkout.
+* Fix: Link in switch element was not clickable on front-end.
+* Fix: Missing "Back to Home" translation not appearing in .pot file.
+
 = 2.4.4 - August 11th, 2023 =
 * Fix: Issue with shop page not fetching products under certain website caching conditions.
 
