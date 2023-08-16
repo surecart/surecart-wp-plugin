@@ -20,41 +20,18 @@ export class ScProductItemPrice {
   @Prop() hasVariant: boolean = false;
 
   componentWillLoad() {
-    // If variant product, then generate a price range.
-    if (this.range && this.metrics?.prices_count > 1 && this.hasVariant) {
-      const dummyPriceAttributes = {
-        id: '',
-        name: '',
-        recurring: false,
-        ad_hoc: false,
-        ad_hoc_max_amount: 0,
-        ad_hoc_min_amount: 0,
-        scratch_amount: 0,
-        setup_fee_enabled: false,
-        setup_fee_amount: 0,
-        setup_fee_name: '',
-        setup_fee_trial_enabled: false,
-        recurring_period_count: 0,
-        archived: false,
-        created_at: 0,
-        updated_at: 0,
-        position: 0,
-        metadata: {},
-      };
-
-      // only currency and amount is necessary for the price range component.
+    // If min-max price is different, then generate a price range.
+    if (this.range && this.metrics?.min_price_amount !== this.metrics?.max_price_amount) {
       this.prices = [
         {
           amount: this.metrics?.min_price_amount,
           currency: this.metrics?.currency,
-          ...dummyPriceAttributes,
         },
         {
           amount: this.metrics?.max_price_amount,
           currency: this.metrics?.currency,
-          ...dummyPriceAttributes,
         },
-      ];
+      ] as Price[];
     }
   }
 
