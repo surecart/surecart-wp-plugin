@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { intervalString } from '../../util/translations';
+import { intervalString, productNameWithPrice } from '../../util/translations';
 import { useEffect, useState } from '@wordpress/element';
 import {
 	ScButton,
@@ -82,7 +82,7 @@ export default ({
 						)}
 						<div>
 							<div>
-								<strong>{`${price?.product?.name} ${price?.name ? `- ${price.name}` : ''}`}</strong>
+								<strong>{productNameWithPrice(price)}</strong>
 							</div>
 							<ScFormatNumber
 								type="currency"

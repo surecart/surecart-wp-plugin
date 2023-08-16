@@ -21,6 +21,7 @@ import { ScBlockUi } from '@surecart/components-react';
 import AddTracking from './components/AddTracking';
 import LineItem from './components/LineItem';
 import { addQueryArgs } from '@wordpress/url';
+import { productNameWithPrice } from '../../../util/translations';
 
 export default ({ fulfillment, onDeleteSuccess }) => {
 	const [busy, setBusy] = useState(false);
@@ -293,7 +294,7 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 													?.id,
 											})}
 										>
-											{line_item?.price?.product?.name}
+											{productNameWithPrice(line_item?.price)}
 										</a>
 										{!!line_item?.price?.product
 											?.weight && (

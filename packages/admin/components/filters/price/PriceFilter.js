@@ -2,7 +2,7 @@ import { ScFormatNumber } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
-import { intervalString } from '../../../../admin/util/translations';
+import { intervalString, productNameWithPrice } from '../../../../admin/util/translations';
 import FilterItem from '../FilterItem';
 
 export default ({ id, onRemove }) => {
@@ -39,7 +39,7 @@ export default ({ id, onRemove }) => {
 		>
 			<div>
 				<div>
-					<strong>{price?.product?.name}</strong>
+					<strong>{productNameWithPrice(price)}</strong>
 				</div>
 				<ScFormatNumber
 					type="currency"

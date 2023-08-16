@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
+import { intervalString, productNameWithPrice } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
 import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
@@ -64,7 +64,7 @@ export default ({ subscription }) => {
 				{
 					product: (
 						<div>
-							{price?.product?.name}
+							{productNameWithPrice(price)}
 							<div
 								css={css`
 									opacity: 0.5;

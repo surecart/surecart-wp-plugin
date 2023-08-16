@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
+import { intervalString, productNameWithPrice } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
@@ -68,7 +68,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								`}
 							>
 								<div>
-									{price?.product?.name}
+									{productNameWithPrice(price)}
 									<div style={{ opacity: 0.5 }}>
 										<ScFormatNumber
 											type="currency"

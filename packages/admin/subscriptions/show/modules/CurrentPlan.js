@@ -6,7 +6,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
+import { intervalString, productNameWithPrice } from '../../../util/translations';
 
 export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
@@ -54,7 +54,7 @@ export default ({ lineItem, loading, subscription }) => {
 									`}
 								>
 									<div>
-										{lineItem?.price?.product?.name}
+										{productNameWithPrice(lineItem?.price)}
 										<div style={{ opacity: 0.5 }}>
 											<ScFormatNumber
 												type="currency"
