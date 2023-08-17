@@ -56,6 +56,8 @@ export class ScProductSelectedPrice {
 
   render() {
     const price = this.lineItem()?.price;
+    const variant = this.lineItem()?.variant;
+    
     if (!price) return <Host style={{ display: 'none' }}></Host>;
 
     return (
@@ -103,7 +105,7 @@ export class ScProductSelectedPrice {
                     ></sc-format-number>{' '}
                   </Fragment>
                 )}
-                <sc-format-number type="currency" currency={price?.currency} value={this.lineItem()?.ad_hoc_amount !== null ? this.lineItem()?.ad_hoc_amount : price?.amount} />
+                <sc-format-number type="currency" currency={price?.currency} value={this.lineItem()?.ad_hoc_amount !== null ? this.lineItem()?.ad_hoc_amount : variant?.amount ? variant?.amount : price?.amount} />
               </span>
               <span class="selected-price__interval">
                 {intervalString(price, {

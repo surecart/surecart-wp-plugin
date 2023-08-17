@@ -1,6 +1,6 @@
 import { Component, h, Prop, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Price } from '../../../../types';
+import { Price, Variant } from '../../../../types';
 import { state } from '@store/product';
 import { intervalString } from '../../../../functions/price';
 
@@ -20,20 +20,18 @@ export class ScProductPrice {
     return <sc-price-range prices={state.prices} />;
   }
 
-  renderVariantPrice(selectedVariant: string) {
-    const variant = state?.variants?.find(variant => variant?.id === selectedVariant);
+  renderVariantPrice(selectedVariant: Variant) {
+    const variant = state?.variants?.find(variant => variant?.id === selectedVariant?.id);
     if ( ! variant ) {
       return this.renderPrice(state.selectedPrice);
     }
-    return this.renderPrice(state.selectedPrice, variant?.amount, variant?.currency);
+    return this.renderPrice(state.selectedPrice, variant?.amount);
   }
 
-  renderPrice(price: Price, variantAmount?: number, variantCurrency?: string) {
+  renderPrice(price: Price, variantAmount?: number) {
 
     const amount = variantAmount || price?.amount;
-    const scratchAmount = variantAmount || price?.scratch_amount;
-    const currency = variantCurrency ? variantCurrency : price?.currency;
-
+    
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
     }
@@ -46,11 +44,11 @@ export class ScProductPrice {
       <Fragment>
         <div class="price">
           <div class="price__amounts">
-            {!!scratchAmount && (
-              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={scratchAmount}></sc-format-number>
+            {!!price?.scratch_amount && (
+              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
             )}
 
-            <sc-format-number class="price__amount" type="currency" value={amount} currency={currency}></sc-format-number>
+            <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>
 
             <div class="price__interval">
               {intervalString(price, {
@@ -65,7 +63,7 @@ export class ScProductPrice {
               })}
             </div>
 
-            {!!scratchAmount && (
+            {!!price?.scratch_amount && (
               <sc-tag type="primary" pill class="price__sale-badge">
                 {this.saleText || __('Sale', 'surecart')}
               </sc-tag>
@@ -80,7 +78,7 @@ export class ScProductPrice {
 
               {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
                 <span class="price__setup-fee">
-                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={currency}></sc-format-number>{' '}
+                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
                   {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
                 </span>
               )}

@@ -63,8 +63,8 @@ export const getVariantFromValues = ({variants, values}) => {
      
     if ( variantValues?.length === variantValueKeys?.length && variantValueKeys.every(key => variantValues.includes(values[key]))
     ) {
-     return variant.id;
+     return variant;
     }
   }
-  return '';
+  return null;
 }

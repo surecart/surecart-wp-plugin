@@ -359,7 +359,7 @@ export interface LineItem extends Object {
   price?: Price;
   price_id: string;
   variant_options: Array<string>;
-  variant?: string;
+  variant?: Variant;
 }
 
 export interface DeletedItem {

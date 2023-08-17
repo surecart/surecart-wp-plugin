@@ -15,7 +15,7 @@ export const submitCartForm = async () => {
         price: state.selectedPrice?.id,
         ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
-        variant: state.selectedVariant
+        variant: state.selectedVariant?.id
       },
       live_mode: state.mode !== 'test',
     });

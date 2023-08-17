@@ -19,7 +19,7 @@ interface Store {
   dialog: string;
   line_item: LineItemData;
   error: string;
-  selectedVariant: string;
+  selectedVariant: Variant;
   variantValues: { [key: string]: string };
 }
 const product = window?.scData?.product_data?.product || null;
@@ -51,9 +51,9 @@ const store = createStore<Store>(
       price_id: selectedPrice?.id,
       quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
-      variant: variants?.length ? variants[0]?.id : '',
+      variant: variants?.length ? variants[0]?.id : null,
     },
-    selectedVariant: variants?.length ? variants[0]?.id : '',
+    selectedVariant: variants?.length ? variants[0] : null,
     variantValues: {}
   },
   (newValue, oldValue) => {
