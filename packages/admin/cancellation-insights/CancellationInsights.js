@@ -2,19 +2,17 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import { ScFlex, ScIcon, ScTag } from '@surecart/components-react';
+import { ScIcon, ScTag } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import Error from '../components/Error';
 import Stat from '../ui/Stat';
-import Tab from '../ui/Tab';
 import { averageProperties, totalProperties } from './util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
-import LiveModeToggle from './LiveModeToggle';
-import Notifications from '../components/Notifications';
 import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
+import Notifications from '../components/Notifications'; 
 
 export default () => {
 	const [data, setData] = useState([]);
