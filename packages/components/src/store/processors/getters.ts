@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import { sortByArray } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
