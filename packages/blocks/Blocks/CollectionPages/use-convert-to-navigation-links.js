@@ -10,9 +10,9 @@ import { createBlock } from '@wordpress/blocks';
  *
  * @return {Array} A nested array of navigation link blocks.
  */
-export function createNavigationLinks( pages = [] ) {
+export function createNavigationLinks( pages = [], parentMenuName = '' ) {
 	const linkMap = {};
-	const navigationLinks = [];
+	let navigationLinks = [];
 	pages?.forEach( ( { id, name, permalink } ) => {
 		linkMap[ id ] = createBlock(
 			'core/navigation-link',
@@ -27,7 +27,32 @@ export function createNavigationLinks( pages = [] ) {
 
 		navigationLinks.push( linkMap[ id ] );
 	} );
+
+	if (  parentMenuName ) {
+		navigationLinks = createBlock(
+			'core/navigation-submenu',
+			{
+				id: stringToSlug(parentMenuName),
+				label: parentMenuName,
+				url: '#',
+				page: 'page',
+				kind: 'post-type',
+			},
+			navigationLinks
+		);
+	}
+
 	return navigationLinks;
+}
+
+function stringToSlug(input) {
+	return input
+		.toLowerCase() // Convert to lowercase
+		.replace(/\s+/g, '-') // Replace spaces with dashes
+		.replace(/[^\w\-]+/g, '') // Remove non-word characters except dashes
+		.replace(/\-\-+/g, '-') // Replace multiple dashes with a single dash
+		.replace(/^-+/, '') // Remove any leading dashes
+		.replace(/-+$/, ''); // Remove any trailing dashes
 }
 
 

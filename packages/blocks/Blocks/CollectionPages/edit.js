@@ -3,10 +3,17 @@ import { useState, useEffect } from '@wordpress/element';
 import { createNavigationLinks } from './use-convert-to-navigation-links';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
-export default ({ attributes, setAttributes, clientId }) => {
+import { Modal, Button, TextControl, ToggleControl } from '@wordpress/components';
+import { css } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
+
+export default ({ clientId }) => {
 	
 	const [collectionPages, setCollectionPages] = useState(null);
-	const { replaceBlock, selectBlock } = useDispatch( blockEditorStore );
+	const [newModal, setNewModal] = useState(false);
+	const [parentMenuName, setParentMenuName] = useState('');
+	const [addInParentMenu, setAddInParentMenu] = useState(false);
+	const { replaceBlock, selectBlock, removeBlock } = useDispatch( blockEditorStore );
 	const {
 		parentClientId,
 	} = useSelect(
@@ -32,12 +39,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 	useEffect(() => {
 		if ( collectionPages ) {
-			console.log('collectionPages', collectionPages);
-			useConvertToNavigationLinks( {
-				clientId,
-				collectionPages,
-				parentClientId
-			} );
+			setNewModal(true);
 		}
 	}, [collectionPages]);
 
@@ -53,9 +55,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		collectionPages,
 		parentClientId,
 	} ) => {
-		console.log('useConvertToNavigationLinks', collectionPages);
-		
-		const navigationLinks = createNavigationLinks( collectionPages );
+		const navigationLinks = createNavigationLinks( collectionPages, parentMenuName );
 
 		// Replace the Page List block with the Navigation Links.
 		replaceBlock( clientId, navigationLinks );
@@ -65,6 +65,51 @@ export default ({ attributes, setAttributes, clientId }) => {
 	}
 
 	return (
-		''
+		<>
+		{newModal && (
+			<Modal
+				title="Setup Collection Pages"
+				shouldCloseOnClickOutside={false}
+				onRequestClose={() => {
+					removeBlock(clientId);
+					selectBlock( parentClientId );
+					setNewModal(true)
+				}}
+			>
+				<ToggleControl
+					label={__('Parent Menu', 'surecart')}
+					checked={addInParentMenu}
+					onChange={() => setAddInParentMenu(!addInParentMenu)}
+					help={__('Add all Collection Pages inside a Parent Menu', 'surecart')}
+				/>
+				{
+					addInParentMenu && (
+						<TextControl
+							label={__('Parent Menu Name', 'surecart')}
+							value={parentMenuName}
+							onChange={(label) => setParentMenuName(label)}
+						/>
+					)
+				}
+				<Button isPrimary onClick={() => {
+					useConvertToNavigationLinks( {
+						clientId,
+						collectionPages,
+						parentClientId
+					} );
+					setNewModal(false);
+				}}>
+					{__('Add', 'surecart')}
+				</Button>
+				<Button isTertiary onClick={() => {
+					removeBlock(clientId);
+					selectBlock(parentClientId);
+					setNewModal(false);
+				}}>
+					{__('Cancel', 'surecart')}
+				</Button>
+			</Modal>
+		)}
+		</>
 	);
 };
