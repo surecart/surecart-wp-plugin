@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSelect } from '@surecart/components-react';
+import { ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import SetupFee from './parts/SetupFee';
 
@@ -14,7 +14,7 @@ export default ({ price, updatePrice }) => {
 		<>
 			<Amount price={price} updatePrice={updatePrice} />
 			{!price?.id && (
-				<sc-flex style={{ flexWrap: 'wrap' }}>
+				<>
 					<ScInput
 						label={__('Number of Payments', 'surecart')}
 						className="sc-payment-number"
@@ -36,30 +36,23 @@ export default ({ price, updatePrice }) => {
 						<span slot="suffix">{__('Payments', 'surecart')}</span>
 					</ScInput>
 					{!!price?.recurring_period_count && (
-						<ScSelect
-							css={css`
-								flex: 1 1 50%;
-							`}
-							label={__('End Behavior', 'surecart')}
-							value={price?.recurring_end_behavior || 'complete'}
-							choices={[
-								{
-									value: 'cancel',
-									label: __('Cancel Plan', 'surecart'),
-								},
-								{
-									value: 'complete',
-									label: __('Keep Plan', 'surecart'),
-								},
-							]}
+						<ScSwitch
+							checked={price?.recurring_end_behavior === 'cancel'}
 							onScChange={(e) =>
 								updatePrice({
-									recurring_end_behavior: e.target.value,
+									recurring_end_behavior: e?.target?.checked
+										? 'cancel'
+										: 'complete',
 								})
 							}
-						/>
+						>
+							{__(
+								'Revoke access when installments are completed',
+								'surecart'
+							)}
+						</ScSwitch>
 					)}
-				</sc-flex>
+				</>
 			)}
 			<ScratchAmount price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
