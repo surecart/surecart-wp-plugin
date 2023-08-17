@@ -19,6 +19,17 @@
 	<?php
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
+		[ 'title' => __( 'Subscription Insights', 'surecart' ) ]
+	);
+	?>
+	<?php if ( $enabled ) : ?>
+		<div id="app"></div>
+	<?php endif; ?>
+
+
+	<?php
+	\SureCart::render(
+		'layouts/partials/admin-index-header',
 		[
 			'title' => __( 'Subscriptions', 'surecart' ),
 		]
