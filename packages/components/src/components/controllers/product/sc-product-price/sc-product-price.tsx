@@ -20,12 +20,25 @@ export class ScProductPrice {
     return <sc-price-range prices={state.prices} />;
   }
 
-  renderPrice(price: Price) {
+  renderVariantPrice(selectedVariant: string) {
+    const variant = state?.variants?.find(variant => variant?.id === selectedVariant);
+    if ( ! variant ) {
+      return this.renderPrice(state.selectedPrice);
+    }
+    return this.renderPrice(state.selectedPrice, variant?.amount, variant?.currency);
+  }
+
+  renderPrice(price: Price, variantAmount?: number, variantCurrency?: string) {
+
+    const amount = variantAmount || price?.amount;
+    const scratchAmount = variantAmount || price?.scratch_amount;
+    const currency = variantCurrency ? variantCurrency : price?.currency;
+
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
     }
 
-    if (price?.amount === 0) {
+    if (amount === 0) {
       return __('Free', 'surecart');
     }
 
@@ -33,11 +46,11 @@ export class ScProductPrice {
       <Fragment>
         <div class="price">
           <div class="price__amounts">
-            {!!price?.scratch_amount && (
-              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
+            {!!scratchAmount && (
+              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={scratchAmount}></sc-format-number>
             )}
 
-            <sc-format-number class="price__amount" type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
+            <sc-format-number class="price__amount" type="currency" value={amount} currency={currency}></sc-format-number>
 
             <div class="price__interval">
               {intervalString(price, {
@@ -52,7 +65,7 @@ export class ScProductPrice {
               })}
             </div>
 
-            {!!price?.scratch_amount && (
+            {!!scratchAmount && (
               <sc-tag type="primary" pill class="price__sale-badge">
                 {this.saleText || __('Sale', 'surecart')}
               </sc-tag>
@@ -67,7 +80,7 @@ export class ScProductPrice {
 
               {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
                 <span class="price__setup-fee">
-                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
+                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={currency}></sc-format-number>{' '}
                   {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
                 </span>
               )}
@@ -78,7 +91,10 @@ export class ScProductPrice {
     );
   }
 
-  render() {
+  render() {  
+    if ( state?.selectedVariant ) {
+      return this.renderVariantPrice(state?.selectedVariant);
+    }
     if (state.selectedPrice) {
       return this.renderPrice(state.selectedPrice);
     }
