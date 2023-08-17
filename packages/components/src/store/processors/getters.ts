@@ -19,9 +19,9 @@ export const availableProcessors = () =>
 export const getAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type === type);
 
 /**
- * Gets other available processor type.
+ * This method accepts a processor name as its input parameter and subsequently evaluates the presence of any additional processors apart from the one provided as the parameter.
  */
-export const getOtherAvailableProcessors = (type: string) => availableProcessors().find(({ processor_type }) => processor_type !== type);
+export const hasOtherAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type !== type);
 
 /**
  * Get a sorted array of manual payment methods
