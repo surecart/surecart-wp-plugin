@@ -14,6 +14,7 @@ import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
 import LiveModeToggle from './LiveModeToggle';
 import Notifications from '../components/Notifications';
+import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -128,58 +129,7 @@ export default () => {
 			`}
 		>
 			<Error error={error} setError={setError} />
-			<ScFlex alignItems="center">
-				<ScFlex
-					alignItems="center"
-					justifyContent="flex-start"
-					flexWrap="wrap"
-				>
-					<Tab
-						selected={filter === '30days'}
-						onClick={() => setFilter('30days')}
-					>
-						{__('Last 30 Days', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'today'}
-						onClick={() => setFilter('today')}
-					>
-						{__('Today', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'yesterday'}
-						onClick={() => setFilter('yesterday')}
-					>
-						{__('Yesterday', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'thisweek'}
-						onClick={() => setFilter('thisweek')}
-					>
-						{__('This Week', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'lastweek'}
-						onClick={() => setFilter('lastweek')}
-					>
-						{__('Last Week', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'thismonth'}
-						onClick={() => setFilter('thismonth')}
-					>
-						{__('This Month', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'lastmonth'}
-						onClick={() => setFilter('lastmonth')}
-					>
-						{__('Last Month', 'surecart')}
-					</Tab>
-				</ScFlex>
-
-				<LiveModeToggle />
-			</ScFlex>
+			<InsightsPeriodFilter filter={filter} setFilter={setFilter} />
 
 			<div
 				css={css`
