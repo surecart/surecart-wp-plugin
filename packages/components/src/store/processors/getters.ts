@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { sortByArray } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
@@ -19,9 +20,9 @@ export const availableProcessors = () =>
 export const getAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type === type);
 
 /**
- * This method accepts a processor name as its input parameter and subsequently evaluates the presence of any additional processors apart from the one provided as the parameter.
+ * Check if there is any available processor except the given processor type.
  */
-export const hasOtherAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type !== type);
+export const hasOtherAvailableProcessor = (type: string) => !!availableProcessors().find(({ processor_type }) => processor_type !== type);
 
 /**
  * Get a sorted array of manual payment methods
