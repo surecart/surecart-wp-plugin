@@ -4,7 +4,6 @@ import { createNavigationLinks } from './use-convert-to-navigation-links';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { Modal, Button, TextControl, ToggleControl } from '@wordpress/components';
-import { css } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 export default ({ clientId }) => {
@@ -68,7 +67,7 @@ export default ({ clientId }) => {
 		<>
 		{newModal && (
 			<Modal
-				title="Setup Collection Pages"
+				title={__('Add Collection Pages', 'surecart')}
 				shouldCloseOnClickOutside={false}
 				onRequestClose={() => {
 					removeBlock(clientId);
@@ -76,21 +75,25 @@ export default ({ clientId }) => {
 					setNewModal(true)
 				}}
 			>
-				<ToggleControl
-					label={__('Parent Menu', 'surecart')}
-					checked={addInParentMenu}
-					onChange={() => setAddInParentMenu(!addInParentMenu)}
-					help={__('Add all Collection Pages inside a Parent Menu', 'surecart')}
-				/>
-				{
-					addInParentMenu && (
-						<TextControl
-							label={__('Parent Menu Name', 'surecart')}
-							value={parentMenuName}
-							onChange={(label) => setParentMenuName(label)}
-						/>
-					)
-				}
+				<div
+					style={{marginTop: "1.6em", marginBottom: "1.6em"}}
+				>
+					<ToggleControl
+						label={__('Parent Menu', 'surecart')}
+						checked={addInParentMenu}
+						onChange={() => setAddInParentMenu(!addInParentMenu)}
+						help={__('Add all Collection Pages inside a Parent Menu', 'surecart')}
+					/>
+					{
+						addInParentMenu && (
+							<TextControl
+								label={__('Parent Menu Name', 'surecart')}
+								value={parentMenuName}
+								onChange={(label) => setParentMenuName(label)}	
+							/>
+						)
+					}
+				</div>
 				<Button isPrimary onClick={() => {
 					useConvertToNavigationLinks( {
 						clientId,
