@@ -103,26 +103,35 @@ class Block extends BaseBlock {
 		}
 
 		// set width class.
-		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width wp-block-button__width-' . $attributes['width'] : '';
+		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 
 		ob_start();
 		?>
-
-		<div class="wp-block-buttons">
-			<sc-product-buy-button
-				<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
-				class="wp-block-button <?php echo esc_attr( $width_class ); ?>"
-				button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
-				<a class="wp-block-button__link wp-element-button sc-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-					<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
-					<sc-spinner data-loader></sc-spinner>
-				</a>
-			</sc-product-buy-button>
-		</div>
-
-		<sc-product-price-modal></sc-product-price-modal>
+		<sc-product-buy-button
+			<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
+			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
+			button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
+			<a class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
+				<?php echo $attributes['add_to_cart'] ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
+			</a>
+		</sc-product-buy-button>
 
 		<?php
+
+		// add this to the footer to make sure it's not covered by any other elements
+		// and can escape the container query.
+		add_action(
+			'wp_footer',
+			function() use ( $attributes, $product ) {
+				?>
+		<sc-product-price-modal <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
+				<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
+		</sc-product-price-modal>
+				<?php
+			}
+		);
+
 		return ob_get_clean();
 	}
 }
