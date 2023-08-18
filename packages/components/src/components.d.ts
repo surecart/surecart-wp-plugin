@@ -2877,9 +2877,21 @@ export namespace Components {
     }
     interface ScProductBuyButton {
         /**
-          * Whether the product is out of stock.
+          * Classes
          */
-        "isOutOfStock": boolean;
+        "classes": string;
+        /**
+          * Out of stock text.
+         */
+        "outOfStockText": string;
+        /**
+          * Styles
+         */
+        "styles": string;
+        /**
+          * Text
+         */
+        "text": string;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -8784,9 +8796,21 @@ declare namespace LocalJSX {
     }
     interface ScProductBuyButton {
         /**
-          * Whether the product is out of stock.
+          * Classes
          */
-        "isOutOfStock"?: boolean;
+        "classes"?: string;
+        /**
+          * Out of stock text.
+         */
+        "outOfStockText"?: string;
+        /**
+          * Styles
+         */
+        "styles"?: string;
+        /**
+          * Text
+         */
+        "text"?: string;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;

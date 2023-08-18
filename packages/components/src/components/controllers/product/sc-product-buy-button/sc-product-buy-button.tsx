@@ -1,7 +1,15 @@
+/**
+ * External dependencies.
+ */
 import { Component, Element, h, Host, Prop } from '@stencil/core';
-import { state } from '@store/product';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { state } from '@store/product';
 import { submitCartForm } from '@store/product/mutations';
+import { isProductOutOfStock } from '@store/product/getters';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -12,9 +20,24 @@ export class ScProductBuyButton {
   @Element() el: HTMLScProductBuyButtonElement;
 
   /**
-   * Whether the product is out of stock.
+   * Text
    */
-  @Prop() isOutOfStock: boolean = false;
+  @Prop() text: string = __('Add to Cart', 'surecart');
+
+  /**
+   * Out of stock text.
+   */
+  @Prop() outOfStockText: string = __('Out of Stock', 'surecart');
+
+  /**
+   * Classes
+   */
+  @Prop() classes: string = '';
+
+  /**
+   * Styles
+   */
+  @Prop() styles: string = '';
 
   handleCartClick(e) {
     e.preventDefault();
@@ -31,9 +54,26 @@ export class ScProductBuyButton {
     submitCartForm();
   }
 
+  getInStockText() {
+    return state.product.archived || !state.product?.prices?.data?.length ? __('Unavailable For Purchase', 'surecart') : this.text;
+  }
+
   render() {
     return (
-      <Host class={{ 'is-busy': state.busy, 'is-disabled': this.isOutOfStock || state.disabled, 'is-out-of-stock': this.isOutOfStock }} onClick={e => this.handleCartClick(e)}>
+      <Host
+        class={{ 'is-busy': state.busy, 'is-disabled': isProductOutOfStock() || state.disabled, 'is-out-of-stock': isProductOutOfStock() }}
+        onClick={e => this.handleCartClick(e)}
+      >
+        <a class={`wp-block-button__link wp-element-button sc-button ${this.classes}`}>
+          {isProductOutOfStock() ? (
+            <span data-text>{this.outOfStockText}</span>
+          ) : (
+            <span>
+              <span data-text>{this.getInStockText()}</span>
+              <sc-spinner data-loader></sc-spinner>
+            </span>
+          )}
+        </a>
         <slot />
       </Host>
     );
