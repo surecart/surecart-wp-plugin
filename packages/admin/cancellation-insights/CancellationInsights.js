@@ -75,45 +75,6 @@ export default () => {
 		return data;
 	};
 
-	const badge = ({ previous, current, reverse = false }) => {
-		if (loading) return null;
-
-		let percentage;
-
-		percentage =
-			Math.abs(
-				((current - previous) / (previous || 1)) * 100.0
-			).toLocaleString('fullwide', { maximumFractionDigits: 0 }) + '%';
-
-		let type, icon;
-		if (previous === current) {
-			type = 'default';
-			icon = 'bar-chart';
-		} else {
-			if (reverse) {
-				type = previous < current ? 'danger' : 'success';
-			} else {
-				type = previous < current ? 'success' : 'danger';
-			}
-			icon = previous < current ? 'arrow-up-right' : 'arrow-down-right';
-		}
-
-		return (
-			<ScTag type={type}>
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.3em;
-					`}
-				>
-					<ScIcon name={icon} />
-					{percentage}
-				</div>
-			</ScTag>
-		);
-	};
-
 	return (
 		<div
 			css={css`
