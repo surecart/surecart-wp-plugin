@@ -2876,6 +2876,7 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductBuyButton {
+        "addToCart": boolean;
         /**
           * Classes
          */
@@ -2892,7 +2893,6 @@ export namespace Components {
           * Text
          */
         "text": string;
-        "addToCart": boolean;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -8801,6 +8801,7 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductBuyButton {
+        "addToCart"?: boolean;
         /**
           * Classes
          */
@@ -8817,7 +8818,6 @@ declare namespace LocalJSX {
           * Text
          */
         "text"?: string;
-        "addToCart"?: boolean;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;

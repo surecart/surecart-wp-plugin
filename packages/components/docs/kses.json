@@ -1551,11 +1551,11 @@
     "slot": true
   },
   "sc-product-buy-button": {
+    "add-to-cart": true,
     "classes": true,
     "out-of-stock-text": true,
     "styles": true,
     "text": true,
-    "add-to-cart": true,
     "style": true,
     "id": true,
     "class": true,

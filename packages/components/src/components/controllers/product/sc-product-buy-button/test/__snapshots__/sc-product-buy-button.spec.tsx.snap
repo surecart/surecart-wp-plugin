@@ -8,7 +8,6 @@ exports[`sc-product-buy-button renders 1`] = `
       <span data-text>
         Unavailable For Purchase
       </span>
-      <sc-spinner data-loader></sc-spinner>
     </span>
   </a>
 </sc-product-buy-button>
