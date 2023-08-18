@@ -3,5 +3,13 @@
 exports[`sc-product-buy-button renders 1`] = `
 <sc-product-buy-button>
   <!---->
+  <a class="sc-button wp-block-button__link wp-element-button">
+    <span>
+      <span data-text>
+        Unavailable For Purchase
+      </span>
+      <sc-spinner data-loader></sc-spinner>
+    </span>
+  </a>
 </sc-product-buy-button>
 `;

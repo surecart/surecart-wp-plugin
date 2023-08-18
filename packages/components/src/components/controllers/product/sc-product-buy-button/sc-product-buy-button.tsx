@@ -55,7 +55,7 @@ export class ScProductBuyButton {
   }
 
   getInStockText() {
-    return state.product.archived || !state.product?.prices?.data?.length ? __('Unavailable For Purchase', 'surecart') : this.text;
+    return state.product?.archived || !state.product?.prices?.data?.length ? __('Unavailable For Purchase', 'surecart') : this.text;
   }
 
   render() {

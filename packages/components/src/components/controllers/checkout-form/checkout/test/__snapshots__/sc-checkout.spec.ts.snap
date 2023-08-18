@@ -5,6 +5,7 @@ exports[`sc-checkout renders 1`] = `
   <!---->
   <div class="sc-checkout-container">
     <sc-checkout-unsaved-changes-warning state="idle"></sc-checkout-unsaved-changes-warning>
+    <sc-checkout-stock-alert></sc-checkout-stock-alert>
     <sc-login-provider>
       <sc-form-state-provider>
         <sc-form-error-provider checkoutstate="draft">
