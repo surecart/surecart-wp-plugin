@@ -111,21 +111,6 @@ export interface Price {
   position: number;
   metadata: { [key: string]: string };
 }
-
-export interface ProductVariant {
-  id: string;
-  object: string;
-  name: string;
-  position: number;
-  product: Product | string;
-  updated_at: number;
-  created_at: number;
-  label: string;
-  sku: string;
-  image: string;
-  labels: string;
-  variants: Array<string>;
-}
 export interface VariantOption {
   id: string;
   object: string;
@@ -255,6 +240,12 @@ export interface Activation {
 
 export interface Variant {
   id: string;
+  amount: number;
+  available_stock: number;
+  currency: string;
+  current_version: boolean;
+  held_stock: number;
+  stock: number;
   object: 'variant';
   image?: string | Media;
   option_1?: string | null;
@@ -298,7 +289,7 @@ export interface Product extends Object {
   variants: {
     object: 'list';
     pagination: Pagination;
-    data: Array<ProductVariant>;
+    data: Array<Variant>;
   };
   variant_options: {
     object: 'list';
@@ -381,6 +372,7 @@ export interface LineItem extends Object {
   price?: Price;
   price_id: string;
   variant_options: Array<string>;
+  variant?: Variant;
 }
 
 export interface DeletedItem {

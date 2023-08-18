@@ -12,8 +12,8 @@ onChange('selectedPrice', value => {
 });
 
 onChange('variantValues', values => {
-  const matchedVariant = getVariantFromValues({variants: availableVariants(), values}); 
-  
+  const matchedVariant = getVariantFromValues({ variants: availableVariants(), values });
+
   if (matchedVariant) {
     state.selectedVariant = matchedVariant;
   }
@@ -30,6 +30,6 @@ const setLineItem = () => {
     price_id: state.selectedPrice?.id,
     quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
     ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
-    variant: state.selectedVariant,
+    variant: state.selectedVariant?.id,
   };
 };

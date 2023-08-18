@@ -22,6 +22,18 @@ export class ScProductVariationChoices {
   /** Toggle line item event */
   @Event() scUpdateLineItem: EventEmitter<LineItemData>;
 
+  componentWillLoad() {
+    const variant = state?.variants?.find(variant => variant?.id === state?.selectedVariant?.id);
+
+    const variantValues = {
+      ...(variant?.option_1 && { option_1: variant.option_1 }),
+      ...(variant?.option_2 && { option_2: variant.option_2 }),
+      ...(variant?.option_3 && { option_3: variant.option_3 }),
+    };
+
+    state.variantValues = variantValues;
+  }
+
   /** The line item from state. */
   lineItem() {
     return getLineItemByProductId(this.productId);
@@ -36,7 +48,7 @@ export class ScProductVariationChoices {
 
     if (!matchedVariant) return;
 
-    this.scUpdateLineItem.emit({ price_id: this.lineItem()?.price?.id, quantity: 1, variant: matchedVariant });
+    this.scUpdateLineItem.emit({ price_id: this.lineItem()?.price?.id, quantity: 1, variant: matchedVariant?.id });
   };
 
   render() {
@@ -44,7 +56,7 @@ export class ScProductVariationChoices {
 
     return (
       <div class="sc-product-variation-choice-wrap">
-        {(availableVariantOptions(this.type) || []).map(option => {
+        {(availableVariantOptions(this.type) || []).map((option, index) => {
           return (
             <sc-select
               exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
@@ -53,7 +65,7 @@ export class ScProductVariationChoices {
               onScChange={(e: any) => {
                 const variantValues = {
                   ...state.variantValues,
-                  [option?.id]: e?.target?.value,
+                  [`option_${index + 1}`]: e?.target?.value,
                 };
                 state.variantValues = variantValues;
                 this.maybeUpdateLineItems(variantValues);

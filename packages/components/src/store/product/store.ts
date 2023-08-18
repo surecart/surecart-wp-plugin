@@ -1,13 +1,13 @@
 import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
-import { Price, Product, VariantOption, ProductVariant } from 'src/types';
+import { Price, Product, VariantOption, Variant } from 'src/types';
 
 interface Store {
   formId: number;
   mode: 'live' | 'test';
   product: Product;
   prices: Price[];
-  variants: ProductVariant[];
+  variants: Variant[];
   variant_options: VariantOption[];
   quantity: number;
   selectedPrice: Price;
@@ -19,7 +19,7 @@ interface Store {
   dialog: string;
   line_item: LineItemData;
   error: string;
-  selectedVariant: string;
+  selectedVariant?: Variant;
   variantValues: { [key: string]: string };
 }
 const product = window?.scData?.product_data?.product || null;
@@ -51,10 +51,10 @@ const store = createStore<Store>(
       price_id: selectedPrice?.id,
       quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
-      variant: variants?.length ? variants[0]?.id : '',
+      variant: variants?.length ? variants[0]?.id : null,
     },
-    selectedVariant: variants?.length ? variants[0]?.id : '',
-    variantValues: {}
+    selectedVariant: variants?.length ? variants[0] : null,
+    variantValues: {},
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

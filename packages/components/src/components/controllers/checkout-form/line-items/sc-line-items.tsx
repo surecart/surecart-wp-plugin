@@ -29,7 +29,7 @@ export class ScLineItems {
 
   /** Update quantity for this line item. */
   updateQuantity(item: LineItem, quantity: number) {
-    this.scUpdateLineItem.emit({ price_id: item.price.id, quantity });
+    this.scUpdateLineItem.emit({ price_id: item.price.id, quantity, variant: item?.variant?.id });
   }
 
   removeLineItem(item: LineItem) {
