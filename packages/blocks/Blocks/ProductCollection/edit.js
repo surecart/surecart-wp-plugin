@@ -24,7 +24,7 @@ import { useSelect } from '@wordpress/data';
 import { Fragment, useEffect, useRef, useState } from '@wordpress/element';
 
 import EditLayoutConfig from '../ProductItemList/modules/EditLayoutConfig';
-import { ScFormControl, ScProductItemList } from '@surecart/components-react';
+import { ScProductItemList } from '@surecart/components-react';
 
 import {
 	getColorPresetCssVar,
@@ -32,8 +32,6 @@ import {
 	getSpacingPresetCssVar,
 } from '../../util';
 import { PRODUCT_ITEM_LAYOUT } from '../ProductItem/edit';
-import ModelSelector from '../../../admin/components/ModelSelector';
-import ProductTag from './components/ProductTag';
 
 const UnitControl = __stableUnitControl
 	? __stableUnitControl
@@ -54,7 +52,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 		ajax_pagination,
 		pagination_auto_scroll,
 		pagination_size,
-		ids,
 	} = attributes;
 	const blockProps = useBlockProps();
 
@@ -301,63 +298,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__('Products', 'surecart')}>
-					<p>
-						{__(
-							'Display a custom selection of hand-picked products.',
-							'surecart'
-						)}
-					</p>
-
-					{!!ids?.length && (
-						<div
-							css={css`
-								display: flex;
-								flex-wrap: wrap;
-								gap: 0.5em;
-								margin-bottom: 1em;
-							`}
-						>
-							{(ids || []).map((id) => (
-								<ProductTag
-									key={id}
-									id={id}
-									onClear={() =>
-										setAttributes({
-											ids: (ids || []).filter(
-												(product_id) =>
-													product_id !== id
-											),
-										})
-									}
-								/>
-							))}
-						</div>
-					)}
-
-					<ScFormControl
-						label={__('Select A Product', 'surecart')}
-						showLabel={false}
-					>
-						<ModelSelector
-							name="product"
-							placeholder={__('Select A Product', 'surecart')}
-							placement={'top-end'}
-							requestQuery={{
-								archived: false,
-								status: ['published'],
-							}}
-							exclude={ids}
-							onSelect={(product) => {
-								setAttributes({
-									ids: [
-										...new Set([...(ids || []), product]),
-									],
-								});
-							}}
-						/>
-					</ScFormControl>
-				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
 				{isEditing ? (
@@ -393,7 +333,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 										...getVars('item', productBlockAttr),
 										...getConfigStyles(layoutConfig),
 									}}
-									ids={ids}
 									limit={limit}
 									paginationAlignment={pagination_alignment}
 									sortEnabled={sort_enabled}

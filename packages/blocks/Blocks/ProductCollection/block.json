@@ -61,10 +61,6 @@
 			"type": "string",
 			"default": "14px"
 		},
-		"ids": {
-			"type": "array",
-			"default": []
-		},
 		"collection_id": {
 			"type": "string",
 			"default": ""
