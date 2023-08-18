@@ -5,10 +5,10 @@ import {
 	ScForm,
 	ScInput,
 } from '@surecart/components-react';
-import { use, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ open, onRequestClose, onCreate }) => {
@@ -38,6 +38,7 @@ export default ({ open, onRequestClose, onCreate }) => {
 			createSuccessNotice(__('Collection created.', 'surecart'), {
 				type: 'snackbar',
 			});
+			setName('');
 			onCreate(collection);
 			onRequestClose();
 		} catch (e) {
