@@ -25,7 +25,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 				'product-collection',
 				deleteItem?.id
 			);
-			createSuccessNotice(__('Product collection deleted.', 'surecart'), {
+			createSuccessNotice(__('Product Collection deleted.', 'surecart'), {
 				type: 'snackbar',
 			});
 			window.location.assign('admin.php?page=sc-product-collections');

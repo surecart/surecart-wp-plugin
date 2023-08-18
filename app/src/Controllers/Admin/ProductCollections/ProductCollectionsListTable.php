@@ -139,13 +139,13 @@ class ProductCollectionsListTable extends ListTable {
 	public function column_name( $collection ) {
 		ob_start();
 		?>
-		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Product collection', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ); ?>">
+		<a class="row-title" aria-label="<?php echo esc_attr__( 'Edit Product Collection', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ); ?>">
 			<?php echo esc_html( $collection->name ); ?>
 		</a>
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ) . '" aria-label="' . esc_attr__( 'Edit Product collection', 'surecart' ) . '">' . esc_attr__( 'Edit', 'surecart' ) . '</a>',
+				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ) . '" aria-label="' . esc_attr__( 'Edit Product Collection', 'surecart' ) . '">' . esc_attr__( 'Edit', 'surecart' ) . '</a>',
 				'view' => '<a href="' . esc_url( $collection->permalink ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '" target="_blank">' . esc_html__( 'View', 'surecart' ) . '</a>',
 			],
 		);

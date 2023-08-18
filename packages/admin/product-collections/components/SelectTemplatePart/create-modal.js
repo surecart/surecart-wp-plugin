@@ -14,7 +14,7 @@ import {
 import { cleanForSlug } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-const DEFAULT_TITLE = __('Custom Product collection page', 'surecart');
+const DEFAULT_TITLE = __('Custom Product Collection page', 'surecart');
 
 export default function PostTemplateCreateModal({
 	onClose,

@@ -90,7 +90,7 @@ class CollectionPageController extends BasePageController {
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit-collection',
-				'title' => __( 'Edit Product collection', 'surecart' ),
+				'title' => __( 'Edit Product Collection', 'surecart' ),
 				'href'  => esc_url( \SureCart::getUrl()->edit( 'product_collections', $this->model->id ) ),
 			]
 		);

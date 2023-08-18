@@ -14,7 +14,7 @@ export default ({ id, collection, updateCollection, loading }) => {
 			title={
 				id
 					? __('Details', 'surecart')
-					: __('Edit Product collection', 'surecart')
+					: __('Edit Product Collection', 'surecart')
 			}
 			loading={loading}
 		>
