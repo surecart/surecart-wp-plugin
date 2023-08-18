@@ -42,11 +42,19 @@ class Variant extends Model {
 	}
 
 	/**
-	 * Get the image url
+	 * Get the image url.
 	 *
-	 * @return string
+	 * TODO: Remove this when we have image url from the API.
+	 *
+	 * @return string|null
 	 */
 	public function getImageUrlAttribute() {
-		return $this->image->url ?? null;
+		// Find image from media, by this image id, then get the url.
+		if ( ! empty( $this->image->url ) ) return $this->image->url;
+
+		// If image url is empty, then check media by this image.
+		$media = (new Media())->find( $this->image );
+
+		return $media->url ?? null;
 	}
 }
