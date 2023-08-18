@@ -12,7 +12,7 @@ import { averageProperties, totalProperties } from './util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
 import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
-import Notifications from '../components/Notifications'; 
+import Notifications from '../components/Notifications';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -179,13 +179,13 @@ export default () => {
 						title={__('Saved Count', 'surecart')}
 						description={__('Total Saved Count', 'surecart')}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: totalProperties('preserved_count', data),
 							previous: totalProperties(
 								'preserved_count',
 								previous
 							),
-						})}
+						}}
 					>
 						{totalProperties('preserved_count', data)}
 					</Stat>
@@ -194,7 +194,7 @@ export default () => {
 						title={__('Saved By Coupon', 'surecart')}
 						description={__('Total Saved By Coupon', 'surecart')}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: totalProperties(
 								'coupon_applied_count',
 								data
@@ -203,7 +203,7 @@ export default () => {
 								'coupon_applied_count',
 								previous
 							),
-						})}
+						}}
 					>
 						{totalProperties('coupon_applied_count', data)}
 					</Stat>
@@ -212,7 +212,7 @@ export default () => {
 						title={__('Total Lost', 'surecart')}
 						description={__('Total Lost Cancellations', 'surecart')}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current:
 								totalProperties('count', data) -
 								totalProperties('preserved_count', data),
@@ -220,7 +220,7 @@ export default () => {
 								totalProperties('count', previous) -
 								totalProperties('preserved_count', previous),
 							reverse: true,
-						})}
+						}}
 					>
 						{totalProperties('count', data) -
 							totalProperties('preserved_count', data)}
@@ -233,10 +233,10 @@ export default () => {
 							'surecart'
 						)}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: averageProperties('preserved_rate', data),
 							previous: averageProperties('preserved_rate', data),
-						})}
+						}}
 					>
 						{`${Math.round(
 							averageProperties('preserved_rate', data) * 100
@@ -250,7 +250,7 @@ export default () => {
 							'surecart'
 						)}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: averageProperties(
 								'coupon_applied_rate',
 								data
@@ -259,7 +259,7 @@ export default () => {
 								'coupon_applied_rate',
 								data
 							),
-						})}
+						}}
 					>
 						{`${Math.round(
 							averageProperties('coupon_applied_rate', data) * 100
