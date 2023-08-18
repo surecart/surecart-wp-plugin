@@ -113,25 +113,6 @@ class Product extends Model {
 	}
 
 	/**
-	 * If product has stock.
-	 *
-	 * @return boolean
-	 */
-	public function hasStock(): bool {
-		// If stock is not enabled, return true.
-		if ( ! $this->attributes['stock_enabled'] ) {
-			return true;
-		}
-
-		// If allow_out_of_stock_purchases is true, return true.
-		if ( $this->attributes['allow_out_of_stock_purchases'] ) {
-			return true;
-		}
-
-		return $this->attributes['stock'] > 0;
-	}
-
-	/**
 	 * Set the product media attribute
 	 *
 	 * @param  string $value ProductMedia properties.
