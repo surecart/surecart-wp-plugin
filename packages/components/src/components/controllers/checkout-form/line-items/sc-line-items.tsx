@@ -98,7 +98,7 @@ export class ScLineItems {
             <div class="line-item">
               <sc-product-line-item
                 key={item.id}
-                imageUrl={(item?.price?.product as Product)?.image_url}
+                imageUrl={item?.variant?.image_url || (item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 max={(item?.price?.product as Product)?.purchase_limit}
