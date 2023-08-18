@@ -45,7 +45,7 @@ export class ScTaxIdInput {
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
   /** Whether tax input is required */
-  @Prop() required: boolean = false;
+  @Prop({ reflect: true }) required: boolean = false;
 
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
