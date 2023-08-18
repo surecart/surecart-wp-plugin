@@ -22,16 +22,12 @@ export class ScProductPrice {
 
   renderVariantPrice(selectedVariant: Variant) {
     const variant = state?.variants?.find(variant => variant?.id === selectedVariant?.id);
-    if ( ! variant ) {
-      return this.renderPrice(state.selectedPrice);
-    }
     return this.renderPrice(state.selectedPrice, variant?.amount);
   }
 
   renderPrice(price: Price, variantAmount?: number) {
-
     const amount = variantAmount || price?.amount;
-    
+
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
     }
@@ -89,10 +85,11 @@ export class ScProductPrice {
     );
   }
 
-  render() {  
-    if ( state?.selectedVariant ) {
+  render() {
+    if (state?.selectedVariant) {
       return this.renderVariantPrice(state?.selectedVariant);
     }
+
     if (state.selectedPrice) {
       return this.renderPrice(state.selectedPrice);
     }

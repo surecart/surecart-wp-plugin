@@ -19,7 +19,7 @@ interface Store {
   dialog: string;
   line_item: LineItemData;
   error: string;
-  selectedVariant: Variant;
+  selectedVariant?: Variant;
   variantValues: { [key: string]: string };
 }
 const product = window?.scData?.product_data?.product || null;
@@ -54,7 +54,7 @@ const store = createStore<Store>(
       variant: variants?.length ? variants[0]?.id : null,
     },
     selectedVariant: variants?.length ? variants[0] : null,
-    variantValues: {}
+    variantValues: {},
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
