@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.4.4
+Stable tag: 2.5.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.5.0 - August 17th, 2023 =
+= 2.5.0 - August 18th, 2023 =
 * New: Buy now button on product pages.
 * New: Featured products. Mark products as featured and optionally show them on product lists.
 * New: Automatic Google Analytics "Add To Cart" event.
