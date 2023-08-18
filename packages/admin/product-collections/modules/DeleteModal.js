@@ -60,11 +60,11 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 				`}
 			>
 				{__(
-					'Deleting a product collection does not delete the products in that collection.',
+					"If you delete a product collection, the products inside that collection won't go away.",
 					'surecart'
 				)}{' '}
 				{__(
-					'Instead, the products will be removed from the collection.',
+					'They will just be taken out of the collection.',
 					'surecart'
 				)}
 			</ScAlert>
