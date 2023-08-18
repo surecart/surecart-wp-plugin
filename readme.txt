@@ -251,6 +251,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Instant checkout pages mode changing should recreate a new checkout.
 * Fix: Link in switch element was not clickable on front-end.
 * Fix: Missing "Back to Home" translation not appearing in .pot file.
+* Fix: Change wording of installment price when there is only 1 installment on the subscription.
 
 = 2.4.4 - August 11th, 2023 =
 * Fix: Issue with shop page not fetching products under certain website caching conditions.
