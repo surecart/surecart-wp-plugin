@@ -126,11 +126,11 @@ export default () => {
 							'surecart'
 						)}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: totalProperties('count', data),
 							previous: totalProperties('count', previous),
 							reverse: true,
-						})}
+						}}
 					>
 						{totalProperties('count', data)}
 					</Stat>

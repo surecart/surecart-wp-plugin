@@ -1,15 +1,76 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs, getQueryArg } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 import Error from '../components/Error';
 import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
 import Stat from '../ui/Stat';
+import { getFilterData } from '../util/filter';
+import { averageProperties, totalProperties } from '../util/stats';
+import { ScFormatNumber } from '@surecart/components-react';
 
 export default () => {
+	const [data, setData] = useState([]);
+	const [previous, setPrevious] = useState([]);
 	const [error, setError] = useState(false);
 	const [filter, setFilter] = useState('30days');
 	const [loading, setLoading] = useState(false);
+	const liveMode = getQueryArg(window.location.href, 'live_mode') !== 'false';
+
+	const fetchData = async ({ startDate, endDate, interval }) => {
+		const { data } = await apiFetch({
+			path: addQueryArgs('surecart/v1/stats/subscriptions', {
+				start_at: startDate.format(),
+				end_at: endDate.format(),
+				interval,
+				live_mode: liveMode,
+			}),
+		});
+
+		return data;
+	};
+
+	const fetchCurrent = async ({ startDate, endDate, interval }) => {
+		const data = await fetchData({ startDate, endDate, interval });
+		data && setData(data);
+	};
+
+	const fetchPrevious = async ({ startDate, endDate, interval }) => {
+		const data = await fetchData({
+			startDate,
+			endDate,
+			interval,
+		});
+		data && setPrevious(data);
+	};
+
+	const getSubscriptionsStatsData = async () => {
+		const { startDate, endDate, prevEndDate, prevStartDate, interval } =
+			getFilterData(filter);
+		setError(false);
+		setLoading(true);
+
+		try {
+			await Promise.all([
+				fetchCurrent({ startDate, endDate, interval }),
+				fetchPrevious({
+					startDate: prevStartDate,
+					endDate: prevEndDate,
+					interval,
+				}),
+			]);
+		} catch (err) {
+			setError(err);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		getSubscriptionsStatsData();
+	}, [filter, liveMode]);
 
 	return (
 		<div
@@ -37,7 +98,7 @@ export default () => {
 
 					// 3 col, desktop.
 					@media screen and (min-width: 1280px) {
-						grid-template-columns: repeat(3, 1fr);
+						grid-template-columns: repeat(4, 1fr);
 					}
 					gap: 1.5em;
 				`}
@@ -46,39 +107,121 @@ export default () => {
 					title={__('Subscriptions', 'surecart')}
 					description={__('Number of subscriptions', 'surecart')}
 					loading={loading}
+					compare={{
+						current: totalProperties('total_count', data),
+						previous: totalProperties('total_count', previous),
+					}}
 				>
-					34
+					{totalProperties('total_count', data)}
 				</Stat>
 				<Stat
-					title={__('Finite Count', 'surecart')}
-					description={__(
-						'Number of finite subscriptions',
-						'surecart'
-					)}
+					title={__('New Subscriptions', 'surecart')}
+					description={__('Number of New Subscriptions', 'surecart')}
+					loading={loading}
+					compare={{
+						current: totalProperties('new_count', data),
+						previous: totalProperties('new_count', previous),
+					}}
+				>
+					{totalProperties('new_count', data)}
+				</Stat>
+				<Stat
+					title={__('Trial Conversion', 'surecart')}
+					description={__('Trial Conversion Rate', 'surecart')}
+					compare={{
+						current: averageProperties(
+							'trial_conversion_rate',
+							data
+						),
+						previous: averageProperties(
+							'trial_conversion_rate',
+							previous
+						),
+					}}
 					loading={loading}
 				>
-					34
+					<ScFormatNumber
+						value={averageProperties('trial_conversion_rate', data)}
+						type="percent"
+					/>
 				</Stat>
 				<Stat
 					title={__('Trials', 'surecart')}
-					description={__('Number of trials', 'surecart')}
+					description={__('Total Trials', 'surecart')}
 					loading={loading}
+					compare={{
+						current: totalProperties('total_trial_count', data),
+						previous: totalProperties(
+							'total_trial_count',
+							previous
+						),
+					}}
 				>
-					34
+					{totalProperties('total_trial_count', data)}
 				</Stat>
 				<Stat
-					title={__('Monthly recurring revenue', 'surecart')}
-					description={__('Monthly recurring revenue', 'surecart')}
+					title={__('MRR', 'surecart')}
+					description={__('Monthly Recurring Revenue', 'surecart')}
 					loading={loading}
+					compare={{
+						current: totalProperties('total_mrr_amount', data),
+						previous: totalProperties('total_mrr_amount', previous),
+					}}
 				>
-					$77
+					<ScFormatNumber
+						type="currency"
+						currency={data[0]?.currency || scData?.currency_code}
+						value={totalProperties('total_mrr_amount', data)}
+					/>
 				</Stat>
 				<Stat
-					title={__('Remaining Amount', 'surecart')}
-					description={__('Remaining amount', 'surecart')}
+					title={__('Churn Rate', 'surecart')}
+					description={__('Subscription Churn Rate', 'surecart')}
 					loading={loading}
+					compare={{
+						current: averageProperties('mrr_churn_rate', data),
+						previous: averageProperties('mrr_churn_rate', previous),
+					}}
 				>
-					$77
+					<ScFormatNumber
+						value={averageProperties('mrr_churn_rate', data)}
+						type="percent"
+					/>
+				</Stat>
+				<Stat
+					title={__('Total Churned', 'surecart')}
+					description={__('Total Churned Subscription', 'surecart')}
+					loading={loading}
+					compare={{
+						current: totalProperties('count_churn_rate', data),
+						previous: totalProperties('count_churn_rate', previous),
+					}}
+				>
+					{totalProperties('count_churn_rate', data)}
+				</Stat>
+				<Stat
+					title={__('Outstanding Installments', 'surecart')}
+					description={__(
+						'Outstanding Installment Payments',
+						'surecart'
+					)}
+					loading={loading}
+					compare={{
+						current: totalProperties(
+							'total_remaining_amount',
+							data
+						),
+						previous: totalProperties(
+							'total_remaining_amount',
+							previous
+						),
+					}}
+				>
+					<ScFormatNumber
+						type="currency"
+						currency={data[0]?.currency || scData?.currency_code}
+						value={totalProperties('total_remaining_amount', data)}
+					></ScFormatNumber>
 				</Stat>
 			</div>
 		</div>
