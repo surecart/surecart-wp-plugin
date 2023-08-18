@@ -8,6 +8,10 @@ shell.exec(
 shell.exec(
 	'./vendor/bin/wp i18n make-pot ./views languages/surecart.pot --ignore-domain --merge --skip-audit'
 );
+// templates directory
+shell.exec(
+	'./vendor/bin/wp i18n make-pot ./templates languages/surecart.pot --ignore-domain --merge --skip-audit'
+);
 // admin directory
 shell.exec(
 	'./vendor/bin/wp i18n make-pot ./packages/admin languages/surecart.pot --ignore-domain --merge --skip-audit'

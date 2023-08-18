@@ -8,13 +8,7 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import {
-	Button,
-	ButtonGroup,
-	PanelBody,
-	PanelRow,
-	TextControl,
-} from '@wordpress/components';
+import { Button, ButtonGroup, PanelBody } from '@wordpress/components';
 import {
 	AlignmentControl,
 	BlockControls,
@@ -95,43 +89,42 @@ export default (props) => {
 
 	return (
 		<>
-			<div class="wp-block-buttons">
-				<div
-					{...blockProps}
-					className={classnames(blockProps.className, {
-						'wp-block-button': true,
-						[`has-custom-width wp-block-button__width-${width}`]:
-							width,
-						[`has-custom-font-size`]: blockProps.style.fontSize,
-					})}
-				>
-					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
-						className={classnames(
-							className,
-							'wp-block-button__link',
-							colorProps.className,
-							borderProps.className,
-							{
-								[`has-text-align-${textAlign}`]: textAlign,
-								// For backwards compatibility add style that isn't
-								// provided via block support.
-								'no-border-radius': style?.border?.radius === 0,
-							},
-							__experimentalGetElementClassName('button')
-						)}
-						style={{
-							...borderProps.style,
-							...colorProps.style,
-							...spacingProps.style,
-						}}
-						value={text}
-						onChange={(value) => setAttributes({ text: value })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</div>
+			<div
+				{...blockProps}
+				className={classnames(blockProps.className, {
+					'wp-block-button': true,
+					'sc-block-button': true,
+					[`has-custom-width sc-block-button__width-${width}`]: width,
+					[`has-custom-font-size`]: blockProps.style.fontSize,
+				})}
+			>
+				<RichText
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
+					className={classnames(
+						className,
+						'wp-block-button__link',
+						'sc-block-button__link',
+						colorProps.className,
+						borderProps.className,
+						{
+							[`has-text-align-${textAlign}`]: textAlign,
+							// For backwards compatibility add style that isn't
+							// provided via block support.
+							'no-border-radius': style?.border?.radius === 0,
+						},
+						__experimentalGetElementClassName('button')
+					)}
+					style={{
+						...borderProps.style,
+						...colorProps.style,
+						...spacingProps.style,
+					}}
+					value={text}
+					onChange={(value) => setAttributes({ text: value })}
+					withoutInteractiveFormatting
+					allowedFormats={['core/bold', 'core/italic']}
+				/>
 			</div>
 			<BlockControls group="block">
 				<AlignmentControl

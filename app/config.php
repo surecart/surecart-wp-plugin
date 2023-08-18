@@ -172,7 +172,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
-
+		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
 	],
 
 	/** Which components to preload for each block. */

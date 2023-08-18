@@ -7,9 +7,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { state } from '@store/product';
-import { submitCartForm } from '@store/product/mutations';
 import { isProductOutOfStock } from '@store/product/getters';
+import { state } from '@store/product';
+import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -39,6 +39,9 @@ export class ScProductBuyButton {
    */
   @Prop() styles: string = '';
 
+  // Is add to cart enabled
+  @Prop() addToCart: boolean;
+
   handleCartClick(e) {
     e.preventDefault();
 
@@ -47,7 +50,14 @@ export class ScProductBuyButton {
 
     // ad hoc price, use the dialog.
     if (state?.selectedPrice?.ad_hoc) {
-      return (state.dialog = 'ad_hoc');
+      return (state.dialog = this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy');
+    }
+
+    // if add to cart is undefined/false navigate to buy url
+    if (!this.addToCart) {
+      const checkoutUrl = window?.scData?.pages?.checkout;
+      if (!checkoutUrl) return;
+      return window.location.assign(getProductBuyLink(checkoutUrl));
     }
 
     // submit the cart form.
@@ -70,7 +80,7 @@ export class ScProductBuyButton {
           ) : (
             <span>
               <span data-text>{this.getInStockText()}</span>
-              <sc-spinner data-loader></sc-spinner>
+              {this.addToCart && <sc-spinner data-loader></sc-spinner>}
             </span>
           )}
         </a>

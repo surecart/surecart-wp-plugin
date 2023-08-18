@@ -38,14 +38,14 @@
 			"type": "string"
 		},
 		"width": {
-			"type": "number"
+			"type": "number",
+			"default": 100
 		}
 	},
 	"supports": {
 		"anchor": true,
 		"align": false,
 		"alignWide": false,
-		"multiple": false,
 		"spacing": {
 			"__experimentalSkipSerialization": true,
 			"padding": ["horizontal", "vertical"],
@@ -86,18 +86,35 @@
 	"variations": [
 		{
 			"name": "cart",
-			"title": "Product Add To Cart Button",
+			"title": "Add To Cart Button",
 			"icon": "cart",
 			"description": "Add a button to add the product to the cart.",
 			"attributes": {
-				"add_to_cart": true
+				"add_to_cart": true,
+				"text": "Add To Cart"
 			},
 			"isDefault": true,
 			"isActive": ["add_to_cart"],
 			"scope": ["inserter", "block", "transform"]
+		},
+		{
+			"name": "buy",
+			"title": "Buy Now Button",
+			"icon": "store",
+			"description": "Add a button to buy the product.",
+			"attributes": {
+				"add_to_cart": false,
+				"text": "Buy Now"
+			},
+			"isActive": ["add_to_cart"],
+			"scope": ["inserter", "block", "transform"]
 		}
+	],
+	"styles": [
+		{ "name": "fill", "label": "Fill", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
 	],
 	"script": "surecart-components",
 	"editorStyle": "wp-block-button-editor",
-	"style": ["surecart-themes-default", "wp-block-button"]
+	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"]
 }

@@ -2,7 +2,7 @@ import { Component, Element, h, Prop } from '@stencil/core';
 import { onChange, state } from '@store/product';
 import { __ } from '@wordpress/i18n';
 
-import { submitCartForm } from '@store/product/mutations';
+import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 
 @Component({
   tag: 'sc-product-price-modal',
@@ -15,6 +15,19 @@ export class ScProductPriceModal {
   private priceInput: HTMLScPriceInputElement;
 
   @Prop() buttonText: string;
+
+  @Prop() addToCart: boolean;
+
+  submit() {
+    // if add to cart is undefined/false navigate to buy url
+    if (!this.addToCart) {
+      const checkoutUrl = window?.scData?.pages?.checkout;
+      if (!checkoutUrl) return;
+      return window.location.assign(getProductBuyLink(checkoutUrl));
+    }
+
+    submitCartForm();
+  }
 
   componentWillLoad() {
     // focus on price input when opened.
@@ -33,7 +46,7 @@ export class ScProductPriceModal {
     }
 
     return (
-      <sc-dialog open={state.dialog === 'ad_hoc'} onScRequestClose={() => (state.dialog = null)}>
+      <sc-dialog open={state.dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => (state.dialog = null)}>
         <span class="dialog__header" slot="label">
           {!!state?.product?.image_url && (
             <div class="dialog__image">
@@ -49,7 +62,7 @@ export class ScProductPriceModal {
         <sc-form
           onScSubmit={e => {
             e.stopImmediatePropagation();
-            submitCartForm();
+            this.submit();
           }}
           onScFormSubmit={e => e.stopImmediatePropagation()}
         >
@@ -63,7 +76,7 @@ export class ScProductPriceModal {
             required
           />
           <sc-button type="primary" full submit busy={state.busy}>
-            {this.buttonText || __('Add To Cart', 'surecart')}
+            <slot>{this.buttonText || __('Add To Cart', 'surecart')}</slot>
           </sc-button>
         </sc-form>
       </sc-dialog>

@@ -2,9 +2,11 @@ import { Checkout } from '../types';
 import { createLocalStore } from './local';
 import { createStore } from '@stencil/store';
 import { state as checkoutState } from '@store/checkout';
-import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
+import { addQueryArgs, removeQueryArgs, getQueryArg } from '@wordpress/url';
 
-const store = window?.scData?.do_not_persist_cart
+const notPersistCart = !!window?.scData?.do_not_persist_cart || !!getQueryArg(window.location.href, 'no_cart');
+
+const store = notPersistCart
   ? createStore<{ live: any; test: any }>({
       live: {},
       test: {},
