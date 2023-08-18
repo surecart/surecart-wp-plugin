@@ -221,7 +221,7 @@ return [
 		'surecart/product-media'             => [],
 		'surecart/product-buy-buttons'       => [ 'sc-product-buy-button', 'sc-button' ],
 		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
-		'surecart/product-variant-choices'          => [ 'sc-product-variation-choices' ],
+		'surecart/product-variant-choices'   => [ 'sc-product-variation-choices' ],
 		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
 	],
 

@@ -93,6 +93,16 @@ class Product extends Model {
 	}
 
 	/**
+	 * Set the variants attribute.
+	 *
+	 * @param  object $value Array of price objects.
+	 * @return void
+	 */
+	public function setVariantsAttribute( $value ) {
+		$this->setCollection( 'variants', $value, Variant::class );
+	}
+
+	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.

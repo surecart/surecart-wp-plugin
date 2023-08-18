@@ -40,4 +40,13 @@ class Variant extends Model {
 	public function setImageAttribute( $value ) {
 		$this->setRelation( 'image', $value, Media::class );
 	}
+
+	/**
+	 * Get the image url
+	 *
+	 * @return string
+	 */
+	public function getImageUrlAttribute() {
+		return $this->image->url ?? null;
+	}
 }
