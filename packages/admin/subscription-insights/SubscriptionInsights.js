@@ -193,11 +193,17 @@ export default () => {
 					description={__('Total Churned Subscription', 'surecart')}
 					loading={loading}
 					compare={{
-						current: totalProperties('count_churn_rate', data),
-						previous: totalProperties('count_churn_rate', previous),
+						current: averageProperties('count_churn_rate', data),
+						previous: averageProperties(
+							'count_churn_rate',
+							previous
+						),
 					}}
 				>
-					{totalProperties('count_churn_rate', data)}
+					<ScFormatNumber
+						value={averageProperties('count_churn_rate', data)}
+						type="decimal"
+					/>
 				</Stat>
 				<Stat
 					title={__('Outstanding Installments', 'surecart')}
