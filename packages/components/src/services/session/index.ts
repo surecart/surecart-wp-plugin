@@ -15,6 +15,7 @@ export const expand = [
   'line_item.price',
   'line_item.fees',
   'line_item.variant',
+  'variant.image',
   'price.product',
   'customer',
   'customer.shipping_address',

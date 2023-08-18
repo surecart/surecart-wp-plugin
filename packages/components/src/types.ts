@@ -248,6 +248,7 @@ export interface Variant {
   stock: number;
   object: 'variant';
   image?: string | Media;
+  image_url?: string;
   option_1?: string | null;
   option_2?: string | null;
   option_3?: string | null;
