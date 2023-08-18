@@ -36,13 +36,14 @@ export class ScCheckoutStockAlert {
 
       const stockEnabled = product?.stock_enabled || false;
       const allowOutOfStockPurchases = product?.allow_out_of_stock_purchases || false;
-      const stockQuantity = product?.stock || 0;
+      const stockQuantity = lineItem?.variant?.stock || product?.stock || 0;
+      const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
 
       // if stock is enabled and out of stock purchases are not allowed.
       if (stockEnabled && !allowOutOfStockPurchases && stockQuantity < lineItem.quantity) {
         stockErrors.push({
           name: product?.name,
-          image_url: product?.image_url,
+          image_url: variantImage || product?.image_url,
           quantity: lineItem.quantity,
           stock: stockQuantity,
         });
@@ -63,7 +64,7 @@ export class ScCheckoutStockAlert {
 
       const stockEnabled = product?.stock_enabled || false;
       const allowOutOfStockPurchases = product?.allow_out_of_stock_purchases || false;
-      const stockQuantity = product?.stock || 0;
+      const stockQuantity = lineItem?.variant?.stock || product?.stock || 0;
 
       // if stock is enabled and out of stock purchases are not allowed.
       if (stockEnabled && !allowOutOfStockPurchases && stockQuantity < lineItem.quantity) {
@@ -79,6 +80,7 @@ export class ScCheckoutStockAlert {
           return {
             price_id: lineItem.price?.id,
             quantity: lineItem.quantity,
+            variant: lineItem.variant?.id,
           };
         }),
       },
