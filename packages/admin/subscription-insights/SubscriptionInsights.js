@@ -172,6 +172,8 @@ export default () => {
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
 						value={totalProperties('total_mrr_amount', data)}
+						maximumFractionDigits={1}
+						minimumFractionDigits={0}
 					/>
 				</Stat>
 				<Stat
@@ -186,23 +188,25 @@ export default () => {
 					<ScFormatNumber
 						value={averageProperties('mrr_churn_rate', data)}
 						type="percent"
+						maximumFractionDigits={2}
 					/>
 				</Stat>
 				<Stat
-					title={__('Total Churned', 'surecart')}
-					description={__('Total Churned Subscription', 'surecart')}
+					title={__('Lost Revenue', 'surecart')}
+					description={__('Revenue Lost From Churn', 'surecart')}
 					loading={loading}
 					compare={{
-						current: averageProperties('count_churn_rate', data),
-						previous: averageProperties(
-							'count_churn_rate',
-							previous
-						),
+						current: totalProperties('lost_mrr_amount', data),
+						previous: totalProperties('lost_mrr_amount', previous),
 					}}
+					reverse
 				>
 					<ScFormatNumber
-						value={averageProperties('count_churn_rate', data)}
-						type="decimal"
+						value={totalProperties('lost_mrr_amount', data)}
+						type="currency"
+						currency={data[0]?.currency || scData?.currency_code}
+						maximumFractionDigits={1}
+						minimumFractionDigits={0}
 					/>
 				</Stat>
 				<Stat
@@ -227,6 +231,8 @@ export default () => {
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
 						value={totalProperties('total_remaining_amount', data)}
+						maximumFractionDigits={1}
+						minimumFractionDigits={0}
 					></ScFormatNumber>
 				</Stat>
 			</div>

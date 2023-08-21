@@ -6,10 +6,15 @@ import { __ } from '@wordpress/i18n';
 export default ({ loading, previous, current, reverse = false }) => {
 	if (loading) return null;
 
-	let percentage =
-		Math.abs(
-			((current - previous) / (previous || 1)) * 100.0
-		).toLocaleString('fullwide', { maximumFractionDigits: 0 }) + '%';
+	let percentage = Math.abs(((current - previous) / (previous || 1)) * 100.0);
+	if (Math.abs(previous) === 0 && Math.abs(current) !== 0) {
+		percentage = 100;
+	}
+
+	percentage =
+		percentage.toLocaleString('fullwide', { maximumFractionDigits: 0 }) +
+		'%';
+
 	let type, icon;
 	if (previous === current) {
 		type = 'default';
