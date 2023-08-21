@@ -23,7 +23,6 @@ class CompatibilityService {
 		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
 
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 4 );
-
 	}
 
 	/**
@@ -60,10 +59,9 @@ class CompatibilityService {
 	 * Filter SC Form Shortcode to load the Spectra Blocks Assets.
 	 *
 	 * @param string $output Content.
-	 * @param array $attributes Shortcode attributes.
+	 * @param array  $attributes Shortcode attributes.
 	 * @param string $name Shortcode Tag.
 	 * @param object $form Form Post Object.
-	 * 
 	 *
 	 * @return array
 	 */
