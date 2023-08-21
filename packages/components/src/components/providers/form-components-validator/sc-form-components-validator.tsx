@@ -67,6 +67,12 @@ export class ScFormComponentsValidator {
     }
   }
 
+  @Watch('hasAddress')
+  handleHasAddressChange() {
+    if (!this.hasAddress) return;
+    this.handleShippingAddressRequired();
+  }
+
   componentWillLoad() {
     this.hasAddress = !!this.el.querySelector('sc-order-shipping-address');
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
@@ -89,33 +95,37 @@ export class ScFormComponentsValidator {
     this.handleOrderChange();
   }
 
-  handleShippingAddressRequired(){
-    if(!checkoutState.checkout?.shipping_address_required) return;
+  handleShippingAddressRequired() {
+    if (!checkoutState.checkout?.shipping_address_required) return;
 
-    const customerName = this.el.querySelector('sc-customer-name');
+    // get the address
     const address = this.el.querySelector('sc-order-shipping-address');
-    if(!!customerName) {
+    if (!address) return;
+
+    // require the address.
+    address.required = true;
+
+    // if we have a customer name field, require that.
+    const customerName = this.el.querySelector('sc-customer-name');
+    if (!!customerName) {
       customerName.required = true;
-      address.required = true;
-      return
+      return;
     }
 
-    address.required = true;
+    // require the name and show the name input.
     address.requireName = true;
     address.showName = true;
   }
 
   addAddressField() {
-    if(this.hasAddress ) {
-      this.handleShippingAddressRequired();
-      return
+    if (this.hasAddress) {
+      return;
     }
 
     const payment = this.el.querySelector('sc-payment');
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
     payment.parentNode.insertBefore(address, payment);
-    this.handleShippingAddressRequired();
     this.hasAddress = true;
   }
 
