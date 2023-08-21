@@ -1544,6 +1544,7 @@
     "slot": true
   },
   "sc-product-buy-button": {
+    "add-to-cart": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1568,6 +1569,7 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
+    "featured": true,
     "ids": true,
     "layout-config": true,
     "limit": true,
@@ -1634,6 +1636,7 @@
     "slot": true
   },
   "sc-product-price-modal": {
+    "add-to-cart": true,
     "button-text": true,
     "style": true,
     "id": true,
