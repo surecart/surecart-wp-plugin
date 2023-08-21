@@ -172,7 +172,7 @@ export class ScSubscriptionPaymentMethod {
 
       return (
         <sc-choice checked={subscription_payment_method_id === id} name="payment_method" value={id} required>
-          <sc-flex justifyContent="flex-start">
+          <sc-flex justifyContent="flex-start" align-items="center">
             <sc-payment-method paymentMethod={paymentMethod} />{' '}
             {!live_mode && (
               <sc-tag type="warning" size="small">
@@ -183,7 +183,10 @@ export class ScSubscriptionPaymentMethod {
           <div slot="description">
             {!!card?.exp_month && (
               <span>
-                {__('Exp.', 'surecart')}
+                {
+                  /** Translators: Credit Card Expires (Exp. 11/27) */
+                  __('Exp.', 'surecart')
+                }
                 {card?.exp_month}/{card?.exp_year}
               </span>
             )}

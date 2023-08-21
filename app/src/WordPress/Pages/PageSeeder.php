@@ -40,6 +40,7 @@ class PageSeeder {
 		$this->createCheckoutForm();
 		$this->createPages();
 		$this->createCartPost();
+		$this->createShopPage();
 	}
 
 	/**
@@ -75,6 +76,29 @@ class PageSeeder {
 	}
 
 	/**
+	 * Create shop page.
+	 *
+	 * @return void
+	 */
+	public function createShopPage() {
+		$pattern = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/shop.php';
+
+		$shop = apply_filters(
+			'surecart/create_shop',
+			[
+				'shop' => [
+					'name'      => _x( 'shop', 'Shop page slug', 'surecart' ),
+					'title'     => _x( 'Shop', 'Shop page title', 'surecart' ),
+					'content'   => $pattern['content'],
+					'post_type' => 'page',
+				],
+			]
+		);
+
+		$this->createPosts( $shop );
+	}
+
+	/**
 	 * Create the main checkout form.
 	 *
 	 * @return void
@@ -105,26 +129,22 @@ class PageSeeder {
 	 * @return array
 	 */
 	public function getPages( $form = null ) {
-		$order_confirmation = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/confirmation/order-confirmation.php';
 		$customer_dashboard = require plugin_dir_path( SURECART_PLUGIN_FILE ) . 'templates/dashboard/customer-dashboard.php';
 
 		return apply_filters(
 			'surecart/create_pages',
 			array(
-				'checkout'           => [
-					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
-					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
-					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} --><!-- /wp:surecart/checkout-form -->',
+				'checkout'  => [
+					'name'          => _x( 'checkout', 'Page slug', 'surecart' ),
+					'title'         => _x( 'Checkout', 'Page title', 'surecart' ),
+					'content'       => '<!-- wp:surecart/checkout-form {"id":' . (int) ( $form->ID ?? 0 ) . '} --><!-- /wp:surecart/checkout-form -->',
+					'page_template' => 'pages/template-surecart-blank.php',
 				],
-				'order-confirmation' => [
-					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),
-					'title'   => _x( 'Thank you!', 'Page title', 'surecart' ),
-					'content' => $order_confirmation['content'],
-				],
-				'dashboard'          => [
-					'name'    => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
-					'title'   => _x( 'Dashboard', 'Page title', 'surecart' ),
-					'content' => $customer_dashboard['content'],
+				'dashboard' => [
+					'name'          => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
+					'title'         => _x( 'Dashboard', 'Page title', 'surecart' ),
+					'content'       => $customer_dashboard['content'],
+					'page_template' => 'pages/template-surecart-dashboard.php',
 				],
 			)
 		);
@@ -161,6 +181,11 @@ class PageSeeder {
 	 * @return void
 	 */
 	public function createPosts( $posts ) {
+		// ability to turn off page seeding.
+		if ( ! apply_filters( 'surecart/seed/all', true ) ) {
+			return;
+		}
+
 		foreach ( $posts as $key => $post ) {
 			$this->pages->findOrCreate(
 				esc_sql( $post['name'] ),
@@ -169,7 +194,8 @@ class PageSeeder {
 				$post['content'],
 				! empty( $post['parent'] ) ? \SureCart::pages()->findOrCreate( $post['parent'] ) : '',
 				! empty( $post['post_status'] ) ? $post['post_status'] : 'publish',
-				! empty( $post['post_type'] ) ? $post['post_type'] : 'page'
+				! empty( $post['post_type'] ) ? $post['post_type'] : 'page',
+				! empty( $post['page_template'] ) ? $post['page_template'] : null
 			);
 		}
 	}

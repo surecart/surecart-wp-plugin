@@ -39,3 +39,16 @@ export const isValidURL = str => {
 
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
+
+export const getValueFromUrl = (key: string) => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(key);
+};
+
+export const sortByArray = (item, key, orderArray) =>
+  (item || []).sort((a, b) => {
+    if (orderArray.indexOf(a?.[key]) === -1) return 1;
+    if (orderArray.indexOf(b?.[key]) === -1) return -1;
+    return orderArray.indexOf(a?.[key]) - orderArray.indexOf(b?.[key]);
+  });

@@ -14,6 +14,7 @@ export default ({
 	loading,
 	footer,
 	className,
+	footerStyle = {},
 }) => {
 	const hasChildren = () => {
 		if (!children) {
@@ -42,23 +43,26 @@ export default ({
 			isBorderless={isBorderLess}
 			className={className}
 		>
-			<CardHeader
-				isBorderless={!hasDivider}
-				css={css`
-					${!hasDivider ? 'padding-bottom: 0 !important' : ''};
-				`}
-			>
-				<sc-text
-					tag="h2"
-					style={{
-						'--font-size': '15px',
-						'--font-weight': 'var(--sc-font-weight-bold)',
-					}}
+			{ ('' !== title || header_action ) &&
+				<CardHeader
+					isBorderless={!hasDivider}
+					css={css`
+						${!hasDivider ? 'padding-bottom: 0 !important' : ''};
+					`}
 				>
-					{title}
-				</sc-text>
-				{header_action}
-			</CardHeader>
+					<sc-text
+						tag="h2"
+						style={{
+							'--font-size': '15px',
+							'--font-weight': 'var(--sc-font-weight-bold)',
+							width: '100%',
+						}}
+					>
+						{title}
+					</sc-text>
+					{header_action}
+				</CardHeader>
+			}
 			{(loading || hasChildren()) && (
 				<CardBody
 					css={css`
@@ -94,7 +98,7 @@ export default ({
 					)}
 				</CardBody>
 			)}
-			{!!footer && <CardFooter>{footer}</CardFooter>}
+			{!!footer && <CardFooter style={footerStyle}>{footer}</CardFooter>}
 		</Card>
 	);
 };

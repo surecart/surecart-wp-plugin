@@ -23,8 +23,36 @@ export default ({ subscription, customer, product, loading }) => {
 		}
 
 		if (
+			(subscription?.restore_at && subscription?.status === 'canceled') ||
+			(!!subscription?.cancel_at_period_end &&
+				!!subscription?.current_period_end_at &&
+				subscription?.status !== 'canceled' &&
+				!!subscription?.restore_at)
+		) {
+			return (
+				<div>
+					<div>
+						<strong>
+							{sprintf(__('Restores on', 'surecart'))}
+						</strong>
+					</div>
+					<ScFormatDate
+						date={subscription.restore_at}
+						type="timestamp"
+						month="long"
+						day="numeric"
+						year="numeric"
+					></ScFormatDate>
+				</div>
+			);
+		}
+
+		if (subscription?.status === 'canceled') return null;
+
+		if (
 			subscription?.cancel_at_period_end &&
-			subscription.current_period_end_at
+			subscription.current_period_end_at &&
+			!subscription?.restore_at
 		) {
 			return (
 				<div>

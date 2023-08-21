@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-columns renders 1`] = `
-<sc-columns class="sc-columns">
+<sc-columns class="is-not-stacked-on-mobile sc-columns">
   <!---->
 </sc-columns>
 `;

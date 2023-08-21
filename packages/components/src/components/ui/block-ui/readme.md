@@ -31,6 +31,7 @@
  - [sc-cart](../../controllers/cart/sc-cart)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
  - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
@@ -40,10 +41,13 @@
  - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-shipping-choices](../sc-shipping-choices)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
@@ -68,6 +72,7 @@ graph TD;
   sc-cart --> sc-block-ui
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
+  sc-checkout-mollie-payment --> sc-block-ui
   sc-compact-address --> sc-block-ui
   sc-coupon-form --> sc-block-ui
   sc-custom-order-price-input --> sc-block-ui
@@ -77,10 +82,13 @@ graph TD;
   sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui
   sc-login-form --> sc-block-ui
+  sc-mollie-add-method --> sc-block-ui
   sc-orders-list --> sc-block-ui
   sc-password-nag --> sc-block-ui
   sc-payment-methods-list --> sc-block-ui
+  sc-product-item-list --> sc-block-ui
   sc-purchase-downloads-list --> sc-block-ui
+  sc-shipping-choices --> sc-block-ui
   sc-subscription --> sc-block-ui
   sc-subscription-ad-hoc-confirm --> sc-block-ui
   sc-subscription-cancel --> sc-block-ui

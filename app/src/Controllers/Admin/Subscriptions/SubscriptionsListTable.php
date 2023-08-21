@@ -59,6 +59,8 @@ class SubscriptionsListTable extends ListTable {
 		$stati = [
 			'all'      => __( 'All', 'surecart' ),
 			'active'   => __( 'Active', 'surecart' ),
+			'trialing' => __( 'Trialing', 'surecart' ),
+			'past_due' => __( 'Past Due', 'surecart' ),
 			'canceled' => __( 'Canceled', 'surecart' ),
 		];
 
@@ -238,7 +240,11 @@ class SubscriptionsListTable extends ListTable {
 		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
 		echo esc_html( $this->getInterval( $interval, $count ) );
 		if ( null !== $period_count ) {
-			echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
+			if ( 1 === $period_count ) {
+				echo ' ' . esc_html( __( '(one time)', 'surecart' ) );
+			} else {
+				echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
+			}
 		}
 		return ob_get_clean();
 	}

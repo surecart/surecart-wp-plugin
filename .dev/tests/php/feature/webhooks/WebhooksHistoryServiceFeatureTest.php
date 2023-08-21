@@ -19,6 +19,7 @@ class WebhooksHistoryServiceFeatureTest extends SureCartUnitTestCase {
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\WordPress\Pages\PageServiceProvider::class,
 				\SureCart\Routing\AdminRouteServiceProvider::class,
 				\SureCart\WordPress\PluginServiceProvider::class,

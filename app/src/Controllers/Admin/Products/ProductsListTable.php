@@ -14,6 +14,7 @@ use SureCart\Models\Integration;
 class ProductsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
+	public $pages    = [];
 
 	/**
 	 * Prepare the items for the table to process
@@ -28,6 +29,7 @@ class ProductsListTable extends ListTable {
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 
 		$query = $this->table_data();
+
 		if ( is_wp_error( $query ) ) {
 			$this->error = $query->get_error_message();
 			$this->items = [];
@@ -97,8 +99,9 @@ class ProductsListTable extends ListTable {
 			'name'         => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
 			'price'        => __( 'Price', 'surecart' ),
-			// 'type'         => __( 'Type', 'surecart' ),
 			'integrations' => __( 'Integrations', 'surecart' ),
+			'status'       => __( 'Product Page', 'surecart' ),
+			'featured'     => __( 'Featured', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 		];
 	}
@@ -151,6 +154,10 @@ class ProductsListTable extends ListTable {
 			[
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
+			]
+		)->with(
+			[
+				'prices',
 			]
 		)->paginate(
 			[
@@ -216,30 +223,35 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
-		$currency = $product->metrics->currency ?? 'usd';
+		$prices = $product->prices->data ?? [];
 
-		if ( empty( $product->metrics->prices_count ) ) {
+		// this has no prices.
+		if ( empty( $prices ) || ! is_array( $prices ) ) {
 			return '<sc-tag type="warning">' . esc_html__( 'No price', 'surecart' ) . '</sc-tag>';
 		}
 
-		if ( ! empty( $product->metrics->min_price_amount ) ) {
-			$amount = '<sc-format-number type="currency" currency="' . $currency . '" value="' . $product->metrics->min_price_amount . '"></sc-format-number>';
-			if ( $product->metrics->prices_count > 1 ) {
-				// translators: Price starting at.
-				$starting_at = sprintf( esc_html__( 'Starting at %s', 'surecart' ), $amount );
-				// translators: Other prices.
-				$others = sprintf( _n( 'and %d other price.', 'and %d other prices.', $product->metrics->prices_count - 1, 'surecart' ), $product->metrics->prices_count - 1 );
-				return $starting_at . '<br /><small style="opacity: 0.75">' . $others . '</small>';
-			} else {
-				return $amount;
-			}
+		// map the prices into an array of formatted price strings.
+		$price_display = array_map(
+			function( $price ) {
+				if ( $price->ad_hoc ) {
+					return esc_html__( 'Name your own price', 'surecart' );
+				}
+				if ( 0 === $price->amount ) {
+					return esc_html__( 'Free', 'surecart' );
+				}
+				return '<sc-format-number type="currency" currency="' . $price->currency . '" value="' . $price->amount . '"></sc-format-number>';     },
+			$prices
+		);
+
+		// combine into string with commas.
+		$price_output = implode( ', ', array_slice( $price_display, 0, 2 ) );
+
+		if ( $product->metrics->prices_count > 2 ) {
+			// translators: %d is the number of other prices.
+			$price_output .= sprintf( _n( ' and %d other price.', ' and %d other prices.', $product->metrics->prices_count - 2, 'surecart' ), $product->metrics->prices_count - 2 );
 		}
 
-		if ( 1 === $product->metrics->prices_count ) {
-			return esc_html__( 'Name your own price', 'surecart' );
-		}
-
-		return esc_html__( 'No price', 'surecart' );
+		return $price_output;
 	}
 
 	/**
@@ -267,6 +279,42 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
+	 * Published column
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_featured( $product ) {
+		ob_start();
+		?>
+			<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="<?php echo $product->featured ? 'currentColor' : 'none'; ?>" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+			</svg>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Published column
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_status( $product ) {
+		ob_start();
+		?>
+		<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
+			<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+		<?php else : ?>
+			<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+		<?php endif; ?>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
 	 * Name column
 	 *
 	 * @param \SureCart\Models\Product $product Product model.
@@ -281,37 +329,27 @@ class ProductsListTable extends ListTable {
 		<?php if ( $product->image_url ) { ?>
 			<img src="<?php echo esc_url( $product->image_url ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
-		<div class="sc-product-image-preview">
-			<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-			  </svg>
-		</div>
-	  <?php } ?>
+			<div class="sc-product-image-preview">
+				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+				</svg>
+			</div>
+		<?php } ?>
 
 	  <div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
 		</a>
 
-		<script> function copyClick(e, content){
-			navigator.clipboard.writeText(content).then(() =>{
-				const oldText = e.target.innerText;
-				e.target.innerText = '<?php echo esc_html_e( 'Copied!', 'surecart' ); ?>';
-				setTimeout(() =>{
-					e.target.innerText = oldText;
-				}, 2000);
-			}).catch(err => {
-
-			});
-		} </script>
-
-
 		<?php
 		echo $this->row_actions(
-			[
-				'edit'  => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'trash' => $this->action_toggle_archive( $product ),
-			],
+			array_filter(
+				[
+					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+					'trash'        => $this->action_toggle_archive( $product ),
+					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				]
+			),
 		);
 		?>
 		</div>

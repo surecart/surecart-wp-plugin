@@ -100,7 +100,7 @@
 					<?php esc_html_e( 'The easiest thing you can do to increase subscription revenue.', 'surecart' ); ?>
 				</sc-text>
 				<sc-text class="sc-get-started-top-desc" style="--font-size: var(--sc-font-size-x-large); --line-height: var(--sc-line-height-normal); --text-align: center;">
-					<?php esc_html_e( 'Automatically lower your subscription canccellation while making customers happy and saving more revenue with Subscription Saver.', 'surecart' ); ?>
+					<?php esc_html_e( 'Automatically lower your subscription cancellation while making customers happy and saving more revenue with Subscription Saver.', 'surecart' ); ?>
 				</sc-text>
 				<sc-button class="sc-get-started-button" type="primary" target="_blank" size="large" href="<?php echo esc_url_raw( \SureCart::config()->links->purchase ); ?>">
 					<?php esc_html_e( 'Get Subscription Saver', 'surecart' ); ?>

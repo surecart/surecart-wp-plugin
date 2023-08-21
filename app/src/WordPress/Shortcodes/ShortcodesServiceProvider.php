@@ -33,7 +33,6 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		add_shortcode( 'sc_form', [ $this, 'formShortcode' ] );
 		add_shortcode( 'sc_add_to_cart_button', [ $this, 'addToCartShortcode' ], 10, 2 );
 		add_shortcode( 'sc_buy_button', [ $this, 'buyButtonShortcode' ], 10, 2 );
-		add_shortcode( 'sc_customer_dashboard', [ $this, 'dashboardShortcode' ] );
 
 		// buttons.
 		$container['surecart.shortcodes']->registerBlockShortcode(
@@ -84,7 +83,12 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_customer_dashboard_page',
-			\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
+			\SureCartBlocks\Blocks\Dashboard\CustomerDashboardArea\Block::class,
+			[ 'name' => '' ]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_customer_dashboard',
+			\SureCartBlocks\Blocks\Dashboard\CustomerDashboardArea\Block::class,
 			[ 'name' => '' ]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
@@ -94,6 +98,15 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'icon'  => 'shopping-bag',
 				'panel' => '',
 				'title' => 'test',
+			]
+		);
+
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_cart_menu_icon',
+			\SureCartBlocks\Blocks\CartMenuButton\Block::class,
+			[
+				'cart_icon'              => 'shopping-bag',
+				'cart_menu_always_shown' => true,
 			]
 		);
 
@@ -107,6 +120,62 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		);
 
+		// product page.
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_list',
+			'surecart/product-item-list',
+			[
+				'ids'                => [],
+				'columns'            => 4,
+				'sort_enabled'       => false,
+				'search_enabled'     => false,
+				'pagination_enabled' => true,
+				'ajax_pagination'    => true,
+				'type'               => 'all',
+				'limit'              => 10,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_description',
+			\SureCartBlocks\Blocks\Product\Description\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_title',
+			\SureCartBlocks\Blocks\Product\Title\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_price',
+			\SureCartBlocks\Blocks\Product\Price\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_price_choices',
+			\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+			[
+				'label'      => __( 'Pricing', 'surecart' ),
+				'columns'    => 2,
+				'show_price' => true,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_media',
+			\SureCartBlocks\Blocks\Product\Media\Block::class,
+			[
+				'auto_height' => true,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_quantity',
+			\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+		);
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_product_cart_button',
+			\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
+			[
+				'add_to_cart' => true,
+				'text'        => __( 'Add To Cart', 'surecart' ),
+				'width'       => 100,
+			]
+		);
 	}
 
 	/**
@@ -131,9 +200,11 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @param  array  $atts Shortcode attributes.
 	 * @param  string $content Shortcode content.
+	 * @param  string $name Shortcode tag.
+	 *
 	 * @return string Shortcode output.
 	 */
-	public function formShortcode( $atts ) {
+	public function formShortcode( $atts, $content, $name ) {
 		$atts = shortcode_atts(
 			[
 				'id' => null,
@@ -159,7 +230,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			return __( 'This form is not available or has been deleted.', 'surecart' );
 		}
 
-		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $form );
+		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $name, $form );
 	}
 
 	/**

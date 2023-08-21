@@ -29,6 +29,7 @@
 - [sc-empty](../../../ui/empty)
 - [sc-format-date](../../../util/format-date)
 - [sc-text](../../../ui/text)
+- [sc-order-shipment-badge](../../../ui/order-shipment-badge)
 - [sc-format-number](../../../util/format-number)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-button](../../../ui/button)
@@ -49,6 +50,7 @@ graph TD;
   sc-orders-list --> sc-empty
   sc-orders-list --> sc-format-date
   sc-orders-list --> sc-text
+  sc-orders-list --> sc-order-shipment-badge
   sc-orders-list --> sc-format-number
   sc-orders-list --> sc-dashboard-module
   sc-orders-list --> sc-button
@@ -57,11 +59,13 @@ graph TD;
   sc-orders-list --> sc-block-ui
   sc-order-status-badge --> sc-tag
   sc-empty --> sc-icon
+  sc-order-shipment-badge --> sc-tag
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-button --> sc-spinner
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
+  sc-pagination --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-orders-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

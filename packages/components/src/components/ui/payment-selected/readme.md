@@ -27,6 +27,12 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
+ - [sc-payment](../../controllers/checkout-form/payment)
+
 ### Depends on
 
 - [sc-divider](../divider)
@@ -35,6 +41,9 @@
 ```mermaid
 graph TD;
   sc-payment-selected --> sc-divider
+  sc-checkout-mollie-payment --> sc-payment-selected
+  sc-mollie-add-method --> sc-payment-selected
+  sc-payment --> sc-payment-selected
   style sc-payment-selected fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

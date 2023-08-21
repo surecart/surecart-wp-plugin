@@ -60,6 +60,19 @@ Type: `Promise<boolean>`
 | `"label"`        | The label.                 |
 
 
+## Dependencies
+
+### Used by
+
+ - [sc-shipping-choices](../sc-shipping-choices)
+
+### Graph
+```mermaid
+graph TD;
+  sc-shipping-choices --> sc-radio
+  style sc-radio fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

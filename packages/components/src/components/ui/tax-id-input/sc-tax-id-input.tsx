@@ -14,6 +14,9 @@ export class ScTaxIdInput {
   /** Force show the field. */
   @Prop() show: boolean = false;
 
+  /** Required? */
+  @Prop({ reflect: true }) required: boolean = false;
+
   /** Type of tax id */
   @Prop({ mutable: true }) type: string = 'other';
 
@@ -28,6 +31,21 @@ export class ScTaxIdInput {
 
   /** Help text. */
   @Prop() help: string;
+
+  /** Other zones label */
+  @Prop() otherLabel: string = __('Tax ID', 'surecart');
+
+  /** GST zone label */
+  @Prop() caGstLabel: string = __('GST Number', 'surecart');
+
+  /** AU zone label */
+  @Prop() auAbnLabel: string = __('ABN Number', 'surecart');
+
+  /** UK zone label */
+  @Prop() gbVatLabel: string = __('UK VAT', 'surecart');
+
+  /** EU zone label */
+  @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
@@ -48,10 +66,24 @@ export class ScTaxIdInput {
     }
   }
 
+  @Watch('otherLabel')
+  @Watch('caGstLabel')
+  @Watch('auAbnLabel')
+  @Watch('gbVatLabel')
+  @Watch('euVatLabel')
+  onLabelChange() {
+    zones.ca_gst.label = this.caGstLabel || zones.ca_gst.label;
+    zones.au_abn.label = this.auAbnLabel || zones.au_abn.label;
+    zones.gb_vat.label = this.gbVatLabel || zones.gb_vat.label;
+    zones.eu_vat.label = this.euVatLabel || zones.eu_vat.label;
+    zones.other.label = this.otherLabel || zones.other.label;
+  }
+
   componentWillLoad() {
     if (this.country) {
       this.type = getType(this.country);
     }
+    this.onLabelChange();
   }
 
   renderStatus() {
@@ -66,11 +98,12 @@ export class ScTaxIdInput {
   render() {
     return (
       <Fragment>
-        <sc-input name="tax_identifier.number_type" value={this.type} style={{ display: 'none' }} />
+        <sc-input name="tax_identifier.number_type" required={this.required} value={this.type} style={{ display: 'none' }} />
 
         <sc-input
           label={zones?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
+          required={this.required}
           value={this.number}
           onScInput={(e: any) => {
             e.stopImmediatePropagation();

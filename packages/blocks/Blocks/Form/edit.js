@@ -7,6 +7,8 @@ import Setup from './components/Setup';
 import { css, jsx } from '@emotion/core';
 import { ScCheckout, ScIcon } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
+import StyleProvider from '../../components/StyleProvider';
+
 import {
 	InnerBlocks,
 	InspectorControls,
@@ -24,10 +26,12 @@ import {
 	UnitControl as __stableUnitControl,
 	__experimentalUnitControl,
 	TextControl,
+	TextareaControl,
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import ClaimNoticeModal from '../../../admin/components/ClaimNoticeModal';
 
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
@@ -41,12 +45,17 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		prices,
 		font_size,
 		loading_text,
+		success_text,
 		choice_type,
 		mode,
 		gap,
 		color,
 		success_url,
 	} = attributes;
+
+	const [showClaimNotice, setShowClaimNotice] = useState(false);
+	const claimUrl = window?.scData?.claim_url;
+	const isAccountClaimed = !claimUrl;
 
 	const [custom_success_url, setCustomSuccessUrl] = useState(!!success_url);
 	useEffect(() => {
@@ -212,6 +221,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		);
 	};
 
+	const onModeSelect = (mode) => {
+		if (mode === 'live' && !isAccountClaimed) {
+			setShowClaimNotice(true);
+			return;
+		}
+		setAttributes({ mode });
+		setShowClaimNotice(false);
+	};
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -282,7 +300,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							>
 								<LinkControl
 									value={{ url: success_url }}
-									settings={{}}
 									shownUnlinkControl={true}
 									noURLSuggestion
 									showInitialSuggestions
@@ -367,192 +384,267 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						/>
 					</PanelRow>
 				</PanelBody>
+				<PanelBody
+					title={__('Success Text', 'surecart')}
+					initialOpen={false}
+				>
+					<PanelRow>
+						<TextControl
+							label={__('Title', 'surecart')}
+							value={success_text?.title}
+							placeholder={__(
+								'Thanks for your order!',
+								'surecart'
+							)}
+							onChange={(title) =>
+								setAttributes({
+									success_text: {
+										...success_text,
+										title,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextareaControl
+							label={__('Description', 'surecart')}
+							value={success_text?.description}
+							placeholder={__(
+								'Your payment was successful, and your order is complete. A receipt is on its way to your inbox.',
+								'surecart'
+							)}
+							onChange={(description) =>
+								setAttributes({
+									success_text: {
+										...success_text,
+										description,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Button Text', 'surecart')}
+							value={success_text?.button}
+							placeholder={__('Continue', 'surecart')}
+							onChange={(button) =>
+								setAttributes({
+									success_text: {
+										...success_text,
+										button,
+									},
+								})
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>
 
-			{blockCount === 0 ? (
-				<Setup
-					templates={patterns}
-					onCreate={onCreate}
-					clientId={clientId}
-				/>
-			) : (
-				<div
-					css={css`
-						max-width: var(--ast-content-width-size);
-						margin-left: auto !important;
-						margin-right: auto !important;
-					`}
-				>
+			<StyleProvider>
+				{showClaimNotice ? (
+					<ClaimNoticeModal
+						title={__('Complete your store setup.', 'surecart')}
+						bodyText={__(
+							"Please complete your store to enable live mode. It's free!",
+							'surecart'
+						)}
+						onRequestClose={() => setShowClaimNotice(false)}
+						claimUrl={claimUrl}
+					/>
+				) : null}
+				{blockCount === 0 ? (
+					<Setup
+						templates={patterns}
+						onCreate={onCreate}
+						clientId={clientId}
+					/>
+				) : (
 					<div
-						style={styles}
 						css={css`
-							padding: 10px 16px;
-							border-radius: 8px;
-							display: grid;
-							gap: 0.5em;
-							border: 1px solid transparent;
-							background: var(
-								--sc-input-background-color-disabled
-							);
+							max-width: var(--ast-content-width-size);
+							margin-left: auto !important;
+							margin-right: auto !important;
 						`}
 					>
 						<div
+							style={styles}
 							css={css`
-								display: flex;
-								justify-content: space-between;
-								align-items: center;
-								font-size: 15px;
+								padding: 10px 16px;
+								border-radius: 8px;
+								display: grid;
+								gap: 0.5em;
+								border: 1px solid transparent;
+								background: var(
+									--sc-input-background-color-disabled
+								);
 							`}
 						>
 							<div
 								css={css`
-									cursor: pointer;
-									flex: 1;
-									user-select: none;
-									display: inline-block;
-									color: var(--sc-input-label-color);
-									font-weight: var(
-										--sc-input-label-font-weight
-									);
-									text-transform: var(
-										--sc-input-label-text-transform,
-										none
-									);
-									letter-spacing: var(
-										--sc-input-label-letter-spacing,
-										0
-									);
-								`}
-							>
-								{__('Form', 'surecart')}
-							</div>
-							<div
-								css={css`
 									display: flex;
+									justify-content: space-between;
 									align-items: center;
+									font-size: 15px;
 								`}
 							>
-								<Mode
-									attributes={attributes}
-									setAttributes={setAttributes}
-								/>
+								<div
+									css={css`
+										cursor: pointer;
+										flex: 1;
+										user-select: none;
+										display: inline-block;
+										color: var(--sc-input-label-color);
+										font-weight: var(
+											--sc-input-label-font-weight
+										);
+										text-transform: var(
+											--sc-input-label-text-transform,
+											none
+										);
+										letter-spacing: var(
+											--sc-input-label-letter-spacing,
+											0
+										);
+									`}
+								>
+									{__('Form', 'surecart')}
+								</div>
 								<div
 									css={css`
 										display: flex;
 										align-items: center;
 									`}
 								>
-									<Button
-										onClick={() =>
-											setTab(tab === 'cart' ? '' : 'cart')
-										}
+									<Mode
+										attributes={attributes}
+										onModeSelect={onModeSelect}
+									/>
+									<div
+										css={css`
+											display: flex;
+											align-items: center;
+										`}
 									>
-										<span
-											css={css`
-												display: inline-block;
-												vertical-align: top;
-												box-sizing: border-box;
-												margin: 1px 0 -1px 2px;
-												padding: 0 5px;
-												min-width: 18px;
-												height: 18px;
-												border-radius: 9px;
-												background-color: currentColor;
-												font-size: 11px;
-												line-height: 1.6;
-												text-align: center;
-												z-index: 26;
-											`}
+										<Button
+											onClick={() =>
+												setTab(
+													tab === 'cart' ? '' : 'cart'
+												)
+											}
 										>
 											<span
 												css={css`
-													color: #fff;
+													display: inline-block;
+													vertical-align: top;
+													box-sizing: border-box;
+													margin: 1px 0 -1px 2px;
+													padding: 0 5px;
+													min-width: 18px;
+													height: 18px;
+													border-radius: 9px;
+													background-color: currentColor;
+													font-size: 11px;
+													line-height: 1.6;
+													text-align: center;
+													z-index: 26;
 												`}
 											>
-												{
-													(prices || []).filter(
-														(p) => p?.id
-													)?.length
-												}
+												<span
+													css={css`
+														color: #fff;
+													`}
+												>
+													{
+														(prices || []).filter(
+															(p) => p?.id
+														)?.length
+													}
+												</span>
 											</span>
-										</span>
 
-										<ScIcon
-											name="shopping-bag"
-											style={{
-												fontSize: '18px',
-												color: 'var(--sc-input-label-color)',
-											}}
-										/>
-									</Button>
+											<ScIcon
+												name="shopping-bag"
+												style={{
+													fontSize: '18px',
+													color: 'var(--sc-input-label-color)',
+												}}
+											/>
+										</Button>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						{tab === 'cart' && (
-							<Cart
-								attributes={attributes}
-								setAttributes={setAttributes}
-							/>
-						)}
-					</div>
-					<ScCheckout
-						mode="test"
-						formId={formId}
-						processors={scBlockData?.processors}
-						stripePaymentElement={
-							scBlockData?.beta?.stripe_payment_element
-						}
-						css={css`
-							margin-top: 2em;
-							font-size: ${font_size}px;
-						`}
-						className={className}
-						style={{
-							...(color
-								? {
-										'--sc-color-primary-500': color,
-										'--sc-focus-ring-color-primary': color,
-										'--sc-input-border-color-focus': color,
-								  }
-								: {}),
-						}}
-						disableComponentsValidation={true}
-						persistSession={false}
-						alignment={align}
-						currencyCode={scBlockData.currency || scData?.currency}
-						choiceType={choice_type}
-						prices={prices}
-					>
-						<div
-							css={css`
-								*
-									> *
-									> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(:last-child) {
-									margin-bottom: ${gap} !important;
-								}
-								// prevents issues with our shadow dom.
-								[data-type*='surecart/'] {
-									pointer-events: all !important;
-								}
-								.wp-block,
-								.block-editor-inserter {
-									pointer-events: all !important;
-								}
-							`}
-						>
-							<InnerBlocks
-								templateLock={false}
-								renderAppender={
-									blockCount
-										? undefined
-										: InnerBlocks.ButtonBlockAppender
-								}
-							/>
+							{tab === 'cart' && (
+								<Cart
+									attributes={attributes}
+									setAttributes={setAttributes}
+								/>
+							)}
 						</div>
-					</ScCheckout>
-				</div>
-			)}
+						<ScCheckout
+							mode="test"
+							formId={formId}
+							processors={scBlockData?.processors}
+							stripePaymentElement={
+								scBlockData?.beta?.stripe_payment_element
+							}
+							css={css`
+								margin-top: 2em;
+								font-size: ${font_size}px;
+							`}
+							className={className}
+							style={{
+								...(color
+									? {
+											'--sc-color-primary-500': color,
+											'--sc-focus-ring-color-primary':
+												color,
+											'--sc-input-border-color-focus':
+												color,
+									  }
+									: {}),
+							}}
+							disableComponentsValidation={true}
+							persistSession={false}
+							alignment={align}
+							currencyCode={
+								scBlockData.currency || scData?.currency
+							}
+							choiceType={choice_type}
+							prices={prices}
+						>
+							<div
+								css={css`
+									*
+										> *
+										> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(:last-child) {
+										margin-bottom: ${gap} !important;
+									}
+									// prevents issues with our shadow dom.
+									[data-type*='surecart/'] {
+										pointer-events: all !important;
+									}
+									.wp-block,
+									.block-editor-inserter {
+										pointer-events: all !important;
+									}
+								`}
+							>
+								<InnerBlocks
+									templateLock={false}
+									renderAppender={
+										blockCount
+											? undefined
+											: InnerBlocks.ButtonBlockAppender
+									}
+								/>
+							</div>
+						</ScCheckout>
+					</div>
+				)}
+			</StyleProvider>
 		</Fragment>
 	);
 }

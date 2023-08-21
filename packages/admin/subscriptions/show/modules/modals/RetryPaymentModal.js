@@ -44,6 +44,7 @@ export default ({ open, period, onRequestClose }) => {
 
 			onRequestClose();
 		} catch (e) {
+			console.error(e);
 			const actions =
 				period?.checkout?.order?.id || period?.checkout?.order
 					? [

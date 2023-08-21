@@ -5,12 +5,17 @@ import { ScText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 export default ({ order, loading }) => {
-	if (!Object.keys(order?.checkout?.metadata || {}).length || loading) {
+	const {
+		wp_created_by,
+		page_id,
+		page_url,
+		buy_page_product_id,
+		...metadata
+	} = order?.checkout?.metadata || {};
+
+	if (!Object.keys(metadata).length || loading) {
 		return null;
 	}
-
-	const { wp_created_by, page_id, page_url, ...metadata } =
-		order?.checkout?.metadata || {};
 
 	return (
 		<Box title={__('Additional Order Data', 'surecart')}>

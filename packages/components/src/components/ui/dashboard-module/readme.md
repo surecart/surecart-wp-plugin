@@ -40,9 +40,11 @@
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
@@ -75,9 +77,11 @@ graph TD;
   sc-customer-details --> sc-dashboard-module
   sc-customer-edit --> sc-dashboard-module
   sc-downloads-list --> sc-dashboard-module
+  sc-fulfillments --> sc-dashboard-module
   sc-invoices-list --> sc-dashboard-module
   sc-licenses-list --> sc-dashboard-module
   sc-order --> sc-dashboard-module
+  sc-order-confirm-provider --> sc-dashboard-module
   sc-order-confirmation-details --> sc-dashboard-module
   sc-orders-list --> sc-dashboard-module
   sc-password-nag --> sc-dashboard-module

@@ -1,4 +1,5 @@
-import { Component, Prop, h, Method, Listen } from '@stencil/core';
+import { Component, Prop, h, Method, Listen, Event, EventEmitter } from '@stencil/core';
+import { isRtl } from '../../../functions/page-align';
 
 @Component({
   tag: 'sc-radio-group',
@@ -24,6 +25,8 @@ export class ScRadioGroup {
   /** Is one of these items required. */
   @Prop() required: boolean;
 
+  @Event() scChange: EventEmitter<string>;
+
   /** Checks for validity and shows the browser's validation message if the control is invalid. */
   @Method()
   async reportValidity() {
@@ -31,14 +34,18 @@ export class ScRadioGroup {
     return this.input.reportValidity();
   }
 
-  @Listen('click')
+  @Listen('scChange')
   handleRadioClick(event) {
+    if (event.target.tagName !== 'SC-RADIO') return;
+    event.stopImmediatePropagation();
     const target = event.target as HTMLScRadioElement;
-    console.log(target);
     if (target.disabled) {
       return;
     }
-    this.value = target.value;
+    if (target.checked) {
+      this.value = target.value;
+      this.scChange.emit(target.value);
+    }
   }
 
   render() {
@@ -49,6 +56,7 @@ export class ScRadioGroup {
           'radio-group': true,
           'radio-group--invalid': this.invalid,
           'radio-group--is-required': this.required,
+          'radio-group--is-rtl': isRtl(),
         }}
         aria-invalid={this.invalid}
         role="radiogroup"
@@ -58,8 +66,9 @@ export class ScRadioGroup {
         </legend>
 
         <input type="text" class="radio-group__hidden-input" ref={el => (this.input = el as HTMLInputElement)} required={this.required} value={this.value} tabindex="-1" />
-
-        <slot></slot>
+        <div part="items" class="radio-group__items">
+          <slot></slot>
+        </div>
       </fieldset>
     );
   }

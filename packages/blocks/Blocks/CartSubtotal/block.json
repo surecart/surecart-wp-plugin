@@ -5,6 +5,7 @@
 	"title": "Cart Subtotal",
 	"description": "Display the cart subtotal",
 	"category": "surecart",
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,

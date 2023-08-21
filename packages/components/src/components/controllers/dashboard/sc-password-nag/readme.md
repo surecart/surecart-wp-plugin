@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property     | Attribute     | Description        | Type                                                        | Default     |
-| ------------ | ------------- | ------------------ | ----------------------------------------------------------- | ----------- |
-| `open`       | `open`        |                    | `boolean`                                                   | `true`      |
-| `successUrl` | `success-url` | The success url.   | `string`                                                    | `undefined` |
-| `type`       | `type`        | The type of alert. | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
+| Property           | Attribute           | Description                         | Type                                                        | Default     |
+| ------------------ | ------------------- | ----------------------------------- | ----------------------------------------------------------- | ----------- |
+| `enableValidation` | `enable-validation` | Ensures strong password validation. | `boolean`                                                   | `true`      |
+| `open`             | `open`              |                                     | `boolean`                                                   | `true`      |
+| `successUrl`       | `success-url`       | The success url.                    | `string`                                                    | `undefined` |
+| `type`             | `type`              | The type of alert.                  | `"danger" \| "info" \| "primary" \| "success" \| "warning"` | `'primary'` |
 
 
 ## Dependencies
@@ -24,7 +25,7 @@
 - [sc-icon](../../../ui/icon)
 - [sc-card](../../../ui/card)
 - [sc-form](../../../ui/form)
-- [sc-input](../../../ui/input)
+- [sc-password](../../../ui/sc-password)
 - [sc-flex](../../../ui/flex)
 - [sc-block-ui](../../../ui/block-ui)
 
@@ -37,12 +38,13 @@ graph TD;
   sc-password-nag --> sc-icon
   sc-password-nag --> sc-card
   sc-password-nag --> sc-form
-  sc-password-nag --> sc-input
+  sc-password-nag --> sc-password
   sc-password-nag --> sc-flex
   sc-password-nag --> sc-block-ui
   sc-alert --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-button --> sc-spinner
+  sc-password --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-block-ui --> sc-spinner

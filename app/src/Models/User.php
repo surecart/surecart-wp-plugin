@@ -3,11 +3,13 @@ namespace SureCart\Models;
 
 use ArrayAccess;
 use JsonSerializable;
+use SureCart\Models\Traits\SyncsCustomer;
 
 /**
  * User class.
  */
 class User implements ArrayAccess, JsonSerializable {
+	use SyncsCustomer;
 	/**
 	 * Holds the user.
 	 *
@@ -41,11 +43,13 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get the user's customer id.
 	 *
+	 * @param string $mode Customer mode.
+	 *
 	 * @return int|null
 	 */
 	protected function customerId( $mode = 'live' ) {
 		if ( empty( $this->user->ID ) ) {
-			return '';
+			return null;
 		}
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
 		if ( isset( $meta[ $mode ] ) ) {
@@ -55,6 +59,81 @@ class User implements ArrayAccess, JsonSerializable {
 			return $meta[0];
 		}
 		return null;
+	}
+
+	/**
+	 * Sync the customer ids.
+	 *
+	 * @return array Array of synced items.
+	 */
+	protected function syncCustomerIds() {
+		// syncing disabled.
+		if ( ! $this->shouldSyncCustomer() ) {
+			return false;
+		}
+
+		// get all customers by email address (live and test).
+		$customers = Customer::where(
+			[
+				'email' => strtolower( $this->user->user_email ),
+			]
+		)->get();
+
+		if ( is_wp_error( $customers ) ) {
+			return $customers;
+		}
+
+		// we have customers.
+		$live_customer = current(
+			array_filter(
+				$customers,
+				function( $customer ) {
+					return $customer->live_mode;
+				}
+			)
+		);
+
+		$test_customer = current(
+			array_filter(
+				$customers,
+				function( $customer ) {
+					return ! $customer->live_mode;
+				}
+			)
+		);
+
+		if ( empty( $live_customer->id ) ) {
+			$live_customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => true,
+				],
+				false // don't create a user.
+			);
+		}
+		if ( empty( $test_customer->id ) ) {
+			$test_customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => false,
+				],
+				false // don't create a user.
+			);
+		}
+
+		if ( ! empty( $live_customer->id ) ) {
+			$this->setCustomerId( $live_customer->id, 'live' );
+		}
+		if ( ! empty( $test_customer->id ) ) {
+			$this->setCustomerId( $test_customer->id, 'test' );
+		}
+
+		return [
+			'live' => $this->customerId( 'live' ),
+			'test' => $this->customerId( 'test' ),
+		];
 	}
 
 	/**
@@ -118,6 +197,28 @@ class User implements ArrayAccess, JsonSerializable {
 		$meta[ $mode ] = $id;
 		// update meta.
 		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
+		return $this;
+	}
+
+	/**
+	 * Remove the the customer id from the user meta.
+	 *
+	 * @param string $mode Customer mode.
+	 * @return $this
+	 */
+	protected function removeCustomerId( $mode = 'live' ) {
+		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
+
+		// if we are setting something here.
+		if ( ! empty( $meta[ $mode ] ) ) {
+			// set mode empty.
+			unset( $meta[ $mode ] );
+		}
+
+		// update meta.
+		update_user_meta( $this->user->ID, $this->customer_id_key, $meta );
+
+		// return this.
 		return $this;
 	}
 
@@ -291,7 +392,6 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return $this
 	 */
 	protected function findByCustomerId( $id ) {
-
 		if ( ! is_string( $id ) || empty( $id ) ) {
 			return false;
 		}

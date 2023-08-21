@@ -9,6 +9,7 @@
  * @package SureCart
  */
 
+use SureCart\Middleware\AccountClaimMiddleware;
 use SureCart\Models\ApiToken;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +28,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
-->handle( 'Onboarding@show' );
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Claim Account
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->get()
+->where( 'admin', 'sc-claim-account' )
+->name( 'account.claim' )
+->middleware( AccountClaimMiddleware::class )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
+->handle( 'OnboardingController@show' );
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->get()
 ->where( 'admin', 'sc-dashboard' )
-->middleware( 'user.can:manage_options' )
+->middleware( 'user.can:manage_sc_shop_settings' )
 ->middleware( 'assets.components' )
 ->name( 'dashboard.show' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Dashboard\\' )
@@ -54,10 +69,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->middleware( 'user.can:manage_options' )
 ->middleware( 'assets.components' )
 ->middleware( 'assets.brand_colors' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Onboarding\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->handle( 'Onboarding@complete' );
-		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'Onboarding@save' );
+		\SureCart::route()->get()->handle( 'OnboardingController@complete' );
+		\SureCart::route()->post()->middleware( 'nonce:update_plugin_settings' )->handle( 'OnboardingController@save' );
 	}
 );
 
@@ -77,6 +93,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'OrdersViewController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'OrdersViewController@edit' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'archive', 'action' )->handle( 'OrdersViewController@archive' );
+	}
+);
+
+/*
+|--------------------------------------------------------------------------
+| Checkouts
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-checkouts' )
+->middleware( 'user.can:edit_sc_orders' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Checkouts\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'CheckoutsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'CheckoutsController@edit' );
 	}
 );
 
@@ -310,10 +343,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_preservation', 'tab' )->name( 'settings.subscription_preservation' )->handle( 'SubscriptionPreservationSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'customer_notification_protocol', 'tab' )->name( 'settings.customer' )->handle( 'CustomerSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'subscription_protocol', 'tab' )->name( 'settings.subscription' )->handle( 'SubscriptionSettings@show' );
-		\SureCart::route()->get()->where( 'sc_url_var', 'portal_protocol', 'tab' )->name( 'settings.portal' )->handle( 'PortalSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->where( 'sc_url_var', 'region', 'type' )->name( 'settings.tax.region' )->handle( 'TaxRegionSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'tax_protocol', 'tab' )->name( 'settings.tax' )->handle( 'TaxSettings@show' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'upgrade', 'tab' )->name( 'settings.upgrade' )->handle( 'UpgradeSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'shipping_protocol', 'tab' )->where('sc_url_var','shipping_profile','type')->name( 'settings.shipping.profile' )->handle( 'ShippingProfileSettings@show' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'shipping_protocol', 'tab' )->name( 'settings.shipping' )->handle( 'ShippingSettings@show' );
 
 		// Connection.
 		\SureCart::route()->get()->where( 'sc_url_var', 'connection', 'tab' )->name( 'settings.connection' )->handle( 'ConnectionSettings@show' );

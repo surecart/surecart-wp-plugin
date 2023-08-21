@@ -1,6 +1,8 @@
 import { Component, h, State, Prop, Element, Watch, Event, EventEmitter, Method } from '@stencil/core';
+import { sprintf, __ } from '@wordpress/i18n';
 import { FormSubmitController } from '../../../functions/form-data';
 
+const CHAR_LIMIT_THRESHOLD = 20;
 let id = 0;
 
 /**
@@ -28,6 +30,7 @@ export class ScTextarea {
   private resizeObserver: ResizeObserver;
 
   @State() private hasFocus = false;
+  @State() private showCharLimit = false;
 
   /** The textarea's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
@@ -117,6 +120,7 @@ export class ScTextarea {
   @Watch('value')
   handleValueChange() {
     this.invalid = !this.input.checkValidity();
+    this.showCharLimit = this.maxlength - this.value.length <= CHAR_LIMIT_THRESHOLD;
   }
 
   @Watch('disabled')
@@ -316,6 +320,11 @@ export class ScTextarea {
                 onBlur={() => this.handleBlur()}
               ></textarea>
             </div>
+            {this.showCharLimit && (
+              <div slot="help" class={'textarea__char-limit-warning'}>
+                {sprintf(__('%d characters remaining', 'surecart'), this.maxlength - this.input.value.length)}
+              </div>
+            )}
           </div>
         </sc-form-control>
       </div>

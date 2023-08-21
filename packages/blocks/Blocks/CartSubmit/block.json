@@ -5,23 +5,54 @@
 	"title": "Cart Submit Button",
 	"description": "The cart submit button",
 	"category": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/cart"],
 	"supports": {
+		"anchor": true,
+		"align": false,
+		"alignWide": false,
+		"multiple": false,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
 		"reusable": false,
-		"html": false,
-		"multiple": false
+		"shadow": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
 	},
 	"attributes": {
 		"text": {
 			"type": "string",
 			"default": "Checkout"
-		},
-		"show_icon": {
-			"type": "boolean"
-		},
-		"size": {
-			"type": "string",
-			"default": "medium"
 		},
 		"border": {
 			"type": "boolean"
@@ -34,12 +65,6 @@
 				"bottom": "1.25em",
 				"right": "1.25em"
 			}
-		},
-		"backgroundColor": {
-			"type": "string"
-		},
-		"textColor": {
-			"type": "string"
 		}
 	}
 }

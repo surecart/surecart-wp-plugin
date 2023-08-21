@@ -22,7 +22,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 0.75em;
     background-color: var(--sc-input-background-color);
     color: transparent;
     border-radius: 50%;
@@ -30,9 +29,9 @@
     background-color: var(--sc-input-background-color);
     display: inline-flex;
     color: transparent;
-    width: var(--sc-radio-size);
-    height: var(--sc-radio-size);
-    transition: var(--sc-transition-fast) border-color, var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) box-shadow;
+    width: var(--sc-toggle-radio-size, var(--sc-radio-size));
+    height: var(--sc-toggle-radio-size, var(--sc-radio-size));
+    transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
 
     svg {
@@ -60,7 +59,8 @@
   padding: var(--sc-toggle-header-padding, var(--sc-toggle-padding));
   user-select: none;
   cursor: pointer;
-  color: solid 1px var(--sc-toggle-details-color, var(--sc-color-gray-200));
+  color: var(--sc-toggle-header-color, var(--sc-input-label-color));
+  gap: 0.75em;
 }
 .details__header:focus {
   outline: none;
@@ -91,15 +91,16 @@
     transform: rotate(90deg);
   }
 }
-.details__body {
-  overflow: hidden;
-  border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
+.details__content {
+  padding: var(--sc-toggle-content-padding, var(--sc-toggle-padding));
+  padding-top: calc(var(--sc-toggle-content-padding, var(--sc-toggle-padding)) / 4);
 }
 .details--shady {
   .details__body {
+    border-top: solid var(--sc-input-border-width) var(--sc-input-border-color);
     background: var(--sc-toggle-shady-color, var(--sc-color-gray-50));
   }
-}
-.details__content {
-  padding: var(--sc-toggle-content-padding, var(--sc-toggle-padding));
+  .details__content {
+    padding-top: var(--sc-toggle-content-padding, var(--sc-toggle-padding));
+  }
 }

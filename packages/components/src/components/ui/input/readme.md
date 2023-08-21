@@ -132,13 +132,11 @@ Type: `Promise<void>`
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
- - [sc-order-password](../../controllers/checkout-form/order-password)
- - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
+ - [sc-password](../sc-password)
  - [sc-price-input](../price-input)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-select](../select)
- - [sc-stripe-element](../stripe-element)
  - [sc-tax-id-input](../tax-id-input)
- - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
 ### Depends on
@@ -161,13 +159,11 @@ graph TD;
   sc-licenses-list --> sc-input
   sc-login-form --> sc-input
   sc-login-provider --> sc-input
-  sc-order-password --> sc-input
-  sc-password-nag --> sc-input
+  sc-password --> sc-input
   sc-price-input --> sc-input
+  sc-product-item-list --> sc-input
   sc-select --> sc-input
-  sc-stripe-element --> sc-input
   sc-tax-id-input --> sc-input
-  sc-wordpress-password-edit --> sc-input
   sc-wordpress-user-edit --> sc-input
   style sc-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

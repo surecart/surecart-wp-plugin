@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
 import { hasSubscription } from '../../../functions/line-items';
-import { getCheckout } from '../../../services/session';
+import { fetchCheckout } from '../../../services/session';
 import { Checkout, PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from './functions';
 
@@ -123,7 +123,7 @@ export class ScPaypalButtons {
        */
       onApprove: async () => {
         try {
-          this.order = (await getCheckout({ id: this.order?.id })) as Checkout;
+          this.order = (await fetchCheckout({ id: this.order?.id })) as Checkout;
         } catch (e) {
           console.error(e);
           this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
@@ -136,7 +136,7 @@ export class ScPaypalButtons {
             method: 'PATCH',
             path: `surecart/v1/payment_intents/${this.order?.payment_intent?.id || this.order?.payment_intent}/capture`,
           })) as PaymentIntent;
-          if (['succeeded', 'pending', 'requires_approval'].includes(intent?.status)) {
+          if (['succeeded', 'processing'].includes(intent?.status)) {
             this.scSetState.emit('PAID');
             this.scPaid.emit();
           } else {

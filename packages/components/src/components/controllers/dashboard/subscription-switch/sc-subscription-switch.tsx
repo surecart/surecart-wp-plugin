@@ -77,7 +77,8 @@ export class ScSubscriptionSwitch {
     this.prices = this.products
       .map(product => (product as Product)?.prices?.data)
       .flat()
-      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i); // remove duplicates.
+      .filter((v, i, a) => a.findIndex(t => t.id === v.id) === i) // remove duplicates.
+      .filter(price => !price?.archived); // remove archived
 
     this.showFilters = this.prices?.length > this.filterAbove;
   }
@@ -90,10 +91,10 @@ export class ScSubscriptionSwitch {
 
     this.hasFilters = {
       ...this.hasFilters,
-      split: this.prices.some(price => price.recurring_interval === 'month' && price?.recurring_period_count),
-      month: this.prices.some(price => price.recurring_interval === 'month' && !price?.recurring_period_count),
-      year: this.prices.some(price => price.recurring_interval === 'year'),
-      never: this.prices.some(price => price.recurring_interval === 'never' || !price.recurring_interval),
+      split: this.prices.some(price => price.recurring_interval === 'month' && price?.recurring_period_count && !price?.archived),
+      month: this.prices.some(price => price.recurring_interval === 'month' && !price?.recurring_period_count && !price?.archived),
+      year: this.prices.some(price => price.recurring_interval === 'year' && !price?.archived),
+      never: this.prices.some(price => (price.recurring_interval === 'never' || !price.recurring_interval) && !price?.archived),
     };
   }
 
@@ -249,7 +250,7 @@ export class ScSubscriptionSwitch {
                   }}
                 >
                   <div>
-                    <strong>{product?.name}</strong>
+                    <strong>{price?.name || product?.name}</strong>
                   </div>
                   <div slot="description">
                     {price?.ad_hoc ? (

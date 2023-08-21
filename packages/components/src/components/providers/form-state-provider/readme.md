@@ -5,11 +5,15 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+This component listens for a confirmed event and redirects to the success url.
+
 ## Events
 
-| Event                    | Description    | Type                                                                                                                                                       |
-| ------------------------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `scSetCheckoutFormState` | Set the state. | `CustomEvent<"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "updating">` |
+| Event                    | Description    | Type                                                                                                                                                                        |
+| ------------------------ | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scSetCheckoutFormState` | Set the state. | `CustomEvent<"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating">` |
 
 
 ## Dependencies

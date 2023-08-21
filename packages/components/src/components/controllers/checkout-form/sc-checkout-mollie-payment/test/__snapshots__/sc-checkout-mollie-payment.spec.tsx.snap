@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-checkout-mollie-payment renders 1`] = `
+<sc-checkout-mollie-payment>
+  <mock:shadow-root>
+    <sc-card>
+      <sc-skeleton style="width: 50%; margin-bottom: 0.5em;"></sc-skeleton>
+      <sc-skeleton style="width: 30%; margin-bottom: 0.5em;"></sc-skeleton>
+      <sc-skeleton style="width: 60%; margin-bottom: 0.5em;"></sc-skeleton>
+    </sc-card>
+  </mock:shadow-root>
+</sc-checkout-mollie-payment>
+`;

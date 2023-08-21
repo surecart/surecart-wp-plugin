@@ -5,7 +5,8 @@
 	"description": "Displays the customers orders.",
 	"category": "surecart",
 	"keywords": ["name", "customer", "dashboard"],
-	"ancestor": ["surecart/dashboard-page"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/dashboard-page", "surecart/dashboard-area"],
 	"supports": {
 		"reusable": false,
 		"html": false

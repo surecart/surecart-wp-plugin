@@ -57,31 +57,31 @@
 				<?php endif; ?>
 			</sc-tab>
 		</sc-upgrade-required>
-		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'portal_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'portal_protocol' === $tab ? 'active' : ''; ?>>
-			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="briefcase"></sc-icon>
-			<?php esc_html_e( 'Customer Portal', 'surecart' ); ?>
-		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'tax_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'tax_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="tag"></sc-icon>
 			<?php esc_html_e( 'Taxes', 'surecart' ); ?>
 		</sc-tab>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'shipping_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'shipping_protocol' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="truck"></sc-icon>
+			<?php esc_html_e( 'Shipping', 'surecart' ); ?>
+		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'processors' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'processors' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="credit-card"></sc-icon>
-			<?php esc_html_e( 'Processors', 'surecart' ); ?>
+			<?php esc_html_e( 'Payment Processors', 'surecart' ); ?>
 		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'export' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'export' === $tab ? 'active' : ''; ?> >
-			<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="layers" slot="prefix"></sc-icon>
+			<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="layers" slot="prefix"></sc-icon>
 			<?php esc_html_e( 'Data Export', 'surecart' ); ?>
 		</sc-tab>
 	<?php endif; ?>
 
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'connection' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'connection' === $tab ? 'active' : ''; ?> >
-		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="upload-cloud" slot="prefix"></sc-icon>
+		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="upload-cloud" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Connection', 'surecart' ); ?>
 	</sc-tab>
 
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'advanced' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'advanced' === $tab ? 'active' : ''; ?> >
-		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
+		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
@@ -90,12 +90,12 @@
 			<sc-card href="<?php echo esc_url( $upgrade_url ); ?>" class="surecart-cta">
 				<sc-flex flex-direction="column" flex-direction="column" style="--spacing: var(--sc-spacing-medium)">
 					<sc-flex justify-content="flex-start">
-						<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4; color: var(--sc-color-primary-500)" name="zap"></sc-icon>
+						<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; color: var(--sc-color-primary-500)" name="zap"></sc-icon>
 						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold)"><?php esc_html_e( 'Boost Your Revenue', 'surecart' ); ?></sc-text>
 					</sc-flex>
 					<sc-text><?php esc_html_e( 'Unlock revenue boosting features when you upgrade to Pro!', 'surecart' ); ?></sc-text>
 					<sc-button type="primary" href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank">
-						<?php esc_html_e( 'Upgrade To Pro', 'surecart' ); ?>
+						<?php esc_html_e( 'Upgrade To Premium', 'surecart' ); ?>
 					</sc-button>
 				</sc-flex>
 			</sc-card>

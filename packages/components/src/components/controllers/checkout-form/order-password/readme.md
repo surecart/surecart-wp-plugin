@@ -16,6 +16,7 @@
 | `confirmationPlaceholder` | `confirmation-placeholder` | The input's confirmation placeholder text.   | `string`                         | `undefined` |
 | `disabled`                | `disabled`                 | Disables the input.                          | `boolean`                        | `false`     |
 | `emailExists`             | `email-exists`             | Does the email exist?                        | `boolean`                        | `undefined` |
+| `enableValidation`        | `enable-validation`        | Ensures strong password validation.          | `boolean`                        | `true`      |
 | `help`                    | `help`                     | The input's help text.                       | `string`                         | `''`        |
 | `label`                   | `label`                    | The input's label.                           | `string`                         | `undefined` |
 | `loggedIn`                | `logged-in`                |                                              | `boolean`                        | `undefined` |
@@ -45,12 +46,13 @@ Type: `Promise<boolean>`
 
 ### Depends on
 
-- [sc-input](../../../ui/input)
+- [sc-password](../../../ui/sc-password)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-order-password --> sc-input
+  sc-order-password --> sc-password
+  sc-password --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   style sc-order-password fill:#f9f,stroke:#333,stroke-width:4px

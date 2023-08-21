@@ -69,12 +69,15 @@ class Form {
 	 */
 	protected function getMode( $id ) {
 		$this->post = get_post( $id );
+		if ( empty( $this->post ) ) {
+			return null;
+		}
 		$blocks     = parse_blocks( $this->post->post_content );
 		$form_block = $blocks[0] ?? false;
 		if ( ! $form_block || 'surecart/form' !== $form_block['blockName'] ) {
 			return '';
 		}
-		return $form_block['attrs']['mode'] ?? 'live';
+		return apply_filters( 'surecart/payments/mode', $form_block['attrs']['mode'] ?? 'live' );
 	}
 
 	/**

@@ -4,6 +4,7 @@
 	"description": "Display a toggle switch.",
 	"category": "surecart",
 	"keywords": ["submit", "button"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

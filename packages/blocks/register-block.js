@@ -1,11 +1,23 @@
-import { registerBlockType } from '@wordpress/blocks';
+import {
+	getBlockType,
+	registerBlockType,
+	unregisterBlockType,
+} from '@wordpress/blocks';
 
 /**
  * Function to register blocks provided by SureCart.
  */
-export const registerBlocks = (blocks = []) => {
-	return (blocks || []).forEach(registerBlock);
-};
+export const registerBlocks = (blocks = []) =>
+	(blocks || []).forEach(registerBlock);
+
+/**
+ * Function to unregister blocks provided by SureCart.
+ */
+export const unregisterBlocks = (blocks = []) =>
+	(blocks || [])
+		.filter((block) => block?.name)
+		.map((block) => block.name)
+		.forEach((name) => getBlockType(name) && unregisterBlockType(name));
 
 /**
  * Function to register an individual block.
@@ -23,11 +35,11 @@ const registerBlock = (block) => {
 	registerBlockType(
 		{
 			...metadata,
-			text_domain: 'surecart', // set our textdomain for everything.
+			textdomain: 'surecart', // set our textdomain for everything.
 		},
 		{
 			...settings,
-			title: metadata.title || settings.title,
+			// title: metadata.title || settings.title,
 		}
 	);
 };

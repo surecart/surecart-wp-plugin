@@ -16,18 +16,24 @@ export class ScWordPressPasswordEdit {
   @State() loading: boolean;
   @State() error: string;
 
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
+
   renderEmpty() {
     return <slot name="empty">{__('User not found.', 'surecart')}</slot>;
+  }
+
+  validatePassword(password: string) {
+    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
+    if (regex.test(password)) return true;
+    return false;
   }
 
   async handleSubmit(e) {
     this.loading = true;
     this.error = '';
     try {
-      const { password, password_confirm } = await e.target.getFormJson();
-      if (password !== password_confirm) {
-        throw { message: __('Passwords do not match.', 'surecart') };
-      }
+      const { password } = await e.target.getFormJson();
       await apiFetch({
         path: `wp/v2/users/me`,
         method: 'PATCH',
@@ -56,8 +62,7 @@ export class ScWordPressPasswordEdit {
         <slot name="end" slot="end" />
         <sc-card>
           <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-            <sc-input label={__('New Password', 'surecart')} name="password" type="password" required />
-            <sc-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
+            <sc-password enableValidation={this.enableValidation} label={__('New Password', 'surecart')} name="password" confirmation={true} required />
             <div>
               <sc-button type="primary" full submit>
                 {__('Update Password', 'surecart')}

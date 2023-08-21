@@ -7,19 +7,22 @@
 
 ## Properties
 
-| Property            | Attribute             | Description                                   | Type      | Default     |
-| ------------------- | --------------------- | --------------------------------------------- | --------- | ----------- |
-| `amount`            | `amount`              | Product monetary amount                       | `number`  | `undefined` |
-| `currency`          | `currency`            | Currency for the product                      | `string`  | `undefined` |
-| `editable`          | `editable`            | Can we select the quantity                    | `boolean` | `true`      |
-| `imageUrl`          | `image-url`           | Url for the product image                     | `string`  | `undefined` |
-| `interval`          | `interval`            | Recurring interval (i.e. monthly, once, etc.) | `string`  | `undefined` |
-| `max`               | `max`                 | The max allowed.                              | `number`  | `100`       |
-| `name`              | `name`                | Product name                                  | `string`  | `undefined` |
-| `quantity`          | `quantity`            | Quantity                                      | `number`  | `undefined` |
-| `removable`         | `removable`           | Is the line item removable                    | `boolean` | `undefined` |
-| `scratchAmount`     | `scratch-amount`      | The line item scratch amount                  | `number`  | `undefined` |
-| `trialDurationDays` | `trial-duration-days` | Trial duration days                           | `number`  | `undefined` |
+| Property               | Attribute                 | Description                                      | Type      | Default     |
+| ---------------------- | ------------------------- | ------------------------------------------------ | --------- | ----------- |
+| `amount`               | `amount`                  | Product monetary amount                          | `number`  | `undefined` |
+| `currency`             | `currency`                | Currency for the product                         | `string`  | `undefined` |
+| `editable`             | `editable`                | Can we select the quantity                       | `boolean` | `true`      |
+| `fees`                 | --                        | Product line item fees.                          | `Fee[]`   | `undefined` |
+| `imageUrl`             | `image-url`               | Url for the product image                        | `string`  | `undefined` |
+| `interval`             | `interval`                | Recurring interval (i.e. monthly, once, etc.)    | `string`  | `undefined` |
+| `max`                  | `max`                     | The max allowed.                                 | `number`  | `100`       |
+| `media`                | --                        | The product media                                | `Media`   | `undefined` |
+| `name`                 | `name`                    | Product name                                     | `string`  | `undefined` |
+| `quantity`             | `quantity`                | Quantity                                         | `number`  | `undefined` |
+| `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
+| `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
+| `setupFeeTrialEnabled` | `setup-fee-trial-enabled` | Is the setup fee not included in the free trial? | `boolean` | `true`      |
+| `trialDurationDays`    | `trial-duration-days`     | Trial duration days                              | `number`  | `undefined` |
 
 
 ## Events
@@ -32,25 +35,27 @@
 
 ## Shadow Parts
 
-| Part                   | Description                        |
-| ---------------------- | ---------------------------------- |
-| `"base"`               | The elements base wrapper.         |
-| `"image"`              |                                    |
-| `"input"`              | The input control.                 |
-| `"minus"`              | The minus control.                 |
-| `"minus-icon"`         | The minus icon.                    |
-| `"plus"`               | The plus control.                  |
-| `"plus-icon"`          | The plus icon.                     |
-| `"price"`              | The price wrapper.                 |
-| `"price__amount"`      | The price amount.                  |
-| `"price__description"` | The price description.             |
-| `"price__scratch"`     |                                    |
-| `"quantity__base"`     | The quantity base wrapper.         |
-| `"remove-icon__base"`  | The remove icon base wrapper.      |
-| `"static-quantity"`    | The statically displayed quantity. |
-| `"suffix"`             | The suffix items.                  |
-| `"text"`               | The text wrapper.                  |
-| `"title"`              | The product title.                 |
+| Part                             | Description                     |
+| -------------------------------- | ------------------------------- |
+| `"base"`                         | The component base              |
+| `"image"`                        | The product image               |
+| `"line-item__price-description"` | The line item price description |
+| `"price"`                        | The product price               |
+| `"price__amount"`                | The product price amount        |
+| `"price__description"`           | The product price description   |
+| `"price__scratch"`               | The product price scratch       |
+| `"product-line-item"`            | The product line item           |
+| `"quantity"`                     | The product quantity            |
+| `"quantity__input"`              | The product quantity input      |
+| `"quantity__minus"`              | The product quantity minus      |
+| `"quantity__minus-icon"`         | The product quantity minus icon |
+| `"quantity__plus"`               | The product quantity plus       |
+| `"quantity__plus-icon"`          | The product quantity plus icon  |
+| `"remove-icon__base"`            | The product remove icon         |
+| `"static-quantity"`              | The product static quantity     |
+| `"suffix"`                       | The product suffix              |
+| `"text"`                         | The product text                |
+| `"title"`                        | The product title               |
 
 
 ## Dependencies
@@ -68,6 +73,7 @@
 - [sc-format-number](../../util/format-number)
 - [sc-quantity-select](../quantity-select)
 - [sc-icon](../icon)
+- [sc-line-item](../line-item)
 
 ### Graph
 ```mermaid
@@ -75,6 +81,7 @@ graph TD;
   sc-product-line-item --> sc-format-number
   sc-product-line-item --> sc-quantity-select
   sc-product-line-item --> sc-icon
+  sc-product-line-item --> sc-line-item
   sc-quantity-select --> sc-icon
   sc-line-items --> sc-product-line-item
   sc-order --> sc-product-line-item

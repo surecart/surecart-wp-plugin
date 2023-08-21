@@ -1,7 +1,7 @@
 import { Component, Prop, h, Watch, State, Host, Listen, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
-import { Order } from '../../../types';
+import { Checkout } from '../../../types';
 
 @Component({
   tag: 'sc-login-provider',
@@ -13,7 +13,7 @@ export class ScLoginProvider {
 
   /** Is the user logged in. */
   @Prop() loggedIn: boolean;
-  @Prop() order: Order;
+  @Prop() order: Checkout;
 
   @Event() scSetLoggedIn: EventEmitter<boolean>;
   @Event() scSetCustomer: EventEmitter<{ email: string; name?: string }>;

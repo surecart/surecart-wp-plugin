@@ -16,8 +16,11 @@ export default ({
 	onQuery,
 	onFetch,
 	onNew,
+	children,
 	ad_hoc = true,
 	loading,
+	onScrollEnd = () => {},
+	...props
 }) => {
 	const selectRef = useRef();
 	const findProduct = throttle(
@@ -70,6 +73,8 @@ export default ({
 				onSelect(e.target.value);
 			}}
 			choices={choices}
+			onScScrollEnd={onScrollEnd}
+			{...props}
 		>
 			{onNew && (
 				<span slot="prefix">
@@ -82,6 +87,7 @@ export default ({
 					></ScDivider>
 				</span>
 			)}
+			{children}
 		</ScSelect>
 	);
 };

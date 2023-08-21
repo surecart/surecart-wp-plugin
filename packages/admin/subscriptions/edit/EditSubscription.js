@@ -76,13 +76,13 @@ export default () => {
 
 	useEffect(() => {
 		if (subscription?.id) {
-			console.log('fetching');
 			fetchUpcomingPeriod();
 		}
 	}, [
 		subscription?.id,
 		subscription?.quantity,
 		subscription?.price,
+		subscription?.ad_hoc_amount,
 		subscription?.trial_end_at,
 		skipProration,
 		updateBehavior,

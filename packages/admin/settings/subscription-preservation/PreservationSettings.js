@@ -24,9 +24,44 @@ import SurveyPreview from './SurveyPreview';
 export default () => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(false);
-	const [reasons, setReasons] = useState(null);
 	const { editEntityRecord, receiveEntityRecords } = useDispatch(coreStore);
 	const { save } = useSave();
+
+	const { reasons, loadingReasons } = useSelect((select) => {
+		const queryArgs = ['surecart', 'cancellation_reason'];
+		const unsortedReasons = select(coreStore).getEntityRecords(
+			...queryArgs
+		);
+		const loading = select(coreStore).isResolving(
+			'getEntityRecords',
+			queryArgs
+		);
+
+		// we always show the edited version of the price.
+		const reasons = (unsortedReasons || [])
+			.map((reason) => {
+				return {
+					...reason,
+					...select(coreStore).getRawEntityRecord(
+						'surecart',
+						'cancellation_reason',
+						reason?.id
+					),
+					...select(coreStore).getEntityRecordEdits(
+						'surecart',
+						'cancellation_reason',
+						reason?.id
+					),
+				};
+			})
+			// sort by position.
+			.sort((a, b) => a?.position - b?.position);
+
+		return {
+			reasons,
+			loading: loading && !reasons?.length,
+		};
+	});
 
 	/** Get the subscription protocol item. */
 	const { item, itemError, hasLoadedItem } = useSelect((select) => {
@@ -157,7 +192,7 @@ export default () => {
 					)}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Turning this one will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active.',
+							'Turning this on will collect subscription cancelation reasons and optionally offer a discount to keep their subscription active.',
 							'surecart'
 						)}
 					</span>
@@ -191,7 +226,7 @@ export default () => {
 							/>
 						}
 					>
-						<Reasons reasons={reasons} setReasons={setReasons} />
+						<Reasons reasons={reasons} loading={loadingReasons} />
 
 						<ScInput
 							label={__('Title', 'surecart')}

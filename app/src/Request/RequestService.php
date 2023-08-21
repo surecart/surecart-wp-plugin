@@ -2,6 +2,7 @@
 
 namespace SureCart\Request;
 
+use SureCart\Models\ApiToken;
 use SureCart\Support\Errors\ErrorsService;
 
 /**
@@ -51,18 +52,26 @@ class RequestService {
 	protected $cache_status = 'none';
 
 	/**
+	 * Is this request authorized?
+	 *
+	 * @var boolean
+	 */
+	protected $authorized = true;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string $token The rest api base path.
 	 */
-	public function __construct( $token = '', $base_path = '/v1', $errors_service = null ) {
+	public function __construct( $token = '', $base_path = '/v1', $errors_service = null, $authorized = true ) {
 		// error handing service.
 		$this->errors_service = $errors_service ? $errors_service : new ErrorsService();
 		// set the token.
 		$this->token = $token;
 		// set the base path and url.
-		$this->base_path = $base_path;
-		$this->base_url  = $this->getBaseUrl();
+		$this->base_path  = $base_path;
+		$this->base_url   = $this->getBaseUrl();
+		$this->authorized = $authorized;
 	}
 
 	/**
@@ -202,13 +211,18 @@ class RequestService {
 	 * @return mixed
 	 */
 	public function makeUncachedRequest( $endpoint, $args = [] ) {
+		// must have a token for the request.
+		if ( $this->authorized && empty( $this->token ) ) {
+			return new \WP_Error( 'missing_token', __( 'Please connect your site to SureCart.', 'surecart' ) );
+		}
+
 		// make sure we send json.
 		if ( empty( $args['headers']['Content-Type'] ) ) {
 			$args['headers']['Content-Type'] = 'application/json';
 		}
 
 		// add auth.
-		if ( empty( $args['headers']['Authorization'] ) ) {
+		if ( $this->authorized && ! empty( $this->token ) && empty( $args['headers']['Authorization'] ) ) {
 			$args['headers']['Authorization'] = "Bearer $this->token";
 		}
 
@@ -262,6 +276,11 @@ class RequestService {
 		$response_body = wp_remote_retrieve_body( $response );
 		$admin_notice  = (array) wp_remote_retrieve_header( $response, 'X-SURECART-WP-ADMIN-NOTICE' );
 
+		if ( ! $this->authorized ) {
+			$api_token = (string) wp_remote_retrieve_header( $response, 'X-SURECART-API-TOKEN' );
+			ApiToken::save( $api_token );
+		}
+
 		if ( $admin_notice ) {
 			// we don't care if this fails.
 			try {
@@ -271,11 +290,14 @@ class RequestService {
 			}
 		}
 
+		// Handle invalid token first.
+		if ( $this->authorized && 401 === $response_code ) {
+			ApiToken::clear();
+			return new \WP_Error( 'invalid_token', __( 'Invalid API token.', 'surecart' ) );
+		}
+
 		// check for errors.
 		if ( ! in_array( $response_code, [ 200, 201 ], true ) ) {
-			error_log( print_r( $response_body, 1 ) );
-			error_log( print_r( $url, 1 ) );
-			error_log( print_r( $args, 1 ) );
 			$body = json_decode( $response_body, true );
 			if ( is_string( $body ) ) {
 				return new \WP_Error( 'error', $response_body );
@@ -386,6 +408,11 @@ class RequestService {
 			// convert bool to int to prevent getting unset.
 			if ( is_bool( $arg ) ) {
 				$args[ $key ] = $arg ? 1 : 0;
+			}
+
+			// url encode any strings.
+			if ( is_string( $arg ) ) {
+				$args[ $key ] = urlencode( $arg );
 			}
 		}
 

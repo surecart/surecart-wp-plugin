@@ -31,7 +31,7 @@ export default ({ color, setColor, onFocus }) => {
 			/>
 			{!!open && (
 				<Popover
-					position="bottom left"
+					position="overlay"
 					focusOnMount
 					onFocusOutside={(e) => {
 						setOpen(false);

@@ -55,19 +55,6 @@ class WebhookController {
 	}
 
 	/**
-	 * Create a webhook for this install.
-	 */
-	public function create() {
-		return Webhook::create(
-			[
-				'description' => 'Main webhook for SureCart',
-				'enabled'     => true,
-				'url'         => \SureCart::routeUrl( 'webhooks.receive' ),
-			]
-		);
-	}
-
-	/**
 	 * Recieve webhook
 	 */
 	public function receive( $request ) {
@@ -144,7 +131,7 @@ class WebhookController {
 		// create the event name.
 		$event = $this->createEventName( $request['type'] );
 		$id    = $this->getObjectId( $request['data'] );
-		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data'] );
+		$model = new $this->models[ $request['data']['object']['object'] ]( $request['data']['object'] );
 
 		// broadcast the webhook.
 		do_action( $event, $model, $request );

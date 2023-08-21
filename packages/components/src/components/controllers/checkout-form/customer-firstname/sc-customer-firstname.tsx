@@ -1,6 +1,10 @@
 import { Customer, Checkout } from '../../../../types';
-import { Component, Prop, h, Event, EventEmitter, Watch, Method } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, Prop, h, Event, EventEmitter, Method } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
+import { getValueFromUrl } from '../../../../functions/util';
+import { state as userState } from '@store/user';
+import { state as checkoutState, onChange } from '@store/checkout';
+import { createOrUpdateCheckout } from '../../../../services/session';
 
 @Component({
   tag: 'sc-customer-firstname',
@@ -10,20 +14,16 @@ import { openWormhole } from 'stencil-wormhole';
 export class ScCustomerFirstname {
   private input: HTMLScInputElement;
 
+  private removeCheckoutListener: () => void;
+
   /** Is the user logged in. */
   @Prop() loggedIn: boolean;
-
-  /** (passed from the sc-checkout component automatically) */
-  @Prop() order: Checkout;
-
-  /** Force a customer. */
-  @Prop() customer: Customer;
 
   /** The input's size. */
   @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
 
   /** The input's value attribute. */
-  @Prop({ mutable: true }) value = '';
+  @Prop({ mutable: true }) value = getValueFromUrl('first_name');
 
   /** Draws a pill-style input with rounded edges. */
   @Prop({ reflect: true }) pill = false;
@@ -82,17 +82,61 @@ export class ScCustomerFirstname {
 
   @Method()
   async reportValidity() {
-    return this.input?.reportValidity?.();
+    if (!this.required) {
+      return await this.input?.reportValidity?.();
+    }
+    this.input?.setCustomValidity?.('');
+
+    if (!this.input?.value.trim().length) {
+      this.input.setCustomValidity(__('Field must not be empty.', 'surecart'));
+    }
+
+    const valid = await this.input?.reportValidity?.();
+
+    if (!valid) {
+      return false;
+    }
+
+    return valid;
   }
 
-  /** Sync customer email with session if it's updated by other means */
-  @Watch('order')
-  handleSessionChange(val) {
-    if (val?.first_name) {
-      if (val.first_name !== this.value) {
-        this.value = val?.first_name;
-      }
+  /** Silently update the checkout when the input changes. */
+  async handleChange() {
+    this.value = this.input.value;
+    try {
+      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { first_name: this.input.value } })) as Checkout;
+    } catch (error) {
+      console.error(error);
     }
+  }
+
+  /** Sync customer first name with session if it's updated by other means */
+  handleSessionChange() {
+    //return if we already have a value
+    if (this.value) return;
+
+    const fromUrl = getValueFromUrl('first_name');
+    if (!userState.loggedIn && !!fromUrl) {
+      this.value = fromUrl;
+      return;
+    }
+
+    if (!userState.loggedIn) {
+      this.value = (checkoutState?.checkout?.customer as Customer)?.first_name || checkoutState?.checkout?.first_name;
+    } else {
+      this.value = checkoutState?.checkout?.first_name || (checkoutState?.checkout?.customer as Customer)?.first_name;
+    }
+  }
+
+  /** Listen to checkout. */
+  componentWillLoad() {
+    this.handleSessionChange();
+    this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+  }
+
+  /** Remove listener. */
+  disconnectedCallback() {
+    this.removeCheckoutListener();
   }
 
   render() {
@@ -101,8 +145,7 @@ export class ScCustomerFirstname {
         type="text"
         name="first_name"
         ref={el => (this.input = el as HTMLScInputElement)}
-        value={this.customer?.first_name || this.value}
-        disabled={!!this.loggedIn}
+        value={this.value}
         label={this.label}
         help={this.help}
         autocomplete="first_name"
@@ -112,6 +155,7 @@ export class ScCustomerFirstname {
         invalid={this.invalid}
         autofocus={this.autofocus}
         hasFocus={this.hasFocus}
+        onScChange={() => this.handleChange()}
         onScInput={() => this.scInput.emit()}
         onScFocus={() => this.scFocus.emit()}
         onScBlur={() => this.scBlur.emit()}
@@ -119,5 +163,3 @@ export class ScCustomerFirstname {
     );
   }
 }
-
-openWormhole(ScCustomerFirstname, ['order', 'customer'], false);

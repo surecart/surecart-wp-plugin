@@ -7,6 +7,7 @@ import { Fragment } from '@wordpress/element';
 
 import Box from '../ui/Box';
 import Definition from '../ui/Definition';
+import { ScFormatDate } from '@surecart/components-react';
 
 export default ({ coupon, updateCoupon, loading }) => {
 	const formattedDiscount = () => {
@@ -78,7 +79,13 @@ export default ({ coupon, updateCoupon, loading }) => {
 
 					{!!coupon?.redeem_by && (
 						<Definition title={__('Redeem By', 'surecart')}>
-							{format('F j, Y', new Date(coupon.redeem_by))}
+							<ScFormatDate
+								type="timestamp"
+								date={coupon.redeem_by}
+								month="long"
+								day="numeric"
+								year="numeric"
+							/>
 						</Definition>
 					)}
 

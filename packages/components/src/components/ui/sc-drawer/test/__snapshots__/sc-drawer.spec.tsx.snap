@@ -6,12 +6,14 @@ exports[`sc-drawer renders 1`] = `
     <div class="drawer drawer--end drawer--fixed" hidden="" part="base">
       <div class="drawer__overlay" part="overlay" tabindex="-1"></div>
       <div aria-hidden="true" aria-labelledby="title" aria-modal="true" class="drawer__panel" part="panel" role="dialog" tabindex="0">
-        <header class="drawer__header" part="header">
+        <header part="header">
           <slot name="header">
-            <h2 class="drawer__title" id="title" part="title">
-              <slot name="label"></slot>
-            </h2>
-            <sc-icon class="drawer__close" exportparts="base:close-button__base" label="Close" name="x" part="close-button"></sc-icon>
+            <div class="drawer__header">
+              <h2 class="drawer__title" id="title" part="title">
+                <slot name="label"></slot>
+              </h2>
+              <sc-icon class="drawer__close" exportparts="base:close-button__base" label="Close" name="x" part="close-button"></sc-icon>
+            </div>
           </slot>
         </header>
         <footer class="drawer__header-suffix" part="header-suffix">

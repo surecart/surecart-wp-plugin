@@ -27,14 +27,14 @@
   }
 
   &--is-required .radio-group__label:after {
-    content: " *";
+    content: ' *';
     color: var(--sc-color-danger-500);
   }
 }
 
 ::slotted(sc-radio:not(:last-of-type)) {
   display: block;
-  margin-bottom: var(--sc-spacing-x-small) !important;
+  margin-bottom: var(--sc-spacing-x-small);
 }
 
 // .radio-group:not(.radio-group--has-fieldset) {
@@ -52,3 +52,12 @@
 //   overflow: hidden;
 //   white-space: nowrap;
 // }
+
+.radio-group--is-rtl {
+  &.radio-group {
+    &,
+    .radio-group__label {
+      text-align: right;
+    }
+  }
+}

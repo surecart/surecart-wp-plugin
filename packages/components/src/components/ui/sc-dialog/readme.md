@@ -46,6 +46,9 @@
 
  - [sc-cancel-dialog](../../controllers/dashboard/sc-cancel-dialog)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
+ - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-upgrade-required](../sc-upgrade-required)
 
@@ -62,6 +65,9 @@ graph TD;
   sc-button --> sc-spinner
   sc-cancel-dialog --> sc-dialog
   sc-login-provider --> sc-dialog
+  sc-order-confirm-provider --> sc-dialog
+  sc-payment-methods-list --> sc-dialog
+  sc-product-price-modal --> sc-dialog
   sc-subscription-details --> sc-dialog
   sc-upgrade-required --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px

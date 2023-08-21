@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-const { __ } = wp.i18n;
-import { ScButton } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { ScButton, ScIcon } from '@surecart/components-react';
+import { SortableKnob } from 'react-easy-sort';
 
 export default ({
 	isOpen,
@@ -24,16 +25,26 @@ export default ({
 			<div
 				onClick={() => setIsOpen && setIsOpen(!isOpen)}
 				css={css`
+					display: flex;
+					gap: var(--sc-spacing-small);
 					cursor: pointer;
 					flex: 1;
 					user-select: none;
-					display: inline-block;
 					color: var(--sc-input-label-color);
 					font-weight: var(--sc-input-label-font-weight);
 					text-transform: var(--sc-input-label-text-transform, none);
 					letter-spacing: var(--sc-input-label-letter-spacing, 0);
 				`}
 			>
+				<SortableKnob>
+					<ScIcon
+						name="drag"
+						css={css`
+							font-size: 16px;
+							cursor: grab;
+						`}
+					/>
+				</SortableKnob>
 				{children}
 			</div>
 			<div

@@ -14,6 +14,11 @@
     "jsx": "react",
     "jsxFactory": "h",
     "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@store/*": ["src/store/*"],
+      "@services/*": ["src/services/*"],
+    }
   },
   "include": ["src", "static-loader.js"],
   "exclude": ["node_modules"]

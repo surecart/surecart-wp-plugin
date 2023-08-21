@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
+	ScBlockUi,
 	ScBreadcrumb,
 	ScBreadcrumbs,
 	ScButton,
@@ -9,18 +10,21 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScBlockUi,
+	ScUpgradeRequired,
+	ScPremiumTag,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { store as noticesStore } from '@wordpress/notices';
+import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Logo from '../../templates/Logo';
 import Template from '../../templates/UpdateModel';
+import PaymentMethod from '../edit/modules/PaymentMethod';
 import CurrentPlan from './modules/CurrentPlan';
 import Customer from './modules/Customer';
 import Details from './modules/Details';
@@ -33,17 +37,59 @@ import PendingUpdate from './modules/PendingUpdate';
 import Periods from './modules/Periods';
 import Purchases from './modules/Purchases';
 import Tax from './modules/Tax';
-import UpcomingPeriod from './modules/UpcomingPeriod';
-import PaymentMethod from '../edit/modules/PaymentMethod';
+import PayOffSubscriptionModal from './modules/modals/PayOffSubscriptionModal';
+import LineItems from './modules/LineItems';
+import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
+import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
+import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
 import Coupon from '../edit/modules/Coupon';
 import CouponDisplay from './modules/CouponDisplay';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const [modal, setModal] = useState();
+	const [upcoming, setUpcoming] = useState();
+	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
+
+	useEffect(() => {
+		if (id) {
+			fetchUpcomingPeriod();
+		}
+	}, [id]);
+
+	const fetchUpcomingPeriod = async () => {
+		setLoadingUpcoming(true);
+		try {
+			const response = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(
+					`surecart/v1/subscriptions/${id}/upcoming_period`,
+					{
+						skip_product_group_validation: true,
+						expand: [
+							'period.checkout',
+							'checkout.line_items',
+							'line_item.price',
+							'price.product',
+							'period.subscription',
+						],
+					}
+				),
+				data: {
+					purge_pending_update: false,
+				},
+			});
+			setUpcoming(response);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		} finally {
+			setLoadingUpcoming(false);
+		}
+	};
 
 	const editSubscription = async (data) => {
 		try {
@@ -84,6 +130,7 @@ export default () => {
 						'period.checkout',
 						'checkout.line_items',
 						'line_item.price',
+						'line_item.fees',
 						'price',
 						'price.product',
 						'customer',
@@ -127,6 +174,13 @@ export default () => {
 			subscription?.status === 'completed'
 		)
 			return null;
+		if (subscription?.cancel_at_period_end && subscription?.restore_at) {
+			return (
+				<ScMenuItem onClick={() => setModal('dont_cancel')}>
+					{__("Don't Pause", 'surecart')}
+				</ScMenuItem>
+			);
+		}
 		if (subscription?.cancel_at_period_end) {
 			return (
 				<ScMenuItem onClick={() => setModal('dont_cancel')}>
@@ -156,16 +210,17 @@ export default () => {
 			</ScMenuItem>
 		);
 	};
-
+	/** Render the restore button */
 	const renderRestoreButton = () => {
 		if (subscription?.status !== 'canceled') return null;
 		return (
 			<ScMenuItem onClick={() => setModal('restore')}>
-				{__('Restore Subscription', 'surecart')}
+				{__('Restore Now', 'surecart')}
 			</ScMenuItem>
 		);
 	};
 
+	/** Render the update button */
 	const renderUpdateButton = () => {
 		if (!!Object.keys(subscription?.pending_update || {})?.length)
 			return null;
@@ -184,6 +239,94 @@ export default () => {
 			</ScMenuItem>
 		);
 	};
+
+	/** Render the pause button */
+	const renderPauseButton = () => {
+		if (subscription?.finite) return null;
+
+		if (
+			subscription?.cancel_at_period_end &&
+			subscription.current_period_end_at &&
+			subscription.restore_at
+		)
+			return null;
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+
+		const upgradeRequired =
+			!window.scData?.entitlements?.subscription_restore_at;
+		return (
+			<ScMenuItem
+				onClick={() =>
+					setModal(upgradeRequired ? 'upgrade_required' : 'pause')
+				}
+			>
+				{upgradeRequired
+					? __('Pause', 'surecart')
+					: __('Pause Subscription', 'surecart')}{' '}
+				{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+			</ScMenuItem>
+		);
+	};
+	const renderPayOffButton = () => {
+		if (['completed', 'canceled'].includes(subscription?.status))
+			return null;
+
+		if (!subscription?.finite) return null;
+
+		const upgradeRequired =
+			!window.scData?.entitlements?.subscription_pay_off;
+
+		return (
+			<ScMenuItem
+				onClick={() =>
+					setModal(upgradeRequired ? 'upgrade_required' : 'pay_off')
+				}
+			>
+				{upgradeRequired
+					? __('Pay Off', 'surecart')
+					: __('Pay Off Subscription', 'surecart')}
+				{upgradeRequired ? <ScPremiumTag slot="suffix" /> : null}
+			</ScMenuItem>
+		);
+	};
+
+	/** Render the restore at button */
+	const renderRestoreAtButton = () => {
+		const isSetToPause =
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at;
+
+		if (subscription?.status !== 'canceled' && !isSetToPause) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('restore_at')}>
+				{__('Restore At...', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	/** Render the renew at button */
+	const renderRenewAtButton = () => {
+		const isSetToPause =
+			!!subscription?.cancel_at_period_end &&
+			!!subscription?.current_period_end_at &&
+			subscription?.status !== 'canceled' &&
+			!!subscription?.restore_at;
+		if (isSetToPause) return null;
+
+		if (!['past_due', 'active'].includes(subscription?.status)) return null;
+
+		return (
+			<ScMenuItem onClick={() => setModal('renew_at')}>
+				{__('Change Renewal Date', 'surecart')}
+			</ScMenuItem>
+		);
+	};
+
+	const onRequestCloseModal = () => setModal(false);
 
 	return (
 		<Template
@@ -257,8 +400,12 @@ export default () => {
 							</ScMenuItem>
 						)}
 						{renderUpdateButton()}
+						{renderRenewAtButton()}
+						{renderPauseButton()}
+						{renderPayOffButton()}
 						{renderCompleteButton()}
 						{renderCancelButton()}
+						{renderRestoreAtButton()}
 						{renderRestoreButton()}
 					</ScMenu>
 				</ScDropdown>
@@ -285,14 +432,9 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				<UpcomingPeriod
-					lineItem={
-						subscription?.current_period?.checkout?.line_items
-							?.data?.[0]
-					}
-					subscriptionId={id}
-					loading={!hasLoadedSubscription}
-				/>
+				{!!upcoming && (
+					<LineItems period={upcoming} loading={loadingUpcoming} />
+				)}
 
 				<Periods subscriptionId={id} />
 
@@ -313,24 +455,52 @@ export default () => {
 
 			<CancelPendingUpdate
 				open={modal === 'cancel_update'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<CancelSubscriptionModal
 				subscription={subscription}
 				open={modal === 'cancel'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<DontCancelModal
 				open={modal === 'dont_cancel'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<CompleteSubscriptionModal
 				open={modal === 'complete'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
 			/>
 			<RestoreSubscriptionModal
+				amountDue={upcoming?.checkout?.amount_due}
+				currency={upcoming?.checkout?.currency}
 				open={modal === 'restore'}
-				onRequestClose={() => setModal(false)}
+				onRequestClose={onRequestCloseModal}
+			/>
+
+			<RestoreSubscriptionAtModal
+				open={modal === 'restore_at'}
+				onRequestClose={onRequestCloseModal}
+				subscription={subscription}
+			/>
+			<PauseSubscriptionUntilModal
+				open={modal === 'pause'}
+				onRequestClose={onRequestCloseModal}
+				currentPeriodEndAt={subscription?.current_period_end_at}
+			/>
+			<RenewSubscriptionAtModal
+				open={modal === 'renew_at'}
+				onRequestClose={onRequestCloseModal}
+				subscription={subscription}
+			/>
+			<PayOffSubscriptionModal
+				open={modal === 'pay_off'}
+				onRequestClose={onRequestCloseModal}
+			/>
+			<ScUpgradeRequired
+				style={{ display: 'block' }}
+				required
+				open={modal === 'upgrade_required'}
+				onScRequestClose={onRequestCloseModal}
 			/>
 
 			{isSaving && <ScBlockUi spinner />}

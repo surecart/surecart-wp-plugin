@@ -44,6 +44,28 @@ class CustomerController extends RestController {
 	}
 
 	/**
+	 * Sync Users with platform.
+	 * This catches the request and enqueues the action to start the sync.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function sync( \WP_REST_Request $request ) {
+		// enqueue action.
+		return as_enqueue_async_action(
+			'surecart/sync/customers',
+			[
+				'page'        => 1,
+				'batch_size'  => apply_filters( 'surecart/sync/customers/batch_size', 100 ),
+				'create_user' => $request->get_param( 'create_user' ),
+				'run_actions' => $request->get_param( 'run_actions' ),
+			],
+			'surecart'
+		);
+	}
+
+	/**
 	 * Expose media for a customer.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
@@ -76,6 +98,7 @@ class CustomerController extends RestController {
 					'user_email' => ! empty( $request['email'] ) ? $request['email'] : $wp_user->user_email,
 					'first_name' => ! empty( $request['first_name'] ) ? $request['first_name'] : $wp_user->first_name,
 					'last_name'  => ! empty( $request['last_name'] ) ? $request['last_name'] : $wp_user->last_name,
+					'phone'      => ! empty( $request['phone'] ) ? $request['phone'] : $wp_user->phone,
 				]
 			);
 		}

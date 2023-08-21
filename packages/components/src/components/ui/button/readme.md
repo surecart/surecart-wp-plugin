@@ -53,7 +53,6 @@
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
- - [sc-cart-submit](../../controllers/cart/cart-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
@@ -65,14 +64,21 @@
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-order](../../controllers/dashboard/order)
+ - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-pagination](../pagination)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-paystack-add-method](../sc-paystack-add-method)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
+ - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-rich-text](../rich-text)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
@@ -100,7 +106,6 @@ graph TD;
   sc-cancel-discount --> sc-button
   sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
-  sc-cart-submit --> sc-button
   sc-charges-list --> sc-button
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button
@@ -112,14 +117,21 @@ graph TD;
   sc-licenses-list --> sc-button
   sc-login-form --> sc-button
   sc-login-provider --> sc-button
+  sc-mollie-add-method --> sc-button
   sc-order --> sc-button
+  sc-order-confirm-provider --> sc-button
   sc-order-submit --> sc-button
   sc-orders-list --> sc-button
   sc-pagination --> sc-button
   sc-password-nag --> sc-button
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
+  sc-paystack-add-method --> sc-button
+  sc-product-item-list --> sc-button
+  sc-product-price-modal --> sc-button
+  sc-product-selected-price --> sc-button
   sc-purchase-downloads-list --> sc-button
+  sc-rich-text --> sc-button
   sc-stripe-add-method --> sc-button
   sc-subscription --> sc-button
   sc-subscription-ad-hoc-confirm --> sc-button

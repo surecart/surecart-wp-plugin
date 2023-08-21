@@ -1,5 +1,6 @@
 import Address from './modules/Address';
 import Customer from './modules/Customer';
+import Phone from './modules/Phone';
 import MetaData from './modules/MetaData';
 import Purchases from './modules/Purchases';
 import TaxInfo from './modules/TaxInfo';
@@ -10,7 +11,13 @@ export default ({ order, checkout, customer, loading }) => {
 	return (
 		<Fragment>
 			<Customer customer={customer} loading={loading} />
-			<Purchases checkoutId={checkout?.id} />
+			{checkout?.phone && (
+				<Phone
+					phone={checkout?.phone}
+					label={__('Phone', 'surecart')}
+					loading={loading}
+				/>
+			)}
 			{!!checkout?.shipping_address && (
 				<Address
 					address={checkout?.shipping_address}
@@ -23,6 +30,7 @@ export default ({ order, checkout, customer, loading }) => {
 					loading={loading}
 				/>
 			)}
+			<Purchases checkoutId={checkout?.id} />
 			<MetaData order={order} loading={loading} />
 		</Fragment>
 	);

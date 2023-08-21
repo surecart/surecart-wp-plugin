@@ -9,6 +9,9 @@ import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
 
 export default ({ lineItem, loading, subscription }) => {
+	if (!loading && !lineItem) {
+		return null;
+	}
 	return (
 		<div
 			css={css`

@@ -4,7 +4,7 @@
 }
 
 .search {
-  margin: var(--sc-spacing-x-small)  var(--sc-spacing-x-small) 0 var(--sc-spacing-x-small);
+  margin: var(--sc-spacing-x-small) var(--sc-spacing-x-small) 0 var(--sc-spacing-x-small);
 }
 
 .loading {
@@ -39,11 +39,12 @@ sc-dropdown {
   white-space: nowrap;
   vertical-align: middle;
   padding: 0;
-  transition: var(--sc-transition-fast) background-color, var(--sc-transition-fast) color, var(--sc-transition-fast) border, var(--sc-transition-fast) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
+    var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   cursor: inherit;
   box-shadow: var(--sc-shadow-small);
   font-size: var(--sc-button-font-size-medium);
-  height: var(--sc-input-height-medium);
+  min-height: var(--sc-input-height-medium);
   line-height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
   border-radius: var(--sc-input-border-radius-medium);
   padding: 0 var(--sc-spacing-small);
@@ -81,7 +82,7 @@ sc-dropdown {
   color: var(--sc-color-gray-400);
 }
 
-.select--placeholder .trigger  {
+.select--placeholder .trigger {
   color: var(--sc-color-gray-400);
 }
 

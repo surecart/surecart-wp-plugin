@@ -1,5 +1,6 @@
 import { Component, h, Prop, Element, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -24,6 +25,9 @@ export class ScQuantitySelect {
   @Prop() max: number = Infinity;
   @Prop() min: number = 1;
   @Prop({ mutable: true, reflect: true }) quantity: number = 0;
+
+  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
+
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
@@ -48,12 +52,14 @@ export class ScQuantitySelect {
     if (this.disabled) return;
     this.quantity = Math.max(this.quantity - 1, this.min);
     this.scChange.emit(this.quantity);
+    this.scInput.emit(this.quantity);
   }
 
   increase() {
     if (this.disabled) return;
     this.quantity = Math.min(this.quantity + 1, this.max);
     this.scChange.emit(this.quantity);
+    this.scInput.emit(this.quantity);
   }
 
   handleBlur() {
@@ -85,6 +91,7 @@ export class ScQuantitySelect {
           // States
           'quantity--focused': this.hasFocus,
           'quantity--disabled': this.disabled,
+          'quantity--is-rtl': isRtl(),
         }}
       >
         <span

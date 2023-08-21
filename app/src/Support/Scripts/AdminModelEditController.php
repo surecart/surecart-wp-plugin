@@ -64,6 +64,10 @@ abstract class AdminModelEditController {
 	public function enqueueComponents() {
 		wp_enqueue_script( 'surecart-components' );
 		wp_enqueue_style( 'surecart-themes-default' );
+		wp_add_inline_style(
+			'surecart-themes-default',
+			':root { --sc-color-primary-text: #fff; }' // this is important in case the user has a dark primary text.
+		);
 	}
 
 	/**
@@ -92,6 +96,9 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
+		// remove admin notices.
+		remove_all_actions( 'admin_notices' );
+
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'admin_head',
@@ -116,16 +123,24 @@ abstract class AdminModelEditController {
 		);
 
 		// pass app url.
-		$this->data['upgrade_url']      = \SureCart::config()->links->purchase;
-		$this->data['surecart_app_url'] = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
-		$this->data['api_url']          = \SureCart::requests()->getBaseUrl();
-		$this->data['plugin_url']       = \SureCart::core()->assets()->getUrl();
+		$this->data['upgrade_url']       = \SureCart::config()->links->purchase;
+		$this->data['surecart_app_url']  = defined( 'SURECART_APP_URL' ) ? SURECART_APP_URL : '';
+		$this->data['api_url']           = \SureCart::requests()->getBaseUrl();
+		$this->data['plugin_url']        = \SureCart::core()->assets()->getUrl();
+		$this->data['home_url']          = untrailingslashit( get_home_url() );
+		$this->data['buy_page_slug']     = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
+		$this->data['product_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
+		$this->data['is_block_theme']    = \SureCart::utility()->blockTemplates()->isFSETheme();
+		$this->data['claim_url']         = ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '';
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;
 		}
 		if ( in_array( 'tax_protocol', $this->with_data ) ) {
 			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
+		}
+		if ( in_array( 'shipping_protocol', $this->with_data ) ) {
+			$this->data['shipping_protocol'] = \SureCart::account()->shipping_protocol;
 		}
 		if ( in_array( 'checkout_page_url', $this->with_data ) ) {
 			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();

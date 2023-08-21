@@ -29,8 +29,12 @@ export class ScOrderStatusBadge {
         return 'success';
       case 'payment_failed':
         return 'danger';
+      case 'canceled':
+        return 'danger';
       case 'void':
-        return 'default';
+        return 'danger';
+      case 'canceled':
+        return 'danger';
     }
   }
 
@@ -42,14 +46,22 @@ export class ScOrderStatusBadge {
         return __('Payment Failed', 'surecart');
       case 'paid':
         return __('Paid', 'surecart');
+      case 'canceled':
+        return __('Canceled', 'surecart');
       case 'void':
         return __('Void', 'surecart');
+      case 'canceled':
+        return __('Canceled', 'surecart');
       default:
         return this.status;
     }
   }
 
   render() {
-    return <sc-tag type={this.getType()}>{this.getText()}</sc-tag>;
+    return (
+      <sc-tag type={this.getType()} pill={this.pill}>
+        {this.getText()}
+      </sc-tag>
+    );
   }
 }

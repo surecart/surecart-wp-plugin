@@ -17,11 +17,23 @@ export default function save({ attributes }) {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const { verticalAlignment, width, sticky, stickyOffset } = attributes;
+	const {
+		verticalAlignment,
+		width,
+		sticky,
+		stickyOffset,
+		layout,
+		style: styleAttribute,
+	} = attributes;
+
+	const { blockGap } = styleAttribute?.spacing || {};
 
 	const wrapperClasses = classnames({
 		[`is-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
 		[`is-sticky`]: sticky,
+		['is-layout-constrained']: layout?.type === 'constrained',
+		[`is-horizontally-aligned-${layout?.justifyContent}`]:
+			layout?.justifyContent,
 	});
 
 	let style;
@@ -40,10 +52,18 @@ export default function save({ attributes }) {
 		style = { flexBasis };
 	}
 
+	if (layout?.contentSize) {
+		style = {
+			...style,
+			'--sc-column-content-width': layout.contentSize,
+		};
+	}
+
 	const blockProps = useBlockProps.save({
 		className: wrapperClasses,
 		style: {
 			...style,
+			...(!!blockGap ? { '--sc-form-row-spacing': blockGap } : {}),
 			top: stickyOffset,
 		},
 		sticky,

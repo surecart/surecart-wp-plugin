@@ -93,7 +93,6 @@ Type: `Promise<void>`
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
- - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -103,7 +102,6 @@ Type: `Promise<void>`
 graph TD;
   sc-cancel-survey --> sc-choice
   sc-order-bump --> sc-choice
-  sc-price-choice --> sc-choice
   sc-subscription-payment --> sc-choice
   sc-subscription-payment-method --> sc-choice
   sc-subscription-switch --> sc-choice

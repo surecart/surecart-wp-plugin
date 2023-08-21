@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
@@ -42,6 +43,9 @@ export class ScCouponForm {
   /** Is the form calculating */
   @Prop() busy: boolean;
 
+  /** The placeholder for the input */
+  @Prop() placeholder: string;
+
   /** The error message */
   @Prop({ mutable: true }) error: string;
 
@@ -60,11 +64,16 @@ export class ScCouponForm {
   /** Is it open */
   @Prop({ mutable: true }) open: boolean;
 
+  @Prop() collapsed: boolean;
+
   /** The value of the input */
   @State() value: string;
 
   /** When the coupon is applied */
   @Event() scApplyCoupon: EventEmitter<string>;
+
+  /** The text for apply button */
+  @Prop({ reflect: true }) buttonText: string;
 
   /** Auto focus the input when opened. */
   @Watch('open')
@@ -136,13 +145,14 @@ export class ScCouponForm {
       );
     }
 
-    return (
+    return this.collapsed ? (
       <div
         part="base"
         class={{
           'coupon-form': true,
           'coupon-form--is-open': this.open || this.forceOpen,
           'coupon-form--has-value': !!this.value,
+          'coupon-form--is-rtl': isRtl(),
         }}
       >
         <div
@@ -163,7 +173,7 @@ export class ScCouponForm {
             exportparts="base:input__base, input, form-control:input__form-control"
             value={this.value}
             onScInput={(e: any) => (this.value = e.target.value)}
-            placeholder={__('Enter coupon code', 'surecart')}
+            placeholder={this.placeholder}
             onScBlur={() => this.handleBlur()}
             onKeyDown={e => this.handleKeyDown(e)}
             ref={el => (this.input = el as HTMLScInputElement)}
@@ -177,9 +187,20 @@ export class ScCouponForm {
               class="coupon-button"
               onClick={() => this.applyCoupon()}
             >
-              <slot />
+              <slot>{this.buttonText}</slot>
             </sc-button>
           </sc-input>
+          <sc-button
+            exportparts="base:button__base, label:button_label"
+            type="primary"
+            outline
+            loading={this.busy}
+            size="medium"
+            class="coupon-button-mobile"
+            onClick={() => this.applyCoupon()}
+          >
+            <slot>{this.buttonText}</slot>
+          </sc-button>
           {!!this.error && (
             <sc-alert exportparts="base:error__base, icon:error__icon, text:error__text, title:error_title, message:error__message" type="danger" open>
               <span slot="title">{this.error}</span>
@@ -188,6 +209,53 @@ export class ScCouponForm {
         </div>
 
         {this.loading && <sc-block-ui exportparts="base:block-ui, content:block-ui__content"></sc-block-ui>}
+      </div>
+    ) : (
+      <div
+        class={{
+          'coupon-form': true,
+          'coupon-form--has-value': !!this.value,
+          'coupon-form--is-rtl': isRtl(),
+        }}
+      >
+        <sc-input
+          label={this.label}
+          exportparts="base:input__base, input, form-control:input__form-control"
+          value={this.value}
+          onScInput={(e: any) => (this.value = e.target.value)}
+          placeholder={this.placeholder}
+          onScBlur={() => this.handleBlur()}
+          onKeyDown={e => this.handleKeyDown(e)}
+          ref={el => (this.input = el as HTMLScInputElement)}
+        >
+          <sc-button
+            exportparts="base:button__base, label:button_label"
+            slot="suffix"
+            type="text"
+            loading={this.busy}
+            size="medium"
+            class="coupon-button"
+            onClick={() => this.applyCoupon()}
+          >
+            <slot>{this.buttonText}</slot>
+          </sc-button>
+        </sc-input>
+        <sc-button
+          exportparts="base:button__base, label:button_label"
+          type="primary"
+          outline
+          loading={this.busy}
+          size="medium"
+          class="coupon-button-mobile"
+          onClick={() => this.applyCoupon()}
+        >
+          <slot>{this.buttonText}</slot>
+        </sc-button>
+        {!!this.error && (
+          <sc-alert exportparts="base:error__base, icon:error__icon, text:error__text, title:error_title, message:error__message" type="danger" open>
+            <span slot="title">{this.error}</span>
+          </sc-alert>
+        )}
       </div>
     );
   }

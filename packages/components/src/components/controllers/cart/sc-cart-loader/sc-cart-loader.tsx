@@ -1,12 +1,12 @@
 import { Component, h, Prop } from '@stencil/core';
 
-import { clearOrder, getOrder } from '../../../../store/checkouts';
-import uiStore from '../../../../store/ui';
+import { clearOrder, getOrder } from '@store/checkouts';
+import uiStore from '@store/ui';
 
 @Component({
   tag: 'sc-cart-loader',
   styleUrl: 'sc-cart-loader.scss',
-  shadow: true,
+  shadow: false,
 })
 export class ScCartLoader {
   /** The form id to use for the cart. */
@@ -19,11 +19,10 @@ export class ScCartLoader {
   @Prop() template: string;
 
   render() {
-    /**
-     * Search for the sc-checkout component on a page to make sure
-     * we don't show the cart on a checkout page.
-     */
-    if (!!document.querySelector('sc-checkout')) return null;
+    // check for forms.
+    if (document.querySelector('sc-checkout')) {
+      return;
+    }
 
     // clear the order if it's already paid.
     const order = getOrder(this.formId, this.mode);

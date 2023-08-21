@@ -2,6 +2,7 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	...defaultConfig,
@@ -21,6 +22,10 @@ module.exports = {
 		},
 	},
 	entry: {
+		['admin/onboarding']: path.resolve(
+			__dirname,
+			'packages/admin/onboarding/index.js'
+		),
 		['admin/dashboard']: path.resolve(
 			__dirname,
 			'packages/admin/dashboard/index.js'
@@ -36,6 +41,10 @@ module.exports = {
 		['admin/customers']: path.resolve(
 			__dirname,
 			'packages/admin/customers/index.js'
+		),
+		['admin/checkouts']: path.resolve(
+			__dirname,
+			'packages/admin/checkouts/index.js'
 		),
 		['admin/orders']: path.resolve(
 			__dirname,
@@ -101,10 +110,6 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/subscription-preservation/index.js'
 		),
-		['admin/settings/portal']: path.resolve(
-			__dirname,
-			'packages/admin/settings/portal/index.js'
-		),
 		['admin/settings/processors']: path.resolve(
 			__dirname,
 			'packages/admin/settings/processors/index.js'
@@ -145,6 +150,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/upgrade/index.js'
 		),
+		['admin/settings/shipping']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/index.js'
+		),
+		['admin/settings/shipping/profile']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/profile/index.js'
+		),
 
 		/**
 		 * Data.
@@ -161,11 +174,48 @@ module.exports = {
 			__dirname,
 			'packages/components/static-loader.js'
 		),
+
+		/**
+		 * Templates
+		 */
+		['templates/admin']: path.resolve(
+			__dirname,
+			'packages/pages/admin/index.js'
+		),
+		['templates/instant-checkout']: path.resolve(
+			__dirname,
+			'packages/pages/instant-checkout/index.js'
+		),
+		['templates/customer-dashboard']: path.resolve(
+			__dirname,
+			'packages/pages/customer-dashboard/index.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
+	},
+	optimization: {
+		...defaultConfig.optimization,
+		minimizer: [
+			new TerserPlugin({
+				parallel: true,
+				exclude: /\.entry\.js$/,
+				terserOptions: {
+					output: {
+						comments: /translators:/i,
+					},
+					compress: {
+						passes: 2,
+					},
+					mangle: {
+						reserved: ['__', '_n', '_nx', '_x'],
+					},
+				},
+				extractComments: false,
+			}),
+		],
 	},
 	plugins: [
 		...defaultConfig.plugins,
@@ -177,7 +227,7 @@ module.exports = {
 				{
 					from: path.resolve(
 						__dirname,
-						'node_modules/@surecart/components/dist/surecart/icon-assets'
+						'./packages/components/src/components/ui/icon/icon-assets'
 					),
 					to: path.resolve(__dirname, 'dist/icon-assets'),
 				},

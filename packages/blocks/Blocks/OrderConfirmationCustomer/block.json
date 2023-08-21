@@ -6,6 +6,7 @@
 	"description": "Display an order confirmation customer section.",
 	"category": "surecart",
 	"keywords": ["customer", "thank you", "confirm"],
+  "textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false

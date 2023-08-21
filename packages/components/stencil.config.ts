@@ -28,6 +28,9 @@ export const config: Config = {
     },
     transformIgnorePatterns: ['node_modules/(?!stencil-fragment)'],
     setupFilesAfterEnv: ['./setup-tests.js'],
+    moduleNameMapper: {
+      '^@store/(.*)$': '<rootDir>/src/store/$1',
+    },
   },
   outputTargets: [
     reactOutputTarget({
@@ -41,7 +44,6 @@ export const config: Config = {
     },
     {
       type: 'dist-custom-elements',
-      autoDefineCustomElements: true,
     },
     {
       type: 'www',

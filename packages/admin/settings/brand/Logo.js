@@ -7,7 +7,7 @@ import { ScFormControl } from '@surecart/components-react';
 import { Button } from '@wordpress/components';
 import MediaLibrary from '../../components/MediaLibrary';
 
-export default ({ brand, editBrand, loading }) => {
+export default ({ label, brand, editBrand, loading }) => {
 	const onSelectMedia = (media) => {
 		return editBrand({
 			logo: media?.id,
@@ -87,10 +87,7 @@ export default ({ brand, editBrand, loading }) => {
 		}
 
 		return (
-			<ScFormControl
-				label={__('Product Image', 'surecart')}
-				showLabel={false}
-			>
+			<ScFormControl label={label} showLabel={false}>
 				<MediaLibrary
 					onSelect={onSelectMedia}
 					isPrivate={false}
@@ -106,9 +103,5 @@ export default ({ brand, editBrand, loading }) => {
 		);
 	};
 
-	return (
-		<ScFormControl label={__('Logo', 'surecart')}>
-			{renderContent()}
-		</ScFormControl>
-	);
+	return <ScFormControl label={label}>{renderContent()}</ScFormControl>;
 };

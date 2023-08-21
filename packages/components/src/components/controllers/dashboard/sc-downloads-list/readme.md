@@ -25,6 +25,7 @@
 
 ### Depends on
 
+- [sc-icon](../../../ui/icon)
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-card](../../../ui/card)
 - [sc-stacked-list](../../../ui/stacked-list)
@@ -37,6 +38,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-downloads-list --> sc-icon
   sc-downloads-list --> sc-dashboard-module
   sc-downloads-list --> sc-card
   sc-downloads-list --> sc-stacked-list

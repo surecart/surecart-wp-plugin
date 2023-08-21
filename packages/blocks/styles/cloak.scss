@@ -1,88 +1,106 @@
 @mixin sheen() {
-  background: linear-gradient(270deg, rgba(75, 85, 99, 0.2), rgba(75, 85, 99, 0.1), rgba(75, 85, 99, 0.1), rgba(75, 85, 99, 0.2));
-  background-size: 400% 100%;
-  background-size: 400% 100%;
-  animation: sheen 3s ease-in-out infinite;
+	background: linear-gradient(
+		270deg,
+		rgba(75, 85, 99, 0.2),
+		rgba(75, 85, 99, 0.1),
+		rgba(75, 85, 99, 0.1),
+		rgba(75, 85, 99, 0.2)
+	);
+	background-size: 400% 100%;
+	background-size: 400% 100%;
+	animation: sheen 3s ease-in-out infinite;
 }
 
 @mixin input_cloak() {
-  display: block;
-  height: var(--sc-input-height-medium);
-  border-radius: var(--sc-input-border-radius-medium);
-  @include sheen();
+	display: block;
+	height: var(--sc-input-height-medium);
+	border-radius: var(--sc-input-border-radius-medium);
+	@include sheen();
 }
 
 @mixin button_cloak() {
-  display: block;
-  width: auto;
-  border-radius: var(--sc-input-border-radius-medium);
-  height: var(--sc-input-height-large);
-  text-align: center;
-  color: transparent;
-  @include sheen();
+	display: block;
+	width: auto;
+	border-radius: var(--sc-input-border-radius-medium);
+	height: var(--sc-input-height-large);
+	text-align: center;
+	color: transparent;
+	@include sheen();
 }
 
 @keyframes sheen {
-  0% {
-    background-position: 200% 0;
-  }
-  to {
-    background-position: -200% 0;
-  }
+	0% {
+		background-position: 200% 0;
+	}
+	to {
+		background-position: -200% 0;
+	}
 }
 
 // form.
 sc-form {
-  display: block;
-  > *:not(:last-child) {
-    margin-bottom: var(--sc-form-row-spacing, 0.75em);
-    &.wp-block-spacer {
-      margin-bottom: 0;
-    }
-  }
-  .wp-block-columns .wp-block-column {
-    margin: 50px;
-  }
+	display: block;
+	> *:not(:last-child) {
+		margin-bottom: var(--sc-form-row-spacing, 0.75em);
+		&.wp-block-spacer {
+			margin-bottom: 0;
+		}
+	}
+	// .wp-block-columns .wp-block-column {
+	//   margin: 50px;
+	// }
 }
 
 // inputs
-sc-input, sc-customer-name, sc-customer-email {
-  &:not(.hydrated),
-  &:not(:defined) {
-    @include input-cloak();
-  }
+sc-input,
+sc-customer-name,
+sc-customer-email {
+	&:not(.hydrated),
+	&:not(:defined) {
+		@include input-cloak();
+	}
 }
 
 // buttons
-sc-order-submit, sc-button {
-  &:not(.hydrated),
-  &:not(:defined) {
-    @include button_cloak();
-  }
+sc-order-submit,
+sc-button {
+	&:not(.hydrated),
+	&:not(:defined) {
+		@include button_cloak();
+	}
 }
 
 sc-order-summary {
-  &:not(.hydrated),
-  &:not(:defined) {
-    @include button_cloak();
-  }
+	&:not(.hydrated),
+	&:not(:defined) {
+		@include button_cloak();
+	}
 }
 
-sc-tab-group, sc-tab {
-  &:not(.hydrated),
-  &:not(:defined) {
-    visibility: hidden;
-  }
+sc-tab-group,
+sc-tab {
+	&:not(.hydrated),
+	&:not(:defined) {
+		visibility: hidden;
+	}
 }
 
 //// columns
+sc-column {
+	&:not(.hydrated),
+	&:not(:defined) {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
 sc-columns {
 	display: flex;
 	box-sizing: border-box;
-  gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large)) !important;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+	gap: var(--sc-column-spacing, var(--sc-spacing-xxxx-large));
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
 
 	// Responsiveness: Allow wrapping on mobile.
 	flex-wrap: wrap !important;
@@ -109,10 +127,18 @@ sc-columns {
 		align-items: flex-end;
 	}
 
+	&:not(.is-not-stacked-on-mobile).is-full-height > sc-column {
+		@media (max-width: 781px) {
+			padding: 30px !important;
+		}
+	}
+
 	&:not(.is-not-stacked-on-mobile) > sc-column {
-    // Responsiveness: Show at most one columns on mobile. This must be
-    // important since the Column assigns its own width as an inline style.
-    flex-basis: 100% !important;
+		// Responsiveness: Show at most one columns on mobile. This must be
+		// important since the Column assigns its own width as an inline style.
+		@media (max-width: 781px) {
+			flex-basis: 100% !important;
+		}
 
 		// At large viewports, show all columns horizontally.
 		@media (min-width: 782px) {
@@ -128,7 +154,7 @@ sc-columns {
 
 			// Columns with an explicitly-assigned width should maintain their
 			// `flex-basis` width and not grow.
-			&[style*="flex-basis"] {
+			&[style*='flex-basis'] {
 				flex-grow: 0;
 			}
 		}
@@ -144,16 +170,15 @@ sc-columns {
 			flex-grow: 1;
 			// Columns with an explicitly-assigned width should maintain their
 			// `flex-basis` width and not grow.
-			&[style*="flex-basis"] {
+			&[style*='flex-basis'] {
 				flex-grow: 0;
 			}
 		}
 	}
 }
 
-
 sc-column {
-  display: block;
+	display: block;
 	flex-grow: 1;
 
 	// Prevent the columns from growing wider than their distributed sizes.
@@ -184,18 +209,18 @@ sc-column {
 		width: 100%;
 	}
 
-  @media (min-width: 782px) {
-    &.is-sticky {
-      position: sticky !important;
-      align-self: flex-start;
-      top: 0;
-    }
-  }
+	@media (min-width: 782px) {
+		&.is-sticky {
+			position: sticky !important;
+			align-self: flex-start;
+			top: 0;
+		}
+	}
 
-
-  > :not(.wp-block-spacer):not(:last-child):not(.is-empty) {
-    margin-bottom: var(--sc-form-row-spacing, 0.75em);
-    display: block;
-  }
+	> :not(.wp-block-spacer):not(:last-child):not(.is-empty):not(style) {
+		margin-bottom: var(--sc-form-row-spacing, 0.75em);
+	}
+	> :not(.wp-block-spacer):not(:last-child):not(.is-empty):not(style):not(.is-layout-flex) {
+		display: block;
+	}
 }
-

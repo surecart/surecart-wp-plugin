@@ -1,6 +1,8 @@
-import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
 import { FormSubmitController } from '../../../functions/form-data';
+import { isRtl } from '../../../functions/page-align';
 
 let id = 0;
 
@@ -110,16 +112,6 @@ export class ScChoice {
     this.input.checked = this.checked;
   }
 
-  handleClick() {
-    if (this.type === 'checkbox') {
-      this.checked = !this.checked;
-    } else {
-      this.checked = true;
-    }
-    // we only want to emit this when an action is actually taken
-    this.scChange.emit(this.input.checked);
-  }
-
   handleBlur() {
     this.hasFocus = false;
     this.scBlur.emit();
@@ -191,7 +183,7 @@ export class ScChoice {
       for (let entry of entries) {
         if (entry.contentBoxSize) {
           const contentBoxSize = Array.isArray(entry.contentBoxSize) ? entry.contentBoxSize[0] : entry.contentBoxSize;
-          setTimeout(() => (this.isStacked = contentBoxSize?.inlineSize < 250), 0);
+          setTimeout(() => (this.isStacked = contentBoxSize?.inlineSize < 350), 0);
         }
       }
     });
@@ -205,6 +197,17 @@ export class ScChoice {
     this.hasDefaultSlot = !!this.el.querySelector('[slot="default"]');
   }
 
+  @Listen('click')
+  handleClickEvent() {
+    if (this.type === 'checkbox') {
+      this.checked = !this.checked;
+      this.scChange.emit(this.input.checked);
+    } else if (!this.checked) {
+      this.checked = true;
+      this.scChange.emit(this.input.checked);
+    }
+  }
+
   render() {
     return (
       <Host tabindex="0" onFocus={() => this.input.focus()}>
@@ -216,6 +219,7 @@ export class ScChoice {
             'choice--disabled': this.disabled,
             'choice--focused': this.hasFocus,
             'choice--layout-columns': !this.isStacked,
+            'choice--is-rtl': isRtl(),
             [`choice--size-${this.size}`]: true,
           }}
           onKeyDown={e => this.handleKeyDown(e)}
@@ -267,9 +271,9 @@ export class ScChoice {
                 aria-labelledby={this.labelId}
                 tabindex="0"
                 // required={this.required}
-                onClick={() => this.handleClick()}
                 onBlur={() => this.handleBlur()}
                 onFocus={() => this.handleFocus()}
+                onChange={() => this.handleClickEvent()}
               />
             </span>
             <span part="label" id={this.labelId} class="choice__label">

@@ -3,10 +3,11 @@ import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
-import { createOrUpdateOrder } from '../../../../services/session';
-import { getOrder, setOrder } from '../../../../store/checkouts';
-import uiStore from '../../../../store/ui';
-import { Checkout, LineItemData } from '../../../../types';
+import { createOrUpdateCheckout } from '../../../../services/session';
+import { getOrder, setOrder } from '@store/checkouts';
+import uiStore from '@store/ui';
+import { Checkout, LineItemData, Product } from '../../../../types';
+import { doCartGoogleAnalytics } from '../../../../functions/google-analytics-cart';
 
 const query = {
   expand: [
@@ -79,6 +80,21 @@ export class ScCartForm {
       // store the checkout in localstorage and open the cart
       setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
+
+      const lineItem = order?.line_items?.data?.find(item => item.price?.id === this.priceId);
+      if(!!lineItem){
+         doCartGoogleAnalytics([
+          {
+            item_id: (lineItem?.price?.product as Product)?.id || '',
+            item_name: (lineItem?.price?.product as Product)?.name || '',
+            price: lineItem?.price?.amount || 0,
+            quantity: lineItem?.quantity || 1,
+            currency: order?.currency,
+            discount: lineItem?.discount_amount || 0,
+          },
+        ]);
+      }
+
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -95,7 +111,7 @@ export class ScCartForm {
     let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
 
     // Line item does not exist. Add it.
-    return (await createOrUpdateOrder({
+    return (await createOrUpdateCheckout({
       id: this.getOrder()?.id,
       data: {
         live_mode: this.mode === 'live',
@@ -106,7 +122,7 @@ export class ScCartForm {
               return {
                 ...item,
                 ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
-                quantity: !!item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
+                quantity: !item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
               };
             }
             // return item.

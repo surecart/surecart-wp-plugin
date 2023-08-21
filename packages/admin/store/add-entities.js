@@ -20,6 +20,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'brand',
+		kind: 'surecart',
+		label: __('Brand', 'surecart'),
+		baseURL: 'surecart/v1/brand',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'bump',
 		kind: 'surecart',
 		label: __('Bump', 'surecart'),
@@ -76,6 +83,20 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit', expand: ['media'] },
 	},
 	{
+		name: 'draft-checkout',
+		kind: 'surecart',
+		label: __('Draft Checkout', 'surecart'),
+		baseURL: 'surecart/v1/draft-checkouts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'fulfillment',
+		kind: 'surecart',
+		label: __('Fulfillment', 'surecart'),
+		baseURL: 'surecart/v1/fulfillments',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'integration',
 		kind: 'surecart',
 		label: __('Integration', 'surecart'),
@@ -109,6 +130,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('License', 'surecart'),
 		baseURL: 'surecart/v1/licences',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'line_item',
+		kind: 'surecart',
+		label: __('Line Items', 'surecart'),
+		baseURL: 'surecart/v1/line_items',
 		baseURLParams: { context: 'edit' },
 	},
 	{
@@ -147,6 +175,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'provisional_account',
+		kind: 'surecart',
+		label: __('Provisional Accounts', 'surecart'),
+		baseURL: 'surecart/v1/provisional_accounts',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'manual_payment_method',
 		kind: 'surecart',
 		label: __('Manual Payment Method', 'surecart'),
@@ -165,6 +200,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Product', 'surecart'),
 		baseURL: 'surecart/v1/products',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'product-media',
+		kind: 'surecart',
+		label: __('Product Media', 'surecart'),
+		baseURL: 'surecart/v1/product_medias',
 		baseURLParams: { context: 'edit' },
 	},
 	{
@@ -207,6 +249,41 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Refund', 'surecart'),
 		baseURL: 'surecart/v1/refunds',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'shipping-protocol',
+		kind: 'surecart',
+		label: __('Shipping Protocol', 'surecart'),
+		baseURL: 'surecart/v1/shipping_protocol',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'shipping-profile',
+		kind: 'surecart',
+		label: __('Shipping Profile', 'surecart'),
+		baseURL: 'surecart/v1/shipping_profiles',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'shipping-zone',
+		kind: 'surecart',
+		label: __('Shipping Zone', 'surecart'),
+		baseURL: 'surecart/v1/shipping_zones',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'shipping-rate',
+		kind: 'surecart',
+		label: __('Shipping Rate', 'surecart'),
+		baseURL: 'surecart/v1/shipping_rates',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'shipping-method',
+		kind: 'surecart',
+		label: __('Shipping Method', 'surecart'),
+		baseURL: 'surecart/v1/shipping_methods',
 		baseURLParams: { context: 'edit' },
 	},
 	{

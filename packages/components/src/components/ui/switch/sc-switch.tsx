@@ -14,6 +14,8 @@ export class ScSwitch {
   private input: HTMLInputElement;
   private switchId: string = `switch-${++id}`;
   private labelId = `switch-label-${id}`;
+  /** Does it have a description? */
+  @State() hasDescription: boolean;
 
   @State() private hasFocus: boolean = false;
 
@@ -107,6 +109,7 @@ export class ScSwitch {
     this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLScChoiceElement) => (control.checked ? control.value : undefined),
     }).addFormData();
+    this.hasDescription = !!this.el.querySelector('[slot="description"]');
   }
 
   disconnectedCallback() {
@@ -127,6 +130,7 @@ export class ScSwitch {
           'switch--focused': this.hasFocus,
           'switch--reversed': this.reversed,
           'switch--editing': this.edit,
+          'switch--has-description': this.hasDescription,
         }}
         onMouseDown={e => this.handleMouseDown(e)}
       >

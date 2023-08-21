@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-avatar has a label 1`] = `
+<sc-avatar label="Avatar label" shape="circle">
+  <mock:shadow-root>
+    <div aria-label="Avatar label" class="avatar avatar--circle" part="base" role="img">
+      <div aria-hidden="true" class="avatar__icon" part="icon">
+        <slot name="icon">
+          <sl-icon library="system" name="person-fill"></sl-icon>
+        </slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-avatar>
+`;
+
+exports[`sc-avatar has an image 1`] = `
+<sc-avatar image="https://s.gravatar.com/avatar/286186a3bf41fb8452d02941833caa24?s=80" shape="circle">
+  <mock:shadow-root>
+    <div aria-label="" class="avatar avatar--circle" part="base" role="img">
+      <div aria-hidden="true" class="avatar__icon" part="icon">
+        <slot name="icon">
+          <sl-icon library="system" name="person-fill"></sl-icon>
+        </slot>
+      </div>
+      <img alt="" class="avatar__image" loading="eager" part="image" src="https://s.gravatar.com/avatar/286186a3bf41fb8452d02941833caa24?s=80">
+    </div>
+  </mock:shadow-root>
+</sc-avatar>
+`;
+
+exports[`sc-avatar has rounded shape 1`] = `
+<sc-avatar shape="rounded">
+  <mock:shadow-root>
+    <div aria-label="" class="avatar avatar--rounded" part="base" role="img">
+      <div aria-hidden="true" class="avatar__icon" part="icon">
+        <slot name="icon">
+          <sl-icon library="system" name="person-fill"></sl-icon>
+        </slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-avatar>
+`;
+
+exports[`sc-avatar has square shape 1`] = `
+<sc-avatar shape="square">
+  <mock:shadow-root>
+    <div aria-label="" class="avatar avatar--square" part="base" role="img">
+      <div aria-hidden="true" class="avatar__icon" part="icon">
+        <slot name="icon">
+          <sl-icon library="system" name="person-fill"></sl-icon>
+        </slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-avatar>
+`;
+
+exports[`sc-avatar renders 1`] = `
+<sc-avatar shape="circle">
+  <mock:shadow-root>
+    <div aria-label="" class="avatar avatar--circle" part="base" role="img">
+      <div aria-hidden="true" class="avatar__icon" part="icon">
+        <slot name="icon">
+          <sl-icon library="system" name="person-fill"></sl-icon>
+        </slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-avatar>
+`;
+
+exports[`sc-avatar renders initials 1`] = `
+<sc-avatar initials="AG" shape="circle">
+  <mock:shadow-root>
+    <div aria-label="" class="avatar avatar--circle" part="base" role="img">
+      <div class="avatar__initials" part="initials">
+        AG
+      </div>
+    </div>
+  </mock:shadow-root>
+</sc-avatar>
+`;

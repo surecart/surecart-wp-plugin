@@ -9,14 +9,14 @@
   font-family: var(--sc-font-sans);
   font-size: var(--sc-font-size-medium);
   font-weight: var(--sc-font-weight-normal);
-  line-height: var(--sc-line-height-normal);
+  line-height: var(--sc-menu-item-line-height, var(--sc-line-height-normal));
   letter-spacing: var(--sc-letter-spacing-normal);
   text-align: left;
   color: var(--sc-menu-item-color, var(--sc-color-gray-700));
   padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-large);
-  transition: var(--sc-transition-fast) fill;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) fill, var(--sc-input-transition, var(--sc-transition-medium)) background-color;
   user-select: none;
-  white-space: nowrap;
+  white-space: var(--sc-menu-item-white-space, nowrap);
   cursor: pointer;
   text-decoration: none;
 
@@ -70,4 +70,15 @@
 
 .menu-item--checked .menu-item__check {
   visibility: visible;
+}
+
+.menu-item--is-rtl{
+  &.menu-item{
+    text-align: right;
+
+    .menu-item__check{
+      left: auto;
+      right: 0.5em;
+    }
+  }
 }

@@ -1,9 +1,36 @@
 import { sprintf, __ } from '@wordpress/i18n';
 
 export const maybeConvertAmount = (amount, currency) => {
-	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'XAF'].includes(
-		currency.toUpperCase()
-	)
+	return [
+		'BIF',
+		'BYR',
+		'CLP',
+		'DJF',
+		'GNF',
+		'HUF',
+		'ISK',
+		'JPY',
+		'KMF',
+		'KRW',
+		'PYG',
+		'RWF',
+		'UGX',
+		'VND',
+		'VUV',
+		'XAF',
+		'XAG',
+		'XAU',
+		'XBA',
+		'XBB',
+		'XBC',
+		'XBD',
+		'XDR',
+		'XOF',
+		'XPD',
+		'XPF',
+		'XPT',
+		'XTS',
+	].includes(currency.toUpperCase())
 		? amount
 		: amount / 100;
 };

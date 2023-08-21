@@ -183,7 +183,9 @@ class CancellationInsightsListTable extends ListTable {
 		if ( $act->preserved ) {
 			ob_start();
 			?>
-			<sc-tag type="success"><?php echo esc_html__( 'Saved', 'surecart' ); ?> </sc-tag>
+			<sc-tag type="success"><?php
+			// translators: Subscription saver feature. This is displayed if the subscription has been "Saved" from cancellation.
+			echo esc_html__( 'Saved', 'surecart' ); ?> </sc-tag>
 			<?php if ( $act->coupon_applied ) { ?>
 				<sc-tag type="info"><?php echo esc_html__( 'Coupon Applied', 'surecart' ); ?></sc-tag>
 			<?php } ?>

@@ -4,7 +4,7 @@ exports[`sc-cc-logo renders 1`] = `
 <sc-cc-logo>
   <mock:shadow-root>
     <div class="cc-logo" part="base">
-      <sc-icon name="credit-card" style="--height: 0.63em;"></sc-icon>
+      <sc-icon name="creditcard" style="--height: 0.63em;"></sc-icon>
     </div>
   </mock:shadow-root>
 </sc-cc-logo>

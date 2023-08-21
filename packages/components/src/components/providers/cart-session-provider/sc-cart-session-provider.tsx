@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
-import { updateOrder } from '../../../services/session';
+import { updateCheckout } from '../../../services/session';
 import { Checkout, LineItemData } from '../../../types';
 
 @Component({
@@ -57,7 +57,7 @@ export class ScCartSessionProvider {
 
   /** Handle the error response. */
   handleErrorResponse(e) {
-    if (e?.code === 'readonly') {
+    if (e?.code === 'readonly' || e?.additional_errors?.[0]?.code === 'checkout.customer.account_mismatch') {
       this.scUpdateOrderState.emit(null);
     }
 
@@ -88,7 +88,7 @@ export class ScCartSessionProvider {
   /** Update a the order */
   async update(data = {}, query = {}) {
     try {
-      this.session = (await updateOrder({
+      this.session = (await updateCheckout({
         id: this.order?.id,
         data: {
           ...data,

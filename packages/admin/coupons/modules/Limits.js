@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSwitch } from '@surecart/components-react';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies.
+ */
 import Box from '../../ui/Box';
+import { ScAlert, ScInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -65,7 +68,9 @@ export default ({ coupon, loading, updateCoupon }) => {
 						checked={!!coupon?.redeem_by}
 						onScChange={(e) => {
 							updateCoupon({
-								redeem_by: e.target.checked ? Date.now() : null,
+								redeem_by: e.target.checked
+									? Date.now() / 1000
+									: null,
 							});
 						}}
 					>
@@ -92,18 +97,25 @@ export default ({ coupon, loading, updateCoupon }) => {
 								)}
 							</BaseControl.VisualLabel>
 							<DateTimePicker
-								currentDate={new Date(coupon?.redeem_by)}
-								onChange={(redeem_by) => {
+								currentDate={new Date(coupon?.redeem_by * 1000)}
+								onChange={(redeem_by) =>
 									updateCoupon({
-										redeem_by: new Date(
-											redeem_by
-										).getTime(),
-									});
-								}}
+										redeem_by:
+											Date.parse(new Date(redeem_by)) /
+											1000,
+									})
+								}
 							/>
 						</div>
 					)}
 				</div>
+
+				<ScAlert open type="info">
+					{__(
+						'Note: Redemption limits are not applied in test mode.',
+						'surecart'
+					)}
+				</ScAlert>
 			</div>
 		</Box>
 	);

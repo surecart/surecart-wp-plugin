@@ -39,6 +39,6 @@ class AdminRouteServiceProvider implements ServiceProviderInterface {
 	 * {@inheritDoc}
 	 */
 	public function bootstrap( $container ) {
-		// Nothing to bootstrap.
+		// nothing to bootstrap.
 	}
 }

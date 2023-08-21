@@ -5,6 +5,7 @@ import {
 	ScFormatNumber,
 	ScIcon,
 	ScLineItem,
+	ScOrderStatusBadge,
 	ScProductLineItem,
 	ScSkeleton,
 } from '@surecart/components-react';
@@ -16,11 +17,61 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import Box from '../../../ui/Box';
+import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
 
+const status = {
+	processing: __('Processing', 'surecart'),
+	payment_failed: __('Payment Failed', 'surecart'),
+	paid: __('Paid', 'surecart'),
+	canceled: __('Canceled', 'surecart'),
+	void: __('Void', 'surecart'),
+	canceled: __('Canceled', 'surecart'),
+};
+
 export default ({ order, checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
+
+	const statusBadge = () => {
+		if (!order?.status) {
+			return null;
+		}
+
+		if (order?.status === 'paid') {
+			return (
+				<ScIcon
+					css={css`
+						font-size: 22px;
+						color: var(--sc-color-success-500);
+					`}
+					name="check-circle"
+				/>
+			);
+		}
+
+		if (order?.status === 'void' || order?.status === 'payment_failed') {
+			return (
+				<ScIcon
+					css={css`
+						font-size: 22px;
+						color: var(--sc-color-danger-500);
+					`}
+					name="x-circle"
+				/>
+			);
+		}
+
+		return (
+			<ScIcon
+				css={css`
+					font-size: 22px;
+					color: var(--sc-color-warning-500);
+				`}
+				name="circle"
+			/>
+		);
+	};
 
 	const { charge, loadedCharge } = useSelect(
 		(select) => {
@@ -59,7 +110,18 @@ export default ({ order, checkout, loading }) => {
 
 	return (
 		<Box
-			title={__('Order Details', 'surecart')}
+			title={
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					{statusBadge()}
+					{status[order?.status] || order?.status}
+				</div>
+			}
 			loading={loading}
 			header_action={
 				order?.statement_url && (
@@ -76,7 +138,7 @@ export default ({ order, checkout, loading }) => {
 							href={addQueryArgs(order?.statement_url, {
 								receipt: true,
 							})}
-							type="primary"
+							type="default"
 							size="small"
 						>
 							{__('Download Receipt / Invoice', 'surecart')}
@@ -135,6 +197,7 @@ export default ({ order, checkout, loading }) => {
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}
+							fees={item?.fees?.data}
 							quantity={item.quantity}
 							amount={item.subtotal_amount}
 							currency={item?.price?.currency}
@@ -194,22 +257,19 @@ export default ({ order, checkout, loading }) => {
 					/>
 				)}
 
-				{!!checkout?.bump_amount && (
+				{!!checkout?.shipping_amount && (
 					<LineItem
-						label={__('Bump Discounts', 'surecart')}
+						label={__('Shipping', 'surecart')}
 						currency={checkout?.currency}
-						value={checkout?.bump_amount}
+						value={checkout?.shipping_amount}
 					/>
 				)}
 
 				{!!checkout?.tax_amount && (
 					<LineItem
-						label={
-							<>
-								{__('Tax', 'surecart')} -{' '}
-								{checkout?.tax_percent}%
-							</>
-						}
+						label={`${formatTaxDisplay(checkout?.tax_label)} (${
+							checkout?.tax_percent
+						}%)`}
 						currency={checkout?.currency}
 						value={checkout?.tax_amount}
 					/>

@@ -22,6 +22,9 @@ runs:
         extensions: mbstring, intl #optional, setup extensions
         ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
 
+    - name: Set up the Lokalise2 CLI
+      uses: frenck/action-setup-lokalise@v1
+
     - name: Check PHP Version
       shell: bash
       run: php -v

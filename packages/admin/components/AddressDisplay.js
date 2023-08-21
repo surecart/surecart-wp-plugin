@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 
 export default ({ address = {} }) => {
 	const [countryName, setCountryName] = useState();
-	const { name, line_1, line_2, city, state, postal_code, country } = address;
+	const { name, line_1, line_2, city, state, postal_code, country } =
+		address || {};
 
 	useEffect(() => {
 		let regionNames = new Intl.DisplayNames(['en'], { type: 'region' });

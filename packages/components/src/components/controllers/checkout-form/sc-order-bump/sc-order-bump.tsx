@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { isBumpInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
+import { sizeImage } from '../../../../functions/media';
 
 import { Bump, Checkout, LineItemData, Price, Product } from '../../../../types';
 
@@ -19,6 +20,8 @@ export class ScOrderBump {
 
   /** Should we show the controls */
   @Prop({ reflect: true }) showControl: boolean;
+
+  @Prop() cdnRoot: string = window.scData?.cdn_root;
 
   /** Add line item event */
   @Event() scAddLineItem: EventEmitter<LineItemData>;
@@ -58,6 +61,12 @@ export class ScOrderBump {
     return amount;
   }
 
+  renderInterval() {
+    const interval = intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } });
+    if (!interval.trim().length) return null;
+    return <span class="bump__interval">{interval}</span>;
+  }
+
   renderPrice() {
     return (
       <div slot="description" class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
@@ -69,11 +78,9 @@ export class ScOrderBump {
         ></sc-format-number>{' '}
         {this.newPrice() === 0 && __('Free', 'surecart')}
         {this.newPrice() !== null && this.newPrice() > 0 && (
-          <Fragment>
-            <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
-            <span class="bump__interval">{intervalString(this.bump?.price as Price, { labels: { interval: '/', period: __('for', 'surecart') } })}</span>
-          </Fragment>
+          <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
         )}
+        {this.renderInterval()}
       </div>
     );
   }
@@ -94,6 +101,7 @@ export class ScOrderBump {
 
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
+
     return (
       <sc-choice
         value={this.bump?.id}
@@ -113,10 +121,10 @@ export class ScOrderBump {
         </div>
 
         {this.bump?.metadata?.description && (
-          <div slot="footer">
+          <div slot="footer" class="bump__product--wrapper">
             <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
             <div class="bump__product">
-              {!!product?.image_url && <img src={product.image_url} class="bump__image" />}
+              {!!product?.image_url && <img src={sizeImage(product?.image_url, 130)} class="bump__image" />}
               <div class="bump__product-text">
                 {!!this.bump?.metadata?.cta && <div class="bump__product-title">{this.bump.name || product?.name}</div>}
                 {!!this.bump?.metadata?.description && <div class="bump__product-description">{this.bump?.metadata?.description}</div>}

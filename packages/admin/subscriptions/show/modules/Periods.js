@@ -11,7 +11,8 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScOrderStatusBadge,
-	ScText,
+	ScPremiumTag,
+	ScUpgradeRequired,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
@@ -73,7 +74,23 @@ export default ({ subscriptionId }) => {
 	return (
 		<>
 			<DataTable
-				title={__('Billing Periods', 'surecart')}
+				title={
+					<ScFlex flexDirection="row" justifyContent="space-between">
+						{__('Billing Periods', 'surecart')}{' '}
+						{!scData?.entitlements?.automatic_payment_retries && (
+							<ScUpgradeRequired>
+								<ScButton type="default" size="small">
+									{__('Enable Automatic Retries', 'surecart')}
+									<ScPremiumTag
+										slot="suffix"
+										size="small"
+										class="hydrated"
+									/>
+								</ScButton>
+							</ScUpgradeRequired>
+						)}
+					</ScFlex>
+				}
 				loading={loading}
 				updating={updating}
 				columns={{
@@ -97,6 +114,9 @@ export default ({ subscriptionId }) => {
 				items={(periods || [])
 					.sort((a, b) => b.created_at - a.created_at)
 					.map((period) => {
+						const orderId =
+							period?.checkout?.order?.id ||
+							period?.checkout?.order;
 						return {
 							period: (
 								<>
@@ -120,7 +140,9 @@ export default ({ subscriptionId }) => {
 							amount: (
 								<ScFormatNumber
 									type="currency"
-									currency={period?.checkout?.currency}
+									currency={
+										period?.checkout?.currency || 'usd'
+									}
 									value={period?.checkout?.amount_due || 0}
 								/>
 							),
@@ -154,7 +176,7 @@ export default ({ subscriptionId }) => {
 									)}
 								</ScFlex>
 							),
-							view: (
+							view: !!orderId && (
 								<ScDropdown placement="bottom-end">
 									<ScButton type="text" slot="trigger">
 										<ScIcon name="more-horizontal" />
@@ -181,10 +203,7 @@ export default ({ subscriptionId }) => {
 											href={addQueryArgs('admin.php', {
 												page: 'sc-orders',
 												action: 'edit',
-												id:
-													period?.checkout?.order
-														?.id ||
-													period?.checkout?.order,
+												id: orderId,
 											})}
 										>
 											<ScIcon

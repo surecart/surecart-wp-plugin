@@ -1,5 +1,4 @@
 import { RichText } from '@wordpress/block-editor';
-import { stripHTML } from '../../util';
 
 export default ({ className, attributes }) => {
 	const { name, checked, value, required, label, description } = attributes;
@@ -13,7 +12,11 @@ export default ({ className, attributes }) => {
 			required={required || false}
 		>
 			<RichText.Content value={label} />
-			<span slot="description">{stripHTML(description)}</span>
+			{!!description?.length && (
+				<span slot="description">
+					<RichText.Content value={description} />
+				</span>
+			)}
 		</sc-switch>
 	);
 };

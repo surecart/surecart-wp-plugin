@@ -5,6 +5,7 @@
 	"description": "Display an shipping address form. This is used for shipping and tax calculations.",
 	"category": "surecart",
 	"keywords": ["address", "shipping", "tax"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,

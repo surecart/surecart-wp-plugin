@@ -2,7 +2,8 @@
 
 namespace SureCart\Integrations\AffiliateWP;
 
-use Surecart\Integrations\AffiliateWP\AffiliateWPIntegration;
+use SureCart\Integrations\AffiliateWP\AffiliateWPIntegration;
+use SureCart\Integrations\AffiliateWP\AffiliateWPRecurringIntegration;
 
 /**
  * Controls the LearnDash integration.
@@ -15,6 +16,15 @@ class AffiliateWPService {
 	 */
 	public function bootstrap() {
 		add_filter( 'affwp_extended_integrations', [ $this, 'register' ] );
+
+		add_action(
+			'plugins_loaded',
+			function() {
+				if ( class_exists( 'Affiliate_WP_Recurring_Base' ) ) {
+					new AffiliateWPRecurringIntegration();
+				}
+			}
+		);
 	}
 
 	/**

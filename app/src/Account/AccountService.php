@@ -65,8 +65,17 @@ class AccountService {
 	public function fetchCachedAccount() {
 		$this->account = get_transient( $this->cache_key );
 		if ( false === $this->account ) {
+			// fetch account.
 			$this->account = $this->fetchAccount();
-			set_transient( $this->cache_key, $this->account, 60 );
+
+			// there was an error or the account could not be fetched by other means.
+			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
+				delete_transient( $this->cache_key );
+				return $this->account;
+			}
+
+			// set the transient.
+			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
 		}
 		return $this->account;
 	}
@@ -77,7 +86,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol' ] )->find();
+		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'shipping_protocol' ] )->find();
 		return $this->account;
 	}
 

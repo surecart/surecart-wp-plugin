@@ -5,6 +5,7 @@
 	"description": "Displays a title/heading section",
 	"category": "surecart",
 	"keywords": ["heading", "title"],
+  "textdomain": "surecart",
 	"ancestor": ["surecart/form", "surecart/card", "surecart/dashboard-page"],
 	"supports": {
 		"reusable": false,

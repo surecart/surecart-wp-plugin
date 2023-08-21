@@ -81,7 +81,10 @@ Type: `Promise<boolean>`
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
+ - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-password-nag](../../controllers/dashboard/sc-password-nag)
+ - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
+ - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
@@ -99,7 +102,10 @@ graph TD;
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form
   sc-login-provider --> sc-form
+  sc-mollie-add-method --> sc-form
   sc-password-nag --> sc-form
+  sc-product-price-modal --> sc-form
+  sc-product-selected-price --> sc-form
   sc-stripe-add-method --> sc-form
   sc-subscription-ad-hoc-confirm --> sc-form
   sc-subscription-payment --> sc-form

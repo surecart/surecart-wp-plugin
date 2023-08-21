@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScPasswordNag {
-  private input: HTMLScInputElement;
+  private input: HTMLScPasswordElement;
   @Prop({ mutable: true }) open: boolean = true;
   /** The type of alert. */
   @Prop({ reflect: true }) type: 'primary' | 'success' | 'info' | 'warning' | 'danger' = 'primary';
@@ -19,6 +19,9 @@ export class ScPasswordNag {
   @State() loading: boolean;
   @State() error: string;
   @State() success: boolean;
+
+  /** Ensures strong password validation. */
+  @Prop({ reflect: true }) enableValidation = true;
 
   @Watch('set')
   handleSetChange() {
@@ -48,15 +51,18 @@ export class ScPasswordNag {
     }
   }
 
+  validatePassword(password: string) {
+    const regex = new RegExp('^(?=.*?[#?!@$%^&*-]).{6,}$');
+    if (regex.test(password)) return true;
+    return false;
+  }
+
   /** Handle password submit. */
   async handleSubmit(e) {
     this.loading = true;
     this.error = '';
     try {
-      const { password, password_confirm } = await e.target.getFormJson();
-      if (password !== password_confirm) {
-        throw { message: __('Passwords do not match.', 'surecart') };
-      }
+      const { password } = await e.target.getFormJson();
       await apiFetch({
         path: `wp/v2/users/me`,
         method: 'PATCH',
@@ -78,20 +84,15 @@ export class ScPasswordNag {
   render() {
     if (this.success) {
       return (
-        <sc-alert style={{ marginBottom: 'var(--sc-spacing-xx-large)' }} type="success" open>
-          <span slot="title">{__('Succcess!', 'surecart')}</span>
+        <sc-alert type="success" open>
+          <span slot="title">{__('Success!', 'surecart')}</span>
           {__('You have successfully set your password.', 'surecart')}
         </sc-alert>
       );
     }
 
     return (
-      <sc-alert
-        type={this.type}
-        open={this.open}
-        exportparts="base, icon, text, title, message, close-icon"
-        style={{ marginBottom: this.open ? 'var(--sc-spacing-xx-large)' : '0', position: 'relative' }}
-      >
+      <sc-alert type={this.type} open={this.open} exportparts="base, icon, text, title, message, close-icon" style={{ position: 'relative' }}>
         {!!this.error && this.error}
         {this.set ? (
           <sc-dashboard-module class="customer-details">
@@ -102,11 +103,16 @@ export class ScPasswordNag {
             </sc-button>
             <sc-card>
               <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-                <sc-input label={__('New Password', 'surecart')} name="password" type="password" required ref={el => (this.input = el as HTMLScInputElement)} />
-                <sc-input label={__('Confirm New Password', 'surecart')} name="password_confirm" type="password" required />
+                <sc-password
+                  enableValidation={this.enableValidation}
+                  label={__('New Password', 'surecart')}
+                  name="password"
+                  confirmation={true}
+                  ref={el => (this.input = el as HTMLScPasswordElement)}
+                />
                 <div>
                   <sc-button type="primary" full submit busy={this.loading}>
-                    {__('Update Password', 'surecart')}
+                    {__('Set Password', 'surecart')}
                   </sc-button>
                 </div>
               </sc-form>

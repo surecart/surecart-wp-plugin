@@ -7,10 +7,18 @@ export function animateTo(el: HTMLElement, keyframes: Keyframe[], options?: Keyf
       throw new Error('Promise-based animations must be finite.');
     }
 
+    if (!el?.animate) {
+      return;
+    }
+
     const animation = el.animate(keyframes, {
       ...options,
       duration: prefersReducedMotion() ? 0 : options!.duration,
     });
+
+    if (!animation) {
+      return;
+    }
 
     animation.addEventListener('cancel', resolve, { once: true });
     animation.addEventListener('finish', resolve, { once: true });

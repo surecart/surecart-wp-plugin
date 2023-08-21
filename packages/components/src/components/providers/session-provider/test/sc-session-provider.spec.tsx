@@ -1,10 +1,11 @@
-import { ScSessionProvider } from '../sc-session-provider';
 import { newSpecPage } from '@stencil/core/testing';
+
 import { parseFormData } from '../../../../functions/form-data';
+import { ScSessionProvider } from '../sc-session-provider';
 
 jest.mock('../../../../services/session', () => ({
-  createOrUpdateOrder: () => Promise.resolve(),
-  finalizeSession: () => Promise.resolve(),
+  createOrUpdateCheckout: () => Promise.resolve(),
+  finalizeCheckout: () => Promise.resolve(),
 }));
 
 describe('sc-session-provider', () => {
