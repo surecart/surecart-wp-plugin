@@ -291,7 +291,13 @@ export class ScProductItemList {
                     size="small"
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
-                        this.updateProducts();
+                        if (!this.apiToken || this.apiToken === 'test') {
+                          this.getDummyProducts();
+                          const searchedProducts = this.products?.filter(product => product.name.toLowerCase().includes(this.query.toLowerCase()));
+                          this.products = searchedProducts;
+                        } else {
+                          this.updateProducts();
+                        }
                       }
                     }}
                     value={this.query}
@@ -304,12 +310,27 @@ export class ScProductItemList {
                         name="x"
                         onClick={() => {
                           this.query = '';
+                          this.getDummyProducts();
                         }}
                       />
                     ) : (
                       <sc-icon slot="prefix" name="search" />
                     )}
-                    <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                    <sc-button 
+                      class="search-button" 
+                      type="link" 
+                      slot="suffix" 
+                      busy={this.busy} 
+                      onClick={() => {
+                        if (!this.apiToken || this.apiToken === 'test') {
+                          this.getDummyProducts();
+                          const searchedProducts = this.products?.filter(product => product.name.toLowerCase().includes(this.query.toLowerCase()));
+                          this.products = searchedProducts;
+                        } else {
+                          this.updateProducts();
+                        }
+                      }}
+                    >
                       {__('Search', 'surecart')}
                     </sc-button>
                   </sc-input>
