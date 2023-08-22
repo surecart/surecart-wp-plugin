@@ -105,9 +105,9 @@ export class ScProductItemList {
   }
 
   // Fetch dummy products.
-  getDummyProducts() {
+  getDummyProducts(type='all') {
    //generate dummy products array of objects with product permalink, name & price with the limit of this.limit
-    const dummyProducts = [...Array(this.limit)].map((_, i) => {
+    let dummyProducts = [...Array(this.limit)].map((_, i) => {
       return {
         permalink: '#',
         name: `Product ${i}`,
@@ -122,7 +122,28 @@ export class ScProductItemList {
         },
       };
     });
-    
+
+    if( this.products ) {
+      if ( 'sort' === type ) {
+        dummyProducts = this.products.sort((a, b) => {
+          switch (this.sort) {
+            case 'created_at:desc':
+              return b.created_at - a.created_at;
+            case 'created_at:asc':
+              return a.created_at - b.created_at;
+            case 'name:asc':
+              return a.name.localeCompare(b.name);
+            case 'name:desc':
+              return b.name.localeCompare(a.name);
+            default:
+              return a.name.localeCompare(b.name);
+          }
+        });
+      }
+      if ( 'search' === type ) {
+        dummyProducts = dummyProducts?.filter(product => product.name.toLowerCase().includes(this.query.toLowerCase()));
+      }
+    }
     this.products = dummyProducts;
   }
 
@@ -145,21 +166,7 @@ export class ScProductItemList {
   @Watch('sort')
   async handleSortChange() {
     if ( ! this.apiToken || this.apiToken === 'test' ) {
-      const sortedProducts = this.products.sort((a, b) => {
-        switch (this.sort) {
-          case 'created_at:desc':
-            return b.created_at - a.created_at;
-          case 'created_at:asc':
-            return a.created_at - b.created_at;
-          case 'name:asc':
-            return a.name.localeCompare(b.name);
-          case 'name:desc':
-            return b.name.localeCompare(a.name);
-          default:
-            return a.name.localeCompare(b.name);
-        }
-      });
-      this.products = sortedProducts;
+      this.getDummyProducts('sort');
     } else {
       this.currentPage = 1;
       this.updateProducts();
@@ -292,9 +299,7 @@ export class ScProductItemList {
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
                         if (!this.apiToken || this.apiToken === 'test') {
-                          this.getDummyProducts();
-                          const searchedProducts = this.products?.filter(product => product.name.toLowerCase().includes(this.query.toLowerCase()));
-                          this.products = searchedProducts;
+                          this.getDummyProducts('search');
                         } else {
                           this.updateProducts();
                         }
@@ -323,9 +328,7 @@ export class ScProductItemList {
                       busy={this.busy} 
                       onClick={() => {
                         if (!this.apiToken || this.apiToken === 'test') {
-                          this.getDummyProducts();
-                          const searchedProducts = this.products?.filter(product => product.name.toLowerCase().includes(this.query.toLowerCase()));
-                          this.products = searchedProducts;
+                          this.getDummyProducts('search');
                         } else {
                           this.updateProducts();
                         }
