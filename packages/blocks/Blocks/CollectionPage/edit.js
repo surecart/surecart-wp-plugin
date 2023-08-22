@@ -2,23 +2,19 @@ import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
 import { createNavigationLink } from './use-convert-to-navigation-links';
 import { useSelect, useDispatch } from '@wordpress/data';
-import { Popover, Button, TextControl, ToggleControl, Modal } from '@wordpress/components';
+import { Popover } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { 
 	store as blockEditorStore, 
 	useBlockProps, __experimentalLinkControl as LinkControl
 } from '@wordpress/block-editor';
 import ModelSelector from '../../../admin/components/ModelSelector';
-import { css, jsx } from '@emotion/core';
-import { ScBlockUi } from '@surecart/components-react';
 
 export default ({ clientId }) => {
 	
 	const [collectionPage, setCollectionPage] = useState(null);
 	const [modal, setModal] = useState(false);
-	const [parentMenuName, setParentMenuName] = useState('');
-	const [addInParentMenu, setAddInParentMenu] = useState(false);
-	const { replaceBlock, selectBlock, removeBlock } = useDispatch( blockEditorStore );
+	const { replaceBlock, selectBlock } = useDispatch( blockEditorStore );
 	const blockProps = useBlockProps();
 	const {
 		parentClientId,
@@ -45,18 +41,12 @@ export default ({ clientId }) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		if ( collectionPage ) {
-			console.log(collectionPage);
-		}
-	}, [collectionPage]);
-
 	const getCollectionPage = async (id) => {
-		console.log(id);
+		
 		const collectionPage = await apiFetch({
 			path: `/surecart/v1/product_collections/${id}`,
 		});
-		console.log(collectionPage);
+		setCollectionPage(collectionPage);
 		useConvertToNavigationLinks({clientId, collectionPage, parentClientId});
 	};
 
@@ -65,9 +55,9 @@ export default ({ clientId }) => {
 		collectionPage,
 		parentClientId,
 	} ) => {
-		console.log(collectionPage);
+		
 		const navigationLink = createNavigationLink( collectionPage );
-console.log(navigationLink);
+
 		// Replace the Page List block with the Navigation Links.
 		replaceBlock( clientId, navigationLink );
 
@@ -87,22 +77,28 @@ console.log(navigationLink);
 					placement="bottom"
 					shift
 					resize={false}
-					className='sc-collection-page-popover'
 				>
-					<ModelSelector
-						placeholder={__(
-							'Select a Collection Page',
-							'surecart'
-						)}
-						placement={'bottom-end'}
-						name="product-collection"
-						onSelect={(collectionId) => {
-							setModal(false);
-							getCollectionPage(collectionId);
+					<div
+						style={{
+							width: '20em',
 						}}
-						style={{ width: '100%' }}
-					/>
-					
+					>
+						<ModelSelector
+							placeholder={__(
+								'Select a Collection Page',
+								'surecart'
+							)}
+							placement={'bottom-end'}
+							name="product-collection"
+							onSelect={(collectionId) => {
+								setModal(false);
+								getCollectionPage(collectionId);
+							}}
+							style={{ width: '100%' }}
+							open={true}
+							fetchOnLoad={true}
+						/>
+					</div>
 				</Popover>
 			)}
 		</>
