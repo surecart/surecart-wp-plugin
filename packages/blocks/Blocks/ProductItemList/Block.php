@@ -3,7 +3,7 @@
 namespace SureCartBlocks\Blocks\ProductItemList;
 
 use SureCartBlocks\Blocks\BaseBlock;
-
+use SureCart\Models\ApiToken;
 /**
  * ProductItemList block
  */
@@ -236,6 +236,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => $attributes['search_enabled'],
 				'sortEnabled'          => $attributes['sort_enabled'],
 				'featured'             => 'featured' === $attributes['type'],
+				'apiToken'             => ApiToken::get()
 			]
 		);
 

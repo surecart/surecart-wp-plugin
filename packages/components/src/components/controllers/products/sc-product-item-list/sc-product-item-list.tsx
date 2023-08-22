@@ -50,11 +50,14 @@ export class ScProductItemList {
   /* Pagination alignment */
   @Prop() paginationAlignment: string = 'center';
 
+  /* API Token */
+  @Prop() apiToken: string = '';
+
   /* Limit per page */
   @Prop() limit: number = 15;
 
   /* Product list */
-  @State() products: Product[];
+  @State() products: Product[] | any;
 
   /* Loading indicator */
   @State() loading: boolean = false;
@@ -79,7 +82,11 @@ export class ScProductItemList {
   };
 
   componentWillLoad() {
-    this.getProducts();
+    if ( ! this.apiToken || this.apiToken === 'test' ) {
+      this.getDummyProducts();
+    } else {
+      this.getProducts();
+    }
   }
 
   // Append URL if no 'product-page' found
@@ -95,6 +102,27 @@ export class ScProductItemList {
     // handle server pagination.
     const newUrl = addQueryArgs(location.href, { 'product-page': page });
     window.location.replace(newUrl);
+  }
+
+  // Fetch dummy products.
+  getDummyProducts() {
+   //generate dummy products array of objects with product permalink, name & price with the limit of this.limit
+    const dummyProducts = [...Array(this.limit)].map((_, i) => {
+      return {
+        permalink: '#',
+        name: `Product ${i}`,
+        prices: {
+          data: [
+            {
+              amount: 1900,
+              currency: 'USD',
+            },
+          ],
+        },
+      };
+    });
+    
+    this.products = dummyProducts;
   }
 
   // Fetch all products
