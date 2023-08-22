@@ -24,7 +24,6 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { addQueryArgs } from '@wordpress/url';
-import Coupon from './modules/Coupon';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -84,6 +83,7 @@ export default () => {
 		subscription?.price,
 		subscription?.ad_hoc_amount,
 		subscription?.trial_end_at,
+		subscription?.discount,
 		skipProration,
 		updateBehavior,
 	]);
@@ -165,6 +165,8 @@ export default () => {
 						'checkout.line_items',
 						'line_item.price',
 						'price.product',
+						'checkout.discount',
+						'discount.coupon',
 						'period.subscription',
 					],
 				}
@@ -286,11 +288,6 @@ export default () => {
 					priceId={subscription?.price?.id || subscription?.price}
 				/>
 				<Trial
-					subscription={subscription}
-					updateSubscription={editSubscription}
-					loading={!hasLoadedSubscription}
-				/>
-				<Coupon
 					subscription={subscription}
 					updateSubscription={editSubscription}
 					loading={!hasLoadedSubscription}

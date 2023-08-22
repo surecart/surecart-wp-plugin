@@ -1,17 +1,19 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScFormatNumber } from '@surecart/components-react';
+import { ScButton, ScFormatNumber, ScTag } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
+import { getHumanDiscount } from '../../../util';
 
 export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
 		return null;
 	}
+	const coupon = subscription?.discount.coupon;
 	return (
 		<div
 			css={css`
@@ -107,6 +109,18 @@ export default ({ lineItem, loading, subscription }) => {
 							</div>
 						),
 					},
+					...(!!coupon?.id
+						? [
+								{
+									quantity: (
+										<ScTag type="success">
+											{coupon?.name}
+										</ScTag>
+									),
+									total: <>({getHumanDiscount(coupon)})</>,
+								},
+						  ]
+						: []),
 				]}
 			/>
 		</div>

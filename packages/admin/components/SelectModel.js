@@ -17,6 +17,7 @@ export default ({
 	onFetch,
 	name,
 	prefix,
+	children,
 	loading,
 	onScrollEnd = () => {},
 	...props
@@ -51,6 +52,7 @@ export default ({
 			{...props}
 			onScScrollEnd={onScrollEnd}
 		>
+			{children}
 			{!!prefix && prefix}
 		</ScSelect>
 	);

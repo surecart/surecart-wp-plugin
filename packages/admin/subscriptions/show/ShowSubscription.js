@@ -42,8 +42,6 @@ import LineItems from './modules/LineItems';
 import RestoreSubscriptionAtModal from './modules/modals/RestoreSubscriptionAtModal';
 import PauseSubscriptionUntilModal from './modules/modals/PauseSubscriptionUntilModal';
 import RenewSubscriptionAtModal from './modules/modals/RenewSubscriptionAtModal';
-import Coupon from '../edit/modules/Coupon';
-import CouponDisplay from './modules/CouponDisplay';
 
 export default () => {
 	const id = useSelect((select) => select(dataStore).selectPageId());
@@ -442,12 +440,6 @@ export default () => {
 					<PaymentMethod
 						subscription={subscription}
 						updateSubscription={editSubscription}
-						loading={!hasLoadedSubscription}
-					/>
-				)}
-				{subscription?.discount && (
-					<CouponDisplay
-						coupon={subscription.discount.coupon}
 						loading={!hasLoadedSubscription}
 					/>
 				)}

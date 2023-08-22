@@ -11,11 +11,14 @@ import {
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
+	ScTag,
 } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
+import ModelSelector from '../../../components/ModelSelector';
+import { getHumanDiscount } from '../../../util';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const [price, setPrice] = useState(null);
@@ -28,6 +31,9 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 		}
 	}, [lineItem]);
 
+	const coupon =
+		upcoming?.checkout?.discount?.coupon || subscription?.discount?.coupon;
+
 	return (
 		<div
 			css={css`
@@ -37,6 +43,30 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 			<DataTable
 				loading={price === null}
 				title={__('Pricing', 'surecart')}
+				footer={
+					!coupon &&
+					!loading && (
+						<ModelSelector
+							style={{ width: '50%' }}
+							name="coupon"
+							requestQuery={{
+								archived: false,
+							}}
+							onSelect={(coupon) =>
+								updateSubscription({
+									discount: {
+										coupon,
+									},
+								})
+							}
+						>
+							<ScButton slot="trigger">
+								<sc-icon name="plus" slot="prefix"></sc-icon>
+								{__('Add Coupon', 'surecart')}
+							</ScButton>
+						</ModelSelector>
+					)
+				}
 				columns={{
 					product: {
 						label: __('Price', 'surecart'),
@@ -148,6 +178,26 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 							</div>
 						),
 					},
+					...(!!coupon?.id
+						? [
+								{
+									quantity: (
+										<ScTag
+											type="success"
+											clearable
+											onClick={() =>
+												updateSubscription({
+													discount: {},
+												})
+											}
+										>
+											{coupon?.name}
+										</ScTag>
+									),
+									total: <>({getHumanDiscount(coupon)})</>,
+								},
+						  ]
+						: []),
 				]}
 			/>
 
