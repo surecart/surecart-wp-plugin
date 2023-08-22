@@ -111,6 +111,7 @@ export class ScProductItemList {
       return {
         permalink: '#',
         name: `Product ${i}`,
+        created_at: Math.floor(Math.random() * 40),
         prices: {
           data: [
             {
@@ -143,8 +144,26 @@ export class ScProductItemList {
 
   @Watch('sort')
   async handleSortChange() {
-    this.currentPage = 1;
-    this.updateProducts();
+    if ( ! this.apiToken || this.apiToken === 'test' ) {
+      const sortedProducts = this.products.sort((a, b) => {
+        switch (this.sort) {
+          case 'created_at:desc':
+            return b.created_at - a.created_at;
+          case 'created_at:asc':
+            return a.created_at - b.created_at;
+          case 'name:asc':
+            return a.name.localeCompare(b.name);
+          case 'name:desc':
+            return b.name.localeCompare(a.name);
+          default:
+            return a.name.localeCompare(b.name);
+        }
+      });
+      this.products = sortedProducts;
+    } else {
+      this.currentPage = 1;
+      this.updateProducts();
+    }
   }
 
   async updateProducts() {
