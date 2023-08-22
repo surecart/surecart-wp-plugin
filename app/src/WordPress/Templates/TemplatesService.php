@@ -144,7 +144,6 @@ class TemplatesService {
 			return;
 		}
 
-		remove_filter( 'posts_pre_query', 'wpse_change_product_post_query' );
 		$product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $product_id );
 		if ( is_wp_error( $product ) ) {
 			$wp_query->is_404 = true;
@@ -154,25 +153,27 @@ class TemplatesService {
 		set_query_var( 'surecart_current_product', $product );
 
 		// create a fake post for the product.
-		$post                 = new \stdClass();
-		$post->post_title     = $product->name;
-		$post->post_name      = $product->slug;
-		$post->post_content   = '<div>' . ( $product->template_part->content ?? '' ) . '</div>';
-		$post->post_status    = 'published' === $product->status ? 'publish' : 'draft';
-		$post->post_type      = 'sc_product'; // TODO: change to surecart-product-template post type?
-		$post->sc_id          = $product->id;
-		$post->product        = $product;
-		$post->post_author    = 1;
-		$post->post_parent    = 0;
-		$post->comment_count  = 0;
-		$post->comment_status = 'closed';
-		$post->ping_status    = 'closed';
-		$post->post_password  = '';
-		$post->post_excerpt   = '';
-		$post->post_date      = gmdate( 'Y-m-d H:i:s' );
-		$post->post_date_gmt  = gmdate( 'Y-m-d H:i:s' );
-		$post->ID             = 999999999;
-		$posts                = array( $post );
+		$post                    = new \stdClass();
+		$post->post_title        = $product->name;
+		$post->post_name         = $product->slug;
+		$post->post_content      = '<div>' . ( $product->template_part->content ?? '' ) . '</div>';
+		$post->post_status       = 'publish';
+		$post->post_type         = 'sc_product'; // TODO: change to surecart-product-template post type?
+		$post->sc_id             = $product->id;
+		$post->product           = $product;
+		$post->post_author       = 1;
+		$post->post_parent       = 0;
+		$post->comment_count     = 0;
+		$post->comment_status    = 'closed';
+		$post->ping_status       = 'closed';
+		$post->post_password     = '';
+		$post->post_excerpt      = '';
+		$post->post_date         = ( new \DateTime( "@$product->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
+		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $product->created_at, true );
+		$post->post_modified     = ( new \DateTime( "@$product->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
+		$post->post_modified_gmt = date_i18n( 'Y-m-d H:i:s', $product->updated_at, true );
+		$post->ID                = 999999999;
+		$posts                   = array( $post );
 
 		$wp_query->found_posts       = 1;
 		$wp_query->max_num_pages     = 1;
@@ -182,6 +183,7 @@ class TemplatesService {
 		$wp_query->is_tax            = false;
 		$wp_query->is_home           = false;
 		$wp_query->is_search         = false;
+		$wp_query->is_404            = false;
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;
 
@@ -264,15 +266,6 @@ class TemplatesService {
 
 		// check for product and use the template id.
 		$product = get_query_var( 'surecart_current_product' );
-
-		if ( $product ) {
-			$id = ! empty( $product->template->wp_id ) ? $product->template->wp_id : $id;
-		}
-
-		// We don't have a single id.
-		if ( empty( $id ) ) {
-			return $template;
-		}
 
 		if ( ! empty( $product->metadata->wp_template_id ) ) {
 			$page_template = $product->metadata->wp_template_id;

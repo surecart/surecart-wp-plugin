@@ -9,7 +9,7 @@
 
 | Property                      | Attribute                       | Description                                                   | Type                                                                             | Default     |
 | ----------------------------- | ------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------- | ----------- |
-| `abandonedCheckoutReturnUrl`  | `abandoned-checkout-return-url` | The abandoned checkout return url.                            | `string`                                                                         | `undefined` |
+| `abandonedCheckoutEnabled`    | `abandoned-checkout-enabled`    | Is abandoned checkout enabled.                                | `boolean`                                                                        | `undefined` |
 | `alignment`                   | `alignment`                     | Alignment                                                     | `"center" \| "full" \| "wide"`                                                   | `undefined` |
 | `currencyCode`                | `currency-code`                 | Currency to use for this checkout.                            | `string`                                                                         | `'usd'`     |
 | `customer`                    | --                              | Stores the current customer                                   | `Customer`                                                                       | `undefined` |
@@ -109,6 +109,8 @@ graph TD;
   sc-form-components-validator --> sc-order-tax-id-input
   sc-form-components-validator --> sc-order-bumps
   sc-form-components-validator --> sc-line-item-tax
+  sc-form-components-validator --> sc-shipping-choices
+  sc-form-components-validator --> sc-line-item-shipping
   sc-order-shipping-address --> sc-address
   sc-order-shipping-address --> sc-compact-address
   sc-address --> sc-form-control
@@ -142,6 +144,14 @@ graph TD;
   sc-order-bump --> sc-divider
   sc-line-item-tax --> sc-line-item
   sc-line-item-tax --> sc-format-number
+  sc-shipping-choices --> sc-form-control
+  sc-shipping-choices --> sc-radio-group
+  sc-shipping-choices --> sc-radio
+  sc-shipping-choices --> sc-format-number
+  sc-shipping-choices --> sc-block-ui
+  sc-line-item-shipping --> sc-line-item
+  sc-line-item-shipping --> sc-skeleton
+  sc-line-item-shipping --> sc-format-number
   sc-order-confirm-provider --> sc-dialog
   sc-order-confirm-provider --> sc-icon
   sc-order-confirm-provider --> sc-dashboard-module

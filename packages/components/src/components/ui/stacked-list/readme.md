@@ -12,6 +12,7 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -28,6 +29,7 @@ graph TD;
   sc-charges-list --> sc-stacked-list
   sc-customer-details --> sc-stacked-list
   sc-downloads-list --> sc-stacked-list
+  sc-fulfillments --> sc-stacked-list
   sc-invoices-list --> sc-stacked-list
   sc-order --> sc-stacked-list
   sc-orders-list --> sc-stacked-list

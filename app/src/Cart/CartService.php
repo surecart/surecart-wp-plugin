@@ -188,7 +188,7 @@ class CartService {
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
-			style="font-size: 16px; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
+			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
 			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
 		</sc-cart>
@@ -241,7 +241,7 @@ class CartService {
 	 * @return string
 	 */
 	public function isFloatingIconEnabled() {
-		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', null );
+		$cart_icon_type = (string) get_option( 'surecart_cart_icon_type', 'floating_icon' );
 		return in_array( $cart_icon_type, [ 'floating_icon', 'both' ] );
 	}
 

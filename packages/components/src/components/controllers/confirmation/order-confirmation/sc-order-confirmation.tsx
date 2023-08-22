@@ -29,7 +29,7 @@ export class ScOrderConfirmation {
   /** Get session id from url. */
   getSessionId() {
     if (this.order?.id) return this.order.id;
-    return getQueryArg(window.location.href, 'order');
+    return getQueryArg(window.location.href, 'sc_order');
   }
 
   /** Update a session */

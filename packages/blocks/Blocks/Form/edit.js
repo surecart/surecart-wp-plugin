@@ -31,6 +31,7 @@ import {
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import ClaimNoticeModal from '../../../admin/components/ClaimNoticeModal';
 
 export default function edit({ clientId, attributes, setAttributes }) {
 	const [patterns, setPatterns] = useState([]);
@@ -51,6 +52,10 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		color,
 		success_url,
 	} = attributes;
+
+	const [showClaimNotice, setShowClaimNotice] = useState(false);
+	const claimUrl = window?.scData?.claim_url;
+	const isAccountClaimed = !claimUrl;
 
 	const [custom_success_url, setCustomSuccessUrl] = useState(!!success_url);
 	useEffect(() => {
@@ -216,6 +221,15 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		);
 	};
 
+	const onModeSelect = (mode) => {
+		if (mode === 'live' && !isAccountClaimed) {
+			setShowClaimNotice(true);
+			return;
+		}
+		setAttributes({ mode });
+		setShowClaimNotice(false);
+	};
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -286,7 +300,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							>
 								<LinkControl
 									value={{ url: success_url }}
-									settings={{}}
 									shownUnlinkControl={true}
 									noURLSuggestion
 									showInitialSuggestions
@@ -430,6 +443,17 @@ export default function edit({ clientId, attributes, setAttributes }) {
 			</InspectorControls>
 
 			<StyleProvider>
+				{showClaimNotice ? (
+					<ClaimNoticeModal
+						title={__('Complete your store setup.', 'surecart')}
+						bodyText={__(
+							"Please complete your store to enable live mode. It's free!",
+							'surecart'
+						)}
+						onRequestClose={() => setShowClaimNotice(false)}
+						claimUrl={claimUrl}
+					/>
+				) : null}
 				{blockCount === 0 ? (
 					<Setup
 						templates={patterns}
@@ -495,7 +519,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								>
 									<Mode
 										attributes={attributes}
-										setAttributes={setAttributes}
+										onModeSelect={onModeSelect}
 									/>
 									<div
 										css={css`

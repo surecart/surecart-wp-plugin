@@ -96,6 +96,9 @@ abstract class AdminModelEditController {
 		// enqueue dependencies.
 		$this->enqueueScriptDependencies();
 
+		// remove admin notices.
+		remove_all_actions( 'admin_notices' );
+
 		// fix shitty jetpack issues key hijacking issues.
 		add_filter(
 			'admin_head',
@@ -128,12 +131,16 @@ abstract class AdminModelEditController {
 		$this->data['buy_page_slug']     = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) );
 		$this->data['product_page_slug'] = untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) );
 		$this->data['is_block_theme']    = \SureCart::utility()->blockTemplates()->isFSETheme();
+		$this->data['claim_url']         = ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '';
 
 		if ( in_array( 'currency', $this->with_data ) ) {
 			$this->data['currency_code'] = \SureCart::account()->currency;
 		}
 		if ( in_array( 'tax_protocol', $this->with_data ) ) {
 			$this->data['tax_protocol'] = \SureCart::account()->tax_protocol;
+		}
+		if ( in_array( 'shipping_protocol', $this->with_data ) ) {
+			$this->data['shipping_protocol'] = \SureCart::account()->shipping_protocol;
 		}
 		if ( in_array( 'checkout_page_url', $this->with_data ) ) {
 			$this->data['checkout_page_url'] = \SureCart::getUrl()->checkout();

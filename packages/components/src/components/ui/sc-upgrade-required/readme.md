@@ -10,15 +10,8 @@
 | Property   | Attribute  | Description                                | Type                             | Default   |
 | ---------- | ---------- | ------------------------------------------ | -------------------------------- | --------- |
 | `open`     | `open`     | Whether to render upgrade modal by default | `boolean`                        | `false`   |
-| `required` | `required` |                                            | `boolean`                        | `true`    |
+| `required` | `required` | Is this required?                          | `boolean`                        | `true`    |
 | `size`     | `size`     | The tag's size.                            | `"large" \| "medium" \| "small"` | `'small'` |
-
-
-## Events
-
-| Event          | Description | Type                |
-| -------------- | ----------- | ------------------- |
-| `requestClose` |             | `CustomEvent<void>` |
 
 
 ## Dependencies

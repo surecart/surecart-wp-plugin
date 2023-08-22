@@ -1,9 +1,10 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { Coupon, Price } from '../types';
+import { zeroDecimalCurrencies } from './currency';
 
 export const convertAmount = (amount: number, currency: string) => {
-  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'xaf'].includes(currency) ? amount : amount / 100;
+  return zeroDecimalCurrencies.includes(currency) ? amount : amount / 100;
 };
 
 export const getHumanDiscount = (coupon: Coupon) => {
@@ -101,7 +102,7 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
 };
 
 export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart'), abbreviate = false) => {
-  if (!price.recurring_interval_count || !price.recurring_interval) {
+  if (!price.recurring_interval_count || !price.recurring_interval || 1 === price?.recurring_period_count) {
     return '';
   }
   if (abbreviate) {
@@ -111,7 +112,7 @@ export const intervalCountString = (price: Price, prefix, fallback = __('once', 
 };
 
 export const periodCountString = (price: Price, abbreviate = false) => {
-  if (!price?.recurring_period_count) {
+  if (!price?.recurring_period_count || 1 === price?.recurring_period_count) {
     return '';
   }
   if (abbreviate) {

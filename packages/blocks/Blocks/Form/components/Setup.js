@@ -99,7 +99,6 @@ export default ({ onCreate, templates }) => {
 						>
 							<LinkControl
 								value={{ url: success_url }}
-								settings={{}}
 								shownUnlinkControl={true}
 								noURLSuggestion
 								showInitialSuggestions

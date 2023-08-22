@@ -77,7 +77,7 @@ class Form {
 		if ( ! $form_block || 'surecart/form' !== $form_block['blockName'] ) {
 			return '';
 		}
-		return $form_block['attrs']['mode'] ?? 'live';
+		return apply_filters( 'surecart/payments/mode', $form_block['attrs']['mode'] ?? 'live' );
 	}
 
 	/**

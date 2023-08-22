@@ -3,7 +3,7 @@ import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 import { Product } from '../../../../types';
-import apiFetch from '../../../../functions/fetch';
+import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
   blockName: string;
@@ -32,6 +32,9 @@ export class ScProductItemList {
   /** Should allow search */
   @Prop() sortEnabled: boolean = true;
 
+  /** Show only featured products. */
+  @Prop() featured: boolean = false;
+
   /** Should we paginate? */
   @Prop() paginationEnabled: boolean = true;
 
@@ -58,6 +61,9 @@ export class ScProductItemList {
 
   /** Busy indicator */
   @State() busy: boolean = false;
+
+  /** Error notice. */
+  @State() error: string;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -118,7 +124,9 @@ export class ScProductItemList {
       this.busy = true;
       await this.fetchProducts();
     } catch (error) {
+      console.log('error');
       console.error(error);
+      this.error = error.message || __('An unknown error occurred.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -127,6 +135,7 @@ export class ScProductItemList {
   private debounce;
   @Watch('ids')
   @Watch('limit')
+  @Watch('featured')
   handleIdsChange() {
     if (this.debounce !== null) {
       clearTimeout(this.debounce);
@@ -141,25 +150,35 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
-    const response = (await apiFetch({
-      path: addQueryArgs(`surecart/v1/products/`, {
-        expand: ['prices', 'product_medias', 'product_media.media'],
-        archived: false,
-        status: ['published'],
-        per_page: this.limit,
-        page: this.currentPage,
-        sort: this.sort,
-        ...(this.ids?.length ? { ids: this.ids } : {}),
-        ...(this.query ? { query: this.query } : {}),
-      }),
-      parse: false,
-    })) as Response;
-    this.currentQuery = this.query;
-    this.pagination = {
-      total: parseInt(response.headers.get('X-WP-Total')),
-      total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
-    };
-    this.products = (await response.json()) as Product[];
+    try {
+      const response = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/products/`, {
+          expand: ['prices', 'product_medias', 'product_media.media'],
+          archived: false,
+          status: ['published'],
+          per_page: this.limit,
+          page: this.currentPage,
+          sort: this.sort,
+          ...(this.featured ? { featured: true } : {}),
+          ...(this.ids?.length ? { ids: this.ids } : {}),
+          ...(this.query ? { query: this.query } : {}),
+        }),
+        parse: false,
+      })) as Response;
+      this.currentQuery = this.query;
+      this.pagination = {
+        total: parseInt(response.headers.get('X-WP-Total')),
+        total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
+      };
+      this.products = (await response.json()) as Product[];
+    } catch (response) {
+      // we will want to handle nonce error if we are bypassing the apiFetch parser.
+      await handleNonceError(response)
+        .then(() => this.fetchProducts())
+        .catch(error => {
+          this.error = error.message || __('An unknown error occurred.', 'surecart');
+        });
+    }
   }
 
   renderSortName() {
@@ -180,11 +199,16 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
+        {this.error && (
+          <sc-alert type="danger" open>
+            {this.error}
+          </sc-alert>
+        )}
         {(this.searchEnabled || this.sortEnabled) && (
           <div class="product-item-list__header">
             <div class="product-item-list__sort">
               {this.sortEnabled && (
-                <sc-dropdown style={{ '--panel-width': '15rem' }}>
+                <sc-dropdown style={{ '--panel-width': '15em' }}>
                   <sc-button type="text" caret slot="trigger">
                     {this.renderSortName()}
                   </sc-button>

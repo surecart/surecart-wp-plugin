@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Form;
 
+use SureCart\Models\Form;
 use SureCart\Models\ManualPaymentMethod;
 use SureCart\Models\Processor;
 use SureCartBlocks\Blocks\BaseBlock;
@@ -48,22 +49,22 @@ class Block extends BaseBlock {
 		return \SureCart::blocks()->render(
 			'blocks/form',
 			[
-				'align'                         => $attributes['align'] ?? '',
-				'label'                         => $attributes['label'] ?? '',
-				'font_size'                     => $attributes['font_size'] ?? 16,
-				'modified'                      => $post->post_modified_gmt ?? '',
-				'customer'                      => [
+				'align'                      => $attributes['align'] ?? '',
+				'label'                      => $attributes['label'] ?? '',
+				'font_size'                  => $attributes['font_size'] ?? 16,
+				'modified'                   => $post->post_modified_gmt ?? '',
+				'customer'                   => [
 					'email' => $user->user_email,
 					'name'  => $user->display_name,
 				],
-				'honeypot_enabled'              => (bool) get_option( 'surecart_honeypot_enabled', true ),
-				'currency_code'                 => $attributes['currency'] ?? \SureCart::account()->currency,
-				'tax_protocol'                  => \SureCart::account()->tax_protocol,
-				'classes'                       => $this->getClasses( $attributes ),
-				'style'                         => $this->getStyle( $attributes ),
-				'content'                       => $content,
-				'abandoned_checkout_return_url' => ! is_admin() ? esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) : '',
-				'processors'                    => array_values(
+				'honeypot_enabled'           => (bool) get_option( 'surecart_honeypot_enabled', true ),
+				'currency_code'              => $attributes['currency'] ?? \SureCart::account()->currency,
+				'tax_protocol'               => \SureCart::account()->tax_protocol,
+				'classes'                    => $this->getClasses( $attributes ),
+				'style'                      => $this->getStyle( $attributes ),
+				'content'                    => $content,
+				'abandoned_checkout_enabled' => ! is_admin(),
+				'processors'                 => array_values(
 					array_filter(
 						$processors ?? [],
 						function( $processor ) {
@@ -71,16 +72,17 @@ class Block extends BaseBlock {
 						}
 					)
 				),
-				'manual_payment_methods'        => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-				'stripe_payment_element'        => (bool) get_option( 'sc_stripe_payment_element', false ),
-				'mode'                          => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
-				'form_id'                       => $attributes['form_id'] ?? $sc_form_id,
-				'id'                            => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
-				'prices'                        => $attributes['prices'] ?? [],
-				'product'                       => $attributes['product'] ?? [],
-				'loading_text'                  => array_filter( $attributes['loading_text'] ?? [] ),
-				'success_text'                  => array_filter( $attributes['success_text'] ?? [] ),
-				'success_url'                   => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
+				'manual_payment_methods'     => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
+				'stripe_payment_element'     => (bool) get_option( 'sc_stripe_payment_element', false ),
+				'mode'                       => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
+				'form_id'                    => $attributes['form_id'] ?? $sc_form_id,
+				'id'                         => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
+				'prices'                     => $attributes['prices'] ?? [],
+				'product'                    => $attributes['product'] ?? [],
+				'loading_text'               => array_filter( $attributes['loading_text'] ?? [] ),
+				'success_text'               => array_filter( $attributes['success_text'] ?? [] ),
+				'success_url'                => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
+				'is_claimed'                 => \SureCart::account()->claimed,
 			]
 		);
 	}
