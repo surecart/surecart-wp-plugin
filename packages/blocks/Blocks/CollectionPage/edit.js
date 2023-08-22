@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { createNavigationLink } from './use-convert-to-navigation-links';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { Popover } from '@wordpress/components';
@@ -11,6 +11,7 @@ import {
 import ModelSelector from '../../../admin/components/ModelSelector';
 
 export default ({ clientId }) => {
+	const anchorRef = useRef(null);
 	const [collectionPage, setCollectionPage] = useState(null);
 	const [modal, setModal] = useState(false);
 	const [placeholderText, setPlaceholderText] = useState(
@@ -72,6 +73,7 @@ export default ({ clientId }) => {
 		<>
 			{(!collectionPage || loadingPage) && (
 				<div
+					ref={anchorRef}
 					{...blockProps}
 					onClick={() => setModal(true)}
 					style={{
@@ -85,6 +87,7 @@ export default ({ clientId }) => {
 				<Popover
 					placement="bottom"
 					shift
+					anchor={anchorRef.current}
 					resize={false}
 					onClose={() => setModal(false)}
 				>
