@@ -6,7 +6,7 @@ import { Popover } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { 
 	store as blockEditorStore, 
-	useBlockProps, __experimentalLinkControl as LinkControl
+	useBlockProps
 } from '@wordpress/block-editor';
 import ModelSelector from '../../../admin/components/ModelSelector';
 
@@ -14,6 +14,8 @@ export default ({ clientId }) => {
 	
 	const [collectionPage, setCollectionPage] = useState(null);
 	const [modal, setModal] = useState(false);
+	const [placeholderText, setPlaceholderText] = useState(__('Select Collection Page', 'surecart'));
+	const [loadingPage, setLoadingPage] = useState(false);
 	const { replaceBlock, selectBlock } = useDispatch( blockEditorStore );
 	const blockProps = useBlockProps();
 	const {
@@ -67,9 +69,15 @@ export default ({ clientId }) => {
 
 	return (
 		<>
-			{ !collectionPage && (
-				<div {...blockProps} onClick={() => setModal(true)}>
-					{__('Select a Collection Page...', 'surecart')}
+			{ (!collectionPage || loadingPage) && (
+				<div 
+					{...blockProps} 
+					onClick={() => setModal(true)}
+					style={{
+						cursor: 'pointer',
+					}}
+				>
+					{placeholderText}
 				</div>
 			)}
 			{modal && (
@@ -77,6 +85,7 @@ export default ({ clientId }) => {
 					placement="bottom"
 					shift
 					resize={false}
+					onClose={() => setModal(false)}
 				>
 					<div
 						style={{
@@ -92,6 +101,8 @@ export default ({ clientId }) => {
 							name="product-collection"
 							onSelect={(collectionId) => {
 								setModal(false);
+								setLoadingPage(true);
+								setPlaceholderText(__('Loading...', 'surecart'));
 								getCollectionPage(collectionId);
 							}}
 							style={{ width: '100%' }}
