@@ -9,6 +9,7 @@ import {
   getAvailableProcessor,
   hasMultipleMethodChoices,
   hasMultipleProcessorChoices,
+  hasOtherAvailableCreditCardProcessor
 } from '../getters';
 import { state as processorsState, dispose as disposeProcessors } from '../index';
 import { state as selectedProcessor } from '@store/selected-processor';
@@ -172,6 +173,39 @@ describe('Processors store', () => {
           recurring_enabled: true,
           processor_type: 'stripe',
         });
+      });
+    });
+
+    describe('hasOtherAvailableCreditCardProcessor', () => {
+      it('should return true when there is another available credit card processor', () => {
+        processorsState.processors = [
+          {
+            live_mode: true,
+            recurring_enabled: true,
+            processor_type: 'stripe',
+          },
+          {
+            live_mode: true,
+            recurring_enabled: true,
+            processor_type: 'paystack',
+          },
+          {
+            live_mode: true,
+            recurring_enabled: true,
+            processor_type: 'paypal',
+          },
+        ] as Processor[];
+        const hasOtherProcessor = hasOtherAvailableCreditCardProcessor('stripe');
+        expect(hasOtherProcessor).toEqual({
+          live_mode: true,
+          recurring_enabled: true,
+          processor_type: 'paystack',
+        });
+      });
+    
+      it('should return undefined when there are no other available credit card processors', () => {
+        const hasOtherProcessor = hasOtherAvailableCreditCardProcessor('paypal');
+        expect(hasOtherProcessor).toBe(undefined);
       });
     });
 
