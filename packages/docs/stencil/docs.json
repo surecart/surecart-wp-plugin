@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-16T16:31:23",
+  "timestamp": "2023-08-23T15:04:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -24303,16 +24303,6 @@
           "docs": "Should allow collection filter",
           "docsTags": [],
           "default": "true",
-        },
-        {
-          "name": "featured",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "featured",
-          "reflectToAttr": false,
-          "docs": "Show only featured products.",
-          "docsTags": [],
-          "default": "false",
           "values": [
             {
               "type": "boolean"
@@ -24333,6 +24323,23 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "featured",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "featured",
+          "reflectToAttr": false,
+          "docs": "Show only featured products.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
