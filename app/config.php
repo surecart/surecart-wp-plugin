@@ -169,6 +169,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
+		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
 		\SureCartBlocks\Blocks\Product\CollectionBadges\Block::class,
 
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,

@@ -44,6 +44,9 @@ export class ScProductItemList {
   /** Show for a specific collection */
   @Prop() collectionId: string | null = null;
 
+  /** Show only featured products. */
+  @Prop() featured: boolean = false;
+
   /** Should we paginate? */
   @Prop() paginationEnabled: boolean = true;
 
@@ -170,6 +173,7 @@ export class ScProductItemList {
   private debounce;
   @Watch('ids')
   @Watch('limit')
+  @Watch('featured')
   handleIdsChange() {
     if (this.debounce !== null) {
       clearTimeout(this.debounce);
@@ -202,6 +206,7 @@ export class ScProductItemList {
           page: this.currentPage,
           sort: this.sort,
           product_collection_ids: collectionIds,
+          ...(this.featured ? { featured: true } : {}),
           ...(this.ids?.length ? { ids: this.ids } : {}),
           ...(this.query ? { query: this.query } : {}),
         }),

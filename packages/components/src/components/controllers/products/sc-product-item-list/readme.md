@@ -12,6 +12,7 @@
 | `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`              |
 | `collectionEnabled`    | `collection-enabled`     | Should allow collection filter                            | `boolean`                                   | `true`              |
 | `collectionId`         | `collection-id`          | Show for a specific collection                            | `string`                                    | `null`              |
+| `featured`             | `featured`               | Show only featured products.                              | `boolean`                                   | `false`             |
 | `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`         |
 | `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`         |
 | `limit`                | `limit`                  |                                                           | `number`                                    | `15`                |
@@ -28,6 +29,7 @@
 
 ### Depends on
 
+- [sc-alert](../../../ui/alert)
 - [sc-dropdown](../../../ui/dropdown)
 - [sc-button](../../../ui/button)
 - [sc-menu](../../../ui/menu)
@@ -44,6 +46,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-product-item-list --> sc-alert
   sc-product-item-list --> sc-dropdown
   sc-product-item-list --> sc-button
   sc-product-item-list --> sc-menu
@@ -56,6 +59,7 @@ graph TD;
   sc-product-item-list --> sc-product-item
   sc-product-item-list --> sc-pagination
   sc-product-item-list --> sc-block-ui
+  sc-alert --> sc-icon
   sc-button --> sc-spinner
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip

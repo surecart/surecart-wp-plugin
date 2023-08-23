@@ -1024,3 +1024,19 @@ export interface ProductCollection {
   products_count: number;
   products?: Product[];
 }
+
+export interface GoogleAnalyticsItem {
+  item_id: string;
+  item_name: string;
+  item_variant?: string;
+  item_category?: string;
+  item_category2?: string;
+  item_category3?: string;
+  item_category4?: string;
+  item_category5?: string;
+  price: number;
+  quantity: number;
+  coupon?: string;
+  currency: string;
+  discount?: number;
+}

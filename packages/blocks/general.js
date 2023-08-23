@@ -1,7 +1,6 @@
 /**
  * WordPress dependencies
  */
-import { registerBlocks } from './register-block';
 
 import './controls';
 import './formats';
@@ -28,39 +27,49 @@ import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
 import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
-// import * as CollapsibleRow from '@blocks/CollapsibleRow';
 import * as storeLogo from '@blocks/StoreLogo';
 
 // deprecated
 import * as customerCharges from '@blocks/Dashboard/Deprecated/CustomerCharges';
 import * as customerInvoices from '@blocks/Dashboard/Deprecated/CustomerInvoices';
 import * as customerShippingAddress from '@blocks/Dashboard/Deprecated/CustomerShippingAddress';
+import { registerBlocksForTemplates } from './conditional-block-registration';
 
-registerBlocks([
-	checkout,
-	buyButton,
-	addToCartButton,
-	cartMenuButton,
-	logoutButton,
-	card,
-	confirmation,
-	confirmationLineItems,
-	customerDashboardButton,
-	customerCharges,
-	customerDashboard,
-	customerShippingAddress,
-	customerDownloads,
-	customerOrders,
-	customerInvoices,
-	customerSubscriptions,
-	customerPaymentMethods,
-	customerBillingDetails,
-	// CollapsibleRow,
-	WordPressAccount,
-	dashboardArea,
-	dashboardPage,
-	dashboardPages,
-	dashboardTab,
-	dashboardTabs,
-	storeLogo,
-]);
+// unregister these blocks on product page templates.
+// @todo Refactor when there will be possible to show a block according on a template/post with a Gutenberg API. https://github.com/WordPress/gutenberg/pull/41718
+registerBlocksForTemplates({
+	blocks: [
+		checkout,
+		buyButton,
+		addToCartButton,
+		cartMenuButton,
+		logoutButton,
+		card,
+		confirmation,
+		confirmationLineItems,
+		customerDashboardButton,
+		customerCharges,
+		customerDashboard,
+		customerShippingAddress,
+		customerDownloads,
+		customerOrders,
+		customerInvoices,
+		customerSubscriptions,
+		customerPaymentMethods,
+		customerBillingDetails,
+		WordPressAccount,
+		dashboardArea,
+		dashboardPage,
+		dashboardPages,
+		dashboardTab,
+		dashboardTabs,
+		storeLogo,
+	],
+	// exclude for these templates.
+	exclude: [
+		'surecart/surecart//product-info',
+		'surecart/surecart//single-product',
+		'sc-products',
+		'sc-part-products-info',
+	],
+});
