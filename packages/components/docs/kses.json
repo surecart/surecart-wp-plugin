@@ -1569,7 +1569,7 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
-    "api-token": true,
+    "api-token-connection": true,
     "featured": true,
     "ids": true,
     "layout-config": true,

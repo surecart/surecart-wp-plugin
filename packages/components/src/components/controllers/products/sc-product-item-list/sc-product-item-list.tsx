@@ -50,8 +50,8 @@ export class ScProductItemList {
   /* Pagination alignment */
   @Prop() paginationAlignment: string = 'center';
 
-  /* API Token */
-  @Prop() apiToken: string = '';
+  /* Is API Token connected */
+  @Prop() apiTokenConnection: boolean = true;
 
   /* Limit per page */
   @Prop() limit: number = 15;
@@ -82,7 +82,7 @@ export class ScProductItemList {
   };
 
   componentWillLoad() {
-    if ( ! this.apiToken || this.apiToken === 'test' ) {
+    if ( ! this.apiTokenConnection ) {
       this.getDummyProducts();
     } else {
       this.getProducts();
@@ -165,7 +165,7 @@ export class ScProductItemList {
 
   @Watch('sort')
   async handleSortChange() {
-    if ( ! this.apiToken || this.apiToken === 'test' ) {
+    if ( ! this.apiTokenConnection ) {
       this.getDummyProducts('sort');
     } else {
       this.currentPage = 1;
@@ -298,7 +298,7 @@ export class ScProductItemList {
                     size="small"
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
-                        if (!this.apiToken || this.apiToken === 'test') {
+                        if ( ! this.apiTokenConnection ) {
                           this.getDummyProducts('search');
                         } else {
                           this.updateProducts();
@@ -327,7 +327,7 @@ export class ScProductItemList {
                       slot="suffix" 
                       busy={this.busy} 
                       onClick={() => {
-                        if (!this.apiToken || this.apiToken === 'test') {
+                        if ( ! this.apiTokenConnection ) {
                           this.getDummyProducts('search');
                         } else {
                           this.updateProducts();

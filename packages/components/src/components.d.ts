@@ -2883,7 +2883,7 @@ export namespace Components {
           * Should we paginate?
          */
         "ajaxPagination": boolean;
-        "apiToken": string;
+        "apiTokenConnection": boolean;
         /**
           * Show only featured products.
          */
@@ -8739,7 +8739,7 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "ajaxPagination"?: boolean;
-        "apiToken"?: string;
+        "apiTokenConnection"?: boolean;
         /**
           * Show only featured products.
          */

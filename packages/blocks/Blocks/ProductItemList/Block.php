@@ -221,6 +221,13 @@ class Block extends BaseBlock {
 			$attributes['type'] = 'custom';
 		}
 
+		$api_token = ApiToken::get();
+		$is_api_connected = true;
+
+		if ( empty( $api_token ) || 'test' === $api_token ) {
+			$is_api_connected = false;
+		}
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -236,7 +243,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => $attributes['search_enabled'],
 				'sortEnabled'          => $attributes['sort_enabled'],
 				'featured'             => 'featured' === $attributes['type'],
-				'apiToken'             => ApiToken::get()
+				'apiTokenConnection'   => $is_api_connected
 			]
 		);
 
