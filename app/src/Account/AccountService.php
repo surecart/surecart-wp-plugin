@@ -2,6 +2,7 @@
 namespace SureCart\Account;
 
 use SureCart\Models\Account;
+use SureCart\Models\ApiToken;
 
 /**
  * Service for plugin activation.
@@ -97,6 +98,15 @@ class AccountService {
 	 */
 	public function clearCache() {
 		return delete_transient( $this->cache_key );
+	}
+
+	/**
+	 * Is the account connected?
+	 *
+	 * @return boolean
+	 */
+	public function isConnected() {
+		return ! empty( ApiToken::get() );
 	}
 
 	/**
