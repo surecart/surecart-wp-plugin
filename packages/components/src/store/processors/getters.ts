@@ -19,7 +19,7 @@ export const availableProcessors = () =>
 export const getAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type === type);
 
 /**
- * This method accepts a processor name as its input parameter and subsequently evaluates the presence of any additional credit card processors apart from the one provided as the parameter.
+ * Check if there is any available credit card processor except the given processor type.
  */
 export const hasOtherAvailableCreditCardProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type !== type && 'paypal' !== processor_type );
 
