@@ -90,6 +90,10 @@ export default ({ product, updateProduct, productId }) => {
 	);
 
 	const footer = () => {
+		if (product?.variants_enabled || !product?.id) {
+			return null;
+		}
+
 		if (!archived?.length && !active?.length) {
 			return null;
 		}
@@ -119,9 +123,7 @@ export default ({ product, updateProduct, productId }) => {
 			<Box
 				title={__('Pricing', 'surecart')}
 				loading={loading}
-				footer={
-					product?.variants_enabled || !product?.id ? null : footer()
-				}
+				footer={footer()}
 			>
 				<div
 					css={css`
