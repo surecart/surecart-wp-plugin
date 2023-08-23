@@ -4,7 +4,7 @@ import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
-import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors, hasOtherAvailableProcessor } from '@store/processors/getters';
+import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors, hasOtherAvailableCreditCardProcessor } from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
@@ -42,7 +42,7 @@ export class ScPayment {
   }
 
   renderStripe(processor) {
-    const title = hasOtherAvailableProcessor('stripe') ? __('Credit Card (Stripe)', 'surecart') : __('Credit Card', 'surecart');
+    const title = hasOtherAvailableCreditCardProcessor('stripe') ? __('Credit Card (Stripe)', 'surecart') : __('Credit Card', 'surecart');
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="stripe" card={this.stripePaymentElement}>
         <span slot="summary" class="sc-payment-toggle-summary">
@@ -72,7 +72,7 @@ export class ScPayment {
             </sc-payment-selected>
           </sc-card>
         </sc-payment-method-choice>
-        {!hasOtherAvailableProcessor('paypal') && (
+        {!hasOtherAvailableCreditCardProcessor('paypal') && (
           <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
             <span slot="summary" class="sc-payment-toggle-summary">
               <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
@@ -92,7 +92,7 @@ export class ScPayment {
   }
 
   renderPaystack(processor) {
-    const title = hasOtherAvailableProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
+    const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
 
     // if system currency is not in the supported currency list, then stop.
     if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
