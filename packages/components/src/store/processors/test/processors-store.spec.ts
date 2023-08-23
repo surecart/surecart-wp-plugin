@@ -9,7 +9,7 @@ import {
   getAvailableProcessor,
   hasMultipleMethodChoices,
   hasMultipleProcessorChoices,
-  hasOtherAvailableCreditCardProcessor
+  hasOtherAvailableCreditCardProcessor,
 } from '../getters';
 import { state as processorsState, dispose as disposeProcessors } from '../index';
 import { state as selectedProcessor } from '@store/selected-processor';
@@ -196,16 +196,12 @@ describe('Processors store', () => {
           },
         ] as Processor[];
         const hasOtherProcessor = hasOtherAvailableCreditCardProcessor('stripe');
-        expect(hasOtherProcessor).toEqual({
-          live_mode: true,
-          recurring_enabled: true,
-          processor_type: 'paystack',
-        });
+        expect(hasOtherProcessor).toEqual(true);
       });
-    
+
       it('should return undefined when there are no other available credit card processors', () => {
         const hasOtherProcessor = hasOtherAvailableCreditCardProcessor('paypal');
-        expect(hasOtherProcessor).toBe(undefined);
+        expect(hasOtherProcessor).toBe(false);
       });
     });
 
