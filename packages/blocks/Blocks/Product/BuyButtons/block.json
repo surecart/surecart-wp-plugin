@@ -29,8 +29,22 @@
 			"__experimentalDefaultControls": {
 				"fontSize": true
 			}
+		},
+		"__experimentalLayout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
+		},
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "flex"
+			}
 		}
 	},
-	"style": ["file:./preload.css", "surecar-themes-default"],
+	"style": ["file:./style.css", "surecart-themes-default"],
 	"script": "surecart-components"
 }

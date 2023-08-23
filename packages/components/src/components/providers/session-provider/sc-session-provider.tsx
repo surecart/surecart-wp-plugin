@@ -183,7 +183,11 @@ export class ScSessionProvider {
     // get URL params.
     const { redirect_status, checkout_id, line_items, coupon, is_surecart_payment_redirect } = getQueryArgs(window.location.href);
     // remove params we don't want.
-    window.history.replaceState({}, document.title, removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id'));
+    window.history.replaceState(
+      {},
+      document.title,
+      removeQueryArgs(window.location.href, 'redirect_status', 'coupon', 'line_items', 'confirm_checkout_id', 'checkout_id', 'no_cart'),
+    );
 
     // handle abandoned checkout.
     if (!!is_surecart_payment_redirect && !!checkout_id) {
@@ -276,6 +280,17 @@ export class ScSessionProvider {
           refresh_status: true,
         },
       })) as Checkout;
+
+      const isModeMismatch = checkoutState.mode !== (checkoutState.checkout?.live_mode ? 'live' : 'test');
+
+      if (isModeMismatch) {
+        console.info('Mode mismatch, creating new checkout.');
+        clearCheckout();
+        checkoutState.checkout = null;
+        await this.handleNewCheckout(promotion_code);
+        return;
+      }
+
       updateFormState('RESOLVE');
     } catch (e) {
       this.handleErrorResponse(e);

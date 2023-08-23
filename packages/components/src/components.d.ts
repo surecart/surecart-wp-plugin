@@ -2867,6 +2867,7 @@ export namespace Components {
         "prices": Price[];
     }
     interface ScProductBuyButton {
+        "addToCart": boolean;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -2882,6 +2883,10 @@ export namespace Components {
           * Should we paginate?
          */
         "ajaxPagination": boolean;
+        /**
+          * Show only featured products.
+         */
+        "featured": boolean;
         /**
           * Limit to a set of ids.
          */
@@ -2990,6 +2995,7 @@ export namespace Components {
         "showPrice": boolean;
     }
     interface ScProductPriceModal {
+        "addToCart": boolean;
         "buttonText": string;
     }
     interface ScProductQuantity {
@@ -8716,6 +8722,7 @@ declare namespace LocalJSX {
         "prices"?: Price[];
     }
     interface ScProductBuyButton {
+        "addToCart"?: boolean;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
@@ -8731,6 +8738,10 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "ajaxPagination"?: boolean;
+        /**
+          * Show only featured products.
+         */
+        "featured"?: boolean;
         /**
           * Limit to a set of ids.
          */
@@ -8847,6 +8858,7 @@ declare namespace LocalJSX {
         "showPrice"?: boolean;
     }
     interface ScProductPriceModal {
+        "addToCart"?: boolean;
         "buttonText"?: string;
     }
     interface ScProductQuantity {
