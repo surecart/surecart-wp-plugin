@@ -125,8 +125,8 @@ export class ScProductItemList {
 
   @Watch('sort')
   async handleSortChange() {
-      this.currentPage = 1;
-      this.updateProducts();
+    this.currentPage = 1;
+    this.updateProducts();
   }
 
   async updateProducts() {
@@ -207,8 +207,6 @@ export class ScProductItemList {
   }
 
   render() {
-    console.log(this.products);
-    
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
         {this.error && (
@@ -274,15 +272,7 @@ export class ScProductItemList {
                     ) : (
                       <sc-icon slot="prefix" name="search" />
                     )}
-                    <sc-button 
-                      class="search-button" 
-                      type="link" 
-                      slot="suffix" 
-                      busy={this.busy} 
-                      onClick={() => {
-                        this.updateProducts();
-                      }}
-                    >
+                    <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
                       {__('Search', 'surecart')}
                     </sc-button>
                   </sc-input>
