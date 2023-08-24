@@ -23,7 +23,6 @@ import Logo from '../templates/Logo';
 import Template from '../templates/UpdateModel';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
-import Restrictions from './modules/Restrictions';
 
 // modules
 import Name from './modules/Name';
@@ -35,15 +34,13 @@ import { useState } from 'react';
 import SaveButton from '../templates/SaveButton';
 import { Modal } from '@wordpress/components';
 import ProductRestrictions from './modules/ProductRestrictions';
-import CheckoutRequirement from './modules/CheckoutRequirement';
 
 export default ({ id }) => {
 	const { save } = useSave();
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEntityRecord, editEntityRecord, deleteEntityRecord } =
-		useDispatch(coreStore);
+	const { editEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 
 	const { coupon, isLoading, isDeleting, deleteError, saveError, loadError } =
 		useSelect((select) => {
@@ -210,12 +207,6 @@ export default ({ id }) => {
 				/> */}
 
 				<Types
-					loading={isLoading}
-					coupon={coupon}
-					updateCoupon={updateCoupon}
-				/>
-
-				<CheckoutRequirement
 					loading={isLoading}
 					coupon={coupon}
 					updateCoupon={updateCoupon}
