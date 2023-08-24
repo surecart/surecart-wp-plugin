@@ -1,17 +1,69 @@
 import { __ } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
-import { ScButton, ScEmpty, ScFlex } from '@surecart/components-react';
+import {
+	ScButton,
+	ScDropdown,
+	ScEmpty,
+	ScFlex,
+	ScIcon,
+	ScMenu,
+	ScMenuItem,
+} from '@surecart/components-react';
 import AddressDisplay from '../../../components/AddressDisplay';
 
-export default ({ onEditAddress, shippingAddress, loading }) => {
+export default ({
+	onEditAddress,
+	onDeleteAddress,
+	shippingAddress,
+	loading,
+}) => {
 	return (
-		<Box title={__('Shipping & Tax Address', 'surecart')} loading={loading}>
+		<Box
+			title={__('Shipping & Tax Address', 'surecart')}
+			loading={loading}
+			header_action={
+				!!shippingAddress?.id && (
+					<ScDropdown placement="bottom-end">
+						<ScButton
+							circle
+							type="text"
+							style={{
+								'--button-color': 'var(--sc-color-gray-600)',
+								margin: '-10px',
+							}}
+							slot="trigger"
+						>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={onEditAddress}>
+								<ScIcon
+									slot="prefix"
+									name="edit"
+									style={{
+										opacity: 0.5,
+									}}
+								/>
+								{__('Edit', 'surecart')}
+							</ScMenuItem>
+							<ScMenuItem onClick={onDeleteAddress}>
+								<ScIcon
+									slot="prefix"
+									name="trash"
+									style={{
+										opacity: 0.5,
+									}}
+								/>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+				)
+			}
+		>
 			{!!shippingAddress?.id ? (
 				<ScFlex>
 					<AddressDisplay address={shippingAddress} />
-					<ScButton size="small" onClick={onEditAddress}>
-						{__('Edit', 'surecart')}
-					</ScButton>
 				</ScFlex>
 			) : (
 				<ScEmpty>

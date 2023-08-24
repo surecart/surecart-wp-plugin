@@ -32,9 +32,11 @@ import User from './modules/User';
 import ActionsDropdown from './components/ActionsDropdown';
 import ShippingAddress from './modules/ShippingAddress';
 import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
+import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
+	CONFIRM_DELETE_ADDRESS: 'CONFIRM_DELETE_ADDRESS',
 };
 
 export default () => {
@@ -160,6 +162,9 @@ export default () => {
 						onEditAddress={() =>
 							setCurrentModal(modals.EDIT_SHIPPING_ADDRESS)
 						}
+						onDeleteAddress={() =>
+							setCurrentModal(modals.CONFIRM_DELETE_ADDRESS)
+						}
 					/>
 					<User customer={customer} customerId={id} />
 					<Notifications
@@ -216,8 +221,13 @@ export default () => {
 			{!!currentModal ? (
 				<>
 					<EditAddressModal
-						open={currentModal}
+						open={currentModal === modals.EDIT_SHIPPING_ADDRESS}
 						shippingAddress={customer?.shipping_address}
+						onRequestClose={() => setCurrentModal('')}
+						customerId={id}
+					/>
+					<ConfirmDeleteAddressModal
+						open={currentModal === modals.CONFIRM_DELETE_ADDRESS}
 						onRequestClose={() => setCurrentModal('')}
 						customerId={id}
 					/>
