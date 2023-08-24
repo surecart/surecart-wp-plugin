@@ -1,6 +1,6 @@
-import { GoogleAnalyticsItem } from "src/types";
+import { CartGoogleAnalyticsItem } from "src/types";
 
-export function doCartGoogleAnalytics(items: GoogleAnalyticsItem[]) {
+export function doCartGoogleAnalytics(items: CartGoogleAnalyticsItem[]) {
   if (!window?.dataLayer && !window?.gtag) return;
 
   // handle google analytics script

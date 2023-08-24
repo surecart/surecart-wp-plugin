@@ -55,7 +55,7 @@ declare global {
       admin_url: string;
       user_permissions: {
         manage_sc_shop_settings: boolean;
-      }
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -1004,7 +1004,7 @@ export interface Rule {
   value: string | string[] | { value: string }[];
 }
 
-export interface GoogleAnalyticsItem {
+export interface CartGoogleAnalyticsItem {
   item_id: string;
   item_name: string;
   item_variant?: string;
@@ -1018,4 +1018,29 @@ export interface GoogleAnalyticsItem {
   coupon?: string;
   currency: string;
   discount?: number;
+}
+
+export interface PaymentInfoAddedParams {
+  checkout_id: string;
+  processor_type: 'paypal' | 'stripe' | 'mollie';
+  payment_method: {
+    billing_details: {
+      name: string;
+      email: string;
+    };
+  };
+}
+
+export interface CheckoutInitiatedParams {
+  transaction_id: string;
+  value: number;
+  currency: string;
+  coupon?: string;
+  tax?: number;
+  items: Array<{
+    item_name: string;
+    discount: number;
+    price: number;
+    quantity: number;
+  }>;
 }

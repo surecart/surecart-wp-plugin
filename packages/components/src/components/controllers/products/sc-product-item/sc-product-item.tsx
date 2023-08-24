@@ -1,6 +1,7 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, EventEmitter, h, Prop } from '@stencil/core';
 import { Product } from '../../../../types';
 import { LayoutConfig } from '../sc-product-item-list/sc-product-item-list';
+import { Event } from '@stencil/core';
 
 @Component({
   tag: 'sc-product-item',
@@ -8,15 +9,23 @@ import { LayoutConfig } from '../sc-product-item-list/sc-product-item-list';
   shadow: true,
 })
 export class ScProductItem {
-  /* Product */
+  /** Product */
   @Prop() product: Product;
 
-  /* Product Layout Config */
+  /** Product Layout Config */
   @Prop() layoutConfig: LayoutConfig;
+
+  /** Product was viewed */
+  @Event() scProductViewed: EventEmitter<Partial<Product>>;
 
   render() {
     return (
-      <a href={this.product?.permalink} class={{ 'product-item': true }}>
+      <a href={this.product?.permalink} onClick={() => this.scProductViewed.emit({
+        id: this.product?.id,
+        name: this.product?.name,
+        permalink: this.product?.permalink,
+        prices: this.product?.prices,
+      })} class={{ 'product-item': true }}>
         {this.product &&
           (this.layoutConfig || []).map(layout => {
             const attributes = layout.attributes || {};

@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 
 @Component({
@@ -49,8 +49,15 @@ export class ScStripeElement {
   /** The form state */
   @Prop() formState: FormState;
 
+  /** The order/invoice was paid for */
   @Event() scPaid: EventEmitter<void>;
+
+  /** There was an error paying for the order/invoice */
   @Event() scPayError: EventEmitter<any>;
+
+  /** A payment method was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
+
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 
@@ -103,6 +110,18 @@ export class ScStripeElement {
         this.error = response.error.message;
         throw response.error;
       }
+
+      this.scPaymentInfoAdded.emit({
+        processor_type: 'stripe',
+        checkout_id: this.order.id,
+        payment_method: {
+          billing_details: {
+            name: (this?.order?.name ? this.order.name : ''),
+            email: (this?.order?.email ? this.order.email : ''),
+          },
+        },
+      });
+
       this.scSetState.emit('PAID');
       // paid
       this.scPaid.emit();

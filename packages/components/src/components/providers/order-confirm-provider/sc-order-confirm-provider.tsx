@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, ManualPaymentMethod, Product } from '../../../types';
+import { Checkout, LineItem, ManualPaymentMethod, Product } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
 import { maybeConvertAmount } from '../../../functions/currency';
 
@@ -43,6 +43,9 @@ export class ScOrderConfirmProvider {
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Checkout>;
 
+  /** The customer started trial */
+  @Event() scStartTrial: EventEmitter<LineItem[]>;
+
   @Event() scSetState: EventEmitter<string>;
 
   /** Error event. */
@@ -56,6 +59,14 @@ export class ScOrderConfirmProvider {
   handleConfirmOrderEvent() {
     if (this.checkoutStatus === 'confirming') {
       this.confirmOrder();
+    }
+  }
+
+  /** Handle event for start trial */
+  handleStartTrial() {
+    const trialLineItems: LineItem[] = this.confirmedCheckout?.line_items?.data?.filter(item => item?.price?.trial_duration_days > 0 || []);
+    if (trialLineItems.length > 0) {
+      this.scStartTrial.emit(trialLineItems);
     }
   }
 

@@ -1,7 +1,9 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { __ } from '@wordpress/i18n';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
+import { CartGoogleAnalyticsItem, Product } from 'src/types';
+import { getCheckout } from '@store/checkouts';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -11,10 +13,13 @@ import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 export class ScProductBuyButton {
   @Element() el: HTMLScProductBuyButtonElement;
 
+  /** Item added to cart */
+  @Event() scAddedToCart: EventEmitter<CartGoogleAnalyticsItem>;
+
   // Is add to cart enabled
   @Prop() addToCart: boolean;
 
-  handleCartClick(e) {
+  async handleCartClick(e) {
     e.preventDefault();
 
     // already busy, do nothing.
@@ -29,11 +34,24 @@ export class ScProductBuyButton {
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
+
       return window.location.assign(getProductBuyLink(checkoutUrl));
     }
 
     // submit the cart form.
-    submitCartForm();
+    await submitCartForm();
+
+    const checkout = getCheckout(state?.formId, state.mode);
+    const newLineItem = checkout.line_items?.data.find(item => item.price.id === state.selectedPrice?.id);
+    this.scAddedToCart.emit({
+      item_id: (newLineItem.price?.product as Product)?.id,
+      item_name: (newLineItem.price?.product as Product)?.name,
+      item_variant: newLineItem.price?.name,
+      price: newLineItem.price?.amount,
+      currency: newLineItem.price?.currency,
+      quantity: newLineItem.quantity,
+      discount: newLineItem.discount_amount,
+    });
   }
 
   render() {

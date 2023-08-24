@@ -21,11 +21,12 @@ and confirms the order when payment is successful.
 
 ## Events
 
-| Event         | Description              | Type                                                                                          |
-| ------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
-| `scError`     | Error event.             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `scOrderPaid` | The order is paid event. | `CustomEvent<Checkout>`                                                                       |
-| `scSetState`  |                          | `CustomEvent<string>`                                                                         |
+| Event          | Description                | Type                                                                                          |
+| -------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
+| `scError`      | Error event.               | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
+| `scOrderPaid`  | The order is paid event.   | `CustomEvent<Checkout>`                                                                       |
+| `scSetState`   |                            | `CustomEvent<string>`                                                                         |
+| `scStartTrial` | The customer started trial | `CustomEvent<LineItem[]>`                                                                     |
 
 
 ## Dependencies

@@ -8,7 +8,8 @@ import { updateFormState } from '@store/form/mutations';
 
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
-import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
+import { Checkout, CheckoutInitiatedParams, FormStateSetter, LineItemData, PriceChoice, Product } from '../../../types';
+import { maybeConvertAmount } from 'src/functions/currency';
 
 @Component({
   tag: 'sc-session-provider',
@@ -30,6 +31,7 @@ export class ScSessionProvider {
   /** Update line items event */
   @Event() scUpdateDraftState: EventEmitter<Checkout>;
 
+  /** Payment was completed */
   @Event() scPaid: EventEmitter<void>;
 
   /** Error event */
@@ -37,6 +39,9 @@ export class ScSessionProvider {
 
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Checkout was initiated */
+  @Event() scCheckoutInitiated: EventEmitter<CheckoutInitiatedParams>;
 
   @Watch('prices')
   handlePricesChange() {
@@ -371,6 +376,25 @@ export class ScSessionProvider {
           line_items,
         },
       })) as Checkout;
+
+
+
+      let eventData:CheckoutInitiatedParams = {
+        transaction_id: checkoutState.checkout.id,
+        value: maybeConvertAmount(checkoutState.checkout?.total_amount, checkoutState.checkout?.currency || 'USD'),
+        currency: (checkoutState.checkout.currency || '').toUpperCase(),
+        ...(checkoutState.checkout?.discount?.promotion?.code ? { coupon: checkoutState.checkout?.discount?.promotion?.code } : {}),
+        ...(checkoutState.checkout?.tax_amount ? { tax: maybeConvertAmount(checkoutState.checkout?.tax_amount, checkoutState.checkout?.currency || 'USD') } : {}),
+        items: (checkoutState.checkout?.line_items?.data || []).map(item => ({
+          item_name: (item?.price?.product as Product)?.name || '',
+          discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkoutState.checkout?.currency || 'USD') : 0,
+          price: maybeConvertAmount(item?.price?.amount || 0, checkoutState.checkout?.currency || 'USD'),
+          quantity: item?.quantity || 1,
+        }))
+      };
+
+      this.scCheckoutInitiated.emit(eventData);
+
       updateFormState('RESOLVE');
     } catch (e) {
       console.error(e);

@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, ShippingAddress } from '../../../types';
+import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
@@ -51,6 +51,9 @@ export class ScStripePaymentElement {
   @Event() scPayError: EventEmitter<any>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Payment information was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
 
   @State() styles: CSSStyleDeclaration;
 
@@ -286,11 +289,23 @@ export class ScStripePaymentElement {
     try {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
+
+
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;
       } else {
         this.scSetState.emit('PAID');
+        this.scPaymentInfoAdded.emit({
+          checkout_id: checkoutState.checkout?.id,
+          processor_type: 'stripe',
+          payment_method: {
+            billing_details: {
+              email: checkoutState.checkout?.email,
+              name: checkoutState.checkout?.name,
+            }
+          }
+        });
         // paid
         this.scPaid.emit();
       }

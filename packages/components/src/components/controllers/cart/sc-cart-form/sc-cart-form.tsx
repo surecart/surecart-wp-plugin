@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
@@ -6,7 +6,7 @@ import { convertLineItemsToLineItemData } from '../../../../functions/line-items
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
-import { Checkout, LineItemData, Product } from '../../../../types';
+import { Checkout,  CartGoogleAnalyticsItem,  LineItemData, Product } from '../../../../types';
 import { doCartGoogleAnalytics } from '../../../../functions/google-analytics-cart';
 
 const query = {
@@ -44,6 +44,9 @@ export class ScCartForm {
 
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
+
+  /** Item added to cart */
+  @Event() scAddedToCart: EventEmitter<CartGoogleAnalyticsItem>;
 
   @State() order: Checkout;
 
@@ -93,8 +96,16 @@ export class ScCartForm {
             discount: lineItem?.discount_amount || 0,
           },
         ]);
-      }
 
+        this.scAddedToCart.emit({
+          item_id: (lineItem?.price?.product as Product)?.id || '',
+            item_name: (lineItem?.price?.product as Product)?.name || '',
+            price: lineItem?.price?.amount || 0,
+            quantity: lineItem?.quantity || 1,
+            currency: order?.currency,
+            discount: lineItem?.discount_amount || 0,
+        });
+      }
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
