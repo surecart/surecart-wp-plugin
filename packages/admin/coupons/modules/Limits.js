@@ -7,7 +7,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import { ScAlert, ScInput, ScSwitch } from '@surecart/components-react';
+import {
+	ScAlert,
+	ScInput,
+	ScPriceInput,
+	ScSwitch,
+} from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -59,6 +64,24 @@ export default ({ coupon, loading, updateCoupon }) => {
 								});
 							}}
 							type="number"
+						/>
+					</BaseControl>
+					<BaseControl>
+						<ScPriceInput
+							className="sc-coupon-minimum-subtotal-amount"
+							help={__(
+								'The minimum order subtotal amount required to apply this coupon.',
+								'surecart'
+							)}
+							currencyCode={coupon?.currency}
+							attribute="min_subtotal_amount"
+							label={__('Minimum Order Subtotal', 'surecart')}
+							value={coupon?.min_subtotal_amount || null}
+							onScInput={(e) =>
+								updateCoupon({
+									min_subtotal_amount: e.target.value,
+								})
+							}
 						/>
 					</BaseControl>
 				</div>
