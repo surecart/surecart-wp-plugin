@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-import { Product, DummyProduct } from '../../../../types';
+import { Product } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
@@ -50,17 +50,11 @@ export class ScProductItemList {
   /* Pagination alignment */
   @Prop() paginationAlignment: string = 'center';
 
-  /* Is API Token connected */
-  @Prop() apiTokenConnection: boolean = true;
-
-  /* Dummy Products */
-  @Prop() dummyProducts: DummyProduct[] | [];
-
   /* Limit per page */
   @Prop() limit: number = 15;
 
   /* Product list */
-  @State() products: Product[] | DummyProduct[] | [];
+  @Prop({ mutable: true }) products?: Product[];
 
   /* Loading indicator */
   @State() loading: boolean = false;
@@ -85,10 +79,8 @@ export class ScProductItemList {
   };
 
   componentWillLoad() {
-    if ( this.apiTokenConnection ) {
+    if (!this.products) {
       this.getProducts();
-    } else {
-      this.products = this.dummyProducts;
     }
   }
 
@@ -214,7 +206,7 @@ export class ScProductItemList {
             {this.error}
           </sc-alert>
         )}
-        {(this.searchEnabled || this.sortEnabled) && this.apiTokenConnection && (
+        {(this.searchEnabled || this.sortEnabled) && (
           <div class="product-item-list__header">
             <div class="product-item-list__sort">
               {this.sortEnabled && (

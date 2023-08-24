@@ -179,12 +179,12 @@ class Block extends BaseBlock {
 	public function getDummyProducts( $limit = 15 ) {
 		$dummy_products = array();
 
-		for ($i = 1; $i <= $limit; $i++) {
+		for ( $i = 1; $i <= $limit; $i++ ) {
 			$product = array(
-				'permalink'   => '#',
-				'name'        => 'Product ' . $i,
-				'created_at'  => rand(1, 40),
-				'prices'      => array(
+				'permalink'  => '#',
+				'name'       => 'Product ' . $i,
+				'created_at' => rand( 1, 40 ),
+				'prices'     => array(
 					'data' => array(
 						array(
 							'amount'   => 1900,
@@ -249,7 +249,7 @@ class Block extends BaseBlock {
 		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
 			$attributes['type'] = 'custom';
 		}
-		
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -259,14 +259,13 @@ class Block extends BaseBlock {
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
-				'paginationEnabled'    => $attributes['pagination_enabled'],
+				'paginationEnabled'    => \SureCart::account()->isConnected() ? $attributes['pagination_enabled'] : false,
 				'ajaxPagination'       => $attributes['ajax_pagination'],
 				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
-				'searchEnabled'        => $attributes['search_enabled'],
-				'sortEnabled'          => $attributes['sort_enabled'],
+				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
+				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
-				'apiTokenConnection'   => \SureCart::account()->isConnected(),
-				'dummyProducts'        => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
 			]
 		);
 
