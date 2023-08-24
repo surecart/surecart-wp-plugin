@@ -35,6 +35,7 @@ import { useState } from 'react';
 import SaveButton from '../templates/SaveButton';
 import { Modal } from '@wordpress/components';
 import ProductRestrictions from './modules/ProductRestrictions';
+import CheckoutRequirement from './modules/CheckoutRequirement';
 
 export default ({ id }) => {
 	const { save } = useSave();
@@ -209,6 +210,12 @@ export default ({ id }) => {
 				/> */}
 
 				<Types
+					loading={isLoading}
+					coupon={coupon}
+					updateCoupon={updateCoupon}
+				/>
+
+				<CheckoutRequirement
 					loading={isLoading}
 					coupon={coupon}
 					updateCoupon={updateCoupon}
