@@ -171,7 +171,7 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Get the style for the block
+	 * Get the dummy products array.
 	 *
 	 * @param  int $limit Limit per page.
 	 * @return array Dummy Products.
