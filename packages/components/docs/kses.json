@@ -1570,6 +1570,7 @@
   "sc-product-item-list": {
     "ajax-pagination": true,
     "api-token-connection": true,
+    "dummy-products": true,
     "featured": true,
     "ids": true,
     "layout-config": true,

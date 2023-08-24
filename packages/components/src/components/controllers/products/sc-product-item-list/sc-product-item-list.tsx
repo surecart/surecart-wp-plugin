@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-import { Product } from '../../../../types';
+import { Product, DummyProduct } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
@@ -53,11 +53,14 @@ export class ScProductItemList {
   /* Is API Token connected */
   @Prop() apiTokenConnection: boolean = true;
 
+  /* Dummy Products */
+  @Prop() dummyProducts: DummyProduct[] | [];
+
   /* Limit per page */
   @Prop() limit: number = 15;
 
   /* Product list */
-  @State() products: Product[] | any;
+  @State() products: Product[] | DummyProduct[] | [];
 
   /* Loading indicator */
   @State() loading: boolean = false;
@@ -82,10 +85,10 @@ export class ScProductItemList {
   };
 
   componentWillLoad() {
-    if ( ! this.apiTokenConnection ) {
-      this.getDummyProducts();
-    } else {
+    if ( this.apiTokenConnection ) {
       this.getProducts();
+    } else {
+      this.products = this.dummyProducts;
     }
   }
 
@@ -102,49 +105,6 @@ export class ScProductItemList {
     // handle server pagination.
     const newUrl = addQueryArgs(location.href, { 'product-page': page });
     window.location.replace(newUrl);
-  }
-
-  // Fetch dummy products.
-  getDummyProducts(type='all') {
-   //generate dummy products array of objects with product permalink, name & price with the limit of this.limit
-    let dummyProducts = [...Array(this.limit)].map((_, i) => {
-      return {
-        permalink: '#',
-        name: `Product ${i}`,
-        created_at: Math.floor(Math.random() * 40),
-        prices: {
-          data: [
-            {
-              amount: 1900,
-              currency: 'USD',
-            },
-          ],
-        },
-      };
-    });
-
-    if( this.products ) {
-      if ( 'sort' === type ) {
-        dummyProducts = this.products.sort((a, b) => {
-          switch (this.sort) {
-            case 'created_at:desc':
-              return b.created_at - a.created_at;
-            case 'created_at:asc':
-              return a.created_at - b.created_at;
-            case 'name:asc':
-              return a.name.localeCompare(b.name);
-            case 'name:desc':
-              return b.name.localeCompare(a.name);
-            default:
-              return a.name.localeCompare(b.name);
-          }
-        });
-      }
-      if ( 'search' === type ) {
-        dummyProducts = dummyProducts?.filter(product => product.name.toLowerCase().includes(this.query.toLowerCase()));
-      }
-    }
-    this.products = dummyProducts;
   }
 
   // Fetch all products
@@ -165,12 +125,8 @@ export class ScProductItemList {
 
   @Watch('sort')
   async handleSortChange() {
-    if ( ! this.apiTokenConnection ) {
-      this.getDummyProducts('sort');
-    } else {
       this.currentPage = 1;
       this.updateProducts();
-    }
   }
 
   async updateProducts() {
@@ -251,6 +207,8 @@ export class ScProductItemList {
   }
 
   render() {
+    console.log(this.products);
+    
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
         {this.error && (
@@ -258,7 +216,7 @@ export class ScProductItemList {
             {this.error}
           </sc-alert>
         )}
-        {(this.searchEnabled || this.sortEnabled) && (
+        {(this.searchEnabled || this.sortEnabled) && this.apiTokenConnection && (
           <div class="product-item-list__header">
             <div class="product-item-list__sort">
               {this.sortEnabled && (
@@ -298,11 +256,7 @@ export class ScProductItemList {
                     size="small"
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
-                        if ( ! this.apiTokenConnection ) {
-                          this.getDummyProducts('search');
-                        } else {
-                          this.updateProducts();
-                        }
+                        this.updateProducts();
                       }
                     }}
                     value={this.query}
@@ -315,7 +269,6 @@ export class ScProductItemList {
                         name="x"
                         onClick={() => {
                           this.query = '';
-                          this.getDummyProducts();
                         }}
                       />
                     ) : (
@@ -327,11 +280,7 @@ export class ScProductItemList {
                       slot="suffix" 
                       busy={this.busy} 
                       onClick={() => {
-                        if ( ! this.apiTokenConnection ) {
-                          this.getDummyProducts('search');
-                        } else {
-                          this.updateProducts();
-                        }
+                        this.updateProducts();
                       }}
                     >
                       {__('Search', 'surecart')}

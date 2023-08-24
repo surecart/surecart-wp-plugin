@@ -171,6 +171,35 @@ class Block extends BaseBlock {
 	}
 
 	/**
+	 * Get the style for the block
+	 *
+	 * @param  int $limit Limit per page.
+	 * @return array Dummy Products.
+	 */
+	public function getDummyProducts( $limit = 15 ) {
+		$dummy_products = array();
+
+		for ($i = 1; $i <= $limit; $i++) {
+			$product = array(
+				'permalink'   => '#',
+				'name'        => 'Product ' . $i,
+				'created_at'  => rand(1, 40),
+				'prices'      => array(
+					'data' => array(
+						array(
+							'amount'   => 1900,
+							'currency' => 'USD',
+						),
+					),
+				),
+			);
+
+			$dummy_products[] = $product;
+		}
+
+		return $dummy_products;
+	}
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -220,7 +249,7 @@ class Block extends BaseBlock {
 		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
 			$attributes['type'] = 'custom';
 		}
-
+		
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -237,6 +266,7 @@ class Block extends BaseBlock {
 				'sortEnabled'          => $attributes['sort_enabled'],
 				'featured'             => 'featured' === $attributes['type'],
 				'apiTokenConnection'   => \SureCart::account()->isConnected(),
+				'dummyProducts'        => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
 			]
 		);
 

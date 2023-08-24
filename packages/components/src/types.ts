@@ -1019,3 +1019,15 @@ export interface GoogleAnalyticsItem {
   currency: string;
   discount?: number;
 }
+
+export interface DummyProduct {
+  permalink: string;
+  name: string;
+  created_at: number;
+  prices: {
+    data: {
+      amount: number;
+      currency: string;
+    };
+  };
+};
