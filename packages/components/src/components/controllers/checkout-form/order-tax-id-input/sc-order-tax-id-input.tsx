@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
-import { state as checkoutState } from '@store/checkout';
+import { state as checkoutState, onChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
@@ -82,6 +82,10 @@ export class ScOrderTaxIdInput {
 
   componentDidLoad() {
     this.updateTaxRequired(this.order?.tax_identifier?.number_type);
+
+    onChange('checkout', (checkout:Checkout) => {
+      this.updateTaxRequired(checkout?.tax_identifier?.number_type);
+    });
   }
 
   updateTaxRequired(taxIdentifierType: string) {
