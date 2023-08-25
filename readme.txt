@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.4.4
+Stable tag: 2.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,20 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.5.1 - August 21th, 2023 =
+* Fix: Issue with some checkout icons inheriting a stroke.
+* Security Fix: Hardened the security of the plugin. Props: Patchstack
+
+= 2.5.0 - August 18th, 2023 =
+* New: Buy now button on product pages.
+* New: Featured products. Mark products as featured and optionally show them on product lists.
+* New: Automatic Google Analytics "Add To Cart" event.
+* Improvement: improve line items exported parts.
+* Fix: Instant checkout pages mode changing should recreate a new checkout.
+* Fix: Link in switch element was not clickable on front-end.
+* Fix: Missing "Back to Home" translation not appearing in .pot file.
+* Fix: Change wording of installment price when there is only 1 installment on the subscription.
 
 = 2.4.4 - August 11th, 2023 =
 * Fix: Issue with shop page not fetching products under certain website caching conditions.

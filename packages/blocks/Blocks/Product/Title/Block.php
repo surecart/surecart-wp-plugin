@@ -29,7 +29,7 @@ class Block extends BaseBlock {
 			'h' . (int) ( $attributes['level'] ?? 1 ),
 			esc_attr( $this->getClasses( $attributes ) . ' surecart-block product-title' ),
 			esc_attr( $this->getStyles( $attributes ) ),
-			$product->name
+			wp_kses_post( $product->name ?? '' )
 		);
 	}
 }

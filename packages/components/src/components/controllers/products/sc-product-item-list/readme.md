@@ -10,6 +10,7 @@
 | Property               | Attribute                | Description                                               | Type                                        | Default             |
 | ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ------------------- |
 | `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `featured`             | `featured`               | Show only featured products.                              | `boolean`                                   | `false`             |
 | `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`         |
 | `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`         |
 | `limit`                | `limit`                  |                                                           | `number`                                    | `15`                |
