@@ -13,7 +13,7 @@ export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
 		return null;
 	}
-	const coupon = subscription?.discount.coupon;
+	const coupon = subscription?.discount?.coupon;
 	return (
 		<div
 			css={css`
