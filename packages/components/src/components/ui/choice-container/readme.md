@@ -89,12 +89,14 @@ Type: `Promise<void>`
 
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../sc-price-choice-container)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-price-choice --> sc-choice-container
   sc-price-choice-container --> sc-choice-container
+  sc-recurring-price-choice-container --> sc-choice-container
   style sc-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

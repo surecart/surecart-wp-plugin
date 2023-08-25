@@ -58,6 +58,7 @@
  - [sc-price-choice-container](../sc-price-choice-container)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-element](../stripe-payment-element)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -98,6 +99,7 @@ graph TD;
   sc-price-choice-container --> sc-skeleton
   sc-product-item-list --> sc-skeleton
   sc-purchase-downloads-list --> sc-skeleton
+  sc-recurring-price-choice-container --> sc-skeleton
   sc-stripe-add-method --> sc-skeleton
   sc-stripe-payment-element --> sc-skeleton
   sc-subscription --> sc-skeleton

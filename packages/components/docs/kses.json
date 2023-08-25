@@ -1739,6 +1739,21 @@
     "class": true,
     "slot": true
   },
+  "sc-recurring-price-choice-container": {
+    "checked": true,
+    "description": true,
+    "label": true,
+    "loading": true,
+    "price": true,
+    "show-control": true,
+    "show-label": true,
+    "show-price": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-rich-text": {
     "disabled": true,
     "help": true,

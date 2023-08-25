@@ -3129,6 +3129,44 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScRecurringPriceChoiceContainer {
+        /**
+          * Is this checked by default
+         */
+        "checked": boolean;
+        /**
+          * Label for the choice.
+         */
+        "description": string;
+        /**
+          * Label for the choice.
+         */
+        "label": string;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        /**
+          * Stores the price
+         */
+        "price": Price1;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
+        /**
+          * Show the label
+         */
+        "showLabel": boolean;
+        /**
+          * Show the price amount
+         */
+        "showPrice": boolean;
+        /**
+          * Choice Type
+         */
+        "type": 'checkbox' | 'radio';
+    }
     interface ScRichText {
         /**
           * Disables the textarea.
@@ -4110,6 +4148,10 @@ export interface ScRadioCustomEvent<T> extends CustomEvent<T> {
 export interface ScRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRadioGroupElement;
+}
+export interface ScRecurringPriceChoiceContainerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScRecurringPriceChoiceContainerElement;
 }
 export interface ScRichTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5103,6 +5145,12 @@ declare global {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
     };
+    interface HTMLScRecurringPriceChoiceContainerElement extends Components.ScRecurringPriceChoiceContainer, HTMLStencilElement {
+    }
+    var HTMLScRecurringPriceChoiceContainerElement: {
+        prototype: HTMLScRecurringPriceChoiceContainerElement;
+        new (): HTMLScRecurringPriceChoiceContainerElement;
+    };
     interface HTMLScRichTextElement extends Components.ScRichText, HTMLStencilElement {
     }
     var HTMLScRichTextElement: {
@@ -5527,6 +5575,7 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
@@ -9011,6 +9060,45 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScRecurringPriceChoiceContainer {
+        /**
+          * Is this checked by default
+         */
+        "checked"?: boolean;
+        /**
+          * Label for the choice.
+         */
+        "description"?: string;
+        /**
+          * Label for the choice.
+         */
+        "label"?: string;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<void>) => void;
+        /**
+          * Stores the price
+         */
+        "price"?: Price1;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
+        /**
+          * Show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * Show the price amount
+         */
+        "showPrice"?: boolean;
+        /**
+          * Choice Type
+         */
+        "type"?: 'checkbox' | 'radio';
+    }
     interface ScRichText {
         /**
           * Disables the textarea.
@@ -10009,6 +10097,7 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
@@ -10226,6 +10315,7 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;

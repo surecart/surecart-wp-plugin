@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-16T16:31:23",
+  "timestamp": "2023-08-25T11:44:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -5750,7 +5750,8 @@
       ],
       "dependents": [
         "sc-price-choice",
-        "sc-price-choice-container"
+        "sc-price-choice-container",
+        "sc-recurring-price-choice-container"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -5758,6 +5759,9 @@
           "sc-choice-container"
         ],
         "sc-price-choice-container": [
+          "sc-choice-container"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-choice-container"
         ]
       }
@@ -13303,6 +13307,7 @@
         "sc-product-price",
         "sc-product-price-choices",
         "sc-product-selected-price",
+        "sc-recurring-price-choice-container",
         "sc-shipping-choices",
         "sc-subscription-details",
         "sc-subscription-next-payment",
@@ -13376,6 +13381,9 @@
           "sc-format-number"
         ],
         "sc-product-selected-price": [
+          "sc-format-number"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-format-number"
         ],
         "sc-shipping-choices": [
@@ -26507,6 +26515,203 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-recurring-price-choice-container/sc-recurring-price-choice-container.tsx",
+      "encapsulation": "none",
+      "tag": "sc-recurring-price-choice-container",
+      "readme": "# sc-price-choice-container\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "checked",
+          "reflectToAttr": true,
+          "docs": "Is this checked by default",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "mutable": false,
+          "attr": "description",
+          "reflectToAttr": false,
+          "docs": "Label for the choice.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "Label for the choice.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "price",
+          "type": "Price | string",
+          "mutable": false,
+          "attr": "price",
+          "reflectToAttr": false,
+          "docs": "Stores the price",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showControl",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-control",
+          "reflectToAttr": false,
+          "docs": "Show the radio/checkbox control",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-label",
+          "reflectToAttr": false,
+          "docs": "Show the label",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showPrice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price",
+          "reflectToAttr": false,
+          "docs": "Show the price amount",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"checkbox\" | \"radio\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": false,
+          "docs": "Choice Type",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "checkbox",
+              "type": "string"
+            },
+            {
+              "value": "radio",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scChange",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-format-number",
+        "sc-choice-container",
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-recurring-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-skeleton"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/rich-text/sc-rich-text.tsx",
       "encapsulation": "shadow",
       "tag": "sc-rich-text",
@@ -27912,6 +28117,7 @@
         "sc-price-choice-container",
         "sc-product-item-list",
         "sc-purchase-downloads-list",
+        "sc-recurring-price-choice-container",
         "sc-stripe-add-method",
         "sc-stripe-payment-element",
         "sc-subscription",
@@ -27999,6 +28205,9 @@
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [
+          "sc-skeleton"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-skeleton"
         ],
         "sc-stripe-add-method": [

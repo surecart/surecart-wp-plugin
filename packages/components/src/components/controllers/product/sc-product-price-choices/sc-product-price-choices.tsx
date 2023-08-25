@@ -2,7 +2,7 @@ import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../functions/price';
 import { state } from '@store/product';
-import { availablePrices } from '@store/product/getters';
+import { availablePrices, availableNonSubscriptionPrices } from '@store/product/getters';
 
 @Component({
   tag: 'sc-product-price-choices',
@@ -35,9 +35,11 @@ export class ScProductPriceChoices {
     const prices = availablePrices();
     if (prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
+    const nonSubscriptionPrices = availableNonSubscriptionPrices();
+    
     return (
       <sc-choices label={this.label} required style={{ '--sc-input-required-indicator': ' ' }}>
-        {(prices || []).map(price => (
+        {(nonSubscriptionPrices || []).map(price => (
           <sc-price-choice-container
             label={price?.name || state.product?.name}
             showPrice={!!this.showPrice}
@@ -50,6 +52,9 @@ export class ScProductPriceChoices {
             }}
           />
         ))}
+        <sc-recurring-price-choice-container
+          label={__('Subscribe and Save', 'surecart')}
+        />
       </sc-choices>
     );
   }
