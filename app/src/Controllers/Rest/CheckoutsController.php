@@ -263,10 +263,10 @@ class CheckoutsController extends RestController {
 		$errors = new \WP_Error();
 
 		// check if they are trying to sign in.
-		// $valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		// if ( is_wp_error( $valid_login ) ) {
-		// $errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
-		// }
+		$valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
+		if ( is_wp_error( $valid_login ) ) {
+			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
+		}
 
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
