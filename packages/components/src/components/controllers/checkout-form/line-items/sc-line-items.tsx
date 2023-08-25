@@ -6,6 +6,29 @@ import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
 import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '../../../../types';
 
+/**
+ * @part base - The component base
+ * @part line-item - The line item
+ * @part product-line-item - The product line item
+ * @part line-item__image - The line item image
+ * @part line-item__text - The line item text
+ * @part line-item__title - The line item title
+ * @part line-item__suffix - The line item suffix
+ * @part line-item__price - The line item price
+ * @part line-item__price-amount - The line item price amount
+ * @part line-item__price-description - The line item price description
+ * @part line-item__price-scratch - The line item price scratch
+ * @part line-item__static-quantity - The line item static quantity
+ * @part line-item__remove-icon - The line item remove icon
+ * @part line-item__quantity - The line item quantity
+ * @part line-item__quantity-minus - The line item quantity minus
+ * @part line-item__quantity-minus-icon - The line item quantity minus icon
+ * @part line-item__quantity-plus - The line item quantity plus
+ * @part line-item__quantity-plus-icon - The line item quantity plus icon
+ * @part line-item__quantity-input - The line item quantity input
+ * @part line-item__price-description - The line item price description
+ */
+
 @Component({
   tag: 'sc-line-items',
   styleUrl: 'sc-line-items.css',
@@ -92,36 +115,32 @@ export class ScLineItems {
     }
 
     return (
-      <div class="line-items">
-        {(this.order?.line_items?.data || [])
-          .sort((a, b) => {
-            if (a.price?.id < b.price?.id) return -1;
-            return a.price?.id > b.price?.id ? 1 : 0;
-          })
-          .map(item => {
-            return (
-              <div class="line-item">
-                <sc-product-line-item
-                  key={item.id}
-                  imageUrl={(item?.price?.product as Product)?.image_url}
-                  name={(item?.price?.product as Product)?.name}
-                  max={(item?.price?.product as Product)?.purchase_limit}
-                  editable={this.isEditable(item)}
-                  removable={this.isRemovable()}
-                  quantity={item.quantity}
-                  fees={item?.fees?.data}
-                  setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
-                  amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
-                  scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
-                  currency={this.order?.currency}
-                  trialDurationDays={item?.price?.trial_duration_days}
-                  interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
-                  onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
-                  onScRemove={() => this.removeLineItem(item)}
-                />
-              </div>
-            );
-          })}
+      <div class="line-items" part="base">
+        {(this.order?.line_items?.data || []).map(item => {
+          return (
+            <div class="line-item">
+              <sc-product-line-item
+                key={item.id}
+                imageUrl={(item?.price?.product as Product)?.image_url}
+                name={(item?.price?.product as Product)?.name}
+                max={(item?.price?.product as Product)?.purchase_limit}
+                editable={this.isEditable(item)}
+                removable={this.isRemovable()}
+                quantity={item.quantity}
+                fees={item?.fees?.data}
+                setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
+                amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
+                scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
+                currency={this.order?.currency}
+                trialDurationDays={item?.price?.trial_duration_days}
+                interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
+                onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
+                onScRemove={() => this.removeLineItem(item)}
+                exportparts="base:line-item, product-line-item, image:line-item__image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input, line-item__price-description:line-item__price-description"
+              />
+            </div>
+          );
+        })}
       </div>
     );
   }

@@ -86,9 +86,9 @@ class ProductIDDataField extends Data_Field {
 	/**
 	 * The primary key for the data field.
 	 *
-	 * @return array
+	 * @return string
 	 */
-	public static function primary_key(): array {
-		return [ ProductDataObject::get_id() ];
+	public static function primary_key() {
+		return ProductDataObject::get_id();
 	}
 }

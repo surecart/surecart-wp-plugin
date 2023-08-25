@@ -208,7 +208,6 @@ export class ScAddress {
               name={this.names?.line_2}
               squared
               disabled={this.disabled}
-              required={this.required}
             />
           )}
 

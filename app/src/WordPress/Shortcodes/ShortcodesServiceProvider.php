@@ -131,6 +131,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'search_enabled'     => false,
 				'pagination_enabled' => true,
 				'ajax_pagination'    => true,
+				'type'               => 'all',
 				'limit'              => 10,
 			]
 		);
@@ -199,9 +200,11 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @param  array  $atts Shortcode attributes.
 	 * @param  string $content Shortcode content.
+	 * @param  string $name Shortcode tag.
+	 *
 	 * @return string Shortcode output.
 	 */
-	public function formShortcode( $atts ) {
+	public function formShortcode( $atts, $content, $name ) {
 		$atts = shortcode_atts(
 			[
 				'id' => null,
@@ -227,7 +230,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			return __( 'This form is not available or has been deleted.', 'surecart' );
 		}
 
-		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $form );
+		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $name, $form );
 	}
 
 	/**

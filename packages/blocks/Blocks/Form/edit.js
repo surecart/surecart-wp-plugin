@@ -300,7 +300,6 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							>
 								<LinkControl
 									value={{ url: success_url }}
-									settings={{}}
 									shownUnlinkControl={true}
 									noURLSuggestion
 									showInitialSuggestions

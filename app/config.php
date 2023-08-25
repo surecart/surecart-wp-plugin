@@ -92,6 +92,7 @@ return [
 		\SureCart\Rest\CustomerNotificationProtocolRestServiceProvider::class,
 		\SureCart\Rest\OrderRestServiceProvider::class,
 		\SureCart\Rest\CheckoutRestServiceProvider::class,
+		\SureCart\Rest\DraftCheckoutRestServiceProvider::class,
 		\SureCart\Rest\InvoicesRestServiceProvider::class,
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
@@ -167,7 +168,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
-
+		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
 	],
 
 	/** Which components to preload for each block. */

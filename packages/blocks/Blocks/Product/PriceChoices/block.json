@@ -22,7 +22,6 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false,
 		"color": {
 			"__experimentalSkipSerialization": true,
 			"gradients": true,
