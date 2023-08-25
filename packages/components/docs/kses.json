@@ -1569,8 +1569,6 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
-    "api-token-connection": true,
-    "dummy-products": true,
     "featured": true,
     "ids": true,
     "layout-config": true,
@@ -1578,6 +1576,7 @@
     "pagination-alignment": true,
     "pagination-auto-scroll": true,
     "pagination-enabled": true,
+    "products": true,
     "query": true,
     "search-enabled": true,
     "sort": true,
