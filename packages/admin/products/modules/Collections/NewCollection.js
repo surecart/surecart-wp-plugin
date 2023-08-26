@@ -1,3 +1,15 @@
+/**
+ * External dependencies.
+ */
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useEffect, useRef, useState } from '@wordpress/element';
+import { store as noticesStore } from '@wordpress/notices';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import {
 	ScBlockUi,
 	ScButton,
@@ -5,15 +17,12 @@ import {
 	ScForm,
 	ScInput,
 } from '@surecart/components-react';
-import { useDispatch } from '@wordpress/data';
-import { __ } from '@wordpress/i18n';
-import { store as coreStore } from '@wordpress/core-data';
-import { useEffect, useRef, useState } from '@wordpress/element';
-import { store as noticesStore } from '@wordpress/notices';
+import Error from '../../../components/Error';
 
-export default ({ open, onRequestClose, onCreate }) => {
+export default ({ open, onRequestClose, onCreate, suggestion = '' }) => {
 	const [busy, setBusy] = useState(false);
 	const [name, setName] = useState('');
+	const [error, setError] = useState(null);
 	const input = useRef(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -32,7 +41,10 @@ export default ({ open, onRequestClose, onCreate }) => {
 				'surecart',
 				'product-collection',
 				{
-					name,
+					name: name || suggestion,
+				},
+				{
+					throwOnError: true,
 				}
 			);
 			createSuccessNotice(__('Collection created.', 'surecart'), {
@@ -42,6 +54,7 @@ export default ({ open, onRequestClose, onCreate }) => {
 			onCreate(collection);
 			onRequestClose();
 		} catch (e) {
+			setError(e);
 			console.error(e);
 		} finally {
 			setBusy(false);
@@ -55,16 +68,19 @@ export default ({ open, onRequestClose, onCreate }) => {
 				open={open}
 				onScRequestClose={onRequestClose}
 			>
+				<Error error={error} />
+
 				<ScInput
 					ref={input}
 					label={__('Collection Name', 'surecart')}
 					className="sc-product-name hydrated"
 					help={__('A name for your product collection.', 'surecart')}
 					onScInput={(e) => setName(e.target.value)}
-					value={name}
+					value={name || suggestion}
 					name="name"
 					required
 					autofocus={open}
+					style={{ marginTop: '1rem' }}
 				/>
 				<ScButton type="primary" submit slot="footer">
 					{__('Create', 'surecart')}
