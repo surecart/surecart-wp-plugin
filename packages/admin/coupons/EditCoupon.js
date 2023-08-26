@@ -41,8 +41,7 @@ export default ({ id }) => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEntityRecord, editEntityRecord, deleteEntityRecord } =
-		useDispatch(coreStore);
+	const { editEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 
 	const { coupon, isLoading, isDeleting, deleteError, saveError, loadError } =
 		useSelect((select) => {
