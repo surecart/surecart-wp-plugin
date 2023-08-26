@@ -14,6 +14,7 @@ export default (props) => {
 		display,
 		exclude = [],
 		fetchOnLoad = false,
+		onChangeQuery = () => {},
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -22,6 +23,11 @@ export default (props) => {
 	const [perPage, setPerPage] = useState(10);
 	const [isLoading, setIsLoading] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
+
+	const handleOnChangeQuery = (queryValue) => {
+		setQuery(queryValue);
+		onChangeQuery(queryValue);
+	};
 
 	const handleOnScrollEnd = () => {
 		if (page >= totalPages || isLoading) return;
@@ -96,7 +102,7 @@ export default (props) => {
 				value: item.id,
 				disabled: exclude.includes(item.id),
 			}))}
-			onQuery={setQuery}
+			onQuery={handleOnChangeQuery}
 			onFetch={fetchData}
 			loading={isLoading}
 			onScrollEnd={handleOnScrollEnd}

@@ -20,6 +20,7 @@ import Collection from './Collection';
 import NewCollection from './NewCollection';
 
 export default ({ product, updateProduct, loading }) => {
+	const [suggestion, setSuggestion] = useState('');
 	const [modal, setModal] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
@@ -62,6 +63,7 @@ export default ({ product, updateProduct, loading }) => {
 						onSelect={(collectionId) =>
 							toggleCollection(collectionId)
 						}
+						onChangeQuery={(value) => setSuggestion(value)}
 						exclude={product?.product_collection_ids}
 						style={{ width: '100%' }}
 					>
@@ -103,6 +105,7 @@ export default ({ product, updateProduct, loading }) => {
 				open={'new' === modal}
 				onRequestClose={() => setModal(false)}
 				onCreate={(collection) => toggleCollection(collection.id)}
+				suggestion={suggestion}
 			/>
 		</>
 	);
