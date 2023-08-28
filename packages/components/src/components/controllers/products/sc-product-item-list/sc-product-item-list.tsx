@@ -79,7 +79,7 @@ export class ScProductItemList {
   };
 
   componentWillLoad() {
-    if (!this.products || !this.products.length) {
+    if (!this?.products?.length) {
       this.getProducts();
     }
   }
