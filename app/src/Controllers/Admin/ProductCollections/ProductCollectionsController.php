@@ -86,7 +86,7 @@ class ProductCollectionsController {
 			'/wp/v2/types?context=edit',
 			'/wp/v2/templates/' . $product_collection->template_id . '?context=edit',
 			'/wp/v2/template-parts/' . $product_collection->template_part_id . '?context=edit',
-			'/surecart/v1/product-collections/' . $product_collection->id . '?context=edit',
+			'/surecart/v1/product_collections/' . $product_collection->id . '?context=edit&expand[0]=media',
 		);
 
 		wp_add_inline_script(
