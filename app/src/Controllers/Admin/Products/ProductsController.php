@@ -49,6 +49,11 @@ class ProductsController extends AdminController {
 			'/wp/v2/templates/' . $product->template_id . '?context=edit',
 			'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
 			'/surecart/v1/products/' . $product->id . '?context=edit',
+			// '/surecart/v1/product_medias?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
+			// '/surecart/v1/prices?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
+			'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
+			'/surecart/v1/integration_providers?context=edit',
+			'/surecart/v1/integration_provider_items?context=edit',
 		);
 
 		wp_add_inline_script(
