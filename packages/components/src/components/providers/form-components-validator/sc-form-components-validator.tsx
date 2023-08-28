@@ -90,6 +90,7 @@ export class ScFormComponentsValidator {
         this.addTaxIDField();
       }
     }
+    console.log('checkout state',JSON.stringify(checkoutState))
 
     // make sure to check order on load.
     this.handleOrderChange();

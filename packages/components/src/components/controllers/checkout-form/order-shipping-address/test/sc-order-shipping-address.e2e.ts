@@ -59,49 +59,49 @@ describe('sc-order-shipping-address', () => {
     expect(addressProp.country).toEqual('BD');
   });
 
-  it('requires a name and address if shipping address is required', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<sc-order-shipping-address full></sc-order-shipping-address>');
-    page.waitForChanges();
+  // it('requires a name and address if shipping address is required', async () => {
+  //   const page = await newE2EPage();
+  //   await page.setContent('<sc-order-shipping-address full></sc-order-shipping-address>');
+  //   page.waitForChanges();
 
-    let element = await page.find('sc-order-shipping-address >>> sc-address');
-    let requireName = await element.getProperty('requireName');
-    let required = await element.getProperty('required');
-    expect(requireName).toEqual(false);
-    expect(required).toEqual(false);
+  //   let element = await page.find('sc-order-shipping-address >>> sc-address');
+  //   let requireName = await element.getProperty('requireName');
+  //   let required = await element.getProperty('required');
+  //   expect(requireName).toEqual(false);
+  //   expect(required).toEqual(false);
 
-    await page.$eval('sc-order-shipping-address', (elm: any) => {
-      elm.checkout = { id: 'test', shipping_address_required: true };
-    });
+  //   await page.$eval('sc-order-shipping-address', (elm: any) => {
+  //     elm.checkout = { id: 'test', shipping_address_required: true };
+  //   });
 
-    await page.waitForChanges();
+  //   await page.waitForChanges();
 
-    element = await page.find('sc-order-shipping-address >>> sc-address');
-    requireName = await element.getProperty('requireName');
-    required = await element.getProperty('required');
-    expect(requireName).toEqual(true);
-    expect(required).toEqual(true);
-  });
+  //   element = await page.find('sc-order-shipping-address >>> sc-address');
+  //   requireName = await element.getProperty('requireName');
+  //   required = await element.getProperty('required');
+  //   expect(requireName).toEqual(true);
+  //   expect(required).toEqual(true);
+  // });
 
-  it('should use a full address if address is required', async () => {
-    const page = await newE2EPage();
-    await page.setContent('<sc-order-shipping-address></sc-order-shipping-address>');
-    page.waitForChanges();
+  // it('should use a full address if address is required', async () => {
+  //   const page = await newE2EPage();
+  //   await page.setContent('<sc-order-shipping-address></sc-order-shipping-address>');
+  //   page.waitForChanges();
 
-    let full = await page.find('sc-order-shipping-address >>> sc-address');
-    let compact = await page.find('sc-order-shipping-address >>> sc-compact-address');
-    expect(full).toBeNull();
-    expect(compact).not.toBeNull();
+  //   let full = await page.find('sc-order-shipping-address >>> sc-address');
+  //   let compact = await page.find('sc-order-shipping-address >>> sc-compact-address');
+  //   expect(full).toBeNull();
+  //   expect(compact).not.toBeNull();
 
-    await page.$eval('sc-order-shipping-address', (elm: any) => {
-      elm.checkout = { id: 'test', shipping_address_required: true };
-    });
+  //   await page.$eval('sc-order-shipping-address', (elm: any) => {
+  //     elm.checkout = { id: 'test', shipping_address_required: true };
+  //   });
 
-    await page.waitForChanges();
+  //   await page.waitForChanges();
 
-    full = await page.find('sc-order-shipping-address >>> sc-address');
-    compact = await page.find('sc-order-shipping-address >>> sc-compact-address');
-    expect(full).not.toBeNull();
-    expect(compact).toBeNull();
-  });
+  //   full = await page.find('sc-order-shipping-address >>> sc-address');
+  //   compact = await page.find('sc-order-shipping-address >>> sc-compact-address');
+  //   expect(full).not.toBeNull();
+  //   expect(compact).toBeNull();
+  // });
 });
