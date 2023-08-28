@@ -177,10 +177,9 @@ export class ScSessionProvider {
     });
   }
 
-  /** Find or create session on load. */
-  componentDidLoad() {
-    this.findOrCreateOrder();
-
+  // emit checkout initiate
+  handleCheckoutInitiated() {
+    if (!checkoutState.checkout) return;
     let eventData: CheckoutInitiatedParams = {
       transaction_id: checkoutState.checkout.id,
       value: maybeConvertAmount(checkoutState.checkout?.total_amount, checkoutState.checkout?.currency || 'USD'),
@@ -196,6 +195,11 @@ export class ScSessionProvider {
     };
 
     this.scCheckoutInitiated.emit(eventData);
+  }
+
+  /** Find or create session on load. */
+  componentDidLoad() {
+    this.findOrCreateOrder().then(() => this.handleCheckoutInitiated());
   }
 
   /** Find or create an order */
