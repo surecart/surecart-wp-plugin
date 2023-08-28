@@ -471,6 +471,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return Array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return $this->user->to_array();
 	}
@@ -504,6 +505,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return bool
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetExists( $offset ) {
 		return ! is_null( $this->getAttribute( $offset ) );
 	}
@@ -514,6 +516,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return $this->getAttribute( $offset );
 	}
@@ -525,6 +528,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $value Value.
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet( $offset, $value ) {
 		$this->setAttribute( $offset, $value );
 	}
@@ -535,6 +539,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset( $offset ) {
 		$this->user->$offset = null;
 	}
