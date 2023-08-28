@@ -59,7 +59,7 @@ class ProductCollectionsListTable extends ListTable {
 	public function get_columns(): array {
 		return [
 			'name'           => __( 'Name', 'surecart' ),
-			'products_count' => __( 'No of products', 'surecart' ),
+			'products_count' => __( 'Products', 'surecart' ),
 			'description'    => __( 'Description', 'surecart' ),
 			'created'        => __( 'Created', 'surecart' ),
 		];
