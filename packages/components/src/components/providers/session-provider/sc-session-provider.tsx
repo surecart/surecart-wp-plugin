@@ -5,11 +5,10 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { updateFormState } from '@store/form/mutations';
-
+import { maybeConvertAmount } from '../../../functions/currency';
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, CheckoutInitiatedParams, FormStateSetter, LineItemData, PriceChoice, Product } from '../../../types';
-import { maybeConvertAmount } from 'src/functions/currency';
 
 @Component({
   tag: 'sc-session-provider',
