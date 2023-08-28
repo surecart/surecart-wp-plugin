@@ -3137,31 +3137,16 @@ export namespace Components {
         /**
           * Label for the choice.
          */
-        "description": string;
-        /**
-          * Label for the choice.
-         */
         "label": string;
-        /**
-          * Is this loading
-         */
-        "loading": boolean;
         /**
           * Stores the price
          */
         "price": Price1;
+        "prices": Price1[];
         /**
           * Show the radio/checkbox control
          */
         "showControl": boolean;
-        /**
-          * Show the label
-         */
-        "showLabel": boolean;
-        /**
-          * Show the price amount
-         */
-        "showPrice": boolean;
         /**
           * Choice Type
          */
@@ -9068,32 +9053,17 @@ declare namespace LocalJSX {
         /**
           * Label for the choice.
          */
-        "description"?: string;
-        /**
-          * Label for the choice.
-         */
         "label"?: string;
-        /**
-          * Is this loading
-         */
-        "loading"?: boolean;
         "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<void>) => void;
         /**
           * Stores the price
          */
         "price"?: Price1;
+        "prices"?: Price1[];
         /**
           * Show the radio/checkbox control
          */
         "showControl"?: boolean;
-        /**
-          * Show the label
-         */
-        "showLabel"?: boolean;
-        /**
-          * Show the price amount
-         */
-        "showPrice"?: boolean;
         /**
           * Choice Type
          */

@@ -2,7 +2,7 @@ import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../functions/price';
 import { state } from '@store/product';
-import { availablePrices, availableNonSubscriptionPrices } from '@store/product/getters';
+import { availablePrices, availableNonSubscriptionPrices, availableSubscriptionPrices } from '@store/product/getters';
 
 @Component({
   tag: 'sc-product-price-choices',
@@ -54,6 +54,7 @@ export class ScProductPriceChoices {
         ))}
         <sc-recurring-price-choice-container
           label={__('Subscribe and Save', 'surecart')}
+          prices={availableSubscriptionPrices()}
         />
       </sc-choices>
     );

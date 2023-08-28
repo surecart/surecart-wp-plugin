@@ -1,7 +1,6 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, Watch } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from 'src/types';
-import { availableSubscriptionPrices } from '@store/product/getters';
 import { state } from '@store/product';
 import { intervalString } from '../../../functions/price';
 
@@ -14,23 +13,11 @@ export class ScRecurringPriceChoiceContainer {
   /** Stores the price */
   @Prop() price: Price;
 
-  /** Is this loading */
-  @Prop() loading: boolean = false;
-
   /** Label for the choice. */
   @Prop() label: string;
 
-  /** Show the label */
-  @Prop() showLabel: boolean = true;
-
-  /** Show the price amount */
-  @Prop() showPrice: boolean = true;
-
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = false;
-
-  /** Label for the choice. */
-  @Prop() description: string;
 
   /** Choice Type */
   @Prop() type: 'checkbox' | 'radio';
@@ -38,9 +25,7 @@ export class ScRecurringPriceChoiceContainer {
   /** Is this checked by default */
   @Prop({ reflect: true, mutable: true }) checked: boolean = false;
 
-  @State() priceData: Price;
-
-  @State() prices: Price[];
+  @Prop() prices: Price[];
 
   @Event() scChange: EventEmitter<void>;
 
@@ -49,7 +34,6 @@ export class ScRecurringPriceChoiceContainer {
     state.selectedPrice = this.price;
   }
   componentWillLoad() {
-    this.prices = availableSubscriptionPrices();
     this.price = this.prices?.[0]
     this.handlePriceChange();
   }
@@ -63,10 +47,6 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
-    
-    const prices = availableSubscriptionPrices();
-    console.log(prices);
-    
     return (
       <sc-choice-container value={this.price?.id} type={this.type} showControl={this.showControl} checked={this.checked} onScChange={() => this.scChange.emit()}>
         <div class="price-choice__title">
@@ -78,7 +58,7 @@ export class ScRecurringPriceChoiceContainer {
                   {this.price?.name}
                 </sc-button>
                 <sc-menu>
-                  {(prices || []).map(price => (
+                  {(this.prices || []).map(price => (
                       <sc-menu-item onClick={() => (this.price = price)}>
                         {price?.name}
                         <span slot="suffix">{this.renderPrice(price)}</span>
