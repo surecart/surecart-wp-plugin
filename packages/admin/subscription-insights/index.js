@@ -1,4 +1,4 @@
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 
 /**
  * register store and entities.
@@ -13,7 +13,6 @@ import '../store/add-entities';
 /**
  * Render
  */
-const app = document.getElementById('app');
-if (app) {
-	render(<SubscriptionInsights />, document.getElementById('app'));
-}
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<SubscriptionInsights />);
