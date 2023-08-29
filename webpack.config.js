@@ -90,6 +90,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/cancellation-insights/index.js'
 		),
+		['admin/subscription-insights']: path.resolve(
+			__dirname,
+			'packages/admin/subscription-insights/index.js'
+		),
 
 		/**
 		 * Settings.

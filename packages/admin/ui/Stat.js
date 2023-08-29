@@ -2,6 +2,7 @@ import { css, jsx } from '@emotion/core';
 
 /** @jsx jsx */
 import Box from '../ui/Box';
+import StatCompareBadge from './StatCompareBadge';
 
 export default ({ title, loading, description, children, compare }) => {
 	return (
@@ -9,7 +10,7 @@ export default ({ title, loading, description, children, compare }) => {
 			title={title}
 			loading={loading}
 			hasDivider={false}
-			header_action={compare}
+			header_action={<StatCompareBadge loading={loading} {...compare} />}
 			css={css`
 				border-radius: 6px !important;
 				border: 1px solid var(--sc-color-gray-200);
