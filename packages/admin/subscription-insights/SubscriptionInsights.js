@@ -172,8 +172,6 @@ export default () => {
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
 						value={totalProperties('total_mrr_amount', data)}
-						maximumFractionDigits={1}
-						minimumFractionDigits={0}
 					/>
 				</Stat>
 				<Stat
@@ -205,8 +203,6 @@ export default () => {
 						value={totalProperties('lost_mrr_amount', data)}
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
-						maximumFractionDigits={1}
-						minimumFractionDigits={0}
 					/>
 				</Stat>
 				<Stat
@@ -231,8 +227,6 @@ export default () => {
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
 						value={totalProperties('total_remaining_amount', data)}
-						maximumFractionDigits={1}
-						minimumFractionDigits={0}
 					></ScFormatNumber>
 				</Stat>
 			</div>
