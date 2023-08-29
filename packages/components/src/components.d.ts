@@ -1378,10 +1378,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The order
-         */
-        "order": Checkout;
-        /**
           * The tax protocol
          */
         "taxProtocol": TaxProtocol;
@@ -7128,10 +7124,6 @@ declare namespace LocalJSX {
           * Disable validation?
          */
         "disabled"?: boolean;
-        /**
-          * The order
-         */
-        "order"?: Checkout;
         /**
           * The tax protocol
          */
