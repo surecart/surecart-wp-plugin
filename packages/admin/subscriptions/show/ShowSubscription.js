@@ -430,7 +430,9 @@ export default () => {
 					<PendingUpdate subscription={subscription} />
 				)}
 
-				<LineItems period={upcoming} loading={loadingUpcoming} />
+				{!!upcoming && (
+					<LineItems period={upcoming} loading={loadingUpcoming} />
+				)}
 
 				<Periods subscriptionId={id} />
 

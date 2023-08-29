@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type     | Default     |
-| ------------ | ------------- | ----------- | -------- | ----------- |
-| `buttonText` | `button-text` |             | `string` | `undefined` |
+| Property     | Attribute     | Description | Type      | Default     |
+| ------------ | ------------- | ----------- | --------- | ----------- |
+| `addToCart`  | `add-to-cart` |             | `boolean` | `undefined` |
+| `buttonText` | `button-text` |             | `string`  | `undefined` |
 
 
 ## Dependencies
