@@ -105,7 +105,7 @@ export default () => {
 			>
 				<Stat
 					title={__('Subscriptions', 'surecart')}
-					description={__('Number of subscriptions', 'surecart')}
+					description={__('Number Of Subscriptions', 'surecart')}
 					loading={loading}
 					compare={{
 						current: totalProperties('total_count', data),
@@ -116,7 +116,7 @@ export default () => {
 				</Stat>
 				<Stat
 					title={__('New Subscriptions', 'surecart')}
-					description={__('Number of New Subscriptions', 'surecart')}
+					description={__('Number Of New Subscriptions', 'surecart')}
 					loading={loading}
 					compare={{
 						current: totalProperties('new_count', data),
@@ -127,7 +127,10 @@ export default () => {
 				</Stat>
 				<Stat
 					title={__('Trial Conversion', 'surecart')}
-					description={__('Trial Conversion Rate', 'surecart')}
+					description={__(
+						'Conversion Rate From Trial To Paid',
+						'surecart'
+					)}
 					compare={{
 						current: averageProperties(
 							'trial_conversion_rate',
@@ -160,8 +163,11 @@ export default () => {
 					{totalProperties('total_trial_count', data)}
 				</Stat>
 				<Stat
-					title={__('MRR', 'surecart')}
-					description={__('Monthly Recurring Revenue', 'surecart')}
+					title={__('Monthly Recurring Revenue', 'surecart')}
+					description={__(
+						'Total Monthly Recurring Revenue',
+						'surecart'
+					)}
 					loading={loading}
 					compare={{
 						current: totalProperties('total_mrr_amount', data),
@@ -208,7 +214,7 @@ export default () => {
 				<Stat
 					title={__('Outstanding Installments', 'surecart')}
 					description={__(
-						'Outstanding Installment Payments',
+						'Total Of Installment Payments Remaining',
 						'surecart'
 					)}
 					loading={loading}
