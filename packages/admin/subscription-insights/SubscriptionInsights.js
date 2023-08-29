@@ -146,6 +146,8 @@ export default () => {
 					<ScFormatNumber
 						value={averageProperties('trial_conversion_rate', data)}
 						type="percent"
+						maximumFractionDigits={2}
+						minimumFractionDigits={0}
 					/>
 				</Stat>
 				<Stat
@@ -187,12 +189,14 @@ export default () => {
 					compare={{
 						current: averageProperties('mrr_churn_rate', data),
 						previous: averageProperties('mrr_churn_rate', previous),
+						reverse: true,
 					}}
 				>
 					<ScFormatNumber
 						value={averageProperties('mrr_churn_rate', data)}
 						type="percent"
 						maximumFractionDigits={2}
+						minimumFractionDigits={0}
 					/>
 				</Stat>
 				<Stat
