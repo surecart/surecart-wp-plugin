@@ -104,16 +104,18 @@ export default () => {
 				`}
 			>
 				<Stat
-					title={__('Subscriptions', 'surecart')}
+					title={__('Total Subscriptions', 'surecart')}
 					description={__('Number Of Subscriptions', 'surecart')}
 					loading={loading}
 					compare={{
-						current: totalProperties('total_count', data),
-						previous: totalProperties('total_count', previous),
+						current: data[data.length - 1]?.total_count || 0,
+						previous:
+							previous[previous.length - 1]?.total_count || 0,
 					}}
 				>
-					{totalProperties('total_count', data)}
+					{data[data.length - 1]?.total_count || 0}
 				</Stat>
+
 				<Stat
 					title={__('New Subscriptions', 'surecart')}
 					description={__('Number Of New Subscriptions', 'surecart')}
@@ -125,6 +127,7 @@ export default () => {
 				>
 					{totalProperties('new_count', data)}
 				</Stat>
+
 				<Stat
 					title={__('Trial Conversion', 'surecart')}
 					description={__(
@@ -150,6 +153,7 @@ export default () => {
 						minimumFractionDigits={0}
 					/>
 				</Stat>
+
 				<Stat
 					title={__('Trials', 'surecart')}
 					description={__('Total Trials', 'surecart')}
@@ -164,27 +168,34 @@ export default () => {
 				>
 					{totalProperties('total_trial_count', data)}
 				</Stat>
+
 				<Stat
-					title={__('Monthly Recurring Revenue', 'surecart')}
+					title={__('MRR', 'surecart')}
 					description={__(
 						'Total Monthly Recurring Revenue',
 						'surecart'
 					)}
 					loading={loading}
 					compare={{
-						current: totalProperties('total_mrr_amount', data),
-						previous: totalProperties('total_mrr_amount', previous),
+						current: data[data.length - 1]?.total_mrr_amount || 0,
+						previous:
+							previous[previous.length - 1]?.total_mrr_amount ||
+							0,
 					}}
 				>
 					<ScFormatNumber
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
-						value={totalProperties('total_mrr_amount', data)}
+						value={data[data.length - 1]?.total_mrr_amount || 0}
 					/>
 				</Stat>
+
 				<Stat
-					title={__('Churn Rate', 'surecart')}
-					description={__('Subscription Churn Rate', 'surecart')}
+					title={__('MRR Churn Rate', 'surecart')}
+					description={__(
+						'Monthly Recurring Revenue Churn Rate',
+						'surecart'
+					)}
 					loading={loading}
 					compare={{
 						current: averageProperties('mrr_churn_rate', data),
@@ -199,9 +210,13 @@ export default () => {
 						minimumFractionDigits={0}
 					/>
 				</Stat>
+
 				<Stat
-					title={__('Lost Revenue', 'surecart')}
-					description={__('Revenue Lost From Churn', 'surecart')}
+					title={__('MRR Lost', 'surecart')}
+					description={__(
+						'Lost Monthly Recurring Revenue',
+						'surecart'
+					)}
 					loading={loading}
 					compare={{
 						current: totalProperties('lost_mrr_amount', data),
@@ -215,6 +230,7 @@ export default () => {
 						currency={data[0]?.currency || scData?.currency_code}
 					/>
 				</Stat>
+
 				<Stat
 					title={__('Outstanding Installments', 'surecart')}
 					description={__(
@@ -223,21 +239,20 @@ export default () => {
 					)}
 					loading={loading}
 					compare={{
-						current: totalProperties(
-							'total_remaining_amount',
-							data
-						),
-						previous: totalProperties(
-							'total_remaining_amount',
-							previous
-						),
+						current:
+							data[data.length - 1]?.total_remaining_amount || 0,
+						previous:
+							previous[previous.length - 1]
+								?.total_remaining_amount || 0,
 					}}
 				>
 					<ScFormatNumber
 						type="currency"
 						currency={data[0]?.currency || scData?.currency_code}
-						value={totalProperties('total_remaining_amount', data)}
-					></ScFormatNumber>
+						value={
+							data[data.length - 1]?.total_remaining_amount || 0
+						}
+					/>
 				</Stat>
 			</div>
 		</div>
