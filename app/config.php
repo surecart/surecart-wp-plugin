@@ -135,6 +135,8 @@ return [
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
 		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\CollapsibleRow\Block::class,
+		\SureCartBlocks\Blocks\Columns\Block::class,
+		\SureCartBlocks\Blocks\Column\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Payment\Block::class,
