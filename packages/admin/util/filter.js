@@ -55,11 +55,19 @@ export function getFilterData(filter) {
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'month');
 			break;
+		case 'last365':
+			endDate = dayjs().endOf('day');
+			startDate = dayjs(endDate).add(-1, 'year');
+			prevEndDate = startDate;
+			prevStartDate = dayjs(startDate).add(-1, 'year');
+			break;
 	}
 
 	// set interval to hour if day is not enough
 	if (endDate.diff(startDate, 'day') < 1) {
 		interval = 'hour';
+	} else if (endDate.diff(startDate, 'month') > 2) {
+		interval = 'month';
 	}
 
 	return {

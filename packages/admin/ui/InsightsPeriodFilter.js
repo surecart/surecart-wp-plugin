@@ -55,6 +55,12 @@ export default ({ filter, setFilter }) => {
 				>
 					{__('Last Month', 'surecart')}
 				</Tab>
+				<Tab
+					selected={filter === 'last365'}
+					onClick={() => setFilter('last365')}
+				>
+					{__('Last 365 Days', 'surecart')}
+				</Tab>
 			</ScFlex>
 
 			<LiveModeToggle />
