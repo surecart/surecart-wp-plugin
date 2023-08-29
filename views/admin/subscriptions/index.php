@@ -10,10 +10,8 @@
 		[ 'title' => __( 'Subscription Insights', 'surecart' ) ]
 	);
 	?>
-	<?php if ( $enabled ) : ?>
-		<div id="app"></div>
-	<?php endif; ?>
 
+	<div id="app"></div>
 
 	<?php
 	\SureCart::render(

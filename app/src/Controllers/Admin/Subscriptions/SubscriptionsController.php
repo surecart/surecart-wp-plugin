@@ -30,8 +30,7 @@ class SubscriptionsController extends AdminController {
 		);
 		return \SureCart::view( 'admin/subscriptions/index' )->with(
 			[
-				'table'   => $table,
-				'enabled' => true, // true for now until we have a way to check if the feature is enabled.
+				'table' => $table,
 			]
 		);
 	}
