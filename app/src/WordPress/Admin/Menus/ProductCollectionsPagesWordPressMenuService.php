@@ -15,6 +15,8 @@ class ProductCollectionsPagesWordPressMenuService {
 	 */
 	public function bootstrap(): void {
 		add_action( 'admin_init', [ $this, 'registerNavMetaBox' ], 9 );
+		add_filter( 'render_block', [ $this, 'filterMenuBlockLinkHref' ], 10, 2 );
+
 	}
 
 	/**
@@ -101,5 +103,32 @@ class ProductCollectionsPagesWordPressMenuService {
 			</p>
 		</div>
 		<?php
+	}
+
+	/**
+	 * If the menu item is a collection page, add the collection slug to the menu item..
+	 *
+	 * @param string $content Block content.
+	 * @param array $block_data Block data.
+	 *
+	 * @return array
+	 */
+	public function filterMenuBlockLinkHref( $content, $block_data ) {
+		
+		if ( empty ( $block_data['blockName'] ) || 'core/navigation-link' !== $block_data['blockName'] || empty( $block_data['attrs']['id'] ) ) {
+			return $content;
+		}
+
+		$collection_slug = ProductCollection::find( $block_data['attrs']['id'] )->slug;
+		
+		if ( empty( $collection_slug ) ) {
+			return $content;
+		}
+
+		$new_link = esc_url_raw( trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . $collection_slug );
+
+		$content = preg_replace( '/href="([^"]*)"/', 'href="' . $new_link . '"', $content );
+
+		return $content;
 	}
 }
