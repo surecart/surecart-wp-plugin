@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-16T16:31:23",
+  "timestamp": "2023-08-30T04:22:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -19822,6 +19822,22 @@
       "usage": {},
       "props": [
         {
+          "name": "another",
+          "type": "string",
+          "mutable": false,
+          "attr": "another",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "auAbnLabel",
           "type": "string",
           "mutable": false,
@@ -19893,6 +19909,22 @@
           "attr": "gb-vat-label",
           "reflectToAttr": false,
           "docs": "UK zone label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "helpText",
+          "type": "string",
+          "mutable": false,
+          "attr": "help-text",
+          "reflectToAttr": false,
+          "docs": "Help text",
           "docsTags": [],
           "values": [
             {
@@ -20000,6 +20032,22 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxIdTypes",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Tax ID Types which will be shown",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,
@@ -31717,6 +31765,22 @@
             {
               "value": "valid",
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "taxIdTypes",
+          "type": "string[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Tax ID Types which will be shown",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,

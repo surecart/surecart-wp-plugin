@@ -47,6 +47,9 @@ export class ScTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
+  /** Tax ID Types which will be shown */
+  @Prop() taxIdTypes: string[] = [];
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
 
@@ -95,13 +98,33 @@ export class ScTaxIdInput {
     }
   }
 
+  filteredZones() {
+    if (!!this.taxIdTypes.length) {
+      return Object.keys(zones)
+        .filter(name => this.taxIdTypes.includes(name))
+        .reduce((obj, key) => {
+          obj[key] = zones[key];
+          return obj;
+        }, {});
+    }
+
+    return zones;
+  }
+
+  @Watch('taxIdTypes')
+  onTaxIdTypesChange() {
+    // If there is no other type, set the first one as default type.
+    if (!!this.taxIdTypes.length) {
+      this.type = !this.taxIdTypes.includes('other') ? this.taxIdTypes[0] : 'other';
+    }
+  }
+
   render() {
     return (
       <Fragment>
         <sc-input name="tax_identifier.number_type" required={this.required} value={this.type} style={{ display: 'none' }} />
-
         <sc-input
-          label={zones?.[this?.type || 'other']?.label}
+          label={this.filteredZones()?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
           required={this.required}
           value={this.number}
@@ -124,10 +147,10 @@ export class ScTaxIdInput {
 
           <sc-dropdown slot="suffix" position="bottom-right">
             <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }}>
-              {zones?.[this?.type || 'other']?.label_small}
+              {this.filteredZones()?.[this?.type || 'other']?.label_small}
             </sc-button>
             <sc-menu>
-              {Object.keys(zones || {}).map(name => (
+              {Object.keys(this.filteredZones() || {}).map(name => (
                 <sc-menu-item
                   onClick={() => {
                     this.scInput.emit({
@@ -148,6 +171,8 @@ export class ScTaxIdInput {
             </sc-menu>
           </sc-dropdown>
         </sc-input>
+
+        {this.help && <sc-help-text>{this.help}</sc-help-text>}
       </Fragment>
     );
   }

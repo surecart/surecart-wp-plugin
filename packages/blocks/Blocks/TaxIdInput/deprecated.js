@@ -10,6 +10,8 @@ export default [
 				au_abn_label: __('ABN Number', 'surecart'),
 				gb_vat_label: __('UK VAT', 'surecart'),
 				eu_vat_label: __('EU VAT', 'surecart'),
+				help_text: null,
+				tax_id_types: [],
 			};
 		},
 		save() {

@@ -43,6 +43,12 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
+  /** Help text */
+  @Prop() helpText: string;
+
+  /** Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' */
+  @Prop() taxIdTypes: string = '';
+
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
     data: Partial<Checkout>;
@@ -77,6 +83,17 @@ export class ScOrderTaxIdInput {
     }
   }
 
+  getTaxTypes() {
+    if (this.taxIdTypes) {
+      const taxTypesData = JSON.parse(this.taxIdTypes);
+      if (taxTypesData && taxTypesData.length) {
+        return taxTypesData;
+      }
+    }
+
+    return [];
+  }
+
   render() {
     return (
       <sc-tax-id-input
@@ -95,6 +112,8 @@ export class ScOrderTaxIdInput {
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
+        help={this.helpText}
+        taxIdTypes={this.getTaxTypes()}
       ></sc-tax-id-input>
     );
   }

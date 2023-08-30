@@ -2268,6 +2268,10 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
+          * Help text
+         */
+        "helpText": string;
+        /**
           * The order
          */
         "order": Partial<Checkout>;
@@ -2279,6 +2283,10 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes": string;
         /**
           * Tax identifier
          */
@@ -3651,6 +3659,10 @@ export namespace Components {
           * The status
          */
         "status": 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes": string[];
         /**
           * Type of tax id
          */
@@ -8075,6 +8087,10 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
+          * Help text
+         */
+        "helpText"?: string;
+        /**
           * Error event
          */
         "onScError"?: (event: ScOrderTaxIdInputCustomEvent<ResponseError>) => void;
@@ -8097,6 +8113,10 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
+        /**
+          * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
+         */
+        "taxIdTypes"?: string;
         /**
           * Tax identifier
          */
@@ -9616,6 +9636,10 @@ declare namespace LocalJSX {
           * The status
          */
         "status"?: 'valid' | 'invalid' | 'unknown';
+        /**
+          * Tax ID Types which will be shown
+         */
+        "taxIdTypes"?: string[];
         /**
           * Type of tax id
          */

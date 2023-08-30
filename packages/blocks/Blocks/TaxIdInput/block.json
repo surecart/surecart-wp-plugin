@@ -25,6 +25,14 @@
 		},
 		"eu_vat_label": {
 			"type": "string"
+		},
+		"help_text": {
+			"type": "string",
+			"default": ""
+		},
+		"tax_id_types": {
+			"type": "array",
+			"default": []
 		}
 	}
 }
