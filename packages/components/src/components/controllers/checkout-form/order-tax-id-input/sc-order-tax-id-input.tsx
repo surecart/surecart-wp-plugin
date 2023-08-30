@@ -15,9 +15,6 @@ import { Address, Checkout, ResponseError, TaxIdentifier, TaxProtocol } from '..
 export class ScOrderTaxIdInput {
   private removeCheckoutListener: () => void;
 
-  /** The order */
-  @Prop() order: Partial<Checkout>;
-
   /** Force show the field. */
   @Prop() show: boolean = false;
 
@@ -100,9 +97,9 @@ export class ScOrderTaxIdInput {
     return (
       <sc-tax-id-input
         show={this.show}
-        number={this.order?.tax_identifier?.number}
-        type={this.order?.tax_identifier?.number_type}
-        country={(this?.order?.shipping_address as Address)?.country}
+        number={checkoutState.checkout?.tax_identifier?.number}
+        type={checkoutState.checkout?.tax_identifier?.number_type}
+        country={(checkoutState.checkout?.shipping_address as Address)?.country}
         status={this.getStatus()}
         loading={this.busy}
         onScChange={e => {
@@ -120,4 +117,4 @@ export class ScOrderTaxIdInput {
   }
 }
 
-openWormhole(ScOrderTaxIdInput, ['draft', 'order', 'tax_status', 'taxIdentifier', 'taxProtocol', 'busy'], false);
+openWormhole(ScOrderTaxIdInput, ['draft', 'tax_status', 'taxIdentifier', 'taxProtocol', 'busy'], false);
