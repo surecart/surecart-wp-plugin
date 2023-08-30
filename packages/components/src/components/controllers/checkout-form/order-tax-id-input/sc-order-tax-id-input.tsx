@@ -44,12 +44,6 @@ export class ScOrderTaxIdInput {
 
   @State() required: boolean;
 
-  /** Make a request to update the order. */
-  @Event() scUpdateOrder: EventEmitter<{
-    data: Partial<Checkout>;
-    options?: { silent?: boolean };
-  }>;
-
   /** Error event */
   @Event() scError: EventEmitter<ResponseError>;
 
