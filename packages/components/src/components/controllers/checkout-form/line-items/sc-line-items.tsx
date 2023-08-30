@@ -52,11 +52,11 @@ export class ScLineItems {
 
   /** Update quantity for this line item. */
   updateQuantity(item: LineItem, quantity: number) {
-    this.scUpdateLineItem.emit({ price_id: item.price.id, quantity });
+    this.scUpdateLineItem.emit({ id: item?.id, price_id: item.price.id, quantity });
   }
 
   removeLineItem(item: LineItem) {
-    this.scRemoveLineItem.emit({ price_id: item.price.id, quantity: 1 });
+    this.scRemoveLineItem.emit({ id: item?.id, price_id: item.price.id, quantity: 1 });
   }
 
   /** Only append price name if there's more than one product price in the session. */
