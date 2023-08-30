@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { state as checkoutState, onChange as onCheckoutStateChange } from '@store/checkout';
+import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 import { TaxProtocol } from '../../../types';
 
 @Component({
@@ -9,6 +9,8 @@ import { TaxProtocol } from '../../../types';
 })
 export class ScFormComponentsValidator {
   @Element() el: HTMLScFormComponentsValidatorElement;
+
+  private removeCheckoutListener: () => void;
 
   /** Disable validation? */
   @Prop() disabled: boolean;
@@ -86,10 +88,12 @@ export class ScFormComponentsValidator {
         this.addTaxIDField();
       }
     }
-    // make sure to check order on load.
-    this.handleOrderChange();
 
-    onCheckoutStateChange('checkout', ()=>this.handleOrderChange());
+    this.removeCheckoutListener = onCheckoutChange('checkout', ()=>this.handleOrderChange());
+  }
+
+  disconnectedCallback() {
+    this.removeCheckoutListener()
   }
 
   handleShippingAddressRequired() {
