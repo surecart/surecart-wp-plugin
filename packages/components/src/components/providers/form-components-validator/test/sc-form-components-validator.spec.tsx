@@ -15,6 +15,7 @@ describe('sc-form-components-validator', () => {
       html: `<sc-form-components-validator></sc-form-components-validator>`,
     });
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback()
   });
 
   it('appends missing address field if required', async () => {
@@ -26,9 +27,11 @@ describe('sc-form-components-validator', () => {
         </sc-form-components-validator>
       ),
     });
-    page.root.order = { tax_status: 'address_invalid' } as Checkout;
-    page.waitForChanges();
+    checkoutState.checkout = {tax_status: 'address_invalid'} as Checkout;
+    await page.waitForChanges();
+
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback()
   });
 
   it('appends missing tax id input if required', async () => {
@@ -40,21 +43,24 @@ describe('sc-form-components-validator', () => {
         </sc-form-components-validator>
       ),
     });
-    page.waitForChanges();
+    await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback()
   });
 
   it('appends missing address field with shipping address required',async () => {
-    checkoutState.checkout = { shipping_address_required: true } as Checkout;
     const page = await newSpecPage({
       components: [ScFormComponentsValidator],
       template: () => (
         <sc-form-components-validator>
+          <sc-payment></sc-payment>
         </sc-form-components-validator>
       ),
     });
-    page.waitForChanges();
-    expect(page.root).toMatchSnapshot();
-  });
+    checkoutState.checkout = { shipping_address_required: true } as Checkout;
+    await page.waitForChanges();
 
+    expect(page.root).toMatchSnapshot();
+    page.rootInstance.disconnectedCallback()
+  });
 });
