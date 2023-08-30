@@ -13,6 +13,8 @@ import { Address, Checkout, ResponseError, TaxIdentifier, TaxProtocol } from '..
   shadow: true,
 })
 export class ScOrderTaxIdInput {
+  private removeCheckoutListener: () => void;
+
   /** The order */
   @Prop() order: Partial<Checkout>;
 
@@ -81,11 +83,13 @@ export class ScOrderTaxIdInput {
   }
 
   componentDidLoad() {
-    this.updateTaxRequired(this.order?.tax_identifier?.number_type);
-
-    onChange('checkout', (checkout:Checkout) => {
+    this.removeCheckoutListener = onChange('checkout', (checkout: Checkout) => {
       this.updateTaxRequired(checkout?.tax_identifier?.number_type);
     });
+  }
+
+  disconnectedCallback() {
+    this.removeCheckoutListener();
   }
 
   updateTaxRequired(taxIdentifierType: string) {
