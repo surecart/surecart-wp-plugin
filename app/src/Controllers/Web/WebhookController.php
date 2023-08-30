@@ -34,6 +34,10 @@ class WebhookController {
 			);
 		}
 
+		// test it.
+		$registered->test();
+
+		// respond back.
 		return ( new RedirectResponse( $request ) )->back();
 	}
 
@@ -60,6 +64,24 @@ class WebhookController {
 
 		// redirect back.
 		return ( new RedirectResponse( $request ) )->back();
+	}
+
+	/**
+	 * This deletes and recreates the webhook
+	 * in case the signing secret is invalid for some reason.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return ResponseInterface
+	 */
+	public function resync( $request ) {
+		// Delete the registered webhook.
+		$webhook = RegisteredWebhook::registration()->delete();
+		if ( is_wp_error( $webhook ) ) {
+			wp_die( wp_kses_post( $webhook->get_error_message() ) );
+		}
+
+		// recreate.
+		return $this->create( $request );
 	}
 
 	/**
