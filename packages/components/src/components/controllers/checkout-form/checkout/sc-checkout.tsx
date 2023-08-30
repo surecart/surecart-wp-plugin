@@ -208,12 +208,14 @@ export class ScCheckout {
     checkoutState.currencyCode = this.currencyCode;
     checkoutState.groupId = this.el.id;
     checkoutState.abandonedCheckoutEnabled = this.abandonedCheckoutEnabled;
+    checkoutState.taxProtocol = this.taxProtocol;
     userState.loggedIn = this.loggedIn;
     userState.email = this.customer?.email;
     userState.name = this.customer?.name;
   }
 
   state() {
+    checkoutState.busy = ['finalizing', 'paying', 'confirming'].includes(formState.formState.value);
     return {
       processor: this.processor,
       method: this.method,
@@ -236,7 +238,7 @@ export class ScCheckout {
 
       // checkout states
       loading: formState.formState.value === 'loading',
-      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(formState.formState.value),
+      busy: checkoutState.busy,
       paying: ['finalizing', 'paying', 'confirming'].includes(formState.formState.value),
       empty: !['loading', 'updating'].includes(formState.formState.value) && !checkoutState.checkout?.line_items?.pagination?.count,
       // checkout states

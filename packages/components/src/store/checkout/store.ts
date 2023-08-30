@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 
-import { Checkout, Product } from '../../types';
+import { Checkout, Product, TaxProtocol } from '../../types';
 
 interface Store {
   formId: number | string;
@@ -11,6 +11,8 @@ interface Store {
   checkout: Checkout;
   currencyCode: string;
   abandonedCheckoutEnabled: boolean;
+  taxProtocol: TaxProtocol,
+  busy: boolean;
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(
@@ -23,6 +25,8 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     checkout: null,
     currencyCode: 'usd',
     abandonedCheckoutEnabled: true,
+    taxProtocol: null,
+    busy: false,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

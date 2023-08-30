@@ -3,9 +3,8 @@ import { state as checkoutState, onChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { openWormhole } from 'stencil-wormhole';
 
-import { Address, Checkout, ResponseError, TaxIdentifier, TaxProtocol } from '../../../../types';
+import { Address, Checkout, ResponseError, TaxIdentifier } from '../../../../types';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -17,15 +16,6 @@ export class ScOrderTaxIdInput {
 
   /** Force show the field. */
   @Prop() show: boolean = false;
-
-  /** Tax identifier */
-  @Prop() taxIdentifier: TaxIdentifier;
-
-  /** The tax protocol. */
-  @Prop() taxProtocol: TaxProtocol;
-
-  /** Is this busy */
-  @Prop() busy: boolean = false;
 
   /** Other zones label */
   @Prop() otherLabel: string;
@@ -48,13 +38,13 @@ export class ScOrderTaxIdInput {
   @Event() scError: EventEmitter<ResponseError>;
 
   getStatus() {
-    if (this.taxIdentifier?.number_type !== 'eu_vat') {
+    if (checkoutState.checkout?.tax_identifier?.number_type !== 'eu_vat') {
       return 'unknown';
     }
-    if (this.taxProtocol?.eu_vat_unverified_behavior === 'apply_reverse_charge') {
+    if (checkoutState.taxProtocol?.eu_vat_unverified_behavior === 'apply_reverse_charge') {
       return 'unknown';
     }
-    return this.taxIdentifier?.eu_vat_verified ? 'valid' : 'invalid';
+    return (checkoutState.checkout?.tax_identifier as TaxIdentifier)?.eu_vat_verified ? 'valid' : 'invalid';
   }
 
   async maybeUpdateOrder(tax_identifier) {
@@ -84,7 +74,7 @@ export class ScOrderTaxIdInput {
   }
 
   updateTaxRequired(taxIdentifierType: string) {
-    this.required = this.taxProtocol?.eu_vat_required && taxIdentifierType === 'eu_vat';
+    this.required = checkoutState.taxProtocol?.eu_vat_required && taxIdentifierType === 'eu_vat';
   }
 
   render() {
@@ -95,7 +85,7 @@ export class ScOrderTaxIdInput {
         type={checkoutState.checkout?.tax_identifier?.number_type}
         country={(checkoutState.checkout?.shipping_address as Address)?.country}
         status={this.getStatus()}
-        loading={this.busy}
+        loading={checkoutState.busy}
         onScChange={e => {
           e.stopImmediatePropagation();
           this.maybeUpdateOrder(e.detail);
@@ -111,4 +101,3 @@ export class ScOrderTaxIdInput {
   }
 }
 
-openWormhole(ScOrderTaxIdInput, ['draft', 'tax_status', 'taxIdentifier', 'taxProtocol', 'busy'], false);
