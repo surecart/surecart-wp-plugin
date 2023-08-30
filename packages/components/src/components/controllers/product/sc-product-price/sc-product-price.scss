@@ -34,3 +34,33 @@
     align-self: center;
   }
 }
+
+.price--left {
+  text-align: left;
+  justify-content: left;
+
+  .price__amounts {
+    justify-content: left;
+    text-align: left;
+  }
+}
+
+.price--center {
+  text-align: center;
+  justify-content: center;
+
+  .price__amounts {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+.price--right {
+  text-align: right;
+  justify-content: right;
+
+  .price__amounts {
+    justify-content: right;
+    text-align: right;
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-16T16:31:23",
+  "timestamp": "2023-08-30T08:44:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -25118,7 +25118,7 @@
           "type": "Price[]",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The prices list",
           "docsTags": [],
           "values": [
             {
@@ -25134,10 +25134,36 @@
           "mutable": false,
           "attr": "sale-text",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The sale text",
           "docsTags": [],
           "values": [
             {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "textAlign",
+          "type": "\"center\" | \"left\" | \"right\"",
+          "mutable": false,
+          "attr": "text-align",
+          "reflectToAttr": false,
+          "docs": "Text alignment",
+          "docsTags": [],
+          "default": "'left'",
+          "values": [
+            {
+              "value": "center",
+              "type": "string"
+            },
+            {
+              "value": "left",
+              "type": "string"
+            },
+            {
+              "value": "right",
               "type": "string"
             }
           ],

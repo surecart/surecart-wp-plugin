@@ -8,9 +8,14 @@ import {
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
+import classNames from 'classnames';
 
-export default ({ attributes: { textAlign, sale_text }, setAttributes }) => {
-	const blockProps = useBlockProps();
+export default ({ attributes: { text_align, sale_text }, setAttributes }) => {
+	const blockProps = useBlockProps({
+		className: classNames({
+			[`has-text-align-${text_align}`]: text_align,
+		}),
+	});
 
 	const warning = useProductPageWarning();
 	if (warning) {
@@ -21,9 +26,9 @@ export default ({ attributes: { textAlign, sale_text }, setAttributes }) => {
 		<>
 			<BlockControls group="block">
 				<AlignmentControl
-					value={textAlign}
+					value={text_align}
 					onChange={(nextAlign) => {
-						setAttributes({ textAlign: nextAlign });
+						setAttributes({ text_align: nextAlign });
 					}}
 				/>
 			</BlockControls>

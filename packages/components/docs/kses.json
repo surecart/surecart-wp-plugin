@@ -1622,6 +1622,7 @@
   "sc-product-price": {
     "prices": true,
     "sale-text": true,
+    "text-align": true,
     "style": true,
     "id": true,
     "class": true,

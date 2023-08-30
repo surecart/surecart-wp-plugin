@@ -9,6 +9,10 @@
 		"sale_text": {
 			"type": "string",
 			"default": "Sale"
+		},
+		"text_align": {
+			"type": "string",
+			"default": "left"
 		}
 	},
 	"supports": {

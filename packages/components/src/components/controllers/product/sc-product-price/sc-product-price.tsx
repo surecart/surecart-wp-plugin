@@ -10,8 +10,14 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
+  /** The prices list */
   @Prop() prices: Price[];
+
+  /** The sale text */
   @Prop() saleText: string;
+
+  /** Text alignment */
+  @Prop() textAlign: 'left' | 'center' | 'right' = 'left';
 
   renderRange() {
     if (state.prices.length === 1) {
@@ -31,7 +37,10 @@ export class ScProductPrice {
 
     return (
       <Fragment>
-        <div class="price">
+        <div class={{
+          "price": true,
+          [`price--${this.textAlign}`]: true,
+        }}>
           <div class="price__amounts">
             {!!price?.scratch_amount && (
               <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>

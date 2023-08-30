@@ -2987,8 +2987,18 @@ export namespace Components {
         "trialDurationDays": number;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices": Price[];
+        /**
+          * The sale text
+         */
         "saleText": string;
+        /**
+          * Text alignment
+         */
+        "textAlign": 'left' | 'center' | 'right';
     }
     interface ScProductPriceChoices {
         "label": string;
@@ -8850,8 +8860,18 @@ declare namespace LocalJSX {
         "trialDurationDays"?: number;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices"?: Price[];
+        /**
+          * The sale text
+         */
         "saleText"?: string;
+        /**
+          * Text alignment
+         */
+        "textAlign"?: 'left' | 'center' | 'right';
     }
     interface ScProductPriceChoices {
         "label"?: string;
