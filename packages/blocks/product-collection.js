@@ -1,14 +1,17 @@
 /**
  * Internal dependencies.
  */
-import { registerBlocks } from './register-block';
+import { registerBlocksForTemplates } from './conditional-block-registration';
 
-import * as ProductCollection from '@blocks/ProductCollection';
 import * as ProductCollectionTitle from '@blocks/ProductCollectionTitle';
 import * as ProductCollectionDescription from '@blocks/ProductCollectionDescription';
 
-registerBlocks([
-	ProductCollectionTitle,
-	ProductCollectionDescription,
-	ProductCollection,
-]);
+registerBlocksForTemplates({
+	blocks: [ProductCollectionTitle, ProductCollectionDescription],
+
+	// include only for these templates.
+	include: [
+		'surecart/surecart//product-collection-part',
+		'surecart/surecart//product-collection',
+	],
+});

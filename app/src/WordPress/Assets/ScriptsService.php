@@ -255,6 +255,7 @@ class ScriptsService {
 		$this->enqueuePageTemplateEditor();
 		$this->enqueueCartBlocks();
 		$this->enqueueProductBlocks();
+		$this->enqueueProductCollectionBlocks();
 	}
 
 	/**
@@ -278,6 +279,20 @@ class ScriptsService {
 		}
 
 		wp_enqueue_script( 'surecart-product-blocks' );
+	}
+
+	/**
+	 * We only want these available in FSE.
+	 *
+	 * @return void
+	 */
+	public function enqueueProductCollectionBlocks() {
+		global $pagenow;
+		if ( 'site-editor.php' !== $pagenow ) {
+			return;
+		}
+
+		wp_enqueue_script( 'surecart-product-collection-blocks' );
 	}
 
 	/**
@@ -328,6 +343,18 @@ class ScriptsService {
 		wp_register_script(
 			'surecart-product-blocks',
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/product.js',
+			$deps,
+			$asset_file['version'],
+			true
+		);
+
+		// Register product collection blocks.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product_collection.asset.php';
+		$deps       = $asset_file['dependencies'] ?? [];
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-product-collection-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/product_collection.js',
 			$deps,
 			$asset_file['version'],
 			true

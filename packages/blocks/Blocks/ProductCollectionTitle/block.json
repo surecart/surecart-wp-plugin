@@ -1,15 +1,10 @@
 {
-	"apiVersion": 2,
+	"apiVersion": 3,
 	"name": "surecart/product-collection-title",
 	"title": "Product Collection Title",
 	"description": "Displays the product collection title.",
 	"category": "surecart",
 	"keywords": ["title", "collection", "product"],
-	"supports": {
-		"reusable": false,
-		"html": false,
-		"multiple": false
-	},
 	"attributes": {
 		"textAlign": {
 			"type": "string"
@@ -20,8 +15,10 @@
 		}
 	},
 	"supports": {
-		"align": ["wide", "full"],
+		"reusable": false,
 		"html": false,
+		"multiple": false,
+		"align": ["wide", "full"],
 		"color": {
 			"gradients": true,
 			"link": true,
