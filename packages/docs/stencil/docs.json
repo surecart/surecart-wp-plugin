@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-16T16:31:23",
+  "timestamp": "2023-08-30T10:52:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -19838,23 +19838,6 @@
           "required": false
         },
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "Is this busy",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "caGstLabel",
           "type": "string",
           "mutable": false,
@@ -19903,76 +19886,6 @@
           "required": false
         },
         {
-          "name": "order",
-          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The order",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ id?: string; status?: \"draft\""
-            },
-            {
-              "value": "paid",
-              "type": "string"
-            },
-            {
-              "value": "finalized",
-              "type": "string"
-            },
-            {
-              "value": "payment_failed",
-              "type": "string"
-            },
-            {
-              "value": "processing",
-              "type": "string"
-            },
-            {
-              "value": "canceled",
-              "type": "string"
-            },
-            {
-              "type": "\"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string"
-            },
-            {
-              "type": "ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
-            },
-            {
-              "type": "Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
-            },
-            {
-              "value": "address_invalid",
-              "type": "string"
-            },
-            {
-              "value": "estimated",
-              "type": "string"
-            },
-            {
-              "type": "\"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string"
-            },
-            {
-              "type": "Order; customer?: string"
-            },
-            {
-              "type": "Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string"
-            },
-            {
-              "type": "Address; shipping_amount?: number; shipping_address?: string"
-            },
-            {
-              "type": "Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string"
-            },
-            {
-              "type": "ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "otherLabel",
           "type": "string",
           "mutable": false,
@@ -20004,36 +19917,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "taxIdentifier",
-          "type": "TaxIdentifier",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Tax identifier",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "TaxIdentifier"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "taxProtocol",
-          "type": "TaxProtocol",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The tax protocol.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "TaxProtocol"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -20045,15 +19928,6 @@
           "cancelable": true,
           "composed": true,
           "docs": "Error event",
-          "docsTags": []
-        },
-        {
-          "event": "scUpdateOrder",
-          "detail": "{ data: Partial<Checkout>; options?: { silent?: boolean; }; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Make a request to update the order.",
           "docsTags": []
         }
       ],
@@ -31667,7 +31541,7 @@
           "type": "boolean",
           "mutable": false,
           "attr": "required",
-          "reflectToAttr": false,
+          "reflectToAttr": true,
           "docs": "Whether tax input is required",
           "docsTags": [],
           "default": "false",

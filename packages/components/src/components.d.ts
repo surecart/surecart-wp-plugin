@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -2252,10 +2252,6 @@ export namespace Components {
          */
         "auAbnLabel": string;
         /**
-          * Is this busy
-         */
-        "busy": boolean;
-        /**
           * GST zone label
          */
         "caGstLabel": string;
@@ -2268,10 +2264,6 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
-          * The order
-         */
-        "order": Partial<Checkout>;
-        /**
           * Other zones label
          */
         "otherLabel": string;
@@ -2279,14 +2271,6 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
-        /**
-          * Tax identifier
-         */
-        "taxIdentifier": TaxIdentifier;
-        /**
-          * The tax protocol.
-         */
-        "taxProtocol": TaxProtocol;
     }
     interface ScOrdersList {
         "allLink": string;
@@ -8059,10 +8043,6 @@ declare namespace LocalJSX {
          */
         "auAbnLabel"?: string;
         /**
-          * Is this busy
-         */
-        "busy"?: boolean;
-        /**
           * GST zone label
          */
         "caGstLabel"?: string;
@@ -8079,17 +8059,6 @@ declare namespace LocalJSX {
          */
         "onScError"?: (event: ScOrderTaxIdInputCustomEvent<ResponseError>) => void;
         /**
-          * Make a request to update the order.
-         */
-        "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
-    data: Partial<Checkout>;
-    options?: { silent?: boolean };
-  }>) => void;
-        /**
-          * The order
-         */
-        "order"?: Partial<Checkout>;
-        /**
           * Other zones label
          */
         "otherLabel"?: string;
@@ -8097,14 +8066,6 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
-        /**
-          * Tax identifier
-         */
-        "taxIdentifier"?: TaxIdentifier;
-        /**
-          * The tax protocol.
-         */
-        "taxProtocol"?: TaxProtocol;
     }
     interface ScOrdersList {
         "allLink"?: string;
