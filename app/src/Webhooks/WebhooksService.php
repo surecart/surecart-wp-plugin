@@ -36,16 +36,16 @@ class WebhooksService {
 	public function bootstrap() {
 		// delete any old webhook processes.
 		add_action( 'delete_expired_transients', [ $this, 'deleteOldWebhhookProcesses' ] );
-		// we can skip this for localhost.
-		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) ) {
+		// we can skip this for localhost or non-secure connections.
+		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) || ! is_ssl() ) {
 			return;
 		}
 		// maybe create webhooks if they are not yet created.
 		\add_action( 'admin_init', [ $this, 'maybeCreate' ] );
-		// verify existing webhooks are functioning properly.
-		\add_action( 'admin_init', [ $this, 'verify' ] );
 		// listen for any domain changes and show notice.
 		\add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
+		// verify existing webhooks are functioning properly.
+		// \add_action( 'admin_init', [ $this, 'verify' ] );
 	}
 
 	/**
@@ -83,10 +83,10 @@ class WebhooksService {
 			'admin/notices/webhook-change',
 			[
 				'previous_webhook' => $webhook,
-				'update_url'       => \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ),
-				'add_url'          => \SureCart::getUrl()->editModel( 'create_webhook', '0' ),
-				'previous_web_url' => URL::getSchemeAndHttpHost( $webhook['url'] ),
-				'current_web_url'  => URL::getSchemeAndHttpHost( $this->webhook->getListenerUrl() ),
+				'update_url'       => esc_url( \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ) ),
+				'add_url'          => esc_url( \SureCart::getUrl()->editModel( 'create_webhook', '0' ) ),
+				'previous_web_url' => esc_url_raw( URL::getSchemeAndHttpHost( $webhook['url'] ) ),
+				'current_web_url'  => esc_url_raw( URL::getSchemeAndHttpHost( $this->webhook->getListenerUrl() ) ),
 			]
 		);
 	}
@@ -153,60 +153,63 @@ class WebhooksService {
 	 *
 	 * @return function
 	 */
-	public function verify() {
-		$webhook = $this->webhook->get();
+	// public function verify() {
+	// $webhook = $this->webhook->get();
 
-		if ( is_wp_error( $webhook ) ) {
-			// not found, let's recreate one.
-			if ( 'webhook_endpoint.not_found' === $webhook->get_error_code() ) {
-				// delete saved.
-				$this->webhook->registration()->delete();
-				// create.
-				return $this->maybeCreate();
-			}
+	// if ( is_wp_error( $webhook ) ) {
+	// not found, let's recreate one.
+	// if ( 'webhook_endpoint.not_found' === $webhook->get_error_code() ) {
+	// delete saved.
+	// $this->webhook->registration()->delete();
+	// create.
+	// return $this->maybeCreate();
+	// }
 
-			// handle other errors.
-			return \SureCart::notices()->add(
-				[
-					'name'  => 'webhooks_general_error',
-					'type'  => 'error',
-					'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
-					'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $webhook->get_error_messages() ?? [] ) ) ),
-				]
-			);
-		}
+	// handle other errors.
+	// return \SureCart::notices()->add(
+	// [
+	// 'name'  => 'webhooks_general_error',
+	// 'type'  => 'error',
+	// 'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
+	// 'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $webhook->get_error_messages() ?? [] ) ) ),
+	// ]
+	// );
+	// }
 
-		// If webhook is not created, show notice.
-		// This should not happen, but just in case.
-		if ( ! $webhook || empty( $webhook->id ) ) {
-			return \SureCart::notices()->add(
-				[
-					'name'  => 'webhooks_not_created',
-					'type'  => 'error',
-					'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
-					'text'  => '<p>' . esc_html__( 'Webhooks cannot be created.', 'surecart' ) . '</p>',
-				]
-			);
-		}
+	// If webhook is not created, show notice.
+	// This should not happen, but just in case.
+	// if ( ! $webhook || empty( $webhook->id ) ) {
+	// return \SureCart::notices()->add(
+	// [
+	// 'name'  => 'webhooks_not_created',
+	// 'type'  => 'error',
+	// 'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
+	// 'text'  => '<p>' . esc_html__( 'Webhooks cannot be created.', 'surecart' ) . '</p>',
+	// ]
+	// );
+	// }
 
-		// Show the grace period notice.
-		if ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
-			$message   = [];
-			$message[] = $webhook->erroring_grace_period_ends_at > time() ? esc_html__( 'Your SureCart webhook connection is being monitored due to errors. This can cause issues with any of your SureCart integrations.', 'surecart' ) : esc_html__( 'Your SureCart webhook connection was disabled due to repeated errors. This can cause issues with any of your SureCart integrations.', 'surecart' );
-			$message[] = $webhook->erroring_grace_period_ends_at > time() ? sprintf( wp_kses( 'These errors will automatically attempt to be retried, however, we will disable this in <strong>%s</strong> if it continues to fail.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( wp_kses( 'It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
-			$message[] = __( 'If you have already fixed this you can dismiss this notice.', 'surecart' );
-			$message[] = '<p><a href="' . esc_url( untrailingslashit( SURECART_APP_URL ) . '/developer' ) . '" class="button" target="_blank">' . esc_html__( 'Troubleshoot Connection', 'surecart' ) . '</a></p>';
+	// Show the grace period notice.
+	// if ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+	// $message   = [];
+	// $message[] = $webhook->erroring_grace_period_ends_at > time() ? esc_html__( 'Your SureCart webhook connection is being monitored due to errors. This can cause issues with any of your SureCart integrations.', 'surecart' ) : esc_html__( 'Your SureCart webhook connection was disabled due to repeated errors. This can cause issues with any of your SureCart integrations.', 'surecart' );
+	// $message[] = $webhook->erroring_grace_period_ends_at > time() ? sprintf( wp_kses( 'These errors will automatically attempt to be retried, however, we will disable this in <strong>%s</strong> if it continues to fail.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( wp_kses( 'It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
+	// $message[] = __( 'If you have already fixed this you can dismiss this notice.', 'surecart' );
+	// $message[] = '<p>
+	// <a href="' . esc_url( \SureCart::getUrl()->editModel( 'resync_webhook', $webhook['id'] ) ) . '" class="button">' . esc_html__( 'Resync Webhook', 'surecart' ) . '</a>
+	// &nbsp;<a href="' . esc_url( untrailingslashit( SURECART_APP_URL ) . '/developer' ) . '" target="_blank">' . esc_html__( 'Troubleshoot Connection', 'surecart' ) . '</a>
+	// </p>';
 
-			return \SureCart::notices()->add(
-				[
-					'name'  => 'webhooks_erroring_grace_period_' . $webhook->erroring_grace_period_ends_at,
-					'type'  => 'warning',
-					'title' => esc_html__( 'SureCart Webhook Connection', 'surecart' ),
-					'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $message ) ) ),
-				]
-			);
-		}
-	}
+	// return \SureCart::notices()->add(
+	// [
+	// 'name'  => 'webhooks_erroring_grace_period_' . $webhook->erroring_grace_period_ends_at,
+	// 'type'  => 'warning',
+	// 'title' => esc_html__( 'SureCart Webhook Connection', 'surecart' ),
+	// 'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $message ) ) ),
+	// ]
+	// );
+	// }
+	// }
 
 	/**
 	 * Get the signing secret stored as encrypted data in the WP database.

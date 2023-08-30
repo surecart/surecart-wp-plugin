@@ -1,12 +1,15 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { ScBlockUi, ScInput } from '@surecart/components-react';
+import { ScFormControl, ScInput } from '@surecart/components-react';
 import SettingsTemplate from '../SettingsTemplate';
 import SettingsBox from '../SettingsBox';
 import useEntity from '../../hooks/useEntity';
 import Error from '../../components/Error';
 import useSave from '../UseSave';
 import IncomingWebhooks from './IncomingWebhooks';
+import { store as coreStore } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
+import ResyncWebhooks from './components/ResyncWebhooks';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -14,6 +17,15 @@ export default () => {
 	const { item, itemError, editItem, hasLoadedItem } = useEntity(
 		'store',
 		'settings'
+	);
+
+	/** Load registered webhook */
+	const webhook = useSelect((select) =>
+		select(coreStore).getEntityRecord(
+			'surecart',
+			'store',
+			'webhook_endpoint'
+		)
 	);
 
 	/**
@@ -61,6 +73,26 @@ export default () => {
 			</SettingsBox>
 
 			{item?.api_token && <IncomingWebhooks />}
+
+			{!!webhook?.id && (
+				<SettingsBox
+					title={__('Advanced Options', 'surecart')}
+					description={__(
+						'Advanced connection options and troubleshooting.',
+						'surecart'
+					)}
+					noButton
+				>
+					<ScFormControl
+						help={__(
+							'This will refetch the webhooks connection settings with your store in the case of an invalid signature or similar issue.',
+							'surecart'
+						)}
+					>
+						<ResyncWebhooks webhook={webhook} />
+					</ScFormControl>
+				</SettingsBox>
+			)}
 		</SettingsTemplate>
 	);
 };

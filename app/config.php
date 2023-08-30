@@ -59,6 +59,7 @@ return [
 		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
 		\SureCart\Rest\IncomingWebhooksRestServiceProvider::class,
+		\SureCart\Rest\RegisteredWebhookRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\CancellationActRestServiceProvider::class,
 		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
