@@ -271,7 +271,7 @@ class CheckoutsController extends RestController {
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
 		if ( $metadata && ! empty( $metadata['get_feedback'] ) ) {
-			$errors->add( 'invalid', __( 'Invalid request. Please try again.', 'surecart' ) );
+			$errors->add( 'invalid', __( 'Spam check failed. Please try again.', 'surecart' ) );
 		}
 
 		// check recaptcha.

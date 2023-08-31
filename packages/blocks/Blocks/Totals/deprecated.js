@@ -11,6 +11,63 @@ export default [
 			},
 			collapsed: {
 				type: 'boolean',
+				default: false,
+			},
+			closed_text: {
+				type: 'string',
+				default: 'Show Summary',
+			},
+			open_text: {
+				type: 'string',
+				default: 'Summary',
+			},
+			collapsedOnMobile: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		migrate(attributes) {
+			const collapsedOnDesktop = attributes.collapsible
+				? attributes.collapsed
+				: false;
+			const collapsedOnMobile = attributes.collapsible
+				? attributes.collapsed || attributes.collapsedOnMobile
+				: false;
+			return {
+				...attributes,
+				collapsedOnDesktop,
+				collapsedOnMobile,
+			};
+		},
+		save({ attributes }) {
+			const {
+				collapsed,
+				collapsible,
+				collapsedOnMobile,
+				closed_text,
+				open_text,
+			} = attributes;
+			return (
+				<sc-order-summary
+					collapsible={collapsible ? '1' : false}
+					collapsed={collapsed ? '1' : false}
+					collapsed-on-mobile={collapsedOnMobile ? '1' : false}
+					closed-text={closed_text}
+					open-text={open_text}
+				>
+					<InnerBlocks.Content />
+				</sc-order-summary>
+			);
+		},
+	},
+
+	{
+		attributes: {
+			collapsible: {
+				type: 'boolean',
+			},
+			collapsed: {
+				type: 'boolean',
 			},
 			closed_text: {
 				type: 'string',
