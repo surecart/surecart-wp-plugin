@@ -67,6 +67,7 @@ export class ScPaymentMethodsList {
       })) as PaymentMethod;
       // remove from view.
       this.paymentMethods = this.paymentMethods.filter(m => m.id !== (this.deletePaymentMethod as PaymentMethod)?.id);
+      this.deletePaymentMethod = false;
     } catch (e) {
       alert(e?.messsage || __('Something went wrong', 'surecart'));
     } finally {
@@ -182,13 +183,13 @@ export class ScPaymentMethodsList {
             {!live_mode && <sc-tag type="warning">{__('Test', 'surecart')}</sc-tag>}
           </sc-flex>
           {typeof customer !== 'string' && customer?.default_payment_method !== id && (
-          <sc-dropdown placement="bottom-end" slot="suffix">
-            <sc-icon name="more-horizontal" slot="trigger"></sc-icon>
-            <sc-menu>
+            <sc-dropdown placement="bottom-end" slot="suffix">
+              <sc-icon name="more-horizontal" slot="trigger"></sc-icon>
+              <sc-menu>
                 <sc-menu-item onClick={() => (this.editPaymentMethod = paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>
                 <sc-menu-item onClick={() => (this.deletePaymentMethod = paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>
-            </sc-menu>
-          </sc-dropdown>
+              </sc-menu>
+            </sc-dropdown>
           )}
         </sc-stacked-list-row>
       );
