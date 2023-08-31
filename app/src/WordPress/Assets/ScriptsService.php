@@ -133,9 +133,11 @@ class ScriptsService {
 					'recaptcha_site_key'      => \SureCart::settings()->recaptcha()->getSiteKey(),
 					'claim_url'               => $this->getAccountClaimUrl(),
 					'admin_url'               => trailingslashit( admin_url() ),
+					'getting_started_url'     => untrailingslashit( admin_url('admin.php?page=sc-getting-started') ),
 					'user_permissions' =>  array (
 						'manage_sc_shop_settings'  => current_user_can( 'manage_sc_shop_settings' )
-					)
+					),
+					'is_account_connected' => \SureCart::account()->isConnected()
 				]
 			)
 		);
@@ -356,9 +358,11 @@ class ScriptsService {
 					'recaptcha_site_key'      => \SureCart::settings()->recaptcha()->getSiteKey(),
 					'claim_url'               => $this->getAccountClaimUrl(),
 					'admin_url'               => trailingslashit( admin_url() ),
+					'getting_started_url'     => untrailingslashit( admin_url('admin.php?page=sc-getting-started') ),
 					'user_permissions' =>  array (
 						'manage_sc_shop_settings'  => current_user_can( 'manage_sc_shop_settings' )
-					)
+					),
+					'is_account_connected' => \SureCart::account()->isConnected(),
 				]
 			)
 		);

@@ -182,7 +182,7 @@ class Block extends BaseBlock {
 		for ( $i = 1; $i <= $limit; $i++ ) {
 			$product = array(
 				'permalink'  => '#',
-				'name'       => 'Product ' . $i,
+				'name'       => __( 'Product ' . $i, 'surecart' ),
 				'created_at' => rand( 1, 40 ),
 				'prices'     => array(
 					'data' => array(
