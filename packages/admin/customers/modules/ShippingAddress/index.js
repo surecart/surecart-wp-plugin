@@ -60,19 +60,20 @@ export default ({
 					</ScDropdown>
 				)
 			}
+			footer={
+				!shippingAddress?.id && (
+					<ScButton size="small" onClick={onEditAddress}>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add Address', 'surecart')}
+					</ScButton>
+				)
+			}
 		>
 			{!!shippingAddress?.id ? (
 				<ScFlex>
 					<AddressDisplay address={shippingAddress} />
 				</ScFlex>
-			) : (
-				<ScEmpty>
-					{__('Shipping address is not set.', 'surecart')}
-					<ScButton size="small" onClick={onEditAddress}>
-						{__('Add', 'surecart')}
-					</ScButton>
-				</ScEmpty>
-			)}
+			) : null}
 		</Box>
 	);
 };

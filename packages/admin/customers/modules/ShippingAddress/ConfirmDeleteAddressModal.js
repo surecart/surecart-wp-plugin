@@ -56,23 +56,14 @@ export default ({ customerId, open, onRequestClose }) => {
 				'--dialog-body-overflow': 'visible',
 			}}
 		>
-			<Error error={error} setError={setError} />
-			<ScForm
-				onScSubmit={onEditAddress}
-				onScFormSubmit={(e) => {
-					e.stopImmediatePropagation();
-				}}
-			>
+			<ScFlex flexDirection="column" style={{ gap: '1em' }}>
+				<Error error={error} setError={setError} />
+
 				{__(
 					'Are you sure you want to delete address? This action cannot be undone.',
 					'surecart'
 				)}
-				<ScFlex
-					justifyContent="flex-end"
-					css={css`
-						margin-top: var(--sc-spacing-medium);
-					`}
-				>
+				<ScFlex justifyContent="flex-end">
 					<ScButton
 						type="text"
 						onClick={onRequestClose}
@@ -80,11 +71,15 @@ export default ({ customerId, open, onRequestClose }) => {
 					>
 						{__('Cancel', 'surecart')}
 					</ScButton>{' '}
-					<ScButton type="primary" disabled={busy} submit>
+					<ScButton
+						type="primary"
+						disabled={busy}
+						onClick={onEditAddress}
+					>
 						{__('Delete', 'surecart')}
 					</ScButton>
 				</ScFlex>
-			</ScForm>
+			</ScFlex>
 			{busy && (
 				<ScBlockUi
 					style={{ '--sc-block-ui-opacity': '0.75' }}
