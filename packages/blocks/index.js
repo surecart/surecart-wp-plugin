@@ -5,4 +5,3 @@ import '../admin/store/add-entities';
 import './general';
 import './checkout';
 import './products';
-import './product-collections';
