@@ -27,4 +27,14 @@ class PaymentMethodsController extends RestController {
 		return $payment_method->where( $request->get_query_params() )
 			->detach( $request->get_json_params() );
 	}
+	/**
+	 * Delete a payment method
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public function delete( \WP_REST_Request $request ) {
+		return $this->detach( $request );
+	}
 }
