@@ -2,6 +2,7 @@
 
 namespace SureCart\Webhooks;
 
+use SureCart\Models\RegisteredWebhook;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -15,8 +16,8 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 * @return void
 	 */
 	public function register( $container ) {
-		$container['surecart.webhooks'] = function () use ( $container ) {
-			return new WebhooksService( new WebhooksHistoryService() );
+		$container['surecart.webhooks'] = function () {
+			return new WebhooksService( new RegisteredWebhook() );
 		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
@@ -31,8 +32,7 @@ class WebhooksServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		if ( ! empty( $container['surecart.webhooks'] ) ) {
-			$container['surecart.webhooks']->maybeCreateWebooks();
-			$container['surecart.webhooks']->listenForDomainChanges();
+			$container['surecart.webhooks']->bootstrap();
 		}
 	}
 }

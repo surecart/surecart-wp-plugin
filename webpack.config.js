@@ -194,6 +194,14 @@ module.exports = {
 			__dirname,
 			'packages/pages/customer-dashboard/index.js'
 		),
+
+		/**
+		 * Styles.
+		 */
+		['styles/webhook-notice']: path.resolve(
+			__dirname,
+			'packages/admin/styles/webhook-notice.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
