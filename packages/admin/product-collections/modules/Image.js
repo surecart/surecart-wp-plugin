@@ -1,6 +1,9 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies.
@@ -9,26 +12,48 @@ import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
 import MediaLibrary from '../../components/MediaLibrary';
 
 export default ({ label, collection, updateCollection, showLabel = false }) => {
-	const onSelectMedia = (media) => {
-		updateCollection({
-			image_id: media?.id, // TODO: Remove this once get image attribute working.
-			image_media: media,
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createSuccessNotice } = useDispatch(noticesStore);
+
+	const onSelectMedia = async (media) => {
+		const response = await saveEntityRecord(
+			'surecart',
+			'product-collection',
+			{
+				id: collection.id,
+				image_id: media?.id,
+			},
+			{ throwOnError: true }
+		);
+		updateCollection(response);
+		createSuccessNotice(__('Image updated.', 'surecart'), {
+			type: 'snackbar',
 		});
 	};
 
-	const onRemoveMedia = () => {
+	const onRemoveMedia = async () => {
 		const confirmedRemoveImage = confirm(
 			__('Are you sure you want to remove this image?', 'surecart')
 		);
 		if (!confirmedRemoveImage) return;
-		return updateCollection({
-			image_media: null,
-			image_id: null,
+
+		const response = await saveEntityRecord(
+			'surecart',
+			'product-collection',
+			{
+				id: collection.id,
+				image_id: null,
+			},
+			{ throwOnError: true }
+		);
+		updateCollection(response);
+		createSuccessNotice(__('Image removed.', 'surecart'), {
+			type: 'snackbar',
 		});
 	};
 
 	const renderContent = () => {
-		if (collection?.image_media?.url || collection?.image?.url) {
+		if (collection?.image?.url) {
 			return (
 				<div
 					css={css`
@@ -37,10 +62,7 @@ export default ({ label, collection, updateCollection, showLabel = false }) => {
 					`}
 				>
 					<img
-						src={
-							collection?.image_media?.url ||
-							collection?.image?.url
-						}
+						src={collection?.image?.url}
 						alt="image"
 						css={css`
 							width: 100%;
