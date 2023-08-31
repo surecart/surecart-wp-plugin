@@ -2241,6 +2241,7 @@ export namespace Components {
         "busy": boolean;
         "closedText": string;
         "collapsed": boolean;
+        "collapsedOnDesktop": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
         "openText": string;
@@ -8040,6 +8041,7 @@ declare namespace LocalJSX {
         "busy"?: boolean;
         "closedText"?: string;
         "collapsed"?: boolean;
+        "collapsedOnDesktop"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
         /**
