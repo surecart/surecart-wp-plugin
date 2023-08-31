@@ -11,8 +11,8 @@ dayjs.extend(utc);
  */
 export function getFilterData(filter) {
 	// defaults.
-	let startDate = dayjs().startOf('day');
-	let endDate = dayjs().endOf('day');
+	let startDate = dayjs().utc().startOf('day');
+	let endDate = dayjs().utc().endOf('day');
 	let prevEndDate = startDate;
 	let prevStartDate = dayjs(startDate).add(-1, 'day');
 	let interval = 'day';
@@ -20,43 +20,43 @@ export function getFilterData(filter) {
 	// change current and previous dates.
 	switch (filter) {
 		case '30days':
-			endDate = dayjs();
-			startDate = dayjs().add(-1, 'month');
+			endDate = dayjs().utc();
+			startDate = dayjs().utc().add(-1, 'month');
 			prevEndDate = startDate;
-			prevStartDate = dayjs().add(-2, 'month');
+			prevStartDate = dayjs().utc().add(-2, 'month');
 			break;
 		case 'yesterday':
-			endDate = dayjs().startOf('day');
-			startDate = dayjs().startOf('day').add(-1, 'day');
+			endDate = dayjs().utc().startOf('day');
+			startDate = dayjs().utc().startOf('day').add(-1, 'day');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'day');
 			break;
 		case 'thisweek':
-			startDate = dayjs().startOf('week');
-			endDate = dayjs().endOf('day');
+			startDate = dayjs().utc().startOf('week');
+			endDate = dayjs().utc().endOf('day');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'week');
 			break;
 		case 'lastweek':
-			startDate = dayjs().startOf('week').add(-1, 'week');
-			endDate = dayjs().startOf('week');
+			startDate = dayjs().utc().startOf('week').add(-1, 'week');
+			endDate = dayjs().utc().startOf('week');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'week');
 			break;
 		case 'thismonth':
-			startDate = dayjs().startOf('month');
-			endDate = dayjs().endOf('day');
+			startDate = dayjs().utc().startOf('month');
+			endDate = dayjs().utc().endOf('day');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'month');
 			break;
 		case 'lastmonth':
-			startDate = dayjs().startOf('month').add(-1, 'month');
-			endDate = dayjs().startOf('month');
+			startDate = dayjs().utc().startOf('month').add(-1, 'month');
+			endDate = dayjs().utc().startOf('month');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'month');
 			break;
 		case 'last365':
-			endDate = dayjs().endOf('day');
+			endDate = dayjs().utc().endOf('day');
 			startDate = dayjs(endDate).add(-1, 'year');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'year');
