@@ -38,3 +38,24 @@ exports[`sc-form-components-validator renders 1`] = `
   </mock:shadow-root>
 </sc-form-components-validator>
 `;
+
+exports[`sc-form-components-validator requires the customer name on sc-customer-name if present in page and shipping address required 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-order-shipping-address></sc-order-shipping-address>
+  <sc-payment></sc-payment>
+  <sc-customer-name></sc-customer-name>
+</sc-form-components-validator>
+`;
+
+exports[`sc-form-components-validator requires the customer name on sc-order-shipping-address if shipping address is required 1`] = `
+<sc-form-components-validator>
+  <mock:shadow-root>
+    <slot></slot>
+  </mock:shadow-root>
+  <sc-payment></sc-payment>
+  <sc-order-shipping-address></sc-order-shipping-address>
+</sc-form-components-validator>
+`;
