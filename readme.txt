@@ -246,6 +246,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 = 2.5.2 - August 31th, 2023 =
 * Improvement: Summary collapse now has "collapse on mobile" and "collapse on desktop" options.
 * Fix: Recaptcha failing on instant checkout pages.
+* Fix: Issue with line items sometimes reordering during quantity change.
 * Fix: Sometimes PayPal errors not being very descriptive.
 * Fix: PHP notices logged when debug mode is turned on in REST Controllers.
 * Fix: Better error handling when default payment method is trying to be deleted.
