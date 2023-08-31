@@ -10,5 +10,16 @@
     .recurring-price-choice__menu-item {
         --sc-spacing-xx-small: 0;
         --sc-spacing-x-large: 1em;
+        &.checked {
+            .menu-item__label {
+                margin-left: 0px;
+            }
+        }
+        .menu-item__label {
+            margin-left: 22px;
+        }
+    }
+    .menu-item__check {
+        margin-right: 8px;
     }
 }
