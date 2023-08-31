@@ -64,7 +64,10 @@ export default ({ webhook }) => {
 						})
 					)}
 					<br />
-					<ScButton href={`${scData.app_url}/developer`}>
+					<ScButton
+						href={`${scData.app_url}/developer`}
+						target="_blank"
+					>
 						{__('View Logs', 'surecart')}
 						<ScIcon slot="suffix" name="external-link" />
 					</ScButton>
