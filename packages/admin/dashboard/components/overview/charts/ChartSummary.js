@@ -90,6 +90,7 @@ export default ({
 						curve: 'smooth',
 					},
 					yaxis: {
+						tickAmount: 1,
 						labels: {
 							formatter: formatYAxis,
 						},
