@@ -174,6 +174,7 @@ return [
 
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
+		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
 	],
 
 	/** Which components to preload for each block. */
