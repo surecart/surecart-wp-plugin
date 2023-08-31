@@ -243,6 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.5.2 - August 31th, 2023 =
+* Improvement: Summary collapse now has "collapse on mobile" and "collapse on desktop" options.
+* Fix: Recaptcha failing on instant checkout pages.
+* Fix: Sometimes PayPal errors not being very descriptive.
+* Fix: PHP notices logged when debug mode is turned on in REST Controllers.
+* Fix: Better error handling when default payment method is trying to be deleted.
+* Fix: Removing payment method is now immediately reflected without page reload.
+* Fix: "Update All Subscriptions" button on default payment method was sometimes having permission issues for some users.
+* Fix: Stacking issue of customer dashboard form fields on some pages.
+* Fix: Compatibility with Spectra blocks not loading assets when using form shortcode.
+
 = 2.5.1 - August 21th, 2023 =
 * Fix: Issue with some checkout icons inheriting a stroke.
 * Security Fix: Hardened the security of the plugin. Props: Patchstack
