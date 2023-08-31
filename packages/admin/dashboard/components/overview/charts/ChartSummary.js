@@ -96,6 +96,7 @@ export default ({
 					},
 					xaxis: {
 						type: 'date',
+						tickAmount: 1,
 						labels: {
 							formatter: function (value) {
 								if (isNaN(value) || data?.length === 0)
