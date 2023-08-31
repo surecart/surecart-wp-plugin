@@ -69,7 +69,7 @@ export default ({
 				<ScEmpty>
 					{__('Shipping address is not set.', 'surecart')}
 					<ScButton size="small" onClick={onEditAddress}>
-						{__('Edit', 'surecart')}
+						{__('Add', 'surecart')}
 					</ScButton>
 				</ScEmpty>
 			)}

@@ -26,6 +26,8 @@ export default ({ customerId, shippingAddress, open, onRequestClose }) => {
 		setAddress(shippingAddress);
 	}, [shippingAddress]);
 
+	const isEdit = () => !!shippingAddress?.id;
+
 	const onEditAddress = async () => {
 		try {
 			setBusy(true);
@@ -52,7 +54,11 @@ export default ({ customerId, shippingAddress, open, onRequestClose }) => {
 
 	return (
 		<ScDialog
-			label={__('Update Shipping Address', 'surecart')}
+			label={
+				isEdit()
+					? __('Update Shipping Address', 'surecart')
+					: __('Add Shipping Address', 'surecart')
+			}
 			open={open}
 			onScRequestClose={onRequestClose}
 			style={{
@@ -80,7 +86,9 @@ export default ({ customerId, shippingAddress, open, onRequestClose }) => {
 						{__('Cancel', 'surecart')}
 					</ScButton>{' '}
 					<ScButton type="primary" disabled={busy} submit>
-						{__('Update Address', 'surecart')}
+						{isEdit()
+							? __('Update Address', 'surecart')
+							: __('Save Address', 'surecart')}
 					</ScButton>
 				</ScFlex>
 			</ScForm>
