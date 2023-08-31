@@ -434,35 +434,37 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<Notice
-					status="warning"
-					isDismissible={false}
-					css={css`
-						margin-bottom: 20px;
-					`}
-				>
-					<div
+				{!apiTokenConnected && (				
+					<Notice
+						status="warning"
+						isDismissible={false}
 						css={css`
-							display: ${!apiTokenConnected ? 'flex' : 'none'};
-							flex-direction: column;
-							gap: 1em;
+							margin-bottom: 20px;
 						`}
 					>
-						{__(
-							"These are sample products. Setup a new store / Connect existing to have real items.",
-							'surecart'
-						)}
-						<ScButton 
-							type="primary" 
-							href={window.scData?.getting_started_url}
+						<div
 							css={css`
-								width: fit-content;
+								display: ${!apiTokenConnected ? 'flex' : 'none'};
+								flex-direction: column;
+								gap: 1em;
 							`}
 						>
-							{__('Setup Store', 'surecart')}
-						</ScButton>
-					</div>
-				</Notice>
+							{__(
+								"These are sample products. Setup a new store / Connect existing to have real items.",
+								'surecart'
+							)}
+							<ScButton 
+								type="primary" 
+								href={window.scData?.getting_started_url}
+								css={css`
+									width: fit-content;
+								`}
+							>
+								{__('Setup Store', 'surecart')}
+							</ScButton>
+						</div>
+					</Notice>
+				)}
 				<div
 					css={css`
 						display: ${isEditing ? 'block' : 'none'};
