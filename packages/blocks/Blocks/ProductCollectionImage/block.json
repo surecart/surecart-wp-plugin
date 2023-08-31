@@ -6,8 +6,9 @@
 	"category": "surecart",
 	"keywords": ["image", "collection", "product"],
 	"attributes": {
-		"textAlign": {
-			"type": "string"
+		"align": {
+			"type": "string",
+			"default": "wide"
 		}
 	},
 	"supports": {
@@ -19,29 +20,13 @@
 			"gradients": true,
 			"link": true,
 			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true,
-				"link": true
+				"background": true
 			}
 		},
 		"spacing": {
 			"margin": true,
 			"padding": true
-		},
-		"typography": {
-			"fontSize": true,
-			"lineHeight": true,
-			"__experimentalFontFamily": true,
-			"__experimentalFontWeight": true,
-			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true,
-			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true,
-			"__experimentalDefaultControls": {
-				"fontSize": true,
-				"fontAppearance": true,
-				"textTransform": true
-			}
 		}
-	}
+	},
+	"style": "file:./style.css"
 }

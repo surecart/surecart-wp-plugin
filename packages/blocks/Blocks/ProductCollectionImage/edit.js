@@ -13,25 +13,21 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-export default ({ attributes: { textAlign }, setAttributes }) => {
-	const blockProps = useBlockProps({
-		className: classnames({
-			[`has-text-align-${textAlign}`]: textAlign,
-		}),
-	});
+export default ({ attributes: { align }, setAttributes }) => {
+	const blockProps = useBlockProps({});
 
 	return (
 		<>
 			<BlockControls group="block">
 				<AlignmentControl
-					value={textAlign}
-					onChange={(nextAlign) => {
-						setAttributes({ textAlign: nextAlign });
-					}}
+					value={align}
+					onChange={(value) => setAttributes({ align: value })}
 				/>
 			</BlockControls>
 
-			<img {...blockProps} src="https://placehold.co/800x100" />
+			<figure class="wp-block-image sc-block-image">
+				<img {...blockProps} src="https://placehold.co/900x100" />
+			</figure>
 		</>
 	);
 };

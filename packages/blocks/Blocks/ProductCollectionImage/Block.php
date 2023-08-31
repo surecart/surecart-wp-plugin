@@ -23,10 +23,13 @@ class Block extends BaseBlock {
 		}
 
 		return sprintf(
-			'<img class="%1$s" style="%2$s" src="%3$s" />',
+			'<figure class="wp-block-image sc-block-image">
+				<img class="%1$s" style="%2$s" src="%3$s" alt="%4$s" />
+			</figure>',
 			esc_attr( $this->getClasses( $attributes ) . ' surecart-block collection-image' ),
 			esc_attr( $this->getStyles( $attributes ) ),
-			$collection->image->url ?? ''
+			esc_url( $collection->image->url ?? '' ),
+			esc_attr( $collection->name ?? '' )
 		);
 	}
 }
