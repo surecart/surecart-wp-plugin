@@ -42,4 +42,12 @@ describe('sc-address', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+
+  it('requires name if requireName is true', async () => {
+    const page = await newSpecPage({
+      components: [ScAddress],
+      template: () => <sc-address requireName={true}></sc-address>,
+    });
+    expect(page.root).toMatchSnapshot();
+  })
 });

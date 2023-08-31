@@ -36,7 +36,7 @@ export class ScOrderShippingAddress {
   /** Is shipping enabled for this order? */
   @Prop() shippingEnabled: boolean;
 
-  /** Show the full address */
+  /** Show the   address */
   @Prop() full: boolean;
 
   /** Show the name field. */
