@@ -59,7 +59,12 @@ export class ScRecurringPriceChoiceContainer {
                 </sc-button>
                 <sc-menu>
                   {(this.prices || []).map(price => (
-                      <sc-menu-item onClick={() => (this.price = price)}>
+                      <sc-menu-item onClick={() => (this.price = price)} class="recurring-price-choice__menu-item">
+                        <span slot="prefix">
+                        { this.price?.id === price?.id && (
+                            <sc-icon name="check" slot="prefix"/>
+                        )}
+                        </span>
                         {price?.name}
                         <span slot="suffix">{this.renderPrice(price)}</span>
                       </sc-menu-item>
