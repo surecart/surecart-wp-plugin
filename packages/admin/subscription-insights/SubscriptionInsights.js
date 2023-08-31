@@ -155,18 +155,15 @@ export default () => {
 				</Stat>
 
 				<Stat
-					title={__('Trials', 'surecart')}
-					description={__('Total Trials', 'surecart')}
+					title={__('New Trials', 'surecart')}
+					description={__('Number Of New Trials', 'surecart')}
 					loading={loading}
 					compare={{
-						current: totalProperties('total_trial_count', data),
-						previous: totalProperties(
-							'total_trial_count',
-							previous
-						),
+						current: totalProperties('new_trial_count', data),
+						previous: totalProperties('new_trial_count', previous),
 					}}
 				>
-					{totalProperties('total_trial_count', data)}
+					{totalProperties('new_trial_count', data)}
 				</Stat>
 
 				<Stat
