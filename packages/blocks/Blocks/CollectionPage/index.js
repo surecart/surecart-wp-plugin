@@ -9,6 +9,7 @@ import { pages as icon } from '@wordpress/icons';
  */
 import edit from './edit';
 import metadata from './block.json';
+import transforms from './transforms';
 
 const { name } = metadata;
 
@@ -16,5 +17,6 @@ export { metadata, name };
 
 export const settings = {
 	icon,
-	edit
+	edit,
+	transforms,
 };
