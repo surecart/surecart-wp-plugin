@@ -53,6 +53,7 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -94,6 +95,7 @@ graph TD;
   sc-subscription-cancel --> sc-block-ui
   sc-subscription-payment --> sc-block-ui
   sc-subscription-payment-method --> sc-block-ui
+  sc-subscription-reactivate --> sc-block-ui
   sc-subscription-switch --> sc-block-ui
   sc-subscriptions-list --> sc-block-ui
   sc-upcoming-invoice --> sc-block-ui

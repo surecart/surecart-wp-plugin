@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -3459,6 +3459,16 @@ export namespace Components {
          */
         "subscription": Subscription;
     }
+    interface ScSubscriptionReactivate {
+        /**
+          * Whether it is open
+         */
+        "open": boolean;
+        /**
+          * The subscription to reactivate
+         */
+        "subscription": Subscription1;
+    }
     interface ScSubscriptionStatusBadge {
         /**
           * Makes the tag clearable.
@@ -4143,6 +4153,10 @@ export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
 export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSubscriptionCancelElement;
+}
+export interface ScSubscriptionReactivateCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSubscriptionReactivateElement;
 }
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5230,6 +5244,12 @@ declare global {
         prototype: HTMLScSubscriptionPaymentMethodElement;
         new (): HTMLScSubscriptionPaymentMethodElement;
     };
+    interface HTMLScSubscriptionReactivateElement extends Components.ScSubscriptionReactivate, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionReactivateElement: {
+        prototype: HTMLScSubscriptionReactivateElement;
+        new (): HTMLScSubscriptionReactivateElement;
+    };
     interface HTMLScSubscriptionStatusBadgeElement extends Components.ScSubscriptionStatusBadge, HTMLStencilElement {
     }
     var HTMLScSubscriptionStatusBadgeElement: {
@@ -5549,6 +5569,7 @@ declare global {
         "sc-subscription-next-payment": HTMLScSubscriptionNextPaymentElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
+        "sc-subscription-reactivate": HTMLScSubscriptionReactivateElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
@@ -9402,6 +9423,24 @@ declare namespace LocalJSX {
          */
         "subscription"?: Subscription;
     }
+    interface ScSubscriptionReactivate {
+        /**
+          * Refresh subscriptions
+         */
+        "onScRefresh"?: (event: ScSubscriptionReactivateCustomEvent<void>) => void;
+        /**
+          * Reactivate modal closed
+         */
+        "onScRequestClose"?: (event: ScSubscriptionReactivateCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        /**
+          * Whether it is open
+         */
+        "open"?: boolean;
+        /**
+          * The subscription to reactivate
+         */
+        "subscription"?: Subscription1;
+    }
     interface ScSubscriptionStatusBadge {
         /**
           * Makes the tag clearable.
@@ -10032,6 +10071,7 @@ declare namespace LocalJSX {
         "sc-subscription-next-payment": ScSubscriptionNextPayment;
         "sc-subscription-payment": ScSubscriptionPayment;
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
+        "sc-subscription-reactivate": ScSubscriptionReactivate;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscriptions-list": ScSubscriptionsList;
@@ -10249,6 +10289,7 @@ declare module "@stencil/core" {
             "sc-subscription-next-payment": LocalJSX.ScSubscriptionNextPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionNextPaymentElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
+            "sc-subscription-reactivate": LocalJSX.ScSubscriptionReactivate & JSXBase.HTMLAttributes<HTMLScSubscriptionReactivateElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;

@@ -34,6 +34,7 @@
 - [sc-card](../../../ui/card)
 - [sc-block-ui](../../../ui/block-ui)
 - [sc-cancel-dialog](../sc-cancel-dialog)
+- [sc-subscription-reactivate](../subscription-reactivate)
 
 ### Graph
 ```mermaid
@@ -51,6 +52,7 @@ graph TD;
   sc-subscription --> sc-card
   sc-subscription --> sc-block-ui
   sc-subscription --> sc-cancel-dialog
+  sc-subscription --> sc-subscription-reactivate
   sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-subscription-next-payment --> sc-toggle
@@ -122,6 +124,15 @@ graph TD;
   sc-cancel-discount --> sc-flex
   sc-cancel-discount --> sc-button
   sc-cancel-discount --> sc-block-ui
+  sc-subscription-reactivate --> sc-dialog
+  sc-subscription-reactivate --> sc-dashboard-module
+  sc-subscription-reactivate --> sc-alert
+  sc-subscription-reactivate --> sc-format-number
+  sc-subscription-reactivate --> sc-text
+  sc-subscription-reactivate --> sc-format-date
+  sc-subscription-reactivate --> sc-flex
+  sc-subscription-reactivate --> sc-button
+  sc-subscription-reactivate --> sc-block-ui
   style sc-subscription fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

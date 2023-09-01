@@ -50,6 +50,7 @@
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-upgrade-required](../sc-upgrade-required)
 
 ### Depends on
@@ -69,6 +70,7 @@ graph TD;
   sc-payment-methods-list --> sc-dialog
   sc-product-price-modal --> sc-dialog
   sc-subscription-details --> sc-dialog
+  sc-subscription-reactivate --> sc-dialog
   sc-upgrade-required --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -27,6 +27,9 @@ export class ScSubscription {
   /** Cancel modal */
   @State() cancelModal: boolean;
 
+  /** Resubscribe modal */
+  @State() resubscribeModal: boolean;
+
   /**  Busy state */
   @State() busy: boolean;
 
@@ -214,6 +217,12 @@ export class ScSubscription {
                 </sc-button>
               )
             )}
+            {this.subscription?.status === 'canceled' && (
+              <sc-button type="link" onClick={() => (this.resubscribeModal = true)}>
+                <sc-icon name="repeat" slot="prefix"></sc-icon>
+                {__('Resubscribe', 'surecart')}
+              </sc-button>
+            )}
           </sc-flex>
         )}
 
@@ -228,6 +237,12 @@ export class ScSubscription {
           protocol={this.protocol}
           open={this.cancelModal}
           onScRequestClose={() => (this.cancelModal = false)}
+          onScRefresh={() => this.getSubscription()}
+        />
+        <sc-subscription-reactivate
+          subscription={this.subscription}
+          open={this.resubscribeModal}
+          onScRequestClose={() => (this.resubscribeModal = false)}
           onScRefresh={() => this.getSubscription()}
         />
       </sc-dashboard-module>

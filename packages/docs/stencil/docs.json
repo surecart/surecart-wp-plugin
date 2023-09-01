@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-16T16:31:23",
+  "timestamp": "2023-09-01T14:07:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -678,6 +678,7 @@
         "sc-product-item-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -752,6 +753,9 @@
           "sc-alert"
         ],
         "sc-stripe-payment-request": [
+          "sc-alert"
+        ],
+        "sc-subscription-reactivate": [
           "sc-alert"
         ],
         "sc-subscription-switch": [
@@ -1115,6 +1119,7 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -1207,6 +1212,9 @@
           "sc-block-ui"
         ],
         "sc-subscription-payment-method": [
+          "sc-block-ui"
+        ],
+        "sc-subscription-reactivate": [
           "sc-block-ui"
         ],
         "sc-subscription-switch": [
@@ -1857,6 +1865,7 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-tax-id-input",
@@ -1979,6 +1988,9 @@
           "sc-button"
         ],
         "sc-subscription-payment-method": [
+          "sc-button"
+        ],
+        "sc-subscription-reactivate": [
           "sc-button"
         ],
         "sc-subscription-switch": [
@@ -4577,10 +4589,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -9675,6 +9687,7 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
@@ -9753,6 +9766,9 @@
           "sc-dashboard-module"
         ],
         "sc-subscription-payment-method": [
+          "sc-dashboard-module"
+        ],
+        "sc-subscription-reactivate": [
           "sc-dashboard-module"
         ],
         "sc-subscription-switch": [
@@ -9937,6 +9953,7 @@
         "sc-payment-methods-list",
         "sc-product-price-modal",
         "sc-subscription-details",
+        "sc-subscription-reactivate",
         "sc-upgrade-required"
       ],
       "dependencies": [
@@ -9967,6 +9984,9 @@
           "sc-dialog"
         ],
         "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-subscription-reactivate": [
           "sc-dialog"
         ],
         "sc-upgrade-required": [
@@ -11515,6 +11535,7 @@
         "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -11560,6 +11581,9 @@
           "sc-flex"
         ],
         "sc-subscription-payment-method": [
+          "sc-flex"
+        ],
+        "sc-subscription-reactivate": [
           "sc-flex"
         ],
         "sc-subscription-switch": [
@@ -12901,6 +12925,7 @@
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
+        "sc-subscription-reactivate",
         "sc-subscription-status-badge",
         "sc-upcoming-invoice"
       ],
@@ -12925,6 +12950,9 @@
           "sc-format-date"
         ],
         "sc-subscription-details": [
+          "sc-format-date"
+        ],
+        "sc-subscription-reactivate": [
           "sc-format-date"
         ],
         "sc-subscription-status-badge": [
@@ -13306,6 +13334,7 @@
         "sc-shipping-choices",
         "sc-subscription-details",
         "sc-subscription-next-payment",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-total",
         "sc-upcoming-invoice"
@@ -13385,6 +13414,9 @@
           "sc-format-number"
         ],
         "sc-subscription-next-payment": [
+          "sc-format-number"
+        ],
+        "sc-subscription-reactivate": [
           "sc-format-number"
         ],
         "sc-subscription-switch": [
@@ -19690,6 +19722,23 @@
           "type": "boolean",
           "mutable": true,
           "attr": "collapsed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsedOnDesktop",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed-on-desktop",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -27626,10 +27675,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [
@@ -29231,7 +29280,8 @@
         "sc-icon",
         "sc-card",
         "sc-block-ui",
-        "sc-cancel-dialog"
+        "sc-cancel-dialog",
+        "sc-subscription-reactivate"
       ],
       "dependencyGraph": {
         "sc-subscription": [
@@ -29247,7 +29297,8 @@
           "sc-icon",
           "sc-card",
           "sc-block-ui",
-          "sc-cancel-dialog"
+          "sc-cancel-dialog",
+          "sc-subscription-reactivate"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -29356,6 +29407,17 @@
         ],
         "sc-cancel-discount": [
           "sc-dashboard-module",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-subscription-reactivate": [
+          "sc-dialog",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-format-number",
+          "sc-text",
+          "sc-format-date",
           "sc-flex",
           "sc-button",
           "sc-block-ui"
@@ -30147,6 +30209,119 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/subscription-reactivate/sc-subscription-reactivate.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-subscription-reactivate",
+      "readme": "# sc-subscription-reactivate\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "Whether it is open",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The subscription to reactivate",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scRefresh",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Refresh subscriptions",
+          "docsTags": []
+        },
+        {
+          "event": "scRequestClose",
+          "detail": "\"close-button\" | \"keyboard\" | \"overlay\"",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Reactivate modal closed",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-subscription"
+      ],
+      "dependencies": [
+        "sc-dialog",
+        "sc-dashboard-module",
+        "sc-alert",
+        "sc-format-number",
+        "sc-text",
+        "sc-format-date",
+        "sc-flex",
+        "sc-button",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-subscription-reactivate": [
+          "sc-dialog",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-format-number",
+          "sc-text",
+          "sc-format-date",
+          "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-subscription": [
+          "sc-subscription-reactivate"
         ]
       }
     },
@@ -31907,6 +32082,7 @@
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
+        "sc-subscription-reactivate",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
@@ -31933,6 +32109,9 @@
           "sc-text"
         ],
         "sc-subscription-details": [
+          "sc-text"
+        ],
+        "sc-subscription-reactivate": [
           "sc-text"
         ],
         "sc-upcoming-invoice": [
