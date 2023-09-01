@@ -105,7 +105,10 @@ export default () => {
 			>
 				<Stat
 					title={__('Total Subscriptions', 'surecart')}
-					description={__('Number Of Subscriptions', 'surecart')}
+					description={__(
+						'Total Number Of Subscriptions',
+						'surecart'
+					)}
 					loading={loading}
 					compare={{
 						current: data[data.length - 1]?.total_count || 0,
