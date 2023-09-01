@@ -42,7 +42,6 @@ export class ScSubscriptionReactivate {
   }
 
   render() {
-    console.log(this.subscription);
     return (
       <sc-dialog noHeader open={this.open} style={{ '--width': '600px', '--body-spacing': 'var(--sc-spacing-xxx-large)' }}>
         <sc-dashboard-module heading={__('Resubscribe', 'surecart')} class="subscription-reactivate" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
