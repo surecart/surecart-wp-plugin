@@ -89,10 +89,3 @@ export const periodCountString = (price) => {
 		price.recurring_period_count
 	)})`;
 };
-
-export const productNameWithPrice = (price) => {
-	if (!price) {
-		return '';
-	}
-	return `${price?.product?.name} ${price?.name ? `- ${price.name}` : ''}`;
-}

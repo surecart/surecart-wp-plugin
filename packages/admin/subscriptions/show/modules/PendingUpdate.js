@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import { intervalString, productNameWithPrice } from '../../../util/translations';
+import { intervalString } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 import { css, jsx } from '@emotion/core';
 import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';

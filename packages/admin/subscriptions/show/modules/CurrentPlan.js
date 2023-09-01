@@ -6,7 +6,8 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import { intervalString, productNameWithPrice } from '../../../util/translations';
+import { intervalString } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
