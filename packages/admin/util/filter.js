@@ -45,7 +45,7 @@ export function getFilterData(filter) {
 			break;
 		case 'thismonth':
 			startDate = dayjs().utc().startOf('month');
-			endDate = dayjs().utc().endOf('day');
+			endDate = dayjs().utc().endOf('month');
 			prevEndDate = startDate;
 			prevStartDate = dayjs(startDate).add(-1, 'month');
 			break;
