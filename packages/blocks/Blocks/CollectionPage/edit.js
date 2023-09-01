@@ -9,14 +9,19 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { ScInput } from '@surecart/components-react';
-import { MenuItem, TextHighlight, MenuGroup } from '@wordpress/components';
 import {
-	Icon,
-	page,
-	category,
-} from '@wordpress/icons';
+	MenuItem,
+	TextHighlight,
+	MenuGroup,
+	SearchControl,
+} from '@wordpress/components';
+import { Icon, page, category } from '@wordpress/icons';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
-import { safeDecodeURI, filterURLForDisplay, addQueryArgs } from '@wordpress/url';
+import {
+	safeDecodeURI,
+	filterURLForDisplay,
+	addQueryArgs,
+} from '@wordpress/url';
 
 export default ({ clientId }) => {
 	const anchorRef = useRef(null);
@@ -65,7 +70,7 @@ export default ({ clientId }) => {
 			getCollectionPages();
 		}
 	}, [searchText]);
-	
+
 	const getCollectionPage = async (id) => {
 		const collectionPage = await apiFetch({
 			path: `/surecart/v1/product_collections/${id}`,
@@ -130,21 +135,16 @@ export default ({ clientId }) => {
 							padding: '1em',
 						}}
 					>
-						<ScInput
-							name='product-collection'
-							showLabel={false}
-							type='search'
+						<SearchControl
 							placeholder={__(
 								'Search or type a collection name',
 								'surecart'
 							)}
 							value={searchText}
-							onScInput={(e) => {
-								setSearchText(e?.target?.value);
-							}}
-						></ScInput>
+							onChange={setSearchText}
+						/>
 
-						{ loading && (
+						{loading && (
 							<div
 								style={{
 									marginTop: '1em',
@@ -154,56 +154,62 @@ export default ({ clientId }) => {
 								<Spinner />
 							</div>
 						)}
-						{ !loading && collectionPages?.length && (
+
+						{!loading && !!collectionPages?.length && (
 							<div
 								style={{
 									marginTop: '1em',
 								}}
 							>
-							<MenuGroup>
-								{ collectionPages?.map((page) => {
-									return (
-									<MenuItem
-										iconPosition="left"
-										info={ filterURLForDisplay( safeDecodeURI( page?.permalink ), 24 ) }
-										shortcut={ 'collection' }
-										icon={
-											<Icon
-												className="block-editor-link-control__search-item-icon"
-												icon={ category }
-											/>
-										}
-										onClick={ () => {
-											setModal(false);
-											setLoadingPage(true);
-											setPlaceholderText(
-												__('Loading...', 'surecart')
-											);
-											getCollectionPage(page?.id);
-										}}
-										className="block-editor-link-control__search-item"
-									>
-										<TextHighlight
-											// The component expects a plain text string.
-											text={ stripHTML(page?.name) }
-											highlight={ searchText }
-										/>
-									</MenuItem>
-									);
-								})}
-							</MenuGroup>
+								<MenuGroup>
+									{collectionPages?.map((page) => {
+										return (
+											<MenuItem
+												iconPosition="left"
+												info={filterURLForDisplay(
+													safeDecodeURI(
+														page?.permalink
+													),
+													24
+												)}
+												shortcut={'collection'}
+												icon={
+													<Icon
+														className="block-editor-link-control__search-item-icon"
+														icon={category}
+													/>
+												}
+												onClick={() => {
+													setModal(false);
+													setLoadingPage(true);
+													setPlaceholderText(
+														__(
+															'Loading...',
+															'surecart'
+														)
+													);
+													getCollectionPage(page?.id);
+												}}
+												className="block-editor-link-control__search-item"
+											>
+												<TextHighlight
+													// The component expects a plain text string.
+													text={stripHTML(page?.name)}
+													highlight={searchText}
+												/>
+											</MenuItem>
+										);
+									})}
+								</MenuGroup>
 							</div>
 						)}
-						{ !loading && !collectionPages?.length && (
+						{!loading && !collectionPages?.length && (
 							<div
 								style={{
 									marginTop: '1em',
 								}}
 							>
-								{__(
-									'No collections found.',
-									'surecart'
-								)}
+								{__('No collections found.', 'surecart')}
 							</div>
 						)}
 					</div>
