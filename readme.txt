@@ -243,9 +243,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.6.0 - August 29th, 2023 =
+= 2.6.0 - September 5th, 2023 =
 * New: Subscription metrics on merchant dashboard.
 * New: Ability to revoke access when installments are completed.
+* Improvement: Webhooks reliability, performance and failure visibility improvements.
 * Improvement: Performance improvement with columns implementations.
 * Improvement: Rework how processors are handled on the form when multiple credit card processors are enabled.
 * Improvement: Loading speed improvement for admin dashboard pages..
