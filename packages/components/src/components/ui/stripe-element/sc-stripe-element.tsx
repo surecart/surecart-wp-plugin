@@ -6,6 +6,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -108,6 +109,7 @@ export class ScStripeElement {
       this.scPaid.emit();
     } catch (e) {
       this.scPayError.emit(e);
+      createErrorNotice(e);
       if (e.message) {
         this.error = e.message;
       }

@@ -10,6 +10,7 @@ import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -237,6 +238,7 @@ export class ScStripePaymentElement {
       console.error({ error });
       console.error(error);
       this.scPayError.emit(error);
+      createErrorNotice(error);
       this.error = error.message;
       return;
     }
@@ -297,6 +299,7 @@ export class ScStripePaymentElement {
     } catch (e) {
       console.error(e);
       this.scPayError.emit(e);
+      createErrorNotice(e);
       if (e.message) {
         this.error = e.message;
       }
