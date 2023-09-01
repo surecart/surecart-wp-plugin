@@ -11,7 +11,6 @@ import { createBlock } from '@wordpress/blocks';
  * @return {Array} A nested array of navigation link blocks.
  */
 export function createNavigationLink( {id, name, permalink } ) {
-	console.log(id);
 	return createBlock(
 		'core/navigation-link',
 		{
@@ -22,16 +21,6 @@ export function createNavigationLink( {id, name, permalink } ) {
 			kind: 'post-type',
 		}
 	);
-}
-
-function stringToSlug(input) {
-	return input
-		.toLowerCase() // Convert to lowercase
-		.replace(/\s+/g, '-') // Replace spaces with dashes
-		.replace(/[^\w\-]+/g, '') // Remove non-word characters except dashes
-		.replace(/\-\-+/g, '-') // Replace multiple dashes with a single dash
-		.replace(/^-+/, '') // Remove any leading dashes
-		.replace(/-+$/, ''); // Remove any trailing dashes
 }
 
 

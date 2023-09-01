@@ -9,14 +9,26 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import ModelSelector from '../../../admin/components/ModelSelector';
+import { ScInput } from '@surecart/components-react';
+import { MenuItem, TextHighlight, MenuGroup } from '@wordpress/components';
+import {
+	Icon,
+	page,
+	category,
+} from '@wordpress/icons';
+import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
+import { safeDecodeURI, filterURLForDisplay } from '@wordpress/url';
 
 export default ({ clientId }) => {
 	const anchorRef = useRef(null);
 	const [collectionPage, setCollectionPage] = useState(null);
+	const [searchText, setSearchText] = useState('');
 	const [modal, setModal] = useState(false);
 	const [placeholderText, setPlaceholderText] = useState(
 		__('Select Collection Page', 'surecart')
 	);
+	const [collectionPages, setCollectionPages] = useState(null);
+
 	const [loadingPage, setLoadingPage] = useState(false);
 	const { replaceBlock, selectBlock } = useDispatch(blockEditorStore);
 	const blockProps = useBlockProps({
@@ -41,6 +53,9 @@ export default ({ clientId }) => {
 		if (!collectionPage) {
 			setModal(true);
 		}
+		if (!collectionPages) {
+			getCollectionPages();
+		}
 	}, []);
 
 	const getCollectionPage = async (id) => {
@@ -53,6 +68,13 @@ export default ({ clientId }) => {
 			collectionPage,
 			parentClientId,
 		});
+	};
+
+	const getCollectionPages = async () => {
+		const pages = await apiFetch({
+			path: '/surecart/v1/product_collections',
+		});
+		setCollectionPages(pages);
 	};
 
 	const useConvertToNavigationLinks = ({
@@ -93,28 +115,60 @@ export default ({ clientId }) => {
 				>
 					<div
 						style={{
-							width: '20em',
+							padding: '1em',
 						}}
 					>
-						<ModelSelector
+						<ScInput
+							name='product-collection'
+							showLabel={false}
+							type='search'
 							placeholder={__(
-								'Select a Collection Page',
+								'Search or type a collection name',
 								'surecart'
 							)}
-							placement={'bottom-end'}
-							name="product-collection"
-							onSelect={(collectionId) => {
-								setModal(false);
-								setLoadingPage(true);
-								setPlaceholderText(
-									__('Loading...', 'surecart')
-								);
-								getCollectionPage(collectionId);
+							value={searchText}
+							onScInput={(e) => {
+								setSearchText(e?.target?.value);
 							}}
-							style={{ width: '100%' }}
-							open={true}
-							fetchOnLoad={true}
-						/>
+						></ScInput>
+						<div
+							style={{
+								marginTop: '1em',
+							}}
+						>
+						<MenuGroup>
+							{ collectionPages?.map((page) => {
+								return (
+								<MenuItem
+									iconPosition="left"
+									info={ filterURLForDisplay( safeDecodeURI( page?.permalink ), 24 ) }
+									shortcut={ 'collection' }
+									icon={
+										<Icon
+											className="block-editor-link-control__search-item-icon"
+											icon={ category }
+										/>
+									}
+									onClick={ () => {
+										setModal(false);
+										setLoadingPage(true);
+										setPlaceholderText(
+											__('Loading...', 'surecart')
+										);
+										getCollectionPage(page?.id);
+									}}
+									className="block-editor-link-control__search-item"
+								>
+									<TextHighlight
+										// The component expects a plain text string.
+										text={ stripHTML(page?.name) }
+										highlight={ searchText }
+									/>
+								</MenuItem>
+								);
+							})}
+						</MenuGroup>
+						</div>
 					</div>
 				</Popover>
 			)}
