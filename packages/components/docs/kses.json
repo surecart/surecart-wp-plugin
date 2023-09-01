@@ -291,7 +291,6 @@
   },
   "sc-checkout-form-errors": {
     "checkout-state": true,
-    "error": true,
     "style": true,
     "id": true,
     "class": true,

@@ -1,8 +1,16 @@
+/**
+ * External dependencies.
+ */
 import { Component, h, Host, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
+import { __ } from '@wordpress/i18n';
 
-import { FormState, ResponseError } from '../../../../types';
+/**
+ * Internal dependencies.
+ */
+import { state as errorState } from '@store/notices';
+import { getErrorMessage, getErrorMessages } from '@store/notices/getters';
+import { FormState } from '../../../../types';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -15,37 +23,51 @@ export class ScCheckoutFormErrors {
   /** The current order. */
   @Prop() checkoutState: FormState;
 
-  /** Error to display. */
-  @Prop() error: ResponseError | null;
+  getAlertType() {
+    switch (errorState?.type) {
+      case 'error':
+        return 'danger';
 
-  /** This filters the error message with some more client friendly error messages. */
-  getErrorMessage(error) {
-    if (error.code === 'order.line_items.price.blank') {
-      return __('This product is no longer purchasable.', 'surecart');
+      case 'default':
+        return 'primary';
+
+      default:
+        return errorState?.type;
     }
-    return <span innerHTML={error?.message}></span>;
   }
 
-  /** First will display validation error, then main error if no validation errors. */
-  errorMessage() {
-    if (this.error?.additional_errors?.[0]?.message) {
-      return this.getErrorMessage(this.error?.additional_errors?.[0]);
-    } else if (this?.error?.message) {
-      return this.getErrorMessage(this?.error);
+  /**
+   * Render the error messages.
+   *
+   * If there is only one error message, render it as a string.
+   * Otherwise, render it as a list.
+   *
+   * @returns string
+   */
+  renderErrorMessages() {
+    if (getErrorMessages().length == 1) {
+      return getErrorMessage();
     }
-    return '';
+
+    return (
+      <ul>
+        {(getErrorMessages() || []).map((message, key) => (
+          <li key={key}>{message}</li>
+        ))}
+      </ul>
+    );
   }
 
   render() {
     // don't show component if no error message or is finalizing or updating.
-    if (!this.errorMessage() || ['finalizing', 'updating'].includes(this.checkoutState)) {
+    if (!!getErrorMessages.length || ['finalizing', 'updating'].includes(this.checkoutState)) {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
       <Host>
-        <sc-alert type="danger" scrollOnOpen={true} open={!!this.errorMessage()}>
-          <span slot="title">{this.errorMessage()}</span>
+        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!getErrorMessage()} closable={errorState?.dismissible}>
+          {this.renderErrorMessages()}
         </sc-alert>
         <slot />
       </Host>
@@ -53,4 +75,4 @@ export class ScCheckoutFormErrors {
   }
 }
 
-openWormhole(ScCheckoutFormErrors, ['checkoutState', 'error'], false);
+openWormhole(ScCheckoutFormErrors, ['checkoutState'], false);

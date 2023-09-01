@@ -16,14 +16,6 @@ This component listens for a confirmed event and redirects to the success url.
 | `checkoutState` | `checkout-state` | The current order. | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating"` | `undefined` |
 
 
-## Events
-
-| Event           | Description       | Type                                                                                            |
-| --------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
-| `scSetState`    | Form state event. | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
-| `scUpdateError` | Set the state.    | `CustomEvent<ResponseError>`                                                                    |
-
-
 ## Dependencies
 
 ### Used by

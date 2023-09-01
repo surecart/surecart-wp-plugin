@@ -577,10 +577,6 @@ export namespace Components {
           * The current order.
          */
         "checkoutState": FormState;
-        /**
-          * Error to display.
-         */
-        "error": ResponseError | null;
     }
     interface ScCheckoutMolliePayment {
         "method": string;
@@ -4003,10 +3999,6 @@ export interface ScFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScFormElement;
 }
-export interface ScFormErrorProviderCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScFormErrorProviderElement;
-}
 export interface ScFormStateProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScFormStateProviderElement;
@@ -6172,10 +6164,6 @@ declare namespace LocalJSX {
           * The current order.
          */
         "checkoutState"?: FormState;
-        /**
-          * Error to display.
-         */
-        "error"?: ResponseError | null;
     }
     interface ScCheckoutMolliePayment {
         "method"?: string;
@@ -7179,14 +7167,6 @@ declare namespace LocalJSX {
           * The current order.
          */
         "checkoutState"?: FormState;
-        /**
-          * Form state event.
-         */
-        "onScSetState"?: (event: ScFormErrorProviderCustomEvent<FormStateSetter>) => void;
-        /**
-          * Set the state.
-         */
-        "onScUpdateError"?: (event: ScFormErrorProviderCustomEvent<ResponseError>) => void;
     }
     interface ScFormRow {
     }

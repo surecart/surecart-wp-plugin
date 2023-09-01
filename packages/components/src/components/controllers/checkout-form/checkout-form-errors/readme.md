@@ -14,7 +14,6 @@ This component listens for a confirmed event and redirects to the success url.
 | Property        | Attribute        | Description        | Type                                                                                                                                                           | Default     |
 | --------------- | ---------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | `checkoutState` | `checkout-state` | The current order. | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating"` | `undefined` |
-| `error`         | --               | Error to display.  | `ResponseError`                                                                                                                                                | `undefined` |
 
 
 ## Dependencies
