@@ -22,13 +22,13 @@ class CompatibilityService {
 		// UAG fix.
 		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
 
-		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 4 );
+		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 	}
 
 	/**
 	 * Render block data.
 	 *
-	 * @param array $block_data Block data.
+	 * @param array $parsed_block Block data.
 	 *
 	 * @return array
 	 */
@@ -61,11 +61,10 @@ class CompatibilityService {
 	 * @param string $output Content.
 	 * @param array  $attributes Shortcode attributes.
 	 * @param string $name Shortcode Tag.
-	 * @param object $form Form Post Object.
 	 *
 	 * @return array
 	 */
-	public function maybeEnqueueUAGBAssetsForShortcode( $output, $attributes, $name, $form ) {
+	public function maybeEnqueueUAGBAssetsForShortcode( $output, $attributes, $name ) {
 		// UAGB must be activated.
 		if ( ! class_exists( '\UAGB_Post_Assets' ) ) {
 			return $output;
