@@ -14,6 +14,7 @@ import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { updateFormState } from '@store/form/mutations';
 import { ResponseError } from 'src/types';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-checkout-paystack-payment-provider',
@@ -49,7 +50,8 @@ export class ScCheckoutPaystackPaymentProvider {
       // must have a public key and access code.
       const { public_key, access_code } = checkoutState?.checkout?.payment_intent.processor_data.paystack;
       if (!public_key || !access_code) {
-        return this.scError.emit({ message: sprintf(__('Paystack is not properly set up to make transactions', 'surecart')) });
+        createErrorNotice({ message: sprintf(__('Paystack is not properly set up to make transactions', 'surecart')) });
+        return;
       }
 
       const paystack = new PaystackPop();
@@ -66,7 +68,7 @@ export class ScCheckoutPaystackPaymentProvider {
         onClose: () => updateFormState('REJECT'),
       });
     } catch (err) {
-      this.scError.emit(err);
+      createErrorNotice(err);
       console.error(err);
       updateFormState('REJECT');
     }
