@@ -30,7 +30,6 @@ import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
 // import * as CollapsibleRow from '@blocks/CollapsibleRow';
 import * as storeLogo from '@blocks/StoreLogo';
-import * as collectionPages from '@blocks/CollectionPages';
 import * as collectionPage from '@blocks/CollectionPage';
 
 // deprecated
@@ -65,6 +64,5 @@ registerBlocks([
 	dashboardTab,
 	dashboardTabs,
 	storeLogo,
-	collectionPages,
 	collectionPage
 ]);

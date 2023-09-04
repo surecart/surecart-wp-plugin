@@ -76,11 +76,6 @@ export default (props) => {
 		setPage(1);
 	}, [query]);
 
-	useEffect(() => {
-		if (!fetchOnLoad) return;
-		fetchData();
-	}, [fetchOnLoad]);
-
 	// if the page, perPage changes, fetch data.
 	useEffect(() => {
 		if (query === null || isLoading) return;
