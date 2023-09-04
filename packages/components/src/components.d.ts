@@ -547,7 +547,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>;
         /**
           * Success text for the form.
          */
@@ -2237,6 +2237,7 @@ export namespace Components {
         "busy": boolean;
         "closedText": string;
         "collapsed": boolean;
+        "collapsedOnDesktop": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
         "openText": string;
@@ -3264,7 +3265,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Checkout | NodeJS.Timeout>;
+        "finalize": () => Promise<Checkout | NodeJS.Timeout | Error>;
         /**
           * Should we persist the session.
          */
@@ -8020,6 +8021,7 @@ declare namespace LocalJSX {
         "busy"?: boolean;
         "closedText"?: string;
         "collapsed"?: boolean;
+        "collapsedOnDesktop"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
         /**

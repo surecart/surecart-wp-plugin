@@ -36,6 +36,6 @@ class CustomerLinksController extends RestController {
 		// override email.
 		$request['email'] = $user->user_email;
 
-		return $model->where( $request->get_query_params() )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return $model->where( $request->get_query_params() )->create( $request->get_json_params() );
 	}
 }

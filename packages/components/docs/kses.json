@@ -1254,6 +1254,7 @@
     "busy": true,
     "closed-text": true,
     "collapsed": true,
+    "collapsed-on-desktop": true,
     "collapsed-on-mobile": true,
     "collapsible": true,
     "open-text": true,
