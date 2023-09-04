@@ -6,6 +6,7 @@ import { createOrUpdateCheckout } from '../../../../services/session';
 import { openWormhole } from 'stencil-wormhole';
 
 import { Address, Checkout, ResponseError, TaxIdentifier, TaxProtocol } from '../../../../types';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -71,7 +72,7 @@ export class ScOrderTaxIdInput {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       unLockCheckout('tax_identifier');
     }
