@@ -82,6 +82,6 @@ return [
 	'payment_method.invalid'                             => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'customer.default_payment_method.invalid'            => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'payment_method.not_detachable'                      => __( 'This payment method cannot be deleted because there are no other valid or reusable saved payment methods available.', 'surecart' ),
-  'checkout.product.out_of_stock'                     => __( 'This product is out of stock.', 'surecart' ),
-	'checkout.price.unpurchasable'                      => __( 'This product is no longer purchaseable.', 'surecart' ),
+	'checkout.product.out_of_stock'                      => __( 'This product is out of stock.', 'surecart' ),
+	'checkout.price.unpurchasable'                       => __( 'This product is no longer purchaseable.', 'surecart' ),
 ];
