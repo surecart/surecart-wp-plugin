@@ -14,6 +14,7 @@ import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import apiFetch from '../../../../functions/fetch';
 
 import { ManualPaymentMethods } from '../payment/ManualPaymentMethods';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-checkout-mollie-payment',
@@ -56,7 +57,7 @@ export class ScCheckoutMolliePayment {
       };
       processorsState.methods = response?.data || [];
     } catch (e) {
-      this.scError.emit(e);
+      createErrorNotice(e);
       console.error(e);
     } finally {
       unLockCheckout('methods');
