@@ -1,8 +1,8 @@
 {
 	"apiVersion": 2,
 	"name": "surecart/collection-pages",
-	"title": "Collection Pages",
-	"description": "Collection pages are used to display a list of products. They are used for category pages, search results, and other product lists.",
+	"title": "Product Collections",
+	"description": "Product Collection pages are used to display a list of products. They are used for category pages, search results, and other product lists.",
 	"parent": ["core/navigation"],
 	"category": "surecart",
 	"keywords": ["collection", "category", "pages"],

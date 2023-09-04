@@ -17,6 +17,7 @@ import {
 } from '@wordpress/icons';
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 import { safeDecodeURI, filterURLForDisplay, addQueryArgs } from '@wordpress/url';
+import throttle from 'lodash/throttle';
 
 export default ({ clientId }) => {
 	const anchorRef = useRef(null);
@@ -102,6 +103,14 @@ export default ({ clientId }) => {
 		selectBlock(parentClientId);
 	};
 
+	const setSearchQuery = throttle(
+		(value) => {
+			setSearchText(value);
+		},
+		750,
+		{ leading: false }
+	);
+
 	return (
 		<>
 			{(!collectionPage || loadingPage) && (
@@ -140,7 +149,7 @@ export default ({ clientId }) => {
 							)}
 							value={searchText}
 							onScInput={(e) => {
-								setSearchText(e?.target?.value);
+								setSearchQuery(e?.target?.value);
 							}}
 						></ScInput>
 
