@@ -3,6 +3,7 @@ namespace SureCartBlocks\Controllers;
 
 use SureCart\Models\Component;
 use SureCart\Models\Price;
+use SureCart\Models\Product;
 use SureCart\Models\Subscription;
 use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
@@ -349,6 +350,89 @@ class SubscriptionController extends BaseController {
 					[
 						'heading' => __( 'Enter An Amount', 'surecart' ),
 						'price'   => $price,
+						'variant' => $this->getParam( 'variant' )
+					]
+				)->render()
+			);
+			?>
+
+	</sc-spacing>
+
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Confirm the product variation.
+	 *
+	 * @return void
+	 */
+	public function confirm_variation() {
+		$price = Price::find( $this->getParam( 'price_id' ) );
+		$id = $this->getId();
+
+		if ( ! $id ) {
+			return $this->notFound();
+		}
+
+		// fetch subscription.
+		$subscription = Subscription::with(
+			[
+				'price',
+				'price.product',
+			]
+		)->find( $id );
+
+		// fetch subscription.
+		$product = Product::with(
+			[
+				'variants', 
+				'variant_options', 
+				'prices'
+			]
+		)->find( $subscription->price->product->id );
+
+		ob_start();
+		?>
+
+		<sc-spacing style="--spacing: var(--sc-spacing-xx-large)">
+			<sc-breadcrumbs>
+				<sc-breadcrumb href="<?php echo esc_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>">
+					<?php esc_html_e( 'Dashboard', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'    => $this->getTab(),
+							'action' => 'edit',
+							'model'  => 'subscription',
+							'id'     => $this->getId(),
+						],
+						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+					)
+				);
+				?>
+				">
+					<?php esc_html_e( 'Plan', 'surecart' ); ?>
+				</sc-breadcrumb>
+				<sc-breadcrumb>
+					<?php esc_html_e( 'Choose Variation', 'surecart' ); ?>
+				</sc-breadcrumb>
+			</sc-breadcrumbs>
+
+			<?php
+
+			echo wp_kses_post(
+				Component::tag( 'sc-subscription-variation-confirm' )
+				->id( 'subscription-ad-hoc-confirm' )
+				->with(
+					[
+						'heading' => __( 'Choose a Variation', 'surecart' ),
+						'product' => $product,
+						'subscription' => $subscription,
+						'price' => $price
 					]
 				)->render()
 			);
@@ -412,6 +496,7 @@ class SubscriptionController extends BaseController {
 						'heading'                => __( 'New Plan', 'surecart' ),
 						'subscriptionId'         => $this->getId(),
 						'priceId'                => $this->getParam( 'price_id' ),
+						'variantId'              => $this->getParam( 'variant' ),
 						'adHocAmount'            => $this->getParam( 'ad_hoc_amount' ),
 						'successUrl'             => esc_url_raw( $back ),
 						'quantityUpdatesEnabled' => (bool) $quantity_enabled,

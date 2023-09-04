@@ -105,6 +105,7 @@ Type: `Promise<void>`
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
 
 ### Depends on
 
@@ -121,6 +122,7 @@ graph TD;
   sc-product-price-modal --> sc-price-input
   sc-product-selected-price --> sc-price-input
   sc-subscription-ad-hoc-confirm --> sc-price-input
+  sc-subscription-variation-confirm --> sc-price-input
   style sc-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

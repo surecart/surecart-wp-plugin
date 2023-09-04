@@ -44,6 +44,7 @@
  - [sc-cart-icon](../sc-cart-icon)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-customer-details](../customer-details)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -76,6 +77,7 @@
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
  - [sc-toggle](../sc-toggle)
@@ -96,6 +98,7 @@ graph TD;
   sc-cart-icon --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
+  sc-checkout-stock-alert --> sc-icon
   sc-customer-details --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon
@@ -128,6 +131,7 @@ graph TD;
   sc-subscription-next-payment --> sc-icon
   sc-subscription-payment-method --> sc-icon
   sc-subscription-switch --> sc-icon
+  sc-subscription-variation-confirm --> sc-icon
   sc-subscriptions-list --> sc-icon
   sc-tax-id-input --> sc-icon
   sc-toggle --> sc-icon

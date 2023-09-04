@@ -5,6 +5,21 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute    | Description     | Type                                        | Default          |
+| ----------- | ------------ | --------------- | ------------------------------------------- | ---------------- |
+| `productId` | `product-id` | The product id. | `string`                                    | `undefined`      |
+| `type`      | `type`       |                 | `"instant-checkout-page" \| "product-page"` | `'product-page'` |
+
+
+## Events
+
+| Event              | Description            | Type                        |
+| ------------------ | ---------------------- | --------------------------- |
+| `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+
+
 ## Shadow Parts
 
 | Part            | Description |

@@ -133,6 +133,17 @@ export class ScSubscriptionSwitch {
     const currentPlan = this.subscription?.price as Price;
     if (price?.id === currentPlan.id && !price?.ad_hoc) return;
 
+    // confirm product variation.
+    if (this.subscription?.variant_options?.length) {
+      this.busy = true;
+      return window.location.assign(
+        addQueryArgs(window.location.href, {
+          action: 'confirm_variation',
+          price_id: plan,
+        }),
+      );
+    }
+
     // confirm ad_hoc amount.
     if (price?.ad_hoc) {
       this.busy = true;
@@ -275,6 +286,10 @@ export class ScSubscriptionSwitch {
   }
 
   buttonText() {
+    if ( this.subscription?.variant_options?.length ) {
+      return __('Choose Variant', 'surecart');
+    }
+
     if (this.selectedPrice?.ad_hoc) {
       if (this.selectedPrice?.id === (this.subscription?.price as Price)?.id) {
         return __('Update Amount', 'surecart');

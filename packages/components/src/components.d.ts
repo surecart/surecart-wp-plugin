@@ -3532,6 +3532,12 @@ export namespace Components {
         "query": object;
         "subscription": Subscription;
     }
+    interface ScSubscriptionVariationConfirm {
+        "heading": string;
+        "price": Price;
+        "product": Product;
+        "subscription": Subscription;
+    }
     interface ScSubscriptionsList {
         "allLink": string;
         "cancelBehavior": 'period_end' | 'immediate';
@@ -3894,6 +3900,7 @@ export namespace Components {
         "quantityUpdatesEnabled": boolean;
         "subscriptionId": string;
         "successUrl": string;
+        "variantId": string;
     }
     interface ScUpgradeRequired {
         /**
@@ -5305,6 +5312,12 @@ declare global {
         prototype: HTMLScSubscriptionSwitchElement;
         new (): HTMLScSubscriptionSwitchElement;
     };
+    interface HTMLScSubscriptionVariationConfirmElement extends Components.ScSubscriptionVariationConfirm, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionVariationConfirmElement: {
+        prototype: HTMLScSubscriptionVariationConfirmElement;
+        new (): HTMLScSubscriptionVariationConfirmElement;
+    };
     interface HTMLScSubscriptionsListElement extends Components.ScSubscriptionsList, HTMLStencilElement {
     }
     var HTMLScSubscriptionsListElement: {
@@ -5616,6 +5629,7 @@ declare global {
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
+        "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
         "sc-switch": HTMLScSwitchElement;
         "sc-tab": HTMLScTabElement;
@@ -9548,6 +9562,12 @@ declare namespace LocalJSX {
         "query"?: object;
         "subscription"?: Subscription;
     }
+    interface ScSubscriptionVariationConfirm {
+        "heading"?: string;
+        "price"?: Price;
+        "product"?: Product;
+        "subscription"?: Subscription;
+    }
     interface ScSubscriptionsList {
         "allLink"?: string;
         "cancelBehavior"?: 'period_end' | 'immediate';
@@ -9937,6 +9957,7 @@ declare namespace LocalJSX {
         "quantityUpdatesEnabled"?: boolean;
         "subscriptionId"?: string;
         "successUrl"?: string;
+        "variantId"?: string;
     }
     interface ScUpgradeRequired {
         /**
@@ -10149,6 +10170,7 @@ declare namespace LocalJSX {
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
+        "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
         "sc-subscriptions-list": ScSubscriptionsList;
         "sc-switch": ScSwitch;
         "sc-tab": ScTab;
@@ -10371,6 +10393,7 @@ declare module "@stencil/core" {
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
+            "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
             "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
             "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;

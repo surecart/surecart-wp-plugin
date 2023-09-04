@@ -23,6 +23,7 @@
 | `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
 | `setupFeeTrialEnabled` | `setup-fee-trial-enabled` | Is the setup fee not included in the free trial? | `boolean` | `true`      |
 | `trialDurationDays`    | `trial-duration-days`     | Trial duration days                              | `number`  | `undefined` |
+| `variantLabel`         | `variant-label`           | Product variant label                            | `string`  | `''`        |
 
 
 ## Events
@@ -56,6 +57,7 @@
 | `"suffix"`                       | The product suffix              |
 | `"text"`                         | The product text                |
 | `"title"`                        | The product title               |
+| `"variant"`                      |                                 |
 
 
 ## Dependencies
