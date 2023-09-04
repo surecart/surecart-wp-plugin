@@ -5,6 +5,7 @@ import { Checkout, ResponseError, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { checkoutIsLocked } from '@store/checkout/getters';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-shipping-choices',
@@ -34,7 +35,7 @@ export class ScShippingChoices {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       unLockCheckout('selected_shipping_choice');
     }
