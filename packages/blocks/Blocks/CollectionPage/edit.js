@@ -31,7 +31,7 @@ export default ({ clientId }) => {
 	const [placeholderText, setPlaceholderText] = useState(
 		__('Select Collection Page', 'surecart')
 	);
-	const [collectionPages, setCollectionPages] = useState(null);
+	const [collectionPages, setCollectionPages] = useState([]);
 
 	const [loadingPage, setLoadingPage] = useState(false);
 	const { replaceBlock, selectBlock } = useDispatch(blockEditorStore);
@@ -57,39 +57,54 @@ export default ({ clientId }) => {
 		if (!collectionPage) {
 			setModal(true);
 		}
-		if (!collectionPages) {
-			setLoading(true);
+		if (!collectionPages?.length) {
 			getCollectionPages();
 		}
 	}, []);
 
 	useEffect(() => {
 		if (searchText) {
-			setLoading(true);
 			getCollectionPages();
 		}
 	}, [searchText]);
 
 	const getCollectionPage = async (id) => {
-		const collectionPage = await apiFetch({
-			path: `/surecart/v1/product_collections/${id}`,
-		});
-		setCollectionPage(collectionPage);
-		useConvertToNavigationLinks({
-			clientId,
-			collectionPage,
-			parentClientId,
-		});
+		try {
+			const collectionPage = await apiFetch({
+				path: `/surecart/v1/product_collections/${id}`,
+			});
+			if (!collectionPage) {
+				return;
+			}
+			setCollectionPage(collectionPage);
+			useConvertToNavigationLinks({
+				clientId,
+				collectionPage,
+				parentClientId,
+			});
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	const getCollectionPages = async () => {
-		const pages = await apiFetch({
-			path: addQueryArgs('/surecart/v1/product_collections', {
-				query: searchText,
-			}),
-		});
-		setCollectionPages(pages);
-		setLoading(false);
+		try {
+			setLoading(true);
+			const pages = await apiFetch({
+				path: addQueryArgs('/surecart/v1/product_collections', {
+					query: searchText,
+				}),
+			});
+			if (!pages) {
+				return;
+			}
+			setCollectionPages(pages);
+			setLoading(false);
+		} catch (e) {
+			console.error(e);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const useConvertToNavigationLinks = ({
