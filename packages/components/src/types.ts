@@ -338,6 +338,7 @@ export interface Coupon extends Model {
 }
 
 export interface LineItemData extends Object {
+  id?: string;
   price_id?: string;
   bump?: string;
   quantity: number;

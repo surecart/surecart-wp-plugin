@@ -88,7 +88,7 @@ export class ScSessionProvider {
         console.error(e);
         updateFormState('REJECT');
         this.handleErrorResponse(e);
-        return;
+        return new Error(e?.message);
       }
     }
 
@@ -137,6 +137,7 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+      return new Error(e?.message);
     }
   }
 
