@@ -1022,7 +1022,7 @@ export interface CartGoogleAnalyticsItem {
 
 export interface PaymentInfoAddedParams {
   checkout_id: string;
-  processor_type: 'paypal' | 'stripe' | 'mollie';
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
   payment_method: {
     billing_details: {
       name: string;
