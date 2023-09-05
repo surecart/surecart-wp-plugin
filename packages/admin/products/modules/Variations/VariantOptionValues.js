@@ -14,12 +14,17 @@ import arrayMove from 'array-move';
 import { ScIcon, ScInput } from '@surecart/components-react';
 
 export default memo(({ option, product, updateProduct, onChangeValue }) => {
-	const [changeType, setChangeType] = useState('option_value_renamed');
 	const [values, setValues] = useState(
 		option?.values?.length > 0
 			? option?.values ?? []
 			: [{ index: 1, label: '' }]
 	);
+
+	const setChangeType = (type) => {
+		updateProduct({
+			change_type: type,
+		});
+	};
 
 	const applySort = (oldIndex, newIndex) => {
 		setChangeType('option_value_sorted');
@@ -27,7 +32,7 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 		setValues(arrayMove(values, oldIndex, newIndex));
 	};
 
-	const onChangeOptionValue = async (index, newLabel) => {
+	const onChangeOptionValue = (index, newLabel) => {
 		setChangeType('option_value_renamed');
 
 		// update specific option value.
@@ -50,21 +55,9 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 		}
 	}, [values]);
 
-	// as the values are changed, we need to add in variants.data.
+	// as the values are changed, we need to update the product.
 	useEffect(() => {
-		updateProduct({
-			...product,
-			variants: {
-				...product.variants,
-				data: values
-					.filter((value) => !!value?.label)
-					.map((value) => {
-						return { option_1: value.label };
-					}),
-			},
-		});
-
-		onChangeValue(values, changeType);
+		onChangeValue(values, product?.change_type);
 	}, [values]);
 
 	const deleteOptionValue = (index) => {

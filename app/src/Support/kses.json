@@ -311,6 +311,13 @@
     "class": true,
     "slot": true
   },
+  "sc-checkout-stock-alert": {
+    "order": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-checkout-unsaved-changes-warning": {
     "state": true,
     "style": true,
@@ -1546,6 +1553,10 @@
   },
   "sc-product-buy-button": {
     "add-to-cart": true,
+    "classes": true,
+    "out-of-stock-text": true,
+    "styles": true,
+    "text": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1587,6 +1598,7 @@
     "slot": true
   },
   "sc-product-item-price": {
+    "metrics": true,
     "prices": true,
     "range": true,
     "style": true,
@@ -1615,6 +1627,7 @@
     "scratch-amount": true,
     "setup-fee-trial-enabled": true,
     "trial-duration-days": true,
+    "variant-label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1671,6 +1684,14 @@
     "class": true,
     "slot": true
   },
+  "sc-product-variation-choices": {
+    "product-id": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-prose": {
     "style": true,
     "id": true,
@@ -1705,6 +1726,7 @@
     "slot": true
   },
   "sc-quantity-select": {
+    "allow-negative": true,
     "click-el": true,
     "disabled": true,
     "has-focus": true,

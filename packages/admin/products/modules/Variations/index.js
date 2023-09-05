@@ -23,7 +23,7 @@ export default ({ product, updateProduct, loading }) => {
 	const maxVariantOptions = 3;
 
 	const addEmptyVariantOption = () => {
-		// if we have reached the max number of variant options, show a toast and return.
+		// if we have reached the max number of variant options, show a notice and return.
 		if ((product?.variant_options ?? []).length >= maxVariantOptions) {
 			createErrorNotice(
 				__(

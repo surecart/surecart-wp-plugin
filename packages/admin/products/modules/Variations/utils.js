@@ -8,7 +8,7 @@ import { __, sprintf } from '@wordpress/i18n';
  *
  * @param {Array} variantOptions
  * @param {Array} previousVariants
- * @param {string} changeType - option_deleted | option_sorted | option_value_renamed | option_value_deleted | option_value_sorted
+ * @param {string} changeType - option_deleted | option_sorted | option_value_renamed | option_value_deleted | option_value_sorted | initially_loaded
  *
  * @return {Array}
  */
@@ -17,6 +17,11 @@ export const generateVariants = (
 	previousVariants = [],
 	changeType = 'option_value_renamed'
 ) => {
+	// If it's for initial load, then return previousVariants.
+	if (changeType === 'initially_loaded') {
+		return previousVariants;
+	}
+
 	const variants = [];
 
 	// Check parameters are valid.
