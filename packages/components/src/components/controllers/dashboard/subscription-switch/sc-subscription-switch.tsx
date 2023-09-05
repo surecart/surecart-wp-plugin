@@ -287,7 +287,7 @@ export class ScSubscriptionSwitch {
 
   buttonText() {
     if ( this.subscription?.variant_options?.length ) {
-      return __('Choose Variant', 'surecart');
+      return __('Choose Options', 'surecart');
     }
 
     if (this.selectedPrice?.ad_hoc) {
