@@ -9,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { state as errorState } from '@store/notices';
-import { getErrorMessage, getErrorMessages } from '@store/notices/getters';
+import { getErrorMessage, getErrorMessages, getNoticeTitle } from '@store/notices/getters';
 import { FormState } from '../../../../types';
 
 /**
@@ -17,6 +17,7 @@ import { FormState } from '../../../../types';
  */
 @Component({
   tag: 'sc-checkout-form-errors',
+  styleUrl: 'sc-checkout-form-errors.scss',
   shadow: true,
 })
 export class ScCheckoutFormErrors {
@@ -45,13 +46,14 @@ export class ScCheckoutFormErrors {
    * @returns string
    */
   renderErrorMessages() {
-    if (getErrorMessages().length == 1) {
-      return getErrorMessage();
+    // if notice title and error message are same, then return empty.
+    if (getNoticeTitle() === getErrorMessage()) {
+      return '';
     }
 
     return (
       <ul>
-        {(getErrorMessages() || []).map((message, key) => (
+        {getErrorMessages().map((message, key) => (
           <li key={key}>{message}</li>
         ))}
       </ul>
@@ -60,13 +62,13 @@ export class ScCheckoutFormErrors {
 
   render() {
     // don't show component if no error message or is finalizing or updating.
-    if (!!getErrorMessages.length || ['finalizing', 'updating'].includes(this.checkoutState)) {
+    if (!getErrorMessages().length || ['finalizing', 'updating'].includes(this.checkoutState)) {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
       <Host>
-        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!getErrorMessage()} closable={errorState?.dismissible}>
+        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!getErrorMessage()} closable={errorState?.dismissible} title={getNoticeTitle()}>
           {this.renderErrorMessages()}
         </sc-alert>
         <slot />

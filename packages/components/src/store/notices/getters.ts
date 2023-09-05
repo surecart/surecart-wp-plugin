@@ -11,39 +11,10 @@ import state from './store';
 /**
  * Get the notice title.
  *
- * @param {Boolean} appendMessage
  * @returns {String}
  */
-export const getNoticeTitle = (appendMessage = false) => {
-  let noticeTitle: string;
-
-  switch (state.type) {
-    case 'error':
-      noticeTitle = __('Error', 'surecart');
-      break;
-
-    case 'warning':
-      noticeTitle = __('Warning', 'surecart');
-      break;
-
-    case 'info':
-      noticeTitle = __('Info', 'surecart');
-      break;
-
-    case 'success':
-      noticeTitle = __('Success', 'surecart');
-      break;
-
-    default:
-      noticeTitle = '';
-  }
-
-  // Append the error message to the title.
-  if (!!state.message && appendMessage) {
-    noticeTitle += `: ${state.message}`;
-  }
-
-  return noticeTitle;
+export const getNoticeTitle = (): string => {
+  return state.message;
 };
 
 /**
@@ -68,7 +39,7 @@ export const getErrorMessage = () => {
 export const getErrorMessages = () => {
   // Check if we have additional errors, if yes, then process all the error messages.
   if (!!state.additional_errors?.length) {
-    return state.additional_errors.map(error => error.message);
+    return state.additional_errors.map(error => error.message) || [];
   }
 
   return [state.message];
