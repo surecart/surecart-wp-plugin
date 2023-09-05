@@ -16,6 +16,7 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
+import VariantLabel from '../../components/VariantLabel';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const [price, setPrice] = useState(null);
@@ -69,6 +70,11 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 							>
 								<div>
 									{price?.product?.name}
+									<VariantLabel
+										variantOptions={
+											lineItem.variant_options ?? []
+										}
+									/>
 									<div style={{ opacity: 0.5 }}>
 										<ScFormatNumber
 											type="currency"
@@ -164,7 +170,12 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 
 			<UpdatePrice
 				price={price}
-				onUpdatePrice={(price) => updateSubscription({ price })}
+				onUpdatePrice={(priceId, variantId) => {
+					updateSubscription({
+						price: priceId,
+						variant: variantId || null,
+					});
+				}}
 				open={dialog === 'price'}
 				onRequestClose={() => setDialog(null)}
 			/>

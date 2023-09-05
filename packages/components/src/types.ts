@@ -763,6 +763,7 @@ export interface Subscription extends Object {
     ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
+    variant?: string;
   };
   purchase: Purchase | string;
   cancel_at_period_end: number | false;
@@ -775,6 +776,8 @@ export interface Subscription extends Object {
   payment_method: PaymentMethod | string;
   price: Price;
   ad_hoc_amount: number;
+  variant?: Variant | string;
+  variant_options?: Array<string>;
   created_at: number;
   updated_at: number;
   restore_at?: number;

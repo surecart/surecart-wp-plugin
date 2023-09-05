@@ -11,6 +11,7 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { formatTaxDisplay } from '../../../../util/tax';
+import { getVariantLabel } from '../../../../util/variation';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
@@ -41,7 +42,10 @@ export default ({ period, loading }) => {
 						<>
 							<ScProductLineItem
 								key={item.id}
-								imageUrl={item?.price?.product?.image_url}
+								imageUrl={
+									item?.variant?.image_url ||
+									item?.price?.product?.image_url
+								}
 								name={item?.price?.product?.name}
 								editable={false}
 								removable={false}
@@ -52,6 +56,9 @@ export default ({ period, loading }) => {
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
+								variantLabel={getVariantLabel(
+									item?.variant_options || []
+								)}
 								interval={intervalString(item?.price)}
 							></ScProductLineItem>
 						</>
