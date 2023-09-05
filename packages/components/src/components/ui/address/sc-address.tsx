@@ -133,7 +133,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || 'US';
+    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || null;
     this.updateAddress({ country });
   }
 
