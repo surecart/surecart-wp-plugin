@@ -18,14 +18,18 @@ export class ScProductItem {
   /** Product was viewed */
   @Event() scProductViewed: EventEmitter<Partial<Product>>;
 
+  onProductLinkClicked (){
+    this.scProductViewed.emit({
+      id: this.product?.id,
+      name: this.product?.name,
+      permalink: this.product?.permalink,
+      prices: this.product?.prices,
+    })
+  }
+
   render() {
     return (
-      <a href={this.product?.permalink} onClick={() => this.scProductViewed.emit({
-        id: this.product?.id,
-        name: this.product?.name,
-        permalink: this.product?.permalink,
-        prices: this.product?.prices,
-      })} class={{ 'product-item': true }}>
+      <a href={this.product?.permalink} onClick={this.onProductLinkClicked} class={{ 'product-item': true }}>
         {this.product &&
           (this.layoutConfig || []).map(layout => {
             const attributes = layout.attributes || {};
