@@ -180,7 +180,7 @@ export class ScSessionProvider {
   // emit checkout initiate
   handleCheckoutInitiated() {
     if (!checkoutState.checkout) return;
-    let eventData: CheckoutInitiatedParams = {
+    const eventData: CheckoutInitiatedParams = {
       transaction_id: checkoutState.checkout.id,
       value: maybeConvertAmount(checkoutState.checkout?.total_amount, checkoutState.checkout?.currency || 'USD'),
       currency: (checkoutState.checkout.currency || '').toUpperCase(),
