@@ -181,9 +181,9 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 					...(!!coupon?.id
 						? [
 								{
-									quantity: (
+									product: (
 										<ScTag
-											type="success"
+											type="default"
 											clearable
 											onClick={() =>
 												updateSubscription({
@@ -194,7 +194,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 											{coupon?.name}
 										</ScTag>
 									),
-									total: <>({getHumanDiscount(coupon)})</>,
+									total: <>{getHumanDiscount(coupon)}</>,
 								},
 						  ]
 						: []),

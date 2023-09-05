@@ -112,8 +112,8 @@ export default ({ lineItem, loading, subscription }) => {
 					...(!!coupon?.id
 						? [
 								{
-									quantity: (
-										<ScTag type="success">
+									product: (
+										<ScTag type="default">
 											{coupon?.name}
 										</ScTag>
 									),
