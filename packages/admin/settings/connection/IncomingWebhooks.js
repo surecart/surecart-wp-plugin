@@ -105,149 +105,138 @@ export default () => {
 			wrapperTag="div"
 		>
 			<>
-				{!!webhooks?.length ? (
-					<>
-						<ScDropdown>
-							<ScButton slot="trigger" type="text" caret>
-								{filters[filter]}
-							</ScButton>
-							<ScMenu>
-								<ScMenuItem
-									onClick={() => setFilter('all')}
-									checked={'all' === filter}
-								>
-									{filters['all']}
-								</ScMenuItem>
-								<ScMenuItem
-									onClick={() => setFilter('failed')}
-									checked={'failed' === filter}
-								>
-									{filters['failed']}
-								</ScMenuItem>
-								<ScMenuItem
-									onClick={() => setFilter('succeeded')}
-									checked={'succeeded' === filter}
-								>
-									{filters['succeeded']}
-								</ScMenuItem>
-							</ScMenu>
-						</ScDropdown>
+				<ScDropdown>
+					<ScButton slot="trigger" type="text" caret>
+						{filters[filter]}
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem
+							onClick={() => setFilter('all')}
+							checked={'all' === filter}
+						>
+							{filters['all']}
+						</ScMenuItem>
+						<ScMenuItem
+							onClick={() => setFilter('failed')}
+							checked={'failed' === filter}
+						>
+							{filters['failed']}
+						</ScMenuItem>
+						<ScMenuItem
+							onClick={() => setFilter('succeeded')}
+							checked={'succeeded' === filter}
+						>
+							{filters['succeeded']}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
 
-						<ScCard noPadding>
-							<DataTable
-								columns={{
-									event: {
-										label: __('Event', 'surecart'),
-									},
-									date: {
-										label: __('Date', 'surecart'),
-									},
-									status: {
-										label: __('Status', 'surecart'),
-										width: '150px',
-									},
-									actions: {
-										width: '150px',
-									},
-								}}
-								empty={__('None found.', 'surecart')}
-								items={(webhooks || []).map(
-									({
-										id,
-										webhook_id,
-										data,
-										created_at,
-										processed,
-									}) => {
-										return {
-											event: (
+				{!!webhooks?.length ? (
+					<ScCard noPadding>
+						<DataTable
+							columns={{
+								event: {
+									label: __('Event', 'surecart'),
+								},
+								date: {
+									label: __('Date', 'surecart'),
+								},
+								status: {
+									label: __('Status', 'surecart'),
+									width: '150px',
+								},
+								actions: {
+									width: '150px',
+								},
+							}}
+							empty={__('None found.', 'surecart')}
+							items={(webhooks || []).map(
+								({
+									id,
+									webhook_id,
+									data,
+									created_at,
+									processed,
+								}) => {
+									return {
+										event: (
+											<div>
 												<div>
-													<div>
-														<strong>
-															{data?.type}
-														</strong>
-													</div>
-													<div
-														css={css`
-															opacity: 0.5;
-														`}
-													>
-														{webhook_id}
-													</div>
+													<strong>
+														{data?.type}
+													</strong>
 												</div>
-											),
-											key: id,
-											date: (
-												<ScFormatDate
-													value={created_at}
-													month="short"
-													day="numeric"
-													hour="numeric"
-													minute="numeric"
-												/>
-											),
-											status: processed ? (
-												<ScTag
-													type="success"
-													size="small"
-												>
-													{__(
-														'Processed',
-														'surecart'
-													)}
-												</ScTag>
-											) : (
-												<ScTag
-													type="danger"
-													size="small"
-												>
-													{__(
-														'Not Processed',
-														'surecart'
-													)}
-												</ScTag>
-											),
-											actions: (
 												<div
 													css={css`
-														display: flex;
-														flex-wrap: wrap;
-														justify-content: flex-end;
-														gap: 0.5em;
+														opacity: 0.5;
 													`}
 												>
+													{webhook_id}
+												</div>
+											</div>
+										),
+										key: id,
+										date: (
+											<ScFormatDate
+												date={created_at}
+												month="short"
+												day="numeric"
+												hour="numeric"
+												minute="numeric"
+											/>
+										),
+										status: processed ? (
+											<ScTag type="success" size="small">
+												{__('Processed', 'surecart')}
+											</ScTag>
+										) : (
+											<ScTag type="danger" size="small">
+												{__(
+													'Not Processed',
+													'surecart'
+												)}
+											</ScTag>
+										),
+										actions: (
+											<div
+												css={css`
+													display: flex;
+													flex-wrap: wrap;
+													justify-content: flex-end;
+													gap: 0.5em;
+												`}
+											>
+												<ScButton
+													size="small"
+													onClick={() =>
+														setDetails(data)
+													}
+												>
+													{__(
+														'View Details',
+														'surecart'
+													)}
+												</ScButton>
+												{!processed && (
 													<ScButton
 														size="small"
 														onClick={() =>
-															setDetails(data)
+															retry(id)
 														}
 													>
 														{__(
-															'View Details',
+															'Retry',
 															'surecart'
 														)}
 													</ScButton>
-													{!processed && (
-														<ScButton
-															size="small"
-															onClick={() =>
-																retry(id)
-															}
-														>
-															{__(
-																'Retry',
-																'surecart'
-															)}
-														</ScButton>
-													)}
-												</div>
-											),
-										};
-									}
-								)}
-							/>
-						</ScCard>
-					</>
+												)}
+											</div>
+										),
+									};
+								}
+							)}
+						/>
+					</ScCard>
 				) : (
 					<ScCard>
 						<ScEmpty icon={page === 1 ? 'check' : 'archive'}>
@@ -263,6 +252,7 @@ export default () => {
 						</ScEmpty>
 					</ScCard>
 				)}
+
 				{(webhooks?.length >= perPage || page > 1) && (
 					<div
 						css={css`
