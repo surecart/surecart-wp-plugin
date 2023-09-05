@@ -18,7 +18,7 @@ import Box from '../ui/Box';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [price, setPrice] = useState('');
+	const [price, setPrice] = useState({ priceId: null, variantId: null });
 	const [name, setName] = useState('');
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -33,7 +33,8 @@ export default ({ id, setId }) => {
 				'bump',
 				{
 					name,
-					price,
+					price: price?.priceId,
+					variant: price?.variantId || null,
 				},
 				{ throwOnError: true }
 			);
@@ -81,7 +82,12 @@ export default ({ id, setId }) => {
 								required
 								value={price}
 								ad_hoc={false}
-								onSelect={({price_id}) => setPrice(price_id)}
+								onSelect={({ price_id, variant_id }) =>
+									setPrice({
+										priceId: price_id,
+										variantId: variant_id,
+									})
+								}
 								requestQuery={{
 									archived: false,
 								}}

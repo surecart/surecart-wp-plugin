@@ -40,7 +40,10 @@ export default ({ loading, bump, updateBump }) => {
 									<div>
 										<ScButton
 											onClick={() =>
-												updateBump({ price: null })
+												updateBump({
+													price: null,
+													variant: null,
+												})
 											}
 										>
 											{__('Change', 'surecart')}
@@ -66,7 +69,12 @@ export default ({ loading, bump, updateBump }) => {
 						open
 						value={bump?.price?.id || bump?.price}
 						ad_hoc={false}
-						onSelect={({price_id}) => updateBump({ price: price_id })}
+						onSelect={({ price_id, variant_id }) =>
+							updateBump({
+								price: price_id,
+								variant: variant_id,
+							})
+						}
 						requestQuery={{
 							archived: false,
 						}}
