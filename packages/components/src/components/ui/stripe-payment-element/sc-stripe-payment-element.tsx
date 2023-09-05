@@ -290,7 +290,6 @@ export class ScStripePaymentElement {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
 
-
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;
