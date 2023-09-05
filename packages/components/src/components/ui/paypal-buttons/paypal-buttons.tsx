@@ -141,12 +141,12 @@ export class ScPaypalButtons {
             this.scSetState.emit('PAID');
             this.scPaid.emit();
           } else {
-            createErrorNotice({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
+            createErrorNotice({ code: 'could_not_capture', message: __('Payment processing failed. Kindly attempt the transaction once more.', 'surecart') });
             this.scSetState.emit('REJECT');
           }
         } catch (err) {
           console.error(err);
-          createErrorNotice({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
+          createErrorNotice({ code: 'could_not_capture', message: __('Payment processing failed. Kindly attempt the transaction once more.', 'surecart') });
           this.scSetState.emit('REJECT');
         }
       },

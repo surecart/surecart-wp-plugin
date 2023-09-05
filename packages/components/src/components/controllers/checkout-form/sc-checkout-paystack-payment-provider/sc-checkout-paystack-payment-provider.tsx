@@ -50,7 +50,7 @@ export class ScCheckoutPaystackPaymentProvider {
       // must have a public key and access code.
       const { public_key, access_code } = checkoutState?.checkout?.payment_intent.processor_data.paystack;
       if (!public_key || !access_code) {
-        createErrorNotice({ message: sprintf(__('Paystack is not properly set up to make transactions', 'surecart')) });
+        createErrorNotice({ message: sprintf(__('Payment gateway configuration incomplete. Please ensure Paystack is properly configured for transactions.', 'surecart')) });
         return;
       }
 
