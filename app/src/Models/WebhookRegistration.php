@@ -32,12 +32,14 @@ class WebhookRegistration {
 	public function save( $webhook ): bool {
 		return update_option(
 			self::REGISTERED_WEBHOOK_KEY,
-			[
-				'id'             => $webhook['id'],
-				'url'            => $webhook['url'],
-				'webhook_events' => $webhook['webhook_events'] ?? [],
-				'signing_secret' => Encryption::encrypt( $webhook['signing_secret'] ),
-			]
+			Encryption::encrypt(
+				[
+					'id'             => $webhook['id'],
+					'url'            => $webhook['url'],
+					'webhook_events' => $webhook['webhook_events'] ?? [],
+					'signing_secret' => $webhook['signing_secret'],
+				]
+			)
 		);
 	}
 
@@ -47,11 +49,11 @@ class WebhookRegistration {
 	 * @return array|null
 	 */
 	public function get() {
-		$webhook = get_option( self::REGISTERED_WEBHOOK_KEY, get_option( self::DEPRECATED_WEBHOOK_KEY, [] ) );
+		$webhook = Encryption::decrypt( get_option( self::REGISTERED_WEBHOOK_KEY, get_option( self::DEPRECATED_WEBHOOK_KEY, [] ) ) );
 		if ( empty( $webhook['signing_secret'] ) ) {
 			return null;
 		}
-		$webhook['signing_secret'] = Encryption::decrypt( $webhook['signing_secret'] );
+		$webhook['signing_secret'] = $webhook['signing_secret'];
 		return new Webhook( $webhook );
 	}
 
