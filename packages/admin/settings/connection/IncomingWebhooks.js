@@ -95,7 +95,7 @@ export default () => {
 
 	return (
 		<SettingsBox
-			title={__('Webhook Processing Health', 'surecart')}
+			title={__('SureCart Event Processing Health', 'surecart')}
 			description={__(
 				'If you have any webhooks that failed to process on your site, you can retry them here.',
 				'surecart'
