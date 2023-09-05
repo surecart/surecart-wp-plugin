@@ -50,7 +50,11 @@ class CompatibilityService {
 
 		// If Spectra Blocks are present in the form, enqueue the assets.
 		$post_assets_instance = new \UAGB_Post_Assets( $parsed_block['attrs']['id'] );
-		$post_assets_instance->enqueue_scripts();
+		$post_assets_instance->enqueue_scripts(); // This will enqueue the JS and CSS files.
+
+		if ( ! empty( $post_assets_instance->file_generation ) && 'disabled' === $post_assets_instance->file_generation ) {
+			$post_assets_instance->print_stylesheet(); // As on checkout page, the wp_head action is not present & Spectra prints inline CSS on that action for file_generation disabled case, we need to print the CSS inline.
+		}
 
 		return $parsed_block;
 	}
