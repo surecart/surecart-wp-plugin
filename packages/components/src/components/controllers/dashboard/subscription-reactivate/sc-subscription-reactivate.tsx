@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Prop, State, h } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __,sprintf } from '@wordpress/i18n';
 import { Subscription } from 'src/types';
 import apiFetch from '../../../../functions/fetch';
 
@@ -47,9 +47,12 @@ export class ScSubscriptionReactivate {
         <sc-dashboard-module heading={__('Resubscribe', 'surecart')} class="subscription-reactivate" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
           <div slot="description">
             <sc-alert open type="warning" title={__('Confirm Charge', 'surecart')}>
-              {__('You will immediately be charged ', 'surecart')}
-              <sc-format-number type="currency" value={this.subscription?.price?.amount} currency={this.subscription?.currency}></sc-format-number>
-              {__(' for your subscription.', 'surecart')}
+              {
+                sprintf(
+                  __('You will immediately be charged %s for your subscription.', 'surecart'),
+                  <sc-format-number type="currency" value={this.subscription?.price?.amount} currency={this.subscription?.currency}></sc-format-number>
+                )
+              }
             </sc-alert>
             <sc-text
               style={{
@@ -59,10 +62,14 @@ export class ScSubscriptionReactivate {
                 'margin-top': 'var(--sc-spacing-medium)',
               }}
             >
-              {__('Your subscription will be reactivated and will renew automatically on ', 'surecart')}
-              <strong>
-                <sc-format-date type="timestamp" date={this.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></sc-format-date>
-              </strong>
+              {
+                sprintf(
+                  __('Your subscription will be reactivated and will renew automatically on %s.', 'surecart'),
+                  <strong>
+                    <sc-format-date type="timestamp" date={this.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></sc-format-date>
+                  </strong>
+                )
+              }
             </sc-text>
           </div>
           <sc-flex justifyContent="flex-start">
