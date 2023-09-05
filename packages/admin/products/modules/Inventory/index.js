@@ -30,10 +30,14 @@ export default ({ product, updateProduct, loading }) => {
 	 */
 	useEffect(() => {
 		if (product?.stock !== undefined) {
-			updateProduct({
-				stock_adjustment:
-					parseInt(product?.stock) - parseInt(product?.initial_stock),
-			});
+			// Update stock adjustment only if the stock is not the initial stock.
+			if (product?.stock !== product?.initial_stock) {
+				updateProduct({
+					stock_adjustment:
+						parseInt(product?.stock) -
+						parseInt(product?.initial_stock),
+				});
+			}
 		}
 	}, [product?.stock]);
 
@@ -54,40 +58,35 @@ export default ({ product, updateProduct, loading }) => {
 			</ScSwitch>
 
 			{!!product?.stock_enabled && product?.variants?.length === 0 && (
-				<>
-					<ScFlex justifyContent="flex-start">
-						<ScFormControl label={__('Stock quantity', 'surecart')}>
-							<ScFlex alignItems="center">
-								<ScQuantitySelect
-									quantity={product?.stock}
-									onScChange={(e) =>
-										updateProduct({
-											stock: e.detail,
-										})
-									}
-									allowNegative={true}
-								/>
-								<ScTooltip
+				<ScFlex justifyContent="flex-start">
+					<ScFormControl label={__('Stock quantity', 'surecart')}>
+						<ScFlex alignItems="center">
+							<ScQuantitySelect
+								quantity={product?.stock}
+								onScChange={(e) =>
+									updateProduct({
+										stock: e.detail,
+									})
+								}
+								allowNegative={true}
+							/>
+							<ScTooltip
+								type="text"
+								text={__('Adjust stock quantity', 'surecart')}
+								css={css`
+									margin-left: 0.5rem;
+								`}
+							>
+								<ScButton
 									type="text"
-									text={__(
-										'Adjust stock quantity',
-										'surecart'
-									)}
-									css={css`
-										margin-left: 0.5rem;
-									`}
+									onClick={() => setModel(true)}
 								>
-									<ScButton
-										type="text"
-										onClick={() => setModel(true)}
-									>
-										<ScIcon name="edit" slot="prefix" />
-									</ScButton>
-								</ScTooltip>
-							</ScFlex>
-						</ScFormControl>
-					</ScFlex>
-				</>
+									<ScIcon name="edit" slot="prefix" />
+								</ScButton>
+							</ScTooltip>
+						</ScFlex>
+					</ScFormControl>
+				</ScFlex>
 			)}
 
 			{!!product?.stock_enabled && (
