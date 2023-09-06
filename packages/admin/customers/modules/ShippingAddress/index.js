@@ -3,7 +3,6 @@ import Box from '../../../ui/Box';
 import {
 	ScButton,
 	ScDropdown,
-	ScEmpty,
 	ScFlex,
 	ScIcon,
 	ScMenu,
@@ -61,8 +60,9 @@ export default ({
 				)
 			}
 			footer={
+				!loading &&
 				!shippingAddress?.id && (
-					<ScButton size="small" onClick={onEditAddress}>
+					<ScButton onClick={onEditAddress}>
 						<ScIcon name="plus" slot="prefix" />
 						{__('Add Address', 'surecart')}
 					</ScButton>
