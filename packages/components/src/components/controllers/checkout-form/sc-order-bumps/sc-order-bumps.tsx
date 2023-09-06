@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
-import { Bump, Checkout } from '../../../../types';
+import { Bump, Checkout, Price, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-bumps',
@@ -15,6 +15,10 @@ export class ScOrderBumps {
   @Prop() bumps: Bump[];
   @Prop() checkout: Checkout;
 
+  getBumpsExcludedVariants() {
+    return this.bumps?.filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0);
+  }
+
   render() {
     if (!this?.bumps?.length) {
       return null;
@@ -23,7 +27,7 @@ export class ScOrderBumps {
     return (
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list">
-          {(this.bumps || []).map(bump => (
+          {(this.getBumpsExcludedVariants() || []).map(bump => (
             <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} checkout={this.checkout}></sc-order-bump>
           ))}
         </div>
