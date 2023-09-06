@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
-Tested up to: 6.2
-Stable tag: 2.4.1
+Tested up to: 6.3
+Stable tag: 2.5.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,43 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.5.2 - August 31th, 2023 =
+* Improvement: Summary collapse now has "collapse on mobile" and "collapse on desktop" options.
+* Fix: Recaptcha failing on instant checkout pages.
+* Fix: Issue with line items sometimes reordering during quantity change.
+* Fix: Sometimes PayPal errors not being very descriptive.
+* Fix: PHP notices logged when debug mode is turned on in REST Controllers.
+* Fix: Better error handling when default payment method is trying to be deleted.
+* Fix: Removing payment method is now immediately reflected without page reload.
+* Fix: "Update All Subscriptions" button on default payment method was sometimes having permission issues for some users.
+* Fix: Stacking issue of customer dashboard form fields on some pages.
+* Fix: Compatibility with Spectra blocks not loading assets when using form shortcode.
+
+= 2.5.1 - August 21th, 2023 =
+* Fix: Issue with some checkout icons inheriting a stroke.
+* Security Fix: Hardened the security of the plugin. Props: Patchstack
+
+= 2.5.0 - August 18th, 2023 =
+* New: Buy now button on product pages.
+* New: Featured products. Mark products as featured and optionally show them on product lists.
+* New: Automatic Google Analytics "Add To Cart" event.
+* Improvement: improve line items exported parts.
+* Fix: Instant checkout pages mode changing should recreate a new checkout.
+* Fix: Link in switch element was not clickable on front-end.
+* Fix: Missing "Back to Home" translation not appearing in .pot file.
+* Fix: Change wording of installment price when there is only 1 installment on the subscription.
+
+= 2.4.4 - August 11th, 2023 =
+* Fix: Issue with shop page not fetching products under certain website caching conditions.
+
+= 2.4.3 - August 10th, 2023 =
+* Fix: Issue with custom thank you page link issue with WordPresss 6.3.
+* Fix: Add missing "Back to Home" translation on customer dashboard page.
+
+= 2.4.2 - August 8th, 2023 =
+* Improvement: Add link to migration contact form.
+* Fix: Conflict with Thrive Automator dynamic data not loading.
 
 = 2.4.1 - August 3rd, 2023 =
 * Improvement: Prevent admin notices on SureCart pages.

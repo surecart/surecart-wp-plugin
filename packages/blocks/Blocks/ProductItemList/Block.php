@@ -216,6 +216,12 @@ class Block extends BaseBlock {
 			}
 		}
 
+		// backwards compat.
+		$attributes['type'] = '';
+		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
+			$attributes['type'] = 'custom';
+		}
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -224,12 +230,13 @@ class Block extends BaseBlock {
 				'paginationAlignment'  => $attributes['pagination_alignment'],
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
-				'ids'                  => array_values( array_filter( $attributes['ids'] ) ),
-				'paginationEnabled'    => $attributes['pagination_enabled'],
-				'ajaxPagination'       => $attributes['ajax_pagination'],
-				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
-				'searchEnabled'        => $attributes['search_enabled'],
-				'sortEnabled'          => $attributes['sort_enabled'],
+				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
+				'paginationEnabled'    => ! ! $attributes['pagination_enabled'],
+				'ajaxPagination'       => ! ! $attributes['ajax_pagination'],
+				'paginationAutoScroll' => ! ! $attributes['pagination_auto_scroll'],
+				'searchEnabled'        => ! ! $attributes['search_enabled'],
+				'sortEnabled'          => ! ! $attributes['sort_enabled'],
+				'featured'             => 'featured' === $attributes['type'],
 			]
 		);
 

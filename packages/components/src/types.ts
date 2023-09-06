@@ -55,7 +55,7 @@ declare global {
       admin_url: string;
       user_permissions: {
         manage_sc_shop_settings: boolean;
-      }
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -283,6 +283,7 @@ export interface Coupon extends Model {
 }
 
 export interface LineItemData extends Object {
+  id?: string;
   price_id?: string;
   bump?: string;
   quantity: number;
@@ -1002,4 +1003,20 @@ export interface Rule {
   condition: RuleName;
   operator: NumberOperators | ArrayOperators;
   value: string | string[] | { value: string }[];
+}
+
+export interface GoogleAnalyticsItem {
+  item_id: string;
+  item_name: string;
+  item_variant?: string;
+  item_category?: string;
+  item_category2?: string;
+  item_category3?: string;
+  item_category4?: string;
+  item_category5?: string;
+  price: number;
+  quantity: number;
+  coupon?: string;
+  currency: string;
+  discount?: number;
 }

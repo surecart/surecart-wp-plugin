@@ -97,12 +97,12 @@ class RecaptchaValidationService {
 
 		// recaptcha failed.
 		if ( ! $this->isTokenValid( $response ) ) {
-			return new \WP_Error( 'invalid_recaptcha', __( 'Your request could not be validated. Please try again.', 'surecart' ) );
+			return new \WP_Error( 'invalid_recaptcha', __( 'Invalid recaptcha check. Please try again.', 'surecart' ) );
 		}
 
 		// score is not valid.
 		if ( apply_filters( 'surecart_recaptcha_needed_validation_score', false ) && ! $this->isValidScore( $response ) ) {
-			return new \WP_Error( 'invalid_recaptcha_score', __( 'Your request could not be validated. Please try again.', 'surecart' ) );
+			return new \WP_Error( 'invalid_recaptcha_score', __( 'Invalid recaptcha score. Please try again.', 'surecart' ) );
 		}
 
 		return true;

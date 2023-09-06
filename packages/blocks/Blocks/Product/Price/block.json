@@ -14,7 +14,6 @@
 	"supports": {
 		"reusable": false,
 		"html": false,
-		"multiple": false,
 		"color": {
 			"gradients": true,
 			"link": false,
