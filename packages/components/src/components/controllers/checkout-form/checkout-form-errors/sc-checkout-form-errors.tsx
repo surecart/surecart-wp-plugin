@@ -1,8 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, h, Host, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, h, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -10,7 +9,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { state as errorState } from '@store/notices';
 import { getErrorMessage, getErrorMessages, getNoticeTitle } from '@store/notices/getters';
-import { FormState } from '../../../../types';
+import { currentFormState } from '@store/form/getters';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -21,17 +20,16 @@ import { FormState } from '../../../../types';
   shadow: true,
 })
 export class ScCheckoutFormErrors {
-  /** The current order. */
-  @Prop() checkoutState: FormState;
-
+  /**
+   * Get the alert type.
+   * @returns string
+   */
   getAlertType() {
     switch (errorState?.type) {
       case 'error':
         return 'danger';
-
       case 'default':
         return 'primary';
-
       default:
         return errorState?.type;
     }
@@ -62,7 +60,7 @@ export class ScCheckoutFormErrors {
 
   render() {
     // don't show component if no error message or is finalizing or updating.
-    if (!getErrorMessages().length || ['finalizing', 'updating'].includes(this.checkoutState)) {
+    if (!getErrorMessages().length || ['finalizing', 'updating'].includes(currentFormState())) {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
@@ -76,5 +74,3 @@ export class ScCheckoutFormErrors {
     );
   }
 }
-
-openWormhole(ScCheckoutFormErrors, ['checkoutState'], false);
