@@ -133,6 +133,11 @@ class BuyPageController extends BasePageController {
 			[],
 			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/instant-checkout.css' ),
 		);
+
+		// add recaptcha if enabled.
+		if ( \SureCart::settings()->recaptcha()->isEnabled() ) {
+			wp_enqueue_script( 'surecart-google-recaptcha' );
+		}
 	}
 
 	/**
