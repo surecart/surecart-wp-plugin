@@ -1740,7 +1740,6 @@
     "slot": true
   },
   "sc-recurring-price-choice-container": {
-    "checked": true,
     "label": true,
     "price": true,
     "prices": true,

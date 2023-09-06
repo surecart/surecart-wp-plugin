@@ -3131,10 +3131,6 @@ export namespace Components {
     }
     interface ScRecurringPriceChoiceContainer {
         /**
-          * Is this checked by default
-         */
-        "checked": boolean;
-        /**
           * Label for the choice.
          */
         "label": string;
@@ -9046,10 +9042,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScRecurringPriceChoiceContainer {
-        /**
-          * Is this checked by default
-         */
-        "checked"?: boolean;
         /**
           * Label for the choice.
          */

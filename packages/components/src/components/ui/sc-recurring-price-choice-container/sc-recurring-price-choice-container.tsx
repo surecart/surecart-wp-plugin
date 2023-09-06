@@ -22,9 +22,6 @@ export class ScRecurringPriceChoiceContainer {
   /** Choice Type */
   @Prop() type: 'checkbox' | 'radio';
 
-  /** Is this checked by default */
-  @Prop({ reflect: true, mutable: true }) checked: boolean = false;
-
   @Prop() prices: Price[];
 
   @Event() scChange: EventEmitter<void>;
@@ -47,8 +44,9 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
+    const cardChecked = this.prices.find(price => price.id === this.price?.id);
     return (
-      <sc-choice-container value={this.price?.id} type={this.type} showControl={this.showControl} checked={this.checked} onScChange={() => this.scChange.emit()}>
+      <sc-choice-container value={this.price?.id} type={this.type} showControl={this.showControl} checked={!!cardChecked} onScChange={() => this.scChange.emit()}>
         <div class="price-choice__title">
           <div class="price-choice__name">{this.label}</div>
           <div class="recurring-price-choice__description-details-wrap">
