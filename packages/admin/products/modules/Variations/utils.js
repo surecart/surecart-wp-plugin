@@ -8,7 +8,7 @@ import { __, sprintf } from '@wordpress/i18n';
  *
  * @param {Array} variantOptions
  * @param {Array} previousVariants
- * @param {string} changeType - option_deleted | option_sorted | option_value_renamed | option_value_deleted | option_value_sorted | initially_loaded
+ * @param {string} changeType - option_added | option_deleted | option_sorted | option_value_renamed | option_value_deleted | option_value_sorted | initially_loaded
  *
  * @return {Array}
  */
