@@ -247,18 +247,24 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			// Add stock value as initial_stock.
 			if ( 'array' === gettype( $response ) && isset( $response['stock'] ) ) {
 				$response['initial_stock'] = $response['stock'];
+				$response['stock_adjustment'] = 0;
+				$response['change_type'] = 'initially_loaded';
 			} elseif ( 'object' === gettype( $response ) && isset( $response->stock ) ) {
 				$response->initial_stock = $response->stock;
+				$response->stock_adjustment = 0;
+				$response->change_type = 'initially_loaded';
 			}
 
 			// For variants, add stock value as initial_stock.
 			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
 				foreach ( $response['variants'] as $index => $variant ) {
 					$response['variants'][ $index ]['initial_stock'] = $variant['stock'];
+					$response['variants'][ $index ]['stock_adjustment'] = 0;
 				}
 			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
 				foreach ( $response->variants as $index => $variant ) {
 					$response->variants[ $index ]->initial_stock = $variant->stock;
+					$response->variants[ $index ]->stock_adjustment = 0;
 				}
 			}
 		}
@@ -282,6 +288,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 					return [
 						'label' => $value,
 						'index' => $value_index,
+						'editing' => false,
 					];
 				},
 				$variant_option['values'],

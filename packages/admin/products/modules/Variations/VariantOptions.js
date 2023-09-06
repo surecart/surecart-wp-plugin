@@ -32,8 +32,6 @@ import Error from '../../../components/Error';
 
 export default ({ product, updateProduct, loading }) => {
 	const [error, setError] = useState(null);
-	const [editingValues, setEditingValues] = useState({});
-	const [changeType, setChangeType] = useState('option_value_renamed');
 
 	// function to update product?.variant_options based on the index.
 	const updateVariantOption = (action) => {
@@ -54,9 +52,9 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	const applyDrag = async (oldIndex, newIndex) => {
-		setChangeType('option_sorted');
 		updateProduct({
 			...product,
+			change_type: 'option_sorted',
 			variant_options: arrayMove(
 				product?.variant_options ?? [],
 				oldIndex,
@@ -66,20 +64,13 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	const changeEditingValues = (index, value) => {
-		setEditingValues({
-			...editingValues,
-			[index]: value,
+		updateVariantOption({
+			index,
+			data: {
+				editing: value,
+			},
 		});
 	};
-
-	// For first time load, we need to add all variant options to editingValues.
-	useEffect(() => {
-		const editingValuesData = {};
-		(product?.variant_options ?? []).forEach((_, index) => {
-			editingValuesData[index] = false;
-		});
-		setEditingValues(editingValuesData);
-	}, []);
 
 	// For first time load, get the diffing variants and save to local storage.
 	useEffect(() => {
@@ -110,24 +101,30 @@ export default ({ product, updateProduct, loading }) => {
 					variantOption?.name?.length
 			);
 
-		const variantsData = generateVariants(
-			updatedVariantOptions,
-			product?.variants ?? [],
-			changeType
-		);
+		// If first time server side loaded
+		// then no need to update product.variants.
+		if (product?.change_type !== 'initially_loaded') {
+			const variantsData = generateVariants(
+				updatedVariantOptions,
+				product?.variants ?? [],
+				product?.change_type
+			);
 
-		updateProduct({
-			variants: getExlcudedVariants(variantsData, getDeletedVariants()),
-		});
+			updateProduct({
+				variants: getExlcudedVariants(
+					variantsData,
+					getDeletedVariants()
+				),
+			});
+		}
 	}, [product?.variant_options]);
 
 	const deleteVariantOption = (index) => {
-		setChangeType('option_deleted');
-
 		const variantOptions = [...product?.variant_options];
 		variantOptions.splice(index, 1);
 		updateProduct({
 			...product,
+			change_type: 'option_deleted',
 			variant_options: variantOptions,
 		});
 	};
@@ -212,13 +209,25 @@ export default ({ product, updateProduct, loading }) => {
 							product={product}
 							updateProduct={updateProduct}
 							onChangeValue={(updatedValues, changeTypeValue) => {
-								setChangeType(changeTypeValue);
+								updateProduct({
+									change_type: changeTypeValue,
+								});
 								updateVariantOption({
 									index,
 									data: {
 										values: updatedValues,
 									},
 								});
+								// updateProduct({
+								// 	variants: getExlcudedVariants(
+								// 		generateVariants(
+								// 			product?.variant_options ?? [],
+								// 			product?.variants ?? [],
+								// 			changeTypeValue
+								// 		),
+								// 		getDeletedVariants()
+								// 	),
+								// });
 							}}
 						/>
 
@@ -330,11 +339,7 @@ export default ({ product, updateProduct, loading }) => {
 						return (
 							<SortableItem
 								key={`option_${index}`}
-								allowDrag={
-									typeof editingValues[index] !==
-										'undefined' &&
-									editingValues[index] === false
-								}
+								allowDrag={!option?.editing}
 							>
 								<div
 									key={index}
@@ -345,9 +350,7 @@ export default ({ product, updateProduct, loading }) => {
 											var(--sc-color-gray-200);
 									`}
 								>
-									{typeof editingValues[index] ===
-										'undefined' ||
-									editingValues[index] === true
+									{option?.editing
 										? renderEditingVariantOption(
 												option,
 												index

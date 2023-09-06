@@ -6,6 +6,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
+import VariantLabel from '../../components/VariantLabel';
 import { intervalString } from '../../../util/translations';
 
 export default ({ lineItem, loading, subscription }) => {
@@ -55,6 +56,12 @@ export default ({ lineItem, loading, subscription }) => {
 								>
 									<div>
 										{lineItem?.price?.product?.name}
+										<VariantLabel
+											variantOptions={
+												lineItem?.variant_options ?? []
+											}
+										/>
+
 										<div style={{ opacity: 0.5 }}>
 											<ScFormatNumber
 												type="currency"
