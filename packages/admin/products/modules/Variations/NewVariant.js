@@ -106,6 +106,7 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 				title={__('Add Variant', 'surecart')}
 				css={css`
 					max-width: 600px !important;
+					min-height: 650px !important;
 					.components-modal__content {
 						overflow: auto !important;
 					}
@@ -155,9 +156,19 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 							name="amount"
 							label={__('Price', 'surecart')}
 							css={css`
-								margin-bottom: var(--sc-spacing-large);
+								margin-bottom: var(--sc-spacing-small);
 							`}
 							onScChange={updateVariantValue}
+						/>
+
+						<ScInput
+							label={__('Stock Qty', 'surecart')}
+							value={item?.stock ?? 0}
+							name="stock"
+							onScChange={updateVariantValue}
+							css={css`
+								margin-bottom: var(--sc-spacing-large);
+							`}
 						/>
 
 						<div>
@@ -242,11 +253,6 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 					>
 						<ScButton
 							type="primary"
-							style={{
-								'--button-border-radius':
-									'--sc-input-border-radius-small',
-								cursor: 'pointer',
-							}}
 							busy={loading}
 							disabled={loading}
 							submit
