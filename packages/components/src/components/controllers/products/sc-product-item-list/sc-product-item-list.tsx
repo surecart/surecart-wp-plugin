@@ -354,9 +354,6 @@ export class ScProductItemList {
             </div>
             {this.collectionEnabled && this.selectedCollections.length > 0 && (
               <div class="product-item-list__search-tag">
-                <div class="product-item-list__search-label">
-                  <span style={{ marginLeft: '5px' }}>{__('Filter:', 'surecart')}</span>
-                </div>
                 {this.selectedCollections.map(collection => (
                   <sc-tag
                     key={collection?.id}
