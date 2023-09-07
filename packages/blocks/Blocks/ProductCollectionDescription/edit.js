@@ -13,9 +13,14 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-export default ({ attributes: { textAlign }, setAttributes }) => {
+export default ({
+	attributes: { textAlign },
+	setAttributes,
+	__unstableLayoutClassNames: layoutClassNames,
+}) => {
 	const blockProps = useBlockProps({
 		className: classnames({
+			[`${layoutClassNames}`]: true,
 			[`has-text-align-${textAlign}`]: textAlign,
 		}),
 	});
@@ -32,10 +37,12 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 			</BlockControls>
 
 			<div {...blockProps}>
-				{__(
-					'Explore our curated selection of premium, eco-friendly kitchenware designed to elevate your cooking experience.',
-					'surecart'
-				)}
+				<p>
+					{__(
+						'Explore our curated selection of premium, eco-friendly kitchenware designed to elevate your cooking experience.',
+						'surecart'
+					)}
+				</p>
 			</div>
 		</>
 	);
