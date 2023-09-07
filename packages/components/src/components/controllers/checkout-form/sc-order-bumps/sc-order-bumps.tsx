@@ -24,7 +24,7 @@ export class ScOrderBumps {
           {(checkoutState?.checkout?.recommended_bumps?.data || [])
             .filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0) // exclude variants for now.
             .map(bump => (
-              <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} checkout={checkoutState?.checkout}></sc-order-bump>
+              <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} />
             ))}
         </div>
       </sc-form-control>
