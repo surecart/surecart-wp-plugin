@@ -63,10 +63,10 @@ const DimensionControls = ({
 	attributes: { aspectRatio, width, height, scale = DEFAULT_SCALE },
 	setAttributes,
 }) => {
-	const defaultUnits = ['px', '%', 'vw', 'em', 'rem'];
-	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || defaultUnits,
-	});
+	// const defaultUnits = ['px', '%', 'vw', 'em', 'rem'];
+	// const units = useCustomUnits({
+	// 	availableUnits: useSetting('spacing.units') || defaultUnits,
+	// });
 	const onDimensionChange = (dimension, nextValue) => {
 		const parsedValue = parseFloat(nextValue);
 		/**
@@ -158,7 +158,7 @@ const DimensionControls = ({
 					onChange={(nextHeight) =>
 						onDimensionChange('height', nextHeight)
 					}
-					units={units}
+					units={['px']}
 				/>
 			</ToolsPanelItem>
 			<ToolsPanelItem
