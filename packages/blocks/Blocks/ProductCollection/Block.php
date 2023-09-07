@@ -222,24 +222,30 @@ class Block extends BaseBlock {
 		$query_collection_id = get_query_var( 'sc_collection_page_id' );
 		$collection_id       = $query_collection_id ? $query_collection_id : $attributes['collection_id'] ?? '';
 
+		$wrapper_attributes = get_block_wrapper_attributes(
+			array(
+				'id'    => 'selector-' . self::$instance,
+				'style' => $style,
+			)
+		);
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
 			[
 				'layoutConfig'         => $layout_config,
 				'paginationAlignment'  => $attributes['pagination_alignment'],
-				'limit'                => $attributes['limit'],
-				'style'                => $style,
-				'paginationEnabled'    => !!$attributes['pagination_enabled'],
-				'ajaxPagination'       => !!$attributes['ajax_pagination'],
-				'paginationAutoScroll' => !!$attributes['pagination_auto_scroll'],
-				'searchEnabled'        => !!$attributes['search_enabled'],
-				'sortEnabled'          => !!$attributes['sort_enabled'],
+				'limit'                => (int) $attributes['limit'],
+				'paginationEnabled'    => (bool) $attributes['pagination_enabled'],
+				'ajaxPagination'       => (bool) $attributes['ajax_pagination'],
+				'paginationAutoScroll' => (bool) $attributes['pagination_auto_scroll'],
+				'searchEnabled'        => (bool) $attributes['search_enabled'],
+				'sortEnabled'          => (bool) $attributes['sort_enabled'],
 				'collectionEnabled'    => false,
 				'collectionId'         => $collection_id,
 			]
 		);
 
-		return '<sc-product-item-list id="selector-' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
+		return '<sc-product-item-list ' . $wrapper_attributes . '></sc-product-item-list>';
 	}
 }
