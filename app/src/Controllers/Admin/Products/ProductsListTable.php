@@ -97,14 +97,14 @@ class ProductsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
-			'name'         => __( 'Name', 'surecart' ),
+			'name'                => __( 'Name', 'surecart' ),
 			// 'description' => __( 'Description', 'surecart' ),
-			'price'        => __( 'Price', 'surecart' ),
-			'integrations' => __( 'Integrations', 'surecart' ),
-			'status'       => __( 'Product Page', 'surecart' ),
-			'featured'     => __( 'Featured', 'surecart' ),
+			'price'               => __( 'Price', 'surecart' ),
+			'integrations'        => __( 'Integrations', 'surecart' ),
+			'status'              => __( 'Product Page', 'surecart' ),
+			'featured'            => __( 'Featured', 'surecart' ),
 			'product_collections' => __( 'Collections', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
 		];
 	}
 
@@ -136,10 +136,10 @@ class ProductsListTable extends ListTable {
 		$product_collections_tags = [];
 
 		foreach ( $product_collections as $product_collection ) {
-			$product_collections_tags[] = '<a href="' . admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) . '"><sc-tag>' . $product_collection['name'] . '</sc-tag></a>';
+			$product_collections_tags[] = '<a href="' . admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) . '">' . $product_collection['name'] . '</a>';
 		}
 
-		return implode( ' ', $product_collections_tags );
+		return implode( ', ', $product_collections_tags );
 	}
 
 	/**
