@@ -9,14 +9,17 @@
 		"reusable": false,
 		"html": false,
 		"multiple": false,
+		"align": ["wide", "full"],
 		"layout": true,
+		"dimensions": {
+			"minHeight": true
+		},
 		"color": {
 			"gradients": true,
-			"link": false,
+			"link": true,
 			"__experimentalDefaultControls": {
-				"background": true,
-				"text": true,
-				"link": true
+				"background": false,
+				"text": false
 			}
 		},
 		"typography": {
@@ -29,9 +32,7 @@
 			"__experimentalTextDecoration": true,
 			"__experimentalLetterSpacing": true,
 			"__experimentalDefaultControls": {
-				"fontSize": true,
-				"fontAppearance": true,
-				"textTransform": true
+				"fontSize": true
 			}
 		}
 	}
