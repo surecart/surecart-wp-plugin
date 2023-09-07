@@ -1909,8 +1909,6 @@ export namespace Components {
         "showControl": boolean;
     }
     interface ScOrderBumps {
-        "bumps": Bump[];
-        "checkout": Checkout;
         "help": string;
         "label": string;
         "showControl": boolean;
@@ -7764,8 +7762,6 @@ declare namespace LocalJSX {
         "showControl"?: boolean;
     }
     interface ScOrderBumps {
-        "bumps"?: Bump[];
-        "checkout"?: Checkout;
         "help"?: string;
         "label"?: string;
         "showControl"?: boolean;
