@@ -19,7 +19,7 @@ export class ScOrderShippingAddress {
   @Prop() label: string;
 
   /** Is this required (defaults to false) */
-  @Prop({ mutable: true }) required: boolean = false;
+  @Prop({ mutable: true, reflect: true }) required: boolean = false;
 
   /** Is this loading. */
   @Prop() loading: boolean;
@@ -37,10 +37,10 @@ export class ScOrderShippingAddress {
   @Prop() shippingEnabled: boolean;
 
   /** Show the   address */
-  @Prop() full: boolean;
+  @Prop({ mutable: true }) full: boolean;
 
   /** Show the name field. */
-  @Prop() showName: boolean;
+  @Prop({ reflect: true }) showName: boolean;
 
   /** Show the placeholder fields. */
   @Prop() namePlaceholder: string = __('Name or Company Name', 'surecart');
@@ -55,7 +55,7 @@ export class ScOrderShippingAddress {
   @Prop() defaultCountry: string;
 
   /** Whether to require the name in the address */
-  @Prop() requireName: boolean = false;
+  @Prop({ reflect: true }) requireName: boolean = false;
 
   /** Placeholder values. */
   @Prop() placeholders: Partial<Address> = {
@@ -83,7 +83,6 @@ export class ScOrderShippingAddress {
     postal_code: null,
     state: null,
   };
-
 
   /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('shippingAddress')
@@ -122,13 +121,22 @@ export class ScOrderShippingAddress {
     }
 
     this.handleRequirementChange();
+    this.handleNameChange();
   }
 
   @Watch('shippingEnabled')
   @Watch('taxEnabled')
   handleRequirementChange() {
-    if (this.shippingEnabled || this.taxEnabled ) {
+    if (this.shippingEnabled || this.taxEnabled) {
       this.required = true;
+    }
+  }
+
+  @Watch('requireName')
+  @Watch('showName')
+  handleNameChange() {
+    if (this.requireName || this.showName) {
+      this.full = true;
     }
   }
 
