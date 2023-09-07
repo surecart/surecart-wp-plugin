@@ -20,7 +20,11 @@ registerBlocksForTemplates({
 	exclude: [
 		'surecart/surecart//product-info',
 		'surecart/surecart//single-product',
+		'surecart/surecart//product-collection-part',
+		'surecart/surecart//product-collection',
 		'sc-products',
 		'sc-part-products-info',
+		'sc-product-collection',
+		'sc-part-product-collection',
 	],
 });

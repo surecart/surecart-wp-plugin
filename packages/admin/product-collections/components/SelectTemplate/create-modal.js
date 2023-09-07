@@ -43,7 +43,9 @@ export default function CollectionTemplateCreateModal({
 		const newTemplateContent = template?.content?.raw;
 
 		const { id } = await saveEntityRecord('postType', 'wp_template', {
-			slug: `sc-collections-${cleanForSlug(title || DEFAULT_TITLE)}`,
+			slug: `sc-product-collection-${cleanForSlug(
+				title || DEFAULT_TITLE
+			)}`,
 			content: newTemplateContent,
 			title: title || DEFAULT_TITLE,
 		});

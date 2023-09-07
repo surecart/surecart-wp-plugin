@@ -34,7 +34,7 @@ export default function CollectionTemplateForm({
 					return (
 						template.id ===
 							'surecart/surecart//product-collection' ||
-						template.slug.includes('sc-collections')
+						template.slug.includes('sc-product-collection')
 					);
 				}
 			);

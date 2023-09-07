@@ -36,7 +36,7 @@ export default function PostTemplateForm({
 				return (
 					template.id ===
 						'surecart/surecart//product-collection-part' ||
-					template.slug.includes('sc-part-products-archive')
+					template.slug.includes('sc-part-product-collection')
 				);
 			});
 			return {

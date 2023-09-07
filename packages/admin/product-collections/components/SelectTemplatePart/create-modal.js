@@ -43,7 +43,7 @@ export default function PostTemplateCreateModal({
 		const newTemplateContent = template?.content?.raw;
 
 		const { id } = await saveEntityRecord('postType', 'wp_template_part', {
-			slug: `sc-part-products-archive-${cleanForSlug(
+			slug: `sc-part-product-collection-${cleanForSlug(
 				title || DEFAULT_TITLE
 			)}`,
 			content: newTemplateContent,
