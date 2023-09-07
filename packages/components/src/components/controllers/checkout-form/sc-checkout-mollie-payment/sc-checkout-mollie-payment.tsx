@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Prop, State } from '@stencil/core';
 import { Address, Pagination, PaymentMethodType, ResponseError } from '../../../../types';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -27,9 +27,6 @@ export class ScCheckoutMolliePayment {
 
   @State() error: ResponseError;
   @State() methods: PaymentMethodType[];
-
-  /** Error event */
-  @Event() scError: EventEmitter<ResponseError>;
 
   componentWillLoad() {
     selectedProcessor.id = 'mollie';

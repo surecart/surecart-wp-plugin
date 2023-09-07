@@ -1,6 +1,8 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { getIconLibrary } from './library';
 import { requestIcon } from './request';
+import { createErrorNotice } from '@store/notices/mutations';
+import { __ } from '@wordpress/i18n';
 
 const parser = new DOMParser();
 
@@ -27,9 +29,6 @@ export class ScIcon {
 
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
-
-  /** Emitted when the icon failed to load.  */
-  @Event() scError: EventEmitter<{ status: number }>;
 
   /** @internal Fetches the icon and redraws it. Used to handle library registrations. */
   redraw() {
@@ -78,14 +77,23 @@ export class ScIcon {
             this.scLoad.emit();
           } else {
             this.svg = '';
-            this.scError.emit({ status: file.status });
+            createErrorNotice({
+              message: __('The requested icon could not be loaded.'),
+              status: file.status,
+            });
           }
         } else {
           this.svg = '';
-          this.scError.emit({ status: file.status });
+          createErrorNotice({
+            message: __('The requested icon could not be loaded.'),
+            status: file.status,
+          });
         }
       } catch {
-        this.scError.emit({ status: -1 });
+        createErrorNotice({
+          message: __('Something went wrong while loading the requested icon.'),
+          status: -1,
+        });
       }
     } else if (this.svg) {
       // If we can't resolve a URL and an icon was previously set, remove it

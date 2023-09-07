@@ -17,10 +17,9 @@
 
 ## Events
 
-| Event     | Description                           | Type                               |
-| --------- | ------------------------------------- | ---------------------------------- |
-| `scError` | Emitted when the icon failed to load. | `CustomEvent<{ status: number; }>` |
-| `scLoad`  | Emitted when the icon has loaded.     | `CustomEvent<void>`                |
+| Event    | Description                       | Type                |
+| -------- | --------------------------------- | ------------------- |
+| `scLoad` | Emitted when the icon has loaded. | `CustomEvent<void>` |
 
 
 ## Shadow Parts

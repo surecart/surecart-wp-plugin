@@ -19,9 +19,6 @@ export class ScCartSessionProvider {
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
 
-  /** Error event */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
-
   /** Set the state */
   @Event() scSetState: EventEmitter<'loading' | 'busy' | 'navigating' | 'idle'>;
 

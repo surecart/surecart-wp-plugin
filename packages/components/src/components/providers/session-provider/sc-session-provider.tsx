@@ -33,9 +33,6 @@ export class ScSessionProvider {
 
   @Event() scPaid: EventEmitter<void>;
 
-  /** Error event */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
-
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 

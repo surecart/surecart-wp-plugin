@@ -54,9 +54,6 @@ export class ScPaypalButtons {
   /** Has this loaded? */
   @State() loaded: boolean;
 
-  /** Emit an error */
-  @Event() scError: EventEmitter<object>;
-
   /** Set the state machine */
   @Event() scSetState: EventEmitter<string>;
 
