@@ -6,22 +6,32 @@
 	"category": "surecart",
 	"keywords": ["image", "collection", "product"],
 	"attributes": {
-		"align": {
+		"aspectRatio": {
+			"type": "string"
+		},
+		"width": {
+			"type": "string"
+		},
+		"height": {
+			"type": "string"
+		},
+		"scale": {
 			"type": "string",
-			"default": "wide"
+			"default": "cover"
 		}
 	},
 	"supports": {
 		"reusable": false,
 		"html": false,
 		"multiple": false,
-		"align": ["wide", "full"],
+		"align": ["left", "right", "center", "wide", "full"],
+		"filter": {
+			"duotone": true
+		},
 		"color": {
-			"gradients": true,
-			"link": true,
-			"__experimentalDefaultControls": {
-				"background": true
-			}
+			"__experimentalDuotone": "img, .wp-block-post-featured-image__placeholder, .components-placeholder__illustration, .components-placeholder::before",
+			"text": false,
+			"background": false
 		},
 		"spacing": {
 			"margin": true,

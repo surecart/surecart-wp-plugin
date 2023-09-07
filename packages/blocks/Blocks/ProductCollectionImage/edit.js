@@ -4,30 +4,56 @@
 import classnames from 'classnames';
 
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import {
-	AlignmentControl,
-	BlockControls,
 	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { Placeholder } from '@wordpress/components';
 
-export default ({ attributes: { align }, setAttributes }) => {
-	const blockProps = useBlockProps({});
+/**
+ * Internal dependencies.
+ */
+import DimensionControls from './dimension-controls';
+
+export default ({ clientId, attributes, setAttributes }) => {
+	const { width, height, aspectRatio } = attributes;
+	const blockProps = useBlockProps({
+		style: { width, height, aspectRatio },
+	});
+	const borderProps = useBorderProps(attributes);
+
+	const placeholder = (content) => {
+		return (
+			<Placeholder
+				className={classnames(
+					'block-editor-media-placeholder',
+					borderProps.className
+				)}
+				withIllustration={true}
+				style={{
+					height: !!aspectRatio && '100%',
+					width: !!aspectRatio && '100%',
+					...borderProps.style,
+				}}
+			>
+				{content}
+			</Placeholder>
+		);
+	};
 
 	return (
 		<>
-			<BlockControls group="block">
-				<AlignmentControl
-					value={align}
-					onChange={(value) => setAttributes({ align: value })}
-				/>
-			</BlockControls>
+			<DimensionControls
+				clientId={clientId}
+				attributes={attributes}
+				setAttributes={setAttributes}
+				imageSizeOptions={[]}
+			/>
 
-			<figure class="wp-block-image sc-block-image">
-				<img {...blockProps} src="https://placehold.co/900x100" />
-			</figure>
+			<div {...blockProps}>{placeholder()}</div>
 		</>
 	);
 };

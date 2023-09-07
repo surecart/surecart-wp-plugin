@@ -142,4 +142,19 @@ class ProductCollection extends Model implements PageModel {
 	public function getMetaDescriptionAttribute(): string {
 		return $this->attributes['description'] ?? '';
 	}
+
+	/**
+	 * Get the image url for a specific size.
+	 *
+	 * @param integer $size The size.
+	 *
+	 * @return string
+	 */
+	public function getImageUrl( $size = 0 ) {
+		if ( empty( $this->attributes['image']->url ) ) {
+			return '';
+		}
+
+		return $size ? $this->imageUrl( $this->attributes['image']->url, $size ) : $this->attributes['image']->url;
+	}
 }
