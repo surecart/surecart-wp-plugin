@@ -7,10 +7,9 @@ import {
 	__experimentalUnitControl as UnitControl,
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOption as ToggleGroupControlOption,
-	__experimentalUseCustomUnits as useCustomUnits,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 } from '@wordpress/components';
-import { InspectorControls, useSetting } from '@wordpress/block-editor';
+import { InspectorControls } from '@wordpress/block-editor';
 
 const SCALE_OPTIONS = (
 	<>
@@ -63,10 +62,7 @@ const DimensionControls = ({
 	attributes: { aspectRatio, width, height, scale = DEFAULT_SCALE },
 	setAttributes,
 }) => {
-	// const defaultUnits = ['px', '%', 'vw', 'em', 'rem'];
-	// const units = useCustomUnits({
-	// 	availableUnits: useSetting('spacing.units') || defaultUnits,
-	// });
+	const units = [{ value: 'px', label: 'px', default: 0 }];
 	const onDimensionChange = (dimension, nextValue) => {
 		const parsedValue = parseFloat(nextValue);
 		/**
@@ -158,7 +154,7 @@ const DimensionControls = ({
 					onChange={(nextHeight) =>
 						onDimensionChange('height', nextHeight)
 					}
-					units={['px']}
+					units={units}
 				/>
 			</ToolsPanelItem>
 			<ToolsPanelItem
