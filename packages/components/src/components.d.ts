@@ -1900,10 +1900,6 @@ export namespace Components {
         "bump": Bump;
         "cdnRoot": string;
         /**
-          * The checkout
-         */
-        "checkout": Checkout;
-        /**
           * Should we show the controls
          */
         "showControl": boolean;
@@ -7744,10 +7740,6 @@ declare namespace LocalJSX {
          */
         "bump"?: Bump;
         "cdnRoot"?: string;
-        /**
-          * The checkout
-         */
-        "checkout"?: Checkout;
         /**
           * Add line item event
          */
