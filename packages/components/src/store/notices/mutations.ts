@@ -31,13 +31,8 @@ export const createNotice = (status: NoticeType, notice: ScNoticeStore, options 
     };
   }
 
-  // TODO: Move the specific checks to server side.
-  if (notice.code === 'order.line_items.price.blank') {
-    notice.message = __('This product is no longer purchasable.', 'surecart');
-  }
-
   // If no notice message, then set the default message.
-  if (!notice.message) {
+  if (!notice?.message) {
     notice.message = __('Something went wrong. Please try again.', 'surecart');
   }
 

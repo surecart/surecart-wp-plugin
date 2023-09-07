@@ -82,7 +82,7 @@ export class ScCheckoutFormErrors {
 
     return (
       <Host>
-        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!getErrorMessage()} closable={errorState?.dismissible} title={getNoticeTitle()}>
+        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!getErrorMessage()} closable={!!errorState?.dismissible} title={getNoticeTitle()}>
           {this.renderErrorMessages()}
         </sc-alert>
         <slot />

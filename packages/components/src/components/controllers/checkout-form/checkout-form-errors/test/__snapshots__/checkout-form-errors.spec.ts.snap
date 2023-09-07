@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScCheckoutFormErrors should render correctly with a error title and additional errors 1`] = `
+<sc-checkout-form-errors>
+  <mock:shadow-root>
+    <sc-alert closable="" open="" scrollonopen="" title="Error title" type="danger">
+      <ul>
+        <li>
+          Additional error 1
+        </li>
+        <li>
+          Additional error 2
+        </li>
+      </ul>
+    </sc-alert>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-checkout-form-errors>
+`;

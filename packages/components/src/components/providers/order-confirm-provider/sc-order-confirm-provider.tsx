@@ -46,9 +46,6 @@ export class ScOrderConfirmProvider {
 
   @Event() scSetState: EventEmitter<string>;
 
-  /** Error event. */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
-
   /**
    * Watch for paid checkout machine state.
    * This is triggered by Stripe, Paypal or Paystack when payment succeeds.

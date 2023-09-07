@@ -3,7 +3,7 @@
  */
 import PaystackPop from '@paystack/inline-js';
 import { __, sprintf } from '@wordpress/i18n';
-import { Component, Event, EventEmitter } from '@stencil/core';
+import { Component } from '@stencil/core';
 
 /**
  * Internal dependencies.
@@ -13,7 +13,6 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { updateFormState } from '@store/form/mutations';
-import { ResponseError } from 'src/types';
 import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
@@ -22,7 +21,6 @@ import { createErrorNotice } from '@store/notices/mutations';
 })
 export class ScCheckoutPaystackPaymentProvider {
   private unlistenToFormState: () => void;
-  @Event() scError: EventEmitter<ResponseError>;
 
   componentWillLoad() {
     // we need to listen to the form state and pay when the form state enters the paying state.

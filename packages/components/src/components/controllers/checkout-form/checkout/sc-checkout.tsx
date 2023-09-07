@@ -301,12 +301,7 @@ export class ScCheckout {
                   {/* Handle confirming of order after it is "Paid" by processors. */}
                   <sc-order-confirm-provider checkout-status={formState.formState.value} success-url={this.successUrl} successText={this.successText}>
                     {/* Handles the current session. */}
-                    <sc-session-provider
-                      ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
-                      prices={this.prices}
-                      persist={this.persistSession}
-                      onScError={e => (this.error = e.detail as ResponseError)}
-                    >
+                    <sc-session-provider ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)} prices={this.prices} persist={this.persistSession}>
                       <slot />
                     </sc-session-provider>
                   </sc-order-confirm-provider>

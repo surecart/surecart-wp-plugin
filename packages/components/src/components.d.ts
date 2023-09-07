@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -573,10 +573,6 @@ export namespace Components {
      * This component listens for a confirmed event and redirects to the success url.
      */
     interface ScCheckoutFormErrors {
-        /**
-          * The current order.
-         */
-        "checkoutState": FormState;
     }
     interface ScCheckoutMolliePayment {
         "method": string;
@@ -1428,10 +1424,6 @@ export namespace Components {
      * This component listens for a confirmed event and redirects to the success url.
      */
     interface ScFormErrorProvider {
-        /**
-          * The current order.
-         */
-        "checkoutState": FormState;
     }
     interface ScFormRow {
     }
@@ -3924,14 +3916,6 @@ export interface ScCheckoutCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutElement;
 }
-export interface ScCheckoutMolliePaymentCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScCheckoutMolliePaymentElement;
-}
-export interface ScCheckoutPaystackPaymentProviderCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScCheckoutPaystackPaymentProviderElement;
-}
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScChoiceElement;
@@ -4115,10 +4099,6 @@ export interface ScSelectCustomEvent<T> extends CustomEvent<T> {
 export interface ScSessionProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSessionProviderElement;
-}
-export interface ScShippingChoicesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScShippingChoicesElement;
 }
 export interface ScStripeElementCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5950,10 +5930,6 @@ declare namespace LocalJSX {
     }
     interface ScCartSessionProvider {
         /**
-          * Error event
-         */
-        "onScError"?: (event: ScCartSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
-        /**
           * Set the state
          */
         "onScSetState"?: (event: ScCartSessionProviderCustomEvent<'loading' | 'busy' | 'navigating' | 'idle'>) => void;
@@ -6161,21 +6137,12 @@ declare namespace LocalJSX {
      * This component listens for a confirmed event and redirects to the success url.
      */
     interface ScCheckoutFormErrors {
-        /**
-          * The current order.
-         */
-        "checkoutState"?: FormState;
     }
     interface ScCheckoutMolliePayment {
         "method"?: string;
-        /**
-          * Error event
-         */
-        "onScError"?: (event: ScCheckoutMolliePaymentCustomEvent<ResponseError>) => void;
         "processorId"?: string;
     }
     interface ScCheckoutPaystackPaymentProvider {
-        "onScError"?: (event: ScCheckoutPaystackPaymentProviderCustomEvent<ResponseError1>) => void;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -7164,10 +7131,6 @@ declare namespace LocalJSX {
      * This component listens for a confirmed event and redirects to the success url.
      */
     interface ScFormErrorProvider {
-        /**
-          * The current order.
-         */
-        "checkoutState"?: FormState;
     }
     interface ScFormRow {
     }
@@ -7354,10 +7317,6 @@ declare namespace LocalJSX {
           * The name of the icon to draw.
          */
         "name"?: string;
-        /**
-          * Emitted when the icon failed to load.
-         */
-        "onScError"?: (event: ScIconCustomEvent<{ status: number }>) => void;
         /**
           * Emitted when the icon has loaded.
          */
@@ -7686,10 +7645,6 @@ declare namespace LocalJSX {
           * Checkout status to listen and do payment related stuff.
          */
         "checkoutStatus"?: string;
-        /**
-          * Error event.
-         */
-        "onScError"?: (event: ScOrderConfirmProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         /**
           * The order is paid event.
          */
@@ -8057,10 +8012,6 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
-          * Error event
-         */
-        "onScError"?: (event: ScOrderTaxIdInputCustomEvent<ResponseError>) => void;
-        /**
           * Make a request to update the order.
          */
         "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
@@ -8291,10 +8242,6 @@ declare namespace LocalJSX {
           * Test or live mode.
          */
         "mode"?: 'test' | 'live';
-        /**
-          * Emit an error
-         */
-        "onScError"?: (event: ScPaypalButtonsCustomEvent<object>) => void;
         "onScPaid"?: (event: ScPaypalButtonsCustomEvent<void>) => void;
         /**
           * Set the state machine
@@ -9155,10 +9102,6 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     interface ScSessionProvider {
-        /**
-          * Error event
-         */
-        "onScError"?: (event: ScSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
         "onScPaid"?: (event: ScSessionProviderCustomEvent<void>) => void;
         /**
           * Set the state
@@ -9186,10 +9129,6 @@ declare namespace LocalJSX {
           * The shipping section label
          */
         "label"?: string;
-        /**
-          * Error event
-         */
-        "onScError"?: (event: ScShippingChoicesCustomEvent<ResponseError>) => void;
         /**
           * Whether to show the shipping choice description
          */
