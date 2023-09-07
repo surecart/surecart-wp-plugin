@@ -188,7 +188,6 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
-
     let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
 
     // If we have a collectionId, we should only fetch products from that collection.
@@ -266,7 +265,7 @@ export class ScProductItemList {
             {this.error}
           </sc-alert>
         )}
-         {(this.searchEnabled || this.sortEnabled || this.collectionEnabled) && (
+        {(this.searchEnabled || this.sortEnabled || this.collectionEnabled) && (
           <div class="product-item-list__header">
             <div class="product-item-list__controls">
               <div class="product-item-list__sort">
@@ -295,6 +294,7 @@ export class ScProductItemList {
                           <sc-menu-item
                             checked={this.selectedCollections.some(selected => selected?.id === collection?.id)}
                             onClick={() => this.toggleSelectCollection(collection)}
+                            key={collection?.id}
                           >
                             {collection.name}
                           </sc-menu-item>
@@ -359,10 +359,10 @@ export class ScProductItemList {
                 </div>
                 {this.selectedCollections.map(collection => (
                   <sc-tag
+                    key={collection?.id}
                     clearable
                     onScClear={() => {
                       this.toggleSelectCollection(collection);
-                      this.updateProducts();
                     }}
                   >
                     {collection?.name}
@@ -381,8 +381,8 @@ export class ScProductItemList {
 
         <div class="product-item-list">
           {this.loading
-            ? [...Array(this.products?.length || this.limit || 10)].map(() => (
-                <div class="product-item-list__loader">
+            ? [...Array(this.products?.length || this.limit || 10)].map((_, index) => (
+                <div class="product-item-list__loader" key={index}>
                   {(this.layoutConfig || []).map(layout => {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
@@ -416,7 +416,7 @@ export class ScProductItemList {
                 </div>
               ))
             : (this.products || []).map(product => {
-                return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
+                return <sc-product-item key={product?.id} exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
               })}
         </div>
         {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
