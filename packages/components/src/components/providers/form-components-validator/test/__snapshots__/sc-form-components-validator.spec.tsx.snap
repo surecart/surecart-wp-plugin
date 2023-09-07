@@ -55,7 +55,7 @@ exports[`sc-form-components-validator requires the customer name on sc-order-shi
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-payment></sc-payment>
   <sc-order-shipping-address></sc-order-shipping-address>
+  <sc-payment></sc-payment>
 </sc-form-components-validator>
 `;

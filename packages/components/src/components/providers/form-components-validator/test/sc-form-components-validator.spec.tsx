@@ -77,6 +77,14 @@ describe('sc-form-components-validator', () => {
     checkoutState.checkout = { shipping_address_required: true } as Checkout;
     await page.waitForChanges();
 
+    const customerName = page.root.querySelector('sc-customer-name');
+    expect(customerName.required).toBe(true);
+
+    const shippingAddress = page.root.querySelector('sc-order-shipping-address');
+    expect(shippingAddress.required).toBe(true);
+    expect(!!shippingAddress.requireName).toBe(false);
+    expect(!!shippingAddress.showName).toBe(false);
+
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();
   })
@@ -87,12 +95,16 @@ describe('sc-form-components-validator', () => {
       template: () => (
         <sc-form-components-validator>
           <sc-payment></sc-payment>
-          <sc-order-shipping-address></sc-order-shipping-address>
         </sc-form-components-validator>
       ),
     });
     checkoutState.checkout = { shipping_address_required: true } as Checkout;
     await page.waitForChanges();
+
+    const shippingAddress = page.root.querySelector('sc-order-shipping-address');
+    expect(shippingAddress.required).toBe(true);
+    expect(shippingAddress.requireName).toBe(true);
+    expect(shippingAddress.showName).toBe(true);
 
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();
