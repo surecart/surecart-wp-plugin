@@ -98,7 +98,7 @@ export default () => {
 
 					// 3 col, desktop.
 					@media screen and (min-width: 1280px) {
-						grid-template-columns: repeat(4, 1fr);
+						grid-template-columns: repeat(3, 1fr);
 					}
 					gap: 1.5em;
 				`}
@@ -131,7 +131,7 @@ export default () => {
 					{totalProperties('new_count', data)}
 				</Stat>
 
-				<Stat
+				{/* <Stat
 					title={__('Trial Conversion', 'surecart')}
 					description={__(
 						'Conversion Rate From Trial To Paid',
@@ -155,7 +155,7 @@ export default () => {
 						maximumFractionDigits={2}
 						minimumFractionDigits={0}
 					/>
-				</Stat>
+				</Stat> */}
 
 				<Stat
 					title={__('New Trials', 'surecart')}
@@ -190,7 +190,7 @@ export default () => {
 					/>
 				</Stat>
 
-				<Stat
+				{/* <Stat
 					title={__('MRR Churn Rate', 'surecart')}
 					description={__(
 						'Monthly Recurring Revenue Churn Rate',
@@ -209,7 +209,7 @@ export default () => {
 						maximumFractionDigits={2}
 						minimumFractionDigits={0}
 					/>
-				</Stat>
+				</Stat> */}
 
 				<Stat
 					title={__('MRR Lost', 'surecart')}
