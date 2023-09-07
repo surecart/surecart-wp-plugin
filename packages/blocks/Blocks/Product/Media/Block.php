@@ -41,7 +41,7 @@ class Block extends BaseBlock {
 		$images     = array_map(
 			function( $product_media ) use ( $product, $width ) {
 				return [
-					'src'    => $product_media->getUrl( $width ),
+					'src'    => esc_url( $product_media->getUrl( $width ) ),
 					'alt'    => $product_media->media->filename ?? $product->name ?? '',
 					'width'  => $product_media->width,
 					'height' => $product_media->height,
@@ -52,7 +52,7 @@ class Block extends BaseBlock {
 		$thumbnails = array_map(
 			function( $product_media ) use ( $product ) {
 				return [
-					'src'    => $product_media->getUrl( 240 ),
+					'src'    => esc_url( $product_media->getUrl( 240 ) ),
 					'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
 					'sizes'  => '(min-width: 780px) 120px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
 					'alt'    => $product_media->media->filename ?? $product->name ?? '',
@@ -68,8 +68,8 @@ class Block extends BaseBlock {
 		<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
 			<sc-image-slider
 				id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"
-				images='<?php echo wp_json_encode( $images ); ?>'
-				thumbnails='<?php echo wp_json_encode( $thumbnails ); ?>'
+				images='<?php echo wp_json_encode( $images, JSON_HEX_APOS ); ?>'
+				thumbnails='<?php echo wp_json_encode( $thumbnails, JSON_HEX_APOS ); ?>'
 				has-thumbnails
 				thumbnails-per-page="<?php echo esc_attr( $attributes['thumbnails_per_page'] ?? 5 ); ?>"
 				auto-height="<?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ); ?>"
