@@ -10,6 +10,8 @@ import { __ } from '@wordpress/i18n';
 import { state as errorState } from '@store/notices';
 import { getErrorMessage, getErrorMessages, getNoticeTitle } from '@store/notices/getters';
 import { currentFormState } from '@store/form/getters';
+import { onChange } from '@store/form';
+import { removeNotice } from '@store/notices/mutations';
 
 /**
  * This component listens for a confirmed event and redirects to the success url.
@@ -20,6 +22,7 @@ import { currentFormState } from '@store/form/getters';
   shadow: true,
 })
 export class ScCheckoutFormErrors {
+  private removeStateListener = () => {};
   /**
    * Get the alert type.
    * @returns string
@@ -56,6 +59,19 @@ export class ScCheckoutFormErrors {
         ))}
       </ul>
     );
+  }
+
+  componentWillLoad() {
+    // remove notice if finalizing or updating.
+    this.removeStateListener = onChange('formState', () => {
+      if (['finalizing', 'updating'].includes(currentFormState())) {
+        removeNotice();
+      }
+    });
+  }
+
+  disconnectedCallback() {
+    this.removeStateListener();
   }
 
   render() {

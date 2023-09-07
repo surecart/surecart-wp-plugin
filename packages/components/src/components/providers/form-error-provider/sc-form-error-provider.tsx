@@ -1,17 +1,12 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop, Element, Watch } from '@stencil/core';
+import { Component, h, Element } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 /**
- * Internal dependencies.
- */
-import { FormState } from '../../../types';
-import { removeNotice } from '@store/notices/mutations';
-
-/**
- * This component listens for a confirmed event and redirects to the success url.
+ * This component checks to make sure there is an error component
+ * and adds one if it's missing.
  */
 @Component({
   tag: 'sc-form-error-provider',
@@ -20,16 +15,6 @@ import { removeNotice } from '@store/notices/mutations';
 export class ScFormErrorProvider {
   /** The element. */
   @Element() el: HTMLScFormErrorProviderElement;
-
-  /** The current order. */
-  @Prop() checkoutState: FormState;
-
-  @Watch('checkoutState')
-  handleStateChange(val) {
-    if (['finalizing', 'updating'].includes(val)) {
-      removeNotice();
-    }
-  }
 
   componentWillLoad() {
     this.maybeAddErrorsComponent();

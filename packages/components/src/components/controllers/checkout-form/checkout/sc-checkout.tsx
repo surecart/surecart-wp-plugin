@@ -294,8 +294,8 @@ export class ScCheckout {
           >
             {/* Handles the current checkout form state. */}
             <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
-              {/* Handles errors in the form. */}
-              <sc-form-error-provider checkoutState={formState.formState.value}>
+              {/* Handles adding error component in the form. */}
+              <sc-form-error-provider>
                 {/* Validate components in the form based on order state. */}
                 <sc-form-components-validator order={checkoutState.checkout} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
