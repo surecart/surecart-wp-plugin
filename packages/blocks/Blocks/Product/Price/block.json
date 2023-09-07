@@ -10,7 +10,7 @@
 			"type": "string",
 			"default": "Sale"
 		},
-		"text_align": {
+		"alignment": {
 			"type": "string",
 			"default": "left"
 		}

@@ -10,10 +10,10 @@ import { __ } from '@wordpress/i18n';
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
 import classNames from 'classnames';
 
-export default ({ attributes: { text_align, sale_text }, setAttributes }) => {
+export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 	const blockProps = useBlockProps({
 		className: classNames({
-			[`has-text-align-${text_align}`]: text_align,
+			[`has-text-align-${alignment}`]: alignment,
 		}),
 	});
 
@@ -26,9 +26,9 @@ export default ({ attributes: { text_align, sale_text }, setAttributes }) => {
 		<>
 			<BlockControls group="block">
 				<AlignmentControl
-					value={text_align}
+					value={alignment}
 					onChange={(nextAlign) => {
-						setAttributes({ text_align: nextAlign });
+						setAttributes({ alignment: nextAlign });
 					}}
 				/>
 			</BlockControls>

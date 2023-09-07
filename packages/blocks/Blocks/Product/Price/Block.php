@@ -44,8 +44,7 @@ class Block extends BaseBlock {
 		<sc-product-price
 			sale-text="<?php echo esc_attr( $attributes['sale_text'] ?? '' ); ?>"
 			class="<?php echo esc_attr( $this->getClasses( $attributes ) . ' product-price surecart-block' ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
-			text-align="<?php echo esc_attr( $attributes['text_align'] ?? '' ); ?>"
+			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>;--sc-product-price-alignment:<?php echo esc_attr( $attributes['alignment'] ?? 'left' ); ?>"
 			>
 
 			<?php if ( ! empty( $active_prices[0] ) ) : ?>

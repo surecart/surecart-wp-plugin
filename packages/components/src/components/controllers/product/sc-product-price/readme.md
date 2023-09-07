@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property    | Attribute    | Description     | Type                            | Default     |
-| ----------- | ------------ | --------------- | ------------------------------- | ----------- |
-| `prices`    | --           | The prices list | `Price[]`                       | `undefined` |
-| `saleText`  | `sale-text`  | The sale text   | `string`                        | `undefined` |
-| `textAlign` | `text-align` | Text alignment  | `"center" \| "left" \| "right"` | `'left'`    |
+| Property   | Attribute   | Description     | Type      | Default     |
+| ---------- | ----------- | --------------- | --------- | ----------- |
+| `prices`   | --          | The prices list | `Price[]` | `undefined` |
+| `saleText` | `sale-text` | The sale text   | `string`  | `undefined` |
 
 
 ## Shadow Parts

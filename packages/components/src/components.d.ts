@@ -2995,10 +2995,6 @@ export namespace Components {
           * The sale text
          */
         "saleText": string;
-        /**
-          * Text alignment
-         */
-        "textAlign": 'left' | 'center' | 'right';
     }
     interface ScProductPriceChoices {
         "label": string;
@@ -8868,10 +8864,6 @@ declare namespace LocalJSX {
           * The sale text
          */
         "saleText"?: string;
-        /**
-          * Text alignment
-         */
-        "textAlign"?: 'left' | 'center' | 'right';
     }
     interface ScProductPriceChoices {
         "label"?: string;
