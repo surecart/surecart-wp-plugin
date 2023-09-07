@@ -71,8 +71,8 @@ class Block extends BaseBlock {
 			esc_attr( $collection->name ?? '' ),
 			$this->getImageStyle( $attributes ),
 			$collection->getImageUrl( $cdn_image_size, 'dpr=2' ) . ' 2x',
-			(int) $attributes['width'],
-			(int) $attributes['height']
+			! empty( $attributes['width'] ) ? (int) $attributes['width'] : null,
+			! empty( $attributes['height'] ) ? (int) $attributes['height'] : null
 		);
 
 		return "<figure {$wrapper_attributes}>{$collection_image}</figure>";
