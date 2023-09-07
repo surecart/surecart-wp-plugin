@@ -17,6 +17,7 @@
 		"align": true,
 		"reusable": false,
 		"html": false,
+		"multiple": false,
 		"spacing": {
 			"blockGap": true,
 			"__experimentalDefaultControls": {
