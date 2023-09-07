@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .product-item-list {
   display: grid;
   grid-template-columns: repeat(var(--sc-product-item-list-column), 1fr);
