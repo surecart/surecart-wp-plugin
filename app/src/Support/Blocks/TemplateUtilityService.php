@@ -46,16 +46,16 @@ class TemplateUtilityService {
 		$this->templates_directory      = $templates_directory;
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
-			'single-product'       => [
-				'title'       => _x( 'SureCart Product', 'Template name', 'surecart' ),
+			'single-product'          => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'Single SureCart Product', 'Template name', 'surecart' ) : _x( 'Single Product', 'Template name', 'surecart' ),
 				'description' => __( 'Displays a single surecart product.', 'surecart' ),
 			],
-			'product-info'         => [
-				'title'       => _x( 'Product Info', 'Template name', 'surecart' ),
+			'product-info'            => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'Single SureCart Product Content', 'Template name', 'surecart' ) : _x( 'Single Product Content', 'Template name', 'surecart' ),
 				'description' => __( 'Displays the product info.', 'surecart' ),
 			],
 			'product-collection-part' => [
-				'title'       => _x( 'Product Collection', 'Template name', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collection', 'Template name', 'surecart' ) : _x( 'Product Collection', 'Template name', 'surecart' ),
 				'description' => __( 'Displays surecart products list for a collection.', 'surecart' ),
 			],
 		];
