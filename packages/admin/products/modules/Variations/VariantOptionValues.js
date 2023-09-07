@@ -55,16 +55,23 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 		}
 	}, [values]);
 
-	// as the values are changed, we need to update the product.
 	useEffect(() => {
-		onChangeValue(values, product?.change_type);
+		const updatedOptionValues = values.map((value, valueIndex) => {
+			return {
+				...value,
+				index: valueIndex,
+			};
+		});
+		onChangeValue(updatedOptionValues, product?.change_type);
 	}, [values]);
 
 	const deleteOptionValue = (index) => {
 		setChangeType('option_value_deleted');
 
-		const newOptionValues = [...values];
-		newOptionValues.splice(index, 1);
+		// remove the option value from the array.
+		const newOptionValues = values.filter(
+			(value, valueIndex) => valueIndex !== index
+		);
 
 		// update the index of the option values.
 		const updatedOptionValues = newOptionValues.map((value, valueIndex) => {

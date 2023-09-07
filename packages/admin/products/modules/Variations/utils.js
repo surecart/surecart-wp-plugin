@@ -55,6 +55,9 @@ export const generateVariants = (
 			);
 
 			if (previousValue) {
+				delete previousValue.option_2;
+				delete previousValue.option_3;
+
 				variants.push({
 					...previousValue,
 					option_1: variantOptions[0].values[i],
@@ -80,6 +83,8 @@ export const generateVariants = (
 				);
 
 				if (previousValue) {
+					delete previousValue.option_3;
+
 					variants.push({
 						...previousValue,
 						option_1: variantOptions[0].values[i],
@@ -447,8 +452,8 @@ export const validateVariant = (variants, variant) => {
 		);
 		if (option2Value) {
 			return sprintf(
-				/* translators: %1s: Option 1 name %2s: Option 2 name */
-				__('%1s / %2s variant already exists.', 'surecart'),
+				/* translators: 1: Option 1 name 2: Option 2 name */
+				__('%1$s / %2$s variant already exists.', 'surecart'),
 				option_1,
 				option_2
 			);
@@ -479,8 +484,8 @@ export const validateVariant = (variants, variant) => {
 		);
 		if (option3Value) {
 			return sprintf(
-				/* translators: %1s: Option 1 name %2s: Option 2 name %3s: Option 3 name */
-				__('%1s / %2s / %3s variant already exists.', 'surecart'),
+				/* translators: 1: Option 1 name 2: Option 2 name 3: Option 3 name */
+				__('%1$s / %2$s / %3$s variant already exists.', 'surecart'),
 				option_1,
 				option_2,
 				option_3

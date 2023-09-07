@@ -42,6 +42,7 @@ export default ({ product, updateProduct, loading }) => {
 					if (index !== action.index) {
 						return item;
 					}
+
 					return {
 						...item,
 						...action.data,
@@ -120,12 +121,12 @@ export default ({ product, updateProduct, loading }) => {
 	}, [product?.variant_options]);
 
 	const deleteVariantOption = (index) => {
-		const variantOptions = [...product?.variant_options];
-		variantOptions.splice(index, 1);
 		updateProduct({
 			...product,
 			change_type: 'option_deleted',
-			variant_options: variantOptions,
+			variant_options: (product?.variant_options || []).filter(
+				(item, itemIndex) => itemIndex !== index
+			),
 		});
 	};
 
@@ -218,16 +219,6 @@ export default ({ product, updateProduct, loading }) => {
 										values: updatedValues,
 									},
 								});
-								// updateProduct({
-								// 	variants: getExlcudedVariants(
-								// 		generateVariants(
-								// 			product?.variant_options ?? [],
-								// 			product?.variants ?? [],
-								// 			changeTypeValue
-								// 		),
-								// 		getDeletedVariants()
-								// 	),
-								// });
 							}}
 						/>
 

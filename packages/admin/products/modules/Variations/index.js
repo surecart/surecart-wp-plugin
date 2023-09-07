@@ -38,7 +38,12 @@ export default ({ product, updateProduct, loading }) => {
 			change_type: 'option_added',
 			variant_options: [
 				...product?.variant_options,
-				{ name: '', position: 0, values: [], editing: true },
+				{
+					name: '',
+					position: product?.variant_options?.length || 0,
+					values: [],
+					editing: true,
+				},
 			],
 		});
 	};
