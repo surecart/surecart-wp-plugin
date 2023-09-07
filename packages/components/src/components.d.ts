@@ -2108,7 +2108,7 @@ export namespace Components {
          */
         "defaultCountry": string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full": boolean;
         /**
@@ -7905,7 +7905,7 @@ declare namespace LocalJSX {
          */
         "defaultCountry"?: string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full"?: boolean;
         /**
