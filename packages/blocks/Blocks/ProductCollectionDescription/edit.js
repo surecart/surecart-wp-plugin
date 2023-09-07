@@ -39,7 +39,7 @@ export default ({
 			<div {...blockProps}>
 				<p>
 					{__(
-						'Explore our curated selection of premium, eco-friendly kitchenware designed to elevate your cooking experience.',
+						'This is the Product Collection Description block, it will display the collection description if one was added.',
 						'surecart'
 					)}
 				</p>
