@@ -66,10 +66,11 @@ class Block extends BaseBlock {
 		}
 
 		$collection_image = sprintf(
-			'<img src="%1$s" alt="%2$s" style="%3$s" />',
+			'<img src="%1$s" alt="%2$s" style="%3$s" srcset="%4$s" />',
 			esc_url( $collection->getImageUrl( $cdn_image_size ) ),
 			esc_attr( $collection->name ?? '' ),
-			$this->getImageStyle( $attributes )
+			$this->getImageStyle( $attributes ),
+			$collection->getImageUrl( $cdn_image_size, 'dpr=2' ) . ' 2x'
 		);
 
 		return "<figure {$wrapper_attributes}>{$collection_image}</figure>";

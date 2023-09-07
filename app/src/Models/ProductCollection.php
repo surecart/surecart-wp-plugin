@@ -150,11 +150,25 @@ class ProductCollection extends Model implements PageModel {
 	 *
 	 * @return string
 	 */
-	public function getImageUrl( $size = 0 ) {
+	public function getImageUrl( $size = 0, $additional_options = '' ) {
 		if ( empty( $this->attributes['image']->url ) ) {
 			return '';
 		}
 
-		return $size ? $this->imageUrl( $this->attributes['image']->url, $size ) : $this->attributes['image']->url;
+		return $size ? $this->imageUrl( $this->attributes['image']->url, $size, false, $additional_options ) : $this->attributes['image']->url;
+	}
+
+	/**
+	 * Get the srcset for the product media.
+	 *
+	 * @param array $sizes The sizes.
+	 *
+	 * @return string
+	 */
+	public function getSrcSet( $sizes = [] ) {
+		if ( empty( $this->attributes['image']->url ) ) {
+			return '';
+		}
+		return $this->imageSrcSet( $this->attributes['image']->url, $sizes );
 	}
 }
