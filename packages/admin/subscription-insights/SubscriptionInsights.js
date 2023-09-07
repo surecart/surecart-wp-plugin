@@ -8,7 +8,7 @@ import Error from '../components/Error';
 import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
 import Stat from '../ui/Stat';
 import { getFilterData } from '../util/filter';
-import { averageProperties, totalProperties } from '../util/stats';
+import { totalProperties } from '../util/stats';
 import { ScFormatNumber } from '@surecart/components-react';
 
 export default () => {
