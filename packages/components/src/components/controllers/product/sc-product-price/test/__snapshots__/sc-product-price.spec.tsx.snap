@@ -1,29 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-product-prices aligns the text to the center when textAlign is center 1`] = `
-<sc-product-price text-align="center">
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
-</sc-product-price>
-`;
-
-exports[`sc-product-prices aligns the text to the left when textAlign is left 1`] = `
-<sc-product-price text-align="left">
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
-</sc-product-price>
-`;
-
-exports[`sc-product-prices aligns the text to the right when textAlign is right 1`] = `
-<sc-product-price text-align="right">
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
-</sc-product-price>
-`;
-
 exports[`sc-product-prices renders 1`] = `
 <sc-product-price>
   <mock:shadow-root>
