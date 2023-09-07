@@ -53,7 +53,7 @@ export class ScRecurringPriceChoiceContainer {
             <div class="recurring-price-choice__description">
               <sc-dropdown style={{ '--panel-width': '25em' }}>
                 <sc-button type="text" caret slot="trigger">
-                  {this.price?.name}
+                  {this.price?.name || state.product?.name}
                 </sc-button>
                 <sc-menu>
                   {(this.prices || []).map(price => {
@@ -66,7 +66,7 @@ export class ScRecurringPriceChoiceContainer {
                           </span>
                         )}
                         <span part="label" class="menu-item__label">
-                          {price?.name}
+                          {price?.name || state.product?.name}
                         </span>
                         <span slot="suffix">{this.renderPrice(price)}</span>
                       </sc-menu-item>
