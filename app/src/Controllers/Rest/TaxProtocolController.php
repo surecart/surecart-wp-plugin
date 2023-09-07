@@ -27,6 +27,6 @@ class TaxProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return TaxProtocol::with( [ 'address', 'ca_tax_identifier', 'eu_tax_identifier' ] )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return TaxProtocol::with( [ 'address', 'ca_tax_identifier', 'eu_tax_identifier' ] )->update( $request->get_json_params() );
 	}
 }
