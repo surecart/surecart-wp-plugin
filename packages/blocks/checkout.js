@@ -9,6 +9,7 @@ import * as columns from '@blocks/Columns';
 import * as coupon from '@blocks/Coupon';
 import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
+import * as newDonation from '@blocks/NewDonation';
 import * as donationAmount from '@blocks/DonationAmount';
 import * as email from '@blocks/Email';
 import * as phone from '@blocks/Phone';
@@ -45,6 +46,7 @@ import { registerBlocks } from './register-block';
 registerBlocks([
 	button,
 	donation,
+	newDonation,
 	donationAmount,
 	nameYourPrice,
 	bumpLineItem,

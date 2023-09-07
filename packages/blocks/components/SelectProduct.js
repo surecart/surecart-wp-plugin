@@ -4,10 +4,10 @@ import { useState, useEffect } from '@wordpress/element';
 import throttle from 'lodash/throttle';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
-import { translateInterval } from '../../../resources/scripts/admin/util/translations';
-import { formatNumber } from '../../../resources/scripts/admin/util';
+import { translateInterval } from '../../admin/util/translations';
+import { formatNumber } from '../../admin/util';
 
-export default ({ onSelect }) => {
+export default ({ onSelect, onlyShowProducts }) => {
 	const [products, setProducts] = useState([]);
 	const [query, setQuery] = useState('');
 	const [busy, setBusy] = useState(false);
@@ -24,6 +24,10 @@ export default ({ onSelect }) => {
 		if (!query) return;
 		fetchProducts();
 	}, [query]);
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
 
 	const fetchProducts = async () => {
 		setBusy(true);
@@ -59,6 +63,13 @@ export default ({ onSelect }) => {
 	};
 
 	const choices = products.map((product) => {
+		if (onlyShowProducts) {
+			return {
+				label: product?.name,
+				value: product.id,
+			}
+		}
+
 		return {
 			label: product?.name,
 			id: product.id,
