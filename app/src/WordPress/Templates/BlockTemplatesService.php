@@ -205,7 +205,7 @@ class BlockTemplatesService {
 					__( 'Product: %s', 'surecart' ),
 					$template->title
 				);
-				$template->description = __( 'Template used for single SureCart product pages.', 'surecart' );
+				$template->description = __( 'Template used for specific single SureCart product pages.', 'surecart' );
 			}
 		}
 
@@ -218,7 +218,7 @@ class BlockTemplatesService {
 					__( 'Product Collection: %s', 'surecart' ),
 					$template->title
 				);
-				$template->description = __( 'Template used for SureCart collection pages.', 'surecart' );
+				$template->description = __( 'Template used for specific single SureCart collection pages.', 'surecart' );
 			}
 		}
 		return $template;
