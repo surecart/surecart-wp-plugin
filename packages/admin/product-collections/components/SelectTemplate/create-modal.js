@@ -14,8 +14,6 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { cleanForSlug } from '@wordpress/url';
 
-const DEFAULT_TITLE = __('Custom Product Collection page', 'surecart');
-
 export default function CollectionTemplateCreateModal({
 	onClose,
 	template,
@@ -44,10 +42,10 @@ export default function CollectionTemplateCreateModal({
 
 		const { id } = await saveEntityRecord('postType', 'wp_template', {
 			slug: `sc-product-collection-${cleanForSlug(
-				title || DEFAULT_TITLE
+				title || collection?.name
 			)}`,
 			content: newTemplateContent,
-			title: title || DEFAULT_TITLE,
+			title: title || collection?.name,
 		});
 
 		updateCollection({
@@ -77,7 +75,7 @@ export default function CollectionTemplateCreateModal({
 						label={__('Name', 'surecart')}
 						value={title}
 						onChange={setTitle}
-						placeholder={DEFAULT_TITLE}
+						placeholder={collection?.name}
 						disabled={isBusy}
 						help={__(
 							'Describe the template, e.g. "Mens T-Shirt Template". A custom template can be manually applied to any collection archive.',
