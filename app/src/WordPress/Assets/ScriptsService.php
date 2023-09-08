@@ -100,21 +100,13 @@ class ScriptsService {
 			);
 		}
 
-		// wp_register_script(
-		// 'surecart-components',
-		// 'https://unpkg.com/@surecart/components@1.0.1-beta.1/dist/surecart/surecart.esm.js',
-		// [ 'wp-i18n' ],
-		// null,
-		// false
-		// );
-
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		wp_localize_script(
 			'surecart-components',
 			'scData',
 			apply_filters(
-				'surecart-components/scData',
+				'surecart-components/scData',  // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
 					'cdn_root'            => SURECART_CDN_IMAGE_BASE,
 					'root_url'            => esc_url_raw( get_rest_url() ),
@@ -335,7 +327,7 @@ class ScriptsService {
 			true
 		);
 
-		// only register
+		// only register.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product.asset.php';
 		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
@@ -365,7 +357,7 @@ class ScriptsService {
 			'surecart-blocks',
 			'scData',
 			apply_filters(
-				'surecart-components/scData',
+				'surecart-components/scData', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
 					'root_url'            => esc_url_raw( get_rest_url() ),
 					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
