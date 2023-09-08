@@ -38,20 +38,6 @@ class ProductCollectionsListTable extends ListTable {
 	}
 
 	/**
-	 * Override the parent display method. Add the search form.
-	 *
-	 * @return void
-	 */
-	public function search() {
-		?>
-		<form class="search-form" method="get">
-			<?php $this->search_box( __( 'Search product collections...', 'surecart' ), 'product_collections' ); ?>
-			<input type="hidden" name="id" value="1" />
-		</form>
-		<?php
-	}
-
-	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
 	 * @return array
