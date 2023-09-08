@@ -118,11 +118,13 @@ class ProductCollectionsListTable extends ListTable {
 			<?php echo esc_html( $collection->name ); ?>
 		</a>
 		<?php
-		echo $this->row_actions(
-			[
-				'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ) . '" aria-label="' . esc_attr__( 'Edit Product Collection', 'surecart' ) . '">' . esc_attr__( 'Edit', 'surecart' ) . '</a>',
-				'view' => '<a href="' . esc_url( $collection->permalink ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '" target="_blank">' . esc_html__( 'View', 'surecart' ) . '</a>',
-			],
+		echo wp_kses_post(
+			$this->row_actions(
+				[
+					'edit' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product_collection', $collection->id ) ) . '" aria-label="' . esc_attr__( 'Edit Product Collection', 'surecart' ) . '">' . esc_attr__( 'Edit', 'surecart' ) . '</a>',
+					'view' => '<a href="' . esc_url( $collection->permalink ) . '" aria-label="' . esc_attr__( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				],
+			)
 		);
 		return ob_get_clean();
 	}
