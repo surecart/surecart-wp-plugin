@@ -142,7 +142,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_product_collection',
 			'surecart/product-collection',
 			[
-				'collection_id'      => '', // ndatory.
+				'collection_id'      => '', // mandatory.
 				'columns'            => 4,
 				'sort_enabled'       => false,
 				'search_enabled'     => false,
