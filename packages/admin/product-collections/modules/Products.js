@@ -9,7 +9,6 @@ import {
 	ScIcon,
 	ScStackedList,
 	ScStackedListRow,
-	ScTag,
 } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
