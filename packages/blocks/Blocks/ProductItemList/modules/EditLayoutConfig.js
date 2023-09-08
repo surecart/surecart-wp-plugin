@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { grid } from '@wordpress/icons';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -16,6 +14,7 @@ export default function EditLayoutConfig({ label, description, onDone }) {
 					display: 'flex',
 					flexDirection: 'column',
 					flex: '1 0 0px',
+					gap: '1em',
 				}}
 			>
 				{description}
@@ -25,6 +24,7 @@ export default function EditLayoutConfig({ label, description, onDone }) {
 						padding: '1rem',
 						backgroundColor: 'var(--sc-color-gray-200)',
 						fontSize: 'var(--wp--preset--font-size--medium)',
+						borderRadisu: 'var(--sc-border-radius-medium)',
 					}}
 				>
 					<div
@@ -45,11 +45,10 @@ export default function EditLayoutConfig({ label, description, onDone }) {
 					</div>
 				</div>
 				<div
-					css={css`
-						display: flex;
-						justify-content: flex-end;
-						padding: 1rem 0 0;
-					`}
+					style={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+					}}
 				>
 					<Button
 						variant="primary"
