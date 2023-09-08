@@ -110,7 +110,7 @@ abstract class BasePageController {
 		<meta property="og:description" content="<?php echo esc_attr( sanitize_text_field( $this->model->meta_description ) ); ?>" />
 		<meta property="og:url" content="<?php echo esc_url( $this->model->permalink ); ?>" />
 		<meta property="og:site_name" content="<?php bloginfo( 'name' ); ?>" />
-		<?php if ( ! empty( $this->model->image_url ) ) { ?>
+		<?php if ( ! empty( $this->model->getImageUrl( 800 ) ) ) { ?>
 			<meta property="og:image" content="<?php echo esc_url( $this->model->getImageUrl( 800 ) ); ?>" />
 		<?php } ?>
 		<?php
