@@ -226,7 +226,6 @@ export default ({ id }) => {
 						loading={!hasLoadedProduct}
 					/>
 					<Collections
-						productId={id}
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
