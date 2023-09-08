@@ -50,7 +50,7 @@ export class ScShippingChoices {
     if (!checkoutState?.checkout?.shipping_choices?.data?.length && !(checkoutState?.checkout?.shipping_address as Address)?.country) {
       return (
         <sc-form-control label={this.label || __('Shipping', 'surecart')}>
-          <div class="shipping-choice__empty">{__('Please select a shipping country to see shipping choices.', 'surecart')}</div>
+          <div class="shipping-choice__empty">{__('To check available shipping choices, please provide your shipping country in the address section.', 'surecart')}</div>
         </sc-form-control>
       );
     }
