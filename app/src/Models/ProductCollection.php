@@ -113,6 +113,11 @@ class ProductCollection extends Model implements PageModel {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}
+		// permalinks off.
+		if ( ! get_option( 'permalink_structure' ) ) {
+			return add_query_arg( 'sc_collection_page_id', $this->slug, get_home_url() );
+		}
+		// permalinks on.
 		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . $this->slug;
 	}
 
