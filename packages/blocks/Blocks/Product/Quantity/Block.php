@@ -18,6 +18,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		ob_start(); ?>
+
 		<sc-product-quantity
 			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
 			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
