@@ -7,7 +7,7 @@ use SureCart\Models\ProductCollection;
 /**
  * Service for product collection pages in WordPress menu related functions.
  */
-class ProductCollectionsPagesWordPressMenuService {
+class ProductCollectionsMenuService {
 	/**
 	 * Bootstrap any actions.
 	 *

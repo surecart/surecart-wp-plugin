@@ -19,7 +19,7 @@ class AdminMenuPageServiceProvider implements ServiceProviderInterface {
 			return new AdminMenuPageService();
 		};
 		$container['surecart.product_collection_pages.menus'] = function () {
-			return new ProductCollectionsPagesWordPressMenuService();
+			return new ProductCollectionsMenuService();
 		};
 	}
 
