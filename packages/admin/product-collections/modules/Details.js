@@ -43,7 +43,7 @@ export default ({ id, collection, updateCollection, loading }) => {
 						'surecart'
 					)}
 					style={{ '--sc-rich-text-max-height': '200px' }}
-					maxlength={2500}
+					maxlength={500}
 					onScInput={(e) => {
 						updateCollection({ description: e.target.value });
 					}}
