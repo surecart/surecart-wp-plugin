@@ -8,7 +8,7 @@
 	"attributes": {
 		"collectionCount": {
 			"type": "number",
-			"default": 4
+			"default": 1
 		}
 	},
 	"supports": {
@@ -24,7 +24,10 @@
 			}
 		},
 		"spacing": {
-			"__experimentalSkipSerialization": true,
+			"blockGap": {
+				"__experimentalDefault": "2em"
+			},
+			"__experimentalSkipSerialization": ["padding", "margin"],
 			"padding": ["horizontal", "vertical"],
 			"margin": ["left", "right"]
 		},
