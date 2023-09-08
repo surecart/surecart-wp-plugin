@@ -89,17 +89,6 @@ class ProductCollectionsListTable extends ListTable {
 	}
 
 	/**
-	 * Handle the date column.
-	 *
-	 * @param \SureCart\Models\ProductCollection $product_collection Product collection object.
-	 *
-	 * @return string
-	 */
-	public function column_date( $product_collection ) {
-		return "<sc-format-date date='$product_collection->created' type='timestamp'></sc-format-date>";
-	}
-
-	/**
 	 * Handle the description column.
 	 *
 	 * @param \SureCart\Models\ProductCollection $product_collection Product collection object.
