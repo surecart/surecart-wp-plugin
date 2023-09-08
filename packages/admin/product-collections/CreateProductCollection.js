@@ -121,7 +121,7 @@ export default ({ id, setId }) => {
 								'surecart'
 							)}
 							style={{ '--sc-rich-text-max-height': '200px' }}
-							maxlength={2500}
+							maxlength={500}
 							onScInput={(e) => setDescription(e.target.value)}
 							value={description}
 							name="description"
