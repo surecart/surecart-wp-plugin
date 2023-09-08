@@ -47,16 +47,20 @@ class TemplateUtilityService {
 		$this->template_parts_directory = $template_parts_directory;
 		$this->plugin_template_types    = [
 			'single-product'          => [
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'Single SureCart Product', 'Template name', 'surecart' ) : _x( 'Single Product', 'Template name', 'surecart' ),
-				'description' => __( 'Displays a single surecart product.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual products unless a custom template has been applied.', 'surecart' ),
 			],
 			'product-info'            => [
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'Single SureCart Product Content', 'Template name', 'surecart' ) : _x( 'Single Product Content', 'Template name', 'surecart' ),
-				'description' => __( 'Displays the product info.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+			],
+			'product-collection'      => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
 			],
 			'product-collection-part' => [
-				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collection', 'Template name', 'surecart' ) : _x( 'Product Collection', 'Template name', 'surecart' ),
-				'description' => __( 'Displays surecart products list for a collection.', 'surecart' ),
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
 			],
 		];
 	}
