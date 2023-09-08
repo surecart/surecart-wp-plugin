@@ -69,7 +69,17 @@ export default ({ collectionId }) => {
 			loading={loading}
 			header_action={
 				!loading && (
-					<ScTag>{sprintf(__('%d Total', 'surecart'), total)}</ScTag>
+					<span
+						css={css`
+							white-space: nowrap;
+							color: var(--sc-input-help-text-color);
+							font-size: var(
+								--sc-input-help-text-font-size-medium
+							);
+						`}
+					>
+						{sprintf(__('%d Total', 'surecart'), total)}
+					</span>
 				)
 			}
 			footer={
