@@ -64,7 +64,7 @@ export default ({ baseUrl, name, value, onChange, onCustomized, ...props }) => {
 					</Button>
 					<Button
 						variant="link"
-						isSmall
+						size="small"
 						onClick={onStartEditing}
 						area-label={__('Edit', 'surecart')}
 					>
