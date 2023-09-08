@@ -137,6 +137,6 @@ class ProductCollectionsListTable extends ListTable {
 	 * @return int
 	 */
 	public function column_products_count( $collection ) {
-		return $collection->products_count ?? 0;
+		return '<a href="' . esc_url( add_query_arg( [ 'sc_collection' => $collection->id ], \SureCart::getUrl()->index( 'product' ) ) ) . '">' . $collection->products_count ?? 0 . '</a>';
 	}
 }
