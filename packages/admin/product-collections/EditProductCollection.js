@@ -26,8 +26,6 @@ import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
 import DeleteModal from './modules/DeleteModal';
 import SaveButton from '../templates/SaveButton';
-import Image from './modules/Image';
-import Box from '../ui/Box';
 import Publishing from './modules/Publishing';
 import useSave from '../../admin/settings/UseSave';
 import Products from './modules/Products';
@@ -154,15 +152,6 @@ export default ({ id }) => {
 						updateCollection={updateCollection}
 						loading={isLoading}
 					/>
-
-					{/* <Box title={__('Image', 'surecart')} loading={isLoading}>
-						<Image
-							label={__('Image', 'surecart')}
-							collection={collection}
-							updateCollection={updateCollection}
-							loading={isLoading}
-						/>
-					</Box> */}
 
 					<Products collectionId={id} />
 				</>
