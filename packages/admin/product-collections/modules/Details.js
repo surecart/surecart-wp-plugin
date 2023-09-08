@@ -8,16 +8,9 @@ import { __ } from '@wordpress/i18n';
 import { ScInput, ScRichText } from '@surecart/components-react';
 import Box from '../../ui/Box';
 
-export default ({ id, collection, updateCollection, loading }) => {
+export default ({ collection, updateCollection, loading }) => {
 	return (
-		<Box
-			title={
-				id
-					? __('Details', 'surecart')
-					: __('Edit Product Collection', 'surecart')
-			}
-			loading={loading}
-		>
+		<Box title={__('Details', 'surecart')} loading={loading}>
 			<div
 				css={css`
 					display: grid;
