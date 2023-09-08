@@ -1,8 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScFlex, ScFormatNumber, ScIcon } from '@surecart/components-react';
+import {
+	ScFlex,
+	ScFormatNumber,
+	ScIcon,
+	ScPriceRange,
+} from '@surecart/components-react';
 import { intervalString } from '../../util/translations';
-import { _n, sprintf, __ } from '@wordpress/i18n';
+import { _n, __ } from '@wordpress/i18n';
 
 export default ({ product }) => {
 	const activePrices = product?.prices?.data?.filter(
@@ -54,7 +59,7 @@ export default ({ product }) => {
 					<strong>{product?.name}</strong>
 				</div>
 				{totalPrices > 1 ? (
-					sprintf(__('%d prices', 'surecart'), totalPrices)
+					<ScPriceRange prices={activePrices} />
 				) : (
 					<>
 						<ScFormatNumber
