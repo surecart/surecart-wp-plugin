@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
+import { css, jsx, Global } from '@emotion/core';
 
 /**
  * External dependencies.
@@ -169,6 +169,14 @@ export default ({ id }) => {
 			}
 		>
 			<>
+				<Global
+					styles={css`
+						// Modals need a higher z-index because of popovers
+						.components-modal__screen-overlay {
+							z-index: 1000000;
+						}
+					`}
+				/>
 				<Error
 					error={saveError || loadError || error}
 					setError={setError}
