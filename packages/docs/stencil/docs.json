@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-07T14:54:27",
+  "timestamp": "2023-09-08T03:48:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10991,13 +10991,7 @@
           "docsTags": []
         }
       ],
-      "listeners": [
-        {
-          "event": "scError",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [
@@ -12142,72 +12136,10 @@
       "encapsulation": "shadow",
       "tag": "sc-form-error-provider",
       "readme": "# sc-form-error-provider\n\n\n",
-      "docs": "This component listens for a confirmed event and redirects to the success url.",
+      "docs": "This component checks to make sure there is an error component\nand adds one if it's missing.",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
-          "mutable": false,
-          "attr": "checkout-state",
-          "reflectToAttr": false,
-          "docs": "The current order.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "confirmed",
-              "type": "string"
-            },
-            {
-              "value": "confirming",
-              "type": "string"
-            },
-            {
-              "value": "draft",
-              "type": "string"
-            },
-            {
-              "value": "expired",
-              "type": "string"
-            },
-            {
-              "value": "failure",
-              "type": "string"
-            },
-            {
-              "value": "finalizing",
-              "type": "string"
-            },
-            {
-              "value": "idle",
-              "type": "string"
-            },
-            {
-              "value": "loading",
-              "type": "string"
-            },
-            {
-              "value": "paid",
-              "type": "string"
-            },
-            {
-              "value": "paying",
-              "type": "string"
-            },
-            {
-              "value": "redirecting",
-              "type": "string"
-            },
-            {
-              "value": "updating",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [],
       "listeners": [],

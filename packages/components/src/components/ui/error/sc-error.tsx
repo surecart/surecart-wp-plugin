@@ -7,9 +7,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import { getErrorMessage, getErrorMessages, getNoticeTitle } from '@store/notices/getters';
 import { state as errorState } from '@store/notices';
 import { ResponseError } from '../../../types';
+import { getAdditionalErrorMessages } from '@store/notices/getters';
 
 /**
  * @part base - The elements base wrapper.
@@ -36,40 +36,11 @@ export class ScFormErrorProvider {
     this.scUpdateError.emit(val);
   }
 
-  /**
-   * Render the error messages.
-   *
-   * If there is only one error message, render it as a string.
-   * Otherwise, render it as a list.
-   *
-   * @returns string
-   */
-  renderErrorMessages() {
-    // if notice title and error message are same, then return empty.
-    if (getNoticeTitle() === getErrorMessage()) {
-      return '';
-    }
-
-    return (
-      <ul>
-        {getErrorMessages().map((message, key) => (
-          <li key={key}>{message}</li>
-        ))}
-      </ul>
-    );
-  }
-
   render() {
-    return !!getErrorMessages()?.length ? (
-      <sc-alert
-        exportparts="base, icon, text, title, message, close"
-        type="danger"
-        scrollOnOpen={true}
-        open={!!getErrorMessage()}
-        closable={errorState?.dismissible}
-        title={getNoticeTitle()}
-      >
-        {this.renderErrorMessages()}
+    return !!errorState?.message ? (
+      <sc-alert exportparts="base, icon, text, title, message, close" type="danger" scrollOnOpen={true} open={!!errorState?.message} closable={!!errorState?.dismissible}>
+        {errorState?.message && <span slot="title" innerHTML={errorState.message}></span>}
+        {getAdditionalErrorMessages() && getAdditionalErrorMessages()}
       </sc-alert>
     ) : null;
   }

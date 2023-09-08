@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { state as errorState } from '@store/notices';
-import { getErrorMessage, getErrorMessages, getNoticeTitle } from '@store/notices/getters';
+import { getAdditionalErrorMessages } from '@store/notices/getters';
 import { currentFormState } from '@store/form/getters';
 import { onChange } from '@store/form';
 import { removeNotice } from '@store/notices/mutations';
@@ -38,29 +38,6 @@ export class ScCheckoutFormErrors {
     }
   }
 
-  /**
-   * Render the error messages.
-   *
-   * If there is only one error message, render it as a string.
-   * Otherwise, render it as a list.
-   *
-   * @returns string
-   */
-  renderErrorMessages() {
-    // if notice title and error message are same, then return empty.
-    if (getNoticeTitle() === getErrorMessage()) {
-      return '';
-    }
-
-    return (
-      <ul>
-        {getErrorMessages().map((message, key) => (
-          <li key={key}>{message}</li>
-        ))}
-      </ul>
-    );
-  }
-
   componentWillLoad() {
     // remove notice if finalizing or updating.
     this.removeStateListener = onChange('formState', () => {
@@ -76,14 +53,15 @@ export class ScCheckoutFormErrors {
 
   render() {
     // don't show component if no error message or is finalizing or updating.
-    if (!getErrorMessages().length || ['finalizing', 'updating'].includes(currentFormState())) {
+    if (!errorState?.message || ['finalizing', 'updating'].includes(currentFormState())) {
       return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
       <Host>
-        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!getErrorMessage()} closable={!!errorState?.dismissible} title={getNoticeTitle()}>
-          {this.renderErrorMessages()}
+        <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!errorState?.message} closable={!!errorState?.dismissible}>
+          {errorState?.message && <span slot="title" innerHTML={errorState.message}></span>}
+          {!!getAdditionalErrorMessages() && getAdditionalErrorMessages()}
         </sc-alert>
         <slot />
       </Host>
