@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { pages as icon } from '@wordpress/icons';
+import { grid as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
