@@ -12,20 +12,20 @@ export default function EditLayoutConfig({ label, description, onDone }) {
 	return (
 		<Placeholder icon={grid} label={label}>
 			<div
-				css={css`
-					display: flex;
-					flex-direction: column;
-					flex: 1 0 0px;
-				`}
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					flex: '1 0 0px',
+				}}
 			>
 				{description}
 				<div
-					css={css`
-						margin-top: 1.4rem;
-						padding: 1rem;
-						background-color: var(--sc-color-gray-200);
-						font-size: var(--wp--preset--font-size--medium);
-					`}
+					style={{
+						marginTop: '1.4rem',
+						padding: '1rem',
+						backgroundColor: 'var(--sc-color-gray-200)',
+						fontSize: 'var(--wp--preset--font-size--medium)',
+					}}
 				>
 					<div
 						style={{
