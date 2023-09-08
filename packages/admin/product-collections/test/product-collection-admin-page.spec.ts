@@ -26,7 +26,7 @@ test.describe('Product Collection Admin Page', () => {
 	});
 
 	test('Should render product collection list page', async ({ page }) => {
-		page.goto('/wp-admin/admin.php?page=sc-product-collections');
+		await page.goto('/wp-admin/admin.php?page=sc-product-collections');
 
 		// Check if the page is loaded.
 		await expect(page.locator('h1')).toHaveText('Product Collections');
