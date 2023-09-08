@@ -33,15 +33,11 @@ exports[`ScCheckoutFormErrors should render errors: initial errors 1`] = `
 exports[`ScCheckoutFormErrors should render errors: re-added errors after clearing. 1`] = `
 <sc-checkout-form-errors>
   <mock:shadow-root>
-    <sc-alert closable="" open="" scrollonopen="" title="Error title" type="danger">
-      <ul>
-        <li>
-          Additional error 1
-        </li>
-        <li>
-          Additional error 2
-        </li>
-      </ul>
+    <sc-alert closable="" open="" scrollonopen="" type="danger">
+      <span slot="title">
+        Error title
+      </span>
+      Additional error 1, Additional error 2
     </sc-alert>
     <slot></slot>
   </mock:shadow-root>

@@ -1421,7 +1421,8 @@ export namespace Components {
         "size": 'small' | 'medium' | 'large';
     }
     /**
-     * This component listens for a confirmed event and redirects to the success url.
+     * This component checks to make sure there is an error component
+     * and adds one if it's missing.
      */
     interface ScFormErrorProvider {
     }
@@ -4533,7 +4534,8 @@ declare global {
         new (): HTMLScFormControlElement;
     };
     /**
-     * This component listens for a confirmed event and redirects to the success url.
+     * This component checks to make sure there is an error component
+     * and adds one if it's missing.
      */
     interface HTMLScFormErrorProviderElement extends Components.ScFormErrorProvider, HTMLStencilElement {
     }
@@ -7128,7 +7130,8 @@ declare namespace LocalJSX {
         "size"?: 'small' | 'medium' | 'large';
     }
     /**
-     * This component listens for a confirmed event and redirects to the success url.
+     * This component checks to make sure there is an error component
+     * and adds one if it's missing.
      */
     interface ScFormErrorProvider {
     }
@@ -10049,7 +10052,8 @@ declare module "@stencil/core" {
             "sc-form-components-validator": LocalJSX.ScFormComponentsValidator & JSXBase.HTMLAttributes<HTMLScFormComponentsValidatorElement>;
             "sc-form-control": LocalJSX.ScFormControl & JSXBase.HTMLAttributes<HTMLScFormControlElement>;
             /**
-             * This component listens for a confirmed event and redirects to the success url.
+             * This component checks to make sure there is an error component
+             * and adds one if it's missing.
              */
             "sc-form-error-provider": LocalJSX.ScFormErrorProvider & JSXBase.HTMLAttributes<HTMLScFormErrorProviderElement>;
             "sc-form-row": LocalJSX.ScFormRow & JSXBase.HTMLAttributes<HTMLScFormRowElement>;

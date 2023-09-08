@@ -7,14 +7,8 @@
 
 ## Overview
 
-This component listens for a confirmed event and redirects to the success url.
-
-## Properties
-
-| Property        | Attribute        | Description        | Type                                                                                                                                                           | Default     |
-| --------------- | ---------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `checkoutState` | `checkout-state` | The current order. | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating"` | `undefined` |
-
+This component checks to make sure there is an error component
+and adds one if it's missing.
 
 ## Dependencies
 
