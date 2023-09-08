@@ -67,7 +67,7 @@ class BuyPageController extends BasePageController {
 		$id = get_query_var( 'sc_checkout_product_id' );
 
 		// fetch the product by id/slug.
-		$this->setModel( \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $id ) );
+		$this->model = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );

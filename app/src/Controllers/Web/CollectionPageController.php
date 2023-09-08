@@ -23,7 +23,7 @@ class CollectionPageController extends BasePageController {
 		$collection_page_id = get_query_var( 'sc_collection_page_id' );
 
 		// fetch the collection by id/slug.
-		$this->setModel( \SureCart\Models\ProductCollection::with( [ 'image' ] )->find( $collection_page_id ) );
+		$this->model = \SureCart\Models\ProductCollection::with( [ 'image' ] )->find( $collection_page_id );
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
 		}
