@@ -155,14 +155,14 @@ export default ({ id }) => {
 						loading={isLoading}
 					/>
 
-					<Box title={__('Image', 'surecart')} loading={isLoading}>
+					{/* <Box title={__('Image', 'surecart')} loading={isLoading}>
 						<Image
 							label={__('Image', 'surecart')}
 							collection={collection}
 							updateCollection={updateCollection}
 							loading={isLoading}
 						/>
-					</Box>
+					</Box> */}
 
 					<Products collectionId={id} />
 				</>

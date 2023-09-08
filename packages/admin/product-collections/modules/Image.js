@@ -116,7 +116,7 @@ export default ({ label, collection, updateCollection, showLabel = false }) => {
 					onSelect={onSelectMedia}
 					isPrivate={false}
 					render={({ setOpen }) => (
-						<ScButton type="primary" onClick={() => setOpen(true)}>
+						<ScButton onClick={() => setOpen(true)}>
 							<ScIcon name="plus" slot="prefix" />
 							{__('Add Image', 'surecart')}
 						</ScButton>
