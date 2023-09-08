@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { render } from '@wordpress/element';
+import { createRoot } from '@wordpress/element';
 
 /**
  * register store and entities.
@@ -16,4 +16,6 @@ import ProductCollections from './ProductCollections';
 /**
  * Render
  */
-render(<ProductCollections />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<ProductCollections />);
