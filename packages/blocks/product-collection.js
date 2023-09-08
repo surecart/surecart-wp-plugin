@@ -20,5 +20,7 @@ registerBlocksForTemplates({
 	include: [
 		'surecart/surecart//product-collection-part',
 		'surecart/surecart//product-collection',
+		'sc-product-collection',
+		'sc-part-product-collection',
 	],
 });
