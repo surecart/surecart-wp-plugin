@@ -142,6 +142,7 @@ export class ScTaxIdInput {
               number_type: this.type || 'other',
             });
           }}
+          help={this.help}
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
@@ -171,8 +172,6 @@ export class ScTaxIdInput {
             </sc-menu>
           </sc-dropdown>
         </sc-input>
-
-        {this.help && <sc-help-text>{this.help}</sc-help-text>}
       </Fragment>
     );
   }
