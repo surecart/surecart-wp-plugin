@@ -142,7 +142,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			'sc_product_collection',
 			'surecart/product-collection',
 			[
-				'collection_id'      => '', // mendatory.
+				'collection_id'      => '', // ndatory.
 				'columns'            => 4,
 				'sort_enabled'       => false,
 				'search_enabled'     => false,
@@ -282,7 +282,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function buyButtonShortcode( $atts, $content ) {
-		// Remove inner shortcode from buy button label
+		// Remove inner shortcode from buy button label.
 		$label = strip_shortcodes( $content );
 		$atts  = shortcode_atts(
 			[
@@ -315,9 +315,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	/**
 	 * Get specific shortcode atts from content
 	 *
-	 * @param string $name Name of shortcode
-	 * @param string $content Page content
-	 * @param array  $defaults Defaults for each
+	 * @param string $name Name of shortcode.
+	 * @param string $content Page content.
+	 * @param array  $defaults Defaults for each.
 	 * @return array
 	 */
 	public function getShortcodesAtts( $name, $content, $defaults = [] ) {
@@ -342,6 +342,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		return $items;
 	}
 
+	/**
+	 * Convert to block.
+	 *
+	 * @param string   $name The name.
+	 * @param stdClass $block The block.
+	 * @param array    $defaults The defaults.
+	 * @param array    $atts The atts.
+	 * @param string   $content The content.
+	 *
+	 * @return string
+	 */
 	protected function convertToBlock( $name, $block, $defaults = [], $atts = [], $content = '' ) {
 		return( new $block() )->render(
 			shortcode_atts(
