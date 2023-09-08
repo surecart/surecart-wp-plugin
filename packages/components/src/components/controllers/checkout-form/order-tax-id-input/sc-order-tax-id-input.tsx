@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
@@ -47,7 +47,15 @@ export class ScOrderTaxIdInput {
   @Prop() helpText: string;
 
   /** Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]' */
-  @Prop() taxIdTypes: string = '';
+  @Prop() taxIdTypes: string | string[];
+
+  /** Tax ID Types data as array */
+  @State() taxIdTypesData: string[] = [];
+
+  @Watch('taxIdTypes')
+  handleTaxIdTypesChange() {
+    this.taxIdTypesData = typeof this.taxIdTypes === 'string' ? JSON.parse(this.taxIdTypes) : this.taxIdTypes;
+  }
 
   /** Make a request to update the order. */
   @Event() scUpdateOrder: EventEmitter<{
@@ -83,17 +91,6 @@ export class ScOrderTaxIdInput {
     }
   }
 
-  getTaxTypes() {
-    if (this.taxIdTypes) {
-      const taxTypesData = JSON.parse(this.taxIdTypes);
-      if (taxTypesData && taxTypesData.length) {
-        return taxTypesData;
-      }
-    }
-
-    return [];
-  }
-
   render() {
     return (
       <sc-tax-id-input
@@ -113,7 +110,7 @@ export class ScOrderTaxIdInput {
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
         help={this.helpText}
-        taxIdTypes={this.getTaxTypes()}
+        taxIdTypes={this.taxIdTypesData}
       ></sc-tax-id-input>
     );
   }
