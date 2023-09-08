@@ -52,7 +52,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 				{__('This action cannot be undone.', 'surecart')}
 			</p>
 			<ScAlert
-				type="warning"
+				type="info"
 				open
 				css={css`
 					margin-top: 10px;
@@ -60,11 +60,7 @@ export default ({ deleteItem, deletingItem, setError, onClose = () => {} }) => {
 				`}
 			>
 				{__(
-					"If you delete a product collection, the products inside that collection won't go away.",
-					'surecart'
-				)}{' '}
-				{__(
-					'They will just be taken out of the collection.',
+					'Deleting a product collection does not delete the products in that collection.',
 					'surecart'
 				)}
 			</ScAlert>
