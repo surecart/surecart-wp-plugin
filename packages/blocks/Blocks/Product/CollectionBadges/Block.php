@@ -41,7 +41,7 @@ class Block extends BaseBlock {
 		$wrapper_attributes = get_block_wrapper_attributes(
 			[
 				'class' => 'is-layout-flex',
-				'style' => 'gap: ' . $attributes['style']['spacing']['blockGap'] ?? '2px',
+				'style' => 'gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '3px' ),
 			]
 		);
 
