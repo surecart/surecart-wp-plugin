@@ -94,6 +94,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/cancellation-insights/index.js'
 		),
+		['admin/subscription-insights']: path.resolve(
+			__dirname,
+			'packages/admin/subscription-insights/index.js'
+		),
 
 		/**
 		 * Settings.
@@ -193,6 +197,14 @@ module.exports = {
 		['templates/customer-dashboard']: path.resolve(
 			__dirname,
 			'packages/pages/customer-dashboard/index.js'
+		),
+
+		/**
+		 * Styles.
+		 */
+		['styles/webhook-notice']: path.resolve(
+			__dirname,
+			'packages/admin/styles/webhook-notice.js'
 		),
 	},
 	output: {
