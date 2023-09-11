@@ -6,18 +6,25 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 /**
  * Component Dependencies
  */
-import { ScFlex } from '@surecart/components-react';
 import classNames from 'classnames';
+import { useSelect } from '@wordpress/data';
+
+const FALLBACK_COLLECTIONS = [
+	{ id: '1', name: 'Collection' },
+	{ id: '2', name: 'Collection 2' },
+	{ id: '3', name: 'Collection 3' },
+];
 
 export default ({ attributes, setAttributes }) => {
-	const { collectionCount } = attributes;
-	const blockProps = useBlockProps({});
+	const { count, style } = attributes;
+	const { blockGap } = style?.spacing || {};
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 	const borderProps = useBorderProps(attributes);
@@ -27,6 +34,17 @@ export default ({ attributes, setAttributes }) => {
 		fontStyle: blockProps?.style?.fontStyle,
 	};
 
+	const blockProps = useBlockProps({
+		className: 'is-layout-flex',
+		style: {
+			...(!!blockGap ? { gap: blockGap } : {}),
+		},
+	});
+
+	const collections = useSelect((select) =>
+		select(coreStore).getEntityRecords('surecart', 'product-collection')
+	);
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -34,13 +52,11 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<TextControl
 							label={__(
-								'Product Collections to display',
+								'Product collections to display',
 								'surecart'
 							)}
-							value={collectionCount}
-							onChange={(collectionCount) =>
-								setAttributes({ collectionCount })
-							}
+							value={count}
+							onChange={(count) => setAttributes({ count })}
 							type="number"
 						/>
 					</PanelRow>
@@ -48,8 +64,10 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScFlex gap="1em" justifyContent="flex-start">
-					{['Male', 'Female', 'Unisex'].map((collection) => (
+				{(collections || FALLBACK_COLLECTIONS)
+					.map((collection) => collection.name)
+					.slice(0, count)
+					.map((collection) => (
 						<span
 							className={classNames(
 								'sc-product-collection-badge',
@@ -67,12 +85,11 @@ export default ({ attributes, setAttributes }) => {
 								...spacingProps.style,
 								...borderProps.style,
 							}}
-							key={collection}
+							key={collection?.id}
 						>
 							{collection}
 						</span>
 					))}
-				</ScFlex>
 			</div>
 		</Fragment>
 	);

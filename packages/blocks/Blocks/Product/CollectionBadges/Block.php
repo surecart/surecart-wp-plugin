@@ -2,7 +2,6 @@
 
 namespace SureCartBlocks\Blocks\Product\CollectionBadges;
 
-use SureCart\Models\ProductCollection;
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
@@ -27,6 +26,11 @@ class Block extends BaseBlock {
 		// get the collections expanded on the product.
 		$collections = $product->product_collections->data ?? [];
 
+		// Limit the number of items displayed based on the $attributes['count'] value.
+		if ( ! empty( $attributes['count'] ) ) {
+			$collections = array_slice( $collections, 0, (int) $attributes['count'] );
+		}
+
 		// we don't have the collections.
 		if ( empty( $collections ) ) {
 			return '';
@@ -34,17 +38,23 @@ class Block extends BaseBlock {
 
 		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
+		$wrapper_attributes = get_block_wrapper_attributes(
+			[
+				'class' => 'is-layout-flex',
+				'style' => 'gap: ' . $attributes['style']['spacing']['blockGap'] ?? '2px',
+			]
+		);
+
 		ob_start(); ?>
-			<sc-flex justify-content="flex-start" flex-wrap="wrap">
+			<div <?php echo $wrapper_attributes; ?>> <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php foreach ( $collections as $collection ) : ?>
-					<a
-					href="<?php echo esc_url( $collection->permalink ); ?>"
+					<a href="<?php echo esc_url( $collection->permalink ); ?>"
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
 					<?php echo wp_kses_post( $collection->name ); ?></a>
 				<?php endforeach; ?>
-			</sc-flex>
+			</div>
 		<?php
 		return ob_get_clean();
 	}

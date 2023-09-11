@@ -1,5 +1,5 @@
 .sc-product-collection-badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   border: none;
   line-height: 1;
@@ -14,6 +14,10 @@
   background-color: var(--sc-tag-default-background-color, var(--sc-color-gray-100));
   border-color: var(--sc-tag-default-border-color, var(--sc-color-gray-200));
   color: var(--sc-tag-default-color, var(--sc-color-gray-700));
+}
+
+.is-layout-flow.is-horizontal {
+  margin: 0;
 }
 
 .sc-product-collection-badge:hover,

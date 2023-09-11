@@ -6,7 +6,7 @@
 	"category": "surecart",
 	"keywords": ["collection", "form", "product"],
 	"attributes": {
-		"collectionCount": {
+		"count": {
 			"type": "number",
 			"default": 1
 		}
