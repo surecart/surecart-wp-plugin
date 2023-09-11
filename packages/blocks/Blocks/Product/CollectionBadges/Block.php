@@ -46,7 +46,8 @@ class Block extends BaseBlock {
 		);
 
 		ob_start(); ?>
-			<div <?php echo $wrapper_attributes; ?>> <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		<div>
+			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php foreach ( $collections as $collection ) : ?>
 					<a href="<?php echo esc_url( $collection->permalink ); ?>"
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
@@ -55,6 +56,7 @@ class Block extends BaseBlock {
 					<?php echo wp_kses_post( $collection->name ); ?></a>
 				<?php endforeach; ?>
 			</div>
+		</div>
 		<?php
 		return ob_get_clean();
 	}

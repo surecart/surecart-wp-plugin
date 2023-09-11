@@ -67,34 +67,32 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<div {...blockProps}>
-				{(collections || FALLBACK_COLLECTIONS)
-					.map((collection) => collection.name)
-					.slice(0, count)
-					.map((collection) => (
-						<span
-							className={classNames(
-								'sc-product-collection-badge',
-								colorProps.className,
-								spacingProps.className,
-								borderProps.className,
-								typographyProps.className,
-								{
-									'no-border-radius':
-										attributes.style?.border?.radius === 0,
-								}
-							)}
-							style={{
-								...fontStyles,
-								...colorProps.style,
-								...spacingProps.style,
-								...borderProps.style,
-								...typographyProps.style,
-							}}
-						>
-							{collection}
-						</span>
-					))}
+			<div>
+				<div {...blockProps}>
+					{(collections || FALLBACK_COLLECTIONS)
+						.map((collection) => collection.name)
+						.slice(0, count)
+						.map((collection) => (
+							<span
+								className={classNames(
+									'sc-product-collection-badge',
+									colorProps.className,
+									spacingProps.className,
+									borderProps.className,
+									typographyProps.className
+								)}
+								style={{
+									...fontStyles,
+									...colorProps.style,
+									...spacingProps.style,
+									...borderProps.style,
+									...typographyProps.style,
+								}}
+							>
+								{collection}
+							</span>
+						))}
+				</div>
 			</div>
 		</Fragment>
 	);
