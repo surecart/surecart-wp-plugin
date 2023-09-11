@@ -20,10 +20,12 @@
   color: var(--sc-tag-default-color, var(--sc-color-gray-700));
   border-style: solid;
   border-color: transparent;
+  text-decoration: none;
 }
 
 .sc-product-collection-badge:hover,
 .sc-product-collection-badge:active,
 .sc-product-collection-badge:visited {
   color: var(--sc-tag-default-color, var(--sc-color-gray-700));
+  text-decoration: none;
 }
