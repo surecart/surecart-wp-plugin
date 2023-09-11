@@ -25,11 +25,10 @@
 		},
 		"spacing": {
 			"blockGap": {
-				"__experimentalDefault": "2em"
+				"__experimentalDefault": "3px"
 			},
-			"__experimentalSkipSerialization": ["padding", "margin"],
-			"padding": ["horizontal", "vertical"],
-			"margin": ["left", "right"]
+			"__experimentalSkipSerialization": ["padding"],
+			"padding": ["horizontal", "vertical"]
 		},
 		"typography": {
 			"fontSize": true,
