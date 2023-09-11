@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.5.2
+Stable tag: 2.6.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.6.0 - September 5th, 2023 =
+= 2.6.0 - September 11th, 2023 =
 * New: Subscription metrics on merchant dashboard.
 * New: Ability to revoke access when installments are completed.
 * Improvement: Webhooks reliability, performance and failure visibility improvements.
