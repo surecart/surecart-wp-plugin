@@ -1,13 +1,18 @@
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
 import {
 	InspectorControls,
 	useBlockProps,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalUseBorderProps as useBorderProps,
+	getTypographyClassesAndStyles as useTypographyProps,
 } from '@wordpress/block-editor';
-import { store as coreStore } from '@wordpress/core-data';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	__experimentalNumberControl as NumberControl,
+} from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 /**
@@ -25,9 +30,12 @@ const FALLBACK_COLLECTIONS = [
 export default ({ attributes, setAttributes }) => {
 	const { count, style } = attributes;
 	const { blockGap } = style?.spacing || {};
+
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 	const borderProps = useBorderProps(attributes);
+	const typographyProps = useTypographyProps(attributes);
+
 	const fontStyles = {
 		fontFamily: blockProps?.style?.fontFamily,
 		fontWeight: blockProps?.style?.fontWeight,
@@ -48,16 +56,12 @@ export default ({ attributes, setAttributes }) => {
 	return (
 		<Fragment>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
+				<PanelBody>
 					<PanelRow>
-						<TextControl
-							label={__(
-								'Product collections to display',
-								'surecart'
-							)}
+						<NumberControl
+							label={__('Number To Display', 'surecart')}
 							value={count}
 							onChange={(count) => setAttributes({ count })}
-							type="number"
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -74,6 +78,7 @@ export default ({ attributes, setAttributes }) => {
 								colorProps.className,
 								spacingProps.className,
 								borderProps.className,
+								typographyProps.className,
 								{
 									'no-border-radius':
 										attributes.style?.border?.radius === 0,
@@ -84,8 +89,8 @@ export default ({ attributes, setAttributes }) => {
 								...colorProps.style,
 								...spacingProps.style,
 								...borderProps.style,
+								...typographyProps.style,
 							}}
-							key={collection?.id}
 						>
 							{collection}
 						</span>
