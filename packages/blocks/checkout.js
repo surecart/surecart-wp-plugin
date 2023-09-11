@@ -11,6 +11,7 @@ import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
 import * as newDonation from '@blocks/NewDonation';
 import * as donationAmount from '@blocks/DonationAmount';
+import * as newDonationAmount from '@blocks/NewDonationAmount';
 import * as email from '@blocks/Email';
 import * as phone from '@blocks/Phone';
 import * as expressPayment from '@blocks/ExpressPayment';
@@ -40,6 +41,7 @@ import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
+import * as recurringChoices from '@blocks/RecurringChoices';
 
 import { registerBlocks } from './register-block';
 
@@ -48,6 +50,8 @@ registerBlocks([
 	donation,
 	newDonation,
 	donationAmount,
+	newDonationAmount,
+	recurringChoices,
 	nameYourPrice,
 	bumpLineItem,
 	checkoutErrors,

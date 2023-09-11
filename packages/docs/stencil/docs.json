@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-25T11:44:30",
+  "timestamp": "2023-09-11T13:13:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1850,6 +1850,7 @@
         "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-purchase-downloads-list",
+        "sc-recurring-price-choice-container",
         "sc-rich-text",
         "sc-stripe-add-method",
         "sc-subscription",
@@ -1958,6 +1959,9 @@
           "sc-button"
         ],
         "sc-purchase-downloads-list": [
+          "sc-button"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-button"
         ],
         "sc-rich-text": [
@@ -4577,10 +4581,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -10924,6 +10928,7 @@
       "dependents": [
         "sc-payment-methods-list",
         "sc-product-item-list",
+        "sc-recurring-price-choice-container",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -10933,6 +10938,9 @@
           "sc-dropdown"
         ],
         "sc-product-item-list": [
+          "sc-dropdown"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-dropdown"
         ],
         "sc-select": [
@@ -13817,6 +13825,7 @@
         "sc-provisional-banner",
         "sc-purchase-downloads-list",
         "sc-quantity-select",
+        "sc-recurring-price-choice-container",
         "sc-rich-text",
         "sc-select",
         "sc-subscription",
@@ -13936,6 +13945,9 @@
           "sc-icon"
         ],
         "sc-quantity-select": [
+          "sc-icon"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-icon"
         ],
         "sc-rich-text": [
@@ -16382,6 +16394,7 @@
       "dependents": [
         "sc-payment-methods-list",
         "sc-product-item-list",
+        "sc-recurring-price-choice-container",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -16391,6 +16404,9 @@
           "sc-menu"
         ],
         "sc-product-item-list": [
+          "sc-menu"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-menu"
         ],
         "sc-select": [
@@ -16555,6 +16571,7 @@
       "dependents": [
         "sc-payment-methods-list",
         "sc-product-item-list",
+        "sc-recurring-price-choice-container",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -16564,6 +16581,9 @@
           "sc-menu-item"
         ],
         "sc-product-item-list": [
+          "sc-menu-item"
+        ],
+        "sc-recurring-price-choice-container": [
           "sc-menu-item"
         ],
         "sc-select": [
@@ -19698,6 +19718,23 @@
           "type": "boolean",
           "mutable": true,
           "attr": "collapsed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsedOnDesktop",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed-on-desktop",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -25233,13 +25270,15 @@
       "dependencies": [
         "sc-format-number",
         "sc-choices",
-        "sc-price-choice-container"
+        "sc-price-choice-container",
+        "sc-recurring-price-choice-container"
       ],
       "dependencyGraph": {
         "sc-product-price-choices": [
           "sc-format-number",
           "sc-choices",
-          "sc-price-choice-container"
+          "sc-price-choice-container",
+          "sc-recurring-price-choice-container"
         ],
         "sc-choices": [
           "sc-form-control"
@@ -25251,6 +25290,18 @@
           "sc-format-number",
           "sc-choice-container",
           "sc-skeleton"
+        ],
+        "sc-recurring-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
@@ -26524,39 +26575,6 @@
       "usage": {},
       "props": [
         {
-          "name": "checked",
-          "type": "boolean",
-          "mutable": true,
-          "attr": "checked",
-          "reflectToAttr": true,
-          "docs": "Is this checked by default",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "description",
-          "type": "string",
-          "mutable": false,
-          "attr": "description",
-          "reflectToAttr": false,
-          "docs": "Label for the choice.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -26573,36 +26591,30 @@
           "required": false
         },
         {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "Is this loading",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "price",
-          "type": "Price | string",
+          "type": "Price",
           "mutable": false,
-          "attr": "price",
           "reflectToAttr": false,
           "docs": "Stores the price",
           "docsTags": [],
           "values": [
             {
               "type": "Price"
-            },
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "prices",
+          "type": "Price[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
             {
-              "type": "string"
+              "type": "Price[]"
             }
           ],
           "optional": false,
@@ -26617,40 +26629,6 @@
           "docs": "Show the radio/checkbox control",
           "docsTags": [],
           "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "showLabel",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "show-label",
-          "reflectToAttr": false,
-          "docs": "Show the label",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "showPrice",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "show-price",
-          "reflectToAttr": false,
-          "docs": "Show the price amount",
-          "docsTags": [],
-          "default": "true",
           "values": [
             {
               "type": "boolean"
@@ -26696,18 +26674,43 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
-      "dependents": [],
+      "parts": [
+        {
+          "name": "checked-icon",
+          "docs": ""
+        },
+        {
+          "name": "label",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-product-price-choices"
+      ],
       "dependencies": [
         "sc-format-number",
         "sc-choice-container",
-        "sc-skeleton"
+        "sc-dropdown",
+        "sc-button",
+        "sc-menu",
+        "sc-menu-item",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-recurring-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
-          "sc-skeleton"
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-product-price-choices": [
+          "sc-recurring-price-choice-container"
         ]
       }
     },
@@ -27831,10 +27834,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [
@@ -28117,7 +28120,6 @@
         "sc-price-choice-container",
         "sc-product-item-list",
         "sc-purchase-downloads-list",
-        "sc-recurring-price-choice-container",
         "sc-stripe-add-method",
         "sc-stripe-payment-element",
         "sc-subscription",
@@ -28205,9 +28207,6 @@
           "sc-skeleton"
         ],
         "sc-purchase-downloads-list": [
-          "sc-skeleton"
-        ],
-        "sc-recurring-price-choice-container": [
           "sc-skeleton"
         ],
         "sc-stripe-add-method": [

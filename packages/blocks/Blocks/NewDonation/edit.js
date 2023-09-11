@@ -40,15 +40,16 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		: __experimentalUseInnerBlocksProps;
 
 	const [template, setTemplate] = useState([
-		['surecart/donation-amount', { amount: 100, currency }],
-		['surecart/donation-amount', { amount: 200, currency }],
-		['surecart/donation-amount', { amount: 500, currency }],
-		['surecart/donation-amount', { amount: 1000, currency }],
-		['surecart/donation-amount', { amount: 2000, currency }],
-		['surecart/donation-amount', { amount: 5000, currency }],
-		['surecart/donation-amount', { amount: 10000, currency }],
-		['surecart/donation-amount', { amount: 20000, currency }],
-		['surecart/donation-amount', { amount: 50000, currency }],
+		['surecart/new-donation-amount', { amount: 100, currency }],
+		['surecart/new-donation-amount', { amount: 200, currency }],
+		['surecart/new-donation-amount', { amount: 500, currency }],
+		['surecart/new-donation-amount', { amount: 1000, currency }],
+		['surecart/new-donation-amount', { amount: 2000, currency }],
+		['surecart/new-donation-amount', { amount: 5000, currency }],
+		['surecart/new-donation-amount', { amount: 10000, currency }],
+		['surecart/new-donation-amount', { amount: 20000, currency }],
+		['surecart/new-donation-amount', { amount: 50000, currency }],
+		['surecart/recurring-choices', { amount: 50000, currency }],
 	]);
 
 	const product = useSelect(
@@ -60,6 +61,8 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const blockProps = useBlockProps({
 		style: {
 			display: 'grid',
+			position: 'relative',
+			zIndex: 1,
 		},
 		css: css`
 			sc-choice.wp-block {
@@ -71,7 +74,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const innerBlocksProps = useInnerBlocksProps(
 		{},
 		{
-			allowedBlocks: ['surecart/donation-amount'],
+			allowedBlocks: ['surecart/new-donation-amount'],
 			renderAppender: false,
 			orientation: 'horizontal',
 			template,
@@ -84,9 +87,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			'product',
 			product_id
 		);
-		// need a price.
+		console.log('product_id', product_id);
+		// need a product.
 		if (!product) return;
-
+console.log('product', product);
 		return setAttributes({ product_id });
 	};
 

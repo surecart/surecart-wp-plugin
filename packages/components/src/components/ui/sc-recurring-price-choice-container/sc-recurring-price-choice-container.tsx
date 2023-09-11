@@ -44,6 +44,8 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
+    console.log(this.prices);
+    
     const cardChecked = this.prices.find(price => price.id === this.price?.id);
     return (
       <sc-choice-container value={this.price?.id} type={this.type} showControl={this.showControl} checked={!!cardChecked} onScChange={() => this.scChange.emit()}>

@@ -26,13 +26,13 @@
 
 ## Methods
 
-### `finalize() => Promise<Checkout | NodeJS.Timeout>`
+### `finalize() => Promise<Checkout | NodeJS.Timeout | Error>`
 
 Finalize the order.
 
 #### Returns
 
-Type: `Promise<Checkout | Timeout>`
+Type: `Promise<Checkout | Timeout | Error>`
 
 
 

@@ -1,12 +1,12 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/donation",
-	"title": "Donation",
+	"name": "surecart/new-donation",
+	"title": "New Donation",
 	"description": "Displays a donation amount for the user to choose from.",
 	"category": "surecart",
 	"ancestor": ["surecart/form"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -19,7 +19,7 @@
 		"default_amount": {
 			"type": "number"
 		},
-		"price_id": {
+		"product_id": {
 			"type": "string"
 		},
 		"currency": {
