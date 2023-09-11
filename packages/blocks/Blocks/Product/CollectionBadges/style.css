@@ -16,10 +16,6 @@
   color: var(--sc-tag-default-color, var(--sc-color-gray-700));
 }
 
-.is-layout-flow.is-horizontal {
-  margin: 0;
-}
-
 .sc-product-collection-badge:hover,
 .sc-product-collection-badge:active,
 .sc-product-collection-badge:visited {
