@@ -8,27 +8,54 @@ import { store as noticesStore } from '@wordpress/notices';
 /**
  * Internal dependencies.
  */
-import { ScButton, ScFormControl, ScIcon } from '@surecart/components-react';
+import { ScBlockUi, ScButton, ScIcon } from '@surecart/components-react';
 import MediaLibrary from '../../components/MediaLibrary';
+import Box from '../../ui/Box';
+import { useState } from 'react';
 
-export default ({ label, collection, updateCollection, showLabel = false }) => {
+export default ({ collection, updateCollection }) => {
+	const [loading, setLoading] = useState(false);
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const { createSuccessNotice } = useDispatch(noticesStore);
+	const { createSuccessNotice, createErrorNotice } =
+		useDispatch(noticesStore);
 
 	const onSelectMedia = async (media) => {
-		const response = await saveEntityRecord(
-			'surecart',
-			'product-collection',
+		try {
+			setLoading(true);
+			const response = await saveEntityRecord(
+				'surecart',
+				'product-collection',
+				{
+					id: collection.id,
+					image_id: media?.id,
+				},
+				{ throwOnError: true }
+			);
+			updateCollection(response);
+			createSuccessNotice(__('Image updated.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 			{
-				id: collection.id,
-				image_id: media?.id,
-			},
-			{ throwOnError: true }
-		);
-		updateCollection(response);
-		createSuccessNotice(__('Image updated.', 'surecart'), {
-			type: 'snackbar',
-		});
+				(e?.additional_errors || []).map((e) => {
+					createErrorNotice(
+						e?.message || __('Something went wrong', 'surecart'),
+						{
+							type: 'snackbar',
+						}
+					);
+				});
+			}
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	const onRemoveMedia = async () => {
@@ -37,51 +64,88 @@ export default ({ label, collection, updateCollection, showLabel = false }) => {
 		);
 		if (!confirmedRemoveImage) return;
 
-		const response = await saveEntityRecord(
-			'surecart',
-			'product-collection',
+		try {
+			setLoading(true);
+			const response = await saveEntityRecord(
+				'surecart',
+				'product-collection',
+				{
+					id: collection.id,
+					image_id: null,
+				},
+				{ throwOnError: true }
+			);
+			updateCollection(response);
+			createSuccessNotice(__('Image removed.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 			{
-				id: collection.id,
-				image_id: null,
-			},
-			{ throwOnError: true }
-		);
-		updateCollection(response);
-		createSuccessNotice(__('Image removed.', 'surecart'), {
-			type: 'snackbar',
-		});
+				(e?.additional_errors || []).map((e) => {
+					createErrorNotice(
+						e?.message || __('Something went wrong', 'surecart'),
+						{
+							type: 'snackbar',
+						}
+					);
+				});
+			}
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	const renderContent = () => {
-		if (collection?.image?.url) {
-			return (
-				<div
-					css={css`
-						display: grid;
-						gap: 1em;
-					`}
-				>
-					<img
-						src={collection?.image?.url}
-						alt="image"
-						css={css`
-							width: 100%;
-							height: 100%;
-							max-height: 8rem;
-							object-fit: contain;
-							height: auto;
-							display: block;
-							border-radius: var(--sc-border-radius-medium);
-							background: #f3f3f3;
-						`}
-					/>
+	return (
+		<div
+			css={css`
+				position: relative;
+			`}
+		>
+			<Box
+				title={__('Image', 'surecart')}
+				footer={
+					!collection?.image?.url && (
+						<MediaLibrary
+							onSelect={onSelectMedia}
+							isPrivate={false}
+							render={({ setOpen }) => (
+								<ScButton onClick={() => setOpen(true)}>
+									<ScIcon name="plus" slot="prefix" />
+									{__('Add Image', 'surecart')}
+								</ScButton>
+							)}
+						/>
+					)
+				}
+			>
+				{!!collection?.image?.url && (
 					<div
 						css={css`
-							display: flex;
-							align-items: center;
-							gap: 0.5em;
+							display: grid;
+							gap: 1em;
 						`}
 					>
+						<img
+							src={collection?.image?.url}
+							alt="image"
+							css={css`
+								width: 100%;
+								height: 100%;
+								max-height: 8rem;
+								object-fit: contain;
+								height: auto;
+								display: block;
+								border-radius: var(--sc-border-radius-medium);
+								background: #f3f3f3;
+							`}
+						/>
 						<div
 							css={css`
 								display: flex;
@@ -89,46 +153,39 @@ export default ({ label, collection, updateCollection, showLabel = false }) => {
 								gap: 0.5em;
 							`}
 						>
-							<MediaLibrary
-								onSelect={onSelectMedia}
-								isPrivate={false}
-								render={({ setOpen }) => (
-									<ScButton
-										type="primary"
-										onClick={() => setOpen(true)}
-									>
-										{__('Replace', 'surecart')}
-									</ScButton>
-								)}
-							/>
-							<ScButton onClick={onRemoveMedia}>
-								{__('Remove', 'surecart')}
-							</ScButton>
+							<div
+								css={css`
+									display: flex;
+									align-items: center;
+									gap: 0.5em;
+								`}
+							>
+								<MediaLibrary
+									onSelect={onSelectMedia}
+									isPrivate={false}
+									render={({ setOpen }) => (
+										<ScButton
+											type="primary"
+											onClick={() => setOpen(true)}
+										>
+											{__('Replace', 'surecart')}
+										</ScButton>
+									)}
+								/>
+								<ScButton onClick={onRemoveMedia}>
+									{__('Remove', 'surecart')}
+								</ScButton>
+							</div>
 						</div>
 					</div>
-				</div>
-			);
-		}
-
-		return (
-			<ScFormControl label={label} showLabel={false}>
-				<MediaLibrary
-					onSelect={onSelectMedia}
-					isPrivate={false}
-					render={({ setOpen }) => (
-						<ScButton onClick={() => setOpen(true)}>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Image', 'surecart')}
-						</ScButton>
-					)}
+				)}
+			</Box>
+			{loading && (
+				<ScBlockUi
+					spinner
+					style={{ zIndex: 9, '--sc-block-ui-opacity': '0.75' }}
 				/>
-			</ScFormControl>
-		);
-	};
-
-	return (
-		<ScFormControl label={label} showLabel={showLabel}>
-			{renderContent()}
-		</ScFormControl>
+			)}
+		</div>
 	);
 };
