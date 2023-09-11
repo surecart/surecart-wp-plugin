@@ -124,7 +124,7 @@ export default () => {
 				abandoned
 			);
 
-			const message = e.target.checked
+			const message = notificationsEnabled
 				? __(
 						'Abandoned Checkout notification has been enabled.',
 						'surecart'
