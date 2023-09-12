@@ -57,8 +57,6 @@ class RequestServiceTest extends SureCartUnitTestCase
 
 	/**
 	 * Should clear the token if a 401 issue.
-	 *
-	 * @group failing
 	 */
 	public function test_shouldNotMakeRequestIfNoToken() {
 		$service = new RequestService( null );
