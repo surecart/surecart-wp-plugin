@@ -147,11 +147,6 @@ export class ScSessionProvider {
     updateFormState('PAID');
   }
 
-  @Listen('scPayError')
-  async handlePayError() {
-    updateFormState('REJECT');
-  }
-
   @Listen('scUpdateAbandonedCart')
   async handleAbandonedCartUpdate(e) {
     const abandoned_checkout_enabled = e.detail;
