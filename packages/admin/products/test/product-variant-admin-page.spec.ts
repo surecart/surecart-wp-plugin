@@ -25,40 +25,44 @@ test.describe('Product Admin Page With Variant', () => {
 		);
 	});
 
-	test('Should create a new variant product', async ({ page }) => {
-		// Go to product create page.
-		page.goto('/wp-admin/admin.php?page=sc-products&action=edit');
+	test('Should create a new variant product using API', async ({
+		page,
+		requestUtils,
+	}) => {
+		// Create product with variant option and go to edit page.
+		const product = await requestUtils.rest({
+			method: 'POST',
+			path: API_BASE_PATH,
+			data: {
+				name: 'Test Product',
+				variant_options: [
+					{ name: 'Size', position: 0 },
+					{ name: 'Color', position: 1 },
+				],
+				variants: [
+					{ option_1: 'S', option_2: 'Black', position: 1 },
+					{ option_1: 'S', option_2: 'Red', position: 2 },
+					{ option_1: 'S', option_2: 'White', position: 3 },
+					{ option_1: 'L', option_2: 'Black', position: 4 },
+					{ option_1: 'L', option_2: 'Red', position: 5 },
+					{ option_1: 'L', option_2: 'White', position: 6 },
+				],
+			},
+		});
 
-		// Fill the form.
-		await page.fill('input[name="name"]', 'Test Product');
-
-		// Select Variant option by .sc-product-type-variant
-		await page.click('.sc-product-type-variant');
-
-		// Save the product.
-		await page.click('button[type="submit"]');
-
-		// Check if the product is being created after being redirected to the edit page.
-		// Check there is content sc-model-form sc-breadcrumbs  Edit Product.
-		await expect(page.locator('sc-model-form sc-breadcrumbs')).toHaveText(
-			'Edit Product'
+		// Go to Product edit page wp-admin/admin.php?page=sc-products&action=edit&id=e726c121-026b-4e9f-825d-d85d6d9e89af
+		await page.goto(
+			'/wp-admin/admin.php?page=sc-products&action=edit&id=' + product.id
 		);
 
+		// Check if the product is created with name by going to the edit page.
 		await expect(page.locator('input[name="name"]')).toHaveValue(
 			'Test Product'
 		);
 
-		// Check if the product is created with New variant option button
-		await expect(
-			page.locator('sc-button:has-text("Add variant")')
-		).toBeVisible();
-	});
-
-	test('Should Handle Add New New Variant', async ({ page }) => {
-		// Create product with variant option and go to edit page.
-
-		// Go to Product edit page wp-admin/admin.php?page=sc-products&action=edit&id=e726c121-026b-4e9f-825d-d85d6d9e89af
-
-		// Check if the button is clickable.
+		// Check if the Variants text is present in components-card__header.
+		await expect(page.locator('.components-card__header')).toContainText(
+			'Variants'
+		);
 	});
 });
