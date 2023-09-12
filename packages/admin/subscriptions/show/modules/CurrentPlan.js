@@ -62,10 +62,14 @@ export default ({ lineItem, loading, subscription }) => {
 			console.log(e);
 			createErrorNotice(
 				e?.message || __('Something went wrong', 'surecart'),
-				{
-					type: 'snackbar',
-				}
+				{ type: 'snackbar' }
 			);
+			(e?.additional_errors || []).forEach((e) => {
+				createErrorNotice(
+					e?.message || __('Something went wrong', 'surecart'),
+					{ type: 'snackbar' }
+				);
+			});
 		} finally {
 			setSaving(false);
 		}
