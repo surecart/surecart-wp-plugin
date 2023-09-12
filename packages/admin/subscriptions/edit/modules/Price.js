@@ -156,12 +156,12 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 					...(!!coupon?.id
 						? [
 								{
-									quantity: (
-										<ScTag type="success">
+									product: (
+										<ScTag type="default">
 											{coupon?.name}
 										</ScTag>
 									),
-									total: <>({getHumanDiscount(coupon)})</>,
+									total: <>{getHumanDiscount(coupon)}</>,
 								},
 						  ]
 						: []),

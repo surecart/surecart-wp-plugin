@@ -171,7 +171,7 @@ export default ({ lineItem, loading, subscription }) => {
 								{
 									quantity: (
 										<ScTag
-											type="success"
+											type="default"
 											clearable
 											onClick={() => onSelectCoupon()}
 										>
