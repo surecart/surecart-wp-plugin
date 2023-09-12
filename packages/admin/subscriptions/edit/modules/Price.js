@@ -17,7 +17,6 @@ import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
-import ModelSelector from '../../../components/ModelSelector';
 import { getHumanDiscount } from '../../../util';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
@@ -43,30 +42,6 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 			<DataTable
 				loading={price === null}
 				title={__('Pricing', 'surecart')}
-				footer={
-					!coupon &&
-					!loading && (
-						<ModelSelector
-							style={{ width: '50%' }}
-							name="coupon"
-							requestQuery={{
-								archived: false,
-							}}
-							onSelect={(coupon) =>
-								updateSubscription({
-									discount: {
-										coupon,
-									},
-								})
-							}
-						>
-							<ScButton slot="trigger">
-								<sc-icon name="plus" slot="prefix"></sc-icon>
-								{__('Add Coupon', 'surecart')}
-							</ScButton>
-						</ModelSelector>
-					)
-				}
 				columns={{
 					product: {
 						label: __('Price', 'surecart'),
@@ -182,15 +157,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 						? [
 								{
 									quantity: (
-										<ScTag
-											type="success"
-											clearable
-											onClick={() =>
-												updateSubscription({
-													discount: {},
-												})
-											}
-										>
+										<ScTag type="success">
 											{coupon?.name}
 										</ScTag>
 									),

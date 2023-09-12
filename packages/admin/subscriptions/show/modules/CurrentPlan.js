@@ -1,19 +1,76 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton, ScFormatNumber, ScTag } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScButton,
+	ScFormatNumber,
+	ScIcon,
+	ScTag,
+} from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
 import { getHumanDiscount } from '../../../util';
+import ModelSelector from '../../../components/ModelSelector';
+import { useState } from 'react';
 
 export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
 		return null;
 	}
+	const { saveEntityRecord } = useDispatch(coreStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+	const [saving, setSaving] = useState(false);
 	const coupon = subscription?.discount?.coupon;
+
+	const onSelectCoupon = async (coupon) => {
+		setSaving(true);
+		try {
+			await saveEntityRecord(
+				'surecart',
+				'subscription',
+				{
+					id: subscription.id,
+					discount: !!coupon
+						? {
+								coupon,
+						  }
+						: {},
+				},
+				{
+					throwOnError: true,
+				}
+			);
+
+			if (!!coupon) {
+				createSuccessNotice(__('Coupon Added', 'surecart'), {
+					type: 'snackbar',
+				});
+			} else {
+				createSuccessNotice(__('Coupon Removed', 'surecart'), {
+					type: 'snackbar',
+				});
+			}
+		} catch (e) {
+			console.log(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+		} finally {
+			setSaving(false);
+		}
+	};
+
 	return (
 		<div
 			css={css`
@@ -113,7 +170,11 @@ export default ({ lineItem, loading, subscription }) => {
 						? [
 								{
 									quantity: (
-										<ScTag type="success">
+										<ScTag
+											type="success"
+											clearable
+											onClick={() => onSelectCoupon()}
+										>
 											{coupon?.name}
 										</ScTag>
 									),
@@ -122,7 +183,31 @@ export default ({ lineItem, loading, subscription }) => {
 						  ]
 						: []),
 				]}
+				footer={
+					!coupon &&
+					!loading && (
+						<ModelSelector
+							style={{ width: '50%' }}
+							name="coupon"
+							requestQuery={{
+								archived: false,
+							}}
+							onSelect={onSelectCoupon}
+						>
+							<ScButton slot="trigger">
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add Coupon', 'surecart')}
+							</ScButton>
+						</ModelSelector>
+					)
+				}
 			/>
+			{saving && (
+				<ScBlockUi
+					spinner
+					style={{ '--sc-block-ui-opacity': '0.5' }}
+				></ScBlockUi>
+			)}
 		</div>
 	);
 };
