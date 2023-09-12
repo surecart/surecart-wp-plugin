@@ -25,5 +25,6 @@
 			"type": "boolean",
 			"default": false
 		}
-	}
+	},
+	"style": "file:./preload.css"
 }

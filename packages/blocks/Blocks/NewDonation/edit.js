@@ -87,10 +87,8 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			'product',
 			product_id
 		);
-		console.log('product_id', product_id);
 		// need a product.
 		if (!product) return;
-console.log('product', product);
 		return setAttributes({ product_id });
 	};
 

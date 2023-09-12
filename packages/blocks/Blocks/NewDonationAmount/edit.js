@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import {
 	ScChoice,
 	ScFormatNumber,
@@ -50,9 +51,9 @@ export default ({ attributes, setAttributes }) => {
 								'surecart'
 							)}
 							checked={custom_amount}
-							onChange={(custom_amount) =>
+							onChange={() => {
 								setAttributes({ custom_amount: ! custom_amount })
-							}
+							}}
 						/>
 					</PanelRow>
 				</PanelBody>
@@ -64,27 +65,21 @@ export default ({ attributes, setAttributes }) => {
 						label
 					) : (
 						!! custom_amount ? (
-							<div
-								style={css`
-									width: 60px;
-									width: 60px;
+							<ScPriceInput
+								currencyCode={currency}
+								value={amount}
+								onScInput={(e) =>
+									setAttributes({
+										amount: parseInt(e.target.value),
+									})
+								}
+								size="small"
+								showCode={false}
+								showLabel={false}
+								css={css`
+									width: 6.1em;
 								`}
-
-								slot='price'
-							>
-								<ScPriceInput
-									currencyCode={currency}
-									value={amount}
-									onScInput={(e) =>
-										setAttributes({
-											amount: parseInt(e.target.value),
-										})
-									}
-									size="small"
-									showCode={false}
-									showLabel={false}
-								/>
-							</div>
+							/>
 						) : (
 							<ScFormatNumber
 								type="currency"
