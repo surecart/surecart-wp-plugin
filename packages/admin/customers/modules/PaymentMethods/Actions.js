@@ -13,6 +13,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useState } from 'react';
 import ConfirmDelete from './ConfirmDelete';
+import { createErrorString } from '../../../util';
 
 export default ({ customerId, isDefault, paymentMethod }) => {
 	const [modal, setModal] = useState(false);
@@ -65,33 +66,31 @@ export default ({ customerId, isDefault, paymentMethod }) => {
 			// invalidate page.
 			await invalidateResolutionForStore();
 		} catch (e) {
-			createErrorNotice(
-				e?.message || __('Something went wrong', 'surecart'),
-				{ type: 'snackbar' }
-			);
+			console.error(e);
+			createErrorNotice(createErrorString(e), { type: 'snackbar' });
 		}
 	};
 
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-end">
 			{isDefault && <ScTag type="info">Default</ScTag>}
-			<ScDropdown placement="bottom-end" disabled={isSaving}>
-				<ScButton type="text" circle slot="trigger">
-					<ScIcon name="more-horizontal" />
-				</ScButton>
-				<ScMenu>
-					{!isDefault && (
+			{!isDefault && (
+				<ScDropdown placement="bottom-end" disabled={isSaving}>
+					<ScButton type="text" circle slot="trigger">
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
 						<ScMenuItem
 							onClick={() => setDefault(paymentMethod?.id)}
 						>
 							{__('Make Default', 'surecart')}
 						</ScMenuItem>
-					)}
-					<ScMenuItem onClick={() => setModal(true)}>
-						{__('Delete', 'surecart')}
-					</ScMenuItem>
-				</ScMenu>
-			</ScDropdown>
+						<ScMenuItem onClick={() => setModal(true)}>
+							{__('Delete', 'surecart')}
+						</ScMenuItem>
+					</ScMenu>
+				</ScDropdown>
+			)}
 			{!!modal && (
 				<ConfirmDelete
 					paymentMethod={paymentMethod}
