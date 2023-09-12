@@ -31,7 +31,7 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 		}
 
 		// Elementor integration.
-		add_action( 'elementor/widgets/widgets_registered', [ $this, 'widget' ] );
+		add_action( 'elementor/widgets/register', [ $this, 'widget' ] );
 		add_action( 'elementor/editor/before_enqueue_scripts', [ $this, 'load_scripts' ] );
 		add_action( 'elementor/elements/categories_registered', [ $this, 'categories_registered' ] );
 
@@ -139,11 +139,8 @@ class ElementorServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @return void
 	 */
-	public function widget() {
-		if ( ! class_exists( '\Elementor\Plugin' ) ) {
-			return;
-		}
-		\Elementor\Plugin::instance()->widgets_manager->register( new ReusableFormWidget() );
+	public function widget( $widgets_manager ) {
+		$widgets_manager->register( new ReusableFormWidget() );
 	}
 
 	/**
