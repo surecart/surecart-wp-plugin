@@ -1,6 +1,13 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { newE2EPage, newSpecPage } from '@stencil/core/testing';
+import { ScForm } from '../sc-form';
+import { Address, Checkout } from '../../../../types';
+import { state as checkoutState, dispose as disposeCheckoutState } from '@store/checkout';
 
 describe('sc-form', () => {
+  afterEach(() => {
+    disposeCheckoutState();
+  });
+
   it('renders', async () => {
     const page = await newE2EPage();
     await page.setContent('<sc-form></sc-form>');
@@ -31,9 +38,10 @@ describe('sc-form', () => {
 
   // we are testing this because JEST doesn't work well with FormData
   it('Serializes data', async () => {
-    const page = await newE2EPage();
-    await page.setContent(`
-    <sc-form>
+    const page = await newSpecPage({
+      components: [ScForm],
+      html: `
+      <sc-form>
       <sc-input name="ce_input" value="CE Input"></sc-input>
       <sc-switch name="ce_switch" value="switch" checked></sc-switch>
       <sc-radio-group>
@@ -60,25 +68,22 @@ describe('sc-form', () => {
       <sc-order-tax-id-input></sc-order-tax-id-input>
       <sc-order-password value="pass"></sc-order-password>
     </sc-form>
-    `);
-    const form = await page.find('sc-form');
+      `,
+    });
+    const form = page.body.querySelector('sc-form');
 
-    // set shipping value.
-    const shipping = await page.find('sc-order-shipping-address');
-    shipping.setProperty('shippingEnabled', true);
-    await page.waitForChanges();
-    shipping.setProperty('shippingAddress', { id: 'test', country: 'US', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' });
-
-    await page.waitForChanges();
-
-    // set tax id value.
-    const taxID = await page.find('sc-order-tax-id-input');
-    taxID.setProperty('order', { tax_identifier: { number: '12345', number_type: 'eu_vat' } });
-
+    // set the shipping value
+    const shipping = page.body.querySelector('sc-order-shipping-address');
+    shipping.shippingEnabled = true;
+    shipping.shippingAddress = { id: 'test', country: 'US', city: 'Monona', line_1: '303 Park Ave', line_2: null, postal_code: '12345', state: 'WI' } as Address;
     await page.waitForChanges();
 
-    // serialize form.
-    const data = await form.callMethod('getFormJson');
+    // set the id tax value
+    checkoutState.checkout = { tax_identifier: { number: '12345', number_type: 'eu_vat' } } as Checkout;
+    await page.waitForChanges();
+
+    //serialize form
+    const data = await form.getFormJson();
     expect(data).toEqual({
       'ce_input': 'CE Input',
       'ce_switch': 'switch',
