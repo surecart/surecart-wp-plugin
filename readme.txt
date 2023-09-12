@@ -244,7 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.6.1 - September 12th, 2023 =
-* Hotfix: Compatibility with Elementor 3.6+
+* Fix: Compatibility with Elementor 3.6+
 
 = 2.6.0 - September 11th, 2023 =
 * New: Subscription metrics on merchant dashboard.
