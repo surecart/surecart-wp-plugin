@@ -11,6 +11,6 @@ import state from './store';
 /**
  * Get all of the error messages by concatenating comma separated strings.
  *
- * @returns {String}
+ * @returns {Array<string>} The error messages.
  */
-export const getAdditionalErrorMessages = () => (state?.additional_errors || []).map(error => error.message).join(', ');
+export const getAdditionalErrorMessages = () => (state?.additional_errors || []).map(error => error.message);
