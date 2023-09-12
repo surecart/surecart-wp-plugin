@@ -61,7 +61,9 @@ export class ScCheckoutFormErrors {
       <Host>
         <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!errorState?.message} closable={!!errorState?.dismissible}>
           {errorState?.message && <span slot="title" innerHTML={errorState.message}></span>}
-          {!!getAdditionalErrorMessages() && getAdditionalErrorMessages()}
+          {(getAdditionalErrorMessages() || []).map((message, index) => (
+            <div innerHTML={message} key={index}></div>
+          ))}
         </sc-alert>
         <slot />
       </Host>

@@ -40,7 +40,9 @@ export class ScFormErrorProvider {
     return !!errorState?.message ? (
       <sc-alert exportparts="base, icon, text, title, message, close" type="danger" scrollOnOpen={true} open={!!errorState?.message} closable={!!errorState?.dismissible}>
         {errorState?.message && <span slot="title" innerHTML={errorState.message}></span>}
-        {getAdditionalErrorMessages() && getAdditionalErrorMessages()}
+        {(getAdditionalErrorMessages() || []).map((message, index) => (
+          <div innerHTML={message} key={index}></div>
+        ))}
       </sc-alert>
     ) : null;
   }
