@@ -224,8 +224,7 @@ export class ScSessionProvider {
     console.info('Handling payment redirect.');
     // status failed.
     if (status === 'failed') {
-      createErrorNotice(__('Payment unsuccessful. Please try again.', 'surecart'));
-      return;
+      return createErrorNotice(__('Payment unsuccessful. Please try again.', 'surecart'));
     }
 
     // get the
