@@ -442,7 +442,6 @@ export class ScSessionProvider {
       return;
     }
 
-    console.log('emit', e);
     createErrorNotice(e);
     updateFormState('REJECT');
   }
