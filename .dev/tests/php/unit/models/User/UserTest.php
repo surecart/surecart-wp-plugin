@@ -123,7 +123,6 @@ class UserTest extends SureCartUnitTestCase {
 		$this->assertSame($user->last_name, 'Gagnon');
 	}
 
-	/** @group failing */
 	public function test_syncsCustomerIds()
 	{
 		// mock the requests in the container

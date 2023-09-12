@@ -35,11 +35,21 @@ class CouponsController extends AdminController {
 	/**
 	 * Coupons edit.
 	 */
-	public function edit() {
+	public function edit( $request ) {
 		// admin edit page.
 		do_action( 'surecart/admin/coupons/edit' );
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( CouponScriptsController::class, 'enqueue' ) );
+
+		$this->preloadPaths(
+			[
+				'/wp/v2/users/me',
+				'/wp/v2/types?context=view',
+				'/wp/v2/types?context=edit',
+				'/surecart/v1/coupons/' . $request->query( 'id' ) . '?context=edit',
+			]
+		);
+
 		// return view.
 		return '<div id="app"></div>';
 	}
