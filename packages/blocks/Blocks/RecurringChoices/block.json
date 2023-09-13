@@ -13,7 +13,7 @@
 	},
 	"attributes": {
 		"product_id": {
-			"type": "number"
+			"type": "string"
 		},
 		"label": {
 			"type": "string"

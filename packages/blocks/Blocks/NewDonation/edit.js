@@ -18,13 +18,13 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { select, use, useDispatch, useSelect } from '@wordpress/data';
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
 import {
 	ScButton,
-	ScDonationChoices,
+	ScDonationChoicesNew,
 	ScForm,
 	ScPriceInput,
 } from '@surecart/components-react';
@@ -34,6 +34,14 @@ import PriceInfo from '@scripts/blocks/components/PriceInfo';
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const { product_id, label, currency, custom_amount, default_amount } =
 		attributes;
+
+	const product = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecord('root', 'product', product_id, { expand: ['prices'], archived: false }),
+		[product_id]
+	);
+	
+	const prices = product?.prices?.data;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
@@ -52,11 +60,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		['surecart/recurring-choices', { amount: 50000, currency }],
 	]);
 
-	const product = useSelect(
-		(select) =>
-			select(coreStore).getEntityRecord('root', 'product', product_id),
-		[product_id]
-	);
+	const [templateVerified, setTemplateVerified] = useState(false);
 
 	const blockProps = useBlockProps({
 		style: {
@@ -81,21 +85,45 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		}
 	);
 
-	const productSelected = async (product_id) => {
-		const product = await select(coreStore).getEntityRecord(
-			'root',
-			'product',
-			product_id
-		);
-		// need a product.
-		if (!product) return;
-		return setAttributes({ product_id });
-	};
+	useEffect(() => {
+		console.log(product);
+		console.log(prices);
 
-	if (!product_id) {
+		let minimum;
+		let maximum;
+		prices?.forEach((price) => {
+			//get a minimum ad hoc amount & maximum ad hoc amount. minimum should be the lowest amount, maximum should be the highest amount in all prices.
+			const { ad_hoc_max_amount, ad_hoc_min_amount } = price;
+			// if we don't have any, we can set the default.
+			if (!ad_hoc_max_amount && !ad_hoc_min_amount) {
+				return;
+			}
+			console.log(ad_hoc_max_amount, ad_hoc_min_amount);
+			if (!minimum || ad_hoc_min_amount < minimum) {
+				minimum = ad_hoc_min_amount;
+			}
+			if (!maximum || ad_hoc_max_amount > maximum) {
+				maximum = ad_hoc_max_amount;
+			}
+
+		});
+		console.log(minimum, maximum);
+		// filter blocks who are only inside the range.
+		setTemplate(
+			template.filter(
+				(block) =>
+					block[1].amount <= maximum &&
+					block[1].amount >= minimum
+			)
+		);
+
+		setTemplateVerified(true);
+	}, [product]);
+
+	if (!product_id || !product || !templateVerified) {
 		return (
 			<div {...blockProps}>
-				<SelectProduct onSelect={productSelected} onlyShowProducts={true} />
+				<SelectProduct onSelect={(product_id) => setAttributes({ product_id })} onlyShowProducts={true} />
 			</div>
 		);
 	}
@@ -103,13 +131,13 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	return (
 		<Fragment>
 			<div {...blockProps}>
-				<ScDonationChoices
+				<ScDonationChoicesNew
 					label={label}
-					priceId={product_id}
+					product={product_id}
 					defaultAmount={default_amount}
 				>
 					<div {...innerBlocksProps}></div>
-				</ScDonationChoices>
+				</ScDonationChoicesNew>
 			</div>
 		</Fragment>
 	);

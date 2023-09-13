@@ -37,6 +37,7 @@
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
+ - [sc-donation-choices-new](../../controllers/checkout-form/donation-choices-new)
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
  - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
@@ -78,6 +79,7 @@ graph TD;
   sc-custom-order-price-input --> sc-block-ui
   sc-customer-edit --> sc-block-ui
   sc-donation-choices --> sc-block-ui
+  sc-donation-choices-new --> sc-block-ui
   sc-express-payment --> sc-block-ui
   sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui

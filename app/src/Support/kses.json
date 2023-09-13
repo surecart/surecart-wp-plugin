@@ -617,6 +617,22 @@
     "class": true,
     "slot": true
   },
+  "sc-donation-choices-new": {
+    "busy": true,
+    "currency-code": true,
+    "default-amount": true,
+    "label": true,
+    "line-items": true,
+    "loading": true,
+    "price-id": true,
+    "prices": true,
+    "product": true,
+    "remove-invalid": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-downloads-list": {
     "customer-id": true,
     "downloads": true,
@@ -1744,6 +1760,7 @@
     "label": true,
     "price": true,
     "prices": true,
+    "product": true,
     "show-control": true,
     "type": true,
     "style": true,

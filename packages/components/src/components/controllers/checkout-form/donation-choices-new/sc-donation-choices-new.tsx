@@ -1,0 +1,200 @@
+import { Component, h, Prop, Watch, State, Element, Listen, Event, EventEmitter, Method } from '@stencil/core';
+import { LineItem, LineItemData, Product, Price } from '../../../../types';
+import { __ } from '@wordpress/i18n';
+import { openWormhole } from 'stencil-wormhole';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '../../../../functions/fetch';
+
+@Component({
+  tag: 'sc-donation-choices-new',
+  styleUrl: 'sc-donation-choices-new.scss',
+  shadow: true,
+})
+export class ScDonationChoicesNew {
+  @Element() el: HTMLScDonationChoicesNewElement;
+  private input: HTMLScPriceInputElement;
+
+  /** The product id for the fields. */
+  @Prop({ reflect: true }) product: string;
+
+  /** The price id for the fields. */
+  @Prop({ reflect: true }) priceId: string;
+
+  @Prop() prices: Price[];
+
+  /** The default amount to load the page with. */
+  @Prop() defaultAmount: string;
+
+  /** Currency code for the donation. */
+  @Prop() currencyCode: string = 'usd';
+
+  /** Order line items. */
+  @Prop() lineItems: LineItem[] = [];
+
+  /** Is this loading */
+  @Prop() loading: boolean;
+  @Prop() busy: boolean;
+  @Prop() removeInvalid: boolean = true;
+
+  /** The label for the field. */
+  @Prop() label: string;
+
+  /** Holds the line item for this component. */
+  @State() lineItem: LineItem;
+
+  /** Error */
+  @State() error: string;
+
+  @State() showCustomAmount: boolean;
+
+  /** Toggle line item event */
+  @Event() scRemoveLineItem: EventEmitter<LineItemData>;
+
+  /** Toggle line item event */
+  @Event() scUpdateLineItem: EventEmitter<LineItemData>;
+
+  /** Toggle line item event */
+  @Event() scAddLineItem: EventEmitter<LineItemData>;
+
+  @Method()
+  async reportValidity() {
+    if (!this.input) return true;
+    return this.input.shadowRoot.querySelector('sc-input').reportValidity();
+  }
+
+  @Listen('scChange')
+  handleChange() {
+    const checked = Array.from(this.getChoices()).find(item => item.checked);
+    console.log(checked);
+    console.log(this.priceId);
+    
+    this.showCustomAmount = checked.value === 'ad_hoc';
+    if (!isNaN(parseInt(checked.value))) {
+      this.scUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) });
+    }
+  }
+
+  @Watch('showCustomAmount')
+  handleCustomAmountToggle(val) {
+    if (val) {
+      setTimeout(() => {
+        this.input?.triggerFocus?.();
+      }, 50);
+    }
+  }
+
+  /** Store current line item in state. */
+  @Watch('lineItems')
+  handleLineItemsChange() {
+    console.log(this.lineItems);
+    
+    if (!this.lineItems?.length) return;
+    this.lineItem = (this.lineItems || []).find(lineItem => lineItem.price.id === this.priceId);
+  }
+
+  @Watch('lineItem')
+  handleLineItemChange(val) {
+    this.removeInvalid && this.removeInvalidPrices();
+    const choices = this.getChoices();
+    let hasCheckedOption = false;
+    // check the correct option.
+    choices.forEach((el: HTMLScChoiceElement) => {
+      if (isNaN(parseInt(el.value)) || el.disabled) return;
+      if (parseInt(el.value) === val?.ad_hoc_amount) {
+        el.checked = true;
+        hasCheckedOption = true;
+      } else {
+        el.checked = false;
+      }
+    });
+
+    this.showCustomAmount = !hasCheckedOption;
+    // no options are checked, let's fill in the input.
+    if (!hasCheckedOption) {
+      (this.el.querySelector('sc-choice[value="ad_hoc"]') as HTMLScChoiceElement).checked = true;
+    }
+  }
+
+  async getProductPrices() {
+    console.log(this.product);
+    
+    if (!this.product) return; 
+    const product = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/products/${this.product}`, {
+        expand: ['prices'],
+      }),
+    })) as Product;
+    
+    this.prices = product?.prices?.data?.filter(price => price?.ad_hoc && price?.recurring_interval).sort((a, b) => a?.position - b?.position);
+    console.log(this.prices);
+
+    this.priceId = this.prices?.[0]?.id;
+    console.log(this.priceId);
+
+    this.handleLineItemsChange();
+  }
+
+  componentWillLoad() {
+    if (!this.prices?.length) {
+      this.getProductPrices();
+    }
+  }
+
+  selectDefaultChoice() {
+    const choices = this.getChoices();
+    if (!choices.length) return;
+    choices[0].checked = true;
+  }
+
+  getChoices() {
+    return (this.el.querySelectorAll('sc-choice') as NodeListOf<HTMLScChoiceElement>) || [];
+  }
+
+  removeInvalidPrices() {
+    console.log(this.lineItem);
+    
+    if (!this.lineItem) return;
+
+    this.getChoices().forEach((el: HTMLScChoiceElement) => {
+      // we have a max and the value is more.
+      if (this.lineItem?.price?.ad_hoc_max_amount && parseInt(el.value) > this.lineItem?.price?.ad_hoc_max_amount) {
+        el.style.display = 'none';
+        el.disabled = true;
+        return;
+      }
+
+      // we have a min and the value is less.
+      if (this.lineItem?.price?.ad_hoc_min_amount && parseInt(el.value) < this.lineItem?.price?.ad_hoc_min_amount) {
+        el.style.display = 'none';
+        el.disabled = true;
+        return;
+      }
+
+      el.style.display = 'flex';
+      el.disabled = false;
+    });
+  }
+
+  render() {
+    if (this.loading) {
+      return (
+        <div class="sc-donation-choices-new">
+          <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
+          <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
+          <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+        </div>
+      );
+    }
+
+    return (
+      <div class="sc-donation-choices-new">
+        <sc-choices label={this.label} auto-width>
+          <slot />
+        </sc-choices>
+        {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
+      </div>
+    );
+  }
+}
+
+openWormhole(ScDonationChoicesNew, ['lineItems', 'loading', 'busy', 'currencyCode'], false);

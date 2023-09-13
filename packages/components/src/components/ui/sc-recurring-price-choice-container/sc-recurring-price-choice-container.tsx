@@ -1,9 +1,10 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, Watch, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Price } from 'src/types';
+import { Price, Product } from 'src/types';
 import { state } from '@store/product';
 import { intervalString } from '../../../functions/price';
-
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '../../../functions/fetch';
 @Component({
   tag: 'sc-recurring-price-choice-container',
   styleUrl: 'sc-recurring-price-choice-container.scss',
@@ -12,6 +13,9 @@ import { intervalString } from '../../../functions/price';
 export class ScRecurringPriceChoiceContainer {
   /** Stores the price */
   @Prop() price: Price;
+
+   /** Product ID */
+   @Prop() product: string;
 
   /** Label for the choice. */
   @Prop() label: string;
@@ -30,12 +34,34 @@ export class ScRecurringPriceChoiceContainer {
   handlePriceChange() {
     state.selectedPrice = this.price;
   }
+
+  async getProductPrices() {
+    if (this.prices || !this.product) return; 
+    const product = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/products/${this.product}`, {
+        expand: ['prices'],
+      }),
+    })) as Product;
+    
+    this.prices = product?.prices?.data?.filter(price => price?.ad_hoc && price?.recurring_interval).sort((a, b) => a?.position - b?.position);
+    this.price = this.prices?.[0]
+    this.handlePriceChange();
+  }
+
   componentWillLoad() {
+    try {
+      this.getProductPrices();
+    } catch (e) {
+      console.log(e);
+    }
     this.price = this.prices?.[0]
     this.handlePriceChange();
   }
 
   renderPrice(price) {
+    if (price?.ad_hoc) {
+      return '';
+    }
     return (
       <Fragment>
         <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
@@ -44,8 +70,12 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
-    console.log(this.prices);
-    
+    if (!this.prices?.length) {
+      return ( 
+        <Host style={{ display: 'none' }}></Host> 
+      );
+    }
+
     const cardChecked = this.prices.find(price => price.id === this.price?.id);
     return (
       <sc-choice-container value={this.price?.id} type={this.type} showControl={this.showControl} checked={!!cardChecked} onScChange={() => this.scChange.emit()}>
@@ -78,10 +108,8 @@ export class ScRecurringPriceChoiceContainer {
               </sc-dropdown>
             </div>
             <div class="recurring-price-choice__details">
-              <div class="price-choice__price">
-                {this.price?.ad_hoc ? (
-                  __('Custom Amount', 'surecart')
-                ) : (
+              { ! this.price?.ad_hoc && (
+                <div class="price-choice__price">
                   <Fragment>
                     <sc-format-number type="currency" value={this.price?.amount} currency={this.price?.currency}></sc-format-number>
                     {intervalString(this.price, {
@@ -95,9 +123,8 @@ export class ScRecurringPriceChoiceContainer {
                       },
                     })}
                   </Fragment>
-                )}
-              </div>
-
+                </div>
+              )}
               {!!this.price?.trial_duration_days && (
                 <div class="price-choice__trial">
                   {sprintf(_n('Starting in %s day', 'Starting in %s days', this.price.trial_duration_days, 'surecart'), this.price.trial_duration_days)}

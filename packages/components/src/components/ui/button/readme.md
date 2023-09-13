@@ -59,6 +59,7 @@
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-dialog](../sc-dialog)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
+ - [sc-donation-choices-new](../../controllers/checkout-form/donation-choices-new)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -113,6 +114,7 @@ graph TD;
   sc-customer-edit --> sc-button
   sc-dialog --> sc-button
   sc-donation-choices --> sc-button
+  sc-donation-choices-new --> sc-button
   sc-downloads-list --> sc-button
   sc-invoices-list --> sc-button
   sc-licenses-list --> sc-button

@@ -1252,6 +1252,40 @@ export namespace Components {
         "removeInvalid": boolean;
         "reportValidity": () => Promise<boolean>;
     }
+    interface ScDonationChoicesNew {
+        "busy": boolean;
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode": string;
+        /**
+          * The default amount to load the page with.
+         */
+        "defaultAmount": string;
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * Order line items.
+         */
+        "lineItems": LineItem[];
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        /**
+          * The price id for the fields.
+         */
+        "priceId": string;
+        "prices": Price[];
+        /**
+          * The product id for the fields.
+         */
+        "product": string;
+        "removeInvalid": boolean;
+        "reportValidity": () => Promise<boolean>;
+    }
     interface ScDownloadsList {
         "customerId": string;
         "downloads": Download[];
@@ -3141,6 +3175,10 @@ export namespace Components {
         "price": Price1;
         "prices": Price1[];
         /**
+          * Product ID
+         */
+        "product": string;
+        /**
           * Show the radio/checkbox control
          */
         "showControl": boolean;
@@ -4007,6 +4045,10 @@ export interface ScDonationChoicesCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScDonationChoicesElement;
 }
+export interface ScDonationChoicesNewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScDonationChoicesNewElement;
+}
 export interface ScDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScDrawerElement;
@@ -4516,6 +4558,12 @@ declare global {
     var HTMLScDonationChoicesElement: {
         prototype: HTMLScDonationChoicesElement;
         new (): HTMLScDonationChoicesElement;
+    };
+    interface HTMLScDonationChoicesNewElement extends Components.ScDonationChoicesNew, HTMLStencilElement {
+    }
+    var HTMLScDonationChoicesNewElement: {
+        prototype: HTMLScDonationChoicesNewElement;
+        new (): HTMLScDonationChoicesNewElement;
     };
     interface HTMLScDownloadsListElement extends Components.ScDownloadsList, HTMLStencilElement {
     }
@@ -5457,6 +5505,7 @@ declare global {
         "sc-dialog": HTMLScDialogElement;
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
+        "sc-donation-choices-new": HTMLScDonationChoicesNewElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
         "sc-drawer": HTMLScDrawerElement;
         "sc-dropdown": HTMLScDropdownElement;
@@ -7001,6 +7050,51 @@ declare namespace LocalJSX {
           * The price id for the fields.
          */
         "priceId"?: string;
+        "removeInvalid"?: boolean;
+    }
+    interface ScDonationChoicesNew {
+        "busy"?: boolean;
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode"?: string;
+        /**
+          * The default amount to load the page with.
+         */
+        "defaultAmount"?: string;
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * Order line items.
+         */
+        "lineItems"?: LineItem[];
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        /**
+          * Toggle line item event
+         */
+        "onScAddLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
+        /**
+          * Toggle line item event
+         */
+        "onScRemoveLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
+        /**
+          * Toggle line item event
+         */
+        "onScUpdateLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
+        /**
+          * The price id for the fields.
+         */
+        "priceId"?: string;
+        "prices"?: Price[];
+        /**
+          * The product id for the fields.
+         */
+        "product"?: string;
         "removeInvalid"?: boolean;
     }
     interface ScDownloadsList {
@@ -9055,6 +9149,10 @@ declare namespace LocalJSX {
         "price"?: Price1;
         "prices"?: Price1[];
         /**
+          * Product ID
+         */
+        "product"?: string;
+        /**
           * Show the radio/checkbox control
          */
         "showControl"?: boolean;
@@ -9961,6 +10059,7 @@ declare namespace LocalJSX {
         "sc-dialog": ScDialog;
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
+        "sc-donation-choices-new": ScDonationChoicesNew;
         "sc-downloads-list": ScDownloadsList;
         "sc-drawer": ScDrawer;
         "sc-dropdown": ScDropdown;
@@ -10169,6 +10268,7 @@ declare module "@stencil/core" {
             "sc-dialog": LocalJSX.ScDialog & JSXBase.HTMLAttributes<HTMLScDialogElement>;
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
+            "sc-donation-choices-new": LocalJSX.ScDonationChoicesNew & JSXBase.HTMLAttributes<HTMLScDonationChoicesNewElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
             "sc-drawer": LocalJSX.ScDrawer & JSXBase.HTMLAttributes<HTMLScDrawerElement>;
             "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;

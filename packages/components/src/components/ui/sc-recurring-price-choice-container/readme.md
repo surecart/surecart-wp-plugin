@@ -12,6 +12,7 @@
 | `label`       | `label`        | Label for the choice.           | `string`                | `undefined` |
 | `price`       | --             | Stores the price                | `Price`                 | `undefined` |
 | `prices`      | --             |                                 | `Price[]`               | `undefined` |
+| `product`     | `product`      | Product ID                      | `string`                | `undefined` |
 | `showControl` | `show-control` | Show the radio/checkbox control | `boolean`               | `false`     |
 | `type`        | `type`         | Choice Type                     | `"checkbox" \| "radio"` | `undefined` |
 
