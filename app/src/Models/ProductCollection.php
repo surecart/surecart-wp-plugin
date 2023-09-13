@@ -89,7 +89,7 @@ class ProductCollection extends Model implements PageModel {
 	/**
 	 * Get the product template id.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
 		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
@@ -107,9 +107,9 @@ class ProductCollection extends Model implements PageModel {
 	/**
 	 * Get the product permalink.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public function getPermalinkAttribute(): string|false {
+	public function getPermalinkAttribute(): string {
 		if ( empty( $this->attributes['id'] ) ) {
 			return false;
 		}

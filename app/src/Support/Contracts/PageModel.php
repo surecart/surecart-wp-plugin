@@ -20,14 +20,14 @@ interface PageModel {
 	/**
 	 * Get the page permalink attribute
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public function getPermalinkAttribute(): string|false;
+	public function getPermalinkAttribute(): string;
 
 	/**
 	 * Get the template id.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string;
 
@@ -41,7 +41,7 @@ interface PageModel {
 	/**
 	 * Get the template id.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
 	public function getTemplatePartIdAttribute(): string;
 
