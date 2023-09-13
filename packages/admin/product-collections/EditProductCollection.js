@@ -27,7 +27,7 @@ import Details from './modules/Details';
 import DeleteModal from './modules/DeleteModal';
 import SaveButton from '../templates/SaveButton';
 import Publishing from './modules/Publishing';
-import Image from './modules/Image';
+// import Image from './modules/Image';
 import useSave from '../../admin/settings/UseSave';
 import Products from './modules/Products';
 import Box from '../ui/Box';
@@ -155,10 +155,10 @@ export default ({ id }) => {
 						loading={isLoading}
 					/>
 
-					<Image
+					{/* <Image
 						collection={collection}
 						updateCollection={updateCollection}
-					/>
+					/> */}
 
 					<Products collectionId={id} />
 				</>
