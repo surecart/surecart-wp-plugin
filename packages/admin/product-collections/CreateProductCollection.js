@@ -82,7 +82,14 @@ export default ({ id, setId }) => {
 					margin-top: var(--sc-spacing-large);
 				`}
 			>
-				<ScForm onScSubmit={onSubmit}>
+				<ScForm
+					onScSubmit={onSubmit}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') {
+							onSubmit(e);
+						}
+					}}
+				>
 					<div
 						css={css`
 							display: grid;
