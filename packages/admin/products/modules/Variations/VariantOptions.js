@@ -160,6 +160,7 @@ export default ({ product, updateProduct, loading }) => {
 							required
 							label={__('Option Name', 'surecart')}
 							value={option?.name}
+							name={`sc_option_name_${index}`}
 							onScInput={(e) => {
 								updateVariantOption({
 									index,
@@ -206,7 +207,10 @@ export default ({ product, updateProduct, loading }) => {
 							required
 						/>
 						<VariantOptionValues
-							option={option}
+							option={{
+								...option,
+								index,
+							}}
 							product={product}
 							updateProduct={updateProduct}
 							onChangeValue={(updatedValues, changeTypeValue) => {
@@ -340,6 +344,7 @@ export default ({ product, updateProduct, loading }) => {
 										border-bottom: 1px solid
 											var(--sc-color-gray-200);
 									`}
+									id={`sc_option_${index}`}
 								>
 									{option?.editing
 										? renderEditingVariantOption(

@@ -95,7 +95,10 @@ export default ({ product, updateProduct, loading }) => {
 			columns={getColumns()}
 			items={(product?.variants ?? []).map((variant, index) => {
 				return VariantItem({
-					variant,
+					variant: {
+						...variant,
+						index,
+					},
 					updateVariant: (updates) => updateVariant(updates, index),
 					product,
 					updateProduct,

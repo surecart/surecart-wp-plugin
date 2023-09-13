@@ -132,6 +132,7 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 										? __('Add another value', 'surecart')
 										: null
 								}
+								id={`option_value_${option?.index}_${index}`}
 								value={optionValue.label}
 								onKeyDown={(e) => {
 									// if we deleted everything, and the label is already blank, delete this.

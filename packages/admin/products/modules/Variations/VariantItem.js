@@ -24,7 +24,7 @@ import {
 import Image from './Image';
 
 export default ({ product, updateProduct, variant, updateVariant, prices }) => {
-	const { sku, status, image_id, image_url, stock, amount, currency } =
+	const { sku, status, image_id, image_url, stock, amount, currency, index } =
 		variant;
 
 	const onChangeInput = (e) => {
@@ -78,6 +78,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 					gap: '1rem',
 					justifyContent: 'flex-start',
 				}}
+				id={`sc_variant_name_${index}`}
 			>
 				<div
 					style={{
@@ -172,6 +173,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 						name="amount"
 						disabled={status === 'draft'}
 						onScChange={onChangeInput}
+						id={`sc_variant_amount_${index}`}
 					/>
 				)}
 			</>
@@ -182,6 +184,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 				name="stock"
 				disabled={status === 'draft'}
 				onScChange={onChangeInput}
+				id={`sc_variant_stock_${index}`}
 			/>
 		),
 		sku: (
@@ -190,10 +193,14 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 				name="sku"
 				disabled={status === 'draft'}
 				onScChange={onChangeInput}
+				id={`sc_variant_sku_${index}`}
 			/>
 		),
 		actions: (
-			<ScDropdown placement="bottom-end">
+			<ScDropdown
+				placement="bottom-end"
+				id={`sc_variant_action_${index}`}
+			>
 				<ScButton type="text" slot="trigger">
 					<ScIcon name="more-horizontal" />
 				</ScButton>
