@@ -1,7 +1,4 @@
-.sc-block-image img {
+.wp-block-surecart-product-collection-image {
 	height: auto;
 	max-width: 100%;
-	vertical-align: bottom;
-	box-sizing: border-box;
-	border-radius: var(--sc-border-radius-medium);
 }
