@@ -7,6 +7,7 @@ import {
 	ScFlex,
 	ScIcon,
 	ScSwitch,
+	ScBlockUi,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -97,7 +98,8 @@ export default () => {
 
 	const toggleNotificationEnabled = async (e) => {
 		try {
-			const notificationsEnabled = e?.target?.checked || false;
+			const notificationsEnabled =
+				e?.target?.checked || !abandoned?.notifications_enabled;
 			setBusy(true);
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
@@ -121,18 +123,14 @@ export default () => {
 				},
 				undefined,
 				false,
-				abandoned
+				{
+					notifications_enabled: data?.notifications_enabled,
+				}
 			);
 
 			const message = notificationsEnabled
-				? __(
-						'Abandoned Checkout notification has been enabled.',
-						'surecart'
-				  )
-				: __(
-						'Abandoned Checkout notification has been disabled.',
-						'surecart'
-				  );
+				? __('Notifications enabled.', 'surecart')
+				: __('Notifications disabled.', 'surecart');
 			createSuccessNotice(message, { type: 'snackbar' });
 		} catch (e) {
 			console.error(e);
@@ -188,27 +186,27 @@ export default () => {
 				<>
 					<Customer
 						customer={abandoned?.customer}
-						loading={!hasLoadedAbandoned || busy}
+						loading={!hasLoadedAbandoned}
 					/>
 					<Coupon
 						promotion={abandoned?.promotion}
 						coupon={abandoned?.promotion?.coupon}
-						loading={!hasLoadedAbandoned || busy}
+						loading={!hasLoadedAbandoned}
 					/>
 					<Schedule
 						abandoned={abandoned}
-						loading={!hasLoadedAbandoned || busy}
+						loading={!hasLoadedAbandoned}
 					/>
 					{!!abandoned?.checkout?.shipping_address && (
 						<Address
 							label={__('Shipping & Tax Address', 'surecart')}
 							address={abandoned?.checkout?.shipping_address}
-							loading={!hasLoadedAbandoned || busy}
+							loading={!hasLoadedAbandoned}
 						/>
 					)}
 					<MetaData
 						abandoned={abandoned}
-						loading={!hasLoadedAbandoned || busy}
+						loading={!hasLoadedAbandoned}
 					/>
 				</>
 			}
@@ -217,9 +215,9 @@ export default () => {
 				<Details
 					abandoned={abandoned}
 					checkout={abandoned?.checkout}
-					loading={!hasLoadedAbandoned || busy}
+					loading={!hasLoadedAbandoned}
 				/>
-				{!abandoned?.recovered_checkout?.id && !busy && (
+				{!abandoned?.recovered_checkout?.id && (
 					<Link
 						url={site?.url}
 						checkoutId={abandoned?.checkout?.id}
@@ -228,10 +226,11 @@ export default () => {
 				)}
 				<LineItems
 					checkout={abandoned?.checkout}
-					loading={!hasLoadedAbandoned || busy}
+					loading={!hasLoadedAbandoned}
 					abandoned={abandoned}
 				/>
 			</>
+			{busy && <ScBlockUi spinner />}
 		</UpdateModel>
 	);
 };
