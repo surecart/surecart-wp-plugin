@@ -37,17 +37,20 @@ import * as customerInvoices from '@blocks/Dashboard/Deprecated/CustomerInvoices
 import * as customerShippingAddress from '@blocks/Dashboard/Deprecated/CustomerShippingAddress';
 import { registerBlocksForTemplates } from './conditional-block-registration';
 
-registerBlocks([collectionPage]);
+registerBlocks([
+	collectionPage,
+	cartMenuButton,
+	storeLogo,
+	buyButton,
+	addToCartButton,
+	logoutButton,
+]);
 
 // unregister these blocks on product page templates.
 // @todo Refactor when there will be possible to show a block according on a template/post with a Gutenberg API. https://github.com/WordPress/gutenberg/pull/41718
 registerBlocksForTemplates({
 	blocks: [
 		checkout,
-		buyButton,
-		addToCartButton,
-		cartMenuButton,
-		logoutButton,
 		card,
 		confirmation,
 		confirmationLineItems,
@@ -67,7 +70,6 @@ registerBlocksForTemplates({
 		dashboardPages,
 		dashboardTab,
 		dashboardTabs,
-		storeLogo,
 	],
 	// exclude for these templates.
 	exclude: [
