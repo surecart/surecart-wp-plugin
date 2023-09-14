@@ -84,7 +84,6 @@ export class ScOrderShippingAddress {
     state: null,
   };
 
-
   /** When the shipping address changes, we want to use that instead of what's entered, if we have empty fields. */
   @Watch('shippingAddress')
   handleCustomerAddressChange(val, old) {
@@ -127,7 +126,7 @@ export class ScOrderShippingAddress {
   @Watch('shippingEnabled')
   @Watch('taxEnabled')
   handleRequirementChange() {
-    if (this.shippingEnabled || this.taxEnabled ) {
+    if (this.shippingEnabled || this.taxEnabled) {
       this.required = true;
     }
   }
