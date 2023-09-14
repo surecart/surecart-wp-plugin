@@ -51,6 +51,14 @@ export class ScCheckoutFormErrors {
     this.removeStateListener();
   }
 
+  getTopLevelError() {
+    // checkout invalid is not friendly.
+    if (errorState?.code === 'checkout.invalid' && getAdditionalErrorMessages()?.length) {
+      return '';
+    }
+    return errorState?.message;
+  }
+
   render() {
     // don't show component if no error message or is finalizing or updating.
     if (!errorState?.message || ['finalizing', 'updating'].includes(currentFormState())) {
@@ -60,8 +68,10 @@ export class ScCheckoutFormErrors {
     return (
       <Host>
         <sc-alert type={this.getAlertType()} scrollOnOpen={true} open={!!errorState?.message} closable={!!errorState?.dismissible}>
-          {errorState?.message && <span slot="title" innerHTML={errorState.message}></span>}
-          {!!getAdditionalErrorMessages() && getAdditionalErrorMessages()}
+          {!!this.getTopLevelError() && <span slot="title" innerHTML={this.getTopLevelError()}></span>}
+          {(getAdditionalErrorMessages() || []).map((message, index) => (
+            <div innerHTML={message} key={index}></div>
+          ))}
         </sc-alert>
         <slot />
       </Host>

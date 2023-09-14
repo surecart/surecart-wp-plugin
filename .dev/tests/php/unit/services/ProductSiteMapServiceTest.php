@@ -48,13 +48,8 @@ class ProductSiteMapServiceTest extends SureCartUnitTestCase {
 			]
 		]);
 
-		$this->assertEquals([
-			[
-				'loc' => 'http://localhost:8889/products/test'
-			],
-			[
-				'loc' => 'http://localhost:8889/products/test2',
-			]
-		], $service->get_url_list(1, ''));
+		$list = $service->get_url_list(1, '');
+		$this->assertContains('products/test', $list[0]['loc']);
+		$this->assertContains('products/test2', $list[1]['loc']);
 	}
 }

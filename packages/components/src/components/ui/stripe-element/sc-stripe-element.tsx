@@ -7,6 +7,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -51,7 +52,6 @@ export class ScStripeElement {
   @Prop() formState: FormState;
 
   @Event() scPaid: EventEmitter<void>;
-  @Event() scPayError: EventEmitter<any>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 
@@ -108,7 +108,7 @@ export class ScStripeElement {
       // paid
       this.scPaid.emit();
     } catch (e) {
-      this.scPayError.emit(e);
+      updateFormState('REJECT');
       createErrorNotice(e);
       if (e.message) {
         this.error = e.message;
