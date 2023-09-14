@@ -89,11 +89,11 @@ export class ScFormComponentsValidator {
       }
     }
 
-    this.removeCheckoutListener = onCheckoutChange('checkout', ()=>this.handleOrderChange());
+    this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
   }
 
   disconnectedCallback() {
-    this.removeCheckoutListener()
+    this.removeCheckoutListener();
   }
 
   handleShippingAddressRequired() {
