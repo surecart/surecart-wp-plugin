@@ -85,4 +85,5 @@ return [
 	'checkout.product.out_of_stock'                      => __( 'This product is out of stock.', 'surecart' ),
 	'checkout.price.unpurchasable'                       => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'order.line_items.price.blank'                       => __( 'This product is no longer available for purchase.', 'surecart' ),
+	'checkout.line_items.price.currency_mismatch'        => __( 'The product price is not valid for this currency.', 'surecart' ),
 ];
