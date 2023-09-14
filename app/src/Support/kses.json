@@ -709,7 +709,6 @@
   },
   "sc-form-components-validator": {
     "disabled": true,
-    "order": true,
     "tax-protocol": true,
     "style": true,
     "id": true,

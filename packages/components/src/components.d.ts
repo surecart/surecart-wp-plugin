@@ -1378,10 +1378,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The order
-         */
-        "order": Checkout;
-        /**
           * The tax protocol
          */
         "taxProtocol": TaxProtocol;
@@ -2112,7 +2108,7 @@ export namespace Components {
          */
         "defaultCountry": string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full": boolean;
         /**
@@ -7129,10 +7125,6 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The order
-         */
-        "order"?: Checkout;
-        /**
           * The tax protocol
          */
         "taxProtocol"?: TaxProtocol;
@@ -7913,7 +7905,7 @@ declare namespace LocalJSX {
          */
         "defaultCountry"?: string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full"?: boolean;
         /**

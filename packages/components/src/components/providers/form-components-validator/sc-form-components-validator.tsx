@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { state as checkoutState } from '@store/checkout';
-import { Checkout, TaxProtocol } from '../../../types';
+import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
+import { TaxProtocol } from '../../../types';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -10,11 +10,10 @@ import { Checkout, TaxProtocol } from '../../../types';
 export class ScFormComponentsValidator {
   @Element() el: HTMLScFormComponentsValidatorElement;
 
+  private removeCheckoutListener: () => void;
+
   /** Disable validation? */
   @Prop() disabled: boolean;
-
-  /** The order */
-  @Prop() order: Checkout;
 
   /** The tax protocol */
   @Prop() taxProtocol: TaxProtocol;
@@ -39,30 +38,29 @@ export class ScFormComponentsValidator {
   /** Is there a shipping amount */
   @State() hasShippingAmount: boolean;
 
-  @Watch('order')
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
 
     // make sure to add the address field if it's not there.
-    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled || checkoutState?.checkout?.shipping_address_required) {
+    if (checkoutState.checkout?.tax_status === 'address_invalid' || checkoutState.checkout?.shipping_enabled || checkoutState.checkout?.shipping_address_required) {
       this.addAddressField();
     }
 
     // add order bumps.
-    if (this?.order?.recommended_bumps?.data?.length) {
+    if (checkoutState.checkout?.recommended_bumps?.data?.length) {
       this.addBumps();
     }
-    if (!!this.order?.tax_amount) {
+    if (!!checkoutState.checkout?.tax_amount) {
       this.addTaxLine();
     }
 
     // add shipping choices.
-    if (checkoutState?.checkout?.shipping_enabled && checkoutState?.checkout?.selected_shipping_choice_required) {
+    if (checkoutState.checkout?.shipping_enabled && checkoutState.checkout?.selected_shipping_choice_required) {
       this.addShippingChoices();
     }
 
-    if (!!this.order?.shipping_amount) {
+    if (!!checkoutState.checkout?.shipping_amount) {
       this.addShippingAmount();
     }
   }
@@ -90,10 +88,12 @@ export class ScFormComponentsValidator {
         this.addTaxIDField();
       }
     }
-    console.log('checkout state',JSON.stringify(checkoutState))
 
-    // make sure to check order on load.
-    this.handleOrderChange();
+    this.removeCheckoutListener = onCheckoutChange('checkout', ()=>this.handleOrderChange());
+  }
+
+  disconnectedCallback() {
+    this.removeCheckoutListener()
   }
 
   handleShippingAddressRequired() {
@@ -143,7 +143,7 @@ export class ScFormComponentsValidator {
     if (this.hasBumpsField) return;
     const payment = this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    bumps.bumps === this.order?.recommended_bumps?.data;
+    bumps.bumps === checkoutState.checkout?.recommended_bumps?.data;
     payment.parentNode.insertBefore(bumps, payment.nextSibling);
     this.hasBumpsField = true;
   }
