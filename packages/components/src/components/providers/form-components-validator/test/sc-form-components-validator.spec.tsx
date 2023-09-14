@@ -87,7 +87,7 @@ describe('sc-form-components-validator', () => {
 
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();
-  })
+  });
 
   it('requires the customer name on sc-order-shipping-address if shipping address is required', async () => {
     const page = await newSpecPage({
@@ -108,6 +108,5 @@ describe('sc-form-components-validator', () => {
 
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();
-  })
-
+  });
 });
