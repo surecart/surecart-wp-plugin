@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.5.1
+Stable tag: 2.6.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,29 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.6.1 - September 12th, 2023 =
+* Fix: Compatibility with Elementor 3.6+
+
+= 2.6.0 - September 11th, 2023 =
+* New: Subscription metrics on merchant dashboard.
+* New: Ability to revoke access when installments are completed.
+* Improvement: Webhooks reliability, performance and failure visibility improvements.
+* Improvement: Performance improvement with columns implementations.
+* Improvement: Rework how processors are handled on the form when multiple credit card processors are enabled.
+* Improvement: Loading speed improvement for admin dashboard pages..
+
+= 2.5.2 - August 31th, 2023 =
+* Improvement: Summary collapse now has "collapse on mobile" and "collapse on desktop" options.
+* Fix: Recaptcha failing on instant checkout pages.
+* Fix: Issue with line items sometimes reordering during quantity change.
+* Fix: Sometimes PayPal errors not being very descriptive.
+* Fix: PHP notices logged when debug mode is turned on in REST Controllers.
+* Fix: Better error handling when default payment method is trying to be deleted.
+* Fix: Removing payment method is now immediately reflected without page reload.
+* Fix: "Update All Subscriptions" button on default payment method was sometimes having permission issues for some users.
+* Fix: Stacking issue of customer dashboard form fields on some pages.
+* Fix: Compatibility with Spectra blocks not loading assets when using form shortcode.
 
 = 2.5.1 - August 21th, 2023 =
 * Fix: Issue with some checkout icons inheriting a stroke.

@@ -21,12 +21,14 @@ class CompatibilityService {
 	public function bootstrap() {
 		// UAG fix.
 		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
+
+		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 	}
 
 	/**
 	 * Render block data.
 	 *
-	 * @param array $block_data Block data.
+	 * @param array $parsed_block Block data.
 	 *
 	 * @return array
 	 */
@@ -51,5 +53,37 @@ class CompatibilityService {
 		$post_assets_instance->enqueue_scripts();
 
 		return $parsed_block;
+	}
+
+	/**
+	 * Filter SC Form Shortcode to load the Spectra Blocks Assets.
+	 *
+	 * @param string $output Content.
+	 * @param array  $attributes Shortcode attributes.
+	 * @param string $name Shortcode Tag.
+	 *
+	 * @return array
+	 */
+	public function maybeEnqueueUAGBAssetsForShortcode( $output, $attributes, $name ) {
+		// UAGB must be activated.
+		if ( ! class_exists( '\UAGB_Post_Assets' ) ) {
+			return $output;
+		}
+
+		// must be our form shortcode.
+		if ( 'sc_form' !== $name ) {
+			return $output;
+		}
+
+		// must have an ID.
+		if ( empty( $attributes['id'] ) ) {
+			return $output;
+		}
+
+		// If Spectra Blocks are present in the form, enqueue the assets.
+		$post_assets_instance = new \UAGB_Post_Assets( $attributes['id'] );
+		$post_assets_instance->enqueue_scripts();
+
+		return $output;
 	}
 }

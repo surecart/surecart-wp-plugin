@@ -20,7 +20,9 @@ export class ScOrderSummary {
   @Prop() openText: string = __('Summary', 'surecart');
   @Prop() collapsible: boolean = false;
   @Prop() collapsedOnMobile: boolean = false;
-  @Prop({ mutable: true }) collapsed: boolean;
+  @Prop() collapsedOnDesktop: boolean;
+
+  @Prop({ mutable: true }) collapsed: boolean = false;
 
   /** Show the toggle */
   @Event() scShow: EventEmitter<void>;
@@ -28,11 +30,18 @@ export class ScOrderSummary {
   /** Show the toggle */
   @Event() scHide: EventEmitter<void>;
 
+  isMobileScreen(): boolean {
+    const bodyRect = document.body?.getClientRects();
+    return bodyRect?.length && bodyRect[0]?.width < 781;
+  }
+
   componentWillLoad() {
-    if (this.collapsedOnMobile) {
-      const bodyRect = document.body.getClientRects();
-      if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
+    if (this.isMobileScreen()) {
+      this.collapsed = this.collapsed || this.collapsedOnMobile;
+    } else {
+      this.collapsed = this.collapsed || this.collapsedOnDesktop;
     }
+
     this.handleOpenChange();
   }
 

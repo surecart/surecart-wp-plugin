@@ -5,7 +5,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
 	const {
-		collapsed,
+		collapsedOnDesktop,
 		collapsible,
 		closed_text,
 		open_text,
@@ -15,7 +15,7 @@ export default function save({ attributes }) {
 	return (
 		<sc-order-summary
 			collapsible={collapsible ? '1' : false}
-			collapsed={collapsed ? '1' : false}
+			collapsed-on-desktop={collapsedOnDesktop ? '1' : false}
 			closed-text={closed_text}
 			open-text={open_text}
 			collapsed-on-mobile={collapsedOnMobile ? '1' : false}
