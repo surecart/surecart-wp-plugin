@@ -1,29 +1,19 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-const API_BASE_PATH = '/surecart/v1/products';
-const PRICE_API_PATH = '/surecart/v1/prices';
+/**
+ * Internal dependencies.
+ */
+import {
+	createProduct,
+	deleteAllProducts,
+} from '../../tests/request-utils/products';
 
 test.describe('Product Admin Page For Stock', () => {
 	test.beforeEach(async ({ requestUtils }) => {
-		const products = await requestUtils.rest({
-			path: API_BASE_PATH,
-			params: {
-				per_page: 100,
-			},
-		});
-
-		// Delete all one by one.
-		await Promise.all(
-			products.map((product) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `${API_BASE_PATH}/${product.id}`,
-				})
-			)
-		);
+		deleteAllProducts(requestUtils);
 	});
 
 	test('Should create a product with/without stock', async ({
@@ -147,24 +137,3 @@ test.describe('Product Admin Page For Stock', () => {
 		).toHaveValue('20');
 	});
 });
-
-export const createProduct = async (requestUtils, data) => {
-	const product = await requestUtils.rest({
-		method: 'POST',
-		path: API_BASE_PATH,
-		data,
-	});
-
-	// Create a price for the product.
-	await requestUtils.rest({
-		method: 'POST',
-		path: PRICE_API_PATH,
-		data: {
-			amount: '1000.00',
-			currency: 'usd',
-			product: product.id,
-		},
-	});
-
-	return product;
-};

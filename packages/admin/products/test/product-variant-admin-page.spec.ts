@@ -1,29 +1,19 @@
 /**
- * WordPress dependencies
+ * WordPress dependencies.
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
+
+/**
+ * Internal dependencies.
+ */
+import { deleteAllProducts } from '../../tests/request-utils/products';
 
 const API_BASE_PATH = '/surecart/v1/products';
 const PRICE_API_PATH = '/surecart/v1/prices';
 
 test.describe('Product Admin Page With Variant', () => {
 	test.beforeEach(async ({ requestUtils }) => {
-		const products = await requestUtils.rest({
-			path: API_BASE_PATH,
-			params: {
-				per_page: 100,
-			},
-		});
-
-		// Delete all one by one.
-		await Promise.all(
-			products.map((product) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `${API_BASE_PATH}/${product.id}`,
-				})
-			)
-		);
+		await deleteAllProducts(requestUtils);
 	});
 
 	test('Should create a variant product', async ({ page, requestUtils }) => {
