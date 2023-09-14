@@ -1,4 +1,4 @@
-import { CartGoogleAnalyticsItem } from "src/types";
+import { CartGoogleAnalyticsItem } from 'src/types';
 
 export function doCartGoogleAnalytics(items: CartGoogleAnalyticsItem[]) {
   if (!window?.dataLayer && !window?.gtag) return;
@@ -18,7 +18,7 @@ export function doCartGoogleAnalytics(items: CartGoogleAnalyticsItem[]) {
       ecommerce: {
         data: {
           items: items,
-        }
+        },
       },
     });
   }
