@@ -50,6 +50,7 @@ export default ({ product, updateProduct, loading }) => {
 						stock_enabled: e.target.checked ? 1 : 0,
 					});
 				}}
+				name="stock_enabled"
 			>
 				{__('Track quantity', 'surecart')}
 				<span slot="description">
@@ -69,6 +70,7 @@ export default ({ product, updateProduct, loading }) => {
 									})
 								}
 								allowNegative={true}
+								name="stock"
 							/>
 							<ScTooltip
 								type="text"
@@ -78,6 +80,7 @@ export default ({ product, updateProduct, loading }) => {
 								`}
 							>
 								<ScButton
+									id="sc-adjust-stock"
 									type="text"
 									onClick={() => setModel(true)}
 								>
