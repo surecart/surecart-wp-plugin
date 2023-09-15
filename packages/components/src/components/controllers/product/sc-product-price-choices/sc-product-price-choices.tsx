@@ -55,6 +55,14 @@ export class ScProductPriceChoices {
         <sc-recurring-price-choice-container
           label={__('Subscribe and Save', 'surecart')}
           prices={availableSubscriptionPrices()}
+          product={state?.product}
+          selectedPrice={state?.selectedPrice}
+          onScChange={e => {
+            if (e.detail) {
+              const price = prices?.find(price => price.id === e.detail);
+              state.selectedPrice = price;
+            }
+          }}
         />
       </sc-choices>
     );
