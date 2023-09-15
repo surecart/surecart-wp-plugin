@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, CartGoogleAnalyticsItem, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { CartGoogleAnalyticsItem as CartGoogleAnalyticsItem1, LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, CartGoogleAnalyticsItem, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { CartGoogleAnalyticsItem as CartGoogleAnalyticsItem1, LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -2870,13 +2870,7 @@ export namespace Components {
         "addToCart": boolean;
     }
     interface ScProductItem {
-        /**
-          * Product Layout Config
-         */
         "layoutConfig": LayoutConfig;
-        /**
-          * Product
-         */
         "product": Product;
     }
     interface ScProductItemImage {
@@ -3917,10 +3911,6 @@ export interface ScCancelSurveyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCancelSurveyElement;
 }
-export interface ScCartFormCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScCartFormElement;
-}
 export interface ScCartHeaderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCartHeaderElement;
@@ -4096,14 +4086,6 @@ export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
 export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
-}
-export interface ScProductBuyButtonCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProductBuyButtonElement;
-}
-export interface ScProductItemCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProductItemElement;
 }
 export interface ScProductItemListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5910,10 +5892,6 @@ declare namespace LocalJSX {
           * Are we in test or live mode.
          */
         "mode"?: 'test' | 'live';
-        /**
-          * Item added to cart
-         */
-        "onScAddedToCart"?: (event: ScCartFormCustomEvent<CartGoogleAnalyticsItem>) => void;
         /**
           * The price id to add.
          */
@@ -7741,10 +7719,6 @@ declare namespace LocalJSX {
         "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Checkout>) => void;
         "onScSetState"?: (event: ScOrderConfirmProviderCustomEvent<string>) => void;
         /**
-          * The customer started trial
-         */
-        "onScStartTrial"?: (event: ScOrderConfirmProviderCustomEvent<LineItem[]>) => void;
-        /**
           * Success text for the form.
          */
         "successText"?: {
@@ -8753,23 +8727,9 @@ declare namespace LocalJSX {
     }
     interface ScProductBuyButton {
         "addToCart"?: boolean;
-        /**
-          * Item added to cart
-         */
-        "onScAddedToCart"?: (event: ScProductBuyButtonCustomEvent<CartGoogleAnalyticsItem1>) => void;
     }
     interface ScProductItem {
-        /**
-          * Product Layout Config
-         */
         "layoutConfig"?: LayoutConfig;
-        /**
-          * Product was viewed
-         */
-        "onScProductViewed"?: (event: ScProductItemCustomEvent<Partial<Product>>) => void;
-        /**
-          * Product
-         */
         "product"?: Product;
     }
     interface ScProductItemImage {
@@ -9225,9 +9185,6 @@ declare namespace LocalJSX {
           * Error event
          */
         "onScError"?: (event: ScSessionProviderCustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>) => void;
-        /**
-          * Payment was completed
-         */
         "onScPaid"?: (event: ScSessionProviderCustomEvent<void>) => void;
         /**
           * Set the state
