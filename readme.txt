@@ -244,6 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.6.2 - September 15th, 2023 =
+* Improvement: Force update WordPress users when doing manual customer sync.
 * Fix: Issue with purchase.updated webhook erroring for subscription changes.
 
 = 2.6.1 - September 12th, 2023 =
