@@ -7,7 +7,7 @@ import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordp
 import { updateFormState } from '@store/form/mutations';
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
-import { Checkout, CheckoutInitiatedParams, FormStateSetter, LineItemData, PriceChoice, Product } from '../../../types';
+import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
 
 @Component({
   tag: 'sc-session-provider',
