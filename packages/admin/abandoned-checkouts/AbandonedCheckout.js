@@ -177,14 +177,16 @@ export default () => {
 				</div>
 			}
 			button={
-				<div>
-					<ScSwitch
-						checked={abandoned?.notifications_enabled}
-						onScChange={toggleNotificationEnabled}
-					>
-						{__('Enabled', 'surecart')}
-					</ScSwitch>
-				</div>
+				hasLoadedAbandoned && (
+					<div>
+						<ScSwitch
+							checked={abandoned?.notifications_enabled}
+							onScChange={toggleNotificationEnabled}
+						>
+							{__('Enabled', 'surecart')}
+						</ScSwitch>
+					</div>
+				)
 			}
 			sidebar={
 				<>
