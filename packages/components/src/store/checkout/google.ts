@@ -1,4 +1,4 @@
-import { maybeConvertAmount } from 'src/functions/currency';
+import { maybeConvertAmount } from '../../functions/currency';
 import { Product } from 'src/types';
 
 /**
