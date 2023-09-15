@@ -1,4 +1,4 @@
-# sc-donation-choices-new
+# sc-donation-recurring-choices-new
 
 
 
@@ -57,11 +57,11 @@ Type: `Promise<boolean>`
 ### Graph
 ```mermaid
 graph TD;
-  sc-donation-choices-new --> sc-skeleton
-  sc-donation-choices-new --> sc-choices
-  sc-donation-choices-new --> sc-recurring-price-choice-container
-  sc-donation-choices-new --> sc-choice
-  sc-donation-choices-new --> sc-block-ui
+  sc-donation-recurring-choices-new --> sc-skeleton
+  sc-donation-recurring-choices-new --> sc-choices
+  sc-donation-recurring-choices-new --> sc-recurring-price-choice-container
+  sc-donation-recurring-choices-new --> sc-choice
+  sc-donation-recurring-choices-new --> sc-block-ui
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-recurring-price-choice-container --> sc-format-number
@@ -73,7 +73,7 @@ graph TD;
   sc-recurring-price-choice-container --> sc-icon
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
-  style sc-donation-choices-new fill:#f9f,stroke:#333,stroke-width:4px
+  style sc-donation-recurring-choices-new fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

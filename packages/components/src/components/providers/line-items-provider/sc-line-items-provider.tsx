@@ -42,6 +42,8 @@ export class ScLineItemsProvider {
   @Listen('scUpdateLineItem')
   handleLineItemUpdate(e: CustomEvent) {
     const lineItem = e.detail as LineItemData;
+    console.log('scUpdateLineItem', lineItem);
+    
     this.addSyncItem('update', lineItem);
   }
 

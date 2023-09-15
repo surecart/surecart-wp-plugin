@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-13T12:31:40",
+  "timestamp": "2023-09-15T11:29:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1100,6 +1100,7 @@
         "sc-customer-edit",
         "sc-donation-choices",
         "sc-donation-choices-new",
+        "sc-donation-recurring-choices-new",
         "sc-express-payment",
         "sc-form-state-provider",
         "sc-invoices-list",
@@ -1163,6 +1164,9 @@
           "sc-block-ui"
         ],
         "sc-donation-choices-new": [
+          "sc-block-ui"
+        ],
+        "sc-donation-recurring-choices-new": [
           "sc-block-ui"
         ],
         "sc-express-payment": [
@@ -1835,7 +1839,6 @@
         "sc-customer-edit",
         "sc-dialog",
         "sc-donation-choices",
-        "sc-donation-choices-new",
         "sc-downloads-list",
         "sc-invoices-list",
         "sc-licenses-list",
@@ -1907,9 +1910,6 @@
           "sc-button"
         ],
         "sc-donation-choices": [
-          "sc-button"
-        ],
-        "sc-donation-choices-new": [
           "sc-button"
         ],
         "sc-downloads-list": [
@@ -5455,6 +5455,8 @@
       ],
       "dependents": [
         "sc-cancel-survey",
+        "sc-donation-choices-new",
+        "sc-donation-recurring-choices-new",
         "sc-order-bump",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
@@ -5463,6 +5465,12 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-cancel-survey": [
+          "sc-choice"
+        ],
+        "sc-donation-choices-new": [
+          "sc-choice"
+        ],
+        "sc-donation-recurring-choices-new": [
           "sc-choice"
         ],
         "sc-order-bump": [
@@ -6013,6 +6021,7 @@
         "sc-cancel-survey",
         "sc-donation-choices",
         "sc-donation-choices-new",
+        "sc-donation-recurring-choices-new",
         "sc-price-choices",
         "sc-product-price-choices",
         "sc-subscription-payment",
@@ -6036,6 +6045,9 @@
           "sc-choices"
         ],
         "sc-donation-choices-new": [
+          "sc-choices"
+        ],
+        "sc-donation-recurring-choices-new": [
           "sc-choices"
         ],
         "sc-price-choices": [
@@ -10349,6 +10361,7 @@
       "filePath": "./src/components/controllers/checkout-form/donation-choices-new/sc-donation-choices-new.tsx",
       "encapsulation": "shadow",
       "tag": "sc-donation-choices-new",
+      "readme": "# sc-donation-choices-new\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10467,6 +10480,37 @@
           "required": false
         },
         {
+          "name": "prices",
+          "type": "Price[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "mutable": false,
+          "attr": "product",
+          "reflectToAttr": true,
+          "docs": "The product id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "removeInvalid",
           "type": "boolean",
           "mutable": false,
@@ -10478,6 +10522,21 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProduct",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
             }
           ],
           "optional": false,
@@ -10540,16 +10599,16 @@
       "dependencies": [
         "sc-skeleton",
         "sc-choices",
-        "sc-price-input",
-        "sc-button",
+        "sc-recurring-price-choice-container",
+        "sc-choice",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-donation-choices-new": [
           "sc-skeleton",
           "sc-choices",
-          "sc-price-input",
-          "sc-button",
+          "sc-recurring-price-choice-container",
+          "sc-choice",
           "sc-block-ui"
         ],
         "sc-choices": [
@@ -10558,11 +10617,290 @@
         "sc-form-control": [
           "sc-tooltip"
         ],
-        "sc-price-input": [
-          "sc-input"
+        "sc-recurring-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item",
+          "sc-icon"
         ],
-        "sc-input": [
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/donation-recurring-choices-new/sc-donation-recurring-choices-new.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-donation-recurring-choices-new",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "Currency code for the donation.",
+          "docsTags": [],
+          "default": "'usd'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "defaultAmount",
+          "type": "string",
+          "mutable": false,
+          "attr": "default-amount",
+          "reflectToAttr": false,
+          "docs": "The default amount to load the page with.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "mutable": false,
+          "attr": "label",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "lineItems",
+          "type": "LineItem[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Order line items.",
+          "docsTags": [],
+          "default": "[]",
+          "values": [
+            {
+              "type": "LineItem[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "priceId",
+          "type": "string",
+          "mutable": false,
+          "attr": "price-id",
+          "reflectToAttr": true,
+          "docs": "The price id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "prices",
+          "type": "Price[]",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "mutable": false,
+          "attr": "product",
+          "reflectToAttr": true,
+          "docs": "The product id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "removeInvalid",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "remove-invalid",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProduct",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "scAddLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        },
+        {
+          "event": "scRemoveLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        },
+        {
+          "event": "scUpdateLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "scChange",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-skeleton",
+        "sc-choices",
+        "sc-recurring-price-choice-container",
+        "sc-choice",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-donation-recurring-choices-new": [
+          "sc-skeleton",
+          "sc-choices",
+          "sc-recurring-price-choice-container",
+          "sc-choice",
+          "sc-block-ui"
+        ],
+        "sc-choices": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-recurring-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item",
+          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
@@ -24269,7 +24607,6 @@
       "dependents": [
         "sc-custom-order-price-input",
         "sc-donation-choices",
-        "sc-donation-choices-new",
         "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-subscription-ad-hoc-confirm"
@@ -24291,9 +24628,6 @@
           "sc-price-input"
         ],
         "sc-donation-choices": [
-          "sc-price-input"
-        ],
-        "sc-donation-choices-new": [
           "sc-price-input"
         ],
         "sc-product-price-modal": [
@@ -26834,21 +27168,6 @@
           "required": false
         },
         {
-          "name": "price",
-          "type": "Price",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Stores the price",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Price"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "prices",
           "type": "Price[]",
           "mutable": false,
@@ -26865,15 +27184,29 @@
         },
         {
           "name": "product",
-          "type": "string",
+          "type": "Product",
           "mutable": false,
-          "attr": "product",
           "reflectToAttr": false,
-          "docs": "Product ID",
+          "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "string"
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedPrice",
+          "type": "Price",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Price"
             }
           ],
           "optional": false,
@@ -26922,7 +27255,7 @@
       "events": [
         {
           "event": "scChange",
-          "detail": "void",
+          "detail": "string",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -26944,6 +27277,8 @@
         }
       ],
       "dependents": [
+        "sc-donation-choices-new",
+        "sc-donation-recurring-choices-new",
         "sc-product-price-choices"
       ],
       "dependencies": [
@@ -26967,6 +27302,12 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-donation-choices-new": [
+          "sc-recurring-price-choice-container"
+        ],
+        "sc-donation-recurring-choices-new": [
+          "sc-recurring-price-choice-container"
         ],
         "sc-product-price-choices": [
           "sc-recurring-price-choice-container"
@@ -28362,6 +28703,7 @@
         "sc-customer-details",
         "sc-donation-choices",
         "sc-donation-choices-new",
+        "sc-donation-recurring-choices-new",
         "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-shipping",
@@ -28416,6 +28758,9 @@
           "sc-skeleton"
         ],
         "sc-donation-choices-new": [
+          "sc-skeleton"
+        ],
+        "sc-donation-recurring-choices-new": [
           "sc-skeleton"
         ],
         "sc-fulfillments": [

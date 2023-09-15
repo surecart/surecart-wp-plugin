@@ -62,6 +62,7 @@ export const ScDialog = /*@__PURE__*/createReactComponent<JSX.ScDialog, HTMLScDi
 export const ScDivider = /*@__PURE__*/createReactComponent<JSX.ScDivider, HTMLScDividerElement>('sc-divider');
 export const ScDonationChoices = /*@__PURE__*/createReactComponent<JSX.ScDonationChoices, HTMLScDonationChoicesElement>('sc-donation-choices');
 export const ScDonationChoicesNew = /*@__PURE__*/createReactComponent<JSX.ScDonationChoicesNew, HTMLScDonationChoicesNewElement>('sc-donation-choices-new');
+export const ScDonationRecurringChoicesNew = /*@__PURE__*/createReactComponent<JSX.ScDonationRecurringChoicesNew, HTMLScDonationRecurringChoicesNewElement>('sc-donation-recurring-choices-new');
 export const ScDownloadsList = /*@__PURE__*/createReactComponent<JSX.ScDownloadsList, HTMLScDownloadsListElement>('sc-downloads-list');
 export const ScDrawer = /*@__PURE__*/createReactComponent<JSX.ScDrawer, HTMLScDrawerElement>('sc-drawer');
 export const ScDropdown = /*@__PURE__*/createReactComponent<JSX.ScDropdown, HTMLScDropdownElement>('sc-dropdown');

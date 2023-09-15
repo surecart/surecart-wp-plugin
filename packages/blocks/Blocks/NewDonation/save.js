@@ -7,7 +7,7 @@ export default ({ attributes }) => {
 	return (
 		<sc-donation-choices-new
 			label={label}
-			product={product_id}
+			productId={product_id}
 			defaultAmount={default_amount}
 		>
 			<InnerBlocks.Content />

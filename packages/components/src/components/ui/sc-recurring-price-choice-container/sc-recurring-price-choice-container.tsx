@@ -20,6 +20,8 @@ export class ScRecurringPriceChoiceContainer {
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = false;
 
+  @Prop() showPriceDetails: boolean = true;
+  
   /** Choice Type */
   @Prop() type: 'checkbox' | 'radio';
 
@@ -36,7 +38,7 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
-    const cardChecked = this.prices.find(price => price.id === this.selectedPrice?.id);
+    const cardChecked = this.prices?.find(price => price.id === this.selectedPrice?.id);
     const selectedPriceName = cardChecked ? this.selectedPrice?.name : this.prices?.[0]?.name ? this.prices?.[0]?.name : this.product?.name;
 
     return (
@@ -69,6 +71,7 @@ export class ScRecurringPriceChoiceContainer {
                 </sc-menu>
               </sc-dropdown>
             </div>
+            { this.showPriceDetails && (
             <div class="recurring-price-choice__details">
               <div class="price-choice__price">
                 {this.selectedPrice?.ad_hoc ? (
@@ -103,6 +106,7 @@ export class ScRecurringPriceChoiceContainer {
                 </div>
               )}
             </div>
+            )}
           </div>
         </div>
       </sc-choice-container>

@@ -7,21 +7,21 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                     | Type                    | Default     |
-| ------------- | -------------- | ------------------------------- | ----------------------- | ----------- |
-| `label`       | `label`        | Label for the choice.           | `string`                | `undefined` |
-| `price`       | --             | Stores the price                | `Price`                 | `undefined` |
-| `prices`      | --             |                                 | `Price[]`               | `undefined` |
-| `product`     | `product`      | Product ID                      | `string`                | `undefined` |
-| `showControl` | `show-control` | Show the radio/checkbox control | `boolean`               | `false`     |
-| `type`        | `type`         | Choice Type                     | `"checkbox" \| "radio"` | `undefined` |
+| Property        | Attribute      | Description                     | Type                    | Default     |
+| --------------- | -------------- | ------------------------------- | ----------------------- | ----------- |
+| `label`         | `label`        | Label for the choice.           | `string`                | `undefined` |
+| `prices`        | --             |                                 | `Price[]`               | `undefined` |
+| `product`       | --             |                                 | `Product`               | `undefined` |
+| `selectedPrice` | --             |                                 | `Price`                 | `undefined` |
+| `showControl`   | `show-control` | Show the radio/checkbox control | `boolean`               | `false`     |
+| `type`          | `type`         | Choice Type                     | `"checkbox" \| "radio"` | `undefined` |
 
 
 ## Events
 
-| Event      | Description | Type                |
-| ---------- | ----------- | ------------------- |
-| `scChange` |             | `CustomEvent<void>` |
+| Event      | Description | Type                  |
+| ---------- | ----------- | --------------------- |
+| `scChange` |             | `CustomEvent<string>` |
 
 
 ## Shadow Parts
@@ -36,6 +36,8 @@
 
 ### Used by
 
+ - [sc-donation-choices-new](../../controllers/checkout-form/donation-choices-new)
+ - [sc-donation-recurring-choices-new](../../controllers/checkout-form/donation-recurring-choices-new)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
 
 ### Depends on
@@ -59,6 +61,8 @@ graph TD;
   sc-recurring-price-choice-container --> sc-menu-item
   sc-recurring-price-choice-container --> sc-icon
   sc-button --> sc-spinner
+  sc-donation-choices-new --> sc-recurring-price-choice-container
+  sc-donation-recurring-choices-new --> sc-recurring-price-choice-container
   sc-product-price-choices --> sc-recurring-price-choice-container
   style sc-recurring-price-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```

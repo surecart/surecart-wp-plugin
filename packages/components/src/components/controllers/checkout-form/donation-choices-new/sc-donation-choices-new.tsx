@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
+import { state as checkoutState } from '@store/checkout';
 
 @Component({
   tag: 'sc-donation-choices-new',
@@ -21,6 +22,8 @@ export class ScDonationChoicesNew {
   @Prop({ reflect: true }) priceId: string;
 
   @Prop() prices: Price[];
+
+  @Prop() selectedProduct: Product;
 
   /** The default amount to load the page with. */
   @Prop() defaultAmount: string;
@@ -65,9 +68,7 @@ export class ScDonationChoicesNew {
   @Listen('scChange')
   handleChange() {
     const checked = Array.from(this.getChoices()).find(item => item.checked);
-    console.log(checked);
-    console.log(this.priceId);
-    
+    if (!checked) return;
     this.showCustomAmount = checked.value === 'ad_hoc';
     if (!isNaN(parseInt(checked.value))) {
       this.scUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) });
@@ -85,8 +86,8 @@ export class ScDonationChoicesNew {
 
   /** Store current line item in state. */
   @Watch('lineItems')
-  handleLineItemsChange() {
-    console.log(this.lineItems);
+  handleLineItemsChange() { 
+    console.log('handleLineItemsChange');
     
     if (!this.lineItems?.length) return;
     this.lineItem = (this.lineItems || []).find(lineItem => lineItem.price.id === this.priceId);
@@ -94,6 +95,8 @@ export class ScDonationChoicesNew {
 
   @Watch('lineItem')
   handleLineItemChange(val) {
+    console.log(val);
+    
     this.removeInvalid && this.removeInvalidPrices();
     const choices = this.getChoices();
     let hasCheckedOption = false;
@@ -115,22 +118,16 @@ export class ScDonationChoicesNew {
     }
   }
 
-  async getProductPrices() {
-    console.log(this.product);
-    
+  async getProductPrices() {  
     if (!this.product) return; 
     const product = (await apiFetch({
       path: addQueryArgs(`surecart/v1/products/${this.product}`, {
         expand: ['prices'],
       }),
     })) as Product;
-    
-    this.prices = product?.prices?.data?.filter(price => price?.ad_hoc && price?.recurring_interval).sort((a, b) => a?.position - b?.position);
-    console.log(this.prices);
-
-    this.priceId = this.prices?.[0]?.id;
-    console.log(this.priceId);
-
+    this.selectedProduct = product;
+    this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position);
+    this.priceId = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc)?.[0]?.id;
     this.handleLineItemsChange();
   }
 
@@ -138,6 +135,7 @@ export class ScDonationChoicesNew {
     if (!this.prices?.length) {
       this.getProductPrices();
     }
+    this.selectDefaultChoice();
   }
 
   selectDefaultChoice() {
@@ -151,9 +149,8 @@ export class ScDonationChoicesNew {
   }
 
   removeInvalidPrices() {
-    console.log(this.lineItem);
-    
     if (!this.lineItem) return;
+console.log(this.lineItem);
 
     this.getChoices().forEach((el: HTMLScChoiceElement) => {
       // we have a max and the value is more.
@@ -174,8 +171,10 @@ export class ScDonationChoicesNew {
       el.disabled = false;
     });
   }
-
+  
   render() {
+    console.log(checkoutState?.checkout?.line_items);
+    
     if (this.loading) {
       return (
         <div class="sc-donation-choices-new">
@@ -191,6 +190,10 @@ export class ScDonationChoicesNew {
         <sc-choices label={this.label} auto-width>
           <slot />
         </sc-choices>
+        <sc-donation-recurring-choices-new
+          prices={this.prices}
+          priceId={this.priceId}
+        />
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
     );

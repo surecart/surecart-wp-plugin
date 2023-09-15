@@ -92,6 +92,8 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-donation-choices-new](../../controllers/checkout-form/donation-choices-new)
+ - [sc-donation-recurring-choices-new](../../controllers/checkout-form/donation-recurring-choices-new)
  - [sc-order-bump](../../controllers/checkout-form/sc-order-bump)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
@@ -101,6 +103,8 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   sc-cancel-survey --> sc-choice
+  sc-donation-choices-new --> sc-choice
+  sc-donation-recurring-choices-new --> sc-choice
   sc-order-bump --> sc-choice
   sc-subscription-payment --> sc-choice
   sc-subscription-payment-method --> sc-choice
