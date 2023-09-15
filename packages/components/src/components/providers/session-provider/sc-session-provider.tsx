@@ -5,7 +5,6 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { updateFormState } from '@store/form/mutations';
-import { maybeConvertAmount } from '../../../functions/currency';
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, CheckoutInitiatedParams, FormStateSetter, LineItemData, PriceChoice, Product } from '../../../types';
@@ -38,9 +37,6 @@ export class ScSessionProvider {
 
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
-
-  /** Checkout was initiated */
-  @Event() scCheckoutInitiated: EventEmitter<CheckoutInitiatedParams>;
 
   @Watch('prices')
   handlePricesChange() {
@@ -177,29 +173,9 @@ export class ScSessionProvider {
     });
   }
 
-  // emit checkout initiate
-  handleCheckoutInitiated() {
-    if (!checkoutState.checkout) return;
-    const eventData: CheckoutInitiatedParams = {
-      transaction_id: checkoutState.checkout.id,
-      value: maybeConvertAmount(checkoutState.checkout?.total_amount, checkoutState.checkout?.currency || 'USD'),
-      currency: (checkoutState.checkout.currency || '').toUpperCase(),
-      ...(checkoutState.checkout?.discount?.promotion?.code ? { coupon: checkoutState.checkout?.discount?.promotion?.code } : {}),
-      ...(checkoutState.checkout?.tax_amount ? { tax: maybeConvertAmount(checkoutState.checkout?.tax_amount, checkoutState.checkout?.currency || 'USD') } : {}),
-      items: (checkoutState.checkout?.line_items?.data || []).map(item => ({
-        item_name: (item?.price?.product as Product)?.name || '',
-        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkoutState.checkout?.currency || 'USD') : 0,
-        price: maybeConvertAmount(item?.price?.amount || 0, checkoutState.checkout?.currency || 'USD'),
-        quantity: item?.quantity || 1,
-      })),
-    };
-
-    this.scCheckoutInitiated.emit(eventData);
-  }
-
   /** Find or create session on load. */
   componentDidLoad() {
-    this.findOrCreateOrder().then(() => this.handleCheckoutInitiated());
+    this.findOrCreateOrder();
   }
 
   /** Find or create an order */
