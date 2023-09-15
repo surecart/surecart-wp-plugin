@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
@@ -6,8 +6,7 @@ import { convertLineItemsToLineItemData } from '../../../../functions/line-items
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { getOrder, setOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
-import { Checkout, CartGoogleAnalyticsItem, LineItemData } from '../../../../types';
-
+import { Checkout, LineItemData } from '../../../../types';
 const query = {
   expand: [
     'line_items',
@@ -43,9 +42,6 @@ export class ScCartForm {
 
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
-
-  /** Item added to cart */
-  @Event() scAddedToCart: EventEmitter<CartGoogleAnalyticsItem>;
 
   @State() order: Checkout;
 
