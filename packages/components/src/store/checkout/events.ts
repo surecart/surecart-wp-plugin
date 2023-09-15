@@ -1,6 +1,6 @@
 import { on } from './store';
 import { Checkout, CheckoutInitiatedParams, LineItem, Product } from 'src/types';
-import { maybeConvertAmount } from 'src/functions/currency';
+import { maybeConvertAmount } from '../../functions/currency';
 
 /**
  * Checkout initiated event.
@@ -8,6 +8,7 @@ import { maybeConvertAmount } from 'src/functions/currency';
 on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
   if (oldCheckout?.id) return; // we only care about new checkouts.
+  if (!checkout?.id) return; // we don't have a saved checkout.
 
   const event = new CustomEvent<CheckoutInitiatedParams>('scCheckoutInitiated', {
     detail: {
@@ -60,30 +61,13 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   // check if line items have changed.
   if (JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
     // emit an event here with the checkout state updates.
-    const event = new CustomEvent<[Checkout, Checkout]>('scUpdateCart', { detail: [checkout, oldCheckout] });
+    const event = new CustomEvent<[Checkout, Checkout]>('scCartUpdated', { detail: [checkout, oldCheckout] });
     window.dispatchEvent(event);
   }
 });
 
 /**
- * Purchase complete event.
- */
-on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
-  if (key !== 'checkout') return; // we only care about checkout
-  if (!checkout?.status || oldCheckout?.status === checkout?.status) return; // we only care about status changes.
-  if (!['paid', 'processing'].includes(checkout.status)) return; // only if it's paid or processing.
-
-  // order paid is deprecated.
-  const deprecated = new CustomEvent('scOrderPaid', { detail: checkout });
-  window.dispatchEvent(deprecated);
-
-  // emit the new event.
-  const event = new CustomEvent('scPurchaseComplete', { detail: checkout });
-  window.dispatchEvent(event);
-});
-
-/**
- * Purchase complete event.
+ * Purchase complete, trial start event.
  */
 on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
