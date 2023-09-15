@@ -21,7 +21,7 @@ import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import LineItem from './components/LineItem';
-import { productNameWithPrice } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({
 	items: fulfillmentItems,

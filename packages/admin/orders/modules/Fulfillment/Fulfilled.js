@@ -21,7 +21,7 @@ import { ScBlockUi } from '@surecart/components-react';
 import AddTracking from './components/AddTracking';
 import LineItem from './components/LineItem';
 import { addQueryArgs } from '@wordpress/url';
-import { productNameWithPrice } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({ fulfillment, onDeleteSuccess }) => {
 	const [busy, setBusy] = useState(false);

@@ -15,7 +15,7 @@ import { useState } from 'react';
 import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
 import { addQueryArgs } from '@wordpress/url';
-import { productNameWithPrice } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);

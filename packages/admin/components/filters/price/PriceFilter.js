@@ -2,7 +2,8 @@ import { ScFormatNumber } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
-import { intervalString, productNameWithPrice } from '../../../../admin/util/translations';
+import { intervalString } from '../../../../admin/util/translations';
+import { productNameWithPrice } from '../../../../admin/util/products';
 import FilterItem from '../FilterItem';
 
 export default ({ id, onRemove }) => {
