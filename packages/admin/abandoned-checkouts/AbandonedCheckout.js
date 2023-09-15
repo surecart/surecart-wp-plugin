@@ -100,7 +100,9 @@ export default () => {
 		try {
 			const notificationsEnabled =
 				e?.target?.checked || !abandoned?.notifications_enabled;
+
 			setBusy(true);
+
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
 				'abandoned_checkout'
@@ -128,10 +130,12 @@ export default () => {
 				}
 			);
 
-			const message = notificationsEnabled
-				? __('Notifications enabled.', 'surecart')
-				: __('Notifications disabled.', 'surecart');
-			createSuccessNotice(message, { type: 'snackbar' });
+			createSuccessNotice(
+				notificationsEnabled
+					? __('Notifications enabled.', 'surecart')
+					: __('Notifications disabled.', 'surecart'),
+				{ type: 'snackbar' }
+			);
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(createErrorString(e), { type: 'snackbar' });
