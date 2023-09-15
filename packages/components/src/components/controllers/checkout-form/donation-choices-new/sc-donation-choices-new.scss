@@ -6,7 +6,7 @@
   display: grid;
   gap: var(--sc-spacing-small);
   position: relative;
-
+  z-index: 1;
   &__form {
     display: grid;
     gap: var(--sc-spacing-small);
