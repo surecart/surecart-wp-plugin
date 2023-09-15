@@ -40,18 +40,10 @@ exports[`sc-order-tax-id-input Renders UK VAT Tax Type 1`] = `
 </sc-order-tax-id-input>
 `;
 
-exports[`sc-order-tax-id-input Shows all types if taxIdTypes is empty 1`] = `
+exports[`sc-order-tax-id-input Renders with Help Text 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input country="DE" number="123456" status="unknown" type="eu_vat"></sc-tax-id-input>
-  </mock:shadow-root>
-</sc-order-tax-id-input>
-`;
-
-exports[`sc-order-tax-id-input Shows only the types in taxIdTypes 1`] = `
-<sc-order-tax-id-input>
-  <mock:shadow-root>
-    <sc-tax-id-input country="DE" number="123456" status="unknown" type="eu_vat"></sc-tax-id-input>
+    <sc-tax-id-input help="Enter your tax identifier" status="unknown"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;

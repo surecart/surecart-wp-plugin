@@ -2286,7 +2286,7 @@ export namespace Components {
         /**
           * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
          */
-        "taxIdTypes": string;
+        "taxIdTypes": string | string[];
         /**
           * Tax identifier
          */
@@ -8116,7 +8116,7 @@ declare namespace LocalJSX {
         /**
           * Tax ID Types which will be shown Eg: '["eu_vat", "gb_vat"]'
          */
-        "taxIdTypes"?: string;
+        "taxIdTypes"?: string | string[];
         /**
           * Tax identifier
          */
