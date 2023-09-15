@@ -230,7 +230,12 @@ export default () => {
 					abandoned={abandoned}
 				/>
 			</>
-			{busy && <ScBlockUi spinner />}
+			{busy && (
+				<ScBlockUi
+					spinner
+					style={{ zIndex: 9989, '--sc-block-ui-opacity': '0.35' }}
+				/>
+			)}
 		</UpdateModel>
 	);
 };
