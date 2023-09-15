@@ -5,6 +5,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg, getQueryArgs, removeQueryArgs } from '@wordpress/url';
 import { updateFormState } from '@store/form/mutations';
+
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
@@ -29,7 +30,6 @@ export class ScSessionProvider {
   /** Update line items event */
   @Event() scUpdateDraftState: EventEmitter<Checkout>;
 
-  /** Payment was completed */
   @Event() scPaid: EventEmitter<void>;
 
   /** Error event */
@@ -371,7 +371,6 @@ export class ScSessionProvider {
           line_items,
         },
       })) as Checkout;
-
       updateFormState('RESOLVE');
     } catch (e) {
       console.error(e);
