@@ -3,6 +3,7 @@
 namespace SureCart\Middleware;
 
 use Closure;
+use SureCart\Models\RegisteredWebhook;
 use SureCartCore\Requests\RequestInterface;
 
 /**
@@ -58,7 +59,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSigningSecret() {
-		return \SureCart::webhooks()->getSigningSecret();
+		return RegisteredWebhook::getSigningSecret();
 	}
 
 	/**
