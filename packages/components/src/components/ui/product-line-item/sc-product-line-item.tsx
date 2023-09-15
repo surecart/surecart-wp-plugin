@@ -140,8 +140,15 @@ export class ScProductLineItem {
         <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
           {!!this.imageUrl && <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />}
           <div class="item__text" part="text">
-            <div class="item__title" part="title">
-              <slot name="title">{`${this.name} ${this?.priceName ? `- ${this.priceName}` : ''}`}</slot>
+            <div class="item__text-details">
+              <div class="item__title" part="title">
+                <slot name="title">{this.name}</slot>
+              </div>
+              {!!this.priceName && (
+                <span class="item__description" part="static-quantity">
+                  {this.priceName}
+                </span>
+              )}
             </div>
             {this.editable && (
               <sc-quantity-select
