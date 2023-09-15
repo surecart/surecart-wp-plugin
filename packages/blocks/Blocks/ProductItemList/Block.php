@@ -239,7 +239,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => ! ! $attributes['search_enabled'],
 				'sortEnabled'          => ! ! $attributes['sort_enabled'],
 				'featured'             => 'featured' === $attributes['type'],
-				'collectionEnabled'    => $attributes['collection_enabled'],
+				'collectionEnabled'    => ! ! $attributes['collection_enabled'],
 			]
 		);
 

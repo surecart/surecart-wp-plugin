@@ -127,8 +127,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'ids'                => [],
 				'columns'            => 4,
-				'sort_enabled'       => false,
-				'search_enabled'     => false,
+				'sort_enabled'       => true,
+				'search_enabled'     => true,
 				'pagination_enabled' => true,
 				'ajax_pagination'    => true,
 				'collection_enabled' => true,
@@ -144,8 +144,8 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			[
 				'collection_id'      => '', // mandatory.
 				'columns'            => 4,
-				'sort_enabled'       => false,
-				'search_enabled'     => false,
+				'sort_enabled'       => true,
+				'search_enabled'     => true,
 				'pagination_enabled' => true,
 				'ajax_pagination'    => true,
 				'limit'              => 10,
