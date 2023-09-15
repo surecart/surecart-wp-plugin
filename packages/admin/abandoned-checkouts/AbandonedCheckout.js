@@ -177,7 +177,7 @@ export default () => {
 				</div>
 			}
 			button={
-				hasLoadedAbandoned && (
+				abandoned?.recovery_status === 'abandoned' && (
 					<div>
 						<ScSwitch
 							checked={abandoned?.notifications_enabled}
