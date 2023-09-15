@@ -130,7 +130,6 @@ return [
 		\SureCartBlocks\Blocks\Coupon\Block::class,
 		\SureCartBlocks\Blocks\AddToCartButton\Block::class,
 		\SureCartBlocks\Blocks\CustomerDashboardButton\Block::class,
-		\SureCartBlocks\Blocks\RecurringChoices\Block::class,
 		\SureCartBlocks\Blocks\CheckoutForm\Block::class,
 		\SureCartBlocks\Blocks\CartCoupon\Block::class,
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,

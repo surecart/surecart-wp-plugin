@@ -1,38 +1,22 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState, useRef, useEffect } from '@wordpress/element';
+import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	ToggleControl,
-	Modal,
-	Tooltip,
-} from '@wordpress/components';
-import {
-	InspectorControls,
 	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
-	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
-import { select, use, useDispatch, useSelect } from '@wordpress/data';
-import PriceSelector from '@scripts/blocks/components/PriceSelector';
+import { useSelect } from '@wordpress/data';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
 import {
-	ScButton,
 	ScDonationChoicesNew,
-	ScForm,
-	ScPriceInput,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import PriceInfo from '@scripts/blocks/components/PriceInfo';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
-	const { product_id, label, currency, custom_amount, default_amount } =
+	const { product_id, label, currency, default_amount } =
 		attributes;
 
 	const product = useSelect(
@@ -57,7 +41,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		['surecart/new-donation-amount', { amount: 10000, currency }],
 		['surecart/new-donation-amount', { amount: 20000, currency }],
 		['surecart/new-donation-amount', { amount: 50000, currency }],
-		['surecart/recurring-choices', { amount: 50000, currency }],
 	]);
 
 	const [templateVerified, setTemplateVerified] = useState(false);
@@ -86,9 +69,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	);
 
 	useEffect(() => {
-		console.log(product);
-		console.log(prices);
-
 		let minimum;
 		let maximum;
 		prices?.forEach((price) => {
@@ -107,7 +87,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			}
 
 		});
-		console.log(minimum, maximum);
 		// filter blocks who are only inside the range.
 		setTemplate(
 			template.filter(

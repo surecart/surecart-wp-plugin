@@ -41,7 +41,6 @@ import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
-import * as recurringChoices from '@blocks/RecurringChoices';
 
 import { registerBlocks } from './register-block';
 
@@ -51,7 +50,6 @@ registerBlocks([
 	newDonation,
 	donationAmount,
 	newDonationAmount,
-	recurringChoices,
 	nameYourPrice,
 	bumpLineItem,
 	checkoutErrors,
