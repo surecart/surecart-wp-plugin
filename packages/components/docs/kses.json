@@ -1742,8 +1742,9 @@
   },
   "sc-recurring-price-choice-container": {
     "label": true,
-    "price": true,
     "prices": true,
+    "product": true,
+    "selected-price": true,
     "show-control": true,
     "type": true,
     "style": true,

@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+import { LineItemData as LineItemData1, Price as Price1, Product as Product1, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1, ResponseError as ResponseError1 } from "src/types";
+export { LineItemData as LineItemData1, Price as Price1, Product as Product1, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -3135,11 +3135,9 @@ export namespace Components {
           * Label for the choice.
          */
         "label": string;
-        /**
-          * Stores the price
-         */
-        "price": Price1;
         "prices": Price1[];
+        "product": Product1;
+        "selectedPrice": Price1;
         /**
           * Show the radio/checkbox control
          */
@@ -9048,12 +9046,10 @@ declare namespace LocalJSX {
           * Label for the choice.
          */
         "label"?: string;
-        "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<void>) => void;
-        /**
-          * Stores the price
-         */
-        "price"?: Price1;
+        "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<string>) => void;
         "prices"?: Price1[];
+        "product"?: Product1;
+        "selectedPrice"?: Price1;
         /**
           * Show the radio/checkbox control
          */

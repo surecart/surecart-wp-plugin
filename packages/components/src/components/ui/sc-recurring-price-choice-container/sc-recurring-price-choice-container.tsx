@@ -1,7 +1,6 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Price } from 'src/types';
-import { state } from '@store/product';
+import { Price, Product } from 'src/types';
 import { intervalString } from '../../../functions/price';
 
 @Component({
@@ -10,8 +9,10 @@ import { intervalString } from '../../../functions/price';
   shadow: false,
 })
 export class ScRecurringPriceChoiceContainer {
-  /** Stores the price */
-  @Prop() price: Price;
+
+  @Prop() selectedPrice: Price;
+
+  @Prop() product: Product;
 
   /** Label for the choice. */
   @Prop() label: string;
@@ -24,16 +25,7 @@ export class ScRecurringPriceChoiceContainer {
 
   @Prop() prices: Price[];
 
-  @Event() scChange: EventEmitter<void>;
-
-  @Watch('price')
-  handlePriceChange() {
-    state.selectedPrice = this.price;
-  }
-  componentWillLoad() {
-    this.price = this.prices?.[0]
-    this.handlePriceChange();
-  }
+  @Event() scChange: EventEmitter<string>;
 
   renderPrice(price) {
     return (
@@ -44,29 +36,31 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
-    const cardChecked = this.prices.find(price => price.id === this.price?.id);
+    const cardChecked = this.prices.find(price => price.id === this.selectedPrice?.id);
+    const selectedPriceName = cardChecked ? this.selectedPrice?.name : this.prices?.[0]?.name ? this.prices?.[0]?.name : this.product?.name;
+
     return (
-      <sc-choice-container value={this.price?.id} type={this.type} showControl={this.showControl} checked={!!cardChecked} onScChange={() => this.scChange.emit()}>
+      <sc-choice-container value={this.selectedPrice?.id} type={this.type} showControl={this.showControl} checked={!!cardChecked} onScChange={() => this.scChange.emit()}>
         <div class="price-choice__title">
           <div class="price-choice__name">{this.label}</div>
           <div class="recurring-price-choice__description-details-wrap">
             <div class="recurring-price-choice__description">
               <sc-dropdown style={{ '--panel-width': '25em' }}>
                 <sc-button type="text" caret slot="trigger">
-                  {this.price?.name || state.product?.name}
+                  {selectedPriceName}
                 </sc-button>
                 <sc-menu>
                   {(this.prices || []).map(price => {
-                    const checked = this.price?.id === price?.id;
+                    const checked = this.selectedPrice?.id === price?.id;
                     return (
-                      <sc-menu-item onClick={() => (this.price = price)} class={`recurring-price-choice__menu-item ${checked ? 'checked' : ''}`}>
+                      <sc-menu-item onClick={() => (this.scChange.emit(price?.id))} class={`recurring-price-choice__menu-item ${checked ? 'checked' : ''}`}>
                         { checked && (
                           <span part="checked-icon" class="menu-item__check">
                               <sc-icon name="check" slot="prefix"/>
                           </span>
                         )}
                         <span part="label" class="menu-item__label">
-                          {price?.name || state.product?.name}
+                          {price?.name || this.product?.name}
                         </span>
                         <span slot="suffix">{this.renderPrice(price)}</span>
                       </sc-menu-item>
@@ -77,12 +71,12 @@ export class ScRecurringPriceChoiceContainer {
             </div>
             <div class="recurring-price-choice__details">
               <div class="price-choice__price">
-                {this.price?.ad_hoc ? (
+                {this.selectedPrice?.ad_hoc ? (
                   __('Custom Amount', 'surecart')
                 ) : (
                   <Fragment>
-                    <sc-format-number type="currency" value={this.price?.amount} currency={this.price?.currency}></sc-format-number>
-                    {intervalString(this.price, {
+                    <sc-format-number type="currency" value={this.selectedPrice?.amount} currency={this.selectedPrice?.currency}></sc-format-number>
+                    {intervalString(this.selectedPrice, {
                       showOnce: true,
                       abbreviate: true,
                       labels: {
@@ -96,16 +90,16 @@ export class ScRecurringPriceChoiceContainer {
                 )}
               </div>
 
-              {!!this.price?.trial_duration_days && (
+              {!!this.selectedPrice?.trial_duration_days && (
                 <div class="price-choice__trial">
-                  {sprintf(_n('Starting in %s day', 'Starting in %s days', this.price.trial_duration_days, 'surecart'), this.price.trial_duration_days)}
+                  {sprintf(_n('Starting in %s day', 'Starting in %s days', this.selectedPrice.trial_duration_days, 'surecart'), this.selectedPrice.trial_duration_days)}
                 </div>
               )}
 
-              {!!this.price?.setup_fee_enabled && this.price?.setup_fee_amount && (
+              {!!this.selectedPrice?.setup_fee_enabled && this.selectedPrice?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
-                  <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price?.currency}></sc-format-number>{' '}
-                  {this.price?.setup_fee_name || __('Setup Fee', 'surecart')}
+                  <sc-format-number type="currency" value={this.selectedPrice.setup_fee_amount} currency={this.selectedPrice?.currency}></sc-format-number>{' '}
+                  {this.selectedPrice?.setup_fee_name || __('Setup Fee', 'surecart')}
                 </div>
               )}
             </div>
