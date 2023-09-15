@@ -134,6 +134,7 @@ export default ({ id }) => {
 		if (product?.archived) {
 			return <ScTag type="warning">{__('Archived', 'surecart')}</ScTag>;
 		}
+		return null;
 	};
 
 	return (
