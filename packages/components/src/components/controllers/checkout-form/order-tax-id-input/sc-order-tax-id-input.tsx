@@ -91,6 +91,12 @@ export class ScOrderTaxIdInput {
     }
   }
 
+  componentWillLoad() {
+    if (this.taxIdTypes) {
+      this.taxIdTypesData = typeof this.taxIdTypes === 'string' ? JSON.parse(this.taxIdTypes) : this.taxIdTypes;
+    }
+  }
+
   render() {
     return (
       <sc-tax-id-input
