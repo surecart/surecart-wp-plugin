@@ -27,6 +27,6 @@ class OrderProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return OrderProtocol::update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return OrderProtocol::update( $request->get_json_params() );
 	}
 }

@@ -340,20 +340,20 @@ class Subscription extends Model {
 	 * @param string $id Model id.
 	 * @return $this|\WP_Error
 	 */
-	protected function payOff ($id = null){
-		if($id){
-			$this->setAttribute('id',$id);
+	protected function payOff( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
 		}
 
-		if($this->fireModelEvent('payingOff') === false){
+		if ( $this->fireModelEvent( 'payingOff' ) === false ) {
 			return false;
 		}
 
-		if(empty($this->attributes['id'])){
-			return new \WP_Error('not_saved','Please create the subscription');
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$paid_off =  $this->makeRequest(
+		$paid_off = $this->makeRequest(
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
@@ -465,6 +465,18 @@ class Subscription extends Model {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Get stats for the subscription
+	 *
+	 * @param array $args Array of arguments for the statistics.
+	 *
+	 * @return \SureCart\Models\Statistic;
+	 */
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'subscriptions' );
 	}
 }
 
