@@ -31,9 +31,19 @@ class LicensesController extends AdminController {
 	/**
 	 * Licenses edit.
 	 */
-	public function edit() {
+	public function edit( $request ) {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( LicensesScriptsController::class, 'enqueue' ) );
+
+		$this->preloadPaths(
+			[
+				'/wp/v2/users/me',
+				'/wp/v2/types?context=view',
+				'/wp/v2/types?context=edit',
+				'/surecart/v1/licenses/' . $request->query( 'id' ) . '?context=edit',
+			]
+		);
+
 		// return view.
 		return '<div id="app"></div>';
 	}

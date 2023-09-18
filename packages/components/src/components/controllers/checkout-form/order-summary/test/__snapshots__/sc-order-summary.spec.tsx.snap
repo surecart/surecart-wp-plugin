@@ -73,3 +73,265 @@ exports[`sc-order-summary renders scratch price if no trial has total savings am
   </mock:shadow-root>
 </sc-order-summary>
 `;
+
+exports[`sc-order-summary should render when collapsible, collapsed on desktop and collapsed in mobile 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Show Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price price--collapsed" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, collapsed on desktop and collapsed in mobile 2`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Show Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price price--collapsed" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, collapsed on desktop and not collapsed in mobile 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Show Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price price--collapsed" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, collapsed on desktop and not collapsed in mobile 2`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Show Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price price--collapsed" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, not collapsed on desktop and collapsed in mobile 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, not collapsed on desktop and collapsed in mobile 2`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, not collapsed on desktop and not collapsed in mobile 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when collapsible, not collapsed on desktop and not collapsed in mobile 2`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <sc-line-item style="--price-size: var(--sc-font-size-x-large);">
+        <span class="collapse-link" slot="title">
+          Summary
+          <svg class="collapse-link__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <span slot="description">
+          <slot name="description"></slot>
+        </span>
+        <span class="price" slot="price">
+          <sc-total class="total-price" total="total"></sc-total>
+        </span>
+      </sc-line-item>
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when not collapsible 1`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;
+
+exports[`sc-order-summary should render when not collapsible 2`] = `
+<sc-order-summary>
+  <mock:shadow-root>
+    <div class="summary summary--open">
+      <div class="summary__content summary__content--empty" style="overflow: hidden;">
+        <slot></slot>
+      </div>
+      <p class="empty">
+        Your cart is empty.
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-order-summary>
+`;

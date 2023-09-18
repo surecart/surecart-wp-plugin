@@ -10,12 +10,12 @@
 	],
 	"license": "GPL-2.0-only",
 	"require": {
-		"php": ">=5.5",
+		"php": ">=7.4",
 		"composer/installers": "^1.4",
 		"pimple/pimple": "^3.2",
 		"guzzlehttp/psr7": "^1.5",
 		"typisttech/imposter-plugin": "^0.6.2",
-		"sultann/wp-query-builder": "^1.0",
+		"surecart/wp-query-builder": "dev-master",
 		"woocommerce/action-scheduler": "^3.6"
 	},
 	"require-dev": {
@@ -34,6 +34,20 @@
 		"phpcompatibility/php-compatibility": "^9.0",
 		"spatie/phpunit-watcher": "^1.23"
 	},
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "surecart/wp-query-builder",
+				"version": "dev-master",
+				"source": {
+					"url": "https://github.com/surecart/wp-query-builder.git",
+					"type": "git",
+					"reference": "master"
+				}
+			}
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"SureCart\\": "app/src/",
