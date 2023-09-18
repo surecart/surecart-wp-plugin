@@ -14,6 +14,7 @@ import Box from '../../ui/Box';
 import Url from '../components/Url';
 import SelectTemplate from '../components/SelectTemplate';
 import SelectTemplatePart from '../components/SelectTemplatePart';
+import Products from '../components/Products';
 
 export default ({ collection, updateCollection, loading }) => {
 	const tag = document.querySelector(
@@ -54,6 +55,8 @@ export default ({ collection, updateCollection, loading }) => {
 					updateCollection={updateCollection}
 				/>
 			)}
+
+			<Products collection={collection} />
 		</Box>
 	);
 };

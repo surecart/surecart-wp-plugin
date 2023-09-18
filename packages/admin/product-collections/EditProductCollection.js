@@ -29,8 +29,6 @@ import SaveButton from '../templates/SaveButton';
 import Publishing from './modules/Publishing';
 // import Image from './modules/Image';
 import useSave from '../../admin/settings/UseSave';
-import Products from './modules/Products';
-import Box from '../ui/Box';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
@@ -40,7 +38,14 @@ export default ({ id }) => {
 
 	const { collection, isLoading, isDeleting, saveError, loadError } =
 		useSelect((select) => {
-			const entityData = ['surecart', 'product-collection', id];
+			const entityData = [
+				'surecart',
+				'product-collection',
+				id,
+				{
+					expand: ['product_collections'],
+				},
+			];
 
 			return {
 				collection: select(coreStore).getEditedEntityRecord(
@@ -159,8 +164,6 @@ export default ({ id }) => {
 						collection={collection}
 						updateCollection={updateCollection}
 					/> */}
-
-					<Products collectionId={id} />
 				</>
 			}
 		>
