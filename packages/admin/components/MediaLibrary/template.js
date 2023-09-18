@@ -21,16 +21,15 @@ export default ({
 			title={title ? title : __('Add Media', 'surecart')}
 			onRequestClose={onClose}
 			css={css`
-				width: 100%;
-				height: 100%;
-				max-width: calc(100% - 32px);
-				max-height: calc(100% - 32px);
-
 				.components-modal__content {
-					display: flex;
-					flex-direction: column;
+					> div:not([class]) {
+						display: flex;
+						flex-direction: column;
+						height: 100%;
+					}
 				}
 			`}
+			isFullScreen={true}
 			overlayClassName="surecart__modal-overlay"
 		>
 			<div
@@ -118,7 +117,7 @@ export default ({
 						display: flex;
 						align-items: center;
 						justify-content: flex-end;
-						padding: 8px;
+						padding: 8px 8px 0;
 					`}
 				>
 					{footer}

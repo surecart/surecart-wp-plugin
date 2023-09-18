@@ -25,6 +25,7 @@ import Prices from './modules/Prices';
 import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
+import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 
 export default ({ id }) => {
@@ -220,6 +221,11 @@ export default ({ id }) => {
 						loading={!hasLoadedProduct}
 					/>
 					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collections
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

@@ -48,8 +48,8 @@ export default ({
 					isBorderless={!hasDivider}
 					css={css`
 						${!hasDivider ? 'padding-bottom: 0 !important' : ''};
-						> * {
-							min-width: auto !important;
+						> sc-tag {
+							min-width: unset;
 						}
 					`}
 				>
