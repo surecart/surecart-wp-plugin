@@ -4,14 +4,11 @@ import { css, jsx } from '@emotion/react';
 /**
  * External dependencies
  */
-import { useMemo, useState } from '@wordpress/element';
-import { Button, Dropdown, PanelRow } from '@wordpress/components';
+import { Button, PanelRow } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
 import { __, sprintf, _n } from '@wordpress/i18n';
 
 export default ({ collection }) => {
-	console.log({ collection });
-
 	return (
 		<PanelRow
 			css={css`
