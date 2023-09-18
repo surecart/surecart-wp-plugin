@@ -1283,28 +1283,14 @@ export namespace Components {
           * The product id for the fields.
          */
         "product": string;
-        "removeInvalid": boolean;
-        "reportValidity": () => Promise<boolean>;
         "selectedProduct": Product;
     }
     interface ScDonationRecurringChoicesNew {
         "busy": boolean;
         /**
-          * Currency code for the donation.
-         */
-        "currencyCode": string;
-        /**
-          * The default amount to load the page with.
-         */
-        "defaultAmount": string;
-        /**
           * The label for the field.
          */
         "label": string;
-        /**
-          * Order line items.
-         */
-        "lineItems": LineItem[];
         /**
           * Is this loading
          */
@@ -1318,7 +1304,6 @@ export namespace Components {
           * The product id for the fields.
          */
         "product": string;
-        "removeInvalid": boolean;
         "selectedProduct": Product;
     }
     interface ScDownloadsList {
@@ -7118,14 +7103,6 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScAddLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
-        /**
-          * Toggle line item event
-         */
-        "onScRemoveLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
-        /**
-          * Toggle line item event
-         */
         "onScUpdateLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
         /**
           * The price id for the fields.
@@ -7136,32 +7113,19 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "product"?: string;
-        "removeInvalid"?: boolean;
         "selectedProduct"?: Product;
     }
     interface ScDonationRecurringChoicesNew {
         "busy"?: boolean;
         /**
-          * Currency code for the donation.
-         */
-        "currencyCode"?: string;
-        /**
-          * The default amount to load the page with.
-         */
-        "defaultAmount"?: string;
-        /**
           * The label for the field.
          */
         "label"?: string;
         /**
-          * Order line items.
-         */
-        "lineItems"?: LineItem[];
-        /**
           * Is this loading
          */
         "loading"?: boolean;
-        "onScChange"?: (event: ScDonationRecurringChoicesNewCustomEvent<string>) => void;
+        "onScChange"?: (event: ScDonationRecurringChoicesNewCustomEvent<string|boolean>) => void;
         /**
           * Toggle line item event
          */
@@ -7175,7 +7139,6 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "product"?: string;
-        "removeInvalid"?: boolean;
         "selectedProduct"?: Product;
     }
     interface ScDownloadsList {
