@@ -121,7 +121,6 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 									/>
 								</SortableKnob>
 							</div>
-
 							<ScInput
 								css={css`
 									width: 100%;
@@ -149,26 +148,22 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 								onInput={(e) =>
 									onChangeOptionValue(index, e.target.value)
 								}
-							>
-								{!isLastItem && (
-									<ScIcon
-										css={css`
-											cursor: pointer;
-											transition: color
-												var(--sc-transition-medium)
-												ease-in-out;
-											&:hover {
-												color: var(
-													--sc-color-danger-500
-												);
-											}
-										`}
-										onClick={() => deleteOptionValue(index)}
-										slot="suffix"
-										name="trash"
-									/>
-								)}
-							</ScInput>
+							/>
+							<ScIcon
+								css={css`
+									visibility: ${isLastItem
+										? 'hidden'
+										: 'visible'};
+									cursor: pointer;
+									transition: color
+										var(--sc-transition-medium) ease-in-out;
+									&:hover {
+										color: var(--sc-color-danger-500);
+									}
+								`}
+								onClick={() => deleteOptionValue(index)}
+								name="trash"
+							/>
 						</div>
 					</SortableItem>
 				);

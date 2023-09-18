@@ -3,7 +3,7 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import { SortableKnob } from 'react-easy-sort';
 import { __ } from '@wordpress/i18n';
 
@@ -28,9 +28,15 @@ export default ({
 	updateOption,
 	onDelete,
 }) => {
-	console.log({ option });
 	// we are automatically editing if we don't yet have an option nane (it's new)
 	const [editing, setEditing] = useState(!option?.name);
+	const input = useRef(null);
+
+	useEffect(() => {
+		if (editing) {
+			input.current.triggerFocus();
+		}
+	}, [editing]);
 
 	return (
 		<div
@@ -84,6 +90,7 @@ export default ({
 									required
 									value={option?.name}
 									autofocus
+									ref={input}
 									css={css`
 										width: 50%;
 									`}
@@ -92,24 +99,21 @@ export default ({
 											name: e.target.value,
 										});
 									}}
-								>
-									<ScIcon
-										slot="suffix"
-										name="trash"
-										onClick={onDelete}
-										css={css`
-											cursor: pointer;
-											transition: color
-												var(--sc-transition-medium)
-												ease-in-out;
-											&:hover {
-												color: var(
-													--sc-color-danger-500
-												);
-											}
-										`}
-									/>
-								</ScInput>
+								/>
+								<ScIcon
+									name="trash"
+									onClick={onDelete}
+									css={css`
+										cursor: pointer;
+										transition: color
+											var(--sc-transition-medium)
+											ease-in-out;
+										color: var(--sc-color-gray-600);
+										&:hover {
+											color: var(--sc-color-danger-500);
+										}
+									`}
+								/>
 							</div>
 						</div>
 

@@ -4,7 +4,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from '@wordpress/element';
-import SortableList, { SortableItem, SortableKnob } from 'react-easy-sort';
+import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 import { __ } from '@wordpress/i18n';
 
