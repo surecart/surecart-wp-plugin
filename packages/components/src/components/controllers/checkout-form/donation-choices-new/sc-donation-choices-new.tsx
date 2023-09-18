@@ -49,12 +49,10 @@ export class ScDonationChoicesNew {
     if (!isNaN(parseInt(checked.value))) {
       this.scUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) });
     }
-    this.loading = false;
   }
 
   @Watch('priceId')
   pricesChanged() {
-    this.loading = true;
     this.removeInvalidPrices();
   }
 
@@ -66,14 +64,15 @@ export class ScDonationChoicesNew {
       }),
     })) as Product;
     this.selectedProduct = product;
-    this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position);
+    this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position); 
+    this.loading = false;
     this.selectDefaultChoice();
     this.removeInvalidPrices();
   }
 
   componentWillLoad() {
-    this.loading = true;
     if (!this.prices?.length) {
+      this.loading = true;
       this.getProductPrices();
     }
   }
@@ -98,7 +97,6 @@ export class ScDonationChoicesNew {
       if (selectedPrice?.ad_hoc_max_amount && parseInt(el.value) > selectedPrice?.ad_hoc_max_amount) {
         el.style.display = 'none';
         el.disabled = true;
-        this.loading = false;
         return;
       }
 
@@ -106,13 +104,11 @@ export class ScDonationChoicesNew {
       if (selectedPrice?.ad_hoc_min_amount && parseInt(el.value) < selectedPrice?.ad_hoc_min_amount) {
         el.style.display = 'none';
         el.disabled = true;
-        this.loading = false;
         return;
       }
 
       el.style.display = 'flex';
       el.disabled = false;
-      this.loading = false;
     });
   }
 

@@ -71,6 +71,11 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	useEffect(() => {
 		let minimum;
 		let maximum;
+		
+		if(!prices?.length) {
+			return;
+		}
+		
 		prices?.forEach((price) => {
 			//get a minimum ad hoc amount & maximum ad hoc amount. minimum should be the lowest amount, maximum should be the highest amount in all prices.
 			const { ad_hoc_max_amount, ad_hoc_min_amount } = price;
@@ -78,7 +83,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			if (!ad_hoc_max_amount && !ad_hoc_min_amount) {
 				return;
 			}
-			console.log(ad_hoc_max_amount, ad_hoc_min_amount);
 			if (!minimum || ad_hoc_min_amount < minimum) {
 				minimum = ad_hoc_min_amount;
 			}
@@ -97,7 +101,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		);
 
 		setTemplateVerified(true);
-	}, [product]);
+	}, [product, product_id]);
 
 	if (!product_id || !product || !templateVerified) {
 		return (

@@ -4,7 +4,7 @@
 
 .sc-donation-choices-new {
   display: grid;
-  gap: var(--sc-spacing-small);
+  gap: 2em;
   position: relative;
   z-index: 1;
   &__form {
@@ -23,4 +23,8 @@
   min-width: calc(50% - 2em);
   box-sizing: border-box;
   height: 100%;
+}
+sc-donation-choices-new sc-choice::part(base) {
+  display: flex;
+  align-items: center;
 }
