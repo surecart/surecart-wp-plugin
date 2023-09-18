@@ -1581,6 +1581,8 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
+    "collection-enabled": true,
+    "collection-id": true,
     "featured": true,
     "ids": true,
     "layout-config": true,

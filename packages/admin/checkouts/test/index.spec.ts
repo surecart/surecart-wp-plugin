@@ -5,6 +5,8 @@ test.describe('Admin checkouts page', () => {
 		page,
 	}) => {
 		await page.goto('/wp-admin/admin.php?page=sc-checkouts');
+		// Wait for the page to load.
+		await page.waitForLoadState('networkidle');
 		const urlParams = new URLSearchParams(page.url());
 		expect(urlParams.has('id')).toBe(true);
 	});

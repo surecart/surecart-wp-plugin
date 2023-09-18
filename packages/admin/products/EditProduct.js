@@ -26,6 +26,7 @@ import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Variations from './modules/Variations';
+import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 
@@ -241,6 +242,11 @@ export default ({ id }) => {
 						loading={!hasLoadedProduct}
 					/>
 					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collections
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}
