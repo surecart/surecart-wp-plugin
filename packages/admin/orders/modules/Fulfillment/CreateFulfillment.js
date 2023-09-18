@@ -324,7 +324,7 @@ export default ({
 							{__('Notify customer of shipment', 'surecart')}
 							<span slot="description">
 								{__(
-									'Send shipping details to your customer',
+									'Send shipment details to your customer now',
 									'surecart'
 								)}
 							</span>
