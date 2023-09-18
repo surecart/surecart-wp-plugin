@@ -625,7 +625,6 @@
     "line-items": true,
     "loading": true,
     "price-id": true,
-    "prices": true,
     "product": true,
     "selected-product": true,
     "style": true,

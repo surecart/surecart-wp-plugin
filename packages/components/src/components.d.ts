@@ -1278,7 +1278,6 @@ export namespace Components {
           * The price id for the fields.
          */
         "priceId": string;
-        "prices": Price[];
         /**
           * The product id for the fields.
          */
@@ -7108,7 +7107,6 @@ declare namespace LocalJSX {
           * The price id for the fields.
          */
         "priceId"?: string;
-        "prices"?: Price[];
         /**
           * The product id for the fields.
          */

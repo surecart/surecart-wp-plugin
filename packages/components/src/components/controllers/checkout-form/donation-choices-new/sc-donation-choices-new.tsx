@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Element, Listen, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Element, Listen, Event, EventEmitter, Watch } from '@stencil/core';
 import { LineItem, LineItemData, Product, Price } from '../../../../types';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -16,7 +16,7 @@ export class ScDonationChoicesNew {
   /** The price id for the fields. */
   @Prop({ reflect: true }) priceId: string;
 
-  @Prop() prices: Price[];
+  @State() prices: Price[];
 
   @Prop() selectedProduct: Product;
 
@@ -52,6 +52,12 @@ export class ScDonationChoicesNew {
     this.loading = false;
   }
 
+  @Watch('priceId')
+  pricesChanged() {
+    this.loading = true;
+    this.removeInvalidPrices();
+  }
+
   async getProductPrices() {  
     if (!this.product) return; 
     const product = (await apiFetch({
@@ -62,6 +68,7 @@ export class ScDonationChoicesNew {
     this.selectedProduct = product;
     this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position);
     this.selectDefaultChoice();
+    this.removeInvalidPrices();
   }
 
   componentWillLoad() {
@@ -81,6 +88,32 @@ export class ScDonationChoicesNew {
 
   getChoices() {
     return (this.el.querySelectorAll('sc-choice') as NodeListOf<HTMLScChoiceElement>) || [];
+  }
+
+  removeInvalidPrices() {
+   const selectedPrice = this.prices?.find(price => price.id === this.priceId);
+
+    this.getChoices().forEach((el: HTMLScChoiceElement) => {
+      // we have a max and the value is more.
+      if (selectedPrice?.ad_hoc_max_amount && parseInt(el.value) > selectedPrice?.ad_hoc_max_amount) {
+        el.style.display = 'none';
+        el.disabled = true;
+        this.loading = false;
+        return;
+      }
+
+      // we have a min and the value is less.
+      if (selectedPrice?.ad_hoc_min_amount && parseInt(el.value) < selectedPrice?.ad_hoc_min_amount) {
+        el.style.display = 'none';
+        el.disabled = true;
+        this.loading = false;
+        return;
+      }
+
+      el.style.display = 'flex';
+      el.disabled = false;
+      this.loading = false;
+    });
   }
 
   render() {
