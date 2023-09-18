@@ -7,6 +7,8 @@ import {
 	ScMenuItem,
 	ScTag,
 	ScBlockUi,
+	ScCheckbox,
+	ScMenuDivider,
 } from '@surecart/components-react';
 import { useDispatch, select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -94,7 +96,12 @@ export default ({ fulfillment, ...rest }) => {
 
 	return (
 		<>
-			<ScDropdown {...rest}>
+			<ScDropdown
+				css={css`
+					--panel-width: 13rem;
+				`}
+				{...rest}
+			>
 				<ScTag
 					slot="trigger"
 					type={types?.[fulfillment?.shipment_status] || 'default'}
@@ -121,7 +128,7 @@ export default ({ fulfillment, ...rest }) => {
 							{status[key]}
 						</ScMenuItem>
 					))}
-					{/* <ScMenuDivider />
+					<ScMenuDivider />
 					<ScCheckbox
 						css={css`
 							padding: 0.5em 1em;
@@ -132,7 +139,7 @@ export default ({ fulfillment, ...rest }) => {
 						}
 					>
 						{__('Notify customer of status change', 'surecart')}
-					</ScCheckbox> */}
+					</ScCheckbox>
 				</ScMenu>
 			</ScDropdown>
 			{busy && <ScBlockUi spinner />}
