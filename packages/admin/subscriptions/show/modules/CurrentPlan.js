@@ -49,15 +49,12 @@ export default ({ lineItem, loading, subscription }) => {
 				}
 			);
 
-			if (!!coupon) {
-				createSuccessNotice(__('Coupon Added', 'surecart'), {
-					type: 'snackbar',
-				});
-			} else {
-				createSuccessNotice(__('Coupon Removed', 'surecart'), {
-					type: 'snackbar',
-				});
-			}
+			createSuccessNotice(
+				!!coupon
+					? __('Coupon Added', 'surecart')
+					: __('Coupon Removed', 'surecart'),
+				{ type: 'snackbar' }
+			);
 		} catch (e) {
 			console.log(e);
 			createErrorNotice(
@@ -173,7 +170,7 @@ export default ({ lineItem, loading, subscription }) => {
 					...(!!coupon?.id
 						? [
 								{
-									quantity: (
+									product: (
 										<ScTag
 											type="default"
 											clearable
