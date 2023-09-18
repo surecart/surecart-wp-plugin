@@ -160,9 +160,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 							'surecart'
 						)}
 					>
-						<ScButton type="warning" size="small">
-							{__('Inactive', 'surecart')}
-						</ScButton>
+						-
 					</ScTooltip>
 				) : (
 					<ScPriceInput

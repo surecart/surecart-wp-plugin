@@ -104,10 +104,13 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 								justify-content: center;
 							`}
 						>
-							{/* Hide if last item */}
-							{isLastItem ? (
-								<ScIcon name="empty" slot="prefix" />
-							) : (
+							<div
+								css={css`
+									visibility: ${isLastItem
+										? 'hidden'
+										: 'visible'};
+								`}
+							>
 								<SortableKnob>
 									<ScIcon
 										name="drag"
@@ -117,7 +120,7 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 										`}
 									/>
 								</SortableKnob>
-							)}
+							</div>
 
 							<ScInput
 								css={css`

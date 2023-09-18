@@ -12,15 +12,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import {
-	ScButton,
-	ScFormControl,
-	ScFlex,
-	ScIcon,
-	ScInput,
-	ScTag,
-} from '@surecart/components-react';
-import VariantOptionValues from './VariantOptionValues';
-import {
 	checkOptionValueError,
 	generateVariants,
 	getDeletedVariants,
@@ -29,6 +20,7 @@ import {
 	trackDeletedVariants,
 } from './utils';
 import Error from '../../../components/Error';
+import VariantOption from './VariantOption';
 
 export default ({ product, updateProduct, loading }) => {
 	const [error, setError] = useState(null);
@@ -38,16 +30,8 @@ export default ({ product, updateProduct, loading }) => {
 		updateProduct({
 			...product,
 			variant_options: (product?.variant_options ?? []).map(
-				(item, index) => {
-					if (index !== action.index) {
-						return item;
-					}
-
-					return {
-						...item,
-						...action.data,
-					};
-				}
+				(item, index) =>
+					index !== action.index ? item : { ...item, ...action.data }
 			),
 		});
 	};
@@ -61,15 +45,6 @@ export default ({ product, updateProduct, loading }) => {
 				oldIndex,
 				newIndex
 			),
-		});
-	};
-
-	const changeEditingValues = (index, value) => {
-		updateVariantOption({
-			index,
-			data: {
-				editing: value,
-			},
 		});
 	};
 
@@ -125,236 +100,42 @@ export default ({ product, updateProduct, loading }) => {
 			...product,
 			change_type: 'option_deleted',
 			variant_options: (product?.variant_options || []).filter(
-				(item, itemIndex) => itemIndex !== index
+				(_, itemIndex) => itemIndex !== index
 			),
 		});
 	};
 
-	const renderEditingVariantOption = (option, index) => {
-		return (
-			<div
-				css={css`
-					display: grid;
-					gap: 24px;
-				`}
-			>
-				<div
-					css={css`
-						display: flex;
-						gap: 1em;
-					`}
-				>
-					<SortableKnob>
-						<ScIcon
-							name="drag"
-							slot="prefix"
-							style={{
-								cursor: 'grab',
-							}}
-						/>
-					</SortableKnob>
-					<ScFlex justifyContent="center" alignItems="center">
-						<ScInput
-							type="text"
-							placeholder={__('Option Name', 'surecart')}
-							required
-							label={__('Option Name', 'surecart')}
-							value={option?.name}
-							name={`sc_option_name_${index}`}
-							onScInput={(e) => {
-								updateVariantOption({
-									index,
-									data: {
-										name: e.target.value,
-									},
-								});
-							}}
-						/>
-
-						<ScButton
-							type="text"
-							onClick={() => deleteVariantOption(index)}
-						>
-							<ScIcon
-								name="trash"
-								slot="prefix"
-								style={{
-									marginLeft: '1rem',
-									marginTop: '1rem',
-								}}
-							/>
-						</ScButton>
-					</ScFlex>
-				</div>
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<div
-						style={{
-							flex: 1,
-						}}
-					>
-						<ScFormControl
-							css={css`
-								margin-left: 1.6rem;
-								display: inline-block;
-							`}
-							label={__('Option Values', 'surecart')}
-							required
-						/>
-						<VariantOptionValues
-							option={{
-								...option,
-								index,
-							}}
-							product={product}
-							updateProduct={updateProduct}
-							onChangeValue={(updatedValues, changeTypeValue) => {
-								updateProduct({
-									change_type: changeTypeValue,
-								});
-								updateVariantOption({
-									index,
-									data: {
-										values: updatedValues,
-									},
-								});
-							}}
-						/>
-
-						<div
-							style={{
-								marginLeft: '1.6rem',
-								marginTop: '1rem',
-							}}
-						>
-							<ScButton
-								onClick={() => {
-									// Check duplicate validations.
-									const duplicateChecker =
-										checkOptionValueError(option?.values);
-									if (duplicateChecker.hasDuplicate) {
-										setError(duplicateChecker.error);
-										return;
-									}
-
-									// If passed, then change editing mode.
-									changeEditingValues(index, false);
-								}}
-							>
-								{__('Done', 'surecart')}
-							</ScButton>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const renderEditedVariantOption = (option, index) => {
-		return (
-			<div
-				css={css`
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					gap: 1em;
-				`}
-			>
-				<div>
-					<div
-						style={{
-							display: 'flex',
-							marginBottom: '1rem',
-						}}
-					>
-						<SortableKnob>
-							<ScIcon
-								name="drag"
-								slot="prefix"
-								style={{
-									marginRight: '1rem',
-									cursor: 'grab',
-								}}
-							/>
-						</SortableKnob>
-
-						<b>{option?.name}</b>
-					</div>
-
-					<div>
-						{(option?.values || [])
-							.filter(
-								(optionValue) => optionValue?.label?.length > 0
-							)
-							.map((value, keyValue) => {
-								return (
-									<ScTag
-										style={{
-											marginRight: '0.5em',
-											marginLeft:
-												keyValue === 0 ? '2em' : '0',
-										}}
-										type="primary"
-										key={keyValue}
-									>
-										{value?.label}
-									</ScTag>
-								);
-							})}
-					</div>
-				</div>
-
-				<div>
-					<ScButton onClick={() => changeEditingValues(index, true)}>
-						{__('Edit', 'surecart')}
-					</ScButton>
-				</div>
-			</div>
-		);
-	};
-
 	return (
-		<div style={{ marginBotttom: '2rem' }} loading={loading}>
-			<div
+		<div>
+			<Error
+				error={error}
+				setError={setError}
 				style={{
 					marginBottom: error?.message ? '1rem' : '0',
 				}}
-			>
-				<Error error={error} setError={setError} />
-			</div>
+			/>
 
 			<SortableList onSortEnd={applyDrag}>
 				{Array.isArray(product?.variant_options) &&
 					product?.variant_options.map((option, index) => {
 						return (
-							<SortableItem
-								key={`option_${index}`}
-								allowDrag={!option?.editing}
-							>
-								<div
-									key={index}
-									css={css`
-										padding: 24px;
-										background: white;
-										border-bottom: 1px solid
-											var(--sc-color-gray-200);
-									`}
-									id={`sc_option_${index}`}
-								>
-									{option?.editing
-										? renderEditingVariantOption(
-												option,
-												index
-										  )
-										: renderEditedVariantOption(
-												option,
-												index
-										  )}
+							<SortableItem key={index}>
+								<div>
+									<VariantOption
+										product={product}
+										updateProduct={updateProduct}
+										option={option}
+										updateOption={(data) => {
+											updateVariantOption({
+												index,
+												data,
+											});
+										}}
+										onDelete={() =>
+											deleteVariantOption(index)
+										}
+										index={index}
+									/>
 								</div>
 							</SortableItem>
 						);
