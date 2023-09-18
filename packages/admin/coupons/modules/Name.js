@@ -17,7 +17,7 @@ export default ({ coupon, updateCoupon, loading }) => {
 				attribute="name"
 				required
 				value={coupon?.name}
-				onScChange={(e) => updateCoupon({ name: e.target.value })}
+				onScInput={(e) => updateCoupon({ name: e.target.value })}
 			/>
 		</Box>
 	);
