@@ -22,6 +22,7 @@ import {
 	ScTooltip,
 } from '@surecart/components-react';
 import Image from './Image';
+import { maybeConvertAmount } from '../../../util';
 
 export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 	const { sku, status, image_id, image_url, stock, amount, currency, index } =
@@ -152,8 +153,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 		),
 		amount: (
 			<>
-				{(prices || []).filter((price) => !price?.archived)?.length >
-				1 ? (
+				{(prices || [])?.length > 1 ? (
 					<ScTooltip
 						type="text"
 						text={__(
@@ -168,6 +168,10 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 						type="number"
 						min="0"
 						value={amount}
+						placeholder={maybeConvertAmount(
+							prices?.[0]?.amount,
+							prices?.[0]?.currency || 'usd'
+						)}
 						currency={currency}
 						name="amount"
 						disabled={status === 'draft'}
