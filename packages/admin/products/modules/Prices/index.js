@@ -16,9 +16,8 @@ import Box from '../../../ui/Box';
 import List from './List';
 import NewPrice from './NewPrice';
 import ShowArchivedToggle from './ShowArchivedToggle';
-import SinglePrice from './SinglePrice';
 
-export default ({ product, updateProduct, productId }) => {
+export default ({ product, productId }) => {
 	const [newPriceModal, setNewPriceModal] = useState(false);
 	const [showArchived, setShowArchived] = useState(false);
 
@@ -131,39 +130,28 @@ export default ({ product, updateProduct, productId }) => {
 						gap: 1em;
 					`}
 				>
-					{(active || [])?.length > 1 ? (
-						<List prices={active} product={product}>
-							<ScEmpty icon="shopping-bag">
-								<ScSpacing>
-									<p
-										css={css`
-											font-size: 14px;
-										`}
-									>
-										{__(
-											'Set up pricing for your product.',
-											'surecart'
-										)}
-									</p>
-									<ScButton
-										onClick={() => setNewPriceModal(true)}
-									>
-										<ScIcon
-											name="plus"
-											slot="prefix"
-										></ScIcon>
-										{__('Add A Price', 'surecart')}
-									</ScButton>
-								</ScSpacing>
-							</ScEmpty>
-						</List>
-					) : (
-						<SinglePrice
-							prices={active}
-							product={product}
-							updateProduct={updateProduct}
-						/>
-					)}
+					<List prices={active} product={product}>
+						<ScEmpty icon="shopping-bag">
+							<ScSpacing>
+								<p
+									css={css`
+										font-size: 14px;
+									`}
+								>
+									{__(
+										'Set up pricing for your product.',
+										'surecart'
+									)}
+								</p>
+								<ScButton
+									onClick={() => setNewPriceModal(true)}
+								>
+									<ScIcon name="plus" slot="prefix"></ScIcon>
+									{__('Add A Price', 'surecart')}
+								</ScButton>
+							</ScSpacing>
+						</ScEmpty>
+					</List>
 
 					{!!archived?.length && (
 						<div
