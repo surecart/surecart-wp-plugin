@@ -119,12 +119,20 @@ export class ScTaxIdInput {
     }
   }
 
+  getZoneLabel() {
+    const filteredZones = this.filteredZones() || {};
+
+    // Get the label of the current type or the other type.
+    // If there is no other type, get the first one.
+    return filteredZones?.[this?.type || 'other']?.label || filteredZones?.[Object.keys(filteredZones)[0]]?.label;
+  }
+
   render() {
     return (
       <Fragment>
         <sc-input name="tax_identifier.number_type" required={this.required} value={this.type} style={{ display: 'none' }} />
         <sc-input
-          label={this.filteredZones()?.[this?.type || 'other']?.label}
+          label={this.getZoneLabel()}
           name="tax_identifier.number"
           required={this.required}
           value={this.number}

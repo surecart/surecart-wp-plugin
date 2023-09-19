@@ -1,4 +1,4 @@
-export default ({ className, attributes }) => {
+export default ({ attributes }) => {
 	const {
 		other_label,
 		ca_gst_label,

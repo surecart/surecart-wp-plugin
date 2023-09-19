@@ -111,7 +111,7 @@ export default ({ attributes, setAttributes }) => {
 								margin-bottom: 0.5em;
 							`}
 						>
-							{!!tax_id_types?.length && (
+							{!!(tax_id_types || [])?.length && (
 								<div
 									css={css`
 										display: flex;
@@ -161,7 +161,7 @@ export default ({ attributes, setAttributes }) => {
 								});
 							}}
 							choices={
-								!!tax_id_types.length
+								!!(tax_id_types || []).length
 									? zones.filter((zone) => {
 											return !tax_id_types.includes(
 												zone.value
