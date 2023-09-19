@@ -22,6 +22,8 @@ export class ScDonationChoicesNew {
 
   @State() prices: Price[];
 
+  @State() selectedPrice: Price;
+
   @Prop() selectedProduct: Product;
 
   /** The default amount to load the page with. */
@@ -56,7 +58,7 @@ export class ScDonationChoicesNew {
   handleChange() {
     const checked = Array.from(this.getChoices()).find(item => item.checked);
     if (!checked) return;
-    if (!isNaN(parseInt(checked.value))) {
+    if (!isNaN(parseInt(checked?.value)) && this.isInRange(checked?.value)) {
       let lineItems = [];
       if (this.lineItem) {
         lineItems = [{ id: this.lineItem?.id, price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) }];
@@ -68,6 +70,7 @@ export class ScDonationChoicesNew {
 
   @Watch('priceId')
   pricesChanged() {
+    this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
     this.removeInvalidPrices();
   }
 
@@ -98,12 +101,12 @@ export class ScDonationChoicesNew {
     this.selectDefaultChoice();
     this.removeInvalidPrices();
   }
+
   handleCheckoutChange() {
     if (this.lineItem) return;
-    console.log(checkoutState.checkout?.line_items?.data?.[0]);
-    
     this.lineItem = checkoutState.checkout?.line_items?.data?.[0];
   }
+
   componentWillLoad() {
     if (!this.prices?.length) {
       this.loading = true;
@@ -129,24 +132,22 @@ export class ScDonationChoicesNew {
     return (this.el.querySelectorAll('sc-choice') as NodeListOf<HTMLScChoiceElement>) || [];
   }
 
+  isInRange(value: string) {
+    if (!this.selectedPrice) return true;
+    if (this.selectedPrice?.ad_hoc_max_amount && parseInt(value) > this.selectedPrice?.ad_hoc_max_amount) return false;
+    if (this.selectedPrice?.ad_hoc_min_amount && parseInt(value) < this.selectedPrice?.ad_hoc_min_amount) return false;
+    return true;
+  }
+
   removeInvalidPrices() {
-   const selectedPrice = this.prices?.find(price => price.id === this.priceId);
+    if (!this.selectedPrice) return;
 
     this.getChoices().forEach((el: HTMLScChoiceElement) => {
-      // we have a max and the value is more.
-      if (selectedPrice?.ad_hoc_max_amount && parseInt(el.value) > selectedPrice?.ad_hoc_max_amount) {
+      if ( !this.isInRange(el.value) ) {
         el.style.display = 'none';
         el.disabled = true;
         return;
       }
-
-      // we have a min and the value is less.
-      if (selectedPrice?.ad_hoc_min_amount && parseInt(el.value) < selectedPrice?.ad_hoc_min_amount) {
-        el.style.display = 'none';
-        el.disabled = true;
-        return;
-      }
-
       el.style.display = 'flex';
       el.disabled = false;
     });
