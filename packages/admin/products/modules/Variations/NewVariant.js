@@ -8,10 +8,9 @@ import {
 	ScPriceInput,
 } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useSelect } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
-import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -19,12 +18,10 @@ import { __ } from '@wordpress/i18n';
  */
 import Error from '../../../components/Error';
 import Image from './Image';
-import { validateVariant } from './utils';
 
-export default ({ product, updateProduct, onRequestClose, loading }) => {
-	const [item, setItem] = useState(null);
+export default ({ product, updateProduct, onRequestClose }) => {
+	const [variant, setVariant] = useState(null);
 	const [error, setError] = useState(null);
-	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const prices = useSelect(
 		(select) =>
@@ -40,53 +37,20 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-
-		// Validation if this options already exists
-		const validationErrorMessage = validateVariant(product?.variants, item);
-		if (validationErrorMessage) {
-			setError(validationErrorMessage);
-			return;
-		}
-
-		// Update product
 		updateProduct({
-			variants: [
-				...product?.variants,
-				{
-					...item,
-					index: product?.variants.length,
-				},
-			],
+			variants: [...product?.variants, variant],
 		});
-
-		// Close modal
 		onRequestClose();
 	};
 
-	const updateVariantValue = (e) => {
-		const value = e.target.value;
-		const name = e.target.name;
-
-		setItem({
-			...item,
-			[name]: value,
+	const updateVariant = (data) => {
+		setVariant({
+			...variant,
+			...data,
 		});
 	};
 
-	const onAddMedia = async (media, variant) => {
-		const event = {
-			target: {
-				name: 'image',
-				value: media,
-			},
-		};
-		updateVariantValue(event, product?.variants.indexOf(variant));
-		createSuccessNotice(__('Variant Image updated.', 'surecart'), {
-			type: 'snackbar',
-		});
-	};
-
-	const onDeleteMedia = async (media, variant) => {
+	const onDeleteMedia = async () => {
 		const confirmDeleteMedia = confirm(
 			__(
 				'Are you sure you wish to delete this variant image? This cannot be undone.',
@@ -94,16 +58,7 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 			)
 		);
 		if (!confirmDeleteMedia) return;
-
-		updateVariantValue(
-			{
-				target: {
-					name: 'image',
-					value: null,
-				},
-			},
-			product?.variants.indexOf(variant)
-		);
+		updateVariant({ image: null });
 	};
 
 	return (
@@ -139,122 +94,88 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 						{product?.variant_options?.map((option, index) => (
 							<ScInput
 								key={index}
-								value={item?.[`option_${index + 1}`] ?? ''}
-								label={option?.name}
-								name={`option_${index + 1}`}
-								required
 								css={css`
 									margin-bottom: var(--sc-spacing-small);
 								`}
-								onScChange={updateVariantValue}
+								value={variant?.[`option_${index + 1}`] ?? ''}
+								label={option?.name}
+								required
+								onScInput={(e) =>
+									updateVariant({
+										[`option_${index + 1}`]: e.target.value,
+									})
+								}
 							/>
 						))}
 
 						<ScInput
-							value={item?.sku}
+							value={variant?.sku}
 							name="sku"
 							label={__('SKU', 'surecart')}
 							css={css`
 								margin-bottom: var(--sc-spacing-small);
 							`}
-							onScChange={updateVariantValue}
+							onScInput={(e) =>
+								updateVariant({ sku: e.target.value })
+							}
 						/>
 
 						{prices?.length <= 1 && (
 							<ScPriceInput
 								type="number"
 								min="0"
-								value={item?.amount ?? ''}
+								value={variant?.amount ?? ''}
 								currency={scData?.currency}
 								name="amount"
 								label={__('Price', 'surecart')}
 								css={css`
 									margin-bottom: var(--sc-spacing-small);
 								`}
-								onScChange={updateVariantValue}
+								onScInput={(e) =>
+									updateVariant({ amount: e.target.value })
+								}
 							/>
 						)}
 
-						<ScInput
-							label={__('Stock Qty', 'surecart')}
-							value={item?.stock ?? 0}
-							name="stock"
-							onScChange={updateVariantValue}
-							css={css`
-								margin-bottom: var(--sc-spacing-large);
-							`}
-						/>
+						{!!product?.stock_enabled && (
+							<ScInput
+								label={__('Stock Qty', 'surecart')}
+								value={variant?.stock}
+								onScInput={(e) =>
+									updateVariant({ stock: e.target.value })
+								}
+								type="number"
+								css={css`
+									margin-bottom: var(--sc-spacing-large);
+								`}
+							/>
+						)}
 
-						<div>
-							{!!item?.image ? (
+						<ScFormControl label={__('Image', 'surecart')}>
+							<Image
+								variant={variant}
+								onRemove={onDeleteMedia}
+								onAdd={(media) => {
+									updateVariant({
+										image_id: media,
+										image_url: media?.url,
+									});
+								}}
+							>
 								<div
 									css={css`
-										position: relative;
-										margin-right: 6px;
+										display: flex;
+										height: 3rem;
+										align-items: center;
+										justify-content: center;
 									`}
 								>
-									<img
-										src={item?.image?.url}
-										alt="product image"
-										css={css`
-											width: 1.5rem;
-											height: 1.5rem;
-										`}
-									/>
-									<ScIcon
-										name="trash"
-										slot="suffix"
-										css={css`
-											position: absolute;
-											right: -14px;
-											top: -12px;
-											cursor: pointer;
-											opacity: 0.8;
-											&:hover {
-												opacity: 1;
-											}
-										`}
-										onClick={() =>
-											onDeleteMedia(item?.image, item)
-										}
-									/>
+									<ScButton type="text">
+										{__('Add Image', 'surecart')}
+									</ScButton>
 								</div>
-							) : (
-								<ScFormControl
-									label={__('Image', 'surecart')}
-									css={css`
-										margin-bottom: var(--sc-spacing-small);
-									`}
-								>
-									<Image
-										variant={item}
-										product={product}
-										updateProduct={updateProduct}
-										existingMediaIds={
-											item?.image?.length > 0
-												? [item?.image?.media?.id]
-												: []
-										}
-										onAddMedia={(medias) =>
-											onAddMedia(medias, item)
-										}
-									>
-										<div
-											css={css`
-												display: flex;
-												height: 3rem;
-												align-items: center;
-												justify-content: center;
-											`}
-										>
-											<ScButton type="text">
-												{__('Add Image', 'surecart')}
-											</ScButton>
-										</div>
-									</Image>
-								</ScFormControl>
-							)}
-						</div>
+							</Image>
+						</ScFormControl>
 					</div>
 
 					<div
@@ -265,19 +186,13 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 							margin-top: var(--sc-spacing-large);
 						`}
 					>
-						<ScButton
-							type="primary"
-							busy={loading}
-							disabled={loading}
-							submit
-						>
+						<ScButton type="primary" submit>
 							{__('Add Variant', 'surecart')}
 						</ScButton>
 						<ScButton type="text" onClick={onRequestClose}>
 							{__('Cancel', 'surecart')}
 						</ScButton>
 					</div>
-					{loading && <sc-block-ui></sc-block-ui>}
 				</ScForm>
 			</Modal>
 		</Fragment>

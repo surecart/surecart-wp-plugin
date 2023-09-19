@@ -12,6 +12,7 @@ import arrayMove from 'array-move';
  * Internal dependencies.
  */
 import { ScIcon, ScInput } from '@surecart/components-react';
+import { hasDuplicate } from './utils';
 
 export default memo(({ option, product, updateProduct, onChangeValue }) => {
 	const [values, setValues] = useState(
@@ -28,7 +29,6 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 
 	const applySort = (oldIndex, newIndex) => {
 		setChangeType('option_value_sorted');
-
 		setValues(arrayMove(values, oldIndex, newIndex));
 	};
 
@@ -70,7 +70,7 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 
 		// remove the option value from the array.
 		const newOptionValues = values.filter(
-			(value, valueIndex) => valueIndex !== index
+			(_, valueIndex) => valueIndex !== index
 		);
 
 		// update the index of the option values.
@@ -134,8 +134,8 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 										? __('Add another value', 'surecart')
 										: null
 								}
-								id={`option_value_${option?.index}_${index}`}
 								value={optionValue.label}
+								required={index === 0}
 								onKeyDown={(e) => {
 									// if we deleted everything, and the label is already blank, delete this.
 									if (
@@ -145,9 +145,23 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 										deleteOptionValue(index); // delete option values
 									}
 								}}
-								onInput={(e) =>
-									onChangeOptionValue(index, e.target.value)
-								}
+								onScInput={(e) => {
+									e.target.setCustomValidity('');
+									onChangeOptionValue(index, e.target.value);
+								}}
+								onScChange={(e) => {
+									e.target.setCustomValidity(
+										hasDuplicate(values, 'label')
+											? sprintf(
+													__(
+														'You have already used the same option value "%s".',
+														'surecart'
+													),
+													e.target.value
+											  )
+											: ''
+									);
+								}}
 							/>
 							<ScIcon
 								css={css`

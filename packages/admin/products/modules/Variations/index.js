@@ -98,7 +98,6 @@ export default ({ product, updateProduct, loading }) => {
 				<NewVariant
 					product={product}
 					updateProduct={updateProduct}
-					loading={loading}
 					onRequestClose={() => setModal(false)}
 				/>
 			)}

@@ -12,7 +12,6 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScDropdown,
-	ScFlex,
 	ScIcon,
 	ScInput,
 	ScMenu,
@@ -24,9 +23,8 @@ import {
 import Image from './Image';
 import { maybeConvertAmount } from '../../../util';
 
-export default ({ product, updateProduct, variant, updateVariant, prices }) => {
-	const { sku, status, image_id, image_url, stock, amount, currency, index } =
-		variant;
+export default ({ variant, updateVariant, prices }) => {
+	const { sku, status, image_id, stock, amount, currency, index } = variant;
 
 	const onChangeInput = (e) => {
 		const { name, value } = e.target;
@@ -73,74 +71,20 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 
 	return {
 		variant: (
-			<ScFlex
-				style={{
-					'--font-weight': 'var(--sc-font-weight-bold)',
-					gap: '1rem',
-					justifyContent: 'flex-start',
-				}}
-				id={`sc_variant_name_${index}`}
+			<div
+				css={css`
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					gap: 1em;
+				`}
 			>
-				<div
-					style={{
-						borderRadius: '4px',
-						cursor: 'pointer',
-					}}
-				>
-					{image_url ? (
-						<div
-							css={css`
-								position: relative;
-								margin-right: 6px;
-								padding: var(--sc-spacing-xx-small);
-								border: 1px dotted var(--sc-color-gray-400);
-							`}
-						>
-							<img
-								src={image_url}
-								alt=""
-								css={css`
-									width: 1.5rem;
-									height: 1.5rem;
-								`}
-							/>
-							<ScIcon
-								name="trash"
-								slot="suffix"
-								css={css`
-									position: absolute;
-									right: -14px;
-									top: -12px;
-									cursor: pointer;
-									opacity: 0.8;
-									&:hover {
-										opacity: 1;
-									}
-								`}
-								onClick={onUnlinkMedia}
-							/>
-						</div>
-					) : (
-						<Image
-							variant={variant}
-							product={product}
-							updateProduct={updateProduct}
-							disabled={status === 'draft'}
-							existingMediaIds={image_id ? [image_id] : []}
-							onAddMedia={(media) => onLinkMedia(media)}
-						>
-							<ScIcon
-								name="image"
-								style={{
-									color: 'var(--sc-color-gray-400)',
-									width: '18px',
-									height: '18px',
-								}}
-							/>
-						</Image>
-					)}
-				</div>
-
+				<Image
+					variant={variant}
+					existingMediaIds={image_id ? [image_id] : []}
+					onAdd={onLinkMedia}
+					onRemove={onUnlinkMedia}
+				/>
 				<ScText
 					style={{
 						'--font-weight': 'var(--sc-font-weight-bold)',
@@ -149,7 +93,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 				>
 					{renderName(variant)}
 				</ScText>
-			</ScFlex>
+			</div>
 		),
 		amount: (
 			<>
@@ -225,6 +169,11 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 							? __('Restore', 'surecart')
 							: __('Delete', 'surecart')}
 					</ScMenuItem>
+					{!!variant?.image_url && (
+						<ScMenuItem onClick={onUnlinkMedia}>
+							{__('Remove Image', 'surecart')}
+						</ScMenuItem>
+					)}
 				</ScMenu>
 			</ScDropdown>
 		),

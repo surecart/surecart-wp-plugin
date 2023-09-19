@@ -19,6 +19,7 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 import VariantOptionValues from './VariantOptionValues';
+import { hasDuplicate } from './utils';
 
 export default ({
 	index,
@@ -51,7 +52,6 @@ export default ({
 					onScFormSubmit={(e) => {
 						e.preventDefault();
 						e.stopImmediatePropagation();
-						// TODO: Check for duplicates.
 						setEditing(false);
 					}}
 				>
@@ -99,6 +99,22 @@ export default ({
 										updateOption({
 											name: e.target.value,
 										});
+									}}
+									onScChange={(e) => {
+										e.target.setCustomValidity(
+											hasDuplicate(
+												product?.variant_options,
+												'name'
+											)
+												? sprintf(
+														__(
+															'You have already used the same option name "%s".',
+															'surecart'
+														),
+														e.target.value
+												  )
+												: ''
+										);
 									}}
 								/>
 								<ScIcon
