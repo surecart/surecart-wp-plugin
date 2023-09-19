@@ -108,6 +108,7 @@ export class ScDonationChoicesNew {
   }
 
   componentWillLoad() {
+    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
     if (!this.prices?.length) {
       this.loading = true;
       this.getProductPrices();
@@ -121,10 +122,17 @@ export class ScDonationChoicesNew {
   }
 
   selectDefaultChoice() {
-    const choices = this.getChoices();
+    const choices = Array.from(this.getChoices());
     if (!choices.length || !this.prices?.length) return;
-    choices[0].checked = true;
-    this.priceId = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc)?.[0]?.id;
+    let checkoutPriceID = this.lineItem?.price?.id;
+    let checkoutAmount = this.lineItem?.ad_hoc_amount;
+    const selectedChoice = choices.find((choice: HTMLScChoiceElement) => choice?.value === checkoutAmount?.toString());
+    if (selectedChoice) {
+      selectedChoice.checked = true;
+    } else {
+      choices[0].checked = true;
+    }
+    this.priceId = checkoutPriceID || this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc)?.[0]?.id;
     this.handleChange();
   }
 
@@ -154,8 +162,6 @@ export class ScDonationChoicesNew {
   }
 
   render() {
-    console.log(checkoutState.checkout);
-    
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     
     if (this.loading) {
