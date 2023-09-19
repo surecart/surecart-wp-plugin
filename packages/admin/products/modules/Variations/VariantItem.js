@@ -152,7 +152,8 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 		),
 		amount: (
 			<>
-				{(prices || [])?.length > 1 ? (
+				{(prices || []).filter((price) => !price?.archived)?.length >
+				1 ? (
 					<ScTooltip
 						type="text"
 						text={__(

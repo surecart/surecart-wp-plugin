@@ -8,8 +8,9 @@ import {
 	ScPriceInput,
 } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { __ } from '@wordpress/i18n';
 
@@ -24,6 +25,18 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 	const [item, setItem] = useState(null);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
+
+	const prices = useSelect(
+		(select) =>
+			(
+				select(coreStore).getEntityRecords('surecart', 'price', {
+					context: 'edit',
+					product_ids: [product?.id],
+					per_page: 100,
+				}) || []
+			).filter((price) => !price?.archived),
+		[product?.id]
+	);
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -147,18 +160,20 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 							onScChange={updateVariantValue}
 						/>
 
-						<ScPriceInput
-							type="number"
-							min="0"
-							value={item?.amount ?? ''}
-							currency={scData?.currency}
-							name="amount"
-							label={__('Price', 'surecart')}
-							css={css`
-								margin-bottom: var(--sc-spacing-small);
-							`}
-							onScChange={updateVariantValue}
-						/>
+						{prices?.length <= 1 && (
+							<ScPriceInput
+								type="number"
+								min="0"
+								value={item?.amount ?? ''}
+								currency={scData?.currency}
+								name="amount"
+								label={__('Price', 'surecart')}
+								css={css`
+									margin-bottom: var(--sc-spacing-small);
+								`}
+								onScChange={updateVariantValue}
+							/>
+						)}
 
 						<ScInput
 							label={__('Stock Qty', 'surecart')}
