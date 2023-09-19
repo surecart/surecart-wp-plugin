@@ -51,6 +51,7 @@ export default ({
 					onScFormSubmit={(e) => {
 						e.preventDefault();
 						e.stopImmediatePropagation();
+						// TODO: Check for duplicates.
 						setEditing(false);
 					}}
 				>
