@@ -332,6 +332,30 @@ export const getDeletedVariants = () => {
 };
 
 /**
+ * Does this have any duplicate optionValue.label.
+ */
+export const hasDuplicateOptionValue = (optionValues = []) => {
+	const optionValuesData = [...optionValues];
+	return optionValuesData.some((optionValue, index) => {
+		return optionValuesData.some((optionValue2, index2) => {
+			return optionValue.label === optionValue2.label && index !== index2;
+		});
+	});
+};
+
+/**
+ * Does this have any duplicate option.name.
+ */
+export const hasDuplicate = (options = [], key) => {
+	const optionData = [...options];
+	return optionData.some((option, index) => {
+		return optionData.some((option2, index2) => {
+			return option?.[key] === option2?.[key] && index !== index2;
+		});
+	});
+};
+
+/**
  * If any duplicate optionValue.label is found.
  *
  * @returns object
@@ -342,23 +366,10 @@ export const checkOptionValueError = (optionValues = []) => {
 		message: '',
 	};
 
-	// If optionValues filtered trimmed data is empty, then error.
-	if (
-		optionValuesData.filter((optionValue) => {
-			return optionValue.label !== '';
-		}).length === 0
-	) {
-		error.message = __('Option values are required.', 'surecart');
-	}
-
-	const hasDuplicateValue = optionValuesData.find((optionValue, index) => {
-		return (
-			optionValuesData.findIndex((optionValue2, index2) => {
-				return (
-					optionValue.label === optionValue2.label && index !== index2
-				);
-			}) !== -1
-		);
+	const hasDuplicateValue = optionValuesData.some((optionValue, index) => {
+		return optionValuesData.some((optionValue2, index2) => {
+			return optionValue.label === optionValue2.label && index !== index2;
+		});
 	});
 
 	if (hasDuplicateValue) {
