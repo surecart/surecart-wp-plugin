@@ -17,27 +17,23 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScPriceInput,
-	ScText,
 	ScTooltip,
 } from '@surecart/components-react';
 import Image from './Image';
 import { maybeConvertAmount } from '../../../util';
 
 export default ({ variant, updateVariant, prices }) => {
-	const { sku, status, image_id, stock, amount, currency, index } = variant;
+	const { sku, status, image_id, stock, amount, currency } = variant;
 
-	const onChangeInput = (e) => {
-		const { name, value } = e.target;
-		updateVariant([{ name, value }]);
-	};
+	/**
+	 * Link media.
+	 */
+	const onLinkMedia = (media) =>
+		updateVariant({ image_id: media?.id, image_url: media?.url });
 
-	const onLinkMedia = (media) => {
-		updateVariant([
-			{ name: 'image_id', value: media?.id },
-			{ name: 'image_url', value: media?.url },
-		]);
-	};
-
+	/**
+	 * Unlink Media
+	 */
 	const onUnlinkMedia = () => {
 		const confirmUnlinkMedia = confirm(
 			__(
@@ -46,12 +42,12 @@ export default ({ variant, updateVariant, prices }) => {
 			)
 		);
 		if (!confirmUnlinkMedia) return;
-		updateVariant([
-			{ name: 'image_id', value: null },
-			{ name: 'image_url', value: null },
-		]);
+		updateVariant({ image_id: null, image_url: null });
 	};
 
+	/**
+	 * Render the variant name.
+	 */
 	const renderName = () => {
 		const { option_1, option_2, option_3, status } = variant;
 		const Tag = status === 'draft' ? 'del' : 'span';
@@ -85,14 +81,14 @@ export default ({ variant, updateVariant, prices }) => {
 					onAdd={onLinkMedia}
 					onRemove={onUnlinkMedia}
 				/>
-				<ScText
-					style={{
-						'--font-weight': 'var(--sc-font-weight-bold)',
-						flex: 1,
-					}}
+				<div
+					css={css`
+						font-weight: bold;
+						flex: 1;
+					`}
 				>
 					{renderName(variant)}
-				</ScText>
+				</div>
 			</div>
 		),
 		amount: (
@@ -117,10 +113,10 @@ export default ({ variant, updateVariant, prices }) => {
 							prices?.[0]?.currency || 'usd'
 						)}
 						currency={currency}
-						name="amount"
 						disabled={status === 'draft'}
-						onScChange={onChangeInput}
-						id={`sc_variant_amount_${index}`}
+						onScInput={(e) =>
+							updateVariant({ amount: e.target.value })
+						}
 					/>
 				)}
 			</>
@@ -128,41 +124,31 @@ export default ({ variant, updateVariant, prices }) => {
 		stock: (
 			<ScInput
 				value={stock ?? 0}
-				name="stock"
 				disabled={status === 'draft'}
-				onScChange={onChangeInput}
-				id={`sc_variant_stock_${index}`}
+				onScInput={(e) => updateVariant({ stock: e.target.value })}
 			/>
 		),
 		sku: (
 			<ScInput
 				value={sku}
-				name="sku"
 				disabled={status === 'draft'}
-				onScChange={onChangeInput}
-				id={`sc_variant_sku_${index}`}
+				onScInput={(e) => updateVariant({ sku: e.target.value })}
 			/>
 		),
 		actions: (
-			<ScDropdown
-				placement="bottom-end"
-				id={`sc_variant_action_${index}`}
-			>
+			<ScDropdown placement="bottom-end">
 				<ScButton type="text" slot="trigger">
 					<ScIcon name="more-horizontal" />
 				</ScButton>
 				<ScMenu>
 					<ScMenuItem
 						onClick={() =>
-							updateVariant([
-								{
-									name: 'status',
-									value:
-										variant?.status === 'draft'
-											? 'publish'
-											: 'draft',
-								},
-							])
+							updateVariant({
+								status:
+									variant?.status === 'draft'
+										? 'publish'
+										: 'draft',
+							})
 						}
 					>
 						{variant?.status === 'draft'
