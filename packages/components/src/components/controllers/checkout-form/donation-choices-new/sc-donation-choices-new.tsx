@@ -1,14 +1,18 @@
 import { Component, h, Prop, State, Element, Listen, Event, EventEmitter, Watch } from '@stencil/core';
-import { LineItem, LineItemData, Product, Price } from '../../../../types';
+import { LineItem, LineItemData, Product, Price, Checkout } from '../../../../types';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
+import { state as checkoutState, onChange } from '@store/checkout';
+import { createOrUpdateCheckout } from '../../../../services/session';
 @Component({
   tag: 'sc-donation-choices-new',
   styleUrl: 'sc-donation-choices-new.scss',
   shadow: true,
 })
 export class ScDonationChoicesNew {
+  private removeCheckoutListener: () => void;
+
   @Element() el: HTMLScDonationChoicesNewElement;
   /** The product id for the fields. */
   @Prop({ reflect: true }) product: string;
@@ -27,27 +31,38 @@ export class ScDonationChoicesNew {
   @Prop() currencyCode: string = 'usd';
 
   /** Order line items. */
-  @Prop() lineItems: LineItem[] = [];
+  @Prop() lineItem: LineItem;
 
   /** Is this loading */
   @Prop() loading: boolean;
   @Prop() busy: boolean;
 
   /** The label for the field. */
-  @Prop() label: string;
+  @Prop() amountlabel: string;
+
+  /** The label for the field. */
+  @Prop() recurringlabel: string;
+
+  /** The label for the field. */
+  @Prop() amountcolumns: number;
 
   /** Error */
   @State() error: string;
 
   /** Toggle line item event */
-  @Event() scUpdateLineItem: EventEmitter<LineItemData>;
+  @Event() scToggleLineItem: EventEmitter<LineItemData>;
 
   @Listen('scChange')
   handleChange() {
     const checked = Array.from(this.getChoices()).find(item => item.checked);
     if (!checked) return;
     if (!isNaN(parseInt(checked.value))) {
-      this.scUpdateLineItem.emit({ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) });
+      let lineItems = [];
+      if (this.lineItem) {
+        lineItems = [{ id: this.lineItem?.id, price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) }];
+      }
+      lineItems = [{ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) }];
+      this.update({ line_items: lineItems });
     }
   }
 
@@ -56,6 +71,20 @@ export class ScDonationChoicesNew {
     this.removeInvalidPrices();
   }
 
+   /** Update a session */
+   async update(data: any = {}, query = {}) {
+    try {
+      checkoutState.checkout = (await createOrUpdateCheckout({
+        id: checkoutState.checkout?.id,
+        data,
+        query,
+      })) as Checkout;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+  
   async getProductPrices() {  
     if (!this.product) return; 
     const product = (await apiFetch({
@@ -69,12 +98,23 @@ export class ScDonationChoicesNew {
     this.selectDefaultChoice();
     this.removeInvalidPrices();
   }
-
+  handleCheckoutChange() {
+    if (this.lineItem) return;
+    console.log(checkoutState.checkout?.line_items?.data?.[0]);
+    
+    this.lineItem = checkoutState.checkout?.line_items?.data?.[0];
+  }
   componentWillLoad() {
     if (!this.prices?.length) {
       this.loading = true;
       this.getProductPrices();
     }
+    this.removeCheckoutListener = onChange('checkout', () => this.handleCheckoutChange());
+  }
+
+  /** Remove listener. */
+  disconnectedCallback() {
+    this.removeCheckoutListener();
   }
 
   selectDefaultChoice() {
@@ -113,6 +153,8 @@ export class ScDonationChoicesNew {
   }
 
   render() {
+    console.log(checkoutState.checkout);
+    
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     
     if (this.loading) {
@@ -127,10 +169,11 @@ export class ScDonationChoicesNew {
 
     return (
       <div class="sc-donation-choices-new">
-        <sc-choices label={this.label} auto-width>
+        <sc-choices label={this.amountlabel}>
           <slot />
         </sc-choices>
         <sc-donation-recurring-choices-new
+          label={this.recurringlabel}
           prices={this.prices}
           priceId={this.priceId}
           onScChange={e => {

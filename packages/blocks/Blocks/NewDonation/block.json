@@ -12,11 +12,18 @@
 		"html": false
 	},
 	"attributes": {
-		"label": {
+		"amount_label": {
 			"type": "string",
 			"default": "Donation Amount"
 		},
+		"recurring_label": {
+			"type": "string",
+			"default": "Make it recurring"
+		},
 		"default_amount": {
+			"type": "number"
+		},
+		"amount_columns": {
 			"type": "number"
 		},
 		"product_id": {

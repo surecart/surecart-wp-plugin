@@ -3,6 +3,13 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	__experimentalNumberControl as NumberControl,
+} from '@wordpress/components';
+import {
+	InspectorControls,
 	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
@@ -16,7 +23,7 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
-	const { product_id, label, currency, default_amount } =
+	const { product_id, amount_label, amount_columns, recurring_label, currency, default_amount } =
 		attributes;
 
 	const product = useSelect(
@@ -110,12 +117,38 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			</div>
 		);
 	}
-
+console.log(recurring_label);
 	return (
 		<Fragment>
+			<InspectorControls>
+				<PanelBody title={__('Attributes', 'surecart')}>
+					<PanelRow>
+						<TextControl
+							label={__('Amount Title', 'surecart')}
+							value={amount_label}
+							onChange={(amount_label) => setAttributes({ amount_label })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Recurring Choice Title', 'surecart')}
+							value={recurring_label}
+							onChange={(recurring_label) => setAttributes({ recurring_label })}
+						/>
+					</PanelRow>
+					<NumberControl
+						label={__('Amount Columns', 'surecart')}
+						value={amount_columns}
+						min={1}
+						onChange={(amount_columns) => setAttributes({ amount_columns: parseInt(amount_columns) })}
+					/>
+				</PanelBody>
+			</InspectorControls>
 			<div {...blockProps}>
 				<ScDonationChoicesNew
-					label={label}
+					amountlabel={amount_label}
+					recurringlabel={recurring_label}
+					amountcolumns={amount_columns}
 					product={product_id}
 					defaultAmount={default_amount}
 				>

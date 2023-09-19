@@ -618,14 +618,16 @@
     "slot": true
   },
   "sc-donation-choices-new": {
+    "amountcolumns": true,
+    "amountlabel": true,
     "busy": true,
     "currency-code": true,
     "default-amount": true,
-    "label": true,
-    "line-items": true,
+    "line-item": true,
     "loading": true,
     "price-id": true,
     "product": true,
+    "recurringlabel": true,
     "selected-product": true,
     "style": true,
     "id": true,

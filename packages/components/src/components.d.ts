@@ -1253,6 +1253,14 @@ export namespace Components {
         "reportValidity": () => Promise<boolean>;
     }
     interface ScDonationChoicesNew {
+        /**
+          * The label for the field.
+         */
+        "amountcolumns": number;
+        /**
+          * The label for the field.
+         */
+        "amountlabel": string;
         "busy": boolean;
         /**
           * Currency code for the donation.
@@ -1263,13 +1271,9 @@ export namespace Components {
          */
         "defaultAmount": string;
         /**
-          * The label for the field.
-         */
-        "label": string;
-        /**
           * Order line items.
          */
-        "lineItems": LineItem[];
+        "lineItem": LineItem;
         /**
           * Is this loading
          */
@@ -1282,6 +1286,10 @@ export namespace Components {
           * The product id for the fields.
          */
         "product": string;
+        /**
+          * The label for the field.
+         */
+        "recurringlabel": string;
         "selectedProduct": Product;
     }
     interface ScDonationRecurringChoicesNew {
@@ -7078,6 +7086,14 @@ declare namespace LocalJSX {
         "removeInvalid"?: boolean;
     }
     interface ScDonationChoicesNew {
+        /**
+          * The label for the field.
+         */
+        "amountcolumns"?: number;
+        /**
+          * The label for the field.
+         */
+        "amountlabel"?: string;
         "busy"?: boolean;
         /**
           * Currency code for the donation.
@@ -7088,13 +7104,9 @@ declare namespace LocalJSX {
          */
         "defaultAmount"?: string;
         /**
-          * The label for the field.
-         */
-        "label"?: string;
-        /**
           * Order line items.
          */
-        "lineItems"?: LineItem[];
+        "lineItem"?: LineItem;
         /**
           * Is this loading
          */
@@ -7102,7 +7114,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
+        "onScToggleLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
         /**
           * The price id for the fields.
          */
@@ -7111,6 +7123,10 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "product"?: string;
+        /**
+          * The label for the field.
+         */
+        "recurringlabel"?: string;
         "selectedProduct"?: Product;
     }
     interface ScDonationRecurringChoicesNew {

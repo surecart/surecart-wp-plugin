@@ -39,7 +39,6 @@ export class ScDonationRecurringChoicesNew {
     return (this.el.querySelectorAll('.sc-donation-recurring-choice')) || [];
   }
 
-  
   render() {
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
@@ -56,18 +55,16 @@ export class ScDonationRecurringChoicesNew {
 
     return (
       <div class="sc-donation-recurring-choices-new">
-        <sc-choices>
-          <div class="sc-donation-recurring-choices">
-            <div class="sc-donation-recurring-choice">
+        <sc-choices
+          label={this.label}
+        >
               <sc-recurring-price-choice-container
-                label={__('Subscribe and Save', 'surecart')}
+                label={__('Yes, count me in!', 'surecart')}
                 prices={recurringPrices}
                 product={this?.selectedProduct}
                 selectedPrice={ this.prices?.find(price => price.id === this.priceId) }
                 showPriceDetails={false}
               />
-            </div>
-            <div class="sc-donation-recurring-choice">
               <sc-choice 
                 show-control="false" 
                 size="small" 
@@ -78,8 +75,6 @@ export class ScDonationRecurringChoicesNew {
                   <div class="price-choice__name">{__('No, donate once', 'surecart')}</div>
                 </div>  
               </sc-choice>
-            </div>
-          </div>
         </sc-choices>
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
