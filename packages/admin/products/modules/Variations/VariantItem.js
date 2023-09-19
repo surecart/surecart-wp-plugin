@@ -92,7 +92,7 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 								position: relative;
 								margin-right: 6px;
 								padding: var(--sc-spacing-xx-small);
-								border: 1px dotted var(--sc-color-gray-200);
+								border: 1px dotted var(--sc-color-gray-400);
 							`}
 						>
 							<img
@@ -131,9 +131,9 @@ export default ({ product, updateProduct, variant, updateVariant, prices }) => {
 							<ScIcon
 								name="image"
 								style={{
-									'--color': 'var(--sc-color-gray-600)',
-									width: '1.6rem',
-									height: '1.6rem',
+									color: 'var(--sc-color-gray-400)',
+									width: '18px',
+									height: '18px',
 								}}
 							/>
 						</Image>
