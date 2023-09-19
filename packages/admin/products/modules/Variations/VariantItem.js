@@ -122,7 +122,13 @@ export default ({ variant, updateVariant, prices }) => {
 			<ScInput
 				value={stock ?? 0}
 				disabled={status === 'draft'}
-				onScInput={(e) => updateVariant({ stock: e.target.value })}
+				onScInput={(e) => {
+					updateVariant({
+						stock: e.target.value,
+						stock_adjustment:
+							e.target.value - variant?.initial_stock || 0,
+					});
+				}}
 			/>
 		),
 		sku: (
