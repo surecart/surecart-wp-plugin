@@ -332,19 +332,7 @@ export const getDeletedVariants = () => {
 };
 
 /**
- * Does this have any duplicate optionValue.label.
- */
-export const hasDuplicateOptionValue = (optionValues = []) => {
-	const optionValuesData = [...optionValues];
-	return optionValuesData.some((optionValue, index) => {
-		return optionValuesData.some((optionValue2, index2) => {
-			return optionValue.label === optionValue2.label && index !== index2;
-		});
-	});
-};
-
-/**
- * Does this have any duplicate option.name.
+ * Does this have any duplicate option.[key].
  */
 export const hasDuplicate = (options = [], key) => {
 	const optionData = [...options];
@@ -353,33 +341,6 @@ export const hasDuplicate = (options = [], key) => {
 			return option?.[key] === option2?.[key] && index !== index2;
 		});
 	});
-};
-
-/**
- * If any duplicate optionValue.label is found.
- *
- * @returns object
- */
-export const checkOptionValueError = (optionValues = []) => {
-	const optionValuesData = [...optionValues];
-	let error = {
-		message: '',
-	};
-
-	const hasDuplicateValue = optionValuesData.some((optionValue, index) => {
-		return optionValuesData.some((optionValue2, index2) => {
-			return optionValue.label === optionValue2.label && index !== index2;
-		});
-	});
-
-	if (hasDuplicateValue) {
-		error.message = __('Option values should not be the same.', 'surecart');
-	}
-
-	return {
-		hasDuplicate: hasDuplicateValue,
-		error,
-	};
 };
 
 /**
