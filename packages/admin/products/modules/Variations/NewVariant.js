@@ -106,7 +106,6 @@ export default ({ product, updateProduct, onRequestClose, loading }) => {
 				title={__('Add Variant', 'surecart')}
 				css={css`
 					max-width: 600px !important;
-					min-height: 650px !important;
 					.components-modal__content {
 						overflow: auto !important;
 					}
