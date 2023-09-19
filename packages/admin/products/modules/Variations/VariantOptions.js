@@ -1,8 +1,6 @@
 /**
  * External dependencies.
  */
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { useEffect, useState } from '@wordpress/element';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
@@ -22,31 +20,8 @@ import {
 import Error from '../../../components/Error';
 import VariantOption from './VariantOption';
 
-export default ({ product, updateProduct, loading }) => {
+export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
-
-	// function to update product?.variant_options based on the index.
-	const updateVariantOption = (action) => {
-		updateProduct({
-			...product,
-			variant_options: (product?.variant_options ?? []).map(
-				(item, index) =>
-					index !== action.index ? item : { ...item, ...action.data }
-			),
-		});
-	};
-
-	const applyDrag = async (oldIndex, newIndex) => {
-		updateProduct({
-			...product,
-			change_type: 'option_sorted',
-			variant_options: arrayMove(
-				product?.variant_options ?? [],
-				oldIndex,
-				newIndex
-			),
-		});
-	};
 
 	// For first time load, get the diffing variants and save to local storage.
 	useEffect(() => {
@@ -95,12 +70,38 @@ export default ({ product, updateProduct, loading }) => {
 		}
 	}, [product?.variant_options]);
 
-	const deleteVariantOption = (index) => {
+	// function to update product?.variant_options based on the index.
+	const onUpdate = (action) => {
+		updateProduct({
+			...product,
+			variant_options: (product?.variant_options ?? []).map(
+				(item, index) =>
+					index !== action.index ? item : { ...item, ...action.data }
+			),
+		});
+	};
+
+	const onDelete = (index) => {
 		updateProduct({
 			...product,
 			change_type: 'option_deleted',
 			variant_options: (product?.variant_options || []).filter(
 				(_, itemIndex) => itemIndex !== index
+			),
+		});
+	};
+
+	/**
+	 * Apply drag to reorder the variant options.
+	 */
+	const applyDrag = async (oldIndex, newIndex) => {
+		updateProduct({
+			...product,
+			change_type: 'option_sorted',
+			variant_options: arrayMove(
+				product?.variant_options ?? [],
+				oldIndex,
+				newIndex
 			),
 		});
 	};
@@ -126,14 +127,12 @@ export default ({ product, updateProduct, loading }) => {
 										updateProduct={updateProduct}
 										option={option}
 										updateOption={(data) => {
-											updateVariantOption({
+											onUpdate({
 												index,
 												data,
 											});
 										}}
-										onDelete={() =>
-											deleteVariantOption(index)
-										}
+										onDelete={() => onDelete(index)}
 										index={index}
 									/>
 								</div>
