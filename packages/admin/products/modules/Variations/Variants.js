@@ -24,7 +24,9 @@ export default ({ product, updateProduct, loading }) => {
 			];
 
 			return {
-				prices: select(coreStore).getEntityRecords(...queryArgs),
+				prices: (
+					select(coreStore).getEntityRecords(...queryArgs) || []
+				).filter((price) => !price?.archived),
 			};
 		},
 		[product?.id]
