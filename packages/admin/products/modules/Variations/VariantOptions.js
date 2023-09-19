@@ -10,7 +10,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import {
-	checkOptionValueError,
 	generateVariants,
 	getDeletedVariants,
 	getDiffingVariants,
