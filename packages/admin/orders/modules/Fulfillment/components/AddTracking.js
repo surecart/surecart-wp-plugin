@@ -1,8 +1,11 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
 	ScButton,
 	ScDialog,
 	ScForm,
+	ScSwitch,
 } from '@surecart/components-react';
 import { __, _n } from '@wordpress/i18n';
 import Tracking from './Tracking';
@@ -13,6 +16,9 @@ import { useEffect, useState } from 'react';
 
 export default ({ fulfillment, open, onRequestClose }) => {
 	const [trackings, setTrackings] = useState([{ number: '', url: '' }]);
+	const [notificationsEnabled, setNotificationsEnabled] = useState(
+		fulfillment?.notifications_enabled
+	);
 	const [busy, setBusy] = useState(false);
 	const { createErrorNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -36,6 +42,7 @@ export default ({ fulfillment, open, onRequestClose }) => {
 					trackings: trackings.filter(
 						({ number, url }) => !!number && !!url
 					),
+					notifications_enabled: notificationsEnabled,
 				},
 				{
 					throwOnError: true,
@@ -74,14 +81,43 @@ export default ({ fulfillment, open, onRequestClose }) => {
 			>
 				<Tracking trackings={trackings} setTrackings={setTrackings} />
 
-				<ScButton type="primary" submit slot="footer" busy={busy}>
-					{fulfillment?.trackings?.data?.length > 0
-						? __('Update', 'surecart')
-						: __('Add', 'surecart')}
-				</ScButton>
-				<ScButton type="text" onClick={onRequestClose} slot="footer">
-					{__('Cancel', 'surecart')}
-				</ScButton>
+				<div
+					slot="footer"
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+					`}
+				>
+					<ScSwitch
+						css={css`
+							flex: 1;
+							display: flex;
+						`}
+						checked={notificationsEnabled}
+						onScChange={(e) =>
+							setNotificationsEnabled(e.target.checked)
+						}
+					>
+						{__('Send update notification', 'surecart')}
+					</ScSwitch>
+
+					<div
+						css={css`
+							display: flex;
+							align-items: flex-end;
+						`}
+					>
+						<ScButton type="primary" submit busy={busy}>
+							{fulfillment?.trackings?.data?.length > 0
+								? __('Update', 'surecart')
+								: __('Add', 'surecart')}
+						</ScButton>
+						<ScButton type="text" onClick={onRequestClose}>
+							{__('Cancel', 'surecart')}
+						</ScButton>
+					</div>
+				</div>
 				{busy && <ScBlockUi spinner />}
 			</ScDialog>
 		</ScForm>
