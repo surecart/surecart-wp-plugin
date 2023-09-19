@@ -36,10 +36,7 @@ export default ({ variant, updateVariant, prices }) => {
 	 */
 	const onUnlinkMedia = () => {
 		const confirmUnlinkMedia = confirm(
-			__(
-				'Are you sure you wish to unlink this variant image?',
-				'surecart'
-			)
+			__('Are you sure you wish to unlink this image?', 'surecart')
 		);
 		if (!confirmUnlinkMedia) return;
 		updateVariant({ image_id: null, image_url: null });
