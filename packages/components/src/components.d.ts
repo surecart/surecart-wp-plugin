@@ -2893,6 +2893,14 @@ export namespace Components {
          */
         "ajaxPagination": boolean;
         /**
+          * Should allow collection filter
+         */
+        "collectionEnabled": boolean;
+        /**
+          * Show for a specific collection
+         */
+        "collectionId": string | null;
+        /**
           * Show only featured products.
          */
         "featured": boolean;
@@ -8760,6 +8768,14 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "ajaxPagination"?: boolean;
+        /**
+          * Should allow collection filter
+         */
+        "collectionEnabled"?: boolean;
+        /**
+          * Show for a specific collection
+         */
+        "collectionId"?: string | null;
         /**
           * Show only featured products.
          */

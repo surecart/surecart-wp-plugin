@@ -1,3 +1,5 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small"},"margin":{"top":"0","bottom":"0"}}},"layout":{"inherit":true,"type":"constrained"}} -->
 <div class="wp-block-group"
 	style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--small);padding-bottom:var(--wp--preset--spacing--small)">
@@ -11,6 +13,8 @@
 
 			<!-- wp:surecart/column {"width":"36%","style":{"spacing":{"blockGap":"24px"}}} -->
 			<div class="wp-block-surecart-column" style="flex-basis:36%;--sc-form-row-spacing:24px">
+				<!-- wp:surecart/product-collection-badges {"count":"1","style":{"typography":{"fontSize":"14px"}}} /-->
+
 				<!-- wp:surecart/product-title {"style":{"typography":{"fontSize":"30px","fontStyle":"normal","fontWeight":"600","letterSpacing":"0px"},"spacing":{"margin":{"top":"0"}}}} /-->
 
 				<!-- wp:surecart/product-price {"style":{"typography":{"fontSize":"24px"}}} /-->
@@ -36,3 +40,5 @@
 	<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

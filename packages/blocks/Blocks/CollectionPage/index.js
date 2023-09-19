@@ -1,0 +1,22 @@
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { pages as icon } from '@wordpress/icons';
+
+/**
+ * Internal dependencies
+ */
+import edit from './edit';
+import metadata from './block.json';
+import transforms from './transforms';
+
+const { name } = metadata;
+
+export { metadata, name };
+
+export const settings = {
+	icon,
+	edit,
+	transforms,
+};

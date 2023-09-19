@@ -24343,6 +24343,40 @@
           "required": false
         },
         {
+          "name": "collectionEnabled",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collection-enabled",
+          "reflectToAttr": false,
+          "docs": "Should allow collection filter",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collectionId",
+          "type": "string",
+          "mutable": false,
+          "attr": "collection-id",
+          "reflectToAttr": false,
+          "docs": "Show for a specific collection",
+          "docsTags": [],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "featured",
           "type": "boolean",
           "mutable": false,
