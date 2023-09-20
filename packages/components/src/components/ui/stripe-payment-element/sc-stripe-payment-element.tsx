@@ -97,20 +97,6 @@ export class ScStripePaymentElement {
 
     try {
       this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
-      this.element.on('change', (event: StripeElementChangeEvent) => {
-        if (event.complete) {
-          this.scPaymentInfoAdded.emit({
-            checkout_id: checkoutState.checkout?.id,
-            processor_type: 'stripe',
-            payment_method: {
-              billing_details: {
-                email: checkoutState.checkout?.email,
-                name: checkoutState.checkout?.name,
-              },
-            },
-          });
-        }
-      });
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
@@ -209,6 +195,20 @@ export class ScStripePaymentElement {
 
       this.element = this.elements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
+      this.element.on('change', (event: StripeElementChangeEvent) => {
+        if (event.complete) {
+          this.scPaymentInfoAdded.emit({
+            checkout_id: checkoutState.checkout?.id,
+            processor_type: 'stripe',
+            payment_method: {
+              billing_details: {
+                email: checkoutState.checkout?.email,
+                name: checkoutState.checkout?.name,
+              },
+            },
+          });
+        }
+      });
       return;
     }
     this.elements.update(this.getElementsConfig());
@@ -303,7 +303,6 @@ export class ScStripePaymentElement {
     try {
       this.scSetState.emit('PAYING');
       const response = type === 'setup' ? await this.stripe.confirmSetup(confirmArgs as any) : await this.stripe.confirmPayment(confirmArgs as any);
-
       if (response?.error) {
         this.error = response.error.message;
         throw response.error;
