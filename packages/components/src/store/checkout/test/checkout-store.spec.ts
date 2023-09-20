@@ -1,10 +1,11 @@
 import { state as checkoutState, dispose as disposeCheckout } from '..';
-import store, { getCheckout } from '../../checkouts';
+import { getCheckout } from '../../checkouts/mutations';
+import { dispose } from '../../checkouts';
 import { Checkout, LineItem } from '../../../types';
 
 describe('checkout store', () => {
   beforeEach(() => {
-    store.dispose();
+    dispose();
     disposeCheckout();
   });
 

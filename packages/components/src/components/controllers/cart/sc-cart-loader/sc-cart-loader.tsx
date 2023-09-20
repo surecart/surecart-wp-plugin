@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 
-import { clearOrder, getOrder } from '@store/checkouts';
+import { clearCheckout, getCheckout } from '@store/checkouts/mutations';
 import uiStore from '@store/ui';
 
 @Component({
@@ -25,9 +25,9 @@ export class ScCartLoader {
     }
 
     // clear the order if it's already paid.
-    const order = getOrder(this.formId, this.mode);
+    const order = getCheckout(this.formId, this.mode);
     if (order?.status === 'paid') {
-      clearOrder(this.formId, this.mode);
+      clearCheckout(this.formId, this.mode);
       return null;
     }
 

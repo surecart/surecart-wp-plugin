@@ -1,3 +1,4 @@
+import '../checkouts/events';
 import { on } from './store';
 import { Checkout, CheckoutInitiatedParams, LineItem, Product } from 'src/types';
 import { maybeConvertAmount } from '../../functions/currency';
@@ -29,42 +30,43 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   window.dispatchEvent(event);
 });
 
-/**
- * Add to cart/remove from cart, cart updated events.
- */
-on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
-  // we only care about checkout.
-  if (key !== 'checkout') return;
+// /**
+//  * Add to cart/remove from cart, cart updated events.
+//  */
+// on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
+//   // we only care about checkout.
+//   if (key !== 'checkout') return;
+//   if (!oldCheckout) return; // we only care about existing checkouts.
 
-  // get new and old line items.
-  const newLineItems = (checkout as Checkout)?.line_items?.data || [];
-  const oldLineItems = (oldCheckout as Checkout)?.line_items?.data || [];
+//   // get new and old line items.
+//   const newLineItems = (checkout as Checkout)?.line_items?.data || [];
+//   const oldLineItems = (oldCheckout as Checkout)?.line_items?.data || [];
 
-  // check for added items
-  newLineItems.forEach(newItem => {
-    const oldItem = oldLineItems.find(item => item.id === newItem.id);
-    if (!oldItem) {
-      const event = new CustomEvent<LineItem>('scAddedToCart', { detail: newItem });
-      window.dispatchEvent(event);
-    }
-  });
+//   // check for added items
+//   newLineItems.forEach(newItem => {
+//     const oldItem = oldLineItems.find(item => item.id === newItem.id);
+//     if (!oldItem) {
+//       const event = new CustomEvent<LineItem>('scAddedToCart', { detail: newItem });
+//       window.dispatchEvent(event);
+//     }
+//   });
 
-  // check for removed items
-  oldLineItems.forEach(oldItem => {
-    const newItem = newLineItems.find(item => item.id === oldItem.id);
-    if (!newItem) {
-      const event = new CustomEvent<LineItem>('scRemovedFromCart', { detail: oldItem });
-      window.dispatchEvent(event);
-    }
-  });
+//   // check for removed items
+//   oldLineItems.forEach(oldItem => {
+//     const newItem = newLineItems.find(item => item.id === oldItem.id);
+//     if (!newItem) {
+//       const event = new CustomEvent<LineItem>('scRemovedFromCart', { detail: oldItem });
+//       window.dispatchEvent(event);
+//     }
+//   });
 
-  // check if line items have changed.
-  if (JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
-    // emit an event here with the checkout state updates.
-    const event = new CustomEvent<[Checkout, Checkout]>('scCartUpdated', { detail: [checkout, oldCheckout] });
-    window.dispatchEvent(event);
-  }
-});
+//   // check if line items have changed.
+//   if (JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
+//     // emit an event here with the checkout state updates.
+//     const event = new CustomEvent<[Checkout, Checkout]>('scCartUpdated', { detail: [checkout, oldCheckout] });
+//     window.dispatchEvent(event);
+//   }
+// });
 
 /**
  * Purchase complete, trial start event.

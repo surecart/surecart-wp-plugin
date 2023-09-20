@@ -1,6 +1,6 @@
 import { addLineItem } from '../../services/session';
 import state from './store';
-import { getCheckout, setCheckout } from '@store/checkouts';
+import { getCheckout, setCheckout } from '@store/checkouts/mutations';
 import { Checkout } from 'src/types';
 import { toggleCart } from '@store/ui';
 import { addQueryArgs } from '@wordpress/url';

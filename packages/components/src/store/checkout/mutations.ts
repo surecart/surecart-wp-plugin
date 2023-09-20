@@ -1,5 +1,5 @@
 import state from './store';
-import { clearCheckout as clearSavedCheckout } from '../checkouts';
+import { clearCheckout as clearSavedCheckout } from '../checkouts/mutations';
 
 /**
  * Clear the current checkout.
