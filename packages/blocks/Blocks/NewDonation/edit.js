@@ -10,6 +10,7 @@ import {
 } from '@wordpress/components';
 import {
 	InspectorControls,
+	InnerBlocks,
 	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
@@ -66,7 +67,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		`,
 	});
 
-	const innerBlocksProps = useInnerBlocksProps(
+	const {children,innerBlocksProps} = useInnerBlocksProps(
 		{},
 		{
 			allowedBlocks: ['surecart/new-donation-amount'],
@@ -146,15 +147,17 @@ console.log(recurring_label);
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				<ScDonationChoicesNew
-					amountlabel={amount_label}
-					recurringlabel={recurring_label}
-					amountcolumns={amount_columns}
-					product={product_id}
-					defaultAmount={default_amount}
-				>
-					<div {...innerBlocksProps}></div>
-				</ScDonationChoicesNew>
+				<div {...innerBlocksProps}>
+					<ScDonationChoicesNew
+						amountlabel={amount_label}
+						recurringlabel={recurring_label}
+						amountcolumns={amount_columns}
+						product={product_id}
+						defaultAmount={default_amount}
+					>
+						{children}
+					</ScDonationChoicesNew>
+				</div>
 			</div>
 		</Fragment>
 	);

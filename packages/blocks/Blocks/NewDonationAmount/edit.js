@@ -13,7 +13,12 @@ import { css, jsx } from '@emotion/core';
 export default ({ attributes, setAttributes }) => {
 	const { label, amount, currency } = attributes;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			display: 'flex',
+			width: '100%',
+		},
+	});
 
 	return (
 		<Fragment>
@@ -47,7 +52,13 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScChoice showControl={false} size="small">
+				<ScChoice 
+					showControl={false} 
+					size="small"
+					css={css`
+						width: 100%;
+					`}
+				>
 					{!!label ? (
 						label
 					) : (

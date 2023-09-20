@@ -13,19 +13,27 @@ import { css, jsx } from '@emotion/core';
 export default ({ attributes, setAttributes }) => {
 	const { label, amount, currency, custom_amount } = attributes;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps({
+		style: {
+			display: 'flex',
+			width: '100%',
+		},
+	});
 
 	return (
 		<div {...blockProps}>
-			<ScChoice showControl={false} size="small">
+			<ScChoice 
+				showControl={false} 
+				size="small"
+				css={css`
+					width: 100%;
+				`}
+			>
 				<ScPriceInput
 					currencyCode={currency}
 					size="small"
 					showCode={false}
 					showLabel={false}
-					css={css`
-						width: 6.1em;
-					`}
 				/>
 			</ScChoice>
 		</div>

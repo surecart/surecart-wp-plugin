@@ -3,3 +3,8 @@ sc-donation-choices-new sc-choice::part(base) {
 	align-items: center;
 	justify-content: center;
 }
+.wp-block-surecart-new-donation-amount
+.wp-block-surecart-new-donation-amount > sc-choice {
+	width: 100%;
+	display: flex;
+}
