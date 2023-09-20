@@ -128,9 +128,11 @@ export class ScCouponForm {
                 this.scApplyCoupon.emit(null);
                 this.open = false;
               }}
-              onKeyDown={() => {
-                this.scApplyCoupon.emit(null);
-                this.open = false;
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  this.scApplyCoupon.emit(null);
+                  this.open = false;
+                }
               }}
             >
               {this?.discount?.promotion?.code}
@@ -169,7 +171,10 @@ export class ScCouponForm {
             }
             this.open = true;
           }}
-          onKeyDown={() => {
+          onKeyDown={e => {
+            if (e.key !== 'Enter') {
+              return true;
+            }
             if (this.open) {
               return;
             }
