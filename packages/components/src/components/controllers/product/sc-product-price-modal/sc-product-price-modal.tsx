@@ -31,12 +31,10 @@ export class ScProductPriceModal {
 
   componentWillLoad() {
     // focus on price input when opened.
-    onChange('dialog', val => {
-      if (val === 'ad_hoc') {
-        setTimeout(() => {
-          this.priceInput?.triggerFocus();
-        }, 50);
-      }
+    onChange('dialog', () => {
+      setTimeout(() => {
+        this.priceInput?.triggerFocus();
+      }, 50);
     });
   }
 
