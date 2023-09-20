@@ -8,10 +8,11 @@ import { addQueryArgs } from '@wordpress/url';
 export const submitCartForm = async () => {
   if (!state.selectedPrice?.id) return;
   if (state.selectedPrice?.ad_hoc && (null === state.adHocAmount || undefined === state.adHocAmount)) return;
+  const savedCheckout = getCheckout(state?.formId, state.mode);
   try {
     state.busy = true;
     const checkout = await addLineItem({
-      checkout: getCheckout(state?.formId, state.mode),
+      checkout: savedCheckout,
       data: {
         price: state.selectedPrice?.id,
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,

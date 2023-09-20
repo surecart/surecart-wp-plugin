@@ -75,16 +75,16 @@ describe('checkout store', () => {
       expect(updated).toBeCalledTimes(2);
     });
 
-    it('emits scPurchaseComplete, scOrderPaid and scStartTrial events', () => {
+    it('emits scCheckoutCompleted, scOrderPaid and scTrialStarted events', () => {
       // listen to scCheckoutIntiated event
-      const purchaseComplete = jest.fn();
-      window.addEventListener('scPurchaseComplete', purchaseComplete);
+      const scCheckoutCompleted = jest.fn();
+      window.addEventListener('scCheckoutCompleted', scCheckoutCompleted);
 
       const orderPaid = jest.fn();
       window.addEventListener('scOrderPaid', orderPaid);
 
-      const startTrial = jest.fn();
-      window.addEventListener('scStartTrial', startTrial);
+      const scTrialStarted = jest.fn();
+      window.addEventListener('scTrialStarted', scTrialStarted);
 
       // expect event to be emitted
       checkoutState.checkout = {
@@ -92,7 +92,7 @@ describe('checkout store', () => {
         status: 'finalized',
       } as Checkout;
 
-      expect(purchaseComplete).toBeCalledTimes(0);
+      expect(scCheckoutCompleted).toBeCalledTimes(0);
       expect(orderPaid).toBeCalledTimes(0);
 
       // status does not change.
@@ -101,7 +101,7 @@ describe('checkout store', () => {
         status: 'finalized',
       } as Checkout;
 
-      expect(purchaseComplete).toBeCalledTimes(0);
+      expect(scCheckoutCompleted).toBeCalledTimes(0);
       expect(orderPaid).toBeCalledTimes(0);
 
       // expect event to be emitted
@@ -110,7 +110,7 @@ describe('checkout store', () => {
         status: 'processing',
       } as Checkout;
 
-      expect(purchaseComplete).toBeCalledTimes(1);
+      expect(scCheckoutCompleted).toBeCalledTimes(1);
       expect(orderPaid).toBeCalledTimes(1);
 
       // expect event to be emitted
@@ -122,8 +122,8 @@ describe('checkout store', () => {
         },
       } as Checkout;
 
-      expect(startTrial).toBeCalledTimes(1);
-      expect(purchaseComplete).toBeCalledTimes(2);
+      expect(scTrialStarted).toBeCalledTimes(1);
+      expect(scCheckoutCompleted).toBeCalledTimes(2);
       expect(orderPaid).toBeCalledTimes(2);
     });
   });
