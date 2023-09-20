@@ -17,6 +17,9 @@ import { createErrorNotice } from '@store/notices/mutations';
   shadow: true,
 })
 export class ScCart {
+  /** The drawer */
+  private drawer: HTMLScDrawerElement;
+
   /** Is this open or closed? */
   @State() open: boolean = null;
 
@@ -51,6 +54,9 @@ export class ScCart {
     uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
+      setTimeout(() => {
+        this.drawer.focus();
+      }, 500);
     }
   }
 
@@ -144,7 +150,7 @@ export class ScCart {
         {this.order() && (
           <Universe.Provider state={this.state()}>
             <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setOrder(e.detail)}>
-              <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+              <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>
                     <div class="cart__header-suffix" slot="header">
