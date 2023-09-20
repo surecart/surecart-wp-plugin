@@ -16,6 +16,9 @@ import { Checkout, ResponseError } from '../../../../types';
   shadow: true,
 })
 export class ScCart {
+  /** The drawer */
+  private drawer: HTMLScDrawerElement;
+
   /** Is this open or closed? */
   @State() open: boolean = null;
 
@@ -53,6 +56,9 @@ export class ScCart {
     uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
+      setTimeout(() => {
+        this.drawer.focus();
+      }, 50);
     }
   }
 
@@ -159,7 +165,7 @@ export class ScCart {
               onScUpdateOrderState={e => this.setOrder(e.detail)}
               onScError={e => (this.error = e.detail as ResponseError)}
             >
-              <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+              <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>
                     <div class="cart__header-suffix" slot="header">
