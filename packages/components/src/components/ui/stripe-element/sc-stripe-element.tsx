@@ -6,6 +6,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 
 import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -111,17 +112,6 @@ export class ScStripeElement {
         throw response.error;
       }
 
-      this.scPaymentInfoAdded.emit({
-        processor_type: 'stripe',
-        checkout_id: this.order.id,
-        payment_method: {
-          billing_details: {
-            name: (this?.order?.name ? this.order.name : ''),
-            email: (this?.order?.email ? this.order.email : ''),
-          },
-        },
-      });
-
       this.scSetState.emit('PAID');
       // paid
       this.scPaid.emit();
@@ -194,7 +184,22 @@ export class ScStripeElement {
 
     this.element = this.elements.getElement('card');
 
-    this.element.on('change', event => (this.error = event?.error?.message ? event.error.message : ''));
+    this.element.on('change', (event: StripeElementChangeEvent) => {
+      if (event.complete) {
+        this.scPaymentInfoAdded.emit({
+          processor_type: 'stripe',
+          checkout_id: this.order.id,
+          payment_method: {
+            billing_details: {
+              name: this?.order?.name ? this.order.name : '',
+              email: this?.order?.email ? this.order.email : '',
+            },
+          },
+        });
+      }
+
+      this.error = event?.error?.message ? event.error.message : '';
+    });
     this.element.on('focus', () => (this.hasFocus = true));
     this.element.on('blur', () => (this.hasFocus = false));
   }

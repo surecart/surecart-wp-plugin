@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { Stripe } from '@stripe/stripe-js';
+import { Stripe, StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -97,6 +97,20 @@ export class ScStripePaymentElement {
 
     try {
       this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
+      this.element.on('change', (event: StripeElementChangeEvent) => {
+        if (event.complete) {
+          this.scPaymentInfoAdded.emit({
+            checkout_id: checkoutState.checkout?.id,
+            processor_type: 'stripe',
+            payment_method: {
+              billing_details: {
+                email: checkoutState.checkout?.email,
+                name: checkoutState.checkout?.name,
+              },
+            },
+          });
+        }
+      });
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
@@ -295,16 +309,6 @@ export class ScStripePaymentElement {
         throw response.error;
       } else {
         this.scSetState.emit('PAID');
-        this.scPaymentInfoAdded.emit({
-          checkout_id: checkoutState.checkout?.id,
-          processor_type: 'stripe',
-          payment_method: {
-            billing_details: {
-              email: checkoutState.checkout?.email,
-              name: checkoutState.checkout?.name,
-            }
-          }
-        });
         // paid
         this.scPaid.emit();
       }
