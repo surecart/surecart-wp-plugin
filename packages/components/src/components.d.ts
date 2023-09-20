@@ -1256,7 +1256,7 @@ export namespace Components {
         /**
           * The label for the field.
          */
-        "amountcolumns": number;
+        "amountcolumns": string;
         /**
           * The label for the field.
          */
@@ -7090,7 +7090,7 @@ declare namespace LocalJSX {
         /**
           * The label for the field.
          */
-        "amountcolumns"?: number;
+        "amountcolumns"?: string;
         /**
           * The label for the field.
          */

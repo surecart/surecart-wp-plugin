@@ -46,7 +46,7 @@ export class ScDonationChoicesNew {
   @Prop() recurringlabel: string;
 
   /** The label for the field. */
-  @Prop() amountcolumns: number;
+  @Prop() amountcolumns: string;
 
   /** Error */
   @State() error: string;
@@ -177,7 +177,10 @@ export class ScDonationChoicesNew {
     }
 
     return (
-      <div class="sc-donation-choices-new">
+      <div 
+        class="sc-donation-choices-new"
+        style={{ '--columns': this.amountcolumns}}
+      >
         <sc-choices label={this.amountlabel}>
           <slot />
         </sc-choices>
