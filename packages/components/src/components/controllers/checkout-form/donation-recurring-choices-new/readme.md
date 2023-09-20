@@ -7,44 +7,30 @@
 
 ## Properties
 
-| Property          | Attribute        | Description                               | Type         | Default     |
-| ----------------- | ---------------- | ----------------------------------------- | ------------ | ----------- |
-| `busy`            | `busy`           |                                           | `boolean`    | `undefined` |
-| `currencyCode`    | `currency-code`  | Currency code for the donation.           | `string`     | `'usd'`     |
-| `defaultAmount`   | `default-amount` | The default amount to load the page with. | `string`     | `undefined` |
-| `label`           | `label`          | The label for the field.                  | `string`     | `undefined` |
-| `lineItems`       | --               | Order line items.                         | `LineItem[]` | `[]`        |
-| `loading`         | `loading`        | Is this loading                           | `boolean`    | `undefined` |
-| `priceId`         | `price-id`       | The price id for the fields.              | `string`     | `undefined` |
-| `prices`          | --               |                                           | `Price[]`    | `undefined` |
-| `product`         | `product`        | The product id for the fields.            | `string`     | `undefined` |
-| `removeInvalid`   | `remove-invalid` |                                           | `boolean`    | `true`      |
-| `selectedProduct` | --               |                                           | `Product`    | `undefined` |
+| Property          | Attribute  | Description                    | Type      | Default     |
+| ----------------- | ---------- | ------------------------------ | --------- | ----------- |
+| `busy`            | `busy`     |                                | `boolean` | `undefined` |
+| `label`           | `label`    | The label for the field.       | `string`  | `undefined` |
+| `loading`         | `loading`  | Is this loading                | `boolean` | `undefined` |
+| `priceId`         | `price-id` | The price id for the fields.   | `string`  | `undefined` |
+| `prices`          | --         |                                | `Price[]` | `undefined` |
+| `product`         | `product`  | The product id for the fields. | `string`  | `undefined` |
+| `selectedProduct` | --         |                                | `Product` | `undefined` |
 
 
 ## Events
 
-| Event              | Description            | Type                        |
-| ------------------ | ---------------------- | --------------------------- |
-| `scAddLineItem`    | Toggle line item event | `CustomEvent<LineItemData>` |
-| `scRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
-| `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
-
-
-## Methods
-
-### `reportValidity() => Promise<boolean>`
-
-
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
+| Event              | Description            | Type                             |
+| ------------------ | ---------------------- | -------------------------------- |
+| `scChange`         |                        | `CustomEvent<boolean \| string>` |
+| `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>`      |
 
 
 ## Dependencies
+
+### Used by
+
+ - [sc-donation-choices-new](../donation-choices-new)
 
 ### Depends on
 
@@ -73,6 +59,7 @@ graph TD;
   sc-recurring-price-choice-container --> sc-icon
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
+  sc-donation-choices-new --> sc-donation-recurring-choices-new
   style sc-donation-recurring-choices-new fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

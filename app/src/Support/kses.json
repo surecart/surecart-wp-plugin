@@ -1776,6 +1776,7 @@
     "product": true,
     "selected-price": true,
     "show-control": true,
+    "show-price": true,
     "show-price-details": true,
     "type": true,
     "style": true,

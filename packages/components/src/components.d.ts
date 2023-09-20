@@ -3203,6 +3203,7 @@ export namespace Components {
           * Show the radio/checkbox control
          */
         "showControl": boolean;
+        "showPrice": boolean;
         "showPriceDetails": boolean;
         /**
           * Choice Type
@@ -9208,6 +9209,7 @@ declare namespace LocalJSX {
           * Show the radio/checkbox control
          */
         "showControl"?: boolean;
+        "showPrice"?: boolean;
         "showPriceDetails"?: boolean;
         /**
           * Choice Type

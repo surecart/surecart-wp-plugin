@@ -7,41 +7,26 @@
 
 ## Properties
 
-| Property          | Attribute        | Description                               | Type         | Default     |
-| ----------------- | ---------------- | ----------------------------------------- | ------------ | ----------- |
-| `busy`            | `busy`           |                                           | `boolean`    | `undefined` |
-| `currencyCode`    | `currency-code`  | Currency code for the donation.           | `string`     | `'usd'`     |
-| `defaultAmount`   | `default-amount` | The default amount to load the page with. | `string`     | `undefined` |
-| `label`           | `label`          | The label for the field.                  | `string`     | `undefined` |
-| `lineItems`       | --               | Order line items.                         | `LineItem[]` | `[]`        |
-| `loading`         | `loading`        | Is this loading                           | `boolean`    | `undefined` |
-| `priceId`         | `price-id`       | The price id for the fields.              | `string`     | `undefined` |
-| `prices`          | --               |                                           | `Price[]`    | `undefined` |
-| `product`         | `product`        | The product id for the fields.            | `string`     | `undefined` |
-| `removeInvalid`   | `remove-invalid` |                                           | `boolean`    | `true`      |
-| `selectedProduct` | --               |                                           | `Product`    | `undefined` |
+| Property          | Attribute        | Description                               | Type       | Default     |
+| ----------------- | ---------------- | ----------------------------------------- | ---------- | ----------- |
+| `amountcolumns`   | `amountcolumns`  | The label for the field.                  | `number`   | `undefined` |
+| `amountlabel`     | `amountlabel`    | The label for the field.                  | `string`   | `undefined` |
+| `busy`            | `busy`           |                                           | `boolean`  | `undefined` |
+| `currencyCode`    | `currency-code`  | Currency code for the donation.           | `string`   | `'usd'`     |
+| `defaultAmount`   | `default-amount` | The default amount to load the page with. | `string`   | `undefined` |
+| `lineItem`        | --               | Order line items.                         | `LineItem` | `undefined` |
+| `loading`         | `loading`        | Is this loading                           | `boolean`  | `undefined` |
+| `priceId`         | `price-id`       | The price id for the fields.              | `string`   | `undefined` |
+| `product`         | `product`        | The product id for the fields.            | `string`   | `undefined` |
+| `recurringlabel`  | `recurringlabel` | The label for the field.                  | `string`   | `undefined` |
+| `selectedProduct` | --               |                                           | `Product`  | `undefined` |
 
 
 ## Events
 
 | Event              | Description            | Type                        |
 | ------------------ | ---------------------- | --------------------------- |
-| `scAddLineItem`    | Toggle line item event | `CustomEvent<LineItemData>` |
-| `scRemoveLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
-| `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
-
-
-## Methods
-
-### `reportValidity() => Promise<boolean>`
-
-
-
-#### Returns
-
-Type: `Promise<boolean>`
-
-
+| `scToggleLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
 
 
 ## Dependencies
@@ -50,8 +35,9 @@ Type: `Promise<boolean>`
 
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-choices](../../../ui/choices)
-- [sc-recurring-price-choice-container](../../../ui/sc-recurring-price-choice-container)
 - [sc-choice](../../../ui/choice)
+- [sc-format-number](../../../util/format-number)
+- [sc-donation-recurring-choices-new](../donation-recurring-choices-new)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -59,11 +45,17 @@ Type: `Promise<boolean>`
 graph TD;
   sc-donation-choices-new --> sc-skeleton
   sc-donation-choices-new --> sc-choices
-  sc-donation-choices-new --> sc-recurring-price-choice-container
   sc-donation-choices-new --> sc-choice
+  sc-donation-choices-new --> sc-format-number
+  sc-donation-choices-new --> sc-donation-recurring-choices-new
   sc-donation-choices-new --> sc-block-ui
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
+  sc-donation-recurring-choices-new --> sc-skeleton
+  sc-donation-recurring-choices-new --> sc-choices
+  sc-donation-recurring-choices-new --> sc-recurring-price-choice-container
+  sc-donation-recurring-choices-new --> sc-choice
+  sc-donation-recurring-choices-new --> sc-block-ui
   sc-recurring-price-choice-container --> sc-format-number
   sc-recurring-price-choice-container --> sc-choice-container
   sc-recurring-price-choice-container --> sc-dropdown

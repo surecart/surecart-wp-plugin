@@ -20,6 +20,8 @@ export class ScRecurringPriceChoiceContainer {
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = false;
 
+  @Prop() showPrice: boolean = true;
+
   @Prop() showPriceDetails: boolean = true;
   
   /** Choice Type */
@@ -64,7 +66,9 @@ export class ScRecurringPriceChoiceContainer {
                         <span part="label" class="menu-item__label">
                           {price?.name || this.product?.name}
                         </span>
-                        <span slot="suffix">{this.renderPrice(price)}</span>
+                        {this.showPrice && (
+                          <span slot="suffix">{this.renderPrice(price)}</span>
+                        )}
                       </sc-menu-item>
                     );
                   })}

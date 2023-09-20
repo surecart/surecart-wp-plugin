@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-15T11:29:25",
+  "timestamp": "2023-09-20T08:01:37",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10367,6 +10367,38 @@
       "usage": {},
       "props": [
         {
+          "name": "amountcolumns",
+          "type": "number",
+          "mutable": false,
+          "attr": "amountcolumns",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "amountlabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "amountlabel",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "busy",
           "type": "boolean",
           "mutable": false,
@@ -10416,32 +10448,15 @@
           "required": false
         },
         {
-          "name": "label",
-          "type": "string",
-          "mutable": false,
-          "attr": "label",
-          "reflectToAttr": false,
-          "docs": "The label for the field.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "lineItems",
-          "type": "LineItem[]",
+          "name": "lineItem",
+          "type": "LineItem",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "Order line items.",
           "docsTags": [],
-          "default": "[]",
           "values": [
             {
-              "type": "LineItem[]"
+              "type": "LineItem"
             }
           ],
           "optional": false,
@@ -10480,21 +10495,6 @@
           "required": false
         },
         {
-          "name": "prices",
-          "type": "Price[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Price[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "product",
           "type": "string",
           "mutable": false,
@@ -10511,17 +10511,16 @@
           "required": false
         },
         {
-          "name": "removeInvalid",
-          "type": "boolean",
+          "name": "recurringlabel",
+          "type": "string",
           "mutable": false,
-          "attr": "remove-invalid",
+          "attr": "recurringlabel",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The label for the field.",
           "docsTags": [],
-          "default": "true",
           "values": [
             {
-              "type": "boolean"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -10543,40 +10542,10 @@
           "required": false
         }
       ],
-      "methods": [
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [
         {
-          "event": "scAddLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        },
-        {
-          "event": "scRemoveLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        },
-        {
-          "event": "scUpdateLineItem",
+          "event": "scToggleLineItem",
           "detail": "LineItemData",
           "bubbles": true,
           "cancelable": true,
@@ -10599,16 +10568,18 @@
       "dependencies": [
         "sc-skeleton",
         "sc-choices",
-        "sc-recurring-price-choice-container",
         "sc-choice",
+        "sc-format-number",
+        "sc-donation-recurring-choices-new",
         "sc-block-ui"
       ],
       "dependencyGraph": {
         "sc-donation-choices-new": [
           "sc-skeleton",
           "sc-choices",
-          "sc-recurring-price-choice-container",
           "sc-choice",
+          "sc-format-number",
+          "sc-donation-recurring-choices-new",
           "sc-block-ui"
         ],
         "sc-choices": [
@@ -10616,6 +10587,13 @@
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-donation-recurring-choices-new": [
+          "sc-skeleton",
+          "sc-choices",
+          "sc-recurring-price-choice-container",
+          "sc-choice",
+          "sc-block-ui"
         ],
         "sc-recurring-price-choice-container": [
           "sc-format-number",
@@ -10638,6 +10616,7 @@
       "filePath": "./src/components/controllers/checkout-form/donation-recurring-choices-new/sc-donation-recurring-choices-new.tsx",
       "encapsulation": "shadow",
       "tag": "sc-donation-recurring-choices-new",
+      "readme": "# sc-donation-recurring-choices-new\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10659,39 +10638,6 @@
           "required": false
         },
         {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "Currency code for the donation.",
-          "docsTags": [],
-          "default": "'usd'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "defaultAmount",
-          "type": "string",
-          "mutable": false,
-          "attr": "default-amount",
-          "reflectToAttr": false,
-          "docs": "The default amount to load the page with.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -10702,22 +10648,6 @@
           "values": [
             {
               "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "lineItems",
-          "type": "LineItem[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Order line items.",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "LineItem[]"
             }
           ],
           "optional": false,
@@ -10787,23 +10717,6 @@
           "required": false
         },
         {
-          "name": "removeInvalid",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "remove-invalid",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "selectedProduct",
           "type": "Product",
           "mutable": false,
@@ -10819,36 +10732,15 @@
           "required": false
         }
       ],
-      "methods": [
-        {
-          "name": "reportValidity",
-          "returns": {
-            "type": "Promise<boolean>",
-            "docs": ""
-          },
-          "signature": "reportValidity() => Promise<boolean>",
-          "parameters": [],
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [
         {
-          "event": "scAddLineItem",
-          "detail": "LineItemData",
+          "event": "scChange",
+          "detail": "boolean | string",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        },
-        {
-          "event": "scRemoveLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
+          "docs": "",
           "docsTags": []
         },
         {
@@ -10861,17 +10753,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [
-        {
-          "event": "scChange",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
+      "dependents": [
+        "sc-donation-choices-new"
+      ],
       "dependencies": [
         "sc-skeleton",
         "sc-choices",
@@ -10907,6 +10795,9 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-donation-choices-new": [
+          "sc-donation-recurring-choices-new"
         ]
       }
     },
@@ -13872,6 +13763,7 @@
       "dependents": [
         "sc-charges-list",
         "sc-coupon-form",
+        "sc-donation-choices-new",
         "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-bump",
@@ -13906,6 +13798,9 @@
           "sc-format-number"
         ],
         "sc-coupon-form": [
+          "sc-format-number"
+        ],
+        "sc-donation-choices-new": [
           "sc-format-number"
         ],
         "sc-fulfillments": [
@@ -27230,6 +27125,40 @@
           "required": false
         },
         {
+          "name": "showPrice",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showPriceDetails",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-price-details",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "type",
           "type": "\"checkbox\" | \"radio\"",
           "mutable": false,
@@ -27277,7 +27206,6 @@
         }
       ],
       "dependents": [
-        "sc-donation-choices-new",
         "sc-donation-recurring-choices-new",
         "sc-product-price-choices"
       ],
@@ -27302,9 +27230,6 @@
         ],
         "sc-button": [
           "sc-spinner"
-        ],
-        "sc-donation-choices-new": [
-          "sc-recurring-price-choice-container"
         ],
         "sc-donation-recurring-choices-new": [
           "sc-recurring-price-choice-container"

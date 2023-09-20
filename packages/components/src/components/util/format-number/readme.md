@@ -30,6 +30,7 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../../ui/coupon-form)
+ - [sc-donation-choices-new](../../controllers/checkout-form/donation-choices-new)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-line-item-bump](../../controllers/checkout-form/sc-line-item-bump)
@@ -63,6 +64,7 @@
 graph TD;
   sc-charges-list --> sc-format-number
   sc-coupon-form --> sc-format-number
+  sc-donation-choices-new --> sc-format-number
   sc-fulfillments --> sc-format-number
   sc-invoices-list --> sc-format-number
   sc-line-item-bump --> sc-format-number
