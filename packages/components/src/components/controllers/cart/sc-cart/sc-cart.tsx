@@ -58,7 +58,7 @@ export class ScCart {
       this.fetchOrder();
       setTimeout(() => {
         this.drawer.focus();
-      }, 50);
+      }, 500);
     }
   }
 
