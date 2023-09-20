@@ -2,12 +2,13 @@
 
 namespace SureCart\Models;
 
+use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
 /**
  * Price model
  */
-class Product extends Model {
+class Product extends Model implements PageModel {
 	use Traits\HasImageSizes;
 
 	/**
@@ -93,6 +94,16 @@ class Product extends Model {
 	}
 
 	/**
+	 * Set the product collections attribute
+	 *
+	 * @param object $value Product collections.
+	 * @return void
+	 */
+	public function setProductCollectionsAttribute( $value ) {
+		$this->setCollection( 'product_collections', $value, ProductCollection::class );
+	}
+
+	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.
@@ -124,12 +135,17 @@ class Product extends Model {
 	/**
 	 * Get the product permalink.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public function getPermalinkAttribute() {
+	public function getPermalinkAttribute(): string {
 		if ( empty( $this->attributes['id'] ) ) {
-			return false;
+			return '';
 		}
+		// permalinks off.
+		if ( ! get_option( 'permalink_structure' ) ) {
+			return add_query_arg( 'sc_product_page_id', $this->slug, get_home_url() );
+		}
+		// permalinks on.
 		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'product_page' ) ) . $this->slug;
 	}
 
@@ -138,8 +154,8 @@ class Product extends Model {
 	 *
 	 * @return string
 	 */
-	public function getPageTitleAttribute() {
-		return $this->metadata->page_title ?? $this->name;
+	public function getPageTitleAttribute(): string {
+		return $this->metadata->page_title ?? $this->name ?? '';
 	}
 
 	/**
@@ -147,8 +163,8 @@ class Product extends Model {
 	 *
 	 * @return string
 	 */
-	public function getMetaDescriptionAttribute() {
-		return $this->metadata->meta_description ?? $this->description;
+	public function getMetaDescriptionAttribute(): string {
+		return $this->metadata->meta_description ?? $this->description ?? '';
 	}
 
 	/**
@@ -184,7 +200,7 @@ class Product extends Model {
 	 *
 	 * @return array
 	 */
-	protected function getJsonSchemaArray() {
+	public function getJsonSchemaArray(): array {
 		$active_prices = (array) $this->activePrices();
 
 		$offers = array_map(
@@ -216,9 +232,9 @@ class Product extends Model {
 	/**
 	 * Get the product template id.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public function getTemplateIdAttribute() {
+	public function getTemplateIdAttribute(): string {
 		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
 			// we have a php file, switch to default.
 			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
@@ -243,9 +259,9 @@ class Product extends Model {
 	/**
 	 * Get the product template id.
 	 *
-	 * @return string|false
+	 * @return string
 	 */
-	public function getTemplatePartIdAttribute() {
+	public function getTemplatePartIdAttribute(): string {
 		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
 			return $this->attributes['metadata']->wp_template_part_id;
 		}

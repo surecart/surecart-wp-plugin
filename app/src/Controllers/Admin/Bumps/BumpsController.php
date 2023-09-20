@@ -31,9 +31,19 @@ class BumpsController extends AdminController {
 	/**
 	 * Edit
 	 */
-	public function edit() {
+	public function edit( $request ) {
 		// enqueue needed script.
 		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( BumpScriptsController::class, 'enqueue' ) );
+
+		$this->preloadPaths(
+			[
+				'/wp/v2/users/me',
+				'/wp/v2/types?context=view',
+				'/wp/v2/types?context=edit',
+				'/surecart/v1/bumps/' . $request->query( 'id' ) . '?context=edit',
+			]
+		);
+
 		// return view.
 		return '<div id="app"></div>';
 	}
