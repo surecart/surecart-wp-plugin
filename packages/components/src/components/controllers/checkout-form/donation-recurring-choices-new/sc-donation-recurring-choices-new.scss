@@ -8,8 +8,7 @@
   position: relative;
   z-index: 1;
   --columns: 2;
-  &__form {
-    display: grid;
-    gap: var(--sc-spacing-small);
-  }
+}
+.sc-donation-recurring-choices-new::part(choices) {
+  background: red;
 }

@@ -48,6 +48,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		['surecart/new-donation-amount', { amount: 10000, currency }],
 		['surecart/new-donation-amount', { amount: 20000, currency }],
 		['surecart/new-donation-amount', { amount: 50000, currency }],
+		['surecart/custom-donation-amount', { currency }],
 	]);
 
 	const [templateVerified, setTemplateVerified] = useState(false);
@@ -102,8 +103,8 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		setTemplate(
 			template.filter(
 				(block) =>
-					block[1].amount <= maximum &&
-					block[1].amount >= minimum
+				('surecart/new-donation-amount' !== block[0]) || (block[1].amount <= maximum &&
+					block[1].amount >= minimum)
 			)
 		);
 

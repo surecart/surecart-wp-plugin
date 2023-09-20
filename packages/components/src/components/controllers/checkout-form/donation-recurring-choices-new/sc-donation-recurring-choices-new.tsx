@@ -54,9 +54,10 @@ export class ScDonationRecurringChoicesNew {
     }
 
     return (
-      <div class="sc-donation-recurring-choices-new">
+      <div class="sc-donation-recurring-choices-new" part='base'>
         <sc-choices
           label={this.label}
+          part='choices'
         >
               <sc-recurring-price-choice-container
                 label={__('Yes, count me in!', 'surecart')}
@@ -71,6 +72,7 @@ export class ScDonationRecurringChoicesNew {
                 size="small" 
                 value={nonRecurringPrice?.id}
                 checked={this.priceId === nonRecurringPrice?.id}
+                part='choice'
               >
                 <div class="price-choice__title">
                   <div class="price-choice__name">{__('No, donate once', 'surecart')}</div>

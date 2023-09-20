@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-20T08:01:37",
+  "timestamp": "2023-09-20T09:27:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -5455,7 +5455,6 @@
       ],
       "dependents": [
         "sc-cancel-survey",
-        "sc-donation-choices-new",
         "sc-donation-recurring-choices-new",
         "sc-order-bump",
         "sc-subscription-payment",
@@ -5465,9 +5464,6 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-cancel-survey": [
-          "sc-choice"
-        ],
-        "sc-donation-choices-new": [
           "sc-choice"
         ],
         "sc-donation-recurring-choices-new": [
@@ -10568,8 +10564,6 @@
       "dependencies": [
         "sc-skeleton",
         "sc-choices",
-        "sc-choice",
-        "sc-format-number",
         "sc-donation-recurring-choices-new",
         "sc-block-ui"
       ],
@@ -10577,8 +10571,6 @@
         "sc-donation-choices-new": [
           "sc-skeleton",
           "sc-choices",
-          "sc-choice",
-          "sc-format-number",
           "sc-donation-recurring-choices-new",
           "sc-block-ui"
         ],
@@ -10756,7 +10748,20 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": ""
+        },
+        {
+          "name": "choice",
+          "docs": ""
+        },
+        {
+          "name": "choices",
+          "docs": ""
+        }
+      ],
       "dependents": [
         "sc-donation-choices-new"
       ],
@@ -13763,7 +13768,6 @@
       "dependents": [
         "sc-charges-list",
         "sc-coupon-form",
-        "sc-donation-choices-new",
         "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-bump",
@@ -13798,9 +13802,6 @@
           "sc-format-number"
         ],
         "sc-coupon-form": [
-          "sc-format-number"
-        ],
-        "sc-donation-choices-new": [
           "sc-format-number"
         ],
         "sc-fulfillments": [

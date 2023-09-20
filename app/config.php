@@ -155,7 +155,9 @@ return [
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
-
+		\SureCartBlocks\Blocks\NewDonationAmount\Block::class,
+		\SureCartBlocks\Blocks\CustomDonationAmount\Block::class,
+		
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,

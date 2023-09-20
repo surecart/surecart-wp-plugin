@@ -12,6 +12,7 @@ import * as donation from '@blocks/Donation';
 import * as newDonation from '@blocks/NewDonation';
 import * as donationAmount from '@blocks/DonationAmount';
 import * as newDonationAmount from '@blocks/NewDonationAmount';
+import * as customDonationAmount from '@blocks/CustomDonationAmount';
 import * as email from '@blocks/Email';
 import * as phone from '@blocks/Phone';
 import * as expressPayment from '@blocks/ExpressPayment';
@@ -50,6 +51,7 @@ registerBlocks([
 	newDonation,
 	donationAmount,
 	newDonationAmount,
+	customDonationAmount,
 	nameYourPrice,
 	bumpLineItem,
 	checkoutErrors,

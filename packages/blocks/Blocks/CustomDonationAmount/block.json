@@ -1,8 +1,8 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/new-donation-amount",
-	"title": "New Donation Amount",
-	"description": "Displays a donation amount for the donation form.",
+	"name": "surecart/custom-donation-amount",
+	"title": "Custom Donation Amount",
+	"description": "Displays a custom donation amount input for the donation form.",
 	"category": "surecart",
 	"parent": ["surecart/new-donation"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
@@ -20,6 +20,10 @@
 		},
 		"currency": {
 			"type": "string"
+		},
+		"custom_amount": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"style": "file:./preload.css"

@@ -35,8 +35,6 @@
 
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-choices](../../../ui/choices)
-- [sc-choice](../../../ui/choice)
-- [sc-format-number](../../../util/format-number)
 - [sc-donation-recurring-choices-new](../donation-recurring-choices-new)
 - [sc-block-ui](../../../ui/block-ui)
 
@@ -45,8 +43,6 @@
 graph TD;
   sc-donation-choices-new --> sc-skeleton
   sc-donation-choices-new --> sc-choices
-  sc-donation-choices-new --> sc-choice
-  sc-donation-choices-new --> sc-format-number
   sc-donation-choices-new --> sc-donation-recurring-choices-new
   sc-donation-choices-new --> sc-block-ui
   sc-choices --> sc-form-control

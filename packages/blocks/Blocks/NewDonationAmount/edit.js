@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, amount, currency, custom_amount } = attributes;
+	const { label, amount, currency } = attributes;
 
 	const blockProps = useBlockProps();
 
@@ -43,51 +43,19 @@ export default ({ attributes, setAttributes }) => {
 							}
 						></ScPriceInput>
 					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Custom', 'surecart')}
-							help={__(
-								'Allow Custom Amount',
-								'surecart'
-							)}
-							checked={custom_amount}
-							onChange={() => {
-								setAttributes({ custom_amount: ! custom_amount })
-							}}
-						/>
-					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScChoice showControl={false} size="small" value={amount}>
+				<ScChoice showControl={false} size="small">
 					{!!label ? (
 						label
 					) : (
-						!! custom_amount ? (
-							<ScPriceInput
-								currencyCode={currency}
-								value={amount}
-								onScInput={(e) =>
-									setAttributes({
-										amount: parseInt(e.target.value),
-									})
-								}
-								size="small"
-								showCode={false}
-								showLabel={false}
-								css={css`
-									width: 6.1em;
-								`}
-							/>
-						) : (
-							<ScFormatNumber
-								type="currency"
-								currency={currency || 'USD'}
-								value={amount}
-								minimum-fraction-digits="0"
-							></ScFormatNumber>
-						)
+					<ScFormatNumber
+						type="currency"
+						currency={currency || 'USD'}
+						minimum-fraction-digits="0"
+					></ScFormatNumber>
 					)}
 				</ScChoice>
 			</div>

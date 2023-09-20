@@ -26,6 +26,15 @@
 | `scUpdateLineItem` | Toggle line item event | `CustomEvent<LineItemData>`      |
 
 
+## Shadow Parts
+
+| Part        | Description |
+| ----------- | ----------- |
+| `"base"`    |             |
+| `"choice"`  |             |
+| `"choices"` |             |
+
+
 ## Dependencies
 
 ### Used by

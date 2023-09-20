@@ -193,6 +193,7 @@ export class ScDonationChoicesNew {
             }
             this.handleChange();
           }}
+          part='recurring-choices'
         />
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
