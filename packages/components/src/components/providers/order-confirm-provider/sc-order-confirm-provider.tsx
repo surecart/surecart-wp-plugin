@@ -24,8 +24,6 @@ export class ScOrderConfirmProvider {
   /** Whether to show success modal */
   @State() showSuccessModal: boolean = false;
 
-  @State() confirmedCheckout: Checkout;
-
   /** Checkout status to listen and do payment related stuff. */
   @Prop() checkoutStatus: string;
 
@@ -61,13 +59,13 @@ export class ScOrderConfirmProvider {
   /** Confirm the order. */
   async confirmOrder() {
     try {
-      this.confirmedCheckout = (await apiFetch({
+      checkoutState.checkout = (await apiFetch({
         method: 'PATCH',
         path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, { expand }),
       })) as Checkout;
       this.scSetState.emit('CONFIRMED');
       // emit the order paid event for tracking scripts.
-      this.scOrderPaid.emit(this.confirmedCheckout);
+      this.scOrderPaid.emit(checkoutState.checkout);
     } catch (e) {
       console.error(e);
       this.scError.emit(e);
@@ -75,11 +73,11 @@ export class ScOrderConfirmProvider {
       // always clear the checkout.
       clearCheckout();
       // get success url.
-      const successUrl = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
+      const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: this.confirmedCheckout?.id })), 50);
+        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id })), 50);
       } else {
         this.showSuccessModal = true;
       }
@@ -87,12 +85,12 @@ export class ScOrderConfirmProvider {
   }
 
   getSuccessUrl() {
-    const url = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
-    return url ? addQueryArgs(url, { sc_order: this.confirmedCheckout?.id }) : window?.scData?.pages?.dashboard;
+    const url = checkoutState.checkout?.metadata?.success_url || this.successUrl;
+    return url ? addQueryArgs(url, { sc_order: checkoutState.checkout?.id }) : window?.scData?.pages?.dashboard;
   }
 
   render() {
-    const manualPaymentMethod = this.confirmedCheckout?.manual_payment_method as ManualPaymentMethod;
+    const manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
 
     return (
       <Host>
