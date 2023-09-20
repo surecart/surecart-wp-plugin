@@ -685,7 +685,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @return array|\WP_Error;
 	 */
 	protected function get() {
-		$this->query['limit'] = 100;
+		$this->query['limit'] = $this->query['limit'] ?? 100;
 
 		$items = $this->makeRequest();
 

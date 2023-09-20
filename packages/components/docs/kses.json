@@ -1255,6 +1255,7 @@
     "busy": true,
     "closed-text": true,
     "collapsed": true,
+    "collapsed-on-desktop": true,
     "collapsed-on-mobile": true,
     "collapsible": true,
     "open-text": true,
@@ -1569,6 +1570,8 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
+    "collection-enabled": true,
+    "collection-id": true,
     "featured": true,
     "ids": true,
     "layout-config": true,

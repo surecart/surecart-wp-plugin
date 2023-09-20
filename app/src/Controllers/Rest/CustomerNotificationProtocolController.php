@@ -27,6 +27,6 @@ class CustomerNotificationProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return CustomerNotificationProtocol::update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return CustomerNotificationProtocol::update( $request->get_json_params() );
 	}
 }

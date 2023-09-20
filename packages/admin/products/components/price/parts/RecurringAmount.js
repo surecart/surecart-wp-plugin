@@ -18,6 +18,9 @@ export default ({ price, updatePrice, locked }) => {
 				suffix={
 					<span style={{ opacity: '0.5' }}>
 						{intervalString(price)}
+						{price?.recurring_end_behavior === 'cancel' && (
+							<> {__('then cancels', 'surecart')}</>
+						)}
 					</span>
 				}
 			/>

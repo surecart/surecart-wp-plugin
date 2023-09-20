@@ -5,7 +5,6 @@ namespace SureCart\Models;
 use ArrayAccess;
 use JsonSerializable;
 use SureCart\Concerns\Arrayable;
-use SureCartVendors\PluginEver\QueryBuilder\Collection;
 use SureCartVendors\PluginEver\QueryBuilder\Query;
 
 /**
@@ -400,10 +399,10 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 
 			// set attribute.
 			if ( ! $is_guarded ) {
-				$this->setAttribute( $key, $value );
+				$this->setAttribute( $key, maybe_unserialize( maybe_unserialize( $value ) ) );
 			} else {
 				if ( $this->isFillable( $key ) ) {
-					$this->setAttribute( $key, $value );
+					$this->setAttribute( $key, maybe_unserialize( maybe_unserialize( $value ) ) );
 				}
 			}
 		}
@@ -556,7 +555,12 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 		);
 
 		$this->query = $this->getQuery();
-		$this->query->page( $args['page'], $args['per_page'] );
+
+		$size   = (int) $args['per_page'];
+		$limit  = (int) $size;
+		$offset = (int) $size * ( ( (int) $args['page'] ) - 1 );
+
+		$this->query->limit( $offset, $limit );
 
 		return $this;
 	}
@@ -710,7 +714,17 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			$this->fill( $attributes );
 		}
 
-		$id = $this->getQuery()->insert( array_merge( [ 'created_at' => current_time( 'mysql' ) ], $this->attributes ) );
+		$id = $this->getQuery()->insert(
+			array_merge(
+				[ 'created_at' => current_time( 'mysql' ) ],
+				array_map(
+					function( $item ) {
+						return maybe_serialize( $item );
+					},
+					$this->attributes
+				)
+			)
+		);
 		if ( ! $id ) {
 			return new \WP_Error( 'could_not_create', 'Could not create.' );
 		}
@@ -756,7 +770,17 @@ abstract class DatabaseModel implements ArrayAccess, JsonSerializable, Arrayable
 			return $item;
 		}
 
-		$update = $this->getQuery()->where( 'id', $item->id )->update( array_merge( [ 'updated_at' => current_time( 'mysql' ) ], $attributes ) );
+		$update = $this->getQuery()->where( 'id', $item->id )->update(
+			array_merge(
+				[ 'updated_at' => current_time( 'mysql' ) ],
+				array_map(
+					function( $item ) {
+						return maybe_serialize( $item );
+					},
+					$attributes
+				)
+			)
+		);
 		if ( false === $update ) {
 			return new \WP_Error( 'could_not_update', 'Could not update.' );
 		}

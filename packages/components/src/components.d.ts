@@ -547,7 +547,7 @@ export namespace Components {
         /**
           * Submit the form
          */
-        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>;
+        "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>;
         /**
           * Success text for the form.
          */
@@ -2241,6 +2241,7 @@ export namespace Components {
         "busy": boolean;
         "closedText": string;
         "collapsed": boolean;
+        "collapsedOnDesktop": boolean;
         "collapsedOnMobile": boolean;
         "collapsible": boolean;
         "openText": string;
@@ -2884,6 +2885,14 @@ export namespace Components {
          */
         "ajaxPagination": boolean;
         /**
+          * Should allow collection filter
+         */
+        "collectionEnabled": boolean;
+        /**
+          * Show for a specific collection
+         */
+        "collectionId": string | null;
+        /**
           * Show only featured products.
          */
         "featured": boolean;
@@ -3268,7 +3277,7 @@ export namespace Components {
           * Finalize the order.
           * @returns
          */
-        "finalize": () => Promise<Checkout | NodeJS.Timeout>;
+        "finalize": () => Promise<Checkout | NodeJS.Timeout | Error>;
         /**
           * Should we persist the session.
          */
@@ -8044,6 +8053,7 @@ declare namespace LocalJSX {
         "busy"?: boolean;
         "closedText"?: string;
         "collapsed"?: boolean;
+        "collapsedOnDesktop"?: boolean;
         "collapsedOnMobile"?: boolean;
         "collapsible"?: boolean;
         /**
@@ -8742,6 +8752,14 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "ajaxPagination"?: boolean;
+        /**
+          * Should allow collection filter
+         */
+        "collectionEnabled"?: boolean;
+        /**
+          * Show for a specific collection
+         */
+        "collectionId"?: string | null;
         /**
           * Show only featured products.
          */
