@@ -105,6 +105,10 @@ export default ({ product, updateProduct }) => {
 		});
 	};
 
+	if (!product?.variant_options?.length) {
+		return null;
+	}
+
 	return (
 		<div>
 			<Error
@@ -116,28 +120,27 @@ export default ({ product, updateProduct }) => {
 			/>
 
 			<SortableList onSortEnd={applyDrag}>
-				{Array.isArray(product?.variant_options) &&
-					product?.variant_options.map((option, index) => {
-						return (
-							<SortableItem key={index}>
-								<div>
-									<VariantOption
-										product={product}
-										updateProduct={updateProduct}
-										option={option}
-										updateOption={(data) => {
-											onUpdate({
-												index,
-												data,
-											});
-										}}
-										onDelete={() => onDelete(index)}
-										index={index}
-									/>
-								</div>
-							</SortableItem>
-						);
-					})}
+				{product?.variant_options.map((option, index) => {
+					return (
+						<SortableItem key={index}>
+							<div>
+								<VariantOption
+									product={product}
+									updateProduct={updateProduct}
+									option={option}
+									updateOption={(data) => {
+										onUpdate({
+											index,
+											data,
+										});
+									}}
+									onDelete={() => onDelete(index)}
+									index={index}
+								/>
+							</div>
+						</SortableItem>
+					);
+				})}
 			</SortableList>
 		</div>
 	);
