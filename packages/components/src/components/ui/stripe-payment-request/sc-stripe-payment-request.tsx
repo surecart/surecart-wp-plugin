@@ -6,6 +6,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { createOrUpdateCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, LineItem, Prices, Product, ResponseError } from '../../../types';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-stripe-payment-request',
@@ -272,6 +273,7 @@ export class ScStripePaymentRequest {
     } catch (e) {
       console.error(e);
       this.scPayError.emit(e);
+      createErrorNotice(e);
       ev.complete('fail');
     } finally {
       this.confirming = false;
