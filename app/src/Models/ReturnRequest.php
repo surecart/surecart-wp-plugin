@@ -1,6 +1,6 @@
 <?php
 
-namespace Surecart\Models;
+namespace SureCart\Models;
 
 use SureCart\Models\Model;
 
@@ -11,7 +11,7 @@ class ReturnRequest extends Model {
 	/**
 	 * Rest API endpoint
 	 */
-	protected $endpoint = 'return-requests';
+	protected $endpoint = 'return_requests';
 
 	/**
 	 * Object name

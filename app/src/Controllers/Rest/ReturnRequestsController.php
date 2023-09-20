@@ -2,7 +2,7 @@
 
 namespace SureCart\Controllers\Rest;
 
-use Surecart\Models\ReturnRequest;
+use SureCart\Models\ReturnRequest;
 
 /**
  * Handle Return Requests requests through the REST API

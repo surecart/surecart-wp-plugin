@@ -42,7 +42,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'open' ),
-					'permission_callback' => [ $this, 'open_permissions_check' ],
+					'permission_callback' => [ $this, 'open_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -56,7 +56,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'complete' ),
-					'permission_callback' => [ $this, 'complete_permissions_check' ],
+					'permission_callback' => [ $this, 'complete_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -122,7 +122,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @param \WP_REST_Request $request Rest Request.
 	 * @return true|\WP_Error True if the request has access to create return request, WP_Error object otherwise.
 	 */
-	public function create_permissions_check( $request ) {
+	public function create_item_permissions_check( $request ) {
 		return true;
 	}
 
@@ -132,7 +132,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @param \WP_REST_Request $request Rest Request.
 	 * @return true|\WP_Error True if the request has access to update return request, WP_Error object otherwise.
 	 */
-	public function update_permissions_check( $request ) {
+	public function update_item_permissions_check( $request ) {
 		return true;
 	}
 
@@ -142,7 +142,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @param \WP_REST_Request $request Rest Request.
 	 * @return true|\WP_Error True if the request has access to delete return request, WP_Error object otherwise.
 	 */
-	public function delete_permissions_check( $request ) {
+	public function delete_item_permissions_check( $request ) {
 		return true;
 	}
 
@@ -152,7 +152,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @param \WP_REST_Request $request Rest Request.
 	 * @return true|\WP_Error True if the request has access to open return request, WP_Error object otherwise.
 	 */
-	public function open_permissions_check( $request ) {
+	public function open_item_permissions_check( $request ) {
 		return true;
 	}
 
@@ -162,7 +162,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @param \WP_REST_Request $request Rest Request.
 	 * @return true|\WP_Error True if the request has access to complete return request, WP_Error object otherwise.
 	 */
-	public function complete_permissions_check( $request ) {
+	public function complete_item_permissions_check( $request ) {
 		return true;
 	}
 }
