@@ -74,8 +74,9 @@ export default ({ coupon, loading, updateCoupon }) => {
 								'surecart'
 							)}
 							currencyCode={coupon?.currency}
+							placeholder={__('No Minimum', 'surecart')}
 							attribute="min_subtotal_amount"
-							label={__('Minimum Order Subtotal', 'surecart')}
+							label={__('Minimum order subtotal', 'surecart')}
 							value={coupon?.min_subtotal_amount || null}
 							onScInput={(e) =>
 								updateCoupon({
