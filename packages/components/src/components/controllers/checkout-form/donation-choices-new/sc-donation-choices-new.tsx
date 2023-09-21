@@ -58,7 +58,8 @@ export class ScDonationChoicesNew {
   handleChange() {
     let checked = Array.from(this.getChoices()).find(item => item.checked && this.isInRange(item.value));
     if (!checked) {
-      checked = Array.from(this.getChoices())?.[0];
+      checked = Array.from(this.getChoices())?.find(item => this.isInRange(item.value));
+      checked.checked = true;
     }
     if (!isNaN(parseInt(checked?.value)) && this.isInRange(checked?.value)) {
       let lineItems = [];
