@@ -331,6 +331,7 @@ export class ScProductItemList {
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           this.updateProducts();
+                          this.scSearched.emit(this.query);
                         }
                       }}
                       value={this.query}
@@ -348,7 +349,16 @@ export class ScProductItemList {
                       ) : (
                         <sc-icon slot="prefix" name="search" />
                       )}
-                      <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                      <sc-button
+                        class="search-button"
+                        type="link"
+                        slot="suffix"
+                        busy={this.busy}
+                        onClick={() => {
+                          this.updateProducts();
+                          this.scSearched.emit(this.query);
+                        }}
+                      >
                         {__('Search', 'surecart')}
                       </sc-button>
                     </sc-input>
