@@ -49,19 +49,12 @@ export const generateVariants = (
 				1
 			);
 
-			if (previousValue) {
-				delete previousValue.option_2;
-				delete previousValue.option_3;
-
-				variants.push({
-					...previousValue,
-					option_1: variantOptions[0].values[i],
-				});
-			} else {
-				variants.push({
-					option_1: variantOptions[0].values[i],
-				});
-			}
+			variants.push({
+				...(previousValue ? previousValue : {}),
+				option_1: variantOptions[0].values[i],
+				option_2: null,
+				option_3: null,
+			});
 		}
 	} else if (variantOptions.length === 2) {
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
@@ -77,20 +70,12 @@ export const generateVariants = (
 					2
 				);
 
-				if (previousValue) {
-					delete previousValue.option_3;
-
-					variants.push({
-						...previousValue,
-						option_1: variantOptions[0].values[i],
-						option_2: variantOptions[1].values[j],
-					});
-				} else {
-					variants.push({
-						option_1: variantOptions[0].values[i],
-						option_2: variantOptions[1].values[j],
-					});
-				}
+				variants.push({
+					...(previousValue ? previousValue : {}),
+					option_1: variantOptions[0].values[i],
+					option_2: variantOptions[1].values[j],
+					option_3: null,
+				});
 			}
 		}
 	} else if (variantOptions.length === 3) {
@@ -109,20 +94,12 @@ export const generateVariants = (
 						3
 					);
 
-					if (previousValue) {
-						variants.push({
-							...previousValue,
-							option_1: variantOptions[0].values[i],
-							option_2: variantOptions[1].values[j],
-							option_3: variantOptions[2].values[k],
-						});
-					} else {
-						variants.push({
-							option_1: variantOptions[0].values[i],
-							option_2: variantOptions[1].values[j],
-							option_3: variantOptions[2].values[k],
-						});
-					}
+					variants.push({
+						...(previousValue ? previousValue : {}),
+						option_1: variantOptions[0].values[i],
+						option_2: variantOptions[1].values[j],
+						option_3: variantOptions[2].values[k],
+					});
 				}
 			}
 		}
