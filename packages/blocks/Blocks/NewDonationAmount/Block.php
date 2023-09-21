@@ -23,28 +23,19 @@ class Block extends BaseBlock {
         $currency = $attributes['currency'] ?? 'USD';
 
         ob_start(); ?>
-            <sc-choice show-control="false" size="small" value="<?php echo esc_attr( $amount ); ?>">
+            <sc-choice-container show-control="false" size="small" value="<?php echo esc_attr( $amount ); ?>">
             <?php if ( $label ) {
                 echo esc_html( $label );
             } else {
-                if ( $custom_amount ) { ?>
-                    <sc-price-input
-                        currencyCode="<?php echo esc_attr( $currency ); ?>"
-                        size="small"
-                        showCode="false"
-                        showLabel="false"
-                        css="width: 6.1em;"
-                    ></sc-price-input>
-                <?php } else { ?>
+                ?>
                     <sc-format-number
                         type="currency"
                         currency="<?php echo esc_attr( $currency ); ?>"
                         value="<?php echo esc_attr( $amount ); ?>"
                         minimum-fraction-digits="0"
                     ></sc-format-number>
-                <?php }
-            } ?>
-            </sc-choice>
+            <?php } ?>
+            </sc-choice-container>
         <?php
 		return ob_get_clean();
 	}

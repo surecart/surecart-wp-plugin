@@ -26,7 +26,6 @@ class Block extends BaseBlock {
                     size="small"
                     showCode="false"
                     showLabel="false"
-                    css="width: 6.1em;"
                 ></sc-price-input>
             </sc-choice-container>
         <?php

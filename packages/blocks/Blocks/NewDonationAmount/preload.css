@@ -1,10 +1,14 @@
-sc-donation-choices-new sc-choice::part(base) {
+sc-donation-choices-new sc-choice-container::part(base) {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+sc-donation-choices-new sc-choice-container::part(content) {
+	width: 100%;
+	text-align: center;
+}
 .wp-block-surecart-new-donation-amount
-.wp-block-surecart-new-donation-amount > sc-choice {
+.wp-block-surecart-new-donation-amount > sc-choice-container {
 	width: 100%;
 	display: flex;
 }

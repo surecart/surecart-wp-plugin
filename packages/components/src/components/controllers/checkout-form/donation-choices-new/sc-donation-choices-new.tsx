@@ -140,7 +140,7 @@ export class ScDonationChoicesNew {
   }
 
   getChoices() {
-    return (this.el.querySelectorAll('sc-choice') as NodeListOf<HTMLScChoiceElement>) || [];
+    return (this.el.querySelectorAll('sc-choice-container') as NodeListOf<HTMLScChoiceElement>) || [];
   }
 
   isInRange(value: string) {
