@@ -66,7 +66,7 @@ export class ScCheckoutStockAlert {
       id: checkoutState.checkout.id,
       data: {
         line_items: (lineItems || [])
-          // .filter(lineItem => !!lineItem.quantity)
+          .filter(lineItem => !!lineItem.quantity)
           .map(lineItem => {
             return {
               id: lineItem.id,
