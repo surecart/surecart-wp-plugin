@@ -30,6 +30,8 @@ import Refunds from './modules/Refunds';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
+import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
+import ReturnItems from './modules/ReturnRequest/ReturnItems';
 
 export default () => {
 	const [modal, setModal] = useState();
@@ -108,6 +110,45 @@ export default () => {
 		[id]
 	);
 
+	const { return_request, return_request_loading } = useSelect(
+		(select) => {
+			if (!order?.id) {
+				return {
+					return_request: null,
+					return_request_loading: false,
+				};
+			}
+
+			const queryArgs = [
+				'surecart',
+				'return_request',
+				{
+					order_ids: [order?.id],
+					expand: [
+						'return_items',
+						'return_item.line_item',
+						'line_item.price',
+						'price.product',
+					],
+				},
+			];
+			return {
+				return_request: select(coreStore).getEntityRecords(
+					...queryArgs
+				)?.[0],
+				return_request_loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[order?.id]
+	);
+
+	const fulfilledItems = order?.checkout?.line_items?.data?.filter(
+		(item) => item?.quantity === item?.fulfilled_quantity
+	);
+
 	useEffect(() => {
 		if (orderError) {
 			createErrorNotice(
@@ -130,6 +171,15 @@ export default () => {
 			menuItems.push({
 				title: __('Cancel Order', 'surecart'),
 				modal: 'order_cancel',
+			});
+		}
+
+		// If there are fulfilled items and not already returned,
+		// then enable the Return action.
+		if ((fulfilledItems || []).length && !return_request?.id) {
+			menuItems.push({
+				title: __('Return', 'surecart'),
+				modal: 'return_request',
 			});
 		}
 
@@ -211,6 +261,14 @@ export default () => {
 					order={order}
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
+					return_request={return_request}
+				/>
+				<ReturnItems
+					loading={return_request_loading}
+					returnRequest={return_request}
+					checkout={order?.checkout}
+					onCreateSuccess={manuallyRefetchOrder}
+					onChangeRequestStatus={manuallyRefetchOrder}
 				/>
 				<Fulfillment
 					loading={!hasLoadedOrder}
@@ -243,6 +301,14 @@ export default () => {
 					open={modal === 'order_cancel'}
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
+				/>
+				<CreateReturnRequest
+					items={fulfilledItems}
+					orderId={order?.id}
+					checkout={order?.checkout}
+					open={modal === 'return_request'}
+					onRequestClose={() => setModal(false)}
+					onCreateSuccess={manuallyRefetchOrder}
 				/>
 			</>
 		</UpdateModel>
