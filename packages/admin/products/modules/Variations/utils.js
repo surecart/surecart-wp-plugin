@@ -314,29 +314,6 @@ export const hasDuplicate = (options = [], key) => {
 };
 
 /**
- * Filter the variations to remove draft variations.
- *
- * TODO: This function is not used anywhere. Remove after testing with API way.
- *
- * @param {object} product
- * @returns {object}
- */
-export const processVariationsForSaving = (product) => {
-	const { variants } = product;
-
-	if (!variants) {
-		return product;
-	}
-
-	return {
-		...product,
-		variants: (variants ?? []).filter((variation) => {
-			return variation?.status !== 'draft';
-		}),
-	};
-};
-
-/**
  * Prepare variants array by adding position and converting optionValue to label.
  *
  * @param {Array} variants
