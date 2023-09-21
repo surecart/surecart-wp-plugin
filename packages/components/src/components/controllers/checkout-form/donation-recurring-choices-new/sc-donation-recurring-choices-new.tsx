@@ -71,7 +71,7 @@ export class ScDonationRecurringChoicesNew {
                 showPriceDetails={false}
                 showPrice={false}
               />
-              <sc-choice 
+              <sc-choice-container 
                 show-control="false" 
                 size="small" 
                 value={nonRecurringPrice?.id}
@@ -81,7 +81,7 @@ export class ScDonationRecurringChoicesNew {
                 <div class="price-choice__title">
                   <div class="price-choice__name">{__('No, donate once', 'surecart')}</div>
                 </div>  
-              </sc-choice>
+              </sc-choice-container>
         </sc-choices>
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
