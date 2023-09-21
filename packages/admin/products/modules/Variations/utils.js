@@ -295,15 +295,10 @@ export const getDiffingVariants = (variants, previousVariants) => {
  * @returns {number}
  */
 export const getNestedVariantLength = (variants = []) => {
-	let variantNestedLength = 1;
-
-	(variants ?? []).forEach(({ option_2, option_3 }, index) => {
-		if (index === 0) {
-			variantNestedLength = option_3 ? 3 : option_2 ? 2 : 1;
-		}
-	});
-
-	return variantNestedLength;
+	const variantNestedLength = (variants ?? []).map(({ option_2, option_3 }) =>
+		option_3 ? 3 : option_2 ? 2 : 1
+	);
+	return Math.max(...variantNestedLength);
 };
 
 /**
