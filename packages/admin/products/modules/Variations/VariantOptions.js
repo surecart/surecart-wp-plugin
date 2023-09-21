@@ -54,7 +54,8 @@ export default ({ product, updateProduct }) => {
 		if (!firstUpdate.current) {
 			const variantsData = generateVariants(
 				updatedVariantOptions,
-				product?.variants ?? []
+				product?.variants ?? [],
+				product?.change_type
 			);
 
 			updateProduct({
