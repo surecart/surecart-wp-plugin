@@ -17,11 +17,6 @@ export const generateVariants = (
 	previousVariants = [],
 	changeType = 'option_value_renamed'
 ) => {
-	// If it's for initial load, then return previousVariants.
-	if (changeType === 'initially_loaded') {
-		return previousVariants;
-	}
-
 	const variants = [];
 
 	// Check parameters are valid.
@@ -309,26 +304,6 @@ export const getNestedVariantLength = (variants = []) => {
 	});
 
 	return variantNestedLength;
-};
-
-/**
- * Store deleted variants in localStorage.
- *
- * @param {Array} variants
- */
-export const trackDeletedVariants = (variants) => {
-	localStorage.setItem('surecart_deleted_variants', JSON.stringify(variants));
-};
-
-/**
- * Get deleted variants from localStorage.
- *
- * @returns {Array}
- */
-export const getDeletedVariants = () => {
-	return JSON.parse(
-		localStorage.getItem('surecart_deleted_variants') ?? '[]'
-	);
 };
 
 /**

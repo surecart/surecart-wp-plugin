@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 import { __ } from '@wordpress/i18n';
@@ -11,16 +11,16 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	generateVariants,
-	getDeletedVariants,
 	getDiffingVariants,
 	getExlcudedVariants,
-	trackDeletedVariants,
 } from './utils';
 import Error from '../../../components/Error';
 import VariantOption from './VariantOption';
 
 export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
+	const firstUpdate = useRef(true);
+	const [deletedVariants, setDeletedVariants] = useState([]);
 
 	// For first time load, get the diffing variants and save to local storage.
 	useEffect(() => {
@@ -31,29 +31,27 @@ export default ({ product, updateProduct }) => {
 			variantsData,
 			product?.variants ?? []
 		);
-		trackDeletedVariants(diffingVariants);
+		setDeletedVariants(diffingVariants);
 	}, []);
 
 	useEffect(() => {
 		// removes all variant values, which label is empty and which has no name.
-		const updatedVariantOptions = (product?.variant_options ?? [])
-			?.map((variantOption) => {
+		const updatedVariantOptions = (product?.variant_options || [])
+			.map((option) => {
 				return {
-					...variantOption,
-					values: variantOption?.values?.filter(
+					...option,
+					values: option?.values?.filter(
 						(value) => value?.label?.length > 0
 					),
 				};
 			})
 			.filter(
-				(variantOption) =>
-					variantOption?.values?.length > 0 &&
-					variantOption?.name?.length
+				(option) => option?.values?.length > 0 && option?.name?.length
 			);
 
 		// If first time server side loaded
 		// then no need to update product.variants.
-		if (product?.change_type !== 'initially_loaded') {
+		if (!firstUpdate.current) {
 			const variantsData = generateVariants(
 				updatedVariantOptions,
 				product?.variants ?? [],
@@ -61,12 +59,12 @@ export default ({ product, updateProduct }) => {
 			);
 
 			updateProduct({
-				variants: getExlcudedVariants(
-					variantsData,
-					getDeletedVariants()
-				),
+				variants: getExlcudedVariants(variantsData, deletedVariants),
 			});
 		}
+
+		// we have updated.
+		firstUpdate.current = false;
 	}, [product?.variant_options]);
 
 	// function to update product?.variant_options based on the index.
@@ -96,7 +94,7 @@ export default ({ product, updateProduct }) => {
 	const applyDrag = async (oldIndex, newIndex) => {
 		updateProduct({
 			...product,
-			change_type: 'option_sorted',
+			// change_type: 'option_sorted', // we don't need this, instead we should react.
 			variant_options: arrayMove(
 				product?.variant_options ?? [],
 				oldIndex,
