@@ -8866,7 +8866,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's value changes.
          */
-        "onScInput"?: (event: ScPriceInputCustomEvent<void>) => void;
+        "onScInput"?: (event: ScPriceInputCustomEvent<string>) => void;
         /**
           * Draws a pill-style input with rounded edges.
          */

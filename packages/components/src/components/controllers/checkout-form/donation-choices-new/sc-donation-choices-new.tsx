@@ -51,32 +51,50 @@ export class ScDonationChoicesNew {
   /** Error */
   @State() error: string;
 
+  @State() customValue: string;
+
   /** Toggle line item event */
   @Event() scToggleLineItem: EventEmitter<LineItemData>;
 
   @Listen('scChange')
   handleChange() {
-    let checked = Array.from(this.getChoices()).find(item => item.checked && this.isInRange(item.value));
+    let checked = Array.from(this.getChoices()).find((item) => {
+      const value = item?.value ? item?.value : this.customValue ? this.customValue : null;
+      return item.checked && this.isInRange(value)
+    });
+    
     if (!checked) {
       checked = Array.from(this.getChoices())?.find(item => this.isInRange(item.value));
       checked.checked = true;
     }
-    if (!isNaN(parseInt(checked?.value)) && this.isInRange(checked?.value)) {
+    const value = checked?.value ? checked?.value : this.customValue ? this.customValue : null;
+
+    if (!isNaN(parseInt(value)) && this.isInRange(value)) {
       let lineItems = [];
       if (this.lineItem) {
-        lineItems = [{ id: this.lineItem?.id, price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) }];
+        lineItems = [{ id: this.lineItem?.id, price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(value) }];
       }
-      lineItems = [{ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(checked.value) }];
+      lineItems = [{ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(value) }];
       this.update({ line_items: lineItems });
     }
   }
-
+  @Listen('scInput')
+  handleCustomAmountChange(e) {
+    if (e?.detail) {
+      this.customValue = e?.detail;
+    }
+  }
   @Watch('priceId')
   pricesChanged() {
     this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
     this.removeInvalidPrices();
   }
 
+  @Watch('customValue')
+  handleCustomAmount() {
+    if (!this.customValue) return;
+    this.handleChange();
+  }
    /** Update a session */
    async update(data: any = {}, query = {}) {
     try {
@@ -144,9 +162,10 @@ export class ScDonationChoicesNew {
   }
 
   isInRange(value: string) {
+    const valueInt = parseInt(value);
     if (!this.selectedPrice) return true;
-    if (this.selectedPrice?.ad_hoc_max_amount && parseInt(value) > this.selectedPrice?.ad_hoc_max_amount) return false;
-    if (this.selectedPrice?.ad_hoc_min_amount && parseInt(value) < this.selectedPrice?.ad_hoc_min_amount) return false;
+    if (this.selectedPrice?.ad_hoc_max_amount && valueInt > this.selectedPrice?.ad_hoc_max_amount) return false;
+    if (this.selectedPrice?.ad_hoc_min_amount && valueInt < this.selectedPrice?.ad_hoc_min_amount) return false;
     return true;
   }
 
