@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-20T09:27:45",
+  "timestamp": "2023-09-21T08:29:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10364,7 +10364,7 @@
       "props": [
         {
           "name": "amountcolumns",
-          "type": "number",
+          "type": "string",
           "mutable": false,
           "attr": "amountcolumns",
           "reflectToAttr": false,
@@ -10372,7 +10372,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "number"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -10559,7 +10559,12 @@
       ],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "recurring-choices",
+          "docs": ""
+        }
+      ],
       "dependents": [],
       "dependencies": [
         "sc-skeleton",

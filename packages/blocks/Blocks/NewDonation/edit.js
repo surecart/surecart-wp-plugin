@@ -115,11 +115,15 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	if (!product_id || !product || !templateVerified) {
 		return (
 			<div {...blockProps}>
-				<SelectProduct onSelect={(product_id) => setAttributes({ product_id })} onlyShowProducts={true} />
+				<SelectProduct 
+					onSelect={(product_id) => setAttributes({ product_id })} 
+					onlyShowProducts={true}
+					onlyShowAdHocProducts={true}
+				/>
 			</div>
 		);
 	}
-console.log(recurring_label);
+
 	return (
 		<Fragment>
 			<InspectorControls>

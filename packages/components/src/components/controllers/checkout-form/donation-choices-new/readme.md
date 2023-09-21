@@ -9,7 +9,7 @@
 
 | Property          | Attribute        | Description                               | Type       | Default     |
 | ----------------- | ---------------- | ----------------------------------------- | ---------- | ----------- |
-| `amountcolumns`   | `amountcolumns`  | The label for the field.                  | `number`   | `undefined` |
+| `amountcolumns`   | `amountcolumns`  | The label for the field.                  | `string`   | `undefined` |
 | `amountlabel`     | `amountlabel`    | The label for the field.                  | `string`   | `undefined` |
 | `busy`            | `busy`           |                                           | `boolean`  | `undefined` |
 | `currencyCode`    | `currency-code`  | Currency code for the donation.           | `string`   | `'usd'`     |
@@ -27,6 +27,13 @@
 | Event              | Description            | Type                        |
 | ------------------ | ---------------------- | --------------------------- |
 | `scToggleLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+
+
+## Shadow Parts
+
+| Part                  | Description |
+| --------------------- | ----------- |
+| `"recurring-choices"` |             |
 
 
 ## Dependencies

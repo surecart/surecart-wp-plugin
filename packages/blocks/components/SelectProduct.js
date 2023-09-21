@@ -7,7 +7,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { translateInterval } from '../../admin/util/translations';
 import { formatNumber } from '../../admin/util';
 
-export default ({ onSelect, onlyShowProducts }) => {
+export default ({ onSelect, onlyShowProducts, onlyShowAdHocProducts }) => {
 	const [products, setProducts] = useState([]);
 	const [query, setQuery] = useState('');
 	const [busy, setBusy] = useState(false);
@@ -36,6 +36,7 @@ export default ({ onSelect, onlyShowProducts }) => {
 				path: addQueryArgs(`surecart/v1/products`, {
 					query,
 					archived: false,
+					ad_hoc: onlyShowAdHocProducts,
 					expand: ['prices'],
 				}),
 			});
@@ -64,11 +65,11 @@ export default ({ onSelect, onlyShowProducts }) => {
 
 	const choices = products.map((product) => {
 		if (onlyShowProducts) {
-			return {
-				label: product?.name,
-				value: product.id,
+				return {
+					label: product?.name,
+					value: product.id,
+				}
 			}
-		}
 
 		return {
 			label: product?.name,

@@ -24,7 +24,8 @@
 			"type": "number"
 		},
 		"amount_columns": {
-			"type": "number"
+			"type": "number",
+			"default": 3
 		},
 		"product_id": {
 			"type": "string"

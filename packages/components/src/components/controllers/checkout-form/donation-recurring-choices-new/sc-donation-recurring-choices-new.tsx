@@ -42,7 +42,7 @@ export class ScDonationRecurringChoicesNew {
   render() {
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
-
+    
     if (this.loading) {
       return (
         <div class="sc-donation-recurring-choices-new">
@@ -53,6 +53,10 @@ export class ScDonationRecurringChoicesNew {
       );
     }
 
+    if ( !recurringPrices?.length && !nonRecurringPrice ) {
+      return'';
+    }
+    
     return (
       <div class="sc-donation-recurring-choices-new" part='base'>
         <sc-choices
