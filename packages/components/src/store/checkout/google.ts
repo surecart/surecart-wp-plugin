@@ -1,5 +1,5 @@
 import { maybeConvertAmount } from '../../functions/currency';
-import { Product } from 'src/types';
+import { LineItem, Product } from 'src/types';
 
 /**
  * Handle add to cart event.
@@ -8,7 +8,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
   if (!window?.dataLayer && !window?.gtag) return;
 
   // get the added item from the event.
-  const item = e.detail;
+  const item:LineItem = e.detail;
 
   // sanity check.
   if (!item?.price?.product) return;
@@ -18,7 +18,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
     {
       item_id: (item.price?.product as Product)?.id,
       item_name: (item.price?.product as Product)?.name,
-      item_variant: item.price?.name,
+      item_variant: (item.variant_options ||[]).join(' / '),
       price: item.price?.amount,
       currency: item.price?.currency,
       quantity: item.quantity,
@@ -62,10 +62,13 @@ window.addEventListener('scPurchaseComplete', function (e: CustomEvent) {
     ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
     ...(checkout?.tax_amount ? { tax: maybeConvertAmount(checkout?.tax_amount, checkout?.currency || 'USD') } : {}),
     items: (checkout?.line_items?.data || []).map(item => ({
+      item_id: (item?.price?.product as Product)?.id,
+      currency: (checkout.currency || '').toUpperCase(),
       item_name: (item?.price?.product as Product)?.name || '',
       discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
       price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
       quantity: item?.quantity || 1,
+      item_variant: (item.variant_options || []).join(' / '),
     })),
   };
 

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-29T19:53:29",
+  "timestamp": "2023-09-21T13:24:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1094,6 +1094,7 @@
         "sc-charges-list",
         "sc-checkout",
         "sc-checkout-mollie-payment",
+        "sc-checkout-stock-alert",
         "sc-compact-address",
         "sc-coupon-form",
         "sc-custom-order-price-input",
@@ -1144,6 +1145,9 @@
           "sc-block-ui"
         ],
         "sc-checkout-mollie-payment": [
+          "sc-block-ui"
+        ],
+        "sc-checkout-stock-alert": [
           "sc-block-ui"
         ],
         "sc-compact-address": [
@@ -1826,6 +1830,7 @@
         "sc-cancel-survey",
         "sc-cart-form-submit",
         "sc-charges-list",
+        "sc-checkout-stock-alert",
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
@@ -1886,6 +1891,9 @@
           "sc-button"
         ],
         "sc-charges-list": [
+          "sc-button"
+        ],
+        "sc-checkout-stock-alert": [
           "sc-button"
         ],
         "sc-coupon-form": [
@@ -3090,17 +3098,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scAddedToCart",
-          "detail": "CartGoogleAnalyticsItem",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Item added to cart",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -4587,10 +4585,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -4660,6 +4658,7 @@
       "dependencies": [
         "sc-alert",
         "sc-checkout-unsaved-changes-warning",
+        "sc-checkout-stock-alert",
         "sc-login-provider",
         "sc-form-state-provider",
         "sc-form-error-provider",
@@ -4672,6 +4671,7 @@
         "sc-checkout": [
           "sc-alert",
           "sc-checkout-unsaved-changes-warning",
+          "sc-checkout-stock-alert",
           "sc-login-provider",
           "sc-form-state-provider",
           "sc-form-error-provider",
@@ -4683,12 +4683,16 @@
         "sc-alert": [
           "sc-icon"
         ],
-        "sc-login-provider": [
-          "sc-alert",
+        "sc-checkout-stock-alert": [
           "sc-dialog",
-          "sc-form",
-          "sc-input",
-          "sc-button"
+          "sc-flex",
+          "sc-icon",
+          "sc-text",
+          "sc-table",
+          "sc-table-cell",
+          "sc-table-row",
+          "sc-button",
+          "sc-block-ui"
         ],
         "sc-dialog": [
           "sc-button",
@@ -4696,6 +4700,16 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-login-provider": [
+          "sc-alert",
+          "sc-dialog",
+          "sc-form",
+          "sc-input",
+          "sc-button"
         ],
         "sc-input": [
           "sc-form-control"
@@ -4705,9 +4719,6 @@
         ],
         "sc-form-state-provider": [
           "sc-block-ui"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
         ],
         "sc-form-error-provider": [
           "sc-checkout-form-errors"
@@ -5038,6 +5049,88 @@
       "dependencyGraph": {
         "sc-payment": [
           "sc-checkout-paystack-payment-provider"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/checkout/checkout-stock-alert/sc-checkout-stock-alert.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-checkout-stock-alert",
+      "readme": "# sc-checkout-stock-alert\n\n\n",
+      "docs": "This component listens for stock requirements and displays a dialog to the user.",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "order",
+          "type": "Checkout",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The current order.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Checkout"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scUpdateLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-checkout"
+      ],
+      "dependencies": [
+        "sc-dialog",
+        "sc-flex",
+        "sc-icon",
+        "sc-text",
+        "sc-table",
+        "sc-table-cell",
+        "sc-table-row",
+        "sc-button",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-checkout-stock-alert": [
+          "sc-dialog",
+          "sc-flex",
+          "sc-icon",
+          "sc-text",
+          "sc-table",
+          "sc-table-cell",
+          "sc-table-row",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-checkout": [
+          "sc-checkout-stock-alert"
         ]
       }
     },
@@ -8320,7 +8413,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9942,6 +10035,7 @@
       ],
       "dependents": [
         "sc-cancel-dialog",
+        "sc-checkout-stock-alert",
         "sc-login-provider",
         "sc-order-confirm-provider",
         "sc-payment-methods-list",
@@ -9962,6 +10056,9 @@
           "sc-spinner"
         ],
         "sc-cancel-dialog": [
+          "sc-dialog"
+        ],
+        "sc-checkout-stock-alert": [
           "sc-dialog"
         ],
         "sc-login-provider": [
@@ -11513,6 +11610,7 @@
       "dependents": [
         "sc-cancel-discount",
         "sc-cancel-survey",
+        "sc-checkout-stock-alert",
         "sc-downloads-list",
         "sc-fulfillments",
         "sc-login-form",
@@ -11534,6 +11632,9 @@
           "sc-flex"
         ],
         "sc-cancel-survey": [
+          "sc-flex"
+        ],
+        "sc-checkout-stock-alert": [
           "sc-flex"
         ],
         "sc-downloads-list": [
@@ -13794,6 +13895,7 @@
         "sc-cart-icon",
         "sc-cc-logo",
         "sc-charges-list",
+        "sc-checkout-stock-alert",
         "sc-customer-details",
         "sc-dialog",
         "sc-downloads-list",
@@ -13863,6 +13965,9 @@
           "sc-icon"
         ],
         "sc-charges-list": [
+          "sc-icon"
+        ],
+        "sc-checkout-stock-alert": [
           "sc-icon"
         ],
         "sc-customer-details": [
@@ -17302,15 +17407,6 @@
           "composed": true,
           "docs": "",
           "docsTags": []
-        },
-        {
-          "event": "scStartTrial",
-          "detail": "LineItem[]",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "The customer started trial",
-          "docsTags": []
         }
       ],
       "listeners": [],
@@ -19712,6 +19808,23 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsedOnDesktop",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed-on-desktop",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -19923,7 +20036,7 @@
         },
         {
           "name": "order",
-          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "The order",
@@ -19985,7 +20098,7 @@
               "type": "Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string"
             },
             {
-              "type": "ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
+              "type": "ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
             }
           ],
           "optional": false,
@@ -24112,27 +24225,91 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "classes",
+          "type": "string",
+          "mutable": false,
+          "attr": "classes",
+          "reflectToAttr": false,
+          "docs": "Classes",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "outOfStockText",
+          "type": "string",
+          "mutable": false,
+          "attr": "out-of-stock-text",
+          "reflectToAttr": false,
+          "docs": "Out of stock text.",
+          "docsTags": [],
+          "default": "__('Out of Stock', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "styles",
+          "type": "string",
+          "mutable": false,
+          "attr": "styles",
+          "reflectToAttr": false,
+          "docs": "Styles",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "Text",
+          "docsTags": [],
+          "default": "__('Add to Cart', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scAddedToCart",
-          "detail": "CartGoogleAnalyticsItem",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Item added to cart",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "sc-spinner"
+      ],
+      "dependencyGraph": {
+        "sc-product-buy-button": [
+          "sc-spinner"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/products/sc-product-item/sc-product-item.tsx",
@@ -24148,7 +24325,7 @@
           "type": "{ blockName: string; attributes: any; }[]",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "Product Layout Config",
+          "docs": "",
           "docsTags": [],
           "values": [
             {
@@ -24163,7 +24340,7 @@
           "type": "Product",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "Product",
+          "docs": "",
           "docsTags": [],
           "values": [
             {
@@ -24175,17 +24352,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scProductViewed",
-          "detail": "{ id?: string; name?: string; description?: string; archived?: boolean; archived_at?: string; metadata?: any; image_url?: string; recurring?: boolean; tax_category?: string; tax_enabled?: boolean; purchase_limit?: number; permalink?: string; weight?: number; weight_unit?: \"kg\" | \"lb\" | \"g\" | \"oz\"; prices?: { object: \"list\"; pagination: Pagination; data: Price[]; }; product_medias?: { object: \"list\"; pagination: Pagination; data: ProductMedia[]; }; downloads?: { object: \"list\"; pagination: Pagination; data: Download[]; }; created_at?: number; updated_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Product was viewed",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -24645,6 +24812,21 @@
       "usage": {},
       "props": [
         {
+          "name": "metrics",
+          "type": "ProductMetrics",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Product metrics",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ProductMetrics"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "prices",
           "type": "Price[]",
           "mutable": false,
@@ -25043,6 +25225,23 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "variantLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "variant-label",
+          "reflectToAttr": false,
+          "docs": "Product variant label",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -25145,6 +25344,10 @@
         {
           "name": "title",
           "docs": "The product title"
+        },
+        {
+          "name": "variant",
+          "docs": ""
         }
       ],
       "dependents": [
@@ -25687,6 +25890,101 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/controllers/product/sc-product-variation-choices/sc-product-variation-choices.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-variation-choices",
+      "readme": "# sc-product-variation-choices\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "The product id.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "type",
+          "type": "\"instant-checkout-page\" | \"product-page\"",
+          "mutable": false,
+          "attr": "type",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'product-page'",
+          "values": [
+            {
+              "value": "instant-checkout-page",
+              "type": "string"
+            },
+            {
+              "value": "product-page",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scUpdateLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "name__input",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-select"
+      ],
+      "dependencyGraph": {
+        "sc-product-variation-choices": [
+          "sc-select"
+        ],
+        "sc-select": [
+          "sc-icon",
+          "sc-menu-label",
+          "sc-menu-item",
+          "sc-form-control",
+          "sc-dropdown",
+          "sc-input",
+          "sc-spinner",
+          "sc-menu"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/sc-prose/sc-prose.tsx",
       "encapsulation": "shadow",
       "tag": "sc-prose",
@@ -26017,6 +26315,23 @@
       ],
       "usage": {},
       "props": [
+        {
+          "name": "allowNegative",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "allow-negative",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "clickEl",
           "type": "HTMLElement",
@@ -27499,7 +27814,7 @@
         },
         {
           "event": "scChange",
-          "detail": "void",
+          "detail": "ChoiceItem",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -27625,7 +27940,8 @@
       ],
       "dependents": [
         "sc-address",
-        "sc-compact-address"
+        "sc-compact-address",
+        "sc-product-variation-choices"
       ],
       "dependencies": [
         "sc-icon",
@@ -27658,6 +27974,9 @@
           "sc-select"
         ],
         "sc-compact-address": [
+          "sc-select"
+        ],
+        "sc-product-variation-choices": [
           "sc-select"
         ]
       }
@@ -27709,10 +28028,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [
@@ -27723,15 +28042,6 @@
         }
       ],
       "events": [
-        {
-          "event": "scCheckoutInitiated",
-          "detail": "CheckoutInitiatedParams",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Checkout was initiated",
-          "docsTags": []
-        },
         {
           "event": "scError",
           "detail": "{ message: string; code?: string; data?: any; additional_errors?: any; } | {}",
@@ -27747,7 +28057,7 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "Payment was completed",
+          "docs": "",
           "docsTags": []
         },
         {
@@ -28200,6 +28510,7 @@
       "dependents": [
         "sc-block-ui",
         "sc-button",
+        "sc-product-buy-button",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -28209,6 +28520,9 @@
           "sc-spinner"
         ],
         "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-product-buy-button": [
           "sc-spinner"
         ],
         "sc-select": [
@@ -31271,10 +31585,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-checkout-stock-alert",
         "sc-licenses-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-checkout-stock-alert": [
+          "sc-table"
+        ],
         "sc-licenses-list": [
           "sc-table"
         ]
@@ -31296,10 +31614,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-checkout-stock-alert",
         "sc-licenses-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-checkout-stock-alert": [
+          "sc-table-cell"
+        ],
         "sc-licenses-list": [
           "sc-table-cell"
         ]
@@ -31357,10 +31679,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "sc-checkout-stock-alert",
         "sc-licenses-list"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-checkout-stock-alert": [
+          "sc-table-row"
+        ],
         "sc-licenses-list": [
           "sc-table-row"
         ]
@@ -32010,6 +32336,7 @@
       "parts": [],
       "dependents": [
         "sc-charges-list",
+        "sc-checkout-stock-alert",
         "sc-invoices-list",
         "sc-orders-list",
         "sc-payment-method",
@@ -32022,6 +32349,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-charges-list": [
+          "sc-text"
+        ],
+        "sc-checkout-stock-alert": [
           "sc-text"
         ],
         "sc-invoices-list": [
