@@ -19,7 +19,7 @@
 		"default_amount": {
 			"type": "number"
 		},
-		"product_id": {
+		"price_id": {
 			"type": "string"
 		},
 		"currency": {
