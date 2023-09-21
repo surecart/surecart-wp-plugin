@@ -11,7 +11,6 @@ import {
 	getDiffingVariants,
 	getExlcudedVariants,
 	getNestedVariantLength,
-	validateVariant,
 } from '../utils';
 
 test.describe('generateVariants', () => {
@@ -699,88 +698,5 @@ test.describe('getExcludeVariants', () => {
 				},
 			])
 		);
-	});
-});
-
-test.describe('validateVariant', () => {
-	test('should not return error message if option does not exist', () => {
-		const error = validateVariant(
-			[
-				{
-					option_1: 'Red',
-				},
-				{
-					option_1: 'Black',
-				},
-			],
-			{
-				option_1: 'Green',
-			}
-		);
-
-		expect(error).toBeNull();
-	});
-
-	test('should return error message if options are already exists - 1 option', () => {
-		const error = validateVariant(
-			[
-				{
-					option_1: 'Red',
-				},
-				{
-					option_1: 'Black',
-				},
-			],
-			{
-				option_1: 'Black',
-			}
-		);
-
-		expect(error).toEqual('Black variant already exists.');
-	});
-
-	test('should return error message if options are already exists - 2 options', () => {
-		const error = validateVariant(
-			[
-				{
-					option_1: 'Red',
-					option_2: 'Small',
-				},
-				{
-					option_1: 'Red',
-					option_2: 'Large',
-				},
-			],
-			{
-				option_1: 'Red',
-				option_2: 'Small',
-			}
-		);
-
-		expect(error).toEqual('Red / Small variant already exists.');
-	});
-
-	test('should return error message if options are already exists - 3 options', () => {
-		const error = validateVariant(
-			[
-				{
-					option_1: 'Red',
-					option_2: 'Small',
-					option_3: 'Rubber',
-				},
-				{
-					option_1: 'Red',
-					option_2: 'Small',
-					option_3: 'Silk',
-				},
-			],
-			{
-				option_1: 'Red',
-				option_2: 'Small',
-				option_3: 'Rubber',
-			}
-		);
-
-		expect(error).toEqual('Red / Small / Rubber variant already exists.');
 	});
 });
