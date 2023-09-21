@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { Checkout as Checkout1, LineItemData, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { Checkout as Checkout1, LineItemData, Price as Price1, ProductMetrics, ResponseError as ResponseError1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -4140,6 +4140,10 @@ export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
 export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
+}
+export interface ScProductItemListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductItemListElement;
 }
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -8861,6 +8865,10 @@ declare namespace LocalJSX {
         "ids"?: string[];
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
+        /**
+          * Product was searched
+         */
+        "onScSearched"?: (event: ScProductItemListCustomEvent<string>) => void;
         "paginationAlignment"?: string;
         /**
           * Should we auto-scroll to the top when paginating via ajax
@@ -9389,8 +9397,18 @@ declare namespace LocalJSX {
           * Mode for the payment
          */
         "mode"?: 'live' | 'test';
+        /**
+          * The order/invoice was paid for
+         */
         "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
+        /**
+          * There was an error paying for the order/invoice
+         */
         "onScPayError"?: (event: ScStripeElementCustomEvent<any>) => void;
+        /**
+          * A payment method was added
+         */
+        "onScPaymentInfoAdded"?: (event: ScStripeElementCustomEvent<PaymentInfoAddedParams>) => void;
         /**
           * Set the state
          */
@@ -9425,6 +9443,10 @@ declare namespace LocalJSX {
           * There was a payment error.
          */
         "onScPayError"?: (event: ScStripePaymentElementCustomEvent<any>) => void;
+        /**
+          * Payment information was added
+         */
+        "onScPaymentInfoAdded"?: (event: ScStripePaymentElementCustomEvent<PaymentInfoAddedParams>) => void;
         /**
           * Set the state
          */

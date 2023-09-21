@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
@@ -76,6 +76,9 @@ export class ScProductItemList {
 
   /** Error notice. */
   @State() error: string;
+
+  /** Product was searched */
+  @Event() scSearched: EventEmitter<string>;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -328,6 +331,7 @@ export class ScProductItemList {
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           this.updateProducts();
+                          this.scSearched.emit(this.query);
                         }
                       }}
                       value={this.query}
@@ -345,7 +349,16 @@ export class ScProductItemList {
                       ) : (
                         <sc-icon slot="prefix" name="search" />
                       )}
-                      <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                      <sc-button
+                        class="search-button"
+                        type="link"
+                        slot="suffix"
+                        busy={this.busy}
+                        onClick={() => {
+                          this.updateProducts();
+                          this.scSearched.emit(this.query);
+                        }}
+                      >
                         {__('Search', 'surecart')}
                       </sc-button>
                     </sc-input>

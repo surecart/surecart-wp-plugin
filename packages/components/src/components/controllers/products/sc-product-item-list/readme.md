@@ -25,6 +25,13 @@
 | `sortEnabled`          | `sort-enabled`           | Should allow search                                       | `boolean`                                   | `true`              |
 
 
+## Events
+
+| Event        | Description          | Type                  |
+| ------------ | -------------------- | --------------------- |
+| `scSearched` | Product was searched | `CustomEvent<string>` |
+
+
 ## Dependencies
 
 ### Depends on

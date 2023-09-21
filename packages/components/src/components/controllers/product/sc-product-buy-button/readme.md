@@ -12,6 +12,13 @@
 | `addToCart` | `add-to-cart` |             | `boolean` | `undefined` |
 
 
+## Events
+
+| Event           | Description        | Type                                   |
+| --------------- | ------------------ | -------------------------------------- |
+| `scAddedToCart` | Item added to cart | `CustomEvent<CartGoogleAnalyticsItem>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

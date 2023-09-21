@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { Stripe } from '@stripe/stripe-js';
+import { Stripe, StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, ShippingAddress } from '../../../types';
+import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
@@ -51,6 +51,9 @@ export class ScStripePaymentElement {
   @Event() scPayError: EventEmitter<any>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Payment information was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
 
   @State() styles: CSSStyleDeclaration;
 
@@ -192,6 +195,20 @@ export class ScStripePaymentElement {
 
       this.element = this.elements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
+      this.element.on('change', (event: StripeElementChangeEvent) => {
+        if (event.complete) {
+          this.scPaymentInfoAdded.emit({
+            checkout_id: checkoutState.checkout?.id,
+            processor_type: 'stripe',
+            payment_method: {
+              billing_details: {
+                email: checkoutState.checkout?.email,
+                name: checkoutState.checkout?.name,
+              },
+            },
+          });
+        }
+      });
       return;
     }
     this.elements.update(this.getElementsConfig());

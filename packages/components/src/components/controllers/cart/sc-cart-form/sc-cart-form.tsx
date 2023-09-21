@@ -4,11 +4,9 @@ import { Creator, Universe } from 'stencil-wormhole';
 
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { getOrder, setOrder } from '@store/checkouts';
+import { getCheckout, setCheckout } from '@store/checkouts/mutations';
 import uiStore from '@store/ui';
-import { Checkout, LineItemData, Product } from '../../../../types';
-import { doCartGoogleAnalytics } from '../../../../functions/google-analytics-cart';
-
+import { Checkout, LineItemData } from '../../../../types';
 const query = {
   expand: [
     'line_items',
@@ -53,12 +51,11 @@ export class ScCartForm {
 
   /** Find a line item with this price. */
   getLineItem() {
-    const order = this.getOrder();
+    const order = this.getCheckout();
     const lineItem = (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
     if (!lineItem?.id) {
       return false;
     }
-
     return {
       id: lineItem?.id,
       price_id: lineItem?.price?.id,
@@ -66,8 +63,8 @@ export class ScCartForm {
     } as LineItemData;
   }
 
-  getOrder() {
-    return getOrder(this?.formId, this.mode);
+  getCheckout() {
+    return getCheckout(this?.formId, this.mode);
   }
 
   /** Add the item to cart. */
@@ -78,23 +75,8 @@ export class ScCartForm {
       // if it's ad_hoc, update the amount. Otherwise increment the quantity.
       const order = await this.addOrUpdateLineItem({ ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}) });
       // store the checkout in localstorage and open the cart
-      setOrder(order, this.formId);
+      setCheckout(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
-
-      const lineItem = order?.line_items?.data?.find(item => item.price?.id === this.priceId);
-      if(!!lineItem){
-         doCartGoogleAnalytics([
-          {
-            item_id: (lineItem?.price?.product as Product)?.id || '',
-            item_name: (lineItem?.price?.product as Product)?.name || '',
-            price: lineItem?.price?.amount || 0,
-            quantity: lineItem?.quantity || 1,
-            currency: order?.currency,
-            discount: lineItem?.discount_amount || 0,
-          },
-        ]);
-      }
-
     } catch (e) {
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
@@ -108,11 +90,11 @@ export class ScCartForm {
     let lineItem = this.getLineItem() as LineItemData;
 
     // convert line items response to line items post.
-    let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
+    let existingData = convertLineItemsToLineItemData(this.getCheckout()?.line_items || []);
 
     // Line item does not exist. Add it.
     return (await createOrUpdateCheckout({
-      id: this.getOrder()?.id,
+      id: this.getCheckout()?.id,
       data: {
         live_mode: this.mode === 'live',
         line_items: [
@@ -155,7 +137,7 @@ export class ScCartForm {
     return {
       busy: this.busy,
       error: this.error,
-      order: this.getOrder(),
+      order: this.getCheckout(),
     };
   }
 

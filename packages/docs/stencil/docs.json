@@ -3090,7 +3090,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scAddedToCart",
+          "detail": "CartGoogleAnalyticsItem",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Item added to cart",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -17292,6 +17302,15 @@
           "composed": true,
           "docs": "",
           "docsTags": []
+        },
+        {
+          "event": "scStartTrial",
+          "detail": "LineItem[]",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "The customer started trial",
+          "docsTags": []
         }
       ],
       "listeners": [],
@@ -24096,7 +24115,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scAddedToCart",
+          "detail": "CartGoogleAnalyticsItem",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Item added to cart",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -24119,7 +24148,7 @@
           "type": "{ blockName: string; attributes: any; }[]",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Product Layout Config",
           "docsTags": [],
           "values": [
             {
@@ -24134,7 +24163,7 @@
           "type": "Product",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Product",
           "docsTags": [],
           "values": [
             {
@@ -24146,7 +24175,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scProductViewed",
+          "detail": "{ id?: string; name?: string; description?: string; archived?: boolean; archived_at?: string; metadata?: any; image_url?: string; recurring?: boolean; tax_category?: string; tax_enabled?: boolean; purchase_limit?: number; permalink?: string; weight?: number; weight_unit?: \"kg\" | \"lb\" | \"g\" | \"oz\"; prices?: { object: \"list\"; pagination: Pagination; data: Price[]; }; product_medias?: { object: \"list\"; pagination: Pagination; data: ProductMedia[]; }; downloads?: { object: \"list\"; pagination: Pagination; data: Download[]; }; created_at?: number; updated_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Product was viewed",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -24512,7 +24551,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scSearched",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Product was searched",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -27675,6 +27724,15 @@
       ],
       "events": [
         {
+          "event": "scCheckoutInitiated",
+          "detail": "CheckoutInitiatedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Checkout was initiated",
+          "docsTags": []
+        },
+        {
           "event": "scError",
           "detail": "{ message: string; code?: string; data?: any; additional_errors?: any; } | {}",
           "bubbles": true,
@@ -27689,7 +27747,7 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Payment was completed",
           "docsTags": []
         },
         {
@@ -28726,7 +28784,7 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "The order/invoice was paid for",
           "docsTags": []
         },
         {
@@ -28735,7 +28793,16 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "There was an error paying for the order/invoice",
+          "docsTags": []
+        },
+        {
+          "event": "scPaymentInfoAdded",
+          "detail": "PaymentInfoAddedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "A payment method was added",
           "docsTags": []
         },
         {
@@ -28806,6 +28873,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "There was a payment error.",
+          "docsTags": []
+        },
+        {
+          "event": "scPaymentInfoAdded",
+          "detail": "PaymentInfoAddedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Payment information was added",
           "docsTags": []
         },
         {
