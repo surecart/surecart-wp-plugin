@@ -32,7 +32,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			select(coreStore).getEntityRecord('root', 'product', product_id, { expand: ['prices'], archived: false }),
 		[product_id]
 	);
-	
+
 	const prices = product?.prices?.data;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
@@ -112,7 +112,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		setTemplateVerified(true);
 	}, [product, product_id]);
 
-	if (!product_id || !product || !templateVerified) {
+	if (!product_id) {
 		return (
 			<div {...blockProps}>
 				<SelectProduct 
