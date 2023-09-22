@@ -64,6 +64,7 @@ export default ({ attributes, setAttributes }) => {
 					) : (
 					<ScFormatNumber
 						type="currency"
+						value={amount}
 						currency={currency || 'USD'}
 						minimum-fraction-digits="0"
 					></ScFormatNumber>
