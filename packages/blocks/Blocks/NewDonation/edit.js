@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
 	PanelBody,
 	PanelRow,
@@ -10,18 +9,15 @@ import {
 } from '@wordpress/components';
 import {
 	InspectorControls,
-	InnerBlocks,
 	useBlockProps,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
 import {
 	ScDonationChoicesNew,
 } from '@surecart/components-react';
-import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const { product_id, amount_label, amount_columns, recurring_label, currency, recurring_choice_label, non_recurring_choice_label } =
@@ -80,7 +76,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -133,6 +129,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					</ScDonationChoicesNew>
 				</div>
 			</div>
-		</Fragment>
+		</>
 	);
 };
