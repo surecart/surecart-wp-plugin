@@ -144,6 +144,10 @@ export class ScChoiceContainer {
 
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
+    const element = event.target as HTMLElement;
+    if (element.tagName === 'SC-PRICE-INPUT') {
+      return true;
+    }
     event.preventDefault();
     this.input.focus();
   }
@@ -219,7 +223,7 @@ export class ScChoiceContainer {
                 )}
               </span>
               <input
-                id={this.inputId}
+                // id={this.inputId}
                 ref={el => (this.input = el as HTMLInputElement)}
                 type={this.type}
                 name={this.name}
