@@ -20,8 +20,13 @@
 			"type": "string",
 			"default": "Make it recurring"
 		},
-		"default_amount": {
-			"type": "number"
+		"recurring_choice_label": {
+			"type": "string",
+			"default": "Yes, count me in!"
+		},
+		"non_recurring_choice_label": {
+			"type": "string",
+			"default": "No, donate once"
 		},
 		"amount_columns": {
 			"type": "number",
@@ -33,10 +38,6 @@
 		"currency": {
 			"type": "string",
 			"default": "USD"
-		},
-		"custom_amount": {
-			"type": "boolean",
-			"default": true
 		}
 	}
 }

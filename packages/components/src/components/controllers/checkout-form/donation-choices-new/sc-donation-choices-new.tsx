@@ -26,9 +26,6 @@ export class ScDonationChoicesNew {
 
   @Prop() selectedProduct: Product;
 
-  /** The default amount to load the page with. */
-  @Prop() defaultAmount: string;
-
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
 
@@ -44,6 +41,10 @@ export class ScDonationChoicesNew {
 
   /** The label for the field. */
   @Prop() recurringlabel: string;
+
+  @Prop() recurringchoicelabel: string;
+
+  @Prop() nonrecurringchoicelabel: string;
 
   /** The label for the field. */
   @Prop() amountcolumns: string;
@@ -206,6 +207,8 @@ export class ScDonationChoicesNew {
         </sc-choices>
         <sc-donation-recurring-choices-new
           label={this.recurringlabel}
+          recurringchoicelabel={this.recurringchoicelabel}
+          nonrecurringchoicelabel={this.nonrecurringchoicelabel}
           prices={this.prices}
           priceId={this.priceId}
           onScChange={e => {

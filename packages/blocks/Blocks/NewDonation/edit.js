@@ -24,22 +24,14 @@ import {
 import { store as coreStore } from '@wordpress/core-data';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
-	const { product_id, amount_label, amount_columns, recurring_label, currency, default_amount } =
+	const { product_id, amount_label, amount_columns, recurring_label, currency, recurring_choice_label, non_recurring_choice_label } =
 		attributes;
-
-	const product = useSelect(
-		(select) =>
-			select(coreStore).getEntityRecord('root', 'product', product_id, { expand: ['prices'], archived: false }),
-		[product_id]
-	);
-
-	const prices = product?.prices?.data;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
-	const [template, setTemplate] = useState([
+	const template= [
 		['surecart/new-donation-amount', { amount: 100, currency }],
 		['surecart/new-donation-amount', { amount: 200, currency }],
 		['surecart/new-donation-amount', { amount: 500, currency }],
@@ -50,9 +42,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		['surecart/new-donation-amount', { amount: 20000, currency }],
 		['surecart/new-donation-amount', { amount: 50000, currency }],
 		['surecart/custom-donation-amount', { currency }],
-	]);
-
-	const [templateVerified, setTemplateVerified] = useState(false);
+	];
 
 	const blockProps = useBlockProps({
 		style: {
@@ -76,41 +66,6 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			template,
 		}
 	);
-
-	useEffect(() => {
-		let minimum;
-		let maximum;
-		
-		if(!prices?.length) {
-			return;
-		}
-		
-		prices?.forEach((price) => {
-			//get a minimum ad hoc amount & maximum ad hoc amount. minimum should be the lowest amount, maximum should be the highest amount in all prices.
-			const { ad_hoc_max_amount, ad_hoc_min_amount } = price;
-			// if we don't have any, we can set the default.
-			if (!ad_hoc_max_amount && !ad_hoc_min_amount) {
-				return;
-			}
-			if (!minimum || ad_hoc_min_amount < minimum) {
-				minimum = ad_hoc_min_amount;
-			}
-			if (!maximum || ad_hoc_max_amount > maximum) {
-				maximum = ad_hoc_max_amount;
-			}
-
-		});
-		// filter blocks who are only inside the range.
-		setTemplate(
-			template.filter(
-				(block) =>
-				('surecart/new-donation-amount' !== block[0]) || (block[1].amount <= maximum &&
-					block[1].amount >= minimum)
-			)
-		);
-
-		setTemplateVerified(true);
-	}, [product, product_id]);
 
 	if (!product_id) {
 		return (
@@ -137,9 +92,23 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Recurring Choice Title', 'surecart')}
+							label={__('Recurring Title', 'surecart')}
 							value={recurring_label}
 							onChange={(recurring_label) => setAttributes({ recurring_label })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Recurring Choice Title', 'surecart')}
+							value={recurring_choice_label}
+							onChange={(recurring_choice_label) => setAttributes({ recurring_choice_label })}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Non Recurring Choice Title', 'surecart')}
+							value={non_recurring_choice_label}
+							onChange={(non_recurring_choice_label) => setAttributes({ non_recurring_choice_label })}
 						/>
 					</PanelRow>
 					<NumberControl
@@ -155,9 +124,10 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 					<ScDonationChoicesNew
 						amountlabel={amount_label}
 						recurringlabel={recurring_label}
+						recurringchoicelabel={recurring_choice_label}
+						nonrecurringchoicelabel={non_recurring_choice_label}
 						amountcolumns={amount_columns}
 						product={product_id}
-						defaultAmount={default_amount}
 					>
 						{children}
 					</ScDonationChoicesNew>
