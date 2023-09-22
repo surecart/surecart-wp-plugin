@@ -7,8 +7,16 @@ sc-donation-choices-new sc-choice-container::part(content) {
 	width: 100%;
 	text-align: center;
 }
-.wp-block-surecart-new-donation-amount
+.wp-block-surecart-new-donation-amount,
 .wp-block-surecart-new-donation-amount > sc-choice-container {
 	width: 100%;
 	display: flex;
+}
+sc-donation-choices-new .block-list-appender.wp-block {
+	width: 100%;
+	display: flex;
+	position: relative;
+}
+sc-donation-choices-new .block-list-appender.wp-block > .block-editor-inserter {
+	width: 100%;
 }
