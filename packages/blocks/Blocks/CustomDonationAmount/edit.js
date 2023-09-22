@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {
-	ScChoice,
+	ScChoiceContainer,
 	ScFormatNumber,
 	ScPriceInput,
 } from '@surecart/components-react';
@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<div {...blockProps}>
-			<ScChoice 
+			<ScChoiceContainer 
 				showControl={false} 
 				size="small"
 				css={css`
@@ -35,7 +35,7 @@ export default ({ attributes, setAttributes }) => {
 					showCode={false}
 					showLabel={false}
 				/>
-			</ScChoice>
+			</ScChoiceContainer>
 		</div>
 	);
 };
