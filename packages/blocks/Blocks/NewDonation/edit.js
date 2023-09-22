@@ -10,6 +10,7 @@ import {
 import {
 	InspectorControls,
 	useBlockProps,
+	InnerBlocks,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
 } from '@wordpress/block-editor';
@@ -57,7 +58,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		{},
 		{
 			allowedBlocks: ['surecart/new-donation-amount'],
-			renderAppender: false,
+			renderAppender: InnerBlocks.ButtonBlockAppender,
 			orientation: 'horizontal',
 			template,
 		}

@@ -13,7 +13,8 @@
 	},
 	"attributes": {
 		"amount": {
-			"type": "number"
+			"type": "number",
+			"default": 0
 		},
 		"label": {
 			"type": "string"
