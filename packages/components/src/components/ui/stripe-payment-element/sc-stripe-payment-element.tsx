@@ -10,6 +10,8 @@ import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
+import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -47,8 +49,6 @@ export class ScStripePaymentElement {
   /** The order/invoice was paid for. */
   @Event() scPaid: EventEmitter<void>;
 
-  /** There was a payment error. */
-  @Event() scPayError: EventEmitter<any>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 
@@ -235,8 +235,8 @@ export class ScStripePaymentElement {
     const { error } = await this.elements.submit();
     if (error) {
       console.error({ error });
-      console.error(error);
-      this.scPayError.emit(error);
+      updateFormState('REJECT');
+      createErrorNotice(error);
       this.error = error.message;
       return;
     }
@@ -296,7 +296,8 @@ export class ScStripePaymentElement {
       }
     } catch (e) {
       console.error(e);
-      this.scPayError.emit(e);
+      updateFormState('REJECT');
+      createErrorNotice(e);
       if (e.message) {
         this.error = e.message;
       }

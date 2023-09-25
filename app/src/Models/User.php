@@ -471,6 +471,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return Array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return $this->user->to_array();
 	}
@@ -504,7 +505,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return bool
 	 */
-	public function offsetExists( $offset ) {
+	public function offsetExists( $offset ): bool {
 		return ! is_null( $this->getAttribute( $offset ) );
 	}
 
@@ -514,6 +515,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return $this->getAttribute( $offset );
 	}
@@ -525,7 +527,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $value Value.
 	 * @return void
 	 */
-	public function offsetSet( $offset, $value ) {
+	public function offsetSet( $offset, $value ): void {
 		$this->setAttribute( $offset, $value );
 	}
 
@@ -535,10 +537,15 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( $offset ) : void {
 		$this->user->$offset = null;
 	}
 
+	/**
+	 * Get the user object.
+	 *
+	 * @return \WP_User|null
+	 */
 	public function getUser() {
 		return $this->user;
 	}

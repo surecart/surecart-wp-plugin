@@ -3,7 +3,7 @@
  */
 import PaystackPop from '@paystack/inline-js';
 import { __, sprintf } from '@wordpress/i18n';
-import { Component, Event, EventEmitter } from '@stencil/core';
+import { Component } from '@stencil/core';
 
 /**
  * Internal dependencies.
@@ -13,7 +13,7 @@ import { state as selectedProcessor } from '@store/selected-processor';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { updateFormState } from '@store/form/mutations';
-import { ResponseError } from 'src/types';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-checkout-paystack-payment-provider',
@@ -21,7 +21,6 @@ import { ResponseError } from 'src/types';
 })
 export class ScCheckoutPaystackPaymentProvider {
   private unlistenToFormState: () => void;
-  @Event() scError: EventEmitter<ResponseError>;
 
   componentWillLoad() {
     // we need to listen to the form state and pay when the form state enters the paying state.
@@ -49,7 +48,8 @@ export class ScCheckoutPaystackPaymentProvider {
       // must have a public key and access code.
       const { public_key, access_code } = checkoutState?.checkout?.payment_intent.processor_data.paystack;
       if (!public_key || !access_code) {
-        return this.scError.emit({ message: sprintf(__('Paystack is not properly set up to make transactions', 'surecart')) });
+        createErrorNotice({ message: sprintf(__('Payment gateway configuration incomplete. Please ensure Paystack is properly configured for transactions.', 'surecart')) });
+        return;
       }
 
       const paystack = new PaystackPop();
@@ -66,7 +66,7 @@ export class ScCheckoutPaystackPaymentProvider {
         onClose: () => updateFormState('REJECT'),
       });
     } catch (err) {
-      this.scError.emit(err);
+      createErrorNotice(err);
       console.error(err);
       updateFormState('REJECT');
     }
