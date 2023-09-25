@@ -137,7 +137,16 @@ export class ScProductLineItem {
   render() {
     return (
       <div class="base" part="base">
-        <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
+        <div
+          part="product-line-item"
+          class={{
+            'item': true,
+            'item--has-image': !!this.imageUrl,
+            'item--is-rtl': isRtl(),
+            'product-line-item__editable': this.editable,
+            'product-line-item__removable': this.removable,
+          }}
+        >
           {!!this.imageUrl && <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />}
           <div class="item__text" part="text">
             <div class="item__text-details">

@@ -80,6 +80,10 @@
   margin-left: auto;
 }
 
+.product-line-item__removable .item__suffix {
+  align-self: flex-start;
+}
+
 .item__price {
   text-align: right;
   max-width: 100%;
