@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-08-29T19:53:29",
+  "timestamp": "2023-09-08T03:48:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -2854,11 +2854,6 @@
           "passive": false
         },
         {
-          "event": "scError",
-          "capture": false,
-          "passive": false
-        },
-        {
           "event": "scCloseCart",
           "capture": false,
           "passive": false
@@ -3540,15 +3535,6 @@
       ],
       "methods": [],
       "events": [
-        {
-          "event": "scError",
-          "detail": "{ message: string; code?: string; data?: any; additional_errors?: any; } | {}",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event",
-          "docsTags": []
-        },
         {
           "event": "scSetState",
           "detail": "\"busy\" | \"idle\" | \"loading\" | \"navigating\"",
@@ -4577,10 +4563,10 @@
         {
           "name": "submit",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Submit the form",
           "docsTags": []
@@ -4799,84 +4785,7 @@
       "docs": "This component listens for a confirmed event and redirects to the success url.",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
-          "mutable": false,
-          "attr": "checkout-state",
-          "reflectToAttr": false,
-          "docs": "The current order.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "confirmed",
-              "type": "string"
-            },
-            {
-              "value": "confirming",
-              "type": "string"
-            },
-            {
-              "value": "draft",
-              "type": "string"
-            },
-            {
-              "value": "expired",
-              "type": "string"
-            },
-            {
-              "value": "failure",
-              "type": "string"
-            },
-            {
-              "value": "finalizing",
-              "type": "string"
-            },
-            {
-              "value": "idle",
-              "type": "string"
-            },
-            {
-              "value": "loading",
-              "type": "string"
-            },
-            {
-              "value": "paid",
-              "type": "string"
-            },
-            {
-              "value": "paying",
-              "type": "string"
-            },
-            {
-              "value": "redirecting",
-              "type": "string"
-            },
-            {
-              "value": "updating",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "error",
-          "type": "ResponseError",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Error to display.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "ResponseError"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [],
       "listeners": [],
@@ -4944,17 +4853,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scError",
-          "detail": "ResponseError",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -5006,17 +4905,7 @@
       "usage": {},
       "props": [],
       "methods": [],
-      "events": [
-        {
-          "event": "scError",
-          "detail": "ResponseError",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -11102,13 +10991,7 @@
           "docsTags": []
         }
       ],
-      "listeners": [
-        {
-          "event": "scError",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [
@@ -12253,105 +12136,13 @@
       "encapsulation": "shadow",
       "tag": "sc-form-error-provider",
       "readme": "# sc-form-error-provider\n\n\n",
-      "docs": "This component listens for a confirmed event and redirects to the success url.",
+      "docs": "This component checks to make sure there is an error component\nand adds one if it's missing.",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "checkoutState",
-          "type": "\"confirmed\" | \"confirming\" | \"draft\" | \"expired\" | \"failure\" | \"finalizing\" | \"idle\" | \"loading\" | \"paid\" | \"paying\" | \"redirecting\" | \"updating\"",
-          "mutable": false,
-          "attr": "checkout-state",
-          "reflectToAttr": false,
-          "docs": "The current order.",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "confirmed",
-              "type": "string"
-            },
-            {
-              "value": "confirming",
-              "type": "string"
-            },
-            {
-              "value": "draft",
-              "type": "string"
-            },
-            {
-              "value": "expired",
-              "type": "string"
-            },
-            {
-              "value": "failure",
-              "type": "string"
-            },
-            {
-              "value": "finalizing",
-              "type": "string"
-            },
-            {
-              "value": "idle",
-              "type": "string"
-            },
-            {
-              "value": "loading",
-              "type": "string"
-            },
-            {
-              "value": "paid",
-              "type": "string"
-            },
-            {
-              "value": "paying",
-              "type": "string"
-            },
-            {
-              "value": "redirecting",
-              "type": "string"
-            },
-            {
-              "value": "updating",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
-      "events": [
-        {
-          "event": "scSetState",
-          "detail": "\"EXPIRE\" | \"FETCH\" | \"FINALIZE\" | \"PAID\" | \"PAYING\" | \"REJECT\" | \"RESOLVE\"",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Form state event.",
-          "docsTags": []
-        },
-        {
-          "event": "scUpdateError",
-          "detail": "ResponseError",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Set the state.",
-          "docsTags": []
-        }
-      ],
-      "listeners": [
-        {
-          "event": "scError",
-          "capture": false,
-          "passive": false
-        },
-        {
-          "event": "scPayError",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "events": [],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -13745,15 +13536,6 @@
       ],
       "methods": [],
       "events": [
-        {
-          "event": "scError",
-          "detail": "{ status: number; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emitted when the icon failed to load.",
-          "docsTags": []
-        },
         {
           "event": "scLoad",
           "detail": "void",
@@ -17267,15 +17049,6 @@
       "methods": [],
       "events": [
         {
-          "event": "scError",
-          "detail": "{ message: string; code?: string; data?: any; additional_errors?: any; } | {}",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event.",
-          "docsTags": []
-        },
-        {
           "event": "scOrderPaid",
           "detail": "Checkout",
           "bubbles": true,
@@ -19693,6 +19466,23 @@
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsedOnDesktop",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed-on-desktop",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
           "values": [
             {
               "type": "boolean"
@@ -20038,15 +19828,6 @@
       ],
       "methods": [],
       "events": [
-        {
-          "event": "scError",
-          "detail": "ResponseError",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event",
-          "docsTags": []
-        },
         {
           "event": "scUpdateOrder",
           "detail": "{ data: Partial<Checkout>; options?: { silent?: boolean; }; }",
@@ -21888,15 +21669,6 @@
       ],
       "methods": [],
       "events": [
-        {
-          "event": "scError",
-          "detail": "object",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Emit an error",
-          "docsTags": []
-        },
         {
           "event": "scPaid",
           "detail": "void",
@@ -27660,10 +27432,10 @@
         {
           "name": "finalize",
           "returns": {
-            "type": "Promise<Checkout | Timeout>",
+            "type": "Promise<Checkout | Timeout | Error>",
             "docs": ""
           },
-          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout>",
+          "signature": "finalize() => Promise<Checkout | NodeJS.Timeout | Error>",
           "parameters": [],
           "docs": "Finalize the order.",
           "docsTags": [
@@ -27674,15 +27446,6 @@
         }
       ],
       "events": [
-        {
-          "event": "scError",
-          "detail": "{ message: string; code?: string; data?: any; additional_errors?: any; } | {}",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event",
-          "docsTags": []
-        },
         {
           "event": "scPaid",
           "detail": "void",
@@ -27809,17 +27572,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scError",
-          "detail": "ResponseError",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Error event",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],

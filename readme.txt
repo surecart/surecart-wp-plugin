@@ -243,9 +243,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.7.1 - September 25th, 2023 =
-* Improvement: Add "Back Home" url filter on customer dashboard template.
-* Fix: Issue with some servers not capitalizing headers causing webhook invalid signature errors.
+= 2.7.1 - Septembner 21st, 2023 =
+Improvement: Add shipping and tax address to edit customer page.
+Improvement: Better error messaging on checkout forms.
+Improvement: Accessibility improvements to tax id input and line item removal.
+Improvement: Remove deprecated customer link endpoint.
+Update: Changed “Void” orders to “Canceled” for better naming.
+Fix: PHP 8.0 notices on User model.
+Fix: Keyboard accessibility issue with buy and add to cart buttons.
+Fix: Keyboard accessibility issue with coupon field on checkout page and cart.
+Fix: Hide non-reusable payment methods on subscription pages.
+Fix: Title/heading block overflowing container on some screen sizes.
 
 = 2.7.0 - September 18th, 2023 =
 * New: Product collections - group your products into collections and create collection pages.

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScCheckoutFormErrors should render errors: cleared due to fetching. 1`] = `
+<sc-checkout-form-errors style="display: none;">
+  <mock:shadow-root></mock:shadow-root>
+</sc-checkout-form-errors>
+`;
+
+exports[`ScCheckoutFormErrors should render errors: cleared due to finalizing. 1`] = `
+<sc-checkout-form-errors style="display: none;">
+  <mock:shadow-root></mock:shadow-root>
+</sc-checkout-form-errors>
+`;
+
+exports[`ScCheckoutFormErrors should render errors: initial errors 1`] = `
+<sc-checkout-form-errors>
+  <mock:shadow-root>
+    <sc-alert closable="" open="" scrollonopen="" type="danger">
+      <span slot="title">
+        Error title
+      </span>
+      <div>
+        Additional error 1
+      </div>
+      <div>
+        Additional error 2
+      </div>
+    </sc-alert>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-checkout-form-errors>
+`;
+
+exports[`ScCheckoutFormErrors should render errors: re-added errors after clearing. 1`] = `
+<sc-checkout-form-errors>
+  <mock:shadow-root>
+    <sc-alert closable="" open="" scrollonopen="" type="danger">
+      <span slot="title">
+        Error title
+      </span>
+      <div>
+        Additional error 1
+      </div>
+      <div>
+        Additional error 2
+      </div>
+    </sc-alert>
+    <slot></slot>
+  </mock:shadow-root>
+</sc-checkout-form-errors>
+`;
