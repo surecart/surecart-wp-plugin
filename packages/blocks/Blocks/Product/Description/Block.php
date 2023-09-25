@@ -2,12 +2,12 @@
 
 namespace SureCartBlocks\Blocks\Product\Description;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\ProductBlock;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Keep track of the instance number of this block.
 	 *
@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProduct( $attributes );
 		if ( empty( $product->description ) ) {
 			return '';
 		}

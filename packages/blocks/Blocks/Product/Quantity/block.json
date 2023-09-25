@@ -8,6 +8,10 @@
 	"attributes": {
 		"label": {
 			"type": "string"
+		},
+		"product_id": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

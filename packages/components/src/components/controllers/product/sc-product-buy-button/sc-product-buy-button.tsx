@@ -1,7 +1,7 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
-import { state } from '@store/product';
 import { __ } from '@wordpress/i18n';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
+import { state } from '@store/product';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -14,31 +14,34 @@ export class ScProductBuyButton {
   // Is add to cart enabled
   @Prop() addToCart: boolean;
 
+  // The product id
+  @Prop() productId: string;
+
   handleCartClick(e) {
     e.preventDefault();
 
     // already busy, do nothing.
-    if (state.busy) return;
+    if (state[this.productId]?.busy) return;
 
     // ad hoc price, use the dialog.
-    if (state?.selectedPrice?.ad_hoc) {
-      return (state.dialog = this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy');
+    if (state[this.productId]?.selectedPrice?.ad_hoc) {
+     return ( state[this.productId].dialog= this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy');
     }
 
     // if add to cart is undefined/false navigate to buy url
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      return window.location.assign(getProductBuyLink(checkoutUrl));
+      return window.location.assign(getProductBuyLink(this.productId,checkoutUrl));
     }
 
     // submit the cart form.
-    submitCartForm();
+    submitCartForm(this.productId);
   }
 
   render() {
     return (
-      <Host class={{ 'is-busy': state.busy && !!this.addToCart, 'is-disabled': state.disabled }} onClick={e => this.handleCartClick(e)}>
+      <Host class={{ 'is-busy': state[this.productId]?.busy && !!this.addToCart, 'is-disabled': state[this.productId]?.disabled }} onClick={e => this.handleCartClick(e)}>
         <slot />
       </Host>
     );

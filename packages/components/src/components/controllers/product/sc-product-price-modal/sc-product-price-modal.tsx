@@ -14,25 +14,30 @@ export class ScProductPriceModal {
 
   private priceInput: HTMLScPriceInputElement;
 
+  /** The button text */
   @Prop() buttonText: string;
 
+  /** Whether to add to cart */
   @Prop() addToCart: boolean;
+
+  /** The product id */
+  @Prop() productId: string;
 
   submit() {
     // if add to cart is undefined/false navigate to buy url
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      return window.location.assign(getProductBuyLink(checkoutUrl));
+      return window.location.assign(getProductBuyLink(this.productId, checkoutUrl));
     }
 
-    submitCartForm();
+    submitCartForm(this.productId);
   }
 
   componentWillLoad() {
     // focus on price input when opened.
-    onChange('dialog', val => {
-      if (val === 'ad_hoc') {
+    onChange(this.productId, val => {
+      if (val[this.productId].dialog === 'ad_hoc') {
         setTimeout(() => {
           this.priceInput?.triggerFocus();
         }, 50);
@@ -41,21 +46,21 @@ export class ScProductPriceModal {
   }
 
   render() {
-    if (!state?.selectedPrice?.ad_hoc) {
+    if (!state[this.productId]?.selectedPrice?.ad_hoc) {
       return null;
     }
 
     return (
-      <sc-dialog open={state.dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => (state.dialog = null)}>
+      <sc-dialog open={state[this.productId].dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => (state.dialog = null)}>
         <span class="dialog__header" slot="label">
-          {!!state?.product?.image_url && (
+          {!!state[this.productId]?.product?.image_url && (
             <div class="dialog__image">
-              <img src={state?.product?.image_url} />
+              <img src={state[this.productId]?.product?.image_url} />
             </div>
           )}
           <div class="dialog__header-text">
             <div class="dialog__action">{__('Enter An Amount', 'surecart')}</div>
-            <div class="dialog__product-name">{state?.product?.name}</div>
+            <div class="dialog__product-name">{state[this.productId]?.product?.name}</div>
           </div>
         </span>
 
@@ -68,14 +73,14 @@ export class ScProductPriceModal {
         >
           <sc-price-input
             ref={el => (this.priceInput = el as HTMLScPriceInputElement)}
-            value={state.adHocAmount?.toString?.()}
-            currency-code={state?.selectedPrice?.currency}
-            min={state?.selectedPrice?.ad_hoc_min_amount}
-            max={state?.selectedPrice?.ad_hoc_max_amount}
-            onScInput={e => (state.adHocAmount = parseInt(e.target.value))}
+            value={state[this.productId].adHocAmount?.toString?.()}
+            currency-code={state[this.productId]?.selectedPrice?.currency}
+            min={state[this.productId]?.selectedPrice?.ad_hoc_min_amount}
+            max={state[this.productId]?.selectedPrice?.ad_hoc_max_amount}
+            onScInput={e => (state[this.productId].adHocAmount = parseInt(e.target.value))}
             required
           />
-          <sc-button type="primary" full submit busy={state.busy}>
+          <sc-button type="primary" full submit busy={state[this.productId].busy}>
             <slot>{this.buttonText || __('Add To Cart', 'surecart')}</slot>
           </sc-button>
         </sc-form>

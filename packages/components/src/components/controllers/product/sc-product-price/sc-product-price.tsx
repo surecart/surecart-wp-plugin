@@ -10,14 +10,20 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
+  /** The product's prices. */
   @Prop() prices: Price[];
+
+  /** The sale text. */
   @Prop() saleText: string;
 
+  /** The product id */
+  @Prop() productId: string;
+
   renderRange() {
-    if (state.prices.length === 1) {
-      return this.renderPrice(state.prices[0]);
+    if (state[this.productId]?.prices.length === 1) {
+      return this.renderPrice(state[this.productId].prices[0]);
     }
-    return <sc-price-range prices={state.prices} />;
+    return <sc-price-range prices={state[this.productId]?.prices} />;
   }
 
   renderPrice(price: Price) {
@@ -79,11 +85,11 @@ export class ScProductPrice {
   }
 
   render() {
-    if (state.selectedPrice) {
-      return this.renderPrice(state.selectedPrice);
+    if (state[this.productId]?.selectedPrice) {
+      return this.renderPrice(state[this.productId]?.selectedPrice);
     }
 
-    if (state.prices.length) {
+    if (state[this.productId]?.prices.length) {
       return this.renderRange();
     }
 

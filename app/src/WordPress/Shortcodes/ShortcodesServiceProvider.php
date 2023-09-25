@@ -155,14 +155,23 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_description',
 			\SureCartBlocks\Blocks\Product\Description\Block::class,
+			[
+				'product_id' => null,
+			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_title',
 			\SureCartBlocks\Blocks\Product\Title\Block::class,
+			[
+				'product_id' => null,
+			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_price',
 			\SureCartBlocks\Blocks\Product\Price\Block::class,
+			[
+				'product_id' => null,
+			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_price_choices',
@@ -171,6 +180,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'label'      => __( 'Pricing', 'surecart' ),
 				'columns'    => 2,
 				'show_price' => true,
+				'product_id' => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
@@ -178,11 +188,15 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			\SureCartBlocks\Blocks\Product\Media\Block::class,
 			[
 				'auto_height' => true,
+				'product_id'  => null,
 			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_quantity',
 			\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+			[
+				'product_id' => null,
+			]
 		);
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_product_cart_button',
@@ -191,6 +205,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'add_to_cart' => true,
 				'text'        => __( 'Add To Cart', 'surecart' ),
 				'width'       => 100,
+				'product_id'  => null,
 			]
 		);
 	}

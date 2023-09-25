@@ -17,6 +17,10 @@
 		"show_price": {
 			"type": "boolean",
 			"default": true
+		},
+		"product_id": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

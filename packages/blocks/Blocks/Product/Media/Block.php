@@ -2,12 +2,12 @@
 
 namespace SureCartBlocks\Blocks\Product\Media;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\ProductBlock;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Keep track of the instance number of this block.
 	 *
@@ -25,7 +25,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		global $content_width;
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProduct( $attributes );
 		if ( empty( $product ) ) {
 			return '';
 		}
@@ -68,6 +68,7 @@ class Block extends BaseBlock {
 		<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
 			<sc-image-slider
 				id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"
+				product-id="<?php echo esc_attr( $product->id ); ?>"
 				images='<?php echo wp_json_encode( $images ); ?>'
 				thumbnails='<?php echo wp_json_encode( $thumbnails ); ?>'
 				has-thumbnails

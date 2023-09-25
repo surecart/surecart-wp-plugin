@@ -6,53 +6,61 @@ import { toggleCart } from '@store/ui';
 import { doCartGoogleAnalytics } from '../../functions/google-analytics-cart';
 import { addQueryArgs } from '@wordpress/url';
 
-export const submitCartForm = async () => {
-  if (!state.selectedPrice?.id) return;
-  if (state.selectedPrice?.ad_hoc && ( null === state.adHocAmount || undefined === state.adHocAmount )) return;
+export const submitCartForm = async (productId:string) => {
+  const productState = state[productId];
+
+  if(!productState) return;
+  if (!productState.selectedPrice?.id) return;
+  if (productState.selectedPrice?.ad_hoc && (null === productState.adHocAmount || undefined === productState.adHocAmount)) return;
   try {
-    state.busy = true;
+    state[productState.product.id].busy = true;
     const checkout = await addLineItem({
-      checkout: getCheckout(state?.formId, state.mode),
+      checkout: getCheckout(productState?.formId, productState.mode),
       data: {
-        price: state.selectedPrice?.id,
-        quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
-        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+        price: productState.selectedPrice?.id,
+        quantity: productState.selectedPrice?.ad_hoc ? 1 : productState.quantity,
+        ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
       },
-      live_mode: state.mode !== 'test',
+      live_mode: productState.mode !== 'test',
     });
-    setCheckout(checkout as Checkout, state.formId);
-    const newLineItem = checkout.line_items?.data.find((item) => item.price.id === state.selectedPrice?.id);
+    setCheckout(checkout as Checkout, productState.formId);
+    const newLineItem = checkout.line_items?.data.find(item => item.price.id === productState.selectedPrice?.id);
     if (newLineItem) {
-      doCartGoogleAnalytics([{
-        item_id: (newLineItem.price?.product as Product)?.id,
-        item_name: (newLineItem.price?.product as Product)?.name,
-        item_variant: newLineItem.price?.name,
-        price: newLineItem.price?.amount,
-        currency: newLineItem.price?.currency,
-        quantity: newLineItem.quantity,
-        discount: newLineItem.discount_amount
-      }]);
+      doCartGoogleAnalytics([
+        {
+          item_id: (newLineItem.price?.product as Product)?.id,
+          item_name: (newLineItem.price?.product as Product)?.name,
+          item_variant: newLineItem.price?.name,
+          price: newLineItem.price?.amount,
+          currency: newLineItem.price?.currency,
+          quantity: newLineItem.quantity,
+          discount: newLineItem.discount_amount,
+        },
+      ]);
     }
     toggleCart(true);
-    state.dialog = null;
+    state[productState.product.id].dialog = null;
   } catch (e) {
     console.error(e);
     state.error = e;
   } finally {
-    state.busy = false;
+    state[productState.product.id].busy = false;
   }
 };
 
-export const getProductBuyLink = url => {
-  if (!state.selectedPrice?.id) return;
-  if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
+export const getProductBuyLink = (productId: string, url: string) => {
+  const productState = state[productId];
+
+  if(!productState) return;
+  if (!productState.selectedPrice?.id) return;
+  if (productState.selectedPrice?.ad_hoc && !productState.adHocAmount) return;
 
   return addQueryArgs(url, {
     line_items: [
       {
-        price: state.selectedPrice?.id,
-        quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
-        ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+        price: productState.selectedPrice?.id,
+        quantity: productState.selectedPrice?.ad_hoc ? 1 : productState.quantity,
+        ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
       },
     ],
     no_cart: true,

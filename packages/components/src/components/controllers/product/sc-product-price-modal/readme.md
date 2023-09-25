@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type      | Default     |
-| ------------ | ------------- | ----------- | --------- | ----------- |
-| `addToCart`  | `add-to-cart` |             | `boolean` | `undefined` |
-| `buttonText` | `button-text` |             | `string`  | `undefined` |
+| Property     | Attribute     | Description            | Type      | Default     |
+| ------------ | ------------- | ---------------------- | --------- | ----------- |
+| `addToCart`  | `add-to-cart` | Whether to add to cart | `boolean` | `undefined` |
+| `buttonText` | `button-text` | The button text        | `string`  | `undefined` |
+| `productId`  | `product-id`  | The product id         | `string`  | `undefined` |
 
 
 ## Dependencies

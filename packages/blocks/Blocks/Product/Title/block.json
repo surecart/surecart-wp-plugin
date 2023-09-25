@@ -12,6 +12,10 @@
 		"level": {
 			"type": "number",
 			"default": 2
+		},
+		"product_id": {
+			"type": "string",
+			"default": ""
 		}
 	},
 	"supports": {

@@ -5,6 +5,12 @@
 	"description": "Display the product description",
 	"category": "surecart",
 	"keywords": ["description"],
+	"attributes": {
+		"product_id": {
+			"type": "string",
+			"default": ""
+		}
+	},
 	"supports": {
 		"reusable": false,
 		"html": false,

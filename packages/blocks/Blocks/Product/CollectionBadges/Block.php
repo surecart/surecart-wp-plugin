@@ -2,13 +2,13 @@
 
 namespace SureCartBlocks\Blocks\Product\CollectionBadges;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\ProductBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Collection Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Render the block
 	 *
@@ -18,7 +18,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProduct( $attributes );
 		if ( empty( $product ) ) {
 			return '';
 		}

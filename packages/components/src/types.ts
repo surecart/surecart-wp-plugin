@@ -21,6 +21,7 @@ declare global {
     sc?: {
       store?: {
         product?: any;
+        products?: any;
       };
     };
     scStore: any;
@@ -1040,4 +1041,22 @@ export interface GoogleAnalyticsItem {
   coupon?: string;
   currency: string;
   discount?: number;
+}
+
+
+export interface ProductState {
+  formId: number;
+  mode: 'live' | 'test';
+  product: Product;
+  prices: Price[];
+  quantity: number;
+  selectedPrice: Price;
+  total: number;
+  busy: boolean;
+  disabled: boolean;
+  checkoutUrl: string;
+  adHocAmount: number;
+  dialog: string;
+  line_item: LineItemData;
+  error: string;
 }

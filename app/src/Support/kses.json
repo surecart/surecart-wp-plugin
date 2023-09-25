@@ -1546,6 +1546,7 @@
   },
   "sc-product-buy-button": {
     "add-to-cart": true,
+    "product-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1624,6 +1625,7 @@
   },
   "sc-product-price": {
     "prices": true,
+    "product-id": true,
     "sale-text": true,
     "style": true,
     "id": true,
@@ -1632,6 +1634,7 @@
   },
   "sc-product-price-choices": {
     "label": true,
+    "product-id": true,
     "show-price": true,
     "style": true,
     "id": true,
@@ -1641,6 +1644,7 @@
   "sc-product-price-modal": {
     "add-to-cart": true,
     "button-text": true,
+    "product-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1651,6 +1655,7 @@
     "help": true,
     "label": true,
     "name": true,
+    "product-id": true,
     "required": true,
     "show-label": true,
     "size": true,
@@ -1667,6 +1672,7 @@
     "slot": true
   },
   "sc-product-text": {
+    "product-id": true,
     "text": true,
     "style": true,
     "id": true,

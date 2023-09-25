@@ -1,23 +1,35 @@
-import state, { onChange } from './store';
+import { ProductState } from 'src/types';
+import state, { on } from './store';
 
-onChange('selectedPrice', value => {
-  // update the total when the selected price changes.
-  state.total = state.adHocAmount || value?.amount || 0;
-  // set the ad hoc amount to the selected product amount.
-  state.adHocAmount = value?.amount;
-  // update disabled based on if price is archived or product is archived.
-  state.disabled = value?.archived || state.product?.archived;
+Object.keys(state).forEach((productId: string) => {
+  on('set', (key: string, newValue: ProductState, oldValue: ProductState) => {
+    if (key === productId) {
+      if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
+        updateSelectedPrice(productId, newValue);
+      }
+
+      const shouldUpdateLineItem = ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
+
+      if (shouldUpdateLineItem) {
+        setLineItem(productId);
+      }
+    }
+  });
 });
 
-// update the line item when any of these change.
-onChange('selectedPrice', () => setLineItem());
-onChange('adHocAmount', () => setLineItem());
-onChange('quantity', () => setLineItem());
+const updateSelectedPrice = (productId: string, newValue: ProductState) => {
+  // update the total when the selected price changes.
+  state[productId].total = state[productId].adHocAmount || newValue?.selectedPrice?.amount || 0;
+  // set the ad hoc amount to the selected product amount.
+  state[productId].adHocAmount = newValue?.selectedPrice?.amount;
+  // update disabled based on if price is archived or product is archived.
+  state[productId].disabled = newValue?.selectedPrice?.archived || state[productId].product?.archived;
+};
 
-const setLineItem = () => {
-  state.line_item = {
-    price_id: state.selectedPrice?.id,
-    quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
-    ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+const setLineItem = (productId: string) => {
+  state[productId].line_item = {
+    price_id: state[productId].selectedPrice?.id,
+    quantity: state[productId].selectedPrice?.ad_hoc ? 1 : state[productId].quantity,
+    ...(state[productId].selectedPrice?.ad_hoc ? { ad_hoc_amount: state[productId].adHocAmount } : {}),
   };
 };
