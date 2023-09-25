@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop, State, Watch, EventEmitter, Event } from '@stencil/core';
+import { Component, Host, h, State, EventEmitter, Event } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Checkout, LineItemData, Product } from 'src/types';
 import { state as checkoutState } from '@store/checkout';
@@ -13,9 +13,6 @@ import { updateCheckout } from '@services/session';
   shadow: true,
 })
 export class ScCheckoutStockAlert {
-  /** The current order. */
-  @Prop() order: Checkout;
-
   /** Stock errors */
   @State() stockErrors: Array<any> = [];
 
@@ -28,23 +25,9 @@ export class ScCheckoutStockAlert {
   /** Update stock error. */
   @State() error: string;
 
-  @Watch('order')
-  handleStockAlert() {
-    this.stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
-      const product = lineItem.price?.product as Product;
-      const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
-      return {
-        name: product?.name,
-        image_url: variantImage || product?.image_url,
-        quantity: lineItem.quantity,
-        stock: lineItem?.variant?.stock || product?.stock,
-      };
-    });
-  }
-
   /** Get the out of stock line items. */
   getOutOfStockLineItems() {
-    return (this.order?.line_items?.data || []).filter(lineItem => {
+    return (checkoutState.checkout?.line_items?.data || []).filter(lineItem => {
       const product = lineItem.price?.product as Product;
       return product?.stock_enabled && !product?.allow_out_of_stock_purchases && (lineItem?.variant?.stock || product?.stock < lineItem.quantity);
     });
@@ -89,9 +72,21 @@ export class ScCheckoutStockAlert {
   }
 
   render() {
+    // stock errors.
+    const stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
+      const product = lineItem.price?.product as Product;
+      const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
+      return {
+        name: product?.name,
+        image_url: variantImage || product?.image_url,
+        quantity: lineItem.quantity,
+        stock: lineItem?.variant?.stock || product?.stock,
+      };
+    });
+
     return (
       <Host>
-        <sc-dialog style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }} open={!!this.stockErrors.length} noHeader={true} onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }} open={!!stockErrors.length} noHeader={true} onScRequestClose={e => e.preventDefault()}>
           <sc-dashboard-module class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
             <sc-flex slot="heading" align-items="center" justify-content="flex-start">
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
@@ -105,8 +100,8 @@ export class ScCheckoutStockAlert {
                   {__('Quantity', 'surecart')}
                 </sc-table-cell>
 
-                {this.stockErrors.map((item, index) => {
-                  const isLastChild = index === this.stockErrors.length - 1;
+                {stockErrors.map((item, index) => {
+                  const isLastChild = index === stockErrors.length - 1;
                   return (
                     <sc-table-row style={{ '--columns': '2', ...(isLastChild ? { border: 'none' } : {}) }}>
                       <sc-table-cell>
@@ -116,7 +111,7 @@ export class ScCheckoutStockAlert {
                         </sc-flex>
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>
-                        <span style={{ '--color': 'var(--sc-color-gray-500)' }}>{item?.quantity}</span> → <span>{item?.stock}</span>
+                        <span style={{ '--color': 'var(--sc-color-gray-500)' }}>{item?.quantity}</span> → <span>{Math.max(item?.stock, 0)}</span>
                       </sc-table-cell>
                     </sc-table-row>
                   );
