@@ -119,11 +119,11 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
 					<ScProductDonationChoices
-						amountlabel={amount_label}
-						recurringlabel={recurring_label}
-						recurringchoicelabel={recurring_choice_label}
-						nonrecurringchoicelabel={non_recurring_choice_label}
-						amountcolumns={amount_columns}
+						amountLabel={amount_label}
+						recurringLabel={recurring_label}
+						recurringChoiceLabel={recurring_choice_label}
+						nonRecurringChoiceLabel={non_recurring_choice_label}
+						amountColumns={amount_columns}
 						product={product_id}
 					>
 						{children}

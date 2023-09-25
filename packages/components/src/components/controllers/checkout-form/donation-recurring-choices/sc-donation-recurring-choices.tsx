@@ -27,9 +27,9 @@ export class ScDonationRecurringChoices {
   /** The label for the field. */
   @Prop() label: string;
 
-  @Prop() recurringchoicelabel: string;
+  @Prop() recurringChoiceLabel: string;
 
-  @Prop() nonrecurringchoicelabel: string;
+  @Prop() nonRecurringChoiceLabel: string;
 
   /** Error */
   @State() error: string;
@@ -68,7 +68,7 @@ export class ScDonationRecurringChoices {
           part='choices'
         >
               <sc-recurring-price-choice-container
-                label={this.recurringchoicelabel}
+                label={this.recurringChoiceLabel}
                 prices={recurringPrices}
                 product={this?.selectedProduct}
                 selectedPrice={ this.prices?.find(price => price.id === this.priceId) }
@@ -83,7 +83,7 @@ export class ScDonationRecurringChoices {
                 part='choice'
               >
                 <div class="price-choice__title">
-                  <div class="price-choice__name">{this.nonrecurringchoicelabel}</div>
+                  <div class="price-choice__name">{this.nonRecurringChoiceLabel}</div>
                 </div>  
               </sc-choice-container>
         </sc-choices>

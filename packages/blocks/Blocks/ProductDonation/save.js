@@ -6,11 +6,11 @@ export default ({ attributes }) => {
 
 	return (
 		<sc-product-donation-choices
-			amountlabel={amount_label}
-			recurringlabel={recurring_label}
-			recurringchoicelabel={recurring_choice_label}
-			nonrecurringchoicelabel={non_recurring_choice_label}
-			amountcolumns={amount_columns}
+			amount-label={amount_label}
+			recurring-label={recurring_label}
+			recurring-choice-label={recurring_choice_label}
+			non-recurring-choice-label={non_recurring_choice_label}
+			amount-columns={amount_columns}
 			product={product_id}
 		>
 			<InnerBlocks.Content />

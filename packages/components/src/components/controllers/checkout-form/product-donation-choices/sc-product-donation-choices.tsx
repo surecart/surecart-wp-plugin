@@ -37,17 +37,17 @@ export class ScProductDonationChoice {
   @Prop() busy: boolean;
 
   /** The label for the field. */
-  @Prop() amountlabel: string;
+  @Prop() amountLabel: string;
 
   /** The label for the field. */
-  @Prop() recurringlabel: string;
+  @Prop() recurringLabel: string;
 
-  @Prop() recurringchoicelabel: string;
+  @Prop() recurringChoiceLabel: string;
 
-  @Prop() nonrecurringchoicelabel: string;
+  @Prop() nonRecurringChoiceLabel: string;
 
   /** The label for the field. */
-  @Prop() amountcolumns: string;
+  @Prop() amountColumns: string;
 
   /** Error */
   @State() error: string;
@@ -200,15 +200,15 @@ export class ScProductDonationChoice {
     return (
       <div 
         class="sc-product-donation-choices"
-        style={{ '--columns': this.amountcolumns}}
+        style={{ '--columns': this.amountColumns}}
       >
-        <sc-choices label={this.amountlabel}>
+        <sc-choices label={this.amountLabel}>
           <slot />
         </sc-choices>
         <sc-donation-recurring-choices
-          label={this.recurringlabel}
-          recurringchoicelabel={this.recurringchoicelabel}
-          nonrecurringchoicelabel={this.nonrecurringchoicelabel}
+          label={this.recurringLabel}
+          recurringChoiceLabel={this.recurringChoiceLabel}
+          nonRecurringChoiceLabel={this.nonRecurringChoiceLabel}
           prices={this.prices}
           priceId={this.priceId}
           onScChange={e => {

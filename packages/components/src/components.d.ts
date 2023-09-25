@@ -1262,7 +1262,7 @@ export namespace Components {
           * Is this loading
          */
         "loading": boolean;
-        "nonrecurringchoicelabel": string;
+        "nonRecurringChoiceLabel": string;
         /**
           * The price id for the fields.
          */
@@ -1272,7 +1272,7 @@ export namespace Components {
           * The product id for the fields.
          */
         "product": string;
-        "recurringchoicelabel": string;
+        "recurringChoiceLabel": string;
         "selectedProduct": Product;
     }
     interface ScDownloadsList {
@@ -2897,11 +2897,11 @@ export namespace Components {
         /**
           * The label for the field.
          */
-        "amountcolumns": string;
+        "amountColumns": string;
         /**
           * The label for the field.
          */
-        "amountlabel": string;
+        "amountLabel": string;
         "busy": boolean;
         /**
           * Currency code for the donation.
@@ -2915,7 +2915,7 @@ export namespace Components {
           * Is this loading
          */
         "loading": boolean;
-        "nonrecurringchoicelabel": string;
+        "nonRecurringChoiceLabel": string;
         /**
           * The price id for the fields.
          */
@@ -2924,11 +2924,11 @@ export namespace Components {
           * The product id for the fields.
          */
         "product": string;
-        "recurringchoicelabel": string;
+        "recurringChoiceLabel": string;
         /**
           * The label for the field.
          */
-        "recurringlabel": string;
+        "recurringLabel": string;
         "selectedProduct": Product;
     }
     interface ScProductItem {
@@ -7096,7 +7096,7 @@ declare namespace LocalJSX {
           * Is this loading
          */
         "loading"?: boolean;
-        "nonrecurringchoicelabel"?: string;
+        "nonRecurringChoiceLabel"?: string;
         "onScChange"?: (event: ScDonationRecurringChoicesCustomEvent<string|boolean>) => void;
         /**
           * Toggle line item event
@@ -7111,7 +7111,7 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "product"?: string;
-        "recurringchoicelabel"?: string;
+        "recurringChoiceLabel"?: string;
         "selectedProduct"?: Product;
     }
     interface ScDownloadsList {
@@ -8871,11 +8871,11 @@ declare namespace LocalJSX {
         /**
           * The label for the field.
          */
-        "amountcolumns"?: string;
+        "amountColumns"?: string;
         /**
           * The label for the field.
          */
-        "amountlabel"?: string;
+        "amountLabel"?: string;
         "busy"?: boolean;
         /**
           * Currency code for the donation.
@@ -8889,7 +8889,7 @@ declare namespace LocalJSX {
           * Is this loading
          */
         "loading"?: boolean;
-        "nonrecurringchoicelabel"?: string;
+        "nonRecurringChoiceLabel"?: string;
         /**
           * Toggle line item event
          */
@@ -8902,11 +8902,11 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "product"?: string;
-        "recurringchoicelabel"?: string;
+        "recurringChoiceLabel"?: string;
         /**
           * The label for the field.
          */
-        "recurringlabel"?: string;
+        "recurringLabel"?: string;
         "selectedProduct"?: Product;
     }
     interface ScProductItem {
