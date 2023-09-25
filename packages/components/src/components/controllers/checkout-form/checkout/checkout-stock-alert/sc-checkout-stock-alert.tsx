@@ -42,7 +42,7 @@ export class ScCheckoutStockAlert {
       const stockQuantity = lineItem?.variant?.stock || product?.stock || 0;
       return {
         ...lineItem,
-        quantity: stockQuantity,
+        quantity: Math.max(stockQuantity, 0),
       };
     });
 
