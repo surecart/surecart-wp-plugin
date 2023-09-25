@@ -77,7 +77,7 @@ $data       = $controller->getData();
 				<div class="sc-dashboard__back sc-pin-bottom">
 					<sc-button href="<?php echo esc_url( get_home_url() ); ?>" type="text" class="sc-link-home">
 						<sc-icon name="arrow-left" slot="prefix"></sc-icon>
-						<?php echo esc_html__( apply_filters( 'sc_customer_dashboard_back_home_text', 'Back Home' ) ); ?>
+						<?php echo esc_html__( apply_filters( 'sc_customer_dashboard_back_home_text', 'Back Home' ), 'surecart' ); ?>
 					</sc-button>
 				</div>
 
