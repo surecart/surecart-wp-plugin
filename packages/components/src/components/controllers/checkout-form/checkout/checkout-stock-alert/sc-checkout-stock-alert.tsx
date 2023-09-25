@@ -26,6 +26,9 @@ export class ScCheckoutStockAlert {
   /** Is it busy */
   @State() busy: boolean;
 
+  /** Update stock error. */
+  @State() error: string;
+
   @Watch('order')
   handleStockAlert() {
     this.stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
@@ -61,34 +64,36 @@ export class ScCheckoutStockAlert {
       };
     });
 
-    this.busy = true;
-    checkoutState.checkout = (await updateCheckout({
-      id: checkoutState.checkout.id,
-      data: {
-        line_items: (lineItems || [])
-          .filter(lineItem => !!lineItem.quantity)
-          .map(lineItem => {
-            return {
-              id: lineItem.id,
-              price_id: lineItem.price?.id,
-              quantity: lineItem.quantity,
-              ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
-            };
-          }),
-      },
-    })) as Checkout;
-    this.busy = false;
+    try {
+      this.busy = true;
+      checkoutState.checkout = (await updateCheckout({
+        id: checkoutState.checkout.id,
+        data: {
+          line_items: (lineItems || [])
+            .filter(lineItem => !!lineItem.quantity)
+            .map(lineItem => {
+              return {
+                id: lineItem.id,
+                price_id: lineItem.price?.id,
+                quantity: lineItem.quantity,
+                ...(lineItem?.variant?.id ? { variant: lineItem.variant.id } : {}),
+              };
+            }),
+        },
+      })) as Checkout;
+    } catch (error) {
+      const additionalErrors = (error?.additional_errors || []).map(error => error?.message).filter(n => n);
+      this.error = `${error?.message || __('Something went wrong.', 'surecart')} ${additionalErrors?.length && ` ${additionalErrors.join('. ')}`}`;
+    } finally {
+      this.busy = false;
+    }
   }
 
   render() {
     return (
       <Host>
         <sc-dialog style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }} open={!!this.stockErrors.length} noHeader={true} onScRequestClose={e => e.preventDefault()}>
-          <sc-dashboard-module
-            class="subscription-cancel"
-            // error={this.error}
-            style={{ '--sc-dashboard-module-spacing': '1em' }}
-          >
+          <sc-dashboard-module class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
             <sc-flex slot="heading" align-items="center" justify-content="flex-start">
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
               {__('Out of Stock', 'surecart')}
