@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\NewDonationAmount;
+namespace SureCartBlocks\Blocks\ProductDonationAmount;
 
 use SureCartBlocks\Blocks\BaseBlock;
 

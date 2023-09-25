@@ -3,12 +3,12 @@ import { LineItemData, Product, Price } from '../../../../types';
 import { __ } from '@wordpress/i18n';
 
 @Component({
-  tag: 'sc-donation-recurring-choices-new',
-  styleUrl: 'sc-donation-recurring-choices-new.scss',
+  tag: 'sc-donation-recurring-choices',
+  styleUrl: 'sc-donation-recurring-choices.scss',
   shadow: true,
 })
-export class ScDonationRecurringChoicesNew {
-  @Element() el: HTMLScDonationRecurringChoicesNewElement;
+export class ScDonationRecurringChoices {
+  @Element() el: HTMLScDonationRecurringChoicesElement;
 
   /** The product id for the fields. */
   @Prop({ reflect: true }) product: string;
@@ -49,7 +49,7 @@ export class ScDonationRecurringChoicesNew {
     
     if (this.loading) {
       return (
-        <div class="sc-donation-recurring-choices-new">
+        <div class="sc-donation-recurring-choices">
           <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
           <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
           <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
@@ -62,7 +62,7 @@ export class ScDonationRecurringChoicesNew {
     }
     
     return (
-      <div class="sc-donation-recurring-choices-new" part='base'>
+      <div class="sc-donation-recurring-choices" part='base'>
         <sc-choices
           label={this.label}
           part='choices'

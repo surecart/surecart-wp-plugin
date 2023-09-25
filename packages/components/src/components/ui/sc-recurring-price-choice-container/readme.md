@@ -38,7 +38,7 @@
 
 ### Used by
 
- - [sc-donation-recurring-choices-new](../../controllers/checkout-form/donation-recurring-choices-new)
+ - [sc-donation-recurring-choices](../../controllers/checkout-form/donation-recurring-choices)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
 
 ### Depends on
@@ -62,7 +62,7 @@ graph TD;
   sc-recurring-price-choice-container --> sc-menu-item
   sc-recurring-price-choice-container --> sc-icon
   sc-button --> sc-spinner
-  sc-donation-recurring-choices-new --> sc-recurring-price-choice-container
+  sc-donation-recurring-choices --> sc-recurring-price-choice-container
   sc-product-price-choices --> sc-recurring-price-choice-container
   style sc-recurring-price-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```

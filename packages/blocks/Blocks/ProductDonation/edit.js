@@ -17,7 +17,7 @@ import {
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
 import {
-	ScDonationChoicesNew,
+	ScProductDonationChoices,
 } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes, isSelected, clientId }) => {
@@ -29,15 +29,15 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		: __experimentalUseInnerBlocksProps;
 
 	const template= [
-		['surecart/new-donation-amount', { amount: 100, currency }],
-		['surecart/new-donation-amount', { amount: 200, currency }],
-		['surecart/new-donation-amount', { amount: 500, currency }],
-		['surecart/new-donation-amount', { amount: 1000, currency }],
-		['surecart/new-donation-amount', { amount: 2000, currency }],
-		['surecart/new-donation-amount', { amount: 5000, currency }],
-		['surecart/new-donation-amount', { amount: 10000, currency }],
-		['surecart/new-donation-amount', { amount: 20000, currency }],
-		['surecart/new-donation-amount', { amount: 50000, currency }],
+		['surecart/product-donation-amount', { amount: 100, currency }],
+		['surecart/product-donation-amount', { amount: 200, currency }],
+		['surecart/product-donation-amount', { amount: 500, currency }],
+		['surecart/product-donation-amount', { amount: 1000, currency }],
+		['surecart/product-donation-amount', { amount: 2000, currency }],
+		['surecart/product-donation-amount', { amount: 5000, currency }],
+		['surecart/product-donation-amount', { amount: 10000, currency }],
+		['surecart/product-donation-amount', { amount: 20000, currency }],
+		['surecart/product-donation-amount', { amount: 50000, currency }],
 		['surecart/custom-donation-amount', { currency }],
 	];
 
@@ -57,7 +57,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const {children,innerBlocksProps} = useInnerBlocksProps(
 		{},
 		{
-			allowedBlocks: ['surecart/new-donation-amount'],
+			allowedBlocks: ['surecart/product-donation-amount'],
 			renderAppender: InnerBlocks.ButtonBlockAppender,
 			orientation: 'horizontal',
 			template,
@@ -118,7 +118,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			</InspectorControls>
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
-					<ScDonationChoicesNew
+					<ScProductDonationChoices
 						amountlabel={amount_label}
 						recurringlabel={recurring_label}
 						recurringchoicelabel={recurring_choice_label}
@@ -127,7 +127,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						product={product_id}
 					>
 						{children}
-					</ScDonationChoicesNew>
+					</ScProductDonationChoices>
 				</div>
 			</div>
 		</>

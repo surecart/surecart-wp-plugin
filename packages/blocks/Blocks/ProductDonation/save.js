@@ -5,7 +5,7 @@ export default ({ attributes }) => {
 	const { product_id, amount_label, recurring_label,amount_columns, recurring_choice_label, non_recurring_choice_label } = attributes;
 
 	return (
-		<sc-donation-choices-new
+		<sc-product-donation-choices
 			amountlabel={amount_label}
 			recurringlabel={recurring_label}
 			recurringchoicelabel={recurring_choice_label}
@@ -14,6 +14,6 @@ export default ({ attributes }) => {
 			product={product_id}
 		>
 			<InnerBlocks.Content />
-		</sc-donation-choices-new>
+		</sc-product-donation-choices>
 	);
 };
