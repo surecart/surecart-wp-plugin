@@ -230,50 +230,21 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		$response = parent::filter_response_by_context( $model, $context );
 
 		if ( 'edit' === $context ) {
-			// if $response['variants'] is object, then get data by obj->data or obj['data'].
-			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
-				$response['variants'] = is_object( $response['variants'] ) ? $response['variants']->data ?? [] : $response['variants']['data'] ?? [];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
-				$response['variants'] = $response->variants->data ?? [];
-			}
-
-			// if $response['variant_options'] is object, then get data by obj->data or obj['data'].
-			if ( 'array' === gettype( $response ) && isset( $response['variant_options'] ) ) {
-				$response['variant_options'] = is_object( $response['variant_options'] ) ? $response['variant_options']->data ?? [] : $response['variant_options']['data'] ?? [];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
-				$response['variant_options'] = $response->variant_options->data ?? [];
-			}
+			// Process the variants, it's in a data column, so we need to pull it out.
+			$response['variants'] = $response['variants']['data'] ?? [];
 
 			// Process the variant_options values column. currently its like string[].
-			// Lets make it like {label: string, index: number}[].
-			if ( 'array' === gettype( $response ) && isset( $response['variant_options'] ) ) {
-				$response['variant_options'] = $this->getProcessedVariantOptions( $response['variant_options'] );
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
-				$response['variant_options'] = $this->getProcessedVariantOptions( $response->variant_options );
-			}
+			$response['variant_options'] = $this->getProcessedVariantOptions( $response['variant_options']['data'] ?? [] );
 
 			// Add stock value as initial_stock.
-			if ( 'array' === gettype( $response ) && isset( $response['stock'] ) ) {
-				$response['initial_stock'] = $response['stock'];
-				$response['stock_adjustment'] = 0;
-				$response['change_type'] = 'initially_loaded';
-			} elseif ( 'object' === gettype( $response ) && isset( $response->stock ) ) {
-				$response->initial_stock = $response->stock;
-				$response->stock_adjustment = 0;
-				$response->change_type = 'initially_loaded';
-			}
+			$response['initial_stock']    = $response['stock'];
+			$response['stock_adjustment'] = 0;
+			$response['change_type']      = 'initially_loaded';
 
 			// For variants, add stock value as initial_stock.
-			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
-				foreach ( $response['variants'] as $index => $variant ) {
-					$response['variants'][ $index ]['initial_stock'] = $variant['stock'];
-					$response['variants'][ $index ]['stock_adjustment'] = 0;
-				}
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
-				foreach ( $response->variants as $index => $variant ) {
-					$response->variants[ $index ]->initial_stock = $variant->stock;
-					$response->variants[ $index ]->stock_adjustment = 0;
-				}
+			foreach ( $response['variants'] as $index => $variant ) {
+				$response['variants'][ $index ]['initial_stock']    = $variant['stock'];
+				$response['variants'][ $index ]['stock_adjustment'] = 0;
 			}
 		}
 
@@ -294,8 +265,8 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			$variant_options[ $index ]['values'] = array_map(
 				function( $value, $value_index ) {
 					return [
-						'label' => $value,
-						'index' => $value_index,
+						'label'   => $value,
+						'index'   => $value_index,
 						'editing' => false,
 					];
 				},
