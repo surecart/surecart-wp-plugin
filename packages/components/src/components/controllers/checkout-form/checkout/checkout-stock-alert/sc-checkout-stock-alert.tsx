@@ -2,7 +2,6 @@ import { Component, Host, h, Prop, State, Watch, EventEmitter, Event } from '@st
 import { __ } from '@wordpress/i18n';
 import { Checkout, LineItemData, Product } from 'src/types';
 import { state as checkoutState } from '@store/checkout';
-import { openWormhole } from 'stencil-wormhole';
 import { updateCheckout } from '@services/session';
 
 /**
@@ -137,5 +136,3 @@ export class ScCheckoutStockAlert {
     );
   }
 }
-
-openWormhole(ScCheckoutStockAlert, ['checkoutState'], false);
