@@ -86,9 +86,9 @@
 }
 
 .item__description {
-  font-size: var(--sc-font-size-small);
-  line-height: var(--sc-line-height-dense);
+  color: var(--sc-price-label-color, var(--sc-input-label-color));
   opacity: 0.75;
+  line-height: var(--sc-line-height-dense);
 }
 
 .item__image {

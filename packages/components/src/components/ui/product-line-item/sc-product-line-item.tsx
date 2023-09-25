@@ -145,9 +145,9 @@ export class ScProductLineItem {
                 <slot name="title">{this.name}</slot>
               </div>
               {!!this.priceName && (
-                <span class="item__description" part="static-quantity">
+                <div class="item__description" part="static-quantity">
                   {this.priceName}
-                </span>
+                </div>
               )}
             </div>
             {this.editable && (
