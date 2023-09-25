@@ -77,7 +77,6 @@ export class ScDonationRecurringChoices {
               />
               <sc-choice-container 
                 show-control="false" 
-                size="small" 
                 value={nonRecurringPrice?.id}
                 checked={this.priceId === nonRecurringPrice?.id}
                 part='choice'

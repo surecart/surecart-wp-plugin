@@ -13,6 +13,9 @@ import {
 	InnerBlocks,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
@@ -20,13 +23,17 @@ import {
 	ScProductDonationChoices,
 } from '@surecart/components-react';
 
-export default ({ attributes, setAttributes, isSelected, clientId }) => {
+export default ({ attributes, setAttributes }) => {
 	const { product_id, amount_label, amount_columns, recurring_label, currency, recurring_choice_label, non_recurring_choice_label } =
 		attributes;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
+
+	const borderProps = useBorderProps(attributes);
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
 
 	const template= [
 		['surecart/product-donation-amount', { amount: 100, currency }],
@@ -125,6 +132,31 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 						nonRecurringChoiceLabel={non_recurring_choice_label}
 						amountColumns={amount_columns}
 						product={product_id}
+						style={{
+							border: 'none',
+							'--sc-input-required-indicator': '/\\00a0',
+							'--sc-choice-text-color': colorProps?.style?.color,
+							'--sc-choice-background-color':
+								colorProps?.style?.backgroundColor,
+							'--sc-choice-border-color':
+								borderProps?.style?.borderColor,
+							'--sc-choice-border-width':
+								borderProps?.style?.borderWidth,
+							'--sc-choice-border-radius':
+								borderProps?.style?.borderRadius,
+							'--sc-choice-padding-left':
+								spacingProps?.style?.paddingLeft,
+							'--sc-choice-padding-right':
+								spacingProps?.style?.paddingRight,
+							'--sc-choice-padding-top':
+								spacingProps?.style?.paddingTop,
+							'--sc-choice-padding-bottom':
+								spacingProps?.style?.paddingBottom,
+							marginTop: spacingProps?.style?.marginTop,
+							marginLeft: spacingProps?.style?.marginLeft,
+							marginRight: spacingProps?.style?.marginRight,
+							marginBottom: spacingProps?.style?.marginBottom,
+						}}
 					>
 						{children}
 					</ScProductDonationChoices>
