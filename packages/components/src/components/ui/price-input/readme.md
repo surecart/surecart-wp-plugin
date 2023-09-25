@@ -34,12 +34,12 @@
 
 ## Events
 
-| Event      | Description                               | Type                |
-| ---------- | ----------------------------------------- | ------------------- |
-| `scBlur`   | Emitted when the control loses focus.     | `CustomEvent<void>` |
-| `scChange` | Emitted when the control's value changes. | `CustomEvent<void>` |
-| `scFocus`  | Emitted when the control gains focus.     | `CustomEvent<void>` |
-| `scInput`  | Emitted when the control's value changes. | `CustomEvent<void>` |
+| Event      | Description                               | Type                  |
+| ---------- | ----------------------------------------- | --------------------- |
+| `scBlur`   | Emitted when the control loses focus.     | `CustomEvent<void>`   |
+| `scChange` | Emitted when the control's value changes. | `CustomEvent<void>`   |
+| `scFocus`  | Emitted when the control gains focus.     | `CustomEvent<void>`   |
+| `scInput`  | Emitted when the control's value changes. | `CustomEvent<string>` |
 
 
 ## Methods

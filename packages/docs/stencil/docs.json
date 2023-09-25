@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-21T08:29:30",
+  "timestamp": "2023-09-25T08:05:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1099,8 +1099,7 @@
         "sc-custom-order-price-input",
         "sc-customer-edit",
         "sc-donation-choices",
-        "sc-donation-choices-new",
-        "sc-donation-recurring-choices-new",
+        "sc-donation-recurring-choices",
         "sc-express-payment",
         "sc-form-state-provider",
         "sc-invoices-list",
@@ -1109,6 +1108,7 @@
         "sc-orders-list",
         "sc-password-nag",
         "sc-payment-methods-list",
+        "sc-product-donation-choices",
         "sc-product-item-list",
         "sc-purchase-downloads-list",
         "sc-shipping-choices",
@@ -1163,10 +1163,7 @@
         "sc-donation-choices": [
           "sc-block-ui"
         ],
-        "sc-donation-choices-new": [
-          "sc-block-ui"
-        ],
-        "sc-donation-recurring-choices-new": [
+        "sc-donation-recurring-choices": [
           "sc-block-ui"
         ],
         "sc-express-payment": [
@@ -1191,6 +1188,9 @@
           "sc-block-ui"
         ],
         "sc-payment-methods-list": [
+          "sc-block-ui"
+        ],
+        "sc-product-donation-choices": [
           "sc-block-ui"
         ],
         "sc-product-item-list": [
@@ -5455,7 +5455,6 @@
       ],
       "dependents": [
         "sc-cancel-survey",
-        "sc-donation-recurring-choices-new",
         "sc-order-bump",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
@@ -5464,9 +5463,6 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-cancel-survey": [
-          "sc-choice"
-        ],
-        "sc-donation-recurring-choices-new": [
           "sc-choice"
         ],
         "sc-order-bump": [
@@ -5765,12 +5761,16 @@
         }
       ],
       "dependents": [
+        "sc-donation-recurring-choices",
         "sc-price-choice",
         "sc-price-choice-container",
         "sc-recurring-price-choice-container"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-donation-recurring-choices": [
+          "sc-choice-container"
+        ],
         "sc-price-choice": [
           "sc-choice-container"
         ],
@@ -6016,9 +6016,9 @@
       "dependents": [
         "sc-cancel-survey",
         "sc-donation-choices",
-        "sc-donation-choices-new",
-        "sc-donation-recurring-choices-new",
+        "sc-donation-recurring-choices",
         "sc-price-choices",
+        "sc-product-donation-choices",
         "sc-product-price-choices",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
@@ -6040,13 +6040,13 @@
         "sc-donation-choices": [
           "sc-choices"
         ],
-        "sc-donation-choices-new": [
-          "sc-choices"
-        ],
-        "sc-donation-recurring-choices-new": [
+        "sc-donation-recurring-choices": [
           "sc-choices"
         ],
         "sc-price-choices": [
+          "sc-choices"
+        ],
+        "sc-product-donation-choices": [
           "sc-choices"
         ],
         "sc-product-price-choices": [
@@ -10354,265 +10354,9 @@
       }
     },
     {
-      "filePath": "./src/components/controllers/checkout-form/donation-choices-new/sc-donation-choices-new.tsx",
+      "filePath": "./src/components/controllers/checkout-form/donation-recurring-choices/sc-donation-recurring-choices.tsx",
       "encapsulation": "shadow",
-      "tag": "sc-donation-choices-new",
-      "readme": "# sc-donation-choices-new\n\n\n",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "amountcolumns",
-          "type": "string",
-          "mutable": false,
-          "attr": "amountcolumns",
-          "reflectToAttr": false,
-          "docs": "The label for the field.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "amountlabel",
-          "type": "string",
-          "mutable": false,
-          "attr": "amountlabel",
-          "reflectToAttr": false,
-          "docs": "The label for the field.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "Currency code for the donation.",
-          "docsTags": [],
-          "default": "'usd'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "defaultAmount",
-          "type": "string",
-          "mutable": false,
-          "attr": "default-amount",
-          "reflectToAttr": false,
-          "docs": "The default amount to load the page with.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "lineItem",
-          "type": "LineItem",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Order line items.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "LineItem"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "Is this loading",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "priceId",
-          "type": "string",
-          "mutable": false,
-          "attr": "price-id",
-          "reflectToAttr": true,
-          "docs": "The price id for the fields.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "product",
-          "type": "string",
-          "mutable": false,
-          "attr": "product",
-          "reflectToAttr": true,
-          "docs": "The product id for the fields.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "recurringlabel",
-          "type": "string",
-          "mutable": false,
-          "attr": "recurringlabel",
-          "reflectToAttr": false,
-          "docs": "The label for the field.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "selectedProduct",
-          "type": "Product",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Product"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [],
-      "events": [
-        {
-          "event": "scToggleLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Toggle line item event",
-          "docsTags": []
-        }
-      ],
-      "listeners": [
-        {
-          "event": "scChange",
-          "capture": false,
-          "passive": false
-        }
-      ],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "recurring-choices",
-          "docs": ""
-        }
-      ],
-      "dependents": [],
-      "dependencies": [
-        "sc-skeleton",
-        "sc-choices",
-        "sc-donation-recurring-choices-new",
-        "sc-block-ui"
-      ],
-      "dependencyGraph": {
-        "sc-donation-choices-new": [
-          "sc-skeleton",
-          "sc-choices",
-          "sc-donation-recurring-choices-new",
-          "sc-block-ui"
-        ],
-        "sc-choices": [
-          "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
-        "sc-donation-recurring-choices-new": [
-          "sc-skeleton",
-          "sc-choices",
-          "sc-recurring-price-choice-container",
-          "sc-choice",
-          "sc-block-ui"
-        ],
-        "sc-recurring-price-choice-container": [
-          "sc-format-number",
-          "sc-choice-container",
-          "sc-dropdown",
-          "sc-button",
-          "sc-menu",
-          "sc-menu-item",
-          "sc-icon"
-        ],
-        "sc-button": [
-          "sc-spinner"
-        ],
-        "sc-block-ui": [
-          "sc-spinner"
-        ]
-      }
-    },
-    {
-      "filePath": "./src/components/controllers/checkout-form/donation-recurring-choices-new/sc-donation-recurring-choices-new.tsx",
-      "encapsulation": "shadow",
-      "tag": "sc-donation-recurring-choices-new",
+      "tag": "sc-donation-recurring-choices",
       "readme": "# sc-donation-recurring-choices-new\n\n\n",
       "docs": "",
       "docsTags": [],
@@ -10667,6 +10411,22 @@
           "required": false
         },
         {
+          "name": "nonrecurringchoicelabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "nonrecurringchoicelabel",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "priceId",
           "type": "string",
           "mutable": false,
@@ -10704,6 +10464,22 @@
           "attr": "product",
           "reflectToAttr": true,
           "docs": "The product id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringchoicelabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "recurringchoicelabel",
+          "reflectToAttr": false,
+          "docs": "",
           "docsTags": [],
           "values": [
             {
@@ -10768,21 +10544,21 @@
         }
       ],
       "dependents": [
-        "sc-donation-choices-new"
+        "sc-product-donation-choices"
       ],
       "dependencies": [
         "sc-skeleton",
         "sc-choices",
         "sc-recurring-price-choice-container",
-        "sc-choice",
+        "sc-choice-container",
         "sc-block-ui"
       ],
       "dependencyGraph": {
-        "sc-donation-recurring-choices-new": [
+        "sc-donation-recurring-choices": [
           "sc-skeleton",
           "sc-choices",
           "sc-recurring-price-choice-container",
-          "sc-choice",
+          "sc-choice-container",
           "sc-block-ui"
         ],
         "sc-choices": [
@@ -10806,8 +10582,8 @@
         "sc-block-ui": [
           "sc-spinner"
         ],
-        "sc-donation-choices-new": [
-          "sc-donation-recurring-choices-new"
+        "sc-product-donation-choices": [
+          "sc-donation-recurring-choices"
         ]
       }
     },
@@ -24472,7 +24248,7 @@
         },
         {
           "event": "scInput",
-          "detail": "void",
+          "detail": "string",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -24627,6 +24403,283 @@
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/product-donation-choices/sc-product-donation-choices.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-product-donation-choices",
+      "readme": "# sc-donation-choices-new\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "amountcolumns",
+          "type": "string",
+          "mutable": false,
+          "attr": "amountcolumns",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "amountlabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "amountlabel",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currencyCode",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency-code",
+          "reflectToAttr": false,
+          "docs": "Currency code for the donation.",
+          "docsTags": [],
+          "default": "'usd'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "lineItem",
+          "type": "LineItem",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Order line items.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "LineItem"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "Is this loading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "nonrecurringchoicelabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "nonrecurringchoicelabel",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "priceId",
+          "type": "string",
+          "mutable": false,
+          "attr": "price-id",
+          "reflectToAttr": true,
+          "docs": "The price id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "string",
+          "mutable": false,
+          "attr": "product",
+          "reflectToAttr": true,
+          "docs": "The product id for the fields.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringchoicelabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "recurringchoicelabel",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringlabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "recurringlabel",
+          "reflectToAttr": false,
+          "docs": "The label for the field.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectedProduct",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scToggleLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Toggle line item event",
+          "docsTags": []
+        }
+      ],
+      "listeners": [
+        {
+          "event": "scChange",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "scInput",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "recurring-choices",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "sc-skeleton",
+        "sc-choices",
+        "sc-donation-recurring-choices",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-product-donation-choices": [
+          "sc-skeleton",
+          "sc-choices",
+          "sc-donation-recurring-choices",
+          "sc-block-ui"
+        ],
+        "sc-choices": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-donation-recurring-choices": [
+          "sc-skeleton",
+          "sc-choices",
+          "sc-recurring-price-choice-container",
+          "sc-choice-container",
+          "sc-block-ui"
+        ],
+        "sc-recurring-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-dropdown",
+          "sc-button",
+          "sc-menu",
+          "sc-menu-item",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/products/sc-product-item/sc-product-item.tsx",
@@ -27212,7 +27265,7 @@
         }
       ],
       "dependents": [
-        "sc-donation-recurring-choices-new",
+        "sc-donation-recurring-choices",
         "sc-product-price-choices"
       ],
       "dependencies": [
@@ -27237,7 +27290,7 @@
         "sc-button": [
           "sc-spinner"
         ],
-        "sc-donation-recurring-choices-new": [
+        "sc-donation-recurring-choices": [
           "sc-recurring-price-choice-container"
         ],
         "sc-product-price-choices": [
@@ -28633,8 +28686,7 @@
         "sc-custom-order-price-input",
         "sc-customer-details",
         "sc-donation-choices",
-        "sc-donation-choices-new",
-        "sc-donation-recurring-choices-new",
+        "sc-donation-recurring-choices",
         "sc-fulfillments",
         "sc-invoices-list",
         "sc-line-item-shipping",
@@ -28651,6 +28703,7 @@
         "sc-paypal-buttons",
         "sc-price-choice",
         "sc-price-choice-container",
+        "sc-product-donation-choices",
         "sc-product-item-list",
         "sc-purchase-downloads-list",
         "sc-stripe-add-method",
@@ -28688,10 +28741,7 @@
         "sc-donation-choices": [
           "sc-skeleton"
         ],
-        "sc-donation-choices-new": [
-          "sc-skeleton"
-        ],
-        "sc-donation-recurring-choices-new": [
+        "sc-donation-recurring-choices": [
           "sc-skeleton"
         ],
         "sc-fulfillments": [
@@ -28740,6 +28790,9 @@
           "sc-skeleton"
         ],
         "sc-price-choice-container": [
+          "sc-skeleton"
+        ],
+        "sc-product-donation-choices": [
           "sc-skeleton"
         ],
         "sc-product-item-list": [

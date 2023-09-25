@@ -1,10 +1,10 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/new-donation-amount",
-	"title": "New Donation Amount",
+	"name": "surecart/product-donation-amount",
+	"title": "Product Donation Amount",
 	"description": "Displays a donation amount for the donation form.",
 	"category": "surecart",
-	"parent": ["surecart/new-donation"],
+	"parent": ["surecart/product-donation"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
 	"supports": {

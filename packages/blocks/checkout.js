@@ -9,9 +9,9 @@ import * as columns from '@blocks/Columns';
 import * as coupon from '@blocks/Coupon';
 import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
-import * as newDonation from '@blocks/NewDonation';
+import * as productDonation from '@blocks/ProductDonation';
 import * as donationAmount from '@blocks/DonationAmount';
-import * as newDonationAmount from '@blocks/NewDonationAmount';
+import * as productDonationAmount from '@blocks/ProductDonationAmount';
 import * as customDonationAmount from '@blocks/CustomDonationAmount';
 import * as email from '@blocks/Email';
 import * as phone from '@blocks/Phone';
@@ -48,9 +48,9 @@ import { registerBlocks } from './register-block';
 registerBlocks([
 	button,
 	donation,
-	newDonation,
+	productDonation,
 	donationAmount,
-	newDonationAmount,
+	productDonationAmount,
 	customDonationAmount,
 	nameYourPrice,
 	bumpLineItem,

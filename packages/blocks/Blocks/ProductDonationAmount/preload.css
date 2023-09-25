@@ -1,0 +1,22 @@
+sc-product-donation-choices sc-choice-container::part(base) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+sc-product-donation-choices sc-choice-container::part(content) {
+	width: 100%;
+	text-align: center;
+}
+.wp-block-surecart-product-donation-amount,
+.wp-block-surecart-product-donation-amount > sc-choice-container {
+	width: 100%;
+	display: flex;
+}
+sc-product-donation-choices .block-list-appender.wp-block {
+	width: 100%;
+	display: flex;
+	position: relative;
+}
+sc-product-donation-choices .block-list-appender.wp-block > .block-editor-inserter {
+	width: 100%;
+}

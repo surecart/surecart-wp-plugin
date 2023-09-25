@@ -1252,45 +1252,7 @@ export namespace Components {
         "removeInvalid": boolean;
         "reportValidity": () => Promise<boolean>;
     }
-    interface ScDonationChoicesNew {
-        /**
-          * The label for the field.
-         */
-        "amountcolumns": string;
-        /**
-          * The label for the field.
-         */
-        "amountlabel": string;
-        "busy": boolean;
-        /**
-          * Currency code for the donation.
-         */
-        "currencyCode": string;
-        /**
-          * Order line items.
-         */
-        "lineItem": LineItem;
-        /**
-          * Is this loading
-         */
-        "loading": boolean;
-        "nonrecurringchoicelabel": string;
-        /**
-          * The price id for the fields.
-         */
-        "priceId": string;
-        /**
-          * The product id for the fields.
-         */
-        "product": string;
-        "recurringchoicelabel": string;
-        /**
-          * The label for the field.
-         */
-        "recurringlabel": string;
-        "selectedProduct": Product;
-    }
-    interface ScDonationRecurringChoicesNew {
+    interface ScDonationRecurringChoices {
         "busy": boolean;
         /**
           * The label for the field.
@@ -1300,7 +1262,7 @@ export namespace Components {
           * Is this loading
          */
         "loading": boolean;
-        "nonrecurringchoicelabel": string;
+        "nonRecurringChoiceLabel": string;
         /**
           * The price id for the fields.
          */
@@ -1310,7 +1272,7 @@ export namespace Components {
           * The product id for the fields.
          */
         "product": string;
-        "recurringchoicelabel": string;
+        "recurringChoiceLabel": string;
         "selectedProduct": Product;
     }
     interface ScDownloadsList {
@@ -2931,6 +2893,44 @@ export namespace Components {
     interface ScProductBuyButton {
         "addToCart": boolean;
     }
+    interface ScProductDonationChoices {
+        /**
+          * The label for the field.
+         */
+        "amountColumns": string;
+        /**
+          * The label for the field.
+         */
+        "amountLabel": string;
+        "busy": boolean;
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode": string;
+        /**
+          * Order line items.
+         */
+        "lineItem": LineItem;
+        /**
+          * Is this loading
+         */
+        "loading": boolean;
+        "nonRecurringChoiceLabel": string;
+        /**
+          * The price id for the fields.
+         */
+        "priceId": string;
+        /**
+          * The product id for the fields.
+         */
+        "product": string;
+        "recurringChoiceLabel": string;
+        /**
+          * The label for the field.
+         */
+        "recurringLabel": string;
+        "selectedProduct": Product;
+    }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
         "product": Product;
@@ -4068,13 +4068,9 @@ export interface ScDonationChoicesCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScDonationChoicesElement;
 }
-export interface ScDonationChoicesNewCustomEvent<T> extends CustomEvent<T> {
+export interface ScDonationRecurringChoicesCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLScDonationChoicesNewElement;
-}
-export interface ScDonationRecurringChoicesNewCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScDonationRecurringChoicesNewElement;
+    target: HTMLScDonationRecurringChoicesElement;
 }
 export interface ScDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4175,6 +4171,10 @@ export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
 export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
+}
+export interface ScProductDonationChoicesCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductDonationChoicesElement;
 }
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4586,17 +4586,11 @@ declare global {
         prototype: HTMLScDonationChoicesElement;
         new (): HTMLScDonationChoicesElement;
     };
-    interface HTMLScDonationChoicesNewElement extends Components.ScDonationChoicesNew, HTMLStencilElement {
+    interface HTMLScDonationRecurringChoicesElement extends Components.ScDonationRecurringChoices, HTMLStencilElement {
     }
-    var HTMLScDonationChoicesNewElement: {
-        prototype: HTMLScDonationChoicesNewElement;
-        new (): HTMLScDonationChoicesNewElement;
-    };
-    interface HTMLScDonationRecurringChoicesNewElement extends Components.ScDonationRecurringChoicesNew, HTMLStencilElement {
-    }
-    var HTMLScDonationRecurringChoicesNewElement: {
-        prototype: HTMLScDonationRecurringChoicesNewElement;
-        new (): HTMLScDonationRecurringChoicesNewElement;
+    var HTMLScDonationRecurringChoicesElement: {
+        prototype: HTMLScDonationRecurringChoicesElement;
+        new (): HTMLScDonationRecurringChoicesElement;
     };
     interface HTMLScDownloadsListElement extends Components.ScDownloadsList, HTMLStencilElement {
     }
@@ -5094,6 +5088,12 @@ declare global {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
     };
+    interface HTMLScProductDonationChoicesElement extends Components.ScProductDonationChoices, HTMLStencilElement {
+    }
+    var HTMLScProductDonationChoicesElement: {
+        prototype: HTMLScProductDonationChoicesElement;
+        new (): HTMLScProductDonationChoicesElement;
+    };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
     var HTMLScProductItemElement: {
@@ -5538,8 +5538,7 @@ declare global {
         "sc-dialog": HTMLScDialogElement;
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
-        "sc-donation-choices-new": HTMLScDonationChoicesNewElement;
-        "sc-donation-recurring-choices-new": HTMLScDonationRecurringChoicesNewElement;
+        "sc-donation-recurring-choices": HTMLScDonationRecurringChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
         "sc-drawer": HTMLScDrawerElement;
         "sc-dropdown": HTMLScDropdownElement;
@@ -5621,6 +5620,7 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
+        "sc-product-donation-choices": HTMLScProductDonationChoicesElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
@@ -7086,49 +7086,7 @@ declare namespace LocalJSX {
         "priceId"?: string;
         "removeInvalid"?: boolean;
     }
-    interface ScDonationChoicesNew {
-        /**
-          * The label for the field.
-         */
-        "amountcolumns"?: string;
-        /**
-          * The label for the field.
-         */
-        "amountlabel"?: string;
-        "busy"?: boolean;
-        /**
-          * Currency code for the donation.
-         */
-        "currencyCode"?: string;
-        /**
-          * Order line items.
-         */
-        "lineItem"?: LineItem;
-        /**
-          * Is this loading
-         */
-        "loading"?: boolean;
-        "nonrecurringchoicelabel"?: string;
-        /**
-          * Toggle line item event
-         */
-        "onScToggleLineItem"?: (event: ScDonationChoicesNewCustomEvent<LineItemData>) => void;
-        /**
-          * The price id for the fields.
-         */
-        "priceId"?: string;
-        /**
-          * The product id for the fields.
-         */
-        "product"?: string;
-        "recurringchoicelabel"?: string;
-        /**
-          * The label for the field.
-         */
-        "recurringlabel"?: string;
-        "selectedProduct"?: Product;
-    }
-    interface ScDonationRecurringChoicesNew {
+    interface ScDonationRecurringChoices {
         "busy"?: boolean;
         /**
           * The label for the field.
@@ -7138,12 +7096,12 @@ declare namespace LocalJSX {
           * Is this loading
          */
         "loading"?: boolean;
-        "nonrecurringchoicelabel"?: string;
-        "onScChange"?: (event: ScDonationRecurringChoicesNewCustomEvent<string|boolean>) => void;
+        "nonRecurringChoiceLabel"?: string;
+        "onScChange"?: (event: ScDonationRecurringChoicesCustomEvent<string|boolean>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScDonationRecurringChoicesNewCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScDonationRecurringChoicesCustomEvent<LineItemData>) => void;
         /**
           * The price id for the fields.
          */
@@ -7153,7 +7111,7 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "product"?: string;
-        "recurringchoicelabel"?: string;
+        "recurringChoiceLabel"?: string;
         "selectedProduct"?: Product;
     }
     interface ScDownloadsList {
@@ -8909,6 +8867,48 @@ declare namespace LocalJSX {
     interface ScProductBuyButton {
         "addToCart"?: boolean;
     }
+    interface ScProductDonationChoices {
+        /**
+          * The label for the field.
+         */
+        "amountColumns"?: string;
+        /**
+          * The label for the field.
+         */
+        "amountLabel"?: string;
+        "busy"?: boolean;
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode"?: string;
+        /**
+          * Order line items.
+         */
+        "lineItem"?: LineItem;
+        /**
+          * Is this loading
+         */
+        "loading"?: boolean;
+        "nonRecurringChoiceLabel"?: string;
+        /**
+          * Toggle line item event
+         */
+        "onScToggleLineItem"?: (event: ScProductDonationChoicesCustomEvent<LineItemData>) => void;
+        /**
+          * The price id for the fields.
+         */
+        "priceId"?: string;
+        /**
+          * The product id for the fields.
+         */
+        "product"?: string;
+        "recurringChoiceLabel"?: string;
+        /**
+          * The label for the field.
+         */
+        "recurringLabel"?: string;
+        "selectedProduct"?: Product;
+    }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
         "product"?: Product;
@@ -10114,8 +10114,7 @@ declare namespace LocalJSX {
         "sc-dialog": ScDialog;
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
-        "sc-donation-choices-new": ScDonationChoicesNew;
-        "sc-donation-recurring-choices-new": ScDonationRecurringChoicesNew;
+        "sc-donation-recurring-choices": ScDonationRecurringChoices;
         "sc-downloads-list": ScDownloadsList;
         "sc-drawer": ScDrawer;
         "sc-dropdown": ScDropdown;
@@ -10197,6 +10196,7 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-buy-button": ScProductBuyButton;
+        "sc-product-donation-choices": ScProductDonationChoices;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
@@ -10324,8 +10324,7 @@ declare module "@stencil/core" {
             "sc-dialog": LocalJSX.ScDialog & JSXBase.HTMLAttributes<HTMLScDialogElement>;
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
-            "sc-donation-choices-new": LocalJSX.ScDonationChoicesNew & JSXBase.HTMLAttributes<HTMLScDonationChoicesNewElement>;
-            "sc-donation-recurring-choices-new": LocalJSX.ScDonationRecurringChoicesNew & JSXBase.HTMLAttributes<HTMLScDonationRecurringChoicesNewElement>;
+            "sc-donation-recurring-choices": LocalJSX.ScDonationRecurringChoices & JSXBase.HTMLAttributes<HTMLScDonationRecurringChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
             "sc-drawer": LocalJSX.ScDrawer & JSXBase.HTMLAttributes<HTMLScDrawerElement>;
             "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;
@@ -10417,6 +10416,7 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
+            "sc-product-donation-choices": LocalJSX.ScProductDonationChoices & JSXBase.HTMLAttributes<HTMLScProductDonationChoicesElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;

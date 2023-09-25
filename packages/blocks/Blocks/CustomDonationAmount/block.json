@@ -4,7 +4,7 @@
 	"title": "Custom Donation Amount",
 	"description": "Displays a custom donation amount input for the donation form.",
 	"category": "surecart",
-	"parent": ["surecart/new-donation"],
+	"parent": ["surecart/product-donation"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
 	"supports": {

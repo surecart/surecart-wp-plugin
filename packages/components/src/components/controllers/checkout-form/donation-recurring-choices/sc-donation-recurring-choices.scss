@@ -2,13 +2,13 @@
   display: block;
 }
 
-.sc-donation-recurring-choices-new {
+.sc-donation-recurring-choices {
   display: grid;
   gap: var(--sc-spacing-small);
   position: relative;
   z-index: 1;
   --columns: 2;
 }
-.sc-donation-recurring-choices-new::part(choices) {
+.sc-donation-recurring-choices::part(choices) {
   background: red;
 }

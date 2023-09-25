@@ -13,14 +13,17 @@ import {
 	InnerBlocks,
 	useInnerBlocksProps as __stableUseInnerBlocksProps,
 	__experimentalUseInnerBlocksProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
 import {
-	ScDonationChoicesNew,
+	ScProductDonationChoices,
 } from '@surecart/components-react';
 
-export default ({ attributes, setAttributes, isSelected, clientId }) => {
+export default ({ attributes, setAttributes }) => {
 	const { product_id, amount_label, amount_columns, recurring_label, currency, recurring_choice_label, non_recurring_choice_label } =
 		attributes;
 
@@ -28,16 +31,20 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		? __stableUseInnerBlocksProps
 		: __experimentalUseInnerBlocksProps;
 
+	const borderProps = useBorderProps(attributes);
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
+
 	const template= [
-		['surecart/new-donation-amount', { amount: 100, currency }],
-		['surecart/new-donation-amount', { amount: 200, currency }],
-		['surecart/new-donation-amount', { amount: 500, currency }],
-		['surecart/new-donation-amount', { amount: 1000, currency }],
-		['surecart/new-donation-amount', { amount: 2000, currency }],
-		['surecart/new-donation-amount', { amount: 5000, currency }],
-		['surecart/new-donation-amount', { amount: 10000, currency }],
-		['surecart/new-donation-amount', { amount: 20000, currency }],
-		['surecart/new-donation-amount', { amount: 50000, currency }],
+		['surecart/product-donation-amount', { amount: 100, currency }],
+		['surecart/product-donation-amount', { amount: 200, currency }],
+		['surecart/product-donation-amount', { amount: 500, currency }],
+		['surecart/product-donation-amount', { amount: 1000, currency }],
+		['surecart/product-donation-amount', { amount: 2000, currency }],
+		['surecart/product-donation-amount', { amount: 5000, currency }],
+		['surecart/product-donation-amount', { amount: 10000, currency }],
+		['surecart/product-donation-amount', { amount: 20000, currency }],
+		['surecart/product-donation-amount', { amount: 50000, currency }],
 		['surecart/custom-donation-amount', { currency }],
 	];
 
@@ -57,7 +64,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 	const {children,innerBlocksProps} = useInnerBlocksProps(
 		{},
 		{
-			allowedBlocks: ['surecart/new-donation-amount'],
+			allowedBlocks: ['surecart/product-donation-amount'],
 			renderAppender: InnerBlocks.ButtonBlockAppender,
 			orientation: 'horizontal',
 			template,
@@ -118,16 +125,41 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 			</InspectorControls>
 			<div {...blockProps}>
 				<div {...innerBlocksProps}>
-					<ScDonationChoicesNew
-						amountlabel={amount_label}
-						recurringlabel={recurring_label}
-						recurringchoicelabel={recurring_choice_label}
-						nonrecurringchoicelabel={non_recurring_choice_label}
-						amountcolumns={amount_columns}
+					<ScProductDonationChoices
+						amountLabel={amount_label}
+						recurringLabel={recurring_label}
+						recurringChoiceLabel={recurring_choice_label}
+						nonRecurringChoiceLabel={non_recurring_choice_label}
+						amountColumns={amount_columns}
 						product={product_id}
+						style={{
+							border: 'none',
+							'--sc-input-required-indicator': '/\\00a0',
+							'--sc-choice-text-color': colorProps?.style?.color,
+							'--sc-choice-background-color':
+								colorProps?.style?.backgroundColor,
+							'--sc-choice-border-color':
+								borderProps?.style?.borderColor,
+							'--sc-choice-border-width':
+								borderProps?.style?.borderWidth,
+							'--sc-choice-border-radius':
+								borderProps?.style?.borderRadius,
+							'--sc-choice-padding-left':
+								spacingProps?.style?.paddingLeft,
+							'--sc-choice-padding-right':
+								spacingProps?.style?.paddingRight,
+							'--sc-choice-padding-top':
+								spacingProps?.style?.paddingTop,
+							'--sc-choice-padding-bottom':
+								spacingProps?.style?.paddingBottom,
+							marginTop: spacingProps?.style?.marginTop,
+							marginLeft: spacingProps?.style?.marginLeft,
+							marginRight: spacingProps?.style?.marginRight,
+							marginBottom: spacingProps?.style?.marginBottom,
+						}}
 					>
 						{children}
-					</ScDonationChoicesNew>
+					</ScProductDonationChoices>
 				</div>
 			</div>
 		</>

@@ -6,14 +6,14 @@ import apiFetch from '../../../../functions/fetch';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
 @Component({
-  tag: 'sc-donation-choices-new',
-  styleUrl: 'sc-donation-choices-new.scss',
+  tag: 'sc-product-donation-choices',
+  styleUrl: 'sc-product-donation-choices.scss',
   shadow: true,
 })
-export class ScDonationChoicesNew {
+export class ScProductDonationChoice {
   private removeCheckoutListener: () => void;
 
-  @Element() el: HTMLScDonationChoicesNewElement;
+  @Element() el: HTMLScProductDonationChoicesElement;
   /** The product id for the fields. */
   @Prop({ reflect: true }) product: string;
 
@@ -37,17 +37,17 @@ export class ScDonationChoicesNew {
   @Prop() busy: boolean;
 
   /** The label for the field. */
-  @Prop() amountlabel: string;
+  @Prop() amountLabel: string;
 
   /** The label for the field. */
-  @Prop() recurringlabel: string;
+  @Prop() recurringLabel: string;
 
-  @Prop() recurringchoicelabel: string;
+  @Prop() recurringChoiceLabel: string;
 
-  @Prop() nonrecurringchoicelabel: string;
+  @Prop() nonRecurringChoiceLabel: string;
 
   /** The label for the field. */
-  @Prop() amountcolumns: string;
+  @Prop() amountColumns: string;
 
   /** Error */
   @State() error: string;
@@ -189,7 +189,7 @@ export class ScDonationChoicesNew {
     
     if (this.loading) {
       return (
-        <div class="sc-donation-choices-new">
+        <div class="sc-product-donation-choices">
           <sc-skeleton style={{ width: '20%', display: 'inline-block' }}></sc-skeleton>
           <sc-skeleton style={{ width: '60%', display: 'inline-block' }}></sc-skeleton>
           <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
@@ -199,16 +199,16 @@ export class ScDonationChoicesNew {
 
     return (
       <div 
-        class="sc-donation-choices-new"
-        style={{ '--columns': this.amountcolumns}}
+        class="sc-product-donation-choices"
+        style={{ '--columns': this.amountColumns}}
       >
-        <sc-choices label={this.amountlabel}>
+        <sc-choices label={this.amountLabel}>
           <slot />
         </sc-choices>
-        <sc-donation-recurring-choices-new
-          label={this.recurringlabel}
-          recurringchoicelabel={this.recurringchoicelabel}
-          nonrecurringchoicelabel={this.nonrecurringchoicelabel}
+        <sc-donation-recurring-choices
+          label={this.recurringLabel}
+          recurringChoiceLabel={this.recurringChoiceLabel}
+          nonRecurringChoiceLabel={this.nonRecurringChoiceLabel}
           prices={this.prices}
           priceId={this.priceId}
           onScChange={e => {
