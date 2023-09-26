@@ -59,16 +59,28 @@ export const generateVariants = (
 	} else if (variantOptions.length === 2) {
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
 			for (let j = 0; j < variantOptions[1].values.length; j++) {
-				const previousValue = findPreviousValue(
-					variantOptions,
-					previousVariants,
-					{
+				let previousValue = null;
+				// If this is the first item, then we need to find previous value of nested length 2.
+				if (variantOptions[1].values.length === 1) {
+					previousValue = findPreviousValue(
+						variantOptions,
+						previousVariants,
 						i,
-						j,
-					},
-					changeType,
-					2
-				);
+						changeType,
+						1
+					);
+				} else {
+					previousValue = findPreviousValue(
+						variantOptions,
+						previousVariants,
+						{
+							i,
+							j,
+						},
+						changeType,
+						2
+					);
+				}
 
 				variants.push({
 					...(previousValue ? previousValue : {}),
@@ -82,17 +94,33 @@ export const generateVariants = (
 		for (let i = 0; i < variantOptions[0].values.length; i++) {
 			for (let j = 0; j < variantOptions[1].values.length; j++) {
 				for (let k = 0; k < variantOptions[2].values.length; k++) {
-					const previousValue = findPreviousValue(
-						variantOptions,
-						previousVariants,
-						{
-							i,
-							j,
-							k,
-						},
-						changeType,
-						3
-					);
+					// If this is the first item, then we need to find previous value of nested length 2.
+					let previousValue = null;
+					if (variantOptions[2].values.length === 1) {
+						previousValue = findPreviousValue(
+							variantOptions,
+							previousVariants,
+							{
+								i,
+								j,
+							},
+							changeType,
+							2
+						);
+					} else {
+						// Else the nested length would be 3.
+						previousValue = findPreviousValue(
+							variantOptions,
+							previousVariants,
+							{
+								i,
+								j,
+								k,
+							},
+							changeType,
+							3
+						);
+					}
 
 					variants.push({
 						...(previousValue ? previousValue : {}),
@@ -127,17 +155,17 @@ const findPreviousValue = (
 ) => {
 	// For renaming, If index exist in previousVariants, then update the label only
 	if (changeType === 'option_value_renamed') {
-		if (nestedLength == 1) {
+		if (nestedLength === 1) {
 			return previousVariants[index] ?? null;
 		}
 
-		if (nestedLength == 2) {
+		if (nestedLength === 2) {
 			const { i, j } = index;
 			const prevIndex = i * variantOptions[1]?.values.length + j;
 			return previousVariants[prevIndex] ?? null;
 		}
 
-		if (nestedLength == 3) {
+		if (nestedLength === 3) {
 			const { i, j, k } = index;
 			const prevIndex =
 				i *
@@ -149,7 +177,7 @@ const findPreviousValue = (
 		}
 	}
 
-	if (nestedLength == 1) {
+	if (nestedLength === 1) {
 		const option1Value = variantOptions[0]?.values?.[index]?.label;
 		return (
 			previousVariants.find(
@@ -158,7 +186,7 @@ const findPreviousValue = (
 		);
 	}
 
-	if (nestedLength == 2) {
+	if (nestedLength === 2) {
 		const { i, j } = index;
 		const option1Value = variantOptions[0]?.values?.[i]?.label;
 		const option2Value = variantOptions[1]?.values?.[j]?.label;
