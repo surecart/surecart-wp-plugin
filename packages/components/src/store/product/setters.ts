@@ -12,7 +12,8 @@ import state from "./store";
 export const setProduct = (productId:string, product:Partial<ProductState>):void =>{
   if(!productId || !state[productId]) return;
 
-  Object.keys(product).forEach(key => {
-    state[productId][key] = product[key];
-  });
+  state[productId] = {
+    ...state[productId],
+    ...product
+  }
 }

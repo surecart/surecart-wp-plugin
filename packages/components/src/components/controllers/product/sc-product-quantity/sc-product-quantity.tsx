@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
+import { setProduct } from '@store/product/setters';
 let id = 0;
 
 @Component({
@@ -55,7 +56,7 @@ export class ScProductQuantity {
             size={this.size}
             quantity={state[this.productId]?.selectedPrice?.ad_hoc ? 1 : state[this.productId]?.quantity}
             disabled={state[this.productId]?.selectedPrice?.ad_hoc}
-            onScInput={e => (state[this.productId].quantity = e.detail)}
+            onScInput={e => setProduct(this.productId, { quantity: e.detail })}
           ></sc-quantity-select>
         </sc-form-control>
       </Host>

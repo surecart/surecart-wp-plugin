@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../functions/price';
 import { state } from '@store/product';
 import { availablePrices } from '@store/product/getters';
+import { setProduct } from '@store/product/setters';
 
 @Component({
   tag: 'sc-product-price-choices',
@@ -51,7 +52,7 @@ export class ScProductPriceChoices {
             checked={state[this.productId]?.selectedPrice?.id === price?.id}
             onScChange={e => {
               if (e.target.checked) {
-                state[this.productId].selectedPrice = price;
+                setProduct(this.productId, { selectedPrice: price })
               }
             }}
           />

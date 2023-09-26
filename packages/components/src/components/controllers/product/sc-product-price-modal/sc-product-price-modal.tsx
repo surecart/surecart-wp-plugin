@@ -3,6 +3,7 @@ import { onChange, state } from '@store/product';
 import { __ } from '@wordpress/i18n';
 
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
+import { setProduct } from '@store/product/setters';
 
 @Component({
   tag: 'sc-product-price-modal',
@@ -77,7 +78,7 @@ export class ScProductPriceModal {
             currency-code={state[this.productId]?.selectedPrice?.currency}
             min={state[this.productId]?.selectedPrice?.ad_hoc_min_amount}
             max={state[this.productId]?.selectedPrice?.ad_hoc_max_amount}
-            onScInput={e => (state[this.productId].adHocAmount = parseInt(e.target.value))}
+            onScInput={e => setProduct(this.productId, { adHocAmount: parseInt(e.target.value) })}
             required
           />
           <sc-button type="primary" full submit busy={state[this.productId].busy}>

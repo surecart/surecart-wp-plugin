@@ -2,6 +2,7 @@ import { Component, Element, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
+import { setProduct } from '@store/product/setters';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -25,7 +26,8 @@ export class ScProductBuyButton {
 
     // ad hoc price, use the dialog.
     if (state[this.productId]?.selectedPrice?.ad_hoc) {
-     return ( state[this.productId].dialog= this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy');
+     setProduct(this.productId, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
+     return;
     }
 
     // if add to cart is undefined/false navigate to buy url
@@ -40,6 +42,7 @@ export class ScProductBuyButton {
   }
 
   render() {
+    console.log('state for product', state[this.productId])
     return (
       <Host class={{ 'is-busy': state[this.productId]?.busy && !!this.addToCart, 'is-disabled': state[this.productId]?.disabled }} onClick={e => this.handleCartClick(e)}>
         <slot />
