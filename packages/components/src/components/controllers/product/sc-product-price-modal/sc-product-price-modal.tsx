@@ -37,12 +37,10 @@ export class ScProductPriceModal {
 
   componentWillLoad() {
     // focus on price input when opened.
-    onChange(this.productId, val => {
-      if (val[this.productId]?.dialog === 'ad_hoc') {
-        setTimeout(() => {
-          this.priceInput?.triggerFocus();
-        }, 50);
-      }
+    onChange(this.productId, (_) => {
+      setTimeout(() => {
+        this.priceInput?.triggerFocus();
+      }, 50);
     });
   }
 
@@ -52,7 +50,7 @@ export class ScProductPriceModal {
     }
 
     return (
-      <sc-dialog open={state[this.productId]?.dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => setProduct(this.productId, {dialog:null})}>
+      <sc-dialog open={state[this.productId]?.dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => setProduct(this.productId, { dialog: null })}>
         <span class="dialog__header" slot="label">
           {!!state[this.productId]?.product?.image_url && (
             <div class="dialog__image">

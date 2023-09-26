@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { addProductToState, getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
+import { onChange } from '@store/product';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -26,15 +27,15 @@ export class ScProductBuyButton {
 
     // ad hoc price, use the dialog.
     if (state[this.productId]?.selectedPrice?.ad_hoc) {
-     setProduct(this.productId, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
-     return;
+      setProduct(this.productId, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
+      return;
     }
 
     // if add to cart is undefined/false navigate to buy url
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      return window.location.assign(getProductBuyLink(this.productId,checkoutUrl));
+      return window.location.assign(getProductBuyLink(this.productId, checkoutUrl, { no_cart: !this.addToCart }));
     }
 
     // submit the cart form.
@@ -42,9 +43,21 @@ export class ScProductBuyButton {
   }
 
   componentDidLoad() {
+    this.link = this.el.querySelector('a');
+    this.updateProductLink();
+    onChange('selectedPrice', () => this.updateProductLink());
+
     if (!state[this.productId]) {
       addProductToState(this.productId, {});
     }
+  }
+
+  private link: HTMLAnchorElement;
+
+  updateProductLink() {
+    const checkoutUrl = window?.scData?.pages?.checkout;
+    if (!checkoutUrl || !this.link) return;
+    this.link.href = getProductBuyLink(checkoutUrl, !this.addToCart ? { no_cart: true } : {});
   }
 
   render() {

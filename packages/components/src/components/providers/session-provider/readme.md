@@ -17,7 +17,6 @@
 
 | Event                | Description             | Type                                                                                            |
 | -------------------- | ----------------------- | ----------------------------------------------------------------------------------------------- |
-| `scError`            | Error event             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>`   |
 | `scPaid`             |                         | `CustomEvent<void>`                                                                             |
 | `scSetState`         | Set the state           | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 | `scUpdateDraftState` | Update line items event | `CustomEvent<Checkout>`                                                                         |

@@ -8,7 +8,8 @@ import { getOrder, setOrder } from '@store/checkouts';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { expand } from '../../../../services/session';
-import { Checkout, ResponseError } from '../../../../types';
+import { Checkout } from '../../../../types';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-cart',
@@ -16,6 +17,9 @@ import { Checkout, ResponseError } from '../../../../types';
   shadow: true,
 })
 export class ScCart {
+  /** The drawer */
+  private drawer: HTMLScDrawerElement;
+
   /** Is this open or closed? */
   @State() open: boolean = null;
 
@@ -45,14 +49,14 @@ export class ScCart {
   /** The current UI state. */
   @State() uiState: 'loading' | 'busy' | 'navigating' | 'idle' = 'idle';
 
-  /** Error state. */
-  @State() error: ResponseError | null;
-
   @Watch('open')
   handleOpenChange() {
     uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
+      setTimeout(() => {
+        this.drawer.focus();
+      }, 500);
     }
   }
 
@@ -87,13 +91,6 @@ export class ScCart {
     this.uiState = e.detail;
   }
 
-  /** Listen for error events in component. */
-  @Listen('scError')
-  handleErrorEvent(e) {
-    this.error = e.detail as ResponseError;
-    this.uiState = 'idle';
-  }
-
   @Listen('scCloseCart')
   handleCloseCart() {
     this.open = false;
@@ -112,7 +109,8 @@ export class ScCart {
       this.setOrder(order);
     } catch (e) {
       console.error(e);
-      throw e;
+      this.uiState = 'idle';
+      createErrorNotice(e);
     } finally {
       this.uiState = 'idle';
     }
@@ -136,7 +134,6 @@ export class ScCart {
       busy: this.uiState === 'busy',
       navigating: this.uiState === 'navigating',
       empty: !this.order()?.line_items?.pagination?.count,
-      error: this.error,
       order: this.order(),
       lineItems: this.order()?.line_items?.data || [],
       tax_status: this.order()?.tax_status,
@@ -152,19 +149,13 @@ export class ScCart {
       <Fragment>
         {this.order() && (
           <Universe.Provider state={this.state()}>
-            <sc-cart-session-provider
-              order={this.order()}
-              form-id={this.formId}
-              group-id={this.formId}
-              onScUpdateOrderState={e => this.setOrder(e.detail)}
-              onScError={e => (this.error = e.detail as ResponseError)}
-            >
-              <sc-drawer open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+            <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setOrder(e.detail)}>
+              <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>
                     <div class="cart__header-suffix" slot="header">
                       <slot name="cart-header" />
-                      <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header" error={this.error} onScUpdateError={e => (this.error = e.detail)}></sc-error>
+                      <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header"></sc-error>
                     </div>
                     <slot />
                   </Fragment>

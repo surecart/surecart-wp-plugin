@@ -113,7 +113,7 @@ class Block extends ProductBlock {
 			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
 			product-id="<?php echo esc_attr( $product->id ); ?>"
 			>
-			<a class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
 				<?php echo $attributes['add_to_cart'] ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
 			</a>
