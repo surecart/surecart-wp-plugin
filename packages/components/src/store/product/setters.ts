@@ -10,7 +10,7 @@ import state from "./store";
  * @returns {void}
  */
 export const setProduct = (productId:string, product:Partial<ProductState>):void =>{
-  if(!productId || !state[productId]) return;
+  if(!productId ) return;
 
   state[productId] = {
     ...state[productId],

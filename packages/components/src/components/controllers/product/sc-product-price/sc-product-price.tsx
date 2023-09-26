@@ -20,8 +20,8 @@ export class ScProductPrice {
   @Prop() productId: string;
 
   renderRange() {
-    if (state[this.productId]?.prices.length === 1) {
-      return this.renderPrice(state[this.productId].prices[0]);
+    if (state[this.productId]?.prices?.length === 1) {
+      return this.renderPrice(state[this.productId]?.prices[0]);
     }
     return <sc-price-range prices={state[this.productId]?.prices} />;
   }
@@ -89,7 +89,7 @@ export class ScProductPrice {
       return this.renderPrice(state[this.productId]?.selectedPrice);
     }
 
-    if (state[this.productId]?.prices.length) {
+    if (state[this.productId]?.prices?.length) {
       return this.renderRange();
     }
 

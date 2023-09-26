@@ -38,7 +38,7 @@ export class ScProductPriceModal {
   componentWillLoad() {
     // focus on price input when opened.
     onChange(this.productId, val => {
-      if (val[this.productId].dialog === 'ad_hoc') {
+      if (val[this.productId]?.dialog === 'ad_hoc') {
         setTimeout(() => {
           this.priceInput?.triggerFocus();
         }, 50);
@@ -52,7 +52,7 @@ export class ScProductPriceModal {
     }
 
     return (
-      <sc-dialog open={state[this.productId].dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => (state.dialog = null)}>
+      <sc-dialog open={state[this.productId]?.dialog === (this?.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy')} onScRequestClose={() => setProduct(this.productId, {dialog:null})}>
         <span class="dialog__header" slot="label">
           {!!state[this.productId]?.product?.image_url && (
             <div class="dialog__image">
@@ -74,14 +74,14 @@ export class ScProductPriceModal {
         >
           <sc-price-input
             ref={el => (this.priceInput = el as HTMLScPriceInputElement)}
-            value={state[this.productId].adHocAmount?.toString?.()}
+            value={state[this.productId]?.adHocAmount?.toString?.()}
             currency-code={state[this.productId]?.selectedPrice?.currency}
             min={state[this.productId]?.selectedPrice?.ad_hoc_min_amount}
             max={state[this.productId]?.selectedPrice?.ad_hoc_max_amount}
             onScInput={e => setProduct(this.productId, { adHocAmount: parseInt(e.target.value) })}
             required
           />
-          <sc-button type="primary" full submit busy={state[this.productId].busy}>
+          <sc-button type="primary" full submit busy={state[this.productId]?.busy}>
             <slot>{this.buttonText || __('Add To Cart', 'surecart')}</slot>
           </sc-button>
         </sc-form>

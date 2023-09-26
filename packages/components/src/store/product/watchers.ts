@@ -1,12 +1,13 @@
 import { ProductState } from 'src/types';
 import state, { on } from './store';
+import { setProduct } from './setters';
 
 on('set', (productId: string, newValue: ProductState, oldValue: ProductState) => {
   if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
     updateSelectedPrice(productId, newValue);
   }
 
-  const shouldUpdateLineItem = ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
+  const shouldUpdateLineItem = !oldValue || ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
 
   if (shouldUpdateLineItem) {
     setLineItem(productId);
@@ -23,9 +24,11 @@ const updateSelectedPrice = (productId: string, newValue: ProductState) => {
 };
 
 const setLineItem = (productId: string) => {
-  state[productId].line_item = {
-    price_id: state[productId].selectedPrice?.id,
-    quantity: state[productId].selectedPrice?.ad_hoc ? 1 : state[productId].quantity,
-    ...(state[productId].selectedPrice?.ad_hoc ? { ad_hoc_amount: state[productId].adHocAmount } : {}),
-  };
+  setProduct(productId, {
+    line_item: {
+      price_id: state[productId]?.selectedPrice?.id,
+      quantity: state[productId]?.selectedPrice?.ad_hoc ? 1 : state[productId].quantity,
+      ...(state[productId]?.selectedPrice?.ad_hoc ? { ad_hoc_amount: state[productId]?.adHocAmount } : {}),
+    },
+  });
 };

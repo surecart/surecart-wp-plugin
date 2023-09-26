@@ -35,7 +35,7 @@ export class ScProductQuantity {
   @Prop() help: string;
 
   /** The product id */
-  @Prop () productId: string;
+  @Prop() productId: string;
 
   render() {
     return (

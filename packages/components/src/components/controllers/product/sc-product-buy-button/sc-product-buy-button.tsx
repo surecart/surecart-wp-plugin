@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
+import { addProductToState, getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 
@@ -41,8 +41,13 @@ export class ScProductBuyButton {
     submitCartForm(this.productId);
   }
 
+  componentDidLoad() {
+    if (!state[this.productId]) {
+      addProductToState(this.productId, {});
+    }
+  }
+
   render() {
-    console.log('state for product', state[this.productId])
     return (
       <Host class={{ 'is-busy': state[this.productId]?.busy && !!this.addToCart, 'is-disabled': state[this.productId]?.disabled }} onClick={e => this.handleCartClick(e)}>
         <slot />

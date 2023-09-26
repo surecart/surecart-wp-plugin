@@ -127,7 +127,7 @@ class Block extends ProductBlock {
 			'wp_footer',
 			function() use ( $attributes, $product ) {
 				?>
-		<sc-product-price-modal <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
+		<sc-product-price-modal product-id="<?php echo esc_attr( $product->id ); ?>" <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
 				<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
 		</sc-product-price-modal>
 				<?php
