@@ -30,8 +30,6 @@ export default ({ product, updateProduct, loading }) => {
 		[product?.id]
 	);
 
-	console.log({ prices });
-
 	/**
 	 * Update a variant by index.
 	 */
