@@ -239,7 +239,6 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 			// Add stock value as initial_stock.
 			$response['initial_stock']    = $response['stock'];
 			$response['stock_adjustment'] = 0;
-			$response['change_type']      = 'initially_loaded';
 
 			// For variants, add stock value as initial_stock.
 			foreach ( $response['variants'] as $index => $variant ) {

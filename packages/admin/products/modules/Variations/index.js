@@ -21,7 +21,6 @@ export default ({ product, updateProduct, loading }) => {
 
 	const addEmptyVariantOption = () => {
 		updateProduct({
-			change_type: 'option_added',
 			variant_options: [
 				...product?.variant_options,
 				{

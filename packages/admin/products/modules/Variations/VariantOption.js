@@ -157,13 +157,7 @@ export default ({
 									}}
 									product={product}
 									updateProduct={updateProduct}
-									onChangeValue={(
-										updatedValues,
-										changeTypeValue
-									) => {
-										updateProduct({
-											change_type: changeTypeValue,
-										});
+									onChangeValue={(updatedValues) => {
 										updateOption({
 											values: updatedValues,
 										});

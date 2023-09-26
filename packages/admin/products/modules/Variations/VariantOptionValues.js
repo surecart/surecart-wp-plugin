@@ -14,27 +14,18 @@ import arrayMove from 'array-move';
 import { ScIcon, ScInput } from '@surecart/components-react';
 import { hasDuplicate } from './utils';
 
-export default memo(({ option, product, updateProduct, onChangeValue }) => {
+export default memo(({ option, onChangeValue }) => {
 	const [values, setValues] = useState(
 		option?.values?.length > 0
 			? option?.values ?? []
-			: [{ index: 1, label: '' }]
+			: [{ index: 1, label: '', id: new Date().valueOf() }]
 	);
 
-	const setChangeType = (type) => {
-		updateProduct({
-			change_type: type,
-		});
-	};
-
 	const applySort = (oldIndex, newIndex) => {
-		setChangeType('option_value_sorted');
 		setValues(arrayMove(values, oldIndex, newIndex));
 	};
 
 	const onChangeOptionValue = (index, newLabel) => {
-		setChangeType('option_value_renamed');
-
 		// update specific option value.
 		const updatedOptionValues = values.map((value, valueIndex) =>
 			valueIndex === index ? { ...value, label: newLabel } : value
@@ -50,6 +41,8 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 				...values,
 				{
 					label: '',
+					index: values.length + 1,
+					id: new Date().valueOf(),
 				},
 			]);
 		}
@@ -62,12 +55,10 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 				index: valueIndex,
 			};
 		});
-		onChangeValue(updatedOptionValues, product?.change_type);
+		onChangeValue(updatedOptionValues);
 	}, [values]);
 
 	const deleteOptionValue = (index) => {
-		setChangeType('option_value_deleted');
-
 		// remove the option value from the array.
 		const newOptionValues = values.filter(
 			(_, valueIndex) => valueIndex !== index

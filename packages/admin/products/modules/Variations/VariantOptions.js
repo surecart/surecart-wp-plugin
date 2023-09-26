@@ -54,8 +54,7 @@ export default ({ product, updateProduct }) => {
 		if (!firstUpdate.current) {
 			const variantsData = generateVariants(
 				updatedVariantOptions,
-				product?.variants ?? [],
-				product?.change_type
+				product?.variants ?? []
 			);
 
 			updateProduct({
@@ -81,7 +80,6 @@ export default ({ product, updateProduct }) => {
 	const onDelete = (index) => {
 		updateProduct({
 			...product,
-			change_type: 'option_deleted',
 			variant_options: (product?.variant_options || []).filter(
 				(_, itemIndex) => itemIndex !== index
 			),
@@ -94,7 +92,6 @@ export default ({ product, updateProduct }) => {
 	const applyDrag = async (oldIndex, newIndex) => {
 		updateProduct({
 			...product,
-			// change_type: 'option_sorted', // we don't need this, instead we should react.
 			variant_options: arrayMove(
 				product?.variant_options ?? [],
 				oldIndex,
