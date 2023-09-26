@@ -13,7 +13,7 @@ export const submitCartForm = async (productId:string) => {
   if (!productState.selectedPrice?.id) return;
   if (productState.selectedPrice?.ad_hoc && (null === productState.adHocAmount || undefined === productState.adHocAmount)) return;
   try {
-    state[productState.product.id].busy = true;
+    state[productId].busy = true;
     const checkout = await addLineItem({
       checkout: getCheckout(productState?.formId, productState.mode),
       data: {
@@ -39,12 +39,12 @@ export const submitCartForm = async (productId:string) => {
       ]);
     }
     toggleCart(true);
-    state[productState.product.id].dialog = null;
+    state[productId].dialog = null;
   } catch (e) {
     console.error(e);
     state.error = e;
   } finally {
-    state[productState.product.id].busy = false;
+    state[productId].busy = false;
   }
 };
 
