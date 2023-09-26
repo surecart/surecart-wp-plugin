@@ -1,20 +1,16 @@
 import { ProductState } from 'src/types';
 import state, { on } from './store';
 
-Object.keys(state).forEach((productId: string) => {
-  on('set', (key: string, newValue: ProductState, oldValue: ProductState) => {
-    if (key === productId) {
-      if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
-        updateSelectedPrice(productId, newValue);
-      }
+on('set', (productId: string, newValue: ProductState, oldValue: ProductState) => {
+  if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
+    updateSelectedPrice(productId, newValue);
+  }
 
-      const shouldUpdateLineItem = ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
+  const shouldUpdateLineItem = ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
 
-      if (shouldUpdateLineItem) {
-        setLineItem(productId);
-      }
-    }
-  });
+  if (shouldUpdateLineItem) {
+    setLineItem(productId);
+  }
 });
 
 const updateSelectedPrice = (productId: string, newValue: ProductState) => {
