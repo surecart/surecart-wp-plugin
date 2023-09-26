@@ -8,7 +8,13 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { Button, ButtonGroup, PanelBody } from '@wordpress/components';
+import {
+	Button,
+	ButtonGroup,
+	PanelBody,
+	PanelRow,
+	TextControl,
+} from '@wordpress/components';
 import {
 	AlignmentControl,
 	BlockControls,

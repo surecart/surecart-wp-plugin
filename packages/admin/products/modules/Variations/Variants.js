@@ -20,13 +20,17 @@ export default ({ product, updateProduct, loading }) => {
 	 */
 	const prices = useSelect(
 		(select) =>
-			select(coreStore).getEntityRecords('surecart', 'price', {
-				context: 'edit',
-				product_ids: [product?.id],
-				per_page: 100,
-			}) || [].filter((price) => !price?.archived),
+			(
+				select(coreStore).getEntityRecords('surecart', 'price', {
+					context: 'edit',
+					product_ids: [product?.id],
+					per_page: 100,
+				}) || []
+			).filter((price) => !price?.archived),
 		[product?.id]
 	);
+
+	console.log({ prices });
 
 	/**
 	 * Update a variant by index.
