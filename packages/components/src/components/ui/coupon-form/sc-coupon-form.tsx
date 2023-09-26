@@ -102,6 +102,18 @@ export class ScCouponForm {
     }
   }
 
+  translateDuration() {
+    const { duration, duration_in_months } = this.discount?.coupon;
+		switch (duration) {
+			case 'once':
+				return __('Once', 'surecart');
+			case 'repeating':
+				return `${duration_in_months} ${__('Months', 'surecart')}`;
+			default:
+				return __('Forever', 'surecart');
+		}
+	}
+
   render() {
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
@@ -142,6 +154,7 @@ export class ScCouponForm {
           {humanDiscount && (
             <span class="coupon-human-discount" slot="price-description">
               ({humanDiscount})
+              ({this.translateDuration()})
             </span>
           )}
 
