@@ -232,19 +232,8 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 		if ( 'edit' === $context ) {
 			// Process the variants, it's in a data column, so we need to pull it out.
 			$response['variants'] = $response['variants']['data'] ?? [];
-
 			// Process the variant_options values column. currently its like string[].
 			$response['variant_options'] = $this->getProcessedVariantOptions( $response['variant_options']['data'] ?? [] );
-
-			// Add stock value as initial_stock.
-			$response['initial_stock']    = $response['stock'];
-			$response['stock_adjustment'] = 0;
-
-			// For variants, add stock value as initial_stock.
-			foreach ( $response['variants'] as $index => $variant ) {
-				$response['variants'][ $index ]['initial_stock']    = $variant['stock'];
-				$response['variants'][ $index ]['stock_adjustment'] = 0;
-			}
 		}
 
 		return $response;
