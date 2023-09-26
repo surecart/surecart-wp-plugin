@@ -73,7 +73,7 @@ export default ({
 				{!choice?.id ? (
 					<PriceSelector ad_hoc={false} onSelect={onSelect} />
 				) : (
-					product?.name
+					`${product?.name} ${price?.name ? `— ${price.name}` : ''}`
 				)}
 			</sc-table-cell>
 			{!hideQuantity && (
