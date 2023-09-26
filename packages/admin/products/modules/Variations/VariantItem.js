@@ -12,18 +12,21 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScDropdown,
+	ScFormControl,
 	ScIcon,
 	ScInput,
 	ScMenu,
 	ScMenuItem,
 	ScPriceInput,
+	ScQuantitySelect,
 	ScTooltip,
 } from '@surecart/components-react';
 import Image from './Image';
 import { maybeConvertAmount } from '../../../util';
 
 export default ({ variant, updateVariant, prices }) => {
-	const { sku, status, image_id, stock, amount, currency } = variant;
+	const { sku, status, image_id, stock, stock_adjustment, amount, currency } =
+		variant;
 
 	/**
 	 * Link media.
@@ -94,21 +97,32 @@ export default ({ variant, updateVariant, prices }) => {
 					<ScTooltip
 						type="text"
 						text={__(
-							'Product has multiple prices. Please keep only one price to maintain variant wise pricing.',
+							'Price overrides are only allowed for products with a single price.',
 							'surecart'
 						)}
 					>
-						-
+						<div
+							css={css`
+								width: 30px;
+								display: inline-block;
+							`}
+						>
+							-
+						</div>
 					</ScTooltip>
 				) : (
 					<ScPriceInput
 						type="number"
 						min="0"
 						value={amount}
-						placeholder={maybeConvertAmount(
-							prices?.[0]?.amount,
-							prices?.[0]?.currency || 'usd'
-						)}
+						placeholder={
+							prices?.[0]
+								? maybeConvertAmount(
+										prices?.[0]?.amount,
+										prices?.[0]?.currency || 'usd'
+								  )
+								: ''
+						}
 						currency={currency}
 						disabled={status === 'draft'}
 						onScInput={(e) =>
@@ -119,17 +133,66 @@ export default ({ variant, updateVariant, prices }) => {
 			</>
 		),
 		stock: (
-			<ScInput
-				value={stock ?? 0}
-				disabled={status === 'draft'}
-				onScInput={(e) => {
-					updateVariant({
-						stock: e.target.value,
-						stock_adjustment:
-							e.target.value - variant?.initial_stock || 0,
-					});
-				}}
-			/>
+			<ScDropdown placement="bottom-end">
+				<ScButton
+					type="text"
+					slot="trigger"
+					css={css`
+						min-width: 70px;
+					`}
+					caret
+				>
+					{(stock || 0) + (stock_adjustment || 0)}
+				</ScButton>
+				<ScMenu>
+					<div
+						css={css`
+							padding: var(--sc-spacing-xx-small)
+								var(--sc-spacing-medium);
+							display: grid;
+							gap: var(--sc-spacing-small);
+						`}
+					>
+						<ScFormControl label={__('Adjust By', 'surecart')}>
+							<ScQuantitySelect
+								css={css`
+									box-sizing: border-box;
+									--sc-quantity-input-max-width: 80px;
+									--sc-quantity-select-width: 145px;
+								`}
+								quantity={stock_adjustment || 0}
+								onScInput={(e) =>
+									updateVariant({
+										stock_adjustment: e.detail,
+									})
+								}
+								min={-9999999}
+								name="stock"
+							/>
+						</ScFormControl>
+						<ScFormControl label={__('New', 'surecart')}>
+							<ScQuantitySelect
+								css={css`
+									box-sizing: border-box;
+									--sc-quantity-input-max-width: 80px;
+									--sc-quantity-select-width: 145px;
+								`}
+								quantity={
+									(stock || 0) + (stock_adjustment || 0)
+								}
+								onScInput={(e) =>
+									updateVariant({
+										stock_adjustment:
+											e.detail - (stock || 0),
+									})
+								}
+								min={-9999999}
+								name="stock"
+							/>
+						</ScFormControl>
+					</div>
+				</ScMenu>
+			</ScDropdown>
 		),
 		sku: (
 			<ScInput

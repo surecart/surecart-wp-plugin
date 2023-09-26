@@ -20,20 +20,12 @@ import {
 
 export default ({ onRequestClose, product, updateProduct, loading }) => {
 	const [stockAdjustment, setStockAdjustment] = useState(
-		parseInt(product?.initial_stock) !== parseInt(product?.stock)
-			? parseInt(product?.stock) - parseInt(product?.initial_stock)
-			: 0
+		product?.stock_adjustment
 	);
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		updateProduct({
-			stock:
-				isNaN(stockAdjustment) || stockAdjustment === ''
-					? product?.initial_stock
-					: parseInt(product?.initial_stock) +
-					  parseInt(stockAdjustment),
-		});
+		updateProduct({ stock_adjustment: stockAdjustment });
 		onRequestClose();
 	};
 
@@ -53,10 +45,12 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 					.components-modal__content {
 						overflow: visible !important;
 					}
+					--sc-quantity-input-max-width: 100%;
+					--sc-quantity-select-width: 100%;
+					--sc-quantity-control-height: var(--sc-input-height-medium);
 				`}
 				overlayClassName={'sc-modal-overflow'}
 				onRequestClose={onRequestClose}
-				shouldCloseOnClickOutside={false}
 			>
 				<ScForm
 					onScFormSubmit={onSubmit}
@@ -64,18 +58,40 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 						--sc-form-row-spacing: var(--sc-spacing-large);
 					`}
 				>
-					<ScFormControl
-						label={__('Adjust the stock quantity', 'surecart')}
-					>
-						<ScQuantitySelect
-							css={css`
-								margin-top: 0.3rem;
-							`}
-							allowNegative={true}
-							quantity={stockAdjustment}
-							onScChange={(e) => setStockAdjustment(e.detail)}
-						/>
-					</ScFormControl>
+					<div>
+						<ScFormControl label={__('Adjust By', 'surecart')}>
+							<ScQuantitySelect
+								css={css`
+									width: 100%;
+								`}
+								min={-9999999}
+								allowNegative={true}
+								quantity={stockAdjustment || 0}
+								onScInput={(e) => setStockAdjustment(e.detail)}
+							/>
+						</ScFormControl>
+					</div>
+					<div>
+						<ScFormControl label={__('New', 'surecart')}>
+							<ScQuantitySelect
+								css={css`
+									width: 100%;
+								`}
+								quantity={
+									(product?.stock || 0) +
+									(stockAdjustment || 0)
+								}
+								onScInput={(e) =>
+									updateProduct({
+										stock_adjustment:
+											e.detail - (product?.stock || 0),
+									})
+								}
+								min={-9999999}
+								name="stock"
+							/>
+						</ScFormControl>
+					</div>
 					<div
 						css={css`
 							display: flex;
