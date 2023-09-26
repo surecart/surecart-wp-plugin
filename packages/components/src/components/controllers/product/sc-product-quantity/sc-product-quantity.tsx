@@ -53,8 +53,8 @@ export class ScProductQuantity {
         >
           <sc-quantity-select
             size={this.size}
-            quantity={state[this.productId].selectedPrice?.ad_hoc ? 1 : state[this.productId].quantity}
-            disabled={state[this.productId].selectedPrice?.ad_hoc}
+            quantity={state[this.productId]?.selectedPrice?.ad_hoc ? 1 : state[this.productId]?.quantity}
+            disabled={state[this.productId]?.selectedPrice?.ad_hoc}
             onScInput={e => (state[this.productId].quantity = e.detail)}
           ></sc-quantity-select>
         </sc-form-control>
