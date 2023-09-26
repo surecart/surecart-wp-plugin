@@ -9197,7 +9197,6 @@ declare namespace LocalJSX {
          */
         "mode"?: 'live' | 'test';
         "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
-        "onScPayError"?: (event: ScStripeElementCustomEvent<any>) => void;
         /**
           * Set the state
          */
@@ -9228,10 +9227,6 @@ declare namespace LocalJSX {
           * The order/invoice was paid for.
          */
         "onScPaid"?: (event: ScStripePaymentElementCustomEvent<void>) => void;
-        /**
-          * There was a payment error.
-         */
-        "onScPayError"?: (event: ScStripePaymentElementCustomEvent<any>) => void;
         /**
           * Set the state
          */
