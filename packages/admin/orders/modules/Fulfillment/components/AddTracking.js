@@ -99,7 +99,7 @@ export default ({ fulfillment, open, onRequestClose }) => {
 							setNotificationsEnabled(e.target.checked)
 						}
 					>
-						{__('Send update notification', 'surecart')}
+						{__('Send notification', 'surecart')}
 					</ScSwitch>
 
 					<div

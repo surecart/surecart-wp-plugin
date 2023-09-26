@@ -138,7 +138,7 @@ export default ({ fulfillment, ...rest }) => {
 							setNotificationsEnabled(e.target.checked)
 						}
 					>
-						{__('Notify customer of status change', 'surecart')}
+						{__('Send notification', 'surecart')}
 					</ScCheckbox>
 				</ScMenu>
 			</ScDropdown>
