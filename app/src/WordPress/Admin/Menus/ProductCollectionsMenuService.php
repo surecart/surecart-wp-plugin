@@ -113,8 +113,16 @@ class ProductCollectionsMenuService {
 	 * @return array
 	 */
 	public function filterMenuBlockLinkHref( $content, $block_data ) {
-
-		if ( empty( $block_data['blockName'] ) || 'core/navigation-link' !== $block_data['blockName'] || empty( $block_data['attrs']['id'] ) || 'sc-collection' !== $block_data['kind'] ) {
+		// not a navigation link.
+		if ( empty( $block_data['blockName'] ) || 'core/navigation-link' !== $block_data['blockName'] ) {
+			return $content;
+		}
+		// don't have kind.
+		if ( empty( $block_data['attrs']['kind'] ) || 'sc-collection' !== $block_data['attrs']['kind'] ) {
+			return $content;
+		}
+		// don't have an id.
+		if ( empty( $block_data['attrs']['id'] ) ) {
 			return $content;
 		}
 
