@@ -152,7 +152,6 @@ export class ScSelectDropdown {
   /** Trigger focus on show */
   handleShow() {
     this.open = true;
-    this.scOpen.emit();
     setTimeout(() => {
       this.searchInput && this.searchInput.triggerFocus();
     }, 50);

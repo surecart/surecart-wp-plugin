@@ -1,43 +1,30 @@
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __experimentalUseInnerBlocksProps, useInnerBlocksProps as __stableUseInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
+import classnames from 'classnames';
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { getPresetStyles } from './utils';
+import { useInnerBlocksProps, useBlockProps } from '@wordpress/block-editor';
 
 export default function save({ attributes }) {
-	const useInnerBlocksProps = __stableUseInnerBlocksProps
-		? __stableUseInnerBlocksProps
-		: __experimentalUseInnerBlocksProps;
-
 	const {
 		isStackedOnMobile,
 		verticalAlignment,
 		isFullHeight,
 		isReversedOnMobile,
-		style,
 	} = attributes;
 
-	const blockProps = useBlockProps.save();
+	const className = classnames({
+		[`are-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
+		[`is-not-stacked-on-mobile`]: !isStackedOnMobile,
+		[`is-full-height`]: isFullHeight,
+		[`is-reversed-on-mobile`]: isReversedOnMobile,
+	});
+
+	const blockProps = useBlockProps.save({ className });
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
-	const presetStyles = getPresetStyles(style);
-
-	const innerBlocksPropsObj = {
-		...innerBlocksProps,
-		style: { ...innerBlocksProps?.style, ...presetStyles },
-	};
-
-	return (
-		<sc-columns
-			vertical-alignment={verticalAlignment}
-			is-stacked-on-mobile={isStackedOnMobile ? '1': null}
-			is-full-height={isFullHeight ? '1' : null}
-			is-reversed-on-mobile={isReversedOnMobile ? '1': null}
-			{...innerBlocksPropsObj}
-		/>
-	);
+	return <div {...innerBlocksProps} />;
 }

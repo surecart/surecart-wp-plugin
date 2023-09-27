@@ -48,14 +48,24 @@ class PermalinkSettingService {
 	protected $option_key = '';
 
 	/**
+	 * Last part of the permalink. This is used to generate the preview.
+	 *
+	 * @var string
+	 */
+	protected $sample_preview_text = '';
+
+	/**
 	 * Build the permalink setting.
+	 *
+	 * @param array $args The arguments.
 	 */
 	public function __construct( $args = [] ) {
-		$this->slug         = $args['slug'] ?? '';
-		$this->label        = $args['label'] ?? '';
-		$this->description  = $args['description'] ?? '';
-		$this->options      = $args['options'] ?? [];
-		$this->current_base = \SureCart::settings()->permalinks()->getBase( "{$this->slug}_page" );
+		$this->slug                = $args['slug'] ?? '';
+		$this->label               = $args['label'] ?? '';
+		$this->description         = $args['description'] ?? '';
+		$this->options             = $args['options'] ?? [];
+		$this->current_base        = \SureCart::settings()->permalinks()->getBase( "{$this->slug}_page" );
+		$this->sample_preview_text = $args['sample_preview_text'] ?? 'sample-product';
 	}
 
 	/**
@@ -96,7 +106,7 @@ class PermalinkSettingService {
 				<?php foreach ( $this->options as $permalink ) : ?>
 				<tr>
 					<th><label><input name="sc_<?php echo esc_attr( $this->slug ); ?>_permalink" type="radio" value="<?php echo esc_attr( $permalink['value'] ); ?>" class="sc-tog-<?php echo esc_attr( $this->slug ); ?>" <?php checked( $permalink['value'], $this->current_base ); ?> /> <?php echo esc_html( $permalink['label'] ); ?></label></th>
-					<td><code><?php echo esc_html( home_url() ); ?>/<?php echo esc_attr( $permalink['value'] ); ?>/sample-product/</code></td>
+					<td><code><?php echo esc_html( home_url() ); ?>/<?php echo esc_attr( $permalink['value'] ); ?>/<?php echo esc_attr( $this->sample_preview_text ); ?>/</code></td>
 				</tr>
 				<?php endforeach; ?>
 				<tr>
