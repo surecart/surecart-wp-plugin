@@ -35,14 +35,19 @@ export default ({ product, updateProduct }) => {
 	}, []);
 
 	useEffect(() => {
-		// removes all variant values, which label is empty and which has no name.
-		const updatedVariantOptions = (product?.variant_options || [])
+		// removes all variant option values, which label is empty and which has no name.
+		const variantOptions = (product?.variant_options || [])
 			.map((option) => {
 				return {
 					...option,
-					values: option?.values?.filter(
-						(value) => value?.label?.length > 0
-					),
+					values: option?.values
+						?.filter((value) => !!value?.label)
+						.map((value) => {
+							return {
+								...value,
+								...(!!value?.id ? {} : { id: value?.label }), // Append id by it's label to map variant with variant_option_id.
+							};
+						}),
 				};
 			})
 			.filter(
@@ -52,13 +57,25 @@ export default ({ product, updateProduct }) => {
 		// If first time server side loaded
 		// then no need to update product.variants.
 		if (!firstUpdate.current) {
-			const variantsData = generateVariants(
-				updatedVariantOptions,
-				product?.variants ?? []
-			);
+			// Append option_id to each variant to map variant with variant_option_id.
+			const previousVariants = product?.variants?.map((variant) => {
+				if (variant?.option_1 && !variant.option_1_id) {
+					variant.option_1_id = variant?.option_1;
+				}
+				if (variant?.option_2 && !variant.option_2_id) {
+					variant.option_2_id = variant?.option_2;
+				}
+				if (variant?.option_3 && !variant.option_3_id) {
+					variant.option_3_id = variant?.option_3;
+				}
+				return variant;
+			});
 
 			updateProduct({
-				variants: getExlcudedVariants(variantsData, deletedVariants),
+				variants: getExlcudedVariants(
+					generateVariants(variantOptions, previousVariants),
+					deletedVariants
+				),
 			});
 		}
 
