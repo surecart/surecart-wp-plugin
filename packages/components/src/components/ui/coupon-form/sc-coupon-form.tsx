@@ -61,6 +61,9 @@ export class ScCouponForm {
   /** The discount amount */
   @Prop() discountAmount: number;
 
+  /** Has recurring */
+  @Prop() hasRecurring: boolean;
+
   /** Is it open */
   @Prop({ mutable: true }) open: boolean;
 
@@ -102,15 +105,17 @@ export class ScCouponForm {
     }
   }
 
-  translateDuration() {
+  translateHumanDiscountWithDuration(humanDiscount) {
+    if(!this.hasRecurring) return humanDiscount;
+    
     const { duration, duration_in_months } = this.discount?.coupon;
 		switch (duration) {
 			case 'once':
-				return '';
+				return `${humanDiscount} ${__('once', 'surecart')}`;
 			case 'repeating':
-				return ` (${duration_in_months} ${__('Months', 'surecart')})`;
+				return `${humanDiscount} for ${duration_in_months} ${__('Months', 'surecart')}`;
 			default:
-				return ` (${__('Forever', 'surecart')})`;
+				return humanDiscount;
 		}
 	}
 
@@ -153,8 +158,7 @@ export class ScCouponForm {
 
           {humanDiscount && (
             <span class="coupon-human-discount" slot="price-description">
-              ({humanDiscount})
-              {this.translateDuration()}
+              {this.translateHumanDiscountWithDuration(humanDiscount)}
             </span>
           )}
 

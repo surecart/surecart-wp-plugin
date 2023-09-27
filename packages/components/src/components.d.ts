@@ -813,6 +813,10 @@ export namespace Components {
          */
         "forceOpen": boolean;
         /**
+          * Has recurring
+         */
+        "hasRecurring": boolean;
+        /**
           * The label for the coupon form
          */
         "label": string;
@@ -6391,6 +6395,10 @@ declare namespace LocalJSX {
           * Force the form to show
          */
         "forceOpen"?: boolean;
+        /**
+          * Has recurring
+         */
+        "hasRecurring"?: boolean;
         /**
           * The label for the coupon form
          */
