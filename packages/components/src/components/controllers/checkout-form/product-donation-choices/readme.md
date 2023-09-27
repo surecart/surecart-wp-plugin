@@ -7,20 +7,20 @@
 
 ## Properties
 
-| Property                  | Attribute                 | Description                     | Type       | Default     |
-| ------------------------- | ------------------------- | ------------------------------- | ---------- | ----------- |
-| `amountcolumns`           | `amountcolumns`           | The label for the field.        | `string`   | `undefined` |
-| `amountlabel`             | `amountlabel`             | The label for the field.        | `string`   | `undefined` |
-| `busy`                    | `busy`                    |                                 | `boolean`  | `undefined` |
-| `currencyCode`            | `currency-code`           | Currency code for the donation. | `string`   | `'usd'`     |
-| `lineItem`                | --                        | Order line items.               | `LineItem` | `undefined` |
-| `loading`                 | `loading`                 | Is this loading                 | `boolean`  | `undefined` |
-| `nonrecurringchoicelabel` | `nonrecurringchoicelabel` |                                 | `string`   | `undefined` |
-| `priceId`                 | `price-id`                | The price id for the fields.    | `string`   | `undefined` |
-| `product`                 | `product`                 | The product id for the fields.  | `string`   | `undefined` |
-| `recurringchoicelabel`    | `recurringchoicelabel`    |                                 | `string`   | `undefined` |
-| `recurringlabel`          | `recurringlabel`          | The label for the field.        | `string`   | `undefined` |
-| `selectedProduct`         | --                        |                                 | `Product`  | `undefined` |
+| Property                  | Attribute                    | Description                     | Type       | Default     |
+| ------------------------- | ---------------------------- | ------------------------------- | ---------- | ----------- |
+| `amountColumns`           | `amount-columns`             | The label for the field.        | `string`   | `undefined` |
+| `amountLabel`             | `amount-label`               | The label for the field.        | `string`   | `undefined` |
+| `busy`                    | `busy`                       |                                 | `boolean`  | `undefined` |
+| `currencyCode`            | `currency-code`              | Currency code for the donation. | `string`   | `'usd'`     |
+| `lineItem`                | --                           | Order line items.               | `LineItem` | `undefined` |
+| `loading`                 | `loading`                    | Is this loading                 | `boolean`  | `undefined` |
+| `nonRecurringChoiceLabel` | `non-recurring-choice-label` |                                 | `string`   | `undefined` |
+| `priceId`                 | `price-id`                   | The price id for the fields.    | `string`   | `undefined` |
+| `product`                 | `product`                    | The product id for the fields.  | `string`   | `undefined` |
+| `recurringChoiceLabel`    | `recurring-choice-label`     |                                 | `string`   | `undefined` |
+| `recurringLabel`          | `recurring-label`            | The label for the field.        | `string`   | `undefined` |
+| `selectedProduct`         | --                           |                                 | `Product`  | `undefined` |
 
 
 ## Events

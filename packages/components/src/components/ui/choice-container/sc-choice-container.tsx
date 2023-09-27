@@ -15,7 +15,6 @@ export class ScChoiceContainer {
   private formController: any;
 
   private input: HTMLInputElement;
-  private inputId: string = `choice-container-${++id}`;
   private labelId: string = `choice-container-label-${id}`;
 
   /** Does the choice have focus */
@@ -144,6 +143,13 @@ export class ScChoiceContainer {
 
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
+
+    const element = event.target as HTMLElement;
+
+    if (element.tagName === 'SC-PRICE-INPUT') {
+      return true;
+    }
+
     event.preventDefault();
     this.input.focus();
   }
@@ -186,7 +192,7 @@ export class ScChoiceContainer {
           onMouseDown={e => this.handleMouseDown(e)}
         >
           <slot name="header" />
-          <label class="choice__content" part="content" htmlFor={this.inputId}>
+          <label class="choice__content" part="content" htmlFor={this.labelId}>
             <span
               part="control"
               class={{
@@ -219,7 +225,6 @@ export class ScChoiceContainer {
                 )}
               </span>
               <input
-                id={this.inputId}
                 ref={el => (this.input = el as HTMLInputElement)}
                 type={this.type}
                 name={this.name}

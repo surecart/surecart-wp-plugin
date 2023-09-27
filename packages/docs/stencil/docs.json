@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-25T08:05:09",
+  "timestamp": "2023-09-27T11:05:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10411,10 +10411,10 @@
           "required": false
         },
         {
-          "name": "nonrecurringchoicelabel",
+          "name": "nonRecurringChoiceLabel",
           "type": "string",
           "mutable": false,
-          "attr": "nonrecurringchoicelabel",
+          "attr": "non-recurring-choice-label",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -10474,10 +10474,10 @@
           "required": false
         },
         {
-          "name": "recurringchoicelabel",
+          "name": "recurringChoiceLabel",
           "type": "string",
           "mutable": false,
-          "attr": "recurringchoicelabel",
+          "attr": "recurring-choice-label",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -24414,10 +24414,10 @@
       "usage": {},
       "props": [
         {
-          "name": "amountcolumns",
+          "name": "amountColumns",
           "type": "string",
           "mutable": false,
-          "attr": "amountcolumns",
+          "attr": "amount-columns",
           "reflectToAttr": false,
           "docs": "The label for the field.",
           "docsTags": [],
@@ -24430,10 +24430,10 @@
           "required": false
         },
         {
-          "name": "amountlabel",
+          "name": "amountLabel",
           "type": "string",
           "mutable": false,
-          "attr": "amountlabel",
+          "attr": "amount-label",
           "reflectToAttr": false,
           "docs": "The label for the field.",
           "docsTags": [],
@@ -24510,10 +24510,10 @@
           "required": false
         },
         {
-          "name": "nonrecurringchoicelabel",
+          "name": "nonRecurringChoiceLabel",
           "type": "string",
           "mutable": false,
-          "attr": "nonrecurringchoicelabel",
+          "attr": "non-recurring-choice-label",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -24558,10 +24558,10 @@
           "required": false
         },
         {
-          "name": "recurringchoicelabel",
+          "name": "recurringChoiceLabel",
           "type": "string",
           "mutable": false,
-          "attr": "recurringchoicelabel",
+          "attr": "recurring-choice-label",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
@@ -24574,10 +24574,10 @@
           "required": false
         },
         {
-          "name": "recurringlabel",
+          "name": "recurringLabel",
           "type": "string",
           "mutable": false,
-          "attr": "recurringlabel",
+          "attr": "recurring-label",
           "reflectToAttr": false,
           "docs": "The label for the field.",
           "docsTags": [],

@@ -7,17 +7,17 @@
 
 ## Properties
 
-| Property                  | Attribute                 | Description                    | Type      | Default     |
-| ------------------------- | ------------------------- | ------------------------------ | --------- | ----------- |
-| `busy`                    | `busy`                    |                                | `boolean` | `undefined` |
-| `label`                   | `label`                   | The label for the field.       | `string`  | `undefined` |
-| `loading`                 | `loading`                 | Is this loading                | `boolean` | `undefined` |
-| `nonrecurringchoicelabel` | `nonrecurringchoicelabel` |                                | `string`  | `undefined` |
-| `priceId`                 | `price-id`                | The price id for the fields.   | `string`  | `undefined` |
-| `prices`                  | --                        |                                | `Price[]` | `undefined` |
-| `product`                 | `product`                 | The product id for the fields. | `string`  | `undefined` |
-| `recurringchoicelabel`    | `recurringchoicelabel`    |                                | `string`  | `undefined` |
-| `selectedProduct`         | --                        |                                | `Product` | `undefined` |
+| Property                  | Attribute                    | Description                    | Type      | Default     |
+| ------------------------- | ---------------------------- | ------------------------------ | --------- | ----------- |
+| `busy`                    | `busy`                       |                                | `boolean` | `undefined` |
+| `label`                   | `label`                      | The label for the field.       | `string`  | `undefined` |
+| `loading`                 | `loading`                    | Is this loading                | `boolean` | `undefined` |
+| `nonRecurringChoiceLabel` | `non-recurring-choice-label` |                                | `string`  | `undefined` |
+| `priceId`                 | `price-id`                   | The price id for the fields.   | `string`  | `undefined` |
+| `prices`                  | --                           |                                | `Price[]` | `undefined` |
+| `product`                 | `product`                    | The product id for the fields. | `string`  | `undefined` |
+| `recurringChoiceLabel`    | `recurring-choice-label`     |                                | `string`  | `undefined` |
+| `selectedProduct`         | --                           |                                | `Product` | `undefined` |
 
 
 ## Events
