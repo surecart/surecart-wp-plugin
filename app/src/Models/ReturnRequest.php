@@ -3,11 +3,14 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Model;
+use SureCart\Models\Traits\HasOrder;
 
 /**
  * ReturnRequest model.
  */
 class ReturnRequest extends Model {
+	use HasOrder;
+
 	/**
 	 * Rest API endpoint
 	 */
