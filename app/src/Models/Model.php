@@ -118,7 +118,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Cache status for the request.
 	 *
-	 * @param string|null;
+	 * @var string|null;
 	 */
 	protected $cache_status = null;
 
@@ -836,7 +836,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			$this->fill( $attributes );
 		}
 
-		// add created by WordPress param
+		// add created by WordPress param.
 		$user_id = get_current_user_id();
 		if ( $user_id ) {
 			$this->addToMetaData( 'wp_created_by', $user_id );
@@ -923,9 +923,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Delete the model.
 	 *
+	 * @param string $id The id of the model to delete.
 	 * @return $this|false
 	 */
-	protected function delete( $id = 0 ) {
+	protected function delete( $id = '' ) {
 		$id = $id ? $id : $this->id;
 
 		if ( $this->fireModelEvent( 'deleting' ) === false ) {
@@ -956,9 +957,9 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Set a model relation.
 	 *
-	 * @prop string $attribute Attribute name.
-	 * @prop string $value     Value to set.
-	 * @prop string $model   Model name.
+	 * @param string $attribute Attribute name.
+	 * @param string $value     Value to set.
+	 * @param string $model   Model name.
 	 * @return void
 	 */
 	public function setRelation( $attribute, $value, $model ) {
@@ -970,9 +971,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Get a relation id.
 	 *
-	 * @prop string $attribute Attribute name.
-	 * @prop string $value     Value to set.
-	 * @prop string $model   Model name.
+	 * @param string $attribute Attribute name.
 	 * @return string|null;
 	 */
 	public function getRelationId( $attribute ) {
@@ -983,9 +982,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	/**
 	 * Set a model collection.
 	 *
-	 * @prop string $attribute Attribute name.
-	 * @prop string $value     Value to set.
-	 * @prop string $model   Model name.
+	 * @param string                      $attribute Attribute name.
+	 * @param \SureCart\Models\Collection $collection Collection.
+	 * @param string                      $model   Model name.
+	 *
 	 * @return void
 	 */
 	public function setCollection( $attribute, $collection, $model ) {
@@ -1182,8 +1182,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @param  mixed $offset Name.
 	 * @return bool
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetExists( $offset ) {
+	public function offsetExists( $offset ): bool {
 		return ! is_null( $this->getAttribute( $offset ) );
 	}
 
@@ -1205,8 +1204,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @param  mixed $value Value.
 	 * @return void
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetSet( $offset, $value ) {
+	public function offsetSet( $offset, $value ): void {
 		$this->setAttribute( $offset, $value );
 	}
 
@@ -1216,8 +1214,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( $offset ) : void {
 		unset( $this->attributes[ $offset ], $this->relations[ $offset ] );
 	}
 

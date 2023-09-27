@@ -103,7 +103,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to read return request, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_orders' );
 	}
 
 	/**
@@ -113,7 +113,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to read return request, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_orders' );
 	}
 
 	/**
@@ -123,7 +123,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to create return request, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'publish_sc_orders' );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to update return request, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_orders' );
 	}
 
 	/**
@@ -143,7 +143,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to delete return request, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'delete_sc_orders' );
 	}
 
 	/**
@@ -153,7 +153,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to open return request, WP_Error object otherwise.
 	 */
 	public function open_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_orders' );
 	}
 
 	/**
@@ -163,6 +163,7 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 * @return true|\WP_Error True if the request has access to complete return request, WP_Error object otherwise.
 	 */
 	public function complete_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_orders' );
+
 	}
 }

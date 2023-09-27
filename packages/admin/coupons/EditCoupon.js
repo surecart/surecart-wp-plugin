@@ -23,7 +23,6 @@ import Logo from '../templates/Logo';
 import Template from '../templates/UpdateModel';
 import Codes from './modules/Codes';
 import Limits from './modules/Limits';
-import Restrictions from './modules/Restrictions';
 
 // modules
 import Name from './modules/Name';
@@ -41,8 +40,7 @@ export default ({ id }) => {
 	const [error, setError] = useState(null);
 	const [modal, setModal] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEntityRecord, editEntityRecord, deleteEntityRecord } =
-		useDispatch(coreStore);
+	const { editEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 
 	const { coupon, isLoading, isDeleting, deleteError, saveError, loadError } =
 		useSelect((select) => {

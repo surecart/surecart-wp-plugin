@@ -49,7 +49,7 @@ class ProductSiteMapServiceTest extends SureCartUnitTestCase {
 		]);
 
 		$list = $service->get_url_list(1, '');
-		$this->assertContains('products/test', $list[0]['loc']);
-		$this->assertContains('products/test2', $list[1]['loc']);
+		$this->assertContains('sc_product_page_id=test', $list[0]['loc']);
+		$this->assertContains('sc_product_page_id=test2', $list[1]['loc']);
 	}
 }

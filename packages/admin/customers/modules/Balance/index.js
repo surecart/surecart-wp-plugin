@@ -23,10 +23,7 @@ export default ({ customer, loading }) => {
 						{__('Adjust Balance', 'surecart')}
 					</ScButton> */}
 
-						<ScButton
-							size="small"
-							onClick={() => setShowTransactions(true)}
-						>
+						<ScButton onClick={() => setShowTransactions(true)}>
 							<ScIcon name="inbox" slot="prefix" />
 							{__('View Transactions', 'surecart')}
 						</ScButton>
