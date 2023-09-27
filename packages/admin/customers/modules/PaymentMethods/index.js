@@ -21,6 +21,7 @@ export default ({ customerId }) => {
 						'bank_account',
 					],
 					customer_ids: [customerId],
+					reusable: true,
 				},
 			];
 			return {

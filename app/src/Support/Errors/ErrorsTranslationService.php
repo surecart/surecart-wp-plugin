@@ -2,6 +2,8 @@
 
 namespace SureCart\Support\Errors;
 
+use SureCart\Support\Currency;
+
 /**
  * Handles error translations from the API.
  */
@@ -74,6 +76,10 @@ class ErrorsTranslationService {
 			}
 
 			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
+		}
+
+		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type ) {
+			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ?? 'usd' ) );
 		}
 
 		return false;

@@ -14,11 +14,10 @@
 
 ## Events
 
-| Event                | Description             | Type                                                                                          |
-| -------------------- | ----------------------- | --------------------------------------------------------------------------------------------- |
-| `scError`            | Error event             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `scSetState`         | Set the state           | `CustomEvent<"busy" \| "idle" \| "loading" \| "navigating">`                                  |
-| `scUpdateOrderState` | Update line items event | `CustomEvent<Checkout>`                                                                       |
+| Event                | Description             | Type                                                         |
+| -------------------- | ----------------------- | ------------------------------------------------------------ |
+| `scSetState`         | Set the state           | `CustomEvent<"busy" \| "idle" \| "loading" \| "navigating">` |
+| `scUpdateOrderState` | Update line items event | `CustomEvent<Checkout>`                                      |
 
 
 ## Dependencies

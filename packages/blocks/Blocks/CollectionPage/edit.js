@@ -120,7 +120,7 @@ export default ({ clientId }) => {
 		// Select the Navigation block to reveal the changes.
 		selectBlock(parentClientId);
 	};
-	
+
 	return (
 		<>
 			{(!collectionPage || loadingPage) && (

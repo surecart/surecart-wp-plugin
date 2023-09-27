@@ -10,17 +10,12 @@ import { createBlock } from '@wordpress/blocks';
  *
  * @return {Array} A nested array of navigation link blocks.
  */
-export function createNavigationLink( {id, name, permalink } ) {
-	return createBlock(
-		'core/navigation-link',
-		{
-			id,
-			label: name,
-			url: permalink,
-			page: 'page',
-			kind: 'post-type',
-		}
-	);
+export function createNavigationLink({ id, name, permalink }) {
+	return createBlock('core/navigation-link', {
+		id,
+		label: name,
+		url: permalink,
+		page: 'page',
+		kind: 'sc-collection',
+	});
 }
-
-

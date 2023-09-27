@@ -46,7 +46,7 @@ export const submitCartForm = async () => {
   }
 };
 
-export const getProductBuyLink = url => {
+export const getProductBuyLink = (url, query = {}) => {
   if (!state.selectedPrice?.id) return;
   if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
 
@@ -58,6 +58,6 @@ export const getProductBuyLink = url => {
         ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
     ],
-    no_cart: true,
+    ...query,
   });
 };

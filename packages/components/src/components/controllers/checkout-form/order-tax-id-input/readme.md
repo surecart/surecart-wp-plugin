@@ -25,7 +25,6 @@
 
 | Event           | Description                         | Type                                                                         |
 | --------------- | ----------------------------------- | ---------------------------------------------------------------------------- |
-| `scError`       | Error event                         | `CustomEvent<ResponseError>`                                                 |
 | `scUpdateOrder` | Make a request to update the order. | `CustomEvent<{ data: Partial<Checkout>; options?: { silent?: boolean; }; }>` |
 
 

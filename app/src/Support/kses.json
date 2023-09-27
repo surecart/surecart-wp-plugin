@@ -290,8 +290,6 @@
     "slot": true
   },
   "sc-checkout-form-errors": {
-    "checkout-state": true,
-    "error": true,
     "style": true,
     "id": true,
     "class": true,
@@ -740,7 +738,6 @@
     "slot": true
   },
   "sc-form-error-provider": {
-    "checkout-state": true,
     "style": true,
     "id": true,
     "class": true,
