@@ -123,9 +123,16 @@ export class ScCouponForm {
               type="success"
               class="coupon-tag"
               clearable
+              tabindex="0"
               onScClear={() => {
                 this.scApplyCoupon.emit(null);
                 this.open = false;
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  this.scApplyCoupon.emit(null);
+                  this.open = false;
+                }
               }}
             >
               {this?.discount?.promotion?.code}
@@ -164,6 +171,16 @@ export class ScCouponForm {
             }
             this.open = true;
           }}
+          onKeyDown={e => {
+            if (e.key !== 'Enter') {
+              return true;
+            }
+            if (this.open) {
+              return;
+            }
+            this.open = true;
+          }}
+          tabindex="0"
         >
           <slot name="label">{this.label}</slot>
         </div>

@@ -156,7 +156,22 @@ export class ScProductLineItem {
             )}
           </div>
           <div class="item__suffix" part="suffix">
-            {this.removable ? <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
+            {this.removable ? (
+              <sc-icon
+                exportparts="base:remove-icon__base"
+                class="item__remove"
+                name="x"
+                onClick={() => this.scRemove.emit()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    this.scRemove.emit();
+                  }
+                }}
+                tabindex="0"
+              ></sc-icon>
+            ) : (
+              <div></div>
+            )}
             {this.renderPriceAndInterval()}
           </div>
         </div>

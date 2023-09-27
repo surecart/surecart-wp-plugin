@@ -64,7 +64,6 @@ return [
 		\SureCart\Rest\CancellationActRestServiceProvider::class,
 		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
-		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\ProcessorRestServiceProvider::class,
 		\SureCart\Rest\ManualPaymentMethodsRestServiceProvider::class,
