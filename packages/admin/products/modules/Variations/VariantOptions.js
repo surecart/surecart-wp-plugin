@@ -21,18 +21,19 @@ export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
 	const firstUpdate = useRef(true);
 	const [deletedVariants, setDeletedVariants] = useState([]);
+	const previousOptions = useRef(product?.variant_options ?? []);
 
 	// For first time load, get the diffing variants and save to local storage.
-	useEffect(() => {
-		const variantsData =
-			generateVariants(product?.variant_options ?? [], []) ?? [];
+	// useEffect(() => {
+	// 	const variantsData =
+	// 		generateVariants(product?.variant_options ?? [], []) ?? [];
 
-		const diffingVariants = getDiffingVariants(
-			variantsData,
-			product?.variants ?? []
-		);
-		setDeletedVariants(diffingVariants);
-	}, []);
+	// 	const diffingVariants = getDiffingVariants(
+	// 		variantsData,
+	// 		product?.variants ?? []
+	// 	);
+	// 	setDeletedVariants(diffingVariants);
+	// }, []);
 
 	useEffect(() => {
 		// removes all variant option values, which label is empty and which has no name.
@@ -59,27 +60,20 @@ export default ({ product, updateProduct }) => {
 		if (!firstUpdate.current) {
 			// Append option_id to each variant to map variant with variant_option_id.
 			const previousVariants = product?.variants?.map((variant) => {
-				if (variant?.option_1 && !variant.option_1_id) {
-					variant.option_1_id = variant?.option_1;
-				}
-				if (variant?.option_2 && !variant.option_2_id) {
-					variant.option_2_id = variant?.option_2;
-				}
-				if (variant?.option_3 && !variant.option_3_id) {
-					variant.option_3_id = variant?.option_3;
-				}
 				return variant;
 			});
 
 			updateProduct({
-				variants: getExlcudedVariants(
-					generateVariants(variantOptions, previousVariants),
-					deletedVariants
+				variants: generateVariants(
+					variantOptions,
+					previousOptions.current,
+					previousVariants
 				),
 			});
 		}
 
 		// we have updated.
+		previousOptions.current = product?.variant_options;
 		firstUpdate.current = false;
 	}, [product?.variant_options]);
 
