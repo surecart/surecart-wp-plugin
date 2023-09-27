@@ -91,11 +91,11 @@ export class ScPriceInput {
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scChange: EventEmitter<void>;
+  scChange: EventEmitter<string>;
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scInput: EventEmitter<string>;
+  scInput: EventEmitter<void>;
 
   /** Emitted when the control gains focus. */
   @Event() scFocus: EventEmitter<void>;
@@ -143,11 +143,12 @@ export class ScPriceInput {
 
   handleChange() {
     this.updateValue();
+    this.scChange.emit(this.value);
   }
 
   handleInput() {
     this.updateValue();
-    this.scInput.emit(this.value);
+    this.scInput.emit();
   }
 
   updateValue() {

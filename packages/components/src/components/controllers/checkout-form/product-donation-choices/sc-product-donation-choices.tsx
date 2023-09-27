@@ -79,7 +79,7 @@ export class ScProductDonationChoice {
       this.update({ line_items: lineItems });
     }
   }
-  @Listen('scInput')
+  @Listen('scChange')
   handleCustomAmountChange(e) {
     if (e?.detail) {
       this.customValue = e?.detail;
