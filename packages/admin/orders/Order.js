@@ -110,12 +110,12 @@ export default () => {
 		[id]
 	);
 
-	const { return_request, return_request_loading } = useSelect(
+	const { returnRequest, returnRequestLoading } = useSelect(
 		(select) => {
 			if (!order?.id) {
 				return {
-					return_request: null,
-					return_request_loading: false,
+					returnRequest: null,
+					returnRequestLoading: false,
 				};
 			}
 
@@ -133,10 +133,10 @@ export default () => {
 				},
 			];
 			return {
-				return_request: select(coreStore).getEntityRecords(
+				returnRequest: select(coreStore).getEntityRecords(
 					...queryArgs
 				)?.[0],
-				return_request_loading: select(coreStore).isResolving(
+				returnRequestLoading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
 				),
@@ -176,7 +176,7 @@ export default () => {
 
 		// If there are fulfilled items and not already returned,
 		// then enable the Return action.
-		if ((fulfilledItems || []).length && !return_request?.id) {
+		if ((fulfilledItems || []).length && !returnRequest?.id) {
 			menuItems.push({
 				title: __('Return', 'surecart'),
 				modal: 'return_request',
@@ -261,11 +261,11 @@ export default () => {
 					order={order}
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
-					return_request={return_request}
+					returnRequest={returnRequest}
 				/>
 				<ReturnItems
-					loading={return_request_loading}
-					returnRequest={return_request}
+					loading={returnRequestLoading}
+					returnRequest={returnRequest}
 					checkout={order?.checkout}
 					onCreateSuccess={manuallyRefetchOrder}
 					onChangeRequestStatus={manuallyRefetchOrder}
@@ -303,7 +303,7 @@ export default () => {
 					loading={!hasLoadedOrder}
 				/>
 				<CreateReturnRequest
-					items={fulfilledItems}
+					fulfillmentItems={fulfilledItems}
 					orderId={order?.id}
 					checkout={order?.checkout}
 					open={modal === 'return_request'}

@@ -12,7 +12,7 @@ import {
 	ScOrderReturnBadge,
 } from '@surecart/components-react';
 
-export default ({ order, checkout, loading, return_request }) => {
+export default ({ order, checkout, loading, returnRequest }) => {
 	if (loading) {
 		return (
 			<div
@@ -58,15 +58,12 @@ export default ({ order, checkout, loading, return_request }) => {
 						pill
 					/>
 
-					{
-						// If there is a return request, show the return status.
-						return_request?.id && (
-							<ScOrderReturnBadge
-								status={return_request?.status}
-								pill
-							/>
-						)
-					}
+					{returnRequest?.id && (
+						<ScOrderReturnBadge
+							status={returnRequest?.status}
+							pill
+						/>
+					)}
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),
