@@ -70,6 +70,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-groups/index.js'
 		),
+		['admin/product-collections']: path.resolve(
+			__dirname,
+			'packages/admin/product-collections/index.js'
+		),
 		['admin/bumps']: path.resolve(
 			__dirname,
 			'packages/admin/bumps/index.js'
@@ -89,6 +93,10 @@ module.exports = {
 		['admin/cancellation-insights']: path.resolve(
 			__dirname,
 			'packages/admin/cancellation-insights/index.js'
+		),
+		['admin/subscription-insights']: path.resolve(
+			__dirname,
+			'packages/admin/subscription-insights/index.js'
 		),
 
 		/**
@@ -189,6 +197,14 @@ module.exports = {
 		['templates/customer-dashboard']: path.resolve(
 			__dirname,
 			'packages/pages/customer-dashboard/index.js'
+		),
+
+		/**
+		 * Styles.
+		 */
+		['styles/webhook-notice']: path.resolve(
+			__dirname,
+			'packages/admin/styles/webhook-notice.js'
 		),
 	},
 	output: {

@@ -1,6 +1,7 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { __ } from '@wordpress/i18n';
+import { onChange } from '@store/product';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 
 @Component({
@@ -29,11 +30,24 @@ export class ScProductBuyButton {
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      return window.location.assign(getProductBuyLink(checkoutUrl));
+      return window.location.assign(getProductBuyLink(checkoutUrl, { no_cart: !this.addToCart }));
     }
 
     // submit the cart form.
     submitCartForm();
+  }
+
+  private link: HTMLAnchorElement;
+  componentDidLoad() {
+    this.link = this.el.querySelector('a');
+    this.updateProductLink();
+    onChange('selectedPrice', () => this.updateProductLink());
+  }
+
+  updateProductLink() {
+    const checkoutUrl = window?.scData?.pages?.checkout;
+    if (!checkoutUrl || !this.link) return;
+    this.link.href = getProductBuyLink(checkoutUrl, !this.addToCart ? { no_cart: true } : {});
   }
 
   render() {

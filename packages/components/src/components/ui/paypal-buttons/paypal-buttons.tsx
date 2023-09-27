@@ -7,6 +7,7 @@ import { hasSubscription } from '../../../functions/line-items';
 import { fetchCheckout } from '../../../services/session';
 import { Checkout, PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from './functions';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-paypal-buttons',
@@ -52,9 +53,6 @@ export class ScPaypalButtons {
 
   /** Has this loaded? */
   @State() loaded: boolean;
-
-  /** Emit an error */
-  @Event() scError: EventEmitter<object>;
 
   /** Set the state machine */
   @Event() scSetState: EventEmitter<string>;
@@ -126,7 +124,7 @@ export class ScPaypalButtons {
           this.order = (await fetchCheckout({ id: this.order?.id })) as Checkout;
         } catch (e) {
           console.error(e);
-          this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
+          createErrorNotice({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
           this.scSetState.emit('REJECT');
         }
 
@@ -140,12 +138,12 @@ export class ScPaypalButtons {
             this.scSetState.emit('PAID');
             this.scPaid.emit();
           } else {
-            this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
+            createErrorNotice({ code: 'could_not_capture', message: __('Payment processing failed. Kindly attempt the transaction once more.', 'surecart') });
             this.scSetState.emit('REJECT');
           }
         } catch (err) {
           console.error(err);
-          this.scError.emit({ code: 'could_not_capture', message: __('The payment did not process. Please try again.', 'surecart') });
+          createErrorNotice({ code: 'could_not_capture', message: __('Payment processing failed. Kindly attempt the transaction once more.', 'surecart') });
           this.scSetState.emit('REJECT');
         }
       },
@@ -156,7 +154,7 @@ export class ScPaypalButtons {
        */
       onError: err => {
         console.error(err);
-        this.scError.emit({ code: err?.code, message: err?.message });
+        createErrorNotice(err);
         this.scSetState.emit('REJECT');
       },
     };
@@ -186,7 +184,7 @@ export class ScPaypalButtons {
         }
 
         // we don't have the correct payment intent for some reason.
-        this.scError.emit({ code: 'missing_payment_intent', message: __('Something went wrong. Please contact us for payment.', 'surecart') });
+        createErrorNotice({ code: 'missing_payment_intent', message: __('Something went wrong. Please contact us for payment.', 'surecart') });
         return reject();
       });
     };
