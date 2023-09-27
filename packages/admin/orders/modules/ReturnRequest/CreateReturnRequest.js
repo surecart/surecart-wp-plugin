@@ -28,7 +28,7 @@ import ReturnReasonsSelector from './ReturnReasonsSelector';
 import { createErrorString } from '../../../util';
 
 export default ({
-	items: fulfillmentItems,
+	fulfillmentItems,
 	orderId,
 	open,
 	onRequestClose,
@@ -74,7 +74,6 @@ export default ({
 	};
 
 	const submit = async () => {
-		if (!orderId) return;
 		try {
 			setBusy(true);
 			await saveEntityRecord(
