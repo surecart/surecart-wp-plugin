@@ -39,18 +39,21 @@ export default ({ product, updateProduct }) => {
 			// set normalized variants.
 			normalized = normalizeVariants(product);
 			setNormalizedVariants(normalized);
-			// receive normalized variants.
-			receiveEntityRecords('surecart', 'product', {
-				...product,
-				variants: normalized,
-			});
+
+			// we need to delay this so that it happens after the product has already been received.
+			setTimeout(() => {
+				receiveEntityRecords('surecart', 'product', {
+					...product,
+					variants: normalized,
+				});
+			}, 0);
 		} else {
 			// We don't want to do this on first load since we only want want the server gives us back.
 			updateProduct({
 				variants: generateVariants(
 					product?.variant_options || [],
 					previousOptions.current,
-					normalized
+					product?.variants || []
 				),
 			});
 			// store the previous variant options for the next update.

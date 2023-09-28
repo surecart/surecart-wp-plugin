@@ -15,7 +15,6 @@ import { ScIcon, ScInput } from '@surecart/components-react';
 import { hasDuplicate } from './utils';
 
 export default memo(({ option, onChangeValue }) => {
-	console.log({ option });
 	const [values, setValues] = useState(
 		option?.values?.length > 0 ? option?.values ?? [] : ['']
 	);
