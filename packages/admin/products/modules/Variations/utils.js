@@ -3,21 +3,6 @@
  */
 import { __ } from '@wordpress/i18n';
 
-/** Fill in any missing deleted variants and set the status. */
-export const normalizeVariants = (product) =>
-	(
-		generateVariants(
-			product?.variant_options || [],
-			product?.variant_options || [],
-			product?.variants
-		) || []
-	).map((variant) => {
-		return {
-			...variant,
-			status: variant?.id ? 'active' : 'deleted', // if the id is not present, it has been deleted.
-		};
-	});
-
 /**
  * Generate Variants based on options.
  */
@@ -104,13 +89,31 @@ export const generateValueCombinations = (options = []) =>
 			  );
 	}, []);
 
+/** Fill in any missing deleted variants and set the status. */
+export const normalizeVariants = (product) =>
+	(
+		generateVariants(
+			product?.variant_options || [],
+			product?.variant_options || [],
+			product?.variants
+		) || []
+	).map((variant) => {
+		return {
+			...variant,
+			status: variant?.id ? 'active' : 'deleted', // if the id is not present, it has been deleted.
+		};
+	});
+
 /**
  * Does this have any duplicate option.[key].
  */
-export const hasDuplicate = (options = [], key) => {
+export const hasDuplicate = (options = [], key = false) => {
 	const optionData = [...options];
 	return optionData.some((option, index) => {
 		return optionData.some((option2, index2) => {
+			if (!key) {
+				return option === option2 && index !== index2;
+			}
 			return option?.[key] === option2?.[key] && index !== index2;
 		});
 	});
