@@ -31,12 +31,12 @@ export default ({ product, updateProduct, loading }) => {
 	);
 
 	/**
-	 * Update a variant by index.
+	 * Update a variant by position.
 	 */
-	const updateVariant = (data, variantIndex) => {
+	const updateVariant = (data, position) => {
 		updateProduct({
-			variants: product?.variants.map((item, index) =>
-				index !== variantIndex ? item : { ...item, ...data }
+			variants: product?.variants.map((item) =>
+				item?.position !== position ? item : { ...item, ...data }
 			),
 		});
 	};
@@ -71,18 +71,21 @@ export default ({ product, updateProduct, loading }) => {
 					label: __('', 'surecart'),
 				},
 			}}
-			items={(product?.variants ?? []).map((variant, index) => {
-				return VariantItem({
-					variant: {
-						...variant,
-						index,
-					},
-					updateVariant: (updates) => updateVariant(updates, index),
-					product,
-					updateProduct,
-					prices,
-				});
-			})}
+			items={(product?.variants ?? [])
+				.filter((variant) => 'deleted' !== variant?.status)
+				.map((variant, index) => {
+					return VariantItem({
+						variant: {
+							...variant,
+							index,
+						},
+						updateVariant: (updates) =>
+							updateVariant(updates, variant?.position),
+						product,
+						updateProduct,
+						prices,
+					});
+				})}
 		/>
 	);
 };
