@@ -96,7 +96,10 @@ export default ({ product, updateProduct }) => {
 				product?.variant_options ?? [],
 				oldIndex,
 				newIndex
-			),
+			).map((option, index) => ({
+				...option,
+				position: index, // make sure to map position.
+			})),
 		});
 	};
 

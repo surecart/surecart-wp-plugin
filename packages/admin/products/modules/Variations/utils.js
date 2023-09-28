@@ -11,11 +11,15 @@ export const generateVariants = (
 	previousOptions,
 	previousVariants = []
 ) => {
+	// initialize position.
+	let position = 0;
+	// generate variants based on options.
 	const variants = [];
 	// Generate all possible combinations of options
 	const optionCombinations = generateValueCombinations(variantOptions);
 	// Generate all possible combinations of options
 	const previousCombinations = generateValueCombinations(previousOptions);
+
 	// Handle new addition or subtraction - we will use the new option combinations since values have not changed.
 	const combinations =
 		optionCombinations.length !== previousCombinations.length
@@ -54,7 +58,7 @@ export const generateVariants = (
 			);
 		}
 
-		const newVariant = { ...(variant || {}) };
+		const newVariant = { ...(variant || {}), position: position++ };
 		previousOptions.forEach((_, index) => {
 			newVariant[`option_${index + 1}`] = combination[index] || null;
 		});
