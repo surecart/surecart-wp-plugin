@@ -13,7 +13,7 @@ exports[`sc-coupon-form handles applied coupons 1`] = `
         </sc-tag>
       </span>
       <span class="coupon-human-discount" slot="price-description">
-        (25% off) (Forever)
+        25% off
       </span>
       <span slot="price">
         <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
