@@ -35,7 +35,7 @@ export class ScCustomDonationAmount {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      createErrorNotice(e);
+      createErrorNotice(e, {dismissible: true});
       throw e;
     }
   }
