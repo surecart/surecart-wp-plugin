@@ -211,6 +211,7 @@ export default ({
 							css={css`
 								display: flex;
 								gap: 0.5em;
+								flex-wrap: wrap;
 							`}
 						>
 							{(option?.values || [])

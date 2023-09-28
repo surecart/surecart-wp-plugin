@@ -45,6 +45,8 @@ export default ({ product, updateProduct, loading }) => {
 		<DataTable
 			css={css`
 				border-top: 1px solid var(--sc-color-gray-200);
+				content-visibility: auto;
+				contain-intrinsic-size: 1000px; /* Explained in the next section. */
 			`}
 			title={__('', 'surecart')}
 			loading={loading}

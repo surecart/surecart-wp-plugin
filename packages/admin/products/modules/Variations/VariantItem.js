@@ -124,6 +124,9 @@ export default ({ variant, updateVariant, prices }) => {
 								: ''
 						}
 						currency={currency}
+						css={css`
+							min-width: 100px;
+						`}
 						disabled={status === 'draft'}
 						onScInput={(e) =>
 							updateVariant({ amount: e.target.value })
@@ -197,6 +200,9 @@ export default ({ variant, updateVariant, prices }) => {
 		sku: (
 			<ScInput
 				value={sku}
+				css={css`
+					min-width: 100px;
+				`}
 				disabled={status === 'draft'}
 				onScInput={(e) => updateVariant({ sku: e.target.value })}
 			/>

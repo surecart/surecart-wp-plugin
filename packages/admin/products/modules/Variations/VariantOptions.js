@@ -40,13 +40,17 @@ export default ({ product, updateProduct }) => {
 			normalized = normalizeVariants(product);
 			setNormalizedVariants(normalized);
 
-			// we need to delay this so that it happens after the product has already been received.
+			receiveEntityRecords('surecart', 'product', {
+				...product,
+				variants: normalized,
+			});
+			// this is a hack to fix a race condition with receiving normalized variants.
 			setTimeout(() => {
 				receiveEntityRecords('surecart', 'product', {
 					...product,
 					variants: normalized,
 				});
-			}, 0);
+			}, 50);
 		} else {
 			// We don't want to do this on first load since we only want want the server gives us back.
 			updateProduct({
@@ -108,6 +112,7 @@ export default ({ product, updateProduct }) => {
 			css={css`
 				display: grid;
 				gap: 1rem;
+				content-visibility: auto;
 			`}
 		>
 			<Error error={error} setError={setError} />

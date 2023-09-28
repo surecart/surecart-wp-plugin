@@ -100,6 +100,7 @@ export default ({ product, updateProduct, onRequestClose }) => {
 								value={variant?.[`option_${index + 1}`] ?? ''}
 								label={option?.name}
 								required
+								tabindex="0"
 								onScInput={(e) =>
 									updateVariant({
 										[`option_${index + 1}`]: e.target.value,
