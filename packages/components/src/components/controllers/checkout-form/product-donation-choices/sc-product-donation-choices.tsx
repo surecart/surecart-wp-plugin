@@ -5,6 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
+import { createErrorNotice } from '@store/notices/mutations';
 @Component({
   tag: 'sc-product-donation-choices',
   styleUrl: 'sc-product-donation-choices.scss',
@@ -52,23 +53,37 @@ export class ScProductDonationChoice {
   /** Error */
   @State() error: string;
 
-  @State() customValue: string;
-
   /** Toggle line item event */
   @Event() scToggleLineItem: EventEmitter<LineItemData>;
 
   @Listen('scChange')
   handleChange() {
     let checked = Array.from(this.getChoices()).find((item) => {
-      const value = item?.value ? item?.value : this.customValue ? this.customValue : null;
-      return item.checked && this.isInRange(value)
+      return item.checked && item.parentElement.tagName === 'SC-CUSTOM-DONATION-AMOUNT';
     });
+   
+    if (checked) {
+      Array.from(this.getChoices()).forEach((item) => {
+        if (item !== checked) {
+          item.checked = false;
+        }
+      }
+      );
+    }
+
+    if (!checked) {
+      checked = Array.from(this.getChoices()).find((item) => {
+        const value = item?.value ? item?.value : null;
+        return item.checked && this.isInRange(value)
+      });
+    }
     
     if (!checked) {
       checked = Array.from(this.getChoices())?.find(item => this.isInRange(item.value));
       checked.checked = true;
     }
-    const value = checked?.value ? checked?.value : this.customValue ? this.customValue : null;
+     
+    const value = checked?.value ? checked?.value : null;
 
     if (!isNaN(parseInt(value)) && this.isInRange(value)) {
       let lineItems = [];
@@ -79,23 +94,13 @@ export class ScProductDonationChoice {
       this.update({ line_items: lineItems });
     }
   }
-  @Listen('scChange')
-  handleCustomAmountChange(e) {
-    if (e?.detail) {
-      this.customValue = e?.detail;
-    }
-  }
+
   @Watch('priceId')
   pricesChanged() {
     this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
     this.removeInvalidPrices();
   }
 
-  @Watch('customValue')
-  handleCustomAmount() {
-    if (!this.customValue) return;
-    this.handleChange();
-  }
    /** Update a session */
    async update(data: any = {}, query = {}) {
     try {
@@ -106,6 +111,7 @@ export class ScProductDonationChoice {
       })) as Checkout;
     } catch (e) {
       console.error(e);
+      createErrorNotice(e);
       throw e;
     }
   }
@@ -144,7 +150,7 @@ export class ScProductDonationChoice {
   }
 
   selectDefaultChoice() {
-    const choices = Array.from(this.getChoices());
+    const choices = Array.from(this.getChoices()); 
     if (!choices.length || !this.prices?.length) return;
     let checkoutPriceID = this.lineItem?.price?.id;
     let checkoutAmount = this.lineItem?.ad_hoc_amount;
@@ -159,7 +165,7 @@ export class ScProductDonationChoice {
   }
 
   getChoices() {
-    return (this.el.querySelectorAll('sc-choice-container') as NodeListOf<HTMLScChoiceElement>) || [];
+    return (this.el.querySelectorAll('sc-choice-container' || 'sc-custom-donation-amount sc-choice-container') as NodeListOf<HTMLScChoiceElement>) || [];
   }
 
   isInRange(value: string) {
@@ -174,7 +180,7 @@ export class ScProductDonationChoice {
     if (!this.selectedPrice) return;
 
     this.getChoices().forEach((el: HTMLScChoiceElement) => {
-      if ( !this.isInRange(el.value) ) {
+      if (!this.isInRange(el.value) && el.parentElement.tagName !== 'SC-CUSTOM-DONATION-AMOUNT') {
         el.style.display = 'none';
         el.disabled = true;
         return;

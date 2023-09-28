@@ -55,6 +55,7 @@
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-coupon-form](../coupon-form)
+ - [sc-custom-donation-amount](../../controllers/checkout-form/custom-donation-amount)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-dialog](../sc-dialog)
@@ -109,6 +110,7 @@ graph TD;
   sc-cart-form-submit --> sc-button
   sc-charges-list --> sc-button
   sc-coupon-form --> sc-button
+  sc-custom-donation-amount --> sc-button
   sc-customer-details --> sc-button
   sc-customer-edit --> sc-button
   sc-dialog --> sc-button

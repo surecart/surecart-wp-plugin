@@ -43,6 +43,7 @@
  - [sc-cart-icon](../sc-cart-icon)
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-custom-donation-amount](../../controllers/checkout-form/custom-donation-amount)
  - [sc-customer-details](../customer-details)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -96,6 +97,7 @@ graph TD;
   sc-cart-icon --> sc-icon
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
+  sc-custom-donation-amount --> sc-icon
   sc-customer-details --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon

@@ -20,3 +20,20 @@ sc-product-donation-choices .block-list-appender.wp-block {
 sc-product-donation-choices .block-list-appender.wp-block > .block-editor-inserter {
 	width: 100%;
 }
+
+sc-custom-donation-amount sc-choice-container sc-price-input sc-button {
+	--sc-button-default-background-color: var(--sc-color-primary-500);
+	--sc-button-default-color: white;
+}
+  
+sc-custom-donation-amount sc-choice-container sc-price-input sc-button {
+	margin: 5px;
+}
+
+sc-custom-donation-amount sc-choice-container sc-price-input::part(base) {
+	height: auto;
+}
+
+sc-custom-donation-amount sc-choice-container sc-price-input:part(suffix) {
+	--sc-input-spacing-medium: 5px;
+}

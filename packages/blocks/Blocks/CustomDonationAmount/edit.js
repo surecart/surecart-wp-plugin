@@ -3,6 +3,7 @@ import {
 	ScChoiceContainer,
 	ScFormatNumber,
 	ScPriceInput,
+	ScCustomDonationAmount
 } from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
@@ -22,20 +23,9 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<div {...blockProps}>
-			<ScChoiceContainer 
-				showControl={false} 
-				size="small"
-				css={css`
-					width: 100%;
-				`}
-			>
-				<ScPriceInput
-					currencyCode={currency}
-					size="small"
-					showCode={false}
-					showLabel={false}
-				/>
-			</ScChoiceContainer>
+			<ScCustomDonationAmount 
+				currencyCode={currency}
+			/>
 		</div>
 	);
 };

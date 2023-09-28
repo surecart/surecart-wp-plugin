@@ -423,6 +423,14 @@
     "class": true,
     "slot": true
   },
+  "sc-custom-donation-amount": {
+    "currency-code": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-custom-order-price-input": {
     "busy": true,
     "help": true,

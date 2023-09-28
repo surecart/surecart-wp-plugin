@@ -37,9 +37,9 @@
 | Event      | Description                               | Type                  |
 | ---------- | ----------------------------------------- | --------------------- |
 | `scBlur`   | Emitted when the control loses focus.     | `CustomEvent<void>`   |
-| `scChange` | Emitted when the control's value changes. | `CustomEvent<void>`   |
+| `scChange` | Emitted when the control's value changes. | `CustomEvent<string>` |
 | `scFocus`  | Emitted when the control gains focus.     | `CustomEvent<void>`   |
-| `scInput`  | Emitted when the control's value changes. | `CustomEvent<string>` |
+| `scInput`  | Emitted when the control's value changes. | `CustomEvent<void>`   |
 
 
 ## Methods
@@ -100,6 +100,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [sc-custom-donation-amount](../../controllers/checkout-form/custom-donation-amount)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
@@ -116,6 +117,7 @@ graph TD;
   sc-price-input --> sc-input
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
+  sc-custom-donation-amount --> sc-price-input
   sc-custom-order-price-input --> sc-price-input
   sc-donation-choices --> sc-price-input
   sc-product-price-modal --> sc-price-input

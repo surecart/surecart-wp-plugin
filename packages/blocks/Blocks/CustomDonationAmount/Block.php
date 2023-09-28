@@ -20,14 +20,10 @@ class Block extends BaseBlock {
         $currency = $attributes['currency'] ?? 'USD';
 
         ob_start(); ?>
-            <sc-choice-container show-control="false">
-                <sc-price-input
-                    currencyCode="<?php echo esc_attr( $currency ); ?>"
-                    size="small"
-                    showCode="false"
-                    showLabel="false"
-                ></sc-price-input>
-            </sc-choice-container>
+            <sc-custom-donation-amount
+                currencyCode="<?php echo esc_attr( $currency ); ?>"
+            >
+            </sc-custom-donation-amount>
         <?php
 		return ob_get_clean();
 	}

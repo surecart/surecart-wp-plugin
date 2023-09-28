@@ -47,6 +47,7 @@ export const ScCompactAddress = /*@__PURE__*/createReactComponent<JSX.ScCompactA
 export const ScConditionalForm = /*@__PURE__*/createReactComponent<JSX.ScConditionalForm, HTMLScConditionalFormElement>('sc-conditional-form');
 export const ScConsumer = /*@__PURE__*/createReactComponent<JSX.ScConsumer, HTMLScConsumerElement>('sc-consumer');
 export const ScCouponForm = /*@__PURE__*/createReactComponent<JSX.ScCouponForm, HTMLScCouponFormElement>('sc-coupon-form');
+export const ScCustomDonationAmount = /*@__PURE__*/createReactComponent<JSX.ScCustomDonationAmount, HTMLScCustomDonationAmountElement>('sc-custom-donation-amount');
 export const ScCustomOrderPriceInput = /*@__PURE__*/createReactComponent<JSX.ScCustomOrderPriceInput, HTMLScCustomOrderPriceInputElement>('sc-custom-order-price-input');
 export const ScCustomerDetails = /*@__PURE__*/createReactComponent<JSX.ScCustomerDetails, HTMLScCustomerDetailsElement>('sc-customer-details');
 export const ScCustomerEdit = /*@__PURE__*/createReactComponent<JSX.ScCustomerEdit, HTMLScCustomerEditElement>('sc-customer-edit');

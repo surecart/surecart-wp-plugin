@@ -829,6 +829,13 @@ export namespace Components {
          */
         "placeholder": string;
     }
+    interface ScCustomDonationAmount {
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode": string;
+        "value": string;
+    }
     interface ScCustomOrderPriceInput {
         /**
           * Is this busy
@@ -4483,6 +4490,12 @@ declare global {
         prototype: HTMLScCouponFormElement;
         new (): HTMLScCouponFormElement;
     };
+    interface HTMLScCustomDonationAmountElement extends Components.ScCustomDonationAmount, HTMLStencilElement {
+    }
+    var HTMLScCustomDonationAmountElement: {
+        prototype: HTMLScCustomDonationAmountElement;
+        new (): HTMLScCustomDonationAmountElement;
+    };
     interface HTMLScCustomOrderPriceInputElement extends Components.ScCustomOrderPriceInput, HTMLStencilElement {
     }
     var HTMLScCustomOrderPriceInputElement: {
@@ -5506,6 +5519,7 @@ declare global {
         "sc-conditional-form": HTMLScConditionalFormElement;
         "sc-consumer": HTMLScConsumerElement;
         "sc-coupon-form": HTMLScCouponFormElement;
+        "sc-custom-donation-amount": HTMLScCustomDonationAmountElement;
         "sc-custom-order-price-input": HTMLScCustomOrderPriceInputElement;
         "sc-customer-details": HTMLScCustomerDetailsElement;
         "sc-customer-edit": HTMLScCustomerEditElement;
@@ -6524,6 +6538,13 @@ declare namespace LocalJSX {
           * The placeholder for the input
          */
         "placeholder"?: string;
+    }
+    interface ScCustomDonationAmount {
+        /**
+          * Currency code for the donation.
+         */
+        "currencyCode"?: string;
+        "value"?: string;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -10033,6 +10054,7 @@ declare namespace LocalJSX {
         "sc-conditional-form": ScConditionalForm;
         "sc-consumer": ScConsumer;
         "sc-coupon-form": ScCouponForm;
+        "sc-custom-donation-amount": ScCustomDonationAmount;
         "sc-custom-order-price-input": ScCustomOrderPriceInput;
         "sc-customer-details": ScCustomerDetails;
         "sc-customer-edit": ScCustomerEdit;
@@ -10243,6 +10265,7 @@ declare module "@stencil/core" {
             "sc-conditional-form": LocalJSX.ScConditionalForm & JSXBase.HTMLAttributes<HTMLScConditionalFormElement>;
             "sc-consumer": LocalJSX.ScConsumer & JSXBase.HTMLAttributes<HTMLScConsumerElement>;
             "sc-coupon-form": LocalJSX.ScCouponForm & JSXBase.HTMLAttributes<HTMLScCouponFormElement>;
+            "sc-custom-donation-amount": LocalJSX.ScCustomDonationAmount & JSXBase.HTMLAttributes<HTMLScCustomDonationAmountElement>;
             "sc-custom-order-price-input": LocalJSX.ScCustomOrderPriceInput & JSXBase.HTMLAttributes<HTMLScCustomOrderPriceInputElement>;
             "sc-customer-details": LocalJSX.ScCustomerDetails & JSXBase.HTMLAttributes<HTMLScCustomerDetailsElement>;
             "sc-customer-edit": LocalJSX.ScCustomerEdit & JSXBase.HTMLAttributes<HTMLScCustomerEditElement>;
