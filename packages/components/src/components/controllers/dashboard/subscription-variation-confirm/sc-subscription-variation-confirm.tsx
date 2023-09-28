@@ -54,9 +54,8 @@ export class ScSubscriptionVariationConfirm {
     if (this.price?.ad_hoc) {
       if (this.price?.id === (this.subscription?.price as Price)?.id) {
         return __('Update Amount', 'surecart');
-      } else {
-        return __('Choose Amount', 'surecart');
       }
+      return __('Choose Amount', 'surecart');
     }
     return __('Next', 'surecart');
   }
@@ -74,8 +73,6 @@ export class ScSubscriptionVariationConfirm {
                     value={this.subscription?.variant_options?.[index] || ''}
                     onScChange={(e: any) => {
                       this.variantValues[index] = e.detail.value;
-                      console.log(this.variantValues);
-                      
                     }}
                     label={name}
                     choices={values?.map(label => ({

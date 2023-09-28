@@ -382,8 +382,12 @@ class SubscriptionController extends BaseController {
 				'price.product',
 			]
 		)->find( $id );
+		
+		if ( ! $subscription ) {
+			return $this->notFound();
+		}
 
-		// fetch subscription.
+		// fetch subscription product.
 		$product = Product::with(
 			[
 				'variants', 
