@@ -21,57 +21,31 @@ export default memo(({ option, onChangeValue }) => {
 			: [{ index: 1, label: '', id: new Date().valueOf() }]
 	);
 
-	const applySort = (oldIndex, newIndex) => {
+	const applySort = (oldIndex, newIndex) =>
 		setValues(arrayMove(values, oldIndex, newIndex));
-	};
 
-	const onChangeOptionValue = (index, newLabel) => {
-		// update specific option value.
-		const updatedOptionValues = values.map((value, valueIndex) =>
-			valueIndex === index ? { ...value, label: newLabel } : value
+	// update specific option value.
+	const onChangeOptionValue = (index, newLabel) =>
+		setValues(
+			values.map((value, valueIndex) =>
+				valueIndex === index ? newLabel : value
+			)
 		);
-		setValues(updatedOptionValues);
-	};
 
-	// we always want an empty value at the end.
 	useEffect(() => {
-		const hasEmpty = values.some((value) => !value?.label);
+		// when values change, update the option.
+		onChangeValue(values);
+
+		// we always want an empty value at the end.
+		const hasEmpty = values.some((value) => !value);
 		if (!hasEmpty) {
-			setValues([
-				...values,
-				{
-					label: '',
-					index: values.length + 1,
-					id: new Date().valueOf(),
-				},
-			]);
+			setValues([...values, '']);
 		}
 	}, [values]);
 
-	useEffect(() => {
-		const updatedOptionValues = values.map((value, valueIndex) => {
-			return {
-				...value,
-				index: valueIndex,
-			};
-		});
-		onChangeValue(updatedOptionValues);
-	}, [values]);
-
+	// remove the option value from the array.
 	const deleteOptionValue = (index) => {
-		// remove the option value from the array.
-		const newOptionValues = values.filter(
-			(_, valueIndex) => valueIndex !== index
-		);
-
-		// update the index of the option values.
-		const updatedOptionValues = newOptionValues.map((value, valueIndex) => {
-			return {
-				...value,
-				index: valueIndex + 1,
-			};
-		});
-		setValues(updatedOptionValues);
+		setValues(values.filter((_, valueIndex) => valueIndex !== index));
 	};
 
 	return (
@@ -125,14 +99,11 @@ export default memo(({ option, onChangeValue }) => {
 										? __('Add another value', 'surecart')
 										: null
 								}
-								value={optionValue.label}
+								value={optionValue}
 								required={index === 0}
 								onKeyDown={(e) => {
 									// if we deleted everything, and the label is already blank, delete this.
-									if (
-										e.key === 'Backspace' &&
-										!optionValue.label
-									) {
+									if (e.key === 'Backspace' && !optionValue) {
 										deleteOptionValue(index); // delete option values
 									}
 								}}
@@ -141,17 +112,17 @@ export default memo(({ option, onChangeValue }) => {
 									onChangeOptionValue(index, e.target.value);
 								}}
 								onScChange={(e) => {
-									e.target.setCustomValidity(
-										hasDuplicate(values, 'label')
-											? sprintf(
-													__(
-														'You have already used the same option value "%s".',
-														'surecart'
-													),
-													e.target.value
-											  )
-											: ''
-									);
+									// e.target.setCustomValidity(
+									// 	hasDuplicate(values, 'label')
+									// 		? sprintf(
+									// 				__(
+									// 					'You have already used the same option value "%s".',
+									// 					'surecart'
+									// 				),
+									// 				e.target.value
+									// 		  )
+									// 		: ''
+									// );
 								}}
 							/>
 							<ScIcon

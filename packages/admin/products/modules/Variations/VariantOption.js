@@ -215,14 +215,11 @@ export default ({
 						>
 							{(option?.values || [])
 								.filter(
-									(optionValue) =>
-										optionValue?.label?.length > 0
+									(optionValue) => optionValue?.length > 0
 								)
 								.map((value, keyValue) => {
 									return (
-										<ScTag key={keyValue}>
-											{value?.label}
-										</ScTag>
+										<ScTag key={keyValue}>{value}</ScTag>
 									);
 								})}
 						</div>

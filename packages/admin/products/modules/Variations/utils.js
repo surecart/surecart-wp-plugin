@@ -24,6 +24,17 @@ export const generateVariants = (
 
 	// Generate variants based on option combinations
 	optionCombinations.forEach((combination, index) => {
+		// search through previous variants to find the variant that matches the combination.
+		// this handles reordering of options.
+		let variant = previousVariants.find((variant) => {
+			const found = combination.every((element) => {
+				return [variant.option_1, variant.option_2, variant.option_3]
+					.filter(Boolean)
+					.includes(element);
+			});
+			return found;
+		});
+
 		// if the values have not changed, we should be able to find the index of the previous combination.
 		const newIndex = (combinations || []).findIndex((prevCombination) => {
 			return (prevCombination || []).every(
@@ -34,20 +45,20 @@ export const generateVariants = (
 		// make sure we have a valid index.
 		const foundIndex = newIndex >= 0 ? newIndex : index;
 
-		const variant =
-			previousVariants.find((variant) =>
+		// the previous variant values changed
+		if (!variant) {
+			variant = previousVariants.find((variant) =>
 				(combinations?.[foundIndex] || []).every(
 					(element, index) =>
 						variant[`option_${index + 1}`] === element
 				)
-			) || {};
+			);
+		}
 
-		const newVariant = { ...variant };
-
+		const newVariant = { ...(variant || {}) };
 		previousOptions.forEach((_, index) => {
 			newVariant[`option_${index + 1}`] = combination[index] || null;
 		});
-
 		variants.push(newVariant);
 	});
 
@@ -59,10 +70,8 @@ export const generateVariants = (
  */
 export const generateValueCombinations = (options = []) =>
 	(options || []).reduce((acc, curr) => {
-		// use just the label for the combination.
-		const values = curr.values
-			.filter((value) => value.label)
-			.map((value) => value.label);
+		// filter out empty.
+		const values = curr.values.filter((value) => !!value);
 		// if no values, return the accumulator.
 		return acc.length === 0
 			? values.map((value) => [value])

@@ -40,7 +40,7 @@ export default ({ product, updateProduct, loading }) => {
 	const renderAddNewVariantButton = () => {
 		return (
 			product?.variant_options?.[0]?.name &&
-			product?.variant_options[0]?.values?.[0]?.label &&
+			product?.variant_options[0]?.values?.[0] &&
 			!loading && (
 				<div
 					css={css`

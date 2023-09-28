@@ -41,14 +41,7 @@ export default ({ product, updateProduct }) => {
 			.map((option) => {
 				return {
 					...option,
-					values: option?.values
-						?.filter((value) => !!value?.label)
-						.map((value) => {
-							return {
-								...value,
-								...(!!value?.id ? {} : { id: value?.label }), // Append id by it's label to map variant with variant_option_id.
-							};
-						}),
+					values: option?.values?.filter((value) => !!value),
 				};
 			})
 			.filter(
@@ -58,16 +51,12 @@ export default ({ product, updateProduct }) => {
 		// If first time server side loaded
 		// then no need to update product.variants.
 		if (!firstUpdate.current) {
-			// Append option_id to each variant to map variant with variant_option_id.
-			const previousVariants = product?.variants?.map((variant) => {
-				return variant;
-			});
-
+			// only generate variants if the variant options have changed.
 			updateProduct({
 				variants: generateVariants(
 					variantOptions,
 					previousOptions.current,
-					previousVariants
+					product?.variants
 				),
 			});
 		}
