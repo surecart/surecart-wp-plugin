@@ -41,4 +41,80 @@ describe('sc-coupon-form', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+  it('handles recurring coupons with repeating duration', async () => {
+    const page = await newSpecPage({
+      components: [ScCouponForm],
+      template: () => (
+        <sc-coupon-form
+          hasRecurring={true}
+          discount={
+            {
+              coupon: {
+                percent_off: 25.0,
+                currency: 'usd',
+                duration: 'repeating',
+                duration_in_months: 3,
+              } as Coupon,
+              promotion: {
+                code: 'TESTCODE',
+              } as Promotion,
+            } as DiscountResponse
+          }
+          discountAmount={725}
+          currency={'usd'}
+        ></sc-coupon-form>
+      ),
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('handles recurring coupons with forever duration', async () => {
+    const page = await newSpecPage({
+      components: [ScCouponForm],
+      template: () => (
+        <sc-coupon-form
+          hasRecurring={true}
+          discount={
+            {
+              coupon: {
+                percent_off: 25.0,
+                currency: 'usd',
+                duration: 'forever',
+              } as Coupon,
+              promotion: {
+                code: 'TESTCODE',
+              } as Promotion,
+            } as DiscountResponse
+          }
+          discountAmount={725}
+          currency={'usd'}
+        ></sc-coupon-form>
+      ),
+    });
+    expect(page.root).toMatchSnapshot();
+  });
+  it('handles recurring coupons with once duration', async () => {
+    const page = await newSpecPage({
+      components: [ScCouponForm],
+      template: () => (
+        <sc-coupon-form
+          hasRecurring={true}
+          discount={
+            {
+              coupon: {
+                percent_off: 25.0,
+                currency: 'usd',
+                duration: 'once',
+              } as Coupon,
+              promotion: {
+                code: 'TESTCODE',
+              } as Promotion,
+            } as DiscountResponse
+          }
+          discountAmount={725}
+          currency={'usd'}
+        ></sc-coupon-form>
+      ),
+    });
+    expect(page.root).toMatchSnapshot();
+  });
 });
