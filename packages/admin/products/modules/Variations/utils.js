@@ -11,16 +11,16 @@ export const generateVariants = (
 	previousOptions,
 	previousVariants = []
 ) => {
-	// initialize position.
+	// initialize position we need to store in the variant.
 	let position = 0;
-	// generate variants based on options.
+	// holds the variants based on options.
 	const variants = [];
 	// Generate all possible combinations of options
 	const optionCombinations = generateValueCombinations(variantOptions);
 	// Generate all possible combinations of options
 	const previousCombinations = generateValueCombinations(previousOptions);
 
-	// Handle new addition or subtraction - we will use the new option combinations since values have not changed.
+	// If the option combinations lengths have not changed, we will use the updated option combinations.
 	const combinations =
 		optionCombinations.length !== previousCombinations.length
 			? optionCombinations
@@ -75,6 +75,8 @@ export const generateValueCombinations = (options = []) =>
 	(options || []).reduce((acc, curr) => {
 		// use just the label for the combination.
 		const values = curr.values.filter((value) => !!value);
+		// not values, just return the existing accumulator.
+		if (!values?.length) return acc;
 		// if no values, return the accumulator.
 		return acc.length === 0
 			? values.map((value) => [value])

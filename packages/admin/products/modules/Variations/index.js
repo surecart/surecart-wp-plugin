@@ -25,9 +25,7 @@ export default ({ product, updateProduct, loading }) => {
 				...product?.variant_options,
 				{
 					name: '',
-					position: product?.variant_options?.length || 0,
 					values: [],
-					editing: true,
 				},
 			],
 		});

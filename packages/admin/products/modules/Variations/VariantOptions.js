@@ -36,33 +36,20 @@ export default ({ product, updateProduct }) => {
 	// }, []);
 
 	useEffect(() => {
-		// removes all variant option values, which label is empty and which has no name.
-		const variantOptions = (product?.variant_options || [])
-			.map((option) => {
-				return {
-					...option,
-					values: option?.values?.filter((value) => !!value),
-				};
-			})
-			.filter(
-				(option) => option?.values?.length > 0 && option?.name?.length
-			);
-
-		// If first time server side loaded
-		// then no need to update product.variants.
+		// We don't want to do this on first load since we only want want the server gives us back.
 		if (!firstUpdate.current) {
-			// only generate variants if the variant options have changed.
 			updateProduct({
 				variants: generateVariants(
-					variantOptions,
+					product?.variant_options || [],
 					previousOptions.current,
 					product?.variants
 				),
 			});
 		}
 
-		// we have updated.
+		// store the previous variant options for the next update.
 		previousOptions.current = product?.variant_options;
+		// this is not the first update anymore.
 		firstUpdate.current = false;
 	}, [product?.variant_options]);
 
