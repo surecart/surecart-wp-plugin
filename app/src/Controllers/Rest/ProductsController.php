@@ -47,12 +47,13 @@ class ProductsController extends RestController {
 		}
 
 		// Filter draft variations.
-		$request['variants'] = array_filter(
-			$request['variants'],
-			function( $variation ) {
-				$variation_status = $variation['status'] ?? 'publish';
-				return 'draft' !== $variation_status;
-			}
+		$request['variants'] = array_values(
+			array_filter(
+				$request['variants'],
+				function( $variation ) {
+					return ! in_array( $variation['status'] ?? 'publish', [ 'draft', 'deleted' ] );
+				}
+			)
 		);
 
 		return parent::edit( $request );
