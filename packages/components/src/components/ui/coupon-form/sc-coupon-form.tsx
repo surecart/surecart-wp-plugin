@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 
 import { getHumanDiscount } from '../../../functions/price';
@@ -113,7 +113,8 @@ export class ScCouponForm {
 			case 'once':
 				return `${humanDiscount} ${__('once', 'surecart')}`;
 			case 'repeating':
-				return `${humanDiscount} for ${duration_in_months} ${__('Months', 'surecart')}`;
+        const monthsLabel = sprintf( _n( '%d month', '%d months', duration_in_months, 'surecart' ), duration_in_months );
+				return `${humanDiscount} for ${monthsLabel}`;
 			default:
 				return humanDiscount;
 		}
