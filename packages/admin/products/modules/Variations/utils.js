@@ -3,6 +3,21 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/** Fill in any missing deleted variants and set the status. */
+export const normalizeVariants = (product) =>
+	(
+		generateVariants(
+			product?.variant_options || [],
+			product?.variant_options || [],
+			product?.variants
+		) || []
+	).map((variant) => {
+		return {
+			...variant,
+			status: variant?.id ? 'active' : 'deleted', // if the id is not present, it has been deleted.
+		};
+	});
+
 /**
  * Generate Variants based on options.
  */
@@ -29,7 +44,7 @@ export const generateVariants = (
 	// Generate variants based on option combinations
 	optionCombinations.forEach((combination, index) => {
 		// search through previous variants to find the variant that matches the combination.
-		// this handles reordering of options.
+		// this handles when(option_1, option_2, option_3) have switched order but the values are the same.
 		let variant = previousVariants.find((variant) =>
 			combination.every((element) =>
 				[variant.option_1, variant.option_2, variant.option_3]
@@ -38,18 +53,21 @@ export const generateVariants = (
 			)
 		);
 
-		// if the values have not changed, we should be able to find the index of the previous combination.
-		const newIndex = (combinations || []).findIndex((prevCombination) =>
-			(prevCombination || []).every(
-				(element, index) => combination[index] === element
-			)
-		);
-
-		// make sure we have a valid index.
-		const foundIndex = newIndex >= 0 ? newIndex : index;
-
-		// the previous variant values changed
+		// we don't have a variant, which means the values changed.
+		// they either changed the order, or they changed the values.
 		if (!variant) {
+			// to handle the order changing, we will find the index of the combination in the previous combinations.
+			const newIndex = (combinations || []).findIndex((prevCombination) =>
+				(prevCombination || []).every(
+					(element, index) => combination[index] === element
+				)
+			);
+
+			// we will have a new index if it was reordered.
+			// otherwise the values have changed.
+			const foundIndex = newIndex >= 0 ? newIndex : index;
+
+			// get the variant from the previous variants using the index from the combinations.
 			variant = previousVariants.find((variant) =>
 				(combinations?.[foundIndex] || []).every(
 					(element, index) =>
@@ -62,6 +80,7 @@ export const generateVariants = (
 		previousOptions.forEach((_, index) => {
 			newVariant[`option_${index + 1}`] = combination[index] || null;
 		});
+		// append to variants.
 		variants.push(newVariant);
 	});
 

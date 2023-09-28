@@ -1,60 +1,69 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
+import { css, jsx } from '@emotion/core';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import SortableList, { SortableItem } from 'react-easy-sort';
+import { store as coreStore } from '@wordpress/core-data';
 import arrayMove from 'array-move';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import {
-	generateVariants,
-	getDiffingVariants,
-	getExlcudedVariants,
-} from './utils';
+import { generateVariants, normalizeVariants } from './utils';
 import Error from '../../../components/Error';
 import VariantOption from './VariantOption';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
 	const firstUpdate = useRef(true);
-	const [deletedVariants, setDeletedVariants] = useState([]);
 	const previousOptions = useRef(product?.variant_options ?? []);
-
-	// For first time load, get the diffing variants and save to local storage.
-	// useEffect(() => {
-	// 	const variantsData =
-	// 		generateVariants(product?.variant_options ?? [], []) ?? [];
-
-	// 	const diffingVariants = getDiffingVariants(
-	// 		variantsData,
-	// 		product?.variants ?? []
-	// 	);
-	// 	setDeletedVariants(diffingVariants);
-	// }, []);
+	const previousProduct = useRef(product);
+	const [normalizedVariants, setNormalizedVariants] = useState(false);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
 	useEffect(() => {
-		// We don't want to do this on first load since we only want want the server gives us back.
-		if (!firstUpdate.current) {
+		// has the product saved?
+		const hasSaved =
+			product?.updated_at !== previousProduct.current?.updated_at;
+
+		let normalized = normalizedVariants || product?.variants || [];
+
+		// on first update, we want to use the normalized variants.
+		if (firstUpdate.current || hasSaved) {
+			// this is not the first update anymore.
+			firstUpdate.current = false;
+			// set normalized variants.
+			normalized = normalizeVariants(product);
+			setNormalizedVariants(normalized);
+			// receive normalized variants.
+			receiveEntityRecords('surecart', 'product', {
+				...product,
+				variants: normalized,
+			});
+		} else {
+			// We don't want to do this on first load since we only want want the server gives us back.
 			updateProduct({
 				variants: generateVariants(
 					product?.variant_options || [],
 					previousOptions.current,
-					product?.variants
+					normalized
 				),
 			});
+			// store the previous variant options for the next update.
+			previousOptions.current = product?.variant_options;
 		}
-
-		// store the previous variant options for the next update.
-		previousOptions.current = product?.variant_options;
-		// this is not the first update anymore.
-		firstUpdate.current = false;
 	}, [product?.variant_options]);
 
+	useEffect(() => {
+		previousProduct.current = product;
+	}, [product]);
+
 	// function to update product?.variant_options based on the index.
-	const onUpdate = (action) => {
+	const onUpdate = (action) =>
 		updateProduct({
 			...product,
 			variant_options: (product?.variant_options ?? []).map(
@@ -62,21 +71,18 @@ export default ({ product, updateProduct }) => {
 					index !== action.index ? item : { ...item, ...action.data }
 			),
 		});
-	};
 
-	const onDelete = (index) => {
+	// delete a variant option based on the index.
+	const onDelete = (index) =>
 		updateProduct({
 			...product,
 			variant_options: (product?.variant_options || []).filter(
 				(_, itemIndex) => itemIndex !== index
 			),
 		});
-	};
 
-	/**
-	 * Apply drag to reorder the variant options.
-	 */
-	const applyDrag = async (oldIndex, newIndex) => {
+	// Apply drag to reorder the variant options.
+	const applyDrag = async (oldIndex, newIndex) =>
 		updateProduct({
 			...product,
 			variant_options: arrayMove(
@@ -88,22 +94,20 @@ export default ({ product, updateProduct }) => {
 				position: index, // make sure to map position.
 			})),
 		});
-	};
 
+	// we don't want to render if there are no variant options.
 	if (!product?.variant_options?.length) {
 		return null;
 	}
 
 	return (
-		<div>
-			<Error
-				error={error}
-				setError={setError}
-				style={{
-					marginBottom: error?.message ? '1rem' : '0',
-				}}
-			/>
-
+		<div
+			css={css`
+				display: grid;
+				gap: 1rem;
+			`}
+		>
+			<Error error={error} setError={setError} />
 			<SortableList onSortEnd={applyDrag}>
 				{product?.variant_options.map((option, index) => {
 					return (
