@@ -96,6 +96,7 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		self::$instance++;
 		$product = $this->getProduct( $attributes );
 
 		if ( empty( $product ) ) {
@@ -105,13 +106,25 @@ class Block extends ProductBlock {
 		// set width class.
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 
+		$form = \SureCart::forms()->getDefault();
+		\SureCart::assets()->addComponentData(
+			'sc-product-buy-button',
+			'#sc-product-buy-button-' . (int) self::$instance,
+			[
+				'product'      => $product,
+				'formId'       => $form->ID,
+				'mode'         => \SureCart\Models\Form::getMode( $form->ID ),
+				'checkoutLink' => \SureCart::pages()->url( 'checkout' ),
+			]
+		);
+
 		ob_start();
 		?>
 		<sc-product-buy-button
 			<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
 			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
-			product-id="<?php echo esc_attr( $product->id ); ?>"
+			id="sc-product-buy-button-<?php echo esc_attr( (int) self::$instance ); ?>"
 			>
 			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>

@@ -4,6 +4,7 @@ import { addProductToState, getProductBuyLink, submitCartForm } from '@store/pro
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
+import { Product } from 'src/types';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -16,18 +17,27 @@ export class ScProductBuyButton {
   // Is add to cart enabled
   @Prop() addToCart: boolean;
 
-  // The product id
-  @Prop() productId: string;
+  // The product
+  @Prop() product: Product;
+
+  // The form id
+  @Prop() formId: number;
+
+  // The mode
+  @Prop() mode: 'live' | 'test' = 'live';
+
+  // checkout link
+  @Prop() checkoutLink: string;
 
   handleCartClick(e) {
     e.preventDefault();
 
     // already busy, do nothing.
-    if (state[this.productId]?.busy) return;
+    if (state[this.product?.id]?.busy) return;
 
     // ad hoc price, use the dialog.
-    if (state[this.productId]?.selectedPrice?.ad_hoc) {
-      setProduct(this.productId, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
+    if (state[this.product?.id]?.selectedPrice?.ad_hoc) {
+      setProduct(this.product?.id, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
       return;
     }
 
@@ -35,20 +45,20 @@ export class ScProductBuyButton {
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      return window.location.assign(getProductBuyLink(this.productId, checkoutUrl, { no_cart: !this.addToCart }));
+      return window.location.assign(getProductBuyLink(this.product?.id, checkoutUrl, { no_cart: !this.addToCart }));
     }
 
     // submit the cart form.
-    submitCartForm(this.productId);
+    submitCartForm(this.product?.id);
   }
 
   componentDidLoad() {
     this.link = this.el.querySelector('a');
     this.updateProductLink();
-    onChange('selectedPrice', () => this.updateProductLink());
+    onChange(this.product?.id, () => this.updateProductLink());
 
-    if (!state[this.productId]) {
-      addProductToState(this.productId, {});
+    if (!state[this.product?.id]) {
+      addProductToState(this.product, this.formId, this.mode, this.checkoutLink);
     }
   }
 
@@ -57,12 +67,12 @@ export class ScProductBuyButton {
   updateProductLink() {
     const checkoutUrl = window?.scData?.pages?.checkout;
     if (!checkoutUrl || !this.link) return;
-    this.link.href = getProductBuyLink(checkoutUrl, !this.addToCart ? { no_cart: true } : {});
+    this.link.href = getProductBuyLink(this.product?.id,checkoutUrl, !this.addToCart ? { no_cart: true } : {});
   }
 
   render() {
     return (
-      <Host class={{ 'is-busy': state[this.productId]?.busy && !!this.addToCart, 'is-disabled': state[this.productId]?.disabled }} onClick={e => this.handleCartClick(e)}>
+      <Host class={{ 'is-busy': state[this.product?.id]?.busy && !!this.addToCart, 'is-disabled': state[this.product?.id]?.disabled }} onClick={e => this.handleCartClick(e)}>
         <slot />
       </Host>
     );

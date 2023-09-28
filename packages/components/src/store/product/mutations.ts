@@ -1,19 +1,16 @@
 import { addLineItem } from '../../services/session';
 import state from './store';
 import { getCheckout, setCheckout } from '@store/checkouts';
-import { Checkout, Product, ProductState } from 'src/types';
+import { Checkout, Product } from 'src/types';
 import { toggleCart } from '@store/ui';
 import { doCartGoogleAnalytics } from '../../functions/google-analytics-cart';
 import { addQueryArgs } from '@wordpress/url';
 import { setProduct } from './setters';
-import apiFetch from '../../functions/fetch';
 
 export const submitCartForm = async (productId: string) => {
-  if (!state[productId]) {
-    await addProductToState(productId, {});
-  }
-
   const productState = state[productId];
+  console.log('state',state)
+  console.log('productState',productState)
   if (!productState) return;
   if (!productState.selectedPrice?.id) return;
   if (productState.selectedPrice?.ad_hoc && (null === productState.adHocAmount || undefined === productState.adHocAmount)) return;
@@ -72,45 +69,30 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
   });
 };
 
-export const addProductToState = async (productId: string, productState: Partial<ProductState>) => {
-  if (!productId) return;
+export const addProductToState = (product:Product,formId:number, mode:'live'|'test', checkoutLink:string) => {
+  if (!product?.id) return;
 
-  state[productId] = {
-    busy: true,
-  } as ProductState;
-
-  const productDetails = (await apiFetch({
-    path: addQueryArgs(`surecart/v1/products/${productId}`, {
-      expand: ['image', 'prices'],
-    }),
-  })) as Product;
-
-  if (!productDetails) {
-    state[productId] = null;
-    return;
-  }
-
-  const prices = productDetails?.prices?.data || [];
-  const selectedPrice = productState.selectedPrice || (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
+  const prices = product?.prices?.data || [];
+  const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
   const adHocAmount = selectedPrice?.amount || null;
 
-  state[productId] = {
-    formId: window?.scData?.product_data?.form?.ID,
-    mode: window?.scData?.product_data?.mode || 'live',
-    product: productDetails,
+  state[product.id] = {
+    formId: formId,
+    mode: mode || 'live',
+    product: product,
     prices,
-    quantity: productState?.quantity || 1,
+    quantity:  1,
     selectedPrice,
     total: null,
-    dialog: productState?.dialog || null,
+    dialog: null,
     busy: false,
-    disabled: selectedPrice?.archived || productDetails?.archived,
+    disabled: selectedPrice?.archived,
     adHocAmount,
     error: null,
-    checkoutUrl: window?.scData?.product_data?.checkout_link,
+    checkoutUrl: checkoutLink,
     line_item: {
       price_id: selectedPrice?.id,
-      quantity: productState?.quantity || 1,
+      quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
     },
   };

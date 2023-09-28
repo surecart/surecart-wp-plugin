@@ -1543,7 +1543,10 @@
   },
   "sc-product-buy-button": {
     "add-to-cart": true,
-    "product-id": true,
+    "checkout-link": true,
+    "form-id": true,
+    "mode": true,
+    "product": true,
     "style": true,
     "id": true,
     "class": true,
