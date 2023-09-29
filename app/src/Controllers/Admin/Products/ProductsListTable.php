@@ -98,12 +98,12 @@ class ProductsListTable extends ListTable {
 		return [
 			// 'cb'          => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
-			// 'description' => __( 'Description', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
 			'integrations'        => __( 'Integrations', 'surecart' ),
 			'status'              => __( 'Product Page', 'surecart' ),
-			'featured'            => __( 'Featured', 'surecart' ),
 			'product_collections' => __( 'Collections', 'surecart' ),
+			'featured'            => __( 'Featured', 'surecart' ),
+			'quantity'            => __( 'Quantity', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
 		];
 	}
@@ -118,6 +118,15 @@ class ProductsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
+	}
+
+	/**
+	 * Show the quantity.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_quantity( $product ) {
+		return $product->stock_enabled ? $product->available_stock : '∞';
 	}
 
 	/**
