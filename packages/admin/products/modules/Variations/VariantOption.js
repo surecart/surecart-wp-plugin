@@ -156,7 +156,6 @@ export default ({
 										index,
 									}}
 									product={product}
-									updateProduct={updateProduct}
 									onChangeValue={(updatedValues) => {
 										updateOption({
 											values: updatedValues,

@@ -14,7 +14,7 @@ import arrayMove from 'array-move';
 import { hasDuplicate } from './utils';
 import VariantOptionValue from './VariantOptionValue';
 
-export default memo(({ option, onChangeValue }) => {
+export default memo(({ product, option, onChangeValue }) => {
 	const [values, setValues] = useState(
 		option?.values?.length > 0 ? option?.values ?? [] : ['']
 	);
@@ -69,6 +69,9 @@ export default memo(({ option, onChangeValue }) => {
 								required={index === 0 || !isLastItem}
 								onChange={(value) =>
 									onChangeOptionValue(index, value)
+								}
+								disabled={
+									product?.variants?.length > 65 && isLastItem
 								}
 								onDelete={() => deleteOptionValue(index)}
 								placeholder={

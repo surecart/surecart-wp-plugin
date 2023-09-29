@@ -17,6 +17,7 @@ export default ({
 	values,
 	index,
 	onChange,
+	disabled,
 	onDelete,
 	required,
 	placeholder,
@@ -84,6 +85,7 @@ export default ({
 				type="text"
 				placeholder={placeholder}
 				value={value}
+				disabled={disabled}
 				required={required}
 				onKeyDown={(e) => {
 					// if we deleted everything, and the label is already blank, delete this.
