@@ -425,6 +425,7 @@
   },
   "sc-custom-donation-amount": {
     "currency-code": true,
+    "line-item": true,
     "value": true,
     "style": true,
     "id": true,
