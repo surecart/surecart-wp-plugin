@@ -83,7 +83,14 @@ export default ({
 					}
 				`}
 				type="text"
-				placeholder={placeholder}
+				placeholder={
+					!disabled
+						? placeholder
+						: __(
+								'You have reached the variant limit of 100',
+								'surecart'
+						  )
+				}
 				value={value}
 				disabled={disabled}
 				required={required}
@@ -110,7 +117,13 @@ export default ({
 						color: var(--sc-color-danger-500);
 					}
 				`}
+				tabindex="0"
 				onClick={onDelete}
+				onKeyDown={(e) => {
+					if (e.key === 'Enter') {
+						onDelete();
+					}
+				}}
 				name="trash"
 			/>
 		</div>
