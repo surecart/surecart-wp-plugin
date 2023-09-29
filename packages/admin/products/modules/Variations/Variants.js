@@ -13,6 +13,8 @@ import { __ } from '@wordpress/i18n';
  */
 import DataTable from '../../../components/DataTable';
 import VariantItem from './VariantItem';
+import { ScTable, ScTableCell } from '@surecart/components-react';
+import { maybeConvertAmount } from '../../../util';
 
 export default ({ product, updateProduct, loading }) => {
 	/**
@@ -42,50 +44,65 @@ export default ({ product, updateProduct, loading }) => {
 	};
 
 	return (
-		<DataTable
+		<div
 			css={css`
-				border-top: 1px solid var(--sc-color-gray-200);
+				sc-table-cell:first-of-type {
+					padding-left: 30px;
+				}
+				sc-table-cell:last-of-type {
+					padding-right: 30px;
+				}
+				.components-card__body {
+					padding: 0 !important;
+				}
+				--sc-table-cell-spacing: var(--sc-spacing-large);
 			`}
-			title={__('', 'surecart')}
-			loading={loading}
-			columns={{
-				variant: {
-					label: __('Variant', 'surecart'),
-					width: '200px',
-				},
-				amount: {
-					label: __('Price', 'surecart'),
-					width: '150px',
-				},
-				...(!!product?.stock_enabled && {
-					stock: {
-						label: __('Quantity', 'surecart'),
-						width: '150px',
-					},
-				}),
-				sku: {
-					label: __('SKU', 'surecart'),
-					width: '150px',
-				},
-				actions: {
-					label: __('', 'surecart'),
-				},
-			}}
-			items={(product?.variants ?? [])
-				.filter((variant) => 'deleted' !== variant?.status)
-				.map((variant, index) => {
-					return VariantItem({
-						variant: {
-							...variant,
-							index,
-						},
-						updateVariant: (updates) =>
-							updateVariant(updates, variant?.position),
-						product,
-						updateProduct,
-						prices,
-					});
-				})}
-		/>
+		>
+			<ScTable
+				style={{
+					'--shadow': 'none',
+					'--border-radius': '0',
+					borderLeft: '0',
+					borderRight: '0',
+				}}
+			>
+				<ScTableCell slot="head" style={{ width: '200px' }}>
+					{__('Variant', 'surecart')}
+				</ScTableCell>
+				<ScTableCell slot="head" style={{ width: '150px' }}>
+					{__('Price', 'surecart')}
+				</ScTableCell>
+				{!!product?.stock_enabled && (
+					<ScTableCell slot="head" style={{ width: '150px' }}>
+						{__('Quantity', 'surecart')}
+					</ScTableCell>
+				)}
+				<ScTableCell slot="head" style={{ width: '150px' }}>
+					{__('Sku', 'surecart')}
+				</ScTableCell>
+				<ScTableCell slot="head" />
+
+				{(product?.variants ?? [])
+					.filter((variant) => 'deleted' !== variant?.status)
+					.map((variant, index) => (
+						<VariantItem
+							key={index}
+							variant={variant}
+							updateVariant={(data) =>
+								updateVariant(data, variant?.position)
+							}
+							canOverride={(prices || [])?.length <= 1}
+							defaultAmount={
+								prices?.[0]
+									? maybeConvertAmount(
+											prices?.[0]?.amount,
+											prices?.[0]?.currency || 'usd'
+									  )
+									: ''
+							}
+						/>
+					))}
+			</ScTable>
+		</div>
 	);
 };
