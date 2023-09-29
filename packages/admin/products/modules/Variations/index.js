@@ -39,7 +39,8 @@ export default ({ product, updateProduct, loading }) => {
 		return (
 			product?.variant_options?.[0]?.name &&
 			product?.variant_options[0]?.values?.[0] &&
-			!loading && (
+			!loading &&
+			product?.variants?.length < 99 && (
 				<div
 					css={css`
 						margin: -12px 0px;
