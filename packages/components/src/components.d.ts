@@ -834,6 +834,10 @@ export namespace Components {
           * Currency code for the donation.
          */
         "currencyCode": string;
+        /**
+          * Order line items.
+         */
+        "lineItem": LineItem;
         "value": string;
     }
     interface ScCustomOrderPriceInput {
@@ -6544,6 +6548,10 @@ declare namespace LocalJSX {
           * Currency code for the donation.
          */
         "currencyCode"?: string;
+        /**
+          * Order line items.
+         */
+        "lineItem"?: LineItem;
         "value"?: string;
     }
     interface ScCustomOrderPriceInput {

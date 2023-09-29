@@ -1,7 +1,7 @@
 import { Component, h, Prop, Element, Fragment } from '@stencil/core';
-import { state as checkoutState } from '@store/checkout';
+import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { Checkout } from '../../../../types';
+import { Checkout, LineItem } from '../../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
@@ -11,6 +11,8 @@ import { createErrorNotice } from '@store/notices/mutations';
 
 export class ScCustomDonationAmount {
 
+  private removeCheckoutListener: () => void;
+
   @Element() el: HTMLScCustomDonationAmountElement;
 
   /** Currency code for the donation. */
@@ -18,11 +20,26 @@ export class ScCustomDonationAmount {
 
   @Prop() value: string;
 
-  async handleButtonClick(e) {
-    e.preventDefault();
+  /** Order line items. */
+  @Prop() lineItem: LineItem;
 
-    const checkoutLineItem = checkoutState.checkout?.line_items?.data?.[0];
-    const lineItems = [{ id: checkoutLineItem?.id, price_id: checkoutLineItem?.price?.id, quantity: 1, ad_hoc_amount: parseInt(this.value) }];
+  componentWillLoad() {
+    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
+    this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+  }
+
+  /** Remove listener. */
+  disconnectedCallback() {
+    this.removeCheckoutListener();
+  }
+
+  handleSessionChange() {
+    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
+  }
+
+  async handleButtonClick(e) {
+    e.stopImmediatePropagation();
+    const lineItems = [{ id: this.lineItem?.id, price_id: this.lineItem?.price?.id, quantity: 1, ad_hoc_amount: parseInt(this.value) }];
 
     const data = {
       line_items: lineItems,
@@ -49,20 +66,26 @@ export class ScCustomDonationAmount {
     return (
       <Fragment>
       <sc-choice-container value={this.value} show-control="false">
-        <sc-price-input
-            currencyCode={this.currencyCode}
-            showCode={false}
-            showLabel={false}
-            onScChange={(e) => this.handlePriceChange(e)}
-        > 
-          <sc-button 
-            onClick={(e) => this.handleButtonClick(e)}
-            slot="suffix" 
+        <sc-form
+          onScFormSubmit={(e) => this.handleButtonClick(e)}
+        >
+          <sc-price-input
+              currencyCode={this.currencyCode}
+              showCode={false}
+              showLabel={false}
+              onScChange={(e) => this.handlePriceChange(e)}
+              min={this.lineItem?.price?.ad_hoc_min_amount}
+              max={this.lineItem?.price?.ad_hoc_max_amount}
+          > 
+          <sc-button
             circle
+            submit
+            slot="suffix" 
           >
             <sc-icon name="arrow-right"></sc-icon>
           </sc-button>
-        </sc-price-input>
+          </sc-price-input>
+        </sc-form>
       </sc-choice-container>
       </Fragment>
     );
