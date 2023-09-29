@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-custom-donation-amount renders 1`] = `
+<sc-custom-donation-amount>
+  <sc-choice-container show-control="false">
+    <sc-price-input currencycode="usd">
+      <sc-button circle="" slot="suffix">
+        <sc-icon name="arrow-right"></sc-icon>
+      </sc-button>
+    </sc-price-input>
+  </sc-choice-container>
+</sc-custom-donation-amount>
+`;
