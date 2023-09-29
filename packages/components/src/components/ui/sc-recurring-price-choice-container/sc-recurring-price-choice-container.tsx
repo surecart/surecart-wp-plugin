@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price, Product } from 'src/types';
 import { intervalString } from '../../../functions/price';
@@ -40,7 +40,10 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   render() {
-    const cardChecked = this.prices?.find(price => price.id === this.selectedPrice?.id);
+    if ( ! this.prices?.length ) { 
+      return <Host></Host>;
+    }
+    const cardChecked = this.prices.find(price => price.id === this.selectedPrice?.id);
     const selectedPriceName = cardChecked ? this.selectedPrice?.name : this.prices?.[0]?.name ? this.prices?.[0]?.name : this.product?.name;
 
     return (
