@@ -141,9 +141,13 @@ export default ({ product, updateProduct, onRequestClose }) => {
 						{!!product?.stock_enabled && (
 							<ScInput
 								label={__('Stock Qty', 'surecart')}
-								value={variant?.stock}
+								value={variant?.stock_adjustment}
 								onScInput={(e) =>
-									updateVariant({ stock: e.target.value })
+									updateVariant({
+										stock_adjustment: parseInt(
+											e.target.value || 0
+										),
+									})
 								}
 								type="number"
 								css={css`
