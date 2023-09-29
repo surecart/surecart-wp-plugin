@@ -11,12 +11,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import DataTable from '../../../components/DataTable';
 import VariantItem from './VariantItem';
 import { ScTable, ScTableCell } from '@surecart/components-react';
 import { maybeConvertAmount } from '../../../util';
 
-export default ({ product, updateProduct, loading }) => {
+export default ({ product, updateProduct }) => {
 	/**
 	 * Get only active prices.
 	 */
