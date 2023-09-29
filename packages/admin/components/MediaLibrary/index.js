@@ -156,15 +156,7 @@ export default ({
 		}
 	};
 
-	const uploadMedia = async (uploadedFile) => {
-		const file = new File(
-			[uploadedFile],
-			uploadedFile.name.replace(/['"]+/g, '_'),
-			{
-				type: uploadedFile.type,
-				lastModified: uploadedFile.lastModified,
-			}
-		);
+	const uploadMedia = async (file) => {
 		const upload = await uploadFile(file, isPrivate);
 		return await saveEntityRecord(
 			'surecart',
