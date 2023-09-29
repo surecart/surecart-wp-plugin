@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-recurring-price-choice-container It should render the Price choices with the Label 1`] = `
+<sc-recurring-price-choice-container>
+  <sc-choice-container>
+    <div class="price-choice__title">
+      <div class="price-choice__name">
+        Subscribe and Save
+      </div>
+      <div class="recurring-price-choice__description-details-wrap">
+        <div class="recurring-price-choice__description">
+          <sc-dropdown style="--panel-width: 25em;">
+            <sc-button caret="" slot="trigger" type="text">
+              Monthly
+            </sc-button>
+            <sc-menu>
+              <sc-menu-item class="recurring-price-choice__menu-item">
+                <span class="menu-item__label" part="label">
+                  Monthly
+                </span>
+                <span slot="suffix">
+                  <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
+                </span>
+              </sc-menu-item>
+              <sc-menu-item class="recurring-price-choice__menu-item">
+                <span class="menu-item__label" part="label">
+                  Yearly
+                </span>
+                <span slot="suffix">
+                  <sc-format-number currency="usd" type="currency" value="20000"></sc-format-number>
+                </span>
+              </sc-menu-item>
+              <sc-menu-item class="recurring-price-choice__menu-item">
+                <span class="menu-item__label" part="label">
+                  Weekly
+                </span>
+                <span slot="suffix">
+                  <sc-format-number currency="usd" type="currency" value="1200"></sc-format-number>
+                </span>
+              </sc-menu-item>
+            </sc-menu>
+          </sc-dropdown>
+        </div>
+        <div class="recurring-price-choice__details">
+          <div class="price-choice__price">
+            <sc-format-number type="currency"></sc-format-number>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-choice-container>
+</sc-recurring-price-choice-container>
+`;
+
+exports[`sc-recurring-price-choice-container renders 1`] = `<sc-recurring-price-choice-container></sc-recurring-price-choice-container>`;
