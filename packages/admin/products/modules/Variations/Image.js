@@ -65,6 +65,7 @@ export default ({ variant, onAdd, onRemove, existingMediaIds = [] }) => {
 						css={css`
 							width: 35px;
 							height: 35px;
+							object-fit: cover;
 						`}
 					/>
 				</div>
