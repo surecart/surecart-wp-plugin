@@ -31,7 +31,7 @@ class OrderController extends BaseController {
 					'isCustomer' => User::current()->isCustomer(),
 					'query'      => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid', 'processing', 'payment_failed' ],
+						'status'       => [ 'paid', 'processing', 'payment_failed', 'canceled', 'void' ],
 						'page'         => 1,
 						'per_page'     => 5,
 					],
@@ -70,7 +70,7 @@ class OrderController extends BaseController {
 					'isCustomer' => User::current()->isCustomer(),
 					'query'      => [
 						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'paid', 'processing', 'payment_failed' ],
+						'status'       => [ 'paid', 'processing', 'payment_failed', 'canceled', 'void' ],
 						'page'         => 1,
 						'per_page'     => 10,
 					],

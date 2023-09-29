@@ -24,7 +24,8 @@
 		"phpcs.composerJsonPath": "composer.json",
 		"phpcs.errorSeverity": 5,
 		"bladeFormatter.format.wrapAttributes": "force",
-		"git.ignoreLimitWarning": true
+		"git.ignoreLimitWarning": true,
+		"php.version": "7.4.33"
 	},
 	"launch": {
 		"version": "0.2.0",

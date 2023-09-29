@@ -1,10 +1,11 @@
-import { Component, Prop, h, EventEmitter, Event, Host } from '@stencil/core';
+import { Component, Prop, h, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, ResponseError, ShippingMethod } from '../../../types';
+import { Checkout, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { checkoutIsLocked } from '@store/checkout/getters';
+import { createErrorNotice } from '@store/notices/mutations';
 
 /**
  * @part base - The elements base wrapper.
@@ -27,9 +28,6 @@ export class ScShippingChoices {
   /** Whether to show the shipping choice description */
   @Prop() showDescription: boolean = true;
 
-  /** Error event */
-  @Event() scError: EventEmitter<ResponseError>;
-
   /** Maybe update the order. */
   async updateCheckout(selectedShippingChoiceId: string) {
     if (!selectedShippingChoiceId) return;
@@ -43,7 +41,7 @@ export class ScShippingChoices {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       unLockCheckout('selected_shipping_choice');
     }

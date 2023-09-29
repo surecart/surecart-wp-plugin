@@ -6,6 +6,7 @@ use SureCart\Models\AbandonedCheckout;
 use SureCart\Models\CancellationAct;
 use SureCart\Models\CancellationReason;
 use SureCart\Models\Order;
+use SureCart\Models\Subscription;
 
 /**
  * Handle Statistic requests through the REST API
@@ -21,6 +22,7 @@ class StatisticsController {
 		'abandoned_checkouts'  => AbandonedCheckout::class,
 		'cancellation_reasons' => CancellationReason::class,
 		'cancellation_acts'    => CancellationAct::class,
+		'subscriptions'        => Subscription::class,
 	];
 
 	/**

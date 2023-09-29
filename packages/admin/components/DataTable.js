@@ -69,7 +69,7 @@ export default ({
 						))}
 
 					{(items || []).map((item) => (
-						<ScTableRow key={item.id}>
+						<ScTableRow key={item?.key || item?.id}>
 							{Object.keys(columns).map((key) => (
 								<ScTableCell key={key}>{item[key]}</ScTableCell>
 							))}

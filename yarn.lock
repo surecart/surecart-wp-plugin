@@ -7247,7 +7247,7 @@ __metadata:
     "@wordpress/dependency-extraction-webpack-plugin": ^3.2.1
     "@wordpress/dom-ready": ^2.10.0
     "@wordpress/e2e-test-utils": ^5.4.1
-    "@wordpress/e2e-test-utils-playwright": ^0.1.0
+    "@wordpress/e2e-test-utils-playwright": ^0.9.0
     "@wordpress/editor": ^9.21.0
     "@wordpress/element": ^2.17.0
     "@wordpress/env": ^4.8.0
@@ -9362,14 +9362,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/api-fetch@npm:^6.30.0":
-  version: 6.30.0
-  resolution: "@wordpress/api-fetch@npm:6.30.0"
+"@wordpress/api-fetch@npm:^6.38.0":
+  version: 6.38.0
+  resolution: "@wordpress/api-fetch@npm:6.38.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@wordpress/i18n": ^4.33.0
-    "@wordpress/url": ^3.34.0
-  checksum: 201816124efb1e7bf30cd7bd90482ca4d98dd1e1f3a6d44bba2958bdc9ed8b2fe18df0af5ac630e01d7602243c6b906bb3bd7ece047e7aee4ae71731d410e1d7
+    "@wordpress/i18n": ^4.41.0
+    "@wordpress/url": ^3.42.0
+  checksum: 6d0502a29721f26e75839073c577b84aa2a80954970d5d821c6ce7f8b46aec249170e36d83b5ac6b27daa6c587fbd902f2ee7808420556fbcfac5c79a5419034
   languageName: node
   linkType: hard
 
@@ -10055,19 +10055,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/e2e-test-utils-playwright@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@wordpress/e2e-test-utils-playwright@npm:0.1.0"
+"@wordpress/e2e-test-utils-playwright@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "@wordpress/e2e-test-utils-playwright@npm:0.9.0"
   dependencies:
-    "@wordpress/api-fetch": ^6.30.0
-    "@wordpress/keycodes": ^3.33.0
-    "@wordpress/url": ^3.34.0
+    "@wordpress/api-fetch": ^6.38.0
+    "@wordpress/keycodes": ^3.41.0
+    "@wordpress/url": ^3.42.0
     change-case: ^4.1.2
     form-data: ^4.0.0
     mime: ^3.0.0
   peerDependencies:
     "@playwright/test": ">=1"
-  checksum: 213af8b827c9ef6f13555c6aefa01126b3f74e4bdb38cc9fe9a9eedd8591f3a6ca00398320eeb25ace9d744281e311fb268a7aa9db20ced43e8a83bf0cc091bc
+  checksum: e6fb27f34026898d666e97343412ac63ad07f7b2f93417bda4a3a6dea1c018374f5389dc90f5d32a016d4cd3cb256e529e71d3df853767218e95018bc65da2ef
   languageName: node
   linkType: hard
 
@@ -10393,12 +10393,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/hooks@npm:^3.33.0":
-  version: 3.33.0
-  resolution: "@wordpress/hooks@npm:3.33.0"
+"@wordpress/hooks@npm:^3.41.0":
+  version: 3.41.0
+  resolution: "@wordpress/hooks@npm:3.41.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-  checksum: 2970fdc1e05e5af117b3faa25b107d21f31aed9b1a41aa85088315c0411d111744e45d4523da49fc6ff4de8f06315645c5b850d1d1d3bff31a50abc279b19dd6
+  checksum: 5c9fcde60d71064183c188def23d341e40fc98025d389463182526e63041cc6944d0fe003331dfa800f6e2dce00ec944b4c5911f471b0e25237ab369a1b64c76
   languageName: node
   linkType: hard
 
@@ -10462,19 +10462,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/i18n@npm:^4.33.0":
-  version: 4.33.0
-  resolution: "@wordpress/i18n@npm:4.33.0"
+"@wordpress/i18n@npm:^4.41.0":
+  version: 4.41.0
+  resolution: "@wordpress/i18n@npm:4.41.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@wordpress/hooks": ^3.33.0
+    "@wordpress/hooks": ^3.41.0
     gettext-parser: ^1.3.1
-    memize: ^1.1.0
+    memize: ^2.1.0
     sprintf-js: ^1.1.1
     tannin: ^1.2.0
   bin:
     pot-to-php: tools/pot-to-php.js
-  checksum: a9edd17ad9fb01244d1c015066ea145a6f83ac20f03addb6894fa6d2a0e23397cbc45fc100a79ded335a42010b490dc91709becc9b80da22004847f15e6aa4e3
+  checksum: 9bca041b3724fb496fb85ec55445cb08d97338bbf0c82b64caef844e3ef5d76687efe38c4e9cfec40c08044dfe476e187c78ddbb6481e6dd2425a56acec8e5a6
   languageName: node
   linkType: hard
 
@@ -10631,14 +10631,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/keycodes@npm:^3.33.0":
-  version: 3.33.0
-  resolution: "@wordpress/keycodes@npm:3.33.0"
+"@wordpress/keycodes@npm:^3.41.0":
+  version: 3.41.0
+  resolution: "@wordpress/keycodes@npm:3.41.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-    "@wordpress/i18n": ^4.33.0
+    "@wordpress/i18n": ^4.41.0
     change-case: ^4.1.2
-  checksum: 26e38ea80be96020da1ac489d79fb9b7f64c0a0a6f2589cefd47c91a95f3dbd042d0292228aecd1de23860240ac57335ba07b22c129110575fd7265bfcdb4ad3
+  checksum: 7bc659b2e3a55c8bcdb1d3cf626e9ce4c60ec1c75da32970ff305991c16caeeac0100a3ae2653f53c538b4d9166ff030fa6a317c7999ec6ab3fb967718d32450
   languageName: node
   linkType: hard
 
@@ -11098,13 +11098,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/url@npm:^3.34.0":
-  version: 3.34.0
-  resolution: "@wordpress/url@npm:3.34.0"
+"@wordpress/url@npm:^3.42.0":
+  version: 3.42.0
+  resolution: "@wordpress/url@npm:3.42.0"
   dependencies:
     "@babel/runtime": ^7.16.0
-    remove-accents: ^0.4.2
-  checksum: 47ca0d0f1ff61c8a3c51cb52656107bd956ad84315b296d5aa7addff3fb9d5cf2507093761b2852eb38df1e00277cae92186716673fe7e8ba76a4730d14247be
+    remove-accents: ^0.5.0
+  checksum: 80231fae1054064d650ca53dc83845769245641c07fe419091e911400f03f115c4a2a1ecceec060d4b4f46f3cf3214467ff0cf4df5665b5966dbc7297f258648
   languageName: node
   linkType: hard
 
@@ -24311,6 +24311,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memize@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "memize@npm:2.1.0"
+  checksum: b2fcaeb42c8f352ffb09c05f0b3a02a7d931a9f835d762a95a50946395aa5d1565796ffc93ff8df01ba223d78e6867492ffce619e890caa88f7f01e7d0f3a212
+  languageName: node
+  linkType: hard
+
 "memoize-one@npm:^6.0.0":
   version: 6.0.0
   resolution: "memoize-one@npm:6.0.0"
@@ -30379,6 +30386,13 @@ __metadata:
   version: 0.4.2
   resolution: "remove-accents@npm:0.4.2"
   checksum: 84a6988555dea24115e2d1954db99509588d43fe55a1590f0b5894802776f7b488b3151c37ceb9e4f4b646f26b80b7325dcea2fae58bc3865df146e1fa606711
+  languageName: node
+  linkType: hard
+
+"remove-accents@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "remove-accents@npm:0.5.0"
+  checksum: 7045b37015acb03df406d21f9cbe93c3fcf2034189f5d2e33b1dace9c7d6bdcd839929905ced21a5d76c58553557e1a42651930728702312a5774179d5b9147b
   languageName: node
   linkType: hard
 
