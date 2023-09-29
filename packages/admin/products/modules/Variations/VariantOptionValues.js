@@ -71,7 +71,7 @@ export default memo(({ product, option, onChangeValue }) => {
 									onChangeOptionValue(index, value)
 								}
 								disabled={
-									product?.variants?.length > 65 && isLastItem
+									product?.variants?.length > 99 && isLastItem
 								}
 								onDelete={() => deleteOptionValue(index)}
 								placeholder={
