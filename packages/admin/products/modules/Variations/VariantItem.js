@@ -65,7 +65,12 @@ export default memo(
 				status === 'draft' ? { color: 'var(--sc-color-gray-400)' } : {};
 
 			return (
-				<Tag style={colorStyle}>
+				<Tag
+					style={colorStyle}
+					css={css`
+						word-break: break-word;
+					`}
+				>
 					{option_1}
 					{!!option_2?.length && ' / '}
 					{option_2}
