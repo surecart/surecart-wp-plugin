@@ -106,19 +106,19 @@ export class ScCouponForm {
   }
 
   translateHumanDiscountWithDuration(humanDiscount) {
-    if(!this.hasRecurring) return humanDiscount;
-    
+    if (!this.hasRecurring) return humanDiscount;
+
     const { duration, duration_in_months } = this.discount?.coupon;
-		switch (duration) {
-			case 'once':
-				return `${humanDiscount} ${__('once', 'surecart')}`;
-			case 'repeating':
-        const monthsLabel = sprintf( _n( '%d month', '%d months', duration_in_months, 'surecart' ), duration_in_months );
-				return `${humanDiscount} for ${monthsLabel}`;
-			default:
-				return humanDiscount;
-		}
-	}
+    switch (duration) {
+      case 'once':
+        return `${humanDiscount} ${__('once', 'surecart')}`;
+      case 'repeating':
+        const monthsLabel = sprintf(_n('%d month', '%d months', duration_in_months, 'surecart'), duration_in_months);
+        return `${humanDiscount} for ${monthsLabel}`;
+      default:
+        return humanDiscount;
+    }
+  }
 
   render() {
     if (this.loading) {
