@@ -158,7 +158,7 @@ export default ({ product, updateProduct, onRequestClose }) => {
 								onRemove={onDeleteMedia}
 								onAdd={(media) => {
 									updateVariant({
-										image_id: media,
+										image_id: media?.id,
 										image_url: media?.url,
 									});
 								}}

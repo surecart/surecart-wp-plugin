@@ -42,7 +42,7 @@ export default ({ variant, updateVariant, prices }) => {
 			__('Are you sure you wish to unlink this image?', 'surecart')
 		);
 		if (!confirmUnlinkMedia) return;
-		updateVariant({ image_id: null, image_url: null });
+		updateVariant({ image_id: null, image_url: null, image: null });
 	};
 
 	/**
