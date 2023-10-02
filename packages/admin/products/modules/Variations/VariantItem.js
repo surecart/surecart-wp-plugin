@@ -126,7 +126,7 @@ export default ({ variant, updateVariant, defaultAmount, canOverride }) => {
 								min-width: 100px;
 							`}
 							disabled={status === 'draft'}
-							onScChange={(e) =>
+							onScInput={(e) =>
 								updateVariant({ amount: e.target.value })
 							}
 						/>
