@@ -5,7 +5,6 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { SortableKnob } from 'react-easy-sort';
-import debounce from 'lodash/debounce';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -33,11 +32,10 @@ export default ({ index, product, option, updateOption, onDelete }) => {
 		}
 	}, [editing]);
 
-	const handleChange = debounce((name) => {
+	const handleChange = (name) =>
 		updateOption({
 			name,
 		});
-	}, 500);
 
 	return (
 		<div
