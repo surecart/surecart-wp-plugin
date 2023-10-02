@@ -3,7 +3,6 @@
 namespace SureCartBlocks\Blocks\Product\VariantChoices;
 
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
@@ -18,13 +17,16 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin', 'padding' ] );
+		$product = get_query_var( 'surecart_current_product' );
+		if ( empty( $product ) || empty( $product->variant_options->data ) ) {
+			return '';
+		}
 		ob_start(); ?>
-		<sc-product-variation-choices
-			type="product-page"
-			style="<?php echo esc_attr( $styles ); ?><?php echo '--sc-variation-gap: ' . esc_attr( $attributes['gap'] ) ?>"
-		>
-		</sc-product-variation-choices>
+
+		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
+			<sc-product-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-select-variant-option>
+		<?php endforeach; ?>
+
 		<?php
 		return ob_get_clean();
 	}

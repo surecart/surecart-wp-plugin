@@ -3055,6 +3055,16 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScProductSelectVariantOption {
+        /**
+          * Label
+         */
+        "label": string;
+        /**
+          * Which option number?
+         */
+        "optionNumber": 1 | 2 | 3;
+    }
     interface ScProductSelectedPrice {
         /**
           * The product id.
@@ -5085,6 +5095,12 @@ declare global {
         prototype: HTMLScProductQuantityElement;
         new (): HTMLScProductQuantityElement;
     };
+    interface HTMLScProductSelectVariantOptionElement extends Components.ScProductSelectVariantOption, HTMLStencilElement {
+    }
+    var HTMLScProductSelectVariantOptionElement: {
+        prototype: HTMLScProductSelectVariantOptionElement;
+        new (): HTMLScProductSelectVariantOptionElement;
+    };
     interface HTMLScProductSelectedPriceElement extends Components.ScProductSelectedPrice, HTMLStencilElement {
     }
     var HTMLScProductSelectedPriceElement: {
@@ -5561,6 +5577,7 @@ declare global {
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
         "sc-product-price-modal": HTMLScProductPriceModalElement;
         "sc-product-quantity": HTMLScProductQuantityElement;
+        "sc-product-select-variant-option": HTMLScProductSelectVariantOptionElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-product-text": HTMLScProductTextElement;
         "sc-product-variation-choices": HTMLScProductVariationChoicesElement;
@@ -8933,6 +8950,16 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScProductSelectVariantOption {
+        /**
+          * Label
+         */
+        "label"?: string;
+        /**
+          * Which option number?
+         */
+        "optionNumber"?: 1 | 2 | 3;
+    }
     interface ScProductSelectedPrice {
         /**
           * Toggle line item event
@@ -10041,6 +10068,7 @@ declare namespace LocalJSX {
         "sc-product-price-choices": ScProductPriceChoices;
         "sc-product-price-modal": ScProductPriceModal;
         "sc-product-quantity": ScProductQuantity;
+        "sc-product-select-variant-option": ScProductSelectVariantOption;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-product-text": ScProductText;
         "sc-product-variation-choices": ScProductVariationChoices;
@@ -10264,6 +10292,7 @@ declare module "@stencil/core" {
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
             "sc-product-price-modal": LocalJSX.ScProductPriceModal & JSXBase.HTMLAttributes<HTMLScProductPriceModalElement>;
             "sc-product-quantity": LocalJSX.ScProductQuantity & JSXBase.HTMLAttributes<HTMLScProductQuantityElement>;
+            "sc-product-select-variant-option": LocalJSX.ScProductSelectVariantOption & JSXBase.HTMLAttributes<HTMLScProductSelectVariantOptionElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
             "sc-product-variation-choices": LocalJSX.ScProductVariationChoices & JSXBase.HTMLAttributes<HTMLScProductVariationChoicesElement>;

@@ -1,5 +1,4 @@
 import state, { onChange } from './store';
-import { availableVariants } from '@store/product/getters';
 import { getVariantFromValues } from '../../functions/util';
 
 onChange('selectedPrice', value => {
@@ -12,7 +11,7 @@ onChange('selectedPrice', value => {
 });
 
 onChange('variantValues', values => {
-  const matchedVariant = getVariantFromValues({ variants: availableVariants(), values });
+  const matchedVariant = getVariantFromValues({ variants: state.variants, values });
 
   if (matchedVariant) {
     state.selectedVariant = matchedVariant;

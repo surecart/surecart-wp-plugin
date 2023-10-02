@@ -1,6 +1,6 @@
-import { Component, h, Host, Element, EventEmitter, Event, Prop } from '@stencil/core';
+import { Component, h, Element, EventEmitter, Event, Prop, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { availableVariants, availableVariantOptions } from '@store/product/getters';
+import { availableVariants } from '@store/product/getters';
 import { state } from '@store/product';
 import { state as checkoutState } from '@store/checkout';
 import { getLineItemByProductId } from '@store/checkout/getters';
@@ -52,32 +52,48 @@ export class ScProductVariationChoices {
   };
 
   render() {
-    if (this.availableVariants?.length < 2) return <Host style={{ display: 'none' }}></Host>;
+    if (state.variant_options?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
     return (
-      <div class="sc-product-variation-choice-wrap">
-        {(availableVariantOptions(this.type) || []).map((option, index) => {
-          return (
-            <sc-select
-              exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
-              part="name__input"
-              value={state.variantValues?.[option.id] || option?.values?.[0]?.value || ''}
-              onScChange={(e: any) => {
-                const variantValues = {
-                  ...state.variantValues,
-                  [`option_${index + 1}`]: e?.target?.value,
-                };
-                state.variantValues = variantValues;
-                this.maybeUpdateLineItems(variantValues);
-              }}
-              label={option?.name}
-              choices={option?.values}
-              unselect={false}
-              key={option?.id}
-            />
-          );
-        })}
-      </div>
+      <sc-variant-options
+        options={state.variant_options}
+        onScChange={e => {
+          const { index, value } = e?.detail as { index: number; value: string };
+          console.log(index, value);
+          state.variantValues = {
+            ...state.variantValues,
+            [`option_${index + 1}`]: value,
+          };
+          console.log(state.variantValues);
+        }}
+      />
     );
+
+    // @ts-ignore
+    // return (
+    //   <div class="sc-product-variation-choice-wrap">
+    //     {(state.variant_options || []).map((option, index) => {
+    //       return (
+    //         <sc-select
+    //           exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
+    //           part="name__input"
+    //           value={state.variantValues?.[option.id] || option?.values?.[0]?.value || ''}
+    //           onScChange={(e: any) => {
+    //             const variantValues = {
+    //               ...state.variantValues,
+    //               [`option_${index + 1}`]: e?.target?.value,
+    //             };
+    //             state.variantValues = variantValues;
+    //             this.maybeUpdateLineItems(variantValues);
+    //           }}
+    //           label={option?.name}
+    //           choices={option?.values}
+    //           unselect={false}
+    //           key={option?.id}
+    //         />
+    //       );
+    //     })}
+    //   </div>
+    // );
   }
 }

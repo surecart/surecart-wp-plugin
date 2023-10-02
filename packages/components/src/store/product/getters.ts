@@ -1,3 +1,4 @@
+import { getVariantFromValues } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
 /**
@@ -37,6 +38,27 @@ export const availableVariants = (type: 'product-page' | 'instant-checkout-page'
  * @returns {boolean} - Returns stock needs to be checked or not
  */
 export const isStockNeedsToBeChecked = !!(state.product?.stock_enabled && !state.product?.allow_out_of_stock_purchases);
+
+/**
+ * Check if this option is out of stock base on the selected variant.
+ */
+export const isOptionSoldOut = (optionNumber: number, option: string) => {
+  // stock does not need to be checked.
+  if (!isStockNeedsToBeChecked) {
+    return false;
+  }
+
+  const values = {
+    ...(state.selectedVariant.option_1 ? { option_1: state.selectedVariant.option_1 } : {}),
+    ...(state.selectedVariant.option_2 ? { option_2: state.selectedVariant.option_2 } : {}),
+    ...(state.selectedVariant.option_3 ? { option_3: state.selectedVariant.option_3 } : {}),
+    [`option_${optionNumber}`]: option,
+  };
+
+  const matchedVariant = getVariantFromValues({ variants: state.variants, values });
+
+  return matchedVariant?.stock <= 0;
+};
 
 /**
  * Is product out of stock.
