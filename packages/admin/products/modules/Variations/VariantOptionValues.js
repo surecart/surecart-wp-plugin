@@ -3,7 +3,7 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useEffect, memo } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
@@ -14,7 +14,7 @@ import arrayMove from 'array-move';
 import { hasDuplicate } from './utils';
 import VariantOptionValue from './VariantOptionValue';
 
-export default memo(({ product, option, onChangeValue }) => {
+export default ({ product, option, onChangeValue }) => {
 	const [values, setValues] = useState(
 		option?.values?.length > 0 ? option?.values ?? [] : ['']
 	);
@@ -88,4 +88,4 @@ export default memo(({ product, option, onChangeValue }) => {
 			})}
 		</SortableList>
 	);
-});
+};

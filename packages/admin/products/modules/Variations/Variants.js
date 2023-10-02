@@ -6,7 +6,6 @@ import { css, jsx } from '@emotion/core';
  */
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { memo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -15,9 +14,8 @@ import { __ } from '@wordpress/i18n';
 import VariantItem from './VariantItem';
 import { maybeConvertAmount } from '../../../util';
 import { TableVirtuoso } from 'react-virtuoso';
-import { useCallback } from 'react';
 
-export default memo(({ product, updateProduct }) => {
+export default ({ product, updateProduct }) => {
 	/**
 	 * Get only active prices.
 	 */
@@ -36,13 +34,12 @@ export default memo(({ product, updateProduct }) => {
 	/**
 	 * Update a variant by position.
 	 */
-	const updateVariant = useCallback((data, position) => {
+	const updateVariant = (data, position) =>
 		updateProduct({
 			variants: product?.variants.map((item) =>
 				item?.position !== position ? item : { ...item, ...data }
 			),
 		});
-	}, []);
 
 	const activeVariants = (product?.variants ?? []).filter(
 		(variant) => 'deleted' !== variant?.status
@@ -147,4 +144,4 @@ export default memo(({ product, updateProduct }) => {
 			/>
 		</div>
 	);
-});
+};
