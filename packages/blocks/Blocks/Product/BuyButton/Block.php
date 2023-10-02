@@ -113,7 +113,7 @@ class Block extends BaseBlock {
 				<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
 				class="wp-block-button <?php echo esc_attr( $width_class ); ?>"
 				text="<?php echo esc_attr( $attributes['text'] ); ?>"
-				out-of-stock-text="<?php echo esc_attr( $attributes['outOfStockText'] ); ?>"
+				<?php echo !empty($attributes['out_of_stock_text']) ? 'out-of-stock-text="' . esc_attr( $attributes['out_of_stock_text'] ) . '"' : ''; ?>
 			>
 			</sc-product-buy-button>
 		</div>

@@ -64,7 +64,7 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
-	const { textAlign, style, text, width, outOfStockText } = attributes;
+	const { textAlign, style, text, width, out_of_stock_text } = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -145,9 +145,9 @@ export default (props) => {
 					<PanelRow>
 						<TextControl
 							label={__('Out of stock label', 'surecart')}
-							value={outOfStockText}
+							value={out_of_stock_text}
 							onChange={(value) =>
-								setAttributes({ outOfStockText: value })
+								setAttributes({ out_of_stock_text: value })
 							}
 						/>
 					</PanelRow>
