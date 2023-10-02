@@ -7,15 +7,15 @@ import { css, jsx } from '@emotion/core';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { memo } from '@wordpress/element';
-import debounce from 'lodash/debounce';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import VariantItem from './VariantItem';
-import { ScTable, ScTableCell } from '@surecart/components-react';
 import { maybeConvertAmount } from '../../../util';
+import { TableVirtuoso } from 'react-virtuoso';
+import { useCallback } from 'react';
 
 export default memo(({ product, updateProduct }) => {
 	/**
@@ -36,74 +36,115 @@ export default memo(({ product, updateProduct }) => {
 	/**
 	 * Update a variant by position.
 	 */
-	const updateVariant = debounce((data, position) => {
+	const updateVariant = useCallback((data, position) => {
 		updateProduct({
 			variants: product?.variants.map((item) =>
 				item?.position !== position ? item : { ...item, ...data }
 			),
 		});
-	}, 500);
+	}, []);
+
+	const activeVariants = (product?.variants ?? []).filter(
+		(variant) => 'deleted' !== variant?.status
+	);
 
 	return (
 		<div
 			css={css`
-				sc-table-cell:first-of-type {
-					padding-left: 30px;
+				table {
+					width: 100%;
 				}
-				sc-table-cell:last-of-type {
-					padding-right: 30px;
+				thead {
+					top: 111px !important;
 				}
+
+				td {
+					font-size: var(--sc-font-size-medium);
+					padding: var(
+							--sc-table-cell-spacing,
+							var(--sc-spacing-small)
+						)
+						var(--sc-table-cell-spacing, var(--sc-spacing-large)) !important;
+					vertical-align: middle;
+				}
+
+				tr:not(:last-child) {
+					td {
+						border-bottom: 1px solid
+							var(
+								--sc-table-row-border-bottom-color,
+								var(--sc-color-gray-200)
+							);
+					}
+				}
+
 				.components-card__body {
 					padding: 0 !important;
 				}
 				--sc-table-cell-spacing: var(--sc-spacing-large);
 			`}
 		>
-			<ScTable
-				style={{
-					'--shadow': 'none',
-					'--border-radius': '0',
-					borderLeft: '0',
-					borderRight: '0',
+			<TableVirtuoso
+				data={activeVariants}
+				useWindowScroll
+				fixedHeaderContent={() => {
+					const cell = {
+						padding:
+							'var(--sc-table-cell-spacing, var(--sc-spacing-small))',
+						borderTop: '1px solid var(--sc-color-gray-200);',
+						borderBottom: '1px solid var(--sc-color-gray-200)',
+						marginBottom: '-1px',
+					};
+					return (
+						<tr
+							css={css`
+								background: var(
+									--sc-table-cell-background-color,
+									var(--sc-color-gray-50)
+								);
+								font-size: var(--sc-font-size-x-small);
+								text-transform: uppercase;
+								font-weight: var(--sc-font-weight-semibold);
+								letter-spacing: var(--sc-letter-spacing-loose);
+								color: var(--sc-color-gray-500);
+								text-align: left;
+								border: 1px solid var(--sc-color-gray-200);
+							`}
+						>
+							<th css={cell} style={{ width: '200px' }}>
+								{__('Variant', 'surecart')}
+							</th>
+							<th css={cell} style={{ width: '150px' }}>
+								{__('Price', 'surecart')}
+							</th>
+							<th css={cell} style={{ width: '150px' }}>
+								{__('Quantity', 'surecart')}
+							</th>
+							<th css={cell} style={{ width: '150px' }}>
+								{__('SKU', 'surecart')}
+							</th>
+							<th css={cell}></th>
+						</tr>
+					);
 				}}
-			>
-				<ScTableCell slot="head" style={{ width: '200px' }}>
-					{__('Variant', 'surecart')}
-				</ScTableCell>
-				<ScTableCell slot="head" style={{ width: '150px' }}>
-					{__('Price', 'surecart')}
-				</ScTableCell>
-				{!!product?.stock_enabled && (
-					<ScTableCell slot="head" style={{ width: '150px' }}>
-						{__('Quantity', 'surecart')}
-					</ScTableCell>
+				itemContent={(_, variant) => (
+					<VariantItem
+						variant={variant}
+						updateVariant={(data) =>
+							updateVariant(data, variant?.position)
+						}
+						canOverride={(prices || [])?.length <= 1}
+						defaultAmount={
+							prices?.[0]
+								? maybeConvertAmount(
+										prices?.[0]?.amount,
+										prices?.[0]?.currency || 'usd'
+								  )
+								: ''
+						}
+					/>
 				)}
-				<ScTableCell slot="head" style={{ width: '150px' }}>
-					{__('Sku', 'surecart')}
-				</ScTableCell>
-				<ScTableCell slot="head" />
-
-				{(product?.variants ?? [])
-					.filter((variant) => 'deleted' !== variant?.status)
-					.map((variant, index) => (
-						<VariantItem
-							key={index}
-							variant={variant}
-							updateVariant={(data) =>
-								updateVariant(data, variant?.position)
-							}
-							canOverride={(prices || [])?.length <= 1}
-							defaultAmount={
-								prices?.[0]
-									? maybeConvertAmount(
-											prices?.[0]?.amount,
-											prices?.[0]?.currency || 'usd'
-									  )
-									: ''
-							}
-						/>
-					))}
-			</ScTable>
+			/>
 		</div>
 	);
 });

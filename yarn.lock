@@ -7315,6 +7315,7 @@ __metadata:
     react-dom: 17.0.2
     react-smooth-dnd: ^0.11.1
     react-test-renderer: 17.0.2
+    react-virtuoso: ^4.6.0
     replace-in-file: ^6.0.0
     sass-loader: ^10
     shelljs: ^0.8.5
@@ -29706,6 +29707,16 @@ __metadata:
   peerDependencies:
     react: ">= 16.8.0"
   checksum: 4436b9c4e6634c74884b6d8c8b22b57e280a3ec5b2167467f4405c56e7ca9a188771d0c043d17eb62d5d9d6e15c16ae2b7a370a187391ef1d1740361b8882b43
+  languageName: node
+  linkType: hard
+
+"react-virtuoso@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "react-virtuoso@npm:4.6.0"
+  peerDependencies:
+    react: ">=16 || >=17 || >= 18"
+    react-dom: ">=16 || >=17 || >= 18"
+  checksum: 9bf788e8d17ae6de7883b96173d5a8a3cf753e647b720487a39bbf65ab517e61f72b83ab45ba3467cb4d9dd0426cc89d382c5675828b1bf70c3179c0be4c1d1e
   languageName: node
   linkType: hard
 

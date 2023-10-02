@@ -19,8 +19,6 @@ import {
 	ScMenuItem,
 	ScPriceInput,
 	ScQuantitySelect,
-	ScTableCell,
-	ScTableRow,
 	ScTooltip,
 } from '@surecart/components-react';
 import Image from './Image';
@@ -81,8 +79,8 @@ export default memo(
 		};
 
 		return (
-			<ScTableRow>
-				<ScTableCell>
+			<>
+				<td>
 					<div
 						css={css`
 							display: flex;
@@ -106,8 +104,8 @@ export default memo(
 							{renderName(variant)}
 						</div>
 					</div>
-				</ScTableCell>
-				<ScTableCell>
+				</td>
+				<td>
 					<>
 						{!canOverride ? (
 							<ScTooltip
@@ -143,8 +141,8 @@ export default memo(
 							/>
 						)}
 					</>
-				</ScTableCell>
-				<ScTableCell>
+				</td>
+				<td>
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							type="text"
@@ -208,8 +206,8 @@ export default memo(
 							</div>
 						</ScMenu>
 					</ScDropdown>
-				</ScTableCell>
-				<ScTableCell>
+				</td>
+				<td>
 					<ScInput
 						value={sku}
 						css={css`
@@ -220,8 +218,8 @@ export default memo(
 							updateVariant({ sku: e.target.value })
 						}
 					/>
-				</ScTableCell>
-				<ScTableCell>
+				</td>
+				<td>
 					<ScDropdown placement="bottom-end">
 						<ScButton type="text" slot="trigger">
 							<ScIcon name="more-horizontal" />
@@ -248,8 +246,8 @@ export default memo(
 							)}
 						</ScMenu>
 					</ScDropdown>
-				</ScTableCell>
-			</ScTableRow>
+				</td>
+			</>
 		);
 	}
 );
