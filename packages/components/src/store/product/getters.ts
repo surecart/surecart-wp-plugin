@@ -77,16 +77,3 @@ export const isProductOutOfStock = () => {
   // Check against selected variant's stock.
   return state.selectedVariant?.stock <= 0;
 };
-
-/**
- * Get selected product stock.
- *
- * @returns {number} - Returns product stock
- */
-export const getSelectedProductStock = () => {
-  // If no variant is selected, check against product stock.
-  if (!state?.selectedVariant) return state.product?.stock;
-
-  // Check against selected variant's stock.
-  return state.selectedVariant?.stock;
-};
