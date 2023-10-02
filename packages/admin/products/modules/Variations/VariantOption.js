@@ -5,6 +5,7 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useRef, useState } from '@wordpress/element';
 import { SortableKnob } from 'react-easy-sort';
+import debounce from 'lodash/debounce';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -21,14 +22,7 @@ import {
 import VariantOptionValues from './VariantOptionValues';
 import { hasDuplicate } from './utils';
 
-export default ({
-	index,
-	product,
-	updateProduct,
-	option,
-	updateOption,
-	onDelete,
-}) => {
+export default ({ index, product, option, updateOption, onDelete }) => {
 	// we are automatically editing if we don't yet have an option nane (it's new)
 	const [editing, setEditing] = useState(!option?.name);
 	const input = useRef(null);
@@ -38,6 +32,12 @@ export default ({
 			input.current.triggerFocus();
 		}
 	}, [editing]);
+
+	const handleChange = debounce((name) => {
+		updateOption({
+			name,
+		});
+	}, 500);
 
 	return (
 		<div
@@ -95,11 +95,9 @@ export default ({
 									css={css`
 										width: 50%;
 									`}
-									onScInput={(e) => {
-										updateOption({
-											name: e.target.value,
-										});
-									}}
+									onScInput={(e) =>
+										handleChange(e.target.value)
+									}
 									onScChange={(e) => {
 										e.target.setCustomValidity(
 											hasDuplicate(

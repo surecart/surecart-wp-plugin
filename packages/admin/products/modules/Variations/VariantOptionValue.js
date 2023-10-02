@@ -6,6 +6,7 @@ import { css, jsx } from '@emotion/core';
 import { useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { SortableKnob } from 'react-easy-sort';
+import debounce from 'lodash/debounce';
 
 /**
  * Internal dependencies.
@@ -27,7 +28,7 @@ export default ({
 	// handle validation.
 	const [customValidity, setCustomValidity] = useState('');
 
-	const handleChange = (changed) => {
+	const handleChange = debounce((changed) => {
 		// has duplicate, don't update.
 		if (
 			!!changed &&
@@ -48,7 +49,7 @@ export default ({
 		// else it's valid.
 		setCustomValidity('');
 		onChange(changed);
-	};
+	}, 500);
 
 	return (
 		<div

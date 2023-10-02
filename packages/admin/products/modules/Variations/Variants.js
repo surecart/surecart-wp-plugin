@@ -6,6 +6,8 @@ import { css, jsx } from '@emotion/core';
  */
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
+import { memo } from '@wordpress/element';
+import debounce from 'lodash/debounce';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -15,7 +17,7 @@ import VariantItem from './VariantItem';
 import { ScTable, ScTableCell } from '@surecart/components-react';
 import { maybeConvertAmount } from '../../../util';
 
-export default ({ product, updateProduct }) => {
+export default memo(({ product, updateProduct }) => {
 	/**
 	 * Get only active prices.
 	 */
@@ -34,13 +36,13 @@ export default ({ product, updateProduct }) => {
 	/**
 	 * Update a variant by position.
 	 */
-	const updateVariant = (data, position) => {
+	const updateVariant = debounce((data, position) => {
 		updateProduct({
 			variants: product?.variants.map((item) =>
 				item?.position !== position ? item : { ...item, ...data }
 			),
 		});
-	};
+	}, 500);
 
 	return (
 		<div
@@ -104,4 +106,4 @@ export default ({ product, updateProduct }) => {
 			</ScTable>
 		</div>
 	);
-};
+});
