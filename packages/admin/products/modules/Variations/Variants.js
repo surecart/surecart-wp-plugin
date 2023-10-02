@@ -45,6 +45,10 @@ export default ({ product, updateProduct }) => {
 		(variant) => 'deleted' !== variant?.status
 	);
 
+	if (!activeVariants?.length) {
+		return null;
+	}
+
 	return (
 		<div
 			css={css`
