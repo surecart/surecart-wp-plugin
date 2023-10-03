@@ -21,20 +21,49 @@ import {
 import VariantOptionValues from './VariantOptionValues';
 import { hasDuplicate } from './utils';
 
-export default ({ index, product, option, updateOption, onDelete }) => {
+export default ({
+	open,
+	setOpen,
+	index,
+	product,
+	option,
+	updateProduct,
+	updateOption,
+	onDelete,
+}) => {
 	// we are automatically editing if we don't yet have an option nane (it's new)
-	const [editing, setEditing] = useState(!option?.name);
 	const input = useRef(null);
 
 	useEffect(() => {
-		if (editing) {
-			input.current.triggerFocus();
+		if (open) {
+			setTimeout(() => {
+				input.current.triggerFocus();
+			}, 50);
 		}
-	}, [editing]);
+	}, [open]);
+
+	useEffect(() => {
+		setOpen(!option?.name);
+	}, []);
 
 	const handleChange = (name) =>
 		updateOption({
 			name,
+		});
+
+	const onChangeValues = (values) =>
+		updateProduct({
+			variant_options: product?.variant_options?.map(
+				(option, optionIndex) => {
+					if (optionIndex === index) {
+						return {
+							...option,
+							values,
+						};
+					}
+					return option;
+				}
+			),
 		});
 
 	return (
@@ -45,12 +74,12 @@ export default ({ index, product, option, updateOption, onDelete }) => {
 				border-bottom: 1px solid var(--sc-color-gray-200);
 			`}
 		>
-			{editing ? (
+			{open ? (
 				<ScForm
 					onScFormSubmit={(e) => {
 						e.preventDefault();
 						e.stopImmediatePropagation();
-						setEditing(false);
+						setOpen(false);
 					}}
 				>
 					<div
@@ -147,16 +176,8 @@ export default ({ index, product, option, updateOption, onDelete }) => {
 									required
 								/>
 								<VariantOptionValues
-									option={{
-										...option,
-										index,
-									}}
-									product={product}
-									onChangeValue={(updatedValues) => {
-										updateOption({
-											values: updatedValues,
-										});
-									}}
+									values={option?.values || []}
+									onChange={onChangeValues}
 								/>
 							</div>
 							<div
@@ -222,7 +243,7 @@ export default ({ index, product, option, updateOption, onDelete }) => {
 					</div>
 
 					<div>
-						<ScButton onClick={() => setEditing(true)}>
+						<ScButton onClick={() => setOpen(true)}>
 							{__('Edit', 'surecart')}
 						</ScButton>
 					</div>

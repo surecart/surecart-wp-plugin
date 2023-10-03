@@ -3,7 +3,7 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useEffect } from '@wordpress/element';
+// import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
@@ -13,40 +13,37 @@ import arrayMove from 'array-move';
  */
 import { hasDuplicate } from './utils';
 import VariantOptionValue from './VariantOptionValue';
+import { useEffect } from 'react';
 
-export default ({ product, option, onChangeValue }) => {
-	const [values, setValues] = useState(
-		option?.values?.length > 0 ? option?.values ?? [] : ['']
-	);
-
-	const applySort = (oldIndex, newIndex) =>
-		setValues(arrayMove(values, oldIndex, newIndex));
-
+export default ({ values, onChange }) => {
 	// update specific option value.
-	const onChangeOptionValue = (index, newLabel) => {
-		const updated = values.map((value, valueIndex) =>
+	const updateValue = (index, newLabel) => {
+		const updated = (values || []).map((value, valueIndex) =>
 			valueIndex === index ? newLabel : value
 		);
 		if (hasDuplicate(updated)) {
 			return;
 		}
-		setValues(updated);
+		onChange(updated);
 	};
 
-	useEffect(() => {
-		// when values change, update the option.
-		onChangeValue(values);
+	// sort values
+	const applySort = (oldIndex, newIndex) =>
+		onChange(arrayMove(values, oldIndex, newIndex));
 
-		// we always want an empty value at the end.
+	// we always want an empty value at the end.
+	useEffect(() => {
 		const hasEmpty = values.some((value) => !value);
 		if (!hasEmpty) {
-			setValues([...values, '']);
+			onChange([...values, '']);
 		}
 	}, [values]);
 
 	// remove the option value from the array.
 	const deleteOptionValue = (index) => {
-		setValues(values.filter((_, valueIndex) => valueIndex !== index));
+		onChange(
+			(values || []).filter((_, valueIndex) => valueIndex !== index)
+		);
 	};
 
 	return (
@@ -67,12 +64,10 @@ export default ({ product, option, onChangeValue }) => {
 								values={values}
 								index={index}
 								required={index === 0 || !isLastItem}
-								onChange={(value) =>
-									onChangeOptionValue(index, value)
-								}
-								disabled={
-									product?.variants?.length > 99 && isLastItem
-								}
+								onChange={(value) => updateValue(index, value)}
+								// disabled={
+								// 	product?.variants?.length > 99 && isLastItem
+								// }
 								onDelete={() => deleteOptionValue(index)}
 								placeholder={
 									isLastItem

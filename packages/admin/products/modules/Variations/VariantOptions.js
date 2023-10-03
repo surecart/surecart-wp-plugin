@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n';
 import { generateVariants, normalizeVariants } from './utils';
 import Error from '../../../components/Error';
 import VariantOption from './VariantOption';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
@@ -24,6 +24,24 @@ export default ({ product, updateProduct }) => {
 	const previousProduct = useRef(product);
 	const [normalizedVariants, setNormalizedVariants] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
+	const [open, setOpen] = useState(false);
+
+	// we want to close the modal if the product is saving.
+	// this will prevent editing variants with the modal open.
+	const isSaving = useSelect((select) => {
+		const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } =
+			select(coreStore);
+		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
+		return dirtyEntityRecords.some((record) =>
+			isSavingEntityRecord(record.kind, record.name, record.key)
+		);
+	}, []);
+
+	useEffect(() => {
+		if (isSaving) {
+			setOpen(false);
+		}
+	}, [isSaving]);
 
 	useEffect(() => {
 		// has the product saved?
@@ -89,7 +107,8 @@ export default ({ product, updateProduct }) => {
 		});
 
 	// Apply drag to reorder the variant options.
-	const applyDrag = async (oldIndex, newIndex) =>
+	const applyDrag = async (oldIndex, newIndex) => {
+		setOpen(false);
 		updateProduct({
 			...product,
 			variant_options: arrayMove(
@@ -101,6 +120,7 @@ export default ({ product, updateProduct }) => {
 				position: index, // make sure to map position.
 			})),
 		});
+	};
 
 	// we don't want to render if there are no variant options.
 	if (!product?.variant_options?.length) {
@@ -122,6 +142,10 @@ export default ({ product, updateProduct }) => {
 						<SortableItem key={index}>
 							<div>
 								<VariantOption
+									open={open === index}
+									setOpen={(open) =>
+										setOpen(open ? index : false)
+									}
 									product={product}
 									updateProduct={updateProduct}
 									option={option}
