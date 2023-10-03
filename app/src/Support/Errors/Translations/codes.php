@@ -115,8 +115,9 @@ return [
 	'payment_method.invalid'                               => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'customer.default_payment_method.invalid'              => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'payment_method.not_detachable'                        => __( 'This payment method cannot be deleted because there are no other valid or reusable saved payment methods available.', 'surecart' ),
-	'checkout.product.out_of_stock'                      => __( 'This product is out of stock.', 'surecart' ),
-	'checkout.price.unpurchasable'                       => __( 'This product is no longer available for purchase.', 'surecart' ),
-	'order.line_items.price.blank'                       => __( 'This product is no longer available for purchase.', 'surecart' ),
-	'checkout.line_items.price.currency_mismatch'        => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'checkout.product.out_of_stock'                        => __( 'This product is out of stock.', 'surecart' ),
+	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
+	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
+	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 ];
