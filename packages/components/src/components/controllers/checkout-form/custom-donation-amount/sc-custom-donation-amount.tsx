@@ -8,9 +8,7 @@ import { createErrorNotice } from '@store/notices/mutations';
   tag: 'sc-custom-donation-amount',
   styleUrl: 'sc-custom-donation-amount.scss',
 })
-
 export class ScCustomDonationAmount {
-
   private removeCheckoutListener: () => void;
 
   @Element() el: HTMLScCustomDonationAmountElement;
@@ -44,15 +42,15 @@ export class ScCustomDonationAmount {
     const data = {
       line_items: lineItems,
     };
-    
+
     try {
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout?.id,
-        data
+        data,
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      createErrorNotice(e, {dismissible: true});
+      createErrorNotice(e, { dismissible: true });
       throw e;
     }
   }
@@ -65,28 +63,22 @@ export class ScCustomDonationAmount {
   render() {
     return (
       <Fragment>
-      <sc-choice-container value={this.value} show-control="false">
-        <sc-form
-          onScFormSubmit={(e) => this.handleButtonClick(e)}
-        >
-          <sc-price-input
+        <sc-choice-container value={this.value} show-control="false">
+          <sc-form onScFormSubmit={e => this.handleButtonClick(e)}>
+            <sc-price-input
               currencyCode={this.currencyCode}
               showCode={false}
               showLabel={false}
-              onScChange={(e) => this.handlePriceChange(e)}
+              onScChange={e => this.handlePriceChange(e)}
               min={this.lineItem?.price?.ad_hoc_min_amount}
               max={this.lineItem?.price?.ad_hoc_max_amount}
-          > 
-          <sc-button
-            circle
-            submit
-            slot="suffix" 
-          >
-            <sc-icon name="arrow-right"></sc-icon>
-          </sc-button>
-          </sc-price-input>
-        </sc-form>
-      </sc-choice-container>
+            >
+              <sc-button circle submit slot="suffix">
+                <sc-icon name="arrow-right"></sc-icon>
+              </sc-button>
+            </sc-price-input>
+          </sc-form>
+        </sc-choice-container>
       </Fragment>
     );
   }

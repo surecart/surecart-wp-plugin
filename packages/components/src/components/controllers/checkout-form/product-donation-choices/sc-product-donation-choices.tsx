@@ -58,31 +58,30 @@ export class ScProductDonationChoice {
 
   @Listen('scChange')
   handleChange() {
-    let checked = Array.from(this.getChoices()).find((item) => {
+    let checked = Array.from(this.getChoices()).find(item => {
       return item.checked && item.parentElement.tagName === 'SC-CUSTOM-DONATION-AMOUNT';
     });
-   
+
     if (checked) {
-      Array.from(this.getChoices()).forEach((item) => {
+      Array.from(this.getChoices()).forEach(item => {
         if (item !== checked) {
           item.checked = false;
         }
-      }
-      );
+      });
     }
 
     if (!checked) {
-      checked = Array.from(this.getChoices()).find((item) => {
+      checked = Array.from(this.getChoices()).find(item => {
         const value = item?.value ? item?.value : null;
-        return item.checked && this.isInRange(value)
+        return item.checked && this.isInRange(value);
       });
     }
-    
+
     if (!checked) {
       checked = Array.from(this.getChoices())?.find(item => this.isInRange(item.value));
       checked.checked = true;
     }
-     
+
     const value = checked?.value ? checked?.value : null;
 
     if (!isNaN(parseInt(value)) && this.isInRange(value)) {
@@ -101,8 +100,8 @@ export class ScProductDonationChoice {
     this.removeInvalidPrices();
   }
 
-   /** Update a session */
-   async update(data: any = {}, query = {}) {
+  /** Update a session */
+  async update(data: any = {}, query = {}) {
     try {
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout?.id,
@@ -111,20 +110,20 @@ export class ScProductDonationChoice {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      createErrorNotice(e, {dismissible: true});
+      createErrorNotice(e, { dismissible: true });
       throw e;
     }
   }
-  
-  async getProductPrices() {  
-    if (!this.product) return; 
+
+  async getProductPrices() {
+    if (!this.product) return;
     const product = (await apiFetch({
       path: addQueryArgs(`surecart/v1/products/${this.product}`, {
         expand: ['prices'],
       }),
     })) as Product;
     this.selectedProduct = product;
-    this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position); 
+    this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position);
     this.loading = false;
     this.selectDefaultChoice();
     this.removeInvalidPrices();
@@ -150,7 +149,7 @@ export class ScProductDonationChoice {
   }
 
   selectDefaultChoice() {
-    let choices = Array.from(this.getChoices()); 
+    let choices = Array.from(this.getChoices());
     //only need choices that has a value
     choices = choices.filter(choice => choice?.value);
     if (!choices.length || !this.prices?.length) return;
@@ -194,7 +193,7 @@ export class ScProductDonationChoice {
 
   render() {
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
-    
+
     if (this.loading) {
       return (
         <div class="sc-product-donation-choices">
@@ -206,10 +205,7 @@ export class ScProductDonationChoice {
     }
 
     return (
-      <div 
-        class="sc-product-donation-choices"
-        style={{ '--columns': this.amountColumns}}
-      >
+      <div class="sc-product-donation-choices" style={{ '--columns': this.amountColumns }}>
         <sc-choices label={this.amountLabel}>
           <slot />
         </sc-choices>
@@ -222,12 +218,12 @@ export class ScProductDonationChoice {
           onScChange={e => {
             if ('string' === typeof e?.detail) {
               this.priceId = e.detail;
-            } else if ( true === e?.detail ) {
+            } else if (true === e?.detail) {
               this.priceId = nonRecurringPrice?.id;
             }
             this.handleChange();
           }}
-          part='recurring-choices'
+          part="recurring-choices"
         />
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
