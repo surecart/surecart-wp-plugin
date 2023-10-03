@@ -5,7 +5,6 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe('surecart/product-donation', () => {
 	let product;
-	let post;
 
 	test.beforeEach(async ({ admin, requestUtils }) => {
 		product = await requestUtils.rest({
@@ -78,7 +77,7 @@ test.describe('surecart/product-donation', () => {
 		await admin.createNewPost();
 	});
 
-	test('Should render donation block', async ({ editor, page }) => {
+	test('Should render donation block on frontend', async ({ editor, page }) => {
 		const serializedBlockHTML = `
 		<!-- wp:surecart/checkout-form {\"title\":\"Test Form\"} /-->
 		<!-- wp:surecart/form {"success_url":"","prices":[]} -->
@@ -148,13 +147,26 @@ test.describe('surecart/product-donation', () => {
 		<!-- /wp:surecart/form -->
 		<!-- /wp:surecart/checkout-form /-->
 		`;
-			
+		// Add a predefined content for the page that has Checkout Form & Donation block.
 		await editor.setContent(serializedBlockHTML);
 		await editor.publishPost();
 		await page
 			.locator('.components-button.is-primary', { hasText: 'View Post' })
 			.click();
 		await page.waitForLoadState('networkidle');
-		await expect(page.locator('sc-checkout')).toBeVisible();
+		await expect(page.locator('sc-product-donation-choices')).toBeVisible(); // expect the sc-product-donation-choices component to be visible.
+		await expect(page.locator('sc-custom-donation-amount')).toBeVisible(); // expect the sc-custom-donation-amount component to be visible.
+		await expect(page.locator('sc-product-donation-choices > sc-choice-container[checked]')).toBeVisible(); // Check  if the first choice is checked by default.
+		await expect(page.locator('sc-product-donation-choices sc-donation-recurring-choices sc-choice-container[checked]')).toBeVisible(); // Check  if the first recurring choice is checked by default.
+		await expect(page.locator('sc-product-donation-choices > .sc-product-donation-choices > sc-choices .form-control label')).toHaveText('Donation Amount'); // Check if the the label of the choices component is correct.
+		await expect(page.locator('sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices .form-control label')).toHaveText('Make it recurring'); // Check if the the label of the choices component is correct.
+		await expect(page.locator('sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices sc-recurring-price-choice-container .price-choice__name')).toHaveText('Yes, count me in!'); // Check if the the label of the choices component is correct.
+		await expect(page.locator('sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices sc-choices > sc-choice-container .price-choice__name')).toHaveText('No, donate once'); // Check if the the label of the choices component is correct.
+		// const amountElement = await page.locator('sc-product-donation-choices > sc-choice-container:not([disabled]):not([checked])').first(); 
+		// amountElement.click();// Click on any other amount choice.
+		// const amountElementValue = await amountElement.getAttribute('value');
+		// await expect(page.locator('sc-product-line-item')).toHaveAttribute('value', amountElementValue); // Check if the amount choice is checked.
+		
+
 	});
 });
