@@ -1,4 +1,3 @@
-import { getVariantFromValues } from '../../functions/util';
 import state from './store';
 import { state as checkoutState } from '@store/checkout';
 /**
@@ -6,24 +5,6 @@ import { state as checkoutState } from '@store/checkout';
  * @returns {Price[]} - Returns an array of prices that are not archived
  */
 export const availablePrices = () => (state.prices || []).filter(price => !price?.archived).sort((a, b) => a?.position - b?.position); // sort by position
-
-export const availableVariantOptions = (type: 'product-page' | 'instant-checkout-page' = 'product-page') =>
-  (
-    ('product-page' === type && state?.variant_options
-      ? state.variant_options
-      : 'instant-checkout-page' === type && checkoutState?.product?.variant_options?.data
-      ? checkoutState?.product?.variant_options?.data
-      : state?.variant_options) || []
-  )?.map(({ id, name, values }) => {
-    return {
-      id,
-      name,
-      values: values?.map(label => ({
-        label,
-        value: label,
-      })),
-    };
-  });
 
 export const availableVariants = (type: 'product-page' | 'instant-checkout-page' = 'product-page') =>
   ('product-page' === type && state?.variants
@@ -48,16 +29,26 @@ export const isOptionSoldOut = (optionNumber: number, option: string) => {
     return false;
   }
 
-  const values = {
-    ...(state.selectedVariant.option_1 ? { option_1: state.selectedVariant.option_1 } : {}),
-    ...(state.selectedVariant.option_2 ? { option_2: state.selectedVariant.option_2 } : {}),
-    ...(state.selectedVariant.option_3 ? { option_3: state.selectedVariant.option_3 } : {}),
-    [`option_${optionNumber}`]: option,
-  };
+  // if this is option 1, check to see if there are any variants with this option.
+  if (optionNumber === 1) {
+    const items = state.variants.filter(variant => variant.option_1 === option);
+    const highestStock = Math.max(...items.map(item => item.stock));
+    return highestStock <= 0;
+  }
 
-  const matchedVariant = getVariantFromValues({ variants: state.variants, values });
+  // if this is option 2, check to see if there are any variants with this option and option 1
+  if (optionNumber === 2) {
+    const items = state.variants.filter(variant => variant?.option_1 === state.selectedVariant.option_1 && variant.option_2 === option);
+    const highestStock = Math.max(...items.map(item => item.stock));
+    return highestStock <= 0;
+  }
 
-  return matchedVariant?.stock <= 0;
+  // if this is option 4, check to see if there are any variants with all the options.
+  const items = state.variants.filter(
+    variant => variant?.option_1 === state.selectedVariant.option_1 && variant?.option_2 === state.selectedVariant.option_2 && variant.option_2 === option,
+  );
+  const highestStock = Math.max(...items.map(item => item.stock));
+  return highestStock <= 0;
 };
 
 /**
