@@ -6,7 +6,6 @@
   display: grid;
   gap: var(--sc-spacing-small);
   position: relative;
-  z-index: 1;
   --columns: 2;
 }
 .sc-donation-recurring-choices::part(choices) {
