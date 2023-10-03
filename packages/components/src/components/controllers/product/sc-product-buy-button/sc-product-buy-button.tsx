@@ -90,7 +90,7 @@ export class ScProductBuyButton {
       >
         <a class={`wp-block-button__link wp-element-button sc-button ${this.classes}`}>
           {isProductOutOfStock() ? (
-            <span data-text>{this.outOfStockText}</span>
+            <span>{this.outOfStockText}</span>
           ) : (
             <span>
               <span data-text>{this.getInStockText()}</span>
