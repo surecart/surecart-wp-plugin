@@ -6,6 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 @Component({
   tag: 'sc-product-donation-choices',
   styleUrl: 'sc-product-donation-choices.scss',
@@ -103,14 +104,17 @@ export class ScProductDonationChoice {
   /** Update a session */
   async update(data: any = {}, query = {}) {
     try {
+      updateFormState('FETCH');
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout?.id,
         data,
         query,
       })) as Checkout;
+      updateFormState('RESOLVE');
     } catch (e) {
       console.error(e);
       createErrorNotice(e, { dismissible: true });
+      updateFormState('REJECT');
       throw e;
     }
   }
