@@ -150,7 +150,9 @@ export class ScProductDonationChoice {
   }
 
   selectDefaultChoice() {
-    const choices = Array.from(this.getChoices()); 
+    let choices = Array.from(this.getChoices()); 
+    //only need choices that has a value
+    choices = choices.filter(choice => choice?.value);
     if (!choices.length || !this.prices?.length) return;
     let checkoutPriceID = this.lineItem?.price?.id;
     let checkoutAmount = this.lineItem?.ad_hoc_amount;
