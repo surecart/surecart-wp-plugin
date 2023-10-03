@@ -21,8 +21,14 @@
 }
 
 @media screen and (max-width: 720px) {
-  sc-dashboard-module::part(heading-text) {
-    flex: 1 1 100%;
+  sc-dashboard-module {
+    &::part(heading-text) {
+      flex: 1 1 100%;
+    }
+
+    &::part(heading) {
+      gap: 0;
+    }
   }
 }
 
