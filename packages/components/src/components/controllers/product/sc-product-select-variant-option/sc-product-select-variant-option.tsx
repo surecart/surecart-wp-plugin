@@ -29,7 +29,7 @@ export class ScProductSelectVariantOption {
         choices={(state.variant_options[this.optionNumber - 1].values || []).map(value => ({
           label: value,
           value,
-          unavailable: isOptionSoldOut(this.optionNumber, value),
+          suffix: isOptionSoldOut(this.optionNumber, value) ? __('Unavailable', 'surecart') : '',
         }))}
         unselect={false}
       />
