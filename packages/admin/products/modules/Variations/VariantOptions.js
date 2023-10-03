@@ -138,6 +138,14 @@ export default ({ product, updateProduct }) => {
 			<Error error={error} setError={setError} />
 			<SortableList onSortEnd={applyDrag}>
 				{product?.variant_options.map((option, index) => {
+					const options = product?.variant_options || [];
+					const total =
+						(options?.[index - 2]?.values?.length || 1) *
+						(options?.[index - 1]?.values?.length || 1) *
+						((options?.[index]?.values?.length || 1) + 1) *
+						(options?.[index + 1]?.values?.length || 1) *
+						(options?.[index + 2]?.values?.length || 1);
+					console.log({ total });
 					return (
 						<SortableItem key={index}>
 							<div>
@@ -157,6 +165,7 @@ export default ({ product, updateProduct }) => {
 									}}
 									onDelete={() => onDelete(index)}
 									index={index}
+									canAddValue={total < 100}
 								/>
 							</div>
 						</SortableItem>

@@ -15,7 +15,8 @@ import { hasDuplicate } from './utils';
 import VariantOptionValue from './VariantOptionValue';
 import { useEffect } from 'react';
 
-export default ({ values, onChange }) => {
+export default ({ values, onChange, canAddValue }) => {
+	console.log({ canAddValue });
 	// update specific option value.
 	const updateValue = (index, newLabel) => {
 		const updated = (values || []).map((value, valueIndex) =>
@@ -65,9 +66,7 @@ export default ({ values, onChange }) => {
 								index={index}
 								required={index === 0 || !isLastItem}
 								onChange={(value) => updateValue(index, value)}
-								// disabled={
-								// 	product?.variants?.length > 99 && isLastItem
-								// }
+								disabled={!canAddValue && isLastItem}
 								onDelete={() => deleteOptionValue(index)}
 								placeholder={
 									isLastItem

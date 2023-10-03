@@ -30,6 +30,7 @@ export default ({
 	updateProduct,
 	updateOption,
 	onDelete,
+	canAddValue,
 }) => {
 	// we are automatically editing if we don't yet have an option nane (it's new)
 	const input = useRef(null);
@@ -178,6 +179,7 @@ export default ({
 								<VariantOptionValues
 									values={option?.values || []}
 									onChange={onChangeValues}
+									canAddValue={canAddValue}
 								/>
 							</div>
 							<div
