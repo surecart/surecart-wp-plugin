@@ -30,6 +30,7 @@ export class ScProductSelectVariantOption {
           label: value,
           value,
           suffix: isOptionSoldOut(this.optionNumber, value) ? __('Unavailable', 'surecart') : '',
+          unavailable: isOptionSoldOut(this.optionNumber, value),
         }))}
         unselect={false}
       />
