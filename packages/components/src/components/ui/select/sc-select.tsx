@@ -475,7 +475,7 @@ export class ScSelectDropdown {
             {this.search && (
               <sc-input
                 exportparts="base:search__base, input:search__input, form-control:search__form-control"
-                placeholder={this.searchPlaceholder || 'Search...'}
+                placeholder={this.searchPlaceholder || __('Search...', 'surecart')}
                 onScInput={e => this.handleQuery(e)}
                 class="search"
                 clearable
