@@ -3,6 +3,7 @@ import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, LineItem } from '../../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-custom-donation-amount',
@@ -44,11 +45,14 @@ export class ScCustomDonationAmount {
     };
 
     try {
+      updateFormState('FETCH');
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout?.id,
         data,
       })) as Checkout;
+      updateFormState('RESOLVE');
     } catch (e) {
+      updateFormState('REJECT');
       console.error(e);
       createErrorNotice(e, { dismissible: true });
       throw e;
