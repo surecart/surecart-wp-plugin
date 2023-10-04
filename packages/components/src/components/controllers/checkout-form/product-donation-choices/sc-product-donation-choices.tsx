@@ -59,18 +59,9 @@ export class ScProductDonationChoice {
   @Listen('scChange')
   handleChange() {
     let checked = Array.from(this.getChoices()).find((item) => {
-      return item.checked && item.parentElement.tagName === 'SC-CUSTOM-DONATION-AMOUNT';
+      return item.checked && item.parentElement.tagName === 'SC-CUSTOM-DONATION-AMOUNT' && this.isInRange(item?.value);
     });
    
-    if (checked) {
-      Array.from(this.getChoices()).forEach((item) => {
-        if (item !== checked) {
-          item.checked = false;
-        }
-      }
-      );
-    }
-
     if (!checked) {
       checked = Array.from(this.getChoices()).find((item) => {
         const value = item?.value ? item?.value : null;
@@ -82,10 +73,19 @@ export class ScProductDonationChoice {
       checked = Array.from(this.getChoices())?.find(item => this.isInRange(item.value));
       checked.checked = true;
     }
-     
+
+    if (checked) {
+      Array.from(this.getChoices()).forEach((item) => {
+        if (item !== checked) {
+          item.checked = false;
+        }
+      }
+      );
+    }
+    
     const value = checked?.value ? checked?.value : null;
 
-    if (!isNaN(parseInt(value)) && this.isInRange(value)) {
+    if (!isNaN(parseInt(value))) {
       let lineItems = [];
       if (this.lineItem) {
         lineItems = [{ id: this.lineItem?.id, price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(value) }];
@@ -111,7 +111,7 @@ export class ScProductDonationChoice {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      createErrorNotice(e, {dismissible: true});
+      createErrorNotice(e);
       throw e;
     }
   }
