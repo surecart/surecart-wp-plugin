@@ -24,7 +24,6 @@ export default ({ product, updateProduct }) => {
 	const previousProduct = useRef(product);
 	const [normalizedVariants, setNormalizedVariants] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
-	const [open, setOpen] = useState(false);
 
 	// we want to close the modal if the product is saving.
 	// this will prevent editing variants with the modal open.
@@ -36,12 +35,6 @@ export default ({ product, updateProduct }) => {
 			isSavingEntityRecord(record.kind, record.name, record.key)
 		);
 	}, []);
-
-	useEffect(() => {
-		if (isSaving) {
-			setOpen(false);
-		}
-	}, [isSaving]);
 
 	useEffect(() => {
 		// has the product saved?
@@ -108,7 +101,6 @@ export default ({ product, updateProduct }) => {
 
 	// Apply drag to reorder the variant options.
 	const applyDrag = async (oldIndex, newIndex) => {
-		setOpen(false);
 		updateProduct({
 			...product,
 			variant_options: arrayMove(
@@ -155,10 +147,6 @@ export default ({ product, updateProduct }) => {
 						<SortableItem key={index}>
 							<div>
 								<VariantOption
-									open={open === index}
-									setOpen={(open) =>
-										setOpen(open ? index : false)
-									}
 									product={product}
 									updateProduct={updateProduct}
 									option={option}

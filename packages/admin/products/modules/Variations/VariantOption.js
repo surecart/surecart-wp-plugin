@@ -3,7 +3,7 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { SortableKnob } from 'react-easy-sort';
 import { __ } from '@wordpress/i18n';
 
@@ -22,8 +22,6 @@ import VariantOptionValues from './VariantOptionValues';
 import { hasDuplicate } from './utils';
 
 export default ({
-	open,
-	setOpen,
 	index,
 	product,
 	option,
@@ -32,8 +30,12 @@ export default ({
 	onDelete,
 	canAddValue,
 }) => {
-	// we are automatically editing if we don't yet have an option nane (it's new)
 	const input = useRef(null);
+
+	// If pass editing from option, then take that value, by default, it's undefined.
+	// otherwise we'll automatically editing if we don't yet have an option name (it's new)
+	const open =
+		option?.editing !== undefined ? option?.editing : !option?.name;
 
 	useEffect(() => {
 		if (open) {
@@ -42,10 +44,6 @@ export default ({
 			}, 50);
 		}
 	}, [open]);
-
-	useEffect(() => {
-		setOpen(!option?.name);
-	}, []);
 
 	const handleChange = (name) =>
 		updateOption({
@@ -80,7 +78,9 @@ export default ({
 					onScFormSubmit={(e) => {
 						e.preventDefault();
 						e.stopImmediatePropagation();
-						setOpen(false);
+						updateOption({
+							editing: false,
+						});
 					}}
 				>
 					<div
@@ -245,7 +245,13 @@ export default ({
 					</div>
 
 					<div>
-						<ScButton onClick={() => setOpen(true)}>
+						<ScButton
+							onClick={() =>
+								updateOption({
+									editing: true,
+								})
+							}
+						>
 							{__('Edit', 'surecart')}
 						</ScButton>
 					</div>
