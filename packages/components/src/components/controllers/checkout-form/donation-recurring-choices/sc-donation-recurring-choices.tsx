@@ -39,10 +39,6 @@ export class ScDonationRecurringChoices {
 
   @Event() scChange: EventEmitter<string | boolean>;
 
-  getChoices() {
-    return this.el.querySelectorAll('.sc-donation-recurring-choice') || [];
-  }
-
   render() {
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
