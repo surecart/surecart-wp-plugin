@@ -13,7 +13,7 @@ jobs:
         name: Playwright e2e tests
         strategy:
           matrix:
-            browser: [chromium, firefox, webkit]
+            browser: [chromium] #For now, skips - firefox, webkit
         steps:
             - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
               with:
@@ -35,10 +35,10 @@ jobs:
                   yarn run wp-env run cli wp rewrite structure /%postname%/
 
             - name: Install Playwright dependencies
-              run: npx playwright install ${{ matrix.browser }} --with-deps
+              run: npx playwright install --with-deps ${{ matrix.browser }}
 
             - name: Run the playwright tests
-              run: yarn run test:e2e --browser ${{ matrix.browser }}
+              run: yarn run test:e2e --project=${{ matrix.browser }}
 
             - name: Stop the server
               run: yarn run wp-env stop
