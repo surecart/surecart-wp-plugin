@@ -6,6 +6,19 @@ sc-product-buy-button {
     text-decoration: none;
   }
 
+  [disabled] {
+    display: none;
+  }
+
+  &.is-unavailable {
+    a {
+      display: none;
+    }
+    [disabled] {
+      display: initial;
+    }
+  }
+
   sc-spinner::part(base) {
     --indicator-color: currentColor;
     --spinner-size: 12px;
