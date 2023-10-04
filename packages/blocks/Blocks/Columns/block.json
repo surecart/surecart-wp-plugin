@@ -52,6 +52,6 @@
 			}
 		}
 	},
-	"editorStyle": "file:./editor-style.css",
+	"editorStyle": "file:./editor.css",
 	"style": "file:./style.css"
 }

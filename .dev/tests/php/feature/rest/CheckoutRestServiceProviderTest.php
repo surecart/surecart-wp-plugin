@@ -10,6 +10,7 @@ use SureCart\Rest\CheckoutRestServiceProvider;
 use SureCart\Settings\SettingsServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\WordPress\PluginServiceProvider;
 use WP_REST_Request;
 
 class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
@@ -26,6 +27,7 @@ class CheckoutRestServiceProviderTest extends SureCartUnitTestCase
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				PluginServiceProvider::class,
 				SettingsServiceProvider::class,
 				AccountServiceProvider::class,
 				CheckoutRestServiceProvider::class,

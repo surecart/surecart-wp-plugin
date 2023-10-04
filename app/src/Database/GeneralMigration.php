@@ -48,7 +48,7 @@ abstract class GeneralMigration {
 	 *
 	 * @return boolean
 	 */
-	public function shouldMigrate() {
+	public function shouldMigrate(): bool {
 		// check if we already have done this migration.
 		return version_compare( $this->version, $this->getLastMigrationVersion(), '>=' );
 	}

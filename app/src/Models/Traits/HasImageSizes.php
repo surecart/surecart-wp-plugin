@@ -62,8 +62,9 @@ trait HasImageSizes {
 	 *
 	 * @return string
 	 */
-	public function imageUrl( $url, $size, $append_width = false ) {
-		$url = "https://surecart.com/cdn-cgi/image/{$this->getResizeOptions()},width=$size/$url";
+	public function imageUrl( $url, $size, $append_width = false, $additional_options = '' ) {
+		$start = "https://surecart.com/cdn-cgi/image/{$this->getResizeOptions()},width=$size" . ( ! empty( $additional_options ) ? ",$additional_options," : '' );
+		$url   = "$start/$url";
 		if ( $append_width ) {
 			$url .= " $size" . 'w';
 		}
@@ -77,9 +78,10 @@ trait HasImageSizes {
 	 *
 	 * @return string
 	 */
-	public function imageSrcSet( $url ) {
-		$sizes = [];
-		foreach ( $this->getImageSizes() as $size ) {
+	public function imageSrcSet( $url, $image_sizes = [] ) {
+		$image_sizes = empty( $image_sizes ) ? $this->getImageSizes() : $image_sizes;
+		$sizes       = [];
+		foreach ( $image_sizes as $size ) {
 			$sizes[] = $this->imageUrl( $url, $size, true );
 		}
 		return implode( ', ', $sizes );

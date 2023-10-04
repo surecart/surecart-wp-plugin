@@ -6,7 +6,7 @@ exports[`sc-paypal-add-method renders 1`] = `
     <span slot="title">
       Error
     </span>
-    window.fetch is not a function
+    Cannot read properties of undefined (reading 'indexOf')
   </sc-alert>
   <div class="sc-paypal-button-container" hidden=""></div>
 </sc-paypal-add-method>

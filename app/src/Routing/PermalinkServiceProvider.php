@@ -57,6 +57,28 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 				]
 			);
 		};
+
+		$container['surecart.settings.permalinks.collection'] = function() {
+			return new PermalinkSettingService(
+				[
+					'slug'                => 'collection',
+					'label'               => __( 'SureCart Product Collection Permalinks', 'surecart' ),
+					/* translators: %s: Home URL */
+					'description'         => sprintf( __( 'If you like, you may enter custom structures for your product page URLs here. For example, using <code>collections</code> would make your product collection links like <code>%scollections/sample-collection/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'options'             => [
+						[
+							'value' => 'collections',
+							'label' => __( 'Default', 'surecart' ),
+						],
+						[
+							'value' => 'product-collections',
+							'label' => __( 'Product Collections', 'surecart' ),
+						],
+					],
+					'sample_preview_text' => 'sample-collection',
+				]
+			);
+		};
 	}
 
 	/**
@@ -78,6 +100,14 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->params( [ 'sc_checkout_product_id' ] )
 			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'buy_page' ) ) . '/([a-z0-9-]+)[/]?$' )
 			->query( 'index.php?sc_checkout_product_id=$matches[1]' )
+			->create();
+
+		// Collection.
+		$container['surecart.settings.permalinks.collection']->bootstrap();
+		( new PermalinkService() )
+			->params( [ 'sc_collection_page_id' ] )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_collection_page_id=$matches[1]' )
 			->create();
 
 		// Redirect.

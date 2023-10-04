@@ -44,6 +44,11 @@ dispatch(dataStore).registerEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'product-collection',
+		baseURL: 'surecart/v1/product-collections',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'price',
 		baseURL: 'surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
