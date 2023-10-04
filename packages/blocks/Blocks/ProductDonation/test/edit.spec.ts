@@ -29,7 +29,7 @@ test.describe('surecart/product-donation', () => {
 			},
 			{
 				position: 1,
-				name: 'Monthly',
+				name: 'Every Month',
 				ad_hoc: true,
 				ad_hoc_min_amount: 1000,
 				ad_hoc_max_amount: 10000,
@@ -224,7 +224,7 @@ test.describe('surecart/product-donation', () => {
 		).toContainText(`${amountElementValue}`); // Check if the amount choice is checked.
 	});
 
-	test('Change the Amount & see if it updates in the checkout', async ({
+	test('Change the Amounts & see if it updates in the checkout', async ({
 		page,
 	}) => {
 		const amountElement = await page
@@ -232,10 +232,97 @@ test.describe('surecart/product-donation', () => {
 				'sc-product-donation-choices > sc-choice-container:not([disabled]):not([checked])'
 			)
 			.first();
-		amountElement.click(); // Click on any other amount choice.
-		const amountElementValue = await amountElement.innerText();
+		await amountElement.click(); // Click on any other amount choice.
+		let amountElementValue = await amountElement.innerText();
 		await expect(
 			page.locator('sc-product-line-item .price sc-format-number')
-		).toContainText(`${amountElementValue}`); // Check if the amount choice is checked.
+		).toContainText(`${amountElementValue}`); // Check if the amount is present in line items.
+
+		const amountElementTwo = await page
+			.locator(
+				'sc-product-donation-choices > sc-choice-container:not([disabled]):not([checked])'
+			)
+			.first();
+		await amountElementTwo.click(); // Click on any other amount choice.
+		amountElementValue = await amountElementTwo.innerText();
+		await expect(
+			page.locator('sc-product-line-item .price sc-format-number')
+		).toContainText(`${amountElementValue}`); // Check if the amount is present in line items.
+	});
+
+	test('Add a custom amount & see if it updates in the checkout', async ({
+		page,
+	}) => {
+		const customAmountElement = await page
+			.locator(
+				'sc-product-donation-choices > sc-custom-donation-amount:not([checked])'
+			)
+			.first();
+		await customAmountElement.click(); // Click on custom amount choice.
+		const customAmountInput = await page.locator(
+			'sc-product-donation-choices > sc-custom-donation-amount sc-price-input sc-input input'
+		);
+		await customAmountInput.fill('2300'); // Fill the custom amount input with 2300.
+		const customAmountInputButton = await page.locator(
+			'sc-product-donation-choices > sc-custom-donation-amount sc-form > sc-price-input > sc-button'
+		);
+		await customAmountInputButton.click(); // Click on custom amount input submit button.
+
+		await expect(
+			page.locator('sc-product-line-item .price sc-format-number')
+		).toContainText('$2300'); // Check if the amount is present in line items.
+	});
+
+	test('Click on No Donate Once Choice & see if it updates in the checkout', async ({
+		page,
+	}) => {
+		await page
+			.locator(
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-choice-container'
+			)
+			.click(); // Click on donate once choice.
+
+		await expect(
+			page.locator('sc-product-line-item .price__description')
+		).toBeEmpty(); // Check if price description like Every Year/Month is not there in price description & it's empty.
+	});
+
+	test('Click on any recurring choice that is not checked & see if it updates in the checkout', async ({
+		page,
+	}) => {
+		await page
+			.locator(
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container'
+			)
+			.click(); // Click on recurring choice container.
+
+		await page
+			.locator(
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container sc-dropdown sc-button'
+			)
+			.click(); // Click on recurring choice container dropdown button.
+
+		const menuItem = await page
+			.locator(
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container sc-dropdown[open] sc-menu sc-menu-item:not([checked])'
+			)
+			.first();
+
+		const menuItemText = (
+			await page
+				.locator(
+					'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container sc-dropdown[open] sc-menu sc-menu-item:not([checked]) > .menu-item__label'
+				)
+				.first()
+				.innerText()
+		).toLowerCase();
+
+		await menuItem.click(); // Click on recurring choice container dropdown menu item.
+
+		const lineItemText = await page
+			.locator('sc-product-line-item .price__description')
+			.innerText();
+
+		await expect(lineItemText).toBe(menuItemText); // Check if the amount is present in line items.
 	});
 });
