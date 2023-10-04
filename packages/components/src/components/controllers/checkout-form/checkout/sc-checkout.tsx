@@ -310,7 +310,7 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={30}></sc-block-ui>}
+          {['updating', 'finalizing', 'paying', 'confirming'].includes(formState.formState.value) && <sc-block-ui class="busy-block-ui" z-index={30}></sc-block-ui>}
 
           {formState.formState.value === 'finalizing' && (
             <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>

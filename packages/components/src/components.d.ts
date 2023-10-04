@@ -7091,7 +7091,7 @@ declare namespace LocalJSX {
          */
         "loading"?: boolean;
         "nonRecurringChoiceLabel"?: string;
-        "onScChange"?: (event: ScDonationRecurringChoicesCustomEvent<string|boolean>) => void;
+        "onScChange"?: (event: ScDonationRecurringChoicesCustomEvent<string | boolean>) => void;
         /**
           * Toggle line item event
          */

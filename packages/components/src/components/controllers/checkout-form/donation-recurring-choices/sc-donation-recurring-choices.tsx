@@ -37,16 +37,16 @@ export class ScDonationRecurringChoices {
   /** Toggle line item event */
   @Event() scUpdateLineItem: EventEmitter<LineItemData>;
 
-  @Event() scChange: EventEmitter<string|boolean>;
+  @Event() scChange: EventEmitter<string | boolean>;
 
   getChoices() {
-    return (this.el.querySelectorAll('.sc-donation-recurring-choice')) || [];
+    return this.el.querySelectorAll('.sc-donation-recurring-choice') || [];
   }
 
   render() {
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
-    
+
     if (this.loading) {
       return (
         <div class="sc-donation-recurring-choices">
@@ -57,34 +57,26 @@ export class ScDonationRecurringChoices {
       );
     }
 
-    if ( !recurringPrices?.length && !nonRecurringPrice ) {
-      return'';
+    if (!recurringPrices?.length && !nonRecurringPrice) {
+      return '';
     }
-    
+
     return (
-      <div class="sc-donation-recurring-choices" part='base'>
-        <sc-choices
-          label={this.label}
-          part='choices'
-        >
-              <sc-recurring-price-choice-container
-                label={this.recurringChoiceLabel}
-                prices={recurringPrices}
-                product={this?.selectedProduct}
-                selectedPrice={ this.prices?.find(price => price.id === this.priceId) }
-                showPriceDetails={false}
-                showPrice={false}
-              />
-              <sc-choice-container 
-                show-control="false" 
-                value={nonRecurringPrice?.id}
-                checked={this.priceId === nonRecurringPrice?.id}
-                part='choice'
-              >
-                <div class="price-choice__title">
-                  <div class="price-choice__name">{this.nonRecurringChoiceLabel}</div>
-                </div>  
-              </sc-choice-container>
+      <div class="sc-donation-recurring-choices" part="base">
+        <sc-choices label={this.label} part="choices">
+          <sc-recurring-price-choice-container
+            label={this.recurringChoiceLabel}
+            prices={recurringPrices}
+            product={this?.selectedProduct}
+            selectedPrice={this.prices?.find(price => price.id === this.priceId)}
+            showPriceDetails={false}
+            showPrice={false}
+          />
+          <sc-choice-container show-control="false" value={nonRecurringPrice?.id} checked={this.priceId === nonRecurringPrice?.id} part="choice">
+            <div class="price-choice__title">
+              <div class="price-choice__name">{this.nonRecurringChoiceLabel}</div>
+            </div>
+          </sc-choice-container>
         </sc-choices>
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
