@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, Fragment } from '@stencil/core';
+import { Component, h, Prop, Element, Host } from '@stencil/core';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, LineItem } from '../../../../types';
@@ -66,24 +66,25 @@ export class ScCustomDonationAmount {
 
   render() {
     return (
-      <Fragment>
+      <Host class={{ 'sc-custom-donation-amount': true, 'sc-custom-donation-amount--has-value': !!this.value?.length }}>
         <sc-choice-container value={this.value} show-control="false">
           <sc-form onScFormSubmit={e => this.handleButtonClick(e)}>
             <sc-price-input
               currencyCode={this.currencyCode}
               showCode={false}
               showLabel={false}
-              onScChange={e => this.handlePriceChange(e)}
+              onScInput={e => this.handlePriceChange(e)}
               min={this.lineItem?.price?.ad_hoc_min_amount}
               max={this.lineItem?.price?.ad_hoc_max_amount}
+              style={{ '--sc-input-border-color-focus': 'var(--sc-input-border-color-hover)', '--sc-focus-ring-color-primary': 'transparent' }}
             >
-              <sc-button circle submit slot="suffix">
-                <sc-icon name="arrow-right"></sc-icon>
+              <sc-button circle submit slot="suffix" size="small" type="primary">
+                <sc-icon name="arrow-right" />
               </sc-button>
             </sc-price-input>
           </sc-form>
         </sc-choice-container>
-      </Fragment>
+      </Host>
     );
   }
 }

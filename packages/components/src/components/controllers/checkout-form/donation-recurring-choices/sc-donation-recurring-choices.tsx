@@ -65,8 +65,8 @@ export class ScDonationRecurringChoices {
             prices={recurringPrices}
             product={this?.selectedProduct}
             selectedPrice={this.prices?.find(price => price.id === this.priceId)}
-            showPriceDetails={false}
-            showPrice={false}
+            showDetails={false}
+            showAmount={false}
           />
           <sc-choice-container show-control="false" value={nonRecurringPrice?.id} checked={this.priceId === nonRecurringPrice?.id} part="choice">
             <div class="price-choice__title">
