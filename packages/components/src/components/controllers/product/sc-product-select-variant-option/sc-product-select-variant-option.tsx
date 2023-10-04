@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-product-select-variant-option',
-  shadow: true,
+  shadow: false,
 })
 export class ScProductSelectVariantOption {
   /** Label */
