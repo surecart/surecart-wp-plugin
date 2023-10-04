@@ -1,4 +1,4 @@
-name: Playwright
+name: End-to-End Tests
 
 on:
   pull_request:
@@ -6,64 +6,43 @@ on:
       - main
       - next
       - fixes
-    paths:
-      - "app/**/*.php"
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: wordpress_test
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    strategy:
-      matrix:
-        php-versions: [ '8.0', '8.1' ]
-        wp-versions: [ 'trunk' ]
-    name: PHP ${{ matrix.php-versions }} / WP ${{ matrix.wp-versions }} Test
-    steps:
-      - uses: actions/checkout@v2
+    e2e-playwright:
+        runs-on: ubuntu-latest
+        name: Playwright e2e tests
+        steps:
+            - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+              with:
+                  show-progress: ${{ runner.debug == '1' && 'true' || 'false' }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, intl #optional, setup extensions
-          ini-values: post_max_size=256M, short_open_tag=On #optional, setup php.ini configuration
-          coverage: xdebug #optional, setup coverage driver
+            - name: Yarn Install
+              run: yarn
 
-      - name: Check PHP Version
-        run: php -v
+            - name: Plugin Build scripts
+              run: |
+                  yarn bootstrap
+                  yarn release:build
+                  yarn wp-scripts build
+                  yarn composer:release
+                  
+            - name: Install WordPress and start the server
+              run: |
+                  yarn run wp-env start
+                  yarn run wp-env run cli wp rewrite structure /%postname%/
 
-      - name: Composer Install
-        run: composer install --optimize-autoloader --prefer-dist
+            - name: Install Playwright dependencies
+              run: |
+                  npx playwright install chromium firefox webkit --with-deps
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+            - name: Run the playwright tests
+              run: |
+                  yarn run test:e2e
+              if: ${{ success() || failure() }}
 
-      - uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Yarn Install
-        run: yarn
-
-      - name: Install WordPress
-        run: |
-          chmod -R 767 ./ # TODO: Possibly integrate in wp-env
-          yarn wp-env start
-
-      - name: Running single site unit tests
-        run: yarn run test:e2e
-        if: ${{ success() || failure() }}
+            # Show the test results
+            - name: Upload test results
+              uses: actions/upload-artifact@v2
+              with:
+                  name: test-results
+                  path: test-results
