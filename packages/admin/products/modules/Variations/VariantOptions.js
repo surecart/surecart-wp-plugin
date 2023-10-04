@@ -140,12 +140,17 @@ export default ({ product, updateProduct }) => {
 				{product?.variant_options.map((option, index) => {
 					const options = product?.variant_options || [];
 					const total =
-						(options?.[index - 2]?.values?.length || 1) *
-						(options?.[index - 1]?.values?.length || 1) *
-						((options?.[index]?.values?.length || 1) + 1) *
-						(options?.[index + 1]?.values?.length || 1) *
-						(options?.[index + 2]?.values?.length || 1);
-					console.log({ total });
+						(options?.[index - 2]?.values?.filter?.((v) => v)
+							?.length || 1) *
+						(options?.[index - 1]?.values?.filter?.((v) => v)
+							?.length || 1) *
+						((options?.[index]?.values?.filter?.((v) => v)
+							?.length || 1) +
+							1) *
+						(options?.[index + 1]?.values?.filter?.((v) => v)
+							?.length || 1) *
+						(options?.[index + 2]?.values?.filter?.((v) => v)
+							.length || 1);
 					return (
 						<SortableItem key={index}>
 							<div>
