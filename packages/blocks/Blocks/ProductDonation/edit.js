@@ -19,13 +19,18 @@ import {
 } from '@wordpress/block-editor';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
-import {
-	ScProductDonationChoices,
-} from '@surecart/components-react';
+import { ScProductDonationChoices } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { product_id, amount_label, amount_columns, recurring_label, currency, recurring_choice_label, non_recurring_choice_label } =
-		attributes;
+	const {
+		product_id,
+		amount_label,
+		amount_columns,
+		recurring_label,
+		currency,
+		recurring_choice_label,
+		non_recurring_choice_label,
+	} = attributes;
 
 	const useInnerBlocksProps = __stableUseInnerBlocksProps
 		? __stableUseInnerBlocksProps
@@ -35,7 +40,7 @@ export default ({ attributes, setAttributes }) => {
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 
-	const template= [
+	const template = [
 		['surecart/product-donation-amount', { amount: 100, currency }],
 		['surecart/product-donation-amount', { amount: 200, currency }],
 		['surecart/product-donation-amount', { amount: 500, currency }],
@@ -61,7 +66,7 @@ export default ({ attributes, setAttributes }) => {
 		`,
 	});
 
-	const {children,innerBlocksProps} = useInnerBlocksProps(
+	const { children, innerBlocksProps } = useInnerBlocksProps(
 		{},
 		{
 			allowedBlocks: ['surecart/product-donation-amount'],
@@ -74,8 +79,8 @@ export default ({ attributes, setAttributes }) => {
 	if (!product_id) {
 		return (
 			<div {...blockProps}>
-				<SelectProduct 
-					onSelect={(product_id) => setAttributes({ product_id })} 
+				<SelectProduct
+					onSelect={(product_id) => setAttributes({ product_id })}
 					onlyShowProducts={true}
 					onlyShowAdHocProducts={true}
 				/>
@@ -91,35 +96,47 @@ export default ({ attributes, setAttributes }) => {
 						<TextControl
 							label={__('Amount Title', 'surecart')}
 							value={amount_label}
-							onChange={(amount_label) => setAttributes({ amount_label })}
+							onChange={(amount_label) =>
+								setAttributes({ amount_label })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Recurring Title', 'surecart')}
 							value={recurring_label}
-							onChange={(recurring_label) => setAttributes({ recurring_label })}
+							onChange={(recurring_label) =>
+								setAttributes({ recurring_label })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Recurring Choice Title', 'surecart')}
 							value={recurring_choice_label}
-							onChange={(recurring_choice_label) => setAttributes({ recurring_choice_label })}
+							onChange={(recurring_choice_label) =>
+								setAttributes({ recurring_choice_label })
+							}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<TextControl
 							label={__('Non Recurring Choice Title', 'surecart')}
 							value={non_recurring_choice_label}
-							onChange={(non_recurring_choice_label) => setAttributes({ non_recurring_choice_label })}
+							onChange={(non_recurring_choice_label) =>
+								setAttributes({ non_recurring_choice_label })
+							}
 						/>
 					</PanelRow>
 					<NumberControl
 						label={__('Amount Columns', 'surecart')}
 						value={amount_columns}
 						min={1}
-						onChange={(amount_columns) => setAttributes({ amount_columns: parseInt(amount_columns) })}
+						onChange={(amount_columns) =>
+							setAttributes({
+								amount_columns: parseInt(amount_columns),
+							})
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
