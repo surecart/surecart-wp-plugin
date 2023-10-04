@@ -24,7 +24,11 @@ class Block extends BaseBlock {
 		ob_start(); ?>
 
 		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-			<sc-product-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-select-variant-option>
+			<?php if ( 'pills' === $attributes['type'] ) : ?>
+				<sc-product-pills-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-pills-variant-option>
+			<?php else : ?>
+				<sc-product-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-select-variant-option>
+			<?php endif; ?>
 		<?php endforeach; ?>
 
 		<?php

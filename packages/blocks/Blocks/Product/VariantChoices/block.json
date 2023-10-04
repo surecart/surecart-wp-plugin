@@ -6,19 +6,23 @@
 	"category": "surecart",
 	"keywords": ["variant", "product", "choice"],
 	"attributes": {
-		"gap": {
+		"type": {
 			"type": "string",
-			"default": "12px"
+			"default": "dropdown"
 		}
 	},
 	"supports": {
 		"reusable": false,
 		"html": false,
 		"multiple": false,
-		"attributes": {
-			"gap": {
-				"type": "string",
-				"default": "12px"
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
 			}
 		},
 		"spacing": {
@@ -31,5 +35,31 @@
 			}
 		}
 	},
+	"variations": [
+		{
+			"name": "dropdown",
+			"title": "Variant Dropdown",
+			"icon": "list-view",
+			"description": "Add a variant dropdown",
+			"attributes": {
+				"type": "dropdown"
+			},
+			"isDefault": true,
+			"isActive": ["dropdown"],
+			"scope": ["inserter", "block", "transform"]
+		},
+		{
+			"name": "pills",
+			"title": "Variant Pills",
+			"icon": "button",
+			"description": "Add a variant pills chooser.",
+			"attributes": {
+				"type": "pills"
+			},
+			"isDefault": true,
+			"isActive": ["pills"],
+			"scope": ["inserter", "block", "transform"]
+		}
+	],
 	"style": "file:./preload.css"
 }
