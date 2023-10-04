@@ -1,0 +1,61 @@
+.sc-pill-option {
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sc-spacing-x-small);
+  }
+
+  &__button {
+    font-size: var(--sc-font-size-medium);
+    border: 1px solid var(--sc-color-gray-300);
+    color: var(--sc-color-gray-700);
+    background: transparent;
+    border-radius: var(--sc-input-height-medium);
+    display: inline-block;
+    padding: 0 calc(var(--sc-spacing-medium) * 1.4);
+    height: var(--sc-input-height-medium);
+    line-height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
+    text-align: center;
+    transition: border var(--sc-transition-medium) ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: var(--sc-shadow-small);
+    transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
+      var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow,
+      var(--sc-input-transition, var(--sc-transition-medium)) opacity;
+
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &--disabled {
+      text-decoration: line-through;
+    }
+
+    &--selected {
+      background-color: var(--sc-color-primary-500);
+      color: white;
+      border-color: white;
+    }
+
+    &:hover:not(.sc-pill-option__button--selected) {
+      background-color: var(--sc-button-default-hover-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-focus-border-color, var(--primary-background));
+      color: var(--primary-background);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+    }
+
+    &:active:not(.sc-pill-option__button--selected) {
+      background-color: var(--sc-button-default-active-background-color, var(--sc-color-white));
+      border-color: var(--sc-button-default-active-border-color, var(--sc-color-white));
+      color: var(--primary-background);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.sc-product-pills-variant-option {
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sc-spacing-x-small);
+  }
+}
