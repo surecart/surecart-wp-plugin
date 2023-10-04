@@ -50,6 +50,9 @@ test.describe('Product Collection Admin Page', () => {
 		// Click on the create button
 		await page.click('button[type="submit"]');
 
+		// Try with a wrong test to see pipeline is working or not.
+		expect(true).toBe(false);
+
 		// Check if the collection is created with name and description by going to the edit page.
 		await expect(page.locator('input[name="name"]')).toHaveValue(
 			'Test Product Collection'
