@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   gap: var(--sc-spacing-x-small);
+  flex-wrap: wrap;
 
   &__name {
     font-weight: var(--sc-font-weight-semibold);
