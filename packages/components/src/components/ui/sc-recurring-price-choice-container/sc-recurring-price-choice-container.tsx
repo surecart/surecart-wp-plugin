@@ -74,25 +74,27 @@ export class ScRecurringPriceChoiceContainer {
           <div class="recurring-price-choice__control">
             <div class="recurring-price-choice__name">{this.label}</div>
 
-            <div class="recurring-price-choice__description">
-              <sc-dropdown style={{ '--panel-width': '100%' }}>
-                <button class="recurring-price-choice__button" slot="trigger">
-                  {this.value?.name || (this.value?.product as Product)?.name}
-                  <sc-icon name="chevron-down"></sc-icon>
-                </button>
-                <sc-menu>
-                  {(this.prices || []).map(price => {
-                    const checked = price?.id === this.selectedPrice?.id;
-                    return (
-                      <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked}>
-                        {price?.name || this.product?.name}
-                        {this.showAmount && <span slot="suffix">{this.renderPrice(price)}</span>}
-                      </sc-menu-item>
-                    );
-                  })}
-                </sc-menu>
-              </sc-dropdown>
-            </div>
+            {this.prices?.length > 1 && (
+              <div class="recurring-price-choice__description">
+                <sc-dropdown style={{ '--panel-width': 'max(100%, 11rem)', '--sc-menu-item-white-space': 'wrap' }}>
+                  <button class="recurring-price-choice__button" slot="trigger">
+                    {this.value?.name || (this.value?.product as Product)?.name}
+                    <sc-icon name="chevron-down"></sc-icon>
+                  </button>
+                  <sc-menu>
+                    {(this.prices || []).map(price => {
+                      const checked = price?.id === this.selectedPrice?.id;
+                      return (
+                        <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked}>
+                          {price?.name || this.product?.name}
+                          {this.showAmount && <span slot="suffix">{this.renderPrice(price)}</span>}
+                        </sc-menu-item>
+                      );
+                    })}
+                  </sc-menu>
+                </sc-dropdown>
+              </div>
+            )}
           </div>
 
           {this.showDetails && (
