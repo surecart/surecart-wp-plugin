@@ -11,6 +11,9 @@ jobs:
     e2e-playwright:
         runs-on: ubuntu-latest
         name: Playwright e2e tests
+        strategy:
+          matrix:
+            browser: [chromium, firefox, webkit]
         steps:
             - uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
               with:
@@ -32,17 +35,10 @@ jobs:
                   yarn run wp-env run cli wp rewrite structure /%postname%/
 
             - name: Install Playwright dependencies
-              run: npx playwright install chromium firefox webkit --with-deps
+              run: npx playwright install ${{ matrix.browser }} --with-deps
 
             - name: Run the playwright tests
-              run: yarn run test:e2e
-              
-            - uses: actions/upload-artifact@v2
-              if: always()
-              with:
-                name: playwright-report
-                path: playwright-report/
-                retention-days: 30
+              run: yarn run test:e2e --browser ${{ matrix.browser }}
 
             - name: Stop the server
               run: yarn run wp-env stop
