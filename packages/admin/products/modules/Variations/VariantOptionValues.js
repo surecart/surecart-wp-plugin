@@ -29,8 +29,12 @@ export default ({ values, onChange, canAddValue }) => {
 	};
 
 	// sort values
-	const applySort = (oldIndex, newIndex) =>
-		onChange(arrayMove(values, oldIndex, newIndex));
+	const applySort = (oldIndex, newIndex) => {
+		const sortedValues = arrayMove(values, oldIndex, newIndex).sort(
+			(a, b) => (a === '' ? 1 : b === '' ? -1 : 0)
+		);
+		onChange(sortedValues);
+	};
 
 	// we always want an empty value at the end.
 	useEffect(() => {
