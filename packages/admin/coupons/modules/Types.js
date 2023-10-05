@@ -29,12 +29,12 @@ export default ({ coupon, loading, updateCoupon }) => {
 
 	const translateDuration = (amount) => {
 		switch (amount) {
-			case 'once':
-				return __('Once', 'surecart');
+			case 'forever':
+				return __('Forever', 'surecart');
 			case 'repeating':
 				return __('Repeating', 'surecart');
 			default:
-				return __('Forever', 'surecart');
+				return __('Once', 'surecart');
 		}
 	};
 
