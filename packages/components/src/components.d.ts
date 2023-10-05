@@ -2989,7 +2989,13 @@ export namespace Components {
         "trialDurationDays": number;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices": Price[];
+        /**
+          * The sale text
+         */
         "saleText": string;
     }
     interface ScProductPriceChoices {
@@ -8806,7 +8812,13 @@ declare namespace LocalJSX {
         "trialDurationDays"?: number;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices"?: Price[];
+        /**
+          * The sale text
+         */
         "saleText"?: string;
     }
     interface ScProductPriceChoices {
