@@ -3,7 +3,7 @@
 		width: 50px;
 	}
 	.column-total, .column-status {
-		width: 75px;
+		min-width: 96px;
 	}
 	.column-order {
 		width: 200px;

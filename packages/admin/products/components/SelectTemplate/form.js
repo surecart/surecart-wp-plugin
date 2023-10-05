@@ -31,7 +31,7 @@ export default function PostTemplateForm({
 			const templates = (getEntityRecords(...selectorArgs) || []).filter(
 				(template) => {
 					return (
-						template.theme === 'surecart/surecart' ||
+						template.id === 'surecart/surecart//single-product' ||
 						template.slug.includes('sc-products')
 					);
 				}

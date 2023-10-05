@@ -101,19 +101,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function get_collection_params() {
 		return [
-			'archived'          => [
+			'archived'               => [
 				'description' => esc_html__( 'Whether to get archived products or not.', 'surecart' ),
 				'type'        => 'boolean',
 			],
-			'recurring'         => [
+			'recurring'              => [
 				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'surecart' ),
 				'type'        => 'boolean',
 			],
-			'query'             => [
+			'query'                  => [
 				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
 			],
-			'ids'               => [
+			'ids'                    => [
 				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -121,7 +121,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
-			'product_group_ids' => [
+			'product_group_ids'      => [
 				'description' => __( 'Only return objects that belong to the given product groups.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -129,11 +129,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
-			'page'              => [
+			'product_collection_ids' => [
+				'description' => __( 'Only return objects that belong to the given product collections.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'page'                   => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'per_page'          => [
+			'per_page'               => [
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],

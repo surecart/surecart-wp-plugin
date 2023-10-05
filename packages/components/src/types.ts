@@ -265,6 +265,15 @@ export type Products = {
   [id: string]: Product;
 };
 
+export interface Collection extends Object {
+  id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Coupon extends Model {
   id: string;
   object: 'coupon';
@@ -1004,6 +1013,18 @@ export interface Rule {
   condition: RuleName;
   operator: NumberOperators | ArrayOperators;
   value: string | string[] | { value: string }[];
+}
+
+export interface ProductCollection {
+  id: string;
+  object: string;
+  name: string;
+  description?: string;
+  position?: number;
+  slug: string;
+  image?: string;
+  products_count: number;
+  products?: Product[];
 }
 
 export interface GoogleAnalyticsItem {

@@ -172,15 +172,15 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 	 * invoke/revoke and quantity update methods.
 	 *
 	 * @param Purchase $purchase The purchase.
-	 * @param array    $request The request.
+	 * @param object   $request The request.
 	 *
 	 * @return void
 	 */
 	public function onPurchaseUpdated( Purchase $purchase, $request ) {
 		$this->purchase = $purchase;
 
-		$data     = $request['data']['object'] ?? null;
-		$previous = $request['data']['previous_attributes'] ?? null;
+		$data     = $request->data->object ?? null;
+		$previous = $request->data->previous_attributes ?? null;
 
 		// we need data or a previous.
 		if ( empty( $data ) || empty( $previous ) ) {
@@ -189,13 +189,13 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 
 		// product has changed, let's revoke access to the old one
 		// and provide access to the new one.
-		if ( ! empty( $previous['product'] ) && $data['product'] !== $previous['product'] ) {
+		if ( ! empty( $previous->product ) && $data->product !== $previous->product ) {
 			$previous_purchase = new Purchase(
 				array_merge(
 					$purchase->toArray(),
 					[
-						'product'  => $previous['product'],
-						'quantity' => $previous['quantity'] ?? 1,
+						'product'  => $previous->product,
+						'quantity' => $previous->quantity ?? 1,
 					]
 				)
 			);
@@ -204,7 +204,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		}
 
 		// The quantity has not changed.
-		if ( (int) $data['quantity'] === (int) $previous['quantity'] ) {
+		if ( (int) $data->quantity === (int) $previous->quantity ) {
 			return;
 		}
 
@@ -214,7 +214,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			if ( ! $integration->id ) {
 				continue;
 			}
-			$this->onPurchaseQuantityUpdated( $data['quantity'], $previous['quantity'], $integration, $purchase->getWPUser() );
+			$this->onPurchaseQuantityUpdated( $data->quantity, $previous->quantity, $integration, $purchase->getWPUser() );
 		}
 	}
 

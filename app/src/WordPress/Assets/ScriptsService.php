@@ -100,42 +100,34 @@ class ScriptsService {
 			);
 		}
 
-		// wp_register_script(
-		// 'surecart-components',
-		// 'https://unpkg.com/@surecart/components@1.0.1-beta.1/dist/surecart/surecart.esm.js',
-		// [ 'wp-i18n' ],
-		// null,
-		// false
-		// );
-
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		wp_localize_script(
 			'surecart-components',
 			'scData',
 			apply_filters(
-				'surecart-components/scData',
+				'surecart-components/scData',  // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
-					'cdn_root'                => SURECART_CDN_IMAGE_BASE,
-					'root_url'                => esc_url_raw( get_rest_url() ),
-					'plugin_url'              => \SureCart::core()->assets()->getUrl(),
-					'api_url'                 => \SureCart::requests()->getBaseUrl(),
-					'currency'                => \SureCart::account()->currency,
-					'do_not_persist_cart'     => is_admin(),
-					'theme'                   => get_option( 'surecart_theme', 'light' ),
-					'pages'                   => [
+					'cdn_root'            => SURECART_CDN_IMAGE_BASE,
+					'root_url'            => esc_url_raw( get_rest_url() ),
+					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
+					'api_url'             => \SureCart::requests()->getBaseUrl(),
+					'currency'            => \SureCart::account()->currency,
+					'do_not_persist_cart' => is_admin(),
+					'theme'               => get_option( 'surecart_theme', 'light' ),
+					'pages'               => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
 					],
-					'page_id'                 => get_the_ID(),
-					'nonce'                   => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-					'nonce_endpoint'          => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-					'recaptcha_site_key'      => \SureCart::settings()->recaptcha()->getSiteKey(),
-					'claim_url'               => $this->getAccountClaimUrl(),
-					'admin_url'               => trailingslashit( admin_url() ),
-					'user_permissions' =>  array (
-						'manage_sc_shop_settings'  => current_user_can( 'manage_sc_shop_settings' )
-					)
+					'page_id'             => get_the_ID(),
+					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'claim_url'           => $this->getAccountClaimUrl(),
+					'admin_url'           => trailingslashit( admin_url() ),
+					'user_permissions'    => array(
+						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
+					),
 				]
 			)
 		);
@@ -264,6 +256,7 @@ class ScriptsService {
 		$this->enqueuePageTemplateEditor();
 		$this->enqueueCartBlocks();
 		$this->enqueueProductBlocks();
+		$this->enqueueProductCollectionBlocks();
 	}
 
 	/**
@@ -287,6 +280,20 @@ class ScriptsService {
 		}
 
 		wp_enqueue_script( 'surecart-product-blocks' );
+	}
+
+	/**
+	 * We only want these available in FSE.
+	 *
+	 * @return void
+	 */
+	public function enqueueProductCollectionBlocks() {
+		global $pagenow;
+		if ( 'site-editor.php' !== $pagenow ) {
+			return;
+		}
+
+		wp_enqueue_script( 'surecart-product-collection-blocks' );
 	}
 
 	/**
@@ -329,7 +336,7 @@ class ScriptsService {
 			true
 		);
 
-		// only register
+		// only register.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product.asset.php';
 		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
@@ -342,32 +349,44 @@ class ScriptsService {
 			true
 		);
 
+		// Register product collection blocks.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product_collection.asset.php';
+		$deps       = $asset_file['dependencies'] ?? [];
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-product-collection-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/product_collection.js',
+			$deps,
+			$asset_file['version'],
+			true
+		);
+
 		// localize.
 		wp_localize_script(
 			'surecart-blocks',
 			'scData',
 			apply_filters(
-				'surecart-components/scData',
+				'surecart-components/scData', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
-					'root_url'                => esc_url_raw( get_rest_url() ),
-					'plugin_url'              => \SureCart::core()->assets()->getUrl(),
-					'api_url'                 => \SureCart::requests()->getBaseUrl(),
-					'currency'                => \SureCart::account()->currency,
-					'do_not_persist_cart'     => is_admin(),
-					'theme'                   => get_option( 'surecart_theme', 'light' ),
-					'pages'                   => [
+					'root_url'            => esc_url_raw( get_rest_url() ),
+					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
+					'api_url'             => \SureCart::requests()->getBaseUrl(),
+					'currency'            => \SureCart::account()->currency,
+					'do_not_persist_cart' => is_admin(),
+					'theme'               => get_option( 'surecart_theme', 'light' ),
+					'pages'               => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
 					],
-					'page_id'                 => get_the_ID(),
-					'nonce'                   => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-					'nonce_endpoint'          => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-					'recaptcha_site_key'      => \SureCart::settings()->recaptcha()->getSiteKey(),
-					'claim_url'               => $this->getAccountClaimUrl(),
-					'admin_url'               => trailingslashit( admin_url() ),
-					'user_permissions' =>  array (
-						'manage_sc_shop_settings'  => current_user_can( 'manage_sc_shop_settings' )
-					)
+					'page_id'             => get_the_ID(),
+					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'claim_url'           => $this->getAccountClaimUrl(),
+					'admin_url'           => trailingslashit( admin_url() ),
+					'user_permissions'    => array(
+						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
+					),
 				]
 			)
 		);
