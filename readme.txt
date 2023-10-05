@@ -243,6 +243,16 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.7.4 - October 5th, 2023 =
+* Improvement: Ability to turn off/on individual abandoned checkout flows for a customer.
+* Improvement: Add support for mandatory address field for Indian merchants using Stripe.
+* Improvement: Improve error message for when a customer reaches a purchase limit on checkout.
+* Improvement: Add php filter to filter "Back to home" and logo url on customer dashboard template.
+* Change: Deprecate tabbed customer dashboard.
+* Change: Remove "Draft/Published" tag in header for product page to avoid confusion.
+* Fix: Alignment of product page price not working on the front end for left and center alignment.
+* Fix: Discount duration default not being correct when creating a coupon.
+
 = 2.7.3 - September 26th, 2023 =
 * Fix: Performance issue with collections in menus using Full Site Editing themes.
 
