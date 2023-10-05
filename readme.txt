@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.7.3
+Stable tag: 2.7.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -248,6 +248,8 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Add support for mandatory address field for Indian merchants using Stripe.
 * Improvement: Improve error message for when a customer reaches a purchase limit on checkout.
 * Improvement: Add php filter to filter "Back to home" and logo url on customer dashboard template.
+* Improvement: Don't allow quantity larger than purchase limit on product page.
+* Improvement: Fix location of purchase error message on default checkout.
 * Change: Deprecate tabbed customer dashboard.
 * Change: Remove "Draft/Published" tag in header for product page to avoid confusion.
 * Fix: Alignment of product page price not working on the front end for left and center alignment.
