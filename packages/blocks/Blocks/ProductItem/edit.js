@@ -67,10 +67,9 @@ const ALLOWED_BLOCKS = [
 export default () => {
 	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
-		templateLock: 'insert',
+		templateLock: false,
 		template: PRODUCT_ITEM_LAYOUT,
 		allowedBlocks: ALLOWED_BLOCKS,
-		renderAppender: false,
 	});
 	return <div {...innerBlocksProps} />;
 };
