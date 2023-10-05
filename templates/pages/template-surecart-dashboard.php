@@ -26,7 +26,7 @@ $data       = $controller->getData();
 		<div class="sc-dashboard__logged-out">
 			<div class="sc-dashboard__logged-out-content">
 				<header class="sc-dashboard__logged-out-header">
-					<a href="<?php echo esc_url( get_home_url() ); ?>">
+					<a href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_store_logo_url', get_home_url() ) ); ?>">
 						<?php \SureCart::render( 'layouts/partials/store-logo', $data ); ?>
 					</a>
 				</header>
@@ -45,7 +45,7 @@ $data       = $controller->getData();
 			<div class="sc-dashboard__column dashboard-left is-sticky">
 				<header class="sc-dashboard__header">
 					<div class="sc-dashboard__logo">
-						<a href="<?php echo esc_url( get_home_url() ); ?>">
+						<a href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_store_logo_url', get_home_url() ) ); ?>">
 							<?php \SureCart::render( 'layouts/partials/store-logo', $data ); ?>
 						</a>
 					</div>
