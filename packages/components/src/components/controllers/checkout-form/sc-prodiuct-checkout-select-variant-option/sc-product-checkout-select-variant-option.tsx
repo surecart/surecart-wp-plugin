@@ -3,7 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { state } from '@store/checkout';
 import { isOptionSoldOut } from '@store/product/getters';
 import { __ } from '@wordpress/i18n';
-import { getVariantFromValues } from 'src/functions/util';
+import { getVariantFromValues } from '../../../../functions/util';
 import { LineItemData } from '../../../../types';
 import { getLineItemByProductId } from '@store/checkout/getters';
 
