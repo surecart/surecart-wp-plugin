@@ -3204,19 +3204,30 @@ export namespace Components {
           * Label for the choice.
          */
         "label": string;
+        /**
+          * The prices to choose from.
+         */
         "prices": Price1[];
+        /**
+          * The product.
+         */
         "product": Product1;
+        /**
+          * The currently selected price
+         */
         "selectedPrice": Price1;
+        /**
+          * Should we show the price?
+         */
+        "showAmount": boolean;
         /**
           * Show the radio/checkbox control
          */
         "showControl": boolean;
-        "showPrice": boolean;
-        "showPriceDetails": boolean;
         /**
-          * Choice Type
+          * Should we show the price details?
          */
-        "type": 'checkbox' | 'radio';
+        "showDetails": boolean;
     }
     interface ScRichText {
         /**
@@ -9176,20 +9187,34 @@ declare namespace LocalJSX {
           * Label for the choice.
          */
         "label"?: string;
+        /**
+          * Change event.
+         */
         "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<string>) => void;
+        /**
+          * The prices to choose from.
+         */
         "prices"?: Price1[];
+        /**
+          * The product.
+         */
         "product"?: Product1;
+        /**
+          * The currently selected price
+         */
         "selectedPrice"?: Price1;
+        /**
+          * Should we show the price?
+         */
+        "showAmount"?: boolean;
         /**
           * Show the radio/checkbox control
          */
         "showControl"?: boolean;
-        "showPrice"?: boolean;
-        "showPriceDetails"?: boolean;
         /**
-          * Choice Type
+          * Should we show the price details?
          */
-        "type"?: 'checkbox' | 'radio';
+        "showDetails"?: boolean;
     }
     interface ScRichText {
         /**

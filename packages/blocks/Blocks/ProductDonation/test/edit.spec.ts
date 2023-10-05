@@ -170,7 +170,7 @@ test.describe('surecart/product-donation', () => {
 		).toHaveText('Make it recurring'); // Check if the the label of the choices component is correct.
 		await expect(
 			page.locator(
-				'sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices sc-recurring-price-choice-container .price-choice__name'
+				'sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices sc-recurring-price-choice-container .recurring-price-choice__name'
 			)
 		).toHaveText('Yes, count me in!'); // Check if the the label of the choices component is correct.
 		await expect(
@@ -253,24 +253,34 @@ test.describe('surecart/product-donation', () => {
 	test('Add a custom amount & see if it updates in the checkout', async ({
 		page,
 	}) => {
-		const customAmountElement = await page
-			.locator(
-				'sc-product-donation-choices > sc-custom-donation-amount:not([checked])'
-			)
+		const customAmountElement = page
+			.locator('sc-product-donation-choices > sc-custom-donation-amount')
 			.first();
 		await customAmountElement.click(); // Click on custom amount choice.
-		const customAmountInput = await page.locator(
-			'sc-product-donation-choices > sc-custom-donation-amount sc-price-input sc-input input'
+
+		await page
+			.locator(
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-choice-container'
+			)
+			.click(); // Click on donate once choice.
+
+		const customAmountPriceInput = await customAmountElement.locator(
+			'sc-price-input'
 		);
-		await customAmountInput.fill('2300'); // Fill the custom amount input with 2300.
-		const customAmountInputButton = await page.locator(
+		const customAmountInput = await customAmountPriceInput.locator(
+			'sc-input'
+		);
+
+		await customAmountInput.locator('input').fill('123');
+		expect(await customAmountInput.getAttribute('value')).toBe('123');
+		const customAmountInputButton = page.locator(
 			'sc-product-donation-choices > sc-custom-donation-amount sc-form > sc-price-input > sc-button'
 		);
 		await customAmountInputButton.click(); // Click on custom amount input submit button.
 
 		await expect(
 			page.locator('sc-product-line-item .price sc-format-number')
-		).toContainText('$2300'); // Check if the amount is present in line items.
+		).toContainText('$123'); // Check if the amount is present in line items.
 	});
 
 	test('Click on No Donate Once Choice & see if it updates in the checkout', async ({
@@ -296,31 +306,29 @@ test.describe('surecart/product-donation', () => {
 			)
 			.click(); // Click on recurring choice container.
 
-		await page
-			.locator(
-				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container sc-dropdown sc-button'
-			)
-			.click(); // Click on recurring choice container dropdown button.
+		await page.locator('.recurring-price-choice__button').click(); // Click on recurring choice container dropdown button.
 
-		const menuItem = await page
+		const menuItem = page
 			.locator(
-				'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container sc-dropdown[open] sc-menu sc-menu-item:not([checked])'
+				'sc-product-donation-choices .recurring-price-choice__description sc-dropdown[open] sc-menu sc-menu-item:not([checked])'
 			)
 			.first();
 
-		const menuItemText = (
-			await page
-				.locator(
-					'sc-product-donation-choices .sc-donation-recurring-choices sc-choices > sc-recurring-price-choice-container sc-dropdown[open] sc-menu sc-menu-item:not([checked]) > .menu-item__label'
-				)
-				.first()
-				.innerText()
-		).toLowerCase();
+		// Get menuItems text & convert it to lowercase.
+		const menuItemText = (await menuItem.innerText()).toLowerCase();
 
 		await menuItem.click(); // Click on recurring choice container dropdown menu item.
 
+		await page.waitForLoadState('networkidle');
+
+		await page.waitForSelector(
+			'sc-order-confirm-provider[checkout-status=draft]'
+		);
+
 		const lineItemText = await page
-			.locator('sc-product-line-item .price__description')
+			.locator(
+				'sc-order-confirm-provider[checkout-status=draft] sc-product-line-item .price__description'
+			)
 			.innerText();
 
 		await expect(lineItemText).toBe(menuItemText); // Check if the amount is present in line items.
