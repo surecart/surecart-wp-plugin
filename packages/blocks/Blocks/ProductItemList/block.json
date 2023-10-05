@@ -49,6 +49,10 @@
 			"type": "boolean",
 			"default": true
 		},
+		"collection_enabled": {
+			"type": "boolean",
+			"default": true
+		},
 		"pagination_alignment": {
 			"type": "string",
 			"default": "center"
