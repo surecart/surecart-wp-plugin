@@ -29,7 +29,15 @@ export class ScCheckoutStockAlert {
   getOutOfStockLineItems() {
     return (checkoutState.checkout?.line_items?.data || []).filter(lineItem => {
       const product = lineItem.price?.product as Product;
-      return product?.stock_enabled && !product?.allow_out_of_stock_purchases && (lineItem?.variant?.stock || product?.stock < lineItem.quantity);
+      // no stock handling.
+      if (!product?.stock_enabled || product?.allow_out_of_stock_purchases) return;
+
+      // check the variant stock.
+      if (lineItem?.variant?.id) {
+        return lineItem?.variant?.stock < lineItem.quantity;
+      }
+
+      return product?.stock < lineItem.quantity;
     });
   }
 
@@ -39,10 +47,17 @@ export class ScCheckoutStockAlert {
   async onSubmit() {
     const lineItems = this.getOutOfStockLineItems().map(lineItem => {
       const product = lineItem.price?.product as Product;
-      const stockQuantity = lineItem?.variant?.stock || product?.stock || 0;
+
+      if (lineItem?.variant?.id) {
+        return {
+          ...lineItem,
+          quantity: Math.max(lineItem?.variant?.stock || 0, 0),
+        };
+      }
+
       return {
         ...lineItem,
-        quantity: Math.max(stockQuantity, 0),
+        quantity: Math.max(product?.stock || 0, 0),
       };
     });
 
@@ -76,11 +91,14 @@ export class ScCheckoutStockAlert {
     const stockErrors = (this.getOutOfStockLineItems() || []).map(lineItem => {
       const product = lineItem.price?.product as Product;
       const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
+
+      const stock = lineItem?.variant?.id ? lineItem?.variant?.stock : product?.stock;
+
       return {
         name: product?.name,
         image_url: variantImage || product?.image_url,
         quantity: lineItem.quantity,
-        stock: lineItem?.variant?.stock || product?.stock,
+        stock,
       };
     });
 
