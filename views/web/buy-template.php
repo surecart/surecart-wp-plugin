@@ -69,13 +69,10 @@
 			</sc-price-choices>
 			<!-- /wp:surecart/price-selector -->
 		<?php endif; ?>
-		
-		<sc-product-variation-choices 
-			type="instant-checkout-page"
-			product-id="<?php echo esc_attr( $product->id ); ?>"
-			style="--sc-variation-gap: 12px;"
-		>
-		</sc-product-variation-choices>
+
+		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
+			<sc-product-checkout-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-checkout-select-variant-option>
+		<?php endforeach; ?>
 
 	</sc-column>
 	<!-- /wp:surecart/column -->

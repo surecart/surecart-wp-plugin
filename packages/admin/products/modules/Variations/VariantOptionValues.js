@@ -16,7 +16,6 @@ import VariantOptionValue from './VariantOptionValue';
 import { useEffect } from 'react';
 
 export default ({ values, onChange, canAddValue }) => {
-	console.log({ canAddValue });
 	// update specific option value.
 	const updateValue = (index, newLabel) => {
 		const updated = (values || []).map((value, valueIndex) =>
