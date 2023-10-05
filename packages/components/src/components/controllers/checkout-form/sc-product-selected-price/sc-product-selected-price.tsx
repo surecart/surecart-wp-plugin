@@ -54,6 +54,12 @@ export class ScProductSelectedPrice {
     }
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    this.updatePrice();
+  }
+
   render() {
     const price = this.lineItem()?.price;
     if (!price) return <Host style={{ display: 'none' }}></Host>;
@@ -62,11 +68,7 @@ export class ScProductSelectedPrice {
       <div class={{ 'selected-price': true }}>
         {this.showInput ? (
           <sc-form
-            onScSubmit={e => {
-              e.preventDefault();
-              e.stopImmediatePropagation();
-              this.updatePrice();
-            }}
+            onScSubmit={this.onSubmit}
             onScFormSubmit={e => {
               e.preventDefault();
               e.stopImmediatePropagation();
@@ -82,6 +84,11 @@ export class ScProductSelectedPrice {
               required={true}
               value={this.adHocAmount?.toString?.()}
               onScInput={e => (this.adHocAmount = parseFloat(e.target.value))}
+              onKeyDown={e => {
+                if (e.key === 'Enter') {
+                  this.onSubmit(e);
+                }
+              }}
             >
               <sc-button slot="suffix" type="link" submit>
                 {__('Update', 'surecart')}
@@ -91,7 +98,7 @@ export class ScProductSelectedPrice {
         ) : (
           <Fragment>
             <div class="selected-price__wrap">
-              <span class="selected-price__price">
+              <span class="selected-price__price" aria-label={__('Product price', 'surecart')}>
                 {price?.scratch_amount > price.amount && (
                   <Fragment>
                     <sc-format-number
@@ -105,7 +112,7 @@ export class ScProductSelectedPrice {
                 )}
                 <sc-format-number type="currency" currency={price?.currency} value={this.lineItem()?.ad_hoc_amount !== null ? this.lineItem()?.ad_hoc_amount : price?.amount} />
               </span>
-              <span class="selected-price__interval">
+              <span class="selected-price__interval" aria-label={__('Price interval', 'surecart')}>
                 {intervalString(price, {
                   labels: {
                     interval: '/',
