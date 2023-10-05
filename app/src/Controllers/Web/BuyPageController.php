@@ -103,6 +103,7 @@ class BuyPageController extends BasePageController {
 				'product'          => $this->model,
 				'prices'           => $active_prices,
 				'selected_price'   => $active_prices[0] ?? null,
+				'variant_options'  => $this->model->variant_options->data ?? [],
 				'terms_text'       => $this->termsText(),
 				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
