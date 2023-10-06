@@ -296,7 +296,7 @@ export class ScDropdown {
               }, 0);
             }
           }}
-          aria-expanded="true"
+          aria-expanded={this.open ? 'true' : 'false'}
           aria-haspopup="true"
         >
           <slot name="trigger"></slot>
