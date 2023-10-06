@@ -1,6 +1,5 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
-const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -209,6 +208,7 @@ module.exports = {
 	},
 	output: {
 		filename: '[name].js',
+		chunkFilename: `[name].js?v=[chunkhash]`,
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 	},
@@ -235,9 +235,6 @@ module.exports = {
 	},
 	plugins: [
 		...defaultConfig.plugins,
-		new webpack.optimize.LimitChunkCountPlugin({
-			maxChunks: 1,
-		}),
 		new CopyPlugin({
 			patterns: [
 				{
