@@ -35,6 +35,10 @@ export namespace Components {
         "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
         /**
+          * Is the name required
+         */
+        "requireName": boolean;
+        /**
           * Is this required?
          */
         "required": boolean;
@@ -1366,10 +1370,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The order
-         */
-        "order": Checkout;
-        /**
           * The tax protocol
          */
         "taxProtocol": TaxProtocol;
@@ -2097,7 +2097,7 @@ export namespace Components {
          */
         "defaultCountry": string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full": boolean;
         /**
@@ -2120,6 +2120,10 @@ export namespace Components {
         "placeholders": Partial<Address>;
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
+        /**
+          * Whether to require the name in the address
+         */
+        "requireName": boolean;
         /**
           * Is this required (defaults to false)
          */
@@ -2985,7 +2989,13 @@ export namespace Components {
         "trialDurationDays": number;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices": Price[];
+        /**
+          * The sale text
+         */
         "saleText": string;
     }
     interface ScProductPriceChoices {
@@ -5586,6 +5596,10 @@ declare namespace LocalJSX {
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         "placeholders"?: Partial<Address>;
         /**
+          * Is the name required
+         */
+        "requireName"?: boolean;
+        /**
           * Is this required?
          */
         "required"?: boolean;
@@ -7083,10 +7097,6 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The order
-         */
-        "order"?: Checkout;
-        /**
           * The tax protocol
          */
         "taxProtocol"?: TaxProtocol;
@@ -7848,7 +7858,7 @@ declare namespace LocalJSX {
          */
         "defaultCountry"?: string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full"?: boolean;
         /**
@@ -7877,6 +7887,10 @@ declare namespace LocalJSX {
          */
         "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
+        /**
+          * Whether to require the name in the address
+         */
+        "requireName"?: boolean;
         /**
           * Is this required (defaults to false)
          */
@@ -8798,7 +8812,13 @@ declare namespace LocalJSX {
         "trialDurationDays"?: number;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices"?: Price[];
+        /**
+          * The sale text
+         */
         "saleText"?: string;
     }
     interface ScProductPriceChoices {

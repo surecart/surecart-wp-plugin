@@ -10,7 +10,6 @@
 | Property      | Attribute  | Description         | Type          | Default     |
 | ------------- | ---------- | ------------------- | ------------- | ----------- |
 | `disabled`    | `disabled` | Disable validation? | `boolean`     | `undefined` |
-| `order`       | --         | The order           | `Checkout`    | `undefined` |
 | `taxProtocol` | --         | The tax protocol    | `TaxProtocol` | `undefined` |
 
 

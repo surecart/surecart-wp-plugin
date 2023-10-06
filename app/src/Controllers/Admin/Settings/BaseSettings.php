@@ -119,11 +119,12 @@ abstract class BaseSettings {
 		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$path.asset.php";
 
 		// Enqueue scripts.
-		\SureCart::core()->assets()->enqueueScript(
+		wp_enqueue_script(
 			$handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$path.js",
 			array_merge( $asset_file['dependencies'], $deps ),
-			$asset_file['version'] . '-' . \SureCart::plugin()->version()
+			$asset_file['version'],
+			true
 		);
 
 		wp_set_script_translations( $handle, 'surecart' );

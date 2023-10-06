@@ -6,6 +6,7 @@
     "loading": true,
     "names": true,
     "placeholders": true,
+    "require-name": true,
     "required": true,
     "show-line2": true,
     "show-name": true,
@@ -706,7 +707,6 @@
   },
   "sc-form-components-validator": {
     "disabled": true,
-    "order": true,
     "tax-protocol": true,
     "style": true,
     "id": true,
@@ -1205,6 +1205,7 @@
     "name-placeholder": true,
     "placeholders": true,
     "postal-code-placeholder": true,
+    "require-name": true,
     "required": true,
     "shipping-address": true,
     "shipping-enabled": true,

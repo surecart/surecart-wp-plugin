@@ -53,6 +53,7 @@ export class ScProductQuantity {
             quantity={state.selectedPrice?.ad_hoc ? 1 : state.quantity}
             disabled={state.selectedPrice?.ad_hoc}
             onScInput={e => (state.quantity = e.detail)}
+            {...(state.product.purchase_limit ? { max: state.product.purchase_limit } : {})}
           ></sc-quantity-select>
         </sc-form-control>
       </Host>
