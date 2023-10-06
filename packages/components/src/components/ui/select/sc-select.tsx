@@ -402,6 +402,11 @@ export class ScSelectDropdown {
         checked={this.isChecked(choice)}
         value={choice?.value}
         onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        onKeyDown={event => {
+          if (event.key === 'Enter' && !choice.disabled) {
+            this.handleSelect(choice.value);
+          }
+        }}
         disabled={choice.disabled}
       >
         {choice.label}
