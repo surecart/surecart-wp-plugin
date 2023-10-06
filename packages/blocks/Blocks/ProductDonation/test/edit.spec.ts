@@ -209,7 +209,7 @@ test.describe('surecart/product-donation', () => {
 		).toBeVisible(); // Check  if the first choice is checked by default.
 		await expect(
 			page.locator(
-				'sc-product-donation-choices sc-donation-recurring-choices sc-choice-container[checked]'
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choice-container[checked]'
 			)
 		).toBeVisible(); // Check  if the first recurring choice is checked by default.
 		const amountElement = await page
