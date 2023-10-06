@@ -244,7 +244,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.7.5 - October 6th, 2023 =
-* Fix: Issue with some merchant admins loading if using javascript browser caching.
+* Fix: Issue with some merchant admins not loading if using javascript browser caching.
 * Fix: Rankmath conflict outputting duplicate open graph tags.
 
 = 2.7.4 - October 5th, 2023 =
