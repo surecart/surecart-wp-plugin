@@ -159,24 +159,6 @@ export class ScProductDonationChoice {
     }
   }
 
-  /** Update a session */
-  async update(data: any = {}, query = {}) {
-    try {
-      updateFormState('FETCH');
-      checkoutState.checkout = (await createOrUpdateCheckout({
-        id: checkoutState.checkout?.id,
-        data,
-        query,
-      })) as Checkout;
-      updateFormState('RESOLVE');
-    } catch (e) {
-      console.error(e);
-      createErrorNotice(e, { dismissible: true });
-      updateFormState('REJECT');
-      throw e;
-    }
-  }
-
   async addOrUpdateProductPrices() {
     if (!this.product) return;
     const product = (await apiFetch({
