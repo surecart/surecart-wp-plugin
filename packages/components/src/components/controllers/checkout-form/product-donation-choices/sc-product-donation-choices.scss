@@ -12,3 +12,9 @@
     gap: var(--sc-spacing-small);
   }
 }
+.sc-donation-recurring-choices {
+  display: grid;
+  gap: var(--sc-spacing-small);
+  position: relative;
+  --columns: 2;
+}

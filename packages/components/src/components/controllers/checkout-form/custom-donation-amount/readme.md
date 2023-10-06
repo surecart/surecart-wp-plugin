@@ -7,9 +7,11 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                     | Type     | Default |
-| -------------- | --------------- | ------------------------------- | -------- | ------- |
-| `currencyCode` | `currency-code` | Currency code for the donation. | `string` | `'usd'` |
+| Property       | Attribute       | Description                     | Type       | Default     |
+| -------------- | --------------- | ------------------------------- | ---------- | ----------- |
+| `currencyCode` | `currency-code` | Currency code for the donation. | `string`   | `'usd'`     |
+| `lineItem`     | --              | Order line items.               | `LineItem` | `undefined` |
+| `value`        | `value`         |                                 | `string`   | `undefined` |
 
 
 ## Dependencies
@@ -17,6 +19,7 @@
 ### Depends on
 
 - [sc-choice-container](../../../ui/choice-container)
+- [sc-form](../../../ui/form)
 - [sc-price-input](../../../ui/price-input)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
@@ -25,6 +28,7 @@
 ```mermaid
 graph TD;
   sc-custom-donation-amount --> sc-choice-container
+  sc-custom-donation-amount --> sc-form
   sc-custom-donation-amount --> sc-price-input
   sc-custom-donation-amount --> sc-button
   sc-custom-donation-amount --> sc-icon

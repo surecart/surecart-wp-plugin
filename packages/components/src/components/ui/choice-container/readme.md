@@ -88,18 +88,18 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-custom-donation-amount](../../controllers/checkout-form/custom-donation-amount)
- - [sc-donation-recurring-choices](../../controllers/checkout-form/donation-recurring-choices)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../sc-price-choice-container)
+ - [sc-product-donation-choices](../../controllers/checkout-form/product-donation-choices)
  - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-custom-donation-amount --> sc-choice-container
-  sc-donation-recurring-choices --> sc-choice-container
   sc-price-choice --> sc-choice-container
   sc-price-choice-container --> sc-choice-container
+  sc-product-donation-choices --> sc-choice-container
   sc-recurring-price-choice-container --> sc-choice-container
   style sc-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```

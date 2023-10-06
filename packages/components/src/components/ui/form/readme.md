@@ -78,6 +78,7 @@ Type: `Promise<boolean>`
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form](../../controllers/cart/sc-cart-form)
+ - [sc-custom-donation-amount](../../controllers/checkout-form/custom-donation-amount)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
@@ -99,6 +100,7 @@ Type: `Promise<boolean>`
 graph TD;
   sc-cancel-survey --> sc-form
   sc-cart-form --> sc-form
+  sc-custom-donation-amount --> sc-form
   sc-customer-edit --> sc-form
   sc-login-form --> sc-form
   sc-login-provider --> sc-form

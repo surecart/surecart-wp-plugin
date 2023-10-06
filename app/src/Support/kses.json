@@ -624,21 +624,6 @@
     "class": true,
     "slot": true
   },
-  "sc-donation-recurring-choices": {
-    "busy": true,
-    "label": true,
-    "loading": true,
-    "non-recurring-choice-label": true,
-    "price-id": true,
-    "prices": true,
-    "product": true,
-    "recurring-choice-label": true,
-    "selected-product": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-downloads-list": {
     "customer-id": true,
     "downloads": true,

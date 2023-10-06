@@ -165,17 +165,17 @@ test.describe('surecart/product-donation', () => {
 		).toHaveText('Donation Amount'); // Check if the the label of the choices component is correct.
 		await expect(
 			page.locator(
-				'sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices .form-control label'
+				'sc-product-donation-choices > .sc-product-donation-choices > .sc-donation-recurring-choices .form-control label'
 			)
 		).toHaveText('Make it recurring'); // Check if the the label of the choices component is correct.
 		await expect(
 			page.locator(
-				'sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices sc-recurring-price-choice-container .recurring-price-choice__name'
+				'sc-product-donation-choices > .sc-product-donation-choices > .sc-donation-recurring-choices sc-recurring-price-choice-container .recurring-price-choice__name'
 			)
 		).toHaveText('Yes, count me in!'); // Check if the the label of the choices component is correct.
 		await expect(
 			page.locator(
-				'sc-product-donation-choices > .sc-product-donation-choices > sc-donation-recurring-choices sc-choices > sc-choice-container .price-choice__name'
+				'sc-product-donation-choices > .sc-product-donation-choices > .sc-donation-recurring-choices sc-choices > sc-choice-container .price-choice__name'
 			)
 		).toHaveText('No, donate once'); // Check if the the label of the choices component is correct.
 
@@ -186,7 +186,7 @@ test.describe('surecart/product-donation', () => {
 		).toBeVisible(); // Check  if the first choice is checked by default.
 		await expect(
 			page.locator(
-				'sc-product-donation-choices sc-donation-recurring-choices sc-choice-container[checked]'
+				'sc-product-donation-choices .sc-donation-recurring-choices sc-choice-container[checked]'
 			)
 		).toBeVisible(); // Check  if the first recurring choice is checked by default.
 		const amountElement = await page

@@ -7,6 +7,7 @@ import { state as checkoutState, onChange } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
+import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 @Component({
   tag: 'sc-product-donation-choices',
   styleUrl: 'sc-product-donation-choices.scss',
@@ -54,15 +55,19 @@ export class ScProductDonationChoice {
   /** Error */
   @State() error: string;
 
+  /** Amount */
+  @State() amount: string;
+
   /** Toggle line item event */
   @Event() scToggleLineItem: EventEmitter<LineItemData>;
 
   @Listen('scChange')
-  handleChange() {
-    let checked = Array.from(this.getChoices()).find((item) => {
+  handleChange(e) {
+    if (e?.target?.tagName !== 'SC-CHOICE-CONTAINER') return;
+    let checked = Array.from(this.getChoices()).find(item => {
       return item.checked && item.parentElement.tagName === 'SC-CUSTOM-DONATION-AMOUNT' && this.isInRange(item?.value);
     });
-   
+
     if (!checked) {
       checked = Array.from(this.getChoices()).find(item => {
         const value = item?.value ? item?.value : null;
@@ -76,30 +81,82 @@ export class ScProductDonationChoice {
     }
 
     if (checked) {
-      Array.from(this.getChoices()).forEach((item) => {
+      Array.from(this.getChoices()).forEach(item => {
         if (item !== checked) {
           item.checked = false;
         }
-      }
-      );
+      });
     }
-    
+
     const value = checked?.value ? checked?.value : null;
 
     if (!isNaN(parseInt(value))) {
-      let lineItems = [];
-      if (this.lineItem) {
-        lineItems = [{ id: this.lineItem?.id, price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(value) }];
-      }
-      lineItems = [{ price_id: this.priceId, quantity: 1, ad_hoc_amount: parseInt(value) }];
-      this.update({ line_items: lineItems });
+      this.addOrUpdateLineItem({
+        ...(!!value ? { ad_hoc_amount: parseInt(value) } : {}),
+        ...(!!this.priceId ? { price_id: this.priceId } : {}),
+        quantity: 1,
+      });
     }
   }
 
   @Watch('priceId')
-  pricesChanged() {
+  priceIdChanged() {
     this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
-    this.removeInvalidPrices();
+    this.removeInvalidAmounts();
+  }
+
+  @Watch('prices')
+  pricesChanged() {
+    this.selectDefaultChoice();
+  }
+
+  @Watch('lineItem')
+  lineItemChanged() {
+    this.priceId = this.lineItem?.price?.id;
+    this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
+    this.amount = this.lineItem?.ad_hoc_amount?.toString();
+    this.removeInvalidAmounts();
+  }
+
+  async addOrUpdateLineItem(data: any = {}) {
+    // convert line items response to line items post.
+    let existingData = convertLineItemsToLineItemData(checkoutState?.checkout?.line_items || []);
+
+    try {
+      updateFormState('FETCH');
+      checkoutState.checkout = (await createOrUpdateCheckout({
+        id: checkoutState?.checkout?.id,
+        data: {
+          live_mode: true,
+          line_items: [
+            ...(existingData || []).map((item: LineItemData) => {
+              return {
+                ...item,
+                ...(!!data?.price_id ? { price_id: data?.price_id } : {}),
+                ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
+                quantity: 1,
+              };
+            }),
+            // add a line item if one does not exist.
+            ...(!this.lineItem
+              ? [
+                  {
+                    price_id: this.priceId,
+                    ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
+                    quantity: 1,
+                  },
+                ]
+              : []),
+          ],
+        },
+      })) as Checkout;
+      updateFormState('RESOLVE');
+    } catch (e) {
+      console.error(e);
+      createErrorNotice(e, { dismissible: true });
+      updateFormState('REJECT');
+      throw e;
+    }
   }
 
   /** Update a session */
@@ -120,7 +177,7 @@ export class ScProductDonationChoice {
     }
   }
 
-  async getProductPrices() {
+  async addOrUpdateProductPrices() {
     if (!this.product) return;
     const product = (await apiFetch({
       path: addQueryArgs(`surecart/v1/products/${this.product}`, {
@@ -129,22 +186,20 @@ export class ScProductDonationChoice {
     })) as Product;
     this.selectedProduct = product;
     this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position);
+    this.removeInvalidAmounts();
     this.loading = false;
-    this.selectDefaultChoice();
-    this.removeInvalidPrices();
   }
 
   handleCheckoutChange() {
-    if (this.lineItem) return;
     this.lineItem = checkoutState.checkout?.line_items?.data?.[0];
   }
 
   componentWillLoad() {
-    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
     if (!this.prices?.length) {
       this.loading = true;
-      this.getProductPrices();
+      this.addOrUpdateProductPrices();
     }
+    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
     this.removeCheckoutListener = onChange('checkout', () => this.handleCheckoutChange());
   }
 
@@ -154,20 +209,27 @@ export class ScProductDonationChoice {
   }
 
   selectDefaultChoice() {
-    let choices = Array.from(this.getChoices());
-    //only need choices that has a value
-    choices = choices.filter(choice => choice?.value);
-    if (!choices.length || !this.prices?.length) return;
+    // Set Price ID.
+    if (!this.prices?.length) return;
     let checkoutPriceID = this.lineItem?.price?.id;
+    this.selectedPrice = checkoutPriceID ? this.prices?.find(price => price.id === checkoutPriceID) : this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc)?.[0];
+    this.priceId = this.selectedPrice?.id;
+
+    let choices = Array.from(this.getChoices());
+    //only need choices that has a value && is in range of selected price
+    choices = choices.filter(choice => choice?.value && this.isInRange(choice?.value));
+
     let checkoutAmount = this.lineItem?.ad_hoc_amount;
-    const selectedChoice = choices.find((choice: HTMLScChoiceElement) => choice?.value === checkoutAmount?.toString());
-    if (selectedChoice) {
-      selectedChoice.checked = true;
-    } else {
-      choices[0].checked = true;
+    let selectedChoice = choices.find((choice: HTMLScChoiceElement) => choice?.value === checkoutAmount?.toString());
+    selectedChoice = selectedChoice ? selectedChoice : choices[0];
+    selectedChoice.checked = true;
+    if (!this.lineItem) {
+      this.addOrUpdateLineItem({
+        ...(!!this.priceId ? { price_id: this.priceId } : {}),
+        ...(!!selectedChoice?.value ? { ad_hoc_amount: parseInt(selectedChoice?.value) } : {}),
+        quantity: 1,
+      });
     }
-    this.priceId = checkoutPriceID || this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc)?.[0]?.id;
-    this.handleChange();
   }
 
   getChoices() {
@@ -182,7 +244,7 @@ export class ScProductDonationChoice {
     return true;
   }
 
-  removeInvalidPrices() {
+  removeInvalidAmounts() {
     if (!this.selectedPrice) return;
 
     this.getChoices().forEach((el: HTMLScChoiceElement) => {
@@ -209,27 +271,52 @@ export class ScProductDonationChoice {
       );
     }
 
+    const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
+
     return (
       <div class="sc-product-donation-choices" style={{ '--columns': this.amountColumns }}>
         <sc-choices label={this.amountLabel}>
           <slot />
         </sc-choices>
-        <sc-donation-recurring-choices
-          label={this.recurringLabel}
-          recurringChoiceLabel={this.recurringChoiceLabel}
-          nonRecurringChoiceLabel={this.nonRecurringChoiceLabel}
-          prices={this.prices}
-          priceId={this.priceId}
-          onScChange={e => {
-            if ('string' === typeof e?.detail) {
-              this.priceId = e.detail;
-            } else if (true === e?.detail) {
-              this.priceId = nonRecurringPrice?.id;
-            }
-            this.handleChange();
-          }}
-          part="recurring-choices"
-        />
+        <div class="sc-donation-recurring-choices" part="base">
+          <sc-choices label={this.recurringLabel} part="choices">
+            <sc-recurring-price-choice-container
+              label={this.recurringChoiceLabel}
+              prices={recurringPrices}
+              product={this?.selectedProduct}
+              selectedPrice={this.selectedPrice}
+              showDetails={false}
+              showAmount={false}
+              onScChange={e => {
+                this.priceId = e.detail;
+                this.addOrUpdateLineItem({
+                  ...(!!this.priceId ? { price_id: this.priceId } : {}),
+                  ...(!!this.amount ? { ad_hoc_amount: parseInt(this.amount) } : {}),
+                  quantity: 1,
+                });
+              }}
+            />
+            <sc-choice-container
+              show-control="false"
+              value={nonRecurringPrice?.id}
+              checked={this.priceId === nonRecurringPrice?.id}
+              part="choice"
+              onScChange={() => {
+                this.priceId = nonRecurringPrice?.id;
+                this.addOrUpdateLineItem({
+                  ...(!!this.priceId ? { price_id: this.priceId } : {}),
+                  ...(!!this.amount ? { ad_hoc_amount: parseInt(this.amount) } : {}),
+                  quantity: 1,
+                });
+              }}
+            >
+              <div class="price-choice__title">
+                <div class="price-choice__name">{this.nonRecurringChoiceLabel}</div>
+              </div>
+            </sc-choice-container>
+          </sc-choices>
+          {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
+        </div>
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>
     );

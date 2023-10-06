@@ -1255,29 +1255,6 @@ export namespace Components {
         "removeInvalid": boolean;
         "reportValidity": () => Promise<boolean>;
     }
-    interface ScDonationRecurringChoices {
-        "busy": boolean;
-        /**
-          * The label for the field.
-         */
-        "label": string;
-        /**
-          * Is this loading
-         */
-        "loading": boolean;
-        "nonRecurringChoiceLabel": string;
-        /**
-          * The price id for the fields.
-         */
-        "priceId": string;
-        "prices": Price[];
-        /**
-          * The product id for the fields.
-         */
-        "product": string;
-        "recurringChoiceLabel": string;
-        "selectedProduct": Product;
-    }
     interface ScDownloadsList {
         "customerId": string;
         "downloads": Download[];
@@ -4079,10 +4056,6 @@ export interface ScDonationChoicesCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScDonationChoicesElement;
 }
-export interface ScDonationRecurringChoicesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScDonationRecurringChoicesElement;
-}
 export interface ScDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScDrawerElement;
@@ -4594,12 +4567,6 @@ declare global {
     var HTMLScDonationChoicesElement: {
         prototype: HTMLScDonationChoicesElement;
         new (): HTMLScDonationChoicesElement;
-    };
-    interface HTMLScDonationRecurringChoicesElement extends Components.ScDonationRecurringChoices, HTMLStencilElement {
-    }
-    var HTMLScDonationRecurringChoicesElement: {
-        prototype: HTMLScDonationRecurringChoicesElement;
-        new (): HTMLScDonationRecurringChoicesElement;
     };
     interface HTMLScDownloadsListElement extends Components.ScDownloadsList, HTMLStencilElement {
     }
@@ -5549,7 +5516,6 @@ declare global {
         "sc-dialog": HTMLScDialogElement;
         "sc-divider": HTMLScDividerElement;
         "sc-donation-choices": HTMLScDonationChoicesElement;
-        "sc-donation-recurring-choices": HTMLScDonationRecurringChoicesElement;
         "sc-downloads-list": HTMLScDownloadsListElement;
         "sc-drawer": HTMLScDrawerElement;
         "sc-dropdown": HTMLScDropdownElement;
@@ -7090,34 +7056,6 @@ declare namespace LocalJSX {
          */
         "priceId"?: string;
         "removeInvalid"?: boolean;
-    }
-    interface ScDonationRecurringChoices {
-        "busy"?: boolean;
-        /**
-          * The label for the field.
-         */
-        "label"?: string;
-        /**
-          * Is this loading
-         */
-        "loading"?: boolean;
-        "nonRecurringChoiceLabel"?: string;
-        "onScChange"?: (event: ScDonationRecurringChoicesCustomEvent<string | boolean>) => void;
-        /**
-          * Toggle line item event
-         */
-        "onScUpdateLineItem"?: (event: ScDonationRecurringChoicesCustomEvent<LineItemData>) => void;
-        /**
-          * The price id for the fields.
-         */
-        "priceId"?: string;
-        "prices"?: Price[];
-        /**
-          * The product id for the fields.
-         */
-        "product"?: string;
-        "recurringChoiceLabel"?: string;
-        "selectedProduct"?: Product;
     }
     interface ScDownloadsList {
         "customerId"?: string;
@@ -10102,7 +10040,6 @@ declare namespace LocalJSX {
         "sc-dialog": ScDialog;
         "sc-divider": ScDivider;
         "sc-donation-choices": ScDonationChoices;
-        "sc-donation-recurring-choices": ScDonationRecurringChoices;
         "sc-downloads-list": ScDownloadsList;
         "sc-drawer": ScDrawer;
         "sc-dropdown": ScDropdown;
@@ -10313,7 +10250,6 @@ declare module "@stencil/core" {
             "sc-dialog": LocalJSX.ScDialog & JSXBase.HTMLAttributes<HTMLScDialogElement>;
             "sc-divider": LocalJSX.ScDivider & JSXBase.HTMLAttributes<HTMLScDividerElement>;
             "sc-donation-choices": LocalJSX.ScDonationChoices & JSXBase.HTMLAttributes<HTMLScDonationChoicesElement>;
-            "sc-donation-recurring-choices": LocalJSX.ScDonationRecurringChoices & JSXBase.HTMLAttributes<HTMLScDonationRecurringChoicesElement>;
             "sc-downloads-list": LocalJSX.ScDownloadsList & JSXBase.HTMLAttributes<HTMLScDownloadsListElement>;
             "sc-drawer": LocalJSX.ScDrawer & JSXBase.HTMLAttributes<HTMLScDrawerElement>;
             "sc-dropdown": LocalJSX.ScDropdown & JSXBase.HTMLAttributes<HTMLScDropdownElement>;

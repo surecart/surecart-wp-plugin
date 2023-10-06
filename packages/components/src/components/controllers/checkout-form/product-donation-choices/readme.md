@@ -32,9 +32,11 @@
 
 ## Shadow Parts
 
-| Part                  | Description |
-| --------------------- | ----------- |
-| `"recurring-choices"` |             |
+| Part        | Description |
+| ----------- | ----------- |
+| `"base"`    |             |
+| `"choice"`  |             |
+| `"choices"` |             |
 
 
 ## Dependencies
@@ -43,7 +45,8 @@
 
 - [sc-skeleton](../../../ui/skeleton)
 - [sc-choices](../../../ui/choices)
-- [sc-donation-recurring-choices](../donation-recurring-choices)
+- [sc-recurring-price-choice-container](../../../ui/sc-recurring-price-choice-container)
+- [sc-choice-container](../../../ui/choice-container)
 - [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
@@ -51,23 +54,17 @@
 graph TD;
   sc-product-donation-choices --> sc-skeleton
   sc-product-donation-choices --> sc-choices
-  sc-product-donation-choices --> sc-donation-recurring-choices
+  sc-product-donation-choices --> sc-recurring-price-choice-container
+  sc-product-donation-choices --> sc-choice-container
   sc-product-donation-choices --> sc-block-ui
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
-  sc-donation-recurring-choices --> sc-skeleton
-  sc-donation-recurring-choices --> sc-choices
-  sc-donation-recurring-choices --> sc-recurring-price-choice-container
-  sc-donation-recurring-choices --> sc-choice-container
-  sc-donation-recurring-choices --> sc-block-ui
   sc-recurring-price-choice-container --> sc-format-number
   sc-recurring-price-choice-container --> sc-choice-container
   sc-recurring-price-choice-container --> sc-dropdown
-  sc-recurring-price-choice-container --> sc-button
+  sc-recurring-price-choice-container --> sc-icon
   sc-recurring-price-choice-container --> sc-menu
   sc-recurring-price-choice-container --> sc-menu-item
-  sc-recurring-price-choice-container --> sc-icon
-  sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   style sc-product-donation-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```

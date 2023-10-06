@@ -37,11 +37,9 @@ graph TD;
   sc-recurring-price-choice-container --> sc-format-number
   sc-recurring-price-choice-container --> sc-choice-container
   sc-recurring-price-choice-container --> sc-dropdown
-  sc-recurring-price-choice-container --> sc-button
+  sc-recurring-price-choice-container --> sc-icon
   sc-recurring-price-choice-container --> sc-menu
   sc-recurring-price-choice-container --> sc-menu-item
-  sc-recurring-price-choice-container --> sc-icon
-  sc-button --> sc-spinner
   style sc-product-price-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
