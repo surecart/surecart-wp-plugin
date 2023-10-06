@@ -9,7 +9,6 @@ import { intervalString } from '../../../functions/price';
   shadow: false,
 })
 export class ScRecurringPriceChoiceContainer {
-
   @Prop() selectedPrice: Price;
 
   @Prop() product: Product;
@@ -28,15 +27,11 @@ export class ScRecurringPriceChoiceContainer {
   @Event() scChange: EventEmitter<string>;
 
   renderPrice(price) {
-    return (
-      <Fragment>
-        <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
-      </Fragment>
-    );
+    return <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>;
   }
 
   render() {
-    if ( ! this.prices?.length ) { 
+    if (!this.prices?.length) {
       return <Host></Host>;
     }
     const cardChecked = this.prices.find(price => price.id === this.selectedPrice?.id);
@@ -56,10 +51,10 @@ export class ScRecurringPriceChoiceContainer {
                   {(this.prices || []).map(price => {
                     const checked = this.selectedPrice?.id === price?.id;
                     return (
-                      <sc-menu-item onClick={() => (this.scChange.emit(price?.id))} class={`recurring-price-choice__menu-item ${checked ? 'checked' : ''}`}>
-                        { checked && (
+                      <sc-menu-item onClick={() => this.scChange.emit(price?.id)} class={`recurring-price-choice__menu-item ${checked ? 'checked' : ''}`}>
+                        {checked && (
                           <span part="checked-icon" class="menu-item__check">
-                              <sc-icon name="check" slot="prefix"/>
+                            <sc-icon name="check" slot="prefix" />
                           </span>
                         )}
                         <span part="label" class="menu-item__label">
