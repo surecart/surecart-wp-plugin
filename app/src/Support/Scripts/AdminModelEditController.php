@@ -115,11 +115,12 @@ abstract class AdminModelEditController {
 		$asset_file = include plugin_dir_path( SURECART_PLUGIN_FILE ) . "dist/$this->path.asset.php";
 
 		// Enqueue scripts.
-		\SureCart::core()->assets()->enqueueScript(
+		wp_enqueue_script(
 			$this->handle,
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . "dist/$this->path.js",
 			array_merge( $asset_file['dependencies'], $this->dependencies ),
-			$asset_file['version'] . '-' . \SureCart::plugin()->version()
+			$asset_file['version'],
+			true
 		);
 
 		// pass app url.
