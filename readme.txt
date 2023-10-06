@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.7.4
+Stable tag: 2.7.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,10 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.7.5 - October 6th, 2023 =
+* Fix: Issue with some merchant admins loading if using javascript browser caching.
+* Fix: Rankmath conflict outputting duplicate open graph tags.
 
 = 2.7.4 - October 5th, 2023 =
 * Improvement: Ability to turn off/on individual abandoned checkout flows for a customer.
