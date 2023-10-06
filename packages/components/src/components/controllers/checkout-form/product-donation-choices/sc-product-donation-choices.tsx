@@ -62,8 +62,7 @@ export class ScProductDonationChoice {
   @Event() scToggleLineItem: EventEmitter<LineItemData>;
 
   @Listen('scChange')
-  handleChange(e) {
-    if (e?.target?.tagName !== 'SC-CHOICE-CONTAINER') return;
+  handleChange() {
     let checked = Array.from(this.getChoices()).find(item => {
       return item.checked && item.parentElement.tagName === 'SC-CUSTOM-DONATION-AMOUNT' && this.isInRange(item?.value);
     });
@@ -77,10 +76,10 @@ export class ScProductDonationChoice {
 
     if (!checked) {
       checked = Array.from(this.getChoices())?.find(item => this.isInRange(item.value));
-      checked.checked = true;
     }
 
     if (checked) {
+      checked.checked = true;
       Array.from(this.getChoices()).forEach(item => {
         if (item !== checked) {
           item.checked = false;
@@ -89,6 +88,7 @@ export class ScProductDonationChoice {
     }
 
     const value = checked?.value ? checked?.value : null;
+    this.amount = value;
 
     if (!isNaN(parseInt(value))) {
       this.addOrUpdateLineItem({
@@ -271,11 +271,6 @@ export class ScProductDonationChoice {
               showAmount={false}
               onScChange={e => {
                 this.priceId = e.detail;
-                this.addOrUpdateLineItem({
-                  ...(!!this.priceId ? { price_id: this.priceId } : {}),
-                  ...(!!this.amount ? { ad_hoc_amount: parseInt(this.amount) } : {}),
-                  quantity: 1,
-                });
               }}
             />
             <sc-choice-container
@@ -285,11 +280,6 @@ export class ScProductDonationChoice {
               part="choice"
               onScChange={() => {
                 this.priceId = nonRecurringPrice?.id;
-                this.addOrUpdateLineItem({
-                  ...(!!this.priceId ? { price_id: this.priceId } : {}),
-                  ...(!!this.amount ? { ad_hoc_amount: parseInt(this.amount) } : {}),
-                  quantity: 1,
-                });
               }}
             >
               <div class="price-choice__title">
