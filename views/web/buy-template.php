@@ -70,9 +70,16 @@
 			<!-- /wp:surecart/price-selector -->
 		<?php endif; ?>
 
-		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-			<sc-product-checkout-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-checkout-select-variant-option>
-		<?php endforeach; ?>
+		<div class="wp-block-group">
+			<?php
+			foreach ( $product->variant_options->data as $key => $option ) :
+					$option_key   = 'option_' . ( $key + 1 );
+					$option_value = $default_variant->$option_key ?? '';
+				?>
+				<sc-product-checkout-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>" selected="<?php echo esc_attr( $option_value ); ?>"></sc-product-checkout-select-variant-option>
+
+			<?php endforeach; ?>
+		</div>
 
 	</sc-column>
 	<!-- /wp:surecart/column -->
