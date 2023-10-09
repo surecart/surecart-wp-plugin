@@ -97,6 +97,18 @@ class BuyPageController extends BasePageController {
 		// add the filters.
 		$this->filters();
 
+		$first_variant_with_stock = $this->model->variants->data[0];
+
+		// stock is enabled
+		if ( $this->model->stock_enabled ) {
+			foreach ( $this->model->variants->data as $variant ) {
+				if ( $variant->stock > 0 ) {
+					$first_variant_with_stock = $variant;
+					break;
+				}
+			}
+		}
+
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
@@ -104,6 +116,7 @@ class BuyPageController extends BasePageController {
 				'prices'           => $active_prices,
 				'selected_price'   => $active_prices[0] ?? null,
 				'variant_options'  => $this->model->variant_options->data ?? [],
+				'default_variant'  => $first_variant_with_stock,
 				'terms_text'       => $this->termsText(),
 				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
