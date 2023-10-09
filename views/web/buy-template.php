@@ -62,7 +62,7 @@
 			<!-- wp:surecart/price-selector -->
 			<sc-price-choices type="radio" columns="1">
 				<?php foreach ( $prices as $key => $option ) : ?>
-					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>","checked":true} -->
+					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>"} -->
 					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-control="false"></sc-price-choice>
 					<!-- /wp:surecart/price-choice -->
 				<?php endforeach; ?>
@@ -70,16 +70,15 @@
 			<!-- /wp:surecart/price-selector -->
 		<?php endif; ?>
 
-		<div class="wp-block-group">
+		<!-- <div class="wp-block-group">
 			<?php
 			foreach ( $product->variant_options->data as $key => $option ) :
 					$option_key   = 'option_' . ( $key + 1 );
 					$option_value = $default_variant->$option_key ?? '';
 				?>
 				<sc-product-checkout-select-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>" selected="<?php echo esc_attr( $option_value ); ?>"></sc-product-checkout-select-variant-option>
-
 			<?php endforeach; ?>
-		</div>
+		</div> -->
 
 	</sc-column>
 	<!-- /wp:surecart/column -->
