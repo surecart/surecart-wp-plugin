@@ -15,6 +15,8 @@ export class ScProductCheckoutSelectVariantOption {
   /** Label */
   @Prop() label: string;
 
+  @Prop() selected: string;
+
   /** Which option number? */
   @Prop() optionNumber: 1 | 2 | 3 = 1;
 
@@ -38,12 +40,11 @@ export class ScProductCheckoutSelectVariantOption {
   }
 
   render() {
-    console.log(state.product);
     return (
       <sc-select
         label={this.label}
         exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, menu__base, spinner__base, empty"
-        value={this.lineItem()?.variant?.[`option_${this.optionNumber}`] || ''}
+        value={this.lineItem()?.variant?.[`option_${this.optionNumber}`] || this.selected}
         onScChange={(e: any) => {
           const values = {
             ...(this.lineItem()?.variant?.option_1 ? { option_1: this.lineItem()?.variant?.option_1 } : {}),
