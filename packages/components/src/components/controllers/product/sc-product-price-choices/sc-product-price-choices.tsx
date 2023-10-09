@@ -36,7 +36,7 @@ export class ScProductPriceChoices {
     if (prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
     const nonSubscriptionPrices = availableNonSubscriptionPrices();
-    
+
     return (
       <sc-choices label={this.label} required style={{ '--sc-input-required-indicator': ' ' }}>
         {(nonSubscriptionPrices || []).map(price => (
@@ -59,8 +59,7 @@ export class ScProductPriceChoices {
           selectedPrice={state?.selectedPrice}
           onScChange={e => {
             if (e.detail) {
-              const price = prices?.find(price => price.id === e.detail);
-              state.selectedPrice = price;
+              state.selectedPrice = prices?.find(price => price.id === e.detail);
             }
           }}
         />

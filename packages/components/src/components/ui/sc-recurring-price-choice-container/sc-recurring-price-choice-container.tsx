@@ -37,11 +37,7 @@ export class ScRecurringPriceChoiceContainer {
   @Event({ bubbles: false }) scChange: EventEmitter<string>;
 
   renderPrice(price) {
-    return (
-      <Fragment>
-        <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
-      </Fragment>
-    );
+    return <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>;
   }
 
   @Watch('selectedPrice')
