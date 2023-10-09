@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State
 import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
 import { state as userState } from '@store/user';
+import { state as processorsState } from '@store/processors';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
@@ -225,7 +226,7 @@ export class ScCheckout {
       // checkout states
 
       // stripe.
-      stripePaymentElement: this.stripePaymentElement,
+      stripePaymentElement: processorsState.config.stripe.paymentElement,
       stripePaymentIntent: (checkoutState.checkout?.staged_payment_intents?.data || []).find(intent => intent.processor_type === 'stripe'),
 
       error: this.error,
@@ -244,9 +245,9 @@ export class ScCheckout {
       country: 'US',
       loggedIn: userState.loggedIn,
       emailExists: checkoutState.checkout?.email_exists,
-      formId: this.formId,
-      mode: this.mode,
-      currencyCode: this.currencyCode,
+      formId: checkoutState.formId,
+      mode: checkoutState.mode,
+      currencyCode: checkoutState.currencyCode,
     };
   }
 
