@@ -44,7 +44,18 @@ export class ScCartIcon {
       return null;
     }
     return (
-      <div class={{ cart: true }} part="base" onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}>
+      <div
+        class={{ cart: true }}
+        part="base"
+        onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}
+        onKeyDown={e => {
+          if ('Enter' === e?.code || 'Space' === e?.code) {
+            uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
+          }
+        }}
+        tabIndex={0}
+        role="button"
+      >
         <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
           <slot>
