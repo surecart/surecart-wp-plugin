@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Listen, Method, Prop, State } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
+import { state as userState } from '@store/user';
 import { __ } from '@wordpress/i18n';
 import { Creator, Universe } from 'stencil-wormhole';
 
@@ -65,9 +66,6 @@ export class ScCheckout {
 
   /** The account tax protocol */
   @Prop() taxProtocol: TaxProtocol;
-
-  /** Is this user logged in? */
-  @Prop({ mutable: true }) loggedIn: boolean;
 
   /** Should we disable components validation */
   @Prop() disableComponentsValidation: boolean;
@@ -244,7 +242,7 @@ export class ScCheckout {
       products: this.productsEntities,
       prices: this.pricesEntities,
       country: 'US',
-      loggedIn: this.loggedIn,
+      loggedIn: userState.loggedIn,
       emailExists: checkoutState.checkout?.email_exists,
       formId: this.formId,
       mode: this.mode,
@@ -274,9 +272,9 @@ export class ScCheckout {
         <Universe.Provider state={this.state()}>
           {/** Handles login form prompts. */}
           <sc-login-provider
-            loggedIn={this.loggedIn}
+            loggedIn={userState.loggedIn}
             onScSetCustomer={e => (this.customer = e.detail as Customer)}
-            onScSetLoggedIn={e => (this.loggedIn = e.detail)}
+            onScSetLoggedIn={e => (userState.loggedIn = e.detail)}
             order={checkoutState.checkout}
           >
             {/* Handles the current checkout form state. */}
@@ -284,7 +282,7 @@ export class ScCheckout {
               {/* Handles adding error component in the form. */}
               <sc-form-error-provider>
                 {/* Validate components in the form based on order state. */}
-                <sc-form-components-validator order={checkoutState.checkout} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
+                <sc-form-components-validator order={checkoutState.checkout} disabled={this.disableComponentsValidation} taxProtocol={checkoutState.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
                   <sc-order-confirm-provider checkout-status={formState.formState.value} success-url={this.successUrl} successText={this.successText}>
                     {/* Handles the current session. */}

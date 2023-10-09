@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 
-import { Checkout, LineItemData, Product } from '../../types';
+import { Checkout, LineItemData, Product, TaxProtocol } from '../../types';
 import { getSerializedState } from '@store/utils';
 const { checkout } = getSerializedState();
 
@@ -14,6 +14,7 @@ interface Store {
   currencyCode: string;
   abandonedCheckoutEnabled: boolean;
   initialLineItems: LineItemData[];
+  taxProtocol: TaxProtocol;
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(

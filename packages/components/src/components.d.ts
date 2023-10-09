@@ -505,10 +505,6 @@ export namespace Components {
     confirmed: string;
   };
         /**
-          * Is this user logged in?
-         */
-        "loggedIn": boolean;
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods": ManualPaymentMethod[];
@@ -6189,10 +6185,6 @@ declare namespace LocalJSX {
     confirming: string;
     confirmed: string;
   };
-        /**
-          * Is this user logged in?
-         */
-        "loggedIn"?: boolean;
         /**
           * Manual payment methods enabled for this form.
          */
