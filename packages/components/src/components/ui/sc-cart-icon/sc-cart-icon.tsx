@@ -30,6 +30,9 @@ export class ScCartIcon {
     return getOrder(this.formId, this.mode);
   }
 
+  /** Cart focus */
+  @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
+
   /** Count the number of items in the cart. */
   getItemsCount() {
     const items = this.order()?.line_items?.data;
@@ -46,13 +49,22 @@ export class ScCartIcon {
     }
     return (
       <div
-        class={{ cart: true }}
+        class={{
+          'cart': true,
+          'cart--focused': this.hasFocus,
+        }}
         part="base"
         onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}
         onKeyDown={e => {
           if ('Enter' === e?.code || 'Space' === e?.code) {
             uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
           }
+        }}
+        onFocus={() => {
+          this.hasFocus = true;
+        }}
+        onBlur={() => {
+          this.hasFocus = false;
         }}
         tabIndex={0}
         role="button"

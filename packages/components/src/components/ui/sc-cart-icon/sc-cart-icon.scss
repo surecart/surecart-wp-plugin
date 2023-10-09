@@ -1,5 +1,6 @@
 :host {
   display: block;
+  --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
 }
 
 .cart {
@@ -47,5 +48,9 @@
     padding: 4px 10px;
     line-height: 18px;
     z-index: 1;
+  }
+
+  &.cart--focused {
+    box-shadow: var(--focus-ring);
   }
 }
