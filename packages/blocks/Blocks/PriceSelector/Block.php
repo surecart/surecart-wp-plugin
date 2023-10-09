@@ -40,7 +40,7 @@ class Block extends BaseBlock {
 		$checked = array_filter(
 			$choices,
 			function( $block ) {
-				return (bool) $block['attrs']['checked'];
+				return ! empty( $block['attrs']['checked'] );
 			}
 		);
 
