@@ -107,6 +107,17 @@ export default ({ order, checkout, loading }) => {
 		[checkout?.id]
 	);
 
+	const hasInstallmentPayments =
+		line_items?.some(
+			(item) =>
+				item.price.recurring_interval &&
+				item.price.recurring_period_count
+		) || false;
+
+	const hasPendingInstallmentPayments =
+		hasInstallmentPayments &&
+		checkout?.full_amount !== checkout?.subtotal_amount;
+
 	return (
 		<Box
 			title={
@@ -210,11 +221,29 @@ export default ({ order, checkout, loading }) => {
 					style={{ '--spacing': 'var(--sc-spacing-x-small)' }}
 				/>
 
-				<LineItem
-					label={__('Subtotal', 'surecart')}
-					currency={checkout?.currency}
-					value={checkout?.subtotal_amount}
-				/>
+				{hasPendingInstallmentPayments ? (
+					<>
+						<LineItem
+							label={__('Total Installment Payments', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.full_amount}
+						/>
+
+						<LineItem
+							label={__('First Payment Subtotal', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.subtotal_amount}
+						/>
+					</>
+				) : (
+					<>
+						<LineItem
+							label={__('Subtotal', 'surecart')}
+							currency={checkout?.currency}
+							value={checkout?.subtotal_amount}
+						/>
+					</>
+				)}
 
 				{!!checkout?.proration_amount && (
 					<LineItem
@@ -276,13 +305,36 @@ export default ({ order, checkout, loading }) => {
 
 				<ScDivider style={{ '--spacing': 'var(--sc-spacing-small)' }} />
 
+				{!!checkout?.trial_amount && (
+					<ScLineItem
+						style={{
+							width: '100%',
+							'--price-size': 'var(--sc-font-size-x-large)',
+						}}
+					>
+						<span slot="title">{__('Free Trial', 'surecart')}</span>
+						<span slot="price">
+							<ScFormatNumber
+								type="currency"
+								currency={checkout?.currency}
+								value={checkout?.trial_amount}
+							></ScFormatNumber>
+						</span>
+						<span slot="currency">{checkout?.currency}</span>
+					</ScLineItem>
+				)}
+
 				<ScLineItem
 					style={{
 						width: '100%',
 						'--price-size': 'var(--sc-font-size-x-large)',
 					}}
 				>
-					<span slot="title">{__('Total', 'surecart')}</span>
+					<span slot="title">
+						{hasPendingInstallmentPayments
+							? __('First Payment Total')
+							: __('Total', 'surecart')}
+					</span>
 					<span slot="price">
 						<ScFormatNumber
 							type="currency"
