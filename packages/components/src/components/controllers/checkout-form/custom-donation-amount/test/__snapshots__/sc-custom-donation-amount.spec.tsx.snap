@@ -1,13 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-custom-donation-amount renders 1`] = `
-<sc-custom-donation-amount>
+<sc-custom-donation-amount class="sc-custom-donation-amount">
   <sc-choice-container show-control="false">
-    <sc-price-input currencycode="usd">
-      <sc-button circle="" slot="suffix">
-        <sc-icon name="arrow-right"></sc-icon>
-      </sc-button>
-    </sc-price-input>
+    <sc-form>
+      <sc-price-input currencycode="usd" style="--sc-input-border-color-focus: var(--sc-input-border-color-hover); --sc-focus-ring-color-primary: transparent;">
+        <sc-button circle="" size="small" slot="suffix" submit="" type="primary">
+          <sc-icon name="arrow-right"></sc-icon>
+        </sc-button>
+      </sc-price-input>
+    </sc-form>
   </sc-choice-container>
 </sc-custom-donation-amount>
 `;
