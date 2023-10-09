@@ -150,6 +150,8 @@ return [
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\ProductItemList\Block::class,
 		\SureCartBlocks\Blocks\ProductCollection\Block::class,
+		\SureCartBlocks\Blocks\PriceSelector\Block::class,
+		\SureCartBlocks\Blocks\PriceChoice\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,

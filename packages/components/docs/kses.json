@@ -1458,6 +1458,14 @@
     "class": true,
     "slot": true
   },
+  "sc-pill-option": {
+    "is-selected": true,
+    "is-unavailable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-premium-tag": {
     "size": true,
     "style": true,
@@ -1549,10 +1557,15 @@
   },
   "sc-product-buy-button": {
     "add-to-cart": true,
-    "classes": true,
-    "out-of-stock-text": true,
-    "styles": true,
-    "text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-checkout-select-variant-option": {
+    "label": true,
+    "option-number": true,
+    "selected": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1626,6 +1639,14 @@
     "setup-fee-trial-enabled": true,
     "trial-duration-days": true,
     "variant-label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-pills-variant-option": {
+    "label": true,
+    "option-number": true,
     "style": true,
     "id": true,
     "class": true,

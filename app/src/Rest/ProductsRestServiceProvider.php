@@ -229,11 +229,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function filter_response_by_context( $model, $context ) {
 		$response = parent::filter_response_by_context( $model, $context );
 
+		if ( is_a( $response, 'WP_REST_Response' ) ) {
+			return $response;
+		}
+
 		if ( 'edit' === $context ) {
 			// Process the variants, it's in a data column, so we need to pull it out.
-			$response['variants'] = $response['variants']['data'] ?? [];
+			if ( ! empty( $response['variants']['data'] ) ) {
+				$response['variants'] = $response['variants']['data'];
+			}
 			// Process the variant_options, it's in a data column, so we need to pull it out.
-			$response['variant_options'] = $response['variant_options']['data'];
+			if ( ! empty( $response['variant_options']['data'] ) ) {
+				$response['variant_options'] = $response['variant_options']['data'];
+			}
 		}
 
 		return $response;
