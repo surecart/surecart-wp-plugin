@@ -1,6 +1,7 @@
 import { Component, h, Event, EventEmitter, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { LineItem } from '../../../../types';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-cart-header',
@@ -35,6 +36,7 @@ export class ScCartHeader {
           }}
           tabIndex={0}
           role="button"
+          aria-label={__('Close Cart', 'surecart')}
         ></sc-icon>
         <div class="cart-title">
           <slot />

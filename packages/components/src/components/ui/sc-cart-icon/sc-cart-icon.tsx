@@ -1,6 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { getOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
+import { __ } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -55,6 +56,7 @@ export class ScCartIcon {
         }}
         tabIndex={0}
         role="button"
+        aria-label={__('Open Cart', 'surecart')}
       >
         <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
