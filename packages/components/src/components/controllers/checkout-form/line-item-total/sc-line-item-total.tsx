@@ -1,5 +1,5 @@
 import { Checkout } from '../../../../types';
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
 import { openWormhole } from 'stencil-wormhole';
 import { __ } from '@wordpress/i18n';
 
@@ -20,6 +20,34 @@ export class ScLineItemTotal {
     amount_due: 'amount_due',
   };
 
+  hasInstallmentPlan() {
+    return this.order?.full_amount !== this.order?.subtotal_amount;
+  }
+
+  renderLineItemTitle() {
+    if (this.total === 'total' && this.hasInstallmentPlan()) {
+      return <span slot="title">{__('First Payment Total', 'surecart')}</span>;
+    }
+
+    return (
+      <span slot="title">
+        <slot name="title" />
+      </span>
+    );
+  }
+
+  renderLineItemDescription() {
+    if (this.total === 'subtotal' && this.hasInstallmentPlan()) {
+      return <span slot="description">{__('First Payment Subtotal', 'surecart')}</span>;
+    }
+
+    return (
+      <span slot="description">
+        <slot name="description" />
+      </span>
+    );
+  }
+
   render() {
     // loading state
     if (this.loading && !this.order?.[this?.order_key?.[this?.total]]) {
@@ -37,6 +65,15 @@ export class ScLineItemTotal {
     if (this.total === 'total' && this.order?.total_amount !== this.order?.amount_due) {
       return (
         <div class="line-item-total__group">
+          {!!this.order.trial_amount && (
+            <sc-line-item>
+              <span slot="description">{__('Free Trial', 'surecart')}</span>
+              <span slot="price">
+                <sc-format-number type="currency" value={this.order.trial_amount} currency={this.order.currency} />
+              </span>
+            </sc-line-item>
+          )}
+
           <sc-line-item>
             <span slot="description">
               <slot name="title" />
@@ -59,20 +96,32 @@ export class ScLineItemTotal {
     }
 
     return (
-      <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
-        <span slot="title">
-          <slot name="title" />
-        </span>
-        <span slot="description">
-          <slot name="description" />
-        </span>
-        <span slot="price">
-          {!!this.order?.total_savings_amount && this.total === 'total' && (
-            <sc-format-number class="scratch-price" type="currency" value={-this.order?.total_savings_amount + this.order?.total_amount} currency={this.order?.currency || 'usd'} />
-          )}
-          <sc-total class="total-price" order={this.order} total={this.total}></sc-total>
-        </span>
-      </sc-line-item>
+      <Fragment>
+        {this.total === 'subtotal' && this.hasInstallmentPlan() && (
+          <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
+            <span slot="description">{__('Total Installment Payments')}</span>
+            <span slot="price">
+              <sc-format-number type="currency" value={this.order?.full_amount} currency={this.order?.currency || 'usd'} />
+            </span>
+          </sc-line-item>
+        )}
+
+        <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
+          {this.renderLineItemTitle()}
+          {this.renderLineItemDescription()}
+          <span slot="price">
+            {!!this.order?.total_savings_amount && this.total === 'total' && (
+              <sc-format-number
+                class="scratch-price"
+                type="currency"
+                value={-this.order?.total_savings_amount + this.order?.total_amount}
+                currency={this.order?.currency || 'usd'}
+              />
+            )}
+            <sc-total class="total-price" order={this.order} total={this.total}></sc-total>
+          </span>
+        </sc-line-item>
+      </Fragment>
     );
   }
 }
