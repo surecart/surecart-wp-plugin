@@ -93,6 +93,7 @@ export class ScCart {
 
   @Listen('scCloseCart')
   handleCloseCart() {
+    (document?.querySelector('sc-cart-icon')?.shadowRoot?.querySelector('.cart') as HTMLElement)?.focus();
     this.open = false;
   }
 
@@ -150,7 +151,15 @@ export class ScCart {
         {this.order() && (
           <Universe.Provider state={this.state()}>
             <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setOrder(e.detail)}>
-              <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+              <sc-drawer
+                ref={el => (this.drawer = el as HTMLScDrawerElement)}
+                open={this.open}
+                onScAfterHide={() => {
+                  this.open = false;
+                  this.handleCloseCart();
+                }}
+                onScAfterShow={() => (this.open = true)}
+              >
                 {this.open === true && (
                   <Fragment>
                     <div class="cart__header-suffix" slot="header">
