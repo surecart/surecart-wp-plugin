@@ -189,7 +189,7 @@ class BuyPageController extends BasePageController {
 	 * @return \SureCart\Models\Variant
 	 */
 	public function getFirstVariantWithStock() {
-		$first_variant_with_stock = $this->model->variants->data[0];
+		$first_variant_with_stock = $this->model->variants->data[0] ?? null;
 
 		// stock is enabled.
 		if ( $this->model->stock_enabled ) {
