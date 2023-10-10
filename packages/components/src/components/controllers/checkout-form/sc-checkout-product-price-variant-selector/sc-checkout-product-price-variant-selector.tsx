@@ -162,14 +162,15 @@ export class ScProductCheckoutSelectVariantOption {
           </sc-form-control>
         ))}
 
-        {this.product?.prices?.data?.length && (
-          <sc-form-control label={this.product.variant_options.data?.length && this.label}>
+        {!!this.product?.prices?.data?.length && (
+          <sc-form-control label={!!this.product.variant_options.data?.length ? this.label : null}>
             <sc-choices required>
               {(this.product.prices.data || [])
                 .sort((a, b) => a?.position - b?.position)
                 .map(price => (
                   <sc-price-choice-container
                     price={price}
+                    label={price?.name || this.product?.name}
                     checked={this.lineItem()?.price?.id === price?.id}
                     onScChange={e => {
                       if (e.target.checked) {
