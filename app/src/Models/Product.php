@@ -143,6 +143,15 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Checkout Permalink.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutPermalinkAttribute() {
+		return $this->buyLink()->url();
+	}
+
+	/**
 	 * Get the product permalink.
 	 *
 	 * @return string
