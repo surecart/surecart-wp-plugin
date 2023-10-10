@@ -54,7 +54,7 @@
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
-				<?php echo wp_kses_post( $product->description ); ?>
+				<?php echo wp_kses_post( $product->description ?? '' ); ?>
 			</sc-prose>
 		<?php endif; ?>
 
