@@ -53,6 +53,7 @@ class Block extends BaseBlock {
 		$line_items = $this->convertPriceBlocksToLineItems( $checked );
 		$existing   = $this->getExistingLineItems();
 
+		// merge any existing with the new ones.
 		return array_merge( $existing, $line_items );
 	}
 

@@ -80,7 +80,7 @@ export class ScOrderSubmit {
   }
 
   render() {
-    if (this.cannotShipToLocation()) {
+    if (this.cannotShipToLocation() || checkoutIsLocked('OUT_OF_STOCK')) {
       return (
         <sc-button type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={true}>
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}

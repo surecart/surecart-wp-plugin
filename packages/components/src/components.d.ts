@@ -576,6 +576,16 @@ export namespace Components {
     }
     interface ScCheckoutPaystackPaymentProvider {
     }
+    interface ScCheckoutProductPriceVariantSelector {
+        /**
+          * The label for the price.
+         */
+        "label": string;
+        /**
+          * The product.
+         */
+        "product": Product;
+    }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
      */
@@ -2167,10 +2177,6 @@ export namespace Components {
     }
     interface ScOrderSubmit {
         /**
-          * Is the order busy
-         */
-        "busy": boolean;
-        /**
           * Currency Code
          */
         "currencyCode": string;
@@ -2186,10 +2192,6 @@ export namespace Components {
           * Is the order loading.
          */
         "loading": boolean;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode": 'test' | 'live';
         /**
           * The current order.
          */
@@ -2751,10 +2753,6 @@ export namespace Components {
          */
         "label": string;
         /**
-          * Session
-         */
-        "order": Checkout;
-        /**
           * Required by default
          */
         "required": boolean;
@@ -2866,17 +2864,6 @@ export namespace Components {
     }
     interface ScProductBuyButton {
         "addToCart": boolean;
-    }
-    interface ScProductCheckoutSelectVariantOption {
-        /**
-          * Label
-         */
-        "label": string;
-        /**
-          * Which option number?
-         */
-        "optionNumber": 1 | 2 | 3;
-        "selected": string;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -4131,10 +4118,6 @@ export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
 }
-export interface ScProductCheckoutSelectVariantOptionCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProductCheckoutSelectVariantOptionElement;
-}
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductLineItemElement;
@@ -4396,6 +4379,12 @@ declare global {
     var HTMLScCheckoutPaystackPaymentProviderElement: {
         prototype: HTMLScCheckoutPaystackPaymentProviderElement;
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
+    };
+    interface HTMLScCheckoutProductPriceVariantSelectorElement extends Components.ScCheckoutProductPriceVariantSelector, HTMLStencilElement {
+    }
+    var HTMLScCheckoutProductPriceVariantSelectorElement: {
+        prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
+        new (): HTMLScCheckoutProductPriceVariantSelectorElement;
     };
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -5053,12 +5042,6 @@ declare global {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
     };
-    interface HTMLScProductCheckoutSelectVariantOptionElement extends Components.ScProductCheckoutSelectVariantOption, HTMLStencilElement {
-    }
-    var HTMLScProductCheckoutSelectVariantOptionElement: {
-        prototype: HTMLScProductCheckoutSelectVariantOptionElement;
-        new (): HTMLScProductCheckoutSelectVariantOptionElement;
-    };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
     var HTMLScProductItemElement: {
@@ -5491,6 +5474,7 @@ declare global {
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
+        "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
@@ -5598,7 +5582,6 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
-        "sc-product-checkout-select-variant-option": HTMLScProductCheckoutSelectVariantOptionElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
@@ -6260,6 +6243,16 @@ declare namespace LocalJSX {
         "processorId"?: string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    interface ScCheckoutProductPriceVariantSelector {
+        /**
+          * The label for the price.
+         */
+        "label"?: string;
+        /**
+          * The product.
+         */
+        "product"?: Product;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -8039,10 +8032,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderSubmit {
         /**
-          * Is the order busy
-         */
-        "busy"?: boolean;
-        /**
           * Currency Code
          */
         "currencyCode"?: string;
@@ -8058,10 +8047,6 @@ declare namespace LocalJSX {
           * Is the order loading.
          */
         "loading"?: boolean;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode"?: 'test' | 'live';
         /**
           * The current order.
          */
@@ -8668,10 +8653,6 @@ declare namespace LocalJSX {
          */
         "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData1>) => void;
         /**
-          * Session
-         */
-        "order"?: Checkout;
-        /**
           * Required by default
          */
         "required"?: boolean;
@@ -8786,21 +8767,6 @@ declare namespace LocalJSX {
     }
     interface ScProductBuyButton {
         "addToCart"?: boolean;
-    }
-    interface ScProductCheckoutSelectVariantOption {
-        /**
-          * Label
-         */
-        "label"?: string;
-        /**
-          * Toggle line item event
-         */
-        "onScUpdateLineItem"?: (event: ScProductCheckoutSelectVariantOptionCustomEvent<LineItemData1>) => void;
-        /**
-          * Which option number?
-         */
-        "optionNumber"?: 1 | 2 | 3;
-        "selected"?: string;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
@@ -9997,6 +9963,7 @@ declare namespace LocalJSX {
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
+        "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
@@ -10104,7 +10071,6 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-buy-button": ScProductBuyButton;
-        "sc-product-checkout-select-variant-option": ScProductCheckoutSelectVariantOption;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
@@ -10210,6 +10176,7 @@ declare module "@stencil/core" {
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
+            "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.
              */
@@ -10331,7 +10298,6 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
-            "sc-product-checkout-select-variant-option": LocalJSX.ScProductCheckoutSelectVariantOption & JSXBase.HTMLAttributes<HTMLScProductCheckoutSelectVariantOptionElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;

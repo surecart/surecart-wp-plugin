@@ -1,0 +1,12 @@
+.sc-checkout-product-price-variant-selector {
+  > *:not(:last-child) {
+    display: block;
+    margin-bottom: var(--sc-form-row-spacing, 0.75em);
+  }
+  &__pills-wrapper {
+    font-size: var(--sc-font-size-small);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sc-spacing-x-small);
+  }
+}

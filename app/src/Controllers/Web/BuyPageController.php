@@ -97,9 +97,101 @@ class BuyPageController extends BasePageController {
 		// add the filters.
 		$this->filters();
 
+		// prepare data.
+		$first_variant_with_stock = $this->getFirstVariantWithStock();
+		$filtered                 = $this->productWithActiveSortedPrices();
+
+		if ( ! empty( $filtered->prices->data[0]->id ) ) {
+			$line_item = array_merge(
+				[
+					'price_id' => $filtered->prices->data[0]->id,
+					'quantity' => 1,
+				],
+				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
+			);
+			sc_initial_state(
+				[
+					'checkout' => [
+						'initialLineItems' => array_merge(
+							$this->getExistingLineItems(),
+							[ $line_item ]
+						),
+					],
+				]
+			);
+		}
+
+		// render the view.
+		return \SureCart::view( 'web/buy' )->with(
+			[
+				'product'          => $filtered,
+				'terms_text'       => $this->termsText(),
+				'mode'             => $filtered->buyLink()->getMode(),
+				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
+				'logo_url'         => \SureCart::account()->brand->logo_url,
+				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
+				'user'             => wp_get_current_user(),
+				'logout_link'      => wp_logout_url( $request->getUrl() ),
+				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
+				'enabled'          => $filtered->buyLink()->isEnabled(),
+				'show_logo'        => $filtered->buyLink()->templatePartEnabled( 'logo' ),
+				'show_terms'       => $filtered->buyLink()->templatePartEnabled( 'terms' ),
+				'show_image'       => $filtered->buyLink()->templatePartEnabled( 'image' ),
+				'show_description' => $filtered->buyLink()->templatePartEnabled( 'description' ),
+				'show_coupon'      => $filtered->buyLink()->templatePartEnabled( 'coupon' ),
+			]
+		);
+	}
+
+	/**
+	 * Create the product with active sorted prices.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	public function productWithActiveSortedPrices() {
+		$filtered = clone $this->model;
+
+		// Filter out archived prices.
+		$filtered->prices->data = array_values(
+			array_filter(
+				$filtered->prices->data,
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
+		// Sort prices by position.
+		usort(
+			$filtered->prices->data,
+			function( $a, $b ) {
+				return $a->position - $b->position;
+			}
+		);
+
+		return $filtered;
+	}
+
+	/**
+	 * Get any existing line items.
+	 *
+	 * @return array
+	 */
+	public function getExistingLineItems() {
+		$initial = \SureCart::state()->getData();
+		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
+	}
+
+	/**
+	 * Get the first variant with stock.
+	 * If stock is disabled, it just gets the first variant.
+	 *
+	 * @return \SureCart\Models\Variant
+	 */
+	public function getFirstVariantWithStock() {
 		$first_variant_with_stock = $this->model->variants->data[0];
 
-		// stock is enabled
+		// stock is enabled.
 		if ( $this->model->stock_enabled ) {
 			foreach ( $this->model->variants->data as $variant ) {
 				if ( $variant->stock > 0 ) {
@@ -108,31 +200,7 @@ class BuyPageController extends BasePageController {
 				}
 			}
 		}
-
-		// render the view.
-		return \SureCart::view( 'web/buy' )->with(
-			[
-				'product'          => $this->model,
-				'prices'           => $active_prices,
-				'selected_price'   => $active_prices[0] ?? null,
-				'variant_options'  => $this->model->variant_options->data ?? [],
-				'default_variant'  => $first_variant_with_stock,
-				'terms_text'       => $this->termsText(),
-				'mode'             => $this->model->buyLink()->getMode(),
-				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
-				'logo_url'         => \SureCart::account()->brand->logo_url,
-				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
-				'user'             => wp_get_current_user(),
-				'logout_link'      => wp_logout_url( $request->getUrl() ),
-				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
-				'enabled'          => $this->model->buyLink()->isEnabled(),
-				'show_logo'        => $this->model->buyLink()->templatePartEnabled( 'logo' ),
-				'show_terms'       => $this->model->buyLink()->templatePartEnabled( 'terms' ),
-				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
-				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
-				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
-			]
-		);
+		return $first_variant_with_stock;
 	}
 
 	/**

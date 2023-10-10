@@ -7,10 +7,11 @@
 
   &__button {
     font-size: var(--sc-font-size-medium);
+    font-weight: var(--sc-font-weight-medium);
     border: 1px solid var(--sc-color-gray-300);
     color: var(--sc-color-gray-700);
     background: transparent;
-    border-radius: var(--sc-input-height-medium);
+    border-radius: var(--sc-border-radius-medium);
     display: inline-block;
     padding: 0 calc(var(--sc-spacing-medium) * 1.4);
     height: var(--sc-input-height-medium);
@@ -19,7 +20,6 @@
     transition: border var(--sc-transition-medium) ease;
     cursor: pointer;
     position: relative;
-    box-shadow: var(--sc-shadow-small);
     transition: var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color,
       var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow,
       var(--sc-input-transition, var(--sc-transition-medium)) opacity;
@@ -40,6 +40,7 @@
       background-color: var(--sc-color-primary-500);
       color: white;
       border-color: white;
+      box-shadow: var(--sc-shadow-small);
     }
 
     &:hover:not(.sc-pill-option__button--selected) {
