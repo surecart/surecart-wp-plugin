@@ -195,6 +195,11 @@ export default ({ order, checkout, loading }) => {
 							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
 							priceName={item?.price?.name}
+							variantLabel={
+								(item?.variant_options || [])
+									.filter(Boolean)
+									.join(' / ') || null
+							}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
