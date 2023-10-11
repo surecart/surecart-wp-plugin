@@ -585,6 +585,7 @@ export namespace Components {
           * The product.
          */
         "product": Product;
+        "reportValidity": () => Promise<boolean>;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -2726,6 +2727,7 @@ export namespace Components {
           * Stores the price
          */
         "price": string | Price1;
+        "required": boolean;
         /**
           * Show the radio/checkbox control
          */
@@ -8618,6 +8620,7 @@ declare namespace LocalJSX {
           * Stores the price
          */
         "price"?: string | Price1;
+        "required"?: boolean;
         /**
           * Show the radio/checkbox control
          */
