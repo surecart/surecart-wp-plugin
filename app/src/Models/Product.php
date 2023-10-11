@@ -267,6 +267,55 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get product with acgive and sorted prices.
+	 *
+	 * @return this
+	 */
+	public function withActiveAndSortedPrices() {
+		$filtered = clone $this;
+
+		// Filter out archived prices.
+		$filtered->prices->data = array_values(
+			array_filter(
+				$filtered->prices->data,
+				function( $price ) {
+					return ! $price->archived;
+				}
+			)
+		);
+
+		// Sort prices by position.
+		usort(
+			$filtered->prices->data,
+			function( $a, $b ) {
+				return $a->position - $b->position;
+			}
+		);
+
+		return $filtered;
+	}
+
+	/**
+	 * Get the first variant with stock.
+	 *
+	 * @return \SureCart\Models\Variant;
+	 */
+	public function getFirstVariantWithStock() {
+		$first_variant_with_stock = $this->variants->data[0] ?? null;
+
+		// stock is enabled.
+		if ( $this->stock_enabled ) {
+			foreach ( $this->variants->data as $variant ) {
+				if ( $variant->stock > 0 ) {
+					$first_variant_with_stock = $variant;
+					break;
+				}
+			}
+		}
+		return $first_variant_with_stock;
+	}
+
+	/**
 	 * Get the product template
 	 *
 	 * @return \WP_Template

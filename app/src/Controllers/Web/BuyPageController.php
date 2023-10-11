@@ -98,8 +98,8 @@ class BuyPageController extends BasePageController {
 		$this->filters();
 
 		// prepare data.
-		$first_variant_with_stock = $this->getFirstVariantWithStock();
-		$filtered                 = $this->productWithActiveSortedPrices();
+		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
+		$filtered                 = $this->model->withActiveAndSortedPrices();
 
 		if ( ! empty( $filtered->prices->data[0]->id ) ) {
 			$line_item = array_merge(
@@ -144,35 +144,6 @@ class BuyPageController extends BasePageController {
 	}
 
 	/**
-	 * Create the product with active sorted prices.
-	 *
-	 * @return \SureCart\Models\Product
-	 */
-	public function productWithActiveSortedPrices() {
-		$filtered = clone $this->model;
-
-		// Filter out archived prices.
-		$filtered->prices->data = array_values(
-			array_filter(
-				$filtered->prices->data,
-				function( $price ) {
-					return ! $price->archived;
-				}
-			)
-		);
-
-		// Sort prices by position.
-		usort(
-			$filtered->prices->data,
-			function( $a, $b ) {
-				return $a->position - $b->position;
-			}
-		);
-
-		return $filtered;
-	}
-
-	/**
 	 * Get any existing line items.
 	 *
 	 * @return array
@@ -180,27 +151,6 @@ class BuyPageController extends BasePageController {
 	public function getExistingLineItems() {
 		$initial = \SureCart::state()->getData();
 		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
-	}
-
-	/**
-	 * Get the first variant with stock.
-	 * If stock is disabled, it just gets the first variant.
-	 *
-	 * @return \SureCart\Models\Variant
-	 */
-	public function getFirstVariantWithStock() {
-		$first_variant_with_stock = $this->model->variants->data[0] ?? null;
-
-		// stock is enabled.
-		if ( $this->model->stock_enabled ) {
-			foreach ( $this->model->variants->data as $variant ) {
-				if ( $variant->stock > 0 ) {
-					$first_variant_with_stock = $variant;
-					break;
-				}
-			}
-		}
-		return $first_variant_with_stock;
 	}
 
 	/**
