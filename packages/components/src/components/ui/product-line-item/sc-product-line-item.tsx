@@ -44,6 +44,9 @@ export class ScProductLineItem {
 
   /** Price name */
   @Prop() priceName?: string;
+        
+  /** Product variant label */
+  @Prop() variantLabel: string = '';
 
   /** Quantity */
   @Prop() quantity: number;
@@ -159,6 +162,11 @@ export class ScProductLineItem {
                 </div>
               )}
             </div>
+            {!!this.variantLabel && (
+              <div class="item__variant" part="variant">
+                <slot name="variant">({this.variantLabel})</slot>
+              </div>
+            )}
             {this.editable && (
               <sc-quantity-select
                 max={this.max || Infinity}
@@ -175,7 +183,22 @@ export class ScProductLineItem {
             )}
           </div>
           <div class="item__suffix" part="suffix">
-            {this.removable ? <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
+            {this.removable ? (
+              <sc-icon
+                exportparts="base:remove-icon__base"
+                class="item__remove"
+                name="x"
+                onClick={() => this.scRemove.emit()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    this.scRemove.emit();
+                  }
+                }}
+                tabindex="0"
+              ></sc-icon>
+            ) : (
+              <div></div>
+            )}
             {this.renderPriceAndInterval()}
           </div>
         </div>

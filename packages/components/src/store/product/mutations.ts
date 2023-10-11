@@ -8,7 +8,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 export const submitCartForm = async () => {
   if (!state.selectedPrice?.id) return;
-  if (state.selectedPrice?.ad_hoc && ( null === state.adHocAmount || undefined === state.adHocAmount )) return;
+  if (state.selectedPrice?.ad_hoc && (null === state.adHocAmount || undefined === state.adHocAmount)) return;
   try {
     state.busy = true;
     const checkout = await addLineItem({
@@ -16,22 +16,25 @@ export const submitCartForm = async () => {
       data: {
         price: state.selectedPrice?.id,
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+        variant: state.selectedVariant?.id,
         ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
       live_mode: state.mode !== 'test',
     });
     setCheckout(checkout as Checkout, state.formId);
-    const newLineItem = checkout.line_items?.data.find((item) => item.price.id === state.selectedPrice?.id);
+    const newLineItem = checkout.line_items?.data.find(item => item.price.id === state.selectedPrice?.id);
     if (newLineItem) {
-      doCartGoogleAnalytics([{
-        item_id: (newLineItem.price?.product as Product)?.id,
-        item_name: (newLineItem.price?.product as Product)?.name,
-        item_variant: newLineItem.price?.name,
-        price: newLineItem.price?.amount,
-        currency: newLineItem.price?.currency,
-        quantity: newLineItem.quantity,
-        discount: newLineItem.discount_amount
-      }]);
+      doCartGoogleAnalytics([
+        {
+          item_id: (newLineItem.price?.product as Product)?.id,
+          item_name: (newLineItem.price?.product as Product)?.name,
+          item_variant: newLineItem.price?.name,
+          price: newLineItem.price?.amount,
+          currency: newLineItem.price?.currency,
+          quantity: newLineItem.quantity,
+          discount: newLineItem.discount_amount,
+        },
+      ]);
     }
     toggleCart(true);
     state.dialog = null;
@@ -43,7 +46,7 @@ export const submitCartForm = async () => {
   }
 };
 
-export const getProductBuyLink = url => {
+export const getProductBuyLink = (url, query = {}) => {
   if (!state.selectedPrice?.id) return;
   if (state.selectedPrice?.ad_hoc && !state.adHocAmount) return;
 
@@ -55,6 +58,6 @@ export const getProductBuyLink = url => {
         ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
     ],
-    no_cart: true,
+    ...query,
   });
 };

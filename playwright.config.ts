@@ -20,13 +20,17 @@ export default defineConfig({
 	testDir: 'packages',
 
 	/* Test file match extension. Currently only supporting `.spec.ts` extension */
-	testMatch: ['packages/blocks/Blocks/**/*.spec.ts', 'packages/admin/**/*.spec.ts', 'packages/admin/**/**/*.spec.ts'],
+	testMatch: [
+		'packages/blocks/Blocks/**/*.spec.ts',
+		'packages/admin/**/*.spec.ts',
+		'packages/admin/**/**/*.spec.ts',
+	],
 
 	/* Run tests for specific file matches [If needs] */
 	// testMatch: ["**/test/*-pw.spec.ts"],
 
 	/* Run tests in files in parallel */
-	fullyParallel: true,
+	fullyParallel: false, // TODO: Enable this when API fixes Discard::RecordNotDiscarded
 
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!CI,

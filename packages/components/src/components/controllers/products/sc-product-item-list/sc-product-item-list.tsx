@@ -1,8 +1,14 @@
+/**
+ * External dependencies.
+ */
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-import { Product } from '../../../../types';
+/**
+ * Internal dependencies.
+ */
+import { Collection, Product } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
@@ -31,6 +37,12 @@ export class ScProductItemList {
 
   /** Should allow search */
   @Prop() sortEnabled: boolean = true;
+
+  /** Should allow collection filter */
+  @Prop() collectionEnabled: boolean = true;
+
+  /** Show for a specific collection */
+  @Prop() collectionId: string | null = null;
 
   /** Show only featured products. */
   @Prop() featured: boolean = false;
@@ -78,8 +90,20 @@ export class ScProductItemList {
     total_pages: 0,
   };
 
+  /** Collections */
+  @State() collections: Collection[];
+
+  /** Selected collections */
+  @State() selectedCollections: Collection[];
+
   componentWillLoad() {
     this.getProducts();
+
+    if (this.collectionEnabled) {
+      this.getCollections();
+    }
+
+    this.selectedCollections = [];
   }
 
   // Append URL if no 'product-page' found
@@ -113,7 +137,21 @@ export class ScProductItemList {
     }
   }
 
+  // Fetch all collections
+  async getCollections() {
+    try {
+      this.collections = (await apiFetch({
+        path: addQueryArgs(`surecart/v1/product_collections/`, {
+          per_page: 100,
+        }),
+      })) as Collection[];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   @Watch('sort')
+  @Watch('selectedCollections')
   async handleSortChange() {
     this.currentPage = 1;
     this.updateProducts();
@@ -150,15 +188,23 @@ export class ScProductItemList {
   }
 
   async fetchProducts() {
+    let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
+
+    // If we have a collectionId, we should only fetch products from that collection.
+    if (this.collectionId) {
+      collectionIds = [this.collectionId];
+    }
+
     try {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
-          expand: ['prices', 'product_medias', 'product_media.media'],
+          expand: ['prices', 'product_medias', 'product_media.media', 'variants'],
           archived: false,
           status: ['published'],
           per_page: this.limit,
           page: this.currentPage,
           sort: this.sort,
+          product_collection_ids: collectionIds,
           ...(this.featured ? { featured: true } : {}),
           ...(this.ids?.length ? { ids: this.ids } : {}),
           ...(this.query ? { query: this.query } : {}),
@@ -196,6 +242,21 @@ export class ScProductItemList {
     }
   }
 
+  toggleSelectCollection(collection: Collection) {
+    // if collection not in selectedCollections, add it, otherwise remove it
+    if (!this.selectedCollections.find(c => c.id === collection.id)) {
+      this.selectedCollections = [...this.selectedCollections, collection];
+    } else {
+      this.selectedCollections = this.selectedCollections.filter(c => c.id !== collection.id);
+    }
+  }
+
+  getCollectionsAfterFiltered() {
+    return (this.collections ?? []).filter(collection => {
+      return !this.selectedCollections.some(selected => selected.id === collection.id);
+    });
+  }
+
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
@@ -204,70 +265,108 @@ export class ScProductItemList {
             {this.error}
           </sc-alert>
         )}
-        {(this.searchEnabled || this.sortEnabled) && (
+        {(this.searchEnabled || this.sortEnabled || this.collectionEnabled) && (
           <div class="product-item-list__header">
-            <div class="product-item-list__sort">
-              {this.sortEnabled && (
-                <sc-dropdown style={{ '--panel-width': '15em' }}>
-                  <sc-button type="text" caret slot="trigger">
-                    {this.renderSortName()}
-                  </sc-button>
-                  <sc-menu>
-                    <sc-menu-item onClick={() => (this.sort = 'created_at:desc')}>{__('Latest', 'surecart')}</sc-menu-item>
-                    <sc-menu-item onClick={() => (this.sort = 'created_at:asc')}>{__('Oldest', 'surecart')}</sc-menu-item>
-                    <sc-menu-item onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
-                    <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
-                  </sc-menu>
-                </sc-dropdown>
-              )}
-            </div>
-            <div class="product-item-list__search">
-              {this.searchEnabled &&
-                (this.query?.length && this.query === this.currentQuery ? (
-                  <div class="product-item-list__search-tag">
-                    <div class="product-item-list__search-label">{__('Search Results:', 'surecart')}</div>
-                    <sc-tag
-                      clearable
-                      onScClear={() => {
-                        this.query = '';
-                        this.currentQuery = '';
-                        this.updateProducts();
-                      }}
-                    >
-                      {this.query}
-                    </sc-tag>
-                  </div>
-                ) : (
-                  <sc-input
-                    type="text"
-                    placeholder="Search"
-                    size="small"
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') {
-                        this.updateProducts();
-                      }
-                    }}
-                    value={this.query}
-                    onScInput={e => (this.query = e.target.value)}
-                  >
-                    {this.query ? (
-                      <sc-icon
-                        class="clear-button"
-                        slot="prefix"
-                        name="x"
-                        onClick={() => {
-                          this.query = '';
-                        }}
-                      />
-                    ) : (
-                      <sc-icon slot="prefix" name="search" />
-                    )}
-                    <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
-                      {__('Search', 'surecart')}
+            <div class="product-item-list__controls">
+              <div class="product-item-list__sort">
+                {this.sortEnabled && (
+                  <sc-dropdown style={{ '--panel-width': '15em' }}>
+                    <sc-button type="text" caret slot="trigger">
+                      {this.renderSortName()}
                     </sc-button>
-                  </sc-input>
-                ))}
+                    <sc-menu>
+                      <sc-menu-item onClick={() => (this.sort = 'created_at:desc')}>{__('Latest', 'surecart')}</sc-menu-item>
+                      <sc-menu-item onClick={() => (this.sort = 'created_at:asc')}>{__('Oldest', 'surecart')}</sc-menu-item>
+                      <sc-menu-item onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
+                      <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
+                    </sc-menu>
+                  </sc-dropdown>
+                )}
+
+                {this.collectionEnabled && (this.collections ?? []).length > 0 && (
+                  <sc-dropdown style={{ '--panel-width': '15rem' }}>
+                    <sc-button type="text" caret slot="trigger">
+                      {__('Filter', 'surecart')}
+                    </sc-button>
+                    <sc-menu>
+                      {(this.collections ?? []).map(collection => {
+                        return (
+                          <sc-menu-item
+                            checked={this.selectedCollections.some(selected => selected?.id === collection?.id)}
+                            onClick={() => this.toggleSelectCollection(collection)}
+                            key={collection?.id}
+                          >
+                            {collection.name}
+                          </sc-menu-item>
+                        );
+                      })}
+                    </sc-menu>
+                  </sc-dropdown>
+                )}
+              </div>
+              <div class="product-item-list__search">
+                {this.searchEnabled &&
+                  (this.query?.length && this.query === this.currentQuery ? (
+                    <div class="product-item-list__search-tag">
+                      <div class="product-item-list__search-label">{__('Search Results:', 'surecart')}</div>
+                      <sc-tag
+                        clearable
+                        onScClear={() => {
+                          this.query = '';
+                          this.currentQuery = '';
+                          this.updateProducts();
+                        }}
+                      >
+                        {this.query}
+                      </sc-tag>
+                    </div>
+                  ) : (
+                    <sc-input
+                      type="text"
+                      placeholder="Search"
+                      size="small"
+                      onKeyDown={e => {
+                        if (e.key === 'Enter') {
+                          this.updateProducts();
+                        }
+                      }}
+                      value={this.query}
+                      onScInput={e => (this.query = e.target.value)}
+                    >
+                      {this.query ? (
+                        <sc-icon
+                          class="clear-button"
+                          slot="prefix"
+                          name="x"
+                          onClick={() => {
+                            this.query = '';
+                          }}
+                        />
+                      ) : (
+                        <sc-icon slot="prefix" name="search" />
+                      )}
+                      <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                        {__('Search', 'surecart')}
+                      </sc-button>
+                    </sc-input>
+                  ))}
+              </div>
             </div>
+            {this.collectionEnabled && this.selectedCollections.length > 0 && (
+              <div class="product-item-list__search-tag">
+                {this.selectedCollections.map(collection => (
+                  <sc-tag
+                    key={collection?.id}
+                    clearable
+                    onScClear={() => {
+                      this.toggleSelectCollection(collection);
+                    }}
+                  >
+                    {collection?.name}
+                  </sc-tag>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -279,9 +378,9 @@ export class ScProductItemList {
 
         <div class="product-item-list">
           {this.loading
-            ? [...Array(this.ids?.length || this.limit || 10)].map(() => (
-                <div class="product-item-list__loader">
-                  {this.layoutConfig?.map(layout => {
+            ? [...Array(this.products?.length || this.limit || 10)].map((_, index) => (
+                <div class="product-item-list__loader" key={index}>
+                  {(this.layoutConfig || []).map(layout => {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
                         return (
@@ -314,7 +413,7 @@ export class ScProductItemList {
                 </div>
               ))
             : (this.products || []).map(product => {
-                return <sc-product-item exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
+                return <sc-product-item key={product?.id} exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
               })}
         </div>
         {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (

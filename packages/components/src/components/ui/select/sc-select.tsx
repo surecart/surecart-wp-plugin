@@ -144,7 +144,7 @@ export class ScSelectDropdown {
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scChange: EventEmitter<void>;
+  scChange: EventEmitter<ChoiceItem>;
 
   /** Emitted when the list scrolls to the end. */
   @Event() scScrollEnd: EventEmitter<void>;
@@ -152,7 +152,6 @@ export class ScSelectDropdown {
   /** Trigger focus on show */
   handleShow() {
     this.open = true;
-    this.scOpen.emit();
     setTimeout(() => {
       this.searchInput && this.searchInput.triggerFocus();
     }, 50);
@@ -216,7 +215,9 @@ export class ScSelectDropdown {
     this.scSearch.emit(this.searchTerm);
   }
 
-  handleSelect(value) {
+  handleSelect(choice) {
+    const { value } = choice;
+
     if (this.value === value && this.unselect) {
       this.value = '';
     } else {
@@ -227,7 +228,7 @@ export class ScSelectDropdown {
       this.searchTerm = '';
     }
 
-    this.scChange.emit();
+    this.scChange.emit(choice);
   }
 
   @Watch('searchTerm')
@@ -399,10 +400,11 @@ export class ScSelectDropdown {
 
     return (
       <sc-menu-item
+        class={{ 'is-unavailable': choice?.unavailable }}
         key={index}
         checked={this.isChecked(choice)}
         value={choice?.value}
-        onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        onClick={() => !choice.disabled && this.handleSelect(choice)}
         disabled={choice.disabled}
       >
         {choice.label}

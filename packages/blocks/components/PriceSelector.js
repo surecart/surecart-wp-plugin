@@ -8,7 +8,7 @@ import SelectPrice from './SelectPrice';
 import { useSelect, dispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
+export default ({ onSelect, createNew, ad_hoc, value, open = true, includeVariants }) => {
 	const [query, setQuery] = useState(null);
 	const [newModal, setNewModal] = useState(false);
 
@@ -19,7 +19,7 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 				'product',
 				{
 					query,
-					expand: ['prices'],
+					expand: ['prices', 'variants'],
 					archived: false,
 					...(ad_hoc !== null ? { ad_hoc } : {}),
 				},
@@ -70,6 +70,7 @@ export default ({ onSelect, createNew, ad_hoc, value, open = true }) => {
 				onFetch={() => setQuery('')}
 				loading={loading}
 				onSelect={onSelect}
+				includeVariants={includeVariants}
 			/>
 			{newModal && (
 				<Modal

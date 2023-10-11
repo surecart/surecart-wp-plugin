@@ -42,12 +42,6 @@ export class ScQuantitySelect {
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
-  componentWillLoad() {
-    if (!this.quantity) {
-      this.quantity = this.min;
-    }
-  }
-
   decrease() {
     if (this.disabled) return;
     this.quantity = Math.max(this.quantity - 1, this.min);

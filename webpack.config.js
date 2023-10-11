@@ -1,6 +1,5 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
-const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -70,6 +69,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-groups/index.js'
 		),
+		['admin/product-collections']: path.resolve(
+			__dirname,
+			'packages/admin/product-collections/index.js'
+		),
 		['admin/bumps']: path.resolve(
 			__dirname,
 			'packages/admin/bumps/index.js'
@@ -89,6 +92,10 @@ module.exports = {
 		['admin/cancellation-insights']: path.resolve(
 			__dirname,
 			'packages/admin/cancellation-insights/index.js'
+		),
+		['admin/subscription-insights']: path.resolve(
+			__dirname,
+			'packages/admin/subscription-insights/index.js'
 		),
 
 		/**
@@ -190,9 +197,18 @@ module.exports = {
 			__dirname,
 			'packages/pages/customer-dashboard/index.js'
 		),
+
+		/**
+		 * Styles.
+		 */
+		['styles/webhook-notice']: path.resolve(
+			__dirname,
+			'packages/admin/styles/webhook-notice.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
+		chunkFilename: `[name].js?v=[chunkhash]`,
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 	},
@@ -219,9 +235,6 @@ module.exports = {
 	},
 	plugins: [
 		...defaultConfig.plugins,
-		new webpack.optimize.LimitChunkCountPlugin({
-			maxChunks: 1,
-		}),
 		new CopyPlugin({
 			patterns: [
 				{

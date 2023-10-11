@@ -18,6 +18,8 @@ export default ({
 	name,
 	prefix,
 	loading,
+	children,
+	style,
 	onScrollEnd = () => {},
 	...props
 }) => {
@@ -42,6 +44,7 @@ export default ({
 			name={name}
 			position={position}
 			onScOpen={onFetch}
+			style={style}
 			onScClose={onClose}
 			onScSearch={(e) => findItem(e.detail)}
 			onScChange={(e) => {
@@ -52,6 +55,7 @@ export default ({
 			onScScrollEnd={onScrollEnd}
 		>
 			{!!prefix && prefix}
+			{children}
 		</ScSelect>
 	);
 };

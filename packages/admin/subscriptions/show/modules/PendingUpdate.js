@@ -7,9 +7,14 @@ import { ScFormatDate } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { useEffect, useState } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+import VariantLabel from '../../components/VariantLabel';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
+	const [pendingVariant, setPendingVariant] = useState(null);
 
 	const { price, hasLoadedPrice } = useSelect(
 		(select) => {
@@ -35,6 +40,22 @@ export default ({ subscription }) => {
 		},
 		[pending_update]
 	);
+
+	useEffect(() => {
+		fetchPendingVariant();
+	}, [pending_update?.variant]);
+
+	const fetchPendingVariant = async () => {
+		if (!pending_update?.variant) return;
+		const pendingVariantData = await apiFetch({
+			path: addQueryArgs(
+				`surecart/v1/variants/${pending_update?.variant}`,
+				{}
+			),
+		});
+
+		setPendingVariant(pendingVariantData);
+	};
 
 	return (
 		<DataTable
@@ -66,6 +87,15 @@ export default ({ subscription }) => {
 					product: (
 						<div>
 							{productNameWithPrice(price)}
+							{pendingVariant && (
+								<VariantLabel
+									variantOptions={[
+										pendingVariant?.option_1,
+										pendingVariant?.option_2,
+										pendingVariant?.option_3,
+									]}
+								/>
+							)}
 							<div
 								css={css`
 									opacity: 0.5;

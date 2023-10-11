@@ -9,6 +9,7 @@ import { updateFormState } from '@store/form/mutations';
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
+import { createErrorNotice, removeNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-session-provider',
@@ -32,16 +33,13 @@ export class ScSessionProvider {
 
   @Event() scPaid: EventEmitter<void>;
 
-  /** Error event */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
-
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 
   @Watch('prices')
   handlePricesChange() {
     let line_items = this.addInitialPrices() || [];
-    line_items = this.addPriceChoices(line_items);
+    // line_items = this.addPriceChoices(line_items);
     if (!line_items?.length) {
       return;
     }
@@ -74,7 +72,7 @@ export class ScSessionProvider {
    */
   @Listen('scFormSubmit')
   async handleFormSubmit() {
-    this.scError.emit({});
+    removeNotice();
 
     updateFormState('FINALIZE');
 
@@ -88,7 +86,7 @@ export class ScSessionProvider {
         console.error(e);
         updateFormState('REJECT');
         this.handleErrorResponse(e);
-        return;
+        return new Error(e?.message);
       }
     }
 
@@ -137,6 +135,7 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+      return new Error(e?.message);
     }
   }
 
@@ -146,11 +145,6 @@ export class ScSessionProvider {
   @Listen('scPaid')
   async handlePaid() {
     updateFormState('PAID');
-  }
-
-  @Listen('scPayError')
-  async handlePayError() {
-    updateFormState('REJECT');
   }
 
   @Listen('scUpdateAbandonedCart')
@@ -165,7 +159,7 @@ export class ScSessionProvider {
   @Listen('scApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
-    this.scError.emit({});
+    removeNotice();
     this.loadUpdate({
       discount: {
         ...(promotion_code ? { promotion_code } : {}),
@@ -225,16 +219,14 @@ export class ScSessionProvider {
     console.info('Handling payment redirect.');
     // status failed.
     if (status === 'failed') {
-      return this.scError.emit({
-        message: __('Payment unsuccessful. Please try again.', 'surecart'),
-      });
+      createErrorNotice(__('Payment unsuccessful. Please try again.', 'surecart'));
+      return;
     }
 
     // get the
     if (!id) {
-      return this.scError.emit({
-        message: __('Could not find checkout. Please contact us before attempting to purchase again.', 'surecart'),
-      });
+      createErrorNotice(__('Could not find checkout. Please contact us before attempting to purchase again.', 'surecart'));
+      return;
     }
 
     // success, refetch the checkout
@@ -308,22 +300,25 @@ export class ScSessionProvider {
 
       case 'payment_failed':
         clearCheckout();
-        return this.scError.emit({
+        createErrorNotice({
           message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
+        return;
 
       case 'payment_intent_canceled':
       case 'canceled':
         clearCheckout();
-        return this.scError.emit({
+        createErrorNotice({
           message: __('Payment canceled. Please try again.', 'surecart'),
         });
+        return;
 
       case 'finalized':
-        this.scError.emit({
+        createErrorNotice({
           message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
         updateFormState('REJECT');
+        return;
     }
   }
 
@@ -349,10 +344,9 @@ export class ScSessionProvider {
 
   /** Handle a brand new checkout. */
   async handleNewCheckout(promotion_code) {
-    console.info('Handling new checkout.');
     // get existing form data from defaults (default country selection, etc).
     const data = this.getFormData();
-    const line_items = this.addPriceChoices(this.addInitialPrices() || []);
+    let line_items = checkoutState.initialLineItems || [];
     const address = this.el.querySelector('sc-order-shipping-address');
 
     try {
@@ -418,6 +412,13 @@ export class ScSessionProvider {
       return;
     }
 
+    // If got Product out of stock error, then fetch the checkout again.
+    if (e?.additional_errors?.[0]?.code === 'checkout.product.out_of_stock') {
+      this.fetch();
+      updateFormState('REJECT');
+      return;
+    }
+
     if (['order.invalid_status_transition'].includes(e?.code)) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
@@ -442,21 +443,14 @@ export class ScSessionProvider {
       return;
     }
 
-    console.log('emit', e);
-    this.scError.emit(e);
+    createErrorNotice(e);
     updateFormState('REJECT');
   }
 
   /** Looks through children and finds items needed for initial session. */
   async initialize(args = {}) {
-    let line_items = this.addInitialPrices() || [];
-    line_items = this.addPriceChoices(line_items);
-
-    if (line_items?.length) {
-      return this.loadUpdate({ line_items, ...args });
-    } else {
-      return this.loadUpdate({ ...args });
-    }
+    let line_items = checkoutState.initialLineItems || [];
+    return this.loadUpdate({ ...(line_items?.length ? { line_items } : {}), ...args });
   }
 
   /** Add prices that are passed into the component. */
@@ -473,35 +467,34 @@ export class ScSessionProvider {
       return {
         price_id: price.id,
         quantity: price.quantity,
+        variant: price.variant,
       };
     });
   }
 
-  /** Add default prices that may be selected in form. */
-  addPriceChoices(line_items = []) {
-    const elements = this.el.querySelectorAll('[price-id]') as any;
-
-    elements.forEach(el => {
-      // handle price choices.
-      if (el.checked) {
-        line_items.push({
-          quantity: el.quantity || 1,
-          price_id: el.priceId,
-          ...(el.defaultAmount ? { ad_hoc_amount: el.defaultAmount } : {}),
-        });
-      }
-      // handle donation default amount.
-      if (el.defaultAmount) {
-        line_items.push({
-          quantity: el.quantity || 1,
-          price_id: el.priceId,
-          ad_hoc_amount: el.defaultAmount,
-        });
-      }
-    });
-
-    return line_items;
-  }
+  // /** Add default prices that may be selected in form. */
+  // addPriceChoices(line_items = []) {
+  //   // const elements = this.el.querySelectorAll('[price-id]') as any;
+  //   // elements.forEach(el => {
+  //   //   // handle price choices.
+  //   //   if (el.checked) {
+  //   //     line_items.push({
+  //   //       quantity: el.quantity || 1,
+  //   //       price_id: el.priceId,
+  //   //       ...(el.defaultAmount ? { ad_hoc_amount: el.defaultAmount } : {}),
+  //   //     });
+  //   //   }
+  //   //   // handle donation default amount.
+  //   //   if (el.defaultAmount) {
+  //   //     line_items.push({
+  //   //       quantity: el.quantity || 1,
+  //   //       price_id: el.priceId,
+  //   //       ad_hoc_amount: el.defaultAmount,
+  //   //     });
+  //   //   }
+  //   // });
+  //   // return line_items;
+  // }
 
   getSessionId() {
     // check url first.

@@ -68,7 +68,7 @@ export default ({ loading, bump, updateBump }) => {
 						open
 						value={bump?.price?.id || bump?.price}
 						ad_hoc={false}
-						onSelect={(price) => updateBump({ price })}
+						onSelect={({price_id}) => updateBump({ price: price_id })}
 						requestQuery={{
 							archived: false,
 						}}

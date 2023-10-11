@@ -9,11 +9,21 @@ test.describe('Button', () => {
 	});
 
 	test('should render the button', async ({ editor, page }) => {
+		// Inserting a quote block
+		await editor.insertBlock( {
+			name: 'surecart/button',
+		} );
+
+		const avatarBlock = editor.canvas.locator(
+			'role=document[name="Block: Avatar"i]'
+		);
+		Block: Product Price Choices
+		await expect( avatarImage ).toBeVisible();
 		await editor.insertBlock({
 			name: 'surecart/button',
 		});
-		await page.keyboard.type('Content');
-		const content = await editor.getEditedPostContent();
-		expect(content).not.toBe(null);
+		await expect(
+			page.locator('[data-type="surecart/button"]')
+		).toBeVisible();
 	});
 });

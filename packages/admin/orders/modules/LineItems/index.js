@@ -26,8 +26,7 @@ const status = {
 	payment_failed: __('Payment Failed', 'surecart'),
 	paid: __('Paid', 'surecart'),
 	canceled: __('Canceled', 'surecart'),
-	void: __('Void', 'surecart'),
-	canceled: __('Canceled', 'surecart'),
+	void: __('Canceled', 'surecart'),
 };
 
 export default ({ order, checkout, loading }) => {

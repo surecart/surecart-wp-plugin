@@ -1,0 +1,65 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/product-variant-choices",
+	"title": "Product Variants",
+	"description": "Displays possible choices for product variants.",
+	"category": "surecart",
+	"keywords": ["variant", "product", "choice"],
+	"attributes": {
+		"type": {
+			"type": "string",
+			"default": "dropdown"
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"padding": true,
+				"margin": true
+			}
+		}
+	},
+	"variations": [
+		{
+			"name": "dropdown",
+			"title": "Variant Dropdown",
+			"icon": "list-view",
+			"description": "Add a variant dropdown",
+			"attributes": {
+				"type": "dropdown"
+			},
+			"isDefault": true,
+			"isActive": ["dropdown"],
+			"scope": ["inserter", "block", "transform"]
+		},
+		{
+			"name": "pills",
+			"title": "Variant Pills",
+			"icon": "button",
+			"description": "Add a variant pills chooser.",
+			"attributes": {
+				"type": "pills"
+			},
+			"isDefault": true,
+			"isActive": ["pills"],
+			"scope": ["inserter", "block", "transform"]
+		}
+	],
+	"style": "file:./preload.css"
+}

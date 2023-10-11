@@ -8,6 +8,7 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { getProcessorData } from '../../../../functions/processor';
 import { Checkout, Processor, ProcessorName } from '../../../../types';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-order-submit',
@@ -15,9 +16,6 @@ import { Checkout, Processor, ProcessorName } from '../../../../types';
   shadow: false,
 })
 export class ScOrderSubmit {
-  /** Is the order busy */
-  @Prop() busy: boolean;
-
   /** Is the order loading. */
   @Prop() loading: boolean;
 
@@ -38,9 +36,6 @@ export class ScOrderSubmit {
 
   /** Show the total. */
   @Prop() showTotal: boolean;
-
-  /** Is this created in "test" mode */
-  @Prop() mode: 'test' | 'live' = 'live';
 
   /** Keys and secrets for processors. */
   @Prop() processors: Processor[];
@@ -65,17 +60,17 @@ export class ScOrderSubmit {
   }
 
   renderPayPalButton(buttons) {
-    const { client_id, account_id, merchant_initiated_enabled } = getProcessorData(availableProcessors(), 'paypal', this.mode);
+    const { client_id, account_id, merchant_initiated_enabled } = getProcessorData(availableProcessors(), 'paypal', checkoutState.mode);
     if (!client_id && !account_id) return null;
 
     return (
       <sc-paypal-buttons
         buttons={buttons}
-        busy={this.busy || checkoutIsLocked()}
-        mode={this.mode}
-        order={this.order}
+        busy={formBusy() || checkoutIsLocked()}
+        mode={checkoutState.mode}
+        order={checkoutState.checkout}
         merchantInitiated={merchant_initiated_enabled}
-        currency-code={this.currencyCode}
+        currency-code={checkoutState.currencyCode}
         client-id={client_id}
         merchant-id={account_id}
         label="checkout"
@@ -85,7 +80,7 @@ export class ScOrderSubmit {
   }
 
   render() {
-    if (this.cannotShipToLocation()) {
+    if (this.cannotShipToLocation() || checkoutIsLocked('OUT_OF_STOCK')) {
       return (
         <sc-button type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={true}>
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
@@ -111,7 +106,7 @@ export class ScOrderSubmit {
           size={this.size}
           full={this.full}
           loading={this.loading || this.paying}
-          disabled={this.loading || this.paying || this.busy || checkoutIsLocked() || this.cannotShipToLocation()}
+          disabled={this.loading || this.paying || formBusy() || checkoutIsLocked() || this.cannotShipToLocation()}
         >
           {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>
@@ -131,4 +126,4 @@ export class ScOrderSubmit {
     );
   }
 }
-openWormhole(ScOrderSubmit, ['busy', 'loading', 'paying', 'processors', 'processor', 'mode', 'currencyCode', 'order'], false);
+openWormhole(ScOrderSubmit, ['loading', 'paying', 'processors', 'processor', 'currencyCode', 'order'], false);

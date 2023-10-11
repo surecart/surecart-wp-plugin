@@ -6,6 +6,7 @@
     "loading": true,
     "names": true,
     "placeholders": true,
+    "require-name": true,
     "required": true,
     "show-line2": true,
     "show-name": true,
@@ -271,7 +272,6 @@
     "edit-line-items": true,
     "form-id": true,
     "loading-text": true,
-    "logged-in": true,
     "manual-payment-methods": true,
     "mode": true,
     "modified": true,
@@ -290,8 +290,6 @@
     "slot": true
   },
   "sc-checkout-form-errors": {
-    "checkout-state": true,
-    "error": true,
     "style": true,
     "id": true,
     "class": true,
@@ -306,6 +304,20 @@
     "slot": true
   },
   "sc-checkout-paystack-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-product-price-variant-selector": {
+    "label": true,
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-stock-alert": {
     "style": true,
     "id": true,
     "class": true,
@@ -708,7 +720,6 @@
   },
   "sc-form-components-validator": {
     "disabled": true,
-    "order": true,
     "tax-protocol": true,
     "style": true,
     "id": true,
@@ -733,7 +744,6 @@
     "slot": true
   },
   "sc-form-error-provider": {
-    "checkout-state": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1208,6 +1218,7 @@
     "name-placeholder": true,
     "placeholders": true,
     "postal-code-placeholder": true,
+    "require-name": true,
     "required": true,
     "shipping-address": true,
     "shipping-enabled": true,
@@ -1231,12 +1242,10 @@
     "slot": true
   },
   "sc-order-submit": {
-    "busy": true,
     "currency-code": true,
     "full": true,
     "icon": true,
     "loading": true,
-    "mode": true,
     "order": true,
     "paying": true,
     "processor": true,
@@ -1255,6 +1264,7 @@
     "busy": true,
     "closed-text": true,
     "collapsed": true,
+    "collapsed-on-desktop": true,
     "collapsed-on-mobile": true,
     "collapsible": true,
     "open-text": true,
@@ -1454,6 +1464,14 @@
     "class": true,
     "slot": true
   },
+  "sc-pill-option": {
+    "is-selected": true,
+    "is-unavailable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-premium-tag": {
     "size": true,
     "style": true,
@@ -1490,6 +1508,7 @@
     "label": true,
     "loading": true,
     "price": true,
+    "required": true,
     "show-control": true,
     "show-label": true,
     "show-price": true,
@@ -1502,7 +1521,6 @@
   "sc-price-choices": {
     "columns": true,
     "label": true,
-    "order": true,
     "required": true,
     "style": true,
     "id": true,
@@ -1569,6 +1587,8 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
+    "collection-enabled": true,
+    "collection-id": true,
     "featured": true,
     "ids": true,
     "layout-config": true,
@@ -1586,6 +1606,7 @@
     "slot": true
   },
   "sc-product-item-price": {
+    "metrics": true,
     "prices": true,
     "range": true,
     "style": true,
@@ -1615,6 +1636,15 @@
     "scratch-amount": true,
     "setup-fee-trial-enabled": true,
     "trial-duration-days": true,
+    "variant-label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-pills-variant-option": {
+    "label": true,
+    "option-number": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1657,6 +1687,14 @@
     "class": true,
     "slot": true
   },
+  "sc-product-select-variant-option": {
+    "label": true,
+    "option-number": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-selected-price": {
     "product-id": true,
     "style": true,
@@ -1666,6 +1704,14 @@
   },
   "sc-product-text": {
     "text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-variation-choices": {
+    "product-id": true,
+    "type": true,
     "style": true,
     "id": true,
     "class": true,

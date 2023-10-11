@@ -1,5 +1,5 @@
 <!-- wp:surecart/columns {"isFullHeight":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}}}} -->
-<sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
+<sc-columns is-stacked-on-mobile="1" is-full-height class="is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
 		<?php if ( $show_image && ! empty( $product->product_medias->data ) ) : ?>
@@ -54,22 +54,22 @@
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
-				<?php echo wp_kses_post( $product->description ); ?>
+				<?php echo wp_kses_post( $product->description ?? '' ); ?>
 			</sc-prose>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $prices ) && count( $prices ) > 1 ) : ?>
-			<!-- wp:surecart/price-selector -->
-			<sc-price-choices type="radio" columns="1">
-				<?php foreach ( $prices as $key => $option ) : ?>
-					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>","checked":true} -->
-					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-control="false"></sc-price-choice>
-					<!-- /wp:surecart/price-choice -->
-				<?php endforeach; ?>
-			</sc-price-choices>
-			<!-- /wp:surecart/price-selector -->
-		<?php endif; ?>
-
+		<div>
+		<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-checkout-product-price-variant-selector>
+		<?php
+		\SureCart::assets()->addComponentData(
+			'sc-checkout-product-price-variant-selector',
+			'#sc-product-price-variant-selector-' . $product->id,
+			[
+				'product' => $product->toArray(),
+			]
+		);
+		?>
+		</div>
 
 	</sc-column>
 	<!-- /wp:surecart/column -->

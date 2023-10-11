@@ -8,14 +8,13 @@
 }
 
 .input__control[type='number'] {
-  -moz-appearance:textfield;
+  -moz-appearance: textfield;
 }
 
 .input__control::-webkit-outer-spin-button,
 .input__control::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-
 
 .input {
   flex: 1 1 auto;
@@ -32,7 +31,8 @@
   border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   cursor: text;
 
   &:hover:not(.input--disabled) {
@@ -87,6 +87,8 @@
   margin: 0;
   cursor: inherit;
   -webkit-appearance: none;
+  box-sizing: border-box;
+  width: 100%;
 
   &::-webkit-search-decoration,
   &::-webkit-search-cancel-button,
@@ -176,7 +178,7 @@
     margin-left: var(--sc-input-spacing-medium) !important;
   }
 
-  .input__suffix ::slotted(:not(sc-button[size="medium"])) {
+  .input__suffix ::slotted(:not(sc-button[size='medium'])) {
     margin-right: var(--sc-input-spacing-medium) !important;
   }
 
