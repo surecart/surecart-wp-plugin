@@ -44,7 +44,7 @@ export class ScProductLineItem {
 
   /** Price name */
   @Prop() priceName?: string;
-        
+
   /** Product variant label */
   @Prop() variantLabel: string = '';
 
@@ -156,17 +156,13 @@ export class ScProductLineItem {
               <div class="item__title" part="title">
                 <slot name="title">{this.name}</slot>
               </div>
-              {!!this.priceName && (
-                <div class="item__description" part="static-quantity">
-                  {this.priceName}
-                </div>
-              )}
-            </div>
-            {!!this.variantLabel && (
-              <div class="item__variant" part="variant">
-                <slot name="variant">({this.variantLabel})</slot>
+              <div class="item__description" part="description">
+                {this.variantLabel}
+                {!!this.priceName && !!this.variantLabel && ' - '}
+                {this.priceName}
               </div>
-            )}
+            </div>
+
             {this.editable && (
               <sc-quantity-select
                 max={this.max || Infinity}

@@ -53,6 +53,7 @@
   margin: 0;
   color: var(--sc-line-item-title-color, var(--sc-input-label-color));
   font-size: var(--sc-font-size-medium);
+  font-weight: var(--sc-font-weight-semibold);
   line-height: var(--sc-line-height-dense);
   cursor: pointer;
   display: -webkit-box;
@@ -108,8 +109,8 @@
 }
 
 .item__description {
-  color: var(--sc-price-label-color, var(--sc-input-label-color));
-  opacity: 0.75;
+  color: var(--sc-price-label-color, var(--sc-input-help-text-color));
+  font-size: var(--sc-price-label-font-size, var(--sc-input-help-text-font-size-medium));
   line-height: var(--sc-line-height-dense);
 }
 
