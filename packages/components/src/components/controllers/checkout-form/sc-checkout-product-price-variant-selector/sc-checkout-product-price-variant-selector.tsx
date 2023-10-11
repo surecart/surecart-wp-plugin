@@ -1,4 +1,4 @@
-import { State, Watch } from '@stencil/core';
+import { Element, Method, State, Watch } from '@stencil/core';
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Price, Product, Variant } from '../../../../types';
@@ -17,6 +17,9 @@ import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
   shadow: false,
 })
 export class ScProductCheckoutSelectVariantOption {
+  private input: HTMLInputElement;
+  @Element() el: HTMLScCheckoutProductPriceVariantSelectorElement;
+
   /** The product. */
   @Prop() product: Product;
 
@@ -51,6 +54,19 @@ export class ScProductCheckoutSelectVariantOption {
         ...(this.option3 ? { option_3: this.option3 } : {}),
       },
     });
+  }
+
+  @Method()
+  async reportValidity() {
+    this.input.setCustomValidity('');
+
+    if (this.hasVariants()) {
+      if (!this.selectedVariant?.id) {
+        this.input.setCustomValidity(__('Please choose an available option.', 'surecart'));
+      }
+    }
+
+    return this.input.reportValidity();
   }
 
   /** When selected variant and selected price are set, we can update the checkout. */
@@ -183,6 +199,8 @@ export class ScProductCheckoutSelectVariantOption {
             </sc-choices>
           </sc-form-control>
         )}
+
+        <input class="sc-checkout-product-price-variant-selector__hidden-input" ref={el => (this.input = el as HTMLInputElement)} value={this.selectedVariant?.id}></input>
       </div>
     );
   }
