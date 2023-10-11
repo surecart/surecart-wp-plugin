@@ -162,7 +162,7 @@ export class ScProductCheckoutSelectVariantOption {
           </sc-form-control>
         ))}
 
-        {!!this.product?.prices?.data?.length && (
+        {this.product?.prices?.data?.length > 1 && (
           <sc-form-control label={!!this.product.variant_options.data?.length ? this.label : null}>
             <sc-choices>
               {(this.product.prices.data || [])
