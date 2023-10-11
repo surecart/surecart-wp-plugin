@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 import { css, jsx } from '@emotion/core';
 import {
 	ScBlockUi,
@@ -69,7 +70,7 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								`}
 							>
 								<div>
-									{price?.product?.name}
+									{productNameWithPrice(price)}
 									<VariantLabel
 										variantOptions={
 											lineItem.variant_options ?? []

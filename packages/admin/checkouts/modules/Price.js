@@ -2,6 +2,7 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
 import { intervalString } from '../../util/translations';
+import { productNameWithPrice } from '../../util/products';
 import { useEffect, useState } from '@wordpress/element';
 import {
 	ScButton,
@@ -85,7 +86,7 @@ export default ({
 						)}
 						<div>
 							<div>
-								<strong>{price?.product?.name}</strong>
+								<strong>{productNameWithPrice(price)}</strong>
 								{variant_options?.length && (
 									<span
 										css={css`

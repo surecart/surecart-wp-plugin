@@ -107,6 +107,7 @@ export class ScSubscriptionNextPayment {
               <sc-product-line-item
                 imageUrl={(item.price?.product as Product)?.image_url}
                 name={(item.price?.product as Product)?.name}
+                priceName={item?.price?.name}
                 editable={false}
                 removable={false}
                 quantity={item?.quantity}

@@ -21,6 +21,7 @@ import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import LineItem from './components/LineItem';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({
 	items: fulfillmentItems,
@@ -227,7 +228,7 @@ export default ({
 											id: item?.price?.product?.id,
 										})}
 									>
-										{item?.price?.product?.name}
+										{productNameWithPrice(item?.price)}
 									</a>
 									<ScFormatNumber
 										type="unit"

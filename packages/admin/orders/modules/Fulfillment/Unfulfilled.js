@@ -15,6 +15,7 @@ import { useState } from 'react';
 import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
 import { addQueryArgs } from '@wordpress/url';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
@@ -116,7 +117,7 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 										id: item?.price?.product?.id,
 									})}
 								>
-									{item?.price?.product?.name}
+									{productNameWithPrice(item?.price)}
 								</a>
 								{!!item?.price?.product?.weight && (
 									<ScFormatNumber

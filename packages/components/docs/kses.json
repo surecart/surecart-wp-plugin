@@ -1630,6 +1630,7 @@
     "max": true,
     "media": true,
     "name": true,
+    "price-name": true,
     "quantity": true,
     "removable": true,
     "scratch-amount": true,

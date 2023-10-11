@@ -11,6 +11,8 @@ import PriceSelector from '../../components/PriceSelector';
 import useEntity from '../../hooks/useEntity';
 import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
+import { productNameWithPrice } from '../../util/products';
+
 import ModelRow from '../components/ModelRow';
 
 export default ({ loading, bump, updateBump }) => {
@@ -49,7 +51,7 @@ export default ({ loading, bump, updateBump }) => {
 								}
 							>
 								<div>
-									<strong>{price?.product?.name}</strong>
+									<strong>{productNameWithPrice(price)}</strong>
 								</div>
 								<ScFormatNumber
 									type="currency"

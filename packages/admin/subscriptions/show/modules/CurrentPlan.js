@@ -8,6 +8,7 @@ import { addQueryArgs } from '@wordpress/url';
 import DataTable from '../../../components/DataTable';
 import VariantLabel from '../../components/VariantLabel';
 import { intervalString } from '../../../util/translations';
+import { productNameWithPrice } from '../../../util/products';
 
 export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
@@ -55,13 +56,12 @@ export default ({ lineItem, loading, subscription }) => {
 									`}
 								>
 									<div>
-										{lineItem?.price?.product?.name}
+										{productNameWithPrice(lineItem?.price)}
 										<VariantLabel
 											variantOptions={
 												lineItem?.variant_options ?? []
 											}
 										/>
-
 										<div style={{ opacity: 0.5 }}>
 											<ScFormatNumber
 												type="currency"
