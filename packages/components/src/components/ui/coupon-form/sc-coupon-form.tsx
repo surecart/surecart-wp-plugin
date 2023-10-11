@@ -33,6 +33,8 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
+  private couponTag: HTMLScTagElement;
+  private addCouponTrigger: HTMLElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -83,6 +85,16 @@ export class ScCouponForm {
     }
   }
 
+  @Watch('busy')
+  handleDiscountChange() {
+    setTimeout(() => {
+      if (this?.discount?.promotion?.code) {
+        this.couponTag.focus();
+      } else {
+        this.addCouponTrigger.focus();
+      }
+    }, 50);
+  }
   /** Close it when blurred and no value. */
   handleBlur() {
     if (!this.value) {
@@ -134,6 +146,7 @@ export class ScCouponForm {
                   this.open = false;
                 }
               }}
+              ref={el => (this.couponTag = el as HTMLScTagElement)}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -181,6 +194,7 @@ export class ScCouponForm {
             this.open = true;
           }}
           tabindex="0"
+          ref={el => (this.addCouponTrigger = el as HTMLElement)}
         >
           <slot name="label">{this.label}</slot>
         </div>
