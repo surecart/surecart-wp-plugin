@@ -505,10 +505,6 @@ export namespace Components {
     confirmed: string;
   };
         /**
-          * Is this user logged in?
-         */
-        "loggedIn": boolean;
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods": ManualPaymentMethod[];
@@ -579,6 +575,17 @@ export namespace Components {
         "processorId": string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    interface ScCheckoutProductPriceVariantSelector {
+        /**
+          * The label for the price.
+         */
+        "label": string;
+        /**
+          * The product.
+         */
+        "product": Product;
+        "reportValidity": () => Promise<boolean>;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -2171,10 +2178,6 @@ export namespace Components {
     }
     interface ScOrderSubmit {
         /**
-          * Is the order busy
-         */
-        "busy": boolean;
-        /**
           * Currency Code
          */
         "currencyCode": string;
@@ -2190,10 +2193,6 @@ export namespace Components {
           * Is the order loading.
          */
         "loading": boolean;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode": 'test' | 'live';
         /**
           * The current order.
          */
@@ -2624,6 +2623,13 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScPillOption {
+        /**
+          * Label
+         */
+        "isSelected": boolean;
+        "isUnavailable": boolean;
+    }
     interface ScPremiumTag {
         /**
           * The tag's size.
@@ -2721,6 +2727,7 @@ export namespace Components {
           * Stores the price
          */
         "price": string | Price1;
+        "required": boolean;
         /**
           * Show the radio/checkbox control
          */
@@ -2747,10 +2754,6 @@ export namespace Components {
           * Selector label
          */
         "label": string;
-        /**
-          * Session
-         */
-        "order": Checkout;
         /**
           * Required by default
          */
@@ -2863,22 +2866,6 @@ export namespace Components {
     }
     interface ScProductBuyButton {
         "addToCart": boolean;
-        /**
-          * Classes
-         */
-        "classes": string;
-        /**
-          * Out of stock text.
-         */
-        "outOfStockText": string;
-        /**
-          * Styles
-         */
-        "styles": string;
-        /**
-          * Text
-         */
-        "text": string;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -3012,6 +2999,16 @@ export namespace Components {
           * Product variant label
          */
         "variantLabel": string;
+    }
+    interface ScProductPillsVariantOption {
+        /**
+          * Label
+         */
+        "label": string;
+        /**
+          * Which option number?
+         */
+        "optionNumber": 1 | 2 | 3;
     }
     interface ScProductPrice {
         "prices": Price[];
@@ -4385,6 +4382,12 @@ declare global {
         prototype: HTMLScCheckoutPaystackPaymentProviderElement;
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
     };
+    interface HTMLScCheckoutProductPriceVariantSelectorElement extends Components.ScCheckoutProductPriceVariantSelector, HTMLStencilElement {
+    }
+    var HTMLScCheckoutProductPriceVariantSelectorElement: {
+        prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
+        new (): HTMLScCheckoutProductPriceVariantSelectorElement;
+    };
     /**
      * This component listens for stock requirements and displays a dialog to the user.
      */
@@ -4993,6 +4996,12 @@ declare global {
         prototype: HTMLScPhoneInputElement;
         new (): HTMLScPhoneInputElement;
     };
+    interface HTMLScPillOptionElement extends Components.ScPillOption, HTMLStencilElement {
+    }
+    var HTMLScPillOptionElement: {
+        prototype: HTMLScPillOptionElement;
+        new (): HTMLScPillOptionElement;
+    };
     interface HTMLScPremiumTagElement extends Components.ScPremiumTag, HTMLStencilElement {
     }
     var HTMLScPremiumTagElement: {
@@ -5070,6 +5079,12 @@ declare global {
     var HTMLScProductLineItemElement: {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
+    };
+    interface HTMLScProductPillsVariantOptionElement extends Components.ScProductPillsVariantOption, HTMLStencilElement {
+    }
+    var HTMLScProductPillsVariantOptionElement: {
+        prototype: HTMLScProductPillsVariantOptionElement;
+        new (): HTMLScProductPillsVariantOptionElement;
     };
     interface HTMLScProductPriceElement extends Components.ScProductPrice, HTMLStencilElement {
     }
@@ -5461,6 +5476,7 @@ declare global {
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
+        "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
         "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
@@ -5560,6 +5576,7 @@ declare global {
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-paystack-add-method": HTMLScPaystackAddMethodElement;
         "sc-phone-input": HTMLScPhoneInputElement;
+        "sc-pill-option": HTMLScPillOptionElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choice-container": HTMLScPriceChoiceContainerElement;
@@ -5573,6 +5590,7 @@ declare global {
         "sc-product-item-price": HTMLScProductItemPriceElement;
         "sc-product-item-title": HTMLScProductItemTitleElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-pills-variant-option": HTMLScProductPillsVariantOptionElement;
         "sc-product-price": HTMLScProductPriceElement;
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
         "sc-product-price-modal": HTMLScProductPriceModalElement;
@@ -6153,10 +6171,6 @@ declare namespace LocalJSX {
     confirmed: string;
   };
         /**
-          * Is this user logged in?
-         */
-        "loggedIn"?: boolean;
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods"?: ManualPaymentMethod[];
@@ -6231,6 +6245,16 @@ declare namespace LocalJSX {
         "processorId"?: string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    interface ScCheckoutProductPriceVariantSelector {
+        /**
+          * The label for the price.
+         */
+        "label"?: string;
+        /**
+          * The product.
+         */
+        "product"?: Product;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -8010,10 +8034,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderSubmit {
         /**
-          * Is the order busy
-         */
-        "busy"?: boolean;
-        /**
           * Currency Code
          */
         "currencyCode"?: string;
@@ -8029,10 +8049,6 @@ declare namespace LocalJSX {
           * Is the order loading.
          */
         "loading"?: boolean;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode"?: 'test' | 'live';
         /**
           * The current order.
          */
@@ -8487,6 +8503,13 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScPillOption {
+        /**
+          * Label
+         */
+        "isSelected"?: boolean;
+        "isUnavailable"?: boolean;
+    }
     interface ScPremiumTag {
         /**
           * The tag's size.
@@ -8597,6 +8620,7 @@ declare namespace LocalJSX {
           * Stores the price
          */
         "price"?: string | Price1;
+        "required"?: boolean;
         /**
           * Show the radio/checkbox control
          */
@@ -8631,10 +8655,6 @@ declare namespace LocalJSX {
           * Toggle line item event
          */
         "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData1>) => void;
-        /**
-          * Session
-         */
-        "order"?: Checkout;
         /**
           * Required by default
          */
@@ -8750,22 +8770,6 @@ declare namespace LocalJSX {
     }
     interface ScProductBuyButton {
         "addToCart"?: boolean;
-        /**
-          * Classes
-         */
-        "classes"?: string;
-        /**
-          * Out of stock text.
-         */
-        "outOfStockText"?: string;
-        /**
-          * Styles
-         */
-        "styles"?: string;
-        /**
-          * Text
-         */
-        "text"?: string;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
@@ -8907,6 +8911,16 @@ declare namespace LocalJSX {
           * Product variant label
          */
         "variantLabel"?: string;
+    }
+    interface ScProductPillsVariantOption {
+        /**
+          * Label
+         */
+        "label"?: string;
+        /**
+          * Which option number?
+         */
+        "optionNumber"?: 1 | 2 | 3;
     }
     interface ScProductPrice {
         "prices"?: Price[];
@@ -9952,6 +9966,7 @@ declare namespace LocalJSX {
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
+        "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
         "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
@@ -10051,6 +10066,7 @@ declare namespace LocalJSX {
         "sc-paypal-buttons": ScPaypalButtons;
         "sc-paystack-add-method": ScPaystackAddMethod;
         "sc-phone-input": ScPhoneInput;
+        "sc-pill-option": ScPillOption;
         "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choice-container": ScPriceChoiceContainer;
@@ -10064,6 +10080,7 @@ declare namespace LocalJSX {
         "sc-product-item-price": ScProductItemPrice;
         "sc-product-item-title": ScProductItemTitle;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-pills-variant-option": ScProductPillsVariantOption;
         "sc-product-price": ScProductPrice;
         "sc-product-price-choices": ScProductPriceChoices;
         "sc-product-price-modal": ScProductPriceModal;
@@ -10162,6 +10179,7 @@ declare module "@stencil/core" {
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
+            "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
             /**
              * This component listens for stock requirements and displays a dialog to the user.
              */
@@ -10275,6 +10293,7 @@ declare module "@stencil/core" {
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-paystack-add-method": LocalJSX.ScPaystackAddMethod & JSXBase.HTMLAttributes<HTMLScPaystackAddMethodElement>;
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
+            "sc-pill-option": LocalJSX.ScPillOption & JSXBase.HTMLAttributes<HTMLScPillOptionElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choice-container": LocalJSX.ScPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScPriceChoiceContainerElement>;
@@ -10288,6 +10307,7 @@ declare module "@stencil/core" {
             "sc-product-item-price": LocalJSX.ScProductItemPrice & JSXBase.HTMLAttributes<HTMLScProductItemPriceElement>;
             "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-pills-variant-option": LocalJSX.ScProductPillsVariantOption & JSXBase.HTMLAttributes<HTMLScProductPillsVariantOptionElement>;
             "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
             "sc-product-price-modal": LocalJSX.ScProductPriceModal & JSXBase.HTMLAttributes<HTMLScProductPriceModalElement>;

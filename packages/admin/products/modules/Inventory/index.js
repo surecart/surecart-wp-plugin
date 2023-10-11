@@ -12,7 +12,6 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	ScButton,
-	ScFlex,
 	ScFormControl,
 	ScIcon,
 	ScQuantitySelect,

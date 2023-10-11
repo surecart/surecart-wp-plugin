@@ -126,7 +126,7 @@ class ProductsListTable extends ListTable {
 	 * @param Product $product The product model.
 	 */
 	public function column_quantity( $product ) {
-		return $product->stock_enabled ? $product->available_stock : '∞';
+		return $product->stock_enabled ? $product->stock : '∞';
 	}
 
 	/**

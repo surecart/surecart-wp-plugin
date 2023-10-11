@@ -110,7 +110,9 @@ export class ScCheckoutStockAlert {
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
               {__('Out of Stock', 'surecart')}
             </sc-flex>
-            <span slot="description"> {__('Some items are no longer available. Your cart has been updated.', 'surecart')}</span>
+
+            <span slot="description"> {__('Some items are no longer available. Your cart will be updated.', 'surecart')}</span>
+
             <sc-card no-padding>
               <sc-table>
                 <sc-table-cell slot="head">{__('Description', 'surecart')}</sc-table-cell>
@@ -124,12 +126,14 @@ export class ScCheckoutStockAlert {
                     <sc-table-row style={{ '--columns': '2', ...(isLastChild ? { border: 'none' } : {}) }}>
                       <sc-table-cell>
                         <sc-flex justifyContent="flex-start" alignItems="center">
-                          <img src={item?.image_url} style={{ width: '50px', height: '50px', marginRight: '10px' }} />
+                          <img class="stock-alert__image" src={`https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=100/${item?.image_url}`} />
                           <h4>{item.name}</h4>
                         </sc-flex>
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>
-                        <span style={{ '--color': 'var(--sc-color-gray-500)' }}>{item?.quantity}</span> → <span>{Math.max(item?.stock, 0)}</span>
+                        <span class="stock-alert__quantity">
+                          <span>{item?.quantity}</span> <sc-icon name="arrow-right" /> <span>{Math.max(item?.stock, 0)}</span>
+                        </span>
                       </sc-table-cell>
                     </sc-table-row>
                   );
