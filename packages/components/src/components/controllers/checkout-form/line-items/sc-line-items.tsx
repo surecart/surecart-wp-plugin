@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 
@@ -35,6 +35,8 @@ import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '
   shadow: true,
 })
 export class ScLineItems {
+  private lineItemsWrapper: HTMLElement;
+
   @Prop() order: Checkout;
   @Prop() busy: boolean;
   @Prop() prices: Prices;
@@ -50,6 +52,12 @@ export class ScLineItems {
   /** Remove the line item. */
   @Event() scRemoveLineItem: EventEmitter<LineItemData>;
 
+  @Watch('order')
+  watchOrder(newVal: Checkout, oldVal: Checkout) {
+    if (newVal?.line_items?.data?.length === oldVal?.line_items?.data?.length) return;
+
+    this.lineItemsWrapper?.focus();
+  }
   /** Update quantity for this line item. */
   updateQuantity(item: LineItem, quantity: number) {
     this.scUpdateLineItem.emit({ id: item.id, price_id: item.price.id, quantity });
@@ -115,7 +123,7 @@ export class ScLineItems {
     }
 
     return (
-      <div class="line-items" part="base">
+      <div class="line-items" part="base" ref={el => (this.lineItemsWrapper = el as HTMLElement)} tabindex="0">
         {(this.order?.line_items?.data || []).map(item => {
           return (
             <div class="line-item">
