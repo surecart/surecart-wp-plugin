@@ -73,6 +73,8 @@ export class ScProductCheckoutSelectVariantOption {
   @Watch('selectedVariant')
   @Watch('selectedPrice')
   async updateLineItems() {
+    // make sure we clear out the out of stock locks.
+    unLockCheckout('OUT_OF_STOCK');
     // get the existing line item.
     const lineItem = this.lineItem();
     // We need a price.
@@ -89,9 +91,6 @@ export class ScProductCheckoutSelectVariantOption {
         return;
       }
     }
-
-    // make sure we clear out the out of stock locks.
-    unLockCheckout('OUT_OF_STOCK');
 
     // create or update the
     try {
@@ -158,16 +157,20 @@ export class ScProductCheckoutSelectVariantOption {
             <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
               {(values || []).map(value => (
                 <sc-pill-option
-                  isUnavailable={isProductVariantOptionSoldOut(
-                    index + 1,
-                    value,
-                    {
-                      ...(this.option1 ? { option_1: this.option1 } : {}),
-                      ...(this.option2 ? { option_2: this.option2 } : {}),
-                      ...(this.option3 ? { option_3: this.option3 } : {}),
-                    },
-                    this.product,
-                  )}
+                  isUnavailable={
+                    this.product?.stock_enabled &&
+                    !this.product?.allow_out_of_stock_purchases &&
+                    isProductVariantOptionSoldOut(
+                      index + 1,
+                      value,
+                      {
+                        ...(this.option1 ? { option_1: this.option1 } : {}),
+                        ...(this.option2 ? { option_2: this.option2 } : {}),
+                        ...(this.option3 ? { option_3: this.option3 } : {}),
+                      },
+                      this.product,
+                    )
+                  }
                   isSelected={this[`option${index + 1}`] === value}
                   onClick={() => (this[`option${index + 1}`] = value)}
                 >
