@@ -161,6 +161,11 @@ export class ScProductLineItem {
                 {!!this.priceName && !!this.variantLabel && ' - '}
                 {this.priceName}
               </div>
+              {!this.editable && this.quantity > 1 && (
+                <span class="item__description" part="static-quantity">
+                  {__('Qty:', 'surecart')} {this.quantity}
+                </span>
+              )}
             </div>
 
             {this.editable && (
@@ -171,11 +176,6 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
               ></sc-quantity-select>
-            )}
-            {!this.editable && this.quantity > 1 && (
-              <span class="item__description" part="static-quantity">
-                {__('Qty:', 'surecart')} {this.quantity}
-              </span>
             )}
           </div>
           <div class="item__suffix" part="suffix">
