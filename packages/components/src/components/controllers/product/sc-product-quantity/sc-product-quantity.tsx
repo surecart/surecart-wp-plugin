@@ -35,10 +35,28 @@ export class ScProductQuantity {
   @Prop() help: string;
 
   getMaxStockQty() {
+    // check purchase limit.
+    if (state.product.purchase_limit) {
+      return state.product.purchase_limit;
+    }
+
+    // If stock is not enabled, return null.
+    if (!isStockNeedsToBeChecked) {
+      return null;
+    }
+
     // If no variant is selected, check against product stock.
     if (!state?.selectedVariant) return state.product?.stock;
     // Check against selected variant's stock.
     return state.selectedVariant?.stock;
+  }
+
+  getMax() {
+    if (state.product.purchase_limit) {
+      return state.product.purchase_limit;
+    }
+    if (isStockNeedsToBeChecked) {
+    }
   }
 
   render() {
@@ -61,7 +79,7 @@ export class ScProductQuantity {
             quantity={state.selectedPrice?.ad_hoc ? 1 : state.quantity}
             disabled={state.selectedPrice?.ad_hoc}
             onScInput={e => (state.quantity = e.detail)}
-            {...(isStockNeedsToBeChecked ? { max: this.getMaxStockQty() } : {})}
+            max={this.getMaxStockQty()}
           />
         </sc-form-control>
       </Host>
