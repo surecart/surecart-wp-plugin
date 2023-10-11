@@ -12,6 +12,8 @@ class BuyPageController extends BasePageController {
 	 */
 	public function filters(): void {
 		parent::filters();
+		// Add edit product link to admin bar.
+		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 		// do not persist the cart for this page.
 		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
