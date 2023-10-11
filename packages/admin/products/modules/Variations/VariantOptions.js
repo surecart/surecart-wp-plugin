@@ -25,17 +25,6 @@ export default ({ product, updateProduct }) => {
 	const [normalizedVariants, setNormalizedVariants] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
-	// we want to close the modal if the product is saving.
-	// this will prevent editing variants with the modal open.
-	const isSaving = useSelect((select) => {
-		const { __experimentalGetDirtyEntityRecords, isSavingEntityRecord } =
-			select(coreStore);
-		const dirtyEntityRecords = __experimentalGetDirtyEntityRecords();
-		return dirtyEntityRecords.some((record) =>
-			isSavingEntityRecord(record.kind, record.name, record.key)
-		);
-	}, []);
-
 	useEffect(() => {
 		// has the product saved?
 		const hasSaved =
