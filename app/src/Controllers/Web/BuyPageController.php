@@ -98,13 +98,13 @@ class BuyPageController extends BasePageController {
 		$this->filters();
 
 		// prepare data.
+		$this->model              = $this->model->withActiveAndSortedPrices();
 		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
-		$filtered                 = $this->model->withActiveAndSortedPrices();
 
-		if ( ! empty( $filtered->prices->data[0]->id ) ) {
+		if ( ! empty( $this->model->prices->data[0]->id ) ) {
 			$line_item = array_merge(
 				[
-					'price_id' => $filtered->prices->data[0]->id,
+					'price_id' => $this->model->prices->data[0]->id,
 					'quantity' => 1,
 				],
 				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
@@ -124,21 +124,21 @@ class BuyPageController extends BasePageController {
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
-				'product'          => $filtered,
+				'product'          => $this->model,
 				'terms_text'       => $this->termsText(),
-				'mode'             => $filtered->buyLink()->getMode(),
+				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
 				'logo_url'         => \SureCart::account()->brand->logo_url,
 				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
 				'user'             => wp_get_current_user(),
 				'logout_link'      => wp_logout_url( $request->getUrl() ),
 				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
-				'enabled'          => $filtered->buyLink()->isEnabled(),
-				'show_logo'        => $filtered->buyLink()->templatePartEnabled( 'logo' ),
-				'show_terms'       => $filtered->buyLink()->templatePartEnabled( 'terms' ),
-				'show_image'       => $filtered->buyLink()->templatePartEnabled( 'image' ),
-				'show_description' => $filtered->buyLink()->templatePartEnabled( 'description' ),
-				'show_coupon'      => $filtered->buyLink()->templatePartEnabled( 'coupon' ),
+				'enabled'          => $this->model->buyLink()->isEnabled(),
+				'show_logo'        => $this->model->buyLink()->templatePartEnabled( 'logo' ),
+				'show_terms'       => $this->model->buyLink()->templatePartEnabled( 'terms' ),
+				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
+				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
+				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
 			]
 		);
 	}
