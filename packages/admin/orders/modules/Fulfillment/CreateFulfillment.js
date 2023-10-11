@@ -22,6 +22,7 @@ import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
 import LineItem from './components/LineItem';
 import { productNameWithPrice } from '../../../util/products';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({
 	items: fulfillmentItems,
@@ -186,9 +187,10 @@ export default ({
 					>
 						{(items || []).map((item, index) => {
 							return (
-								<LineItem
-									key={index}
-									imageUrl={item?.price?.product?.image_url}
+								<ProductLineItem
+									key={item?.id}
+									lineItem={item}
+									showWeight={true}
 									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}
@@ -220,22 +222,7 @@ export default ({
 											</span>
 										</ScInput>
 									}
-								>
-									<a
-										href={addQueryArgs('admin.php', {
-											page: 'sc-products',
-											action: 'edit',
-											id: item?.price?.product?.id,
-										})}
-									>
-										{productNameWithPrice(item?.price)}
-									</a>
-									<ScFormatNumber
-										type="unit"
-										value={item?.price?.product?.weight}
-										unit={item?.price?.product?.weight_unit}
-									/>
-								</LineItem>
+								/>
 							);
 						})}
 					</div>

@@ -16,6 +16,7 @@ import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
 import { addQueryArgs } from '@wordpress/url';
 import { productNameWithPrice } from '../../../util/products';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
@@ -100,33 +101,18 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 						gap: var(--sc-spacing-large);
 					`}
 				>
-					{(items || []).map((item) => {
+					{(items || []).map((line_item) => {
 						return (
-							<LineItem
-								key={item?.id}
-								imageUrl={item?.price?.product?.image_url}
+							<ProductLineItem
+								key={line_item?.id}
+								lineItem={line_item}
+								showWeight={true}
 								suffix={sprintf(
 									__('Qty: %d', 'surecart'),
-									item.quantity - item.fulfilled_quantity || 0
+									line_item.quantity -
+										line_item.fulfilled_quantity || 0
 								)}
-							>
-								<a
-									href={addQueryArgs('admin.php', {
-										page: 'sc-products',
-										action: 'edit',
-										id: item?.price?.product?.id,
-									})}
-								>
-									{productNameWithPrice(item?.price)}
-								</a>
-								{!!item?.price?.product?.weight && (
-									<ScFormatNumber
-										type="unit"
-										value={item?.price?.product?.weight}
-										unit={item?.price?.product?.weight_unit}
-									/>
-								)}
-							</LineItem>
+							/>
 						);
 					})}
 				</div>
