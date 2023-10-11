@@ -7,15 +7,11 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScTag,
-	ScFormatNumber,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { useState } from 'react';
-import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
-import { addQueryArgs } from '@wordpress/url';
-import { productNameWithPrice } from '../../../util/products';
 import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {

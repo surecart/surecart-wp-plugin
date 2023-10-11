@@ -7,7 +7,6 @@ import {
 	ScForm,
 	ScIcon,
 	ScInput,
-	ScFormatNumber,
 	ScFormControl,
 	ScTooltip,
 	ScBlockUi,
@@ -16,12 +15,9 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
-import LineItem from './components/LineItem';
-import { productNameWithPrice } from '../../../util/products';
 import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({
