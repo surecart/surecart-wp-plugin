@@ -84,9 +84,10 @@ export class ScCouponForm {
       setTimeout(() => this.input.triggerFocus(), 50);
     }
   }
-
-  @Watch('busy')
-  handleDiscountChange() {
+  // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
+  @Watch('discount')
+  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
+    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         this.couponTag.focus();
@@ -95,6 +96,7 @@ export class ScCouponForm {
       }
     }, 50);
   }
+
   /** Close it when blurred and no value. */
   handleBlur() {
     if (!this.value) {
