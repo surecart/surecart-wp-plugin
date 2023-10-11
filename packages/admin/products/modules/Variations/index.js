@@ -26,6 +26,7 @@ export default ({ product, updateProduct, loading }) => {
 				{
 					name: '',
 					values: [],
+					editing: true,
 				},
 			],
 		});
