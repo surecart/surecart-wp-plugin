@@ -1,7 +1,7 @@
-import { Component, h, Prop, Fragment } from '@stencil/core';
+import { Component, h, Prop, Fragment, Element, Host, State } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
-import { state } from '@store/product';
+import { state,onChange } from '@store/product';
 import { intervalString } from '../../../../functions/price';
 
 @Component({
@@ -10,8 +10,22 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
+  @Element() el: HTMLElement;
+
   @Prop() prices: Price[];
   @Prop() saleText: string;
+
+  @State() ariaLabel: string = '';
+
+  componentDidLoad() {
+    this.ariaLabel = this.el.shadowRoot?.textContent;
+
+    onChange('selectedPrice', () => {
+      setTimeout(() => {
+        this.ariaLabel = this.el.shadowRoot?.textContent;
+      }, 50);
+    })
+  }
 
   renderRange() {
     if (state.prices.length === 1) {
@@ -31,7 +45,7 @@ export class ScProductPrice {
 
     return (
       <Fragment>
-        <div class="price">
+        <div class="price" id="price">
           <div class="price__amounts">
             {!!price?.scratch_amount && (
               <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
@@ -79,14 +93,10 @@ export class ScProductPrice {
   }
 
   render() {
-    if (state.selectedPrice) {
-      return this.renderPrice(state.selectedPrice);
-    }
-
-    if (state.prices.length) {
-      return this.renderRange();
-    }
-
-    return <slot />;
+    return (
+      <Host role="paragraph" aria-live="polite" aria-label={this.ariaLabel}>
+        {state.selectedPrice ? this.renderPrice(state.selectedPrice) : state.prices.length ? this.renderRange() : <slot />}
+      </Host>
+    );
   }
 }
