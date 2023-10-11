@@ -282,7 +282,7 @@ export class ScDropdown {
           'dropdown--disabled': this.disabled,
         }}
       >
-        <span
+        <button
           part="trigger"
           class="dropdown__trigger"
           ref={el => (this.trigger = el as HTMLElement)}
@@ -300,7 +300,7 @@ export class ScDropdown {
           aria-haspopup="true"
         >
           <slot name="trigger"></slot>
-        </span>
+        </button>
 
         {/* Position the panel with a wrapper since the popover makes use of translate. This let's us add animations
         on the panel without interfering with the position. */}
