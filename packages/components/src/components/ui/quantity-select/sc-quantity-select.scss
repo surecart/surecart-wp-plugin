@@ -12,8 +12,7 @@
   max-width: 35px;
   background-color: var(--sc-input-control-background-color, var(--sc-color-white));
   color: var(--sc-input-control-color, var(--sc-color-black));
-  -moz-appearance:textfield;
-
+  -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -65,7 +64,8 @@
   border-radius: var(--border-radius);
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &:hover:not(.quantity--disabled) {
     background-color: var(--sc-input-background-color-hover);
@@ -116,6 +116,7 @@
   cursor: pointer;
   font-size: 13px;
   user-select: none;
+  border-width: 0;
 
   &:hover:not(.button--disabled) {
     .quantity__control {

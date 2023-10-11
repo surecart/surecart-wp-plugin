@@ -94,15 +94,15 @@ export class ScQuantitySelect {
           'quantity--is-rtl': isRtl(),
         }}
       >
-        <span
+        <button
           part="minus"
-          role="button"
           aria-label={__('decrease number', 'surecart')}
+          aria-disabled={this.quantity <= this.min && this.min > 1}
           class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
           onClick={() => this.quantity > this.min && this.decrease()}
         >
           <sc-icon name="minus" exportparts="base:minus__icon"></sc-icon>
-        </span>
+        </button>
 
         <input
           part="input"
@@ -126,15 +126,15 @@ export class ScQuantitySelect {
           onBlur={() => this.handleBlur()}
         />
 
-        <span
+        <button
           part="plus"
-          role="button"
           aria-label={__('increase number', 'surecart')}
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
           onClick={() => this.quantity < this.max && this.increase()}
+          aria-disabled={this.quantity >= this.max}
         >
           <sc-icon name="plus" exportparts="base:plus__icon"></sc-icon>
-        </span>
+        </button>
       </div>
     );
   }
