@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Host } from '@stencil/core';
 import { getOrder } from '@store/checkouts';
 import uiStore from '@store/ui';
 import { __ } from '@wordpress/i18n';
@@ -48,35 +48,37 @@ export class ScCartIcon {
       return null;
     }
     return (
-      <div
-        class={{
-          'cart': true,
-          'cart--focused': this.hasFocus,
-        }}
-        part="base"
-        onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}
-        onKeyDown={e => {
-          if ('Enter' === e?.code || 'Space' === e?.code) {
-            uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
-          }
-        }}
-        onFocus={() => {
-          this.hasFocus = true;
-        }}
-        onBlur={() => {
-          this.hasFocus = false;
-        }}
-        tabIndex={0}
-        role="button"
-        aria-label={__('Open Cart', 'surecart')}
-      >
-        <div class="cart__container" part="container">
-          <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
-          <slot>
-            <sc-icon exportparts="base:icon__base" name={this.icon}></sc-icon>
-          </slot>
+      <Host role="button" aria-label={__('Open Cart', 'surecart')}>
+        <div
+          class={{
+            'cart': true,
+            'cart--focused': this.hasFocus,
+          }}
+          part="base"
+          onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}
+          onKeyDown={e => {
+            if ('Enter' === e?.code || 'Space' === e?.code) {
+              uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
+            }
+          }}
+          onFocus={() => {
+            this.hasFocus = true;
+          }}
+          onBlur={() => {
+            this.hasFocus = false;
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label={__('Open Cart', 'surecart')}
+        >
+          <div class="cart__container" part="container">
+            <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
+            <slot>
+              <sc-icon exportparts="base:icon__base" name={this.icon}></sc-icon>
+            </slot>
+          </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }
