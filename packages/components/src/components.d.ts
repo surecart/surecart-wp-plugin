@@ -1892,17 +1892,11 @@ export namespace Components {
         "bump": Bump;
         "cdnRoot": string;
         /**
-          * The checkout
-         */
-        "checkout": Checkout;
-        /**
           * Should we show the controls
          */
         "showControl": boolean;
     }
     interface ScOrderBumps {
-        "bumps": Bump[];
-        "checkout": Checkout;
         "help": string;
         "label": string;
         "showControl": boolean;
@@ -7743,10 +7737,6 @@ declare namespace LocalJSX {
         "bump"?: Bump;
         "cdnRoot"?: string;
         /**
-          * The checkout
-         */
-        "checkout"?: Checkout;
-        /**
           * Add line item event
          */
         "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
@@ -7760,8 +7750,6 @@ declare namespace LocalJSX {
         "showControl"?: boolean;
     }
     interface ScOrderBumps {
-        "bumps"?: Bump[];
-        "checkout"?: Checkout;
         "help"?: string;
         "label"?: string;
         "showControl"?: boolean;

@@ -3,7 +3,6 @@ import {
 	ScCard,
 	ScStackedList,
 	ScFormatNumber,
-	ScStackedListRow,
 	ScButton,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
@@ -68,7 +67,9 @@ export default ({ loading, bump, updateBump }) => {
 						open
 						value={bump?.price?.id || bump?.price}
 						ad_hoc={false}
-						onSelect={({price_id}) => updateBump({ price: price_id })}
+						onSelect={({ price_id }) =>
+							updateBump({ price: price_id })
+						}
 						requestQuery={{
 							archived: false,
 						}}
