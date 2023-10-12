@@ -10,7 +10,6 @@ import PriceSelector from '../../components/PriceSelector';
 import useEntity from '../../hooks/useEntity';
 import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
-import { productNameWithPrice } from '../../util/products';
 
 import ModelRow from '../components/ModelRow';
 import LineItemLabel from '../../ui/LineItemLabel';

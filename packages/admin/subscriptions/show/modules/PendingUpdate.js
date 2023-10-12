@@ -1,16 +1,11 @@
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
-import { productNameWithPrice } from '../../../util/products';
 import { css, jsx } from '@emotion/core';
 import { ScFormatDate, ScFormatNumber } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useEffect, useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
-import VariantLabel from '../../components/VariantLabel';
 import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ subscription }) => {

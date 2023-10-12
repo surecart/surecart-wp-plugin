@@ -1053,7 +1053,6 @@
   "sc-order-bump": {
     "bump": true,
     "cdn-root": true,
-    "checkout": true,
     "show-control": true,
     "style": true,
     "id": true,
@@ -1061,8 +1060,6 @@
     "slot": true
   },
   "sc-order-bumps": {
-    "bumps": true,
-    "checkout": true,
     "help": true,
     "label": true,
     "show-control": true,

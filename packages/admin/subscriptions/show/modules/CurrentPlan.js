@@ -6,9 +6,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 /** @jsx jsx */
 import DataTable from '../../../components/DataTable';
-import VariantLabel from '../../components/VariantLabel';
 import { intervalString } from '../../../util/translations';
-import { productNameWithPrice } from '../../../util/products';
 import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ lineItem, loading, subscription }) => {
