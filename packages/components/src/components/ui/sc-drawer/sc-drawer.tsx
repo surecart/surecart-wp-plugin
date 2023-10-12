@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 
 import { animateTo, stopAnimations } from '../../../functions/animate';
 import { getAnimation, setDefaultAnimation } from '../../../functions/animation-registry';
-
+import { speak } from '@wordpress/a11y';
 @Component({
   tag: 'sc-drawer',
   styleUrl: 'sc-drawer.css',
@@ -105,6 +105,7 @@ export class ScDrawer {
   @Watch('open')
   async handleOpenChange() {
     if (this.open) {
+      speak('Drawer Opened', 'assertive');
       this.scShow.emit();
       this.originalTrigger = document.activeElement as HTMLElement;
 
@@ -153,6 +154,7 @@ export class ScDrawer {
       this.scAfterShow.emit();
     } else {
       // Hide
+      speak('Drawer Closed', 'assertive');
       this.scHide.emit();
       this.unLockBodyScrolling();
 
