@@ -5,7 +5,7 @@ import {
 	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
-	ScFormControl
+	ScFormControl,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -15,6 +15,7 @@ import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
+import { ScInput } from '@surecart/components-react';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -23,16 +24,13 @@ export default () => {
 		'store',
 		'subscription_protocol'
 	);
-	
-	const { 
-		item: portalItem, 
-		itemError: portalItemError, 
-		editItem: portalEditItem, 
-		hasLoadedItem: portalHasLoadedItem 
-	} = useEntity(
-		'store',
-		'portal_protocol'
-	);
+
+	const {
+		item: portalItem,
+		itemError: portalItemError,
+		editItem: portalEditItem,
+		hasLoadedItem: portalHasLoadedItem,
+	} = useEntity('store', 'portal_protocol');
 
 	/**
 	 * Form is submitted.
@@ -145,6 +143,42 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
+				<ScSwitch
+					checked={item.cancel_window_enabled}
+					onScChange={(e) => {
+						e.preventDefault();
+						editItem({
+							cancel_window_enabled: !item.cancel_window_enabled,
+						});
+					}}
+				>
+					{__('Delay Cancellations', 'surecart')}
+					{!scData?.entitlements?.optional_upfront_payment_method && (
+						<ScPremiumTag />
+					)}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Whether to delay showing the cancel option for the customers.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				{!!item.cancel_window_enabled && (
+					<ScInput
+						value={item?.cancel_window_days}
+						label={__('Delay duration', 'surecart')}
+						placeholder={__('Number of days to delay.', 'surecart')}
+						type="number"
+						onScInput={(e) =>
+							editItem({ cancel_window_days: e.target.value })
+						}
+						help={__(
+							'The number of days prior to a subscription renewing that the cancel option will be visible to customers.',
+							'surecart'
+						)}
+						required
+					></ScInput>
+				)}
 			</SettingsBox>
 
 			<SettingsBox

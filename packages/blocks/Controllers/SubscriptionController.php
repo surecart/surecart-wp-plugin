@@ -108,6 +108,7 @@ class SubscriptionController extends BaseController {
 			]
 		)->find( $id );
 
+		$should_delay_cancellation = $subscription->shouldDelayCancellation();
 		ob_start();
 		?>
 
@@ -137,14 +138,14 @@ class SubscriptionController extends BaseController {
 				</sc-breadcrumb>
 			</sc-breadcrumbs>
 
-		<?php
+			<?php
 			echo wp_kses_post(
 				Component::tag( 'sc-subscription' )
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
 						'heading'      => __( 'Current Plan', 'surecart' ),
-						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count,
+						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && !$should_delay_cancellation,
 						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
 						'subscription' => $subscription,
 					]
