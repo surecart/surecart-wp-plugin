@@ -156,10 +156,9 @@ export class ScProductLineItem {
               <div class="item__title" part="title">
                 <slot name="title">{this.name}</slot>
               </div>
-              <div class="item__description" part="description">
-                {this.variantLabel}
-                {!!this.priceName && !!this.variantLabel && ' - '}
-                {this.priceName}
+              <div class="item__description item__price-variant" part="description">
+                <div>{this.variantLabel}</div>
+                <div>{this.priceName}</div>
               </div>
               {!this.editable && this.quantity > 1 && (
                 <span class="item__description" part="static-quantity">
@@ -174,6 +173,7 @@ export class ScProductLineItem {
                 exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
                 clickEl={this.el}
                 quantity={this.quantity}
+                size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
               ></sc-quantity-select>
             )}

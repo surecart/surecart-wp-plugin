@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * Internal dependencies.
  */
-import { getVariantLabel } from '../../util/variation';
+import { getVariantLabel } from '../util/variation';
 
 export default ({ variantOptions = [] }) => {
 	if (!variantOptions.length) {

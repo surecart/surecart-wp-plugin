@@ -97,7 +97,7 @@ export class ScSubscriptionNextPayment {
                 <strong>
                   <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due} />
                 </strong>{' '}
-                {!!this.subscription?.finite && ' - ' + translateRemainingPayments(this.subscription?.remaining_period_count)}
+                {!!this.subscription?.finite && ' — ' + translateRemainingPayments(this.subscription?.remaining_period_count)}
               </div>
             </sc-subscription-details>
           </span>

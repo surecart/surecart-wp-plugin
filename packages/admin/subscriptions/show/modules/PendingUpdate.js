@@ -3,7 +3,7 @@ import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
 import { productNameWithPrice } from '../../../util/products';
 import { css, jsx } from '@emotion/core';
-import { ScFormatDate } from '@surecart/components-react';
+import { ScFormatDate, ScFormatNumber } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
@@ -11,10 +11,10 @@ import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import VariantLabel from '../../components/VariantLabel';
+import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
-	const [pendingVariant, setPendingVariant] = useState(null);
 
 	const { price, hasLoadedPrice } = useSelect(
 		(select) => {
@@ -41,21 +41,16 @@ export default ({ subscription }) => {
 		[pending_update]
 	);
 
-	useEffect(() => {
-		fetchPendingVariant();
-	}, [pending_update?.variant]);
-
-	const fetchPendingVariant = async () => {
-		if (!pending_update?.variant) return;
-		const pendingVariantData = await apiFetch({
-			path: addQueryArgs(
-				`surecart/v1/variants/${pending_update?.variant}`,
-				{}
-			),
-		});
-
-		setPendingVariant(pendingVariantData);
-	};
+	const { variant } = useSelect(
+		(select) => {
+			if (!pending_update) return {};
+			const queryArgs = ['surecart', 'variant', pending_update?.variant];
+			return {
+				variant: select(coreStore).getEntityRecord(...queryArgs),
+			};
+		},
+		[pending_update?.variant]
+	);
 
 	return (
 		<DataTable
@@ -86,33 +81,31 @@ export default ({ subscription }) => {
 				{
 					product: (
 						<div>
-							{productNameWithPrice(price)}
-							{pendingVariant && (
-								<VariantLabel
-									variantOptions={[
-										pendingVariant?.option_1,
-										pendingVariant?.option_2,
-										pendingVariant?.option_3,
-									]}
-								/>
-							)}
-							<div
-								css={css`
-									opacity: 0.5;
-								`}
+							<div>{price?.product?.name}</div>
+							<LineItemLabel
+								lineItem={{
+									price: price,
+									variant_options: [
+										variant?.option_1,
+										variant?.option_2,
+										variant?.option_3,
+									],
+								}}
 							>
-								<sc-format-number
-									type="currency"
-									value={
-										pending_update?.ad_hoc_amount ||
-										price?.amount
-									}
-									currency={price?.currency}
-								/>
-								{intervalString(price, {
-									labels: { interval: '/' },
-								})}
-							</div>
+								<div>
+									<ScFormatNumber
+										type="currency"
+										value={
+											pending_update?.ad_hoc_amount ||
+											price?.amount
+										}
+										currency={price?.currency}
+									/>
+									{intervalString(price, {
+										labels: { interval: '/' },
+									})}
+								</div>
+							</LineItemLabel>
 						</div>
 					),
 					quantity:

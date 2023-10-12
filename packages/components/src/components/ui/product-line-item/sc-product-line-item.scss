@@ -97,9 +97,13 @@
   align-items: flex-end;
   min-width: 100px;
   margin-left: auto;
+  align-self: center;
 }
 
 .product-line-item__removable .item__suffix {
+  align-self: flex-start;
+}
+.product-line-item__editable .item__suffix {
   align-self: flex-start;
 }
 

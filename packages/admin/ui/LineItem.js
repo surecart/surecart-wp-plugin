@@ -31,6 +31,7 @@ export default ({ className, imageUrl, children, suffix }) => {
 							var(--sc-input-border-color, var(--sc-input-border));
 						display: block;
 						box-shadow: var(--sc-input-box-shadow);
+						align-self: flex-start;
 					`}
 				/>
 			)}
@@ -55,7 +56,13 @@ export default ({ className, imageUrl, children, suffix }) => {
 				</div>
 			</div>
 
-			<div>{suffix}</div>
+			<div
+				css={css`
+					align-self: flex-start;
+				`}
+			>
+				{suffix}
+			</div>
 		</div>
 	);
 };

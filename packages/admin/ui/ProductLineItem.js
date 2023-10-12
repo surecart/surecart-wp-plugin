@@ -2,44 +2,14 @@
 import { css, jsx } from '@emotion/core';
 import LineItem from './LineItem';
 import { ScFormatNumber } from '@surecart/components-react';
+import LineItemLabel from './LineItemLabel';
 
-export default ({
-	lineItem,
-	imageUrl,
-	title,
-	description,
-	suffix,
-	showWeight,
-}) => {
-	const variantLabel =
-		(lineItem?.variant_options || []).filter(Boolean).join(' / ') || null;
-	const priceName = lineItem?.price?.name;
-
-	imageUrl = imageUrl || lineItem?.price?.product?.image_url;
-
-	title = title || lineItem?.price?.product?.name;
-
-	description = description || (
-		<>
-			<div>
-				{variantLabel}
-				{!!variantLabel && !!priceName && ' - '}
-				{priceName}
-			</div>
-			{showWeight && !!lineItem?.price?.product?.weight && (
-				<div>
-					<ScFormatNumber
-						type="unit"
-						value={lineItem?.price?.product?.weight}
-						unit={lineItem?.price?.product?.weight_unit}
-					/>
-				</div>
-			)}
-		</>
-	);
-
+export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 	return (
-		<LineItem imageUrl={imageUrl} suffix={suffix}>
+		<LineItem
+			imageUrl={lineItem?.price?.product?.image_url}
+			suffix={suffix}
+		>
 			<span
 				css={css`
 					box-sizing: border-box;
@@ -63,23 +33,30 @@ export default ({
 					text-overflow: ellipsis;
 				`}
 			>
-				{title}
+				{lineItem?.price?.product?.name}
 			</span>
-			<span
-				css={css`
-					color: var(
-						--sc-price-label-color,
-						var(--sc-input-help-text-color)
-					);
-					font-size: var(
-						--sc-price-label-font-size,
-						var(--sc-input-help-text-font-size-medium)
-					);
-					line-height: var(--sc-line-height-dense);
-				`}
-			>
-				{description}
-			</span>
+
+			<LineItemLabel lineItem={lineItem}>
+				{children}
+				{showWeight && !!lineItem?.price?.product?.weight && (
+					<div>
+						<ScFormatNumber
+							type="unit"
+							value={lineItem?.price?.product?.weight}
+							unit={lineItem?.price?.product?.weight_unit}
+						/>
+					</div>
+				)}
+				{showQuantity && !!lineItem?.quantity && (
+					<div>
+						{sprintf(
+							__('Qty: %d', 'surecart'),
+							line_item.quantity - line_item.fulfilled_quantity ||
+								0
+						)}
+					</div>
+				)}
+			</LineItemLabel>
 		</LineItem>
 	);
 };

@@ -86,6 +86,7 @@ export class ScQuantitySelect {
           'quantity--focused': this.hasFocus,
           'quantity--disabled': this.disabled,
           'quantity--is-rtl': isRtl(),
+          'quantity--small': this.size === 'small',
         }}
       >
         <span

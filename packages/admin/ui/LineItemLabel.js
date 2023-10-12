@@ -4,12 +4,11 @@ import { css, jsx } from '@emotion/core';
 /**
  * Internal dependencies.
  */
-import { getVariantLabel } from '../../util/variation';
+import { getVariantLabel } from '../util/variation';
 
-export default ({ variantOptions = [] }) => {
-	if (!variantOptions.length) {
-		return '';
-	}
+export default ({ lineItem, children }) => {
+	const variantLabel = getVariantLabel(lineItem?.variant_options);
+	const priceName = lineItem?.price?.name;
 
 	return (
 		<span
@@ -25,7 +24,9 @@ export default ({ variantOptions = [] }) => {
 				line-height: var(--sc-line-height-dense);
 			`}
 		>
-			{''} ( {getVariantLabel(variantOptions)} ){''}
+			<div>{variantLabel}</div>
+			<div>{priceName}</div>
+			<div>{children}</div>
 		</span>
 	);
 };

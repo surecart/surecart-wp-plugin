@@ -9,7 +9,6 @@ import { addLineItem, updateLineItem } from '@services/session';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
 import { isProductVariantOptionSoldOut } from '@store/utils';
-import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-checkout-product-price-variant-selector',
@@ -56,14 +55,40 @@ export class ScProductCheckoutSelectVariantOption {
     });
   }
 
+  /**
+   * Is the selected variant out of stock?
+   * @returns {boolean} Whether the selected variant is out of stock.
+   */
+  isSelectedVariantOutOfStock() {
+    return this.product?.stock_enabled && this.hasVariants() && !this.product?.allow_out_of_stock_purchases && this.selectedVariant.stock < 1;
+  }
+
+  /**
+   * Do we have the required selected variant?
+   * @returns {boolean} Whether the product has a required variant and it is not selected.
+   */
+  hasRequiredSelectedVariant() {
+    return this.hasVariants() && this.selectedVariant?.id;
+  }
+
   @Method()
   async reportValidity() {
     this.input.setCustomValidity('');
 
-    if (this.hasVariants()) {
-      if (!this.selectedVariant?.id) {
-        this.input.setCustomValidity(__('Please choose an available option.', 'surecart'));
-      }
+    if (!this.hasVariants()) {
+      return this.input.reportValidity();
+    }
+
+    // We don't have a required selected variant.
+    if (!this.hasRequiredSelectedVariant()) {
+      this.input.setCustomValidity(__('Please choose an available option.', 'surecart'));
+      return this.input.reportValidity();
+    }
+
+    // don't let the person checkout with an out of stock selection.
+    if (this.isSelectedVariantOutOfStock()) {
+      this.input.setCustomValidity(__('This selection is not available.', 'surecart'));
+      return this.input.reportValidity();
     }
 
     return this.input.reportValidity();
@@ -73,24 +98,16 @@ export class ScProductCheckoutSelectVariantOption {
   @Watch('selectedVariant')
   @Watch('selectedPrice')
   async updateLineItems() {
-    // make sure we clear out the out of stock locks.
-    unLockCheckout('OUT_OF_STOCK');
-    // get the existing line item.
-    const lineItem = this.lineItem();
     // We need a price.
     if (!this.selectedPrice?.id) return;
-    // We need a selected variant if this product has variants.
-    if (this.product?.variants?.data?.length && !this.selectedVariant?.id) return;
+    // get the existing line item.
+    const lineItem = this.lineItem();
     // no changes.
     if (lineItem?.price?.id === this.selectedPrice?.id && lineItem?.variant?.id === this.selectedVariant?.id) return;
-
-    if (this.product?.stock_enabled) {
-      if (this.product?.variants?.data?.length && this.selectedVariant.stock < 1) {
-        // don't let the person checkout with an out of stock selection.
-        lockCheckout('OUT_OF_STOCK');
-        return;
-      }
-    }
+    // We need a selected variant if this product has variants.
+    if (!this.hasRequiredSelectedVariant()) return;
+    // Don't let the person checkout with an out of stock selection.
+    if (this.isSelectedVariantOutOfStock()) return;
 
     // create or update the
     try {

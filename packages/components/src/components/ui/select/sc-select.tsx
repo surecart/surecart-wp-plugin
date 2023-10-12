@@ -186,7 +186,7 @@ export class ScSelectDropdown {
       chosen = subchoices.find(choice => choice?.value == this.value);
     }
     if (chosen) {
-      return `${append ? append + ' - ' : ''}${chosen?.label}`;
+      return `${append ? append + ' — ' : ''}${chosen?.label}`;
     }
     return false;
   }

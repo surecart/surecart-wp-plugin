@@ -9,6 +9,7 @@ import DataTable from '../../../components/DataTable';
 import VariantLabel from '../../components/VariantLabel';
 import { intervalString } from '../../../util/translations';
 import { productNameWithPrice } from '../../../util/products';
+import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ lineItem, loading, subscription }) => {
 	if (!loading && !lineItem) {
@@ -56,27 +57,32 @@ export default ({ lineItem, loading, subscription }) => {
 									`}
 								>
 									<div>
-										{productNameWithPrice(lineItem?.price)}
-										<VariantLabel
-											variantOptions={
-												lineItem?.variant_options ?? []
-											}
-										/>
-										<div style={{ opacity: 0.5 }}>
-											<ScFormatNumber
-												type="currency"
-												value={
-													lineItem?.ad_hoc_amount ||
-													lineItem?.total_amount
-												}
-												currency={
-													lineItem?.price?.currency
-												}
-											/>
-											{intervalString(lineItem?.price, {
-												labels: { interval: '/' },
-											})}
+										<div>
+											{lineItem?.price?.product?.name}
 										</div>
+										<LineItemLabel lineItem={lineItem}>
+											<div>
+												<ScFormatNumber
+													type="currency"
+													value={
+														lineItem?.ad_hoc_amount ||
+														lineItem?.total_amount
+													}
+													currency={
+														lineItem?.price
+															?.currency
+													}
+												/>
+												{intervalString(
+													lineItem?.price,
+													{
+														labels: {
+															interval: '/',
+														},
+													}
+												)}
+											</div>
+										</LineItemLabel>
 									</div>
 									{!subscription?.finite && (
 										<ScButton
