@@ -1262,6 +1262,8 @@ export namespace Components {
           * By default, the drawer slides out of its containing block (usually the viewport). To make the drawer slide out of its parent element, set this prop and add `position: relative` to the parent.
          */
         "contained": boolean;
+        "drawerCloseAnnouncement": string;
+        "drawerOpenAnnouncement": string;
         /**
           * The drawer's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
          */
@@ -6970,6 +6972,8 @@ declare namespace LocalJSX {
           * By default, the drawer slides out of its containing block (usually the viewport). To make the drawer slide out of its parent element, set this prop and add `position: relative` to the parent.
          */
         "contained"?: boolean;
+        "drawerCloseAnnouncement"?: string;
+        "drawerOpenAnnouncement"?: string;
         /**
           * The drawer's label as displayed in the header. You should always include a relevant label even when using `no-header`, as it is required for proper accessibility.
          */

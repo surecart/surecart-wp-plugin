@@ -628,6 +628,8 @@
   },
   "sc-drawer": {
     "contained": true,
+    "drawer-close-announcement": true,
+    "drawer-open-announcement": true,
     "label": true,
     "no-header": true,
     "open": true,

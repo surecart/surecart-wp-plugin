@@ -159,6 +159,8 @@ export class ScCart {
                   this.handleCloseCart();
                 }}
                 onScAfterShow={() => (this.open = true)}
+                drawerOpenAnnouncement={__('Cart opened', 'surecart')}
+                drawerCloseAnnouncement={__('Cart closed', 'surecart')}
               >
                 {this.open === true && (
                   <Fragment>
