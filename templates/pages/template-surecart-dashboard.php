@@ -83,7 +83,7 @@ $data       = $controller->getData();
 
 				<div class="sc-dashboard__user-menu">
 					<sc-dropdown style="width: 100%;" placement="top-right" distance="20">
-						<sc-flex class="sc-dashboard__menu-trigger" align-items="center" justify-content="space-between" slot="trigger" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
+						<sc-flex class="sc-dashboard__menu-trigger" align-items="center" justify-content="space-between" slot="trigger" tabindex="0" style="<?php echo isset( $attributes['color'] ) ? 'color:' . esc_attr( $attributes['color'] ) . ';' : ''; ?>">
 							<sc-flex class="sc-dashboard__menu-user" align-items="center" justify-content="space-between">
 								<sc-avatar image="<?php echo esc_url( get_avatar_url( $data['user']->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" initials="<?php echo esc_attr( substr( $data['user']->display_name, 0, 1 ) ); ?>"></sc-avatar>
 								<span class="sc-dashboard__user-menu-name"><?php echo esc_html( $data['user']->display_name ); ?></span>
@@ -91,7 +91,7 @@ $data       = $controller->getData();
 							<sc-icon name="chevron-up"></sc-icon>
 						</sc-flex>
 
-						<sc-menu>
+						<sc-menu tabindex="0">
 							<?php foreach ( $data['account_navigation'] as $navigation ) : ?>
 								<?php
 								\SureCart::render(
