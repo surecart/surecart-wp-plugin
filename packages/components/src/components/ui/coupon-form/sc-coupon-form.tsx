@@ -99,6 +99,9 @@ export class ScCouponForm {
   handleKeyDown(e) {
     if (e?.code === 'Enter') {
       this.applyCoupon();
+    } else if (e?.code === 'Escape') {
+      this.scApplyCoupon.emit(null);
+      this.open = false;
     }
   }
 
@@ -129,7 +132,7 @@ export class ScCouponForm {
                 this.open = false;
               }}
               onKeyDown={e => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' || e.key === 'Escape') {
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
@@ -172,7 +175,7 @@ export class ScCouponForm {
             this.open = true;
           }}
           onKeyDown={e => {
-            if (e.key !== 'Enter') {
+            if (e.key !== 'Enter' && e.key !== ' ') {
               return true;
             }
             if (this.open) {
