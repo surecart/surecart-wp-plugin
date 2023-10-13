@@ -469,7 +469,7 @@ export class ScSelectDropdown {
             onScHide={() => this.handleHide()}
           >
             <slot name="trigger" slot="trigger">
-              <div class="trigger">
+              <div class="trigger" role='button' tabIndex={0}>
                 <div class="select__value">
                   <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
                 </div>
