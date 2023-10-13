@@ -26,7 +26,6 @@ export const expand = [
   'product.variants',
   'discount.coupon',
   'shipping_address',
-  'staged_payment_intents',
   'tax_identifier',
   'manual_payment_method',
   'shipping_choices',
