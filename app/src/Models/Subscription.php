@@ -77,10 +77,6 @@ class Subscription extends Model {
 			$this->setAttribute( 'id', $id );
 		}
 
-		if($this->shouldDelayCancellation()){
-			return new \WP_Error( 'not_saved', 'Please wait until the subscription is cancellable.' );
-		}
-
 		if ( $this->fireModelEvent( 'canceling' ) === false ) {
 			return false;
 		}
@@ -436,11 +432,6 @@ class Subscription extends Model {
 	 * @return boolean
 	 */
 	public function shouldDelayCancellation(){
-		$has_permission = current_user_can( 'edit_sc_subscriptions' );
-		if ( ! $has_permission ) {
-			return false;
-		}
-
 		$protocol = \SureCart::account()->subscription_protocol;
 
 		if(!$protocol->cancel_window_enabled || empty($protocol->cancel_window_days)){
@@ -453,7 +444,10 @@ class Subscription extends Model {
 		$end->setTimestamp( $this->attributes['current_period_end_at'] );
 		$end = $end->modify( "-{$cancel_window_days} days" );
 
-		return $end->diff($now)->days > 0;
+		$interval = $now->diff( $end );
+		$diff_days = $interval->days * ($interval->invert ? -1: 1);
+
+		return $diff_days > 0;
 	}
 
 	/**

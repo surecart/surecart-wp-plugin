@@ -32,6 +32,12 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 			return false;
 		}
 
+		// if we should delay cancellation
+		$subscription = Subscription::find( $args[2] );
+		if($subscription->shouldDelayCancellation()){
+			return false;
+		}
+
 		return $this->belongsToUser( Subscription::class, $args[2], $user );
 	}
 
