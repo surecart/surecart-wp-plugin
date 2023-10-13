@@ -26,7 +26,11 @@ export class ScLineItemTotal {
 
   renderLineItemTitle() {
     if (this.total === 'total' && this.hasInstallmentPlan()) {
-      return <span slot="title">{__('First Payment Total', 'surecart')}</span>;
+      return (
+        <span slot="title">
+          <slot name="first-payment-total-description">{__('First Payment Total', 'surecart')}</slot>
+        </span>
+      );
     }
 
     return (
@@ -38,7 +42,11 @@ export class ScLineItemTotal {
 
   renderLineItemDescription() {
     if (this.total === 'subtotal' && this.hasInstallmentPlan()) {
-      return <span slot="description">{__('First Payment Subtotal', 'surecart')}</span>;
+      return (
+        <span slot="description">
+          <slot name="first-payment-subtotal-description">{__('First Payment Subtotal', 'surecart')}</slot>
+        </span>
+      );
     }
 
     return (
@@ -65,15 +73,6 @@ export class ScLineItemTotal {
     if (this.total === 'total' && this.order?.total_amount !== this.order?.amount_due) {
       return (
         <div class="line-item-total__group">
-          {!!this.order.trial_amount && (
-            <sc-line-item>
-              <span slot="description">{__('Free Trial', 'surecart')}</span>
-              <span slot="price">
-                <sc-format-number type="currency" value={this.order.trial_amount} currency={this.order.currency} />
-              </span>
-            </sc-line-item>
-          )}
-
           <sc-line-item>
             <span slot="description">
               <slot name="title" />
@@ -83,6 +82,18 @@ export class ScLineItemTotal {
               <sc-total order={this.order} total={this.total}></sc-total>
             </span>
           </sc-line-item>
+
+          {!!this.order.trial_amount && (
+            <sc-line-item>
+              <span slot="description">
+                <slot name="free-trial-description">{__('Free Trial', 'surecart')}</slot>
+              </span>
+              <span slot="price">
+                <sc-format-number type="currency" value={this.order.trial_amount} currency={this.order.currency} />
+              </span>
+            </sc-line-item>
+          )}
+
           <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
             <span slot="title">
               <slot name="subscription-title">{__('Total Due Today', 'surecart')}</slot>
@@ -99,7 +110,9 @@ export class ScLineItemTotal {
       <Fragment>
         {this.total === 'subtotal' && this.hasInstallmentPlan() && (
           <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
-            <span slot="description">{__('Total Installment Payments')}</span>
+            <span slot="description">
+              <slot name="total-payments-description">{__('Total Payments', 'surecart')}</slot>
+            </span>
             <span slot="price">
               <sc-format-number type="currency" value={this.order?.full_amount} currency={this.order?.currency || 'usd'} />
             </span>

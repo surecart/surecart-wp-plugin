@@ -57,8 +57,8 @@ graph TD;
   sc-order-confirmation-totals --> sc-divider
   sc-line-item-total --> sc-line-item
   sc-line-item-total --> sc-skeleton
-  sc-line-item-total --> sc-total
   sc-line-item-total --> sc-format-number
+  sc-line-item-total --> sc-total
   sc-total --> sc-format-number
   style sc-order-confirmation-details fill:#f9f,stroke:#333,stroke-width:4px
 ```
