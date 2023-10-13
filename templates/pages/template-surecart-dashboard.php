@@ -58,7 +58,7 @@ $data       = $controller->getData();
 					</div>
 
 					<sc-dropdown class="sc-dashboard__mobile-menu" placement="bottom-right" distance="20">
-						<sc-button circle slot="trigger"><sc-icon name="menu"></sc-icon></sc-button>
+						<sc-button circle slot="trigger" role="button" tabindex="0"><sc-icon name="menu"></sc-icon></sc-button>
 						<?php
 						\SureCart::render(
 							'layouts/partials/customer-dashboard/dashboard-navigation',

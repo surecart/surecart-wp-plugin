@@ -46,7 +46,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 
 		<?php if ( ! empty( $user->ID ) ) : ?>
 			<sc-dropdown position="bottom-right" style="font-size: 15px;">
-				<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" slot="trigger" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
+				<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px"  role="button" tabindex="0" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
 				<sc-menu>
 					<?php if ( ! empty( $dashboard_link ) ) : ?>
 						<sc-menu-item href="<?php echo esc_url( $dashboard_link ); ?>">
