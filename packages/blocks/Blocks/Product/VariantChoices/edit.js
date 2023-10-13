@@ -1,162 +1,67 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import {
 	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
-	useSetting,
+	getTypographyClassesAndStyles as useTypographyProps,
 } from '@wordpress/block-editor';
-import {
-	ScFormControl,
-	ScSelect,
-	ScPillOption,
-} from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import {
-	__experimentalUseCustomUnits as useCustomUnits,
-	__experimentalUnitControl as UnitControl,
-	PanelBody,
-} from '@wordpress/components';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
-import { useRef, useEffect } from '@wordpress/element';
+import { ScFormControl, ScPillOption } from '@surecart/components-react';
 
-export default ({ attributes, setAttributes }) => {
-	const selectColor = useRef();
-	const selectSize = useRef();
-	const { gap, type } = attributes;
+import classNames from 'classnames';
+
+export default ({ attributes }) => {
 	const blockProps = useBlockProps();
+	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
-	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || ['%', 'px', 'em', 'rem'],
-	});
+	const borderProps = useBorderProps(attributes);
+	const typographyProps = useTypographyProps(attributes);
 
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
+	const fontStyles = {
+		fontFamily: blockProps?.style?.fontFamily,
+		fontWeight: blockProps?.style?.fontWeight,
+		fontStyle: blockProps?.style?.fontStyle,
+	};
 
-	useEffect(() => {
-		if (selectColor.current) {
-			selectColor.current.value = 'green';
-			selectColor.current.choices = [
-				{
-					value: 'green',
-					label: __('Green', 'surecart'),
-				},
-				{
-					value: 'white',
-					label: __('White', 'surecart'),
-				},
-				{
-					value: 'black',
-					label: __('Black', 'surecart'),
-				},
-			];
-		}
-		if (selectSize.current) {
-			selectSize.current.value = 'small';
-			selectSize.current.choices = [
-				{
-					value: 'small',
-					label: __('Small', 'surecart'),
-				},
-				{
-					value: 'medium',
-					label: __('Medium', 'surecart'),
-				},
-				{
-					value: 'large',
-					label: __('Large', 'surecart'),
-				},
-			];
-		}
-	}, [selectColor, selectSize, type]);
+	const styleAttributes = {
+		className: classNames(
+			spacingProps.className,
+			borderProps.className,
+			typographyProps.className
+		),
+		style: {
+			...fontStyles,
+			'--sc-pill-option-text-color': colorProps?.style?.color,
+			'--sc-pill-option-background-color':
+				colorProps?.style?.backgroundColor,
+			'--sc-pill-option-border-color': borderProps?.style?.borderColor,
+			'--sc-pill-option-border-width': borderProps?.style?.borderWidth,
+			'--sc-pill-option-border-style': borderProps?.style?.borderStyle,
+			'--sc-pill-option-border-radius': borderProps?.style?.borderRadius,
+			'--sc-pill-option-padding-left': spacingProps?.style?.paddingLeft,
+			'--sc-pill-option-padding-right': spacingProps?.style?.paddingRight,
+			'--sc-pill-option-padding-top': spacingProps?.style?.paddingTop,
+			'--sc-pill-option-padding-bottom':
+				spacingProps?.style?.paddingBottom,
+			...typographyProps.style,
+			borderStyle: 'none',
+			display: 'flex',
+			flexWrap: 'wrap',
+			gap: 'var(--sc-spacing-x-small)',
+		},
+	};
 
 	return (
-		<>
-			<div
-				{...blockProps}
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					gap,
-					...spacingProps.style,
-				}}
-			>
-				{type === 'dropdown' && (
-					<>
-						<ScSelect
-							ref={selectColor}
-							label={__('Color', 'surecart')}
-							style={{
-								marginBottom:
-									'var(--sc-form-row-spacing, 0.75em)',
-							}}
-						/>
-						<ScSelect
-							ref={selectSize}
-							label={__('Size', 'surecart')}
-							style={{
-								marginBottom:
-									'var(--sc-form-row-spacing, 0.75em)',
-							}}
-						/>
-					</>
-				)}
-				{type === 'pills' && (
-					<>
-						<ScFormControl
-							label={__('Color', 'surecart')}
-							style={{
-								marginBottom:
-									'var(--sc-form-row-spacing, 0.75em)',
-							}}
-						>
-							<div
-								style={{
-									display: 'flex',
-									flexWrap: 'wrap',
-									gap: 'var(--sc-spacing-x-small)',
-								}}
-							>
-								<ScPillOption isSelected>
-									{__('Green', 'surecart')}
-								</ScPillOption>
-								<ScPillOption>
-									{__('White', 'surecart')}
-								</ScPillOption>
-								<ScPillOption>
-									{__('Black', 'surecart')}
-								</ScPillOption>
-							</div>
-						</ScFormControl>
-						<ScFormControl
-							label={__('Size', 'surecart')}
-							style={{
-								marginBottom:
-									'var(--sc-form-row-spacing, 0.75em)',
-							}}
-						>
-							<div
-								style={{
-									display: 'flex',
-									flexWrap: 'wrap',
-									gap: 'var(--sc-spacing-x-small)',
-								}}
-							>
-								<ScPillOption isSelected>
-									{__('Small', 'surecart')}
-								</ScPillOption>
-								<ScPillOption>
-									{__('Medium', 'surecart')}
-								</ScPillOption>
-								<ScPillOption>
-									{__('Large', 'surecart')}
-								</ScPillOption>
-							</div>
-						</ScFormControl>
-					</>
-				)}
-			</div>
-		</>
+		<div {...blockProps}>
+			<ScFormControl label={__('Color', 'surecart')}>
+				<div {...styleAttributes}>
+					<ScPillOption isSelected>
+						{__('Green', 'surecart')}
+					</ScPillOption>
+					<ScPillOption>{__('White', 'surecart')}</ScPillOption>
+					<ScPillOption>{__('Black', 'surecart')}</ScPillOption>
+				</div>
+			</ScFormControl>
+		</div>
 	);
 };
