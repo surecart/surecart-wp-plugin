@@ -3,6 +3,7 @@
 namespace SureCartBlocks\Blocks\Product\VariantChoices;
 
 use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
@@ -23,20 +24,24 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
+
 		// get wrapper attributes.
 		$wrapper_attributes = get_block_wrapper_attributes(
 			[
-				'style' => 'border: none;' . esc_attr( $this->getVars( $attributes, '--sc-pill-option' ) ),
+				'style' => 'border: none; display: block; margin-bottom: var(--sc-form-row-spacing, 0.75em);' . esc_attr( $this->getVars( $attributes, '--sc-pill-option' ) ),
 			]
 		);
 
 		ob_start(); ?>
 
-		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-			<sc-form-control label="<?php echo esc_attr( $option->name ); ?>">
-				<sc-product-pills-variant-option  option-number="<?php echo (int) $key + 1; ?>" <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></sc-product-pills-variant-option>
-			</sc-form-control>
-		<?php endforeach; ?>
+		<div style="<?php echo esc_attr( $styles ); ?>">
+			<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
+				<sc-form-control label="<?php echo esc_attr( $option->name ); ?>" <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+					<sc-product-pills-variant-option  option-number="<?php echo (int) $key + 1; ?>"></sc-product-pills-variant-option>
+				</sc-form-control>
+			<?php endforeach; ?>
+		</div>
 
 		<?php
 		return ob_get_clean();

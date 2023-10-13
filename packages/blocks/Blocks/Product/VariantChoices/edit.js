@@ -11,11 +11,18 @@ import { ScFormControl, ScPillOption } from '@surecart/components-react';
 import classNames from 'classnames';
 
 export default ({ attributes }) => {
-	const blockProps = useBlockProps();
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 	const borderProps = useBorderProps(attributes);
 	const typographyProps = useTypographyProps(attributes);
+	const blockProps = useBlockProps({
+		style: {
+			marginTop: spacingProps?.style?.marginTop,
+			marginLeft: spacingProps?.style?.marginLeft,
+			marginRight: spacingProps?.style?.marginRight,
+			marginBottom: spacingProps?.style?.marginBottom,
+		},
+	});
 
 	const fontStyles = {
 		fontFamily: blockProps?.style?.fontFamily,
@@ -45,16 +52,19 @@ export default ({ attributes }) => {
 				spacingProps?.style?.paddingBottom,
 			...typographyProps.style,
 			borderStyle: 'none',
-			display: 'flex',
-			flexWrap: 'wrap',
-			gap: 'var(--sc-spacing-x-small)',
 		},
 	};
 
 	return (
 		<div {...blockProps}>
-			<ScFormControl label={__('Color', 'surecart')}>
-				<div {...styleAttributes}>
+			<ScFormControl label={__('Color', 'surecart')} {...styleAttributes}>
+				<div
+					style={{
+						display: 'flex',
+						flexWrap: 'wrap',
+						gap: 'var(--sc-spacing-x-small)',
+					}}
+				>
 					<ScPillOption isSelected>
 						{__('Green', 'surecart')}
 					</ScPillOption>

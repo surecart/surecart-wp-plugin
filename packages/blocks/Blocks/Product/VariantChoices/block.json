@@ -39,13 +39,8 @@
 		},
 		"spacing": {
 			"__experimentalSkipSerialization": true,
-			"blockGap": true,
-			"margin": false,
-			"padding": true,
-			"__experimentalDefaultControls": {
-				"padding": true,
-				"blockGap": true
-			}
+			"margin": true,
+			"padding": true
 		}
 	},
 	"selectors": {
