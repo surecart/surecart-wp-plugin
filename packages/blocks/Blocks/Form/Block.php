@@ -47,44 +47,50 @@ class Block extends BaseBlock {
 
 		// set the initial state.
 		sc_initial_state(
-			[
-				'checkout'   => [
-					'formId'                   => $attributes['form_id'] ?? $sc_form_id,
-					'mode'                     => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
-					'product'                  => $attributes['product'] ?? [],
-					'currencyCode'             => $attributes['currency'] ?? \SureCart::account()->currency,
-					'groupId'                  => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
-					'abandonedCheckoutEnabled' => ! is_admin(),
-					'taxProtocol'              => \SureCart::account()->tax_protocol,
-				],
-				'processors' => [
-					'processors'           => array_values(
-						array_filter(
-							$processors ?? [],
-							function( $processor ) {
-								return $processor->approved && $processor->enabled;
-							}
-						)
-					),
-					'manualPaymentMethods' => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
-					'config'               => [
-						'stripe' => [
-							'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', false ),
+			array_filter(
+				[
+					'checkout'   => [
+						'formId'                   => $attributes['form_id'] ?? $sc_form_id,
+						'mode'                     => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
+						'product'                  => $attributes['product'] ?? [],
+						'currencyCode'             => $attributes['currency'] ?? \SureCart::account()->currency,
+						'groupId'                  => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
+						'abandonedCheckoutEnabled' => ! is_admin(),
+						'taxProtocol'              => \SureCart::account()->tax_protocol,
+					],
+					'processors' => [
+						'processors'           => array_values(
+							array_filter(
+								$processors ?? [],
+								function( $processor ) {
+									return $processor->approved && $processor->enabled;
+								}
+							)
+						),
+						'manualPaymentMethods' => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
+						'config'               => [
+							'stripe' => [
+								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', false ),
+							],
 						],
 					],
-				],
-				'user'       => [
-					'loggedIn' => is_user_logged_in(),
-					'email'    => $user->user_email,
-					'name'     => $user->display_name,
-				],
-				'form'       => [
-					'text' => [
-						'loading' => array_filter( $attributes['loading_text'] ?? [] ),
-						'success' => array_filter( $attributes['success_text'] ?? [] ),
+					'user'       => [
+						'loggedIn' => is_user_logged_in(),
+						'email'    => $user->user_email,
+						'name'     => $user->display_name,
 					],
-				],
-			]
+					'form'       => array_filter(
+						[
+							'text' => array_filter(
+								[
+									'loading' => array_filter( $attributes['loading_text'] ?? [] ),
+									'success' => array_filter( $attributes['success_text'] ?? [] ),
+								]
+							),
+						]
+					),
+				]
+			)
 		);
 
 		if ( ! empty( $attributes['prices'] ) ) {
