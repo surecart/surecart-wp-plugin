@@ -271,7 +271,6 @@
     "disable-components-validation": true,
     "edit-line-items": true,
     "form-id": true,
-    "loading-text": true,
     "manual-payment-methods": true,
     "mode": true,
     "modified": true,
@@ -281,7 +280,6 @@
     "product": true,
     "remove-line-items": true,
     "stripe-payment-element": true,
-    "success-text": true,
     "success-url": true,
     "tax-protocol": true,
     "style": true,
@@ -1077,7 +1075,6 @@
   },
   "sc-order-confirm-provider": {
     "checkout-status": true,
-    "success-text": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -1701,14 +1698,6 @@
   },
   "sc-product-text": {
     "text": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-product-variation-choices": {
-    "product-id": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,

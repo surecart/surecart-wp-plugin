@@ -500,15 +500,6 @@ export namespace Components {
          */
         "formId": number;
         /**
-          * Text for the loading states of the form.
-         */
-        "loadingText": {
-    finalizing: string;
-    paying: string;
-    confirming: string;
-    confirmed: string;
-  };
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods": ManualPaymentMethod[];
@@ -548,14 +539,6 @@ export namespace Components {
           * Submit the form
          */
         "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>;
-        /**
-          * Success text for the form.
-         */
-        "successText": {
-    title: string;
-    description: string;
-    button: string;
-  };
         /**
           * Where to go on success
          */
@@ -1917,14 +1900,6 @@ export namespace Components {
          */
         "checkoutStatus": string;
         /**
-          * Success text for the form.
-         */
-        "successText": {
-    title: string;
-    description: string;
-    button: string;
-  };
-        /**
           * Success url.
          */
         "successUrl": string;
@@ -3079,13 +3054,6 @@ export namespace Components {
     interface ScProductText {
         "text": 'name' | 'description';
     }
-    interface ScProductVariationChoices {
-        /**
-          * The product id.
-         */
-        "productId": string;
-        "type": 'product-page' | 'instant-checkout-page';
-    }
     interface ScProse {
     }
     interface ScProvider {
@@ -4136,10 +4104,6 @@ export interface ScProductSelectedPriceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductSelectedPriceElement;
 }
-export interface ScProductVariationChoicesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProductVariationChoicesElement;
-}
 export interface ScProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProviderElement;
@@ -5136,12 +5100,6 @@ declare global {
         prototype: HTMLScProductTextElement;
         new (): HTMLScProductTextElement;
     };
-    interface HTMLScProductVariationChoicesElement extends Components.ScProductVariationChoices, HTMLStencilElement {
-    }
-    var HTMLScProductVariationChoicesElement: {
-        prototype: HTMLScProductVariationChoicesElement;
-        new (): HTMLScProductVariationChoicesElement;
-    };
     interface HTMLScProseElement extends Components.ScProse, HTMLStencilElement {
     }
     var HTMLScProseElement: {
@@ -5606,7 +5564,6 @@ declare global {
         "sc-product-select-variant-option": HTMLScProductSelectVariantOptionElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-product-text": HTMLScProductTextElement;
-        "sc-product-variation-choices": HTMLScProductVariationChoicesElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
         "sc-provisional-banner": HTMLScProvisionalBannerElement;
@@ -6174,15 +6131,6 @@ declare namespace LocalJSX {
          */
         "formId"?: number;
         /**
-          * Text for the loading states of the form.
-         */
-        "loadingText"?: {
-    finalizing: string;
-    paying: string;
-    confirming: string;
-    confirmed: string;
-  };
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods"?: ManualPaymentMethod[];
@@ -6230,14 +6178,6 @@ declare namespace LocalJSX {
           * Use the Stripe payment element.
          */
         "stripePaymentElement"?: boolean;
-        /**
-          * Success text for the form.
-         */
-        "successText"?: {
-    title: string;
-    description: string;
-    button: string;
-  };
         /**
           * Where to go on success
          */
@@ -7775,14 +7715,6 @@ declare namespace LocalJSX {
         "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Checkout>) => void;
         "onScSetState"?: (event: ScOrderConfirmProviderCustomEvent<string>) => void;
         /**
-          * Success text for the form.
-         */
-        "successText"?: {
-    title: string;
-    description: string;
-    button: string;
-  };
-        /**
           * Success url.
          */
         "successUrl"?: string;
@@ -9003,17 +8935,6 @@ declare namespace LocalJSX {
     interface ScProductText {
         "text"?: 'name' | 'description';
     }
-    interface ScProductVariationChoices {
-        /**
-          * Toggle line item event
-         */
-        "onScUpdateLineItem"?: (event: ScProductVariationChoicesCustomEvent<LineItemData1>) => void;
-        /**
-          * The product id.
-         */
-        "productId"?: string;
-        "type"?: 'product-page' | 'instant-checkout-page';
-    }
     interface ScProse {
     }
     interface ScProvider {
@@ -10104,7 +10025,6 @@ declare namespace LocalJSX {
         "sc-product-select-variant-option": ScProductSelectVariantOption;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-product-text": ScProductText;
-        "sc-product-variation-choices": ScProductVariationChoices;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
         "sc-provisional-banner": ScProvisionalBanner;
@@ -10331,7 +10251,6 @@ declare module "@stencil/core" {
             "sc-product-select-variant-option": LocalJSX.ScProductSelectVariantOption & JSXBase.HTMLAttributes<HTMLScProductSelectVariantOptionElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
-            "sc-product-variation-choices": LocalJSX.ScProductVariationChoices & JSXBase.HTMLAttributes<HTMLScProductVariationChoicesElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-provisional-banner": LocalJSX.ScProvisionalBanner & JSXBase.HTMLAttributes<HTMLScProvisionalBannerElement>;
