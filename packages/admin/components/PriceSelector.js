@@ -11,6 +11,7 @@ import SelectPrice from './SelectPrice';
 export default ({
 	onSelect,
 	ad_hoc,
+	variable,
 	value,
 	open = false,
 	requestQuery,
@@ -25,6 +26,8 @@ export default ({
 		per_page: 10,
 	});
 	const { receiveEntityRecords } = useDispatch(coreStore);
+
+	console.log({ variable });
 
 	const handleOnScrollEnd = () => {
 		if (!pagination.enabled || isLoading) return;
@@ -92,6 +95,7 @@ export default ({
 			`}
 			value={value}
 			ad_hoc={ad_hoc}
+			variable={variable}
 			open={open}
 			products={products}
 			onQuery={setQuery}

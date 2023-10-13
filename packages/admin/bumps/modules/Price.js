@@ -69,6 +69,7 @@ export default ({ loading, bump, updateBump }) => {
 						open
 						value={bump?.price?.id || bump?.price}
 						ad_hoc={false}
+						variable={false}
 						onSelect={({ price_id }) =>
 							updateBump({ price: price_id })
 						}
