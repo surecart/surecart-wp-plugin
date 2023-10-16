@@ -53,6 +53,7 @@ export default ({
 						}
 						return true;
 					})
+					.filter((price) => !price?.archived)
 					.map((price) => {
 						const variants = product?.variants?.data || [];
 
@@ -82,7 +83,7 @@ export default ({
 								return {
 									value: price.id,
 									label: `${formatNumber(
-										price.amount,
+										variant?.amount ?? price.amount,
 										price.currency
 									)}${price?.archived ? ' (Archived)' : ''}`,
 									suffix: `(${variantLabel}) ${intervalString(
