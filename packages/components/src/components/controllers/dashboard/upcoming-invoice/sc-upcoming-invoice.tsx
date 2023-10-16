@@ -20,6 +20,7 @@ export class ScUpcomingInvoice {
   @Prop() successUrl: string;
   @Prop() subscriptionId: string;
   @Prop() priceId: string;
+  @Prop() variantId: string;
   @Prop() quantity: number;
   @Prop({ mutable: true }) discount: {
     promotion_code?: string;
@@ -92,6 +93,7 @@ export class ScUpcomingInvoice {
       }),
       data: {
         price: this.priceId,
+        variant: this.variantId,
         quantity: this.quantity,
         ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
         ...(this.discount ? { discount: this.discount } : {}),
@@ -138,6 +140,7 @@ export class ScUpcomingInvoice {
         data: {
           price: this.priceId,
           quantity: this.quantity,
+          variant: this.variantId,
           ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
           ...(this.discount ? { discount: this.discount } : {}),
         },

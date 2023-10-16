@@ -2019,6 +2019,16 @@
     "class": true,
     "slot": true
   },
+  "sc-subscription-variation-confirm": {
+    "heading": true,
+    "price": true,
+    "product": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-subscriptions-list": {
     "all-link": true,
     "cancel-behavior": true,
@@ -2213,6 +2223,7 @@
     "quantity-updates-enabled": true,
     "subscription-id": true,
     "success-url": true,
+    "variant-id": true,
     "style": true,
     "id": true,
     "class": true,
