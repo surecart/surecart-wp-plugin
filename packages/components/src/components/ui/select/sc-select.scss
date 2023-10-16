@@ -132,3 +132,7 @@ sc-dropdown {
   height: 18px;
   object-fit: contain;
 }
+
+sc-menu-item.is-unavailable {
+  --sc-menu-item-color: var(--sc-color-gray-500);
+}

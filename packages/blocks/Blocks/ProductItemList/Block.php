@@ -93,7 +93,8 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Style variables.
+	 * @param  array  $attr Style variables.
+	 * @param  string $prefix Prefix for the css variable.
 	 * @return string
 	 */
 	public function getVars( $attr, $prefix ) {
@@ -160,7 +161,8 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Product list & Product item attributes.
+	 * @param  array $attr Product List attributes.
+	 * @param  array $item_attributes Product item attributes.
 	 * @return string
 	 */
 	public function getStyle( $attr, $item_attributes ) {
@@ -217,6 +219,7 @@ class Block extends BaseBlock {
 		}
 
 		// backwards compat.
+		$attributes['type'] = '';
 		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
 			$attributes['type'] = 'custom';
 		}
@@ -230,12 +233,13 @@ class Block extends BaseBlock {
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
-				'paginationEnabled'    => $attributes['pagination_enabled'],
-				'ajaxPagination'       => $attributes['ajax_pagination'],
-				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
-				'searchEnabled'        => $attributes['search_enabled'],
-				'sortEnabled'          => $attributes['sort_enabled'],
+				'paginationEnabled'    => ! ! $attributes['pagination_enabled'],
+				'ajaxPagination'       => ! ! $attributes['ajax_pagination'],
+				'paginationAutoScroll' => ! ! $attributes['pagination_auto_scroll'],
+				'searchEnabled'        => ! ! $attributes['search_enabled'],
+				'sortEnabled'          => ! ! $attributes['sort_enabled'],
 				'featured'             => 'featured' === $attributes['type'],
+				'collectionEnabled'    => ! ! $attributes['collection_enabled'],
 			]
 		);
 

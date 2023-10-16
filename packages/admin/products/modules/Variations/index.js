@@ -5,8 +5,6 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
 
 /**
  * Internal dependencies.
@@ -19,25 +17,17 @@ import NewVariant from './NewVariant';
 
 export default ({ product, updateProduct, loading }) => {
 	const [modal, setModal] = useState(false);
-	const { createErrorNotice } = useDispatch(noticesStore);
 	const maxVariantOptions = 3;
 
 	const addEmptyVariantOption = () => {
-		// if we have reached the max number of variant options, show a toast and return.
-		if ((product?.variant_options ?? []).length >= maxVariantOptions) {
-			createErrorNotice(
-				__(
-					'You have reached the maximum number of variant options. Only 3 variant options are allowed.',
-					'surecart'
-				)
-			);
-			return;
-		}
-
 		updateProduct({
 			variant_options: [
 				...product?.variant_options,
-				{ name: '', position: 0, values: [] },
+				{
+					name: '',
+					values: [],
+					editing: true,
+				},
 			],
 		});
 	};
@@ -49,8 +39,9 @@ export default ({ product, updateProduct, loading }) => {
 	const renderAddNewVariantButton = () => {
 		return (
 			product?.variant_options?.[0]?.name &&
-			product?.variant_options[0]?.values?.[0]?.label &&
-			!loading && (
+			product?.variant_options[0]?.values?.[0] &&
+			!loading &&
+			product?.variants?.length < 99 && (
 				<div
 					css={css`
 						margin: -12px 0px;
@@ -69,6 +60,10 @@ export default ({ product, updateProduct, loading }) => {
 		);
 	};
 
+	const hasOptions = !!(product?.variant_options ?? []).length;
+	const hasMaxOptions =
+		(product?.variant_options ?? []).length >= maxVariantOptions;
+
 	return (
 		<Box
 			title={__('Variants', 'surecart')}
@@ -85,6 +80,14 @@ export default ({ product, updateProduct, loading }) => {
 				`
 			}
 			header_action={renderAddNewVariantButton()}
+			footer={
+				!hasOptions && (
+					<ScButton type="default" onClick={addEmptyVariantOption}>
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add Options Like Size or Color', 'surecart')}
+					</ScButton>
+				)
+			}
 		>
 			<VariantOptions product={product} updateProduct={updateProduct} />
 
@@ -92,52 +95,40 @@ export default ({ product, updateProduct, loading }) => {
 				<NewVariant
 					product={product}
 					updateProduct={updateProduct}
-					loading={loading}
 					onRequestClose={() => setModal(false)}
 				/>
 			)}
 
-			<div
-				css={css`
-					padding: 12px 24px;
-				`}
-			>
-				<ScTooltip
-					type="text"
-					text={
-						(product?.variant_options ?? []).length >=
-						maxVariantOptions
-							? __(
-									'You have reached the maximum number of variant options. Only 3 variant options are allowed.',
-									'surecart'
-							  )
-							: null
-					}
+			{hasOptions && (
+				<div
+					css={css`
+						padding: 12px 24px;
+					`}
 				>
-					<span>
-						<ScButton
-							type={
-								(product?.variant_options ?? []).length
-									? 'link'
-									: 'default'
-							}
-							onClick={addEmptyVariantOption}
-							disabled={
-								(product?.variant_options ?? []).length >=
-								maxVariantOptions
-							}
-						>
-							<ScIcon name="plus" slot="prefix" />
-							{!(product?.variant_options ?? []).length
+					<ScTooltip
+						type="text"
+						text={
+							hasMaxOptions
 								? __(
-										'Add Options Like Size or Color',
+										'You have reached the maximum number of variant options.',
 										'surecart'
 								  )
-								: __('Add More Options', 'surecart')}
-						</ScButton>
-					</span>
-				</ScTooltip>
-			</div>
+								: null
+						}
+					>
+						<span>
+							<ScButton
+								type="link"
+								onClick={addEmptyVariantOption}
+								disabled={hasMaxOptions}
+							>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add More Options', 'surecart')}
+							</ScButton>
+						</span>
+					</ScTooltip>
+				</div>
+			)}
 
 			{!!product?.variants && (
 				<Variants

@@ -76,6 +76,7 @@ export interface ChoiceItem extends Object {
   label: string;
   disabled?: boolean;
   checked?: boolean;
+  unavailable?: boolean;
   choices?: ChoiceItem[];
   suffix?: string;
   icon?: string;
@@ -320,6 +321,15 @@ export type Products = {
   [id: string]: Product;
 };
 
+export interface Collection extends Object {
+  id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Coupon extends Model {
   id: string;
   object: 'coupon';
@@ -338,6 +348,7 @@ export interface Coupon extends Model {
 }
 
 export interface LineItemData extends Object {
+  id?: string;
   price_id?: string;
   bump?: string;
   quantity: number;
@@ -580,6 +591,7 @@ export interface Checkout extends Object {
   total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
+  shipping_address_required?: boolean;
   tax_enabled: boolean;
   tax_amount: number;
   email_exists: boolean;
@@ -763,6 +775,7 @@ export interface Subscription extends Object {
     ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
+    variant?: string;
   };
   purchase: Purchase | string;
   cancel_at_period_end: number | false;
@@ -775,7 +788,7 @@ export interface Subscription extends Object {
   payment_method: PaymentMethod | string;
   price: Price;
   ad_hoc_amount: number;
-  variant?: string | null;
+  variant?: Variant | string;
   variant_options?: Array<string>;
   created_at: number;
   updated_at: number;
@@ -1064,6 +1077,18 @@ export interface Rule {
   condition: RuleName;
   operator: NumberOperators | ArrayOperators;
   value: string | string[] | { value: string }[];
+}
+
+export interface ProductCollection {
+  id: string;
+  object: string;
+  name: string;
+  description?: string;
+  position?: number;
+  slug: string;
+  image?: string;
+  products_count: number;
+  products?: Product[];
 }
 
 export interface GoogleAnalyticsItem {

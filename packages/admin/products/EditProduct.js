@@ -26,6 +26,7 @@ import Publishing from './modules/Publishing';
 import SearchEngine from './modules/SearchEngine';
 import Tax from './modules/Tax';
 import Variations from './modules/Variations';
+import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 
@@ -155,10 +156,7 @@ export default ({ id }) => {
 		if (product?.archived) {
 			return <ScTag type="warning">{__('Archived', 'surecart')}</ScTag>;
 		}
-		if (product?.status === 'published') {
-			return <ScTag type="success">{__('Published', 'surecart')}</ScTag>;
-		}
-		return <ScTag>{__('Draft', 'surecart')}</ScTag>;
+		return null;
 	};
 
 	return (
@@ -241,6 +239,11 @@ export default ({ id }) => {
 						loading={!hasLoadedProduct}
 					/>
 					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collections
 						product={product}
 						updateProduct={editProduct}
 						loading={!hasLoadedProduct}

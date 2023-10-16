@@ -25,6 +25,6 @@ class PaymentIntentsController extends RestController {
 	public function capture( \WP_REST_Request $request ) {
 		$intent = new $this->class( [ 'id' => $request['id'] ] );
 		return $intent->where( $request->get_query_params() )
-			->capture( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+			->capture( $request->get_json_params() );
 	}
 }

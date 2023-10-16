@@ -178,6 +178,8 @@ class BlockTemplatesService {
 					$template->description = $this->utility->getBlockTemplateDescription( $template->slug );
 				}
 
+				$template = $this->setTemplateName( $template );
+
 				return $template;
 			},
 			$query_result
@@ -203,7 +205,20 @@ class BlockTemplatesService {
 					__( 'Product: %s', 'surecart' ),
 					$template->title
 				);
-				$template->description = __( 'Template used for single SureCart product pages.', 'surecart' );
+				$template->description = __( 'Template used for specific single SureCart product pages.', 'surecart' );
+			}
+		}
+
+		if ( preg_match( '/(sc-product-collection)-(.+)/', $template->slug, $matches ) ) {
+			$type = $matches[1];
+
+			if ( 'sc-product-collection' === $type ) {
+				$template->title = sprintf(
+					// translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
+					__( 'Product Collection: %s', 'surecart' ),
+					$template->title
+				);
+				$template->description = __( 'Template used for specific single SureCart collection pages.', 'surecart' );
 			}
 		}
 		return $template;

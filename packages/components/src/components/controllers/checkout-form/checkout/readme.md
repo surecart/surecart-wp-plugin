@@ -43,13 +43,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Checkout | Timeout>`
+Type: `Promise<Checkout | Timeout | Error>`
 
 
 

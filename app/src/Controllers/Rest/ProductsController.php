@@ -26,7 +26,7 @@ class ProductsController extends RestController {
 	protected function middleware( $class, \WP_REST_Request $request ) {
 		// if we are in edit context, we want to fetch the variants, variant options and prices.
 		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
-			$class->with( [ 'variants', 'variant_options', 'variants.image', 'prices' ] );
+			$class->with( [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections' ] );
 		}
 		return parent::middleware( $class, $request );
 	}
@@ -47,12 +47,13 @@ class ProductsController extends RestController {
 		}
 
 		// Filter draft variations.
-		$request['variants'] = array_filter(
-			$request['variants'],
-			function( $variation ) {
-				$variation_status = $variation['status'] ?? 'publish';
-				return 'draft' !== $variation_status;
-			}
+		$request['variants'] = array_values(
+			array_filter(
+				$request['variants'],
+				function( $variation ) {
+					return ! in_array( $variation['status'] ?? 'publish', [ 'draft', 'deleted' ] );
+				}
+			)
 		);
 
 		return parent::edit( $request );

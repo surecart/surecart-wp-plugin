@@ -1,0 +1,129 @@
+import {
+	__experimentalUseInnerBlocksProps,
+	useInnerBlocksProps as __stableUseInnerBlocksProps,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import classnames from 'classnames';
+
+/**
+ * Internal dependencies
+ */
+
+export default [
+	{
+		attributes: {
+			layout: {
+				type: 'object',
+			},
+			verticalAlignment: {
+				type: 'string',
+			},
+			width: {
+				type: 'string',
+			},
+			sticky: {
+				type: 'boolean',
+			},
+			stickyOffset: {
+				type: 'string',
+			},
+			allowedBlocks: {
+				type: 'array',
+			},
+			templateLock: {
+				type: ['string', 'boolean'],
+				enum: ['all', 'insert', false],
+			},
+		},
+		supports: {
+			anchor: true,
+			reusable: false,
+			html: false,
+			color: {
+				gradients: true,
+				link: true,
+			},
+			__experimentalBorder: {
+				width: true,
+				color: true,
+				__experimentalDefaultControls: {
+					width: true,
+					color: true,
+				},
+			},
+			spacing: {
+				padding: true,
+				blockGap: true,
+				__experimentalDefaultControls: {
+					padding: true,
+					blockGap: true,
+				},
+			},
+		},
+		save({ attributes }) {
+			const useInnerBlocksProps = __stableUseInnerBlocksProps
+				? __stableUseInnerBlocksProps
+				: __experimentalUseInnerBlocksProps;
+
+			const {
+				verticalAlignment,
+				width,
+				sticky,
+				stickyOffset,
+				layout,
+				style: styleAttribute,
+			} = attributes;
+
+			const { blockGap } = styleAttribute?.spacing || {};
+
+			const wrapperClasses = classnames({
+				[`is-vertically-aligned-${verticalAlignment}`]:
+					verticalAlignment,
+				[`is-sticky`]: sticky,
+				['is-layout-constrained']: layout?.type === 'constrained',
+				[`is-horizontally-aligned-${layout?.justifyContent}`]:
+					layout?.justifyContent,
+			});
+
+			let style;
+
+			if (width && /\d/.test(width)) {
+				// Numbers are handled for backward compatibility as they can be still provided with templates.
+				let flexBasis = Number.isFinite(width) ? width + '%' : width;
+				// In some cases we need to round the width to a shorter float.
+				if (!Number.isFinite(width) && width?.endsWith('%')) {
+					const multiplier = 1000000000000;
+					// Shrink the number back to a reasonable float.
+					flexBasis =
+						Math.round(Number.parseFloat(width) * multiplier) /
+							multiplier +
+						'%';
+				}
+				style = { flexBasis };
+			}
+
+			if (layout?.contentSize) {
+				style = {
+					...style,
+					'--sc-column-content-width': layout.contentSize,
+				};
+			}
+
+			const blockProps = useBlockProps.save({
+				className: wrapperClasses,
+				style: {
+					...style,
+					...(!!blockGap
+						? { '--sc-form-row-spacing': blockGap }
+						: {}),
+					top: stickyOffset,
+				},
+				sticky,
+				stickyOffset,
+			});
+			const innerBlocksProps = useInnerBlocksProps.save(blockProps);
+
+			return <sc-column {...innerBlocksProps} />;
+		},
+	},
+];

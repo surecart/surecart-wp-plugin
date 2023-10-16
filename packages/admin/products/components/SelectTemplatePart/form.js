@@ -34,7 +34,7 @@ export default function PostTemplateForm({
 				}) || []
 			).filter((template) => {
 				return (
-					template.theme === 'surecart/surecart' ||
+					template.id === 'surecart/surecart//product-info' ||
 					template.slug.includes('sc-part-products-info')
 				);
 			});

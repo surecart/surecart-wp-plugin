@@ -26,7 +26,9 @@ export default () => {
 			}}
 			reversed
 		>
-			{__('Test Mode', 'surecart')}
+			<span style={{ whiteSpace: 'noWrap' }}>
+				{__('Test Mode', 'surecart')}
+			</span>
 		</ScSwitch>
 	);
 };

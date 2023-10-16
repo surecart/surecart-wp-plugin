@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -12,33 +12,33 @@ import { __ } from '@wordpress/i18n';
  */
 import {
 	ScButton,
-	ScFlex,
 	ScFormControl,
 	ScIcon,
 	ScQuantitySelect,
 	ScSwitch,
 	ScTooltip,
 } from '@surecart/components-react';
+
+import StockAdjustmentModal from './StockAdjustmentModal';
+
 import Box from '../../../ui/Box';
-import StockAdjustmentModal from './StockAdjustment';
 
 export default ({ product, updateProduct, loading }) => {
 	const [model, setModel] = useState(false);
 
-	/**
-	 * If stock has changed, calculate the stock adjustment.
-	 */
-	useEffect(() => {
-		if (product?.stock !== undefined) {
-			updateProduct({
-				stock_adjustment:
-					parseInt(product?.stock) - parseInt(product?.initial_stock),
-			});
-		}
-	}, [product?.stock]);
-
 	return (
-		<Box title={__('Inventory', 'surecart')} loading={loading}>
+		<Box
+			title={__('Inventory', 'surecart')}
+			loading={loading}
+			css={css`
+				--sc-quantity-input-max-width: 100%;
+				--sc-quantity-select-width: 100%;
+				--sc-quantity-control-height: var(--sc-input-height-medium);
+				.components-card__body {
+					gap: 20px;
+				}
+			`}
+		>
 			<ScSwitch
 				checked={!!product?.stock_enabled}
 				onScChange={(e) => {
@@ -46,49 +46,13 @@ export default ({ product, updateProduct, loading }) => {
 						stock_enabled: e.target.checked ? 1 : 0,
 					});
 				}}
+				name="stock_enabled"
 			>
 				{__('Track quantity', 'surecart')}
 				<span slot="description">
 					{__('Track the quantity of this product.', 'surecart')}
 				</span>
 			</ScSwitch>
-
-			{!!product?.stock_enabled && product?.variants?.length === 0 && (
-				<>
-					<ScFlex justifyContent="flex-start">
-						<ScFormControl label={__('Stock quantity', 'surecart')}>
-							<ScFlex alignItems="center">
-								<ScQuantitySelect
-									quantity={product?.stock}
-									onScChange={(e) =>
-										updateProduct({
-											stock: e.detail,
-										})
-									}
-									allowNegative={true}
-								/>
-								<ScTooltip
-									type="text"
-									text={__(
-										'Adjust stock quantity',
-										'surecart'
-									)}
-									css={css`
-										margin-left: 0.5rem;
-									`}
-								>
-									<ScButton
-										type="text"
-										onClick={() => setModel(true)}
-									>
-										<ScIcon name="edit" slot="prefix" />
-									</ScButton>
-								</ScTooltip>
-							</ScFlex>
-						</ScFormControl>
-					</ScFlex>
-				</>
-			)}
 
 			{!!product?.stock_enabled && (
 				<ScSwitch
@@ -106,6 +70,50 @@ export default ({ product, updateProduct, loading }) => {
 						{__('Continue selling when out of stock', 'surecart')}
 					</span>
 				</ScSwitch>
+			)}
+
+			{!!product?.stock_enabled && product?.variants?.length === 0 && (
+				<ScFormControl
+					label={__('Stock quantity', 'surecart')}
+					css={css`
+						margin-bottom: 10px;
+					`}
+				>
+					<div
+						css={css`
+							display: flex;
+							align-items: center;
+						`}
+					>
+						<ScQuantitySelect
+							quantity={
+								(product?.stock || 0) +
+								(product?.stock_adjustment || 0)
+							}
+							onScChange={(e) =>
+								updateProduct({
+									stock_adjustment:
+										e.detail - (product?.stock || 0),
+								})
+							}
+							min={-9999999}
+							name="stock"
+						/>
+						<ScTooltip
+							type="text"
+							text={__('Make stock adjustment', 'surecart')}
+						>
+							<ScButton
+								id="sc-adjust-stock"
+								type="text"
+								circle
+								onClick={() => setModel(true)}
+							>
+								<ScIcon name="edit-3" />
+							</ScButton>
+						</ScTooltip>
+					</div>
+				</ScFormControl>
 			)}
 
 			{model && (

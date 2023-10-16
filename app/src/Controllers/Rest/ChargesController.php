@@ -28,7 +28,7 @@ class ChargesController extends RestController {
 			return $model;
 		}
 		$class  = new $this->class( [ 'id' => $request['id'] ] );
-		$refund = $class->refund()->where( $request->get_query_params() )->with( [ 'charge' ] )->create( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		$refund = $class->refund()->where( $request->get_query_params() )->with( [ 'charge' ] )->create( $request->get_json_params() );
 		if ( is_wp_error( $refund ) ) {
 			return $refund;
 		}

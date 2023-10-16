@@ -25,7 +25,6 @@ import {
 } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { sprintf, __ } from '@wordpress/i18n';
-import { ScColumn } from '@surecart/components-react';
 import Spacing from './Inspector/Spacing';
 
 function ColumnEdit({ attributes, setAttributes, clientId }) {
@@ -91,8 +90,6 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 	const widthWithUnit = Number.isFinite(width) ? width + '%' : width;
 	const blockProps = useBlockProps({
 		className: classes,
-		sticky,
-		stickyOffset,
 		style: {
 			...(widthWithUnit ? { flexBasis: widthWithUnit } : undefined),
 			top: stickyOffset,
@@ -174,7 +171,7 @@ function ColumnEdit({ attributes, setAttributes, clientId }) {
 					)}
 				</PanelBody>
 			</InspectorControls>
-			<ScColumn {...innerBlocksProps} />
+			<div {...innerBlocksProps} />
 		</>
 	);
 }

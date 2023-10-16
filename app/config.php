@@ -46,6 +46,7 @@ return [
 		\SureCart\Background\BackgroundServiceProvider::class,
 
 		// REST providers.
+		\SureCart\Rest\SiteHealthRestServiceProvider::class,
 		\SureCart\Rest\AbandonedCheckoutRestServiceProvider::class,
 		\SureCart\Rest\AbandonedCheckoutProtocolRestServiceProvider::class,
 		\SureCart\Rest\BlockPatternsRestServiceProvider::class,
@@ -57,17 +58,19 @@ return [
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
 		\SureCart\Rest\StatisticRestServiceProvider::class,
 		\SureCart\Rest\IntegrationsRestServiceProvider::class,
+		\SureCart\Rest\IncomingWebhooksRestServiceProvider::class,
+		\SureCart\Rest\RegisteredWebhookRestServiceProvider::class,
 		\SureCart\Rest\IntegrationProvidersRestServiceProvider::class,
 		\SureCart\Rest\CancellationActRestServiceProvider::class,
 		\SureCart\Rest\CancellationReasonRestServiceProvider::class,
 		\SureCart\Rest\CustomerRestServiceProvider::class,
-		\SureCart\Rest\CustomerLinksRestServiceProvider::class,
 		\SureCart\Rest\PaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\ProcessorRestServiceProvider::class,
 		\SureCart\Rest\ManualPaymentMethodsRestServiceProvider::class,
 		\SureCart\Rest\PaymentIntentsRestServiceProvider::class,
 		\SureCart\Rest\ProductsRestServiceProvider::class,
 		\SureCart\Rest\ProductGroupsRestServiceProvider::class,
+		\SureCart\Rest\ProductCollectionsRestServiceProvider::class,
 		\SureCart\Rest\PriceRestServiceProvider::class,
 		\SureCart\Rest\CouponRestServiceProvider::class,
 		\SureCart\Rest\PromotionRestServiceProvider::class,
@@ -138,11 +141,17 @@ return [
 		\SureCartBlocks\Blocks\CartSubtotal\Block::class,
 		\SureCartBlocks\Blocks\CartBumpLineItem\Block::class,
 		\SureCartBlocks\Blocks\CollapsibleRow\Block::class,
+		\SureCartBlocks\Blocks\Columns\Block::class,
+		\SureCartBlocks\Blocks\Column\Block::class,
+		\SureCartBlocks\Blocks\CollectionPage\Block::class,
 		\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		\SureCartBlocks\Blocks\Form\Block::class,
 		\SureCartBlocks\Blocks\Payment\Block::class,
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\ProductItemList\Block::class,
+		\SureCartBlocks\Blocks\ProductCollection\Block::class,
+		\SureCartBlocks\Blocks\PriceSelector\Block::class,
+		\SureCartBlocks\Blocks\PriceChoice\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
@@ -163,7 +172,6 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
 
-		// \SureCartBlocks\Blocks\Product\Info\Block::class,
 		\SureCartBlocks\Blocks\Product\Description\Block::class,
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
@@ -173,6 +181,11 @@ return [
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButtons\Block::class,
+		\SureCartBlocks\Blocks\Product\CollectionBadges\Block::class,
+
+		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
+		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
+		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
 	],
 
 	/** Which components to preload for each block. */
@@ -223,6 +236,7 @@ return [
 		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
 		'surecart/product-variant-choices'   => [ 'sc-product-variation-choices' ],
 		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
+		'surecart/product-collection-badges' => [],
 	],
 
 	/**
@@ -358,6 +372,34 @@ return [
 		// phpcs:ignore
 		// \SureCart\Middleware\MyMiddlewareThatShouldRunFirst::class,
 		// \SureCart\Middleware\MyMiddlewareThatShouldRunSecond::class,
+	],
+
+	/**
+	 * Webhook events we gonna proceed.
+	 */
+	'webhook_events'         => [
+		// 'cancellation_act.updated',
+		// 'customer.created',
+		// 'customer.updated',
+		// 'order.created',
+		// 'order.made_processing',
+		// 'order.paid', // In doc
+		// 'order.payment_failed',
+		'purchase.created',
+		'purchase.invoked',
+		'purchase.updated',
+		'purchase.revoked',
+		// 'refund.created',
+		// 'refund.succeeded', // In doc
+		// 'subscription.canceled', // In doc
+		// 'subscription.created',
+		// 'subscription.completed',
+		// 'subscription.made_active', // In doc
+		// 'subscription.made_past_due',
+		// 'subscription.made_trialing', // In doc
+		'subscription.renewed', // needed for AffiliateWP recurring referrals.
+		// 'subscription.updated',
+		'account.updated',
 	],
 
 	/**

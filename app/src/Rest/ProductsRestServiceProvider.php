@@ -101,19 +101,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function get_collection_params() {
 		return [
-			'archived'          => [
+			'archived'               => [
 				'description' => esc_html__( 'Whether to get archived products or not.', 'surecart' ),
 				'type'        => 'boolean',
 			],
-			'recurring'         => [
+			'recurring'              => [
 				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'surecart' ),
 				'type'        => 'boolean',
 			],
-			'query'             => [
+			'query'                  => [
 				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
 			],
-			'ids'               => [
+			'ids'                    => [
 				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -121,7 +121,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
-			'product_group_ids' => [
+			'product_group_ids'      => [
 				'description' => __( 'Only return objects that belong to the given product groups.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -129,11 +129,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
-			'page'              => [
+			'product_collection_ids' => [
+				'description' => __( 'Only return objects that belong to the given product collections.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'page'                   => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'per_page'          => [
+			'per_page'               => [
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],
@@ -221,74 +229,13 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function filter_response_by_context( $model, $context ) {
 		$response = parent::filter_response_by_context( $model, $context );
 
-		if ( 'edit' === $context ) {
-			// if $response['variants'] is object, then get data by obj->data or obj['data'].
-			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
-				$response['variants'] = is_object( $response['variants'] ) ? $response['variants']->data ?? [] : $response['variants']['data'] ?? [];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
-				$response['variants'] = $response->variants->data ?? [];
-			}
-
-			// if $response['variant_options'] is object, then get data by obj->data or obj['data'].
-			if ( 'array' === gettype( $response ) && isset( $response['variant_options'] ) ) {
-				$response['variant_options'] = is_object( $response['variant_options'] ) ? $response['variant_options']->data ?? [] : $response['variant_options']['data'] ?? [];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
-				$response['variant_options'] = $response->variant_options->data ?? [];
-			}
-
-			// Process the variant_options values column. currently its like string[].
-			// Lets make it like {label: string, index: number}[].
-			if ( 'array' === gettype( $response ) && isset( $response['variant_options'] ) ) {
-				$response['variant_options'] = $this->getProcessedVariantOptions( $response['variant_options'] );
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
-				$response['variant_options'] = $this->getProcessedVariantOptions( $response->variant_options );
-			}
-
-			// Add stock value as initial_stock.
-			if ( 'array' === gettype( $response ) && isset( $response['stock'] ) ) {
-				$response['initial_stock'] = $response['stock'];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->stock ) ) {
-				$response->initial_stock = $response->stock;
-			}
-
-			// For variants, add stock value as initial_stock.
-			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
-				foreach ( $response['variants'] as $index => $variant ) {
-					$response['variants'][ $index ]['initial_stock'] = $variant['stock'];
-				}
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
-				foreach ( $response->variants as $index => $variant ) {
-					$response->variants[ $index ]->initial_stock = $variant->stock;
-				}
-			}
+		if ( 'edit' === $context && is_array( $response ) && ! empty( $response['id'] ) ) {
+			// Process the variants, it's in a data column, so we need to pull it out.
+			$response['variants'] = ! empty( $response['variants']['data'] ) ? $response['variants']['data'] : [];
+			// Process the variant_options, it's in a data column, so we need to pull it out.
+			$response['variant_options'] = ! empty( $response['variant_options']['data'] ) ? $response['variant_options']['data'] : [];
 		}
 
 		return $response;
-	}
-
-	/**
-	 * Get processed variant options
-	 *
-	 * Convert values column to {label: string, index: number}[].
-	 *
-	 * @param array $variant_options Variant options.
-	 *
-	 * @return array
-	 */
-	private function getProcessedVariantOptions( array $variant_options ): array {
-		foreach ( $variant_options as $index => $variant_option ) {
-			$variant_options[ $index ]['values'] = array_map(
-				function( $value, $value_index ) {
-					return [
-						'label' => $value,
-						'index' => $value_index,
-					];
-				},
-				$variant_option['values'],
-				array_keys( $variant_option['values'] )
-			);
-		}
-
-		return $variant_options;
 	}
 }

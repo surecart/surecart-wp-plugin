@@ -12,9 +12,9 @@
 			"type": "boolean",
 			"default": false
 		},
-		"outOfStockText": {
+		"out_of_stock_text": {
 			"type": "string",
-			"default": "Out of Stock"
+			"default": "Sold out"
 		},
 		"textAlign": {
 			"type": "string"

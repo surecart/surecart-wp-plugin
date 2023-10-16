@@ -1,365 +1,158 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
-/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useEffect, useState } from '@wordpress/element';
-import SortableList, { SortableItem, SortableKnob } from 'react-easy-sort';
+import { useEffect, useRef, useState } from '@wordpress/element';
+import SortableList, { SortableItem } from 'react-easy-sort';
+import { store as coreStore } from '@wordpress/core-data';
 import arrayMove from 'array-move';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import {
-	ScButton,
-	ScFormControl,
-	ScFlex,
-	ScIcon,
-	ScInput,
-	ScTag,
-} from '@surecart/components-react';
-import VariantOptionValues from './VariantOptionValues';
-import {
-	checkOptionValueError,
-	generateVariants,
-	getDeletedVariants,
-	getDiffingVariants,
-	getExlcudedVariants,
-	trackDeletedVariants,
-} from './utils';
+import { generateVariants, normalizeVariants } from './utils';
 import Error from '../../../components/Error';
+import VariantOption from './VariantOption';
+import { useDispatch, useSelect } from '@wordpress/data';
 
-export default ({ product, updateProduct, loading }) => {
+export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
-	const [editingValues, setEditingValues] = useState({});
-	const [changeType, setChangeType] = useState('option_value_renamed');
+	const firstUpdate = useRef(true);
+	const previousOptions = useRef(product?.variant_options ?? []);
+	const previousProduct = useRef(product);
+	const [normalizedVariants, setNormalizedVariants] = useState(false);
+	const { receiveEntityRecords } = useDispatch(coreStore);
+
+	useEffect(() => {
+		// has the product saved?
+		const hasSaved =
+			product?.updated_at !== previousProduct.current?.updated_at;
+
+		let normalized = normalizedVariants || product?.variants || [];
+
+		// on first update, we want to use the normalized variants.
+		if (firstUpdate.current || hasSaved) {
+			// this is not the first update anymore.
+			firstUpdate.current = false;
+			// set normalized variants.
+			normalized = normalizeVariants(product);
+			setNormalizedVariants(normalized);
+
+			receiveEntityRecords('surecart', 'product', {
+				...product,
+				variants: normalized,
+			});
+			// this is a hack to fix a race condition with receiving normalized variants.
+			setTimeout(() => {
+				receiveEntityRecords('surecart', 'product', {
+					...product,
+					variants: normalized,
+				});
+			}, 50);
+		} else {
+			// We don't want to do this on first load since we only want want the server gives us back.
+			updateProduct({
+				variants: generateVariants(
+					product?.variant_options || [],
+					previousOptions.current,
+					product?.variants || []
+				),
+			});
+			// store the previous variant options for the next update.
+			previousOptions.current = product?.variant_options;
+		}
+	}, [product?.variant_options]);
+
+	useEffect(() => {
+		previousProduct.current = product;
+	}, [product]);
 
 	// function to update product?.variant_options based on the index.
-	const updateVariantOption = (action) => {
+	const onUpdate = (action) =>
 		updateProduct({
 			...product,
 			variant_options: (product?.variant_options ?? []).map(
-				(item, index) => {
-					if (index !== action.index) {
-						return item;
-					}
-					return {
-						...item,
-						...action.data,
-					};
-				}
+				(item, index) =>
+					index !== action.index ? item : { ...item, ...action.data }
 			),
 		});
-	};
 
+	// delete a variant option based on the index.
+	const onDelete = (index) =>
+		updateProduct({
+			...product,
+			variant_options: (product?.variant_options || []).filter(
+				(_, itemIndex) => itemIndex !== index
+			),
+		});
+
+	// Apply drag to reorder the variant options.
 	const applyDrag = async (oldIndex, newIndex) => {
-		setChangeType('option_sorted');
 		updateProduct({
 			...product,
 			variant_options: arrayMove(
 				product?.variant_options ?? [],
 				oldIndex,
 				newIndex
-			),
+			).map((option, index) => ({
+				...option,
+				position: index, // make sure to map position.
+			})),
 		});
 	};
 
-	const changeEditingValues = (index, value) => {
-		setEditingValues({
-			...editingValues,
-			[index]: value,
-		});
-	};
-
-	// For first time load, we need to add all variant options to editingValues.
-	useEffect(() => {
-		const editingValuesData = {};
-		(product?.variant_options ?? []).forEach((_, index) => {
-			editingValuesData[index] = false;
-		});
-		setEditingValues(editingValuesData);
-	}, []);
-
-	// For first time load, get the diffing variants and save to local storage.
-	useEffect(() => {
-		const variantsData =
-			generateVariants(product?.variant_options ?? [], []) ?? [];
-
-		const diffingVariants = getDiffingVariants(
-			variantsData,
-			product?.variants ?? []
-		);
-		trackDeletedVariants(diffingVariants);
-	}, []);
-
-	useEffect(() => {
-		// removes all variant values, which label is empty and which has no name.
-		const updatedVariantOptions = (product?.variant_options ?? [])
-			?.map((variantOption) => {
-				return {
-					...variantOption,
-					values: variantOption?.values?.filter(
-						(value) => value?.label?.length > 0
-					),
-				};
-			})
-			.filter(
-				(variantOption) =>
-					variantOption?.values?.length > 0 &&
-					variantOption?.name?.length
-			);
-
-		const variantsData = generateVariants(
-			updatedVariantOptions,
-			product?.variants ?? [],
-			changeType
-		);
-
-		updateProduct({
-			variants: getExlcudedVariants(variantsData, getDeletedVariants()),
-		});
-	}, [product?.variant_options]);
-
-	const deleteVariantOption = (index) => {
-		setChangeType('option_deleted');
-
-		const variantOptions = [...product?.variant_options];
-		variantOptions.splice(index, 1);
-		updateProduct({
-			...product,
-			variant_options: variantOptions,
-		});
-	};
-
-	const renderEditingVariantOption = (option, index) => {
-		return (
-			<div
-				css={css`
-					display: grid;
-					gap: 24px;
-				`}
-			>
-				<div
-					css={css`
-						display: flex;
-						gap: 1em;
-					`}
-				>
-					<SortableKnob>
-						<ScIcon
-							name="drag"
-							slot="prefix"
-							style={{
-								cursor: 'grab',
-							}}
-						/>
-					</SortableKnob>
-					<ScFlex justifyContent="center" alignItems="center">
-						<ScInput
-							type="text"
-							placeholder={__('Option Name', 'surecart')}
-							required
-							label={__('Option Name', 'surecart')}
-							value={option?.name}
-							onScInput={(e) => {
-								updateVariantOption({
-									index,
-									data: {
-										name: e.target.value,
-									},
-								});
-							}}
-						/>
-
-						<ScButton
-							type="text"
-							onClick={() => deleteVariantOption(index)}
-						>
-							<ScIcon
-								name="trash"
-								slot="prefix"
-								style={{
-									marginLeft: '1rem',
-									marginTop: '1rem',
-								}}
-							/>
-						</ScButton>
-					</ScFlex>
-				</div>
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 1em;
-					`}
-				>
-					<div
-						style={{
-							flex: 1,
-						}}
-					>
-						<ScFormControl
-							css={css`
-								margin-left: 1.6rem;
-								display: inline-block;
-							`}
-							label={__('Option Values', 'surecart')}
-							required
-						/>
-						<VariantOptionValues
-							option={option}
-							product={product}
-							updateProduct={updateProduct}
-							onChangeValue={(updatedValues, changeTypeValue) => {
-								setChangeType(changeTypeValue);
-								updateVariantOption({
-									index,
-									data: {
-										values: updatedValues,
-									},
-								});
-							}}
-						/>
-
-						<div
-							style={{
-								marginLeft: '1.6rem',
-								marginTop: '1rem',
-							}}
-						>
-							<ScButton
-								onClick={() => {
-									// Check duplicate validations.
-									const duplicateChecker =
-										checkOptionValueError(option?.values);
-									if (duplicateChecker.hasDuplicate) {
-										setError(duplicateChecker.error);
-										return;
-									}
-
-									// If passed, then change editing mode.
-									changeEditingValues(index, false);
-								}}
-							>
-								{__('Done', 'surecart')}
-							</ScButton>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const renderEditedVariantOption = (option, index) => {
-		return (
-			<div
-				css={css`
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					gap: 1em;
-				`}
-			>
-				<div>
-					<div
-						style={{
-							display: 'flex',
-							marginBottom: '1rem',
-						}}
-					>
-						<SortableKnob>
-							<ScIcon
-								name="drag"
-								slot="prefix"
-								style={{
-									marginRight: '1rem',
-									cursor: 'grab',
-								}}
-							/>
-						</SortableKnob>
-
-						<b>{option?.name}</b>
-					</div>
-
-					<div>
-						{(option?.values || [])
-							.filter(
-								(optionValue) => optionValue?.label?.length > 0
-							)
-							.map((value, keyValue) => {
-								return (
-									<ScTag
-										style={{
-											marginRight: '0.5em',
-											marginLeft:
-												keyValue === 0 ? '2em' : '0',
-										}}
-										type="primary"
-										key={keyValue}
-									>
-										{value?.label}
-									</ScTag>
-								);
-							})}
-					</div>
-				</div>
-
-				<div>
-					<ScButton onClick={() => changeEditingValues(index, true)}>
-						{__('Edit', 'surecart')}
-					</ScButton>
-				</div>
-			</div>
-		);
-	};
+	// we don't want to render if there are no variant options.
+	if (!product?.variant_options?.length) {
+		return null;
+	}
 
 	return (
-		<div style={{ marginBotttom: '2rem' }} loading={loading}>
-			<div
-				style={{
-					marginBottom: error?.message ? '1rem' : '0',
-				}}
-			>
-				<Error error={error} setError={setError} />
-			</div>
-
+		<div
+			css={css`
+				display: grid;
+				gap: 1rem;
+				content-visibility: auto;
+			`}
+		>
+			<Error error={error} setError={setError} />
 			<SortableList onSortEnd={applyDrag}>
-				{Array.isArray(product?.variant_options) &&
-					product?.variant_options.map((option, index) => {
-						return (
-							<SortableItem
-								key={`option_${index}`}
-								allowDrag={
-									typeof editingValues[index] !==
-										'undefined' &&
-									editingValues[index] === false
-								}
-							>
-								<div
-									key={index}
-									css={css`
-										padding: 24px;
-										background: white;
-										border-bottom: 1px solid
-											var(--sc-color-gray-200);
-									`}
-								>
-									{typeof editingValues[index] ===
-										'undefined' ||
-									editingValues[index] === true
-										? renderEditingVariantOption(
-												option,
-												index
-										  )
-										: renderEditedVariantOption(
-												option,
-												index
-										  )}
-								</div>
-							</SortableItem>
-						);
-					})}
+				{product?.variant_options.map((option, index) => {
+					const options = product?.variant_options || [];
+					const total =
+						(options?.[index - 2]?.values?.filter?.((v) => v)
+							?.length || 1) *
+						(options?.[index - 1]?.values?.filter?.((v) => v)
+							?.length || 1) *
+						((options?.[index]?.values?.filter?.((v) => v)
+							?.length || 1) +
+							1) *
+						(options?.[index + 1]?.values?.filter?.((v) => v)
+							?.length || 1) *
+						(options?.[index + 2]?.values?.filter?.((v) => v)
+							.length || 1);
+					return (
+						<SortableItem key={index}>
+							<div>
+								<VariantOption
+									product={product}
+									updateProduct={updateProduct}
+									option={option}
+									updateOption={(data) => {
+										onUpdate({
+											index,
+											data,
+										});
+									}}
+									onDelete={() => onDelete(index)}
+									index={index}
+									canAddValue={total < 100}
+								/>
+							</div>
+						</SortableItem>
+					);
+				})}
 			</SortableList>
 		</div>
 	);

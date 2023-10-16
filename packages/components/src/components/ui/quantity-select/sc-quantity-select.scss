@@ -9,7 +9,7 @@
   line-height: 1;
   border: none;
   flex: 1;
-  max-width: 35px;
+  max-width: var(--sc-quantity-input-max-width, 35px);
   background-color: var(--sc-input-control-background-color, var(--sc-color-white));
   color: var(--sc-input-control-color, var(--sc-color-black));
   -moz-appearance: textfield;
@@ -42,10 +42,6 @@
   &:focus {
     outline: none;
   }
-
-  &.input__control--allow-negative {
-    max-width: 100% !important;
-  }
 }
 
 .quantity--trigger {
@@ -56,7 +52,7 @@
 .quantity {
   position: relative;
   display: inline-block;
-  width: 100px;
+  width: var(--sc-quantity-select-width, 100px);
   height: var(--sc-quantity-control-height, var(--sc-input-height-small));
   display: flex;
   align-items: stretch;
@@ -104,11 +100,6 @@
       }
     }
   }
-
-  &.quantity--allow-negative {
-    width: auto !important;
-    height: calc(var(--sc-input-height-medium) - var(--sc-input-border-width) * 2);
-  }
 }
 
 .button__decrease,
@@ -121,7 +112,7 @@
   bottom: 1px;
   width: 32px;
   background: var(--sc-input-background-color);
-  color: var(--sc-input-color);
+  color: var(--sc-input-help-text-color);
   cursor: pointer;
   font-size: 13px;
   user-select: none;
@@ -137,6 +128,23 @@
     border-color: var(--sc-input-border-color-disabled);
     opacity: 0.5;
     cursor: not-allowed;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Small
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.quantity--small {
+  width: var(--sc-quantity-select-width-small, 76px);
+  height: var(--sc-quantity-control-height-small, 26px);
+
+  .button__decrease,
+  .button__increase {
+    width: 24px;
+    border: none;
+  }
+  .input__control {
+    max-width: 24px;
   }
 }
 

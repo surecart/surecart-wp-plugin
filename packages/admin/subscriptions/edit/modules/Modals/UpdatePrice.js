@@ -1,8 +1,7 @@
 import { ScButton, ScDialog } from '@surecart/components-react';
 import PriceSelector from '@admin/components/PriceSelector';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-import { useEffect } from 'react';
+import { useState, useEffect } from '@wordpress/element';
 
 export default ({
 	price: existingPrice,
@@ -13,8 +12,9 @@ export default ({
 	const [price, setPrice] = useState(existingPrice);
 
 	const submit = () => {
-		if (price) {
-			onUpdatePrice(price);
+		const { priceId, variantId } = price;
+		if (priceId) {
+			onUpdatePrice(priceId, variantId || null);
 		}
 		onRequestClose();
 	};
@@ -34,8 +34,13 @@ export default ({
 				label={__('Select a price', 'surecart')}
 				open={open}
 				required
-				value={price}
-				onSelect={({price_id}) => setPrice(price_id)}
+				value={price?.priceId}
+				onSelect={({ price_id, variant_id }) => {
+					setPrice({
+						priceId: price_id,
+						variantId: variant_id || null,
+					});
+				}}
 				requestQuery={{
 					archived: false,
 					recurring: true,

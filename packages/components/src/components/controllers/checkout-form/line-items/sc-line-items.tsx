@@ -52,11 +52,11 @@ export class ScLineItems {
 
   /** Update quantity for this line item. */
   updateQuantity(item: LineItem, quantity: number) {
-    this.scUpdateLineItem.emit({ price_id: item.price.id, quantity, variant: item?.variant?.id });
+    this.scUpdateLineItem.emit({ id: item.id, price_id: item.price.id, quantity, variant: item?.variant?.id });
   }
 
   removeLineItem(item: LineItem) {
-    this.scRemoveLineItem.emit({ price_id: item.price.id, quantity: 1 });
+    this.scRemoveLineItem.emit({ id: item.id, price_id: item.price.id, quantity: 1 });
   }
 
   /** Only append price name if there's more than one product price in the session. */
@@ -123,6 +123,7 @@ export class ScLineItems {
                 key={item.id}
                 imageUrl={item?.variant?.image_url || (item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
+                priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}

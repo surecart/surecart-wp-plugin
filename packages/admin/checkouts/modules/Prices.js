@@ -147,13 +147,14 @@ export default ({ checkout, loading, setBusy }) => {
 						subtotal_amount,
 						ad_hoc_amount,
 						fees,
-						variant_options
+						variant_options,
 					} = line_item;
 
 					return (
 						<Price
 							key={id}
 							price={price}
+							lineItem={line_item}
 							fees={fees?.data || []}
 							quantity={quantity}
 							subtotal_amount={subtotal_amount}

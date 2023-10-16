@@ -27,46 +27,6 @@ class ProductsController extends AdminController {
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}
 
-
-	/**
-	 * Preload API Requests
-	 *
-	 * @param \SureCart\Models\Product $product The product.
-	 *
-	 * @return void
-	 */
-	public function preloadAPIRequests( $product ) {
-		$preload_paths = array(
-			array( '/wp/v2/templates', 'OPTIONS' ),
-			'/wp/v2/settings',
-			'/wp/v2/types/wp_template?context=edit',
-			'/wp/v2/types/wp_template-part?context=edit',
-			'/wp/v2/templates?context=edit&per_page=-1',
-			'/wp/v2/template-parts?context=edit&per_page=-1',
-			'/wp/v2/users/me',
-			'/wp/v2/types?context=view',
-			'/wp/v2/types?context=edit',
-			'/wp/v2/templates/' . $product->template_id . '?context=edit',
-			'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
-			'/surecart/v1/products/' . $product->id . '?context=edit',
-		);
-
-		wp_add_inline_script(
-			'wp-api-fetch',
-			sprintf(
-				'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );',
-				wp_json_encode(
-					array_reduce(
-						$preload_paths,
-						'rest_preload_api_request',
-						array()
-					)
-				)
-			),
-			'after'
-		);
-	}
-
 	/**
 	 * Edit a product.
 	 */
@@ -85,7 +45,27 @@ class ProductsController extends AdminController {
 		}
 
 		if ( ! empty( $product ) ) {
-			$this->preloadAPIRequests( $product );
+			$this->preloadPaths(
+				[
+					[ '/wp/v2/templates', 'OPTIONS' ],
+					'/wp/v2/settings',
+					'/wp/v2/types/wp_template?context=edit',
+					'/wp/v2/types/wp_template-part?context=edit',
+					'/wp/v2/templates?context=edit&per_page=-1',
+					'/wp/v2/template-parts?context=edit&per_page=-1',
+					'/wp/v2/users/me',
+					'/wp/v2/types?context=view',
+					'/wp/v2/types?context=edit',
+					'/wp/v2/templates/' . $product->template_id . '?context=edit',
+					'/wp/v2/template-parts/' . $product->template_part_id . '?context=edit',
+					'/surecart/v1/products/' . $product->id . '?context=edit',
+					// '/surecart/v1/product_medias?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
+					// '/surecart/v1/prices?context=edit&product_ids[0]=' . $product->id . '&per_page=100',
+					'/surecart/v1/integrations?context=edit&model_ids[0]=' . $product->id . '&per_page=50',
+					'/surecart/v1/integration_providers?context=edit',
+					'/surecart/v1/integration_provider_items?context=edit',
+				]
+			);
 		}
 
 		// add product link.
@@ -108,16 +88,6 @@ class ProductsController extends AdminController {
 
 		// return view.
 		return '<div id="app"></div>';
-	}
-
-	public function addInstantCheckoutLink( $wp_admin_bar ) {
-		$wp_admin_bar->add_node(
-			[
-				'id'    => 'edit',
-				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => '#',
-			]
-		);
 	}
 
 	/**

@@ -2,6 +2,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useEffect, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { store as noticesStore } from '@wordpress/notices';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useDispatch, select } from '@wordpress/data';
@@ -11,11 +12,12 @@ import PriceSelector from '@admin/components/PriceSelector';
 export default ({ checkout, setBusy }) => {
 	const [price, setPrice] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
+	const { createErrorNotice } = useDispatch(noticesStore);
 
 	useEffect(() => {
 		const { priceId, variantId } = price;
 		if (priceId) {
-			onSubmit( priceId, variantId ?? null );
+			onSubmit(priceId, variantId ?? null);
 		}
 	}, [price]);
 
@@ -47,7 +49,7 @@ export default ({ checkout, setBusy }) => {
 					checkout: checkout?.id,
 					price: priceId,
 					quantity: 1,
-					variant: variantId
+					variant: variantId,
 				},
 			});
 
@@ -63,7 +65,12 @@ export default ({ checkout, setBusy }) => {
 			setPrice(false);
 		} catch (e) {
 			console.error(e);
-			setError(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 		} finally {
 			setBusy(false);
 		}
@@ -71,16 +78,13 @@ export default ({ checkout, setBusy }) => {
 
 	return (
 		<PriceSelector
-			required
 			value={price?.priceId}
 			ad_hoc={true}
-			onSelect={({price_id, variant_id}) => {
-				setPrice(
-					{
-						priceId: price_id,
-						variantId: variant_id
-					}
-				)
+			onSelect={({ price_id, variant_id }) => {
+				setPrice({
+					priceId: price_id,
+					variantId: variant_id,
+				});
 			}}
 			requestQuery={{
 				archived: false,

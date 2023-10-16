@@ -66,10 +66,8 @@ export default function save({ attributes }) {
 			...(!!blockGap ? { '--sc-form-row-spacing': blockGap } : {}),
 			top: stickyOffset,
 		},
-		sticky,
-		stickyOffset,
 	});
 	const innerBlocksProps = useInnerBlocksProps.save(blockProps);
 
-	return <sc-column {...innerBlocksProps} />;
+	return <div {...innerBlocksProps} />;
 }

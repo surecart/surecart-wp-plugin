@@ -27,6 +27,7 @@ const prices = product?.prices?.data || [];
 const variant_options = product?.variant_options?.data || [];
 const variants = product?.variants?.data || [];
 const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
+const selectedVariant = variants?.length ? variants[0] : null;
 
 const adHocAmount = selectedPrice?.amount || null;
 
@@ -53,8 +54,12 @@ const store = createStore<Store>(
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
       variant: variants?.length ? variants[0]?.id : null,
     },
-    selectedVariant: variants?.length ? variants[0] : null,
-    variantValues: {},
+    selectedVariant,
+    variantValues: {
+      ...(selectedVariant?.option_1 ? { option_1: selectedVariant?.option_1 } : {}),
+      ...(selectedVariant?.option_2 ? { option_2: selectedVariant?.option_2 } : {}),
+      ...(selectedVariant?.option_3 ? { option_3: selectedVariant?.option_3 } : {}),
+    },
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
