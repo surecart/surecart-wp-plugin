@@ -131,7 +131,7 @@ export class ScSubscriptionSwitch {
     const { plan } = await e.target.getFormJson();
     const price = this.prices.find(p => p.id === plan);
     const currentPlan = this.subscription?.price as Price;
-    if (price?.id === currentPlan.id && !price?.ad_hoc) return;
+    if (price?.id === currentPlan.id && !price?.ad_hoc && !this.subscription?.variant_options?.length) return;
 
     // confirm product variation.
     if (this.subscription?.variant_options?.length) {
@@ -286,8 +286,12 @@ export class ScSubscriptionSwitch {
   }
 
   buttonText() {
-    if ( this.subscription?.variant_options?.length ) {
-      return __('Choose Options', 'surecart');
+    if (this.subscription?.variant_options?.length) {
+      if (this.selectedPrice?.id === (this.subscription?.price as Price)?.id) {
+        return __('Update Options', 'surecart');
+      } else {
+        return __('Choose Options', 'surecart');
+      }
     }
 
     if (this.selectedPrice?.ad_hoc) {
@@ -300,10 +304,17 @@ export class ScSubscriptionSwitch {
     return __('Next', 'surecart');
   }
 
+  buttonDisabled() {
+    if (this.subscription?.variant_options) {
+      return false;
+    }
+    return (this.subscription?.price as Price)?.id === this.selectedPrice?.id && !this.selectedPrice?.ad_hoc;
+  }
+
   render() {
     // we are not loading and we don't have enough prices to switch.
     if (!this.loading && this.prices?.length < 2) {
-      if (!this.prices?.[0]?.ad_hoc) {
+      if (!this.prices?.[0]?.ad_hoc && !this.subscription?.variant_options?.length) {
         return null;
       }
     }
@@ -323,13 +334,7 @@ export class ScSubscriptionSwitch {
         <sc-form class="subscriptions-switch" onScFormSubmit={e => this.handleSubmit(e)}>
           {this.renderContent()}
 
-          <sc-button
-            type="primary"
-            full
-            submit
-            loading={this.loading || this.busy}
-            disabled={(this.subscription?.price as Price)?.id === this.selectedPrice?.id && !this.selectedPrice?.ad_hoc}
-          >
+          <sc-button type="primary" full submit loading={this.loading || this.busy} disabled={this.buttonDisabled()}>
             {this.buttonText()} <sc-icon name="arrow-right" slot="suffix"></sc-icon>
           </sc-button>
 
