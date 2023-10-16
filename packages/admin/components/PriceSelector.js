@@ -15,6 +15,7 @@ export default ({
 	value,
 	open = false,
 	requestQuery,
+	required,
 	...props
 }) => {
 	const [query, setQuery] = useState(null);
@@ -26,8 +27,6 @@ export default ({
 		per_page: 10,
 	});
 	const { receiveEntityRecords } = useDispatch(coreStore);
-
-	console.log({ variable });
 
 	const handleOnScrollEnd = () => {
 		if (!pagination.enabled || isLoading) return;
@@ -89,7 +88,7 @@ export default ({
 
 	return (
 		<SelectPrice
-			required
+			required={required}
 			css={css`
 				flex: 0 1 50%;
 			`}

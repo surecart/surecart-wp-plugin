@@ -78,7 +78,6 @@ export default ({ checkout, setBusy }) => {
 
 	return (
 		<PriceSelector
-			required
 			value={price?.priceId}
 			ad_hoc={true}
 			onSelect={({ price_id, variant_id }) => {
