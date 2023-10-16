@@ -37,9 +37,7 @@ class Block extends BaseBlock {
 
 		<div style="<?php echo esc_attr( $styles ); ?>">
 			<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-				<sc-form-control label="<?php echo esc_attr( $option->name ); ?>" <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-					<sc-product-pills-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>"></sc-product-pills-variant-option>
-				</sc-form-control>
+				<sc-product-pills-variant-option label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>" <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></sc-product-pills-variant-option>
 			<?php endforeach; ?>
 		</div>
 
