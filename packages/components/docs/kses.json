@@ -989,6 +989,7 @@
     "slot": true
   },
   "sc-menu": {
+    "aria-label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1001,6 +1002,7 @@
     "slot": true
   },
   "sc-menu-item": {
+    "aria-label": true,
     "checked": true,
     "disabled": true,
     "href": true,
