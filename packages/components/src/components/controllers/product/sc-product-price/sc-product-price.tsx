@@ -43,11 +43,11 @@ export class ScProductPrice {
       <Fragment>
         <div class="price">
           <div class="price__amounts">
-            {!!price?.scratch_amount && (
+            {!!price?.scratch_amount && price?.scratch_amount !== amount && (
               <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
             )}
 
-            <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>
+            {amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>}
 
             <div class="price__interval">
               {intervalString(price, {
