@@ -56,6 +56,7 @@ export const getProductBuyLink = (url, query = {}) => {
         price: state.selectedPrice?.id,
         quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
         ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
+        ...(state.selectedVariant?.id ? { variant: state.selectedVariant?.id } : {}),
       },
     ],
     ...query,
