@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { Checkout, LineItemData, Product } from 'src/types';
 import { state as checkoutState } from '@store/checkout';
 import { updateCheckout } from '@services/session';
+import { currentFormState } from '@store/form/getters';
 
 /**
  * This component listens for stock requirements and displays a dialog to the user.
@@ -104,7 +105,12 @@ export class ScCheckoutStockAlert {
 
     return (
       <Host>
-        <sc-dialog style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }} open={!!stockErrors.length} noHeader={true} onScRequestClose={e => e.preventDefault()}>
+        <sc-dialog
+          style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }}
+          open={!!stockErrors.length && currentFormState() === 'draft'}
+          noHeader={true}
+          onScRequestClose={e => e.preventDefault()}
+        >
           <sc-dashboard-module class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
             <sc-flex slot="heading" align-items="center" justify-content="flex-start">
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
