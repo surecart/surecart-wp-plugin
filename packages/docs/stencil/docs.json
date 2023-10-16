@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-08T03:48:03",
+  "timestamp": "2023-10-16T13:53:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10789,7 +10789,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "keydown",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [
@@ -16131,7 +16137,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [
         {
@@ -16208,6 +16231,23 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "Aria label",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "checked",
           "type": "boolean",
@@ -27495,11 +27535,6 @@
           "passive": false
         },
         {
-          "event": "scPayError",
-          "capture": false,
-          "passive": false
-        },
-        {
           "event": "scUpdateAbandonedCart",
           "capture": false,
           "passive": false
@@ -28483,15 +28518,6 @@
           "docsTags": []
         },
         {
-          "event": "scPayError",
-          "detail": "any",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        },
-        {
           "event": "scSetState",
           "detail": "\"EXPIRE\" | \"FETCH\" | \"FINALIZE\" | \"PAID\" | \"PAYING\" | \"REJECT\" | \"RESOLVE\"",
           "bubbles": true,
@@ -28550,15 +28576,6 @@
           "cancelable": true,
           "composed": true,
           "docs": "The order/invoice was paid for.",
-          "docsTags": []
-        },
-        {
-          "event": "scPayError",
-          "detail": "any",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "There was a payment error.",
           "docsTags": []
         },
         {
