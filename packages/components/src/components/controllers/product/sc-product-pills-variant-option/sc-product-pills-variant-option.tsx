@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { isOptionSoldOut } from '@store/product/getters';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-product-pills-variant-option',
@@ -29,7 +29,9 @@ export class ScProductPillsVariantOption {
               })
             }
           >
+            <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), this.label)} </span>
             {value}
+            {isOptionSoldOut(this.optionNumber, value) && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
           </sc-pill-option>
         ))}
       </div>

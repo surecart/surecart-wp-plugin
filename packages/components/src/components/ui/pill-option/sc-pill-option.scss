@@ -50,6 +50,7 @@
     &:hover:not(.sc-pill-option__button--selected) {
       background-color: var(--sc-button-default-hover-background-color, var(--sc-pill-option-background-color, transparent));
       border-color: var(--sc-pill-option-active-background-color, var(--sc-button-default-focus-border-color, var(--primary-background)));
+      color: var(--sc-pill-option-text-color, var(--sc-color-gray-700));
     }
 
     &:focus {

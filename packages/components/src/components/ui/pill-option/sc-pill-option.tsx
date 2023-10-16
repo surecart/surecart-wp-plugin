@@ -20,6 +20,9 @@ export class ScPillOption {
           'sc-pill-option__button--selected': this.isSelected,
         }}
         tabindex="0"
+        role="radio"
+        aria-checked={this.isSelected ? 'true' : 'false'}
+        aria-disabled={this.isUnavailable ? 'true' : 'false'}
       >
         <slot />
       </button>
