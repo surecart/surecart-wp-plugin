@@ -1,6 +1,6 @@
 import { Element, Method, State, Watch } from '@stencil/core';
 import { Component, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Price, Product, Variant } from '../../../../types';
 import { getLineItemByProductId } from '@store/checkout/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
@@ -172,28 +172,28 @@ export class ScProductCheckoutSelectVariantOption {
         {(this.product.variant_options.data || []).map(({ name, values }, index) => (
           <sc-form-control label={name}>
             <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
-              {(values || []).map(value => (
-                <sc-pill-option
-                  isUnavailable={
-                    this.product?.stock_enabled &&
-                    !this.product?.allow_out_of_stock_purchases &&
-                    isProductVariantOptionSoldOut(
-                      index + 1,
-                      value,
-                      {
-                        ...(this.option1 ? { option_1: this.option1 } : {}),
-                        ...(this.option2 ? { option_2: this.option2 } : {}),
-                        ...(this.option3 ? { option_3: this.option3 } : {}),
-                      },
-                      this.product,
-                    )
-                  }
-                  isSelected={this[`option${index + 1}`] === value}
-                  onClick={() => (this[`option${index + 1}`] = value)}
-                >
-                  {value}
-                </sc-pill-option>
-              ))}
+              {(values || []).map(value => {
+                const isUnavailable =
+                  this.product?.stock_enabled &&
+                  !this.product?.allow_out_of_stock_purchases &&
+                  isProductVariantOptionSoldOut(
+                    index + 1,
+                    value,
+                    {
+                      ...(this.option1 ? { option_1: this.option1 } : {}),
+                      ...(this.option2 ? { option_2: this.option2 } : {}),
+                      ...(this.option3 ? { option_3: this.option3 } : {}),
+                    },
+                    this.product,
+                  );
+                return (
+                  <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
+                    <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), name)} </span>
+                    {value}
+                    {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+                  </sc-pill-option>
+                );
+              })}
             </div>
           </sc-form-control>
         ))}
