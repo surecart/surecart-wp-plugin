@@ -29,14 +29,10 @@ export class ScProductPrice {
   }
 
   renderPrice(price: Price, variantAmount?: number) {
-    const amount = variantAmount || price?.amount;
+    const amount = variantAmount ?? price?.amount ?? 0;
 
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
-    }
-
-    if (amount === 0) {
-      return __('Free', 'surecart');
     }
 
     return (
@@ -44,7 +40,13 @@ export class ScProductPrice {
         <div class="price">
           <div class="price__amounts">
             {!!price?.scratch_amount && price?.scratch_amount !== amount && (
-              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
+              <Fragment>
+                {price?.scratch_amount === 0 ? (
+                  __('Free', 'surecart')
+                ) : (
+                  <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
+                )}
+              </Fragment>
             )}
 
             {amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>}
