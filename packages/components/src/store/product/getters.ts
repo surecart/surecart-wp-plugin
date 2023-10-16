@@ -32,14 +32,14 @@ export const isOptionSoldOut = (optionNumber: number, option: string) => {
   // if this is option 1, check to see if there are any variants with this option.
   if (optionNumber === 1) {
     const items = state.variants.filter(variant => variant.option_1 === option);
-    const highestStock = Math.max(...items.map(item => item.stock));
+    const highestStock = Math.max(...items.map(item => item.available_stock));
     return highestStock <= 0;
   }
 
   // if this is option 2, check to see if there are any variants with this option and option 1
   if (optionNumber === 2) {
     const items = state.variants.filter(variant => variant?.option_1 === state.selectedVariant.option_1 && variant.option_2 === option);
-    const highestStock = Math.max(...items.map(item => item.stock));
+    const highestStock = Math.max(...items.map(item => item.available_stock));
     return highestStock <= 0;
   }
 
@@ -47,7 +47,7 @@ export const isOptionSoldOut = (optionNumber: number, option: string) => {
   const items = state.variants.filter(
     variant => variant?.option_1 === state.selectedVariant.option_1 && variant?.option_2 === state.selectedVariant.option_2 && variant.option_2 === option,
   );
-  const highestStock = Math.max(...items.map(item => item.stock));
+  const highestStock = Math.max(...items.map(item => item.available_stock));
   return highestStock <= 0;
 };
 
@@ -63,8 +63,8 @@ export const isProductOutOfStock = () => {
   }
 
   // If no variant is selected, check against product stock.
-  if (!state?.selectedVariant) return state.product?.stock <= 0;
+  if (!state?.selectedVariant) return state.product?.available_stock <= 0;
 
   // Check against selected variant's stock.
-  return state.selectedVariant?.stock <= 0;
+  return state.selectedVariant?.available_stock <= 0;
 };

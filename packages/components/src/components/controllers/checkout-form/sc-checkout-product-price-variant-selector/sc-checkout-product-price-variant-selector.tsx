@@ -60,7 +60,7 @@ export class ScProductCheckoutSelectVariantOption {
    * @returns {boolean} Whether the selected variant is out of stock.
    */
   isSelectedVariantOutOfStock() {
-    return this.product?.stock_enabled && this.hasVariants() && !this.product?.allow_out_of_stock_purchases && this.selectedVariant.stock < 1;
+    return this.product?.stock_enabled && this.hasVariants() && !this.product?.allow_out_of_stock_purchases && this.selectedVariant.available_stock < 1;
   }
 
   /**

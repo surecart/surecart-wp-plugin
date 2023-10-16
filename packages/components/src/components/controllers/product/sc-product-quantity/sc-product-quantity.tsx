@@ -46,9 +46,9 @@ export class ScProductQuantity {
     }
 
     // If no variant is selected, check against product stock.
-    if (!state?.selectedVariant) return state.product?.stock;
+    if (!state?.selectedVariant) return state.product?.available_stock;
     // Check against selected variant's stock.
-    return state.selectedVariant?.stock;
+    return state.selectedVariant?.available_stock;
   }
 
   getMax() {

@@ -34,10 +34,10 @@ export class ScCheckoutStockAlert {
 
       // check the variant stock.
       if (lineItem?.variant?.id) {
-        return lineItem?.variant?.stock < lineItem.quantity;
+        return lineItem?.variant?.available_stock < lineItem.quantity;
       }
 
-      return product?.stock < lineItem.quantity;
+      return product?.available_stock < lineItem.quantity;
     });
   }
 
@@ -51,13 +51,13 @@ export class ScCheckoutStockAlert {
       if (lineItem?.variant?.id) {
         return {
           ...lineItem,
-          quantity: Math.max(lineItem?.variant?.stock || 0, 0),
+          quantity: Math.max(lineItem?.variant?.available_stock || 0, 0),
         };
       }
 
       return {
         ...lineItem,
-        quantity: Math.max(product?.stock || 0, 0),
+        quantity: Math.max(product?.available_stock || 0, 0),
       };
     });
 
@@ -92,13 +92,13 @@ export class ScCheckoutStockAlert {
       const product = lineItem.price?.product as Product;
       const variantImage = typeof lineItem?.variant?.image !== 'string' ? lineItem?.variant?.image?.url : null;
 
-      const stock = lineItem?.variant?.id ? lineItem?.variant?.stock : product?.stock;
+      const available_stock = lineItem?.variant?.id ? lineItem?.variant?.available_stock : product?.available_stock;
 
       return {
         name: product?.name,
         image_url: variantImage || product?.image_url,
         quantity: lineItem.quantity,
-        stock,
+        available_stock,
       };
     });
 
@@ -132,7 +132,7 @@ export class ScCheckoutStockAlert {
                       </sc-table-cell>
                       <sc-table-cell style={{ width: '100px', textAlign: 'right' }}>
                         <span class="stock-alert__quantity">
-                          <span>{item?.quantity}</span> <sc-icon name="arrow-right" /> <span>{Math.max(item?.stock, 0)}</span>
+                          <span>{item?.quantity}</span> <sc-icon name="arrow-right" /> <span>{Math.max(item?.available_stock, 0)}</span>
                         </span>
                       </sc-table-cell>
                     </sc-table-row>

@@ -306,7 +306,7 @@ class Product extends Model implements PageModel {
 		// stock is enabled.
 		if ( $this->stock_enabled ) {
 			foreach ( $this->variants->data as $variant ) {
-				if ( $variant->stock > 0 ) {
+				if ( $variant->available_stock > 0 ) {
 					$first_variant_with_stock = $variant;
 					break;
 				}
