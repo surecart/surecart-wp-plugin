@@ -2130,9 +2130,11 @@
   },
   "sc-toggle": {
     "borderless": true,
+    "close-speak-text": true,
     "collapsible": true,
     "disabled": true,
     "open": true,
+    "open-speak-text": true,
     "shady": true,
     "show-control": true,
     "show-icon": true,

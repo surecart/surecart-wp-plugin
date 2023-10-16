@@ -140,6 +140,12 @@
     }
   }
 
+  &.button--medium {
+    &:focus:not(.button--disabled) {
+      box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+    }
+  }
+
   &.button--success {
     background-color: var(--sc-color-success-500);
     border-color: var(--sc-color-success-500);
