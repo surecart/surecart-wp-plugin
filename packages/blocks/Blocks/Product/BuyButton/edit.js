@@ -157,6 +157,8 @@ export default (props) => {
 								setAttributes({ out_of_stock_text: value })
 							}
 						/>
+					</PanelRow>
+					<PanelRow>
 						<TextControl
 							label={__('Unavailable label', 'surecart')}
 							value={unavailable_text}
