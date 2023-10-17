@@ -2,8 +2,11 @@
 	.column-mode {
 		width: 50px;
 	}
-	.column-total, .column-status {
+	.column-total {
 		min-width: 96px;
+	}
+	.column-status {
+		width: 92px;
 	}
 	.column-order {
 		width: 200px;
