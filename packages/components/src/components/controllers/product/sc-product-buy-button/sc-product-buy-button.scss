@@ -6,7 +6,8 @@ sc-product-buy-button {
     text-decoration: none;
   }
 
-  [disabled] {
+  .sc-block-button--sold-out,
+  .sc-block-button--unavailable {
     display: none;
   }
 
@@ -14,7 +15,16 @@ sc-product-buy-button {
     a {
       display: none;
     }
-    [disabled] {
+    .sc-block-button--unavailable {
+      display: initial;
+    }
+  }
+
+  &.is-sold-out {
+    a {
+      display: none;
+    }
+    .sc-block-button--sold-out {
       display: initial;
     }
   }

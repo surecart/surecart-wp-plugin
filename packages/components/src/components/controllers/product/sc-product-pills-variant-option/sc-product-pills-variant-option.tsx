@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
-import { isOptionSoldOut } from '@store/product/getters';
+import { isOptionMissing, isOptionSoldOut } from '@store/product/getters';
 import { __, sprintf } from '@wordpress/i18n';
 
 @Component({
@@ -19,22 +19,25 @@ export class ScProductPillsVariantOption {
     return (
       <sc-form-control label={this.label}>
         <div class="sc-product-pills-variant-option__wrapper">
-          {(state.variant_options[this.optionNumber - 1].values || []).map(value => (
-            <sc-pill-option
-              isUnavailable={isOptionSoldOut(this.optionNumber, value)}
-              isSelected={state.selectedVariant[`option_${this.optionNumber}`] === value}
-              onClick={() =>
-                (state.variantValues = {
-                  ...state.variantValues,
-                  [`option_${this.optionNumber}`]: value,
-                })
-              }
-            >
-              <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), this.label)} </span>
-              {value}
-              {isOptionSoldOut(this.optionNumber, value) && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
-            </sc-pill-option>
-          ))}
+          {(state.variant_options[this.optionNumber - 1].values || []).map(value => {
+            const isUnavailable = isOptionSoldOut(this.optionNumber, value) || isOptionMissing(this.optionNumber, value);
+            return (
+              <sc-pill-option
+                isUnavailable={isUnavailable}
+                isSelected={state.variantValues[`option_${this.optionNumber}`] === value}
+                onClick={() =>
+                  (state.variantValues = {
+                    ...state.variantValues,
+                    [`option_${this.optionNumber}`]: value,
+                  })
+                }
+              >
+                <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), this.label)} </span>
+                {value}
+                {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+              </sc-pill-option>
+            );
+          })}
         </div>
       </sc-form-control>
     );

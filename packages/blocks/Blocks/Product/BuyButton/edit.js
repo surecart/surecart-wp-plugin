@@ -64,7 +64,14 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
-	const { textAlign, style, text, width, out_of_stock_text } = attributes;
+	const {
+		textAlign,
+		style,
+		text,
+		width,
+		out_of_stock_text,
+		unavailable_text,
+	} = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -148,6 +155,13 @@ export default (props) => {
 							value={out_of_stock_text}
 							onChange={(value) =>
 								setAttributes({ out_of_stock_text: value })
+							}
+						/>
+						<TextControl
+							label={__('Unavailable label', 'surecart')}
+							value={unavailable_text}
+							onChange={(value) =>
+								setAttributes({ unavailable_text: value })
 							}
 						/>
 					</PanelRow>

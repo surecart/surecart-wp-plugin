@@ -1,17 +1,10 @@
+import { getVariantFromValues } from 'src/functions/util';
 import state from './store';
-import { state as checkoutState } from '@store/checkout';
 /**
  * Available product prices
  * @returns {Price[]} - Returns an array of prices that are not archived
  */
 export const availablePrices = () => (state.prices || []).filter(price => !price?.archived).sort((a, b) => a?.position - b?.position); // sort by position
-
-export const availableVariants = (type: 'product-page' | 'instant-checkout-page' = 'product-page') =>
-  ('product-page' === type && state?.variants
-    ? state.variants
-    : 'instant-checkout-page' === type && checkoutState?.product?.variants?.data
-    ? checkoutState?.product?.variants?.data
-    : state?.variants) || [];
 
 /**
  * Check if product label stock is enabled and not out of stock purchases are allowed.
@@ -38,17 +31,35 @@ export const isOptionSoldOut = (optionNumber: number, option: string) => {
 
   // if this is option 2, check to see if there are any variants with this option and option 1
   if (optionNumber === 2) {
-    const items = state.variants.filter(variant => variant?.option_1 === state.selectedVariant.option_1 && variant.option_2 === option);
+    const items = state.variants.filter(variant => variant?.option_1 === state.variantValues.option_1 && variant?.option_2 === option);
     const highestStock = Math.max(...items.map(item => item.available_stock));
     return highestStock <= 0;
   }
 
-  // if this is option 4, check to see if there are any variants with all the options.
+  // if this is option 3, check to see if there are any variants with all the options.
   const items = state.variants.filter(
-    variant => variant?.option_1 === state.selectedVariant.option_1 && variant?.option_2 === state.selectedVariant.option_2 && variant.option_2 === option,
+    variant => variant?.option_1 === state.variantValues.option_1 && variant?.option_2 === state.variantValues.option_2 && variant?.option_3 === option,
   );
   const highestStock = Math.max(...items.map(item => item.available_stock));
   return highestStock <= 0;
+};
+
+/**
+ * Check if this option is out of stock base on the selected variant.
+ */
+export const isOptionMissing = (optionNumber: number, option: string) => {
+  // if this is option 1, check to see if there are any variants with this option.
+  if (optionNumber === 1) {
+    return !state.variants.some(variant => variant.option_1 === option);
+  }
+
+  // if this is option 2, check to see if there are any variants with this option and option 1
+  if (optionNumber === 2) {
+    return !state.variants.some(variant => variant?.option_1 === state.variantValues.option_1 && variant.option_2 === option);
+  }
+
+  // if this is option 3, check to see if there are any variants with all the options.
+  return !state.variants.some(variant => variant?.option_1 === state.variantValues.option_1 && variant?.option_2 === state.variantValues.option_2 && variant.option_3 === option);
 };
 
 /**
@@ -68,3 +79,5 @@ export const isProductOutOfStock = () => {
   // Check against selected variant's stock.
   return state.selectedVariant?.available_stock <= 0;
 };
+
+export const isSelectedVariantMissing = () => getVariantFromValues({ variants: state.variants, values: state.variantValues })?.id === undefined;
