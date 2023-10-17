@@ -431,21 +431,21 @@ class Subscription extends Model {
 	 *
 	 * @return boolean
 	 */
-	public function shouldDelayCancellation(){
+	public function shouldDelayCancellation(): bool {
 		$protocol = \SureCart::account()->subscription_protocol;
 
-		if(!$protocol->cancel_window_enabled || empty($protocol->cancel_window_days)){
+		if ( ! $protocol->cancel_window_enabled || empty( $protocol->cancel_window_days ) ) {
 			return false;
 		}
 
 		$cancel_window_days = $protocol->cancel_window_days;
-		$now              = new \DateTime();
-		$end              = new \DateTime();
+		$now                = new \DateTime();
+		$end                = new \DateTime();
 		$end->setTimestamp( $this->attributes['current_period_end_at'] );
 		$end = $end->modify( "-{$cancel_window_days} days" );
 
 		$interval = $now->diff( $end );
-		$diff_days = $interval->days * ($interval->invert ? -1: 1);
+		$diff_days = $interval->days * ( $interval->invert ? -1: 1 );
 
 		return $diff_days > 0;
 	}

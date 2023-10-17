@@ -34,7 +34,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 
 		// if we should delay cancellation
 		$subscription = Subscription::find( $args[2] );
-		if($subscription->shouldDelayCancellation()){
+		if ( $subscription->shouldDelayCancellation() ) {
 			return false;
 		}
 
