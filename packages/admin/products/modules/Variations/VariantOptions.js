@@ -73,19 +73,26 @@ export default ({ product, updateProduct }) => {
 	const onUpdate = (action) =>
 		updateProduct({
 			...product,
-			variant_options: (product?.variant_options ?? []).map(
-				(item, index) =>
+			variant_options: (product?.variant_options ?? [])
+				.map((item, index) =>
 					index !== action.index ? item : { ...item, ...action.data }
-			),
+				)
+				.map((option, index) => ({
+					...option,
+					position: index, // make sure to map position.
+				})),
 		});
 
 	// delete a variant option based on the index.
 	const onDelete = (index) =>
 		updateProduct({
 			...product,
-			variant_options: (product?.variant_options || []).filter(
-				(_, itemIndex) => itemIndex !== index
-			),
+			variant_options: (product?.variant_options || [])
+				.filter((_, itemIndex) => itemIndex !== index)
+				.map((option, index) => ({
+					...option,
+					position: index, // make sure to map position.
+				})),
 		});
 
 	// Apply drag to reorder the variant options.
