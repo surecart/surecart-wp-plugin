@@ -299,6 +299,10 @@ export class ScDropdown {
           }}
           aria-expanded={this.open ? 'true' : 'false'}
           aria-haspopup="true"
+          onFocus={() => {
+            alert('has focus')
+          }}
+          onBlur={()=> alert('no focus')}
         >
           <slot name="trigger"></slot>
         </span>

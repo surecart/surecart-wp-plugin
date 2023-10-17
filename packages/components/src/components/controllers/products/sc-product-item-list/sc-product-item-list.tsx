@@ -326,6 +326,7 @@ export class ScProductItemList {
                           this.currentQuery = '';
                           this.updateProducts();
                         }}
+                      ariaLabel={sprintf(__('Searched for %s. Press space to clear search.', 'surecart'), this.query)}
                       >
                         {this.query}
                       </sc-tag>

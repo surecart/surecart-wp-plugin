@@ -2064,6 +2064,7 @@
     "slot": true
   },
   "sc-tag": {
+    "aria-label": true,
     "clearable": true,
     "pill": true,
     "size": true,

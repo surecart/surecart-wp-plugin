@@ -3589,6 +3589,10 @@ export namespace Components {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel": string;
+        /**
           * Makes the tag clearable.
          */
         "clearable": boolean;
@@ -9478,6 +9482,10 @@ declare namespace LocalJSX {
         "href"?: string;
     }
     interface ScTag {
+        /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
         /**
           * Makes the tag clearable.
          */

@@ -20,6 +20,9 @@ export class ScTag {
   /** Makes the tag clearable. */
   @Prop() clearable: boolean = false;
 
+  /** Aria label */
+  @Prop() ariaLabel: string;
+
   handleClearClick() {
     this.scClear.emit(this);
   }
@@ -48,6 +51,7 @@ export class ScTag {
           'tag--pill': this.pill,
           'tag--clearable': this.clearable,
         }}
+        aria-label={this.ariaLabel}
       >
         <span part="content" class="tag__content">
           <slot></slot>
