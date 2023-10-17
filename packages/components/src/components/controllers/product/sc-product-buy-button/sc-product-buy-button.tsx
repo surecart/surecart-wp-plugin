@@ -43,6 +43,7 @@ export class ScProductBuyButton {
     this.link = this.el.querySelector('a');
     this.updateProductLink();
     onChange('selectedPrice', () => this.updateProductLink());
+    onChange('selectedVariant', () => this.updateProductLink());
   }
 
   updateProductLink() {

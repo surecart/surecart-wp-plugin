@@ -1703,6 +1703,14 @@
     "class": true,
     "slot": true
   },
+  "sc-product-variation-choices": {
+    "product-id": true,
+    "type": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-prose": {
     "style": true,
     "id": true,
