@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-09-08T03:48:03",
+  "timestamp": "2023-10-16T14:30:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10789,7 +10789,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "keydown",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [],
       "slots": [],
       "parts": [
@@ -27495,11 +27501,6 @@
           "passive": false
         },
         {
-          "event": "scPayError",
-          "capture": false,
-          "passive": false
-        },
-        {
           "event": "scUpdateAbandonedCart",
           "capture": false,
           "passive": false
@@ -28483,15 +28484,6 @@
           "docsTags": []
         },
         {
-          "event": "scPayError",
-          "detail": "any",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "",
-          "docsTags": []
-        },
-        {
           "event": "scSetState",
           "detail": "\"EXPIRE\" | \"FETCH\" | \"FINALIZE\" | \"PAID\" | \"PAYING\" | \"REJECT\" | \"RESOLVE\"",
           "bubbles": true,
@@ -28550,15 +28542,6 @@
           "cancelable": true,
           "composed": true,
           "docs": "The order/invoice was paid for.",
-          "docsTags": []
-        },
-        {
-          "event": "scPayError",
-          "detail": "any",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "There was a payment error.",
           "docsTags": []
         },
         {
