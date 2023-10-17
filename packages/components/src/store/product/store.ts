@@ -25,7 +25,7 @@ interface Store {
 const product = window?.scData?.product_data?.product || null;
 const prices = product?.prices?.data || [];
 const variant_options = product?.variant_options?.data || [];
-const variants = product?.variants?.data || [];
+const variants = (product?.variants?.data || []).sort((a, b) => a?.position - b?.position);
 const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
 const selectedVariant = variants?.length ? variants[0] : null;
 
