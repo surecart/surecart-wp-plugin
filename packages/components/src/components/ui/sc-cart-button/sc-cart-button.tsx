@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
 import store, { getCheckout } from '@store/checkouts';
-
+import { speak } from '@wordpress/a11y';
 /**
  * @part base - The elements base wrapper.
  * @part count - The icon base wrapper.
@@ -54,7 +54,9 @@ export class ScCartButton {
     this.link.addEventListener('click', e => {
       e.preventDefault();
       e.stopImmediatePropagation();
+      const speakText = uiStore.state.cart.open ? 'Cart closed' : 'Cart opened';
       uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
+      speak(speakText, 'assertive');
       return false;
     });
 
