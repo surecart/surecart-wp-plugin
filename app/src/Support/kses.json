@@ -1681,14 +1681,6 @@
     "class": true,
     "slot": true
   },
-  "sc-product-select-variant-option": {
-    "label": true,
-    "option-number": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-product-selected-price": {
     "product-id": true,
     "style": true,
@@ -1698,14 +1690,6 @@
   },
   "sc-product-text": {
     "text": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-product-variation-choices": {
-    "product-id": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,

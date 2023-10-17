@@ -3035,16 +3035,6 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
-    interface ScProductSelectVariantOption {
-        /**
-          * Label
-         */
-        "label": string;
-        /**
-          * Which option number?
-         */
-        "optionNumber": 1 | 2 | 3;
-    }
     interface ScProductSelectedPrice {
         /**
           * The product id.
@@ -3053,13 +3043,6 @@ export namespace Components {
     }
     interface ScProductText {
         "text": 'name' | 'description';
-    }
-    interface ScProductVariationChoices {
-        /**
-          * The product id.
-         */
-        "productId": string;
-        "type": 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
     }
@@ -4118,10 +4101,6 @@ export interface ScProductSelectedPriceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductSelectedPriceElement;
 }
-export interface ScProductVariationChoicesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScProductVariationChoicesElement;
-}
 export interface ScProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProviderElement;
@@ -5100,12 +5079,6 @@ declare global {
         prototype: HTMLScProductQuantityElement;
         new (): HTMLScProductQuantityElement;
     };
-    interface HTMLScProductSelectVariantOptionElement extends Components.ScProductSelectVariantOption, HTMLStencilElement {
-    }
-    var HTMLScProductSelectVariantOptionElement: {
-        prototype: HTMLScProductSelectVariantOptionElement;
-        new (): HTMLScProductSelectVariantOptionElement;
-    };
     interface HTMLScProductSelectedPriceElement extends Components.ScProductSelectedPrice, HTMLStencilElement {
     }
     var HTMLScProductSelectedPriceElement: {
@@ -5117,12 +5090,6 @@ declare global {
     var HTMLScProductTextElement: {
         prototype: HTMLScProductTextElement;
         new (): HTMLScProductTextElement;
-    };
-    interface HTMLScProductVariationChoicesElement extends Components.ScProductVariationChoices, HTMLStencilElement {
-    }
-    var HTMLScProductVariationChoicesElement: {
-        prototype: HTMLScProductVariationChoicesElement;
-        new (): HTMLScProductVariationChoicesElement;
     };
     interface HTMLScProseElement extends Components.ScProse, HTMLStencilElement {
     }
@@ -5591,10 +5558,8 @@ declare global {
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
         "sc-product-price-modal": HTMLScProductPriceModalElement;
         "sc-product-quantity": HTMLScProductQuantityElement;
-        "sc-product-select-variant-option": HTMLScProductSelectVariantOptionElement;
         "sc-product-selected-price": HTMLScProductSelectedPriceElement;
         "sc-product-text": HTMLScProductTextElement;
-        "sc-product-variation-choices": HTMLScProductVariationChoicesElement;
         "sc-prose": HTMLScProseElement;
         "sc-provider": HTMLScProviderElement;
         "sc-provisional-banner": HTMLScProvisionalBannerElement;
@@ -8944,16 +8909,6 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
-    interface ScProductSelectVariantOption {
-        /**
-          * Label
-         */
-        "label"?: string;
-        /**
-          * Which option number?
-         */
-        "optionNumber"?: 1 | 2 | 3;
-    }
     interface ScProductSelectedPrice {
         /**
           * Toggle line item event
@@ -8966,17 +8921,6 @@ declare namespace LocalJSX {
     }
     interface ScProductText {
         "text"?: 'name' | 'description';
-    }
-    interface ScProductVariationChoices {
-        /**
-          * Toggle line item event
-         */
-        "onScUpdateLineItem"?: (event: ScProductVariationChoicesCustomEvent<LineItemData1>) => void;
-        /**
-          * The product id.
-         */
-        "productId"?: string;
-        "type"?: 'product-page' | 'instant-checkout-page';
     }
     interface ScProse {
     }
@@ -10072,10 +10016,8 @@ declare namespace LocalJSX {
         "sc-product-price-choices": ScProductPriceChoices;
         "sc-product-price-modal": ScProductPriceModal;
         "sc-product-quantity": ScProductQuantity;
-        "sc-product-select-variant-option": ScProductSelectVariantOption;
         "sc-product-selected-price": ScProductSelectedPrice;
         "sc-product-text": ScProductText;
-        "sc-product-variation-choices": ScProductVariationChoices;
         "sc-prose": ScProse;
         "sc-provider": ScProvider;
         "sc-provisional-banner": ScProvisionalBanner;
@@ -10300,10 +10242,8 @@ declare module "@stencil/core" {
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
             "sc-product-price-modal": LocalJSX.ScProductPriceModal & JSXBase.HTMLAttributes<HTMLScProductPriceModalElement>;
             "sc-product-quantity": LocalJSX.ScProductQuantity & JSXBase.HTMLAttributes<HTMLScProductQuantityElement>;
-            "sc-product-select-variant-option": LocalJSX.ScProductSelectVariantOption & JSXBase.HTMLAttributes<HTMLScProductSelectVariantOptionElement>;
             "sc-product-selected-price": LocalJSX.ScProductSelectedPrice & JSXBase.HTMLAttributes<HTMLScProductSelectedPriceElement>;
             "sc-product-text": LocalJSX.ScProductText & JSXBase.HTMLAttributes<HTMLScProductTextElement>;
-            "sc-product-variation-choices": LocalJSX.ScProductVariationChoices & JSXBase.HTMLAttributes<HTMLScProductVariationChoicesElement>;
             "sc-prose": LocalJSX.ScProse & JSXBase.HTMLAttributes<HTMLScProseElement>;
             "sc-provider": LocalJSX.ScProvider & JSXBase.HTMLAttributes<HTMLScProviderElement>;
             "sc-provisional-banner": LocalJSX.ScProvisionalBanner & JSXBase.HTMLAttributes<HTMLScProvisionalBannerElement>;
