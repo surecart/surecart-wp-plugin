@@ -8,7 +8,7 @@ import { getVariantFromValues } from '../../../../functions/util';
 import { addLineItem, updateLineItem } from '@services/session';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
-import { isProductVariantOptionSoldOut } from '@store/utils';
+import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
 
 @Component({
   tag: 'sc-checkout-product-price-variant-selector',
@@ -173,19 +173,17 @@ export class ScProductCheckoutSelectVariantOption {
           <sc-form-control label={name}>
             <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
               {(values || []).map(value => {
-                const isUnavailable =
-                  this.product?.stock_enabled &&
-                  !this.product?.allow_out_of_stock_purchases &&
-                  isProductVariantOptionSoldOut(
-                    index + 1,
-                    value,
-                    {
-                      ...(this.option1 ? { option_1: this.option1 } : {}),
-                      ...(this.option2 ? { option_2: this.option2 } : {}),
-                      ...(this.option3 ? { option_3: this.option3 } : {}),
-                    },
-                    this.product,
-                  );
+                const args = [
+                  index + 1,
+                  value,
+                  {
+                    ...(this.option1 ? { option_1: this.option1 } : {}),
+                    ...(this.option2 ? { option_2: this.option2 } : {}),
+                    ...(this.option3 ? { option_3: this.option3 } : {}),
+                  },
+                  this.product,
+                ];
+                const isUnavailable = isProductVariantOptionSoldOut.apply(void 0, args) || isProductVariantOptionMissing.apply(void 0, args);
                 return (
                   <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
                     <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), name)} </span>
