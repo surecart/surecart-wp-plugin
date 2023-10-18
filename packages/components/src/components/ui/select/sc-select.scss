@@ -95,6 +95,11 @@ sc-dropdown {
     pointer-events: none;
     width: 0;
   }
+  &__suffix-description,
+  &__description {
+    font-size: var(--sc-input-help-text-font-size-medium);
+    color: var(--sc-input-help-text-color);
+  }
 }
 
 .select__caret {
