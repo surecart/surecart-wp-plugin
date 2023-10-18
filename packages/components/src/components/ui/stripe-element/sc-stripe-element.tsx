@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { createErrorNotice } from '@store/notices/mutations';
@@ -56,6 +56,9 @@ export class ScStripeElement {
   @Event() scPaid: EventEmitter<void>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Payment information was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
 
   @State() error: string;
   @State() confirming: boolean;

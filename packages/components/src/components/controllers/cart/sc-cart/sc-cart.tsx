@@ -149,7 +149,7 @@ export class ScCart {
       <Fragment>
         {this.order() && (
           <Universe.Provider state={this.state()}>
-            <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setOrder(e.detail)}>
+            <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setCheckout(e.detail)}>
               <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>

@@ -8,6 +8,7 @@ import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
+import { createErrorNotice } from '@store/notices/mutations';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
