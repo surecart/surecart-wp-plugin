@@ -60,23 +60,3 @@ add_filter(
 	}
 );
 
-
-add_action('wp_head', function() { ?>
-<script>
-	window.addEventListener('scCheckoutInitiated', (e) =>{
-		console.log('checkoutInitiated', {e});
-	});
-	window.addEventListener('scAddedToCart', (e) =>{
-		console.log('scAddedToCart', {e});
-	});
-	window.addEventListener('scRemovedFromCart', (e) =>{
-		console.log('scRemovedFromCart', {e});
-	});
-	window.addEventListener('scCheckoutCompleted', (e) =>{
-		console.log('scCheckoutCompleted', {e});
-	});
-	window.addEventListener('scProductViewed', (e) =>{
-		console.log('scProductViewed', {e});
-	});
-	</script>
-<?php });
