@@ -99,12 +99,12 @@ class ProductsListTable extends ListTable {
 			// 'cb'          => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
-			'integrations'        => __( 'Integrations', 'surecart' ),
-			'status'              => __( 'Product Page', 'surecart' ),
-			'product_collections' => __( 'Collections', 'surecart' ),
-			'featured'            => __( 'Featured', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
+			'integrations'        => __( 'Integrations', 'surecart' ),
+			'product_collections' => __( 'Collections', 'surecart' ),
+			'status'              => __( 'Product Page', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
+			'featured'            => __( 'Featured', 'surecart' ),
 		];
 	}
 
