@@ -32,15 +32,12 @@
       border: 0;
     }
 
-    &:focus {
-      outline: none;
-    }
-
     &--disabled {
       text-decoration: line-through;
     }
 
-    &--selected {
+    &--selected,
+    &:focus {
       background-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
       border-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
       color: var(--sc-pill-option-active-text-color, white);
@@ -54,8 +51,8 @@
     }
 
     &:focus {
+      outline: none;
       box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-pill-option-active-background-color, var(--sc-focus-ring-color-primary));
-      border-color: white;
     }
 
     &:active:not(.sc-pill-option__button--selected) {
