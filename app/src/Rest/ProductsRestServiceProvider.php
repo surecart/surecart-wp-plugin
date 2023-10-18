@@ -229,81 +229,13 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function filter_response_by_context( $model, $context ) {
 		$response = parent::filter_response_by_context( $model, $context );
 
-		if ( 'edit' === $context ) {
-			// if $response['variants'] is object, then get data by obj->data or obj['data'].
-			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
-				$response['variants'] = is_object( $response['variants'] ) ? $response['variants']->data ?? [] : $response['variants']['data'] ?? [];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
-				$response['variants'] = $response->variants->data ?? [];
-			}
-
-			// if $response['variant_options'] is object, then get data by obj->data or obj['data'].
-			if ( 'array' === gettype( $response ) && isset( $response['variant_options'] ) ) {
-				$response['variant_options'] = is_object( $response['variant_options'] ) ? $response['variant_options']->data ?? [] : $response['variant_options']['data'] ?? [];
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
-				$response['variant_options'] = $response->variant_options->data ?? [];
-			}
-
-			// Process the variant_options values column. currently its like string[].
-			// Lets make it like {label: string, index: number}[].
-			if ( 'array' === gettype( $response ) && isset( $response['variant_options'] ) ) {
-				$response['variant_options'] = $this->getProcessedVariantOptions( $response['variant_options'] );
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variant_options ) ) {
-				$response['variant_options'] = $this->getProcessedVariantOptions( $response->variant_options );
-			}
-
-			// Add stock value as initial_stock.
-			if ( 'array' === gettype( $response ) && isset( $response['stock'] ) ) {
-				$response['initial_stock'] = $response['stock'];
-				$response['stock_adjustment'] = 0;
-				$response['change_type'] = 'initially_loaded';
-			} elseif ( 'object' === gettype( $response ) && isset( $response->stock ) ) {
-				$response->initial_stock = $response->stock;
-				$response->stock_adjustment = 0;
-				$response->change_type = 'initially_loaded';
-			}
-
-			// For variants, add stock value as initial_stock.
-			if ( 'array' === gettype( $response ) && isset( $response['variants'] ) ) {
-				foreach ( $response['variants'] as $index => $variant ) {
-					$response['variants'][ $index ]['initial_stock'] = $variant['stock'];
-					$response['variants'][ $index ]['stock_adjustment'] = 0;
-				}
-			} elseif ( 'object' === gettype( $response ) && isset( $response->variants ) ) {
-				foreach ( $response->variants as $index => $variant ) {
-					$response->variants[ $index ]->initial_stock = $variant->stock;
-					$response->variants[ $index ]->stock_adjustment = 0;
-				}
-			}
+		if ( 'edit' === $context && is_array( $response ) && ! empty( $response['id'] ) ) {
+			// Process the variants, it's in a data column, so we need to pull it out.
+			$response['variants'] = ! empty( $response['variants']['data'] ) ? $response['variants']['data'] : [];
+			// Process the variant_options, it's in a data column, so we need to pull it out.
+			$response['variant_options'] = ! empty( $response['variant_options']['data'] ) ? $response['variant_options']['data'] : [];
 		}
 
 		return $response;
-	}
-
-	/**
-	 * Get processed variant options
-	 *
-	 * Convert values column to {label: string, index: number}[].
-	 *
-	 * @param array $variant_options Variant options.
-	 *
-	 * @return array
-	 */
-	private function getProcessedVariantOptions( array $variant_options ): array {
-		foreach ( $variant_options as $index => $variant_option ) {
-			$variant_options[ $index ]['values'] = array_map(
-				function( $value, $value_index ) {
-					return [
-						'label' => $value,
-						'index' => $value_index,
-						'editing' => false,
-					];
-				},
-				$variant_option['values'],
-				array_keys( $variant_option['values'] )
-			);
-		}
-
-		return $variant_options;
 	}
 }

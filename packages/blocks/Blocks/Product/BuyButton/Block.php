@@ -96,8 +96,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = get_query_var( 'surecart_current_product' );
 
+		$product = get_query_var( 'surecart_current_product' );
 		if ( empty( $product ) ) {
 			return '';
 		}
@@ -107,18 +107,21 @@ class Block extends BaseBlock {
 
 		ob_start();
 		?>
-
-		<div class="wp-block-buttons">
-			<sc-product-buy-button
-				<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
-				class="wp-block-button <?php echo esc_attr( $width_class ); ?>"
-				text="<?php echo esc_attr( $attributes['text'] ); ?>"
-				out-of-stock-text="<?php echo esc_attr( $attributes['outOfStockText'] ); ?>"
-			>
-			</sc-product-buy-button>
-		</div>
-
-		<sc-product-price-modal></sc-product-price-modal>
+		<sc-product-buy-button
+			<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
+			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
+			button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
+			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
+				<?php echo $attributes['add_to_cart'] ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
+			</a>
+			<button disabled class="wp-block-button__link sc-block-button__link wp-element-button sc-block-button--sold-out <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<span data-text><?php echo esc_html( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ); ?></span>
+			</button>
+			<button disabled class="wp-block-button__link sc-block-button__link wp-element-button sc-block-button--unavailable <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<span data-text><?php echo esc_html( $attributes['unavailable_text'] ?? __( 'Unavailable', 'surecart' ) ); ?></span>
+			</button>
+		</sc-product-buy-button>
 
 		<?php
 

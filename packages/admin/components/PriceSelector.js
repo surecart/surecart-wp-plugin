@@ -11,9 +11,11 @@ import SelectPrice from './SelectPrice';
 export default ({
 	onSelect,
 	ad_hoc,
+	variable,
 	value,
 	open = false,
 	requestQuery,
+	required,
 	...props
 }) => {
 	const [query, setQuery] = useState(null);
@@ -86,12 +88,13 @@ export default ({
 
 	return (
 		<SelectPrice
-			required
+			required={required}
 			css={css`
 				flex: 0 1 50%;
 			`}
 			value={value}
 			ad_hoc={ad_hoc}
+			variable={variable}
 			open={open}
 			products={products}
 			onQuery={setQuery}

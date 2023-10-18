@@ -21,12 +21,10 @@ export default ({ product, updateProduct, loading }) => {
 
 	const addEmptyVariantOption = () => {
 		updateProduct({
-			change_type: 'option_added',
 			variant_options: [
 				...product?.variant_options,
 				{
 					name: '',
-					position: product?.variant_options?.length || 0,
 					values: [],
 					editing: true,
 				},
@@ -41,8 +39,9 @@ export default ({ product, updateProduct, loading }) => {
 	const renderAddNewVariantButton = () => {
 		return (
 			product?.variant_options?.[0]?.name &&
-			product?.variant_options[0]?.values?.[0]?.label &&
-			!loading && (
+			product?.variant_options[0]?.values?.[0] &&
+			!loading &&
+			product?.variants?.length < 99 && (
 				<div
 					css={css`
 						margin: -12px 0px;

@@ -17,6 +17,7 @@ import { __ } from '@wordpress/i18n';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
 import VariantLabel from '../../components/VariantLabel';
+import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const [price, setPrice] = useState(null);
@@ -69,27 +70,24 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								`}
 							>
 								<div>
-									{price?.product?.name}
-									<VariantLabel
-										variantOptions={
-											lineItem.variant_options ?? []
-										}
-									/>
-									<div style={{ opacity: 0.5 }}>
-										<ScFormatNumber
-											type="currency"
-											value={
-												price?.ad_hoc &&
-												subscription?.ad_hoc_amount
-													? subscription?.ad_hoc_amount
-													: price?.amount
-											}
-											currency={price?.currency}
-										/>
-										{intervalString(price, {
-											labels: { interval: '/' },
-										})}
-									</div>
+									<div>{price?.product?.name}</div>
+									<LineItemLabel lineItem={lineItem}>
+										<div>
+											<ScFormatNumber
+												type="currency"
+												value={
+													price?.ad_hoc &&
+													subscription?.ad_hoc_amount
+														? subscription?.ad_hoc_amount
+														: price?.amount
+												}
+												currency={price?.currency}
+											/>
+											{intervalString(price, {
+												labels: { interval: '/' },
+											})}
+										</div>
+									</LineItemLabel>
 								</div>
 
 								<ScDropdown

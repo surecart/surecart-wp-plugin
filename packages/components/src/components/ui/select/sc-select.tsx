@@ -186,7 +186,7 @@ export class ScSelectDropdown {
       chosen = subchoices.find(choice => choice?.value == this.value);
     }
     if (chosen) {
-      return `${append ? append + ' - ' : ''}${chosen?.label}`;
+      return `${append ? append + ' — ' : ''}${chosen?.label}`;
     }
     return false;
   }
@@ -216,7 +216,6 @@ export class ScSelectDropdown {
   }
 
   handleSelect(choice) {
-
     const { value } = choice;
 
     if (this.value === value && this.unselect) {
@@ -401,6 +400,7 @@ export class ScSelectDropdown {
 
     return (
       <sc-menu-item
+        class={{ 'is-unavailable': choice?.unavailable }}
         key={index}
         checked={this.isChecked(choice)}
         value={choice?.value}
@@ -414,7 +414,7 @@ export class ScSelectDropdown {
     );
   }
 
-  render() {   
+  render() {
     return (
       <div
         part="base"

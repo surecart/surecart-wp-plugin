@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property     | Attribute     | Description  | Type                             | Default     |
-| ------------ | ------------- | ------------ | -------------------------------- | ----------- |
-| `allowEmpty` | `allow-empty` |              | `boolean`                        | `false`     |
-| `clickEl`    | --            |              | `HTMLElement`                    | `undefined` |
-| `disabled`   | `disabled`    |              | `boolean`                        | `undefined` |
-| `hasFocus`   | `has-focus`   | Inputs focus | `boolean`                        | `undefined` |
-| `max`        | `max`         |              | `number`                         | `Infinity`  |
-| `min`        | `min`         |              | `number`                         | `1`         |
-| `quantity`   | `quantity`    |              | `number`                         | `0`         |
-| `size`       | `size`        |              | `"large" \| "medium" \| "small"` | `'medium'`  |
+| Property        | Attribute        | Description  | Type                             | Default     |
+| --------------- | ---------------- | ------------ | -------------------------------- | ----------- |
+| `allowNegative` | `allow-negative` |              | `boolean`                        | `false`     |
+| `clickEl`       | --               |              | `HTMLElement`                    | `undefined` |
+| `disabled`      | `disabled`       |              | `boolean`                        | `undefined` |
+| `hasFocus`      | `has-focus`      | Inputs focus | `boolean`                        | `undefined` |
+| `max`           | `max`            |              | `number`                         | `Infinity`  |
+| `min`           | `min`            |              | `number`                         | `1`         |
+| `quantity`      | `quantity`       |              | `number`                         | `0`         |
+| `size`          | `size`           |              | `"large" \| "medium" \| "small"` | `'medium'`  |
 
 
 ## Events

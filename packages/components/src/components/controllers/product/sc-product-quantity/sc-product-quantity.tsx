@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
-import { getSelectedProductStock, isStockNeedsToBeChecked } from '@store/product/getters';
+import { isStockNeedsToBeChecked } from '@store/product/getters';
 let id = 0;
 
 @Component({
@@ -35,9 +35,28 @@ export class ScProductQuantity {
   @Prop() help: string;
 
   getMaxStockQty() {
-    if (!isStockNeedsToBeChecked) return undefined;
+    // check purchase limit.
+    if (state.product.purchase_limit) {
+      return state.product.purchase_limit;
+    }
 
-    return getSelectedProductStock();
+    // If stock is not enabled, return null.
+    if (!isStockNeedsToBeChecked) {
+      return null;
+    }
+
+    // If no variant is selected, check against product stock.
+    if (!state?.selectedVariant) return state.product?.available_stock;
+    // Check against selected variant's stock.
+    return state.selectedVariant?.available_stock;
+  }
+
+  getMax() {
+    if (state.product.purchase_limit) {
+      return state.product.purchase_limit;
+    }
+    if (isStockNeedsToBeChecked) {
+    }
   }
 
   render() {
@@ -61,7 +80,7 @@ export class ScProductQuantity {
             disabled={state.selectedPrice?.ad_hoc}
             onScInput={e => (state.quantity = e.detail)}
             max={this.getMaxStockQty()}
-          ></sc-quantity-select>
+          />
         </sc-form-control>
       </Host>
     );

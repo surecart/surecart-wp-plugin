@@ -156,10 +156,7 @@ export default ({ id }) => {
 		if (product?.archived) {
 			return <ScTag type="warning">{__('Archived', 'surecart')}</ScTag>;
 		}
-		if (product?.status === 'published') {
-			return <ScTag type="success">{__('Published', 'surecart')}</ScTag>;
-		}
-		return <ScTag>{__('Draft', 'surecart')}</ScTag>;
+		return null;
 	};
 
 	return (

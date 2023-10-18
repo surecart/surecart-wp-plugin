@@ -54,28 +54,22 @@
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
-				<?php echo wp_kses_post( $product->description ); ?>
+				<?php echo wp_kses_post( $product->description ?? '' ); ?>
 			</sc-prose>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $prices ) && count( $prices ) > 1 ) : ?>
-			<!-- wp:surecart/price-selector -->
-			<sc-price-choices type="radio" columns="1">
-				<?php foreach ( $prices as $key => $option ) : ?>
-					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>","checked":true} -->
-					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-control="false"></sc-price-choice>
-					<!-- /wp:surecart/price-choice -->
-				<?php endforeach; ?>
-			</sc-price-choices>
-			<!-- /wp:surecart/price-selector -->
-		<?php endif; ?>
-		
-		<sc-product-variation-choices 
-			type="instant-checkout-page"
-			product-id="<?php echo esc_attr( $product->id ); ?>"
-			style="--sc-variation-gap: 12px;"
-		>
-		</sc-product-variation-choices>
+		<div>
+		<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-checkout-product-price-variant-selector>
+		<?php
+		\SureCart::assets()->addComponentData(
+			'sc-checkout-product-price-variant-selector',
+			'#sc-product-price-variant-selector-' . $product->id,
+			[
+				'product' => $product->toArray(),
+			]
+		);
+		?>
+		</div>
 
 	</sc-column>
 	<!-- /wp:surecart/column -->

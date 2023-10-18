@@ -123,6 +123,7 @@ export class ScLineItems {
                 key={item.id}
                 imageUrl={item?.variant?.image_url || (item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
+                priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}

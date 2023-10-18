@@ -6,6 +6,29 @@ sc-product-buy-button {
     text-decoration: none;
   }
 
+  .sc-block-button--sold-out,
+  .sc-block-button--unavailable {
+    display: none;
+  }
+
+  &.is-unavailable {
+    a {
+      display: none;
+    }
+    .sc-block-button--unavailable {
+      display: initial;
+    }
+  }
+
+  &.is-sold-out {
+    a {
+      display: none;
+    }
+    .sc-block-button--sold-out {
+      display: initial;
+    }
+  }
+
   sc-spinner::part(base) {
     --indicator-color: currentColor;
     --spinner-size: 12px;

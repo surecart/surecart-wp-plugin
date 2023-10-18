@@ -5,9 +5,9 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
+import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
-
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -30,20 +30,10 @@ export class ScOrderConfirmProvider {
   /** Success url. */
   @Prop() successUrl: string;
 
-  /** Success text for the form. */
-  @Prop() successText: {
-    title: string;
-    description: string;
-    button: string;
-  };
-
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Checkout>;
 
   @Event() scSetState: EventEmitter<string>;
-
-  /** Error event. */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /**
    * Watch for paid checkout machine state.
@@ -68,7 +58,7 @@ export class ScOrderConfirmProvider {
       this.scOrderPaid.emit(checkoutState.checkout);
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       // always clear the checkout.
       clearCheckout();
@@ -102,11 +92,11 @@ export class ScOrderConfirmProvider {
             </div>
           </div>
           <sc-dashboard-module
-            heading={this.successText?.title || __('Thanks for your order!', 'surecart')}
+            heading={formState?.text?.success?.title || __('Thanks for your order!', 'surecart')}
             style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
           >
             <span slot="description">
-              {this.successText?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
+              {formState?.text?.success?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
             </span>
             {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
@@ -117,7 +107,7 @@ export class ScOrderConfirmProvider {
               </sc-alert>
             )}
             <sc-button href={this.getSuccessUrl()} size="large" type="primary">
-              {this.successText?.button || __('Continue', 'surecart')}
+              {formState?.text?.success?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
           </sc-dashboard-module>

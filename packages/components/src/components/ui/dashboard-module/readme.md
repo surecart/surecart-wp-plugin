@@ -56,6 +56,7 @@
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
@@ -93,6 +94,7 @@ graph TD;
   sc-subscription-payment --> sc-dashboard-module
   sc-subscription-payment-method --> sc-dashboard-module
   sc-subscription-switch --> sc-dashboard-module
+  sc-subscription-variation-confirm --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module
   sc-upcoming-invoice --> sc-dashboard-module
   sc-wordpress-password-edit --> sc-dashboard-module

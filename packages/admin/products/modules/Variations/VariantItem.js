@@ -12,18 +12,20 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScDropdown,
+	ScFormControl,
 	ScIcon,
 	ScInput,
 	ScMenu,
 	ScMenuItem,
 	ScPriceInput,
+	ScQuantitySelect,
 	ScTooltip,
 } from '@surecart/components-react';
 import Image from './Image';
-import { maybeConvertAmount } from '../../../util';
 
-export default ({ variant, updateVariant, prices }) => {
-	const { sku, status, image_id, stock, amount, currency } = variant;
+export default ({ variant, updateVariant, defaultAmount, canOverride }) => {
+	const { sku, status, image_id, stock, stock_adjustment, amount, currency } =
+		variant;
 
 	/**
 	 * Link media.
@@ -39,7 +41,7 @@ export default ({ variant, updateVariant, prices }) => {
 			__('Are you sure you wish to unlink this image?', 'surecart')
 		);
 		if (!confirmUnlinkMedia) return;
-		updateVariant({ image_id: null, image_url: null });
+		updateVariant({ image_id: null, image_url: null, image: null });
 	};
 
 	/**
@@ -52,7 +54,12 @@ export default ({ variant, updateVariant, prices }) => {
 			status === 'draft' ? { color: 'var(--sc-color-gray-400)' } : {};
 
 		return (
-			<Tag style={colorStyle}>
+			<Tag
+				style={colorStyle}
+				css={css`
+					word-break: break-word;
+				`}
+			>
 				{option_1}
 				{!!option_2?.length && ' / '}
 				{option_2}
@@ -62,109 +69,170 @@ export default ({ variant, updateVariant, prices }) => {
 		);
 	};
 
-	return {
-		variant: (
-			<div
-				css={css`
-					display: flex;
-					align-items: center;
-					justify-content: flex-start;
-					gap: 1em;
-				`}
-			>
-				<Image
-					variant={variant}
-					existingMediaIds={image_id ? [image_id] : []}
-					onAdd={onLinkMedia}
-					onRemove={onUnlinkMedia}
-				/>
+	return (
+		<>
+			<td>
 				<div
 					css={css`
-						font-weight: bold;
-						flex: 1;
+						display: flex;
+						align-items: center;
+						justify-content: flex-start;
+						gap: 1em;
 					`}
 				>
-					{renderName(variant)}
-				</div>
-			</div>
-		),
-		amount: (
-			<>
-				{(prices || [])?.length > 1 ? (
-					<ScTooltip
-						type="text"
-						text={__(
-							'Product has multiple prices. Please keep only one price to maintain variant wise pricing.',
-							'surecart'
-						)}
-					>
-						-
-					</ScTooltip>
-				) : (
-					<ScPriceInput
-						type="number"
-						min="0"
-						value={amount}
-						placeholder={maybeConvertAmount(
-							prices?.[0]?.amount,
-							prices?.[0]?.currency || 'usd'
-						)}
-						currency={currency}
-						disabled={status === 'draft'}
-						onScInput={(e) =>
-							updateVariant({ amount: e.target.value })
-						}
+					<Image
+						variant={variant}
+						existingMediaIds={image_id ? [image_id] : []}
+						onAdd={onLinkMedia}
+						onRemove={onUnlinkMedia}
 					/>
-				)}
-			</>
-		),
-		stock: (
-			<ScInput
-				value={stock ?? 0}
-				disabled={status === 'draft'}
-				onScInput={(e) => {
-					updateVariant({
-						stock: e.target.value,
-						stock_adjustment:
-							e.target.value - variant?.initial_stock || 0,
-					});
-				}}
-			/>
-		),
-		sku: (
-			<ScInput
-				value={sku}
-				disabled={status === 'draft'}
-				onScInput={(e) => updateVariant({ sku: e.target.value })}
-			/>
-		),
-		actions: (
-			<ScDropdown placement="bottom-end">
-				<ScButton type="text" slot="trigger">
-					<ScIcon name="more-horizontal" />
-				</ScButton>
-				<ScMenu>
-					<ScMenuItem
-						onClick={() =>
-							updateVariant({
-								status:
-									variant?.status === 'draft'
-										? 'publish'
-										: 'draft',
-							})
-						}
+					<div
+						css={css`
+							font-weight: bold;
+							flex: 1;
+						`}
 					>
-						{variant?.status === 'draft'
-							? __('Restore', 'surecart')
-							: __('Delete', 'surecart')}
-					</ScMenuItem>
-					{!!variant?.image_url && (
-						<ScMenuItem onClick={onUnlinkMedia}>
-							{__('Remove Image', 'surecart')}
-						</ScMenuItem>
+						{renderName(variant)}
+					</div>
+				</div>
+			</td>
+			<td>
+				<>
+					{!canOverride ? (
+						<ScTooltip
+							type="text"
+							text={__(
+								'Price overrides are only allowed for products with a single price.',
+								'surecart'
+							)}
+						>
+							<div
+								css={css`
+									width: 30px;
+									display: inline-block;
+								`}
+							>
+								-
+							</div>
+						</ScTooltip>
+					) : (
+						<ScPriceInput
+							type="number"
+							min="0"
+							value={amount}
+							placeholder={defaultAmount}
+							currency={currency}
+							css={css`
+								min-width: 100px;
+							`}
+							disabled={status === 'draft'}
+							onScInput={(e) =>
+								updateVariant({ amount: e.target.value })
+							}
+						/>
 					)}
-				</ScMenu>
-			</ScDropdown>
-		),
-	};
+				</>
+			</td>
+			<td>
+				<ScDropdown placement="bottom-end">
+					<ScButton
+						type="text"
+						slot="trigger"
+						css={css`
+							min-width: 70px;
+						`}
+						caret
+					>
+						{(stock || 0) + (stock_adjustment || 0)}
+					</ScButton>
+					<ScMenu>
+						<div
+							css={css`
+								padding: var(--sc-spacing-xx-small)
+									var(--sc-spacing-medium);
+								display: grid;
+								gap: var(--sc-spacing-small);
+							`}
+						>
+							<ScFormControl label={__('Adjust By', 'surecart')}>
+								<ScQuantitySelect
+									css={css`
+										box-sizing: border-box;
+										--sc-quantity-input-max-width: 80px;
+										--sc-quantity-select-width: 145px;
+									`}
+									quantity={stock_adjustment || 0}
+									onScInput={(e) =>
+										updateVariant({
+											stock_adjustment: e.detail,
+										})
+									}
+									min={-9999999}
+									name="stock"
+								/>
+							</ScFormControl>
+							<ScFormControl label={__('New', 'surecart')}>
+								<ScQuantitySelect
+									css={css`
+										box-sizing: border-box;
+										--sc-quantity-input-max-width: 80px;
+										--sc-quantity-select-width: 145px;
+									`}
+									quantity={
+										(stock || 0) + (stock_adjustment || 0)
+									}
+									onScInput={(e) =>
+										updateVariant({
+											stock_adjustment:
+												e.detail - (stock || 0),
+										})
+									}
+									min={-9999999}
+									name="stock"
+								/>
+							</ScFormControl>
+						</div>
+					</ScMenu>
+				</ScDropdown>
+			</td>
+			<td>
+				<ScInput
+					value={sku}
+					css={css`
+						min-width: 100px;
+					`}
+					disabled={status === 'draft'}
+					onScInput={(e) => updateVariant({ sku: e.target.value })}
+				/>
+			</td>
+			<td>
+				<ScDropdown placement="bottom-end">
+					<ScButton type="text" slot="trigger">
+						<ScIcon name="more-horizontal" />
+					</ScButton>
+					<ScMenu>
+						<ScMenuItem
+							onClick={() =>
+								updateVariant({
+									status:
+										variant?.status === 'draft'
+											? 'publish'
+											: 'draft',
+								})
+							}
+						>
+							{variant?.status === 'draft'
+								? __('Restore', 'surecart')
+								: __('Delete', 'surecart')}
+						</ScMenuItem>
+						{!!variant?.image_url && (
+							<ScMenuItem onClick={onUnlinkMedia}>
+								{__('Remove Image', 'surecart')}
+							</ScMenuItem>
+						)}
+					</ScMenu>
+				</ScDropdown>
+			</td>
+		</>
+	);
 };

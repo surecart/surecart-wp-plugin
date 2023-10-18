@@ -14,9 +14,15 @@ export default ({ variantOptions = [] }) => {
 	return (
 		<span
 			css={css`
-				opacity: 0.65;
-				font-size: 12px;
-				line-height: 1.2;
+				color: var(
+					--sc-price-label-color,
+					var(--sc-input-help-text-color)
+				);
+				font-size: var(
+					--sc-price-label-font-size,
+					var(--sc-input-help-text-font-size-medium)
+				);
+				line-height: var(--sc-line-height-dense);
 			`}
 		>
 			{''} ( {getVariantLabel(variantOptions)} ){''}

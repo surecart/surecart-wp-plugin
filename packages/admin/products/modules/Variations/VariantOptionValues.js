@@ -3,84 +3,51 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useState, useEffect, memo } from '@wordpress/element';
+// import { useState, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import SortableList, { SortableItem, SortableKnob } from 'react-easy-sort';
+import SortableList, { SortableItem } from 'react-easy-sort';
 import arrayMove from 'array-move';
 
 /**
  * Internal dependencies.
  */
-import { ScIcon, ScInput } from '@surecart/components-react';
 import { hasDuplicate } from './utils';
+import VariantOptionValue from './VariantOptionValue';
+import { useEffect } from 'react';
 
-export default memo(({ option, product, updateProduct, onChangeValue }) => {
-	const [values, setValues] = useState(
-		option?.values?.length > 0
-			? option?.values ?? []
-			: [{ index: 1, label: '' }]
-	);
-
-	const setChangeType = (type) => {
-		updateProduct({
-			change_type: type,
-		});
-	};
-
-	const applySort = (oldIndex, newIndex) => {
-		setChangeType('option_value_sorted');
-		setValues(arrayMove(values, oldIndex, newIndex));
-	};
-
-	const onChangeOptionValue = (index, newLabel) => {
-		setChangeType('option_value_renamed');
-
-		// update specific option value.
-		const updatedOptionValues = values.map((value, valueIndex) =>
-			valueIndex === index ? { ...value, label: newLabel } : value
+export default ({ values, onChange, canAddValue }) => {
+	// update specific option value.
+	const updateValue = (index, newLabel) => {
+		const updated = (values || []).map((value, valueIndex) =>
+			valueIndex === index ? newLabel : value
 		);
-		setValues(updatedOptionValues);
+		if (hasDuplicate(updated)) {
+			return;
+		}
+		onChange(updated);
+	};
+
+	// sort values
+	const applySort = (oldIndex, newIndex) => {
+		const sortedValues = arrayMove(values, oldIndex, newIndex).sort(
+			(a, b) => (a === '' ? 1 : b === '' ? -1 : 0)
+		);
+		onChange(sortedValues);
 	};
 
 	// we always want an empty value at the end.
 	useEffect(() => {
-		const hasEmpty = values.some((value) => !value?.label);
+		const hasEmpty = values.some((value) => !value);
 		if (!hasEmpty) {
-			setValues([
-				...values,
-				{
-					label: '',
-				},
-			]);
+			onChange([...values, '']);
 		}
 	}, [values]);
 
-	useEffect(() => {
-		const updatedOptionValues = values.map((value, valueIndex) => {
-			return {
-				...value,
-				index: valueIndex,
-			};
-		});
-		onChangeValue(updatedOptionValues, product?.change_type);
-	}, [values]);
-
+	// remove the option value from the array.
 	const deleteOptionValue = (index) => {
-		setChangeType('option_value_deleted');
-
-		// remove the option value from the array.
-		const newOptionValues = values.filter(
-			(_, valueIndex) => valueIndex !== index
+		onChange(
+			(values || []).filter((_, valueIndex) => valueIndex !== index)
 		);
-
-		// update the index of the option values.
-		const updatedOptionValues = newOptionValues.map((value, valueIndex) => {
-			return {
-				...value,
-				index: valueIndex + 1,
-			};
-		});
-		setValues(updatedOptionValues);
 	};
 
 	return (
@@ -95,88 +62,22 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 				const isLastItem = index === array.length - 1;
 				return (
 					<SortableItem key={index}>
-						<div
-							css={css`
-								width: 100%;
-								display: flex;
-								align-items: center;
-								gap: 1em;
-								justify-content: center;
-							`}
-						>
-							<div
-								css={css`
-									visibility: ${isLastItem
-										? 'hidden'
-										: 'visible'};
-								`}
-							>
-								<SortableKnob>
-									<ScIcon
-										name="drag"
-										slot="prefix"
-										css={css`
-											cursor: grab;
-										`}
-									/>
-								</SortableKnob>
-							</div>
-							<ScInput
-								css={css`
-									width: 100%;
-									focus: {
-										border-color: var(--sc-color-primary);
-									}
-								`}
-								type="text"
+						<div>
+							<VariantOptionValue
+								value={optionValue}
+								values={values}
+								index={index}
+								required={index === 0 || !isLastItem}
+								onChange={(value) => updateValue(index, value)}
+								disabled={!canAddValue && isLastItem}
+								onDelete={() => deleteOptionValue(index)}
 								placeholder={
 									isLastItem
 										? __('Add another value', 'surecart')
 										: null
 								}
-								value={optionValue.label}
-								required={index === 0}
-								onKeyDown={(e) => {
-									// if we deleted everything, and the label is already blank, delete this.
-									if (
-										e.key === 'Backspace' &&
-										!optionValue.label
-									) {
-										deleteOptionValue(index); // delete option values
-									}
-								}}
-								onScInput={(e) => {
-									e.target.setCustomValidity('');
-									onChangeOptionValue(index, e.target.value);
-								}}
-								onScChange={(e) => {
-									e.target.setCustomValidity(
-										hasDuplicate(values, 'label')
-											? sprintf(
-													__(
-														'You have already used the same option value "%s".',
-														'surecart'
-													),
-													e.target.value
-											  )
-											: ''
-									);
-								}}
-							/>
-							<ScIcon
-								css={css`
-									visibility: ${isLastItem
-										? 'hidden'
-										: 'visible'};
-									cursor: pointer;
-									transition: color
-										var(--sc-transition-medium) ease-in-out;
-									&:hover {
-										color: var(--sc-color-danger-500);
-									}
-								`}
-								onClick={() => deleteOptionValue(index)}
-								name="trash"
+								isDraggable={!isLastItem}
+								isDeletable={!isLastItem}
 							/>
 						</div>
 					</SortableItem>
@@ -184,4 +85,4 @@ export default memo(({ option, product, updateProduct, onChangeValue }) => {
 			})}
 		</SortableList>
 	);
-});
+};

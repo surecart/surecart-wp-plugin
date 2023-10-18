@@ -26,7 +26,7 @@ $data       = $controller->getData();
 		<div class="sc-dashboard__logged-out">
 			<div class="sc-dashboard__logged-out-content">
 				<header class="sc-dashboard__logged-out-header">
-					<a href="<?php echo esc_url( get_home_url() ); ?>">
+					<a href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_store_logo_url', get_home_url() ) ); ?>">
 						<?php \SureCart::render( 'layouts/partials/store-logo', $data ); ?>
 					</a>
 				</header>
@@ -45,7 +45,7 @@ $data       = $controller->getData();
 			<div class="sc-dashboard__column dashboard-left is-sticky">
 				<header class="sc-dashboard__header">
 					<div class="sc-dashboard__logo">
-						<a href="<?php echo esc_url( get_home_url() ); ?>">
+						<a href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_store_logo_url', get_home_url() ) ); ?>">
 							<?php \SureCart::render( 'layouts/partials/store-logo', $data ); ?>
 						</a>
 					</div>
@@ -75,9 +75,9 @@ $data       = $controller->getData();
 				</header>
 
 				<div class="sc-dashboard__back sc-pin-bottom">
-					<sc-button href="<?php echo esc_url( get_home_url() ); ?>" type="text" class="sc-link-home">
+					<sc-button href="<?php echo esc_url( apply_filters( 'sc_customer_dashboard_back_home_url', get_home_url() ) ); ?>" type="text" class="sc-link-home">
 						<sc-icon name="arrow-left" slot="prefix"></sc-icon>
-						<?php esc_html_e( 'Back Home', 'surecart' ); ?>
+						<?php echo esc_html( apply_filters( 'sc_customer_dashboard_back_home_text', __( 'Back Home', 'surecart' ) ) ); ?>
 					</sc-button>
 				</div>
 

@@ -26,8 +26,7 @@ const status = {
 	payment_failed: __('Payment Failed', 'surecart'),
 	paid: __('Paid', 'surecart'),
 	canceled: __('Canceled', 'surecart'),
-	void: __('Void', 'surecart'),
-	canceled: __('Canceled', 'surecart'),
+	void: __('Canceled', 'surecart'),
 };
 
 export default ({ order, checkout, loading }) => {
@@ -195,6 +194,12 @@ export default ({ order, checkout, loading }) => {
 							key={item.id}
 							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
+							priceName={item?.price?.name}
+							variantLabel={
+								(item?.variant_options || [])
+									.filter(Boolean)
+									.join(' / ') || null
+							}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}

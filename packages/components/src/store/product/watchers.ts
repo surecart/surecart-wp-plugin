@@ -1,6 +1,6 @@
 import state, { onChange } from './store';
-import { availableVariants } from '@store/product/getters';
 import { getVariantFromValues } from '../../functions/util';
+import { isStockNeedsToBeChecked } from './getters';
 
 onChange('selectedPrice', value => {
   // update the total when the selected price changes.
@@ -12,10 +12,21 @@ onChange('selectedPrice', value => {
 });
 
 onChange('variantValues', values => {
-  const matchedVariant = getVariantFromValues({ variants: availableVariants(), values });
+  const matchedVariant = getVariantFromValues({ variants: state.variants, values });
 
   if (matchedVariant) {
     state.selectedVariant = matchedVariant;
+  }
+});
+
+onChange('selectedVariant', () => {
+  // we don't have a selected variant and stock does not need to be checked.
+  if (!state.selectedVariant || !isStockNeedsToBeChecked) {
+    return;
+  }
+
+  if (state?.selectedVariant.stock < state?.quantity) {
+    state.quantity = state?.selectedVariant.stock || 1;
   }
 });
 

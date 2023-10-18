@@ -19,7 +19,7 @@ export class ScOrderShippingAddress {
   @Prop() label: string;
 
   /** Is this required (defaults to false) */
-  @Prop({ mutable: true }) required: boolean = false;
+  @Prop({ mutable: true, reflect: true }) required: boolean = false;
 
   /** Is this loading. */
   @Prop() loading: boolean;
@@ -36,11 +36,11 @@ export class ScOrderShippingAddress {
   /** Is shipping enabled for this order? */
   @Prop() shippingEnabled: boolean;
 
-  /** Show the full address */
-  @Prop() full: boolean;
+  /** Show the   address */
+  @Prop({ mutable: true }) full: boolean;
 
   /** Show the name field. */
-  @Prop() showName: boolean;
+  @Prop({ reflect: true }) showName: boolean;
 
   /** Show the placeholder fields. */
   @Prop() namePlaceholder: string = __('Name or Company Name', 'surecart');
@@ -53,6 +53,9 @@ export class ScOrderShippingAddress {
 
   /** Default country for address */
   @Prop() defaultCountry: string;
+
+  /** Whether to require the name in the address */
+  @Prop({ reflect: true }) requireName: boolean = false;
 
   /** Placeholder values. */
   @Prop() placeholders: Partial<Address> = {
@@ -109,7 +112,7 @@ export class ScOrderShippingAddress {
 
   @Method()
   async reportValidity() {
-    return this.input.reportValidity();
+    return this.input?.reportValidity?.();
   }
 
   componentWillLoad() {
@@ -118,6 +121,7 @@ export class ScOrderShippingAddress {
     }
 
     this.handleRequirementChange();
+    this.handleNameChange();
   }
 
   @Watch('shippingEnabled')
@@ -125,6 +129,14 @@ export class ScOrderShippingAddress {
   handleRequirementChange() {
     if (this.shippingEnabled || this.taxEnabled) {
       this.required = true;
+    }
+  }
+
+  @Watch('requireName')
+  @Watch('showName')
+  handleNameChange() {
+    if (this.requireName || this.showName) {
+      this.full = true;
     }
   }
 
@@ -148,6 +160,7 @@ export class ScOrderShippingAddress {
           loading={this.loading}
           address={this.address}
           show-name={this.showName}
+          require-name={this.requireName}
           onScChangeAddress={e => this.updateAddressState(e.detail)}
         ></sc-address>
       );

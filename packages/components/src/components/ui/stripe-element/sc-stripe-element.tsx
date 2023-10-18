@@ -4,9 +4,11 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName } from '../../../types';
+import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { StripeElementChangeEvent } from '@stripe/stripe-js';
+import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-stripe-element',
@@ -52,13 +54,6 @@ export class ScStripeElement {
 
   /** The order/invoice was paid for */
   @Event() scPaid: EventEmitter<void>;
-
-  /** There was an error paying for the order/invoice */
-  @Event() scPayError: EventEmitter<any>;
-
-  /** A payment method was added */
-  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
-
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
 
@@ -116,7 +111,8 @@ export class ScStripeElement {
       // paid
       this.scPaid.emit();
     } catch (e) {
-      this.scPayError.emit(e);
+      updateFormState('REJECT');
+      createErrorNotice(e);
       if (e.message) {
         this.error = e.message;
       }

@@ -43,13 +43,13 @@
 
 ## Methods
 
-### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout>`
+### `submit({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>`
 
 Submit the form
 
 #### Returns
 
-Type: `Promise<Checkout | Timeout>`
+Type: `Promise<Checkout | Timeout | Error>`
 
 
 
@@ -70,6 +70,7 @@ Type: `Promise<boolean>`
 
 - [sc-alert](../../../ui/alert)
 - [sc-checkout-unsaved-changes-warning](../../../providers/checkout-unsaved-changes-warning)
+- [sc-checkout-stock-alert](checkout-stock-alert)
 - [sc-login-provider](../../../providers/sc-login-provider)
 - [sc-form-state-provider](../../../providers/form-state-provider)
 - [sc-form-error-provider](../../../providers/form-error-provider)
@@ -83,6 +84,7 @@ Type: `Promise<boolean>`
 graph TD;
   sc-checkout --> sc-alert
   sc-checkout --> sc-checkout-unsaved-changes-warning
+  sc-checkout --> sc-checkout-stock-alert
   sc-checkout --> sc-login-provider
   sc-checkout --> sc-form-state-provider
   sc-checkout --> sc-form-error-provider
@@ -91,18 +93,27 @@ graph TD;
   sc-checkout --> sc-session-provider
   sc-checkout --> sc-block-ui
   sc-alert --> sc-icon
+  sc-checkout-stock-alert --> sc-dialog
+  sc-checkout-stock-alert --> sc-flex
+  sc-checkout-stock-alert --> sc-icon
+  sc-checkout-stock-alert --> sc-text
+  sc-checkout-stock-alert --> sc-table
+  sc-checkout-stock-alert --> sc-table-cell
+  sc-checkout-stock-alert --> sc-table-row
+  sc-checkout-stock-alert --> sc-button
+  sc-checkout-stock-alert --> sc-block-ui
+  sc-dialog --> sc-button
+  sc-dialog --> sc-icon
+  sc-button --> sc-spinner
+  sc-block-ui --> sc-spinner
   sc-login-provider --> sc-alert
   sc-login-provider --> sc-dialog
   sc-login-provider --> sc-form
   sc-login-provider --> sc-input
   sc-login-provider --> sc-button
-  sc-dialog --> sc-button
-  sc-dialog --> sc-icon
-  sc-button --> sc-spinner
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-form-state-provider --> sc-block-ui
-  sc-block-ui --> sc-spinner
   sc-form-error-provider --> sc-checkout-form-errors
   sc-checkout-form-errors --> sc-alert
   sc-form-components-validator --> sc-order-shipping-address

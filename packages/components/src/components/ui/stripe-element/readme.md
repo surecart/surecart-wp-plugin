@@ -23,12 +23,10 @@
 
 ## Events
 
-| Event                | Description                                     | Type                                                                                            |
-| -------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `scPaid`             | The order/invoice was paid for                  | `CustomEvent<void>`                                                                             |
-| `scPayError`         | There was an error paying for the order/invoice | `CustomEvent<any>`                                                                              |
-| `scPaymentInfoAdded` | A payment method was added                      | `CustomEvent<PaymentInfoAddedParams>`                                                           |
-| `scSetState`         | Set the state                                   | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
+| Event        | Description   | Type                                                                                            |
+| ------------ | ------------- | ----------------------------------------------------------------------------------------------- |
+| `scPaid`     |               | `CustomEvent<void>`                                                                             |
+| `scSetState` | Set the state | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 
 
 ## Methods

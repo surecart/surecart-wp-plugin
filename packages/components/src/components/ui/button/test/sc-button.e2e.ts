@@ -1,7 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('sc-button', () => {
-  let page, element, label, button, prefix, suffix;
+  let page, element, button;
 
   const selector = 'sc-button';
 
@@ -10,9 +10,6 @@ describe('sc-button', () => {
     await page.setContent(`<${selector}></${selector}>`);
     element = await page.find(`${selector}`);
     button = await page.find(`${selector} >>> .button`);
-    label = await page.find(`${selector} >>> .button__label`);
-    prefix = await page.find(`${selector} >>> .button__prefix`);
-    suffix = await page.find(`${selector} >>> .button__suffix`);
   });
 
   it('renders', async () => {

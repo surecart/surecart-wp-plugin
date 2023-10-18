@@ -3,7 +3,7 @@
  */
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { useEffect, useRef, useState } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 import { SortableKnob } from 'react-easy-sort';
 import { __ } from '@wordpress/i18n';
 
@@ -24,20 +24,46 @@ import { hasDuplicate } from './utils';
 export default ({
 	index,
 	product,
-	updateProduct,
 	option,
+	updateProduct,
 	updateOption,
 	onDelete,
+	canAddValue,
 }) => {
-	// we are automatically editing if we don't yet have an option nane (it's new)
-	const [editing, setEditing] = useState(!option?.name);
 	const input = useRef(null);
 
+	// If pass editing from option, then take that value, by default, it's undefined.
+	// otherwise we'll automatically editing if we don't yet have an option name (it's new)
+	const open =
+		option?.editing !== undefined ? option?.editing : !option?.name;
+
 	useEffect(() => {
-		if (editing) {
-			input.current.triggerFocus();
+		if (open) {
+			setTimeout(() => {
+				input.current.triggerFocus();
+			}, 50);
 		}
-	}, [editing]);
+	}, [open]);
+
+	const handleChange = (name) =>
+		updateOption({
+			name,
+		});
+
+	const onChangeValues = (values) =>
+		updateProduct({
+			variant_options: product?.variant_options?.map(
+				(option, optionIndex) => {
+					if (optionIndex === index) {
+						return {
+							...option,
+							values,
+						};
+					}
+					return option;
+				}
+			),
+		});
 
 	return (
 		<div
@@ -47,12 +73,14 @@ export default ({
 				border-bottom: 1px solid var(--sc-color-gray-200);
 			`}
 		>
-			{editing ? (
+			{open ? (
 				<ScForm
 					onScFormSubmit={(e) => {
 						e.preventDefault();
 						e.stopImmediatePropagation();
-						setEditing(false);
+						updateOption({
+							editing: false,
+						});
 					}}
 				>
 					<div
@@ -95,11 +123,9 @@ export default ({
 									css={css`
 										width: 50%;
 									`}
-									onScInput={(e) => {
-										updateOption({
-											name: e.target.value,
-										});
-									}}
+									onScInput={(e) =>
+										handleChange(e.target.value)
+									}
 									onScChange={(e) => {
 										e.target.setCustomValidity(
 											hasDuplicate(
@@ -151,23 +177,9 @@ export default ({
 									required
 								/>
 								<VariantOptionValues
-									option={{
-										...option,
-										index,
-									}}
-									product={product}
-									updateProduct={updateProduct}
-									onChangeValue={(
-										updatedValues,
-										changeTypeValue
-									) => {
-										updateProduct({
-											change_type: changeTypeValue,
-										});
-										updateOption({
-											values: updatedValues,
-										});
-									}}
+									values={option?.values || []}
+									onChange={onChangeValues}
+									canAddValue={canAddValue}
 								/>
 							</div>
 							<div
@@ -217,25 +229,29 @@ export default ({
 							css={css`
 								display: flex;
 								gap: 0.5em;
+								flex-wrap: wrap;
 							`}
 						>
 							{(option?.values || [])
 								.filter(
-									(optionValue) =>
-										optionValue?.label?.length > 0
+									(optionValue) => optionValue?.length > 0
 								)
 								.map((value, keyValue) => {
 									return (
-										<ScTag key={keyValue}>
-											{value?.label}
-										</ScTag>
+										<ScTag key={keyValue}>{value}</ScTag>
 									);
 								})}
 						</div>
 					</div>
 
 					<div>
-						<ScButton onClick={() => setEditing(true)}>
+						<ScButton
+							onClick={() =>
+								updateOption({
+									editing: true,
+								})
+							}
+						>
 							{__('Edit', 'surecart')}
 						</ScButton>
 					</div>

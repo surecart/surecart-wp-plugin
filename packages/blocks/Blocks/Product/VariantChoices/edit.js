@@ -1,98 +1,77 @@
 import {
 	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
-	useSetting,
-	InspectorControls,
+	getTypographyClassesAndStyles as useTypographyProps,
 } from '@wordpress/block-editor';
-import {
-	ScSelect,
-} from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
-import {
-	__experimentalUseCustomUnits as useCustomUnits,
-	__experimentalUnitControl as UnitControl,
-	PanelBody,
-} from '@wordpress/components';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
-import { useRef, useEffect } from '@wordpress/element';
+import { ScFormControl, ScPillOption } from '@surecart/components-react';
 
-export default ({ attributes, setAttributes, context }) => {
-	const selectColor = useRef();
-	const selectSize = useRef();
-	const { gap } = attributes;
-	const blockProps = useBlockProps();
+import classNames from 'classnames';
+
+export default ({ attributes }) => {
+	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
-	const units = useCustomUnits({
-		availableUnits: useSetting('spacing.units') || ['%', 'px', 'em', 'rem'],
+	const borderProps = useBorderProps(attributes);
+	const typographyProps = useTypographyProps(attributes);
+	const blockProps = useBlockProps({
+		style: {
+			marginTop: spacingProps?.style?.marginTop,
+			marginLeft: spacingProps?.style?.marginLeft,
+			marginRight: spacingProps?.style?.marginRight,
+			marginBottom: spacingProps?.style?.marginBottom,
+		},
 	});
 
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
+	const fontStyles = {
+		fontFamily: blockProps?.style?.fontFamily,
+		fontWeight: blockProps?.style?.fontWeight,
+		fontStyle: blockProps?.style?.fontStyle,
+	};
 
-	useEffect(() => {
-		if (selectColor.current) {
-			selectColor.current.value = 'black';
-			selectColor.current.choices = [
-				{
-					value: 'black',
-					label: __('Black', 'surecart'),
-				},
-				{
-					value: 'white',
-					label: __('White', 'surecart'),
-				},
-			];
-		}
-		if (selectSize.current) {
-			selectSize.current.value = 'xl';
-			selectSize.current.choices = [
-				{
-					value: 'xl',
-					label: __('XL', 'surecart'),
-				},
-				{
-					value: 'l',
-					label: __('L', 'surecart'),
-				},
-				{
-					value: 'm',
-					label: __('M', 'surecart'),
-				},
-			];
-		}
-	}, [selectColor, selectSize]);
+	const styleAttributes = {
+		className: classNames(
+			spacingProps.className,
+			borderProps.className,
+			typographyProps.className
+		),
+		style: {
+			...fontStyles,
+			'--sc-pill-option-text-color': colorProps?.style?.color,
+			'--sc-pill-option-background-color':
+				colorProps?.style?.backgroundColor,
+			'--sc-pill-option-border-color': borderProps?.style?.borderColor,
+			'--sc-pill-option-border-width': borderProps?.style?.borderWidth,
+			'--sc-pill-option-border-style': borderProps?.style?.borderStyle,
+			'--sc-pill-option-border-radius': borderProps?.style?.borderRadius,
+			'--sc-pill-option-padding-left': spacingProps?.style?.paddingLeft,
+			'--sc-pill-option-padding-right': spacingProps?.style?.paddingRight,
+			'--sc-pill-option-padding-top': spacingProps?.style?.paddingTop,
+			'--sc-pill-option-padding-bottom':
+				spacingProps?.style?.paddingBottom,
+			...typographyProps.style,
+			borderStyle: 'none',
+		},
+	};
 
 	return (
-		<>
-			<InspectorControls>
-				<PanelBody title={__('Layout')}>
-					<UnitControl
-						label={__('Gap')}
-						labelPosition="edge"
-						__unstableInputWidth="80px"
-						value={gap || ''}
-						onChange={(nextGap) => {
-							nextGap = 0 > parseFloat(nextGap) ? '0' : nextGap;
-							setAttributes({ gap: nextGap });
-						}}
-						units={units}
-					/>
-				</PanelBody>
-			</InspectorControls>
-
-			<div {...blockProps}
-				style={{
-					display: 'flex',
-  					flexDirection: 'column',
-					  gap,
-					...spacingProps.style
-				}}
-			>
-				<ScSelect ref={selectColor} label={__('Color', 'surecart')} />
-				<ScSelect ref={selectSize} label={__('Size', 'surecart')} />
-			</div>
-		</>
+		<div {...blockProps}>
+			<ScFormControl label={__('Color', 'surecart')} {...styleAttributes}>
+				<div
+					style={{
+						display: 'flex',
+						flexWrap: 'wrap',
+						gap: 'var(--sc-spacing-x-small)',
+					}}
+				>
+					<ScPillOption isSelected>
+						{__('Green', 'surecart')}
+					</ScPillOption>
+					<ScPillOption>{__('White', 'surecart')}</ScPillOption>
+					<ScPillOption>{__('Black', 'surecart')}</ScPillOption>
+				</div>
+			</ScFormControl>
+		</div>
 	);
 };

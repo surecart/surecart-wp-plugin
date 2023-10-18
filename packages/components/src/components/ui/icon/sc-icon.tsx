@@ -28,9 +28,6 @@ export class ScIcon {
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
 
-  /** Emitted when the icon failed to load.  */
-  @Event() scError: EventEmitter<{ status: number }>;
-
   /** @internal Fetches the icon and redraws it. Used to handle library registrations. */
   redraw() {
     this.setIcon();
@@ -78,14 +75,14 @@ export class ScIcon {
             this.scLoad.emit();
           } else {
             this.svg = '';
-            this.scError.emit({ status: file.status });
+            console.error({ status: file?.status });
           }
         } else {
           this.svg = '';
-          this.scError.emit({ status: file.status });
+          console.error({ status: file?.status });
         }
       } catch {
-        this.scError.emit({ status: -1 });
+        console.error({ status: -1 });
       }
     } else if (this.svg) {
       // If we can't resolve a URL and an icon was previously set, remove it

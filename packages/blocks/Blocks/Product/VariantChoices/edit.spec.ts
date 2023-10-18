@@ -4,19 +4,24 @@
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
 test.describe('surecart/product-variant-choices', () => {
-	test.beforeEach(async ({ admin, editor }) => {
-		await admin.visitSiteEditor({
-			postId: 'surecart/surecart//product-info',
-			postType: 'wp_template_part',
-		});
-		await editor.canvas.click('body');
+	test.beforeAll(async ({ requestUtils }) => {
+		await requestUtils.deleteAllTemplates('wp_template');
+		await requestUtils.deleteAllTemplates('wp_template_part');
 	});
 
-	test('Should render Variant Choices Block', async ({ editor, page }) => {
-		await editor.setContent('');
-		await editor.insertBlock({ name: 'surecart/product-variant-choices' });
+	test.beforeEach(async ({ admin, editor }) => {
+		await admin.visitSiteEditor({
+			postId: 'surecart/surecart//single-product',
+			postType: 'wp_template',
+			canvas: 'edit',
+		});
+	});
 
-		const content = await editor.getEditedPostContent();
-		expect(content).toBe(`<!-- wp:surecart/product-variant-choices /-->`);
+	test('Should have variant choices block', async ({ editor, page }) => {
+		await expect(
+			page
+				.frameLocator('iframe[name="editor-canvas"]')
+				.locator('[data-type="surecart/product-variant-choices"]')
+		).toBeVisible();
 	});
 });

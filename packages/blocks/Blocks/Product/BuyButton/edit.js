@@ -8,7 +8,13 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
-import { Button, ButtonGroup, PanelBody } from '@wordpress/components';
+import {
+	Button,
+	ButtonGroup,
+	PanelBody,
+	PanelRow,
+	TextControl,
+} from '@wordpress/components';
 import {
 	AlignmentControl,
 	BlockControls,
@@ -58,7 +64,14 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 
 export default (props) => {
 	const { attributes, setAttributes, className } = props;
-	const { textAlign, style, text, width, outOfStockText } = attributes;
+	const {
+		textAlign,
+		style,
+		text,
+		width,
+		out_of_stock_text,
+		unavailable_text,
+	} = attributes;
 
 	function onKeyDown(event) {
 		if (isKeyboardEvent.primary(event, 'k')) {
@@ -139,9 +152,18 @@ export default (props) => {
 					<PanelRow>
 						<TextControl
 							label={__('Out of stock label', 'surecart')}
-							value={outOfStockText}
+							value={out_of_stock_text}
 							onChange={(value) =>
-								setAttributes({ outOfStockText: value })
+								setAttributes({ out_of_stock_text: value })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Unavailable label', 'surecart')}
+							value={unavailable_text}
+							onChange={(value) =>
+								setAttributes({ unavailable_text: value })
 							}
 						/>
 					</PanelRow>
