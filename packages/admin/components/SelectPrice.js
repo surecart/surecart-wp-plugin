@@ -35,7 +35,6 @@ export default ({
 
 	const choices = (products || [])
 		.filter((product) => {
-			console.log({ product, variable });
 			if (!variable && product?.variants?.data?.length) {
 				return false;
 			}

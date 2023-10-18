@@ -21,6 +21,53 @@ export default ({ checkout, setBusy }) => {
 		}
 	}, [price]);
 
+	const updateQuantity = async (id, data) => {
+		try {
+			setBusy(true);
+			// get the line items endpoint.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'line_item'
+			);
+
+			const { checkout } = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${id}`, {
+					expand: [
+						// expand the checkout and the checkout's required expands.
+						...(expand || []).map((item) => {
+							return item.includes('.')
+								? item
+								: `checkout.${item}`;
+						}),
+						'checkout',
+					],
+				}),
+				data,
+			});
+
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'draft-checkout',
+				checkout,
+				undefined,
+				false,
+				checkout
+			);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	const onSubmit = async (priceId, variantId = null) => {
 		try {
 			setBusy(true);
@@ -81,6 +128,17 @@ export default ({ checkout, setBusy }) => {
 			value={price?.priceId}
 			ad_hoc={true}
 			onSelect={({ price_id, variant_id }) => {
+				const variantExists = checkout?.line_items?.data?.find(
+					(item) =>
+						item?.variant === variant_id &&
+						item?.price?.id === price_id
+				);
+				if (variantExists) {
+					updateQuantity(variantExists?.id, {
+						quantity: variantExists?.quantity + 1,
+					});
+					return;
+				}
 				setPrice({
 					priceId: price_id,
 					variantId: variant_id,
