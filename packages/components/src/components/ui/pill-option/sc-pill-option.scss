@@ -36,29 +36,25 @@
       text-decoration: line-through;
     }
 
-    &--selected,
-    &:focus {
+    &--selected {
       background-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
       border-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
       color: var(--sc-pill-option-active-text-color, white);
       box-shadow: var(--sc-shadow-small);
     }
 
-    &:hover:not(.sc-pill-option__button--selected) {
-      background-color: var(--sc-button-default-hover-background-color, var(--sc-pill-option-background-color, transparent));
+    &:focus-visible {
+      outline-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
+      outline-offset: 4px;
+      outline-width: 2px;
+    }
+
+    &:hover:not(.sc-pill-option__button--selected),
+    &:focus:not(.sc-pill-option__button--selected),
+    &:active:not(.sc-pill-option__button--selected) {
+      background-color: var(--sc-button-default-hover-background-color, var(--sc-pill-option-background-color, var(--sc-color-white)));
       border-color: var(--sc-pill-option-active-background-color, var(--sc-button-default-focus-border-color, var(--primary-background)));
       color: var(--sc-pill-option-text-color, var(--sc-color-gray-700));
-    }
-
-    &:focus {
-      outline: none;
-      box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-pill-option-active-background-color, var(--sc-focus-ring-color-primary));
-    }
-
-    &:active:not(.sc-pill-option__button--selected) {
-      background-color: var(--sc-button-default-active-background-color, var(--sc-color-white));
-      border-color: var(--sc-button-default-active-border-color, var(--sc-color-white));
-      color: var(--sc-pill-option-active-background-color, var(--primary-background));
     }
   }
 }
