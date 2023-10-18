@@ -54,6 +54,7 @@
 
     ::slotted(*) {
       margin-left: var(--sc-spacing-x-small);
+      text-align: right;
     }
   }
 }
@@ -72,11 +73,11 @@
   visibility: visible;
 }
 
-.menu-item--is-rtl{
-  &.menu-item{
+.menu-item--is-rtl {
+  &.menu-item {
     text-align: right;
 
-    .menu-item__check{
+    .menu-item__check {
       left: auto;
       right: 0.5em;
     }
