@@ -48,7 +48,7 @@ export default ({ product, updateProduct, loading }) => {
 				}}
 				name="stock_enabled"
 			>
-				{__('Track quantity', 'surecart')}
+				{__('Track Quantity', 'surecart')}
 				<span slot="description">
 					{__('Track the quantity of this product.', 'surecart')}
 				</span>
@@ -65,7 +65,7 @@ export default ({ product, updateProduct, loading }) => {
 						});
 					}}
 				>
-					{__('Allow Out of stock selling', 'surecart')}
+					{__('Allow Out Of Stock Selling', 'surecart')}
 					<span slot="description">
 						{__('Continue selling when out of stock', 'surecart')}
 					</span>
