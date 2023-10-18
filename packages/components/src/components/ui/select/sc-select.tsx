@@ -408,11 +408,10 @@ export class ScSelectDropdown {
         disabled={choice.disabled}
       >
         {choice.label}
-        {!!choice?.suffix && (
-          <span slot="suffix" class={{ 'is-unavailable suffix': choice?.suffixUnavailable }}>
-            {choice.suffix}
-          </span>
-        )}
+        {!!choice?.description && <div>{choice?.description}</div>}
+        <div slot="suffix">
+          {choice?.suffix} {!!choice?.suffixDescription && <div>{choice?.suffixDescription}</div>}
+        </div>
         {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );
