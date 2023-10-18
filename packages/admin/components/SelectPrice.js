@@ -35,7 +35,6 @@ export default ({
 
 	const choices = (products || [])
 		.filter((product) => {
-			console.log({ product, variable });
 			if (!variable && product?.variants?.data?.length) {
 				return false;
 			}
@@ -73,6 +72,9 @@ export default ({
 						return variants
 							.sort((a, b) => a?.position - b?.position)
 							.map((variant) => {
+								const variantUnavailable =
+									!product?.allow_out_of_stock_purchases &&
+									0 >= variant?.available_stock;
 								const variantLabel = [
 									variant?.option_1,
 									variant?.option_2,
@@ -90,6 +92,8 @@ export default ({
 										price,
 										{ showOnce: true }
 									)}`,
+									unavailable: variantUnavailable,
+									suffixUnavailable: variantUnavailable,
 									variant_id: variant?.id,
 								};
 							});
@@ -113,6 +117,10 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
+				if (e?.detail?.suffixUnavailable) {
+					alert(__('Variant Out of Stock.', 'surecart'));
+					return;
+				}
 				onSelect({
 					price_id: e?.target?.value,
 					...(includeVariants && {
