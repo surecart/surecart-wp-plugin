@@ -27,7 +27,12 @@ const prices = product?.prices?.data || [];
 const variant_options = product?.variant_options?.data || [];
 const variants = (product?.variants?.data || []).sort((a, b) => a?.position - b?.position);
 const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
-const selectedVariant = variants?.length ? variants[0] : null;
+const selectedVariant = variants?.length
+  ? variants.find(variant => {
+      if (!product?.stock_enabled || product?.allow_out_of_stock_purchases) return true;
+      return variant?.available_stock > 0;
+    })
+  : null;
 
 const adHocAmount = selectedPrice?.amount || null;
 
