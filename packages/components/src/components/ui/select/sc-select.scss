@@ -98,7 +98,7 @@ sc-dropdown {
   &__suffix-description,
   &__description {
     font-size: var(--sc-input-help-text-font-size-medium);
-    color: var(--sc-input-help-text-color);
+    opacity: 0.65;
   }
 }
 
