@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
 import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
@@ -38,6 +38,9 @@ export default ({
 			if (!variable && product?.variants?.data?.length) {
 				return false;
 			}
+			if (!product?.prices?.data?.length) {
+				return false;
+			}
 			return true;
 		})
 		.map((product) => {
@@ -57,12 +60,23 @@ export default ({
 						const variants = product?.variants?.data || [];
 
 						if (!includeVariants || !variants.length) {
+							const priceUnavailable =
+								product?.stock_enabled &&
+								!product?.allow_out_of_stock_purchases &&
+								0 >= product?.available_stock;
 							return {
 								value: price.id,
 								label: `${formatNumber(
 									price.amount,
 									price.currency
 								)}${price?.archived ? ' (Archived)' : ''}`,
+								disabled: priceUnavailable,
+								suffixDescription: product?.stock_enabled
+									? sprintf(
+											__('%s available', 'surecart'),
+											product?.available_stock
+									  )
+									: null,
 								suffix: intervalString(price, {
 									showOnce: true,
 								}),
@@ -73,6 +87,7 @@ export default ({
 							.sort((a, b) => a?.position - b?.position)
 							.map((variant) => {
 								const variantUnavailable =
+									product?.stock_enabled &&
 									!product?.allow_out_of_stock_purchases &&
 									0 >= variant?.available_stock;
 								const variantLabel = [
@@ -92,8 +107,13 @@ export default ({
 										price,
 										{ showOnce: true }
 									)}`,
-									unavailable: variantUnavailable,
-									suffixUnavailable: variantUnavailable,
+									suffixDescription: product?.stock_enabled
+										? sprintf(
+												__('%s available', 'surecart'),
+												variant?.available_stock
+										  )
+										: null,
+									disabled: variantUnavailable,
 									variant_id: variant?.id,
 								};
 							});
