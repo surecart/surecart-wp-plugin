@@ -310,30 +310,28 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {['updating', 'finalizing', 'paying', 'confirming'].includes(formState.formState.value) && (
-            <sc-block-ui class="busy-block-ui" style={{ zIndex: '30' }} z-index={30}></sc-block-ui>
-          )}
+          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={30}></sc-block-ui>}
 
           {formState.formState.value === 'finalizing' && (
-            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75', 'zIndex': '30' }}>
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.finalizing || __('Submitting order...', 'surecart')}
             </sc-block-ui>
           )}
 
           {formState.formState.value === 'paying' && (
-            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75', 'zIndex': '30' }}>
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.paying || __('Processing payment...', 'surecart')}
             </sc-block-ui>
           )}
 
           {formState.formState.value === 'confirming' && (
-            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75', 'zIndex': '30' }}>
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.confirming || __('Finalizing order...', 'surecart')}
             </sc-block-ui>
           )}
 
           {formState.formState.value === 'redirecting' && (
-            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75', 'zIndex': '30' }}>
+            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
               {this.loadingText?.confirmed || __('Success! Redirecting...', 'surecart')}
             </sc-block-ui>
           )}
