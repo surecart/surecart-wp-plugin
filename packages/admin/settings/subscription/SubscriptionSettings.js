@@ -143,26 +143,31 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
-				<ScSwitch
-					checked={item.cancel_window_enabled}
-					onScChange={(e) => {
-						e.preventDefault();
-						editItem({
-							cancel_window_enabled: !item.cancel_window_enabled,
-						});
-					}}
+				<ScUpgradeRequired
+					required={!scData?.entitlements?.subscription_cancel_window}
 				>
-					{__('Delay Cancellations', 'surecart')}
-					{!scData?.entitlements?.optional_upfront_payment_method && (
-						<ScPremiumTag />
-					)}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Whether to delay showing the cancel option for the customers.',
-							'surecart'
+					<ScSwitch
+						checked={item.cancel_window_enabled}
+						onScChange={(e) => {
+							e.preventDefault();
+							editItem({
+								cancel_window_enabled:
+									!item.cancel_window_enabled,
+							});
+						}}
+					>
+						{__('Delay Cancellations', 'surecart')}
+						{!scData?.entitlements?.subscription_cancel_window && (
+							<ScPremiumTag />
 						)}
-					</span>
-				</ScSwitch>
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Whether to delay showing the cancel option for the customers.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</ScUpgradeRequired>
 				{!!item.cancel_window_enabled && (
 					<ScInput
 						value={item?.cancel_window_days}
