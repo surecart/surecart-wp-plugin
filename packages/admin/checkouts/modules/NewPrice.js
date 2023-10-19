@@ -21,7 +21,7 @@ export default ({ checkout, setBusy }) => {
 		}
 	}, [price]);
 
-	const updateQuantity = async (id, data) => {
+	const updateLineItem = async (id, data) => {
 		try {
 			setBusy(true);
 			// get the line items endpoint.
@@ -68,7 +68,7 @@ export default ({ checkout, setBusy }) => {
 		}
 	};
 
-	const onSubmit = async (priceId, variantId = null) => {
+	const addLineItem = async (data) => {
 		try {
 			setBusy(true);
 
@@ -79,7 +79,7 @@ export default ({ checkout, setBusy }) => {
 			);
 
 			// add the line item.
-			const { checkout: data } = await apiFetch({
+			const { checkout } = await apiFetch({
 				method: 'POST',
 				path: addQueryArgs(baseURL, {
 					expand: [
@@ -92,19 +92,14 @@ export default ({ checkout, setBusy }) => {
 						'checkout',
 					],
 				}),
-				data: {
-					checkout: checkout?.id,
-					price: priceId,
-					quantity: 1,
-					variant: variantId,
-				},
+				data,
 			});
 
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
 				'draft-checkout',
-				data,
+				checkout,
 				undefined,
 				false,
 				checkout
@@ -123,22 +118,38 @@ export default ({ checkout, setBusy }) => {
 		}
 	};
 
+	const onSubmit = async (priceId, variantId = null) => {
+		const priceExists = checkout?.line_items?.data?.find(
+			(item) => item?.price?.id === priceId
+		);
+		const variantExists = checkout?.line_items?.data?.find(
+			(item) => item?.variant === variantId && item?.price?.id === priceId
+		);
+		if (variantExists) {
+			updateLineItem(variantExists?.id, {
+				quantity: variantExists?.quantity + 1,
+			});
+			return;
+		}
+		if (priceExists) {
+			updateLineItem(priceExists?.id, {
+				quantity: priceExists?.quantity + 1,
+			});
+			return;
+		}
+		addLineItem({
+			checkout: checkout?.id,
+			price: priceId,
+			quantity: 1,
+			variant: variantId,
+		});
+	};
+
 	return (
 		<PriceSelector
 			value={price?.priceId}
 			ad_hoc={true}
 			onSelect={({ price_id, variant_id }) => {
-				const variantExists = checkout?.line_items?.data?.find(
-					(item) =>
-						item?.variant === variant_id &&
-						item?.price?.id === price_id
-				);
-				if (variantExists) {
-					updateQuantity(variantExists?.id, {
-						quantity: variantExists?.quantity + 1,
-					});
-					return;
-				}
 				setPrice({
 					priceId: price_id,
 					variantId: variant_id,
