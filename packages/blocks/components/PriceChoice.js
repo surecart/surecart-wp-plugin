@@ -6,13 +6,14 @@ import {
 	ScInput,
 	ScMenu,
 	ScMenuItem,
+	ScFormatNumber,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../admin/util/translations';
-
 import PriceSelector from './PriceSelector';
+import LineItemLabel from '../../admin/ui/LineItemLabel';
 
 export default ({
 	choice,
@@ -27,12 +28,24 @@ export default ({
 		(select) => {
 			if (!choice?.id) return;
 			return select(coreStore).getEntityRecord(
-				'root',
+				'surecart',
 				'price',
 				choice?.id
 			);
 		},
 		[choice?.id]
+	);
+
+	const variant = useSelect(
+		(select) => {
+			if (!choice?.variant_id) return;
+			return select(coreStore).getEntityRecord(
+				'surecart',
+				'variant',
+				choice?.variant_id
+			);
+		},
+		[choice?.variant_id]
 	);
 
 	// get product from price.
@@ -73,7 +86,32 @@ export default ({
 				{!choice?.id ? (
 					<PriceSelector ad_hoc={false} onSelect={onSelect} />
 				) : (
-					`${product?.name} ${price?.name ? `— ${price.name}` : ''}`
+					<div>
+						<strong>{product?.name}</strong>
+						<LineItemLabel
+							lineItem={{
+								price,
+								variant_options: [
+									variant?.option_1,
+									variant?.option_2,
+									variant?.option_3,
+								],
+							}}
+						>
+							<div>
+								<ScFormatNumber
+									type="currency"
+									currency={price?.currency || 'usd'}
+									value={
+										!!price?.ad_hoc && ad_hoc_amount
+											? ad_hoc_amount
+											: price?.amount
+									}
+								/>
+								{intervalString(price)}
+							</div>
+						</LineItemLabel>
+					</div>
 				)}
 			</sc-table-cell>
 			{!hideQuantity && (
