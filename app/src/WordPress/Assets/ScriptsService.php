@@ -245,6 +245,8 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function enqueueFront() {
+		// make sure it is registered.
+		$this->register();
 		// enqueue it.
 		wp_enqueue_script( 'surecart-components' );
 
