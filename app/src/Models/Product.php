@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
@@ -344,5 +345,38 @@ class Product extends Model implements PageModel {
 	public function getTemplatePartAttribute() {
 		return get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
 	}
-}
 
+	/**
+	 * Get the appended variant choice block content with product block content.
+	 *
+	 * @return string
+	 */
+	public function getAppendedVariantChoiceBlockContent(): string {
+		$block_name         = 'surecart/product-variant-choices';
+		$is_variant_product = count( $this->variants->data ?? [] ) > 0;
+		$block_content      = wp_is_block_theme() ? $this->template->content : $this->template_part->content;
+
+		// Return if not a variant product or has already a `surecart/product-variant-choices` block in the content.
+		if ( ! $is_variant_product || has_block( $block_name, $block_content ) ) {
+			return $block_content;
+		}
+
+		// Get parsed block array from content string.
+		$blocks = parse_blocks( $block_content );
+
+		// Append `surecart/product-variant-choices` block to the parsed block array
+		// before the `surecart/product-buy-button` block.
+		$blocks = SureCart::blocks()->appendBlock(
+			$blocks,
+			'surecart/product-buy-button',
+			[
+				'blockName'    => $block_name,
+				'innerContent' => [],
+				'attrs'        => [],
+				'innerBlocks'  => [],
+			]
+		);
+
+		return serialize_blocks( $blocks );
+	}
+}
