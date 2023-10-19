@@ -101,6 +101,9 @@ class AssetsService {
 	 * @return void
 	 */
 	public function enqueueGlobals() {
+		if ( true ) {
+			wp_enqueue_script( 'surecart-google-recaptcha' );
+		}
 		if ( is_page_template( 'pages/template-surecart-dashboard.php' ) ) {
 			// enqueue it.
 			wp_enqueue_style( 'surecart-themes-default' );
