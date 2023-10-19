@@ -131,7 +131,7 @@ export default ({ product, updateProduct, loading }) => {
 				name="sku"
 				label={__('SKU (Stock Keeping Unit)', 'surecart')}
 				value={product?.sku || ''}
-				onScChange={(e) => {
+				onScInput={(e) => {
 					updateProduct({
 						sku: e.target.value,
 					});
