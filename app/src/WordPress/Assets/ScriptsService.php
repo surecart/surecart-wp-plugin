@@ -229,6 +229,7 @@ class ScriptsService {
 				'strategy' => 'defer',
 			]
 		);
+
 		wp_add_inline_script(
 			'surecart-affiliate-tracking',
 			'window.SureCartAffiliatesConfig = {
