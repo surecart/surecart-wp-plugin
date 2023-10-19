@@ -37,6 +37,9 @@ if ( ! defined( 'SURECART_APP_URL' ) ) {
 if ( ! defined( 'SURECART_API_URL' ) ) {
 	define( 'SURECART_API_URL', 'https://api.surecart.com' );
 }
+if ( ! defined( 'SURECART_JS_URL' ) ) {
+	define( 'SURECART_JS_URL', 'https://js.surecart.com' );
+}
 if ( ! defined( 'SURECART_CDN_IMAGE_BASE' ) ) {
 	define( 'SURECART_CDN_IMAGE_BASE', 'https://surecart.com/cdn-cgi/image' );
 }
