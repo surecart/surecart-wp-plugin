@@ -220,7 +220,7 @@ class ScriptsService {
 			$asset_file['version']
 		);
 
-		wp_enqueue_script(
+		wp_register_script(
 			'surecart-affiliate-tracking',
 			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),
 			[],
