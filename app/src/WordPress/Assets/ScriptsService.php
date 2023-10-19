@@ -220,7 +220,7 @@ class ScriptsService {
 			$asset_file['version']
 		);
 
-		wp_register_script(
+		wp_enqueue_script(
 			'surecart-affiliate-tracking',
 			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),
 			[],
@@ -233,7 +233,7 @@ class ScriptsService {
 			'surecart-affiliate-tracking',
 			'window.SureCartAffiliatesConfig = {
 				"accountSlug": "' . \SureCart::account()->slug . '",
-				"baseURL":"' . esc_url_raw( untrailingslashit( SURECART_API_URL ) ) . '"
+				"baseURL":"' . esc_url_raw( untrailingslashit( SURECART_API_URL ) ) . '/v1"
 			};',
 			'before'
 		);
