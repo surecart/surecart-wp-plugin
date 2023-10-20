@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -5,7 +6,6 @@ import {
 	ScFormatNumber,
 	ScIcon,
 	ScLineItem,
-	ScOrderStatusBadge,
 	ScProductLineItem,
 	ScSkeleton,
 } from '@surecart/components-react';
