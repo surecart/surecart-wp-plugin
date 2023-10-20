@@ -190,10 +190,6 @@ export default ({ order, checkout, loading }) => {
 		>
 			<Fragment>
 				{(line_items || []).map((item) => {
-					const variantLabel =
-						(item?.variant_options || [])
-							.filter(Boolean)
-							.join(' / ') || null;
 					return (
 						<ScProductLineItem
 							key={item.id}
@@ -213,7 +209,7 @@ export default ({ order, checkout, loading }) => {
 							currency={item?.price?.currency}
 							trialDurationDays={item?.price?.trial_duration_days}
 							interval={intervalString(item?.price)}
-							sku={getSKUText(item, variantLabel)}
+							sku={getSKUText(item)}
 						></ScProductLineItem>
 					);
 				})}

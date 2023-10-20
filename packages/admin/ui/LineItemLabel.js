@@ -11,7 +11,7 @@ import { getSKUText } from '../util/products';
 export default ({ lineItem, children }) => {
 	const variantLabel = getVariantLabel(lineItem?.variant_options);
 	const priceName = lineItem?.price?.name;
-	const productSku = getSKUText(lineItem, variantLabel);
+	const productSku = getSKUText(lineItem);
 
 	return (
 		<span
