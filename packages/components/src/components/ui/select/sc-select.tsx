@@ -195,7 +195,7 @@ export class ScSelectDropdown {
     if (checked) {
       return true;
     }
-    return this.value === value;
+    return value && this.value === value;
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
@@ -408,7 +408,10 @@ export class ScSelectDropdown {
         disabled={choice.disabled}
       >
         {choice.label}
-        {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
+        {!!choice?.description && <div class="select__description">{choice?.description}</div>}
+        <div slot="suffix">
+          {choice?.suffix} {!!choice?.suffixDescription && <div class="select__suffix-description">{choice?.suffixDescription}</div>}
+        </div>
         {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );

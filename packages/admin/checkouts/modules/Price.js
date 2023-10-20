@@ -25,7 +25,6 @@ export default ({
 	onChange,
 	subtotal_amount,
 	ad_hoc_amount,
-	variant_options,
 	lineItem,
 }) => {
 	const imageUrl = price?.product?.image_url;

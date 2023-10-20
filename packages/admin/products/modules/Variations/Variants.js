@@ -135,6 +135,7 @@ export default ({ product, updateProduct }) => {
 							updateVariant(data, variant?.position)
 						}
 						canOverride={(prices || [])?.length <= 1}
+						defaultSku={product?.sku}
 						defaultAmount={
 							prices?.[0]
 								? maybeConvertAmount(

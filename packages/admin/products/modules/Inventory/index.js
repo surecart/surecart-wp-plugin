@@ -14,6 +14,7 @@ import {
 	ScButton,
 	ScFormControl,
 	ScIcon,
+	ScInput,
 	ScQuantitySelect,
 	ScSwitch,
 	ScTooltip,
@@ -125,6 +126,17 @@ export default ({ product, updateProduct, loading }) => {
 					loading={loading}
 				/>
 			)}
+
+			<ScInput
+				name="sku"
+				label={__('SKU (Stock Keeping Unit)', 'surecart')}
+				value={product?.sku || ''}
+				onScInput={(e) => {
+					updateProduct({
+						sku: e.target.value,
+					});
+				}}
+			/>
 		</Box>
 	);
 };

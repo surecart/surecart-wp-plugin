@@ -36,7 +36,7 @@ export class ScProductQuantity {
 
   getMaxStockQty() {
     // check purchase limit.
-    if (state.product.purchase_limit) {
+    if (state.product?.purchase_limit) {
       return state.product.purchase_limit;
     }
 
