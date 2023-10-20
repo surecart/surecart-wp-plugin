@@ -25,8 +25,8 @@ onChange('selectedVariant', () => {
     return;
   }
 
-  if (state?.selectedVariant.stock < state?.quantity) {
-    state.quantity = state?.selectedVariant.stock || 1;
+  if (state?.selectedVariant.available_stock < state?.quantity) {
+    state.quantity = state?.selectedVariant.available_stock || 1;
   }
 });
 
