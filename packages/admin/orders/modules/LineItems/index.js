@@ -20,6 +20,7 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
+import { getSKUText } from '../../../util/products';
 
 const status = {
 	processing: __('Processing', 'surecart'),
@@ -189,6 +190,10 @@ export default ({ order, checkout, loading }) => {
 		>
 			<Fragment>
 				{(line_items || []).map((item) => {
+					const variantLabel =
+						(item?.variant_options || [])
+							.filter(Boolean)
+							.join(' / ') || null;
 					return (
 						<ScProductLineItem
 							key={item.id}
@@ -208,6 +213,8 @@ export default ({ order, checkout, loading }) => {
 							currency={item?.price?.currency}
 							trialDurationDays={item?.price?.trial_duration_days}
 							interval={intervalString(item?.price)}
+							showSku={true}
+							sku={getSKUText(item, variantLabel)}
 						></ScProductLineItem>
 					);
 				})}

@@ -2969,6 +2969,14 @@ export namespace Components {
          */
         "setupFeeTrialEnabled": boolean;
         /**
+          * The SKU will be showed.
+         */
+        "showSku": boolean;
+        /**
+          * The SKU.
+         */
+        "sku": string;
+        /**
           * Trial duration days
          */
         "trialDurationDays": number;
@@ -8842,6 +8850,14 @@ declare namespace LocalJSX {
           * Is the setup fee not included in the free trial?
          */
         "setupFeeTrialEnabled"?: boolean;
+        /**
+          * The SKU will be showed.
+         */
+        "showSku"?: boolean;
+        /**
+          * The SKU.
+         */
+        "sku"?: string;
         /**
           * Trial duration days
          */

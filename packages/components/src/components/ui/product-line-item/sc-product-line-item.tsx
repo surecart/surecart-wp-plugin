@@ -81,6 +81,12 @@ export class ScProductLineItem {
   /** The max allowed. */
   @Prop() max: number = 100;
 
+  /** The SKU will be showed. */
+  @Prop() showSku: boolean = false;
+
+  /** The SKU. */
+  @Prop() sku: string = '';
+
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
 
@@ -158,6 +164,11 @@ export class ScProductLineItem {
               </div>
               <div class="item__description item__price-variant" part="description">
                 <div>{this.variantLabel}</div>
+                {this.showSku && !!this.sku && (
+                  <div>
+                    {__('SKU:', 'surecart')} {this.sku}
+                  </div>
+                )}
                 <div>{this.priceName}</div>
               </div>
               {!this.editable && this.quantity > 1 && (
