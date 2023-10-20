@@ -53,7 +53,9 @@ export default ({ className, attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<PriceSelector
-					onSelect={({price_id}) => setAttributes({ price_id })}
+					onSelect={({ price_id, variant_id }) =>
+						setAttributes({ price_id, variant_id })
+					}
 				/>
 			</div>
 		);

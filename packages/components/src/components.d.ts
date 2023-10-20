@@ -318,6 +318,10 @@ export namespace Components {
           * The quantity
          */
         "quantity": number;
+        /**
+          * The variant id to add.
+         */
+        "variantId": string;
     }
     interface ScCartFormSubmit {
         /**
@@ -5941,6 +5945,10 @@ declare namespace LocalJSX {
           * The quantity
          */
         "quantity"?: number;
+        /**
+          * The variant id to add.
+         */
+        "variantId"?: string;
     }
     interface ScCartFormSubmit {
         /**

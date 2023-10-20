@@ -8,6 +8,7 @@ import {
 	ScMenuItem,
 	ScFormatNumber,
 } from '@surecart/components-react';
+import { Spinner } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -83,34 +84,40 @@ export default ({
 					max-width: 50%;
 				`}
 			>
-				{!choice?.id || !price || !variant ? (
+				{!choice?.id ? (
 					<PriceSelector ad_hoc={false} onSelect={onSelect} />
 				) : (
 					<div>
-						<strong>{product?.name}</strong>
-						<LineItemLabel
-							lineItem={{
-								price,
-								variant_options: [
-									variant?.option_1,
-									variant?.option_2,
-									variant?.option_3,
-								],
-							}}
-						>
-							<div>
-								<ScFormatNumber
-									type="currency"
-									currency={price?.currency || 'usd'}
-									value={
-										!!price?.ad_hoc && ad_hoc_amount
-											? ad_hoc_amount
-											: price?.amount
-									}
-								/>
-								{intervalString(price)}
-							</div>
-						</LineItemLabel>
+						{!price || !variant ? (
+							<Spinner />
+						) : (
+							<>
+								<strong>{product?.name}</strong>
+								<LineItemLabel
+									lineItem={{
+										price,
+										variant_options: [
+											variant?.option_1,
+											variant?.option_2,
+											variant?.option_3,
+										],
+									}}
+								>
+									<div>
+										<ScFormatNumber
+											type="currency"
+											currency={price?.currency || 'usd'}
+											value={
+												!!price?.ad_hoc && ad_hoc_amount
+													? ad_hoc_amount
+													: price?.amount
+											}
+										/>
+										{intervalString(price)}
+									</div>
+								</LineItemLabel>
+							</>
+						)}
 					</div>
 				)}
 			</sc-table-cell>
