@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 import { Placeholder, Button } from '@wordpress/components';
 
 import { button as icon, login } from '@wordpress/icons';
