@@ -5,10 +5,10 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { Placeholder, Button } from '@wordpress/components';
 
-import { button as icon } from '@wordpress/icons';
+import { button as icon, login } from '@wordpress/icons';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
@@ -20,6 +20,53 @@ export default ({ setAttributes }) => {
 	};
 
 	const updateLineItem = (data, index) => {
+		const priceExists = line_items.find((item) => {
+			return item?.id && item.id === data.id;
+		});
+		const variantExists = line_items.find((item) => {
+			return (
+				item?.id &&
+				item.id === data.id &&
+				item.variant_id &&
+				item.variant_id === data.variant_id
+			);
+		});
+
+		if (variantExists) {
+			removeLineItem(index);
+			setLineItems(
+				line_items.map((item) => {
+					if (
+						item?.id !== variantExists?.id ||
+						item?.variant_id !== variantExists?.variant_id
+					) {
+						return item;
+					}
+					return {
+						...item,
+						...{
+							quantity: variantExists?.quantity + 1,
+						},
+					};
+				})
+			);
+			return;
+		}
+		if (priceExists) {
+			removeLineItem(index);
+			setLineItems(
+				line_items.map((item) => {
+					if (item?.id !== priceExists?.id) return item;
+					return {
+						...item,
+						...{
+							quantity: priceExists?.quantity + 1,
+						},
+					};
+				})
+			);
+			return;
+		}
 		setLineItems(
 			line_items.map((item, i) => {
 				if (i !== index) return item;

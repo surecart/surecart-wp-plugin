@@ -83,7 +83,7 @@ export default ({
 					max-width: 50%;
 				`}
 			>
-				{!choice?.id ? (
+				{!choice?.id || !price || !variant ? (
 					<PriceSelector ad_hoc={false} onSelect={onSelect} />
 				) : (
 					<div>
