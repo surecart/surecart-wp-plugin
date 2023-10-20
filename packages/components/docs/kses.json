@@ -1629,6 +1629,7 @@
     "removable": true,
     "scratch-amount": true,
     "setup-fee-trial-enabled": true,
+    "sku": true,
     "trial-duration-days": true,
     "variant-label": true,
     "style": true,

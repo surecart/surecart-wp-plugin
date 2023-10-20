@@ -1,6 +1,10 @@
-import { getVariantFromValues } from 'src/functions/util';
+/**
+ * Internal dependencies.
+ */
 import state from './store';
 import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
+import { getVariantFromValues } from '../../functions/util';
+
 /**
  * Available product prices
  * @returns {Price[]} - Returns an array of prices that are not archived
