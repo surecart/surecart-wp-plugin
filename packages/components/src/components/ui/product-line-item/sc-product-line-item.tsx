@@ -81,9 +81,6 @@ export class ScProductLineItem {
   /** The max allowed. */
   @Prop() max: number = 100;
 
-  /** The SKU will be showed. */
-  @Prop() showSku: boolean = false;
-
   /** The SKU. */
   @Prop() sku: string = '';
 
@@ -164,7 +161,7 @@ export class ScProductLineItem {
               </div>
               <div class="item__description item__price-variant" part="description">
                 <div>{this.variantLabel}</div>
-                {this.showSku && !!this.sku && (
+                {!!this.sku && (
                   <div>
                     {__('SKU:', 'surecart')} {this.sku}
                   </div>

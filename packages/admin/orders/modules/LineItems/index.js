@@ -213,7 +213,6 @@ export default ({ order, checkout, loading }) => {
 							currency={item?.price?.currency}
 							trialDurationDays={item?.price?.trial_duration_days}
 							interval={intervalString(item?.price)}
-							showSku={true}
 							sku={getSKUText(item, variantLabel)}
 						></ScProductLineItem>
 					);
