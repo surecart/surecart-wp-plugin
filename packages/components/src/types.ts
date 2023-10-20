@@ -74,11 +74,13 @@ interface Model {
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
+  description?: string;
   disabled?: boolean;
   checked?: boolean;
   unavailable?: boolean;
   choices?: ChoiceItem[];
   suffix?: string;
+  suffixDescription?: string;
   icon?: string;
 }
 
