@@ -17,13 +17,11 @@ export const productNameWithPrice = (price) => {
  * @returns {string}
  */
 export const getSKUText = (lineItem, variantLabel) => {
-	let skuText = '';
-
 	if (variantLabel && lineItem?.variant?.sku) {
-		skuText = lineItem.variant.sku;
-	} else if (!variantLabel && lineItem?.price?.product?.sku) {
-		skuText = lineItem.price.product.sku;
+		return lineItem.variant.sku;
 	}
-
-	return skuText;
+	if (!variantLabel && lineItem?.price?.product?.sku) {
+		return lineItem.price.product.sku;
+	}
+	return '';
 };
