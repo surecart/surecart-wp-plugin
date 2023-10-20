@@ -16,12 +16,5 @@ export const productNameWithPrice = (price) => {
  * @param {string} variantLabel
  * @returns {string}
  */
-export const getSKUText = (lineItem) => {
-	if (lineItem?.variant) {
-		return lineItem.variant.sku;
-	}
-	if (lineItem?.price?.product?.sku) {
-		return lineItem.price.product.sku;
-	}
-	return '';
-};
+export const getSKUText = (lineItem) =>
+	lineItem.variant.sku || lineItem?.price?.product?.sku || '';
