@@ -29,7 +29,7 @@ export default ({
 		750,
 		{ leading: false }
 	);
-	
+
 	const choices = (products || [])
 		.filter((product) => !!product?.prices?.data?.length)
 		.filter((product) => {
@@ -53,6 +53,9 @@ export default ({
 				}
 			}
 
+			if (!product?.prices?.data?.length) {
+				return false;
+			}
 			return true;
 		})
 		.map((product) => {
@@ -78,14 +81,28 @@ export default ({
 					})
 					.map((price) => {
 						const variants = product?.variants?.data || [];
-						
-						if ( ! includeVariants || ! variants.length) {
+
+						if (!includeVariants || !variants.length) {
+							const priceUnavailable =
+								product?.stock_enabled &&
+								!product?.allow_out_of_stock_purchases &&
+								0 >= product?.available_stock;
 							return {
 								value: price.id,
 								label: price?.ad_hoc
 									? __('Name Your Price', 'surecart')
-									: formatNumber(price.amount, price.currency),
-								suffix:intervalString(price, {
+									: formatNumber(
+											price.amount,
+											price.currency
+									  ),
+								disabled: priceUnavailable,
+								suffixDescription: product?.stock_enabled
+									? sprintf(
+											__('%s available', 'surecart'),
+											product?.available_stock
+									  )
+									: null,
+								suffix: intervalString(price, {
 									showOnce: true,
 								}),
 							};
@@ -94,18 +111,41 @@ export default ({
 						return variants
 							.sort((a, b) => a?.position - b?.position)
 							.map((variant) => {
-								const variantLabel = [variant?.option_1, variant?.option_2, variant?.option_3].filter(Boolean).join(' / ');
+								const variantUnavailable =
+									product?.stock_enabled &&
+									!product?.allow_out_of_stock_purchases &&
+									0 >= variant?.available_stock;
+								const variantLabel = [
+									variant?.option_1,
+									variant?.option_2,
+									variant?.option_3,
+								]
+									.filter(Boolean)
+									.join(' / ');
 								return {
 									value: price.id,
 									label: price?.ad_hoc
 										? __('Name Your Price', 'surecart')
-										: formatNumber(price.amount, price.currency),
-									suffix: `(${variantLabel}) ${intervalString(price, { showOnce: true })}`,
+										: formatNumber(
+												price.amount,
+												price.currency
+										  ),
+									suffix: `(${variantLabel}) ${intervalString(
+										price,
+										{ showOnce: true }
+									)}`,
+									suffixDescription: product?.stock_enabled
+										? sprintf(
+												__('%s available', 'surecart'),
+												variant?.available_stock
+										  )
+										: null,
+									disabled: variantUnavailable,
 									variant_id: variant?.id,
-									
 								};
-						});
-					}).flat(),
+							});
+					})
+					.flat(),
 			};
 		});
 
@@ -125,9 +165,15 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
+				if (e?.detail?.suffixUnavailable) {
+					alert(__('Variant Out of Stock.', 'surecart'));
+					return;
+				}
 				onSelect({
 					price_id: e?.target?.value,
-					...(includeVariants && { variant_id: e?.detail?.variant_id })
+					...(includeVariants && {
+						variant_id: e?.detail?.variant_id,
+					}),
 				});
 			}}
 			choices={choices}
