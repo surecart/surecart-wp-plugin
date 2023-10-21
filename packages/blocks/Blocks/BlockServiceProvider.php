@@ -31,12 +31,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockService( $app );
 		};
 
-		$container['blocks_validation'] = function () use ( $app ) {
-			return new BlockValidationService( $app );
-		};
-
 		$app->alias( 'blocks', 'blocks' );
-		$app->alias( 'blocks_validation', 'blocks_validation' );
 
 		$app->alias(
 			'block',
