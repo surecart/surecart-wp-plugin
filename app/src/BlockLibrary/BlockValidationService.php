@@ -19,6 +19,12 @@ class BlockValidationService {
 	 * Set validators
 	 */
 	public function __construct() {
+		/**
+		 * Filters the list of block validators for SureCart blocks.
+		 *
+		 * @param array $validators An array of block validator instances.
+		 * @return array Modified array of block validator instances.
+		 */
 		$this->validators = apply_filters(
 			'surecart_block_validators',
 			[
@@ -32,14 +38,14 @@ class BlockValidationService {
 	 *
 	 * @return void
 	 */
-	public function bootstrap() {
+	public function bootstrap(): void {
 		add_action( 'wp', [ $this, 'register' ] );
 	}
 
 	/**
 	 * Register block validators.
 	 */
-	public function register() {
+	public function register(): void {
 		foreach ( $this->validators as $validator ) {
 			add_filter( 'render_block', [ $validator, 'validateAndRender' ], 10, 2 );
 		}
