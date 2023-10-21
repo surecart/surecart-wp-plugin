@@ -44,6 +44,8 @@ class BlockValidationService {
 
 	/**
 	 * Register block validators.
+	 *
+	 * @return void
 	 */
 	public function register(): void {
 		foreach ( $this->validators as $validator ) {

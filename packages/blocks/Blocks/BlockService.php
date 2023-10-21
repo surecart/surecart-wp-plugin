@@ -56,37 +56,4 @@ class BlockService {
 		}
 		return $found_blocks;
 	}
-
-	/**
-	 * Append a block to blocks array by searching a block.
-	 *
-	 * @param array  $blocks              Blocks array.
-	 * @param string $searched_block_name Searched block name.
-	 * @param array  $appended_block      Appended block.
-	 *
-	 * @return array $blocks
-	 */
-	public function appendBlock( array $blocks, string $searched_block_name, array $appended_block ): array {
-		foreach ( $blocks as $index => &$block ) {
-			// Check if the current block is the target block.
-			if ( isset( $block['blockName'] ) && $block['blockName'] === $searched_block_name ) {
-				// Split the blocks into two parts before and after the target block.
-				$before = array_slice( $blocks, 0, $index );
-				$after  = array_slice( $blocks, count( $before ) );
-
-				// Merge the blocks with the appended block.
-				$blocks = array_merge( $before, [ $appended_block ], $after );
-
-				// Stop the loop.
-				break;
-			}
-
-			// Check innerBlocks recursively.
-			if ( is_array( $block['innerBlocks'] ?? null ) ) {
-				$blocks[ $index ]['innerBlocks'] = $this->appendBlock($block['innerBlocks'], $searched_block_name, $appended_block );
-			}
-		}
-
-		return $blocks;
-	}
 }
