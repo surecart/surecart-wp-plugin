@@ -44,7 +44,7 @@ class ProductPageController extends BasePageController {
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
 			global $_wp_current_template_content;
-			$_wp_current_template_content = $this->model->getAppendedVariantChoiceBlockContent();
+			$_wp_current_template_content = $this->model->template->content ?? '';
 		}
 
 		// include the default view.
