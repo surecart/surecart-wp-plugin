@@ -13,17 +13,9 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../admin/util/translations';
-import PriceSelector from './PriceSelector';
 import LineItemLabel from '../../admin/ui/LineItemLabel';
 
-export default ({
-	choice,
-	onUpdate,
-	hideQuantity,
-	onSelect,
-	onRemove,
-	onNew,
-}) => {
+export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 	// get price from choice.
 	const price = useSelect(
 		(select) => {
@@ -84,41 +76,35 @@ export default ({
 					max-width: 50%;
 				`}
 			>
-				{!choice?.id ? (
-					<PriceSelector ad_hoc={false} onSelect={onSelect} />
+				{!choice?.id || !price ? (
+					<Spinner />
 				) : (
-					<div>
-						{!price || !variant ? (
-							<Spinner />
-						) : (
-							<>
-								<strong>{product?.name}</strong>
-								<LineItemLabel
-									lineItem={{
-										price,
-										variant_options: [
-											variant?.option_1,
-											variant?.option_2,
-											variant?.option_3,
-										],
-									}}
-								>
-									<div>
-										<ScFormatNumber
-											type="currency"
-											currency={price?.currency || 'usd'}
-											value={
-												!!price?.ad_hoc && ad_hoc_amount
-													? ad_hoc_amount
-													: price?.amount
-											}
-										/>
-										{intervalString(price)}
-									</div>
-								</LineItemLabel>
-							</>
-						)}
-					</div>
+					<>
+						<strong>{product?.name}</strong>
+						<LineItemLabel
+							lineItem={{
+								price,
+								variant_options: [
+									variant?.option_1,
+									variant?.option_2,
+									variant?.option_3,
+								],
+							}}
+						>
+							<div>
+								<ScFormatNumber
+									type="currency"
+									currency={price?.currency || 'usd'}
+									value={
+										!!price?.ad_hoc && ad_hoc_amount
+											? ad_hoc_amount
+											: price?.amount
+									}
+								/>
+								{intervalString(price)}
+							</div>
+						</LineItemLabel>
+					</>
 				)}
 			</sc-table-cell>
 			{!hideQuantity && (

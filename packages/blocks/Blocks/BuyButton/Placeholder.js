@@ -13,17 +13,18 @@ import { button as icon, login } from '@wordpress/icons';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 
 export default ({ setAttributes }) => {
-	const [line_items, setLineItems] = useState([{ quantity: 1 }]);
+	const [line_items, setLineItems] = useState([]);
 
 	const removeLineItem = (index) => {
 		setLineItems(line_items.filter((_, i) => i !== index));
 	};
 
-	const updateLineItem = (data, index) => {
-		const priceExists = line_items.find((item) => {
-			return item?.id && item.id === data.id;
+	const updateLineItem = (data) => {
+		const priceExists = line_items?.find((item) => {
+			return item?.id && item.id === data.id && !data?.variant_id;
 		});
-		const variantExists = line_items.find((item) => {
+
+		const variantExists = line_items?.find((item) => {
 			return (
 				item?.id &&
 				item.id === data.id &&
@@ -33,7 +34,6 @@ export default ({ setAttributes }) => {
 		});
 
 		if (variantExists) {
-			removeLineItem(index);
 			setLineItems(
 				line_items.map((item) => {
 					if (
@@ -53,7 +53,6 @@ export default ({ setAttributes }) => {
 			return;
 		}
 		if (priceExists) {
-			removeLineItem(index);
 			setLineItems(
 				line_items.map((item) => {
 					if (item?.id !== priceExists?.id) return item;
@@ -67,21 +66,10 @@ export default ({ setAttributes }) => {
 			);
 			return;
 		}
-		setLineItems(
-			line_items.map((item, i) => {
-				if (i !== index) return item;
-				return {
-					...item,
-					...data,
-				};
-			})
-		);
-	};
-
-	const addLineItem = () => {
 		setLineItems([
-			...(line_items || []),
+			...line_items,
 			{
+				...data,
 				quantity: 1,
 			},
 		]);
@@ -98,7 +86,6 @@ export default ({ setAttributes }) => {
 			>
 				<PriceChoices
 					choices={line_items}
-					onAddProduct={addLineItem}
 					onUpdate={updateLineItem}
 					onRemove={removeLineItem}
 					onNew={() => {}}

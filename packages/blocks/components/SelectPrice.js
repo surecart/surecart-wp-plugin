@@ -1,10 +1,9 @@
-import { ScDivider, ScMenuItem, ScSelect } from '@surecart/components-react';
-import { useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useRef } from '@wordpress/element';
+import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
-
-import { styles } from '../../admin/styles/admin';
 import { formatNumber } from '../../admin/util';
+import { styles } from '../../admin/styles/admin';
 import { intervalString } from '../../admin/util/translations';
 
 export default ({
@@ -17,9 +16,13 @@ export default ({
 	onQuery,
 	onFetch,
 	onNew,
-	ad_hoc,
+	children,
+	ad_hoc = true,
+	variable = true,
 	loading,
+	onScrollEnd = () => {},
 	includeVariants = true,
+	...props
 }) => {
 	const selectRef = useRef();
 	const findProduct = throttle(
@@ -79,6 +82,7 @@ export default ({
 
 						return true;
 					})
+					.filter((price) => !price?.archived)
 					.map((price) => {
 						const variants = product?.variants?.data || [];
 
@@ -165,6 +169,7 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
+				if (!e?.target?.value) return;
 				if (e?.detail?.suffixUnavailable) {
 					alert(__('Variant Out of Stock.', 'surecart'));
 					return;
@@ -177,6 +182,8 @@ export default ({
 				});
 			}}
 			choices={choices}
+			onScScrollEnd={onScrollEnd}
+			{...props}
 		>
 			{onNew && (
 				<span slot="prefix">
@@ -189,6 +196,7 @@ export default ({
 					></ScDivider>
 				</span>
 			)}
+			{children}
 		</ScSelect>
 	);
 };
