@@ -11,6 +11,13 @@ use \SureCartBlocks\Blocks\Product\VariantChoices\Block as VariantChoicesBlock;
  */
 class VariantChoice extends BlockValidator {
 	/**
+	 * Has this run before?
+	 *
+	 * @var boolean
+	 */
+	protected static $has_run = false;
+
+	/**
 	 * The name of the block to validate.
 	 *
 	 * @var string
@@ -28,6 +35,11 @@ class VariantChoice extends BlockValidator {
 	protected function isValid( string $block_content, array $block ): bool {
 		$product = get_query_var( 'surecart_current_product' );
 
+		// we have already run this.
+		if ( self::$has_run ) {
+			return true;
+		}
+
 		// If not in product page return.
 		if ( empty( $product ) || ! $product instanceof \SureCart\Models\Product ) {
 			return true;
@@ -43,6 +55,10 @@ class VariantChoice extends BlockValidator {
 			return true;
 		}
 
+		// We only want to run once.
+		self::$has_run = true;
+
+		// We don't have a variant choice block.
 		return false;
 	}
 
