@@ -156,7 +156,7 @@ class TemplatesService {
 		$post                    = new \stdClass();
 		$post->post_title        = $product->name;
 		$post->post_name         = $product->slug;
-		$post->post_content      = '<div>' . ( $product->template_part->content ?? '' ) . '</div>';
+		$post->post_content      = '<div>' . ( $product->getTemplateContent() ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
 		$post->post_type         = 'sc_product'; // TODO: change to surecart-product-template post type?
 		$post->sc_id             = $product->id;
