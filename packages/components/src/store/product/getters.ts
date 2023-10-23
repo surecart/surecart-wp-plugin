@@ -46,4 +46,4 @@ export const isProductOutOfStock = () => {
   return state.selectedVariant?.available_stock <= 0;
 };
 
-export const isSelectedVariantMissing = () => getVariantFromValues({ variants: state.variants, values: state.variantValues })?.id === undefined;
+export const isSelectedVariantMissing = () => !!state.variants?.length && getVariantFromValues({ variants: state.variants, values: state.variantValues })?.id === undefined;
