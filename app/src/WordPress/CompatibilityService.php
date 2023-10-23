@@ -8,6 +8,7 @@
  */
 
 namespace SureCart\WordPress;
+
 use SureCart\WordPress\Admin\Notices\AdminNoticesService;
 
 /**
@@ -26,28 +27,10 @@ class CompatibilityService {
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
-
-		add_action( 'admin_init', [ $this, 'gutenberg_active_notice' ] );
+		// Show gutenberg active notice.
+		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 	}
 
-	/**
-	 * Show the Gutenberg active notice.
-	 *
-	 * @return void
-	 */
-	public function gutenberg_active_notice() {
-		if( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
-			( new AdminNoticesService() )->add(
-				[
-					'name'  => 'gutenberg_active_notice',
-					'type'  => 'warning',
-					'title' => esc_html__( 'SureCart', 'surecart' ),
-					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks may not work as expected in the block editor. Please consider disabling the Gutenberg plugin if you encounter any issues.<p>', 'surecart' ) ),
-				]
-			);
-		}
-	}
-	
 	/**
 	 * Prevent rankmath from outputting og:tags on our custom pages.
 	 *
@@ -124,5 +107,23 @@ class CompatibilityService {
 		$post_assets_instance->enqueue_scripts();
 
 		return $output;
+	}
+
+	/**
+	 * Show the Gutenberg active notice.
+	 *
+	 * @return void
+	 */
+	public function gutenbergActiveNotice(): void {
+		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
+			( new AdminNoticesService() )->add(
+				[
+					'name'  => 'gutenberg_active_notice',
+					'type'  => 'warning',
+					'title' => esc_html__( 'SureCart', 'surecart' ),
+					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks may not work as expected in the block editor. Please consider disabling the Gutenberg plugin if you encounter any issues.<p>', 'surecart' ) ),
+				]
+			);
+		}
 	}
 }
