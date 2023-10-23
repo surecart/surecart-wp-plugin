@@ -17,4 +17,4 @@ export const productNameWithPrice = (price) => {
  * @returns {string}
  */
 export const getSKUText = (lineItem) =>
-	lineItem.variant.sku || lineItem?.price?.product?.sku || '';
+	lineItem?.variant?.sku || lineItem?.price?.product?.sku || '';
