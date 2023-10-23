@@ -15,7 +15,7 @@ class VariantChoice extends BlockValidator {
 	 *
 	 * @var string
 	 */
-	protected $block_name = 'surecart/product-buy-buttons';
+	protected $block_name = 'surecart/product-buy-button';
 
 	/**
 	 * Validate block.
@@ -39,7 +39,7 @@ class VariantChoice extends BlockValidator {
 		}
 
 		// If has block already exist, return.
-		if ( has_block( 'surecart/product-variant-choices', $product->getTemplateContent() ) ) {
+		if ( has_block( 'surecart/product-variant-choices' ) ) {
 			return true;
 		}
 
