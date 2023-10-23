@@ -133,13 +133,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 						</div>
 					)}
 				</div>
-
-				<ScAlert open type="info">
-					{__(
-						'Note: Redemption limits are not applied in test mode.',
-						'surecart'
-					)}
-				</ScAlert>
 			</div>
 		</Box>
 	);
