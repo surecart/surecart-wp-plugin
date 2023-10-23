@@ -7,12 +7,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import {
-	ScAlert,
-	ScInput,
-	ScPriceInput,
-	ScSwitch,
-} from '@surecart/components-react';
+import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
