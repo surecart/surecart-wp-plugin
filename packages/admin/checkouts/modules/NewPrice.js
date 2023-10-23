@@ -21,7 +21,54 @@ export default ({ checkout, setBusy }) => {
 		}
 	}, [price]);
 
-	const onSubmit = async (priceId, variantId = null) => {
+	const updateLineItem = async (id, data) => {
+		try {
+			setBusy(true);
+			// get the line items endpoint.
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'line_item'
+			);
+
+			const { checkout } = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${id}`, {
+					expand: [
+						// expand the checkout and the checkout's required expands.
+						...(expand || []).map((item) => {
+							return item.includes('.')
+								? item
+								: `checkout.${item}`;
+						}),
+						'checkout',
+					],
+				}),
+				data,
+			});
+
+			// update the checkout in the redux store.
+			receiveEntityRecords(
+				'surecart',
+				'draft-checkout',
+				checkout,
+				undefined,
+				false,
+				checkout
+			);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(
+				e?.message || __('Something went wrong', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	const addLineItem = async (data) => {
 		try {
 			setBusy(true);
 
@@ -32,7 +79,7 @@ export default ({ checkout, setBusy }) => {
 			);
 
 			// add the line item.
-			const { checkout: data } = await apiFetch({
+			const { checkout } = await apiFetch({
 				method: 'POST',
 				path: addQueryArgs(baseURL, {
 					expand: [
@@ -45,19 +92,14 @@ export default ({ checkout, setBusy }) => {
 						'checkout',
 					],
 				}),
-				data: {
-					checkout: checkout?.id,
-					price: priceId,
-					quantity: 1,
-					variant: variantId,
-				},
+				data,
 			});
 
 			// update the checkout in the redux store.
 			receiveEntityRecords(
 				'surecart',
 				'draft-checkout',
-				data,
+				checkout,
 				undefined,
 				false,
 				checkout
@@ -74,6 +116,33 @@ export default ({ checkout, setBusy }) => {
 		} finally {
 			setBusy(false);
 		}
+	};
+
+	const onSubmit = async (priceId, variantId = null) => {
+		const priceExists = checkout?.line_items?.data?.find(
+			(item) => item?.price?.id === priceId
+		);
+		const variantExists = checkout?.line_items?.data?.find(
+			(item) => item?.variant === variantId && item?.price?.id === priceId
+		);
+		if (variantExists) {
+			updateLineItem(variantExists?.id, {
+				quantity: variantExists?.quantity + 1,
+			});
+			return;
+		}
+		if (priceExists) {
+			updateLineItem(priceExists?.id, {
+				quantity: priceExists?.quantity + 1,
+			});
+			return;
+		}
+		addLineItem({
+			checkout: checkout?.id,
+			price: priceId,
+			quantity: 1,
+			variant: variantId,
+		});
 	};
 
 	return (

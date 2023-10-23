@@ -68,7 +68,10 @@ export class ScProductCheckoutSelectVariantOption {
    * @returns {boolean} Whether the product has a required variant and it is not selected.
    */
   hasRequiredSelectedVariant() {
-    return this.hasVariants() && this.selectedVariant?.id;
+    if (!this.hasVariants()) {
+      return true;
+    }
+    return this.selectedVariant?.id;
   }
 
   @Method()

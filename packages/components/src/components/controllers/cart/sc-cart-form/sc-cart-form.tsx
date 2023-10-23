@@ -37,6 +37,9 @@ export class ScCartForm {
   /** The price id to add. */
   @Prop() priceId: string;
 
+  /** The variant id to add. */
+  @Prop() variantId: string;
+
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
 
@@ -73,7 +76,10 @@ export class ScCartForm {
     try {
       this.busy = true;
       // if it's ad_hoc, update the amount. Otherwise increment the quantity.
-      const order = await this.addOrUpdateLineItem({ ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}) });
+      const order = await this.addOrUpdateLineItem({
+        ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}),
+        ...(!!this.variantId ? { variant_id: (this.variantId as string) || null } : {}),
+      });
       // store the checkout in localstorage and open the cart
       setCheckout(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
@@ -104,6 +110,7 @@ export class ScCartForm {
               return {
                 ...item,
                 ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
+                ...(!!data?.variant_id ? { variant_id: data?.variant_id } : {}),
                 quantity: !item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
               };
             }
@@ -115,6 +122,7 @@ export class ScCartForm {
             ? [
                 {
                   price_id: this.priceId,
+                  variant_id: this.variantId,
                   ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
                   quantity: 1,
                 },

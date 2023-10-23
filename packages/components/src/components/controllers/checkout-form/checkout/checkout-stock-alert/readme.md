@@ -9,13 +9,6 @@
 
 This component listens for stock requirements and displays a dialog to the user.
 
-## Properties
-
-| Property | Attribute | Description        | Type       | Default     |
-| -------- | --------- | ------------------ | ---------- | ----------- |
-| `order`  | --        | The current order. | `Checkout` | `undefined` |
-
-
 ## Events
 
 | Event              | Description            | Type                        |
@@ -32,9 +25,10 @@ This component listens for stock requirements and displays a dialog to the user.
 ### Depends on
 
 - [sc-dialog](../../../../ui/sc-dialog)
+- [sc-dashboard-module](../../../../ui/dashboard-module)
 - [sc-flex](../../../../ui/flex)
 - [sc-icon](../../../../ui/icon)
-- [sc-text](../../../../ui/text)
+- [sc-card](../../../../ui/card)
 - [sc-table](../../../../ui/table)
 - [sc-table-cell](../../../../ui/table-cell)
 - [sc-table-row](../../../../ui/table-row)
@@ -45,9 +39,10 @@ This component listens for stock requirements and displays a dialog to the user.
 ```mermaid
 graph TD;
   sc-checkout-stock-alert --> sc-dialog
+  sc-checkout-stock-alert --> sc-dashboard-module
   sc-checkout-stock-alert --> sc-flex
   sc-checkout-stock-alert --> sc-icon
-  sc-checkout-stock-alert --> sc-text
+  sc-checkout-stock-alert --> sc-card
   sc-checkout-stock-alert --> sc-table
   sc-checkout-stock-alert --> sc-table-cell
   sc-checkout-stock-alert --> sc-table-row
@@ -56,6 +51,8 @@ graph TD;
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
+  sc-dashboard-module --> sc-alert
+  sc-alert --> sc-icon
   sc-block-ui --> sc-spinner
   sc-checkout --> sc-checkout-stock-alert
   style sc-checkout-stock-alert fill:#f9f,stroke:#333,stroke-width:4px

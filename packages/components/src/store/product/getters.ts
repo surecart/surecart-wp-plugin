@@ -1,6 +1,10 @@
-import { getVariantFromValues } from 'src/functions/util';
+/**
+ * Internal dependencies.
+ */
 import state from './store';
 import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
+import { getVariantFromValues } from '../../functions/util';
+
 /**
  * Available product prices
  * @returns {Price[]} - Returns an array of prices that are not archived
@@ -42,4 +46,4 @@ export const isProductOutOfStock = () => {
   return state.selectedVariant?.available_stock <= 0;
 };
 
-export const isSelectedVariantMissing = () => getVariantFromValues({ variants: state.variants, values: state.variantValues })?.id === undefined;
+export const isSelectedVariantMissing = () => !!state.variants?.length && getVariantFromValues({ variants: state.variants, values: state.variantValues })?.id === undefined;

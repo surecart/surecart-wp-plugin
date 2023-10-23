@@ -318,6 +318,10 @@ export namespace Components {
           * The quantity
          */
         "quantity": number;
+        /**
+          * The variant id to add.
+         */
+        "variantId": string;
     }
     interface ScCartFormSubmit {
         /**
@@ -2968,6 +2972,10 @@ export namespace Components {
           * Is the setup fee not included in the free trial?
          */
         "setupFeeTrialEnabled": boolean;
+        /**
+          * The SKU.
+         */
+        "sku": string;
         /**
           * Trial duration days
          */
@@ -5945,6 +5953,10 @@ declare namespace LocalJSX {
           * The quantity
          */
         "quantity"?: number;
+        /**
+          * The variant id to add.
+         */
+        "variantId"?: string;
     }
     interface ScCartFormSubmit {
         /**
@@ -8850,6 +8862,10 @@ declare namespace LocalJSX {
           * Is the setup fee not included in the free trial?
          */
         "setupFeeTrialEnabled"?: boolean;
+        /**
+          * The SKU.
+         */
+        "sku"?: string;
         /**
           * Trial duration days
          */

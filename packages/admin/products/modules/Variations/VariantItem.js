@@ -23,7 +23,13 @@ import {
 } from '@surecart/components-react';
 import Image from './Image';
 
-export default ({ variant, updateVariant, defaultAmount, canOverride }) => {
+export default ({
+	variant,
+	updateVariant,
+	defaultAmount,
+	defaultSku,
+	canOverride,
+}) => {
 	const { sku, status, image_id, stock, stock_adjustment, amount, currency } =
 		variant;
 
@@ -198,6 +204,7 @@ export default ({ variant, updateVariant, defaultAmount, canOverride }) => {
 			<td>
 				<ScInput
 					value={sku}
+					placeholder={defaultSku}
 					css={css`
 						min-width: 100px;
 					`}

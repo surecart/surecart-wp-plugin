@@ -1,14 +1,17 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { getVariantLabel } from '../util/variation';
+import { getSKUText } from '../util/products';
 
 export default ({ lineItem, children }) => {
 	const variantLabel = getVariantLabel(lineItem?.variant_options);
 	const priceName = lineItem?.price?.name;
+	const productSku = getSKUText(lineItem);
 
 	return (
 		<span
@@ -26,6 +29,11 @@ export default ({ lineItem, children }) => {
 		>
 			<div>{variantLabel}</div>
 			<div>{priceName}</div>
+			{!!productSku && (
+				<div>
+					{__('SKU:', 'surecart')} {productSku}
+				</div>
+			)}
 			<div>{children}</div>
 		</span>
 	);

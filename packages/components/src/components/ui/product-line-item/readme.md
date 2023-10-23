@@ -18,6 +18,7 @@
 | `max`                  | `max`                     | The max allowed.                                 | `number`  | `100`       |
 | `media`                | --                        | The product media                                | `Media`   | `undefined` |
 | `name`                 | `name`                    | Product name                                     | `string`  | `undefined` |
+| `priceName`            | `price-name`              | Price name                                       | `string`  | `undefined` |
 | `quantity`             | `quantity`                | Quantity                                         | `number`  | `undefined` |
 | `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
 | `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
@@ -39,6 +40,7 @@
 | Part                             | Description                     |
 | -------------------------------- | ------------------------------- |
 | `"base"`                         | The component base              |
+| `"description"`                  |                                 |
 | `"image"`                        | The product image               |
 | `"line-item__price-description"` | The line item price description |
 | `"price"`                        | The product price               |
@@ -57,7 +59,6 @@
 | `"suffix"`                       | The product suffix              |
 | `"text"`                         | The product text                |
 | `"title"`                        | The product title               |
-| `"variant"`                      |                                 |
 
 
 ## Dependencies
