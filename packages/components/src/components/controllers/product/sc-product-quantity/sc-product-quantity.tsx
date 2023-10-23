@@ -51,14 +51,6 @@ export class ScProductQuantity {
     return state.selectedVariant?.available_stock;
   }
 
-  getMax() {
-    if (state.product.purchase_limit) {
-      return state.product.purchase_limit;
-    }
-    if (isStockNeedsToBeChecked) {
-    }
-  }
-
   render() {
     return (
       <Host>
@@ -76,7 +68,7 @@ export class ScProductQuantity {
         >
           <sc-quantity-select
             size={this.size}
-            quantity={state.selectedPrice?.ad_hoc ? 1 : state.quantity}
+            quantity={Math.max(state.selectedPrice?.ad_hoc ? 1 : state.quantity, 1)}
             disabled={state.selectedPrice?.ad_hoc}
             onScInput={e => (state.quantity = e.detail)}
             max={this.getMaxStockQty()}
