@@ -17,7 +17,7 @@ export default ({
 	onFetch,
 	onNew,
 	children,
-	ad_hoc = true,
+	ad_hoc,
 	variable = true,
 	loading,
 	onScrollEnd = () => {},
@@ -35,6 +35,12 @@ export default ({
 
 	const choices = (products || [])
 		.filter((product) => !!product?.prices?.data?.length)
+		.filter((product) => {
+			if (!variable && product?.variants?.data?.length) {
+				return false;
+			}
+			return true;
+		})
 		.filter((product) => {
 			if (ad_hoc === true) {
 				if (
@@ -176,9 +182,7 @@ export default ({
 				}
 				onSelect({
 					price_id: e?.target?.value,
-					...(includeVariants && {
-						variant_id: e?.detail?.variant_id,
-					}),
+					variant_id: e?.detail?.variant_id,
 				});
 			}}
 			choices={choices}

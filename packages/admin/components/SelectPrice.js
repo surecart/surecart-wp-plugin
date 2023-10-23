@@ -35,7 +35,6 @@ export default ({
 
 	const choices = (products || [])
 		.filter((product) => {
-			console.log({ product, variable });
 			if (!variable && product?.variants?.data?.length) {
 				return false;
 			}
@@ -115,9 +114,7 @@ export default ({
 			onScChange={(e) => {
 				onSelect({
 					price_id: e?.target?.value,
-					...(includeVariants && {
-						variant_id: e?.detail?.variant_id,
-					}),
+					variant_id: e?.detail?.variant_id,
 				});
 			}}
 			choices={choices}

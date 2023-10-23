@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { Placeholder, Button } from '@wordpress/components';
 
-import { button as icon, login } from '@wordpress/icons';
+import { button as icon } from '@wordpress/icons';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 

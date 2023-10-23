@@ -54,6 +54,7 @@ export default ({ className, attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<PriceSelector
+					variable={true}
 					onSelect={({ price_id, variant_id }) =>
 						setAttributes({ price_id, variant_id })
 					}
