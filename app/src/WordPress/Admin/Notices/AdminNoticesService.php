@@ -27,26 +27,6 @@ class AdminNoticesService {
 	 */
 	public function bootstrap() {
 		add_action( 'admin_init', [ $this, 'dismiss' ] );
-		add_action( 'admin_init', [ $this, 'gutenberg_active_notice' ] );
-
-	}
-
-	/**
-	 * Show the Gutenberg active notice.
-	 *
-	 * @return void
-	 */
-	public function gutenberg_active_notice() {
-		if( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
-			$this->add(
-				[
-					'name'  => 'gutenberg_active_notice',
-					'type'  => 'warning',
-					'title' => esc_html__( 'SureCart', 'surecart' ),
-					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks may not work as expected in the block editor. Please consider disabling the Gutenberg plugin if you encounter any issues.<p>', 'surecart' ) ),
-				]
-			);
-		}
 	}
 
 	/**
