@@ -161,12 +161,12 @@ export class ScProductLineItem {
               </div>
               <div class="item__description item__price-variant" part="description">
                 <div>{this.variantLabel}</div>
+                <div>{this.priceName}</div>
                 {!!this.sku && (
                   <div>
                     {__('SKU:', 'surecart')} {this.sku}
                   </div>
                 )}
-                <div>{this.priceName}</div>
               </div>
               {!this.editable && this.quantity > 1 && (
                 <span class="item__description" part="static-quantity">

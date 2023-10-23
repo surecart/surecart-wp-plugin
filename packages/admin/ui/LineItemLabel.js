@@ -28,12 +28,12 @@ export default ({ lineItem, children }) => {
 			`}
 		>
 			<div>{variantLabel}</div>
+			<div>{priceName}</div>
 			{!!productSku && (
 				<div>
 					{__('SKU:', 'surecart')} {productSku}
 				</div>
 			)}
-			<div>{priceName}</div>
 			<div>{children}</div>
 		</span>
 	);
