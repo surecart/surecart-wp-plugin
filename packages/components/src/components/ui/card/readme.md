@@ -29,6 +29,7 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -63,6 +64,7 @@
 graph TD;
   sc-charges-list --> sc-card
   sc-checkout-mollie-payment --> sc-card
+  sc-checkout-stock-alert --> sc-card
   sc-customer-details --> sc-card
   sc-customer-edit --> sc-card
   sc-downloads-list --> sc-card

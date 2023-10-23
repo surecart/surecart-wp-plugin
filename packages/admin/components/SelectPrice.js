@@ -143,9 +143,7 @@ export default ({
 				}
 				onSelect({
 					price_id: e?.target?.value,
-					...(includeVariants && {
-						variant_id: e?.detail?.variant_id,
-					}),
+					variant_id: e?.detail?.variant_id,
 				});
 			}}
 			choices={choices}

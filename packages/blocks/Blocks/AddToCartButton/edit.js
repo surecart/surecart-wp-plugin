@@ -32,6 +32,7 @@ export default ({ className, attributes, setAttributes }) => {
 		button_text,
 		size,
 		price_id,
+		variant_id,
 		ad_hoc_label,
 		placeholder,
 		help,
@@ -53,7 +54,10 @@ export default ({ className, attributes, setAttributes }) => {
 		return (
 			<div {...blockProps}>
 				<PriceSelector
-					onSelect={({price_id}) => setAttributes({ price_id })}
+					variable={true}
+					onSelect={({ price_id, variant_id }) =>
+						setAttributes({ price_id, variant_id })
+					}
 				/>
 			</div>
 		);
@@ -172,7 +176,10 @@ export default ({ className, attributes, setAttributes }) => {
 				></PanelColorSettings>
 				<PanelBody title={__('Product Info', 'surecart')}>
 					<PanelRow>
-						<PriceInfo price_id={price_id} />
+						<PriceInfo
+							price_id={price_id}
+							variant_id={variant_id}
+						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>

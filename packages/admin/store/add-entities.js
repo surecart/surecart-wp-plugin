@@ -318,14 +318,14 @@ dispatch(coreStore).addEntities([
 		name: 'variant-option',
 		kind: 'surecart',
 		label: __('Variant Option', 'surecart'),
-		baseURL: 'surecart/v1/variant_options',
+		baseURL: '/surecart/v1/variant_options',
 		baseURLParams: { context: 'edit' },
 	},
 	{
 		name: 'variant',
 		kind: 'surecart',
-		label: __('Variant Option', 'surecart'),
-		baseURL: 'surecart/v1/variants',
+		label: __('Variant', 'surecart'),
+		baseURL: '/surecart/v1/variants',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

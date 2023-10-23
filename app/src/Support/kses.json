@@ -171,6 +171,7 @@
     "mode": true,
     "price-id": true,
     "quantity": true,
+    "variant-id": true,
     "style": true,
     "id": true,
     "class": true,

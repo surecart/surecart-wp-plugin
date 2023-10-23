@@ -1,97 +1,108 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
-
-import { useState, useEffect, Fragment } from '@wordpress/element';
-import { Modal, Button } from '@wordpress/components';
-import SelectPrice from './SelectPrice';
-import { useSelect, dispatch } from '@wordpress/data';
+import { useState, useEffect } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { select, useDispatch } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
 
-export default ({ onSelect, createNew, ad_hoc, value, open = true, includeVariants }) => {
+import SelectPrice from './SelectPrice';
+
+export default ({
+	onSelect,
+	ad_hoc,
+	variable,
+	value,
+	open = false,
+	requestQuery,
+	required,
+	...props
+}) => {
 	const [query, setQuery] = useState(null);
-	const [newModal, setNewModal] = useState(false);
+	const [products, setProducts] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [pagination, setPagination] = useState({
+		enabled: true,
+		page: 1,
+		per_page: 10,
+	});
+	const { receiveEntityRecords } = useDispatch(coreStore);
 
-	const { products, loading } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'root',
-				'product',
-				{
-					query,
-					expand: ['prices', 'variants'],
-					archived: false,
-					...(ad_hoc !== null ? { ad_hoc } : {}),
-				},
-			];
-			return {
-				products: select(coreStore).getEntityRecords(...queryArgs),
-				prices: select(coreStore).getEntityRecords('root', 'price'),
-				loading: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[query]
-	);
-
-	// set prices when products are loaded.
-	useEffect(() => {
-		const prices = (products || [])
-			.map((product) => product?.prices?.data)
-			.flat()
-			.filter((price) => price?.id);
-
-		if (prices) {
-			dispatch(coreStore).receiveEntityRecords('root', 'price', prices, {
-				expand: ['product'],
-			});
-		}
-	}, [products]);
-
-	const onNew = () => {
-		setNewModal(true);
+	const handleOnScrollEnd = () => {
+		if (!pagination.enabled || isLoading) return;
+		setPagination((state) => ({ ...state, page: (state.page += 1) }));
 	};
 
+	const fetchData = async (pagination) => {
+		const { baseURL } = select(coreStore).getEntityConfig(
+			'surecart',
+			'product'
+		);
+		if (!baseURL) return;
+		if (pagination.page === 1) {
+			setProducts([]);
+			setPagination((state) => ({ ...state, enabled: true }));
+		}
+
+		const queryArgs = {
+			query,
+			expand: ['prices', 'variants'],
+			page: pagination.page,
+			per_page: pagination.per_page,
+			...requestQuery,
+		};
+
+		const data = select(coreStore).getEntityRecords('surecart', 'product', {
+			...queryArgs,
+		});
+
+		if (data && data.length) {
+			setProducts((state) => [...state, ...(data || [])]);
+			return;
+		}
+
+		try {
+			setIsLoading(true);
+			const data = await apiFetch({
+				path: addQueryArgs(baseURL, queryArgs),
+			});
+			setProducts((state) => [...state, ...(data || [])]);
+			receiveEntityRecords('surecart', 'product', data, queryArgs);
+		} catch (error) {
+			setPagination((state) => ({ ...state, enabled: false }));
+			console.error(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		if (query === null) return;
+		setPagination((state) => ({ ...state, page: 1 }));
+	}, [query]);
+
+	useEffect(() => {
+		if (query === null || isLoading) return;
+		fetchData(pagination);
+	}, [pagination]);
+
 	return (
-		<Fragment>
-			<SelectPrice
-				required
-				css={css`
-					flex: 0 1 50%;
-				`}
-				value={value}
-				onNew={createNew && onNew}
-				open={open}
-				ad_hoc={ad_hoc}
-				products={products}
-				onQuery={setQuery}
-				onFetch={() => setQuery('')}
-				loading={loading}
-				onSelect={onSelect}
-				includeVariants={includeVariants}
-			/>
-			{newModal && (
-				<Modal
-					title="Create a product"
-					isFullScreen={true}
-					css={css`
-						width: 90vw;
-						min-height: 90vh;
-					`}
-					shouldCloseOnClickOutside={false}
-					onRequestClose={() => setNewModal(false)}
-				>
-					<p>Dialog for creating a new product</p>
-					<Button isPrimary onClick={() => setNewModal(false)}>
-						Create
-					</Button>
-					<Button isTertiary onClick={() => setNewModal(false)}>
-						Cancel
-					</Button>
-				</Modal>
-			)}
-		</Fragment>
+		<SelectPrice
+			required={required}
+			css={css`
+				flex: 0 1 50%;
+			`}
+			value={value}
+			ad_hoc={ad_hoc}
+			variable={variable}
+			open={open}
+			products={products}
+			onQuery={setQuery}
+			onFetch={() => setQuery('')}
+			loading={isLoading}
+			onSelect={onSelect}
+			onScrollEnd={handleOnScrollEnd}
+			{...props}
+		/>
 	);
 };
