@@ -143,6 +143,8 @@ export interface Media {
   filename: string;
   public_access: boolean;
   release_json: any;
+  alt: string;
+  title: string;
   url?: string;
   url_expires_at?: number;
   updated_at: number;

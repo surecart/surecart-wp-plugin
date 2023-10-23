@@ -40,7 +40,7 @@ export class ScProductItemImage {
             'is_covered': this.sizing === 'cover',
           }}
         >
-          {!!this.getSrc() ? <img src={this.getSrc()} alt={this.alt} /> : <div class="product-img_placeholder" />}
+          {!!this.getSrc() ? <img src={this.getSrc()} alt={this.alt || (this.productMedia?.media as Media)?.alt} title={(this.productMedia?.media as Media)?.title} /> : <div class="product-img_placeholder" />}
         </div>
       </Host>
     );

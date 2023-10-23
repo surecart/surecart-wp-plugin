@@ -76,7 +76,6 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 
 			<img
 				src={productMedia?.url || productMedia?.media?.url}
-				alt="product image"
 				css={css`
 					max-width: 100%;
 					aspect-ratio: 1 / 1;
@@ -86,6 +85,8 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					border-radius: var(--sc-border-radius-medium);
 					pointer-events: none;
 				`}
+				title={productMedia?.media?.title}
+				alt={productMedia?.media?.alt}
 			/>
 		</div>
 	);
