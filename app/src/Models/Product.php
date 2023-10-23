@@ -344,4 +344,15 @@ class Product extends Model implements PageModel {
 	public function getTemplatePartAttribute() {
 		return get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
 	}
+
+	/**
+	 * Get Template Content.
+	 *
+	 * @return string
+	 */
+	public function getTemplateContent() : string {
+		return wp_is_block_theme() ?
+			$this->template->content ?? '' :
+			$this->template_part->content ?? '';
+	}
 }

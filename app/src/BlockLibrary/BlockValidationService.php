@@ -17,20 +17,11 @@ class BlockValidationService {
 
 	/**
 	 * Set validators
+	 *
+	 * @param array $validators Array of validators.
 	 */
-	public function __construct() {
-		/**
-		 * Filters the list of block validators for SureCart blocks.
-		 *
-		 * @param array $validators An array of block validator instances.
-		 * @return array Modified array of block validator instances.
-		 */
-		$this->validators = apply_filters(
-			'surecart_block_validators',
-			[
-				new \SureCart\BlockValidator\VariantChoice(),
-			]
-		);
+	public function __construct( $validators = [] ) {
+		$this->validators = $validators;
 	}
 
 	/**
@@ -39,7 +30,7 @@ class BlockValidationService {
 	 * @return void
 	 */
 	public function bootstrap(): void {
-		add_action( 'wp', [ $this, 'register' ] );
+		add_action( 'wp', [ $this, 'bootstrapValidators' ] );
 	}
 
 	/**
@@ -47,9 +38,9 @@ class BlockValidationService {
 	 *
 	 * @return void
 	 */
-	public function register(): void {
+	public function bootstrapValidators(): void {
 		foreach ( $this->validators as $validator ) {
-			add_filter( 'render_block', [ $validator, 'validateAndRender' ], 10, 2 );
+			$validator->bootstrap();
 		}
 	}
 }

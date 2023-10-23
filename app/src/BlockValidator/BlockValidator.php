@@ -13,11 +13,11 @@ namespace SureCart\BlockValidator;
  */
 abstract class BlockValidator {
 	/**
-	 * The block to search for.
+	 * The name of the block to validate.
 	 *
 	 * @var string
 	 */
-	protected string $searched_block;
+	protected $block_name = '';
 
 	/**
 	 * Validate block.
@@ -29,7 +29,7 @@ abstract class BlockValidator {
 	 *
 	 * @return bool
 	 */
-	abstract protected function validate( string $block_content, array $block): bool;
+	abstract protected function isValid( string $block_content, array $block ): bool;
 
 	/**
 	 * Render block.
@@ -44,6 +44,19 @@ abstract class BlockValidator {
 	abstract protected function render( string $block_content, array $block ): string;
 
 	/**
+	 * Bootstrap the service.
+	 * We only want to validate and render the block when the buy button renders.
+	 *
+	 * @return void
+	 */
+	public function bootstrap(): void {
+		if ( ! $this->block_name ) {
+			return;
+		}
+		add_action( 'render_block_' . $this->block_name, [ $this, 'validateAndRender' ], 10, 2 );
+	}
+
+	/**
 	 * Validate and render block.
 	 *
 	 * @param string $block_content The block content.
@@ -52,25 +65,12 @@ abstract class BlockValidator {
 	 * @return string
 	 */
 	public function validateAndRender( string $block_content, array $block ): string {
-		// If the block is not valid, return the original content.
-		if ( ! $this->validate( $block_content, $block ) ) {
+		// If the content is valid, return the original content.
+		if ( $this->isValid( $block_content, $block ) ) {
 			return $block_content;
 		}
 
 		// Render the block - This should be implemented by the child class.
 		return $this->render( $block_content, $block );
-	}
-
-	/**
-	 * Get block content of a template from model.
-	 *
-	 * @param \SureCart\Models\Model $model The model, eg. Product, ProductCollection, etc.
-	 *
-	 * @return string
-	 */
-	public function getBlockContent( \SureCart\Models\Model $model ): string {
-		return wp_is_block_theme() ?
-			$model->template->content ?? '' :
-			$model->template_part->content ?? '';
 	}
 }

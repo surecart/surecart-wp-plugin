@@ -34,8 +34,15 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockPatternsService( $app );
 		};
 
-		$container['blocks.validations'] = function () use ( $app ) {
-			return new BlockValidationService( $app );
+		$container['blocks.validations'] = function () {
+			return new BlockValidationService(
+				apply_filters(
+					'surecart_block_validators',
+					[
+						new \SureCart\BlockValidator\VariantChoice(),
+					]
+				)
+			);
 		};
 
 		$app->alias( 'blocks', 'blocks' );

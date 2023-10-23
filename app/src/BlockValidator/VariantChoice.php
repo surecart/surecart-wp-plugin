@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace SureCart\BlockValidator;
 
+use \SureCartBlocks\Blocks\Product\VariantChoices\Block as VariantChoicesBlock;
+
 /**
  * VariantChoice Block validator.
  */
 class VariantChoice extends BlockValidator {
 	/**
-	 * The block to search for.
+	 * The name of the block to validate.
 	 *
 	 * @var string
 	 */
-	protected string $searched_block = 'surecart/product-variant-choices';
+	protected $block_name = 'surecart/product-buy-buttons';
 
 	/**
 	 * Validate block.
@@ -21,32 +23,27 @@ class VariantChoice extends BlockValidator {
 	 * @param string $block_content The block content.
 	 * @param array  $block The block.
 	 *
-	 * @return bool
+	 * @return bool True if the block is valid, false otherwise.
 	 */
-	protected function validate( string $block_content, array $block ): bool {
-		// Return if not surecart/product-buy-buttons block.
-		if ( 'surecart/product-buy-buttons' !== $block['blockName'] ) {
-			return false;
-		}
-
+	protected function isValid( string $block_content, array $block ): bool {
 		$product = get_query_var( 'surecart_current_product' );
 
 		// If not in product page return.
-		if ( empty( $product ) ) {
-			return false;
+		if ( empty( $product ) || ! $product instanceof \SureCart\Models\Product ) {
+			return true;
 		}
 
 		// If no variant, return.
 		if ( ! count( $product->variants->data ?? [] ) ) {
-			return false;
+			return true;
 		}
 
 		// If has block already exist, return.
-		if ( has_block( $this->searched_block, $this->getBlockContent( $product ) ) ) {
-			return false;
+		if ( has_block( 'surecart/product-variant-choices', $product->getTemplateContent() ) ) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -58,8 +55,7 @@ class VariantChoice extends BlockValidator {
 	 * @return string
 	 */
 	protected function render( string $block_content, array $block ): string {
-		$appended_block = ( new \SureCartBlocks\Blocks\Product\VariantChoices\Block() )->render( [], '' );
-
+		$appended_block = ( new VariantChoicesBlock() )->render( [], '' );
 		return $appended_block . $block_content;
 	}
 }
