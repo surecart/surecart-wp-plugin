@@ -55,7 +55,12 @@ class VariantChoice extends BlockValidator {
 	 * @return string
 	 */
 	protected function render( string $block_content, array $block ): string {
-		$appended_block = ( new VariantChoicesBlock() )->render( [], '' );
+		$appended_block = render_block(
+			[
+				'blockName' => 'surecart/product-variant-choices',
+				'attrs'     => [],
+			]
+		);
 		return $appended_block . $block_content;
 	}
 }
