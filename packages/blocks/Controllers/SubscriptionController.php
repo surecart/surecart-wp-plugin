@@ -394,7 +394,7 @@ class SubscriptionController extends BaseController {
 				'variant_options', 
 				'prices'
 			]
-		)->find( $subscription->price->product->id );
+		)->find( $price->product );
 
 		ob_start();
 		?>
