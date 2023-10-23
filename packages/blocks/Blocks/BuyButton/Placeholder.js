@@ -20,52 +20,46 @@ export default ({ setAttributes }) => {
 	};
 
 	const updateLineItem = (data) => {
-		const priceExists = line_items?.find((item) => {
-			return item?.id && item.id === data.id && !data?.variant_id;
+		const existingPrice = line_items?.find((item) => {
+			return item?.id === data.id && !data?.variant_id;
 		});
+		const existingVariant = line_items?.find(
+			(item) =>
+				item?.id === data.id && item?.variant_id === data.variant_id
+		);
 
-		const variantExists = line_items?.find((item) => {
-			return (
-				item?.id &&
-				item.id === data.id &&
-				item.variant_id &&
-				item.variant_id === data.variant_id
-			);
-		});
-
-		if (variantExists) {
+		// increase quantity if variant exists.
+		if (existingVariant) {
 			setLineItems(
 				line_items.map((item) => {
-					if (
-						item?.id !== variantExists?.id ||
-						item?.variant_id !== variantExists?.variant_id
-					) {
-						return item;
-					}
+					if (item?.id !== existingVariant?.id) return item;
 					return {
 						...item,
 						...{
-							quantity: variantExists?.quantity + 1,
+							quantity: existingVariant?.quantity + 1,
 						},
 					};
 				})
 			);
 			return;
 		}
-		if (priceExists) {
+
+		// increase price if price exists.
+		if (existingPrice) {
 			setLineItems(
 				line_items.map((item) => {
-					if (item?.id !== priceExists?.id) return item;
+					if (item?.id !== existingPrice?.id) return item;
 					return {
 						...item,
 						...{
-							quantity: priceExists?.quantity + 1,
+							quantity: existingPrice?.quantity + 1,
 						},
 					};
 				})
 			);
 			return;
 		}
+
 		setLineItems([
 			...line_items,
 			{
