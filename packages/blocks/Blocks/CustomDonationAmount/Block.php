@@ -17,11 +17,9 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-        $currency = $attributes['currency'] ?? 'USD';
-
         ob_start(); ?>
             <sc-custom-donation-amount
-                currencyCode="<?php echo esc_attr( $currency ); ?>"
+            	currencyCode="<?php echo esc_attr( $attributes['currency'] ?? 'USD' ); ?>"
             >
             </sc-custom-donation-amount>
         <?php

@@ -1,7 +1,5 @@
 import { InnerBlocks } from '@wordpress/block-editor';
 
-export default (props) => {
-	return (
-		<InnerBlocks.Content />
-	);
+export default () => {
+	return <InnerBlocks.Content />;
 };

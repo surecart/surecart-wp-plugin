@@ -34,7 +34,7 @@ export class ScRecurringPriceChoiceContainer {
   @State() value: Price;
 
   /** Change event. */
-  @Event({ bubbles: false }) scChange: EventEmitter<string>;
+  @Event() scChange: EventEmitter<string>;
 
   renderPrice(price) {
     return <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>;

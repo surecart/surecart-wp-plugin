@@ -21,6 +21,19 @@ import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
 import { ScProductDonationChoices } from '@surecart/components-react';
 
+const TEMPLATE = [
+	['surecart/product-donation-amount', { amount: 100, currency }],
+	['surecart/product-donation-amount', { amount: 200, currency }],
+	['surecart/product-donation-amount', { amount: 500, currency }],
+	['surecart/product-donation-amount', { amount: 1000, currency }],
+	['surecart/product-donation-amount', { amount: 2000, currency }],
+	['surecart/product-donation-amount', { amount: 5000, currency }],
+	['surecart/product-donation-amount', { amount: 10000, currency }],
+	['surecart/product-donation-amount', { amount: 20000, currency }],
+	['surecart/product-donation-amount', { amount: 50000, currency }],
+	['surecart/custom-donation-amount', { currency }],
+];
+
 export default ({ attributes, setAttributes }) => {
 	const {
 		product_id,
@@ -39,19 +52,6 @@ export default ({ attributes, setAttributes }) => {
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
-
-	const template = [
-		['surecart/product-donation-amount', { amount: 100, currency }],
-		['surecart/product-donation-amount', { amount: 200, currency }],
-		['surecart/product-donation-amount', { amount: 500, currency }],
-		['surecart/product-donation-amount', { amount: 1000, currency }],
-		['surecart/product-donation-amount', { amount: 2000, currency }],
-		['surecart/product-donation-amount', { amount: 5000, currency }],
-		['surecart/product-donation-amount', { amount: 10000, currency }],
-		['surecart/product-donation-amount', { amount: 20000, currency }],
-		['surecart/product-donation-amount', { amount: 50000, currency }],
-		['surecart/custom-donation-amount', { currency }],
-	];
 
 	const blockProps = useBlockProps({
 		style: {
@@ -72,7 +72,7 @@ export default ({ attributes, setAttributes }) => {
 			allowedBlocks: ['surecart/product-donation-amount'],
 			renderAppender: InnerBlocks.ButtonBlockAppender,
 			orientation: 'horizontal',
-			template,
+			TEMPLATE,
 		}
 	);
 

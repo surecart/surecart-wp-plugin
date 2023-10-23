@@ -241,8 +241,6 @@ export class ScProductDonationChoice {
   }
 
   render() {
-    const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
-
     if (this.loading) {
       return (
         <div class="sc-product-donation-choices">
@@ -253,6 +251,7 @@ export class ScProductDonationChoice {
       );
     }
 
+    const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
 
     return (
@@ -287,7 +286,6 @@ export class ScProductDonationChoice {
               </div>
             </sc-choice-container>
           </sc-choices>
-          {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
         </div>
         {this.busy && <sc-block-ui style={{ zIndex: '9' }}></sc-block-ui>}
       </div>

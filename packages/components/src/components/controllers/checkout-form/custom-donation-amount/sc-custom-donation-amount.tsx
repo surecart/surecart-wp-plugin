@@ -87,8 +87,7 @@ export class ScCustomDonationAmount {
   }
 
   handlePriceChange(e) {
-    const value = e?.target?.value;
-    this.value = value;
+    this.value = e?.target?.value;
   }
 
   render() {

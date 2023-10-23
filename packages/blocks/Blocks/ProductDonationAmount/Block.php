@@ -19,8 +19,6 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
         $amount = $attributes['amount'] ?? '';
         $label = $attributes['label'] ?? '';
-        $custom_amount = $attributes['custom_amount'] ?? false;
-        $currency = $attributes['currency'] ?? 'USD';
 
         ob_start(); ?>
             <sc-choice-container show-control="false" value="<?php echo esc_attr( $amount ); ?>">
@@ -30,7 +28,7 @@ class Block extends BaseBlock {
                 ?>
                     <sc-format-number
                         type="currency"
-                        currency="<?php echo esc_attr( $currency ); ?>"
+                        currency="<?php echo esc_attr( $attributes['currency'] ?? 'USD' ); ?>"
                         value="<?php echo esc_attr( $amount ); ?>"
                         minimum-fraction-digits="0"
                     ></sc-format-number>
