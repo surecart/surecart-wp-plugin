@@ -1,5 +1,5 @@
 import { Product } from 'src/types';
-import { getCheckout } from '../checkouts';
+import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 
 /**

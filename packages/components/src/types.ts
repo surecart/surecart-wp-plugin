@@ -1108,3 +1108,28 @@ export interface GoogleAnalyticsItem {
   currency: string;
   discount?: number;
 }
+
+export interface PaymentInfoAddedParams {
+  checkout_id: string;
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
+  payment_method: {
+    billing_details: {
+      name: string;
+      email: string;
+    };
+  };
+}
+
+export interface CheckoutInitiatedParams {
+  transaction_id: string;
+  value: number;
+  currency: string;
+  coupon?: string;
+  tax?: number;
+  items: Array<{
+    item_name: string;
+    discount: number;
+    price: number;
+    quantity: number;
+  }>;
+}

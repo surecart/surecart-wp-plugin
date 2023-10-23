@@ -4101,6 +4101,10 @@ export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
 }
+export interface ScProductItemListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductItemListElement;
+}
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScProductLineItemElement;
@@ -8750,6 +8754,10 @@ declare namespace LocalJSX {
         "ids"?: string[];
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
+        /**
+          * Product was searched
+         */
+        "onScSearched"?: (event: ScProductItemListCustomEvent<string>) => void;
         "paginationAlignment"?: string;
         /**
           * Should we auto-scroll to the top when paginating via ajax
@@ -9282,7 +9290,14 @@ declare namespace LocalJSX {
           * Mode for the payment
          */
         "mode"?: 'live' | 'test';
+        /**
+          * The order/invoice was paid for
+         */
         "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
+        /**
+          * A payment method was added
+         */
+        "onScPaymentInfoAdded"?: (event: ScStripeElementCustomEvent<PaymentInfoAddedParams>) => void;
         /**
           * Set the state
          */

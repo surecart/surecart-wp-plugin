@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
-import { getOrder, setOrder } from '@store/checkouts';
+import { getCheckout, setCheckout } from '@store/checkouts/mutations';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { expand } from '../../../../services/session';
@@ -61,11 +61,11 @@ export class ScCart {
   }
 
   order() {
-    return getOrder(this.formId, this.mode);
+    return getCheckout(this.formId, this.mode);
   }
 
-  setOrder(data) {
-    setOrder(data, this.formId);
+  setCheckout(data) {
+    setCheckout(data, this.formId);
   }
 
   /**
@@ -106,7 +106,7 @@ export class ScCart {
           expand,
         }),
       })) as Checkout;
-      this.setOrder(order);
+      this.setCheckout(order);
     } catch (e) {
       console.error(e);
       this.uiState = 'idle';
@@ -149,7 +149,7 @@ export class ScCart {
       <Fragment>
         {this.order() && (
           <Universe.Provider state={this.state()}>
-            <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setOrder(e.detail)}>
+            <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setCheckout(e.detail)}>
               <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
                 {this.open === true && (
                   <Fragment>

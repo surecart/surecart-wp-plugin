@@ -1,6 +1,7 @@
 import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
 import { Price, Product, VariantOption, Variant } from 'src/types';
+import { productViewed } from './events';
 
 interface Store {
   formId: number;
@@ -35,6 +36,10 @@ const selectedVariant = variants?.length
   : null;
 
 const adHocAmount = selectedPrice?.amount || null;
+
+if (product) {
+  productViewed(product);
+}
 
 const store = createStore<Store>(
   {
