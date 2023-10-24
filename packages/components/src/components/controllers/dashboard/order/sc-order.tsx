@@ -271,18 +271,20 @@ export class ScOrder {
           <span slot="currency">{checkout?.currency}</span>
         </sc-line-item>
 
-        <sc-line-item
-          style={{
-            'width': '100%',
-            '--price-size': 'var(--sc-font-size-x-large)',
-          }}
-        >
-          <span slot="title">{__('Amount Due', 'surecart')}</span>
-          <span slot="price">
-            <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
-          </span>
-          <span slot="currency">{checkout?.currency}</span>
-        </sc-line-item>
+        {checkout?.amount_due !== checkout?.total_amount && (
+          <sc-line-item
+            style={{
+              'width': '100%',
+              '--price-size': 'var(--sc-font-size-x-large)',
+            }}
+          >
+            <span slot="title">{__('Amount Due', 'surecart')}</span>
+            <span slot="price">
+              <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
+            </span>
+            <span slot="currency">{checkout?.currency}</span>
+          </sc-line-item>
+        )}
 
         {!!checkout?.charge && (
           <sc-line-item
@@ -343,10 +345,7 @@ export class ScOrder {
                     <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
                   </sc-stacked-list-row>
 
-                  <div style={{ padding: 'var(--sc-spacing-large)' }}>
-                    <div style={{ marginBottom: '0.5em' }}>{__('Line items', 'surecart')}</div>
-                    {this.renderContent()}
-                  </div>
+                  <div class="order__row">{this.renderContent()}</div>
                 </sc-stacked-list>
               </Fragment>
             )}
