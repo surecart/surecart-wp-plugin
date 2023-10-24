@@ -343,10 +343,10 @@ export class ScOrder {
                     <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
                   </sc-stacked-list-row>
 
-                  <sc-stacked-list-row style={{ '--columns': '2' }}>
-                    <div>{__('Line items', 'surecart')}</div>
+                  <div style={{ padding: 'var(--sc-spacing-large)' }}>
+                    <div style={{ marginBottom: '0.5em' }}>{__('Line items', 'surecart')}</div>
                     {this.renderContent()}
-                  </sc-stacked-list-row>
+                  </div>
                 </sc-stacked-list>
               </Fragment>
             )}
