@@ -8,7 +8,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, select } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
 
@@ -56,9 +56,16 @@ export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 
 		try {
 			setBusy(true);
+
 			const path = status === 'open' ? 'open' : 'complete';
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'return_request'
+			);
+
 			await apiFetch({
-				path: `/surecart/v1/return_requests/${returnRequest.id}/${path}`,
+				path: `${baseURL}/${returnRequest.id}/${path}`,
 				method: 'PATCH',
 			});
 
