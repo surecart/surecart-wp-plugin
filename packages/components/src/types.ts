@@ -55,7 +55,7 @@ declare global {
       admin_url: string;
       user_permissions: {
         manage_sc_shop_settings: boolean;
-      }
+      };
     };
     ceRegisterIconLibrary: any;
     ResizeObserver: any;
@@ -1019,15 +1019,3 @@ export interface GoogleAnalyticsItem {
   currency: string;
   discount?: number;
 }
-
-export interface DummyProduct {
-  permalink: string;
-  name: string;
-  created_at: number;
-  prices: {
-    data: {
-      amount: number;
-      currency: string;
-    };
-  };
-};
