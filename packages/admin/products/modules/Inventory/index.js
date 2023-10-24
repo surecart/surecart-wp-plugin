@@ -75,7 +75,7 @@ export default ({ product, updateProduct, loading }) => {
 
 			{!!product?.stock_enabled && product?.variants?.length === 0 && (
 				<ScFormControl
-					label={__('Stock quantity', 'surecart')}
+					label={__('Available Stock', 'surecart')}
 					css={css`
 						margin-bottom: 10px;
 					`}
@@ -88,13 +88,14 @@ export default ({ product, updateProduct, loading }) => {
 					>
 						<ScQuantitySelect
 							quantity={
-								(product?.stock || 0) +
+								(product?.available_stock || 0) +
 								(product?.stock_adjustment || 0)
 							}
 							onScChange={(e) =>
 								updateProduct({
 									stock_adjustment:
-										e.detail - (product?.stock || 0),
+										e.detail -
+										(product?.available_stock || 0),
 								})
 							}
 							min={-9999999}
