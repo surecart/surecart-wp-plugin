@@ -43,16 +43,13 @@ export default ({
 
 	useEffect(() => {
 		setItems(
-			(fulfillmentItems || []).map(
-				({ quantity, fulfilled_quantity, ...item }) => {
-					return {
-						...item,
-						quantity: 0,
-						originalQuantity: fulfilled_quantity,
-						return_reason: 'unknown', // by default, set return reason to unknown
-					};
-				}
-			)
+			(fulfillmentItems || []).map(({ fulfilled_quantity, ...item }) => {
+				return {
+					...item,
+					originalQuantity: fulfilled_quantity,
+					return_reason: 'unknown', // by default, set return reason to unknown
+				};
+			})
 		);
 	}, [fulfillmentItems]);
 
