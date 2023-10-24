@@ -128,9 +128,7 @@ export class ScProductItemList {
     } catch (error) {
       console.log('error');
       console.error(error);
-      if ('missing_token' !== error?.code) {
-        this.error = error.message || __('An unknown error occurred.', 'surecart');
-      }
+      this.error = error.message || __('An unknown error occurred.', 'surecart');
     } finally {
       this.busy = false;
     }
@@ -180,9 +178,7 @@ export class ScProductItemList {
       await handleNonceError(response)
         .then(() => this.fetchProducts())
         .catch(error => {
-          if ('missing_token' !== error?.code) {
-            this.error = error.message || __('An unknown error occurred.', 'surecart');
-          }
+          this.error = error.message || __('An unknown error occurred.', 'surecart');
         });
     }
   }
