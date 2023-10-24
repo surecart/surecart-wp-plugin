@@ -28,7 +28,7 @@ import {
 	ScFormControl,
 	ScProductItemList,
 	ScSelect,
-	ScButton
+	ScButton,
 } from '@surecart/components-react';
 
 import {
@@ -63,7 +63,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 	} = attributes;
 
 	const apiTokenConnected = scData?.is_account_connected;
-	
+
 	const blockProps = useBlockProps();
 
 	function togglePreview() {
@@ -166,25 +166,25 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 	const getDummyProducts = (limit = 15) => {
 		const dummyProducts = [];
-		
+
 		for (let i = 1; i <= limit; i++) {
 			const product = {
-			permalink: '#',
-			name: __(`Product ${i}`, 'surecart'),
-			created_at: Math.floor(Math.random() * 40) + 1,
-			prices: {
-				data: [
-				{
-					amount: 1900,
-					currency: 'USD',
+				permalink: '#',
+				name: __('Example Product Title', 'surecart'),
+				created_at: Math.floor(Math.random() * 40) + 1,
+				prices: {
+					data: [
+						{
+							amount: 1900,
+							currency: 'USD',
+						},
+					],
 				},
-				],
-			},
 			};
-		
+
 			dummyProducts.push(product);
 		}
-		
+
 		return dummyProducts;
 	};
 
@@ -434,7 +434,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
-				{!apiTokenConnected && (				
+				{!apiTokenConnected && (
 					<Notice
 						status="warning"
 						isDismissible={false}
@@ -444,17 +444,19 @@ export default ({ attributes, setAttributes, clientId }) => {
 					>
 						<div
 							css={css`
-								display: ${!apiTokenConnected ? 'flex' : 'none'};
+								display: ${!apiTokenConnected
+									? 'flex'
+									: 'none'};
 								flex-direction: column;
 								gap: 1em;
 							`}
 						>
 							{__(
-								"These are sample products. Setup a new store / Connect existing to have real items.",
+								'These are sample products. Setup a new store / Connect existing to have real items.',
 								'surecart'
 							)}
-							<ScButton 
-								type="primary" 
+							<ScButton
+								type="primary"
 								href={window.scData?.getting_started_url}
 								css={css`
 									width: fit-content;
@@ -500,11 +502,23 @@ export default ({ attributes, setAttributes, clientId }) => {
 								limit={limit}
 								layoutConfig={layoutConfig}
 								paginationAlignment={pagination_alignment}
-								sortEnabled={apiTokenConnected ? sort_enabled : false}
+								sortEnabled={
+									apiTokenConnected ? sort_enabled : false
+								}
 								featured={type === 'featured'}
-								searchEnabled={apiTokenConnected ? search_enabled : false}
-								paginationEnabled={apiTokenConnected ? pagination_enabled : false}
-								products={!apiTokenConnected ? getDummyProducts(limit) : []}
+								searchEnabled={
+									apiTokenConnected ? search_enabled : false
+								}
+								paginationEnabled={
+									apiTokenConnected
+										? pagination_enabled
+										: false
+								}
+								products={
+									!apiTokenConnected
+										? getDummyProducts(limit)
+										: []
+								}
 							/>
 						)}
 					</Disabled>
