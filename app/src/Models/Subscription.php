@@ -434,7 +434,7 @@ class Subscription extends Model {
 	public function shouldDelayCancellation(): bool {
 		$protocol = \SureCart::account()->subscription_protocol;
 
-		if ( ! $protocol->cancel_window_enabled || empty( $protocol->cancel_window_days ) ) {
+		if ( ! $protocol->cancel_window_enabled || empty( $protocol->cancel_window_days ) || empty( $this->attributes['current_period_end_at'] ) ) {
 			return false;
 		}
 
