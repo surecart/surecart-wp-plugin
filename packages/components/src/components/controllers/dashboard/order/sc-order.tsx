@@ -124,6 +124,8 @@ export class ScOrder {
               key={item.id}
               imageUrl={(item?.price?.product as Product)?.image_url}
               name={(item?.price?.product as Product)?.name}
+              priceName={item?.price?.name}
+              variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
               editable={false}
               removable={false}
               quantity={item.quantity}

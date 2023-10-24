@@ -30,7 +30,7 @@ export default defineConfig({
 	// testMatch: ["**/test/*-pw.spec.ts"],
 
 	/* Run tests in files in parallel */
-	fullyParallel: true,
+	fullyParallel: false, // TODO: Enable this when API fixes Discard::RecordNotDiscarded
 
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!CI,

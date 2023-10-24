@@ -16,7 +16,6 @@ export const getPricesAndProducts = async ({ ids, archived = false }: { ids: Arr
 
   return normalizePrices(prices);
 };
-
 export const normalizePrices = (prices: Array<Price>) => {
   const { entities } = normalizeEntities(prices);
   return {

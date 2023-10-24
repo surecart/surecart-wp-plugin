@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -34,6 +34,10 @@ export namespace Components {
         "names": Partial<Address>;
         "placeholders": Partial<Address>;
         "reportValidity": () => Promise<boolean>;
+        /**
+          * Is the name required
+         */
+        "requireName": boolean;
         /**
           * Is this required?
          */
@@ -314,6 +318,10 @@ export namespace Components {
           * The quantity
          */
         "quantity": number;
+        /**
+          * The variant id to add.
+         */
+        "variantId": string;
     }
     interface ScCartFormSubmit {
         /**
@@ -496,19 +504,6 @@ export namespace Components {
          */
         "formId": number;
         /**
-          * Text for the loading states of the form.
-         */
-        "loadingText": {
-    finalizing: string;
-    paying: string;
-    confirming: string;
-    confirmed: string;
-  };
-        /**
-          * Is this user logged in?
-         */
-        "loggedIn": boolean;
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods": ManualPaymentMethod[];
@@ -549,14 +544,6 @@ export namespace Components {
          */
         "submit": ({ skip_validation }?: { skip_validation: boolean; }) => Promise<Checkout | NodeJS.Timeout | Error>;
         /**
-          * Success text for the form.
-         */
-        "successText": {
-    title: string;
-    description: string;
-    button: string;
-  };
-        /**
           * Where to go on success
          */
         "successUrl": string;
@@ -579,6 +566,22 @@ export namespace Components {
         "processorId": string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    interface ScCheckoutProductPriceVariantSelector {
+        /**
+          * The label for the price.
+         */
+        "label": string;
+        /**
+          * The product.
+         */
+        "product": Product;
+        "reportValidity": () => Promise<boolean>;
+    }
+    /**
+     * This component listens for stock requirements and displays a dialog to the user.
+     */
+    interface ScCheckoutStockAlert {
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state": FormState;
@@ -1366,10 +1369,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The order
-         */
-        "order": Checkout;
-        /**
           * The tax protocol
          */
         "taxProtocol": TaxProtocol;
@@ -1880,17 +1879,11 @@ export namespace Components {
         "bump": Bump;
         "cdnRoot": string;
         /**
-          * The checkout
-         */
-        "checkout": Checkout;
-        /**
           * Should we show the controls
          */
         "showControl": boolean;
     }
     interface ScOrderBumps {
-        "bumps": Bump[];
-        "checkout": Checkout;
         "help": string;
         "label": string;
         "showControl": boolean;
@@ -1910,14 +1903,6 @@ export namespace Components {
           * Checkout status to listen and do payment related stuff.
          */
         "checkoutStatus": string;
-        /**
-          * Success text for the form.
-         */
-        "successText": {
-    title: string;
-    description: string;
-    button: string;
-  };
         /**
           * Success url.
          */
@@ -2097,7 +2082,7 @@ export namespace Components {
          */
         "defaultCountry": string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full": boolean;
         /**
@@ -2120,6 +2105,10 @@ export namespace Components {
         "placeholders": Partial<Address>;
         "postalCodePlaceholder": string;
         "reportValidity": () => Promise<boolean>;
+        /**
+          * Whether to require the name in the address
+         */
+        "requireName": boolean;
         /**
           * Is this required (defaults to false)
          */
@@ -2166,10 +2155,6 @@ export namespace Components {
     }
     interface ScOrderSubmit {
         /**
-          * Is the order busy
-         */
-        "busy": boolean;
-        /**
           * Currency Code
          */
         "currencyCode": string;
@@ -2185,10 +2170,6 @@ export namespace Components {
           * Is the order loading.
          */
         "loading": boolean;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode": 'test' | 'live';
         /**
           * The current order.
          */
@@ -2619,6 +2600,13 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScPillOption {
+        /**
+          * Label
+         */
+        "isSelected": boolean;
+        "isUnavailable": boolean;
+    }
     interface ScPremiumTag {
         /**
           * The tag's size.
@@ -2716,6 +2704,7 @@ export namespace Components {
           * Stores the price
          */
         "price": string | Price1;
+        "required": boolean;
         /**
           * Show the radio/checkbox control
          */
@@ -2742,10 +2731,6 @@ export namespace Components {
           * Selector label
          */
         "label": string;
-        /**
-          * Session
-         */
-        "order": Checkout;
         /**
           * Required by default
          */
@@ -2918,6 +2903,10 @@ export namespace Components {
         "sortEnabled": boolean;
     }
     interface ScProductItemPrice {
+        /**
+          * Product metrics
+         */
+        "metrics": ProductMetrics;
         "prices": Price1[];
         /**
           * Show price range?
@@ -2964,6 +2953,10 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Price name
+         */
+        "priceName"?: string;
+        /**
           * Quantity
          */
         "quantity": number;
@@ -2980,12 +2973,36 @@ export namespace Components {
          */
         "setupFeeTrialEnabled": boolean;
         /**
+          * The SKU.
+         */
+        "sku": string;
+        /**
           * Trial duration days
          */
         "trialDurationDays": number;
+        /**
+          * Product variant label
+         */
+        "variantLabel": string;
+    }
+    interface ScProductPillsVariantOption {
+        /**
+          * Label
+         */
+        "label": string;
+        /**
+          * Which option number?
+         */
+        "optionNumber": 1 | 2 | 3;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices": Price[];
+        /**
+          * The sale text
+         */
         "saleText": string;
     }
     interface ScProductPriceChoices {
@@ -3489,6 +3506,12 @@ export namespace Components {
         "query": object;
         "subscription": Subscription;
     }
+    interface ScSubscriptionVariationConfirm {
+        "heading": string;
+        "price": Price;
+        "product": Product;
+        "subscription": Subscription;
+    }
     interface ScSubscriptionsList {
         "allLink": string;
         "cancelBehavior": 'period_end' | 'immediate';
@@ -3851,6 +3874,7 @@ export namespace Components {
         "quantityUpdatesEnabled": boolean;
         "subscriptionId": string;
         "successUrl": string;
+        "variantId": string;
     }
     interface ScUpgradeRequired {
         /**
@@ -3924,6 +3948,10 @@ export interface ScCheckboxCustomEvent<T> extends CustomEvent<T> {
 export interface ScCheckoutCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCheckoutElement;
+}
+export interface ScCheckoutStockAlertCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCheckoutStockAlertElement;
 }
 export interface ScChoiceCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4072,6 +4100,10 @@ export interface ScPriceChoicesCustomEvent<T> extends CustomEvent<T> {
 export interface ScPriceInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScPriceInputElement;
+}
+export interface ScProductItemListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScProductItemListElement;
 }
 export interface ScProductLineItemCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4330,6 +4362,21 @@ declare global {
     var HTMLScCheckoutPaystackPaymentProviderElement: {
         prototype: HTMLScCheckoutPaystackPaymentProviderElement;
         new (): HTMLScCheckoutPaystackPaymentProviderElement;
+    };
+    interface HTMLScCheckoutProductPriceVariantSelectorElement extends Components.ScCheckoutProductPriceVariantSelector, HTMLStencilElement {
+    }
+    var HTMLScCheckoutProductPriceVariantSelectorElement: {
+        prototype: HTMLScCheckoutProductPriceVariantSelectorElement;
+        new (): HTMLScCheckoutProductPriceVariantSelectorElement;
+    };
+    /**
+     * This component listens for stock requirements and displays a dialog to the user.
+     */
+    interface HTMLScCheckoutStockAlertElement extends Components.ScCheckoutStockAlert, HTMLStencilElement {
+    }
+    var HTMLScCheckoutStockAlertElement: {
+        prototype: HTMLScCheckoutStockAlertElement;
+        new (): HTMLScCheckoutStockAlertElement;
     };
     interface HTMLScCheckoutUnsavedChangesWarningElement extends Components.ScCheckoutUnsavedChangesWarning, HTMLStencilElement {
     }
@@ -4930,6 +4977,12 @@ declare global {
         prototype: HTMLScPhoneInputElement;
         new (): HTMLScPhoneInputElement;
     };
+    interface HTMLScPillOptionElement extends Components.ScPillOption, HTMLStencilElement {
+    }
+    var HTMLScPillOptionElement: {
+        prototype: HTMLScPillOptionElement;
+        new (): HTMLScPillOptionElement;
+    };
     interface HTMLScPremiumTagElement extends Components.ScPremiumTag, HTMLStencilElement {
     }
     var HTMLScPremiumTagElement: {
@@ -5007,6 +5060,12 @@ declare global {
     var HTMLScProductLineItemElement: {
         prototype: HTMLScProductLineItemElement;
         new (): HTMLScProductLineItemElement;
+    };
+    interface HTMLScProductPillsVariantOptionElement extends Components.ScProductPillsVariantOption, HTMLStencilElement {
+    }
+    var HTMLScProductPillsVariantOptionElement: {
+        prototype: HTMLScProductPillsVariantOptionElement;
+        new (): HTMLScProductPillsVariantOptionElement;
     };
     interface HTMLScProductPriceElement extends Components.ScProductPrice, HTMLStencilElement {
     }
@@ -5224,6 +5283,12 @@ declare global {
         prototype: HTMLScSubscriptionSwitchElement;
         new (): HTMLScSubscriptionSwitchElement;
     };
+    interface HTMLScSubscriptionVariationConfirmElement extends Components.ScSubscriptionVariationConfirm, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionVariationConfirmElement: {
+        prototype: HTMLScSubscriptionVariationConfirmElement;
+        new (): HTMLScSubscriptionVariationConfirmElement;
+    };
     interface HTMLScSubscriptionsListElement extends Components.ScSubscriptionsList, HTMLStencilElement {
     }
     var HTMLScSubscriptionsListElement: {
@@ -5386,6 +5451,8 @@ declare global {
         "sc-checkout-form-errors": HTMLScCheckoutFormErrorsElement;
         "sc-checkout-mollie-payment": HTMLScCheckoutMolliePaymentElement;
         "sc-checkout-paystack-payment-provider": HTMLScCheckoutPaystackPaymentProviderElement;
+        "sc-checkout-product-price-variant-selector": HTMLScCheckoutProductPriceVariantSelectorElement;
+        "sc-checkout-stock-alert": HTMLScCheckoutStockAlertElement;
         "sc-checkout-unsaved-changes-warning": HTMLScCheckoutUnsavedChangesWarningElement;
         "sc-choice": HTMLScChoiceElement;
         "sc-choice-container": HTMLScChoiceContainerElement;
@@ -5484,6 +5551,7 @@ declare global {
         "sc-paypal-buttons": HTMLScPaypalButtonsElement;
         "sc-paystack-add-method": HTMLScPaystackAddMethodElement;
         "sc-phone-input": HTMLScPhoneInputElement;
+        "sc-pill-option": HTMLScPillOptionElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choice-container": HTMLScPriceChoiceContainerElement;
@@ -5497,6 +5565,7 @@ declare global {
         "sc-product-item-price": HTMLScProductItemPriceElement;
         "sc-product-item-title": HTMLScProductItemTitleElement;
         "sc-product-line-item": HTMLScProductLineItemElement;
+        "sc-product-pills-variant-option": HTMLScProductPillsVariantOptionElement;
         "sc-product-price": HTMLScProductPriceElement;
         "sc-product-price-choices": HTMLScProductPriceChoicesElement;
         "sc-product-price-modal": HTMLScProductPriceModalElement;
@@ -5533,6 +5602,7 @@ declare global {
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
+        "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
         "sc-switch": HTMLScSwitchElement;
         "sc-tab": HTMLScTabElement;
@@ -5585,6 +5655,10 @@ declare namespace LocalJSX {
          */
         "onScInputAddress"?: (event: ScAddressCustomEvent<Partial<Address>>) => void;
         "placeholders"?: Partial<Address>;
+        /**
+          * Is the name required
+         */
+        "requireName"?: boolean;
         /**
           * Is this required?
          */
@@ -5879,6 +5953,10 @@ declare namespace LocalJSX {
           * The quantity
          */
         "quantity"?: number;
+        /**
+          * The variant id to add.
+         */
+        "variantId"?: string;
     }
     interface ScCartFormSubmit {
         /**
@@ -6066,19 +6144,6 @@ declare namespace LocalJSX {
          */
         "formId"?: number;
         /**
-          * Text for the loading states of the form.
-         */
-        "loadingText"?: {
-    finalizing: string;
-    paying: string;
-    confirming: string;
-    confirmed: string;
-  };
-        /**
-          * Is this user logged in?
-         */
-        "loggedIn"?: boolean;
-        /**
           * Manual payment methods enabled for this form.
          */
         "manualPaymentMethods"?: ManualPaymentMethod[];
@@ -6127,14 +6192,6 @@ declare namespace LocalJSX {
          */
         "stripePaymentElement"?: boolean;
         /**
-          * Success text for the form.
-         */
-        "successText"?: {
-    title: string;
-    description: string;
-    button: string;
-  };
-        /**
           * Where to go on success
          */
         "successUrl"?: string;
@@ -6153,6 +6210,25 @@ declare namespace LocalJSX {
         "processorId"?: string;
     }
     interface ScCheckoutPaystackPaymentProvider {
+    }
+    interface ScCheckoutProductPriceVariantSelector {
+        /**
+          * The label for the price.
+         */
+        "label"?: string;
+        /**
+          * The product.
+         */
+        "product"?: Product;
+    }
+    /**
+     * This component listens for stock requirements and displays a dialog to the user.
+     */
+    interface ScCheckoutStockAlert {
+        /**
+          * Toggle line item event
+         */
+        "onScUpdateLineItem"?: (event: ScCheckoutStockAlertCustomEvent<LineItemData>) => void;
     }
     interface ScCheckoutUnsavedChangesWarning {
         "state"?: FormState;
@@ -6436,7 +6512,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScCustomOrderPriceInputCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScCustomOrderPriceInputCustomEvent<LineItemData1>) => void;
         /**
           * Input placeholder.
          */
@@ -6923,15 +6999,15 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScAddLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
+        "onScAddLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScDonationChoicesCustomEvent<LineItemData1>) => void;
         /**
           * The price id for the fields.
          */
@@ -7082,10 +7158,6 @@ declare namespace LocalJSX {
           * Disable validation?
          */
         "disabled"?: boolean;
-        /**
-          * The order
-         */
-        "order"?: Checkout;
         /**
           * The tax protocol
          */
@@ -7542,11 +7614,11 @@ declare namespace LocalJSX {
         /**
           * Remove the line item.
          */
-        "onScRemoveLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScLineItemsCustomEvent<LineItemData1>) => void;
         /**
           * Update the line item.
          */
-        "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData1>) => void;
         "order"?: Checkout;
         "prices"?: Prices;
         "removable"?: boolean;
@@ -7556,7 +7628,7 @@ declare namespace LocalJSX {
         /**
           * Update line items event
          */
-        "onScUpdateLineItems"?: (event: ScLineItemsProviderCustomEvent<Array<LineItemData>>) => void;
+        "onScUpdateLineItems"?: (event: ScLineItemsProviderCustomEvent<Array<LineItemData1>>) => void;
         /**
           * Order Object
          */
@@ -7618,25 +7690,19 @@ declare namespace LocalJSX {
         "bump"?: Bump;
         "cdnRoot"?: string;
         /**
-          * The checkout
-         */
-        "checkout"?: Checkout;
-        /**
           * Add line item event
          */
-        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        "onScAddLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Remove line item event
          */
-        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScOrderBumpCustomEvent<LineItemData1>) => void;
         /**
           * Should we show the controls
          */
         "showControl"?: boolean;
     }
     interface ScOrderBumps {
-        "bumps"?: Bump[];
-        "checkout"?: Checkout;
         "help"?: string;
         "label"?: string;
         "showControl"?: boolean;
@@ -7661,14 +7727,6 @@ declare namespace LocalJSX {
          */
         "onScOrderPaid"?: (event: ScOrderConfirmProviderCustomEvent<Checkout>) => void;
         "onScSetState"?: (event: ScOrderConfirmProviderCustomEvent<string>) => void;
-        /**
-          * Success text for the form.
-         */
-        "successText"?: {
-    title: string;
-    description: string;
-    button: string;
-  };
         /**
           * Success url.
          */
@@ -7848,7 +7906,7 @@ declare namespace LocalJSX {
          */
         "defaultCountry"?: string;
         /**
-          * Show the full address
+          * Show the   address
          */
         "full"?: boolean;
         /**
@@ -7877,6 +7935,10 @@ declare namespace LocalJSX {
          */
         "placeholders"?: Partial<Address>;
         "postalCodePlaceholder"?: string;
+        /**
+          * Whether to require the name in the address
+         */
+        "requireName"?: boolean;
         /**
           * Is this required (defaults to false)
          */
@@ -7923,10 +7985,6 @@ declare namespace LocalJSX {
     }
     interface ScOrderSubmit {
         /**
-          * Is the order busy
-         */
-        "busy"?: boolean;
-        /**
           * Currency Code
          */
         "currencyCode"?: string;
@@ -7942,10 +8000,6 @@ declare namespace LocalJSX {
           * Is the order loading.
          */
         "loading"?: boolean;
-        /**
-          * Is this created in "test" mode
-         */
-        "mode"?: 'test' | 'live';
         /**
           * The current order.
          */
@@ -8400,6 +8454,13 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScPillOption {
+        /**
+          * Label
+         */
+        "isSelected"?: boolean;
+        "isUnavailable"?: boolean;
+    }
     interface ScPremiumTag {
         /**
           * The tag's size.
@@ -8442,11 +8503,11 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData>) => void;
+        "onScUpdateLineItem"?: (event: ScPriceChoiceCustomEvent<LineItemData1>) => void;
         /**
           * Session
          */
@@ -8510,6 +8571,7 @@ declare namespace LocalJSX {
           * Stores the price
          */
         "price"?: string | Price1;
+        "required"?: boolean;
         /**
           * Show the radio/checkbox control
          */
@@ -8539,15 +8601,11 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScRemoveLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
+        "onScRemoveLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData>) => void;
-        /**
-          * Session
-         */
-        "order"?: Checkout;
+        "onScUpdateLineItem"?: (event: ScPriceChoicesCustomEvent<LineItemData1>) => void;
         /**
           * Required by default
          */
@@ -8696,6 +8754,10 @@ declare namespace LocalJSX {
         "ids"?: string[];
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
+        /**
+          * Product was searched
+         */
+        "onScSearched"?: (event: ScProductItemListCustomEvent<string>) => void;
         "paginationAlignment"?: string;
         /**
           * Should we auto-scroll to the top when paginating via ajax
@@ -8723,6 +8785,10 @@ declare namespace LocalJSX {
         "sortEnabled"?: boolean;
     }
     interface ScProductItemPrice {
+        /**
+          * Product metrics
+         */
+        "metrics"?: ProductMetrics;
         "prices"?: Price1[];
         /**
           * Show price range?
@@ -8777,6 +8843,10 @@ declare namespace LocalJSX {
          */
         "onScUpdateQuantity"?: (event: ScProductLineItemCustomEvent<number>) => void;
         /**
+          * Price name
+         */
+        "priceName"?: string;
+        /**
           * Quantity
          */
         "quantity"?: number;
@@ -8793,12 +8863,36 @@ declare namespace LocalJSX {
          */
         "setupFeeTrialEnabled"?: boolean;
         /**
+          * The SKU.
+         */
+        "sku"?: string;
+        /**
           * Trial duration days
          */
         "trialDurationDays"?: number;
+        /**
+          * Product variant label
+         */
+        "variantLabel"?: string;
+    }
+    interface ScProductPillsVariantOption {
+        /**
+          * Label
+         */
+        "label"?: string;
+        /**
+          * Which option number?
+         */
+        "optionNumber"?: 1 | 2 | 3;
     }
     interface ScProductPrice {
+        /**
+          * The prices list
+         */
         "prices"?: Price[];
+        /**
+          * The sale text
+         */
         "saleText"?: string;
     }
     interface ScProductPriceChoices {
@@ -8843,7 +8937,7 @@ declare namespace LocalJSX {
         /**
           * Toggle line item event
          */
-        "onScUpdateLineItem"?: (event: ScProductSelectedPriceCustomEvent<LineItemData1>) => void;
+        "onScUpdateLineItem"?: (event: ScProductSelectedPriceCustomEvent<LineItemData>) => void;
         /**
           * The product id.
          */
@@ -9047,7 +9141,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: ScSelectCustomEvent<void>) => void;
+        "onScChange"?: (event: ScSelectCustomEvent<ChoiceItem>) => void;
         /**
           * Emitted whent the components search query changes
          */
@@ -9196,7 +9290,14 @@ declare namespace LocalJSX {
           * Mode for the payment
          */
         "mode"?: 'live' | 'test';
+        /**
+          * The order/invoice was paid for
+         */
         "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
+        /**
+          * A payment method was added
+         */
+        "onScPaymentInfoAdded"?: (event: ScStripeElementCustomEvent<PaymentInfoAddedParams>) => void;
         /**
           * Set the state
          */
@@ -9366,6 +9467,12 @@ declare namespace LocalJSX {
           * Customer id to fetch subscriptions
          */
         "query"?: object;
+        "subscription"?: Subscription;
+    }
+    interface ScSubscriptionVariationConfirm {
+        "heading"?: string;
+        "price"?: Price;
+        "product"?: Product;
         "subscription"?: Subscription;
     }
     interface ScSubscriptionsList {
@@ -9757,6 +9864,7 @@ declare namespace LocalJSX {
         "quantityUpdatesEnabled"?: boolean;
         "subscriptionId"?: string;
         "successUrl"?: string;
+        "variantId"?: string;
     }
     interface ScUpgradeRequired {
         /**
@@ -9820,6 +9928,8 @@ declare namespace LocalJSX {
         "sc-checkout-form-errors": ScCheckoutFormErrors;
         "sc-checkout-mollie-payment": ScCheckoutMolliePayment;
         "sc-checkout-paystack-payment-provider": ScCheckoutPaystackPaymentProvider;
+        "sc-checkout-product-price-variant-selector": ScCheckoutProductPriceVariantSelector;
+        "sc-checkout-stock-alert": ScCheckoutStockAlert;
         "sc-checkout-unsaved-changes-warning": ScCheckoutUnsavedChangesWarning;
         "sc-choice": ScChoice;
         "sc-choice-container": ScChoiceContainer;
@@ -9918,6 +10028,7 @@ declare namespace LocalJSX {
         "sc-paypal-buttons": ScPaypalButtons;
         "sc-paystack-add-method": ScPaystackAddMethod;
         "sc-phone-input": ScPhoneInput;
+        "sc-pill-option": ScPillOption;
         "sc-premium-tag": ScPremiumTag;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choice-container": ScPriceChoiceContainer;
@@ -9931,6 +10042,7 @@ declare namespace LocalJSX {
         "sc-product-item-price": ScProductItemPrice;
         "sc-product-item-title": ScProductItemTitle;
         "sc-product-line-item": ScProductLineItem;
+        "sc-product-pills-variant-option": ScProductPillsVariantOption;
         "sc-product-price": ScProductPrice;
         "sc-product-price-choices": ScProductPriceChoices;
         "sc-product-price-modal": ScProductPriceModal;
@@ -9967,6 +10079,7 @@ declare namespace LocalJSX {
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
+        "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
         "sc-subscriptions-list": ScSubscriptionsList;
         "sc-switch": ScSwitch;
         "sc-tab": ScTab;
@@ -10027,6 +10140,11 @@ declare module "@stencil/core" {
             "sc-checkout-form-errors": LocalJSX.ScCheckoutFormErrors & JSXBase.HTMLAttributes<HTMLScCheckoutFormErrorsElement>;
             "sc-checkout-mollie-payment": LocalJSX.ScCheckoutMolliePayment & JSXBase.HTMLAttributes<HTMLScCheckoutMolliePaymentElement>;
             "sc-checkout-paystack-payment-provider": LocalJSX.ScCheckoutPaystackPaymentProvider & JSXBase.HTMLAttributes<HTMLScCheckoutPaystackPaymentProviderElement>;
+            "sc-checkout-product-price-variant-selector": LocalJSX.ScCheckoutProductPriceVariantSelector & JSXBase.HTMLAttributes<HTMLScCheckoutProductPriceVariantSelectorElement>;
+            /**
+             * This component listens for stock requirements and displays a dialog to the user.
+             */
+            "sc-checkout-stock-alert": LocalJSX.ScCheckoutStockAlert & JSXBase.HTMLAttributes<HTMLScCheckoutStockAlertElement>;
             "sc-checkout-unsaved-changes-warning": LocalJSX.ScCheckoutUnsavedChangesWarning & JSXBase.HTMLAttributes<HTMLScCheckoutUnsavedChangesWarningElement>;
             "sc-choice": LocalJSX.ScChoice & JSXBase.HTMLAttributes<HTMLScChoiceElement>;
             "sc-choice-container": LocalJSX.ScChoiceContainer & JSXBase.HTMLAttributes<HTMLScChoiceContainerElement>;
@@ -10136,6 +10254,7 @@ declare module "@stencil/core" {
             "sc-paypal-buttons": LocalJSX.ScPaypalButtons & JSXBase.HTMLAttributes<HTMLScPaypalButtonsElement>;
             "sc-paystack-add-method": LocalJSX.ScPaystackAddMethod & JSXBase.HTMLAttributes<HTMLScPaystackAddMethodElement>;
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
+            "sc-pill-option": LocalJSX.ScPillOption & JSXBase.HTMLAttributes<HTMLScPillOptionElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choice-container": LocalJSX.ScPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScPriceChoiceContainerElement>;
@@ -10149,6 +10268,7 @@ declare module "@stencil/core" {
             "sc-product-item-price": LocalJSX.ScProductItemPrice & JSXBase.HTMLAttributes<HTMLScProductItemPriceElement>;
             "sc-product-item-title": LocalJSX.ScProductItemTitle & JSXBase.HTMLAttributes<HTMLScProductItemTitleElement>;
             "sc-product-line-item": LocalJSX.ScProductLineItem & JSXBase.HTMLAttributes<HTMLScProductLineItemElement>;
+            "sc-product-pills-variant-option": LocalJSX.ScProductPillsVariantOption & JSXBase.HTMLAttributes<HTMLScProductPillsVariantOptionElement>;
             "sc-product-price": LocalJSX.ScProductPrice & JSXBase.HTMLAttributes<HTMLScProductPriceElement>;
             "sc-product-price-choices": LocalJSX.ScProductPriceChoices & JSXBase.HTMLAttributes<HTMLScProductPriceChoicesElement>;
             "sc-product-price-modal": LocalJSX.ScProductPriceModal & JSXBase.HTMLAttributes<HTMLScProductPriceModalElement>;
@@ -10185,6 +10305,7 @@ declare module "@stencil/core" {
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
+            "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
             "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
             "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;

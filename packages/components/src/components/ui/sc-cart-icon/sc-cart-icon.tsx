@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { getOrder } from '@store/checkouts';
+import { getCheckout } from '@store/checkouts/mutations';
 import uiStore from '@store/ui';
 
 /**
@@ -26,7 +26,7 @@ export class ScCartIcon {
   @Prop() mode: 'test' | 'live' = 'live';
 
   order() {
-    return getOrder(this.formId, this.mode);
+    return getCheckout(this.formId, this.mode);
   }
 
   /** Count the number of items in the cart. */

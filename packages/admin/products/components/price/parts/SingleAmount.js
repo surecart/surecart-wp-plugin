@@ -16,7 +16,6 @@ export default ({ className, price, updatePrice, suffix }) => {
 			onScInput={(e) => {
 				updatePrice({ amount: e.target.value });
 			}}
-			autofocus
 			required
 		>
 			{!!suffix && <span slot="suffix">{suffix}</span>}

@@ -27,19 +27,6 @@ const prices = [
   },
 ];
 
-const lineItems = [
-  {
-    price: {
-      id: 'price1',
-    },
-  },
-  {
-    price: {
-      id: 'price2',
-    },
-  },
-];
-
 describe('Line items functions', () => {
   it('calculateInitialLineItems', () => {
     expect(calculateInitialLineItems(prices, 'all')).toEqual([

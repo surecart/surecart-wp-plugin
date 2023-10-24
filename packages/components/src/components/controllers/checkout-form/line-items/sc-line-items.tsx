@@ -52,7 +52,7 @@ export class ScLineItems {
 
   /** Update quantity for this line item. */
   updateQuantity(item: LineItem, quantity: number) {
-    this.scUpdateLineItem.emit({ id: item.id, price_id: item.price.id, quantity });
+    this.scUpdateLineItem.emit({ id: item.id, price_id: item.price.id, quantity, variant: item?.variant?.id });
   }
 
   removeLineItem(item: LineItem) {
@@ -121,8 +121,10 @@ export class ScLineItems {
             <div class="line-item">
               <sc-product-line-item
                 key={item.id}
-                imageUrl={(item?.price?.product as Product)?.image_url}
+                imageUrl={item?.variant?.image_url || (item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
+                priceName={item?.price?.name}
+                variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}
                 removable={this.isRemovable()}

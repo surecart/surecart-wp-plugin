@@ -6,6 +6,7 @@
     "loading": true,
     "names": true,
     "placeholders": true,
+    "require-name": true,
     "required": true,
     "show-line2": true,
     "show-name": true,
@@ -170,6 +171,7 @@
     "mode": true,
     "price-id": true,
     "quantity": true,
+    "variant-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -270,8 +272,6 @@
     "disable-components-validation": true,
     "edit-line-items": true,
     "form-id": true,
-    "loading-text": true,
-    "logged-in": true,
     "manual-payment-methods": true,
     "mode": true,
     "modified": true,
@@ -281,7 +281,6 @@
     "product": true,
     "remove-line-items": true,
     "stripe-payment-element": true,
-    "success-text": true,
     "success-url": true,
     "tax-protocol": true,
     "style": true,
@@ -304,6 +303,20 @@
     "slot": true
   },
   "sc-checkout-paystack-payment-provider": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-product-price-variant-selector": {
+    "label": true,
+    "product": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-checkout-stock-alert": {
     "style": true,
     "id": true,
     "class": true,
@@ -706,7 +719,6 @@
   },
   "sc-form-components-validator": {
     "disabled": true,
-    "order": true,
     "tax-protocol": true,
     "style": true,
     "id": true,
@@ -1040,7 +1052,6 @@
   "sc-order-bump": {
     "bump": true,
     "cdn-root": true,
-    "checkout": true,
     "show-control": true,
     "style": true,
     "id": true,
@@ -1048,8 +1059,6 @@
     "slot": true
   },
   "sc-order-bumps": {
-    "bumps": true,
-    "checkout": true,
     "help": true,
     "label": true,
     "show-control": true,
@@ -1067,7 +1076,6 @@
   },
   "sc-order-confirm-provider": {
     "checkout-status": true,
-    "success-text": true,
     "success-url": true,
     "style": true,
     "id": true,
@@ -1205,6 +1213,7 @@
     "name-placeholder": true,
     "placeholders": true,
     "postal-code-placeholder": true,
+    "require-name": true,
     "required": true,
     "shipping-address": true,
     "shipping-enabled": true,
@@ -1228,12 +1237,10 @@
     "slot": true
   },
   "sc-order-submit": {
-    "busy": true,
     "currency-code": true,
     "full": true,
     "icon": true,
     "loading": true,
-    "mode": true,
     "order": true,
     "paying": true,
     "processor": true,
@@ -1452,6 +1459,14 @@
     "class": true,
     "slot": true
   },
+  "sc-pill-option": {
+    "is-selected": true,
+    "is-unavailable": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-premium-tag": {
     "size": true,
     "style": true,
@@ -1488,6 +1503,7 @@
     "label": true,
     "loading": true,
     "price": true,
+    "required": true,
     "show-control": true,
     "show-label": true,
     "show-price": true,
@@ -1500,7 +1516,6 @@
   "sc-price-choices": {
     "columns": true,
     "label": true,
-    "order": true,
     "required": true,
     "style": true,
     "id": true,
@@ -1586,6 +1601,7 @@
     "slot": true
   },
   "sc-product-item-price": {
+    "metrics": true,
     "prices": true,
     "range": true,
     "style": true,
@@ -1609,11 +1625,22 @@
     "max": true,
     "media": true,
     "name": true,
+    "price-name": true,
     "quantity": true,
     "removable": true,
     "scratch-amount": true,
     "setup-fee-trial-enabled": true,
+    "sku": true,
     "trial-duration-days": true,
+    "variant-label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-pills-variant-option": {
+    "label": true,
+    "option-number": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1986,6 +2013,16 @@
     "class": true,
     "slot": true
   },
+  "sc-subscription-variation-confirm": {
+    "heading": true,
+    "price": true,
+    "product": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-subscriptions-list": {
     "all-link": true,
     "cancel-behavior": true,
@@ -2180,6 +2217,7 @@
     "quantity-updates-enabled": true,
     "subscription-id": true,
     "success-url": true,
+    "variant-id": true,
     "style": true,
     "id": true,
     "class": true,
