@@ -171,7 +171,7 @@ export default () => {
 				{!!item.cancel_window_enabled && (
 					<ScInput
 						value={item?.cancel_window_days}
-						label={__('Delay duration', 'surecart')}
+						label={__('Delay Duration', 'surecart')}
 						placeholder={__('Number of days to delay.', 'surecart')}
 						type="number"
 						onScInput={(e) =>
