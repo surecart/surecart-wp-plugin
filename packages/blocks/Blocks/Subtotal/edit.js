@@ -4,12 +4,8 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 export default ({ attributes, setAttributes }) => {
-	const {
-		text,
-		total_payments_text,
-		first_payment_subtotal_text,
-		free_trial_text,
-	} = attributes;
+	const { text, total_payments_text, first_payment_subtotal_text } =
+		attributes;
 
 	return (
 		<Fragment>
