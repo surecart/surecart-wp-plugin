@@ -6,6 +6,7 @@ import {
 	ScSwitch,
 	ScUpgradeRequired,
 	ScFormControl,
+	ScInput,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -15,7 +16,6 @@ import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
-import { ScInput } from '@surecart/components-react';
 
 export default () => {
 	const [error, setError] = useState(null);

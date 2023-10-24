@@ -151,7 +151,7 @@ class SubscriptionController extends BaseController {
 					]
 				)->render()
 			);
-		?>
+			?>
 
 		<?php
 		// show switch if we can change it.

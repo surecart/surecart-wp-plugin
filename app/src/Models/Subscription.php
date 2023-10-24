@@ -444,8 +444,8 @@ class Subscription extends Model {
 		$end->setTimestamp( $this->attributes['current_period_end_at'] );
 		$end = $end->modify( "-{$cancel_window_days} days" );
 
-		$interval = $now->diff( $end );
-		$diff_days = $interval->days * ( $interval->invert ? -1: 1 );
+		$interval  = $now->diff( $end );
+		$diff_days = $interval->days * ( $interval->invert ? -1 : 1 );
 
 		return $diff_days > 0;
 	}
