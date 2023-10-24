@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-10-19T13:36:04",
+  "timestamp": "2023-10-24T15:17:49",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -3123,6 +3123,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "variantId",
+          "type": "string",
+          "mutable": false,
+          "attr": "variant-id",
+          "reflectToAttr": false,
+          "docs": "The variant id to add.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -4933,6 +4949,7 @@
       "filePath": "./src/components/controllers/checkout-form/sc-checkout-product-price-variant-selector/sc-checkout-product-price-variant-selector.tsx",
       "encapsulation": "none",
       "tag": "sc-checkout-product-price-variant-selector",
+      "readme": "# sc-checkout-product-price-variant-selector\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -24470,7 +24487,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scSearched",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Product was searched",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -24963,6 +24990,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "sku",
+          "type": "string",
+          "mutable": false,
+          "attr": "sku",
+          "reflectToAttr": false,
+          "docs": "The SKU.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -28789,7 +28833,16 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "The order/invoice was paid for",
+          "docsTags": []
+        },
+        {
+          "event": "scPaymentInfoAdded",
+          "detail": "PaymentInfoAddedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Payment information was added",
           "docsTags": []
         },
         {
@@ -28851,6 +28904,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "The order/invoice was paid for.",
+          "docsTags": []
+        },
+        {
+          "event": "scPaymentInfoAdded",
+          "detail": "PaymentInfoAddedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Payment information was added",
           "docsTags": []
         },
         {

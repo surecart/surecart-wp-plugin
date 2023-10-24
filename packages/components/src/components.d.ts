@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -9295,7 +9295,7 @@ declare namespace LocalJSX {
          */
         "onScPaid"?: (event: ScStripeElementCustomEvent<void>) => void;
         /**
-          * A payment method was added
+          * Payment information was added
          */
         "onScPaymentInfoAdded"?: (event: ScStripeElementCustomEvent<PaymentInfoAddedParams>) => void;
         /**
@@ -9328,6 +9328,10 @@ declare namespace LocalJSX {
           * The order/invoice was paid for.
          */
         "onScPaid"?: (event: ScStripePaymentElementCustomEvent<void>) => void;
+        /**
+          * Payment information was added
+         */
+        "onScPaymentInfoAdded"?: (event: ScStripePaymentElementCustomEvent<PaymentInfoAddedParams>) => void;
         /**
           * Set the state
          */

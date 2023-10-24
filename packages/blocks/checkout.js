@@ -26,6 +26,7 @@ import * as password from '@blocks/Password';
 import * as payment from '@blocks/Payment';
 import * as priceChoice from '@blocks/PriceChoice';
 import * as priceSelector from '@blocks/PriceSelector';
+import * as priceVariantSelector from '@blocks/PriceVariantSelector';
 import * as radio from '@blocks/Radio';
 import * as radioGroup from '@blocks/RadioGroup';
 import * as submit from '@blocks/Submit';
@@ -74,6 +75,7 @@ registerBlocks([
 	payment,
 	priceChoice,
 	priceSelector,
+	priceVariantSelector,
 	submit,
 	subtotal,
 	switchBlock,

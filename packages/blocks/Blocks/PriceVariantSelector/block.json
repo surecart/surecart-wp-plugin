@@ -1,0 +1,23 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/price-variant-selector",
+	"title": "Price Variant Selector",
+	"description": "Displays a selector for product variant prices.",
+	"category": "surecart",
+	"keywords": ["price", "product", "choice", "checkout", "variant"],
+	"textdomain": "surecart",
+	"ancestor": ["surecart/form"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"className": true
+	},
+	"attributes": {
+		"label": {
+			"type": "string"
+		},
+		"product_id": {
+			"type": "string"
+		}
+	}
+}
