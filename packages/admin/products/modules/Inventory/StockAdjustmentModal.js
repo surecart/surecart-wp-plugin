@@ -72,7 +72,28 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 						</ScFormControl>
 					</div>
 					<div>
-						<ScFormControl label={__('New', 'surecart')}>
+						<ScFormControl label={__('Available', 'surecart')}>
+							<ScQuantitySelect
+								css={css`
+									width: 100%;
+								`}
+								quantity={
+									(product?.available_stock || 0) +
+									(stockAdjustment || 0)
+								}
+								onScInput={(e) =>
+									setStockAdjustment(
+										e.detail -
+											(product?.available_stock || 0)
+									)
+								}
+								min={-9999999}
+								name="stock"
+							/>
+						</ScFormControl>
+					</div>
+					<div>
+						<ScFormControl label={__('On Hand', 'surecart')}>
 							<ScQuantitySelect
 								css={css`
 									width: 100%;
@@ -82,10 +103,9 @@ export default ({ onRequestClose, product, updateProduct, loading }) => {
 									(stockAdjustment || 0)
 								}
 								onScInput={(e) =>
-									updateProduct({
-										stock_adjustment:
-											e.detail - (product?.stock || 0),
-									})
+									setStockAdjustment(
+										e.detail - (product?.stock || 0)
+									)
 								}
 								min={-9999999}
 								name="stock"

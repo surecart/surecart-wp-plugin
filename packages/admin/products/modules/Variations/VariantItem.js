@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -29,9 +29,18 @@ export default ({
 	defaultAmount,
 	defaultSku,
 	canOverride,
+	quantityEnabled,
 }) => {
-	const { sku, status, image_id, stock, stock_adjustment, amount, currency } =
-		variant;
+	const {
+		sku,
+		status,
+		image_id,
+		stock,
+		available_stock,
+		stock_adjustment,
+		amount,
+		currency,
+	} = variant;
 
 	/**
 	 * Link media.
@@ -139,68 +148,103 @@ export default ({
 					)}
 				</>
 			</td>
-			<td>
-				<ScDropdown placement="bottom-end">
-					<ScButton
-						type="text"
-						slot="trigger"
-						css={css`
-							min-width: 70px;
-						`}
-						caret
-					>
-						{(stock || 0) + (stock_adjustment || 0)}
-					</ScButton>
-					<ScMenu>
-						<div
+			{quantityEnabled && (
+				<td>
+					<ScDropdown placement="bottom-end">
+						<ScButton
+							type="text"
+							slot="trigger"
 							css={css`
-								padding: var(--sc-spacing-xx-small)
-									var(--sc-spacing-medium);
-								display: grid;
-								gap: var(--sc-spacing-small);
+								min-width: 70px;
+								color: var(--sc-color-gray-700);
 							`}
+							caret
 						>
-							<ScFormControl label={__('Adjust By', 'surecart')}>
-								<ScQuantitySelect
-									css={css`
-										box-sizing: border-box;
-										--sc-quantity-input-max-width: 80px;
-										--sc-quantity-select-width: 145px;
-									`}
-									quantity={stock_adjustment || 0}
-									onScInput={(e) =>
-										updateVariant({
-											stock_adjustment: e.detail,
-										})
-									}
-									min={-9999999}
-									name="stock"
-								/>
-							</ScFormControl>
-							<ScFormControl label={__('New', 'surecart')}>
-								<ScQuantitySelect
-									css={css`
-										box-sizing: border-box;
-										--sc-quantity-input-max-width: 80px;
-										--sc-quantity-select-width: 145px;
-									`}
-									quantity={
-										(stock || 0) + (stock_adjustment || 0)
-									}
-									onScInput={(e) =>
-										updateVariant({
-											stock_adjustment:
-												e.detail - (stock || 0),
-										})
-									}
-									min={-9999999}
-									name="stock"
-								/>
-							</ScFormControl>
-						</div>
-					</ScMenu>
-				</ScDropdown>
-			</td>
+							{sprintf(
+								__('%d Available', 'surecart'),
+								(available_stock || 0) + (stock_adjustment || 0)
+							)}
+						</ScButton>
+						<ScMenu>
+							<div
+								css={css`
+									padding: var(--sc-spacing-xx-small)
+										var(--sc-spacing-medium);
+									display: grid;
+									gap: var(--sc-spacing-small);
+								`}
+							>
+								<ScFormControl
+									label={__('Adjust By', 'surecart')}
+								>
+									<ScQuantitySelect
+										css={css`
+											box-sizing: border-box;
+											--sc-quantity-input-max-width: 80px;
+											--sc-quantity-select-width: 145px;
+										`}
+										quantity={stock_adjustment || 0}
+										onScInput={(e) =>
+											updateVariant({
+												stock_adjustment: e.detail,
+											})
+										}
+										min={-9999999}
+										name="stock"
+									/>
+								</ScFormControl>
+								<ScFormControl
+									label={__('Available', 'surecart')}
+								>
+									<ScQuantitySelect
+										css={css`
+											box-sizing: border-box;
+											--sc-quantity-input-max-width: 80px;
+											--sc-quantity-select-width: 145px;
+										`}
+										quantity={
+											(available_stock || 0) +
+											(stock_adjustment || 0)
+										}
+										onScInput={(e) =>
+											updateVariant({
+												stock_adjustment:
+													e.detail -
+													(available_stock || 0),
+											})
+										}
+										min={-9999999}
+										name="stock"
+									/>
+								</ScFormControl>
+								<ScFormControl
+									label={__('On Hand', 'surecart')}
+								>
+									<ScQuantitySelect
+										css={css`
+											box-sizing: border-box;
+											--sc-quantity-input-max-width: 80px;
+											--sc-quantity-select-width: 145px;
+										`}
+										quantity={
+											(stock || 0) +
+											(stock_adjustment || 0)
+										}
+										onScInput={(e) =>
+											updateVariant({
+												stock_adjustment:
+													e.detail - (stock || 0),
+											})
+										}
+										min={-9999999}
+										name="stock"
+									/>
+								</ScFormControl>
+							</div>
+						</ScMenu>
+					</ScDropdown>
+				</td>
+			)}
 			<td>
 				<ScInput
 					value={sku}
