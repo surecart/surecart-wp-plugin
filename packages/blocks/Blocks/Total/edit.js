@@ -24,7 +24,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label Free Trial', 'surecart')}
+							label={__('Free Trial Label', 'surecart')}
 							value={free_trial_text}
 							onChange={(free_trial_text) =>
 								setAttributes({ free_trial_text })
@@ -42,7 +42,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label Due Today', 'surecart')}
+							label={__('Amount Due Label', 'surecart')}
 							value={subscription_text}
 							onChange={(subscription_text) =>
 								setAttributes({ subscription_text })
