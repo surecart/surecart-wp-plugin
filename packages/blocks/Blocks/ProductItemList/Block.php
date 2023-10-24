@@ -3,7 +3,6 @@
 namespace SureCartBlocks\Blocks\ProductItemList;
 
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCart\Models\ApiToken;
 /**
  * ProductItemList block
  */
@@ -182,8 +181,8 @@ class Block extends BaseBlock {
 		for ( $i = 1; $i <= $limit; $i++ ) {
 			$product = array(
 				'permalink'  => '#',
-				'name'       => __( 'Product ' . $i, 'surecart' ),
-				'created_at' => rand( 1, 40 ),
+				'name'       => __( 'Example Product Title', 'surecart' ),
+				'created_at' => wp_rand( 1, 40 ),
 				'prices'     => array(
 					'data' => array(
 						array(
