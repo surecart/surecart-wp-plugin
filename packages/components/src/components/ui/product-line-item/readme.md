@@ -18,11 +18,13 @@
 | `max`                  | `max`                     | The max allowed.                                 | `number`  | `100`       |
 | `media`                | --                        | The product media                                | `Media`   | `undefined` |
 | `name`                 | `name`                    | Product name                                     | `string`  | `undefined` |
+| `priceName`            | `price-name`              | Price name                                       | `string`  | `undefined` |
 | `quantity`             | `quantity`                | Quantity                                         | `number`  | `undefined` |
 | `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
 | `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
 | `setupFeeTrialEnabled` | `setup-fee-trial-enabled` | Is the setup fee not included in the free trial? | `boolean` | `true`      |
 | `trialDurationDays`    | `trial-duration-days`     | Trial duration days                              | `number`  | `undefined` |
+| `variantLabel`         | `variant-label`           | Product variant label                            | `string`  | `''`        |
 
 
 ## Events
@@ -38,6 +40,7 @@
 | Part                             | Description                     |
 | -------------------------------- | ------------------------------- |
 | `"base"`                         | The component base              |
+| `"description"`                  |                                 |
 | `"image"`                        | The product image               |
 | `"line-item__price-description"` | The line item price description |
 | `"price"`                        | The product price               |

@@ -20,7 +20,7 @@ class ProductPageController extends BasePageController {
 		$id = get_query_var( 'sc_product_page_id' );
 
 		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $id );
+		$this->model = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
@@ -43,7 +43,7 @@ class ProductPageController extends BasePageController {
 
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
-			global  $_wp_current_template_content;
+			global $_wp_current_template_content;
 			$_wp_current_template_content = $this->model->template->content ?? '';
 		}
 
