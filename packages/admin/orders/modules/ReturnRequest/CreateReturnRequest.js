@@ -26,6 +26,8 @@ import {
 import LineItem from './components/LineItem';
 import ReturnReasonsSelector from './ReturnReasonsSelector';
 import { createErrorString } from '../../../util';
+import { getVariantLabel } from '../../../util/variation';
+import { getSKUText } from '../../../util/products';
 
 export default ({
 	fulfillmentItems,
@@ -144,6 +146,10 @@ export default ({
 						`}
 					>
 						{(items || []).map((item, index) => {
+							const variantLabel = getVariantLabel(
+								item?.variant_options
+							);
+							const productSku = getSKUText(item);
 							return (
 								<LineItem
 									key={index}
@@ -245,6 +251,25 @@ export default ({
 									>
 										{item?.price?.product?.name}
 									</a>
+									{(!!variantLabel || !!productSku) && (
+										<div
+											css={css`
+												color: var(
+													--sc-input-help-text-color
+												);
+											`}
+										>
+											{!!variantLabel && (
+												<div>{variantLabel}</div>
+											)}
+											{!!productSku && (
+												<div>
+													{__('SKU:', 'surecart')}{' '}
+													{productSku}
+												</div>
+											)}
+										</div>
+									)}
 									<ScFormatNumber
 										type="unit"
 										value={item?.price?.product?.weight}

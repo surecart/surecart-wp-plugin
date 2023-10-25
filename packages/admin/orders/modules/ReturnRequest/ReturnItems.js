@@ -30,6 +30,8 @@ import LineItemView from '../Fulfillment/components/LineItem';
 import Box from '../../../ui/Box';
 import ReturnCancelConfirmModal from './ReturnCancelConfirmModal';
 import { createErrorString } from '../../../util';
+import { getVariantLabel } from '../../../util/variation';
+import { getSKUText } from '../../../util/products';
 
 export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 	if (!returnRequest?.id) {
@@ -258,6 +260,10 @@ export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 							return_reason_description,
 							note,
 						}) => {
+							const variantLabel = getVariantLabel(
+								line_item?.variant_options
+							);
+							const productSku = getSKUText(line_item);
 							return (
 								<LineItemView
 									key={id}
@@ -278,6 +284,26 @@ export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 									>
 										{line_item?.price?.product?.name}
 									</a>
+									{(!!variantLabel || !!productSku) && (
+										<div
+											css={css`
+												color: var(
+													--sc-input-help-text-color
+												);
+											`}
+										>
+											{!!variantLabel && (
+												<div>{variantLabel}</div>
+											)}
+											{!!productSku && (
+												<div>
+													{__('SKU:', 'surecart')}{' '}
+													{productSku}
+												</div>
+											)}
+										</div>
+									)}
+
 									{!!line_item?.price?.product?.weight && (
 										<ScFormatNumber
 											type="unit"
