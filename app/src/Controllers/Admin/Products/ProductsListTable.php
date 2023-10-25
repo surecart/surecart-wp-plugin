@@ -13,7 +13,7 @@ use SureCart\Models\ProductCollection;
 class ProductsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
-	public $pages    = [];
+	public $pages    = array();
 
 	/**
 	 * Prepare the items for the table to process
@@ -31,15 +31,15 @@ class ProductsListTable extends ListTable {
 
 		if ( is_wp_error( $query ) ) {
 			$this->error = $query->get_error_message();
-			$this->items = [];
+			$this->items = array();
 			return;
 		}
 
 		$this->set_pagination_args(
-			[
+			array(
 				'total_items' => $query->pagination->count,
 				'per_page'    => $this->get_items_per_page( 'products' ),
-			]
+			)
 		);
 
 		$this->items = $query->data;
@@ -53,11 +53,11 @@ class ProductsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$statuses = [
+		$statuses = array(
 			'active'   => __( 'Active', 'surecart' ),
 			'archived' => __( 'Archived', 'surecart' ),
 			'all'      => __( 'All', 'surecart' ),
-		];
+		);
 
 		$link = admin_url( 'admin.php?page=sc-products' );
 
@@ -95,7 +95,7 @@ class ProductsListTable extends ListTable {
 	 * @return array
 	 */
 	public function get_columns() {
-		return [
+		return array(
 			// 'cb'          => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
@@ -105,7 +105,7 @@ class ProductsListTable extends ListTable {
 			'status'              => __( 'Product Page', 'surecart' ),
 			'featured'            => __( 'Featured', 'surecart' ),
 			'date'                => __( 'Date', 'surecart' ),
-		];
+		);
 	}
 
 	/**
@@ -126,7 +126,8 @@ class ProductsListTable extends ListTable {
 	 * @param Product $product The product model.
 	 */
 	public function column_quantity( $product ) {
-		return $product->stock_enabled ? $product->stock : '∞';
+		// translators: %d is the number of available stock.
+		return $product->stock_enabled ? sprintf( __( '%d Available', 'surecart' ), $product->available_stock ) : '∞';
 	}
 
 	/**
@@ -135,14 +136,14 @@ class ProductsListTable extends ListTable {
 	 * @param Product $product The product model.
 	 */
 	public function column_product_collections( $product ) {
-		$product_collections = $product->product_collections->data ?? [];
+		$product_collections = $product->product_collections->data ?? array();
 
 		// this has no collection.
 		if ( empty( $product_collections ) ) {
 			return '-';
 		}
 
-		$product_collections_tags = [];
+		$product_collections_tags = array();
 
 		foreach ( $product_collections as $product_collection ) {
 			$product_collections_tags[] = '<a href="' . esc_url( admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) ) . '">' . $product_collection['name'] . '</a>';
@@ -184,31 +185,31 @@ class ProductsListTable extends ListTable {
 	 */
 	private function table_data() {
 		$product_query = Product::where(
-			[
+			array(
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
-			]
+			)
 		)->with(
-			[
+			array(
 				'prices',
 				'product_collections',
-			]
+			)
 		);
 
 		// Check if there is any sc_collection in the query, then filter it.
 		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$product_query->where(
-				[
-					'product_collection_ids' => [ sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ],  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				]
+				array(
+					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				)
 			);
 		}
 
 		return $product_query->paginate(
-			[
+			array(
 				'per_page' => $this->get_items_per_page( 'products' ),
 				'page'     => $this->get_pagenum(),
-			]
+			)
 		);
 	}
 
@@ -268,7 +269,7 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
-		$prices = $product->prices->data ?? [];
+		$prices = $product->prices->data ?? array();
 
 		// this has no prices.
 		if ( empty( $prices ) || ! is_array( $prices ) ) {
@@ -277,7 +278,7 @@ class ProductsListTable extends ListTable {
 
 		// map the prices into an array of formatted price strings.
 		$price_display = array_map(
-			function( $price ) {
+			function ( $price ) {
 				if ( $price->ad_hoc ) {
 					return esc_html__( 'Name your own price', 'surecart' );
 				}
@@ -381,7 +382,7 @@ class ProductsListTable extends ListTable {
 			</div>
 		<?php } ?>
 
-	  <div>
+		<div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
 		</a>
@@ -389,11 +390,11 @@ class ProductsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			array_filter(
-				[
+				array(
 					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 					'trash'        => $this->action_toggle_archive( $product ),
 					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-				]
+				)
 			),
 		);
 		?>
@@ -509,7 +510,7 @@ class ProductsListTable extends ListTable {
 			return;
 		}
 
-		$product_collections  = ProductCollection::get( [ 'per_page' => -1 ] );
+		$product_collections  = ProductCollection::get( array( 'per_page' => -1 ) );
 		$displayed_collection = isset( $_GET['sc_collection'] ) ? sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 
