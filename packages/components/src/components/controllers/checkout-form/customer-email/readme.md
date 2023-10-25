@@ -10,6 +10,7 @@
 | Property                      | Attribute                       | Description                                                                                                                                                                                                   | Type                             | Default                    |
 | ----------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | -------------------------- |
 | `autofocus`                   | `autofocus`                     | The input's autofocus attribute.                                                                                                                                                                              | `boolean`                        | `undefined`                |
+| `busy`                        | `busy`                          | Is busy or not eg: email checking                                                                                                                                                                             | `boolean`                        | `undefined`                |
 | `disabled`                    | `disabled`                      | Disables the input.                                                                                                                                                                                           | `boolean`                        | `false`                    |
 | `hasFocus`                    | `has-focus`                     | Inputs focus                                                                                                                                                                                                  | `boolean`                        | `undefined`                |
 | `help`                        | `help`                          | The input's help text.                                                                                                                                                                                        | `string`                         | `''`                       |
@@ -57,11 +58,13 @@ Type: `Promise<boolean>`
 ### Depends on
 
 - [sc-input](../../../ui/input)
+- [sc-spinner](../../../ui/spinner)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-customer-email --> sc-input
+  sc-customer-email --> sc-spinner
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   style sc-customer-email fill:#f9f,stroke:#333,stroke-width:4px

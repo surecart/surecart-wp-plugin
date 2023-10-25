@@ -520,6 +520,13 @@
     "class": true,
     "slot": true
   },
+  "sc-customer-login": {
+    "user": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-customer-name": {
     "autofocus": true,
     "disabled": true,

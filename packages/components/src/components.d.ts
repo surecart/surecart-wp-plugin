@@ -1067,6 +1067,9 @@ export namespace Components {
          */
         "value": any;
     }
+    interface ScCustomerLogin {
+        "user": any;
+    }
     interface ScCustomerName {
         /**
           * The input's autofocus attribute.
@@ -4437,6 +4440,12 @@ declare global {
         prototype: HTMLScCustomerLastnameElement;
         new (): HTMLScCustomerLastnameElement;
     };
+    interface HTMLScCustomerLoginElement extends Components.ScCustomerLogin, HTMLStencilElement {
+    }
+    var HTMLScCustomerLoginElement: {
+        prototype: HTMLScCustomerLoginElement;
+        new (): HTMLScCustomerLoginElement;
+    };
     interface HTMLScCustomerNameElement extends Components.ScCustomerName, HTMLStencilElement {
     }
     var HTMLScCustomerNameElement: {
@@ -5412,6 +5421,7 @@ declare global {
         "sc-customer-email": HTMLScCustomerEmailElement;
         "sc-customer-firstname": HTMLScCustomerFirstnameElement;
         "sc-customer-lastname": HTMLScCustomerLastnameElement;
+        "sc-customer-login": HTMLScCustomerLoginElement;
         "sc-customer-name": HTMLScCustomerNameElement;
         "sc-customer-phone": HTMLScCustomerPhoneElement;
         "sc-dashboard-customer-details": HTMLScDashboardCustomerDetailsElement;
@@ -6723,6 +6733,9 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: any;
+    }
+    interface ScCustomerLogin {
+        "user"?: any;
     }
     interface ScCustomerName {
         /**
@@ -9856,6 +9869,7 @@ declare namespace LocalJSX {
         "sc-customer-email": ScCustomerEmail;
         "sc-customer-firstname": ScCustomerFirstname;
         "sc-customer-lastname": ScCustomerLastname;
+        "sc-customer-login": ScCustomerLogin;
         "sc-customer-name": ScCustomerName;
         "sc-customer-phone": ScCustomerPhone;
         "sc-dashboard-customer-details": ScDashboardCustomerDetails;
@@ -10063,6 +10077,7 @@ declare module "@stencil/core" {
             "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;
             "sc-customer-firstname": LocalJSX.ScCustomerFirstname & JSXBase.HTMLAttributes<HTMLScCustomerFirstnameElement>;
             "sc-customer-lastname": LocalJSX.ScCustomerLastname & JSXBase.HTMLAttributes<HTMLScCustomerLastnameElement>;
+            "sc-customer-login": LocalJSX.ScCustomerLogin & JSXBase.HTMLAttributes<HTMLScCustomerLoginElement>;
             "sc-customer-name": LocalJSX.ScCustomerName & JSXBase.HTMLAttributes<HTMLScCustomerNameElement>;
             "sc-customer-phone": LocalJSX.ScCustomerPhone & JSXBase.HTMLAttributes<HTMLScCustomerPhoneElement>;
             "sc-dashboard-customer-details": LocalJSX.ScDashboardCustomerDetails & JSXBase.HTMLAttributes<HTMLScDashboardCustomerDetailsElement>;

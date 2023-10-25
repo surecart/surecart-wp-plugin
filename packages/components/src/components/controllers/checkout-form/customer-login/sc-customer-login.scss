@@ -1,0 +1,69 @@
+:host {
+  display: block;
+}
+
+a {
+  color: var(--sc-color-primary-500);
+}
+
+.customer-login-area {
+  padding: 0px 1rem;
+  border: 1px solid #ccc;
+  margin: 10px 0px;
+  border-radius: 10px;
+  padding-bottom: 50px;
+
+  // Open it with animation.
+  animation: open 0.5s ease-in-out;
+}
+
+.customer-email {
+  background: var(--sc-color-gray-100);
+  color: var(--sc-color-primary-500);
+  padding: 0px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.reset-email-preview {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.reset-code-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.reset-code-area input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0px 5px;
+  flex: 1;
+  max-width: 40px;
+  height: 40px;
+}
+
+.matched-icon {
+  color: green;
+  margin-left: 6px;
+}
+
+.resend-code-button {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.resend-code-button a {
+  text-decoration: none;
+}
+
+.use-password {
+  margin-top: 1rem;
+  text-align: center;
+  text-decoration: none;
+}

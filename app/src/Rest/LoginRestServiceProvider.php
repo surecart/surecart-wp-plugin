@@ -3,7 +3,6 @@
 namespace SureCart\Rest;
 
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\AccountController;
 use SureCart\Controllers\Rest\LoginController;
 
 /**

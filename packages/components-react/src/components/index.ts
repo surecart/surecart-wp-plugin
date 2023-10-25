@@ -53,6 +53,7 @@ export const ScCustomerEdit = /*@__PURE__*/createReactComponent<JSX.ScCustomerEd
 export const ScCustomerEmail = /*@__PURE__*/createReactComponent<JSX.ScCustomerEmail, HTMLScCustomerEmailElement>('sc-customer-email');
 export const ScCustomerFirstname = /*@__PURE__*/createReactComponent<JSX.ScCustomerFirstname, HTMLScCustomerFirstnameElement>('sc-customer-firstname');
 export const ScCustomerLastname = /*@__PURE__*/createReactComponent<JSX.ScCustomerLastname, HTMLScCustomerLastnameElement>('sc-customer-lastname');
+export const ScCustomerLogin = /*@__PURE__*/createReactComponent<JSX.ScCustomerLogin, HTMLScCustomerLoginElement>('sc-customer-login');
 export const ScCustomerName = /*@__PURE__*/createReactComponent<JSX.ScCustomerName, HTMLScCustomerNameElement>('sc-customer-name');
 export const ScCustomerPhone = /*@__PURE__*/createReactComponent<JSX.ScCustomerPhone, HTMLScCustomerPhoneElement>('sc-customer-phone');
 export const ScDashboardCustomerDetails = /*@__PURE__*/createReactComponent<JSX.ScDashboardCustomerDetails, HTMLScDashboardCustomerDetailsElement>('sc-dashboard-customer-details');

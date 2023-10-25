@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Host, Method, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Host, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
@@ -62,6 +62,12 @@ export class ScCustomerEmail {
   /** Inputs focus */
   @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
 
+  /** Is busy or not eg: email checking */
+  @State() busy: boolean;
+
+  /** After email search if user is found */
+  @State() user: any = null;
+
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -91,9 +97,16 @@ export class ScCustomerEmail {
     this.scChange.emit();
 
     try {
+      this.busy = true;
       checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: this.input.value } })) as Checkout;
+      this.user = {
+        email: this.input.value,
+      };
+      console.log('trying user information...');
     } catch (error) {
       console.log(error);
+    } finally {
+      this.busy = false;
     }
   }
 
@@ -164,29 +177,41 @@ export class ScCustomerEmail {
   render() {
     return (
       <Host>
-        <sc-input
-          exportparts="base, input, form-control, label, help-text, prefix, suffix"
-          type="email"
-          name="email"
-          ref={el => (this.input = el as HTMLScInputElement)}
-          value={this.value}
-          help={this.help}
-          label={this.label}
-          autocomplete={'email'}
-          placeholder={this.placeholder}
-          disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
-          readonly={this.readonly}
-          required={true}
-          invalid={this.invalid}
-          autofocus={this.autofocus}
-          hasFocus={this.hasFocus}
-          onScChange={() => this.handleChange()}
-          onScInput={() => this.scInput.emit()}
-          onScFocus={() => this.scFocus.emit()}
-          onScBlur={() => this.scBlur.emit()}
-        ></sc-input>
+        {!!this.user ? (
+          <sc-customer-login user={this.user}></sc-customer-login>
+        ) : (
+          <Fragment>
+            <sc-input
+              exportparts="base, input, form-control, label, help-text, prefix, suffix"
+              type="email"
+              name="email"
+              ref={el => (this.input = el as HTMLScInputElement)}
+              value={this.value}
+              help={this.help}
+              label={this.label}
+              autocomplete={'email'}
+              placeholder={this.placeholder}
+              disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
+              readonly={this.readonly}
+              required={true}
+              invalid={this.invalid}
+              autofocus={this.autofocus}
+              hasFocus={this.hasFocus}
+              onScChange={() => this.handleChange()}
+              onScInput={() => this.scInput.emit()}
+              onScFocus={() => this.scFocus.emit()}
+              onScBlur={() => this.scBlur.emit()}
+            ></sc-input>
 
-        {this.renderOptIn()}
+            {this.busy && (
+              <div class="account-loader">
+                <sc-spinner></sc-spinner>
+              </div>
+            )}
+
+            {this.renderOptIn()}
+          </Fragment>
+        )}
       </Host>
     );
   }
