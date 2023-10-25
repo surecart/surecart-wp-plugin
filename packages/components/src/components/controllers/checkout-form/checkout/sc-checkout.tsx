@@ -215,7 +215,6 @@ export class ScCheckout {
   }
 
   state() {
-    checkoutState.busy = ['finalizing', 'paying', 'confirming'].includes(formState.formState.value);
     return {
       processor: this.processor,
       method: this.method,
@@ -238,7 +237,7 @@ export class ScCheckout {
 
       // checkout states
       loading: formState.formState.value === 'loading',
-      busy: checkoutState.busy,
+      busy: ['updating', 'finalizing', 'paying', 'confirming'].includes(formState.formState.value),
       paying: ['finalizing', 'paying', 'confirming'].includes(formState.formState.value),
       empty: !['loading', 'updating'].includes(formState.formState.value) && !checkoutState.checkout?.line_items?.pagination?.count,
       // checkout states

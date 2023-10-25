@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
 
 import { Address, Checkout, ResponseError, TaxIdentifier } from '../../../../types';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -85,7 +86,7 @@ export class ScOrderTaxIdInput {
         type={checkoutState.checkout?.tax_identifier?.number_type}
         country={(checkoutState.checkout?.shipping_address as Address)?.country}
         status={this.getStatus()}
-        loading={checkoutState.busy}
+        loading={formBusy()}
         onScChange={e => {
           e.stopImmediatePropagation();
           this.maybeUpdateOrder(e.detail);
@@ -100,4 +101,3 @@ export class ScOrderTaxIdInput {
     );
   }
 }
-

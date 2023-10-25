@@ -11,8 +11,7 @@ interface Store {
   checkout: Checkout;
   currencyCode: string;
   abandonedCheckoutEnabled: boolean;
-  taxProtocol: TaxProtocol,
-  busy: boolean;
+  taxProtocol: TaxProtocol;
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(
@@ -26,7 +25,6 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     currencyCode: 'usd',
     abandonedCheckoutEnabled: true,
     taxProtocol: null,
-    busy: false,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
