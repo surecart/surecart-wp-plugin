@@ -243,6 +243,15 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.8.0 - October 26th, 2023 =
+* New: Product variants.
+* New: Stock management for products.
+* New: Product SKU.
+* Improvement: Line item quantity selector design.
+* Improvement: Show price name on line items (in addition to variant).
+* Fix: Issue with forms sometimes not loading properly when editing in admin.
+* Fix: Deleting webhook processes having a typo which prevents deleting process logs older than 90 days.
+
 = 2.7.5 - October 6th, 2023 =
 * Fix: Issue with some merchant admins not loading if using javascript browser caching.
 * Fix: Rankmath conflict outputting duplicate open graph tags.
