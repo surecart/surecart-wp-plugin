@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-10-06T11:17:03",
+  "timestamp": "2023-10-25T12:33:15",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -24171,10 +24171,10 @@
           "required": false
         },
         {
-          "name": "product",
+          "name": "productId",
           "type": "string",
           "mutable": false,
-          "attr": "product",
+          "attr": "product-id",
           "reflectToAttr": true,
           "docs": "The product id for the fields.",
           "docsTags": [],
@@ -26876,7 +26876,7 @@
         {
           "event": "scChange",
           "detail": "string",
-          "bubbles": false,
+          "bubbles": true,
           "cancelable": true,
           "composed": true,
           "docs": "Change event.",

@@ -69,7 +69,10 @@ export default ({ attributes, setAttributes }) => {
 	const { children, innerBlocksProps } = useInnerBlocksProps(
 		{},
 		{
-			allowedBlocks: ['surecart/product-donation-amount'],
+			allowedBlocks: [
+				'surecart/product-donation-amount',
+				'surecart/custom-donation-amount',
+			],
 			renderAppender: InnerBlocks.ButtonBlockAppender,
 			orientation: 'horizontal',
 			TEMPLATE,
