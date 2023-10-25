@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
@@ -33,7 +33,10 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
-  @State() required: boolean;
+  @Prop({ mutable: true }) taxIdentifier: {
+    number: string;
+    number_type: string;
+  };
 
   /** Error event */
   @Event() scError: EventEmitter<ResponseError>;
@@ -48,13 +51,12 @@ export class ScOrderTaxIdInput {
     return (checkoutState.checkout?.tax_identifier as TaxIdentifier)?.eu_vat_verified ? 'valid' : 'invalid';
   }
 
-  async maybeUpdateOrder(tax_identifier) {
-    this.updateTaxRequired(tax_identifier?.number_type);
+  async maybeUpdateOrder() {
     try {
       lockCheckout('tax_identifier');
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
-        data: { tax_identifier },
+        data: { tax_identifier: this.taxIdentifier },
       })) as Checkout;
     } catch (e) {
       console.error(e);
@@ -66,7 +68,7 @@ export class ScOrderTaxIdInput {
 
   componentDidLoad() {
     this.removeCheckoutListener = onChange('checkout', (checkout: Checkout) => {
-      this.updateTaxRequired(checkout?.tax_identifier?.number_type);
+      this.taxIdentifier = checkout?.tax_identifier;
     });
   }
 
@@ -74,8 +76,13 @@ export class ScOrderTaxIdInput {
     this.removeCheckoutListener();
   }
 
-  updateTaxRequired(taxIdentifierType: string) {
-    this.required = checkoutState.taxProtocol?.eu_vat_required && taxIdentifierType === 'eu_vat';
+  required() {
+    return checkoutState.taxProtocol?.eu_vat_required && this.taxIdentifier?.number_type === 'eu_vat';
+  }
+
+  @Watch('taxIdentifier')
+  handleTaxIdentifierChange() {
+    this.maybeUpdateOrder();
   }
 
   render() {
@@ -89,14 +96,14 @@ export class ScOrderTaxIdInput {
         loading={formBusy()}
         onScChange={e => {
           e.stopImmediatePropagation();
-          this.maybeUpdateOrder(e.detail);
+          this.taxIdentifier = e.detail;
         }}
         otherLabel={this.otherLabel}
         caGstLabel={this.caGstLabel}
         auAbnLabel={this.auAbnLabel}
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
-        required={this.required}
+        required={this.required()}
       ></sc-tax-id-input>
     );
   }
