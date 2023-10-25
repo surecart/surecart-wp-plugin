@@ -2900,7 +2900,7 @@ export namespace Components {
         /**
           * The product id for the fields.
          */
-        "product": string;
+        "productId": string;
         "recurringChoiceLabel": string;
         /**
           * The label for the field.
@@ -8817,7 +8817,7 @@ declare namespace LocalJSX {
         /**
           * The product id for the fields.
          */
-        "product"?: string;
+        "productId"?: string;
         "recurringChoiceLabel"?: string;
         /**
           * The label for the field.

@@ -79,9 +79,10 @@ export class ScCustomDonationAmount {
 
   async handleButtonClick(e) {
     e.stopImmediatePropagation();
+    if (!this.lineItem?.price?.id || !this.value) return;
     this.addOrUpdateLineItem({
-      ...(!!this.value ? { ad_hoc_amount: parseInt(this.value) } : {}),
-      ...(!!this.lineItem?.price?.id ? { price_id: this.lineItem?.price?.id } : {}),
+      ad_hoc_amount: parseInt(this.value),
+      price_id: this.lineItem?.price?.id,
       quantity: 1,
     });
   }

@@ -22,16 +22,16 @@ import SelectProduct from '@scripts/blocks/components/SelectProduct';
 import { ScProductDonationChoices } from '@surecart/components-react';
 
 const TEMPLATE = [
-	['surecart/product-donation-amount', { amount: 100, currency }],
-	['surecart/product-donation-amount', { amount: 200, currency }],
-	['surecart/product-donation-amount', { amount: 500, currency }],
-	['surecart/product-donation-amount', { amount: 1000, currency }],
-	['surecart/product-donation-amount', { amount: 2000, currency }],
-	['surecart/product-donation-amount', { amount: 5000, currency }],
-	['surecart/product-donation-amount', { amount: 10000, currency }],
-	['surecart/product-donation-amount', { amount: 20000, currency }],
-	['surecart/product-donation-amount', { amount: 50000, currency }],
-	['surecart/custom-donation-amount', { currency }],
+	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 200, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 500, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 1000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 2000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 5000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 10000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 20000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 50000, currency: 'USD' }],
+	['surecart/custom-donation-amount', { currency: 'USD' }],
 ];
 
 export default ({ attributes, setAttributes }) => {
@@ -148,7 +148,7 @@ export default ({ attributes, setAttributes }) => {
 						recurringChoiceLabel={recurring_choice_label}
 						nonRecurringChoiceLabel={non_recurring_choice_label}
 						amountColumns={amount_columns}
-						product={product_id}
+						productId={product_id}
 						style={{
 							border: 'none',
 							'--sc-input-required-indicator': '/\\00a0',

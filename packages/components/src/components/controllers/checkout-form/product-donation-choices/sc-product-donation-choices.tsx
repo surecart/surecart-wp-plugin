@@ -18,7 +18,7 @@ export class ScProductDonationChoice {
 
   @Element() el: HTMLScProductDonationChoicesElement;
   /** The product id for the fields. */
-  @Prop({ reflect: true }) product: string;
+  @Prop({ reflect: true }) productId: string;
 
   /** The price id for the fields. */
   @Prop({ reflect: true }) priceId: string;
@@ -160,9 +160,9 @@ export class ScProductDonationChoice {
   }
 
   async addOrUpdateProductPrices() {
-    if (!this.product) return;
+    if (!this.productId) return;
     const product = (await apiFetch({
-      path: addQueryArgs(`surecart/v1/products/${this.product}`, {
+      path: addQueryArgs(`surecart/v1/products/${this.productId}`, {
         expand: ['prices'],
       }),
     })) as Product;

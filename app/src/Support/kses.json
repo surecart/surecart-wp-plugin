@@ -1566,7 +1566,7 @@
     "loading": true,
     "non-recurring-choice-label": true,
     "price-id": true,
-    "product": true,
+    "product-id": true,
     "recurring-choice-label": true,
     "recurring-label": true,
     "selected-product": true,

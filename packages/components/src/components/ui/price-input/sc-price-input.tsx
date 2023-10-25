@@ -143,7 +143,7 @@ export class ScPriceInput {
 
   handleChange() {
     this.updateValue();
-    this.scChange.emit(this.value);
+    this.scChange.emit();
   }
 
   handleInput() {

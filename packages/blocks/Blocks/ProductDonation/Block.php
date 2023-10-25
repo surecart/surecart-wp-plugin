@@ -27,7 +27,7 @@ class Block extends BaseBlock {
 			recurring-choice-label="<?php echo esc_attr( $attributes['recurring_choice_label'] ?? '' ); ?>"
 			non-recurring-choice-label="<?php echo esc_attr( $attributes['non_recurring_choice_label'] ); ?>"
 			amount-columns="<?php echo esc_attr( $attributes['amount_columns'] ); ?>"
-			product="<?php echo esc_attr( $attributes['product_id'] ); ?>"
+			product-id="<?php echo esc_attr( $attributes['product_id'] ); ?>"
 			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> border: none; <?php echo esc_attr( $styles ); ?>"
 		>
 			<?php echo $content; ?>
