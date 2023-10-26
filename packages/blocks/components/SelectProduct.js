@@ -7,7 +7,12 @@ import { addQueryArgs } from '@wordpress/url';
 import { translateInterval } from '../../admin/util/translations';
 import { formatNumber } from '../../admin/util';
 
-export default ({ onSelect, onlyShowProducts, onlyShowAdHocProducts }) => {
+export default ({
+	onSelect,
+	onlyShowProducts,
+	onlyShowAdHocProducts,
+	children,
+}) => {
 	const [products, setProducts] = useState([]);
 	const [query, setQuery] = useState('');
 	const [busy, setBusy] = useState(false);
@@ -65,11 +70,11 @@ export default ({ onSelect, onlyShowProducts, onlyShowAdHocProducts }) => {
 
 	const choices = products.map((product) => {
 		if (onlyShowProducts) {
-				return {
-					label: product?.name,
-					value: product.id,
-				}
-			}
+			return {
+				label: product?.name,
+				value: product.id,
+			};
+		}
 
 		return {
 			label: product?.name,
@@ -97,6 +102,8 @@ export default ({ onSelect, onlyShowProducts, onlyShowAdHocProducts }) => {
 				onSelect(e.target.value);
 			}}
 			choices={choices}
-		/>
+		>
+			{children}
+		</ScSelect>
 	);
 };

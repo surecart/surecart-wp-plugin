@@ -204,7 +204,10 @@ export class ScProductDonationChoice {
     let checkoutAmount = this.lineItem?.ad_hoc_amount;
     let selectedChoice = choices.find((choice: HTMLScChoiceElement) => choice?.value === checkoutAmount?.toString());
     selectedChoice = selectedChoice ? selectedChoice : choices[0];
-    selectedChoice.checked = true;
+    if (selectedChoice) {
+      selectedChoice.checked = true;
+    }
+
     if (!this.lineItem) {
       this.addOrUpdateLineItem({
         ...(!!this.priceId ? { price_id: this.priceId } : {}),

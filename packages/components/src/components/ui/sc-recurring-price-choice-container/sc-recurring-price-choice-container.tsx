@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, Host, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price, Product } from 'src/types';
 import { intervalString } from '../../../functions/price';
@@ -30,9 +30,6 @@ export class ScRecurringPriceChoiceContainer {
   /** Should we show the price details? */
   @Prop() showDetails: boolean = true;
 
-  /** The current value. */
-  @State() value: Price;
-
   /** Change event. */
   @Event() scChange: EventEmitter<string>;
 
@@ -40,19 +37,13 @@ export class ScRecurringPriceChoiceContainer {
     return <sc-format-number type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>;
   }
 
-  @Watch('selectedPrice')
-  handleSelectedPriceChange() {
-    // if the selected price is a recurring price, update this value. Otherwise, use the first price.
-    this.value = this.prices.find(price => price.id === this.selectedPrice?.id) || this.value || this.prices[0];
-  }
-
-  componentWillLoad() {
-    this.handleSelectedPriceChange();
+  value() {
+    return this.prices.find(price => price.id === this.selectedPrice?.id) || this.prices[0];
   }
 
   render() {
     if (!this.prices?.length) {
-      return <Host></Host>;
+      return <Host style={{ display: 'none' }}></Host>;
     }
 
     return (
@@ -63,7 +54,7 @@ export class ScRecurringPriceChoiceContainer {
         checked={this.prices.some(price => price.id === this.selectedPrice?.id)}
         onScChange={e => {
           e.stopPropagation();
-          this.scChange.emit(this.value?.id);
+          this.scChange.emit(this.value()?.id);
         }}
       >
         <div class="recurring-price-choice">
@@ -74,7 +65,7 @@ export class ScRecurringPriceChoiceContainer {
               <div class="recurring-price-choice__description">
                 <sc-dropdown style={{ '--panel-width': 'max(100%, 11rem)', '--sc-menu-item-white-space': 'wrap' }}>
                   <button class="recurring-price-choice__button" slot="trigger">
-                    {this.value?.name || (this.value?.product as Product)?.name}
+                    {this.value()?.name || (this.value()?.product as Product)?.name}
                     <sc-icon name="chevron-down"></sc-icon>
                   </button>
                   <sc-menu>

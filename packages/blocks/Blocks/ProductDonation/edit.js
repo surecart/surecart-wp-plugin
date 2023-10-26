@@ -6,6 +6,7 @@ import {
 	PanelRow,
 	TextControl,
 	__experimentalNumberControl as NumberControl,
+	Placeholder,
 } from '@wordpress/components';
 import {
 	InspectorControls,
@@ -19,7 +20,11 @@ import {
 } from '@wordpress/block-editor';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
 
-import { ScProductDonationChoices } from '@surecart/components-react';
+import {
+	ScProductDonationChoices,
+	ScButton,
+	ScIcon,
+} from '@surecart/components-react';
 
 const TEMPLATE = [
 	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
@@ -66,27 +71,55 @@ export default ({ attributes, setAttributes }) => {
 		`,
 	});
 
-	const { children, innerBlocksProps } = useInnerBlocksProps(
-		{},
-		{
-			allowedBlocks: [
-				'surecart/product-donation-amount',
-				'surecart/custom-donation-amount',
-			],
-			renderAppender: InnerBlocks.ButtonBlockAppender,
-			orientation: 'horizontal',
-			TEMPLATE,
-		}
-	);
+	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
+		allowedBlocks: [
+			'surecart/product-donation-amount',
+			'surecart/custom-donation-amount',
+		],
+		renderAppender: InnerBlocks.ButtonBlockAppender,
+		orientation: 'horizontal',
+		TEMPLATE,
+	});
 
 	if (!product_id) {
 		return (
 			<div {...blockProps}>
-				<SelectProduct
-					onSelect={(product_id) => setAttributes({ product_id })}
-					onlyShowProducts={true}
-					onlyShowAdHocProducts={true}
-				/>
+				<Placeholder
+					icon={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							style={{ fill: 'none' }}
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+							<circle cx="12" cy="12" r="3"></circle>
+						</svg>
+					}
+					label={__('Select a Product', 'surecart')}
+					instructions={__(
+						'Select a product to display donation choices according to the prices of the product.',
+						'surecart'
+					)}
+				>
+					<SelectProduct
+						onSelect={(product_id) => setAttributes({ product_id })}
+						onlyShowProducts={true}
+						onlyShowAdHocProducts={true}
+						style={{ width: '100%' }}
+					>
+						<ScButton slot="trigger" type="primary">
+							<ScIcon name="plus" slot="prefix" />
+							{__('Select Product', 'surecart')}
+						</ScButton>
+					</SelectProduct>
+				</Placeholder>
 			</div>
 		);
 	}
@@ -143,44 +176,42 @@ export default ({ attributes, setAttributes }) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div {...blockProps}>
-				<div {...innerBlocksProps}>
-					<ScProductDonationChoices
-						amountLabel={amount_label}
-						recurringLabel={recurring_label}
-						recurringChoiceLabel={recurring_choice_label}
-						nonRecurringChoiceLabel={non_recurring_choice_label}
-						amountColumns={amount_columns}
-						productId={product_id}
-						style={{
-							border: 'none',
-							'--sc-input-required-indicator': '/\\00a0',
-							'--sc-choice-text-color': colorProps?.style?.color,
-							'--sc-choice-background-color':
-								colorProps?.style?.backgroundColor,
-							'--sc-choice-border-color':
-								borderProps?.style?.borderColor,
-							'--sc-choice-border-width':
-								borderProps?.style?.borderWidth,
-							'--sc-choice-border-radius':
-								borderProps?.style?.borderRadius,
-							'--sc-choice-padding-left':
-								spacingProps?.style?.paddingLeft,
-							'--sc-choice-padding-right':
-								spacingProps?.style?.paddingRight,
-							'--sc-choice-padding-top':
-								spacingProps?.style?.paddingTop,
-							'--sc-choice-padding-bottom':
-								spacingProps?.style?.paddingBottom,
-							marginTop: spacingProps?.style?.marginTop,
-							marginLeft: spacingProps?.style?.marginLeft,
-							marginRight: spacingProps?.style?.marginRight,
-							marginBottom: spacingProps?.style?.marginBottom,
-						}}
-					>
-						{children}
-					</ScProductDonationChoices>
-				</div>
+			<div {...innerBlocksProps}>
+				<ScProductDonationChoices
+					amountLabel={amount_label}
+					recurringLabel={recurring_label}
+					recurringChoiceLabel={recurring_choice_label}
+					nonRecurringChoiceLabel={non_recurring_choice_label}
+					amountColumns={amount_columns}
+					productId={product_id}
+					style={{
+						border: 'none',
+						'--sc-input-required-indicator': '/\\00a0',
+						'--sc-choice-text-color': colorProps?.style?.color,
+						'--sc-choice-background-color':
+							colorProps?.style?.backgroundColor,
+						'--sc-choice-border-color':
+							borderProps?.style?.borderColor,
+						'--sc-choice-border-width':
+							borderProps?.style?.borderWidth,
+						'--sc-choice-border-radius':
+							borderProps?.style?.borderRadius,
+						'--sc-choice-padding-left':
+							spacingProps?.style?.paddingLeft,
+						'--sc-choice-padding-right':
+							spacingProps?.style?.paddingRight,
+						'--sc-choice-padding-top':
+							spacingProps?.style?.paddingTop,
+						'--sc-choice-padding-bottom':
+							spacingProps?.style?.paddingBottom,
+						marginTop: spacingProps?.style?.marginTop,
+						marginLeft: spacingProps?.style?.marginLeft,
+						marginRight: spacingProps?.style?.marginRight,
+						marginBottom: spacingProps?.style?.marginBottom,
+					}}
+				>
+					{children}
+				</ScProductDonationChoices>
 			</div>
 		</>
 	);

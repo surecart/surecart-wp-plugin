@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { button as icon } from '@wordpress/icons';
+import { moneyAlt as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
