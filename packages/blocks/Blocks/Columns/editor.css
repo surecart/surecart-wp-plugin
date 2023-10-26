@@ -11,6 +11,6 @@ html :where(.wp-block-column) {
 }
 
 
-.editor-styles-wrapper :where(body .is-layout-flow) > *{
-  margin-block-start: 0 !important;
+div[data-type="surecart/columns"] div[data-type="surecart/column"]{
+  margin-block-start: 0;
 }
