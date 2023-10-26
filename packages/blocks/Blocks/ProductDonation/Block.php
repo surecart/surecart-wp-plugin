@@ -30,7 +30,7 @@ class Block extends BaseBlock {
 			product-id="<?php echo esc_attr( $attributes['product_id'] ); ?>"
 			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> border: none; <?php echo esc_attr( $styles ); ?>"
 		>
-			<?php echo $content; ?>
+			<?php echo filter_block_content( $content ); ?>
 		</sc-product-donation-choices>
 		<?php
 		return ob_get_clean();
