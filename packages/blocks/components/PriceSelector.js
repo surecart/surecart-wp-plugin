@@ -5,6 +5,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import usePrevious from '../hooks/usePrevious';
 
 import SelectPrice from './SelectPrice';
 
@@ -13,78 +14,90 @@ export default ({
 	ad_hoc,
 	variable,
 	value,
-	open = false,
 	requestQuery,
 	required,
 	...props
 }) => {
 	const [query, setQuery] = useState(null);
 	const [products, setProducts] = useState([]);
+	const [totalPages, setTotalPages] = useState();
+	const [page, setPage] = useState(1);
+	const [perPage, setPerPage] = useState(10);
 	const [isLoading, setIsLoading] = useState(false);
-	const [pagination, setPagination] = useState({
-		enabled: true,
-		page: 1,
-		per_page: 10,
-	});
 	const { receiveEntityRecords } = useDispatch(coreStore);
+	const previousQuery = usePrevious(query);
+
+	const handleOnChangeQuery = (queryValue) => setQuery(queryValue);
 
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || isLoading) return;
-		setPagination((state) => ({ ...state, page: (state.page += 1) }));
+		if (page >= totalPages || isLoading) return;
+		setPage(page + 1);
 	};
 
-	const fetchData = async (pagination) => {
+	const fetchData = async () => {
+		if (isLoading) return;
+
 		const { baseURL } = select(coreStore).getEntityConfig(
 			'surecart',
 			'product'
 		);
+
 		if (!baseURL) return;
-		if (pagination.page === 1) {
-			setProducts([]);
-			setPagination((state) => ({ ...state, enabled: true }));
-		}
 
 		const queryArgs = {
 			query,
 			expand: ['prices', 'variants'],
-			page: pagination.page,
-			per_page: pagination.per_page,
+			page,
+			per_page: perPage,
 			...requestQuery,
 		};
 
-		const data = select(coreStore).getEntityRecords('surecart', 'product', {
-			...queryArgs,
-		});
-
-		if (data && data.length) {
-			setProducts((state) => [...state, ...(data || [])]);
-			return;
-		}
-
 		try {
 			setIsLoading(true);
-			const data = await apiFetch({
+
+			// fetch.
+			const response = await apiFetch({
 				path: addQueryArgs(baseURL, queryArgs),
+				parse: false,
 			});
-			setProducts((state) => [...state, ...(data || [])]);
-			receiveEntityRecords('surecart', 'product', data, queryArgs);
+
+			// set pagination.
+			setTotalPages(parseInt(response.headers.get('X-WP-TotalPages')));
+
+			// get response.
+			const data = await response.json();
+
+			// append new data to choices.
+			for (let i = 0; i < data.length; i++) {
+				if (!products.some((item) => item.id === data[i].id)) {
+					setProducts((state) => [...state, data[i]]);
+				}
+			}
+
+			receiveEntityRecords('surecart', 'product', products, queryArgs);
 		} catch (error) {
-			setPagination((state) => ({ ...state, enabled: false }));
 			console.error(error);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
+	// if the page, perPage changes, fetch data.
 	useEffect(() => {
-		if (query === null) return;
-		setPagination((state) => ({ ...state, page: 1 }));
-	}, [query]);
+		// we are doing a new query, reset pagination to 1.
+		if (query !== previousQuery) {
+			setPage(1);
+			return; // we want to fetch data on the next useEffect.
+		}
+		fetchData();
+	}, [page, perPage, query]);
 
+	// if the query changes, reset the page to 1.
 	useEffect(() => {
-		if (query === null || isLoading) return;
-		fetchData(pagination);
-	}, [pagination]);
+		if (page === 1) {
+			setProducts([]);
+		}
+	}, [page]);
 
 	return (
 		<SelectPrice
@@ -95,10 +108,9 @@ export default ({
 			value={value}
 			ad_hoc={ad_hoc}
 			variable={variable}
-			open={open}
 			products={products}
-			onQuery={setQuery}
-			onFetch={() => setQuery('')}
+			onQuery={handleOnChangeQuery}
+			onFetch={fetchData}
 			loading={isLoading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
