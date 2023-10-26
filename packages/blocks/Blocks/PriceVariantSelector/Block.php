@@ -19,7 +19,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-		$product  = (new Product())::with([
+		$product  = \SureCart\Models\Product::with([
+			'prices',
 			'variants',
 			'variant_options'
 		])
@@ -28,6 +29,38 @@ class Block extends BaseBlock {
 		if(empty($product)){
 			return '';
 		}
+
+		//active prices
+		$active_prices = $product->activePrices();
+
+		// must have at least one active price
+		if(empty($active_prices[0])){
+			return '';
+		}
+
+		//prepare data
+		$product = $product->withActiveAndSortedPrices();
+		$first_variant_with_stock = $product->getFirstVariantWithStock();
+
+		if(!empty($product->prices->data[0]->id)){
+			$line_item = array_merge(
+				[
+					'price_id' => $product->prices->data[0]->id,
+					'quantity' => 1,
+				],
+				!empty($first_variant_with_stock->id) ? ['variant_id' => $first_variant_with_stock->id] : []
+			);
+
+			sc_initial_state([
+				'checkout' => [
+					'initialLineItems' => array_merge(
+						$this->getExistingLineItems(),
+						[$line_item]
+					),
+				],
+			]);
+		}
+
 
 
 		return wp_kses_post(
@@ -38,5 +71,15 @@ class Block extends BaseBlock {
 					'product' => $product,
 				]
 			)->render( '' ) );
+	}
+
+	/**
+	 * Get any existing line items.
+	 *
+	 * @return array
+	 */
+	public function getExistingLineItems() {
+		$initial = \SureCart::state()->getData();
+		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
 	}
 }
