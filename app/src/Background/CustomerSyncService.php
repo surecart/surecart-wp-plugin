@@ -115,7 +115,7 @@ class CustomerSyncService {
 			if ( ! $user ) {
 				$user = User::getUserBy( 'email', $customer->email );
 				if ( $user ) {
-					$user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test' );
+					$user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test', true ); // force update.
 				} else {
 					$customer->createUser();
 				}

@@ -295,19 +295,14 @@ export class ScCheckout {
           >
             {/* Handles the current checkout form state. */}
             <sc-form-state-provider onScSetCheckoutFormState={e => (this.checkoutState = e.detail)}>
-              {/* Handles errors in the form. */}
-              <sc-form-error-provider checkoutState={formState.formState.value} onScUpdateError={e => (this.error = e.detail)}>
+              {/* Handles adding error component in the form. */}
+              <sc-form-error-provider>
                 {/* Validate components in the form based on order state. */}
-                <sc-form-components-validator order={checkoutState.checkout} disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
+                <sc-form-components-validator  disabled={this.disableComponentsValidation} taxProtocol={this.taxProtocol}>
                   {/* Handle confirming of order after it is "Paid" by processors. */}
                   <sc-order-confirm-provider checkout-status={formState.formState.value} success-url={this.successUrl} successText={this.successText}>
                     {/* Handles the current session. */}
-                    <sc-session-provider
-                      ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)}
-                      prices={this.prices}
-                      persist={this.persistSession}
-                      onScError={e => (this.error = e.detail as ResponseError)}
-                    >
+                    <sc-session-provider ref={el => (this.sessionProvider = el as HTMLScSessionProviderElement)} prices={this.prices} persist={this.persistSession}>
                       <slot />
                     </sc-session-provider>
                   </sc-order-confirm-provider>

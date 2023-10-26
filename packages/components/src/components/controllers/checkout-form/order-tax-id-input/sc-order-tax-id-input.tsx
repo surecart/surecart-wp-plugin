@@ -1,11 +1,12 @@
-import { Component, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
+import { Component,  h, Prop, Watch } from '@stencil/core';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
 
-import { Address, Checkout, ResponseError, TaxIdentifier } from '../../../../types';
+import { Address, Checkout, TaxIdentifier } from '../../../../types';
 import { formBusy } from '@store/form/getters';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -38,9 +39,6 @@ export class ScOrderTaxIdInput {
     number_type: string;
   };
 
-  /** Error event */
-  @Event() scError: EventEmitter<ResponseError>;
-
   getStatus() {
     if (checkoutState.checkout?.tax_identifier?.number_type !== 'eu_vat') {
       return 'unknown';
@@ -60,7 +58,7 @@ export class ScOrderTaxIdInput {
       })) as Checkout;
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       unLockCheckout('tax_identifier');
     }

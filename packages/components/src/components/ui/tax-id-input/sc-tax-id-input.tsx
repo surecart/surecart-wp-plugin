@@ -8,6 +8,9 @@ import { zones, getType } from '../../../functions/tax';
   shadow: true,
 })
 export class ScTaxIdInput {
+  /** The input */
+  private input: HTMLScInputElement;
+
   /** The country code. */
   @Prop() country: string;
 
@@ -101,6 +104,7 @@ export class ScTaxIdInput {
         <sc-input name="tax_identifier.number_type" required={this.required} value={this.type} style={{ display: 'none' }} />
 
         <sc-input
+          ref={el => (this.input = el as HTMLScInputElement)}
           label={zones?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
           value={this.number}
@@ -123,7 +127,7 @@ export class ScTaxIdInput {
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
           <sc-dropdown slot="suffix" position="bottom-right">
-            <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }}>
+            <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
               {zones?.[this?.type || 'other']?.label_small}
             </sc-button>
             <sc-menu>
@@ -139,6 +143,20 @@ export class ScTaxIdInput {
                       number_type: name,
                     });
                     this.type = name;
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      this.scInput.emit({
+                        number: this.number,
+                        number_type: name,
+                      });
+                      this.scChange.emit({
+                        number: this.number,
+                        number_type: name,
+                      });
+                      this.type = name;
+                      this.input?.triggerFocus();
+                    }
                   }}
                   checked={this.type === name}
                 >

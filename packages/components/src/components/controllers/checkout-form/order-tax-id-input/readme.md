@@ -7,21 +7,15 @@
 
 ## Properties
 
-| Property     | Attribute      | Description           | Type      | Default     |
-| ------------ | -------------- | --------------------- | --------- | ----------- |
-| `auAbnLabel` | `au-abn-label` | AU zone label         | `string`  | `undefined` |
-| `caGstLabel` | `ca-gst-label` | GST zone label        | `string`  | `undefined` |
-| `euVatLabel` | `eu-vat-label` | EU zone label         | `string`  | `undefined` |
-| `gbVatLabel` | `gb-vat-label` | UK zone label         | `string`  | `undefined` |
-| `otherLabel` | `other-label`  | Other zones label     | `string`  | `undefined` |
-| `show`       | `show`         | Force show the field. | `boolean` | `false`     |
-
-
-## Events
-
-| Event     | Description | Type                         |
-| --------- | ----------- | ---------------------------- |
-| `scError` | Error event | `CustomEvent<ResponseError>` |
+| Property        | Attribute      | Description           | Type                                       | Default     |
+| --------------- | -------------- | --------------------- | ------------------------------------------ | ----------- |
+| `auAbnLabel`    | `au-abn-label` | AU zone label         | `string`                                   | `undefined` |
+| `caGstLabel`    | `ca-gst-label` | GST zone label        | `string`                                   | `undefined` |
+| `euVatLabel`    | `eu-vat-label` | EU zone label         | `string`                                   | `undefined` |
+| `gbVatLabel`    | `gb-vat-label` | UK zone label         | `string`                                   | `undefined` |
+| `otherLabel`    | `other-label`  | Other zones label     | `string`                                   | `undefined` |
+| `show`          | `show`         | Force show the field. | `boolean`                                  | `false`     |
+| `taxIdentifier` | --             |                       | `{ number: string; number_type: string; }` | `undefined` |
 
 
 ## Dependencies

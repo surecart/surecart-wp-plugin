@@ -26,7 +26,6 @@
 | Event        | Description   | Type                                                                                            |
 | ------------ | ------------- | ----------------------------------------------------------------------------------------------- |
 | `scPaid`     |               | `CustomEvent<void>`                                                                             |
-| `scPayError` |               | `CustomEvent<any>`                                                                              |
 | `scSetState` | Set the state | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 
 

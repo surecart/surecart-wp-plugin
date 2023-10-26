@@ -6,6 +6,7 @@
     "loading": true,
     "names": true,
     "placeholders": true,
+    "require-name": true,
     "required": true,
     "show-line2": true,
     "show-name": true,
@@ -290,8 +291,6 @@
     "slot": true
   },
   "sc-checkout-form-errors": {
-    "checkout-state": true,
-    "error": true,
     "style": true,
     "id": true,
     "class": true,
@@ -708,7 +707,6 @@
   },
   "sc-form-components-validator": {
     "disabled": true,
-    "order": true,
     "tax-protocol": true,
     "style": true,
     "id": true,
@@ -733,7 +731,6 @@
     "slot": true
   },
   "sc-form-error-provider": {
-    "checkout-state": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1208,6 +1205,7 @@
     "name-placeholder": true,
     "placeholders": true,
     "postal-code-placeholder": true,
+    "require-name": true,
     "required": true,
     "shipping-address": true,
     "shipping-enabled": true,
@@ -1272,6 +1270,7 @@
     "gb-vat-label": true,
     "other-label": true,
     "show": true,
+    "tax-identifier": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1566,6 +1565,8 @@
   },
   "sc-product-item-list": {
     "ajax-pagination": true,
+    "collection-enabled": true,
+    "collection-id": true,
     "featured": true,
     "ids": true,
     "layout-config": true,

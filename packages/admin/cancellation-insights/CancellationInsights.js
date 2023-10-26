@@ -2,18 +2,16 @@
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
-import { ScFlex, ScIcon, ScTag } from '@surecart/components-react';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 import Error from '../components/Error';
 import Stat from '../ui/Stat';
-import Tab from '../ui/Tab';
-import { averageProperties, totalProperties } from './util';
 import { getFilterData } from '../util/filter';
 import { CancellationReasonStats } from './CancellationReasonStats';
-import LiveModeToggle from './LiveModeToggle';
+import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
 import Notifications from '../components/Notifications';
+import { averageProperties, totalProperties } from '../util/stats';
 
 export default () => {
 	const [data, setData] = useState([]);
@@ -76,45 +74,6 @@ export default () => {
 		return data;
 	};
 
-	const badge = ({ previous, current, reverse = false }) => {
-		if (loading) return null;
-
-		let percentage;
-
-		percentage =
-			Math.abs(
-				((current - previous) / (previous || 1)) * 100.0
-			).toLocaleString('fullwide', { maximumFractionDigits: 0 }) + '%';
-
-		let type, icon;
-		if (previous === current) {
-			type = 'default';
-			icon = 'bar-chart';
-		} else {
-			if (reverse) {
-				type = previous < current ? 'danger' : 'success';
-			} else {
-				type = previous < current ? 'success' : 'danger';
-			}
-			icon = previous < current ? 'arrow-up-right' : 'arrow-down-right';
-		}
-
-		return (
-			<ScTag type={type}>
-				<div
-					css={css`
-						display: flex;
-						align-items: center;
-						gap: 0.3em;
-					`}
-				>
-					<ScIcon name={icon} />
-					{percentage}
-				</div>
-			</ScTag>
-		);
-	};
-
 	return (
 		<div
 			css={css`
@@ -128,58 +87,7 @@ export default () => {
 			`}
 		>
 			<Error error={error} setError={setError} />
-			<ScFlex alignItems="center">
-				<ScFlex
-					alignItems="center"
-					justifyContent="flex-start"
-					flexWrap="wrap"
-				>
-					<Tab
-						selected={filter === '30days'}
-						onClick={() => setFilter('30days')}
-					>
-						{__('Last 30 Days', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'today'}
-						onClick={() => setFilter('today')}
-					>
-						{__('Today', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'yesterday'}
-						onClick={() => setFilter('yesterday')}
-					>
-						{__('Yesterday', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'thisweek'}
-						onClick={() => setFilter('thisweek')}
-					>
-						{__('This Week', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'lastweek'}
-						onClick={() => setFilter('lastweek')}
-					>
-						{__('Last Week', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'thismonth'}
-						onClick={() => setFilter('thismonth')}
-					>
-						{__('This Month', 'surecart')}
-					</Tab>
-					<Tab
-						selected={filter === 'lastmonth'}
-						onClick={() => setFilter('lastmonth')}
-					>
-						{__('Last Month', 'surecart')}
-					</Tab>
-				</ScFlex>
-
-				<LiveModeToggle />
-			</ScFlex>
+			<InsightsPeriodFilter filter={filter} setFilter={setFilter} />
 
 			<div
 				css={css`
@@ -218,11 +126,11 @@ export default () => {
 							'surecart'
 						)}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: totalProperties('count', data),
 							previous: totalProperties('count', previous),
 							reverse: true,
-						})}
+						}}
 					>
 						{totalProperties('count', data)}
 					</Stat>
@@ -231,13 +139,13 @@ export default () => {
 						title={__('Saved Count', 'surecart')}
 						description={__('Total Saved Count', 'surecart')}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: totalProperties('preserved_count', data),
 							previous: totalProperties(
 								'preserved_count',
 								previous
 							),
-						})}
+						}}
 					>
 						{totalProperties('preserved_count', data)}
 					</Stat>
@@ -246,7 +154,7 @@ export default () => {
 						title={__('Saved By Coupon', 'surecart')}
 						description={__('Total Saved By Coupon', 'surecart')}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: totalProperties(
 								'coupon_applied_count',
 								data
@@ -255,7 +163,7 @@ export default () => {
 								'coupon_applied_count',
 								previous
 							),
-						})}
+						}}
 					>
 						{totalProperties('coupon_applied_count', data)}
 					</Stat>
@@ -264,7 +172,7 @@ export default () => {
 						title={__('Total Lost', 'surecart')}
 						description={__('Total Lost Cancellations', 'surecart')}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current:
 								totalProperties('count', data) -
 								totalProperties('preserved_count', data),
@@ -272,7 +180,7 @@ export default () => {
 								totalProperties('count', previous) -
 								totalProperties('preserved_count', previous),
 							reverse: true,
-						})}
+						}}
 					>
 						{totalProperties('count', data) -
 							totalProperties('preserved_count', data)}
@@ -285,10 +193,10 @@ export default () => {
 							'surecart'
 						)}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: averageProperties('preserved_rate', data),
 							previous: averageProperties('preserved_rate', data),
-						})}
+						}}
 					>
 						{`${Math.round(
 							averageProperties('preserved_rate', data) * 100
@@ -302,7 +210,7 @@ export default () => {
 							'surecart'
 						)}
 						loading={loading}
-						compare={badge({
+						compare={{
 							current: averageProperties(
 								'coupon_applied_rate',
 								data
@@ -311,7 +219,7 @@ export default () => {
 								'coupon_applied_rate',
 								data
 							),
-						})}
+						}}
 					>
 						{`${Math.round(
 							averageProperties('coupon_applied_rate', data) * 100

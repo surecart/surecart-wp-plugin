@@ -10,7 +10,10 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
+  /** The prices list */
   @Prop() prices: Price[];
+
+  /** The sale text */
   @Prop() saleText: string;
 
   renderRange() {
