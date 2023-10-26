@@ -22,12 +22,14 @@ export default ({
 	const [products, setProducts] = useState([]);
 	const [totalPages, setTotalPages] = useState();
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(10);
+	const [perPage, setPerPage] = useState(50);
 	const [isLoading, setIsLoading] = useState(false);
 	const { receiveEntityRecords } = useDispatch(coreStore);
 	const previousQuery = usePrevious(query);
 
-	const handleOnChangeQuery = (queryValue) => setQuery(queryValue);
+	const handleOnChangeQuery = (queryValue) => {
+		setQuery(queryValue);
+	};
 
 	const handleOnScrollEnd = () => {
 		if (page >= totalPages || isLoading) return;
@@ -48,6 +50,7 @@ export default ({
 			query,
 			expand: ['prices', 'variants'],
 			page,
+			archived: false,
 			per_page: perPage,
 			...requestQuery,
 		};
@@ -86,8 +89,10 @@ export default ({
 	useEffect(() => {
 		// we are doing a new query, reset pagination to 1.
 		if (query !== previousQuery) {
-			setPage(1);
-			return; // we want to fetch data on the next useEffect.
+			if (page !== 1) {
+				setPage(1);
+				return; // we want to fetch data on the next useEffect.
+			}
 		}
 		fetchData();
 	}, [page, perPage, query]);
