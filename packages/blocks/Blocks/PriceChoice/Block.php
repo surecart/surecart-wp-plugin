@@ -2,12 +2,20 @@
 
 namespace SureCartBlocks\Blocks\PriceChoice;
 
+use SureCart\Models\Price;
 use SureCartBlocks\Blocks\BaseBlock;
 
 /**
  * Checkout block
  */
 class Block extends BaseBlock {
+	/**
+	 * Keep track of number of instances.
+	 *
+	 * @var integer
+	 */
+	public static $instance = 0;
+
 	/**
 	 * Render the block
 	 *
@@ -17,8 +25,21 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		$price = Price::find( $attributes['price_id'] );
+
+		self::$instance++;
+
+		\SureCart::assets()->addComponentData(
+			'sc-price-choice',
+			'#sc-price-choice-' . (int) self::$instance,
+			[
+				'price' => $price,
+			]
+		);
+
 		ob_start(); ?>
 		<sc-price-choice
+			id="sc-price-choice-<?php echo (int) self::$instance; ?>"
 			price-id="<?php echo esc_attr( $attributes['price_id'] ?? '' ); ?>"
 			type="<?php echo esc_attr( $attributes['type'] ?? 'radio' ); ?>"
 			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
