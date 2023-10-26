@@ -4,6 +4,7 @@ import { css, Global, jsx } from '@emotion/core';
 import { Button, Modal, Flex } from '@wordpress/components';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { addQueryArgs } from '@wordpress/url';
+import { updateCartLineItem } from '../util';
 
 export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
 	const { url, line_items } = attributes;
@@ -12,28 +13,10 @@ export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
 		setAttributes({ line_items: line_items.filter((_, i) => i !== index) });
 	};
 
-	const updateLineItem = (data, index) => {
+	const updateLineItem = (data) =>
 		setAttributes({
-			line_items: line_items.map((item, i) => {
-				if (i !== index) return item;
-				return {
-					...item,
-					...data,
-				};
-			}),
+			line_items: updateCartLineItem(data, line_items),
 		});
-	};
-
-	const addLineItem = () => {
-		setAttributes({
-			line_items: [
-				...(line_items || []),
-				{
-					quantity: 1,
-				},
-			],
-		});
-	};
 
 	const createLink = () => {
 		const checkoutPage =
@@ -78,7 +61,6 @@ export default ({ attributes, setAttributes, onChange, setAddingLink }) => {
 			/>
 			<PriceChoices
 				choices={line_items}
-				onAddProduct={addLineItem}
 				onUpdate={updateLineItem}
 				onRemove={removeLineItem}
 				onNew={() => {}}

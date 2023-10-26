@@ -11,6 +11,7 @@ import { Placeholder, Button } from '@wordpress/components';
 import { button as icon } from '@wordpress/icons';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
+import { updateCartLineItem } from '../../util';
 
 export default ({ setAttributes }) => {
 	const [line_items, setLineItems] = useState([]);
@@ -19,55 +20,8 @@ export default ({ setAttributes }) => {
 		setLineItems(line_items.filter((_, i) => i !== index));
 	};
 
-	const updateLineItem = (data) => {
-		const existingPrice = line_items?.find((item) => {
-			return item?.id === data.id && !data?.variant_id;
-		});
-		const existingVariant = line_items?.find(
-			(item) =>
-				item?.id === data.id && item?.variant_id === data.variant_id
-		);
-
-		// increase quantity if variant exists.
-		if (existingVariant) {
-			setLineItems(
-				line_items.map((item) => {
-					if (item?.id !== existingVariant?.id) return item;
-					return {
-						...item,
-						...{
-							quantity: existingVariant?.quantity + 1,
-						},
-					};
-				})
-			);
-			return;
-		}
-
-		// increase price if price exists.
-		if (existingPrice) {
-			setLineItems(
-				line_items.map((item) => {
-					if (item?.id !== existingPrice?.id) return item;
-					return {
-						...item,
-						...{
-							quantity: existingPrice?.quantity + 1,
-						},
-					};
-				})
-			);
-			return;
-		}
-
-		setLineItems([
-			...line_items,
-			{
-				...data,
-				quantity: 1,
-			},
-		]);
-	};
+	const updateLineItem = (data) =>
+		setLineItems(updateCartLineItem(data, line_items));
 
 	return (
 		<Placeholder icon={icon} label={__('Select some products', 'surecart')}>
