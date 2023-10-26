@@ -21,13 +21,16 @@
 }
 
 @media screen and (max-width: 720px) {
-  sc-dashboard-module {
-    &::part(heading-text) {
-      flex: 1 1 100%;
-    }
+  .subscription {
+    &__action-buttons {
+      &::part(base) {
+        flex-direction: column;
+        gap: var(--sc-spacing-xx-small);
+      }
 
-    &::part(heading) {
-      gap: 0;
+      sc-button::part(base) {
+        width: auto;
+      }
     }
   }
 }
