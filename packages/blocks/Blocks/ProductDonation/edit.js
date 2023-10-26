@@ -18,7 +18,6 @@ import {
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
-import SelectProduct from '@scripts/blocks/components/SelectProduct';
 import SelectModel from '../../../admin/components/SelectModel';
 
 import {
@@ -107,7 +106,7 @@ export default ({ attributes, setAttributes }) => {
 		],
 		renderAppender: InnerBlocks.ButtonBlockAppender,
 		orientation: 'horizontal',
-		TEMPLATE,
+		template: TEMPLATE,
 	});
 
 	if (!product_id) {
