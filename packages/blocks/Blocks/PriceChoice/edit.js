@@ -48,7 +48,8 @@ export default ({ attributes, setAttributes, isSelected }) => {
 			<div {...blockProps}>
 				<PriceSelector
 					ad_hoc={false}
-					onSelect={({price_id}) => setAttributes({ price_id })}
+					variable={false}
+					onSelect={({ price_id }) => setAttributes({ price_id })}
 				/>
 			</div>
 		);
