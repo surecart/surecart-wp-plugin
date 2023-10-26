@@ -19,12 +19,16 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import SelectProduct from '@scripts/blocks/components/SelectProduct';
+import SelectModel from '../../../admin/components/SelectModel';
 
 import {
 	ScProductDonationChoices,
 	ScButton,
 	ScIcon,
 } from '@surecart/components-react';
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
 
 const TEMPLATE = [
 	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
@@ -40,6 +44,31 @@ const TEMPLATE = [
 ];
 
 export default ({ attributes, setAttributes }) => {
+	const [query, setQuery] = useState(null);
+
+	const { products, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				{
+					query,
+					archived: false,
+					ad_hoc: true,
+					expand: ['prices'],
+				},
+			];
+			return {
+				products: select(coreStore).getEntityRecords(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[query]
+	);
+
 	const {
 		product_id,
 		amount_label,
@@ -108,17 +137,22 @@ export default ({ attributes, setAttributes }) => {
 						'surecart'
 					)}
 				>
-					<SelectProduct
+					<SelectModel
+						choices={(products || []).map((product) => ({
+							label: product.name,
+							value: product.id,
+						}))}
+						onQuery={setQuery}
+						onFetch={() => setQuery('')}
+						loading={loading}
 						onSelect={(product_id) => setAttributes({ product_id })}
-						onlyShowProducts={true}
-						onlyShowAdHocProducts={true}
 						style={{ width: '100%' }}
 					>
 						<ScButton slot="trigger" type="primary">
 							<ScIcon name="plus" slot="prefix" />
 							{__('Select Product', 'surecart')}
 						</ScButton>
-					</SelectProduct>
+					</SelectModel>
 				</Placeholder>
 			</div>
 		);
