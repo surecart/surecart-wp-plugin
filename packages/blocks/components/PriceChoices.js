@@ -84,6 +84,7 @@ export default ({ choices, onUpdate, onRemove, description }) => {
 					requestQuery={{
 						archived: false,
 					}}
+					allowOutOfStockSelection={true}
 				>
 					<ScButton slot="trigger" type="default">
 						<ScIcon name="plus" slot="prefix" />

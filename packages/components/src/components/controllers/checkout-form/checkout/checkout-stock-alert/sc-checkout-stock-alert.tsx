@@ -103,6 +103,9 @@ export class ScCheckoutStockAlert {
       };
     });
 
+    // we have at least one quantity change.
+    const hasOutOfStockItems = stockErrors?.some(item => item?.available_stock < 1);
+
     return (
       <Host>
         <sc-dialog
@@ -114,10 +117,14 @@ export class ScCheckoutStockAlert {
           <sc-dashboard-module class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
             <sc-flex slot="heading" align-items="center" justify-content="flex-start">
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
-              {__('Out of Stock', 'surecart')}
+              {hasOutOfStockItems ? __('Out of Stock', 'surecart') : __('Quantity Update', 'surecart')}
             </sc-flex>
 
-            <span slot="description"> {__('Some items are no longer available. Your cart will be updated.', 'surecart')}</span>
+            <span slot="description">
+              {hasOutOfStockItems
+                ? __('Some items are no longer available. Your cart will be updated.', 'surecart')
+                : __('Available quantities for these items have changed. Your cart will be updated.', 'surecart')}
+            </span>
 
             <sc-card no-padding>
               <sc-table>

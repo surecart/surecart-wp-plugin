@@ -36,7 +36,10 @@
       text-decoration: line-through;
     }
 
-    &--selected {
+    &--selected,
+    &--selected:focus,
+    &--selected:hover,
+    &--selected:active {
       background-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
       border-color: var(--sc-pill-option-active-background-color, var(--sc-color-primary-500));
       color: var(--sc-pill-option-active-text-color, white);

@@ -112,19 +112,21 @@ export default ({ product, updateProduct }) => {
 								border: 1px solid var(--sc-color-gray-200);
 							`}
 						>
-							<th css={cell} style={{ width: '200px' }}>
+							<th css={cell} style={{ minWidth: '185px' }}>
 								{__('Variant', 'surecart')}
 							</th>
-							<th css={cell} style={{ width: '150px' }}>
+							<th css={cell} style={{ minWidth: '150px' }}>
 								{__('Price', 'surecart')}
 							</th>
-							<th css={cell} style={{ width: '150px' }}>
-								{__('Quantity', 'surecart')}
-							</th>
-							<th css={cell} style={{ width: '150px' }}>
+							{!!product?.stock_enabled && (
+								<th css={cell} style={{ minWidth: '150px' }}>
+									{__('Quantity', 'surecart')}
+								</th>
+							)}
+							<th css={cell} style={{ width: '185px' }}>
 								{__('SKU', 'surecart')}
 							</th>
-							<th css={cell}></th>
+							<th css={cell} style={{ width: '45px' }}></th>
 						</tr>
 					);
 				}}
@@ -134,6 +136,7 @@ export default ({ product, updateProduct }) => {
 						updateVariant={(data) =>
 							updateVariant(data, variant?.position)
 						}
+						quantityEnabled={!!product?.stock_enabled}
 						canOverride={(prices || [])?.length <= 1}
 						defaultSku={product?.sku}
 						defaultAmount={
