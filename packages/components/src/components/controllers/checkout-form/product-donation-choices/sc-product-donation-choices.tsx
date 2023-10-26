@@ -23,33 +23,40 @@ export class ScProductDonationChoice {
   /** The price id for the fields. */
   @Prop({ reflect: true }) priceId: string;
 
+  /** The ad_hoc prices of the product selected. */
   @State() prices: Price[];
 
+  /** The selected price of the product. */
   @State() selectedPrice: Price;
 
+  /** The selected product. */
   @Prop() selectedProduct: Product;
 
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
 
-  /** Order line items. */
+  /** Order line item. */
   @Prop() lineItem: LineItem;
 
   /** Is this loading */
   @Prop() loading: boolean;
+
+  /** Is this busy */
   @Prop() busy: boolean;
 
   /** The label for the field. */
   @Prop() amountLabel: string;
 
-  /** The label for the field. */
+  /** The label for the recurring fields. */
   @Prop() recurringLabel: string;
 
+  /** The label for the recurring choice field. */
   @Prop() recurringChoiceLabel: string;
 
+  /** The label for the non recurring choice field. */
   @Prop() nonRecurringChoiceLabel: string;
 
-  /** The label for the field. */
+  /** Number of columns for amounts. */
   @Prop() amountColumns: string;
 
   /** Error */

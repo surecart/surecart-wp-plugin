@@ -17,6 +17,7 @@ export class ScCustomDonationAmount {
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
 
+  /** Custom Amount value of the donation. */
   @Prop() value: string;
 
   /** Order line items. */

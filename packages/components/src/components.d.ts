@@ -838,6 +838,9 @@ export namespace Components {
           * Order line items.
          */
         "lineItem": LineItem;
+        /**
+          * Custom Amount value of the donation.
+         */
         "value": string;
     }
     interface ScCustomOrderPriceInput {
@@ -2872,26 +2875,32 @@ export namespace Components {
     }
     interface ScProductDonationChoices {
         /**
-          * The label for the field.
+          * Number of columns for amounts.
          */
         "amountColumns": string;
         /**
           * The label for the field.
          */
         "amountLabel": string;
+        /**
+          * Is this busy
+         */
         "busy": boolean;
         /**
           * Currency code for the donation.
          */
         "currencyCode": string;
         /**
-          * Order line items.
+          * Order line item.
          */
         "lineItem": LineItem;
         /**
           * Is this loading
          */
         "loading": boolean;
+        /**
+          * The label for the non recurring choice field.
+         */
         "nonRecurringChoiceLabel": string;
         /**
           * The price id for the fields.
@@ -2901,11 +2910,17 @@ export namespace Components {
           * The product id for the fields.
          */
         "productId": string;
+        /**
+          * The label for the recurring choice field.
+         */
         "recurringChoiceLabel": string;
         /**
-          * The label for the field.
+          * The label for the recurring fields.
          */
         "recurringLabel": string;
+        /**
+          * The selected product.
+         */
         "selectedProduct": Product;
     }
     interface ScProductItem {
@@ -6529,6 +6544,9 @@ declare namespace LocalJSX {
           * Order line items.
          */
         "lineItem"?: LineItem;
+        /**
+          * Custom Amount value of the donation.
+         */
         "value"?: string;
     }
     interface ScCustomOrderPriceInput {
@@ -8785,26 +8803,32 @@ declare namespace LocalJSX {
     }
     interface ScProductDonationChoices {
         /**
-          * The label for the field.
+          * Number of columns for amounts.
          */
         "amountColumns"?: string;
         /**
           * The label for the field.
          */
         "amountLabel"?: string;
+        /**
+          * Is this busy
+         */
         "busy"?: boolean;
         /**
           * Currency code for the donation.
          */
         "currencyCode"?: string;
         /**
-          * Order line items.
+          * Order line item.
          */
         "lineItem"?: LineItem;
         /**
           * Is this loading
          */
         "loading"?: boolean;
+        /**
+          * The label for the non recurring choice field.
+         */
         "nonRecurringChoiceLabel"?: string;
         /**
           * Toggle line item event
@@ -8818,11 +8842,17 @@ declare namespace LocalJSX {
           * The product id for the fields.
          */
         "productId"?: string;
+        /**
+          * The label for the recurring choice field.
+         */
         "recurringChoiceLabel"?: string;
         /**
-          * The label for the field.
+          * The label for the recurring fields.
          */
         "recurringLabel"?: string;
+        /**
+          * The selected product.
+         */
         "selectedProduct"?: Product;
     }
     interface ScProductItem {
