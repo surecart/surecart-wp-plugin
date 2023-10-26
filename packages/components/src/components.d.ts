@@ -835,11 +835,7 @@ export namespace Components {
          */
         "currencyCode": string;
         /**
-          * Order line items.
-         */
-        "lineItem": LineItem;
-        /**
-          * Custom Amount value of the donation.
+          * Custom Amount of the donation.
          */
         "value": string;
     }
@@ -6541,11 +6537,7 @@ declare namespace LocalJSX {
          */
         "currencyCode"?: string;
         /**
-          * Order line items.
-         */
-        "lineItem"?: LineItem;
-        /**
-          * Custom Amount value of the donation.
+          * Custom Amount of the donation.
          */
         "value"?: string;
     }

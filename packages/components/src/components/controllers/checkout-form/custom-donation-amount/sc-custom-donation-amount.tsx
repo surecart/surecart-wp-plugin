@@ -1,5 +1,5 @@
 import { Component, h, Prop, Element, Host } from '@stencil/core';
-import { state as checkoutState, onChange } from '@store/checkout';
+import { state as checkoutState } from '@store/checkout';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, LineItem, LineItemData } from '../../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
@@ -17,24 +17,16 @@ export class ScCustomDonationAmount {
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
 
-  /** Custom Amount value of the donation. */
+  /** Custom Amount of the donation. */
   @Prop() value: string;
-
-  /** Order line items. */
-  @Prop() lineItem: LineItem;
-
-  componentWillLoad() {
-    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
-    this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
-  }
 
   /** Remove listener. */
   disconnectedCallback() {
     this.removeCheckoutListener();
   }
 
-  handleSessionChange() {
-    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
+  lineItem() {
+    return checkoutState?.checkout?.line_items?.data?.[0] as LineItem;
   }
 
   async addOrUpdateLineItem(data: any = {}) {
@@ -57,10 +49,10 @@ export class ScCustomDonationAmount {
               };
             }),
             // add a line item if one does not exist.
-            ...(!this.lineItem
+            ...(!this.lineItem()
               ? [
                   {
-                    price_id: this.lineItem?.price?.id,
+                    price_id: this.lineItem()?.price?.id,
                     ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
                     quantity: 1,
                   },
@@ -80,10 +72,10 @@ export class ScCustomDonationAmount {
 
   async handleButtonClick(e) {
     e.stopImmediatePropagation();
-    if (!this.lineItem?.price?.id || !this.value) return;
+    if (!this.lineItem()?.price?.id || !this.value) return;
     this.addOrUpdateLineItem({
       ad_hoc_amount: parseInt(this.value),
-      price_id: this.lineItem?.price?.id,
+      price_id: this.lineItem()?.price?.id,
       quantity: 1,
     });
   }
@@ -102,8 +94,8 @@ export class ScCustomDonationAmount {
               showCode={false}
               showLabel={false}
               onScInput={e => this.handlePriceChange(e)}
-              min={this.lineItem?.price?.ad_hoc_min_amount}
-              max={this.lineItem?.price?.ad_hoc_max_amount}
+              min={this.lineItem()?.price?.ad_hoc_min_amount}
+              max={this.lineItem()?.price?.ad_hoc_max_amount}
               style={{ '--sc-input-border-color-focus': 'var(--sc-input-border-color-hover)', '--sc-focus-ring-color-primary': 'transparent' }}
             >
               <sc-button circle submit slot="suffix" size="small" type="primary">

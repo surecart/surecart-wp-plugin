@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                     | Type       | Default     |
-| -------------- | --------------- | ------------------------------- | ---------- | ----------- |
-| `currencyCode` | `currency-code` | Currency code for the donation. | `string`   | `'usd'`     |
-| `lineItem`     | --              | Order line items.               | `LineItem` | `undefined` |
-| `value`        | `value`         |                                 | `string`   | `undefined` |
+| Property       | Attribute       | Description                     | Type     | Default     |
+| -------------- | --------------- | ------------------------------- | -------- | ----------- |
+| `currencyCode` | `currency-code` | Currency code for the donation. | `string` | `'usd'`     |
+| `value`        | `value`         | Custom Amount of the donation.  | `string` | `undefined` |
 
 
 ## Dependencies

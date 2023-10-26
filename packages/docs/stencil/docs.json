@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-10-26T07:06:56",
+  "timestamp": "2023-10-26T11:52:27",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -6936,27 +6936,12 @@
           "required": false
         },
         {
-          "name": "lineItem",
-          "type": "LineItem",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Order line items.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "LineItem"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "value",
           "type": "string",
           "mutable": false,
           "attr": "value",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Custom Amount of the donation.",
           "docsTags": [],
           "values": [
             {
@@ -24048,7 +24033,7 @@
           "mutable": false,
           "attr": "amount-columns",
           "reflectToAttr": false,
-          "docs": "The label for the field.",
+          "docs": "Number of columns for amounts.",
           "docsTags": [],
           "values": [
             {
@@ -24080,7 +24065,7 @@
           "mutable": false,
           "attr": "busy",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is this busy",
           "docsTags": [],
           "values": [
             {
@@ -24112,7 +24097,7 @@
           "type": "LineItem",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "Order line items.",
+          "docs": "Order line item.",
           "docsTags": [],
           "values": [
             {
@@ -24144,7 +24129,7 @@
           "mutable": false,
           "attr": "non-recurring-choice-label",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The label for the non recurring choice field.",
           "docsTags": [],
           "values": [
             {
@@ -24192,7 +24177,7 @@
           "mutable": false,
           "attr": "recurring-choice-label",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The label for the recurring choice field.",
           "docsTags": [],
           "values": [
             {
@@ -24208,7 +24193,7 @@
           "mutable": false,
           "attr": "recurring-label",
           "reflectToAttr": false,
-          "docs": "The label for the field.",
+          "docs": "The label for the recurring fields.",
           "docsTags": [],
           "values": [
             {
@@ -24223,7 +24208,7 @@
           "type": "Product",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The selected product.",
           "docsTags": [],
           "values": [
             {
