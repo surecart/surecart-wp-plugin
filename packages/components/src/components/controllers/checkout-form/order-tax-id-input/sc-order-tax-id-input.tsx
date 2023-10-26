@@ -1,4 +1,4 @@
-import { Component,  h, Prop, Watch } from '@stencil/core';
+import { Component, h, Method, Prop, Watch } from '@stencil/core';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
@@ -14,6 +14,9 @@ import { createErrorNotice } from '@store/notices/mutations';
   shadow: true,
 })
 export class ScOrderTaxIdInput {
+  /** The tax id input */
+  private input: HTMLScTaxIdInputElement;
+
   private removeCheckoutListener: () => void;
 
   /** Force show the field. */
@@ -38,6 +41,11 @@ export class ScOrderTaxIdInput {
     number: string;
     number_type: string;
   };
+
+  @Method()
+  async reportValidity() {
+   return this.input.reportValidity();
+  }
 
   getStatus() {
     if (checkoutState.checkout?.tax_identifier?.number_type !== 'eu_vat') {
@@ -86,6 +94,7 @@ export class ScOrderTaxIdInput {
   render() {
     return (
       <sc-tax-id-input
+        ref={el => (this.input = el as HTMLScTaxIdInputElement)}
         show={this.show}
         number={checkoutState.checkout?.tax_identifier?.number}
         type={checkoutState.checkout?.tax_identifier?.number_type}

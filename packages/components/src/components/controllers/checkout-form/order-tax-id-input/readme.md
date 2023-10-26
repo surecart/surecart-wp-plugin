@@ -18,6 +18,19 @@
 | `taxIdentifier` | --             |                       | `{ number: string; number_type: string; }` | `undefined` |
 
 
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Dependencies
 
 ### Used by

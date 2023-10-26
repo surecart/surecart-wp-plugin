@@ -2261,6 +2261,7 @@ export namespace Components {
           * Other zones label
          */
         "otherLabel": string;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Force show the field.
          */
@@ -3635,6 +3636,7 @@ export namespace Components {
           * Other zones label
          */
         "otherLabel": string;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Whether tax input is required
          */

@@ -1270,6 +1270,7 @@
     "gb-vat-label": true,
     "other-label": true,
     "show": true,
+    "tax-identifier": true,
     "style": true,
     "id": true,
     "class": true,

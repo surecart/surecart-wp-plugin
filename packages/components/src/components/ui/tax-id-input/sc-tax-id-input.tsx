@@ -1,4 +1,4 @@
-import { Component, h, Prop, Fragment, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Fragment, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { zones, getType } from '../../../functions/tax';
 
@@ -61,6 +61,12 @@ export class ScTaxIdInput {
 
   /** Set the checkout state. */
   @Event() scSetState: EventEmitter<string>;
+
+  @Method()
+  async reportValidity() {
+    const input = this.input.shadowRoot.querySelector('input');
+    return input.reportValidity();
+  }
 
   @Watch('country')
   handleCountryChange() {

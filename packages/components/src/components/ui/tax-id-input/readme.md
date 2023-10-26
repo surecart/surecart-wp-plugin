@@ -34,6 +34,19 @@
 | `scSetState`  | Set the checkout state.             | `CustomEvent<string>`                                     |
 
 
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
+
+
 ## Dependencies
 
 ### Used by
