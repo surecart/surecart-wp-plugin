@@ -141,10 +141,13 @@ class Block extends BaseBlock {
 		return array_values(
 			array_map(
 				function( $price ) {
-					return [
-						'price'    => $price['id'],
-						'quantity' => $price['quantity'] ?? 1,
-					];
+					return array_filter(
+						[
+							'price'    => $price['id'],
+							'variant'  => $price['variant_id'] ?? null,
+							'quantity' => $price['quantity'] ?? 1,
+						]
+					);
 				},
 				$prices
 			)
