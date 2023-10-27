@@ -189,7 +189,6 @@
     "slot": true
   },
   "sc-cart-header": {
-    "line-items": true,
     "style": true,
     "id": true,
     "class": true,
@@ -215,7 +214,6 @@
     "slot": true
   },
   "sc-cart-session-provider": {
-    "order": true,
     "style": true,
     "id": true,
     "class": true,
@@ -223,11 +221,6 @@
   },
   "sc-cart-submit": {
     "busy": true,
-    "checkout-link": true,
-    "full": true,
-    "icon": true,
-    "size": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,
@@ -966,14 +959,8 @@
     "slot": true
   },
   "sc-line-items": {
-    "busy": true,
-    "edit-line-items": true,
     "editable": true,
-    "locked-choices": true,
-    "order": true,
-    "prices": true,
     "removable": true,
-    "remove-line-items": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1124,13 +1111,10 @@
     "slot": true
   },
   "sc-order-coupon-form": {
-    "busy": true,
     "button-text": true,
     "collapsed": true,
-    "error": true,
     "label": true,
     "loading": true,
-    "order": true,
     "placeholder": true,
     "style": true,
     "id": true,

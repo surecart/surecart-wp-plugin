@@ -20,25 +20,6 @@ test.describe('Product Admin Page', () => {
 		});
 	});
 
-	test.beforeEach(async ({ requestUtils }) => {
-		const products = await requestUtils.rest({
-			path: API_BASE_PATH,
-			params: {
-				per_page: 100,
-			},
-		});
-
-		// Delete all one by one.
-		await Promise.all(
-			products.map((post) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `${API_BASE_PATH}/${post.id}`,
-				})
-			)
-		);
-	});
-
 	test.afterAll(async ({ requestUtils }) => {
 		// Delete the product collection created in beforeAll.
 		await requestUtils.rest({

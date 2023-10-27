@@ -3,19 +3,10 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-/**
- * Internal dependencies.
- */
-import { deleteAllProducts } from '../../tests/request-utils/products';
-
 const API_BASE_PATH = '/surecart/v1/products';
 const PRICE_API_PATH = '/surecart/v1/prices';
 
 test.describe('Product Admin Page With Variant', () => {
-	test.beforeEach(async ({ requestUtils }) => {
-		await deleteAllProducts(requestUtils);
-	});
-
 	test('Should create a variant product', async ({ page, requestUtils }) => {
 		// Create product with variant option and go to edit page.
 		const product = await createVariantProduct(requestUtils);

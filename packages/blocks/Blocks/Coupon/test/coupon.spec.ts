@@ -7,23 +7,6 @@ test.describe('Coupon', () => {
 	let product;
 
 	test.beforeEach(async ({ requestUtils }) => {
-		const products = await requestUtils.rest({
-			path: '/surecart/v1/products',
-			params: {
-				per_page: 100,
-			},
-		});
-		// Delete all one by one.
-		// "surecart/v1/products" not yet supports batch requests.
-		await Promise.all(
-			products.map((post) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `/surecart/v1/products/${post.id}`,
-				})
-			)
-		);
-
 		const coupons = await requestUtils.rest({
 			path: '/surecart/v1/coupons',
 			params: {

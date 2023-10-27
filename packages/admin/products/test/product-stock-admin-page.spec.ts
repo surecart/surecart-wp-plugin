@@ -6,16 +6,9 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 /**
  * Internal dependencies.
  */
-import {
-	createProduct,
-	deleteAllProducts,
-} from '../../tests/request-utils/products';
+import { createProduct } from '../../tests/request-utils/products';
 
 test.describe('Product Admin Page For Stock', () => {
-	test.beforeEach(async ({ requestUtils }) => {
-		deleteAllProducts(requestUtils);
-	});
-
 	test('Should create a product with/without stock', async ({
 		page,
 		requestUtils,
