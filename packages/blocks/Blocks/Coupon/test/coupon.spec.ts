@@ -6,26 +6,6 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 test.describe('Coupon', () => {
 	let product;
 
-	test.beforeEach(async ({ requestUtils }) => {
-		const coupons = await requestUtils.rest({
-			path: '/surecart/v1/coupons',
-			params: {
-				per_page: 100,
-			},
-		});
-
-		// Delete all one by one.
-		// "surecart/v1/coupons" not yet supports batch requests.
-		await Promise.all(
-			coupons.map((post) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `/surecart/v1/coupons/${post.id}`,
-				})
-			)
-		);
-	});
-
 	test('Can add a valid coupon', async ({ page, requestUtils }) => {
 		await requestUtils.rest({
 			method: 'POST',
@@ -65,7 +45,10 @@ test.describe('Coupon', () => {
 		await page.waitForLoadState('networkidle');
 
 		await page.getByText('Add Coupon Code').click();
-		await page.keyboard.type('Hello');
+		await page
+			.getByPlaceholder('Enter coupon code')
+			.locator('input')
+			.fill('Hello');
 
 		await page
 			.locator('sc-coupon-form sc-input')
@@ -92,6 +75,8 @@ test.describe('Coupon', () => {
 		await page.waitForResponse((resp) =>
 			resp.url().includes('surecart/v1/checkout')
 		);
+
+		await page.waitForLoadState('networkidle');
 
 		const coupon = await page.locator('sc-coupon-form');
 		expect(coupon).toContainText('VALID');

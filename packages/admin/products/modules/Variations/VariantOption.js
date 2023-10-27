@@ -5,7 +5,7 @@
 import { css, jsx } from '@emotion/core';
 import { useEffect, useRef } from '@wordpress/element';
 import { SortableKnob } from 'react-easy-sort';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
@@ -115,6 +115,8 @@ export default ({
 								</SortableKnob>
 								<ScInput
 									type="text"
+									label={__('Option Name', 'surecart')}
+									showLabel={false}
 									placeholder={__('Option Name', 'surecart')}
 									required
 									value={option?.name}
@@ -145,7 +147,12 @@ export default ({
 								/>
 								<ScIcon
 									name="trash"
+									tabindex="0"
 									onClick={onDelete}
+									aria-label={sprintf(
+										__('Delete %s', 'surecart'),
+										option?.name
+									)}
 									css={css`
 										cursor: pointer;
 										transition: color
@@ -246,6 +253,10 @@ export default ({
 
 					<div>
 						<ScButton
+							aria-label={sprintf(
+								__('Edit %s', 'surecart'),
+								option?.name
+							)}
 							onClick={() =>
 								updateOption({
 									editing: true,

@@ -36,10 +36,10 @@ export default defineConfig({
 	forbidOnly: !!CI,
 
 	/* Retry only on CI */
-	retries: CI ? 4 : 0,
+	retries: 4,
 
 	/* Opt out of parallel tests on CI. */
-	workers: CI ? 1 : undefined,
+	// workers: CI ? 1 : undefined,
 
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
@@ -52,7 +52,7 @@ export default defineConfig({
 
 	/* Web-first assertions - separate timeout. See https://playwright.dev/docs/test-timeouts#expect-timeout */
 	expect: {
-		timeout: 30 * 1000, // 30 seconds
+		timeout: 10 * 1000, // 30 seconds
 	},
 
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
