@@ -425,6 +425,7 @@
   },
   "sc-custom-donation-amount": {
     "currency-code": true,
+    "product-id": true,
     "value": true,
     "style": true,
     "id": true,
@@ -1561,7 +1562,6 @@
     "amount-label": true,
     "busy": true,
     "currency-code": true,
-    "line-item": true,
     "loading": true,
     "non-recurring-choice-label": true,
     "price-id": true,

@@ -835,6 +835,10 @@ export namespace Components {
          */
         "currencyCode": string;
         /**
+          * Selected Product Id for the donation.
+         */
+        "productId": string;
+        /**
           * Custom Amount of the donation.
          */
         "value": string;
@@ -2886,10 +2890,6 @@ export namespace Components {
           * Currency code for the donation.
          */
         "currencyCode": string;
-        /**
-          * Order line item.
-         */
-        "lineItem": LineItem;
         /**
           * Is this loading
          */
@@ -6537,6 +6537,10 @@ declare namespace LocalJSX {
          */
         "currencyCode"?: string;
         /**
+          * Selected Product Id for the donation.
+         */
+        "productId"?: string;
+        /**
           * Custom Amount of the donation.
          */
         "value"?: string;
@@ -8810,10 +8814,6 @@ declare namespace LocalJSX {
           * Currency code for the donation.
          */
         "currencyCode"?: string;
-        /**
-          * Order line item.
-         */
-        "lineItem"?: LineItem;
         /**
           * Is this loading
          */

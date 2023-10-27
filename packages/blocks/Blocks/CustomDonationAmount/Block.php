@@ -20,6 +20,7 @@ class Block extends BaseBlock {
         ob_start(); ?>
             <sc-custom-donation-amount
             	currencyCode="<?php echo esc_attr( $attributes['currency'] ?? 'USD' ); ?>"
+				product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
             >
             </sc-custom-donation-amount>
         <?php

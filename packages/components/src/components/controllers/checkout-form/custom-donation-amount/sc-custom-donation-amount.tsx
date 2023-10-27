@@ -17,6 +17,9 @@ export class ScCustomDonationAmount {
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
 
+  /** Selected Product Id for the donation. */
+  @Prop() productId: string;
+
   /** Custom Amount of the donation. */
   @Prop() value: string;
 
@@ -26,7 +29,7 @@ export class ScCustomDonationAmount {
   }
 
   lineItem() {
-    return checkoutState?.checkout?.line_items?.data?.[0] as LineItem;
+    return checkoutState?.checkout?.line_items?.data?.find((item: any) => item?.price?.product?.id === this.productId && item?.price?.ad_hoc) as LineItem;
   }
 
   async addOrUpdateLineItem(data: any = {}) {

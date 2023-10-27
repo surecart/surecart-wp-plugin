@@ -11,6 +11,7 @@
 		"reusable": false,
 		"html": false
 	},
+	"usesContext": ["surecart/product-donation/product_id"],
 	"attributes": {
 		"amount": {
 			"type": "number"

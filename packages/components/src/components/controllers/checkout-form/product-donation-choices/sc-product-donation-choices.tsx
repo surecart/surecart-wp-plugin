@@ -35,9 +35,6 @@ export class ScProductDonationChoice {
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
 
-  /** Order line item. */
-  @Prop() lineItem: LineItem;
-
   /** Is this loading */
   @Prop() loading: boolean;
 
@@ -117,11 +114,10 @@ export class ScProductDonationChoice {
     this.selectDefaultChoice();
   }
 
-  @Watch('lineItem')
   lineItemChanged() {
-    this.priceId = this.lineItem?.price?.id;
+    this.priceId = this.lineItem()?.price?.id;
     this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
-    this.amount = this.lineItem?.ad_hoc_amount?.toString();
+    this.amount = this.lineItem()?.ad_hoc_amount?.toString();
     this.removeInvalidAmounts();
   }
 
@@ -145,7 +141,7 @@ export class ScProductDonationChoice {
               };
             }),
             // add a line item if one does not exist.
-            ...(!this.lineItem
+            ...(!this.lineItem()
               ? [
                   {
                     price_id: this.priceId,
@@ -179,8 +175,12 @@ export class ScProductDonationChoice {
     this.loading = false;
   }
 
+  lineItem() {
+    return checkoutState?.checkout?.line_items?.data?.find((item: any) => item?.price?.product?.id === this.productId && item?.price?.ad_hoc) as LineItem;
+  }
+
   handleCheckoutChange() {
-    this.lineItem = checkoutState.checkout?.line_items?.data?.[0];
+    this.lineItemChanged();
   }
 
   componentWillLoad() {
@@ -188,7 +188,6 @@ export class ScProductDonationChoice {
       this.loading = true;
       this.addOrUpdateProductPrices();
     }
-    this.lineItem = checkoutState?.checkout?.line_items?.data?.[0];
     this.removeCheckoutListener = onChange('checkout', () => this.handleCheckoutChange());
   }
 
@@ -200,7 +199,7 @@ export class ScProductDonationChoice {
   selectDefaultChoice() {
     // Set Price ID.
     if (!this.prices?.length) return;
-    let checkoutPriceID = this.lineItem?.price?.id;
+    let checkoutPriceID = this.lineItem()?.price?.id;
     this.selectedPrice = checkoutPriceID ? this.prices?.find(price => price.id === checkoutPriceID) : this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc)?.[0];
     this.priceId = this.selectedPrice?.id;
 
@@ -208,14 +207,14 @@ export class ScProductDonationChoice {
     //only need choices that has a value && is in range of selected price
     choices = choices.filter(choice => choice?.value && this.isInRange(choice?.value));
 
-    let checkoutAmount = this.lineItem?.ad_hoc_amount;
+    let checkoutAmount = this.lineItem()?.ad_hoc_amount;
     let selectedChoice = choices.find((choice: HTMLScChoiceElement) => choice?.value === checkoutAmount?.toString());
     selectedChoice = selectedChoice ? selectedChoice : choices[0];
     if (selectedChoice) {
       selectedChoice.checked = true;
     }
 
-    if (!this.lineItem) {
+    if (!this.lineItem()) {
       this.addOrUpdateLineItem({
         ...(!!this.priceId ? { price_id: this.priceId } : {}),
         ...(!!selectedChoice?.value ? { ad_hoc_amount: parseInt(selectedChoice?.value) } : {}),
@@ -263,6 +262,7 @@ export class ScProductDonationChoice {
 
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
+    console.log(this.lineItem());
 
     return (
       <div class="sc-product-donation-choices" style={{ '--columns': this.amountColumns }}>
