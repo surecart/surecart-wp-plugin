@@ -1,0 +1,21 @@
+sc-verification-code {
+  display: block;
+}
+
+.verification-code-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.code-input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0px 5px;
+  flex: 1;
+  max-width: 40px;
+  height: 40px;
+}

@@ -521,6 +521,7 @@
     "slot": true
   },
   "sc-customer-login": {
+    "code-error": true,
     "user": true,
     "style": true,
     "id": true,
@@ -2197,6 +2198,14 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-verification-code": {
+    "on-change": true,
+    "total": true,
     "style": true,
     "id": true,
     "class": true,
