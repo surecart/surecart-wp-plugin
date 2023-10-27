@@ -217,7 +217,21 @@ class CartService {
 			return;
 		}
 		$template = $this->cartTemplate();
+		$state    = \SureCart::state()->getData();
+
+		if ( empty( $state['checkout']['formId'] ) ) {
+			sc_initial_state(
+				array_filter(
+					[
+						'checkout' => [
+							'formId' => $form->ID,
+						],
+					]
+				)
+			);
+		}
 		?>
+
 		<sc-cart-loader
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
