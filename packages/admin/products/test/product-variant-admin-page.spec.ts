@@ -3,9 +3,6 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-const API_BASE_PATH = '/surecart/v1/products';
-const PRICE_API_PATH = '/surecart/v1/prices';
-
 test.describe('Product Admin Page With Variant', () => {
 	test.beforeEach(async ({ page }) => {
 		// make sure variants are in view.
@@ -197,7 +194,7 @@ test.describe('Product Admin Page With Variant', () => {
 export const createVariantProduct = (requestUtils) => {
 	return requestUtils.rest({
 		method: 'POST',
-		path: API_BASE_PATH,
+		path: '/surecart/v1/products',
 		data: {
 			name: 'Test Product',
 			variant_options: [
