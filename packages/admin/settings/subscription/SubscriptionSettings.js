@@ -156,13 +156,13 @@ export default () => {
 							});
 						}}
 					>
-						{__('Delay Cancellations', 'surecart')}
+						{__('Delay Showing Cancel Plan Button', 'surecart')}
 						{!scData?.entitlements?.subscription_cancel_window && (
 							<ScPremiumTag />
 						)}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'Whether to delay showing the cancel option for the customers.',
+								'When enabled, this feature prevents customers from cancelling their subscription until a set number of days before renewal.',
 								'surecart'
 							)}
 						</span>
@@ -178,7 +178,7 @@ export default () => {
 							editItem({ cancel_window_days: e.target.value })
 						}
 						help={__(
-							'The number of days prior to a subscription renewing that the cancel option will be visible to customers.',
+							'Choose how many days before the subscription renewal customers can access the "Cancel Plan" button. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week just before it renews, reducing early cancellations.',
 							'surecart'
 						)}
 						required
