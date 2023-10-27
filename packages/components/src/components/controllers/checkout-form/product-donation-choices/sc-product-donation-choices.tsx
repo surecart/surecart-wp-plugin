@@ -279,7 +279,11 @@ export class ScProductDonationChoice {
               showDetails={false}
               showAmount={false}
               onScChange={e => {
-                this.priceId = e.detail;
+                this.addOrUpdateLineItem({
+                  ...(!!this.lineItem() ? { ...this.lineItem() } : {}),
+                  ...(!!nonRecurringPrice?.id ? { price_id: e.detail } : {}),
+                  quantity: 1,
+                });
               }}
             />
             <sc-choice-container
@@ -288,7 +292,11 @@ export class ScProductDonationChoice {
               checked={this.priceId === nonRecurringPrice?.id}
               part="choice"
               onScChange={() => {
-                this.priceId = nonRecurringPrice?.id;
+                this.addOrUpdateLineItem({
+                  ...(!!this.lineItem() ? { ...this.lineItem() } : {}),
+                  ...(!!nonRecurringPrice?.id ? { price_id: nonRecurringPrice.id } : {}),
+                  quantity: 1,
+                });
               }}
             >
               <div class="price-choice__title">
