@@ -6,13 +6,17 @@ import {
 	ScButton,
 	ScFlex,
 	ScIcon,
+	ScSwitch,
+	ScBlockUi,
 } from '@surecart/components-react';
 import { store as dataStore } from '@surecart/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
-import { useEffect } from 'react';
+import { useEffect, useState } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 import Logo from '../templates/Logo';
 // template
@@ -25,9 +29,13 @@ import Customer from './modules/Customer';
 import Address from './modules/Address';
 import MetaData from './modules/MetaData';
 import Coupon from './modules/Coupon';
+import { createErrorString } from '../util';
 
 export default () => {
-	const { createErrorNotice } = useDispatch(noticesStore);
+	const { createErrorNotice, createSuccessNotice } =
+		useDispatch(noticesStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
+	const [busy, setBusy] = useState(false);
 	const id = useSelect((select) => select(dataStore).selectPageId());
 
 	const { abandoned, hasLoadedAbandoned, loadError } = useSelect(
@@ -88,6 +96,54 @@ export default () => {
 		}
 	}, [loadError]);
 
+	const toggleNotificationEnabled = async (e) => {
+		try {
+			const notificationsEnabled =
+				e?.target?.checked || !abandoned?.notifications_enabled;
+
+			setBusy(true);
+
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'abandoned_checkout'
+			);
+
+			const data = await apiFetch({
+				method: 'PATCH',
+				path: addQueryArgs(`${baseURL}/${id}`, {}),
+				data: {
+					notifications_enabled: notificationsEnabled,
+				},
+			});
+
+			receiveEntityRecords(
+				'surecart',
+				'abandoned_checkout',
+				{
+					...abandoned,
+					notifications_enabled: data?.notifications_enabled,
+				},
+				undefined,
+				false,
+				{
+					notifications_enabled: data?.notifications_enabled,
+				}
+			);
+
+			createSuccessNotice(
+				notificationsEnabled
+					? __('Notifications enabled.', 'surecart')
+					: __('Notifications disabled.', 'surecart'),
+				{ type: 'snackbar' }
+			);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(createErrorString(e), { type: 'snackbar' });
+		} finally {
+			setBusy(false);
+		}
+	};
+
 	return (
 		<UpdateModel
 			title={
@@ -120,6 +176,18 @@ export default () => {
 					</ScBreadcrumbs>
 				</div>
 			}
+			button={
+				abandoned?.recovery_status === 'abandoned' && (
+					<div>
+						<ScSwitch
+							checked={abandoned?.notifications_enabled}
+							onScChange={toggleNotificationEnabled}
+						>
+							{__('Enabled', 'surecart')}
+						</ScSwitch>
+					</div>
+				)
+			}
 			sidebar={
 				<>
 					<Customer
@@ -129,6 +197,7 @@ export default () => {
 					<Coupon
 						promotion={abandoned?.promotion}
 						coupon={abandoned?.promotion?.coupon}
+						loading={!hasLoadedAbandoned}
 					/>
 					<Schedule
 						abandoned={abandoned}
@@ -138,6 +207,7 @@ export default () => {
 						<Address
 							label={__('Shipping & Tax Address', 'surecart')}
 							address={abandoned?.checkout?.shipping_address}
+							loading={!hasLoadedAbandoned}
 						/>
 					)}
 					<MetaData
@@ -166,6 +236,12 @@ export default () => {
 					abandoned={abandoned}
 				/>
 			</>
+			{busy && (
+				<ScBlockUi
+					spinner
+					style={{ zIndex: 9989, '--sc-block-ui-opacity': '0.35' }}
+				/>
+			)}
 		</UpdateModel>
 	);
 };

@@ -21,8 +21,22 @@ class CompatibilityService {
 	public function bootstrap() {
 		// UAG fix.
 		add_action( 'render_block_data', [ $this, 'maybeEnqueueUAGBAssets' ] );
-
+		// SC Form Shortcode fix.
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
+		// rankmath fix.
+		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+	}
+
+	/**
+	 * Prevent rankmath from outputting og:tags on our custom pages.
+	 *
+	 * @return void
+	 */
+	public function rankMathFix() {
+		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) ) {
+			remove_all_actions( 'rank_math/opengraph/facebook' );
+			remove_all_actions( 'rank_math/opengraph/twitter' );
+		}
 	}
 
 	/**

@@ -49,6 +49,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-checkout-product-price-variant-selector](../../controllers/checkout-form/sc-checkout-product-price-variant-selector)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choices](../../controllers/checkout-form/price-choices)
  - [sc-product-donation-choices](../../controllers/checkout-form/product-donation-choices)
@@ -67,6 +68,7 @@ graph TD;
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-cancel-survey --> sc-choices
+  sc-checkout-product-price-variant-selector --> sc-choices
   sc-donation-choices --> sc-choices
   sc-price-choices --> sc-choices
   sc-product-donation-choices --> sc-choices

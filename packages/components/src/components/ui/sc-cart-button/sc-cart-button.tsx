@@ -1,6 +1,7 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
-import store, { getCheckout } from '@store/checkouts';
+import { onChange } from '@store/checkouts';
+import { getCheckout } from '@store/checkouts/mutations';
 
 /**
  * @part base - The elements base wrapper.
@@ -60,7 +61,7 @@ export class ScCartButton {
 
     // maybe hide the parent <a> if there are no items in the cart.
     this.handleParentLinkDisplay();
-    store.onChange(this.mode, () => this.handleParentLinkDisplay());
+    onChange(this.mode, () => this.handleParentLinkDisplay());
   }
 
   handleParentLinkDisplay() {

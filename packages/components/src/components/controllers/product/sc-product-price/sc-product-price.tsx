@@ -1,6 +1,6 @@
 import { Component, h, Prop, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Price } from '../../../../types';
+import { Price, Variant } from '../../../../types';
 import { state } from '@store/product';
 import { intervalString } from '../../../../functions/price';
 
@@ -10,7 +10,10 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
+  /** The prices list */
   @Prop() prices: Price[];
+
+  /** The sale text */
   @Prop() saleText: string;
 
   renderRange() {
@@ -20,24 +23,33 @@ export class ScProductPrice {
     return <sc-price-range prices={state.prices} />;
   }
 
-  renderPrice(price: Price) {
+  renderVariantPrice(selectedVariant: Variant) {
+    const variant = state?.variants?.find(variant => variant?.id === selectedVariant?.id);
+    return this.renderPrice(state.selectedPrice, variant?.amount);
+  }
+
+  renderPrice(price: Price, variantAmount?: number) {
+    const amount = variantAmount ?? price?.amount ?? 0;
+
     if (price?.ad_hoc) {
       return __('Custom Amount', 'surecart');
-    }
-
-    if (price?.amount === 0) {
-      return __('Free', 'surecart');
     }
 
     return (
       <Fragment>
         <div class="price">
           <div class="price__amounts">
-            {!!price?.scratch_amount && (
-              <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
+            {!!price?.scratch_amount && price?.scratch_amount !== amount && (
+              <Fragment>
+                {price?.scratch_amount === 0 ? (
+                  __('Free', 'surecart')
+                ) : (
+                  <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
+                )}
+              </Fragment>
             )}
 
-            <sc-format-number class="price__amount" type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
+            {amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>}
 
             <div class="price__interval">
               {intervalString(price, {
@@ -79,6 +91,10 @@ export class ScProductPrice {
   }
 
   render() {
+    if (state?.selectedVariant) {
+      return this.renderVariantPrice(state?.selectedVariant);
+    }
+
     if (state.selectedPrice) {
       return this.renderPrice(state.selectedPrice);
     }

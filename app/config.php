@@ -107,6 +107,9 @@ return [
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
+		\SureCart\Rest\VariantsRestServiceProvider::class,
+		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
+		\SureCart\Rest\VariantValuesRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -147,6 +150,8 @@ return [
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\ProductItemList\Block::class,
 		\SureCartBlocks\Blocks\ProductCollection\Block::class,
+		\SureCartBlocks\Blocks\PriceSelector\Block::class,
+		\SureCartBlocks\Blocks\PriceChoice\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
@@ -165,7 +170,7 @@ return [
 		\SureCartBlocks\Blocks\ProductDonation\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
 		\SureCartBlocks\Blocks\CustomDonationAmount\Block::class,
-		
+
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerCharges\Block::class,
@@ -174,6 +179,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
@@ -230,7 +236,8 @@ return [
 		'surecart/product-price'             => [ 'sc-product-price', 'sc-tag', 'sc-format-number' ],
 		'surecart/product-media'             => [],
 		'surecart/product-buy-buttons'       => [ 'sc-product-buy-button', 'sc-button' ],
-		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton', 'sc-recurring-price-choice-container' ],
+		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
+		'surecart/product-variant-choices'   => [ 'sc-product-variation-choices' ],
 		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
 		'surecart/product-collection-badges' => [],
 	],

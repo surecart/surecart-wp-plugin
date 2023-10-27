@@ -48,6 +48,7 @@ class Block extends BaseBlock {
 			function( $item ) {
 				return [
 					'price_id' => $item['id'] ?? null,
+					'variant_id' => $item['variant_id'] ?? null,
 					'quantity' => $item['quantity'] ?? 1,
 				];
 			},
