@@ -57,6 +57,7 @@
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -110,6 +111,7 @@ graph TD;
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button
   sc-customer-edit --> sc-button
+  sc-customer-login --> sc-button
   sc-dialog --> sc-button
   sc-donation-choices --> sc-button
   sc-downloads-list --> sc-button

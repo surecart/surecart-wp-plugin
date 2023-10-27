@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-10-24T11:36:21",
+  "timestamp": "2023-10-26T19:41:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1846,6 +1846,7 @@
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
+        "sc-customer-login",
         "sc-dialog",
         "sc-donation-choices",
         "sc-downloads-list",
@@ -1912,6 +1913,9 @@
           "sc-button"
         ],
         "sc-customer-edit": [
+          "sc-button"
+        ],
+        "sc-customer-login": [
           "sc-button"
         ],
         "sc-dialog": [
@@ -7561,22 +7565,6 @@
           "required": false
         },
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": true,
-          "attr": "busy",
-          "reflectToAttr": true,
-          "docs": "Is busy or not eg: email checking",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "disabled",
           "type": "boolean",
           "mutable": false,
@@ -7896,19 +7884,33 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
+        "sc-customer-login",
         "sc-input",
         "sc-spinner"
       ],
       "dependencyGraph": {
         "sc-customer-email": [
+          "sc-customer-login",
           "sc-input",
           "sc-spinner"
+        ],
+        "sc-customer-login": [
+          "sc-flex",
+          "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-verification-code",
+          "sc-spinner",
+          "sc-divider"
         ],
         "sc-input": [
           "sc-form-control"
         ],
         "sc-form-control": [
           "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
         ]
       }
     },
@@ -8578,21 +8580,72 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/customer-login/sc-customer-login.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-customer-login",
+      "readme": "# sc-customer-login\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "user",
+          "type": "any",
+          "mutable": false,
+          "attr": "user",
+          "reflectToAttr": false,
+          "docs": "The user object",
+          "docsTags": [],
+          "default": "null",
+          "values": [
+            {
+              "type": "any"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependents": [
+        "sc-customer-email"
+      ],
+      "dependencies": [
+        "sc-flex",
+        "sc-input",
+        "sc-button",
+        "sc-icon",
+        "sc-verification-code",
+        "sc-spinner",
+        "sc-divider"
+      ],
+      "dependencyGraph": {
+        "sc-customer-login": [
+          "sc-flex",
+          "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-verification-code",
+          "sc-spinner",
+          "sc-divider"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-tooltip"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-customer-email": [
+          "sc-customer-login"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/checkout-form/customer-name/sc-customer-name.tsx",
@@ -9975,6 +10028,7 @@
       ],
       "dependents": [
         "sc-customer-details",
+        "sc-customer-login",
         "sc-express-payment",
         "sc-invoices-list",
         "sc-login-form",
@@ -9993,6 +10047,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "sc-customer-details": [
+          "sc-divider"
+        ],
+        "sc-customer-login": [
           "sc-divider"
         ],
         "sc-express-payment": [
@@ -11445,6 +11502,7 @@
       "dependents": [
         "sc-cancel-discount",
         "sc-cancel-survey",
+        "sc-customer-login",
         "sc-downloads-list",
         "sc-fulfillments",
         "sc-login-form",
@@ -11466,6 +11524,9 @@
           "sc-flex"
         ],
         "sc-cancel-survey": [
+          "sc-flex"
+        ],
+        "sc-customer-login": [
           "sc-flex"
         ],
         "sc-downloads-list": [
@@ -13611,6 +13672,7 @@
         "sc-cc-logo",
         "sc-charges-list",
         "sc-customer-details",
+        "sc-customer-login",
         "sc-dialog",
         "sc-downloads-list",
         "sc-drawer",
@@ -13682,6 +13744,9 @@
           "sc-icon"
         ],
         "sc-customer-details": [
+          "sc-icon"
+        ],
+        "sc-customer-login": [
           "sc-icon"
         ],
         "sc-dialog": [
@@ -14713,6 +14778,7 @@
         "sc-customer-email",
         "sc-customer-firstname",
         "sc-customer-lastname",
+        "sc-customer-login",
         "sc-customer-name",
         "sc-licenses-list",
         "sc-login-form",
@@ -14753,6 +14819,9 @@
           "sc-input"
         ],
         "sc-customer-lastname": [
+          "sc-input"
+        ],
+        "sc-customer-login": [
           "sc-input"
         ],
         "sc-customer-name": [
@@ -27952,6 +28021,7 @@
         "sc-block-ui",
         "sc-button",
         "sc-customer-email",
+        "sc-customer-login",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -27964,6 +28034,9 @@
           "sc-spinner"
         ],
         "sc-customer-email": [
+          "sc-spinner"
+        ],
+        "sc-customer-login": [
           "sc-spinner"
         ],
         "sc-select": [
@@ -33300,6 +33373,70 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/verification-code/sc-verification-code.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-verification-code",
+      "readme": "# sc-verification-code\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "onChange",
+          "type": "(value: string) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "On change verification code",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(value: string) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "total",
+          "type": "number",
+          "mutable": false,
+          "attr": "total",
+          "reflectToAttr": false,
+          "docs": "Total number of inputs",
+          "docsTags": [],
+          "default": "6",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "keydown",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-customer-login"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-customer-login": [
+          "sc-verification-code"
         ]
       }
     },

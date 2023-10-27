@@ -44,6 +44,7 @@
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
+ - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-drawer](../sc-drawer)
@@ -96,6 +97,7 @@ graph TD;
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
   sc-customer-details --> sc-icon
+  sc-customer-login --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon
   sc-drawer --> sc-icon

@@ -1,5 +1,6 @@
-import { Component, Event, EventEmitter, Fragment, h, Host, Method, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Host, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
@@ -68,6 +69,9 @@ export class ScCustomerEmail {
   /** After email search if user is found */
   @State() user: any = null;
 
+  /** Error */
+  @State() error: string = '';
+
   /** Emitted when the control's value changes. */
   @Event({ composed: true }) scChange: EventEmitter<void>;
 
@@ -97,14 +101,34 @@ export class ScCustomerEmail {
     this.scChange.emit();
 
     try {
-      this.busy = true;
       checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: this.input.value } })) as Checkout;
-      this.user = {
-        email: this.input.value,
-      };
-      console.log('trying user information...');
     } catch (error) {
       console.log(error);
+    } finally {
+      this.busy = false;
+    }
+  }
+
+  @Watch('value')
+  async createLoginCode() {
+    if (!this?.input?.value) return;
+
+    // Check if a valid email using regex, if not return.
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.input.value)) {
+      return;
+    }
+
+    try {
+      this.busy = true;
+      this.user = await apiFetch({
+        method: 'POST',
+        path: 'surecart/v1/verification_codes',
+        data: {
+          login: this?.input?.value,
+        },
+      });
+    } catch (e) {
+      this.handleCodeSendError(e);
     } finally {
       this.busy = false;
     }
@@ -140,6 +164,18 @@ export class ScCustomerEmail {
   componentWillLoad() {
     this.handleSessionChange();
     this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+  }
+
+  handleCodeSendError(error: any) {
+    (error?.additional_errors || []).forEach((e: any) => {
+      if (e?.code === 'verification_code.email.blocked_duplicate') {
+        this.user = {
+          email: this.input?.value || '',
+        };
+      }
+
+      this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
+    });
   }
 
   /** Remove listener. */
@@ -178,7 +214,7 @@ export class ScCustomerEmail {
     return (
       <Host>
         {!!this.user ? (
-          <sc-customer-login user={this.user}></sc-customer-login>
+          <sc-customer-login user={this.user} codeError={this.error}></sc-customer-login>
         ) : (
           <Fragment>
             <sc-input
@@ -205,7 +241,7 @@ export class ScCustomerEmail {
 
             {this.busy && (
               <div class="account-loader">
-                <sc-spinner></sc-spinner>
+                <sc-spinner />
               </div>
             )}
 

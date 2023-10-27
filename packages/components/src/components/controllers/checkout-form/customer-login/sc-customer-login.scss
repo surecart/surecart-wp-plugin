@@ -11,7 +11,7 @@ a {
   border: 1px solid #ccc;
   margin: 10px 0px;
   border-radius: 10px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 
   // Open it with animation.
   animation: open 0.5s ease-in-out;
@@ -66,4 +66,20 @@ a {
   margin-top: 1rem;
   text-align: center;
   text-decoration: none;
+}
+
+.change-mode {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.change-mode a {
+  text-decoration: none;
+  color: var(--sc-color-gray-500);
+}
+
+.code-sent-error {
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
 }
