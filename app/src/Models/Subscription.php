@@ -439,15 +439,13 @@ class Subscription extends Model {
 		}
 
 		$cancel_window_days = $protocol->cancel_window_days;
-		$now                = new \DateTime();
+		$now                = (new \DateTime())->format('Y-m-d');
 		$end                = new \DateTime();
 		$end->setTimestamp( $this->attributes['current_period_end_at'] );
 		$end = $end->modify( "-{$cancel_window_days} days" );
+		$end = $end->format('Y-m-d');
 
-		$interval  = $now->diff( $end );
-		$diff_days = $interval->days * ( $interval->invert ? -1 : 1 );
-
-		return $diff_days > 0;
+		return $now < $end;
 	}
 
 	/**
