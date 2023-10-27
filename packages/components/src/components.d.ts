@@ -2873,6 +2873,32 @@ export namespace Components {
     interface ScProductBuyButton {
         "addToCart": boolean;
     }
+    interface ScProductDonationAmountChoice {
+        /**
+          * Is this busy
+         */
+        "busy": boolean;
+        /**
+          * Is the field checked.
+         */
+        "checked": boolean;
+        /**
+          * The currency code for the field.
+         */
+        "currencyCode": string;
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * The product id for the fields.
+         */
+        "productId": string;
+        /**
+          * The value of the field.
+         */
+        "value": number;
+    }
     interface ScProductDonationChoices {
         /**
           * Number of columns for amounts.
@@ -5076,6 +5102,12 @@ declare global {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
     };
+    interface HTMLScProductDonationAmountChoiceElement extends Components.ScProductDonationAmountChoice, HTMLStencilElement {
+    }
+    var HTMLScProductDonationAmountChoiceElement: {
+        prototype: HTMLScProductDonationAmountChoiceElement;
+        new (): HTMLScProductDonationAmountChoiceElement;
+    };
     interface HTMLScProductDonationChoicesElement extends Components.ScProductDonationChoices, HTMLStencilElement {
     }
     var HTMLScProductDonationChoicesElement: {
@@ -5608,6 +5640,7 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
+        "sc-product-donation-amount-choice": HTMLScProductDonationAmountChoiceElement;
         "sc-product-donation-choices": HTMLScProductDonationChoicesElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
@@ -8797,6 +8830,32 @@ declare namespace LocalJSX {
     interface ScProductBuyButton {
         "addToCart"?: boolean;
     }
+    interface ScProductDonationAmountChoice {
+        /**
+          * Is this busy
+         */
+        "busy"?: boolean;
+        /**
+          * Is the field checked.
+         */
+        "checked"?: boolean;
+        /**
+          * The currency code for the field.
+         */
+        "currencyCode"?: string;
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * The product id for the fields.
+         */
+        "productId"?: string;
+        /**
+          * The value of the field.
+         */
+        "value"?: number;
+    }
     interface ScProductDonationChoices {
         /**
           * Number of columns for amounts.
@@ -10143,6 +10202,7 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-buy-button": ScProductBuyButton;
+        "sc-product-donation-amount-choice": ScProductDonationAmountChoice;
         "sc-product-donation-choices": ScProductDonationChoices;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
@@ -10364,6 +10424,7 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
+            "sc-product-donation-amount-choice": LocalJSX.ScProductDonationAmountChoice & JSXBase.HTMLAttributes<HTMLScProductDonationAmountChoiceElement>;
             "sc-product-donation-choices": LocalJSX.ScProductDonationChoices & JSXBase.HTMLAttributes<HTMLScProductDonationChoicesElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;

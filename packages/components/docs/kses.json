@@ -1557,6 +1557,18 @@
     "class": true,
     "slot": true
   },
+  "sc-product-donation-amount-choice": {
+    "busy": true,
+    "checked": true,
+    "currency-code": true,
+    "label": true,
+    "product-id": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-donation-choices": {
     "amount-columns": true,
     "amount-label": true,

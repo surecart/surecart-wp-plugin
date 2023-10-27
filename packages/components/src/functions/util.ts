@@ -52,3 +52,11 @@ export const sortByArray = (item, key, orderArray) =>
     if (orderArray.indexOf(b?.[key]) === -1) return -1;
     return orderArray.indexOf(a?.[key]) - orderArray.indexOf(b?.[key]);
   });
+
+export const isInRange = (value, price) => {
+  const valueInt = parseInt(value);
+  if (!price) return true;
+  if (price?.ad_hoc_max_amount && valueInt > price?.ad_hoc_max_amount) return false;
+  if (price?.ad_hoc_min_amount && valueInt < price?.ad_hoc_min_amount) return false;
+  return true;
+};

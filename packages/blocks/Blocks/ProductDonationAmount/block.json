@@ -7,6 +7,7 @@
 	"ancestor": ["surecart/product-donation"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
+	"usesContext": ["surecart/product-donation/product_id"],
 	"supports": {
 		"reusable": false,
 		"html": false

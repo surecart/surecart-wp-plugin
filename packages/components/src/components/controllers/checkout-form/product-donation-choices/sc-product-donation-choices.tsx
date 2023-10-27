@@ -264,7 +264,6 @@ export class ScProductDonationChoice {
 
     const nonRecurringPrice = this.prices?.find(price => !price?.recurring_interval && price?.ad_hoc);
     const recurringPrices = this.prices?.filter(price => price?.recurring_interval && price?.ad_hoc);
-    console.log(this.lineItem());
 
     return (
       <div class="sc-product-donation-choices" style={{ '--columns': this.amountColumns }}>
