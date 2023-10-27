@@ -103,10 +103,14 @@ export class ScProductDonationChoice {
     }
   }
 
+  @Watch('selectedPrice')
+  priceChanged() {
+    this.removeInvalidAmounts();
+  }
+
   @Watch('priceId')
   priceIdChanged() {
     this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
-    this.removeInvalidAmounts();
   }
 
   @Watch('prices')
@@ -118,7 +122,6 @@ export class ScProductDonationChoice {
     this.priceId = this.lineItem()?.price?.id;
     this.selectedPrice = this.prices?.find(price => price.id === this.priceId);
     this.amount = this.lineItem()?.ad_hoc_amount?.toString();
-    this.removeInvalidAmounts();
   }
 
   async addOrUpdateLineItem(data: any = {}) {
@@ -171,7 +174,6 @@ export class ScProductDonationChoice {
     })) as Product;
     this.selectedProduct = product;
     this.prices = product?.prices?.data?.sort((a, b) => a?.position - b?.position);
-    this.removeInvalidAmounts();
     this.loading = false;
   }
 
