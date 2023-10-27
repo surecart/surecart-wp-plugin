@@ -41,6 +41,17 @@ test.describe('Product Page With Variant', () => {
 		await page.locator('button').getByText('Blue').click({ force: true });
 
 		expect(await page.getByText('Unavailable').first()).toBeVisible();
+
+		await page.locator('button').getByText('Small').click({ force: true });
+		await page.locator('button').getByText('Red').click({ force: true });
+
+		await page.getByText('Add To Cart').first().click({ force: true });
+
+		// expect the cart to have the product.
+		await expect(page.locator('#sc-cart')).toContainText('Test Product');
+		await expect(page.locator('#sc-cart')).toContainText('Small / Red');
+		await expect(page.locator('#sc-cart')).toContainText('One Time');
+		await expect(page.locator('#sc-cart')).toContainText('$20');
 	});
 });
 
