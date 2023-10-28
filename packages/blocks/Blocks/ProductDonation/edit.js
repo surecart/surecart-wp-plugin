@@ -42,8 +42,13 @@ const TEMPLATE = [
 	['surecart/custom-donation-amount', { currency: 'USD' }],
 ];
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, clientId }) => {
 	const [query, setQuery] = useState(null);
+
+	// there has not yet been an instance id.
+	if (!attributes?.id) {
+		setAttributes({ id: clientId });
+	}
 
 	const { products, loading } = useSelect(
 		(select) => {

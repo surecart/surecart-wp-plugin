@@ -1557,8 +1557,6 @@
     "slot": true
   },
   "sc-product-donation-amount-choice": {
-    "busy": true,
-    "checked": true,
     "currency-code": true,
     "label": true,
     "product-id": true,
@@ -1571,15 +1569,10 @@
   "sc-product-donation-choices": {
     "amount-columns": true,
     "amount-label": true,
-    "busy": true,
-    "currency-code": true,
-    "loading": true,
     "non-recurring-choice-label": true,
-    "price-id": true,
     "product-id": true,
     "recurring-choice-label": true,
     "recurring-label": true,
-    "selected-product": true,
     "style": true,
     "id": true,
     "class": true,

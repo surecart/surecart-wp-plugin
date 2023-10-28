@@ -17,15 +17,17 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-        ob_start(); ?>
-            <sc-product-donation-amount-choice 
-                value="<?php echo esc_attr( $attributes['amount'] ?? '' ); ?>"
-                product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
-                label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-                currency-code="<?php echo esc_attr( $attributes['currency'] ?? 'USD' ); ?>"
-            >
-            </sc-product-donation-amount-choice>
-        <?php
+
+		ob_start(); ?>
+			<sc-product-donation-amount-choice
+				product-donation-id="<?php echo esc_attr( $this->block->context['surecart/product_donation/instance_id'] ); ?>"
+				value="<?php echo esc_attr( $attributes['amount'] ?? '' ); ?>"
+				product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
+				label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
+				currency-code="<?php echo esc_attr( $attributes['currency'] ?? 'USD' ); ?>"
+			>
+			</sc-product-donation-amount-choice>
+		<?php
 		return ob_get_clean();
 	}
 }

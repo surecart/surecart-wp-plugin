@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+import { LineItemData, Price as Price1, Product as Product1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+export { LineItemData, Price as Price1, Product as Product1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -2835,14 +2835,6 @@ export namespace Components {
     }
     interface ScProductDonationAmountChoice {
         /**
-          * Is this busy
-         */
-        "busy": boolean;
-        /**
-          * Is the field checked.
-         */
-        "checked": boolean;
-        /**
           * The currency code for the field.
          */
         "currencyCode": string;
@@ -2869,25 +2861,9 @@ export namespace Components {
          */
         "amountLabel": string;
         /**
-          * Is this busy
-         */
-        "busy": boolean;
-        /**
-          * Currency code for the donation.
-         */
-        "currencyCode": string;
-        /**
-          * Is this loading
-         */
-        "loading": boolean;
-        /**
           * The label for the non recurring choice field.
          */
         "nonRecurringChoiceLabel": string;
-        /**
-          * The price id for the fields.
-         */
-        "priceId": string;
         /**
           * The product id for the fields.
          */
@@ -2900,10 +2876,6 @@ export namespace Components {
           * The label for the recurring fields.
          */
         "recurringLabel": string;
-        /**
-          * The selected product.
-         */
-        "selectedProduct": Product;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -8820,14 +8792,6 @@ declare namespace LocalJSX {
     }
     interface ScProductDonationAmountChoice {
         /**
-          * Is this busy
-         */
-        "busy"?: boolean;
-        /**
-          * Is the field checked.
-         */
-        "checked"?: boolean;
-        /**
           * The currency code for the field.
          */
         "currencyCode"?: string;
@@ -8854,29 +8818,9 @@ declare namespace LocalJSX {
          */
         "amountLabel"?: string;
         /**
-          * Is this busy
-         */
-        "busy"?: boolean;
-        /**
-          * Currency code for the donation.
-         */
-        "currencyCode"?: string;
-        /**
-          * Is this loading
-         */
-        "loading"?: boolean;
-        /**
           * The label for the non recurring choice field.
          */
         "nonRecurringChoiceLabel"?: string;
-        /**
-          * Toggle line item event
-         */
-        "onScToggleLineItem"?: (event: ScProductDonationChoicesCustomEvent<LineItemData>) => void;
-        /**
-          * The price id for the fields.
-         */
-        "priceId"?: string;
         /**
           * The product id for the fields.
          */
@@ -8889,10 +8833,6 @@ declare namespace LocalJSX {
           * The label for the recurring fields.
          */
         "recurringLabel"?: string;
-        /**
-          * The selected product.
-         */
-        "selectedProduct"?: Product;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;

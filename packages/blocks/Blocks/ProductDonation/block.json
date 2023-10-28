@@ -8,7 +8,8 @@
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
 	"providesContext": {
-		"surecart/product-donation/product_id": "product_id"
+		"surecart/product-donation/product_id": "product_id",
+		"surecart/product_donation/instance_id": "id"
 	},
 	"supports": {
 		"reusable": false,
@@ -50,6 +51,9 @@
 		}
 	},
 	"attributes": {
+		"id": {
+			"type": "string"
+		},
 		"amount_label": {
 			"type": "string",
 			"default": "Donation Amount"
