@@ -151,7 +151,7 @@ class BuyPageController extends BasePageController {
 	 * @return array
 	 */
 	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
+		$initial = sc_initial_state();
 		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
 	}
 

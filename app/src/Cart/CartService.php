@@ -217,7 +217,7 @@ class CartService {
 			return;
 		}
 		$template = $this->cartTemplate();
-		$state    = \SureCart::state()->getData();
+		$state    = sc_initial_state();
 
 		if ( empty( $state['checkout']['formId'] ) ) {
 			sc_initial_state(
