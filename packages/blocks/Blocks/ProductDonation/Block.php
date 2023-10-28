@@ -11,12 +11,6 @@ use SureCartBlocks\Util\BlockStyleAttributes;
  */
 class Block extends BaseBlock {
 	/**
-	 * Instance.
-	 *
-	 * @var integer
-	 */
-	public static $instance = 0;
-	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -58,18 +52,17 @@ class Block extends BaseBlock {
 			]
 		);
 
-			[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
+		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
 
-			ob_start(); ?>
+		ob_start(); ?>
 
 		<sc-product-donation-choices
-			product-id="<?php echo esc_attr( $attributes['product_id'] ?? '' ); ?>"
+			product-id="<?php echo esc_attr( $attributes['product_id'] ); ?>"
 			amount-label="<?php echo esc_attr( $attributes['amount_label'] ?? '' ); ?>"
 			recurring-label="<?php echo esc_attr( $attributes['recurring_label'] ?? '' ); ?>"
 			recurring-choice-label="<?php echo esc_attr( $attributes['recurring_choice_label'] ?? '' ); ?>"
 			non-recurring-choice-label="<?php echo esc_attr( $attributes['non_recurring_choice_label'] ); ?>"
 			amount-columns="<?php echo esc_attr( $attributes['amount_columns'] ); ?>"
-			product-id="<?php echo esc_attr( $attributes['product_id'] ); ?>"
 			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> border: none; <?php echo esc_attr( $styles ); ?>"
 		>
 			<?php echo filter_block_content( $content ); ?>
