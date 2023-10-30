@@ -10,9 +10,11 @@ import {
 	ScIcon,
 	ScDialog,
 	ScForm,
-	ScDivider,
 	ScSkeleton,
 	ScFlex,
+	ScPillOption,
+	ScFormControl,
+	ScAlert,
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 
@@ -21,18 +23,54 @@ import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
 import CopyInput from './CopyInput';
 import { getFormattedPrice } from '../../../../util';
+import { useEffect } from '@wordpress/element';
+
+export const getVariantFromValues = ({ variants, values }) => {
+	const variantValueKeys = Object.keys(values || {});
+
+	for (const variant of variants) {
+		const variantValues = ['option_1', 'option_2', 'option_3']
+			.map((option) => variant[option])
+			.filter((value) => value !== null && value !== undefined);
+
+		if (
+			variantValues?.length === variantValueKeys?.length &&
+			variantValueKeys.every((key) => variantValues.includes(values[key]))
+		) {
+			return variant;
+		}
+	}
+	return null;
+};
 
 export default ({
 	isOpen,
 	setIsOpen,
 	className,
 	price,
+	variants,
+	variantOptions,
 	onArchive,
 	collapsible,
 	onDelete,
 	loading,
 }) => {
 	const [copyDialog, setCopyDialog] = useState(false);
+	const [selectedVariant, setSelectedVariant] = useState();
+	const [variantValues, setVariantValues] = useState({
+		...(variants[0]?.option_1 ? { option_1: variants[0]?.option_1 } : {}),
+		...(variants[0]?.option_2 ? { option_2: variants[0]?.option_2 } : {}),
+		...(variants[0]?.option_3 ? { option_3: variants[0]?.option_3 } : {}),
+	});
+
+	useEffect(() => {
+		setSelectedVariant(
+			getVariantFromValues({ variants, values: variantValues })
+		);
+	}, [variantValues]);
+
+	const canCopy = !variants?.length || selectedVariant?.status === 'active';
+
 	const trial = () => {
 		return (
 			<>
@@ -172,6 +210,8 @@ export default ({
 		);
 	};
 
+	console.log({ selectedVariant });
+
 	const renderDropdown = () => {
 		if (!onArchive && !onDelete) {
 			return null;
@@ -267,30 +307,70 @@ export default ({
 				{headerName()}
 			</ToggleHeader>
 			<ScDialog
-				label={__('Links and Shortcodes', 'surecart')}
+				label={__('Price Details', 'surecart')}
 				open={copyDialog}
 				onScRequestClose={() => setCopyDialog(false)}
 			>
 				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
-					<CopyInput
-						label={__('Buy Link', 'surecart')}
-						text={addQueryArgs(scData?.checkout_page_url, {
-							line_items: [{ price_id: price?.id, quantity: 1 }],
-						})}
-					/>
-
-					<ScDivider>{__('Shortcodes', 'surecart')}</ScDivider>
-
-					<CopyInput
-						label={__('Add To Cart Button Shortcode', 'surecart')}
-						text={`[sc_add_to_cart_button price_id=${price?.id}]Add To Cart[/sc_add_to_cart_button]`}
-					/>
-					<CopyInput
-						label={__('Buy Button Shortcode', 'surecart')}
-						text={`[sc_buy_button]Buy Now [sc_line_item price_id=${price?.id} quantity=1][/sc_buy_button]`}
-					/>
-
-					<ScDivider>{__('Miscellaneous', 'surecart')}</ScDivider>
+					{(variantOptions || [])?.map((option, index) => {
+						const optionNumber = index + 1;
+						return (
+							<div>
+								<ScFormControl label={option?.name}>
+									<div
+										style={{
+											display: 'flex',
+											flexWrap: 'wrap',
+											gap: 'var(--sc-spacing-x-small)',
+										}}
+									>
+										{(option?.values || []).map((value) => {
+											return (
+												<ScPillOption
+													isSelected={
+														variantValues[
+															`option_${optionNumber}`
+														] === value
+													}
+													onClick={() =>
+														setVariantValues({
+															...variantValues,
+															[`option_${optionNumber}`]:
+																value,
+														})
+													}
+												>
+													{value}
+												</ScPillOption>
+											);
+										})}
+									</div>
+								</ScFormControl>
+							</div>
+						);
+					})}
+					{canCopy ? (
+						<CopyInput
+							label={__('Buy Link', 'surecart')}
+							text={addQueryArgs(scData?.checkout_page_url, {
+								line_items: [
+									{
+										price_id: price?.id,
+										quantity: 1,
+										variant_id: selectedVariant?.id,
+										no_cart: true,
+									},
+								],
+							})}
+						/>
+					) : (
+						<ScAlert type="warning" open>
+							{__(
+								'Please select an available option.',
+								'surecart'
+							)}
+						</ScAlert>
+					)}
 
 					<CopyInput
 						label={__('Price ID', 'surecart')}

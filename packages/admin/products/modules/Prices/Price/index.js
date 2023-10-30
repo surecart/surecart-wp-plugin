@@ -131,6 +131,8 @@ export default ({ price, product }) => {
 				setIsOpen={setIsOpen}
 				price={price}
 				onArchive={toggleArchive}
+				variantOptions={product?.variant_options}
+				variants={product?.variants}
 				onDelete={onDelete}
 				css={css`
 					padding: var(--sc-spacing-large);
