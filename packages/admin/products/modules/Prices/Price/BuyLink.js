@@ -120,11 +120,7 @@ export default ({ open, price, variants, variantOptions, onRequestClose }) => {
 					/>
 				</ScForm>
 
-				<ScButton
-					onClick={() => setCopyDialog(false)}
-					type="primary"
-					slot="footer"
-				>
+				<ScButton onClick={onRequestClose} type="primary" slot="footer">
 					{__('Done', 'surecart')}
 				</ScButton>
 			</ScDialog>
