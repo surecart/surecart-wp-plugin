@@ -64,8 +64,7 @@ export class ScTaxIdInput {
 
   @Method()
   async reportValidity() {
-    const input = this.input.shadowRoot.querySelector('input');
-    return input.reportValidity();
+    return this.input.reportValidity();
   }
 
   @Watch('country')
