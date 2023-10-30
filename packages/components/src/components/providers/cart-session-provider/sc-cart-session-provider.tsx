@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 
 import { updateCheckout } from '../../../services/session';
 import { Checkout, LineItemData } from '../../../types';
+import { createErrorNotice, removeNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-cart-session-provider',
@@ -17,9 +18,6 @@ export class ScCartSessionProvider {
 
   /** Update line items event */
   @Event() scUpdateOrderState: EventEmitter<Checkout>;
-
-  /** Error event */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /** Set the state */
   @Event() scSetState: EventEmitter<'loading' | 'busy' | 'navigating' | 'idle'>;
@@ -47,7 +45,7 @@ export class ScCartSessionProvider {
   @Listen('scApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
-    this.scError.emit({});
+    removeNotice();
     this.loadUpdate({
       discount: {
         ...(promotion_code ? { promotion_code } : {}),
@@ -69,12 +67,12 @@ export class ScCartSessionProvider {
 
     // something went wrong
     if (e?.message) {
-      this.scError.emit(e);
+      createErrorNotice(e);
     }
 
     // handle curl timeout errors.
     if (e?.code === 'http_request_failed') {
-      this.scError.emit({ message: 'Something went wrong. Please reload the page and try again.' });
+      createErrorNotice(__('Something went wrong. Please reload the page and try again.', 'surecart'));
     }
 
     this.scSetState.emit('idle');

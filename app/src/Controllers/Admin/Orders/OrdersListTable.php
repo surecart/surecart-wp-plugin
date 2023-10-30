@@ -94,19 +94,19 @@ class OrdersListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
 
 		$columns = [
 			// 'cb'          => '<input type="checkbox" />',
 			'order'              => __( 'Order', 'surecart' ),
+			'status'             => __( 'Status', 'surecart' ),
 			'fulfillment_status' => __( 'Fulfillment', 'surecart' ),
 			'shipment_status'    => __( 'Shipping', 'surecart' ),
 			'method'             => __( 'Method', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'total'              => __( 'Total', 'surecart' ),
-			'status'             => __( 'Payment', 'surecart' ),
 			'type'               => __( 'Type', 'surecart' ),
 			'created'            => __( 'Date', 'surecart' ),
 			'mode'               => '',

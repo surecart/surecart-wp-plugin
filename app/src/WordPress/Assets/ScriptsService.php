@@ -100,21 +100,13 @@ class ScriptsService {
 			);
 		}
 
-		// wp_register_script(
-		// 'surecart-components',
-		// 'https://unpkg.com/@surecart/components@1.0.1-beta.1/dist/surecart/surecart.esm.js',
-		// [ 'wp-i18n' ],
-		// null,
-		// false
-		// );
-
 		wp_set_script_translations( 'surecart-components', 'surecart' );
 
 		wp_localize_script(
 			'surecart-components',
 			'scData',
 			apply_filters(
-				'surecart-components/scData',
+				'surecart-components/scData',  // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
 					'cdn_root'             => SURECART_CDN_IMAGE_BASE,
 					'root_url'             => esc_url_raw( get_rest_url() ),
@@ -221,6 +213,15 @@ class ScriptsService {
 			$asset_file['version'],
 			true
 		);
+
+		// admin notices.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/styles/webhook-notice.asset.php';
+		wp_register_style(
+			'surecart-webhook-admin-notices',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.css',
+			$asset_file['dependencies'],
+			$asset_file['version']
+		);
 	}
 
 	/**
@@ -257,6 +258,7 @@ class ScriptsService {
 		$this->enqueuePageTemplateEditor();
 		$this->enqueueCartBlocks();
 		$this->enqueueProductBlocks();
+		$this->enqueueProductCollectionBlocks();
 	}
 
 	/**
@@ -280,6 +282,20 @@ class ScriptsService {
 		}
 
 		wp_enqueue_script( 'surecart-product-blocks' );
+	}
+
+	/**
+	 * We only want these available in FSE.
+	 *
+	 * @return void
+	 */
+	public function enqueueProductCollectionBlocks() {
+		global $pagenow;
+		if ( 'site-editor.php' !== $pagenow ) {
+			return;
+		}
+
+		wp_enqueue_script( 'surecart-product-collection-blocks' );
 	}
 
 	/**
@@ -322,7 +338,7 @@ class ScriptsService {
 			true
 		);
 
-		// only register
+		// only register.
 		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product.asset.php';
 		$deps       = $asset_file['dependencies'] ?? [];
 		// fix bug in deps array.
@@ -335,12 +351,24 @@ class ScriptsService {
 			true
 		);
 
+		// Register product collection blocks.
+		$asset_file = include trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/blocks/product_collection.asset.php';
+		$deps       = $asset_file['dependencies'] ?? [];
+		$deps[ array_search( 'wp-blockEditor', $deps ) ] = 'wp-block-editor';
+		wp_register_script(
+			'surecart-product-collection-blocks',
+			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/blocks/product_collection.js',
+			$deps,
+			$asset_file['version'],
+			true
+		);
+
 		// localize.
 		wp_localize_script(
 			'surecart-blocks',
 			'scData',
 			apply_filters(
-				'surecart-components/scData',
+				'surecart-components/scData', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
 					'root_url'             => esc_url_raw( get_rest_url() ),
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),

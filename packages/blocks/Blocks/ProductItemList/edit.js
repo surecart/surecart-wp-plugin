@@ -55,6 +55,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		type,
 		sort_enabled,
 		search_enabled,
+		collection_enabled,
 		pagination_enabled,
 		ajax_pagination,
 		pagination_auto_scroll,
@@ -324,6 +325,16 @@ export default ({ attributes, setAttributes, clientId }) => {
 							}
 						/>
 					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={__('Collection', 'surecart')}
+							help={__('Show collection filtering.', 'surecart')}
+							checked={collection_enabled}
+							onChange={(collection_enabled) =>
+								setAttributes({ collection_enabled })
+							}
+						/>
+					</PanelRow>
 				</PanelBody>
 				<PanelBody>
 					<PanelRow>
@@ -473,6 +484,11 @@ export default ({ attributes, setAttributes, clientId }) => {
 					`}
 				>
 					<EditLayoutConfig
+						label={__('All Products', 'surecart')}
+						description={__(
+							'Display all products from your store as a grid.',
+							'surecart'
+						)}
 						attributes={attributes}
 						onDone={togglePreview}
 					/>
@@ -487,7 +503,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 						{layoutConfig && (
 							<ScProductItemList
 								style={{
-									'border-style': 'none',
+									borderStyle: 'none',
 									'--sc-product-item-list-column': columns,
 									'--sc-pagination-font-size':
 										pagination_size,
@@ -519,6 +535,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 										? getDummyProducts(limit)
 										: []
 								}
+								collectionEnabled={collection_enabled}
 							/>
 						)}
 					</Disabled>

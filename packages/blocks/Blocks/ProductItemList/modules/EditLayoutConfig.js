@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { grid } from '@wordpress/icons';
 import { Button, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -8,27 +6,26 @@ import { InnerBlocks } from '@wordpress/block-editor';
 const PRODUCT_BLOCKS = [['surecart/product-item']];
 const ALLOWED_BLOCKS = ['surecart/product-item'];
 
-export default function EditLayoutConfig({ onDone }) {
+export default function EditLayoutConfig({ label, description, onDone }) {
 	return (
-		<Placeholder icon={grid} label={__('All Products', 'surecart')}>
+		<Placeholder icon={grid} label={label}>
 			<div
-				css={css`
-					display: flex;
-					flex-direction: column;
-					flex: 1 0 0px;
-				`}
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					flex: '1 0 0px',
+					gap: '1em',
+				}}
 			>
-				{__(
-					'Display all products from your store as a grid.',
-					'surecart'
-				)}
+				{description}
 				<div
-					css={css`
-						margin-top: 1.4rem;
-						padding: 1rem;
-						background-color: var(--sc-color-gray-200);
-						font-size: var(--wp--preset--font-size--medium);
-					`}
+					style={{
+						marginTop: '1.4rem',
+						padding: '1rem',
+						backgroundColor: 'var(--sc-color-gray-200)',
+						fontSize: 'var(--wp--preset--font-size--medium)',
+						borderRadisu: 'var(--sc-border-radius-medium)',
+					}}
 				>
 					<div
 						style={{
@@ -48,11 +45,10 @@ export default function EditLayoutConfig({ onDone }) {
 					</div>
 				</div>
 				<div
-					css={css`
-						display: flex;
-						justify-content: flex-end;
-						padding: 1rem 0 0;
-					`}
+					style={{
+						display: 'flex',
+						justifyContent: 'flex-end',
+					}}
 				>
 					<Button
 						variant="primary"

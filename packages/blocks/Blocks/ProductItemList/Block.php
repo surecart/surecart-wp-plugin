@@ -92,7 +92,8 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Style variables.
+	 * @param  array  $attr Style variables.
+	 * @param  string $prefix Prefix for the css variable.
 	 * @return string
 	 */
 	public function getVars( $attr, $prefix ) {
@@ -159,7 +160,8 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Product list & Product item attributes.
+	 * @param  array $attr Product List attributes.
+	 * @param  array $item_attributes Product item attributes.
 	 * @return string
 	 */
 	public function getStyle( $attr, $item_attributes ) {
@@ -268,6 +270,7 @@ class Block extends BaseBlock {
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
+				'collectionEnabled'    => ! ! $attributes['collection_enabled'],
 			]
 		);
 

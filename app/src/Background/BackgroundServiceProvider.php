@@ -19,8 +19,18 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 			return new SyncService();
 		};
 
+		$container['surecart.queue'] = function () use ( $container ) {
+			return new QueueService();
+		};
+
+		$container['surecart.async.webhooks'] = function() {
+			return new AsyncWebhookService();
+		};
+
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'sync', 'surecart.sync' );
+		$app->alias( 'queue', 'surecart.queue' );
+		$app->alias( 'async', 'surecart.async.webhooks' );
 	}
 
 	/**
@@ -31,5 +41,6 @@ class BackgroundServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['surecart.sync']->customers()->bootstrap();
+		$container['surecart.async.webhooks']->bootstrap();
 	}
 }

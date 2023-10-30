@@ -9,6 +9,7 @@ import { updateFormState } from '@store/form/mutations';
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
+import { createErrorNotice, removeNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-session-provider',
@@ -31,9 +32,6 @@ export class ScSessionProvider {
   @Event() scUpdateDraftState: EventEmitter<Checkout>;
 
   @Event() scPaid: EventEmitter<void>;
-
-  /** Error event */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
 
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
@@ -74,7 +72,7 @@ export class ScSessionProvider {
    */
   @Listen('scFormSubmit')
   async handleFormSubmit() {
-    this.scError.emit({});
+    removeNotice();
 
     updateFormState('FINALIZE');
 
@@ -88,7 +86,7 @@ export class ScSessionProvider {
         console.error(e);
         updateFormState('REJECT');
         this.handleErrorResponse(e);
-        return;
+        return new Error(e?.message);
       }
     }
 
@@ -137,6 +135,7 @@ export class ScSessionProvider {
     } catch (e) {
       console.error(e);
       this.handleErrorResponse(e);
+      return new Error(e?.message);
     }
   }
 
@@ -146,11 +145,6 @@ export class ScSessionProvider {
   @Listen('scPaid')
   async handlePaid() {
     updateFormState('PAID');
-  }
-
-  @Listen('scPayError')
-  async handlePayError() {
-    updateFormState('REJECT');
   }
 
   @Listen('scUpdateAbandonedCart')
@@ -165,7 +159,7 @@ export class ScSessionProvider {
   @Listen('scApplyCoupon')
   async handleCouponApply(e) {
     const promotion_code = e.detail;
-    this.scError.emit({});
+    removeNotice();
     this.loadUpdate({
       discount: {
         ...(promotion_code ? { promotion_code } : {}),
@@ -225,16 +219,14 @@ export class ScSessionProvider {
     console.info('Handling payment redirect.');
     // status failed.
     if (status === 'failed') {
-      return this.scError.emit({
-        message: __('Payment unsuccessful. Please try again.', 'surecart'),
-      });
+      createErrorNotice(__('Payment unsuccessful. Please try again.', 'surecart'));
+      return;
     }
 
     // get the
     if (!id) {
-      return this.scError.emit({
-        message: __('Could not find checkout. Please contact us before attempting to purchase again.', 'surecart'),
-      });
+      createErrorNotice(__('Could not find checkout. Please contact us before attempting to purchase again.', 'surecart'));
+      return;
     }
 
     // success, refetch the checkout
@@ -308,22 +300,25 @@ export class ScSessionProvider {
 
       case 'payment_failed':
         clearCheckout();
-        return this.scError.emit({
+        createErrorNotice({
           message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
+        return;
 
       case 'payment_intent_canceled':
       case 'canceled':
         clearCheckout();
-        return this.scError.emit({
+        createErrorNotice({
           message: __('Payment canceled. Please try again.', 'surecart'),
         });
+        return;
 
       case 'finalized':
-        this.scError.emit({
+        createErrorNotice({
           message: __('Payment unsuccessful. Please try again.', 'surecart'),
         });
         updateFormState('REJECT');
+        return;
     }
   }
 
@@ -442,8 +437,7 @@ export class ScSessionProvider {
       return;
     }
 
-    console.log('emit', e);
-    this.scError.emit(e);
+    createErrorNotice(e);
     updateFormState('REJECT');
   }
 

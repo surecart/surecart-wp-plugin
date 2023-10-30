@@ -27,6 +27,6 @@ class AbandonedCheckoutProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function edit( \WP_REST_Request $request ) {
-		return AbandonedCheckoutProtocol::with( [ 'coupon' ] )->update( array_diff_assoc( $request->get_params(), $request->get_query_params() ) );
+		return AbandonedCheckoutProtocol::with( [ 'coupon' ] )->update( $request->get_json_params() );
 	}
 }

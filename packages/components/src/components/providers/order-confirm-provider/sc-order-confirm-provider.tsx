@@ -8,6 +8,7 @@ import { state as checkoutState } from '@store/checkout';
 import { Checkout, ManualPaymentMethod, Product } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
 import { maybeConvertAmount } from '../../../functions/currency';
+import { createErrorNotice } from '@store/notices/mutations';
 
 /**
  * This component listens to the order status
@@ -45,9 +46,6 @@ export class ScOrderConfirmProvider {
 
   @Event() scSetState: EventEmitter<string>;
 
-  /** Error event. */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
-
   /**
    * Watch for paid checkout machine state.
    * This is triggered by Stripe, Paypal or Paystack when payment succeeds.
@@ -72,7 +70,7 @@ export class ScOrderConfirmProvider {
       this.doGoogleAnalytics();
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       // always clear the checkout.
       clearCheckout();
