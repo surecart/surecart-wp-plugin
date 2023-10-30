@@ -46,7 +46,7 @@ describe('sc-coupon-form', () => {
       components: [ScCouponForm],
       template: () => (
         <sc-coupon-form
-          hasRecurring={true}
+          showInterval={true}
           discount={
             {
               coupon: {
@@ -72,7 +72,7 @@ describe('sc-coupon-form', () => {
       components: [ScCouponForm],
       template: () => (
         <sc-coupon-form
-          hasRecurring={true}
+          showInterval={true}
           discount={
             {
               coupon: {
@@ -97,7 +97,7 @@ describe('sc-coupon-form', () => {
       components: [ScCouponForm],
       template: () => (
         <sc-coupon-form
-          hasRecurring={true}
+          showInterval={true}
           discount={
             {
               coupon: {

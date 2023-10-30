@@ -813,10 +813,6 @@ export namespace Components {
          */
         "forceOpen": boolean;
         /**
-          * Has recurring
-         */
-        "hasRecurring": boolean;
-        /**
           * The label for the coupon form
          */
         "label": string;
@@ -832,6 +828,10 @@ export namespace Components {
           * The placeholder for the input
          */
         "placeholder": string;
+        /**
+          * Has recurring
+         */
+        "showInterval": boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -6396,10 +6396,6 @@ declare namespace LocalJSX {
          */
         "forceOpen"?: boolean;
         /**
-          * Has recurring
-         */
-        "hasRecurring"?: boolean;
-        /**
           * The label for the coupon form
          */
         "label"?: string;
@@ -6419,6 +6415,10 @@ declare namespace LocalJSX {
           * The placeholder for the input
          */
         "placeholder"?: string;
+        /**
+          * Has recurring
+         */
+        "showInterval"?: boolean;
     }
     interface ScCustomOrderPriceInput {
         /**

@@ -50,7 +50,7 @@ export class ScOrderCouponForm {
           'order-coupon-form--is-rtl': isRtl(),
         }}
         button-text={this.buttonText || __('Apply', 'surecart')}
-        has-recurring={hasRecurring}
+        show-interval={hasRecurring}
       ></sc-coupon-form>
     );
   }

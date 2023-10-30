@@ -62,7 +62,7 @@ export class ScCouponForm {
   @Prop() discountAmount: number;
 
   /** Has recurring */
-  @Prop() hasRecurring: boolean;
+  @Prop() showInterval: boolean;
 
   /** Is it open */
   @Prop({ mutable: true }) open: boolean;
@@ -106,7 +106,7 @@ export class ScCouponForm {
   }
 
   translateHumanDiscountWithDuration(humanDiscount) {
-    if (!this.hasRecurring) return humanDiscount;
+    if (!this.showInterval) return humanDiscount;
 
     const { duration, duration_in_months } = this.discount?.coupon;
     switch (duration) {
