@@ -2875,7 +2875,7 @@ export namespace Components {
         /**
           * Custom Amount of the donation.
          */
-        "value": string;
+        "value": number;
     }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
@@ -8832,7 +8832,7 @@ declare namespace LocalJSX {
         /**
           * Custom Amount of the donation.
          */
-        "value"?: string;
+        "value"?: number;
     }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
