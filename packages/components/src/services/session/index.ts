@@ -131,6 +131,7 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
     }
     return item.variant.id === data.variant && item.price.id === data.price;
   });
+
   // create the checkout with the line item.
   if (!checkout?.id) {
     return (await apiFetch({

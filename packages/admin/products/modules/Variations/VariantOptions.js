@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n';
 import { generateVariants, normalizeVariants } from './utils';
 import Error from '../../../components/Error';
 import VariantOption from './VariantOption';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ product, updateProduct }) => {
 	const [error, setError] = useState(null);
@@ -141,7 +141,7 @@ export default ({ product, updateProduct }) => {
 							.length || 1);
 					return (
 						<SortableItem key={index}>
-							<div>
+							<div class="variant-option">
 								<VariantOption
 									product={product}
 									updateProduct={updateProduct}

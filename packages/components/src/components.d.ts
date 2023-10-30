@@ -346,7 +346,6 @@ export namespace Components {
         "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScCartHeader {
-        "lineItems": Array<LineItem>;
     }
     interface ScCartIcon {
         /**
@@ -381,33 +380,12 @@ export namespace Components {
         "template": string;
     }
     interface ScCartSessionProvider {
-        /**
-          * Order Object
-         */
-        "order": Checkout;
     }
     interface ScCartSubmit {
         /**
           * Is the cart busy
          */
         "busy": boolean;
-        "checkoutLink": string;
-        /**
-          * Show a full-width button.
-         */
-        "full": boolean;
-        /**
-          * Icon to show.
-         */
-        "icon": string;
-        /**
-          * The button's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * The button type.
-         */
-        "type": 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScCcLogo {
         "brand": string;
@@ -1802,14 +1780,14 @@ export namespace Components {
         "total": 'total' | 'subtotal';
     }
     interface ScLineItems {
-        "busy": boolean;
-        "editLineItems": boolean;
+        /**
+          * Is the line item editable?
+         */
         "editable": boolean;
-        "lockedChoices": Array<PriceChoice>;
-        "order": Checkout;
-        "prices": Prices;
+        /**
+          * Is the line item removable?
+         */
         "removable": boolean;
-        "removeLineItems": boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -1945,13 +1923,10 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScOrderCouponForm {
-        "busy": boolean;
         "buttonText": string;
         "collapsed": boolean;
-        "error": any;
         "label": string;
         "loading": boolean;
-        "order": Checkout;
         "placeholder": string;
     }
     interface ScOrderDetail {
@@ -4033,10 +4008,6 @@ export interface ScInputCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScInputElement;
 }
-export interface ScLineItemsCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScLineItemsElement;
-}
 export interface ScLineItemsProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScLineItemsProviderElement;
@@ -5981,7 +5952,6 @@ declare namespace LocalJSX {
         "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScCartHeader {
-        "lineItems"?: Array<LineItem>;
         "onScCloseCart"?: (event: ScCartHeaderCustomEvent<void>) => void;
     }
     interface ScCartIcon {
@@ -6021,37 +5991,12 @@ declare namespace LocalJSX {
           * Set the state
          */
         "onScSetState"?: (event: ScCartSessionProviderCustomEvent<'loading' | 'busy' | 'navigating' | 'idle'>) => void;
-        /**
-          * Update line items event
-         */
-        "onScUpdateOrderState"?: (event: ScCartSessionProviderCustomEvent<Checkout>) => void;
-        /**
-          * Order Object
-         */
-        "order"?: Checkout;
     }
     interface ScCartSubmit {
         /**
           * Is the cart busy
          */
         "busy"?: boolean;
-        "checkoutLink"?: string;
-        /**
-          * Show a full-width button.
-         */
-        "full"?: boolean;
-        /**
-          * Icon to show.
-         */
-        "icon"?: string;
-        /**
-          * The button's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The button type.
-         */
-        "type"?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link';
     }
     interface ScCcLogo {
         "brand"?: string;
@@ -7607,22 +7552,14 @@ declare namespace LocalJSX {
         "total"?: 'total' | 'subtotal';
     }
     interface ScLineItems {
-        "busy"?: boolean;
-        "editLineItems"?: boolean;
+        /**
+          * Is the line item editable?
+         */
         "editable"?: boolean;
-        "lockedChoices"?: Array<PriceChoice>;
         /**
-          * Remove the line item.
+          * Is the line item removable?
          */
-        "onScRemoveLineItem"?: (event: ScLineItemsCustomEvent<LineItemData1>) => void;
-        /**
-          * Update the line item.
-         */
-        "onScUpdateLineItem"?: (event: ScLineItemsCustomEvent<LineItemData1>) => void;
-        "order"?: Checkout;
-        "prices"?: Prices;
         "removable"?: boolean;
-        "removeLineItems"?: boolean;
     }
     interface ScLineItemsProvider {
         /**
@@ -7769,14 +7706,11 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScOrderCouponForm {
-        "busy"?: boolean;
         "buttonText"?: string;
         "collapsed"?: boolean;
-        "error"?: any;
         "label"?: string;
         "loading"?: boolean;
         "onScApplyCoupon"?: (event: ScOrderCouponFormCustomEvent<string>) => void;
-        "order"?: Checkout;
         "placeholder"?: string;
     }
     interface ScOrderDetail {

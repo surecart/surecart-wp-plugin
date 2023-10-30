@@ -171,7 +171,6 @@ export default ({
 			ref={selectRef}
 			value={value}
 			className={className}
-			open={open}
 			showParentLabel
 			loading={loading}
 			placeholder={__('Select a product', 'surecart')}

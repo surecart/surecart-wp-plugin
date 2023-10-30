@@ -20,33 +20,6 @@ test.describe('Product Admin Page', () => {
 		});
 	});
 
-	test.beforeEach(async ({ requestUtils }) => {
-		const products = await requestUtils.rest({
-			path: API_BASE_PATH,
-			params: {
-				per_page: 100,
-			},
-		});
-
-		// Delete all one by one.
-		await Promise.all(
-			products.map((post) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `${API_BASE_PATH}/${post.id}`,
-				})
-			)
-		);
-	});
-
-	test.afterAll(async ({ requestUtils }) => {
-		// Delete the product collection created in beforeAll.
-		await requestUtils.rest({
-			method: 'DELETE',
-			path: `${API_PRODUCT_COLLECTION_BASE_PATH}/${productCollection?.id}`,
-		});
-	});
-
 	test('Should render product list page', async ({ page }) => {
 		await page.goto('/wp-admin/admin.php?page=sc-products');
 
@@ -60,7 +33,7 @@ test.describe('Product Admin Page', () => {
 		await expect(page.locator('.wp-list-table')).toBeVisible();
 	});
 
-	test('Should create a new productn', async ({ page }) => {
+	test('Should create a new product', async ({ page }) => {
 		await page.goto('/wp-admin/admin.php?page=sc-products');
 
 		// Click on the create product collection link by class - page-title-action

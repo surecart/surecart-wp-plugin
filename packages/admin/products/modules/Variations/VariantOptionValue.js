@@ -76,6 +76,8 @@ export default ({
 				</SortableKnob>
 			</div>
 			<ScInput
+				label={sprintf(__('Option Value %d', 'surecart'), index + 1)}
+				showLabel={false}
 				css={css`
 					width: 100%;
 					focus: {
