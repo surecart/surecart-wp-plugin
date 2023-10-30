@@ -1,12 +1,12 @@
 import { Component, h, Method, Prop, Watch } from '@stencil/core';
 import { state as checkoutState, onChange } from '@store/checkout';
-import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
 
 import { Address, Checkout, TaxIdentifier } from '../../../../types';
 import { formBusy } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-order-tax-id-input',
@@ -44,7 +44,7 @@ export class ScOrderTaxIdInput {
 
   @Method()
   async reportValidity() {
-   return this.input.reportValidity();
+    return this.input.reportValidity();
   }
 
   getStatus() {
@@ -59,16 +59,16 @@ export class ScOrderTaxIdInput {
 
   async maybeUpdateOrder() {
     try {
-      lockCheckout('tax_identifier');
+      updateFormState('FETCH');
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
         data: { tax_identifier: this.taxIdentifier },
       })) as Checkout;
+      updateFormState('RESOLVE');
     } catch (e) {
       console.error(e);
       createErrorNotice(e);
-    } finally {
-      unLockCheckout('tax_identifier');
+      updateFormState('REJECT');
     }
   }
 
