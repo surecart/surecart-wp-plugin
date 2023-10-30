@@ -114,7 +114,8 @@ export class ScCouponForm {
         return `${humanDiscount} ${__('once', 'surecart')}`;
       case 'repeating':
         const monthsLabel = sprintf(_n('%d month', '%d months', duration_in_months, 'surecart'), duration_in_months);
-        return `${humanDiscount} for ${monthsLabel}`;
+        // translators: %s is the discount amount, %s is the duration (e.g. 3 months)
+        return sprintf(__('%s for %s', 'surecart'), humanDiscount, monthsLabel);
       default:
         return humanDiscount;
     }
