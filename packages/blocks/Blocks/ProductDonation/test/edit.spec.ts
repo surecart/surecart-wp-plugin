@@ -157,7 +157,9 @@ test.describe('surecart/product-donation', () => {
 		page,
 	}) => {
 		await expect(page.locator('sc-product-donation-choices')).toBeVisible(); // expect the sc-product-donation-choices component to be visible.
-		await expect(page.locator('sc-custom-donation-amount')).toBeVisible(); // expect the sc-custom-donation-amount component to be visible.
+		await expect(
+			page.locator('sc-product-donation-custom-amount')
+		).toBeVisible(); // expect the sc-product-donation-custom-amount component to be visible.
 		await expect(
 			page.locator(
 				'sc-product-donation-choices > .sc-product-donation-choices > sc-choices .form-control label'
@@ -254,7 +256,9 @@ test.describe('surecart/product-donation', () => {
 		page,
 	}) => {
 		const customAmountElement = page
-			.locator('sc-product-donation-choices > sc-custom-donation-amount')
+			.locator(
+				'sc-product-donation-choices > sc-product-donation-custom-amount'
+			)
 			.first();
 		await customAmountElement.click(); // Click on custom amount choice.
 
@@ -274,7 +278,7 @@ test.describe('surecart/product-donation', () => {
 		await customAmountInput.locator('input').fill('123');
 		expect(await customAmountInput.getAttribute('value')).toBe('123');
 		const customAmountInputButton = page.locator(
-			'sc-product-donation-choices > sc-custom-donation-amount sc-form > sc-price-input > sc-button'
+			'sc-product-donation-choices > sc-product-donation-custom-amount sc-form > sc-price-input > sc-button'
 		);
 		await customAmountInputButton.click(); // Click on custom amount input submit button.
 

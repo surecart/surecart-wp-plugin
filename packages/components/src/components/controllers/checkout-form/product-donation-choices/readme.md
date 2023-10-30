@@ -7,26 +7,14 @@
 
 ## Properties
 
-| Property                  | Attribute                    | Description                                   | Type      | Default     |
-| ------------------------- | ---------------------------- | --------------------------------------------- | --------- | ----------- |
-| `amountColumns`           | `amount-columns`             | Number of columns for amounts.                | `string`  | `undefined` |
-| `amountLabel`             | `amount-label`               | The label for the field.                      | `string`  | `undefined` |
-| `busy`                    | `busy`                       | Is this busy                                  | `boolean` | `undefined` |
-| `currencyCode`            | `currency-code`              | Currency code for the donation.               | `string`  | `'usd'`     |
-| `loading`                 | `loading`                    | Is this loading                               | `boolean` | `undefined` |
-| `nonRecurringChoiceLabel` | `non-recurring-choice-label` | The label for the non recurring choice field. | `string`  | `undefined` |
-| `priceId`                 | `price-id`                   | The price id for the fields.                  | `string`  | `undefined` |
-| `productId`               | `product-id`                 | The product id for the fields.                | `string`  | `undefined` |
-| `recurringChoiceLabel`    | `recurring-choice-label`     | The label for the recurring choice field.     | `string`  | `undefined` |
-| `recurringLabel`          | `recurring-label`            | The label for the recurring fields.           | `string`  | `undefined` |
-| `selectedProduct`         | --                           | The selected product.                         | `Product` | `undefined` |
-
-
-## Events
-
-| Event              | Description            | Type                        |
-| ------------------ | ---------------------- | --------------------------- |
-| `scToggleLineItem` | Toggle line item event | `CustomEvent<LineItemData>` |
+| Property                  | Attribute                    | Description                                   | Type     | Default     |
+| ------------------------- | ---------------------------- | --------------------------------------------- | -------- | ----------- |
+| `amountColumns`           | `amount-columns`             | Number of columns for amounts.                | `string` | `undefined` |
+| `amountLabel`             | `amount-label`               | The label for the field.                      | `string` | `undefined` |
+| `nonRecurringChoiceLabel` | `non-recurring-choice-label` | The label for the non recurring choice field. | `string` | `undefined` |
+| `productId`               | `product-id`                 | The product id for the fields.                | `string` | `undefined` |
+| `recurringChoiceLabel`    | `recurring-choice-label`     | The label for the recurring choice field.     | `string` | `undefined` |
+| `recurringLabel`          | `recurring-label`            | The label for the recurring fields.           | `string` | `undefined` |
 
 
 ## Shadow Parts
@@ -42,20 +30,16 @@
 
 ### Depends on
 
-- [sc-skeleton](../../../ui/skeleton)
 - [sc-choices](../../../ui/choices)
 - [sc-recurring-price-choice-container](../../../ui/sc-recurring-price-choice-container)
 - [sc-choice-container](../../../ui/choice-container)
-- [sc-block-ui](../../../ui/block-ui)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-donation-choices --> sc-skeleton
   sc-product-donation-choices --> sc-choices
   sc-product-donation-choices --> sc-recurring-price-choice-container
   sc-product-donation-choices --> sc-choice-container
-  sc-product-donation-choices --> sc-block-ui
   sc-choices --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-recurring-price-choice-container --> sc-format-number
@@ -64,7 +48,6 @@ graph TD;
   sc-recurring-price-choice-container --> sc-icon
   sc-recurring-price-choice-container --> sc-menu
   sc-recurring-price-choice-container --> sc-menu-item
-  sc-block-ui --> sc-spinner
   style sc-product-donation-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

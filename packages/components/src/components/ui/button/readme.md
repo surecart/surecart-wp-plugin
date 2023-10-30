@@ -56,7 +56,6 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-coupon-form](../coupon-form)
- - [sc-custom-donation-amount](../../controllers/checkout-form/custom-donation-amount)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-dialog](../sc-dialog)
@@ -76,6 +75,7 @@
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-paystack-add-method](../sc-paystack-add-method)
+ - [sc-product-donation-custom-amount](../../controllers/checkout-form/product-donation-custom-amount)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
@@ -112,7 +112,6 @@ graph TD;
   sc-charges-list --> sc-button
   sc-checkout-stock-alert --> sc-button
   sc-coupon-form --> sc-button
-  sc-custom-donation-amount --> sc-button
   sc-customer-details --> sc-button
   sc-customer-edit --> sc-button
   sc-dialog --> sc-button
@@ -132,6 +131,7 @@ graph TD;
   sc-payment-method --> sc-button
   sc-payment-methods-list --> sc-button
   sc-paystack-add-method --> sc-button
+  sc-product-donation-custom-amount --> sc-button
   sc-product-item-list --> sc-button
   sc-product-price-modal --> sc-button
   sc-product-selected-price --> sc-button

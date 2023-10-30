@@ -56,7 +56,6 @@
  - [sc-paypal-buttons](../paypal-buttons)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../sc-price-choice-container)
- - [sc-product-donation-choices](../../controllers/checkout-form/product-donation-choices)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-stripe-add-method](../sc-stripe-add-method)
@@ -97,7 +96,6 @@ graph TD;
   sc-paypal-buttons --> sc-skeleton
   sc-price-choice --> sc-skeleton
   sc-price-choice-container --> sc-skeleton
-  sc-product-donation-choices --> sc-skeleton
   sc-product-item-list --> sc-skeleton
   sc-purchase-downloads-list --> sc-skeleton
   sc-stripe-add-method --> sc-skeleton

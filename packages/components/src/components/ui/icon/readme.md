@@ -63,6 +63,7 @@
  - [sc-payment](../../controllers/checkout-form/payment)
  - [sc-payment-method](../sc-payment-method)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-donation-custom-amount](../../controllers/checkout-form/product-donation-custom-amount)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-line-item](../product-line-item)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
@@ -118,6 +119,7 @@ graph TD;
   sc-payment --> sc-icon
   sc-payment-method --> sc-icon
   sc-payment-methods-list --> sc-icon
+  sc-product-donation-custom-amount --> sc-icon
   sc-product-item-list --> sc-icon
   sc-product-line-item --> sc-icon
   sc-product-selected-price --> sc-icon

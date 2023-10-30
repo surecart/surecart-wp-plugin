@@ -6,13 +6,13 @@ import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 @Component({
-  tag: 'sc-custom-donation-amount',
-  styleUrl: 'sc-custom-donation-amount.scss',
+  tag: 'sc-product-donation-custom-amount',
+  styleUrl: 'sc-product-donation-custom-amount.scss',
 })
-export class ScCustomDonationAmount {
+export class ScProductDonationCustomAmount {
   private removeCheckoutListener: () => void;
 
-  @Element() el: HTMLScCustomDonationAmountElement;
+  @Element() el: HTMLScProductDonationCustomAmountElement;
 
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
@@ -89,7 +89,7 @@ export class ScCustomDonationAmount {
 
   render() {
     return (
-      <Host class={{ 'sc-custom-donation-amount': true, 'sc-custom-donation-amount--has-value': !!this.value?.length }}>
+      <Host class={{ 'sc-product-donation-custom-amount': true, 'sc-product-donation-custom-amount--has-value': !!this.value?.length }}>
         <sc-choice-container value={this.value} show-control="false">
           <sc-form onScFormSubmit={e => this.handleButtonClick(e)}>
             <sc-price-input

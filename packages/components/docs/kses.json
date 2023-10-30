@@ -429,15 +429,6 @@
     "class": true,
     "slot": true
   },
-  "sc-custom-donation-amount": {
-    "currency-code": true,
-    "product-id": true,
-    "value": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-custom-order-price-input": {
     "busy": true,
     "help": true,
@@ -1573,6 +1564,15 @@
     "product-id": true,
     "recurring-choice-label": true,
     "recurring-label": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-donation-custom-amount": {
+    "currency-code": true,
+    "product-id": true,
+    "value": true,
     "style": true,
     "id": true,
     "class": true,
