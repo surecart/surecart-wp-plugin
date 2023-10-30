@@ -24,6 +24,7 @@ import { useState } from 'react';
 import CopyInput from './CopyInput';
 import { getFormattedPrice } from '../../../../util';
 import { useEffect } from '@wordpress/element';
+import BuyLink from './BuyLink';
 
 export const getVariantFromValues = ({ variants, values }) => {
 	const variantValueKeys = Object.keys(values || {});
@@ -210,8 +211,6 @@ export default ({
 		);
 	};
 
-	console.log({ selectedVariant });
-
 	const renderDropdown = () => {
 		if (!onArchive && !onDelete) {
 			return null;
@@ -306,86 +305,13 @@ export default ({
 			>
 				{headerName()}
 			</ToggleHeader>
-			<ScDialog
-				label={__('Price Details', 'surecart')}
+			<BuyLink
 				open={copyDialog}
-				onScRequestClose={() => setCopyDialog(false)}
-			>
-				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
-					{(variantOptions || [])?.map((option, index) => {
-						const optionNumber = index + 1;
-						return (
-							<div>
-								<ScFormControl label={option?.name}>
-									<div
-										style={{
-											display: 'flex',
-											flexWrap: 'wrap',
-											gap: 'var(--sc-spacing-x-small)',
-										}}
-									>
-										{(option?.values || []).map((value) => {
-											return (
-												<ScPillOption
-													isSelected={
-														variantValues[
-															`option_${optionNumber}`
-														] === value
-													}
-													onClick={() =>
-														setVariantValues({
-															...variantValues,
-															[`option_${optionNumber}`]:
-																value,
-														})
-													}
-												>
-													{value}
-												</ScPillOption>
-											);
-										})}
-									</div>
-								</ScFormControl>
-							</div>
-						);
-					})}
-					{canCopy ? (
-						<CopyInput
-							label={__('Buy Link', 'surecart')}
-							text={addQueryArgs(scData?.checkout_page_url, {
-								line_items: [
-									{
-										price_id: price?.id,
-										quantity: 1,
-										variant_id: selectedVariant?.id,
-										no_cart: true,
-									},
-								],
-							})}
-						/>
-					) : (
-						<ScAlert type="warning" open>
-							{__(
-								'Please select an available option.',
-								'surecart'
-							)}
-						</ScAlert>
-					)}
-
-					<CopyInput
-						label={__('Price ID', 'surecart')}
-						text={price?.id}
-					/>
-				</ScForm>
-
-				<ScButton
-					onClick={() => setCopyDialog(false)}
-					type="primary"
-					slot="footer"
-				>
-					{__('Done', 'surecart')}
-				</ScButton>
-			</ScDialog>
+				price={price}
+				variants={variants}
+				variantOptions={variantOptions}
+				onRequestClose={() => setCopyDialog(false)}
+			/>
 		</>
 	);
 };
