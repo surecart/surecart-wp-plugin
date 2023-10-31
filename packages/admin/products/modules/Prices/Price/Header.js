@@ -8,41 +8,15 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScIcon,
-	ScDialog,
-	ScForm,
 	ScSkeleton,
 	ScFlex,
-	ScPillOption,
-	ScFormControl,
-	ScAlert,
 } from '@surecart/components-react';
-import { addQueryArgs } from '@wordpress/url';
 
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
-import CopyInput from './CopyInput';
 import { getFormattedPrice } from '../../../../util';
-import { useEffect } from '@wordpress/element';
 import BuyLink from './BuyLink';
-
-export const getVariantFromValues = ({ variants, values }) => {
-	const variantValueKeys = Object.keys(values || {});
-
-	for (const variant of variants) {
-		const variantValues = ['option_1', 'option_2', 'option_3']
-			.map((option) => variant[option])
-			.filter((value) => value !== null && value !== undefined);
-
-		if (
-			variantValues?.length === variantValueKeys?.length &&
-			variantValueKeys.every((key) => variantValues.includes(values[key]))
-		) {
-			return variant;
-		}
-	}
-	return null;
-};
 
 export default ({
 	isOpen,
@@ -51,26 +25,13 @@ export default ({
 	price,
 	variants,
 	variantOptions,
+	stockEnabled,
 	onArchive,
 	collapsible,
 	onDelete,
 	loading,
 }) => {
 	const [copyDialog, setCopyDialog] = useState(false);
-	const [selectedVariant, setSelectedVariant] = useState();
-	const [variantValues, setVariantValues] = useState({
-		...(variants[0]?.option_1 ? { option_1: variants[0]?.option_1 } : {}),
-		...(variants[0]?.option_2 ? { option_2: variants[0]?.option_2 } : {}),
-		...(variants[0]?.option_3 ? { option_3: variants[0]?.option_3 } : {}),
-	});
-
-	useEffect(() => {
-		setSelectedVariant(
-			getVariantFromValues({ variants, values: variantValues })
-		);
-	}, [variantValues]);
-
-	const canCopy = !variants?.length || selectedVariant?.status === 'active';
 
 	const trial = () => {
 		return (
@@ -310,6 +271,7 @@ export default ({
 				price={price}
 				variants={variants}
 				variantOptions={variantOptions}
+				stockEnabled={stockEnabled}
 				onRequestClose={() => setCopyDialog(false)}
 			/>
 		</>

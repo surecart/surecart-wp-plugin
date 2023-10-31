@@ -3,47 +3,17 @@ import {
 	ScButton,
 	ScDialog,
 	ScForm,
-	ScPillOption,
-	ScFormControl,
 	ScAlert,
+	ScSelect,
+	ScDivider,
 } from '@surecart/components-react';
 import { addQueryArgs } from '@wordpress/url';
 import { useState } from 'react';
 import CopyInput from './CopyInput';
-import { useEffect } from '@wordpress/element';
+import { formatNumber } from '../../../../util';
 
-export const getVariantFromValues = ({ variants, values }) => {
-	const variantValueKeys = Object.keys(values || {});
-
-	for (const variant of variants) {
-		const variantValues = ['option_1', 'option_2', 'option_3']
-			.map((option) => variant[option])
-			.filter((value) => value !== null && value !== undefined);
-
-		if (
-			variantValues?.length === variantValueKeys?.length &&
-			variantValueKeys.every((key) => variantValues.includes(values[key]))
-		) {
-			return variant;
-		}
-	}
-	return null;
-};
-
-export default ({ open, price, variants, variantOptions, onRequestClose }) => {
-	const [selectedVariant, setSelectedVariant] = useState();
-	const [variantValues, setVariantValues] = useState({
-		...(variants[0]?.option_1 ? { option_1: variants[0]?.option_1 } : {}),
-		...(variants[0]?.option_2 ? { option_2: variants[0]?.option_2 } : {}),
-		...(variants[0]?.option_3 ? { option_3: variants[0]?.option_3 } : {}),
-	});
-
-	useEffect(() => {
-		setSelectedVariant(
-			getVariantFromValues({ variants, values: variantValues })
-		);
-	}, [variantValues]);
-
+export default ({ open, price, variants, stockEnabled, onRequestClose }) => {
+	const [selectedVariant, setSelectedVariant] = useState(variants[0]);
 	const canCopy = !variants?.length || selectedVariant?.status === 'active';
 
 	return (
@@ -52,45 +22,42 @@ export default ({ open, price, variants, variantOptions, onRequestClose }) => {
 				open={open}
 				label={__('Price Details', 'surecart')}
 				onScAfterHide={onRequestClose}
+				style={{ '--dialog-body-overflow': 'visible' }}
 			>
 				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
-					{(variantOptions || [])?.map((option, index) => {
-						const optionNumber = index + 1;
-						return (
-							<div>
-								<ScFormControl label={option?.name}>
-									<div
-										style={{
-											display: 'flex',
-											flexWrap: 'wrap',
-											gap: 'var(--sc-spacing-x-small)',
-										}}
-									>
-										{(option?.values || []).map((value) => {
-											return (
-												<ScPillOption
-													isSelected={
-														variantValues[
-															`option_${optionNumber}`
-														] === value
-													}
-													onClick={() =>
-														setVariantValues({
-															...variantValues,
-															[`option_${optionNumber}`]:
-																value,
-														})
-													}
-												>
-													{value}
-												</ScPillOption>
-											);
-										})}
-									</div>
-								</ScFormControl>
-							</div>
-						);
-					})}
+					<ScSelect
+						label={__('Variant', 'surecart')}
+						value={selectedVariant?.id}
+						onScChange={(e) =>
+							setSelectedVariant(
+								variants.find((v) => v.id === e.target.value)
+							)
+						}
+						choices={(variants || [])
+							.filter((variant) => variant?.status === 'active')
+							.map((variant) => {
+								return {
+									label: [
+										variant?.option_1,
+										variant?.option_2,
+										variant?.option_3,
+									]
+										.filter(Boolean)
+										.join(' / '),
+									description: stockEnabled
+										? sprintf(
+												__('%s available', 'surecart'),
+												variant?.available_stock
+										  )
+										: null,
+									suffix: formatNumber(
+										variant?.amount || price.amount,
+										price.currency
+									),
+									value: variant?.id,
+								};
+							})}
+					/>
 					{canCopy ? (
 						<CopyInput
 							label={__('Buy Link', 'surecart')}
@@ -100,9 +67,9 @@ export default ({ open, price, variants, variantOptions, onRequestClose }) => {
 										price_id: price?.id,
 										quantity: 1,
 										variant_id: selectedVariant?.id,
-										no_cart: true,
 									},
 								],
+								no_cart: true,
 							})}
 						/>
 					) : (
@@ -114,10 +81,40 @@ export default ({ open, price, variants, variantOptions, onRequestClose }) => {
 						</ScAlert>
 					)}
 
+					<ScDivider>{__('Shortcodes', 'surecart')}</ScDivider>
+
+					<CopyInput
+						label={__('Add To Cart Button Shortcode', 'surecart')}
+						text={`[sc_add_to_cart_button price_id=${price?.id}${
+							selectedVariant?.id
+								? ` variant_id=${selectedVariant.id}`
+								: ''
+						}]Add To Cart[/sc_add_to_cart_button]`}
+					/>
+					<CopyInput
+						label={__('Buy Button Shortcode', 'surecart')}
+						text={`[sc_buy_button]Buy Now [sc_line_item price_id=${
+							price?.id
+						}${
+							selectedVariant?.id
+								? ` variant_id=${selectedVariant.id}`
+								: ''
+						} quantity=1][/sc_buy_button]`}
+					/>
+
+					<ScDivider>{__('Miscellaneous', 'surecart')}</ScDivider>
+
 					<CopyInput
 						label={__('Price ID', 'surecart')}
 						text={price?.id}
 					/>
+
+					{selectedVariant?.id && (
+						<CopyInput
+							label={__('Variant ID', 'surecart')}
+							text={selectedVariant.id}
+						/>
+					)}
 				</ScForm>
 
 				<ScButton onClick={onRequestClose} type="primary" slot="footer">
