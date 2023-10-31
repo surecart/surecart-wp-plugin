@@ -87,44 +87,4 @@ test.describe('Product Admin Page', () => {
 			'Edit Product Updated'
 		);
 	});
-
-	// test('Should create and update product', async ({ page }) => {
-	// 	await page.goto('/wp-admin/admin.php?page=sc-products');
-	// 	await page.locator('[data-test-id="add-new-button"]').click();
-
-	// 	// Go to create product page.
-	// 	page.goto('/wp-admin/admin.php?page=sc-products&action=edit');
-
-	// 	// Fill the form.
-	// 	await page.fill('input[name="name"]', 'Test Product');
-
-	// 	// Click on the create button.
-	// 	await page.getByRole('button', { name: 'Create' }).click();
-
-	// 	// wait for page to load.
-	// 	await page.waitForLoadState('networkidle');
-
-	// 	// Check if the product is created with name by going to the edit page.
-	// 	await expect(page.locator('input[name="name"]')).toHaveValue(
-	// 		'Test Product'
-	// 	);
-
-	// 	// Change the name.
-	// 	await page.fill('input[name="name"]', 'Test Product Updated');
-
-	// 	// Choose a product collection.
-	// 	await page.click(
-	// 		'sc-form-control[label="Select Product Collections"] sc-select'
-	// 	);
-
-	// 	// Click on the menu-item product collection - sc-menu-item with value of product collection id.
-	// 	await page.click(`sc-menu-item[value="${productCollection?.id}"]`);
-
-	// 	// Check if Test Product Collection For Product Linking is visible.
-	// 	await expect(
-	// 		page.locator(
-	// 			'sc-form-control[label="Select Product Collections"] sc-tag'
-	// 		)
-	// 	).toHaveText('Test Product Collection For Product Linking');
-	// });
 });
