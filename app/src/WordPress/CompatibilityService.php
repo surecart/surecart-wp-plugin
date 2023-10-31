@@ -121,9 +121,10 @@ class CompatibilityService {
 					'name'  => 'gutenberg_active_notice',
 					'type'  => 'warning',
 					'title' => esc_html__( 'SureCart', 'surecart' ),
-					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks may not work as expected in the block editor. Please consider disabling the Gutenberg plugin if you encounter any issues.<p>', 'surecart' ) ),
+					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, it is recommended to consider disabling the Gutenberg plugin.<p>', 'surecart' ) ),
 				]
 			);
 		}
 	}
 }
+
