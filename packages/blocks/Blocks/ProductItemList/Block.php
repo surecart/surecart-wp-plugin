@@ -222,6 +222,9 @@ class Block extends BaseBlock {
 		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
 			$attributes['type'] = 'custom';
 		}
+		if ( empty( $attributes['type'] ) ) {
+			$attributes['type'] = '';
+		}
 
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
