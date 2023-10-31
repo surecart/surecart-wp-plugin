@@ -101,6 +101,10 @@ class AssetsService {
 	 * @return void
 	 */
 	public function enqueueGlobals() {
+		if ( defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT ) ) {
+			wp_enqueue_script( 'surecart-affiliate-tracking' );
+		}
+
 		if ( is_page_template( 'pages/template-surecart-dashboard.php' ) ) {
 			// enqueue it.
 			wp_enqueue_style( 'surecart-themes-default' );
