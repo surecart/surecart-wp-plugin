@@ -243,14 +243,19 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.8.0 - October 26th, 2023 =
+= 2.8.0 - November 1st, 2023 =
 * New: Product variants.
 * New: Stock management for products.
 * New: Product SKU.
 * Improvement: Line item quantity selector design.
 * Improvement: Show price name on line items (in addition to variant).
+* Improvement: Preload price choices to speed up loading of checkout forms.
+* Improvement: Faster loading of checkout forms with pre-set prices.
 * Fix: Issue with forms sometimes not loading properly when editing in admin.
 * Fix: Deleting webhook processes having a typo which prevents deleting process logs older than 90 days.
+* Fix: Z-index issue on checkout page during loading state.
+* Fix: Handle price version mismatch better on checkout form.
+* Fix: Issue with customers not able to add non-credit card mollie payment methods on customer dashboard.
 
 = 2.7.5 - October 6th, 2023 =
 * Fix: Issue with some merchant admins not loading if using javascript browser caching.
