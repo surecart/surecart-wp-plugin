@@ -267,6 +267,7 @@ class Block extends BaseBlock {
 				'ajaxPagination'       => $attributes['ajax_pagination'],
 				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
+				'isStoreConnected'        => \SureCart::account()->isConnected(),
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],

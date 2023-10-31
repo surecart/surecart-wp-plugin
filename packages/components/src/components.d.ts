@@ -2893,6 +2893,10 @@ export namespace Components {
           * Limit to a set of ids.
          */
         "ids": string[];
+        /**
+          * Is the store connected?
+         */
+        "isStoreConnected": boolean;
         "layoutConfig": LayoutConfig1;
         "limit": number;
         "paginationAlignment": string;
@@ -8709,6 +8713,10 @@ declare namespace LocalJSX {
           * Limit to a set of ids.
          */
         "ids"?: string[];
+        /**
+          * Is the store connected?
+         */
+        "isStoreConnected"?: boolean;
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         "paginationAlignment"?: string;

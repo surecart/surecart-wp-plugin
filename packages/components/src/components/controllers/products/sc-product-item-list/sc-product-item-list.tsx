@@ -32,6 +32,9 @@ export class ScProductItemList {
   /** Query to search for */
   @Prop({ mutable: true }) query: string;
 
+  /** Is the store connected? */
+  @Prop() isStoreConnected: boolean = true;
+
   /** Should allow search */
   @Prop() searchEnabled: boolean = true;
 
@@ -262,7 +265,7 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
-        {this.error && this.collectionEnabled && (
+        {this.error && this.isStoreConnected && (
           <sc-alert type="danger" open>
             {this.error}
           </sc-alert>
