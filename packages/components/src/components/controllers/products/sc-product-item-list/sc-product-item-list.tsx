@@ -262,7 +262,7 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
-        {this.error && (
+        {this.error && this.collectionEnabled && (
           <sc-alert type="danger" open>
             {this.error}
           </sc-alert>
