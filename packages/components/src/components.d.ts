@@ -325,10 +325,6 @@ export namespace Components {
     }
     interface ScCartFormSubmit {
         /**
-          * Is the cart busy
-         */
-        "busy": boolean;
-        /**
           * Show a full-width button.
          */
         "full": boolean;
@@ -349,31 +345,11 @@ export namespace Components {
     }
     interface ScCartIcon {
         /**
-          * The count to show in the cart icon.
-         */
-        "count": number;
-        /**
-          * The form id to use for the cart.
-         */
-        "formId": string;
-        /**
           * The icon to show.
          */
         "icon": string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode": 'test' | 'live';
     }
     interface ScCartLoader {
-        /**
-          * The form id to use for the cart.
-         */
-        "formId": string;
-        /**
-          * The mode for the form.
-         */
-        "mode": 'live' | 'test';
         /**
           * The cart template to inject when opened.
          */
@@ -1353,14 +1329,6 @@ export namespace Components {
     }
     interface ScFormControl {
         /**
-          * Store the error message
-         */
-        "errorMessage": string;
-        /**
-          * Display server-side validation errors.
-         */
-        "errors": any;
-        /**
           * Help text
          */
         "help": string;
@@ -1774,8 +1742,7 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScLineItemTotal {
-        "loading": boolean;
-        "order": Checkout;
+        "checkout": Checkout;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
@@ -5931,10 +5898,6 @@ declare namespace LocalJSX {
     }
     interface ScCartFormSubmit {
         /**
-          * Is the cart busy
-         */
-        "busy"?: boolean;
-        /**
           * Show a full-width button.
          */
         "full"?: boolean;
@@ -5956,31 +5919,11 @@ declare namespace LocalJSX {
     }
     interface ScCartIcon {
         /**
-          * The count to show in the cart icon.
-         */
-        "count"?: number;
-        /**
-          * The form id to use for the cart.
-         */
-        "formId"?: string;
-        /**
           * The icon to show.
          */
         "icon"?: string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode"?: 'test' | 'live';
     }
     interface ScCartLoader {
-        /**
-          * The form id to use for the cart.
-         */
-        "formId"?: string;
-        /**
-          * The mode for the form.
-         */
-        "mode"?: 'live' | 'test';
         /**
           * The cart template to inject when opened.
          */
@@ -7110,14 +7053,6 @@ declare namespace LocalJSX {
     }
     interface ScFormControl {
         /**
-          * Store the error message
-         */
-        "errorMessage"?: string;
-        /**
-          * Display server-side validation errors.
-         */
-        "errors"?: any;
-        /**
           * Help text
          */
         "help"?: string;
@@ -7546,8 +7481,7 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScLineItemTotal {
-        "loading"?: boolean;
-        "order"?: Checkout;
+        "checkout"?: Checkout;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
     }
