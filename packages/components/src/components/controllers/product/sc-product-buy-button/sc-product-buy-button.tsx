@@ -62,7 +62,7 @@ export class ScProductBuyButton {
     return (
       <Host class={{ 'is-busy': state.busy && !!this.addToCart, 'is-disabled': state.disabled }} onClick={e => this.handleCartClick(e)}>
         {!!state?.error && !!this?.addToCart && (
-          <sc-alert type="danger" scrollOnOpen={true} open={!!state.error} closable={true}>
+          <sc-alert type="danger" scrollOnOpen={true} open={!!state.error} closable={false}>
             {!!this.getTopLevelError() && <span slot="title" innerHTML={this.getTopLevelError()}></span>}
             {(getAdditionalErrorMessages() || []).map((message, index) => (
               <div innerHTML={message} key={index}></div>
