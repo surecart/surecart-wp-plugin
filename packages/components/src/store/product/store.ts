@@ -2,6 +2,29 @@ import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
 import { Price, Product } from 'src/types';
 
+interface AdditionalError {
+  code: string;
+  message: string;
+  data: {
+    attribute: string;
+    type: string;
+    options: {
+      if: string[];
+      value: string;
+    };
+  };
+}
+
+export interface ScNoticeStore {
+  code: string;
+  message: string;
+  data?: {
+    status: number;
+    type: string;
+    http_status: string;
+  };
+  additional_errors?: AdditionalError[] | null;
+}
 interface Store {
   formId: number;
   mode: 'live' | 'test';
@@ -16,7 +39,7 @@ interface Store {
   adHocAmount: number;
   dialog: string;
   line_item: LineItemData;
-  error: string;
+  error: ScNoticeStore;
 }
 const product = window?.scData?.product_data?.product || null;
 const prices = product?.prices?.data || [];
