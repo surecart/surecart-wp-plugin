@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 
 import { ScRadioGroup, ScRadio } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
@@ -47,6 +45,7 @@ export default ({
 					<PriceSelector
 						ad_hoc={true}
 						value={choices[0]?.id}
+						variable={false}
 						onSelect={({ price_id }) => {
 							if (price_id) {
 								setChoices([{ id: price_id, quantity: 1 }]);
@@ -68,6 +67,7 @@ export default ({
 					choices={choices}
 					onUpdate={updateChoice}
 					onRemove={removeChoice}
+					variable={false}
 				/>
 			</sc-dashboard-module>
 
