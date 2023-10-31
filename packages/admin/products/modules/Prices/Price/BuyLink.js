@@ -25,39 +25,48 @@ export default ({ open, price, variants, stockEnabled, onRequestClose }) => {
 				style={{ '--dialog-body-overflow': 'visible' }}
 			>
 				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
-					<ScSelect
-						label={__('Variant', 'surecart')}
-						value={selectedVariant?.id}
-						onScChange={(e) =>
-							setSelectedVariant(
-								variants.find((v) => v.id === e.target.value)
-							)
-						}
-						choices={(variants || [])
-							.filter((variant) => variant?.status === 'active')
-							.map((variant) => {
-								return {
-									label: [
-										variant?.option_1,
-										variant?.option_2,
-										variant?.option_3,
-									]
-										.filter(Boolean)
-										.join(' / '),
-									description: stockEnabled
-										? sprintf(
-												__('%s available', 'surecart'),
-												variant?.available_stock
-										  )
-										: null,
-									suffix: formatNumber(
-										variant?.amount || price.amount,
-										price.currency
-									),
-									value: variant?.id,
-								};
-							})}
-					/>
+					{!!variants?.length && (
+						<ScSelect
+							label={__('Variant', 'surecart')}
+							value={selectedVariant?.id}
+							onScChange={(e) =>
+								setSelectedVariant(
+									variants.find(
+										(v) => v.id === e.target.value
+									)
+								)
+							}
+							choices={(variants || [])
+								.filter(
+									(variant) => variant?.status === 'active'
+								)
+								.map((variant) => {
+									return {
+										label: [
+											variant?.option_1,
+											variant?.option_2,
+											variant?.option_3,
+										]
+											.filter(Boolean)
+											.join(' / '),
+										description: stockEnabled
+											? sprintf(
+													__(
+														'%s available',
+														'surecart'
+													),
+													variant?.available_stock
+											  )
+											: null,
+										suffix: formatNumber(
+											variant?.amount || price.amount,
+											price.currency
+										),
+										value: variant?.id,
+									};
+								})}
+						/>
+					)}
 					{canCopy ? (
 						<CopyInput
 							label={__('Buy Link', 'surecart')}
@@ -66,10 +75,11 @@ export default ({ open, price, variants, stockEnabled, onRequestClose }) => {
 									{
 										price_id: price?.id,
 										quantity: 1,
-										variant_id: selectedVariant?.id,
+										...(selectedVariant?.id
+											? { variant_id: selectedVariant.id }
+											: {}),
 									},
 								],
-								no_cart: true,
 							})}
 						/>
 					) : (
