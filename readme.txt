@@ -256,6 +256,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Fix: Z-index issue on checkout page during loading state.
 * Fix: Handle price version mismatch better on checkout form.
 * Fix: Issue with customers not able to add non-credit card mollie payment methods on customer dashboard.
+* Fix: Use hashed string for transient caching to prevent transient names that are too long.
 
 = 2.7.5 - October 6th, 2023 =
 * Fix: Issue with some merchant admins not loading if using javascript browser caching.
