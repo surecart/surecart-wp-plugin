@@ -281,10 +281,10 @@ export class ScCheckout {
             </sc-form-state-provider>
           </sc-login-provider>
 
-          {this.state().busy && <sc-block-ui class="busy-block-ui" z-index={30}></sc-block-ui>}
+          {this.state().busy && <sc-block-ui class="busy-block-ui" style={{ 'z-index': '30' }}></sc-block-ui>}
 
           {['finalizing', 'paying', 'confirming', 'confirmed', 'redirecting'].includes(formState.formState.value) && (
-            <sc-block-ui z-index={30} spinner style={{ '--sc-block-ui-opacity': '0.75' }}>
+            <sc-block-ui spinner style={{ '--sc-block-ui-opacity': '0.75', 'z-index': '30' }}>
               {formState.text.loading[formState.formState.value] || __('Processing payment...', 'surecart')}
             </sc-block-ui>
           )}
