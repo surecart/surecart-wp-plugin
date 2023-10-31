@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { getCheckout } from '@store/checkouts/mutations';
+import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 
 /**
@@ -16,22 +16,9 @@ export class ScCartIcon {
   /** The icon to show. */
   @Prop() icon: string = 'shopping-bag';
 
-  /** The count to show in the cart icon. */
-  @Prop() count: number = 0;
-
-  /** The form id to use for the cart. */
-  @Prop({ reflect: true }) formId: string;
-
-  /** Are we in test or live mode. */
-  @Prop() mode: 'test' | 'live' = 'live';
-
-  order() {
-    return getCheckout(this.formId, this.mode);
-  }
-
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState?.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;
@@ -40,7 +27,7 @@ export class ScCartIcon {
   }
 
   render() {
-    if (!this.order()) {
+    if (!checkoutState?.checkout) {
       return null;
     }
     return (
