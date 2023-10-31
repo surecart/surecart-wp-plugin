@@ -24,6 +24,25 @@ class CartService {
 					\SureCart::assets()->enqueueComponents();
 				}
 			);
+
+			$form = $this->getForm();
+			if ( empty( $form->ID ) ) {
+				return;
+			}
+			$state = sc_initial_state();
+
+			if ( empty( $state['checkout']['formId'] ) ) {
+				sc_initial_state(
+					array_filter(
+						[
+							'checkout' => [
+								'formId' => $form->ID,
+								'mode'   => Form::getMode( $form->ID ),
+							],
+						]
+					)
+				);
+			}
 			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
 		}
 	}
@@ -217,19 +236,6 @@ class CartService {
 			return;
 		}
 		$template = $this->cartTemplate();
-		$state    = \SureCart::state()->getData();
-
-		if ( empty( $state['checkout']['formId'] ) ) {
-			sc_initial_state(
-				array_filter(
-					[
-						'checkout' => [
-							'formId' => $form->ID,
-						],
-					]
-				)
-			);
-		}
 		?>
 
 		<sc-cart-loader
