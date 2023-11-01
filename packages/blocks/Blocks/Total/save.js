@@ -1,3 +1,8 @@
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+
 export default ({ attributes }) => {
 	const {
 		text,
@@ -13,12 +18,17 @@ export default ({ attributes }) => {
 			size="large"
 			show-currency="1"
 		>
-			<span slot="title">{text}</span>
-			<span slot="subscription-title">{subscription_text || text}</span>
-			<span slot="first-payment-total-description">
-				{first_payment_total_text}
+			<span slot="title">{text || __('Total', 'surecart')}</span>
+			<span slot="subscription-title">
+				{subscription_text || text || __('Total Due Today', 'surecart')}
 			</span>
-			<span slot="free-trial-description">{free_trial_text}</span>
+			<span slot="first-payment-total-description">
+				{first_payment_total_text ||
+					__('First Payment Total', 'surecart')}
+			</span>
+			<span slot="free-trial-description">
+				{free_trial_text || __('Free Trial', 'surecart')}
+			</span>
 		</sc-line-item-total>
 	);
 };

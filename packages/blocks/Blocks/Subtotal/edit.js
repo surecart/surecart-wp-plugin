@@ -16,6 +16,7 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Subtotal Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
+							placeholder={__('Subtotal', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -25,6 +26,7 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(total_payments_text) =>
 								setAttributes({ total_payments_text })
 							}
+							placeholder={__('Total Payments', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -37,18 +39,25 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(first_payment_subtotal_text) =>
 								setAttributes({ first_payment_subtotal_text })
 							}
+							placeholder={__(
+								'First Payment Subtotal',
+								'surecart'
+							)}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<sc-line-item-total total="subtotal">
-				<span slot="description">{text}</span>
+				<span slot="description">
+					{text || __('Subtotal', 'surecart')}
+				</span>
 				<span slot="total-payments-description">
-					{total_payments_text}
+					{total_payments_text || __('Total Payments', 'surecart')}
 				</span>
 				<span slot="first-payment-subtotal-description">
-					{first_payment_subtotal_text}
+					{first_payment_subtotal_text ||
+						__('First Payment Subtotal', 'surecart')}
 				</span>
 			</sc-line-item-total>
 		</Fragment>

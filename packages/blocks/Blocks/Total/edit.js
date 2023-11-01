@@ -17,9 +17,10 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
+							label={__('Total Label', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
+							placeholder={__('Total', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -29,6 +30,7 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(free_trial_text) =>
 								setAttributes({ free_trial_text })
 							}
+							placeholder={__('Free Trial', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -38,6 +40,7 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(first_payment_total_text) =>
 								setAttributes({ first_payment_total_text })
 							}
+							placeholder={__('First Payment Total', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -47,20 +50,24 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(subscription_text) =>
 								setAttributes({ subscription_text })
 							}
+							placeholder={__('Total Due Today', 'surecart')}
 						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
 
 			<sc-line-item-total total="total" size="large" show-currency>
-				<span slot="title">{text}</span>
+				<span slot="title">{text || __('Total', 'surecart')}</span>
 				<span slot="subscription-title">
-					{subscription_text || text}
+					{subscription_text || text || __('Total', 'surecart')}
 				</span>
 				<span slot="first-payment-total-description">
-					{first_payment_total_text}
+					{first_payment_total_text ||
+						__('First Payment Total', 'surecart')}
 				</span>
-				<span slot="free-trial-description">{free_trial_text}</span>
+				<span slot="free-trial-description">
+					{free_trial_text || __('Free Trial', 'surecart')}
+				</span>
 			</sc-line-item-total>
 		</Fragment>
 	);

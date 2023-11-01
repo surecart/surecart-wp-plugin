@@ -75,8 +75,14 @@ export class ScLineItemTotal {
         <div class="line-item-total__group">
           <sc-line-item>
             <span slot="description">
-              <slot name="title" />
-              <slot name="description" />
+              {this.hasInstallmentPlan() ? (
+                this.renderLineItemTitle()
+              ) : (
+                <Fragment>
+                  <slot name="title" />
+                  <slot name="description" />
+                </Fragment>
+              )}
             </span>
             <span slot="price">
               <sc-total order={this.order} total={this.total}></sc-total>
