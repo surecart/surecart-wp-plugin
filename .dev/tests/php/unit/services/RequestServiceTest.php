@@ -40,7 +40,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	/**
 	 * @dataProvider cacheProvider
 	 */
-	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args =[], bool $expected) {
+	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args, bool $expected) {
 		$service = new RequestService();
 		$this->assertSame($service->shouldFindCache($cachable, $cache_key, $args), $expected);
 	}
