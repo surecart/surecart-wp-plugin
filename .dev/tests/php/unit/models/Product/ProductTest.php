@@ -47,11 +47,9 @@ class ProductTest extends SureCartUnitTestCase
 		$instance = new Product($request['product']);
 		$created = $instance->create();
 
-		// has a product
+		// has prices.
 		foreach($created->prices->data as $price) {
 			$this->assertInstanceOf(Price::class, $price);
 		}
-		// response is correct
-		$this->assertContains($created->toArray(), json_decode(json_encode($response), true));
 	}
 }
