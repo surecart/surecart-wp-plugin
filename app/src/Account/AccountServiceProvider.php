@@ -30,5 +30,9 @@ class AccountServiceProvider implements ServiceProviderInterface {
 	 * @param \Pimple\Container $container Service container.
 	 * @return void
 	 */
-	public function bootstrap( $container ) {}
+	public function bootstrap( $container ) {
+		if ( ! empty( $container['surecart.account'] ) ) {
+			$container['surecart.account']->bootstrap();
+		}
+	}
 }

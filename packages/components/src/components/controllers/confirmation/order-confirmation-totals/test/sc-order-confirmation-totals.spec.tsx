@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { h } from '@stencil/core';
 import { ScOrderConfirmationTotals } from '../sc-order-confirmation-totals';
-import { Checkout, Order } from '../../../../../types';
+import { Checkout } from '../../../../../types';
 
 describe('sc-order-confirmation-totals', () => {
   it('renders', async () => {
