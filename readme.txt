@@ -244,19 +244,19 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.8.0 - November 1st, 2023 =
-* New: Product variants.
-* New: Stock management for products.
-* New: Product SKU.
-* Improvement: Line item quantity selector design.
-* Improvement: Show price name on line items (in addition to variant).
-* Improvement: Preload price choices to speed up loading of checkout forms.
-* Improvement: Faster loading of checkout forms with pre-set prices.
-* Fix: Issue with forms sometimes not loading properly when editing in admin.
-* Fix: Deleting webhook processes having a typo which prevents deleting process logs older than 90 days.
-* Fix: Z-index issue on checkout page during loading state.
-* Fix: Handle price version mismatch better on checkout form.
-* Fix: Issue with customers not able to add non-credit card mollie payment methods on customer dashboard.
-* Fix: Use hashed string for transient caching to prevent transient names that are too long.
+New: Product variants.
+New: Stock management.
+New: Product SKU.
+Improvement: Redesign of the line item quantity selector.
+Improvement: Display of price name on line items in addition to the variant.
+Improvement: Preloading of price choices to speed up checkout form loading.
+Improvement: Faster loading of checkout forms with preset prices.
+Fix: Issue with forms not loading properly when editing in admin.
+Fix: Typo in the deletion of webhook processes that prevented clearing of process logs older than 90 days.
+Fix: Z-index issue on the checkout page during the loading state.
+Fix: Improved handling of price version mismatches on the checkout form.
+Fix: Issue with customers not being able to add non-credit card Mollie payment methods on the customer dashboard.
+Fix: Use of hashed strings for transient caching to prevent excessively long transient names.
 
 = 2.7.5 - October 6th, 2023 =
 * Fix: Issue with some merchant admins not loading if using javascript browser caching.
