@@ -3,7 +3,7 @@ namespace SureCart\Tests\Migrations;
 
 
 class MigrationsTest extends \WP_UnitTestCase {
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
