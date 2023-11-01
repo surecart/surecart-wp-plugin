@@ -57,6 +57,7 @@ Type: `Promise<boolean>`
 ### Depends on
 
 - [sc-customer-login](../customer-login)
+- [sc-customer-email-preview](../customer-email-preview)
 - [sc-input](../../../ui/input)
 - [sc-spinner](../../../ui/spinner)
 
@@ -64,6 +65,7 @@ Type: `Promise<boolean>`
 ```mermaid
 graph TD;
   sc-customer-email --> sc-customer-login
+  sc-customer-email --> sc-customer-email-preview
   sc-customer-email --> sc-input
   sc-customer-email --> sc-spinner
   sc-customer-login --> sc-flex
@@ -72,10 +74,13 @@ graph TD;
   sc-customer-login --> sc-icon
   sc-customer-login --> sc-verification-code
   sc-customer-login --> sc-spinner
+  sc-customer-login --> sc-customer-email-preview
   sc-customer-login --> sc-divider
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
+  sc-customer-email-preview --> sc-flex
+  sc-customer-email-preview --> sc-button
   style sc-customer-email fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

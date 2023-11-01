@@ -946,6 +946,8 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScCustomerEmailPreview {
+    }
     interface ScCustomerFirstname {
         /**
           * The input's autofocus attribute.
@@ -1072,10 +1074,6 @@ export namespace Components {
           * Code Error comin from the parent
          */
         "codeError": string;
-        /**
-          * The user object
-         */
-        "user": any;
     }
     interface ScCustomerName {
         /**
@@ -3892,6 +3890,10 @@ export namespace Components {
          */
         "onChange": (value: string) => void;
         /**
+          * Show clear button
+         */
+        "showClearButton": boolean;
+        /**
           * Total number of inputs
          */
         "total": number;
@@ -3990,6 +3992,10 @@ export interface ScCustomerFirstnameCustomEvent<T> extends CustomEvent<T> {
 export interface ScCustomerLastnameCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCustomerLastnameElement;
+}
+export interface ScCustomerLoginCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScCustomerLoginElement;
 }
 export interface ScCustomerNameCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4444,6 +4450,12 @@ declare global {
     var HTMLScCustomerEmailElement: {
         prototype: HTMLScCustomerEmailElement;
         new (): HTMLScCustomerEmailElement;
+    };
+    interface HTMLScCustomerEmailPreviewElement extends Components.ScCustomerEmailPreview, HTMLStencilElement {
+    }
+    var HTMLScCustomerEmailPreviewElement: {
+        prototype: HTMLScCustomerEmailPreviewElement;
+        new (): HTMLScCustomerEmailPreviewElement;
     };
     interface HTMLScCustomerFirstnameElement extends Components.ScCustomerFirstname, HTMLStencilElement {
     }
@@ -5442,6 +5454,7 @@ declare global {
         "sc-customer-details": HTMLScCustomerDetailsElement;
         "sc-customer-edit": HTMLScCustomerEditElement;
         "sc-customer-email": HTMLScCustomerEmailElement;
+        "sc-customer-email-preview": HTMLScCustomerEmailPreviewElement;
         "sc-customer-firstname": HTMLScCustomerFirstnameElement;
         "sc-customer-lastname": HTMLScCustomerLastnameElement;
         "sc-customer-login": HTMLScCustomerLoginElement;
@@ -6608,6 +6621,8 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScCustomerEmailPreview {
+    }
     interface ScCustomerFirstname {
         /**
           * The input's autofocus attribute.
@@ -6764,9 +6779,9 @@ declare namespace LocalJSX {
          */
         "codeError"?: string;
         /**
-          * The user object
+          * Clear Codes event
          */
-        "user"?: any;
+        "onScClearVerificationCodes"?: (event: ScCustomerLoginCustomEvent<void>) => void;
     }
     interface ScCustomerName {
         /**
@@ -9842,6 +9857,10 @@ declare namespace LocalJSX {
          */
         "onChange"?: (value: string) => void;
         /**
+          * Show clear button
+         */
+        "showClearButton"?: boolean;
+        /**
           * Total number of inputs
          */
         "total"?: number;
@@ -9908,6 +9927,7 @@ declare namespace LocalJSX {
         "sc-customer-details": ScCustomerDetails;
         "sc-customer-edit": ScCustomerEdit;
         "sc-customer-email": ScCustomerEmail;
+        "sc-customer-email-preview": ScCustomerEmailPreview;
         "sc-customer-firstname": ScCustomerFirstname;
         "sc-customer-lastname": ScCustomerLastname;
         "sc-customer-login": ScCustomerLogin;
@@ -10117,6 +10137,7 @@ declare module "@stencil/core" {
             "sc-customer-details": LocalJSX.ScCustomerDetails & JSXBase.HTMLAttributes<HTMLScCustomerDetailsElement>;
             "sc-customer-edit": LocalJSX.ScCustomerEdit & JSXBase.HTMLAttributes<HTMLScCustomerEditElement>;
             "sc-customer-email": LocalJSX.ScCustomerEmail & JSXBase.HTMLAttributes<HTMLScCustomerEmailElement>;
+            "sc-customer-email-preview": LocalJSX.ScCustomerEmailPreview & JSXBase.HTMLAttributes<HTMLScCustomerEmailPreviewElement>;
             "sc-customer-firstname": LocalJSX.ScCustomerFirstname & JSXBase.HTMLAttributes<HTMLScCustomerFirstnameElement>;
             "sc-customer-lastname": LocalJSX.ScCustomerLastname & JSXBase.HTMLAttributes<HTMLScCustomerLastnameElement>;
             "sc-customer-login": LocalJSX.ScCustomerLogin & JSXBase.HTMLAttributes<HTMLScCustomerLoginElement>;

@@ -9,6 +9,8 @@ class LoginController extends RestController {
 	/**
 	 * Login user
 	 *
+	 * @param \WP_REST_Request $request Request object.
+	 *
 	 * @return Model
 	 */
 	public function authenticate( \WP_REST_Request $request ) {
@@ -32,5 +34,21 @@ class LoginController extends RestController {
 			'redirect_url' => $request->get_param( 'redirect_url' ),
 			'nonce'        => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 		];
+	}
+
+	/**
+	 * Logout user
+	 *
+	 * @param \WP_REST_Request $request Request object.
+	 *
+	 * @return boolean
+	 */
+	public function logout( \WP_REST_Request $request ) {
+		wp_logout();
+
+		// flush all caches.
+		wp_cache_flush();
+
+		return true;
 	}
 }

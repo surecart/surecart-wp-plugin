@@ -480,6 +480,12 @@
     "class": true,
     "slot": true
   },
+  "sc-customer-email-preview": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-customer-firstname": {
     "autofocus": true,
     "disabled": true,
@@ -522,7 +528,6 @@
   },
   "sc-customer-login": {
     "code-error": true,
-    "user": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2205,6 +2210,7 @@
   },
   "sc-verification-code": {
     "on-change": true,
+    "show-clear-button": true,
     "total": true,
     "style": true,
     "id": true,

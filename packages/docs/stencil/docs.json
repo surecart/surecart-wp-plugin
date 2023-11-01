@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-10-26T19:41:23",
+  "timestamp": "2023-11-01T04:59:55",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1846,6 +1846,7 @@
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
+        "sc-customer-email-preview",
         "sc-customer-login",
         "sc-dialog",
         "sc-donation-choices",
@@ -1913,6 +1914,9 @@
           "sc-button"
         ],
         "sc-customer-edit": [
+          "sc-button"
+        ],
+        "sc-customer-email-preview": [
           "sc-button"
         ],
         "sc-customer-login": [
@@ -7885,12 +7889,14 @@
       "dependents": [],
       "dependencies": [
         "sc-customer-login",
+        "sc-customer-email-preview",
         "sc-input",
         "sc-spinner"
       ],
       "dependencyGraph": {
         "sc-customer-email": [
           "sc-customer-login",
+          "sc-customer-email-preview",
           "sc-input",
           "sc-spinner"
         ],
@@ -7901,6 +7907,7 @@
           "sc-icon",
           "sc-verification-code",
           "sc-spinner",
+          "sc-customer-email-preview",
           "sc-divider"
         ],
         "sc-input": [
@@ -7911,6 +7918,49 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-customer-email-preview": [
+          "sc-flex",
+          "sc-button"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/customer-email-preview/sc-customer-email-preview.tsx",
+      "encapsulation": "none",
+      "tag": "sc-customer-email-preview",
+      "readme": "# sc-customer-login\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-customer-email",
+        "sc-customer-login"
+      ],
+      "dependencies": [
+        "sc-flex",
+        "sc-button"
+      ],
+      "dependencyGraph": {
+        "sc-customer-email-preview": [
+          "sc-flex",
+          "sc-button"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-customer-email": [
+          "sc-customer-email-preview"
+        ],
+        "sc-customer-login": [
+          "sc-customer-email-preview"
         ]
       }
     },
@@ -8588,17 +8638,17 @@
       "usage": {},
       "props": [
         {
-          "name": "user",
-          "type": "any",
+          "name": "codeError",
+          "type": "string",
           "mutable": false,
-          "attr": "user",
+          "attr": "code-error",
           "reflectToAttr": false,
-          "docs": "The user object",
+          "docs": "Code Error comin from the parent",
           "docsTags": [],
-          "default": "null",
+          "default": "''",
           "values": [
             {
-              "type": "any"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -8606,7 +8656,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scClearVerificationCodes",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Clear Codes event",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -8621,6 +8681,7 @@
         "sc-icon",
         "sc-verification-code",
         "sc-spinner",
+        "sc-customer-email-preview",
         "sc-divider"
       ],
       "dependencyGraph": {
@@ -8631,6 +8692,7 @@
           "sc-icon",
           "sc-verification-code",
           "sc-spinner",
+          "sc-customer-email-preview",
           "sc-divider"
         ],
         "sc-input": [
@@ -8641,6 +8703,10 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-customer-email-preview": [
+          "sc-flex",
+          "sc-button"
         ],
         "sc-customer-email": [
           "sc-customer-login"
@@ -11502,6 +11568,7 @@
       "dependents": [
         "sc-cancel-discount",
         "sc-cancel-survey",
+        "sc-customer-email-preview",
         "sc-customer-login",
         "sc-downloads-list",
         "sc-fulfillments",
@@ -11524,6 +11591,9 @@
           "sc-flex"
         ],
         "sc-cancel-survey": [
+          "sc-flex"
+        ],
+        "sc-customer-email-preview": [
           "sc-flex"
         ],
         "sc-customer-login": [
@@ -33423,6 +33493,11 @@
       "listeners": [
         {
           "event": "keydown",
+          "capture": false,
+          "passive": false
+        },
+        {
+          "event": "scClearVerificationCodes",
           "capture": false,
           "passive": false
         }

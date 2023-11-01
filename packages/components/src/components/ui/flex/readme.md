@@ -30,6 +30,7 @@
 
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
@@ -51,6 +52,7 @@
 graph TD;
   sc-cancel-discount --> sc-flex
   sc-cancel-survey --> sc-flex
+  sc-customer-email-preview --> sc-flex
   sc-customer-login --> sc-flex
   sc-downloads-list --> sc-flex
   sc-fulfillments --> sc-flex

@@ -2,6 +2,7 @@
  * External dependencies.
  */
 import { Component, h, Element, Prop, State, Listen, Host } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-verification-code',
@@ -20,6 +21,9 @@ export class ScVerificationCode {
   /** On change verification code */
   @Prop() onChange: (value: string) => void;
 
+  /** Show clear button */
+  @Prop() showClearButton: boolean = false;
+
   @Listen('keydown')
   handleKeyDown(e: KeyboardEvent, index: number) {
     if ((e.key === 'Backspace' || e.key === 'Delete') && index > 0) {
@@ -33,26 +37,25 @@ export class ScVerificationCode {
 
   handleInput(e: InputEvent, index: number) {
     const target = e.target as HTMLInputElement;
-    const value = target.value;
+    let value = target.value;
 
     // If value is greater than 1, then put all of the characters to the input one by one.
     if (value.length > 1) {
-      const valueLength = value.length;
-      for (let i = 0; i < this.total; i++) {
+      for (let i = 0; i < this.total - index; i++) {
         const input = this.getElementByIndex(index + i);
+
+        // No need to work with focus, we'll add that manually later.
+        input.blur();
+
         input.value = value[i];
         this.codes[index + i] = value[i];
-
-        // remove focus
-        if (i === valueLength - 1) {
-          input.blur();
-        }
       }
 
       // Update the index to the last character to be able to continue typing.
-      index = index + valueLength - 1;
-    } else {
-      target.value = value;
+      index = index + value.length - 1;
+
+      // Finally update the value to the last character.
+      value = value[value.length - 1];
     }
 
     if (index < this.codes.length) {
@@ -96,9 +99,10 @@ export class ScVerificationCode {
     target.select();
   }
 
-  // on component load, focus the first input
-  componentWillLoad() {
-    this.focusInput(0);
+  @Listen('scClearVerificationCodes')
+  handleClearVerificationCodes() {
+    this.codes = Array(this.total).fill('');
+    this.getElementByIndex(0).focus();
   }
 
   render() {
@@ -116,6 +120,26 @@ export class ScVerificationCode {
               required
             />
           ))}
+
+          {/* If codes length and total is same after trimming then, add a clear button */}
+          {this.codes.join('').trim().length === this.total && this.showClearButton && (
+            <sc-tooltip text={__('Clear code', 'surecart')} type="text" style={{ display: 'inline-block', cursor: 'help' }}>
+              <sc-button
+                type="text"
+                onClick={() => {
+                  this.codes = Array(this.total).fill('');
+                  this.getElementByIndex(0).focus();
+                }}
+              >
+                <sc-icon name="x-circle" />
+              </sc-button>
+            </sc-tooltip>
+          )}
+
+          {/* Hidden Submit button for screen readers */}
+          <button type="submit" style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" onClick={() => this.onChange(this.codes.join(''))}>
+            {__('Submit', 'surecart')}
+          </button>
         </div>
       </Host>
     );

@@ -41,6 +41,19 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 				'schema' => [ $this, 'get_item_schema' ],
 			]
 		);
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			'logout',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( LoginController::class, 'logout' ),
+					'permission_callback' => [ $this, 'logout_permissions_check' ],
+				],
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
 	}
 
 	/**
@@ -79,9 +92,20 @@ class LoginRestServiceProvider extends RestServiceProvider implements RestServic
 	/**
 	 * Anyone can login.
 	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 *
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function authenticate_permissions_check( $request ) {
 		return true;
+	}
+
+	/**
+	 * Only logged in users can logout.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 */
+	public function logout_permissions_check( $request ) {
+		return is_user_logged_in();
 	}
 }

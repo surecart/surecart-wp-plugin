@@ -1,14 +1,13 @@
 /**
  * External dependencies.
  */
-import { Component, Fragment, h, Host, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Host, Prop, State, Event, EventEmitter } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
-import { VerificationCode } from 'src/types';
 import { state as userState } from '@store/user';
 
 @Component({
@@ -17,12 +16,6 @@ import { state as userState } from '@store/user';
   shadow: false,
 })
 export class ScCustomerLogin {
-  /** The user object */
-  @Prop() user: any = null;
-
-  /** Is verification code matched */
-  @State() matched: boolean = false;
-
   /** The mode of the login */
   @State() mode: 'code' | 'password' = 'code';
 
@@ -53,36 +46,50 @@ export class ScCustomerLogin {
   /** Login Password */
   @State() password: string = '';
 
-  getEmailPreview() {
-    if (!this.user?.email) return '';
-    const emailParts = this.user?.email.split('@');
-    return emailParts[0].slice(0, 2) + '..@' + emailParts[1];
-  }
+  /** Show Verification clear button or not */
+  @State() showVerificationClearButton: boolean = false;
+
+  /** Clear Codes event */
+  @Event() scClearVerificationCodes: EventEmitter<void>;
 
   async verifyCode(code: string) {
+    // If not valid email and code, then return.
+    if (!userState.email || !code) {
+      return;
+    }
+
     try {
       this.error = '';
       this.verifying = true;
-      const { verified } = (await apiFetch({
+      this.showVerificationClearButton = false;
+
+      const user = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes/verify',
         data: {
-          login: this.user?.email,
+          login: userState.email,
           code: code,
         },
-      })) as VerificationCode;
-      this.verifying = false;
-      this.verified = verified;
+      })) as any;
+      this.verified = user?.verified;
 
-      if (!verified) {
+      if (!user?.verified) {
         throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
       }
 
-      // window.location.reload();
-      
+      // Update userState and make the user as logged in user.
+      userState.loggedIn = true;
+      userState.name = user?.name || 'N/A';
     } catch (e) {
-      this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
+      if (e.code === 'not_found') {
+        this.error = __('Verification code is not valid. Please try again.', 'surecart');
+      } else {
+        this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
+      }
+      this.verified = false;
+      this.showVerificationClearButton = true;
     } finally {
+      this.scClearVerificationCodes.emit();
       this.verifying = false;
     }
   }
@@ -91,11 +98,12 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.codeResending = true;
-      this.user = await apiFetch({
+      this.scClearVerificationCodes.emit();
+      await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
-          login: this.user?.email,
+          login: userState.email,
         },
       });
 
@@ -126,32 +134,25 @@ export class ScCustomerLogin {
     });
   }
 
-  async login() {
+  async loginByPassword() {
     try {
       this.error = '';
       this.busy = true;
-      const { name, email, nonce } = (await apiFetch({
+      const { name, email } = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/login',
         data: {
-          login: this.user?.email,
+          login: userState.email,
           password: this.password,
         },
       })) as any;
       this.busy = false;
       this.verified = true;
-      // TODO: refactor this to use the user state only.
-      this.user.name = name;
-      this.user.email = email;
 
       userState.loggedIn = true;
-      userState.email = email;
+      userState.matched = true;
       userState.name = name;
-
-      // Update nonce in cookie to be able to use it in the next request.
-      if (!!nonce) {
-        document.cookie = `wp_rest=${nonce}; path=/`;
-      }
+      userState.email = email;
     } catch (e) {
       this.error = e?.message || __('Login failed. Please try again.', 'surecart');
     } finally {
@@ -162,12 +163,29 @@ export class ScCustomerLogin {
   renderPasswordView() {
     return (
       <div class="use-password">
-        <sc-flex alignItems="center" justifyContent="center">
-          <sc-input type="password" placeholder={__('Password', 'surecart')} required disabled={this.busy} onScInput={(e: any) => (this.password = e.target.value)} />
-          <sc-button size="medium" type="primary" onClick={() => this.login()}>
-            {__('Login', 'surecart')} &nbsp; <sc-icon name="user" />
-          </sc-button>
-        </sc-flex>
+        <sc-form onScSubmit={() => this.loginByPassword()}>
+          <sc-flex alignItems="center">
+            <sc-input
+              type="password"
+              style={{ flex: '1' }}
+              placeholder={__('Password', 'surecart')}
+              required
+              disabled={this.busy}
+              onScInput={(e: any) => (this.password = e.target.value)}
+              onKeyDown={(e: any) => {
+                if (e.key === 'Enter') {
+                  this.loginByPassword();
+                }
+              }}
+            />
+            <sc-button size="medium" submit type="primary" loading={this.busy}>
+              <sc-icon slot="prefix" name="lock" />
+              &nbsp;
+              {__('Login', 'surecart')}
+            </sc-button>
+          </sc-flex>
+        </sc-form>
+        {!!this.error && <p class="login-error">{this.error}</p>}
       </div>
     );
   }
@@ -176,17 +194,17 @@ export class ScCustomerLogin {
     return (
       <div>
         <p class="code-hint">
-          {__('Enter the code sent to', 'surecart')} <span class="reset-email-preview">{this.getEmailPreview()}</span> {__('to securely use your saved information.', 'surecart')}
+          {__('Enter the code sent to', 'surecart')} <span class="reset-email-preview">{userState.email}</span> {__('to securely use your saved information.', 'surecart')}
         </p>
         <div>
           <div class="reset-code-area">
-            <sc-verification-code total={6} onChange={value => this.verifyCode(value)} />
+            <sc-verification-code total={6} onChange={value => this.verifyCode(value)} showClearButton={this.showVerificationClearButton} />
             <div class="matched-icon">
               {this.verifying && <sc-spinner />}
               {this.verified && <sc-icon name="check" />}
             </div>
           </div>
-          {(!!this.error || !!this.codeError) && <p class="code-sent-error">{this.error || this.codeError}</p>}
+          {(!!this.error || !!this.codeError) && <p class="login-error">{this.error || this.codeError}</p>}
         </div>
 
         <div class="resend-code-button">
@@ -213,10 +231,7 @@ export class ScCustomerLogin {
     return (
       <Host>
         <div class="customer-login-area">
-          <sc-flex alignItems="center" justifyContent="space-between">
-            <p>{__('Email', 'surecart')}</p>
-            <span class="customer-email">{this.user?.email}</span>
-          </sc-flex>
+          <sc-customer-email-preview></sc-customer-email-preview>
           <sc-divider></sc-divider>
 
           {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
