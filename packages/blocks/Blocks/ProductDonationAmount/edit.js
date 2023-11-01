@@ -5,7 +5,13 @@ import {
 	ScPriceInput,
 } from '@surecart/components-react';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl, ToggleControl } from '@wordpress/components';
+import {
+	Disabled,
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToggleControl,
+} from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
@@ -52,8 +58,8 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScChoiceContainer 
-					showControl={false} 
+				<ScChoiceContainer
+					showControl={false}
 					size="small"
 					css={css`
 						width: 100%;
@@ -62,12 +68,12 @@ export default ({ attributes, setAttributes }) => {
 					{!!label ? (
 						label
 					) : (
-					<ScFormatNumber
-						type="currency"
-						value={amount}
-						currency={currency || 'USD'}
-						minimum-fraction-digits="0"
-					></ScFormatNumber>
+						<ScFormatNumber
+							type="currency"
+							value={amount}
+							currency={currency || 'USD'}
+							minimum-fraction-digits="0"
+						></ScFormatNumber>
 					)}
 				</ScChoiceContainer>
 			</div>
