@@ -2,49 +2,37 @@
 
 exports[`sc-customer-email Logged In Url Params Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CheckoutEmail"></sc-input>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Url Params Customer and Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Url Params Customer email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Without Url Params Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CheckoutEmail"></sc-input>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Without Url Params Customer and Checkout email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-customer-email>
 `;
 
 exports[`sc-customer-email Logged In Without Url Params Customer email provided 1`] = `
 <sc-customer-email size="medium">
-  <mock:shadow-root>
-    <sc-input autocomplete="email" disabled="" exportparts="base, input, form-control, label, help-text, prefix, suffix" help="" name="email" required="" type="email" value="CustomerEmail"></sc-input>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-customer-email>
 `;
 

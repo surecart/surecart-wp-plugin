@@ -44,6 +44,8 @@
  - [sc-cc-logo](../cc-logo)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-customer-details](../customer-details)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
+ - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -81,6 +83,7 @@
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-verification-code](../verification-code)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
@@ -97,6 +100,8 @@ graph TD;
   sc-cc-logo --> sc-icon
   sc-charges-list --> sc-icon
   sc-customer-details --> sc-icon
+  sc-customer-email --> sc-icon
+  sc-customer-email-preview --> sc-icon
   sc-customer-login --> sc-icon
   sc-dialog --> sc-icon
   sc-downloads-list --> sc-icon
@@ -134,6 +139,7 @@ graph TD;
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
   sc-upgrade-required --> sc-icon
+  sc-verification-code --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

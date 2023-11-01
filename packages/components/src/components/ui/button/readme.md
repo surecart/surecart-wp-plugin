@@ -57,6 +57,7 @@
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-customer-email](../../controllers/checkout-form/customer-email)
  - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
@@ -92,6 +93,7 @@
  - [sc-tax-id-input](../tax-id-input)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-verification-code](../verification-code)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -112,6 +114,7 @@ graph TD;
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button
   sc-customer-edit --> sc-button
+  sc-customer-email --> sc-button
   sc-customer-email-preview --> sc-button
   sc-customer-login --> sc-button
   sc-dialog --> sc-button
@@ -147,6 +150,7 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-upcoming-invoice --> sc-button
   sc-upgrade-required --> sc-button
+  sc-verification-code --> sc-button
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-user --> sc-button
   sc-wordpress-user-edit --> sc-button

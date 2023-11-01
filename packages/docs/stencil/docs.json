@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-01T04:59:55",
+  "timestamp": "2023-11-01T15:01:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1846,6 +1846,7 @@
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
+        "sc-customer-email",
         "sc-customer-email-preview",
         "sc-customer-login",
         "sc-dialog",
@@ -1881,6 +1882,7 @@
         "sc-tax-id-input",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
+        "sc-verification-code",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1914,6 +1916,9 @@
           "sc-button"
         ],
         "sc-customer-edit": [
+          "sc-button"
+        ],
+        "sc-customer-email": [
           "sc-button"
         ],
         "sc-customer-email-preview": [
@@ -2019,6 +2024,9 @@
           "sc-button"
         ],
         "sc-upgrade-required": [
+          "sc-button"
+        ],
+        "sc-verification-code": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -7891,16 +7899,21 @@
         "sc-customer-login",
         "sc-customer-email-preview",
         "sc-input",
-        "sc-spinner"
+        "sc-spinner",
+        "sc-button",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-customer-email": [
           "sc-customer-login",
           "sc-customer-email-preview",
           "sc-input",
-          "sc-spinner"
+          "sc-spinner",
+          "sc-button",
+          "sc-icon"
         ],
         "sc-customer-login": [
+          "sc-form",
           "sc-flex",
           "sc-input",
           "sc-button",
@@ -7919,9 +7932,15 @@
         "sc-button": [
           "sc-spinner"
         ],
+        "sc-verification-code": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon"
+        ],
         "sc-customer-email-preview": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ]
       }
     },
@@ -7946,12 +7965,14 @@
       ],
       "dependencies": [
         "sc-flex",
-        "sc-button"
+        "sc-button",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-customer-email-preview": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-button": [
           "sc-spinner"
@@ -8675,6 +8696,7 @@
         "sc-customer-email"
       ],
       "dependencies": [
+        "sc-form",
         "sc-flex",
         "sc-input",
         "sc-button",
@@ -8686,6 +8708,7 @@
       ],
       "dependencyGraph": {
         "sc-customer-login": [
+          "sc-form",
           "sc-flex",
           "sc-input",
           "sc-button",
@@ -8704,9 +8727,15 @@
         "sc-button": [
           "sc-spinner"
         ],
+        "sc-verification-code": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon"
+        ],
         "sc-customer-email-preview": [
           "sc-flex",
-          "sc-button"
+          "sc-button",
+          "sc-icon"
         ],
         "sc-customer-email": [
           "sc-customer-login"
@@ -11768,6 +11797,7 @@
         "sc-cancel-survey",
         "sc-cart-form",
         "sc-customer-edit",
+        "sc-customer-login",
         "sc-login-form",
         "sc-login-provider",
         "sc-mollie-add-method",
@@ -11792,6 +11822,9 @@
           "sc-form"
         ],
         "sc-customer-edit": [
+          "sc-form"
+        ],
+        "sc-customer-login": [
           "sc-form"
         ],
         "sc-login-form": [
@@ -13742,6 +13775,8 @@
         "sc-cc-logo",
         "sc-charges-list",
         "sc-customer-details",
+        "sc-customer-email",
+        "sc-customer-email-preview",
         "sc-customer-login",
         "sc-dialog",
         "sc-downloads-list",
@@ -13779,6 +13814,7 @@
         "sc-toggle",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
+        "sc-verification-code",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -13814,6 +13850,12 @@
           "sc-icon"
         ],
         "sc-customer-details": [
+          "sc-icon"
+        ],
+        "sc-customer-email": [
+          "sc-icon"
+        ],
+        "sc-customer-email-preview": [
           "sc-icon"
         ],
         "sc-customer-login": [
@@ -13925,6 +13967,9 @@
           "sc-icon"
         ],
         "sc-upgrade-required": [
+          "sc-icon"
+        ],
+        "sc-verification-code": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -33008,7 +33053,8 @@
       ],
       "dependents": [
         "sc-form-control",
-        "sc-payment-method"
+        "sc-payment-method",
+        "sc-verification-code"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -33016,6 +33062,9 @@
           "sc-tooltip"
         ],
         "sc-payment-method": [
+          "sc-tooltip"
+        ],
+        "sc-verification-code": [
           "sc-tooltip"
         ]
       }
@@ -33471,6 +33520,23 @@
           "required": false
         },
         {
+          "name": "showClearButton",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-clear-button",
+          "reflectToAttr": false,
+          "docs": "Show clear button",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "total",
           "type": "number",
           "mutable": false,
@@ -33508,8 +33574,20 @@
       "dependents": [
         "sc-customer-login"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "sc-tooltip",
+        "sc-button",
+        "sc-icon"
+      ],
       "dependencyGraph": {
+        "sc-verification-code": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
         "sc-customer-login": [
           "sc-verification-code"
         ]

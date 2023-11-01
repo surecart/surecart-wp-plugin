@@ -31,12 +31,14 @@
 
  - [sc-form-control](../form-control)
  - [sc-payment-method](../sc-payment-method)
+ - [sc-verification-code](../verification-code)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-form-control --> sc-tooltip
   sc-payment-method --> sc-tooltip
+  sc-verification-code --> sc-tooltip
   style sc-tooltip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -27,6 +27,7 @@
 
 ### Depends on
 
+- [sc-form](../../../ui/form)
 - [sc-flex](../../../ui/flex)
 - [sc-input](../../../ui/input)
 - [sc-button](../../../ui/button)
@@ -39,6 +40,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-customer-login --> sc-form
   sc-customer-login --> sc-flex
   sc-customer-login --> sc-input
   sc-customer-login --> sc-button
@@ -50,8 +52,12 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
+  sc-verification-code --> sc-tooltip
+  sc-verification-code --> sc-button
+  sc-verification-code --> sc-icon
   sc-customer-email-preview --> sc-flex
   sc-customer-email-preview --> sc-button
+  sc-customer-email-preview --> sc-icon
   sc-customer-email --> sc-customer-login
   style sc-customer-login fill:#f9f,stroke:#333,stroke-width:4px
 ```

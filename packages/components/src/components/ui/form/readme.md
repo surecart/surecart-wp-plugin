@@ -79,6 +79,7 @@ Type: `Promise<boolean>`
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form](../../controllers/cart/sc-cart-form)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
+ - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
  - [sc-mollie-add-method](../sc-mollie-add-method)
@@ -100,6 +101,7 @@ graph TD;
   sc-cancel-survey --> sc-form
   sc-cart-form --> sc-form
   sc-customer-edit --> sc-form
+  sc-customer-login --> sc-form
   sc-login-form --> sc-form
   sc-login-provider --> sc-form
   sc-mollie-add-method --> sc-form

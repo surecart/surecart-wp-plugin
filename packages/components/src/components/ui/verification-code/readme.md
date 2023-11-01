@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute | Description                 | Type                      | Default     |
-| ---------- | --------- | --------------------------- | ------------------------- | ----------- |
-| `onChange` | --        | On change verification code | `(value: string) => void` | `undefined` |
-| `total`    | `total`   | Total number of inputs      | `number`                  | `6`         |
+| Property          | Attribute           | Description                 | Type                      | Default     |
+| ----------------- | ------------------- | --------------------------- | ------------------------- | ----------- |
+| `onChange`        | --                  | On change verification code | `(value: string) => void` | `undefined` |
+| `showClearButton` | `show-clear-button` | Show clear button           | `boolean`                 | `false`     |
+| `total`           | `total`             | Total number of inputs      | `number`                  | `6`         |
 
 
 ## Dependencies
@@ -19,9 +20,19 @@
 
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
 
+### Depends on
+
+- [sc-tooltip](../tooltip)
+- [sc-button](../button)
+- [sc-icon](../icon)
+
 ### Graph
 ```mermaid
 graph TD;
+  sc-verification-code --> sc-tooltip
+  sc-verification-code --> sc-button
+  sc-verification-code --> sc-icon
+  sc-button --> sc-spinner
   sc-customer-login --> sc-verification-code
   style sc-verification-code fill:#f9f,stroke:#333,stroke-width:4px
 ```

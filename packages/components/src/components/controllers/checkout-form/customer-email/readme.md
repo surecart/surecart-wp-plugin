@@ -60,6 +60,8 @@ Type: `Promise<boolean>`
 - [sc-customer-email-preview](../customer-email-preview)
 - [sc-input](../../../ui/input)
 - [sc-spinner](../../../ui/spinner)
+- [sc-button](../../../ui/button)
+- [sc-icon](../../../ui/icon)
 
 ### Graph
 ```mermaid
@@ -68,6 +70,9 @@ graph TD;
   sc-customer-email --> sc-customer-email-preview
   sc-customer-email --> sc-input
   sc-customer-email --> sc-spinner
+  sc-customer-email --> sc-button
+  sc-customer-email --> sc-icon
+  sc-customer-login --> sc-form
   sc-customer-login --> sc-flex
   sc-customer-login --> sc-input
   sc-customer-login --> sc-button
@@ -79,8 +84,12 @@ graph TD;
   sc-input --> sc-form-control
   sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
+  sc-verification-code --> sc-tooltip
+  sc-verification-code --> sc-button
+  sc-verification-code --> sc-icon
   sc-customer-email-preview --> sc-flex
   sc-customer-email-preview --> sc-button
+  sc-customer-email-preview --> sc-icon
   style sc-customer-email fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
