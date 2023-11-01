@@ -2,7 +2,7 @@ import state from './store';
 import { clearCheckout as clearSavedCheckout } from '../checkouts/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
-import { addLineItem, removeLineItem, updateLineItem } from '@services/session';
+import { addLineItem, removeLineItem, updateLineItem } from '../../services/session';
 
 /**
  * Clear the current checkout.
