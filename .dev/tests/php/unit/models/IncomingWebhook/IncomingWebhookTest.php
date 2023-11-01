@@ -76,9 +76,6 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 		$this->assertFalse($updated->processed);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_can_fetch_older_than_30_days() {
 		$date = new \DateTime();
 		$date->modify('-31 days');

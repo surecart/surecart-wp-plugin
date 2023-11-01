@@ -23,7 +23,6 @@ class MigrationsTest extends \WP_UnitTestCase {
 
 	/**
 	 * @group migrations
-	 * @group failing
 	 */
 	public function test_createsIncomingWebhooksTable() {
 		$this->table_exists('surecart_incoming_webhooks');
