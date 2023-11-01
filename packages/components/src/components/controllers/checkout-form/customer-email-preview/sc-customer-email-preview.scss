@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+.customer-email {
+  background: var(--sc-color-gray-100);
+  color: var(--sc-color-primary-500);
+  padding: 0px 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  height: 100%;
+}

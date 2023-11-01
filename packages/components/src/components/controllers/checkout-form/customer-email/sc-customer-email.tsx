@@ -120,18 +120,25 @@ export class ScCustomerEmail {
 
     try {
       this.busy = true;
-      this.user = await apiFetch({
+      const user = (await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
           login: this?.input?.value,
         },
-      });
+      })) as any;
+      userState.email = user?.email;
+      userState.matched = true;
+      userState.loggedIn = false;
     } catch (e) {
       this.handleCodeSendError(e);
     } finally {
       this.busy = false;
     }
+  }
+
+  isValidEmail() {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
   }
 
   @Method()
@@ -169,9 +176,8 @@ export class ScCustomerEmail {
   handleCodeSendError(error: any) {
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
-        this.user = {
-          email: this.input?.value || '',
-        };
+        userState.email = this.input?.value || '';
+        userState.matched = true;
       }
 
       this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
@@ -213,9 +219,15 @@ export class ScCustomerEmail {
   render() {
     return (
       <Host>
-        {!!this.user ? (
-          <sc-customer-login user={this.user} codeError={this.error}></sc-customer-login>
-        ) : (
+        {userState.matched && !userState.loggedIn && <sc-customer-login codeError={this.error}></sc-customer-login>}
+
+        {userState.matched && userState.loggedIn && (
+          <div style={{ border: '1px solid #dcdfe5', padding: '0 10px', borderRadius: '4px' }}>
+            <sc-customer-email-preview></sc-customer-email-preview>
+          </div>
+        )}
+
+        {!userState.matched && !userState.loggedIn && (
           <Fragment>
             <sc-input
               exportparts="base, input, form-control, label, help-text, prefix, suffix"
@@ -242,6 +254,25 @@ export class ScCustomerEmail {
             {this.busy && (
               <div class="account-loader">
                 <sc-spinner />
+              </div>
+            )}
+
+            {/* If a valid email  */}
+            {this.isValidEmail() && !this.busy && (
+              <div class="account-loader">
+                <sc-button
+                  type="text"
+                  onClick={() => this.createLoginCode()}
+                  style={{
+                    position: 'absolute',
+                    top: '-13px',
+                    right: '0px',
+                    width: '40px',
+                    zIndex: '1',
+                  }}
+                >
+                  <sc-icon name="arrow-right" />
+                </sc-button>
               </div>
             )}
 
