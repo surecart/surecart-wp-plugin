@@ -66,7 +66,7 @@ export function CancellationReasonStats({ liveMode = true, filter }) {
 					return (
 						<div
 							key={idx}
-							title={`${label} - ${percentage}% (${count})`}
+							title={`${label} — ${percentage}% (${count})`}
 							css={css`
 								width: ${percentage}%;
 								height: 8px;

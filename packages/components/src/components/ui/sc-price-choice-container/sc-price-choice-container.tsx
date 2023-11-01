@@ -34,6 +34,8 @@ export class ScPriceChoiceContainer {
   /** Choice Type */
   @Prop() type: 'checkbox' | 'radio';
 
+  @Prop() required: boolean = false;
+
   /** Is this checked by default */
   @Prop({ reflect: true, mutable: true }) checked: boolean = false;
 
@@ -80,7 +82,14 @@ export class ScPriceChoiceContainer {
     }
 
     return (
-      <sc-choice-container value={this.priceData?.id} type={this.type} showControl={this.showControl} checked={this.checked} onScChange={() => this.scChange.emit()}>
+      <sc-choice-container
+        value={this.priceData?.id}
+        type={this.type}
+        showControl={this.showControl}
+        checked={this.checked}
+        onScChange={() => this.scChange.emit()}
+        required={this.required}
+      >
         <div class="price-choice">
           {this.showLabel && (
             <div class="price-choice__title">
