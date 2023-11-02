@@ -243,7 +243,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.8.1 - November 1st, 2023 =
+= 2.8.1 - November 2st, 2023 =
 * Fix: Theme conflict with GeneratePress causing product page out of stock buttons to appear.
 * Fix: Issue with images using special characters breaking product page slideshow.
 * Fix: Prevent name/company name fields from being emptied when address country changes.
