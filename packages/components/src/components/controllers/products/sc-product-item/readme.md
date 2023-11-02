@@ -7,17 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute | Description           | Type                                        | Default     |
-| -------------- | --------- | --------------------- | ------------------------------------------- | ----------- |
-| `layoutConfig` | --        | Product Layout Config | `{ blockName: string; attributes: any; }[]` | `undefined` |
-| `product`      | --        | Product               | `Product`                                   | `undefined` |
-
-
-## Events
-
-| Event             | Description        | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| ----------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `scProductViewed` | Product was viewed | `CustomEvent<{ id?: string; name?: string; description?: string; archived?: boolean; archived_at?: string; metadata?: any; image_url?: string; recurring?: boolean; tax_category?: string; tax_enabled?: boolean; purchase_limit?: number; permalink?: string; weight?: number; weight_unit?: "kg" \| "lb" \| "g" \| "oz"; prices?: { object: "list"; pagination: Pagination; data: Price[]; }; product_medias?: { object: "list"; pagination: Pagination; data: ProductMedia[]; }; downloads?: { object: "list"; pagination: Pagination; data: Download[]; }; created_at?: number; updated_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }>` |
+| Property       | Attribute | Description | Type                                        | Default     |
+| -------------- | --------- | ----------- | ------------------------------------------- | ----------- |
+| `layoutConfig` | --        |             | `{ blockName: string; attributes: any; }[]` | `undefined` |
+| `product`      | --        |             | `Product`                                   | `undefined` |
 
 
 ## Shadow Parts

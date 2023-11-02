@@ -54,7 +54,6 @@ graph TD;
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-textarea --> sc-form-control
   sc-button --> sc-spinner
   sc-cancel-dialog --> sc-cancel-survey

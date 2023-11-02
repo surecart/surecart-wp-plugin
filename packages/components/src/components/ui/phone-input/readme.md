@@ -130,7 +130,6 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   sc-phone-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-customer-edit --> sc-phone-input
   sc-customer-phone --> sc-phone-input
   style sc-phone-input fill:#f9f,stroke:#333,stroke-width:4px

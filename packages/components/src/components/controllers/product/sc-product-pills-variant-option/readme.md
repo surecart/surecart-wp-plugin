@@ -25,7 +25,6 @@
 graph TD;
   sc-product-pills-variant-option --> sc-form-control
   sc-product-pills-variant-option --> sc-pill-option
-  sc-form-control --> sc-tooltip
   style sc-product-pills-variant-option fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

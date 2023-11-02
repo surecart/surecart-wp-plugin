@@ -69,7 +69,6 @@ graph TD;
   sc-alert --> sc-icon
   sc-button --> sc-spinner
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-empty --> sc-icon
   sc-product-item --> sc-product-item-title
   sc-product-item --> sc-product-item-image

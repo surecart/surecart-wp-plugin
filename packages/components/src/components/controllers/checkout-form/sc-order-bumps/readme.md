@@ -30,7 +30,6 @@
 graph TD;
   sc-order-bumps --> sc-form-control
   sc-order-bumps --> sc-order-bump
-  sc-form-control --> sc-tooltip
   sc-order-bump --> sc-format-number
   sc-order-bump --> sc-choice
   sc-order-bump --> sc-divider

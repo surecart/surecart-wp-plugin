@@ -23,6 +23,7 @@
 | `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
 | `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
 | `setupFeeTrialEnabled` | `setup-fee-trial-enabled` | Is the setup fee not included in the free trial? | `boolean` | `true`      |
+| `sku`                  | `sku`                     | The SKU.                                         | `string`  | `''`        |
 | `trialDurationDays`    | `trial-duration-days`     | Trial duration days                              | `number`  | `undefined` |
 | `variantLabel`         | `variant-label`           | Product variant label                            | `string`  | `''`        |
 
