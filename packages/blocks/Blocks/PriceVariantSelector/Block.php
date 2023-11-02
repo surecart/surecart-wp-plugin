@@ -19,28 +19,27 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-		$product = \SureCart\Models\Product::with(
+		$product = Product::with(
 			[
 				'prices',
 				'variants',
 				'variant_options',
 			]
-		)
-		->find( $attributes['product_id'] );
+		)->find( $attributes['product_id'] );
 
 		if ( empty( $product ) ) {
 			return '';
 		}
 
-		// active prices
+		// active prices.
 		$active_prices = $product->activePrices();
 
-		// must have at least one active price
+		// must have at least one active price.
 		if ( empty( $active_prices[0] ) ) {
 			return '';
 		}
 
-		// prepare data
+		// prepare data.
 		$product                  = $product->withActiveAndSortedPrices();
 		$first_variant_with_stock = $product->getFirstVariantWithStock();
 
