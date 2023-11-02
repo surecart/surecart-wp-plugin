@@ -16,7 +16,7 @@ export default ({ onSelectProduct, productChoices }) => {
 		<Placeholder
 			label={__('Select a product', 'surecart')}
 			instructions={__(
-				'Select a product that has variants to add a price variant selector.',
+				'Please pick a product with available variants to use the Variant Price Selector.',
 				'surecart'
 			)}
 		>
