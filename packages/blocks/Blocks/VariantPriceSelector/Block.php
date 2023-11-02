@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\PriceVariantSelector;
+namespace SureCartBlocks\Blocks\VariantPriceSelector;
 
 use SureCart\Models\Component;
 use SureCart\Models\Product;
