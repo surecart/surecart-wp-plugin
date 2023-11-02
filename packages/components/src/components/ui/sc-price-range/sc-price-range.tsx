@@ -50,7 +50,7 @@ export class ScPriceRange {
           </span>
         ) : (
           <span>
-            <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number> {' - '}
+            <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number> {' — '}
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>
         )}

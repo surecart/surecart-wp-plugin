@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type      | Default     |
-| ---------- | ----------- | ----------- | --------- | ----------- |
-| `prices`   | --          |             | `Price[]` | `undefined` |
-| `saleText` | `sale-text` |             | `string`  | `undefined` |
+| Property   | Attribute   | Description     | Type      | Default     |
+| ---------- | ----------- | --------------- | --------- | ----------- |
+| `prices`   | --          | The prices list | `Price[]` | `undefined` |
+| `saleText` | `sale-text` | The sale text   | `string`  | `undefined` |
 
 
 ## Shadow Parts

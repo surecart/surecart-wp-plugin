@@ -12,6 +12,8 @@ class BuyPageController extends BasePageController {
 	 */
 	public function filters(): void {
 		parent::filters();
+		// Add edit product link to admin bar.
+		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
 		// do not persist the cart for this page.
 		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
@@ -67,7 +69,7 @@ class BuyPageController extends BasePageController {
 		$id = get_query_var( 'sc_checkout_product_id' );
 
 		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $id );
+		$this->model = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
@@ -97,12 +99,34 @@ class BuyPageController extends BasePageController {
 		// add the filters.
 		$this->filters();
 
+		// prepare data.
+		$this->model              = $this->model->withActiveAndSortedPrices();
+		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
+
+		if ( ! empty( $this->model->prices->data[0]->id ) ) {
+			$line_item = array_merge(
+				[
+					'price_id' => $this->model->prices->data[0]->id,
+					'quantity' => 1,
+				],
+				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
+			);
+			sc_initial_state(
+				[
+					'checkout' => [
+						'initialLineItems' => array_merge(
+							$this->getExistingLineItems(),
+							[ $line_item ]
+						),
+					],
+				]
+			);
+		}
+
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
 				'product'          => $this->model,
-				'prices'           => $active_prices,
-				'selected_price'   => $active_prices[0] ?? null,
 				'terms_text'       => $this->termsText(),
 				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
@@ -119,6 +143,16 @@ class BuyPageController extends BasePageController {
 				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
 			]
 		);
+	}
+
+	/**
+	 * Get any existing line items.
+	 *
+	 * @return array
+	 */
+	public function getExistingLineItems() {
+		$initial = \SureCart::state()->getData();
+		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
 	}
 
 	/**

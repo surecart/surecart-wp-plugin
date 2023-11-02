@@ -73,13 +73,6 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	echo filter_block_content(
 		( new FormBlock() )->render(
 			[
-				'prices'  => [
-					[
-						'id'         => $selected_price->id,
-						'product_id' => $product->id,
-						'quantity'   => 1,
-					],
-				],
 				'product' => $product,
 				'mode'    => $mode,
 			],

@@ -42,4 +42,21 @@ describe('sc-address', () => {
     });
     expect(page.root).toMatchSnapshot();
   });
+
+  it('shows the name field if showName is true', async () => {
+    const page = await newSpecPage({
+      components: [ScAddress],
+      template: () => <sc-address showName={true}></sc-address>,
+    });
+    expect(page.root).toMatchSnapshot();
+  })
+
+
+  it('shows and requires name if requireName is true', async () => {
+    const page = await newSpecPage({
+      components: [ScAddress],
+      template: () => <sc-address requireName={true}></sc-address>,
+    });
+    expect(page.root).toMatchSnapshot();
+  })
 });

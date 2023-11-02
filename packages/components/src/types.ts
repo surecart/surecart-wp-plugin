@@ -74,10 +74,13 @@ interface Model {
 export interface ChoiceItem extends Object {
   value: string;
   label: string;
+  description?: string;
   disabled?: boolean;
   checked?: boolean;
+  unavailable?: boolean;
   choices?: ChoiceItem[];
   suffix?: string;
+  suffixDescription?: string;
   icon?: string;
 }
 
@@ -111,7 +114,18 @@ export interface Price {
   position: number;
   metadata: { [key: string]: string };
 }
-
+export interface VariantOption {
+  id: string;
+  object: string;
+  name: string;
+  position: number;
+  product: Product | string;
+  updated_at: number;
+  created_at: number;
+  label: string;
+  labels: string;
+  values: Array<string>;
+}
 export interface Bump {
   id: string;
   object: 'bump';
@@ -227,6 +241,34 @@ export interface Activation {
   updated_at: number;
 }
 
+export interface Variant {
+  id: string;
+  amount: number;
+  available_stock: number;
+  currency: string;
+  current_version: boolean;
+  held_stock: number;
+  stock: number;
+  object: 'variant';
+  image?: string | Media;
+  image_url?: string;
+  option_1?: string | null;
+  option_2?: string | null;
+  option_3?: string | null;
+  position: number;
+  product: string | Product;
+  sku?: string | null;
+  created_at: number;
+  updated_at: number;
+}
+
+export interface ProductMetrics {
+  currency: string;
+  max_price_amount: number;
+  min_price_amount: number;
+  prices_count: number;
+}
+
 export interface Product extends Object {
   id: string;
   name: string;
@@ -239,6 +281,7 @@ export interface Product extends Object {
   tax_category: string;
   tax_enabled: boolean;
   purchase_limit: number;
+  metrics: ProductMetrics;
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
@@ -246,6 +289,16 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Price>;
+  };
+  variants: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Variant>;
+  };
+  variant_options: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<VariantOption>;
   };
   product_medias: {
     object: 'list';
@@ -257,6 +310,11 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Download>;
   };
+  stock_enabled: boolean;
+  allow_out_of_stock_purchases: boolean;
+  stock: number;
+  available_stock: number;
+  held_stock: number;
   created_at: number;
   updated_at: number;
 }
@@ -297,6 +355,7 @@ export interface LineItemData extends Object {
   bump?: string;
   quantity: number;
   ad_hoc_amount?: number;
+  variant?: string;
 }
 
 export type LineItemsData = {
@@ -326,6 +385,8 @@ export interface LineItem extends Object {
   updated_at: number;
   price?: Price;
   price_id: string;
+  variant_options: Array<string>;
+  variant?: Variant;
 }
 
 export interface DeletedItem {
@@ -353,6 +414,7 @@ export interface PriceChoice {
   quantity: number;
   enabled: boolean;
   selected?: boolean;
+  variant?: string | null;
 }
 
 export type CheckoutState = 'idle' | 'loading' | 'draft' | 'updating' | 'finalized' | 'paid' | 'failure';
@@ -531,6 +593,7 @@ export interface Checkout extends Object {
   total_savings_amount?: number;
   applied_balance_amount?: number;
   discounts?: number;
+  shipping_address_required?: boolean;
   tax_enabled: boolean;
   tax_amount: number;
   email_exists: boolean;
@@ -580,6 +643,7 @@ export interface Checkout extends Object {
   };
   url: string;
   created_at?: number;
+  variant: string;
 }
 
 export interface ShippingMethod {
@@ -713,6 +777,7 @@ export interface Subscription extends Object {
     ad_hoc_amount?: number;
     price?: string;
     quantity?: number;
+    variant?: string;
   };
   purchase: Purchase | string;
   cancel_at_period_end: number | false;
@@ -725,6 +790,8 @@ export interface Subscription extends Object {
   payment_method: PaymentMethod | string;
   price: Price;
   ad_hoc_amount: number;
+  variant?: Variant | string;
+  variant_options?: Array<string>;
   created_at: number;
   updated_at: number;
   restore_at?: number;
@@ -1040,4 +1107,29 @@ export interface GoogleAnalyticsItem {
   coupon?: string;
   currency: string;
   discount?: number;
+}
+
+export interface PaymentInfoAddedParams {
+  checkout_id: string;
+  processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
+  payment_method: {
+    billing_details: {
+      name: string;
+      email: string;
+    };
+  };
+}
+
+export interface CheckoutInitiatedParams {
+  transaction_id: string;
+  value: number;
+  currency: string;
+  coupon?: string;
+  tax?: number;
+  items: Array<{
+    item_name: string;
+    discount: number;
+    price: number;
+    quantity: number;
+  }>;
 }
