@@ -103,7 +103,8 @@
       color: var(--primary-background);
     }
 
-    &:focus:not(.button--disabled) {
+    &:focus:not(.button--disabled),
+    &.button--focused:not(.button--disabled) {
       background-color: var(--sc-button-default-focus-background-color, var(--sc-color-white));
       border-color: var(--sc-button-default-focus-border-color, var(--sc-color-white));
       color: var(--primary-background);

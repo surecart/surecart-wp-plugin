@@ -1,4 +1,5 @@
-import { Component, h, Event, EventEmitter, Element, Method } from '@stencil/core';
+import { Component, h, Event, EventEmitter, Element, Method, Prop } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 @Component({
   tag: 'sc-menu',
   styleUrl: 'sc-menu.scss',
@@ -8,6 +9,8 @@ export class ScMenu {
   @Element() el: HTMLElement;
   @Event() scSelect: EventEmitter<{ item: HTMLScMenuItemElement }>;
   private items: HTMLScMenuItemElement[] = [];
+
+  @Prop({ reflect: false }) ariaLabel: string;
 
   /** TODO: Click test */
   handleClick(event: MouseEvent) {
@@ -97,7 +100,7 @@ export class ScMenu {
 
   render() {
     return (
-      <div part="base" class="menu" role="menu" tabindex="0" onKeyDown={e => this.handleKeyDown(e)}>
+      <div part="base" class="menu" role="menu" tabindex="0" onKeyDown={e => this.handleKeyDown(e)} aria-label={this.ariaLabel || 'Menus'}>
         <slot onSlotchange={() => this.handleSlotChange()}></slot>
       </div>
     );

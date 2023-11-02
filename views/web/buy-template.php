@@ -9,31 +9,31 @@
 				\SureCart::assets()->addComponentData(
 					'sc-image-slider',
 					'#sc-product-media-' . $product->id,
-					[
+					array(
 						'hasThumbnails' => true,
 						'images'        => array_map(
-							function( $product_media ) use ( $product ) {
-								return [
+							function ( $product_media ) use ( $product ) {
+								return array(
 									'src'   => $product_media->getUrl( 450 ),
 									'alt'   => $product_media->media->filename ?? $product->name ?? '',
 									'width' => 450,
-								];
+								);
 							},
 							$product->product_medias->data
 						),
 						'thumbnails'    => array_map(
-							function( $product_media ) use ( $product ) {
-								return [
+							function ( $product_media ) use ( $product ) {
+								return array(
 									'src'    => $product_media->getUrl( 90 ),
-									'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
+									'srcset' => $product_media->getSrcset( array( 90, 120, 240 ) ),
 									'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
 									'alt'    => $product_media->media->filename ?? $product->name ?? '',
 									'width'  => 90,
-								];
+								);
 							},
 							$product->product_medias->data
 						),
-					]
+					)
 				);
 				?>
 			<?php else : ?>
@@ -45,8 +45,7 @@
 			<?php endif; ?>
 		<?php endif; ?>
 
-
-		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1">
+		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1" aria-label="<?php echo esc_attr_e( 'Product name', 'surecart' ); ?>">
 			<?php echo wp_kses_post( $product->name ); ?>
 		</sc-text>
 
@@ -54,6 +53,7 @@
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
+				<span class="screen-reader-text"><?php echo esc_attr_e( 'Product description', 'surecart' ); ?></span>
 				<?php echo wp_kses_post( $product->description ?? '' ); ?>
 			</sc-prose>
 		<?php endif; ?>
@@ -64,9 +64,9 @@
 		\SureCart::assets()->addComponentData(
 			'sc-checkout-product-price-variant-selector',
 			'#sc-product-price-variant-selector-' . $product->id,
-			[
+			array(
 				'product' => $product->toArray(),
-			]
+			)
 		);
 		?>
 		</div>

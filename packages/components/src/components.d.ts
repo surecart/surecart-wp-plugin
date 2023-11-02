@@ -1772,11 +1772,16 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScMenu {
+        "ariaLabel": string;
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
     }
     interface ScMenuDivider {
     }
     interface ScMenuItem {
+        /**
+          * Aria label
+         */
+        "ariaLabel": string;
         /**
           * Draws the item in a checked state.
          */
@@ -3548,6 +3553,10 @@ export namespace Components {
         "href": string;
     }
     interface ScTag {
+        /**
+          * Aria label
+         */
+        "ariaLabel": string;
         /**
           * Makes the tag clearable.
          */
@@ -7519,11 +7528,16 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScMenu {
+        "ariaLabel"?: string;
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
     interface ScMenuDivider {
     }
     interface ScMenuItem {
+        /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
         /**
           * Draws the item in a checked state.
          */
@@ -9449,6 +9463,10 @@ declare namespace LocalJSX {
         "href"?: string;
     }
     interface ScTag {
+        /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
         /**
           * Makes the tag clearable.
          */
