@@ -52,16 +52,16 @@ export class ScProductBuyButton {
 
   getTopLevelError() {
     // checkout invalid is not friendly.
-    if (state?.error?.code === 'checkout.invalid' && getAdditionalErrorMessages()?.length) {
+    if (state.error?.code === 'checkout.invalid' && getAdditionalErrorMessages()?.length) {
       return '';
     }
-    return state?.error?.message;
+    return state.error?.message;
   }
 
   render() {
     return (
       <Host class={{ 'is-busy': state.busy && !!this.addToCart, 'is-disabled': state.disabled }} onClick={e => this.handleCartClick(e)}>
-        {!!state?.error && !!this?.addToCart && (
+        {!!state.error && !!this.addToCart && (
           <sc-alert type="danger" scrollOnOpen={true} open={!!state.error} closable={false}>
             {!!this.getTopLevelError() && <span slot="title" innerHTML={this.getTopLevelError()}></span>}
             {(getAdditionalErrorMessages() || []).map((message, index) => (
