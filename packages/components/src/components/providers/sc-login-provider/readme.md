@@ -48,7 +48,6 @@ graph TD;
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-checkout --> sc-login-provider
   style sc-login-provider fill:#f9f,stroke:#333,stroke-width:4px
 ```

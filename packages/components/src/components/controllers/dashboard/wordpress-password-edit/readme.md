@@ -39,7 +39,6 @@ graph TD;
   sc-alert --> sc-icon
   sc-password --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   style sc-wordpress-password-edit fill:#f9f,stroke:#333,stroke-width:4px

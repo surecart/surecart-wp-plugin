@@ -42,7 +42,6 @@ graph TD;
   sc-checkout-product-price-variant-selector --> sc-pill-option
   sc-checkout-product-price-variant-selector --> sc-choices
   sc-checkout-product-price-variant-selector --> sc-price-choice-container
-  sc-form-control --> sc-tooltip
   sc-choices --> sc-form-control
   sc-price-choice-container --> sc-format-number
   sc-price-choice-container --> sc-choice-container

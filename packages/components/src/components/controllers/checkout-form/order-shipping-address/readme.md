@@ -70,7 +70,6 @@ graph TD;
   sc-address --> sc-input
   sc-address --> sc-select
   sc-address --> sc-block-ui
-  sc-form-control --> sc-tooltip
   sc-input --> sc-form-control
   sc-select --> sc-icon
   sc-select --> sc-menu-label
