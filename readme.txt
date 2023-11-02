@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,14 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.8.1 - November 1st, 2023 =
+* Fix: Theme conflict with GeneratePress causing product page out of stock buttons to appear.
+* Fix: Issue with images using special characters breaking product page slideshow.
+* Fix: Prevent name/company name fields from being emptied when address country changes.
+* Fix: Add theme support for block border settings missing if they are not set by the theme.
+* Fix: Issue where customer could enter a blank password when setting one for the first time on the customer dashboard.
+* Fix: Featured product list filter not working on product list blocks.
 
 = 2.8.0 - November 1st, 2023 =
 New: Product variants.
