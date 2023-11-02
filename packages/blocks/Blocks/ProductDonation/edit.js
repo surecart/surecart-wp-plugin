@@ -8,6 +8,7 @@ import {
 	__experimentalNumberControl as NumberControl,
 	Placeholder,
 } from '@wordpress/components';
+import { productDonationStore } from '@surecart/components';
 import {
 	InspectorControls,
 	useBlockProps,
@@ -73,7 +74,6 @@ export default ({ attributes, setAttributes }) => {
 		amount_label,
 		amount_columns,
 		recurring_label,
-		currency,
 		recurring_choice_label,
 		non_recurring_choice_label,
 	} = attributes;
@@ -108,6 +108,25 @@ export default ({ attributes, setAttributes }) => {
 		orientation: 'horizontal',
 		template: TEMPLATE,
 	});
+
+	const product = useSelect(
+		(select) => {
+			return select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				product_id,
+				{ expand: ['prices'] }
+			);
+		},
+		[product_id]
+	);
+
+	productDonationStore.state[product_id] = {
+		product,
+		amounts: product?.prices?.data.map((price) => price?.amount),
+		ad_hoc_amount: product?.prices?.data[0]?.amount,
+		selectedPrice: product?.prices?.data[0],
+	};
 
 	if (!product_id) {
 		return (
