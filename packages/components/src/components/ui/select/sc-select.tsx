@@ -406,7 +406,9 @@ export class ScSelectDropdown {
         value={choice?.value}
         onClick={() => !choice.disabled && this.handleSelect(choice)}
         onKeyDown={event => {
-          if (event.key === 'Enter' && !choice.disabled) {
+          if ((event.key === 'Enter' || event.key === ' ') && !choice.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
             this.handleSelect(choice);
           }
         }}
