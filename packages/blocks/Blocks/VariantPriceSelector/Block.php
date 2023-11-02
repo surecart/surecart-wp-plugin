@@ -70,6 +70,7 @@ class Block extends BaseBlock {
 			->with(
 				[
 					'product' => $product,
+					'label'   => ! empty( $attributes['label'] ) ? $attributes['label'] : '',
 				]
 			)->render( '' )
 		);
