@@ -19,49 +19,51 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-		$product  = \SureCart\Models\Product::with([
-			'prices',
-			'variants',
-			'variant_options'
-		])
+		$product = \SureCart\Models\Product::with(
+			[
+				'prices',
+				'variants',
+				'variant_options',
+			]
+		)
 		->find( $attributes['product_id'] );
 
-		if(empty($product)){
+		if ( empty( $product ) ) {
 			return '';
 		}
 
-		//active prices
+		// active prices
 		$active_prices = $product->activePrices();
 
 		// must have at least one active price
-		if(empty($active_prices[0])){
+		if ( empty( $active_prices[0] ) ) {
 			return '';
 		}
 
-		//prepare data
-		$product = $product->withActiveAndSortedPrices();
+		// prepare data
+		$product                  = $product->withActiveAndSortedPrices();
 		$first_variant_with_stock = $product->getFirstVariantWithStock();
 
-		if(!empty($product->prices->data[0]->id)){
+		if ( ! empty( $product->prices->data[0]->id ) ) {
 			$line_item = array_merge(
 				[
 					'price_id' => $product->prices->data[0]->id,
 					'quantity' => 1,
 				],
-				!empty($first_variant_with_stock->id) ? ['variant_id' => $first_variant_with_stock->id] : []
+				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
 			);
 
-			sc_initial_state([
-				'checkout' => [
-					'initialLineItems' => array_merge(
-						$this->getExistingLineItems(),
-						[$line_item]
-					),
-				],
-			]);
+			sc_initial_state(
+				[
+					'checkout' => [
+						'initialLineItems' => array_merge(
+							$this->getExistingLineItems(),
+							[ $line_item ]
+						),
+					],
+				]
+			);
 		}
-
-
 
 		return wp_kses_post(
 			Component::tag( 'sc-checkout-product-price-variant-selector' )
@@ -70,7 +72,8 @@ class Block extends BaseBlock {
 				[
 					'product' => $product,
 				]
-			)->render( '' ) );
+			)->render( '' )
+		);
 	}
 
 	/**
