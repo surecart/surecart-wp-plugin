@@ -30,7 +30,6 @@
 ```mermaid
 graph TD;
   sc-button-group --> sc-form-control
-  sc-form-control --> sc-tooltip
   style sc-button-group fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

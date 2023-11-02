@@ -5,24 +5,10 @@
 
 ## Properties
 
-| Property          | Attribute           | Description | Type                       | Default     |
-| ----------------- | ------------------- | ----------- | -------------------------- | ----------- |
-| `busy`            | `busy`              |             | `boolean`                  | `undefined` |
-| `editLineItems`   | `edit-line-items`   |             | `boolean`                  | `true`      |
-| `editable`        | `editable`          |             | `boolean`                  | `undefined` |
-| `lockedChoices`   | --                  |             | `PriceChoice[]`            | `[]`        |
-| `order`           | --                  |             | `Checkout`                 | `undefined` |
-| `prices`          | --                  |             | `{ [id: string]: Price; }` | `undefined` |
-| `removable`       | `removable`         |             | `boolean`                  | `undefined` |
-| `removeLineItems` | `remove-line-items` |             | `boolean`                  | `true`      |
-
-
-## Events
-
-| Event              | Description           | Type                        |
-| ------------------ | --------------------- | --------------------------- |
-| `scRemoveLineItem` | Remove the line item. | `CustomEvent<LineItemData>` |
-| `scUpdateLineItem` | Update the line item. | `CustomEvent<LineItemData>` |
+| Property    | Attribute   | Description                 | Type      | Default     |
+| ----------- | ----------- | --------------------------- | --------- | ----------- |
+| `editable`  | `editable`  | Is the line item editable?  | `boolean` | `undefined` |
+| `removable` | `removable` | Is the line item removable? | `boolean` | `undefined` |
 
 
 ## Shadow Parts

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-10-19T13:36:04",
+  "timestamp": "2023-11-02T17:02:24",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -386,9 +386,6 @@
           "sc-input",
           "sc-select",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-input": [
           "sc-form-control"
@@ -2100,9 +2097,6 @@
       "dependencyGraph": {
         "sc-button-group": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -2244,9 +2238,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-textarea": [
           "sc-form-control"
@@ -2490,9 +2481,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-textarea": [
           "sc-form-control"
@@ -3123,6 +3111,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "variantId",
+          "type": "string",
+          "mutable": false,
+          "attr": "variant-id",
+          "reflectToAttr": false,
+          "docs": "The variant id to add.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -3155,22 +3159,6 @@
       "docsTags": [],
       "usage": {},
       "props": [
-        {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "Is the cart busy",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "full",
           "type": "boolean",
@@ -3306,23 +3294,7 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "lineItems",
-          "type": "LineItem[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "LineItem[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [
         {
@@ -3374,39 +3346,6 @@
       "usage": {},
       "props": [
         {
-          "name": "count",
-          "type": "number",
-          "mutable": false,
-          "attr": "count",
-          "reflectToAttr": false,
-          "docs": "The count to show in the cart icon.",
-          "docsTags": [],
-          "default": "0",
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "formId",
-          "type": "string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": true,
-          "docs": "The form id to use for the cart.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "icon",
           "type": "string",
           "mutable": false,
@@ -3417,28 +3356,6 @@
           "default": "'shopping-bag'",
           "values": [
             {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Are we in test or live mode.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
               "type": "string"
             }
           ],
@@ -3485,44 +3402,6 @@
       "usage": {},
       "props": [
         {
-          "name": "formId",
-          "type": "string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": true,
-          "docs": "The form id to use for the cart.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "The mode for the form.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "template",
           "type": "string",
           "mutable": false,
@@ -3557,23 +3436,7 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Order Object",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
+      "props": [],
       "methods": [],
       "events": [
         {
@@ -3583,15 +3446,6 @@
           "cancelable": true,
           "composed": true,
           "docs": "Set the state",
-          "docsTags": []
-        },
-        {
-          "event": "scUpdateOrderState",
-          "detail": "Checkout",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Update line items event",
           "docsTags": []
         }
       ],
@@ -3645,127 +3499,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "checkoutLink",
-          "type": "string",
-          "mutable": false,
-          "attr": "checkout-link",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "full",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "full",
-          "reflectToAttr": false,
-          "docs": "Show a full-width button.",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "icon",
-          "type": "string",
-          "mutable": false,
-          "attr": "icon",
-          "reflectToAttr": false,
-          "docs": "Icon to show.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "size",
-          "type": "\"large\" | \"medium\" | \"small\"",
-          "mutable": false,
-          "attr": "size",
-          "reflectToAttr": true,
-          "docs": "The button's size.",
-          "docsTags": [],
-          "default": "'medium'",
-          "values": [
-            {
-              "value": "large",
-              "type": "string"
-            },
-            {
-              "value": "medium",
-              "type": "string"
-            },
-            {
-              "value": "small",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "type",
-          "type": "\"danger\" | \"default\" | \"info\" | \"link\" | \"primary\" | \"success\" | \"text\" | \"warning\"",
-          "mutable": false,
-          "attr": "type",
-          "reflectToAttr": true,
-          "docs": "The button type.",
-          "docsTags": [],
-          "default": "'primary'",
-          "values": [
-            {
-              "value": "danger",
-              "type": "string"
-            },
-            {
-              "value": "default",
-              "type": "string"
-            },
-            {
-              "value": "info",
-              "type": "string"
-            },
-            {
-              "value": "link",
-              "type": "string"
-            },
-            {
-              "value": "primary",
-              "type": "string"
-            },
-            {
-              "value": "success",
-              "type": "string"
-            },
-            {
-              "value": "text",
-              "type": "string"
-            },
-            {
-              "value": "warning",
-              "type": "string"
             }
           ],
           "optional": false,
@@ -4691,9 +4424,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-form-state-provider": [
           "sc-block-ui"
         ],
@@ -4933,6 +4663,7 @@
       "filePath": "./src/components/controllers/checkout-form/sc-checkout-product-price-variant-selector/sc-checkout-product-price-variant-selector.tsx",
       "encapsulation": "none",
       "tag": "sc-checkout-product-price-variant-selector",
+      "readme": "# sc-checkout-product-price-variant-selector\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5000,9 +4731,6 @@
           "sc-pill-option",
           "sc-choices",
           "sc-price-choice-container"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-choices": [
           "sc-form-control"
@@ -6067,9 +5795,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-cancel-survey": [
           "sc-choices"
         ],
@@ -6528,9 +6253,6 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-select": [
           "sc-icon",
@@ -7037,9 +6759,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -7272,9 +6991,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -7650,9 +7366,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-phone-input": [
           "sc-form-control"
@@ -8043,9 +7756,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -8393,9 +8103,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -8707,9 +8414,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -9005,9 +8709,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -9337,9 +9038,6 @@
         ],
         "sc-phone-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -10380,9 +10078,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-price-input": [
           "sc-input"
@@ -11923,9 +11618,6 @@
           "sc-select",
           "sc-block-ui"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -12027,38 +11719,6 @@
       ],
       "usage": {},
       "props": [
-        {
-          "name": "errorMessage",
-          "type": "string",
-          "mutable": true,
-          "attr": "error-message",
-          "reflectToAttr": false,
-          "docs": "Store the error message",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "errors",
-          "type": "any",
-          "mutable": false,
-          "attr": "errors",
-          "reflectToAttr": false,
-          "docs": "Display server-side validation errors.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "any"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "help",
           "type": "string",
@@ -12265,13 +11925,8 @@
         "sc-stripe-element",
         "sc-textarea"
       ],
-      "dependencies": [
-        "sc-tooltip"
-      ],
+      "dependencies": [],
       "dependencyGraph": {
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-address": [
           "sc-form-control"
         ],
@@ -14886,9 +14541,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-address": [
           "sc-input"
         ],
@@ -15184,9 +14836,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -15626,23 +15275,7 @@
       "usage": {},
       "props": [
         {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
+          "name": "checkout",
           "type": "Checkout",
           "mutable": false,
           "reflectToAttr": false,
@@ -15821,95 +15454,16 @@
       "usage": {},
       "props": [
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "editLineItems",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "edit-line-items",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "editable",
           "type": "boolean",
           "mutable": false,
           "attr": "editable",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is the line item editable?",
           "docsTags": [],
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "lockedChoices",
-          "type": "PriceChoice[]",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "[]",
-          "values": [
-            {
-              "type": "PriceChoice[]"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "prices",
-          "type": "{ [id: string]: Price; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ [id: string]: Price; }"
             }
           ],
           "optional": false,
@@ -15921,25 +15475,8 @@
           "mutable": false,
           "attr": "removable",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Is the line item removable?",
           "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "removeLineItems",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "remove-line-items",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "true",
           "values": [
             {
               "type": "boolean"
@@ -15950,26 +15487,7 @@
         }
       ],
       "methods": [],
-      "events": [
-        {
-          "event": "scRemoveLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Remove the line item.",
-          "docsTags": []
-        },
-        {
-          "event": "scUpdateLineItem",
-          "detail": "LineItemData",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Update the line item.",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -16197,9 +15715,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -16313,9 +15828,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-checkout": [
           "sc-login-provider"
@@ -17078,9 +16590,6 @@
           "sc-form-control",
           "sc-order-bump"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-order-bump": [
           "sc-format-number",
           "sc-choice",
@@ -17693,22 +17202,6 @@
       "usage": {},
       "props": [
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "buttonText",
           "type": "string",
           "mutable": false,
@@ -17741,22 +17234,6 @@
           "required": false
         },
         {
-          "name": "error",
-          "type": "any",
-          "mutable": false,
-          "attr": "error",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "any"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -17783,21 +17260,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
             }
           ],
           "optional": false,
@@ -17856,9 +17318,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -18544,9 +18003,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -19066,9 +18522,6 @@
           "sc-input",
           "sc-select",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-input": [
           "sc-form-control"
@@ -19982,9 +19435,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -20649,9 +20099,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-order-password": [
           "sc-password"
         ],
@@ -20801,9 +20248,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -20984,9 +20428,6 @@
         ],
         "sc-payment-selected": [
           "sc-divider"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-checkout-mollie-payment": [
           "sc-card",
@@ -22643,9 +22084,6 @@
         "sc-phone-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-customer-edit": [
           "sc-phone-input"
         ],
@@ -23435,9 +22873,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -23957,9 +23392,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-custom-order-price-input": [
           "sc-price-input"
         ],
@@ -24470,7 +23902,17 @@
         }
       ],
       "methods": [],
-      "events": [],
+      "events": [
+        {
+          "event": "scSearched",
+          "detail": "string",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Product was searched",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -24515,9 +23957,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-empty": [
           "sc-icon"
@@ -24969,6 +24408,23 @@
           "required": false
         },
         {
+          "name": "sku",
+          "type": "string",
+          "mutable": false,
+          "attr": "sku",
+          "reflectToAttr": false,
+          "docs": "The SKU.",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "trialDurationDays",
           "type": "number",
           "mutable": false,
@@ -25215,9 +24671,6 @@
         "sc-product-pills-variant-option": [
           "sc-form-control",
           "sc-pill-option"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -25353,9 +24806,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
@@ -25437,9 +24887,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -25593,9 +25040,6 @@
           "sc-form-control",
           "sc-quantity-select"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-quantity-select": [
           "sc-icon"
         ]
@@ -25669,9 +25113,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -26890,9 +26331,6 @@
           "sc-button",
           "sc-icon"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ]
@@ -27683,9 +27121,6 @@
           "sc-spinner",
           "sc-menu"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -27904,9 +27339,6 @@
           "sc-radio",
           "sc-format-number",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -28789,7 +28221,16 @@
           "bubbles": true,
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "The order/invoice was paid for",
+          "docsTags": []
+        },
+        {
+          "event": "scPaymentInfoAdded",
+          "detail": "PaymentInfoAddedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Payment information was added",
           "docsTags": []
         },
         {
@@ -28815,9 +28256,6 @@
         "sc-stripe-element": [
           "sc-form-control",
           "sc-text"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -28851,6 +28289,15 @@
           "cancelable": true,
           "composed": true,
           "docs": "The order/invoice was paid for.",
+          "docsTags": []
+        },
+        {
+          "event": "scPaymentInfoAdded",
+          "detail": "PaymentInfoAddedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Payment information was added",
           "docsTags": []
         },
         {
@@ -29427,9 +28874,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-textarea": [
           "sc-form-control"
         ],
@@ -29519,9 +28963,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -30087,9 +29528,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-payment-method": [
           "sc-tooltip",
           "sc-button",
@@ -30200,9 +29638,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -30528,9 +29963,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-alert": [
           "sc-icon"
         ],
@@ -30659,9 +30091,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-input": [
           "sc-form-control"
@@ -32032,9 +31461,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -32772,9 +32198,6 @@
         "sc-textarea": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-cancel-survey": [
           "sc-textarea"
         ]
@@ -33258,14 +32681,10 @@
         }
       ],
       "dependents": [
-        "sc-form-control",
         "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-payment-method": [
           "sc-tooltip"
         ]
@@ -33588,9 +33007,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -33823,9 +33239,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -34003,9 +33416,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"

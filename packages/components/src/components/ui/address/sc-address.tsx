@@ -121,6 +121,7 @@ export class ScAddress {
 
   clearAddress() {
     this.address = {
+      name: this.address?.name,
       country: null,
       city: null,
       line_1: null,

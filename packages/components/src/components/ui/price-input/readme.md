@@ -115,7 +115,6 @@ Type: `Promise<void>`
 graph TD;
   sc-price-input --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-custom-order-price-input --> sc-price-input
   sc-donation-choices --> sc-price-input
   sc-product-price-modal --> sc-price-input
