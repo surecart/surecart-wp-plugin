@@ -68,7 +68,7 @@ export class ScShippingChoices {
             </sc-radio>
           ))}
         </sc-radio-group>
-        {checkoutIsLocked() && <sc-block-ui></sc-block-ui>}
+        {checkoutIsLocked('selected_shipping_choice') && <sc-block-ui></sc-block-ui>}
       </Host>
     );
   }

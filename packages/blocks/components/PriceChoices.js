@@ -4,10 +4,11 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import PriceChoice from './PriceChoice';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 import { styles } from '@admin/styles/admin';
+import PriceSelector from './PriceSelector';
 
-export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
+export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 	const renderTable = () => {
 		return (
 			<sc-card no-padding>
@@ -31,7 +32,6 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 							<PriceChoice
 								key={index}
 								choice={choice}
-								onSelect={(id) => onUpdate({ id }, index)}
 								onRemove={() => onRemove(index)}
 								onUpdate={(data) => onUpdate(data, index)}
 							/>
@@ -76,10 +76,22 @@ export default ({ choices, onUpdate, onRemove, onAddProduct, description }) => {
 					align-items: center;
 				`}
 			>
-				<ScButton onClick={onAddProduct}>
-					<sc-icon name="plus" slot="prefix"></sc-icon>
-					{__('Add Product', 'surecart')}
-				</ScButton>
+				<PriceSelector
+					ad_hoc={false}
+					onSelect={({ price_id, variant_id }) =>
+						onUpdate({ id: price_id, variant_id })
+					}
+					requestQuery={{
+						archived: false,
+					}}
+					allowOutOfStockSelection={true}
+					{...rest}
+				>
+					<ScButton slot="trigger" type="default">
+						<ScIcon name="plus" slot="prefix" />
+						{__('Add Product', 'surecart')}
+					</ScButton>
+				</PriceSelector>
 			</div>
 		</div>
 	);

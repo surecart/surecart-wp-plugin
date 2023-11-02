@@ -15,6 +15,13 @@
 | `quantity` | `quantity` | The quantity                     | `number`           | `1`         |
 
 
+## Events
+
+| Event           | Description        | Type                                   |
+| --------------- | ------------------ | -------------------------------------- |
+| `scAddedToCart` | Item added to cart | `CustomEvent<CartGoogleAnalyticsItem>` |
+
+
 ## Dependencies
 
 ### Depends on

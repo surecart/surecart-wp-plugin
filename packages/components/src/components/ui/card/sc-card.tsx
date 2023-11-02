@@ -1,5 +1,4 @@
 import { Component, h, Prop, Element, State } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 
 /**
  * @part base - The elements base wrapper.
@@ -47,5 +46,3 @@ export class ScCard {
     );
   }
 }
-
-openWormhole(ScCard, ['loading'], false);
