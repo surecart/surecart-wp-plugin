@@ -2,6 +2,8 @@
 
 namespace SureCartBlocks\Blocks;
 
+use SureCart\Models\Product;
+
 /**
  * Product Block
  */
@@ -13,8 +15,8 @@ abstract class ProductBlock extends BaseBlock {
 	 *
 	 * @return string
 	 */
-	public function getProductId( $attributes ) {
-		return ! empty( $attributes['product_id'] ) ? $attributes['product_id'] : get_query_var( 'surecart_current_product' )->id;
+	public function getProductId( array $attributes ): string {
+		return $attributes['product_id'] ?? get_query_var( 'surecart_current_product' )->id ?? '';
 	}
 
 	/**
@@ -24,7 +26,7 @@ abstract class ProductBlock extends BaseBlock {
 	 *
 	 * @return Product
 	 */
-	public function getProduct( $attributes ) {
+	public function getProduct( array $attributes ): Product {
 		if ( empty( $attributes['product_id'] ) ) {
 			return get_query_var( 'surecart_current_product' );
 		}

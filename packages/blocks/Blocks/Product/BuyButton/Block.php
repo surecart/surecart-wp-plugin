@@ -16,9 +16,10 @@ class Block extends ProductBlock {
 	public static $instance;
 
 	/**
-	 * Get the style for the block
+	 * Get the style for the block.
 	 *
-	 * @param  array $attributes Style variables.
+	 * @param array  $attr Style variables.
+	 * @param string $prefix Prefix.
 	 * @return string
 	 */
 	public function getVars( $attr, $prefix ) {
