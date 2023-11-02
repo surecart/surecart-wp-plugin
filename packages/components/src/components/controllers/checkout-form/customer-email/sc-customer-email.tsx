@@ -66,9 +66,6 @@ export class ScCustomerEmail {
   /** Is busy or not eg: email checking */
   @State() busy: boolean;
 
-  /** After email search if user is found */
-  @State() user: any = null;
-
   /** Error */
   @State() error: string = '';
 
@@ -111,25 +108,24 @@ export class ScCustomerEmail {
 
   @Watch('value')
   async createLoginCode() {
-    if (!this?.input?.value) return;
+    if (!this.value) return;
 
     // Check if a valid email using regex, if not return.
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.input.value)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
       return;
     }
 
     try {
       this.busy = true;
-      const user = (await apiFetch({
+      await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
         data: {
-          login: this?.input?.value,
+          login: this.value,
         },
-      })) as any;
-      userState.email = user?.email;
+      });
+      userState.email = this.value;
       userState.matched = true;
-      userState.loggedIn = false;
     } catch (e) {
       this.handleCodeSendError(e);
     } finally {
@@ -143,6 +139,9 @@ export class ScCustomerEmail {
 
   @Method()
   async reportValidity() {
+    // if user is logged in, no need to validate.
+    if (userState.loggedIn) return true;
+
     return this.input?.reportValidity?.();
   }
 
@@ -165,6 +164,10 @@ export class ScCustomerEmail {
     }
 
     this.value = checkoutState?.checkout?.email || (checkoutState?.checkout?.customer as Customer)?.email;
+
+    if (!!this.value && !userState.loggedIn) {
+      userState.email = this.value;
+    }
   }
 
   /** Listen to checkout. */
@@ -246,7 +249,10 @@ export class ScCustomerEmail {
               autofocus={this.autofocus}
               hasFocus={this.hasFocus}
               onScChange={() => this.handleChange()}
-              onScInput={() => this.scInput.emit()}
+              onScInput={() => {
+                this.scInput.emit();
+                this.createLoginCode();
+              }}
               onScFocus={() => this.scFocus.emit()}
               onScBlur={() => this.scBlur.emit()}
             ></sc-input>
@@ -254,25 +260,6 @@ export class ScCustomerEmail {
             {this.busy && (
               <div class="account-loader">
                 <sc-spinner />
-              </div>
-            )}
-
-            {/* If a valid email  */}
-            {this.isValidEmail() && !this.busy && (
-              <div class="account-loader">
-                <sc-button
-                  type="text"
-                  onClick={() => this.createLoginCode()}
-                  style={{
-                    position: 'absolute',
-                    top: '-13px',
-                    right: '0px',
-                    width: '40px',
-                    zIndex: '1',
-                  }}
-                >
-                  <sc-icon name="arrow-right" />
-                </sc-button>
               </div>
             )}
 

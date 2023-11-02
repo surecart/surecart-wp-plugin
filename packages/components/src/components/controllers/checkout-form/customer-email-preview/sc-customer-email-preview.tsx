@@ -23,7 +23,7 @@ export class ScCustomerEmailPreview {
       this.busy = true;
       await apiFetch({
         method: 'POST',
-        path: 'surecart/v1/logout'
+        path: 'surecart/v1/logout',
       });
 
       userState.loggedIn = false;
@@ -45,14 +45,14 @@ export class ScCustomerEmailPreview {
           <sc-flex justifyContent="flex-end" alignItems="center">
             <span class="customer-email">{userState.email}</span>
 
-            <span>
+            <sc-tooltip type="text" text={__('Logout', 'surecart')}>
               {(userState.loggedIn && (
                 <sc-button type="text" onClick={() => this.logout()} loading={this.busy}>
                   <sc-icon name="log-out" />
                 </sc-button>
               )) ||
                 ''}
-            </span>
+            </sc-tooltip>
           </sc-flex>
         </sc-flex>
       </Host>
