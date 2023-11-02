@@ -18,6 +18,7 @@
 | `quantityUpdatesEnabled` | `quantity-updates-enabled` |             | `boolean`                                       | `true`      |
 | `subscriptionId`         | `subscription-id`          |             | `string`                                        | `undefined` |
 | `successUrl`             | `success-url`              |             | `string`                                        | `undefined` |
+| `variantId`              | `variant-id`               |             | `string`                                        | `undefined` |
 
 
 ## Dependencies

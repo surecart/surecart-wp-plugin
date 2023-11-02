@@ -1,5 +1,7 @@
 import { createStore } from '@stencil/store';
 import { ManualPaymentMethod, PaymentMethodType, Processor } from '../../types';
+import { getSerializedState } from '@store/utils';
+const { processors } = getSerializedState();
 
 interface Store {
   processors: Processor[];
@@ -42,6 +44,7 @@ const { state, onChange, on, dispose } = createStore<Store>(
         paymentElement: false,
       },
     },
+    ...processors,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

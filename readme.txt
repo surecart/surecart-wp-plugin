@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.7.5
+Stable tag: 2.8.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,21 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.8.0 - November 1st, 2023 =
+New: Product variants.
+New: Stock management.
+New: Product SKU.
+Improvement: Redesign of the line item quantity selector.
+Improvement: Display of price name on line items in addition to the variant.
+Improvement: Preloading of price choices to speed up checkout form loading.
+Improvement: Faster loading of checkout forms with preset prices.
+Fix: Issue with forms not loading properly when editing in admin.
+Fix: Typo in the deletion of webhook processes that prevented clearing of process logs older than 90 days.
+Fix: Z-index issue on the checkout page during the loading state.
+Fix: Improved handling of price version mismatches on the checkout form.
+Fix: Issue with customers not being able to add non-credit card Mollie payment methods on the customer dashboard.
+Fix: Use of hashed strings for transient caching to prevent excessively long transient names.
 
 = 2.7.5 - October 6th, 2023 =
 * Fix: Issue with some merchant admins not loading if using javascript browser caching.

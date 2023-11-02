@@ -42,16 +42,12 @@ export default ({ attributes, setAttributes }) => {
 
 	const [title, setTitle] = useEntityProp('postType', 'sc_form', 'title', id);
 
-	const innerBlocksProps = useInnerBlocksProps(
-		{},
-		{
-			value: blocks,
-			onInput,
-			onChange,
-			template: [['surecart/form', {}]],
-			templateLock: 'all',
-		}
-	);
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		value: blocks,
+		onInput,
+		onChange,
+		templateLock: 'all',
+	});
 
 	const { isMissing, hasResolved } = useSelect((select) => {
 		const hasResolved = select(coreStore).hasFinishedResolution(
@@ -110,7 +106,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div {...blockProps}>{<div {...innerBlocksProps} />}</div>
+			<div {...innerBlocksProps} />
 		</>
 	);
 };

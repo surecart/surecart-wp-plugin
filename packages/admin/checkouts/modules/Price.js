@@ -15,6 +15,7 @@ import {
 	ScPriceInput,
 	ScForm,
 } from '@surecart/components-react';
+import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({
 	price,
@@ -24,6 +25,7 @@ export default ({
 	onChange,
 	subtotal_amount,
 	ad_hoc_amount,
+	lineItem,
 }) => {
 	const imageUrl = price?.product?.image_url;
 	const [open, setOpen] = useState(false);
@@ -44,16 +46,26 @@ export default ({
 							<img
 								src={imageUrl}
 								css={css`
-									width: 40px;
-									height: 40px;
-									object-fit: cover;
-									background: #f3f3f3;
-									display: flex;
-									align-items: center;
-									justify-content: center;
-									border-radius: var(
-										--sc-border-radius-small
+									width: var(
+										--sc-product-line-item-image-size,
+										4em
 									);
+									height: var(
+										--sc-product-line-item-image-size,
+										4em
+									);
+									object-fit: cover;
+									border-radius: 4px;
+									border: solid 1px
+										var(
+											--sc-input-border-color,
+											var(--sc-input-border)
+										);
+									display: block;
+									box-shadow: var(--sc-input-box-shadow);
+									-webkit-align-self: flex-start;
+									-ms-flex-item-align: start;
+									align-self: flex-start;
 								`}
 							/>
 						) : (
@@ -83,17 +95,21 @@ export default ({
 						<div>
 							<div>
 								<strong>{price?.product?.name}</strong>
+								<LineItemLabel lineItem={lineItem}>
+									<div>
+										<ScFormatNumber
+											type="currency"
+											currency={price?.currency || 'usd'}
+											value={
+												!!price?.ad_hoc && ad_hoc_amount
+													? ad_hoc_amount
+													: price?.amount
+											}
+										/>
+										{intervalString(price)}
+									</div>
+								</LineItemLabel>
 							</div>
-							<ScFormatNumber
-								type="currency"
-								currency={price?.currency || 'usd'}
-								value={
-									!!price?.ad_hoc && ad_hoc_amount
-										? ad_hoc_amount
-										: price?.amount
-								}
-							/>
-							{intervalString(price)}
 						</div>
 					</ScFlex>
 				</ScTableCell>

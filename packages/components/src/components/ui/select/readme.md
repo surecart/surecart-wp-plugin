@@ -39,15 +39,15 @@
 
 ## Events
 
-| Event         | Description                                       | Type                  |
-| ------------- | ------------------------------------------------- | --------------------- |
-| `scBlur`      | Emitted when the control loses focus.             | `CustomEvent<void>`   |
-| `scChange`    | Emitted when the control's value changes.         | `CustomEvent<void>`   |
-| `scClose`     | Emitted whent the components search query changes | `CustomEvent<string>` |
-| `scFocus`     | Emitted when the control gains focus.             | `CustomEvent<void>`   |
-| `scOpen`      | Emitted whent the components search query changes | `CustomEvent<string>` |
-| `scScrollEnd` | Emitted when the list scrolls to the end.         | `CustomEvent<void>`   |
-| `scSearch`    | Emitted whent the components search query changes | `CustomEvent<string>` |
+| Event         | Description                                       | Type                      |
+| ------------- | ------------------------------------------------- | ------------------------- |
+| `scBlur`      | Emitted when the control loses focus.             | `CustomEvent<void>`       |
+| `scChange`    | Emitted when the control's value changes.         | `CustomEvent<ChoiceItem>` |
+| `scClose`     | Emitted whent the components search query changes | `CustomEvent<string>`     |
+| `scFocus`     | Emitted when the control gains focus.             | `CustomEvent<void>`       |
+| `scOpen`      | Emitted whent the components search query changes | `CustomEvent<string>`     |
+| `scScrollEnd` | Emitted when the list scrolls to the end.         | `CustomEvent<void>`       |
+| `scSearch`    | Emitted whent the components search query changes | `CustomEvent<string>`     |
 
 
 ## Methods
@@ -100,6 +100,7 @@ Type: `Promise<void>`
 
  - [sc-address](../address)
  - [sc-compact-address](../sc-compact-address)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
 
 ### Depends on
 
@@ -127,6 +128,7 @@ graph TD;
   sc-input --> sc-form-control
   sc-address --> sc-select
   sc-compact-address --> sc-select
+  sc-subscription-variation-confirm --> sc-select
   style sc-select fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
