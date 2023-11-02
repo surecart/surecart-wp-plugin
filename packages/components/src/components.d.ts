@@ -3730,6 +3730,7 @@ export namespace Components {
           * Is this a borderless toggle?
          */
         "borderless": boolean;
+        "closeSpeakText": string;
         /**
           * Are these collapsible?
          */
@@ -3742,6 +3743,7 @@ export namespace Components {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
+        "openSpeakText": string;
         /**
           * Is this a shady
          */
@@ -9642,6 +9644,7 @@ declare namespace LocalJSX {
           * Is this a borderless toggle?
          */
         "borderless"?: boolean;
+        "closeSpeakText"?: string;
         /**
           * Are these collapsible?
          */
@@ -9662,6 +9665,7 @@ declare namespace LocalJSX {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        "openSpeakText"?: string;
         /**
           * Is this a shady
          */
