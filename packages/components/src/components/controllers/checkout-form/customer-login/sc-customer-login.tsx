@@ -134,7 +134,9 @@ export class ScCustomerLogin {
     });
   }
 
-  async loginByPassword() {
+  async loginByPassword(e: any) {
+    e.preventDefault();
+
     try {
       this.error = '';
       this.busy = true;
@@ -163,28 +165,26 @@ export class ScCustomerLogin {
   renderPasswordView() {
     return (
       <div class="use-password">
-        <sc-form onScSubmit={() => this.loginByPassword()}>
-          <sc-flex alignItems="center">
-            <sc-input
-              type="password"
-              style={{ flex: '1' }}
-              placeholder={__('Password', 'surecart')}
-              required
-              disabled={this.busy}
-              onScInput={(e: any) => (this.password = e.target.value)}
-              onKeyDown={(e: any) => {
-                if (e.key === 'Enter') {
-                  this.loginByPassword();
-                }
-              }}
-            />
-            <sc-button size="medium" submit type="primary" loading={this.busy}>
-              <sc-icon slot="prefix" name="lock" />
-              &nbsp;
-              {__('Login', 'surecart')}
-            </sc-button>
-          </sc-flex>
-        </sc-form>
+        <sc-flex alignItems="center">
+          <sc-input
+            type="password"
+            style={{ flex: '1' }}
+            placeholder={__('Password', 'surecart')}
+            required
+            disabled={this.busy}
+            onScInput={(e: any) => (this.password = e.target.value)}
+            onKeyDown={(e: any) => {
+              if (e.key === 'Enter') {
+                this.loginByPassword(e);
+              }
+            }}
+          />
+          <sc-button size="medium" type="primary" loading={this.busy} onClick={(e: any) => this.loginByPassword(e)}>
+            <sc-icon slot="prefix" name="lock" />
+            &nbsp;
+            {__('Login', 'surecart')}
+          </sc-button>
+        </sc-flex>
         {!!this.error && <p class="login-error">{this.error}</p>}
       </div>
     );

@@ -3,12 +3,15 @@
  */
 import { Component, h, Host, State } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
+import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { state as userState } from '@store/user';
+import { Checkout } from 'src/types';
+import { createOrUpdateCheckout } from '@services/session';
 
 @Component({
   tag: 'sc-customer-email-preview',
@@ -21,6 +24,11 @@ export class ScCustomerEmailPreview {
   async logout() {
     try {
       this.busy = true;
+
+      // Clear checkout state first.
+      checkoutState.checkout = (await createOrUpdateCheckout({ id: checkoutState.checkout.id, data: { email: '' } })) as Checkout;
+
+      // Logout.
       await apiFetch({
         method: 'POST',
         path: 'surecart/v1/logout',
