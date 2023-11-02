@@ -81,7 +81,7 @@ class Block extends BaseBlock {
 	 *
 	 * @return array
 	 */
-	private function getExistingLineItems() {
+	private function getExistingLineItems(): array {
 		$initial_state = \SureCart::state()->getData();
 		return $initial_state['checkout']['initialLineItems'] ?? [];
 	}
