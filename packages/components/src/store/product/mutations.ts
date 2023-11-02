@@ -9,11 +9,10 @@ import { setProduct } from './setters';
 
 export const submitCartForm = async (productId: string) => {
   const productState = state[productId];
-  console.log('state',state)
-  console.log('productState',productState)
   if (!productState) return;
   if (!productState.selectedPrice?.id) return;
   if (productState.selectedPrice?.ad_hoc && (null === productState.adHocAmount || undefined === productState.adHocAmount)) return;
+
   try {
     setProduct(productId, { busy: true });
     const checkout = await addLineItem({
@@ -69,7 +68,7 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
   });
 };
 
-export const addProductToState = (product:Product,formId:number, mode:'live'|'test', checkoutLink:string) => {
+export const addProductToState = (product: Product, formId: number, mode: 'live' | 'test', checkoutLink: string) => {
   if (!product?.id) return;
 
   const prices = product?.prices?.data || [];
@@ -81,7 +80,7 @@ export const addProductToState = (product:Product,formId:number, mode:'live'|'te
     mode: mode || 'live',
     product: product,
     prices,
-    quantity:  1,
+    quantity: 1,
     selectedPrice,
     total: null,
     dialog: null,

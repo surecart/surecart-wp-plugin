@@ -1,7 +1,6 @@
 import { createStore } from '@stencil/store';
 import { ProductState } from 'src/types';
 
-
 interface Store {
   [key: string]: ProductState;
 }
@@ -12,35 +11,32 @@ const adHocAmount = selectedPrice?.amount || null;
 
 const defaultState: Store = {};
 
-if(!!product?.id){
+if (!!product?.id) {
   defaultState[product.id] = {
     formId: window?.scData?.product_data?.form?.ID,
-      mode: window?.scData?.product_data?.mode || 'live',
-      product,
-      prices,
+    mode: window?.scData?.product_data?.mode || 'live',
+    product,
+    prices,
+    quantity: 1,
+    selectedPrice,
+    total: null,
+    dialog: null,
+    busy: false,
+    disabled: selectedPrice?.archived || product?.archived,
+    adHocAmount,
+    error: null,
+    checkoutUrl: window?.scData?.product_data?.checkout_link,
+    line_item: {
+      price_id: selectedPrice?.id,
       quantity: 1,
-      selectedPrice,
-      total: null,
-      dialog: null,
-      busy: false,
-      disabled: selectedPrice?.archived || product?.archived,
-      adHocAmount,
-      error: null,
-      checkoutUrl: window?.scData?.product_data?.checkout_link,
-      line_item: {
-        price_id: selectedPrice?.id,
-        quantity: 1,
-        ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
-      },
-  }
+      ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
+    },
+  };
 }
 
-const store = createStore<Store>(
-  defaultState,
-  (newValue, oldValue) => {
-    return JSON.stringify(newValue) !== JSON.stringify(oldValue);
-  },
-);
+const store = createStore<Store>(defaultState, (newValue, oldValue) => {
+  return JSON.stringify(newValue) !== JSON.stringify(oldValue);
+});
 
 const { state, onChange, on, dispose, forceUpdate } = store;
 export default state;

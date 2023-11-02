@@ -1,5 +1,5 @@
-import { ProductState } from "src/types";
-import state from "./store";
+import { ProductState } from 'src/types';
+import state from './store';
 
 /**
  * Set the product
@@ -9,11 +9,11 @@ import state from "./store";
  *
  * @returns {void}
  */
-export const setProduct = (productId:string, product:Partial<ProductState>):void =>{
-  if(!productId ) return;
+export const setProduct = (productId: string, product: Partial<ProductState>): void => {
+  if (!productId) return;
 
   state[productId] = {
     ...state[productId],
-    ...product
-  }
-}
+    ...product,
+  };
+};
