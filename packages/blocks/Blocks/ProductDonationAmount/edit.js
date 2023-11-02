@@ -10,7 +10,6 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
-	ToggleControl,
 } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -58,24 +57,26 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScChoiceContainer
-					showControl={false}
-					size="small"
-					css={css`
-						width: 100%;
-					`}
-				>
-					{!!label ? (
-						label
-					) : (
-						<ScFormatNumber
-							type="currency"
-							value={amount}
-							currency={currency || 'USD'}
-							minimum-fraction-digits="0"
-						></ScFormatNumber>
-					)}
-				</ScChoiceContainer>
+				<Disabled style={{ width: '100%' }}>
+					<ScChoiceContainer
+						showControl={false}
+						size="small"
+						css={css`
+							width: 100%;
+						`}
+					>
+						{!!label ? (
+							label
+						) : (
+							<ScFormatNumber
+								type="currency"
+								value={amount}
+								currency={currency || 'USD'}
+								minimum-fraction-digits="0"
+							></ScFormatNumber>
+						)}
+					</ScChoiceContainer>
+				</Disabled>
 			</div>
 		</Fragment>
 	);
