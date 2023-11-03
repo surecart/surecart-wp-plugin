@@ -1,8 +1,8 @@
-import { Component, State, h, Watch, Prop, Event, EventEmitter } from '@stencil/core';
-import { Checkout } from '../../../../types';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, State, h, Prop, Event, EventEmitter } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 import { isRtl } from '../../../../functions/page-align';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-order-coupon-form',
@@ -12,24 +12,14 @@ import { isRtl } from '../../../../functions/page-align';
 export class ScOrderCouponForm {
   @Prop() label: string;
   @Prop() loading: boolean;
-  @Prop() busy: boolean;
-  @Prop() error: any;
-  @Prop() order: Checkout;
   @Prop() collapsed: boolean;
   @Prop() placeholder: string;
   @Prop() buttonText: string;
 
   @State() open: boolean;
   @State() value: string;
-  @State() errorMessage: string;
 
   @Event() scApplyCoupon: EventEmitter<string>;
-
-  @Watch('error')
-  handleErrorsChange() {
-    const error = (this?.error?.additional_errors || []).find(error => error?.data?.attribute === 'discount.promotion_code');
-    this.errorMessage = error?.message ? error?.message : '';
-  }
 
   render() {
     // Do any line items have a recurring price?
@@ -40,12 +30,11 @@ export class ScOrderCouponForm {
         label={this.label || __('Add Coupon Code', 'surecart')}
         collapsed={this.collapsed}
         placeholder={this.placeholder}
-        loading={this.busy && !this.order?.line_items?.data?.length}
-        busy={this.busy}
-        error={this.errorMessage}
-        discount={this?.order?.discount}
-        currency={this?.order?.currency}
-        discount-amount={this?.order?.discount_amount}
+        loading={formBusy() && !checkoutState.checkout?.line_items?.data?.length}
+        busy={formBusy()}
+        discount={checkoutState.checkout?.discount}
+        currency={checkoutState.checkout?.currency}
+        discount-amount={checkoutState.checkout?.discount_amount}
         class={{
           'order-coupon-form--is-rtl': isRtl(),
         }}
@@ -55,5 +44,3 @@ export class ScOrderCouponForm {
     );
   }
 }
-
-openWormhole(ScOrderCouponForm, ['loading', 'busy', 'order', 'error'], false);

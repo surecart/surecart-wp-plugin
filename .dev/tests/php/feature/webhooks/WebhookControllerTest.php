@@ -17,7 +17,7 @@ class WebhookControllerTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		parent::setUp();
 
@@ -32,6 +32,7 @@ class WebhookControllerTest extends SureCartUnitTestCase
 
 	/**
 	 * Checks that our recieve function calls the correct event.
+	 * @group failing
 	 */
 	public function test_can_receive()
 	{

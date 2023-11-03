@@ -1,14 +1,13 @@
 import { newE2EPage } from '@stencil/core/testing';
 
 describe('sc-switch', () => {
-  let page, element, input, switchEl;
+  let page, input, switchEl;
 
   const selector = 'sc-switch';
 
   beforeEach(async () => {
     page = await newE2EPage();
     await page.setContent(`<${selector}></${selector}>`);
-    element = await page.find(`${selector}`);
     switchEl = await page.find(`${selector} >>> .switch`);
     input = await page.find(`${selector} >>> input`);
   });
