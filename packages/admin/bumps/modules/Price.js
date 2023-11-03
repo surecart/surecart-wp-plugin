@@ -3,7 +3,6 @@ import {
 	ScCard,
 	ScStackedList,
 	ScFormatNumber,
-	ScStackedListRow,
 	ScButton,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
@@ -11,7 +10,9 @@ import PriceSelector from '../../components/PriceSelector';
 import useEntity from '../../hooks/useEntity';
 import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
+
 import ModelRow from '../components/ModelRow';
+import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({ loading, bump, updateBump }) => {
 	const { price, hasLoadedPrice } = useEntity(
@@ -51,12 +52,14 @@ export default ({ loading, bump, updateBump }) => {
 								<div>
 									<strong>{price?.product?.name}</strong>
 								</div>
-								<ScFormatNumber
-									type="currency"
-									currency={price?.currency || 'usd'}
-									value={price?.amount}
-								/>
-								{intervalString(price)}
+								<LineItemLabel lineItem={{ price: price }}>
+									<ScFormatNumber
+										type="currency"
+										currency={price?.currency || 'usd'}
+										value={price?.amount}
+									/>
+									{intervalString(price)}
+								</LineItemLabel>
 							</ModelRow>
 						</ScStackedList>
 					</ScCard>
@@ -66,7 +69,10 @@ export default ({ loading, bump, updateBump }) => {
 						open
 						value={bump?.price?.id || bump?.price}
 						ad_hoc={false}
-						onSelect={(price) => updateBump({ price })}
+						variable={false}
+						onSelect={({ price_id }) =>
+							updateBump({ price: price_id })
+						}
 						requestQuery={{
 							archived: false,
 						}}

@@ -35,7 +35,6 @@ graph TD;
   sc-button --> sc-spinner
   sc-price-input --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   style sc-product-price-modal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

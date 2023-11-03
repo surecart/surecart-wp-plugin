@@ -46,7 +46,6 @@ graph TD;
   sc-product-selected-price --> sc-icon
   sc-price-input --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
   style sc-product-selected-price fill:#f9f,stroke:#333,stroke-width:4px
 ```

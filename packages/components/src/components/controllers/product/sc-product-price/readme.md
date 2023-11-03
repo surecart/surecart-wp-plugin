@@ -11,7 +11,7 @@
 | ----------- | ------------ | --------------------- | --------- | ----------- |
 | `prices`    | --           | The product's prices. | `Price[]` | `undefined` |
 | `productId` | `product-id` | The product id        | `string`  | `undefined` |
-| `saleText`  | `sale-text`  | The sale text.        | `string`  | `undefined` |
+| `saleText`  | `sale-text`  | The sale text         | `string`  | `undefined` |
 
 
 ## Shadow Parts

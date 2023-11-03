@@ -1,9 +1,8 @@
 import { addLineItem } from '../../services/session';
 import state from './store';
-import { getCheckout, setCheckout } from '@store/checkouts';
+import { getCheckout, setCheckout } from '@store/checkouts/mutations';
 import { Checkout, Product } from 'src/types';
 import { toggleCart } from '@store/ui';
-import { doCartGoogleAnalytics } from '../../functions/google-analytics-cart';
 import { addQueryArgs } from '@wordpress/url';
 import { setProduct } from './setters';
 
@@ -19,26 +18,13 @@ export const submitCartForm = async (productId: string) => {
       checkout: getCheckout(productState?.formId, productState.mode),
       data: {
         price: productState.selectedPrice?.id,
-        quantity: productState.selectedPrice?.ad_hoc ? 1 : productState.quantity,
+        quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
         ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
+        variant: productState.selectedVariant?.id,
       },
       live_mode: productState.mode !== 'test',
     });
     setCheckout(checkout as Checkout, productState.formId);
-    const newLineItem = checkout.line_items?.data.find(item => item.price.id === productState.selectedPrice?.id);
-    if (newLineItem) {
-      doCartGoogleAnalytics([
-        {
-          item_id: (newLineItem.price?.product as Product)?.id,
-          item_name: (newLineItem.price?.product as Product)?.name,
-          item_variant: newLineItem.price?.name,
-          price: newLineItem.price?.amount,
-          currency: newLineItem.price?.currency,
-          quantity: newLineItem.quantity,
-          discount: newLineItem.discount_amount,
-        },
-      ]);
-    }
     toggleCart(true);
     setProduct(productId, { dialog: null });
   } catch (e) {
@@ -60,8 +46,10 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
     line_items: [
       {
         price: productState.selectedPrice?.id,
-        quantity: productState.selectedPrice?.ad_hoc ? 1 : productState.quantity,
+        quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
         ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
+        ...(productState.selectedVariant?.id ? { variant: productState.selectedVariant?.id } : {}),
+
       },
     ],
     ...query,
@@ -74,6 +62,14 @@ export const addProductToState = (product: Product, formId: number, mode: 'live'
   const prices = product?.prices?.data || [];
   const selectedPrice = (prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);
   const adHocAmount = selectedPrice?.amount || null;
+  const variant_options = product?.variant_options?.data || [];
+const variants = (product?.variants?.data || []).sort((a, b) => a?.position - b?.position);
+  const selectedVariant = variants?.length
+  ? variants.find(variant => {
+      if (!product?.stock_enabled || product?.allow_out_of_stock_purchases) return true;
+      return variant?.available_stock > 0;
+    })
+  : null;
 
   state[product.id] = {
     formId: formId,
@@ -93,6 +89,14 @@ export const addProductToState = (product: Product, formId: number, mode: 'live'
       price_id: selectedPrice?.id,
       quantity: 1,
       ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: adHocAmount } : {}),
+    },
+    variant_options,
+    variants,
+    selectedVariant,
+     variantValues: {
+      ...(selectedVariant?.option_1 ? { option_1: selectedVariant?.option_1 } : {}),
+      ...(selectedVariant?.option_2 ? { option_2: selectedVariant?.option_2 } : {}),
+      ...(selectedVariant?.option_3 ? { option_3: selectedVariant?.option_3 } : {}),
     },
   };
 };

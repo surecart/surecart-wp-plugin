@@ -41,8 +41,8 @@ class Block extends ProductBlock {
 		$images     = array_map(
 			function( $product_media ) use ( $product, $width ) {
 				return [
-					'src'    => $product_media->getUrl( $width ),
-					'alt'    => $product_media->media->filename ?? $product->name ?? '',
+					'src'    => esc_url( $product_media->getUrl( $width ) ),
+					'alt'    => esc_attr( esc_url( $product_media->media->filename ?? $product->name ?? '' ) ),
 					'width'  => $product_media->width,
 					'height' => $product_media->height,
 				];
@@ -52,10 +52,10 @@ class Block extends ProductBlock {
 		$thumbnails = array_map(
 			function( $product_media ) use ( $product ) {
 				return [
-					'src'    => $product_media->getUrl( 240 ),
+					'src'    => esc_url( $product_media->getUrl( 240 ) ),
 					'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
 					'sizes'  => '(min-width: 780px) 120px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
-					'alt'    => $product_media->media->filename ?? $product->name ?? '',
+					'alt'    => esc_attr( esc_url( $product_media->media->filename ?? $product->name ?? '' ) ),
 					'width'  => $product_media->width,
 					'height' => $product_media->height,
 				];

@@ -12,6 +12,10 @@
 		},
 		"product_id": {
 			"type": "string"
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left"
 		}
 	},
 	"supports": {

@@ -1,13 +1,13 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ScPayment } from '../sc-payment';
-import store from '@store/checkouts';
+import { dispose } from '@store/checkouts';
 import { dispose as disposeSelectedProcessor } from '@store/selected-processor';
 import { state as checkoutState, dispose as disposeCheckout } from '@store/checkout';
 import { state as processorsState, dispose as disposeProcessors } from '@store/processors';
 import { Checkout, Processor } from '../../../../../types';
 
 beforeEach(() => {
-  store.dispose();
+  dispose();
   disposeSelectedProcessor();
   disposeProcessors();
   disposeCheckout();

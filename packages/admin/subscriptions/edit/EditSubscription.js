@@ -145,6 +145,7 @@ export default () => {
 			quantity,
 			discount,
 			price,
+			variant,
 			payment_method,
 		} = subscription;
 
@@ -176,6 +177,7 @@ export default () => {
 				quantity,
 				purge_pending_update: true,
 				price,
+				variant,
 			},
 		});
 	};

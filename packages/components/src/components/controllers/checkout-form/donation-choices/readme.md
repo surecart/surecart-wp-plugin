@@ -60,7 +60,6 @@ graph TD;
   sc-donation-choices --> sc-button
   sc-donation-choices --> sc-block-ui
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-price-input --> sc-input
   sc-input --> sc-form-control
   sc-button --> sc-spinner

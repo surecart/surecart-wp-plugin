@@ -5,6 +5,7 @@ import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
 import { Product } from 'src/types';
+import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -72,7 +73,15 @@ export class ScProductBuyButton {
 
   render() {
     return (
-      <Host class={{ 'is-busy': state[this.product?.id]?.busy && !!this.addToCart, 'is-disabled': state[this.product?.id]?.disabled }} onClick={e => this.handleCartClick(e)}>
+      <Host
+        class={{
+          'is-busy': state[this.product?.id]?.busy && !!this.addToCart,
+          'is-disabled': state[this.product?.id]?.disabled,
+          'is-sold-out': isProductOutOfStock(this.product?.id) && !isSelectedVariantMissing(this.product?.id),
+          'is-unavailable': isSelectedVariantMissing(this.product?.id),
+        }}
+        onClick={e => this.handleCartClick(e)}
+      >
         <slot />
       </Host>
     );

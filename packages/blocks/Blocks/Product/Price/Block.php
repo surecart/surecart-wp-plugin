@@ -44,7 +44,7 @@ class Block extends ProductBlock {
 		<sc-product-price
 			sale-text="<?php echo esc_attr( $attributes['sale_text'] ?? '' ); ?>"
 			class="<?php echo esc_attr( $this->getClasses( $attributes ) . ' product-price surecart-block' ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
+			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>;--sc-product-price-alignment:<?php echo esc_attr( $attributes['alignment'] ?? 'left' ); ?>"
 			product-id="<?php echo esc_attr( $product->id ); ?>"
 			>
 
