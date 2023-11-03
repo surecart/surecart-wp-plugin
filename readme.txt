@@ -244,8 +244,12 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.8.2 - November 3rd, 2023 =
-* Fix: Google analytics not automatically tracking purchase events.
-* Fix: Checkout form products are not able to increment quantity.
+* Fix: Google analytics not automatically tracking purchase events for some users.
+* Fix: Duplicate scOrderPaid analytics event was firing on some orders.
+* Fix: Currency conversion issue on google add to cart analytics events.
+* Fix: Checkout form with set products are not able to increment quantity in the admin.
+* Fix: PHP notice when no attributes are passed to a shortcode.
+* Fix: Issue with stock correction notice appearing in form admin when item is out of stock.
 
 = 2.8.1 - November 2nd, 2023 =
 * Fix: Theme conflict with GeneratePress causing product page out of stock buttons to appear.
