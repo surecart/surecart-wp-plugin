@@ -27,6 +27,11 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		$price = Price::with( array( 'product' ) )->find( $attributes['price_id'] );
 
+		// empty check.
+		if ( is_wp_error( $price ) || empty( $price->id ) ) {
+			return null;
+		}
+
 		self::$instance++;
 
 		\SureCart::assets()->addComponentData(
