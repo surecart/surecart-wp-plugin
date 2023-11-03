@@ -2,7 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Product\CollectionBadges;
 
-use SureCartBlocks\Blocks\ProductBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**

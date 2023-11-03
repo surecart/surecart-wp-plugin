@@ -2,8 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Product\PriceChoices;
 
-use SureCartBlocks\Blocks\BaseBlock;
-use SureCartBlocks\Blocks\ProductBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**

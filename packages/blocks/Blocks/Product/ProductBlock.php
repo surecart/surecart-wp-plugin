@@ -1,8 +1,9 @@
 <?php
 
-namespace SureCartBlocks\Blocks;
+namespace SureCartBlocks\Blocks\Product;
 
 use SureCart\Models\Product;
+use SureCartBlocks\Blocks\BaseBlock;
 
 /**
  * Product Block

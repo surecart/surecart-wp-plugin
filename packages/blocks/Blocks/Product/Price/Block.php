@@ -3,7 +3,7 @@
 namespace SureCartBlocks\Blocks\Product\Price;
 
 use SureCart\Support\Currency;
-use SureCartBlocks\Blocks\ProductBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
  * Product Title Block

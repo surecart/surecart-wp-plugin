@@ -2,7 +2,7 @@
 
 namespace SureCartBlocks\Blocks\Product\Description;
 
-use SureCartBlocks\Blocks\ProductBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
  * Product Title Block
