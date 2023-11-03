@@ -56,7 +56,6 @@ graph TD;
   sc-payment --> sc-alert
   sc-payment-method-choice --> sc-card
   sc-payment-selected --> sc-divider
-  sc-form-control --> sc-tooltip
   sc-checkout-mollie-payment --> sc-card
   sc-checkout-mollie-payment --> sc-skeleton
   sc-checkout-mollie-payment --> sc-alert

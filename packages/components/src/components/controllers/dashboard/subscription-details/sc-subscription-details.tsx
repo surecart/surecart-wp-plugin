@@ -5,7 +5,7 @@ import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
 import { License, Price, Product, Purchase, Subscription } from '../../../../types';
-
+import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-subscription-details',
   styleUrl: 'sc-subscription-details.css',
@@ -22,7 +22,7 @@ export class ScSubscriptionDetails {
 
   renderName() {
     if (typeof this.subscription?.price?.product !== 'string') {
-      return this.subscription?.price?.product?.name;
+      return productNameWithPrice(this.subscription?.price);
     }
     return __('Subscription', 'surecart');
   }

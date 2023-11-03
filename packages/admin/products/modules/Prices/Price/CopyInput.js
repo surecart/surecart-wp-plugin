@@ -1,11 +1,9 @@
-import useSnackbar from '../../../../hooks/useSnackbar';
 import { ScButton, ScIcon, ScInput } from '@surecart/components-react';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 export default ({ label, text }) => {
-	const { addSnackbarNotice } = useSnackbar();
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const copy = async () => {
@@ -28,7 +26,7 @@ export default ({ label, text }) => {
 			readonly
 			value={text}
 		>
-      {location.protocol === 'https:' && (
+			{location.protocol === 'https:' && (
 				<ScButton slot="suffix" size="small" onClick={copy}>
 					<ScIcon name="clipboard" slot="prefix" />
 					{__('Copy', 'surecart')}

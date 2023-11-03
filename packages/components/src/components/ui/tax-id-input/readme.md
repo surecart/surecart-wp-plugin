@@ -62,7 +62,6 @@ graph TD;
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
   sc-customer-edit --> sc-tax-id-input
   sc-order-tax-id-input --> sc-tax-id-input
