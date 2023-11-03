@@ -25,16 +25,17 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$price = Price::find( $attributes['price_id'] );
+		$price = Price::with( array( 'product' ) )->find( $attributes['price_id'] );
 
-		self::$instance++;
+		++self::$instance;
 
 		\SureCart::assets()->addComponentData(
 			'sc-price-choice',
 			'#sc-price-choice-' . (int) self::$instance,
-			[
-				'price' => $price,
-			]
+			array(
+				'price'   => $price->toArray(),
+				'product' => $price->product->toArray(),
+			)
 		);
 
 		ob_start(); ?>
