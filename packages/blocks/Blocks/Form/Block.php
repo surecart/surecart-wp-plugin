@@ -57,6 +57,7 @@ class Block extends BaseBlock {
 						'groupId'                  => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
 						'abandonedCheckoutEnabled' => ! is_admin(),
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
+						'validateStock'            => ! is_admin(),
 					],
 					'processors' => [
 						'processors'           => array_values(
