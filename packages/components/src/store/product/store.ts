@@ -42,7 +42,7 @@ interface Store {
   adHocAmount: number;
   dialog: string;
   line_item: LineItemData;
-  error: ScNoticeStore;
+  error: string;
   selectedVariant?: Variant;
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
 }

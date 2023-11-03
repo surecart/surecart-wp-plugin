@@ -11,7 +11,7 @@ import { getVariantFromValues } from '../../functions/util';
  */
 export const availablePrices = () => (state.prices || []).filter(price => !price?.archived).sort((a, b) => a?.position - b?.position); // sort by position
 
-export const getAdditionalErrorMessages = () => (state?.error?.additional_errors || []).map(error => error.message);
+export const getAdditionalErrorMessages = error => (error?.additional_errors || []).map(error => error.message);
 /**
  * Check if product label stock is enabled and not out of stock purchases are allowed.
  *

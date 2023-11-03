@@ -5,6 +5,7 @@ import { onChange } from '@store/product';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { getAdditionalErrorMessages } from '@store/product/getters';
+import { ScNoticeStore } from '@store/product/store';
 @Component({
   tag: 'sc-product-buy-button',
   styleUrl: 'sc-product-buy-button.scss',
@@ -16,7 +17,10 @@ export class ScProductBuyButton {
   // Is add to cart enabled
   @Prop() addToCart: boolean;
 
-  handleCartClick(e) {
+  // Is add to cart enabled
+  @Prop() error: ScNoticeStore;
+
+  async handleCartClick(e) {
     e.preventDefault();
 
     // already busy, do nothing.
@@ -35,7 +39,11 @@ export class ScProductBuyButton {
     }
 
     // submit the cart form.
-    submitCartForm();
+    try {
+      await submitCartForm();
+    } catch (e) {
+      this.error = e;
+    }
   }
 
   private link: HTMLAnchorElement;
@@ -54,10 +62,10 @@ export class ScProductBuyButton {
 
   getTopLevelError() {
     // checkout invalid is not friendly.
-    if (state.error?.code === 'checkout.invalid' && getAdditionalErrorMessages()?.length) {
+    if (this.error?.code === 'checkout.invalid' && getAdditionalErrorMessages(this.error)?.length) {
       return '';
     }
-    return state.error?.message;
+    return this.error?.message;
   }
 
   render() {
@@ -71,10 +79,10 @@ export class ScProductBuyButton {
         }}
         onClick={e => this.handleCartClick(e)}
       >
-        {!!state.error && !!this.addToCart && (
-          <sc-alert type="danger" scrollOnOpen={true} open={!!state.error} closable={false}>
+        {!!this.error && (
+          <sc-alert type="danger" scrollOnOpen={true} open={!!this.error} closable={false}>
             {!!this.getTopLevelError() && <span slot="title" innerHTML={this.getTopLevelError()}></span>}
-            {(getAdditionalErrorMessages() || []).map((message, index) => (
+            {(getAdditionalErrorMessages(this.error) || []).map((message, index) => (
               <div innerHTML={message} key={index}></div>
             ))}
           </sc-alert>

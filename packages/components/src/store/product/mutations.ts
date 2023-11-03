@@ -27,6 +27,7 @@ export const submitCartForm = async () => {
   } catch (e) {
     console.error(e);
     state.error = e;
+    throw e; // Re-throw the caught error
   } finally {
     state.busy = false;
   }

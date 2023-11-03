@@ -1533,6 +1533,7 @@
   },
   "sc-product-buy-button": {
     "add-to-cart": true,
+    "error": true,
     "style": true,
     "id": true,
     "class": true,
