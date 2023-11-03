@@ -404,10 +404,12 @@ export class ScSelectDropdown {
         key={index}
         checked={this.isChecked(choice)}
         value={choice?.value}
-        onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        onClick={() => !choice.disabled && this.handleSelect(choice)}
         onKeyDown={event => {
-          if (event.key === 'Enter' && !choice.disabled) {
-            this.handleSelect(choice.value);
+          if ((event.key === 'Enter' || event.key === ' ') && !choice.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            this.handleSelect(choice);
           }
         }}
         disabled={choice.disabled}
@@ -475,7 +477,7 @@ export class ScSelectDropdown {
             onScHide={() => this.handleHide()}
           >
             <slot name="trigger" slot="trigger">
-              <div class="trigger">
+              <div class="trigger" role="button" tabIndex={0}>
                 <div class="select__value">
                   <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
                 </div>

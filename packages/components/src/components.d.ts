@@ -1772,11 +1772,16 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScMenu {
+        "ariaLabel": string;
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
     }
     interface ScMenuDivider {
     }
     interface ScMenuItem {
+        /**
+          * Aria label
+         */
+        "ariaLabel": string;
         /**
           * Draws the item in a checked state.
          */
@@ -3549,6 +3554,10 @@ export namespace Components {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel": string;
+        /**
           * Makes the tag clearable.
          */
         "clearable": boolean;
@@ -3730,6 +3739,7 @@ export namespace Components {
           * Is this a borderless toggle?
          */
         "borderless": boolean;
+        "closeSpeakText": string;
         /**
           * Are these collapsible?
          */
@@ -3742,6 +3752,7 @@ export namespace Components {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
+        "openSpeakText": string;
         /**
           * Is this a shady
          */
@@ -7517,11 +7528,16 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScMenu {
+        "ariaLabel"?: string;
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
     interface ScMenuDivider {
     }
     interface ScMenuItem {
+        /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
         /**
           * Draws the item in a checked state.
          */
@@ -9448,6 +9464,10 @@ declare namespace LocalJSX {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
+        /**
           * Makes the tag clearable.
          */
         "clearable"?: boolean;
@@ -9642,6 +9662,7 @@ declare namespace LocalJSX {
           * Is this a borderless toggle?
          */
         "borderless"?: boolean;
+        "closeSpeakText"?: string;
         /**
           * Are these collapsible?
          */
@@ -9662,6 +9683,7 @@ declare namespace LocalJSX {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
+        "openSpeakText"?: string;
         /**
           * Is this a shady
          */

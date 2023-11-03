@@ -193,6 +193,7 @@ export class ScDropdown {
   handleHide() {
     this.open = false;
     itemIndex = 0;
+    this.trigger.focus();
   }
 
   @Listen('keydown')
@@ -314,9 +315,7 @@ export class ScDropdown {
               'position--bottom-left': this.position === 'bottom-left',
               'position--bottom-right': this.position === 'bottom-right',
             }}
-            role="menu"
             aria-orientation="vertical"
-            aria-labelledby="menu-button"
             tabindex="-1"
             onClick={e => this.handleClick(e)}
             ref={el => (this.panel = el as HTMLElement)}
