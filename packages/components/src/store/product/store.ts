@@ -2,6 +2,7 @@ import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
 import { Price, Product, VariantOption, Variant } from 'src/types';
 import { productViewed } from './events';
+
 interface Store {
   formId: number;
   mode: 'live' | 'test';
