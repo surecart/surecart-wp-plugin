@@ -16,7 +16,7 @@ interface AdditionalError {
 }
 
 export interface ScNoticeStore {
-  type: NoticeType;
+  type: NoticeType | 'default';
   code: string;
   message: string;
   data?: {

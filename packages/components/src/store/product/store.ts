@@ -2,30 +2,6 @@ import { createStore } from '@stencil/store';
 import { LineItemData } from 'src/types';
 import { Price, Product, VariantOption, Variant } from 'src/types';
 import { productViewed } from './events';
-
-interface AdditionalError {
-  code: string;
-  message: string;
-  data: {
-    attribute: string;
-    type: string;
-    options: {
-      if: string[];
-      value: string;
-    };
-  };
-}
-
-export interface ScNoticeStore {
-  code: string;
-  message: string;
-  data?: {
-    status: number;
-    type: string;
-    http_status: string;
-  };
-  additional_errors?: AdditionalError[] | null;
-}
 interface Store {
   formId: number;
   mode: 'live' | 'test';

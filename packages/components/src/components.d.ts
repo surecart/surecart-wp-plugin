@@ -7,12 +7,12 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
-import { ScNoticeStore } from "@store/product/store";
+import { ScNoticeStore } from "@store/notices/store";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
-export { ScNoticeStore } from "@store/product/store";
+export { ScNoticeStore } from "@store/notices/store";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
