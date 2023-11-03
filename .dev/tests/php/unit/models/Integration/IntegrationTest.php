@@ -7,7 +7,7 @@ use SureCart\Tests\SureCartUnitTestCase;
 use SureCartVendors\PluginEver\QueryBuilder\Collection;
 
 class IntegrationTest extends SureCartUnitTestCase {
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.

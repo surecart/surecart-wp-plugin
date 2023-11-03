@@ -6,7 +6,7 @@ use SureCart\Models\IncomingWebhook;
 use SureCart\Tests\SureCartUnitTestCase;
 
 class IncomingWebhookTest extends SureCartUnitTestCase {
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
@@ -76,9 +76,6 @@ class IncomingWebhookTest extends SureCartUnitTestCase {
 		$this->assertFalse($updated->processed);
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_can_fetch_older_than_30_days() {
 		$date = new \DateTime();
 		$date->modify('-31 days');

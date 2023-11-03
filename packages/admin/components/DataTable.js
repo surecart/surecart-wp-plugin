@@ -15,6 +15,7 @@ export default ({
 	empty = '',
 	loading,
 	updating,
+	className,
 }) => {
 	if ((items || []).length === 0 && !loading && !updating) {
 		return (
@@ -26,6 +27,7 @@ export default ({
 
 	return (
 		<div
+			className={className}
 			css={
 				!loading &&
 				!updating &&

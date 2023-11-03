@@ -47,7 +47,6 @@ graph TD;
   sc-alert --> sc-icon
   sc-price-input --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-block-ui --> sc-spinner
   style sc-custom-order-price-input fill:#f9f,stroke:#333,stroke-width:4px
 ```

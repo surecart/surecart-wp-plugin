@@ -1,11 +1,10 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 
 import { ScRadioGroup, ScRadio } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import PriceSelector from '../../../components/PriceSelector';
 import { Fragment } from '@wordpress/element';
+import { updateCartLineItem } from '../../../util';
 
 export default ({
 	template,
@@ -18,26 +17,8 @@ export default ({
 		setChoices(choices.filter((_, i) => i !== index));
 	};
 
-	const updateChoice = (data, index) => {
-		setChoices(
-			choices.map((item, i) => {
-				if (i !== index) return item;
-				return {
-					...item,
-					...data,
-				};
-			})
-		);
-	};
-
-	const addProduct = () => {
-		setChoices([
-			...(choices || []),
-			{
-				quantity: 1,
-			},
-		]);
-	};
+	const updateChoice = (data) =>
+		setChoices(updateCartLineItem(data, choices));
 
 	const hasValidChoices = () => {
 		return !!(choices || []).find((choice) => !!choice.id);
@@ -63,11 +44,11 @@ export default ({
 				<sc-dashboard-module heading={heading}>
 					<PriceSelector
 						ad_hoc={true}
-						open={false}
 						value={choices[0]?.id}
-						onSelect={(id) => {
-							if (id) {
-								setChoices([{ id, quantity: 1 }]);
+						variable={false}
+						onSelect={({ price_id }) => {
+							if (price_id) {
+								setChoices([{ id: price_id, quantity: 1 }]);
 							} else {
 								setChoices([]);
 							}
@@ -84,9 +65,9 @@ export default ({
 			<sc-dashboard-module heading={__('Products', 'surecart')}>
 				<PriceChoices
 					choices={choices}
-					onAddProduct={addProduct}
 					onUpdate={updateChoice}
 					onRemove={removeChoice}
+					variable={false}
 				/>
 			</sc-dashboard-module>
 
