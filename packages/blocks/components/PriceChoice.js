@@ -113,7 +113,13 @@ export default ({ choice, onUpdate, hideQuantity, onRemove }) => {
 						type="number"
 						value={choice?.quantity}
 						onScChange={(e) =>
-							onUpdate({ quantity: e.target.value })
+							onUpdate({
+								id: choice?.id,
+								quantity: e.target.value,
+								...(choice?.variant_id
+									? { variant_id: choice.variant_id }
+									: {}),
+							})
 						}
 					/>
 				</sc-table-cell>
