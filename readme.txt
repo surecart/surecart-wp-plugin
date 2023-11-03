@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
-Tested up to: 6.3
-Stable tag: 2.8.2
+Tested up to: 6.4
+Stable tag: 2.8.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,9 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.8.3 - November 3rd, 2023 =
+* Fix: Issue with price selectors without price names not showing product name as fallback.
 
 = 2.8.2 - November 3rd, 2023 =
 * Fix: Google analytics not automatically tracking purchase events for some users.
