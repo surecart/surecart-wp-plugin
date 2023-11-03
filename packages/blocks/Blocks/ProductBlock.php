@@ -31,6 +31,6 @@ abstract class ProductBlock extends BaseBlock {
 			return get_query_var( 'surecart_current_product' );
 		}
 
-		return \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
+		return Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
 	}
 }
