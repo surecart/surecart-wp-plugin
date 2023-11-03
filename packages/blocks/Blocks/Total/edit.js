@@ -45,7 +45,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Amount Due Label', 'surecart')}
+							label={__('Total Due Today Label', 'surecart')}
 							value={subscription_text}
 							onChange={(subscription_text) =>
 								setAttributes({ subscription_text })
