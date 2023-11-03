@@ -11,8 +11,7 @@
 			"default": "Sale"
 		},
 		"product_id": {
-			"type": "string",
-			"default": ""
+			"type": "string"
 		}
 	},
 	"supports": {
