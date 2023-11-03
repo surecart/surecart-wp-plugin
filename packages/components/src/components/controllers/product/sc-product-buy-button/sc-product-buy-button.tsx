@@ -67,7 +67,7 @@ export class ScProductBuyButton {
   updateProductLink() {
     const checkoutUrl = window?.scData?.pages?.checkout;
     if (!checkoutUrl || !this.link) return;
-    this.link.href = getProductBuyLink(this.product?.id,checkoutUrl, !this.addToCart ? { no_cart: true } : {});
+    this.link.href = getProductBuyLink(this.product?.id, checkoutUrl, !this.addToCart ? { no_cart: true } : {});
   }
 
   render() {
