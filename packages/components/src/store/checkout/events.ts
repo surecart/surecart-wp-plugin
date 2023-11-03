@@ -1,5 +1,5 @@
 import '../checkouts/events';
-import { on } from './store';
+import state, { on } from './store';
 import { Checkout, CheckoutInitiatedParams, LineItem, Product } from 'src/types';
 import { maybeConvertAmount } from '../../functions/currency';
 
@@ -10,6 +10,7 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
   if (oldCheckout?.id) return; // we only care about new checkouts.
   if (!checkout?.id) return; // we don't have a saved checkout.
+  if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
 
   const event = new CustomEvent<CheckoutInitiatedParams>('scCheckoutInitiated', {
     detail: {
