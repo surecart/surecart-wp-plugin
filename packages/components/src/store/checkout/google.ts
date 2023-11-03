@@ -50,7 +50,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
 /**
  * Handle purchase complete event.
  */
-window.addEventListener('scPurchaseComplete', function (e: CustomEvent) {
+window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
   if (!window?.dataLayer && !window?.gtag) return;
 
   const checkout = e.detail;
