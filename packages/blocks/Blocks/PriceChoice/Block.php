@@ -32,10 +32,10 @@ class Block extends BaseBlock {
 		\SureCart::assets()->addComponentData(
 			'sc-price-choice',
 			'#sc-price-choice-' . (int) self::$instance,
-			array(
+			[
 				'price'   => $price->toArray(),
 				'product' => $price->product->toArray(),
-			)
+			]
 		);
 
 		ob_start(); ?>
