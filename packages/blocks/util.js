@@ -66,7 +66,9 @@ export const updateCartLineItem = (data, existing = []) => {
 				return {
 					...item,
 					...{
-						quantity: existingVariant?.quantity + 1,
+						quantity: data?.quantity
+							? data.quantity
+							: existingVariant?.quantity + 1,
 					},
 				};
 			});
@@ -83,7 +85,9 @@ export const updateCartLineItem = (data, existing = []) => {
 			return {
 				...item,
 				...{
-					quantity: existingPrice?.quantity + 1,
+					quantity: data?.quantity
+						? data.quantity
+						: existingPrice?.quantity + 1,
 				},
 			};
 		});
