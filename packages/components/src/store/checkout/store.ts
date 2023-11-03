@@ -16,6 +16,7 @@ interface Store {
   initialLineItems: LineItemData[];
   taxProtocol: TaxProtocol;
   isCheckoutPage: boolean;
+  validateStock: boolean;
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(
@@ -30,6 +31,7 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     abandonedCheckoutEnabled: true,
     initialLineItems: [],
     isCheckoutPage: false,
+    validateStock: false,
     ...checkout,
   },
   (newValue, oldValue) => {

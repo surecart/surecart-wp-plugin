@@ -58,6 +58,7 @@ class Block extends BaseBlock {
 						'abandonedCheckoutEnabled' => ! is_admin(),
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
 						'isCheckoutPage'           => true,
+						'validateStock'            => ! is_admin(),
 					],
 					'processors' => [
 						'processors'           => array_values(
