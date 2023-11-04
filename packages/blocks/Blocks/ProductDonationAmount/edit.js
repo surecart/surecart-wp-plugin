@@ -80,6 +80,7 @@ export default ({ attributes, setAttributes }) => {
 						aria-label={__('Donation Amount text')}
 						value={label}
 						onChange={(value) => setAttributes({ label: value })}
+						allowedFormats={[]}
 						withoutInteractiveFormatting
 					/>
 				</ScChoiceContainer>
