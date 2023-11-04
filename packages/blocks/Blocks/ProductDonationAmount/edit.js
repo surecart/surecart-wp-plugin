@@ -4,26 +4,38 @@ import {
 	ScFormatNumber,
 	ScPriceInput,
 } from '@surecart/components-react';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	useBlockProps,
+	RichText,
+} from '@wordpress/block-editor';
 import {
 	Disabled,
 	PanelBody,
 	PanelRow,
 	TextControl,
 } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
+import { formatNumber } from '../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, amount, currency } = attributes;
-
 	const blockProps = useBlockProps({
 		style: {
 			display: 'flex',
 			width: '100%',
 		},
 	});
+
+	useEffect(() => {
+		if (label) return;
+		const formattedNumber = formatNumber(amount, currency);
+		setAttributes({
+			label: formattedNumber,
+		});
+	}, [amount, currency]);
 
 	return (
 		<Fragment>
@@ -57,26 +69,20 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<Disabled style={{ width: '100%' }}>
-					<ScChoiceContainer
-						showControl={false}
-						size="small"
-						css={css`
-							width: 100%;
-						`}
-					>
-						{!!label ? (
-							label
-						) : (
-							<ScFormatNumber
-								type="currency"
-								value={amount}
-								currency={currency || 'USD'}
-								minimum-fraction-digits="0"
-							></ScFormatNumber>
-						)}
-					</ScChoiceContainer>
-				</Disabled>
+				<ScChoiceContainer
+					showControl={false}
+					size="small"
+					css={css`
+						width: 100%;
+					`}
+				>
+					<RichText
+						aria-label={__('Donation Amount text')}
+						value={label}
+						onChange={(value) => setAttributes({ label: value })}
+						withoutInteractiveFormatting
+					/>
+				</ScChoiceContainer>
 			</div>
 		</Fragment>
 	);

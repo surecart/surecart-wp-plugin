@@ -37,3 +37,7 @@ sc-product-donation-custom-amount sc-choice-container sc-form sc-price-input::pa
 sc-product-donation-custom-amount sc-choice-container sc-form sc-price-input:part(suffix) {
 	--sc-input-spacing-medium: 5px;
 }
+sc-product-donation-amount-choice {
+	width: 100%;
+	text-align: center;
+}
