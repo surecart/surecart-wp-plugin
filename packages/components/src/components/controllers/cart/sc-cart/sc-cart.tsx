@@ -2,14 +2,15 @@ import { Component, Fragment, h, Listen, Prop, State, Watch } from '@stencil/cor
 import apiFetch from '../../../../functions/fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { Creator, Universe } from 'stencil-wormhole';
 import { baseUrl } from '../../../../services/session';
-import { getOrder, setOrder } from '@store/checkouts';
+import { getCheckout, setCheckout } from '@store/checkouts/mutations';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { expand } from '../../../../services/session';
 import { Checkout } from '../../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-cart',
@@ -61,11 +62,11 @@ export class ScCart {
   }
 
   order() {
-    return getOrder(this.formId, this.mode);
+    return getCheckout(this.formId, this.mode);
   }
 
-  setOrder(data) {
-    setOrder(data, this.formId);
+  setCheckout(data) {
+    setCheckout(data, this.formId);
   }
 
   /**
@@ -78,7 +79,7 @@ export class ScCart {
 
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;
@@ -100,83 +101,72 @@ export class ScCart {
   /** Fetch the order */
   async fetchOrder() {
     try {
-      this.uiState = 'loading';
-      const order = (await apiFetch({
+      updateFormState('FETCH');
+      checkoutState.checkout = (await apiFetch({
         method: 'GET', // create or update
-        path: addQueryArgs(`${baseUrl}${this.order()?.id}`, {
+        path: addQueryArgs(`${baseUrl}${checkoutState.checkout?.id}`, {
           expand,
         }),
       })) as Checkout;
-      this.setOrder(order);
+      updateFormState('RESOLVE');
     } catch (e) {
       console.error(e);
-      this.uiState = 'idle';
+      updateFormState('REJECT');
       createErrorNotice(e);
-    } finally {
-      this.uiState = 'idle';
     }
   }
 
   componentWillLoad() {
-    Universe.create(this as Creator, this.state());
     this.open = !!uiStore.state.cart.open;
     uiStore.onChange('cart', cart => {
       this.open = cart.open;
     });
-    checkoutState.mode = this.mode;
   }
 
   state() {
     return {
-      processor_data: this.order()?.processor_data,
       uiState: this.uiState,
       checkoutLink: this.checkoutLink,
       loading: this.uiState === 'loading',
       busy: this.uiState === 'busy',
       navigating: this.uiState === 'navigating',
-      empty: !this.order()?.line_items?.pagination?.count,
-      order: this.order(),
-      lineItems: this.order()?.line_items?.data || [],
-      tax_status: this.order()?.tax_status,
-      customerShippingAddress: typeof this.order()?.customer !== 'string' ? this.order()?.customer?.shipping_address : {},
-      shippingAddress: this.order()?.shipping_address,
-      taxStatus: this.order()?.tax_status,
+      empty: !checkoutState.checkout?.line_items?.pagination?.count,
+      order: checkoutState.checkout,
+      lineItems: checkoutState.checkout?.line_items?.data || [],
+      tax_status: checkoutState.checkout?.tax_status,
+      customerShippingAddress: typeof checkoutState.checkout?.customer !== 'string' ? checkoutState.checkout?.customer?.shipping_address : {},
+      shippingAddress: checkoutState.checkout?.shipping_address,
+      taxStatus: checkoutState.checkout?.tax_status,
       formId: this.formId,
     };
   }
 
   render() {
     return (
-      <Fragment>
-        {this.order() && (
-          <Universe.Provider state={this.state()}>
-            <sc-cart-session-provider order={this.order()} form-id={this.formId} group-id={this.formId} onScUpdateOrderState={e => this.setOrder(e.detail)}>
-              <sc-drawer
-                ref={el => (this.drawer = el as HTMLScDrawerElement)}
-                open={this.open}
-                onScAfterHide={() => {
-                  this.open = false;
-                  this.handleCloseCart();
-                }}
-                onScAfterShow={() => (this.open = true)}
-                drawerOpenAnnouncement={__('Cart opened', 'surecart')}
-                drawerCloseAnnouncement={__('Cart closed', 'surecart')}
-              >
-                {this.open === true && (
-                  <Fragment>
-                    <div class="cart__header-suffix" slot="header">
-                      <slot name="cart-header" />
-                      <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header"></sc-error>
-                    </div>
-                    <slot />
-                  </Fragment>
-                )}
-                {this.uiState === 'busy' && <sc-block-ui z-index={9}></sc-block-ui>}
-              </sc-drawer>
-            </sc-cart-session-provider>
-          </Universe.Provider>
-        )}
-      </Fragment>
+      <sc-cart-session-provider>
+        <sc-drawer
+          ref={el => (this.drawer = el as HTMLScDrawerElement)}
+          open={this.open}
+          onScAfterShow={() => (this.open = true)}
+          onScAfterHide={() => {
+            this.open = false;
+            this.handleCloseCart();
+          }}
+          drawerOpenAnnouncement={__('Cart opened', 'surecart')}
+          drawerCloseAnnouncement={__('Cart closed', 'surecart')}
+        >
+          {this.open === true && (
+            <Fragment>
+              <div class="cart__header-suffix" slot="header">
+                <slot name="cart-header" />
+                <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header"></sc-error>
+              </div>
+              <slot />
+            </Fragment>
+          )}
+          {formBusy() && <sc-block-ui z-index={9}></sc-block-ui>}
+        </sc-drawer>
+      </sc-cart-session-provider>
     );
   }
 }

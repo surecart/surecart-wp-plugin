@@ -219,9 +219,11 @@ class Block extends BaseBlock {
 		}
 
 		// backwards compat.
-		$attributes['type'] = '';
 		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
 			$attributes['type'] = 'custom';
+		}
+		if ( empty( $attributes['type'] ) ) {
+			$attributes['type'] = '';
 		}
 
 		\SureCart::assets()->addComponentData(

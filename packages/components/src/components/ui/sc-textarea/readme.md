@@ -94,7 +94,6 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   sc-textarea --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-cancel-survey --> sc-textarea
   style sc-textarea fill:#f9f,stroke:#333,stroke-width:4px
 ```

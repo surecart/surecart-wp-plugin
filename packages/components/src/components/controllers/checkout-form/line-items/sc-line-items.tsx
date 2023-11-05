@@ -1,10 +1,12 @@
-import { Component, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
 
+import { state as checkoutState } from '@store/checkout';
+import { LineItem, Product } from '../../../../types';
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '../../../../types';
+import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
+import { formBusy } from '@store/form/getters';
 
 /**
  * @part base - The component base
@@ -35,82 +37,29 @@ import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '
   shadow: true,
 })
 export class ScLineItems {
-  private lineItemsWrapper: HTMLElement;
-
-  @Prop() order: Checkout;
-  @Prop() busy: boolean;
-  @Prop() prices: Prices;
+  /**
+   * Is the line item editable?
+   */
   @Prop() editable: boolean;
+
+  /**
+   * Is the line item removable?
+   */
   @Prop() removable: boolean;
-  @Prop() editLineItems: boolean = true;
-  @Prop() removeLineItems: boolean = true;
-  @Prop() lockedChoices: Array<PriceChoice> = [];
 
-  /** Update the line item. */
-  @Event() scUpdateLineItem: EventEmitter<LineItemData>;
-
-  /** Remove the line item. */
-  @Event() scRemoveLineItem: EventEmitter<LineItemData>;
-
-  @Watch('order')
-  watchOrder(newVal: Checkout, oldVal: Checkout) {
-    if (newVal?.line_items?.data?.length === oldVal?.line_items?.data?.length) return;
-
-    this.lineItemsWrapper?.focus();
-  }
-  /** Update quantity for this line item. */
-  updateQuantity(item: LineItem, quantity: number) {
-    this.scUpdateLineItem.emit({ id: item.id, price_id: item.price.id, quantity });
-  }
-
-  removeLineItem(item: LineItem) {
-    this.scRemoveLineItem.emit({ id: item.id, price_id: item.price.id, quantity: 1 });
-  }
-
-  /** Only append price name if there's more than one product price in the session. */
-  getName(item: LineItem) {
-    const otherPrices = Object.keys(this.prices || {}).filter(key => {
-      const price = this.prices[key];
-      // @ts-ignore
-      return price.product === item.price.product.id;
-    });
-
-    let name = '';
-    if (otherPrices.length > 1) {
-      name = `${(item?.price?.product as Product)?.name} \u2013 ${item?.price?.name}`;
-    } else {
-      name = (item?.price?.product as Product)?.name;
-    }
-    return name;
-  }
-
-  // Is this price choice locked?
-  isLocked(item) {
-    return this.lockedChoices.some(choice => choice.id === item.price.id);
-  }
-
+  /**
+   * Is the line item editable?
+   */
   isEditable(item: LineItem) {
-    // ad hoc prices cannot have quantity.
-    if (item?.price?.ad_hoc) {
+    // ad_hoc prices and bumps cannot have quantity.
+    if (item?.price?.ad_hoc || item?.bump_amount) {
       return false;
     }
-
-    // if the item has a bump amount, it cannot have quantity.
-    if (item?.bump_amount) {
-      return false;
-    }
-
-    if (this.editable !== null) return this.editable;
-    return this.editLineItems;
-  }
-
-  isRemovable() {
-    if (this.removable !== null) return this.removable;
-    return this.removeLineItems;
+    return this.editable;
   }
 
   render() {
-    if (!!this.busy && !this.order?.line_items?.data?.length) {
+    if (!!formBusy() && !checkoutState?.checkout?.line_items?.data?.length) {
       return (
         <sc-line-item>
           <sc-skeleton style={{ 'width': '50px', 'height': '50px', '--border-radius': '0' }} slot="image"></sc-skeleton>
@@ -123,27 +72,29 @@ export class ScLineItems {
     }
 
     return (
-      <div class="line-items" part="base" ref={el => (this.lineItemsWrapper = el as HTMLElement)} tabindex="0">
-        {(this.order?.line_items?.data || []).map(item => {
+      <div class="line-items" part="base">
+        {(checkoutState?.checkout?.line_items?.data || []).map(item => {
           return (
             <div class="line-item">
               <sc-product-line-item
                 key={item.id}
-                imageUrl={(item?.price?.product as Product)?.image_url}
+                imageUrl={item?.variant?.image_url || (item?.price?.product as Product)?.image_url}
                 name={(item?.price?.product as Product)?.name}
+                priceName={item?.price?.name}
+                variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}
-                removable={this.isRemovable()}
+                removable={this.removable}
                 quantity={item.quantity}
                 fees={item?.fees?.data}
                 setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
                 amount={item.ad_hoc_amount !== null ? item.ad_hoc_amount : item.subtotal_amount}
                 scratchAmount={item.ad_hoc_amount == null && item?.scratch_amount}
-                currency={this.order?.currency}
+                currency={checkoutState?.checkout?.currency}
                 trialDurationDays={item?.price?.trial_duration_days}
-                interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(this.order) })}
-                onScUpdateQuantity={e => this.updateQuantity(item, e.detail)}
-                onScRemove={() => this.removeLineItem(item)}
+                interval={!!item?.price && intervalString(item?.price, { showOnce: hasSubscription(checkoutState?.checkout) })}
+                onScUpdateQuantity={e => updateCheckoutLineItem({ id: item.id, data: { quantity: e.detail } })}
+                onScRemove={() => removeCheckoutLineItem(item?.id)}
                 exportparts="base:line-item, product-line-item, image:line-item__image, text:line-item__text, title:line-item__title, suffix:line-item__suffix, price:line-item__price, price__amount:line-item__price-amount, price__description:line-item__price-description, price__scratch:line-item__price-scratch, static-quantity:line-item__static-quantity, remove-icon__base:line-item__remove-icon, quantity:line-item__quantity, quantity__minus:line-item__quantity-minus, quantity__minus-icon:line-item__quantity-minus-icon, quantity__plus:line-item__quantity-plus, quantity__plus-icon:line-item__quantity-plus-icon, quantity__input:line-item__quantity-input, line-item__price-description:line-item__price-description"
               />
             </div>
@@ -153,5 +104,3 @@ export class ScLineItems {
     );
   }
 }
-
-openWormhole(ScLineItems, ['order', 'busy', 'prices', 'lockedChoices', 'editLineItems', 'removeLineItems'], false);

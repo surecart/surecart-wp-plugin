@@ -47,8 +47,9 @@ class Block extends BaseBlock {
 		return array_map(
 			function( $item ) {
 				return [
-					'price_id' => $item['id'] ?? null,
-					'quantity' => $item['quantity'] ?? 1,
+					'price_id'   => $item['id'] ?? null,
+					'variant_id' => $item['variant_id'] ?? null,
+					'quantity'   => $item['quantity'] ?? 1,
 				];
 			},
 			$line_items ?? []
@@ -65,6 +66,7 @@ class Block extends BaseBlock {
 		return add_query_arg(
 			[
 				'line_items' => $this->lineItems( $line_items ?? [] ),
+				'no_cart'    => true,
 			],
 			\SureCart::pages()->url( 'checkout' )
 		);

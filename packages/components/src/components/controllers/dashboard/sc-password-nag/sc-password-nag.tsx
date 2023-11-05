@@ -109,6 +109,7 @@ export class ScPasswordNag {
                   name="password"
                   confirmation={true}
                   ref={el => (this.input = el as HTMLScPasswordElement)}
+                  required
                 />
                 <div>
                   <sc-button type="primary" full submit busy={this.loading}>

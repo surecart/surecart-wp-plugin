@@ -1,7 +1,9 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
-import store, { getCheckout } from '@store/checkouts';
+import { onChange } from '@store/checkouts';
+import { state as checkoutState } from '@store/checkout';
 import { speak } from '@wordpress/a11y';
+
 /**
  * @part base - The elements base wrapper.
  * @part count - The icon base wrapper.
@@ -34,13 +36,9 @@ export class ScCartButton {
   /** Whether the cart count will be shown or not when the cart is empty */
   @Prop() showEmptyCount: boolean = false;
 
-  order() {
-    return getCheckout(this.formId, this.mode);
-  }
-
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState?.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;
@@ -62,7 +60,7 @@ export class ScCartButton {
 
     // maybe hide the parent <a> if there are no items in the cart.
     this.handleParentLinkDisplay();
-    store.onChange(this.mode, () => this.handleParentLinkDisplay());
+    onChange(this.mode, () => this.handleParentLinkDisplay());
   }
 
   handleParentLinkDisplay() {

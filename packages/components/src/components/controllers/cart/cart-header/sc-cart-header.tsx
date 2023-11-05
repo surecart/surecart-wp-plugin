@@ -1,6 +1,5 @@
-import { Component, h, Event, EventEmitter, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
-import { LineItem } from '../../../../types';
+import { Component, h, Event, EventEmitter } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 
 @Component({
@@ -9,12 +8,11 @@ import { __ } from '@wordpress/i18n';
   shadow: true,
 })
 export class ScCartHeader {
-  @Prop() lineItems: Array<LineItem>;
   @Event() scCloseCart: EventEmitter<void>;
 
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.lineItems || [];
+    const items = checkoutState.checkout?.line_items?.data || [];
     let count = 0;
     items.forEach(item => {
       count = count + item?.quantity;
@@ -46,4 +44,3 @@ export class ScCartHeader {
     );
   }
 }
-openWormhole(ScCartHeader, ['lineItems'], false);

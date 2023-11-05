@@ -1,9 +1,10 @@
 /**
  * External dependencies.
  */
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import {speak} from '@wordpress/a11y'
 
 /**
  * Internal dependencies.
@@ -76,6 +77,9 @@ export class ScProductItemList {
 
   /** Error notice. */
   @State() error: string;
+
+  /** Product was searched */
+  @Event() scSearched: EventEmitter<string>;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -198,7 +202,7 @@ export class ScProductItemList {
     try {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
-          expand: ['prices', 'product_medias', 'product_media.media'],
+          expand: ['prices', 'product_medias', 'product_media.media', 'variants'],
           archived: false,
           status: ['published'],
           per_page: this.limit,
@@ -217,6 +221,10 @@ export class ScProductItemList {
         total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
       };
       this.products = (await response.json()) as Product[];
+      if (!!collectionIds.length || !!this.query) {
+        speak(sprintf(__('%s products found', 'surecart'), this.pagination.total))
+      }
+
     } catch (response) {
       // we will want to handle nonce error if we are bypassing the apiFetch parser.
       await handleNonceError(response)
@@ -274,11 +282,15 @@ export class ScProductItemList {
                     <sc-button type="text" caret slot="trigger">
                       {this.renderSortName()}
                     </sc-button>
-                    <sc-menu>
-                      <sc-menu-item onClick={() => (this.sort = 'created_at:desc')}>{__('Latest', 'surecart')}</sc-menu-item>
-                      <sc-menu-item onClick={() => (this.sort = 'created_at:asc')}>{__('Oldest', 'surecart')}</sc-menu-item>
-                      <sc-menu-item onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
-                      <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
+                    <sc-menu ariaLabel={__('Sort Products','surecart')}>
+                      <sc-menu-item ariaLabel={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
+                        {__('Latest', 'surecart')}
+                      </sc-menu-item>
+                      <sc-menu-item ariaLabel={__('Sort by oldest', 'surecart')} disabled={this.sort === 'created_at:asc'}>
+                        {__('Oldest', 'surecart')}
+                      </sc-menu-item>
+                      <sc-menu-item ariaLabel={__('Sort by name, A to Z','surecart')} onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
+                      <sc-menu-item ariaLabel={__('Sort by name, Z to A','surecart')} onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
                     </sc-menu>
                   </sc-dropdown>
                 )}
@@ -288,13 +300,14 @@ export class ScProductItemList {
                     <sc-button type="text" caret slot="trigger">
                       {__('Filter', 'surecart')}
                     </sc-button>
-                    <sc-menu>
+                    <sc-menu ariaLabel={__('Filter products','surecart')}>
                       {(this.collections ?? []).map(collection => {
                         return (
                           <sc-menu-item
                             checked={this.selectedCollections.some(selected => selected?.id === collection?.id)}
                             onClick={() => this.toggleSelectCollection(collection)}
                             key={collection?.id}
+                            ariaLabel={sprintf(__('Filter by %s', 'surecart'), collection?.name)}
                           >
                             {collection.name}
                           </sc-menu-item>
@@ -316,6 +329,7 @@ export class ScProductItemList {
                           this.currentQuery = '';
                           this.updateProducts();
                         }}
+                      ariaLabel={sprintf(__('Searched for %s. Press space to clear search.', 'surecart'), this.query)}
                       >
                         {this.query}
                       </sc-tag>
@@ -328,6 +342,7 @@ export class ScProductItemList {
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           this.updateProducts();
+                          this.scSearched.emit(this.query);
                         }
                       }}
                       value={this.query}
@@ -345,7 +360,16 @@ export class ScProductItemList {
                       ) : (
                         <sc-icon slot="prefix" name="search" />
                       )}
-                      <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                      <sc-button
+                        class="search-button"
+                        type="link"
+                        slot="suffix"
+                        busy={this.busy}
+                        onClick={() => {
+                          this.updateProducts();
+                          this.scSearched.emit(this.query);
+                        }}
+                      >
                         {__('Search', 'surecart')}
                       </sc-button>
                     </sc-input>
@@ -376,7 +400,7 @@ export class ScProductItemList {
           </sc-empty>
         )}
 
-        <div class="product-item-list">
+        <section class="product-item-list" aria-label={__('Product list','surecart')}>
           {this.loading
             ? [...Array(this.products?.length || this.limit || 10)].map((_, index) => (
                 <div class="product-item-list__loader" key={index}>
@@ -415,7 +439,7 @@ export class ScProductItemList {
             : (this.products || []).map(product => {
                 return <sc-product-item key={product?.id} exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
               })}
-        </div>
+        </section>
         {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
           <div
             class={{

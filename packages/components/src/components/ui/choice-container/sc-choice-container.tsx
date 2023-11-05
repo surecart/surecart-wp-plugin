@@ -127,7 +127,7 @@ export class ScChoiceContainer {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    // On arrow key press
+    // On arrow key press.
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
@@ -139,6 +139,13 @@ export class ScChoiceContainer {
       choices[index].checked = true;
 
       event.preventDefault();
+    }
+
+    // On space key press select the choice like handle mouse click.
+    if (event.key === ' ') {
+      event.preventDefault();
+      this.checked = true;
+      this.scChange.emit(this.input.checked);
     }
   }
 
