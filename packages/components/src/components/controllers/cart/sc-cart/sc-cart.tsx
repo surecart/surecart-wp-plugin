@@ -1,6 +1,5 @@
 import { Component, Fragment, h, Listen, Prop, State, Watch } from '@stencil/core';
 import apiFetch from '../../../../functions/fetch';
-import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { baseUrl } from '../../../../services/session';
 import { getCheckout, setCheckout } from '@store/checkouts/mutations';
@@ -11,7 +10,6 @@ import { Checkout } from '../../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { formBusy } from '@store/form/getters';
-import { speak } from '@wordpress/a11y';
 @Component({
   tag: 'sc-cart',
   styleUrl: 'sc-cart.scss',
@@ -54,14 +52,12 @@ export class ScCart {
   handleOpenChange() {
     uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
-      speak(__('Cart Opened', 'surecart'), 'assertive');
       this.fetchOrder();
       setTimeout(() => {
         this.drawer.focus();
       }, 500);
     } else {
       (document?.querySelector('sc-cart-icon')?.shadowRoot?.querySelector('.cart') as HTMLElement)?.focus();
-      speak(__('Cart Closed', 'surecart'), 'assertive');
     }
   }
 
