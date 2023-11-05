@@ -30,9 +30,6 @@ export class ScCartIcon {
     return getOrder(this.formId, this.mode);
   }
 
-  /** Cart focus */
-  @Prop({ mutable: true, reflect: true }) hasFocus: boolean;
-
   /** Count the number of items in the cart. */
   getItemsCount() {
     const items = this.order()?.line_items?.data;
@@ -48,11 +45,10 @@ export class ScCartIcon {
       return null;
     }
     return (
-      <Host role="button" aria-label={__('Open Cart', 'surecart')}>
+      <Host>
         <div
           class={{
-            'cart': true,
-            'cart--focused': this.hasFocus,
+            cart: true,
           }}
           part="base"
           onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}
@@ -61,15 +57,9 @@ export class ScCartIcon {
               uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
             }
           }}
-          onFocus={() => {
-            this.hasFocus = true;
-          }}
-          onBlur={() => {
-            this.hasFocus = false;
-          }}
           tabIndex={0}
           role="button"
-          aria-label={__('Open Cart', 'surecart')}
+          aria-label={!uiStore.state.cart.open ? __('Open Cart', 'surecart') : __('Close Cart', 'surecart')}
         >
           <div class="cart__container" part="container">
             <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>

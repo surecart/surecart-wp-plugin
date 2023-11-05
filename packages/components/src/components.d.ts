@@ -354,10 +354,6 @@ export namespace Components {
          */
         "formId": string;
         /**
-          * Cart focus
-         */
-        "hasFocus": boolean;
-        /**
           * The icon to show.
          */
         "icon": string;
@@ -5935,10 +5931,6 @@ declare namespace LocalJSX {
           * The form id to use for the cart.
          */
         "formId"?: string;
-        /**
-          * Cart focus
-         */
-        "hasFocus"?: boolean;
         /**
           * The icon to show.
          */

@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property | Attribute | Description                         | Type               | Default          |
-| -------- | --------- | ----------------------------------- | ------------------ | ---------------- |
-| `count`  | `count`   | The count to show in the cart icon. | `number`           | `0`              |
-| `formId` | `form-id` | The form id to use for the cart.    | `string`           | `undefined`      |
-| `icon`   | `icon`    | The icon to show.                   | `string`           | `'shopping-bag'` |
-| `mode`   | `mode`    | Are we in test or live mode.        | `"live" \| "test"` | `'live'`         |
+| Property   | Attribute   | Description                         | Type               | Default          |
+| ---------- | ----------- | ----------------------------------- | ------------------ | ---------------- |
+| `count`    | `count`     | The count to show in the cart icon. | `number`           | `0`              |
+| `formId`   | `form-id`   | The form id to use for the cart.    | `string`           | `undefined`      |
+| `hasFocus` | `has-focus` | Cart focus                          | `boolean`          | `undefined`      |
+| `icon`     | `icon`      | The icon to show.                   | `string`           | `'shopping-bag'` |
+| `mode`     | `mode`      | Are we in test or live mode.        | `"live" \| "test"` | `'live'`         |
 
 
 ## Shadow Parts

@@ -197,7 +197,6 @@
   "sc-cart-icon": {
     "count": true,
     "form-id": true,
-    "has-focus": true,
     "icon": true,
     "mode": true,
     "style": true,
