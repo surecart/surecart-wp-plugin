@@ -192,6 +192,7 @@ export class ScProductLineItem {
                 exportparts="base:remove-icon__base"
                 class="item__remove"
                 name="x"
+                aria-label={__('Remove item', 'surecart')}
                 onClick={() => this.scRemove.emit()}
                 onKeyDown={e => {
                   if (e.key === 'Enter') {

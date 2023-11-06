@@ -77,9 +77,7 @@ export class ScOrderSummary {
           slot="title"
           onClick={e => this.handleClick(e)}
           tabIndex={0}
-          onFocus={() => {
-            speak(__(`Collapsible Order summary. Press space to ${this.collapsed ? 'expand' : 'collapse'}.`, 'surecart'), 'assertive');
-          }}
+          aria-label={__(`Order Summary ${this.collapsed ? 'collapsed' : 'expanded'}`, 'surecart')}
           onKeyDown={e => {
             if (e.key === ' ') {
               this.handleClick(e);
