@@ -20,6 +20,7 @@ import { createErrorNotice } from '@store/notices/mutations';
   shadow: true,
 })
 export class ScOrderConfirmProvider {
+  private continueButton: HTMLScButtonElement;
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
@@ -81,6 +82,15 @@ export class ScOrderConfirmProvider {
     return url ? addQueryArgs(url, { sc_order: checkoutState.checkout?.id }) : window?.scData?.pages?.dashboard;
   }
 
+  @Watch('showSuccessModal')
+  handleSuccessModal() {
+    if (this.showSuccessModal) {
+      setTimeout(() => {
+        this.continueButton?.focus();
+      }, 50);
+    }
+  }
+
   render() {
     const manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
 
@@ -108,7 +118,7 @@ export class ScOrderConfirmProvider {
                 })}
               </sc-alert>
             )}
-            <sc-button href={this.getSuccessUrl()} size="large" type="primary">
+            <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
               {formState?.text?.success?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
