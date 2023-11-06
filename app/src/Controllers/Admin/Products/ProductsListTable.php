@@ -6,11 +6,14 @@ use SureCart\Models\Product;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\ProductCollection;
+use SureCartCore\View\HasProductMediaTrait;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class ProductsListTable extends ListTable {
+	use HasProductMediaTrait;
+
 	public $checkbox = true;
 	public $error    = '';
 	public $pages    = [];
@@ -183,8 +186,8 @@ class ProductsListTable extends ListTable {
 			[
 				'prices',
 				'product_collections',
-				'product_medias',
-				'product_medias.media',
+				'featured_product_media',
+				'product_media.media'
 			]
 		);
 
@@ -360,13 +363,13 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$media = $product->product_medias->data[0]->media ?? null;
+		$media = $this->getFeaturedProductMediaAttributes( $product );
 		ob_start();
 		?>
 
 		<div class="sc-product-name">
-		<?php if ( $product->image_url ) { ?>
-			<img src="<?php echo esc_url( $product->image_url ); ?>" alt="<?php echo esc_attr( !empty($media)? $media->alt :'Product Image'	);?>" title="<?php echo esc_attr( !empty($media)? $media->title :'Product Image' );?>" class="sc-product-image-preview" />
+		<?php if ( $media->url ) { ?>
+			<img src="<?php echo esc_url( $media->url ); ?>" alt="<?php echo esc_attr( $media->alt);?>" title="<?php echo esc_attr( $media->title );?>" class="sc-product-image-preview" />
 		<?php } else { ?>
 			<div class="sc-product-image-preview">
 				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
