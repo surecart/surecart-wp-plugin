@@ -58,7 +58,6 @@ Type: `Promise<boolean>`
 graph TD;
   sc-customer-lastname --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   style sc-customer-lastname fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

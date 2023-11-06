@@ -77,7 +77,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getSignature() {
-		return $this->request->headers( 'X-Webhook-Signature' )[0] ?? '';
+		return $this->request->headers( 'X-Webhook-Signature' )[0] ?? $this->request->headers( 'x-webhook-signature' )[0] ?? '';
 	}
 
 	/**
@@ -86,7 +86,7 @@ class WebhooksMiddleware {
 	 * @return string
 	 */
 	public function getTimestamp() {
-		return $this->request->headers( 'X-Webhook-Timestamp' )[0] ?? '';
+		return $this->request->headers( 'X-Webhook-Timestamp' )[0] ?? $this->request->headers( 'x-webhook-timestamp' )[0] ?? '';
 	}
 
 	/**

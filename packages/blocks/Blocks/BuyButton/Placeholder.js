@@ -11,34 +11,17 @@ import { Placeholder, Button } from '@wordpress/components';
 import { button as icon } from '@wordpress/icons';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
+import { updateCartLineItem } from '../../util';
 
 export default ({ setAttributes }) => {
-	const [line_items, setLineItems] = useState([{ quantity: 1 }]);
+	const [line_items, setLineItems] = useState([]);
 
 	const removeLineItem = (index) => {
 		setLineItems(line_items.filter((_, i) => i !== index));
 	};
 
-	const updateLineItem = (data, index) => {
-		setLineItems(
-			line_items.map((item, i) => {
-				if (i !== index) return item;
-				return {
-					...item,
-					...data,
-				};
-			})
-		);
-	};
-
-	const addLineItem = () => {
-		setLineItems([
-			...(line_items || []),
-			{
-				quantity: 1,
-			},
-		]);
-	};
+	const updateLineItem = (data) =>
+		setLineItems(updateCartLineItem(data, line_items));
 
 	return (
 		<Placeholder icon={icon} label={__('Select some products', 'surecart')}>
@@ -51,7 +34,6 @@ export default ({ setAttributes }) => {
 			>
 				<PriceChoices
 					choices={line_items}
-					onAddProduct={addLineItem}
 					onUpdate={updateLineItem}
 					onRemove={removeLineItem}
 					onNew={() => {}}

@@ -108,13 +108,21 @@ class ProductCollectionsMenuService {
 	 * If the menu item is a collection page, add the collection slug to the menu item..
 	 *
 	 * @param string $content Block content.
-	 * @param array $block_data Block data.
+	 * @param array  $block_data Block data.
 	 *
 	 * @return array
 	 */
 	public function filterMenuBlockLinkHref( $content, $block_data ) {
-		
-		if ( empty ( $block_data['blockName'] ) || 'core/navigation-link' !== $block_data['blockName'] || empty( $block_data['attrs']['id'] ) ) {
+		// not a navigation link.
+		if ( empty( $block_data['blockName'] ) || 'core/navigation-link' !== $block_data['blockName'] ) {
+			return $content;
+		}
+		// don't have kind.
+		if ( empty( $block_data['attrs']['kind'] ) || 'sc-collection' !== $block_data['attrs']['kind'] ) {
+			return $content;
+		}
+		// don't have an id.
+		if ( empty( $block_data['attrs']['id'] ) ) {
 			return $content;
 		}
 
@@ -125,7 +133,7 @@ class ProductCollectionsMenuService {
 		}
 
 		$collection_slug = $collection->slug;
-		
+
 		$new_link = esc_url_raw( trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . $collection_slug );
 
 		return preg_replace( '/href="([^"]*)"/', 'href="' . $new_link . '"', $content );

@@ -13,13 +13,6 @@
 | `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean` | `true`      |
 
 
-## Events
-
-| Event     | Description | Type                         |
-| --------- | ----------- | ---------------------------- |
-| `scError` | Error event | `CustomEvent<ResponseError>` |
-
-
 ## Dependencies
 
 ### Used by
@@ -42,7 +35,6 @@ graph TD;
   sc-shipping-choices --> sc-radio
   sc-shipping-choices --> sc-format-number
   sc-shipping-choices --> sc-block-ui
-  sc-form-control --> sc-tooltip
   sc-block-ui --> sc-spinner
   sc-form-components-validator --> sc-shipping-choices
   style sc-shipping-choices fill:#f9f,stroke:#333,stroke-width:4px

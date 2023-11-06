@@ -1,15 +1,17 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { Stripe } from '@stripe/stripe-js';
+import { Stripe, StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, ShippingAddress } from '../../../types';
+import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
+import { createErrorNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -47,10 +49,11 @@ export class ScStripePaymentElement {
   /** The order/invoice was paid for. */
   @Event() scPaid: EventEmitter<void>;
 
-  /** There was a payment error. */
-  @Event() scPayError: EventEmitter<any>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Payment information was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
 
   @State() styles: CSSStyleDeclaration;
 
@@ -192,6 +195,20 @@ export class ScStripePaymentElement {
 
       this.element = this.elements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
+      this.element.on('change', (event: StripeElementChangeEvent) => {
+        if (event.complete) {
+          this.scPaymentInfoAdded.emit({
+            checkout_id: checkoutState.checkout?.id,
+            processor_type: 'stripe',
+            payment_method: {
+              billing_details: {
+                email: checkoutState.checkout?.email,
+                name: checkoutState.checkout?.name,
+              },
+            },
+          });
+        }
+      });
       return;
     }
     this.elements.update(this.getElementsConfig());
@@ -235,8 +252,8 @@ export class ScStripePaymentElement {
     const { error } = await this.elements.submit();
     if (error) {
       console.error({ error });
-      console.error(error);
-      this.scPayError.emit(error);
+      updateFormState('REJECT');
+      createErrorNotice(error);
       this.error = error.message;
       return;
     }
@@ -296,7 +313,8 @@ export class ScStripePaymentElement {
       }
     } catch (e) {
       console.error(e);
-      this.scPayError.emit(e);
+      updateFormState('REJECT');
+      createErrorNotice(e);
       if (e.message) {
         this.error = e.message;
       }

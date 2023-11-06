@@ -23,11 +23,11 @@
 
 ## Events
 
-| Event        | Description   | Type                                                                                            |
-| ------------ | ------------- | ----------------------------------------------------------------------------------------------- |
-| `scPaid`     |               | `CustomEvent<void>`                                                                             |
-| `scPayError` |               | `CustomEvent<any>`                                                                              |
-| `scSetState` | Set the state | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
+| Event                | Description                    | Type                                                                                            |
+| -------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `scPaid`             | The order/invoice was paid for | `CustomEvent<void>`                                                                             |
+| `scPaymentInfoAdded` | Payment information was added  | `CustomEvent<PaymentInfoAddedParams>`                                                           |
+| `scSetState`         | Set the state                  | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 
 
 ## Methods
@@ -65,7 +65,6 @@ Type: `Promise<any>`
 graph TD;
   sc-stripe-element --> sc-form-control
   sc-stripe-element --> sc-text
-  sc-form-control --> sc-tooltip
   style sc-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

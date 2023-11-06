@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -5,7 +6,6 @@ import {
 	ScFormatNumber,
 	ScIcon,
 	ScLineItem,
-	ScOrderStatusBadge,
 	ScProductLineItem,
 	ScSkeleton,
 } from '@surecart/components-react';
@@ -20,14 +20,14 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
+import { getSKUText } from '../../../util/products';
 
 const status = {
 	processing: __('Processing', 'surecart'),
 	payment_failed: __('Payment Failed', 'surecart'),
 	paid: __('Paid', 'surecart'),
 	canceled: __('Canceled', 'surecart'),
-	void: __('Void', 'surecart'),
-	canceled: __('Canceled', 'surecart'),
+	void: __('Canceled', 'surecart'),
 };
 
 export default ({ order, checkout, loading }) => {
@@ -195,6 +195,12 @@ export default ({ order, checkout, loading }) => {
 							key={item.id}
 							imageUrl={item?.price?.product?.image_url}
 							name={item?.price?.product?.name}
+							priceName={item?.price?.name}
+							variantLabel={
+								(item?.variant_options || [])
+									.filter(Boolean)
+									.join(' / ') || null
+							}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
@@ -203,6 +209,7 @@ export default ({ order, checkout, loading }) => {
 							currency={item?.price?.currency}
 							trialDurationDays={item?.price?.trial_duration_days}
 							interval={intervalString(item?.price)}
+							sku={getSKUText(item)}
 						></ScProductLineItem>
 					);
 				})}
