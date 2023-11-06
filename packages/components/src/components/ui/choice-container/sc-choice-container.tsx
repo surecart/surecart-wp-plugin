@@ -178,7 +178,7 @@ export class ScChoiceContainer {
 
   render() {
     return (
-      <Host tabindex="0" onFocus={() => this.input.focus()}>
+      <Host tabindex="0" role="button" aria-labelledby={this.labelId} onFocus={() => this.input.focus()}>
         <div
           part="base"
           class={{

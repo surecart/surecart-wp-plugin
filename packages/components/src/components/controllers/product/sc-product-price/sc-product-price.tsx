@@ -1,4 +1,4 @@
-import { Component, h, Prop, Fragment } from '@stencil/core';
+import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price, Variant } from '../../../../types';
 import { state } from '@store/product';
@@ -37,7 +37,7 @@ export class ScProductPrice {
 
     return (
       <Fragment>
-        <div class="price">
+        <div class="price" id="price">
           <div class="price__amounts">
             {!!price?.scratch_amount && price?.scratch_amount !== amount && (
               <Fragment>
@@ -91,18 +91,6 @@ export class ScProductPrice {
   }
 
   render() {
-    if (state?.selectedVariant) {
-      return this.renderVariantPrice(state?.selectedVariant);
-    }
-
-    if (state.selectedPrice) {
-      return this.renderPrice(state.selectedPrice);
-    }
-
-    if (state.prices.length) {
-      return this.renderRange();
-    }
-
-    return <slot />;
+    return <Host role="paragraph">{state.selectedPrice ? this.renderPrice(state.selectedPrice) : state.prices.length ? this.renderRange() : <slot />}</Host>;
   }
 }
