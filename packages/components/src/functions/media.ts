@@ -10,6 +10,6 @@ export const getFeaturedProductMediaAttributes = (product: Product):FeaturedProd
   return {
     alt: (featuredProductMedia?.media as Media)?.alt || product?.name,
     url: (featuredProductMedia?.media as Media)?.url || product?.image_url,
-    title: (featuredProductMedia?.media as Media)?.title || product?.name,
+    title: (featuredProductMedia?.media as Media)?.title || '',
   };
 };

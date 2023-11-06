@@ -24,7 +24,7 @@ trait HasProductMediaTrait
 
         return (object) [
             'alt' => $featured_product_media->media->alt ?? $product->title ?? $product->name ?? '',
-            'title' => $featured_product_media->media->title ?? $product->name ?? '',
+            'title' => $featured_product_media->media->title ?? '',
 			'url' => $featured_product_media->media->url ?? $product->image_url,
         ];
     }
