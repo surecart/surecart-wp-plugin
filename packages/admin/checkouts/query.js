@@ -4,6 +4,8 @@ const expand = [
 	'line_item.price',
 	'line_item.fees',
 	'price.product',
+	'product.featured_product_media',
+	'product_media.media',
 	'customer',
 	'customer.shipping_address',
 	'payment_intent',

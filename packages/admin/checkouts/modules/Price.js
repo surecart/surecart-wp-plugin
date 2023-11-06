@@ -15,6 +15,7 @@ import {
 	ScPriceInput,
 	ScForm,
 } from '@surecart/components-react';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({
 	price,
@@ -25,7 +26,7 @@ export default ({
 	subtotal_amount,
 	ad_hoc_amount,
 }) => {
-	const imageUrl = price?.product?.image_url;
+	const media = getFeaturedProductMediaAttributes(price?.product);
 	const [open, setOpen] = useState(false);
 	const [addHocAmount, setAddHocAmount] = useState(
 		ad_hoc_amount || price?.amount
@@ -40,9 +41,11 @@ export default ({
 			<ScTableRow>
 				<ScTableCell>
 					<ScFlex alignItems="center" justifyContent="flex-start">
-						{imageUrl ? (
+						{media?.url ? (
 							<img
-								src={imageUrl}
+								src={media.url}
+								alt={media.alt}
+								title={media.title}
 								css={css`
 									width: 40px;
 									height: 40px;
