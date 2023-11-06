@@ -4,7 +4,8 @@ import { openWormhole } from 'stencil-wormhole';
 
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product } from '../../../../types';
+import { LineItem, LineItemData, Checkout, PriceChoice, Prices, Product, FeaturedProductMediaAttributes } from '../../../../types';
+import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
 
 /**
  * @part base - The component base
@@ -101,6 +102,16 @@ export class ScLineItems {
     return this.removeLineItems;
   }
 
+  getImageAttributes(product: Product) {
+    const media: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(product);
+
+    return {
+      imageUrl: media.url,
+      imageTitle: media.title,
+      imageAlt: media.alt,
+    };
+  }
+
   render() {
     if (!!this.busy && !this.order?.line_items?.data?.length) {
       return (
@@ -121,7 +132,7 @@ export class ScLineItems {
             <div class="line-item">
               <sc-product-line-item
                 key={item.id}
-                imageUrl={(item?.price?.product as Product)?.image_url}
+                {...this.getImageAttributes(item?.price?.product as Product)}
                 name={(item?.price?.product as Product)?.name}
                 max={(item?.price?.product as Product)?.purchase_limit}
                 editable={this.isEditable(item)}
