@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 
 import { animateTo, stopAnimations } from '../../../functions/animate';
 import { getAnimation, setDefaultAnimation } from '../../../functions/animation-registry';
-import { speak } from '@wordpress/a11y';
+
 @Component({
   tag: 'sc-drawer',
   styleUrl: 'sc-drawer.css',
@@ -47,12 +47,6 @@ export class ScDrawer {
    * accessible way for users to dismiss the drawer.
    */
   @Prop({ attribute: 'no-header', reflect: true }) noHeader: boolean = false;
-
-  // When the drawer is opened, this text will be announced to screen readers.
-  @Prop() drawerOpenAnnouncement: string = __('Drawer Opened', 'surecart');
-
-  // When the drawer is closed, this text will be announced to screen readers.
-  @Prop() drawerCloseAnnouncement: string = __('Drawer Closed', 'surecart');
 
   componentDidLoad() {
     this.drawer.hidden = !this.open;
@@ -111,7 +105,6 @@ export class ScDrawer {
   @Watch('open')
   async handleOpenChange() {
     if (this.open) {
-      speak(this.drawerOpenAnnouncement, 'assertive');
       this.scShow.emit();
       this.originalTrigger = document.activeElement as HTMLElement;
 
@@ -160,7 +153,6 @@ export class ScDrawer {
       this.scAfterShow.emit();
     } else {
       // Hide
-      speak(this.drawerCloseAnnouncement, 'assertive');
       this.scHide.emit();
       this.unLockBodyScrolling();
 
