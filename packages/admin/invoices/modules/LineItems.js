@@ -10,6 +10,7 @@ import Definition from '../../ui/Definition';
 import { useSelect } from '@wordpress/data';
 import { store } from '@surecart/data';
 import { ScButton } from '@surecart/components-react';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ invoice, charge: chargeInput, loading }) => {
 	const line_items = invoice?.invoice_items?.data;
@@ -21,6 +22,16 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 
 	const renderLoading = () => {
 		return <sc-skeleton></sc-skeleton>;
+	};
+
+	const getImageProps = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
 	};
 
 	return (
@@ -95,7 +106,9 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						return (
 							<sc-product-line-item
 								key={item.id}
-								imageUrl={item?.price?.product?.image_url}
+								{...getFeaturedProductMediaAttributes(
+									item?.price?.product
+								)}
 								name={item?.price?.product?.name}
 								editable={false}
 								removable={false}

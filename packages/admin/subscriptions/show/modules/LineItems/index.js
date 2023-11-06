@@ -11,10 +11,21 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { formatTaxDisplay } from '../../../../util/tax';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
 	const line_items = period?.checkout?.line_items?.data;
+
+	const getImageProps = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
 
 	return (
 		<Box
@@ -41,7 +52,7 @@ export default ({ period, loading }) => {
 						<>
 							<ScProductLineItem
 								key={item.id}
-								imageUrl={item?.price?.product?.image_url}
+								{...getImageProps(item?.price?.product)}
 								name={item?.price?.product?.name}
 								editable={false}
 								removable={false}
