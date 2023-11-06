@@ -26,6 +26,7 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { intervalString } from '../../../util/translations';
 import PrevNextButtons from '../../../ui/PrevNextButtons';
 import usePagination from '../../../hooks/usePagination';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 const PRODUCTS_PER_PAGE = 5;
 
@@ -52,7 +53,11 @@ export default ({
 					shipping_profile_ids: [shippingProfileId],
 					per_page: PRODUCTS_PER_PAGE,
 					page: currentPage,
-					expand: ['prices'],
+					expand: [
+						'prices',
+						'featured_product_media',
+						'product_media.media',
+					],
 				},
 			];
 
@@ -136,12 +141,15 @@ export default ({
 		);
 		const firstPrice = activePrices?.[0];
 		const totalPrices = activePrices?.length;
+		const media = getFeaturedProductMediaAttributes(product);
 
 		return (
 			<ScFlex alignItems="center" justifyContent="flex-start">
-				{product?.image_url ? (
+				{media?.url ? (
 					<img
-						src={product.image_url}
+						src={media.url}
+						alt={media.alt}
+						title={media.title}
 						css={css`
 							width: 40px;
 							height: 40px;
