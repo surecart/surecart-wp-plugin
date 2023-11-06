@@ -1,5 +1,5 @@
 import { Component, h, Host, Prop } from '@stencil/core';
-import { Media, ProductMedia } from '../../../../types';
+import { FeaturedProductMediaAttributes } from '../../../../types';
 import { sizeImage } from '../../../../functions/media';
 import { applyFilters } from '@wordpress/hooks';
 
@@ -9,11 +9,8 @@ import { applyFilters } from '@wordpress/hooks';
   shadow: true,
 })
 export class ScProductItemImage {
-  /* Product image url */
-  @Prop() productMedia: ProductMedia;
-
-  /* Product image alt */
-  @Prop() alt: string;
+  /* Product Media */
+  @Prop() productMedia: FeaturedProductMediaAttributes;
 
   /* Product image sizing */
   @Prop() sizing: 'cover' | 'contain';
@@ -23,8 +20,8 @@ export class ScProductItemImage {
       return this.productMedia?.url;
     }
 
-    if ((this.productMedia?.media as Media)?.url) {
-      return sizeImage((this.productMedia?.media as Media)?.url, applyFilters('surecart/product-list/media/size', 900));
+    if (this.productMedia.url) {
+      return sizeImage(this.productMedia.url, applyFilters('surecart/product-list/media/size', 900));
     }
 
     return '';
@@ -40,7 +37,7 @@ export class ScProductItemImage {
             'is_covered': this.sizing === 'cover',
           }}
         >
-          {!!this.getSrc() ? <img src={this.getSrc()} alt={this.alt || (this.productMedia?.media as Media)?.alt} title={(this.productMedia?.media as Media)?.title} /> : <div class="product-img_placeholder" />}
+          {!!this.getSrc() ? <img src={this.getSrc()} alt={this.productMedia.alt} title={this.productMedia.title} /> : <div class="product-img_placeholder" />}
         </div>
       </Host>
     );

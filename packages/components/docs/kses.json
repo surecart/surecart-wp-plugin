@@ -1558,7 +1558,6 @@
     "slot": true
   },
   "sc-product-item-image": {
-    "alt": true,
     "product-media": true,
     "sizing": true,
     "style": true,

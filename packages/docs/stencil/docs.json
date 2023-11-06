@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-06T12:35:51",
+  "timestamp": "2023-11-06T13:39:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -23997,31 +23997,15 @@
       "usage": {},
       "props": [
         {
-          "name": "alt",
-          "type": "string",
-          "mutable": false,
-          "attr": "alt",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "productMedia",
-          "type": "ProductMedia",
+          "type": "FeaturedProductMediaAttributes",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "ProductMedia"
+              "type": "FeaturedProductMediaAttributes"
             }
           ],
           "optional": false,
