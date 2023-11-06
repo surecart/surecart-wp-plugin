@@ -18,7 +18,7 @@ import { getFeaturedProductMediaAttributes } from '@surecart/components';
 export default ({ checkout, loading, abandoned }) => {
 	const line_items = checkout?.line_items?.data;
 
-	const getImageProps = (product) => {
+	const getImageAttributes = (product) => {
 		const featuredMedia = getFeaturedProductMediaAttributes(product);
 
 		return {
@@ -52,7 +52,7 @@ export default ({ checkout, loading, abandoned }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							{...getImageProps(item?.price?.product)}
+							{...getImageAttributes(item?.price?.product)}
 							name={item?.price?.product?.name}
 							editable={false}
 							removable={false}

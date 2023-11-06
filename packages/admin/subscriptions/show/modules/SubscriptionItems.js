@@ -35,7 +35,7 @@ export default () => {
 		</Fragment>
 	);
 
-	const getImageProps = (product) => {
+	const getImageAttributes = (product) => {
 		const featuredMedia = getFeaturedProductMediaAttributes(product);
 
 		return {
@@ -58,7 +58,7 @@ export default () => {
 						return (
 							<sc-product-line-item
 								key={item.id}
-								{...getImageProps(item?.price?.product)}
+								{...getImageAttributes(item?.price?.product)}
 								name={`${item?.price?.product?.name} \u2013 ${item?.price?.name}`}
 								editable={false}
 								removable={false}

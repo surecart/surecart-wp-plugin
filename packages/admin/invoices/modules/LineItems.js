@@ -24,7 +24,7 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 		return <sc-skeleton></sc-skeleton>;
 	};
 
-	const getImageProps = (product) => {
+	const getImageAttributes = (product) => {
 		const featuredMedia = getFeaturedProductMediaAttributes(product);
 
 		return {
