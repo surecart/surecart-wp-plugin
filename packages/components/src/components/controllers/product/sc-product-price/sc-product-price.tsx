@@ -1,7 +1,7 @@
-import { Component, h, Prop, Fragment, Element, Host, State } from '@stencil/core';
+import { Component, h, Prop, Fragment, Element, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
-import { state,onChange } from '@store/product';
+import { state } from '@store/product';
 import { intervalString } from '../../../../functions/price';
 
 @Component({
@@ -14,18 +14,6 @@ export class ScProductPrice {
 
   @Prop() prices: Price[];
   @Prop() saleText: string;
-
-  @State() ariaLabel: string = '';
-
-  componentDidLoad() {
-    this.ariaLabel = this.el.shadowRoot?.textContent;
-
-    onChange('selectedPrice', () => {
-      setTimeout(() => {
-        this.ariaLabel = this.el.shadowRoot?.textContent;
-      }, 50);
-    })
-  }
 
   renderRange() {
     if (state.prices.length === 1) {
@@ -48,10 +36,17 @@ export class ScProductPrice {
         <div class="price" id="price">
           <div class="price__amounts">
             {!!price?.scratch_amount && (
-              <sc-format-number aria-label={__('Original price','surecart')} class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price.scratch_amount}></sc-format-number>
+              <sc-format-number
+                aria-label={__('Original price', 'surecart')}
+                class="price__scratch"
+                part="price__scratch"
+                type="currency"
+                currency={price.currency}
+                value={price.scratch_amount}
+              ></sc-format-number>
             )}
 
-            <sc-format-number aria-label={__('Sale Price','surecart')} class="price__amount" type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
+            <sc-format-number aria-label={__('Sale Price', 'surecart')} class="price__amount" type="currency" value={price?.amount} currency={price?.currency}></sc-format-number>
 
             <div class="price__interval">
               {intervalString(price, {
@@ -94,7 +89,7 @@ export class ScProductPrice {
 
   render() {
     return (
-      <Host role="paragraph" aria-live="polite" aria-label={this.ariaLabel}>
+      <Host role="paragraph" aria-live="polite">
         {state.selectedPrice ? this.renderPrice(state.selectedPrice) : state.prices.length ? this.renderRange() : <slot />}
       </Host>
     );
