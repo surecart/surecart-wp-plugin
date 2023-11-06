@@ -16,9 +16,6 @@ import { formBusy } from '@store/form/getters';
   shadow: true,
 })
 export class ScCart {
-  /** The drawer */
-  private drawer: HTMLScDrawerElement;
-
   /** Is this open or closed? */
   @State() open: boolean = null;
 
@@ -53,9 +50,6 @@ export class ScCart {
     uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
-      setTimeout(() => {
-        this.drawer.focus();
-      }, 500);
     } else {
       (document?.querySelector('sc-cart-icon')?.shadowRoot?.querySelector('.cart') as HTMLElement)?.focus();
     }
@@ -144,7 +138,6 @@ export class ScCart {
     return (
       <sc-cart-session-provider>
         <sc-drawer
-          ref={el => (this.drawer = el as HTMLScDrawerElement)}
           open={this.open}
           onScAfterShow={() => (this.open = true)}
           onScAfterHide={() => {
