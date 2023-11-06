@@ -33,7 +33,7 @@ export class ScCartIcon {
   }
 
   render() {
-    if (!checkoutState?.checkout) {
+    if (!checkoutState?.checkout || checkoutState?.checkout?.line_items?.data?.length === 0) {
       return null;
     }
     return (
@@ -46,6 +46,7 @@ export class ScCartIcon {
         onKeyDown={e => {
           if ('Enter' === e?.code || 'Space' === e?.code) {
             this.toggleCart();
+            e.preventDefault();
           }
         }}
         tabIndex={0}
