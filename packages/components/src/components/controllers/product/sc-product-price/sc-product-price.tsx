@@ -1,4 +1,4 @@
-import { Component, h, Prop, Fragment, Element, Host } from '@stencil/core';
+import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price } from '../../../../types';
 import { state } from '@store/product';
@@ -10,8 +10,6 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
-  @Element() el: HTMLElement;
-
   @Prop() prices: Price[];
   @Prop() saleText: string;
 
@@ -88,10 +86,6 @@ export class ScProductPrice {
   }
 
   render() {
-    return (
-      <Host role="paragraph" aria-live="polite">
-        {state.selectedPrice ? this.renderPrice(state.selectedPrice) : state.prices.length ? this.renderRange() : <slot />}
-      </Host>
-    );
+    return <Host role="paragraph">{state.selectedPrice ? this.renderPrice(state.selectedPrice) : state.prices.length ? this.renderRange() : <slot />}</Host>;
   }
 }
