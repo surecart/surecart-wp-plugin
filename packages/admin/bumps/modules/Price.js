@@ -3,7 +3,6 @@ import {
 	ScCard,
 	ScStackedList,
 	ScFormatNumber,
-	ScStackedListRow,
 	ScButton,
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
@@ -12,13 +11,18 @@ import useEntity from '../../hooks/useEntity';
 import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
 import ModelRow from '../components/ModelRow';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ loading, bump, updateBump }) => {
 	const { price, hasLoadedPrice } = useEntity(
 		'price',
 		bump?.price,
 		{
-			expand: ['product'],
+			expand: [
+				'product',
+				'product.featured_product_media',
+				'product_media.media',
+			],
 		},
 		[bump?.price]
 	);
@@ -34,7 +38,9 @@ export default ({ loading, bump, updateBump }) => {
 						<ScStackedList>
 							<ModelRow
 								icon={'image'}
-								imageUrl={price?.product?.image_url}
+								media={getFeaturedProductMediaAttributes(
+									price?.product
+								)}
 								loading={!hasLoadedPrice}
 								suffix={
 									<div>
