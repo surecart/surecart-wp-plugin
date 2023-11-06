@@ -1,5 +1,6 @@
 import { Component, h, Event, EventEmitter } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-cart-header',
@@ -22,7 +23,19 @@ export class ScCartHeader {
   render() {
     return (
       <div class="cart-header">
-        <sc-icon class="cart__close" name="arrow-right" onClick={() => this.scCloseCart.emit()}></sc-icon>
+        <sc-icon
+          class="cart__close"
+          name="arrow-right"
+          onClick={() => this.scCloseCart.emit()}
+          onKeyDown={e => {
+            if ('Enter' === e?.code || 'Space' === e?.code) {
+              this.scCloseCart.emit();
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label={__('Close Cart', 'surecart')}
+        ></sc-icon>
         <div class="cart-title">
           <slot />
         </div>
