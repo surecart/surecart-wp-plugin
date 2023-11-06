@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
-import uiStore from '@store/ui';
 
 @Component({
   tag: 'sc-cart-loader',
@@ -24,6 +23,6 @@ export class ScCartLoader {
     }
 
     // return the loader.
-    return <div innerHTML={checkoutState?.checkout?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
+    return <div innerHTML={this.template || ''}></div>;
   }
 }
