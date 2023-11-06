@@ -12,37 +12,8 @@ service.start();
 onChange('formState', () => {
   const { formState } = state;
   const { value } = formState;
-  console.log('value', value);
-
-  let speakText = '';
-  switch (value) {
-    case 'finalizing':
-      speakText += state.text.loading.finalizing;
-      break;
-
-    case 'paying':
-      speakText += state.text.loading.paying;
-      break;
-
-    case 'confirming':
-      speakText += state.text.loading.confirming;
-      break;
-
-    case 'confirmed':
-      speakText += state.text.loading.confirmed;
-      break;
-
-    case 'redirecting':
-      speakText += state.text.loading.redirecting;
-      break;
-
-    default:
-      break;
-  }
-
-  if (speakText) {
-    speak(speakText, 'assertive');
-  }
+  if (state.text.loading[value] === undefined) return;
+  speak(state.text.loading[value], 'assertive');
 });
 
 export default service;
