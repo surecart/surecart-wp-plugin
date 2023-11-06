@@ -13,10 +13,11 @@
 | `currency`             | `currency`                | Currency for the product                         | `string`  | `undefined` |
 | `editable`             | `editable`                | Can we select the quantity                       | `boolean` | `true`      |
 | `fees`                 | --                        | Product line item fees.                          | `Fee[]`   | `undefined` |
+| `imageAlt`             | `image-alt`               | Alternative description for the product image    | `string`  | `undefined` |
+| `imageTitle`           | `image-title`             | Title for the product image                      | `string`  | `undefined` |
 | `imageUrl`             | `image-url`               | Url for the product image                        | `string`  | `undefined` |
 | `interval`             | `interval`                | Recurring interval (i.e. monthly, once, etc.)    | `string`  | `undefined` |
 | `max`                  | `max`                     | The max allowed.                                 | `number`  | `100`       |
-| `media`                | --                        | The product media                                | `Media`   | `undefined` |
 | `name`                 | `name`                    | Product name                                     | `string`  | `undefined` |
 | `quantity`             | `quantity`                | Quantity                                         | `number`  | `undefined` |
 | `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
