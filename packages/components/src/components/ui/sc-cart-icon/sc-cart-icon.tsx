@@ -1,4 +1,4 @@
-import { Component, h, Prop, Host } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { __ } from '@wordpress/i18n';
@@ -27,35 +27,38 @@ export class ScCartIcon {
     return count;
   }
 
+  /** Toggle the cart in the ui. */
+  toggleCart() {
+    return uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
+  }
+
   render() {
     if (!checkoutState?.checkout) {
       return null;
     }
     return (
-      <Host>
-        <div
-          class={{
-            cart: true,
-          }}
-          part="base"
-          onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}
-          onKeyDown={e => {
-            if ('Enter' === e?.code || 'Space' === e?.code) {
-              uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
-            }
-          }}
-          tabIndex={0}
-          role="button"
-          aria-label={!uiStore.state.cart.open ? __('Open Cart', 'surecart') : __('Close Cart', 'surecart')}
-        >
-          <div class="cart__container" part="container">
-            <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
-            <slot>
-              <sc-icon exportparts="base:icon__base" name={this.icon}></sc-icon>
-            </slot>
-          </div>
+      <div
+        class={{
+          cart: true,
+        }}
+        part="base"
+        onClick={() => this.toggleCart()}
+        onKeyDown={e => {
+          if ('Enter' === e?.code || 'Space' === e?.code) {
+            this.toggleCart();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label={!uiStore.state.cart.open ? __('Open Cart', 'surecart') : __('Close Cart', 'surecart')}
+      >
+        <div class="cart__container" part="container">
+          <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
+          <slot>
+            <sc-icon exportparts="base:icon__base" name={this.icon}></sc-icon>
+          </slot>
         </div>
-      </Host>
+      </div>
     );
   }
 }
