@@ -23,7 +23,7 @@ export class ScOrderCouponForm {
 
   render() {
     // Do any line items have a recurring price?
-    const hasRecurring = this?.order?.line_items?.data?.some(item => item?.price?.recurring_interval);
+    const hasRecurring = checkoutState?.checkout?.line_items?.data?.some(item => item?.price?.recurring_interval);
 
     return (
       <sc-coupon-form
