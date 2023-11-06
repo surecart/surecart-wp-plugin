@@ -8,7 +8,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
   if (!window?.dataLayer && !window?.gtag) return;
 
   // get the added item from the event.
-  const item:LineItem = e.detail;
+  const item: LineItem = e.detail;
 
   // sanity check.
   if (!item?.price?.product) return;
@@ -18,11 +18,11 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
     {
       item_id: (item.price?.product as Product)?.id,
       item_name: (item.price?.product as Product)?.name,
-      item_variant: (item.variant_options ||[]).join(' / '),
-      price: item.price?.amount,
+      item_variant: (item.variant_options || []).join(' / '),
+      price: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'),
       currency: item.price?.currency,
       quantity: item.quantity,
-      discount: item.discount_amount,
+      discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item.price?.currency || 'USD') : 0,
     },
   ];
 
@@ -50,7 +50,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
 /**
  * Handle purchase complete event.
  */
-window.addEventListener('scPurchaseComplete', function (e: CustomEvent) {
+window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
   if (!window?.dataLayer && !window?.gtag) return;
 
   const checkout = e.detail;
@@ -65,8 +65,8 @@ window.addEventListener('scPurchaseComplete', function (e: CustomEvent) {
       item_id: (item?.price?.product as Product)?.id,
       currency: (checkout.currency || '').toUpperCase(),
       item_name: (item?.price?.product as Product)?.name || '',
-      discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
-      price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
+      discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item?.price?.currency || 'USD') : 0,
+      price: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
       quantity: item?.quantity || 1,
       item_variant: (item.variant_options || []).join(' / '),
     })),

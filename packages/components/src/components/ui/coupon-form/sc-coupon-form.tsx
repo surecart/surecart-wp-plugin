@@ -34,6 +34,8 @@ import { isRtl } from '../../../functions/page-align';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
+  private couponTag: HTMLScTagElement;
+  private addCouponTrigger: HTMLElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -82,6 +84,18 @@ export class ScCouponForm {
     if (val) {
       setTimeout(() => this.input.triggerFocus(), 50);
     }
+  }
+  // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
+  @Watch('discount')
+  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
+    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
+    setTimeout(() => {
+      if (this?.discount?.promotion?.code) {
+        this.couponTag.focus();
+      } else {
+        this.addCouponTrigger.focus();
+      }
+    }, 50);
   }
 
   /** Close it when blurred and no value. */
@@ -138,6 +152,7 @@ export class ScCouponForm {
                   this.open = false;
                 }
               }}
+              ref={el => (this.couponTag = el as HTMLScTagElement)}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -186,6 +201,7 @@ export class ScCouponForm {
             speak(__('Coupon code field opened. Press Escape button to close it.', 'surecart'), 'assertive');
           }}
           tabindex="0"
+          ref={el => (this.addCouponTrigger = el as HTMLElement)}
         >
           <slot name="label">{this.label}</slot>
         </div>
