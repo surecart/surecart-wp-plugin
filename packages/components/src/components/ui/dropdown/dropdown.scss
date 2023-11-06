@@ -18,6 +18,9 @@
   &__trigger {
     display: block;
     cursor: pointer;
+    border-width: 0;
+    outline: none;
+    background-color: unset;
   }
 
   &--disabled,

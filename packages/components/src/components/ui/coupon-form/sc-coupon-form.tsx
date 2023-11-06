@@ -1,9 +1,10 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { isRtl } from '../../../functions/page-align';
+import { speak } from '@wordpress/a11y';
 
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -113,6 +114,9 @@ export class ScCouponForm {
   handleKeyDown(e) {
     if (e?.code === 'Enter') {
       this.applyCoupon();
+    } else if (e?.code === 'Escape') {
+      this.scApplyCoupon.emit(null);
+      this.open = false;
     }
   }
 
@@ -143,7 +147,7 @@ export class ScCouponForm {
                 this.open = false;
               }}
               onKeyDown={e => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' || e.key === 'Escape') {
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
@@ -187,13 +191,14 @@ export class ScCouponForm {
             this.open = true;
           }}
           onKeyDown={e => {
-            if (e.key !== 'Enter') {
+            if (e.key !== 'Enter' && e.key !== ' ') {
               return true;
             }
             if (this.open) {
               return;
             }
             this.open = true;
+            speak(__('Coupon code field opened. Press Escape button to close it.', 'surecart'), 'assertive');
           }}
           tabindex="0"
           ref={el => (this.addCouponTrigger = el as HTMLElement)}

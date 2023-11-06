@@ -106,6 +106,7 @@ export class ScTaxIdInput {
         <sc-input
           ref={el => (this.input = el as HTMLScInputElement)}
           label={zones?.[this?.type || 'other']?.label}
+          aria-label={__('Tax ID', 'surecart')}
           name="tax_identifier.number"
           required={this.required}
           value={this.number}

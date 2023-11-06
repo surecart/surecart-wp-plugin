@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Watch, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { speak } from '@wordpress/a11y';
 
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
@@ -44,6 +45,8 @@ export class ScOrderConfirmProvider {
   handleConfirmOrderEvent() {
     if (this.checkoutStatus === 'confirming') {
       this.confirmOrder();
+    } else if (this.checkoutStatus === 'confirmed') {
+      speak(__('Order has been confirmed. Please click on continue...'));
     }
   }
 

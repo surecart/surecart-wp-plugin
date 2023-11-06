@@ -1,5 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
+
 import { state as checkoutState } from '@store/checkout';
 import { formBusy, formLoading } from '@store/form/getters';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
@@ -75,9 +77,11 @@ export class ScOrderSummary {
           slot="title"
           onClick={e => this.handleClick(e)}
           tabIndex={0}
+          aria-label={__(`Order Summary ${this.collapsed ? 'collapsed' : 'expanded'}`, 'surecart')}
           onKeyDown={e => {
             if (e.key === ' ') {
               this.handleClick(e);
+              speak(__(`Order Summary ${this.collapsed ? 'collapsed' : 'expanded'}`, 'surecart'), 'assertive');
             }
           }}
         >
