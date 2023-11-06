@@ -25,7 +25,12 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$price = Price::find( $attributes['price_id'] );
+		$price = Price::with( array( 'product' ) )->find( $attributes['price_id'] );
+
+		// empty check.
+		if ( is_wp_error( $price ) || empty( $price->id ) ) {
+			return null;
+		}
 
 		self::$instance++;
 
@@ -33,7 +38,8 @@ class Block extends BaseBlock {
 			'sc-price-choice',
 			'#sc-price-choice-' . (int) self::$instance,
 			[
-				'price' => $price,
+				'price'   => $price->toArray(),
+				'product' => $price->product->toArray(),
 			]
 		);
 
