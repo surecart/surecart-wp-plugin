@@ -71,7 +71,6 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function register() {
-
 		// should we use the esm loader directly?
 		if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
 			wp_register_script(
@@ -219,6 +218,25 @@ class ScriptsService {
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.css',
 			$asset_file['dependencies'],
 			$asset_file['version']
+		);
+
+		wp_register_script(
+			'surecart-affiliate-tracking',
+			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),
+			[],
+			'1',
+			[
+				'strategy' => 'defer',
+			]
+		);
+
+		wp_add_inline_script(
+			'surecart-affiliate-tracking',
+			'window.SureCartAffiliatesConfig = {
+				"accountSlug": "' . \SureCart::account()->slug . '",
+				"baseURL":"' . esc_url_raw( untrailingslashit( SURECART_API_URL ) ) . '/v1"
+			};',
+			'before'
 		);
 	}
 

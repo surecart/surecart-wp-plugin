@@ -292,7 +292,7 @@ export class ScInput {
                 spellcheck={this.spellcheck}
                 pattern={this.pattern}
                 inputmode={this.inputmode}
-                aria-labelledby={this.label}
+                aria-labelledby={this.labelId}
                 aria-invalid={this.invalid ? true : false}
                 value={this.value}
                 onChange={() => this.handleChange()}

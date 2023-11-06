@@ -1,5 +1,4 @@
-import { Component, h, Prop, Element, Watch } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, h, Prop, Element } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
 
 /**
@@ -24,9 +23,6 @@ export class ScFormControl {
   /** Name for the input. Used for validation errors. */
   @Prop() name: string;
 
-  /** Display server-side validation errors. */
-  @Prop() errors: any;
-
   /** Show the label. */
   @Prop() showLabel: boolean = true;
 
@@ -48,14 +44,6 @@ export class ScFormControl {
   /** Help id */
   @Prop() helpId: string;
 
-  /** Store the error message */
-  @Prop({ mutable: true }) errorMessage: string;
-
-  @Watch('errors')
-  handleErrors() {
-    this.errorMessage = this?.errors?.[this?.name];
-  }
-
   render() {
     return (
       <div
@@ -68,7 +56,7 @@ export class ScFormControl {
           'form-control--has-label': !!this.label && this.showLabel,
           'form-control--has-help-text': !!this.help,
           'form-control--is-required': !!this.required,
-          'form-control--is-rtl':isRtl()
+          'form-control--is-rtl': isRtl(),
         }}
       >
         <label part="label" id={this.labelId} class="form-control__label" htmlFor={this.inputId} aria-hidden={!!this.label ? 'false' : 'true'}>
@@ -76,13 +64,7 @@ export class ScFormControl {
           <slot name="label-end"></slot>
         </label>
         <div part="input" class="form-control__input">
-          {!!this.errorMessage ? (
-            <sc-tooltip exportparts="base:tooltip, text:tooltip-text" text={this.errorMessage} type="danger" padding={10} freeze open onClick={() => (this.errorMessage = '')}>
-              <slot></slot>
-            </sc-tooltip>
-          ) : (
-            <slot></slot>
-          )}
+          <slot />
         </div>
         {this.help && (
           <div part="help-text" id={this.helpId} class="form-control__help-text">
@@ -93,5 +75,3 @@ export class ScFormControl {
     );
   }
 }
-
-openWormhole(ScFormControl, ['errors'], false);

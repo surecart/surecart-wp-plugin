@@ -24,6 +24,25 @@ class CartService {
 					\SureCart::assets()->enqueueComponents();
 				}
 			);
+
+			$form = $this->getForm();
+			if ( empty( $form->ID ) ) {
+				return;
+			}
+			$state = sc_initial_state();
+
+			if ( empty( $state['checkout']['formId'] ) ) {
+				sc_initial_state(
+					array_filter(
+						[
+							'checkout' => [
+								'formId' => $form->ID,
+								'mode'   => Form::getMode( $form->ID ),
+							],
+						]
+					)
+				);
+			}
 			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
 		}
 	}
@@ -142,7 +161,7 @@ class CartService {
 
 		ob_start(); ?>
 			<li class='menu-item'>
-				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link">
+				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link" role="button" aria-label="Open Cart">
 					<sc-cart-button
 						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
 						form-id='<?php echo esc_attr( $form->ID ); ?>'
@@ -185,8 +204,6 @@ class CartService {
 		<sc-cart
 			id="sc-cart"
 			header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>"
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
@@ -194,10 +211,7 @@ class CartService {
 		</sc-cart>
 
 		<?php if ( $this->isFloatingIconEnabled() ) : ?>
-			<sc-cart-icon
-				form-id="<?php echo esc_attr( $form->ID ); ?>"
-				style="font-size: 16px"
-				mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>">
+			<sc-cart-icon style="font-size: 16px">
 				<?php echo wp_kses_post( $this->getIcon( 'floating' ) ); ?>
 			</sc-cart-icon>
 		<?php endif; ?>
@@ -218,9 +232,8 @@ class CartService {
 		}
 		$template = $this->cartTemplate();
 		?>
+
 		<sc-cart-loader
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			template='<?php echo esc_attr( $template ); ?>'>
 		</sc-cart-loader>
 		<?php

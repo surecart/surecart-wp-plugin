@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.3
-Stable tag: 2.7.3
+Stable tag: 2.8.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,45 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.8.1 - November 2nd, 2023 =
+* Fix: Theme conflict with GeneratePress causing product page out of stock buttons to appear.
+* Fix: Issue with images using special characters breaking product page slideshow.
+* Fix: Prevent name/company name fields from being emptied when address country changes.
+* Fix: Add theme support for block border settings missing if they are not set by the theme.
+* Fix: Issue where customer could enter a blank password when setting one for the first time on the customer dashboard.
+* Fix: Featured product list filter not working on product list blocks.
+
+= 2.8.0 - November 1st, 2023 =
+New: Product variants.
+New: Stock management.
+New: Product SKU.
+Improvement: Redesign of the line item quantity selector.
+Improvement: Display of price name on line items in addition to the variant.
+Improvement: Preloading of price choices to speed up checkout form loading.
+Improvement: Faster loading of checkout forms with preset prices.
+Fix: Issue with forms not loading properly when editing in admin.
+Fix: Typo in the deletion of webhook processes that prevented clearing of process logs older than 90 days.
+Fix: Z-index issue on the checkout page during the loading state.
+Fix: Improved handling of price version mismatches on the checkout form.
+Fix: Issue with customers not being able to add non-credit card Mollie payment methods on the customer dashboard.
+Fix: Use of hashed strings for transient caching to prevent excessively long transient names.
+
+= 2.7.5 - October 6th, 2023 =
+* Fix: Issue with some merchant admins not loading if using javascript browser caching.
+* Fix: Rankmath conflict outputting duplicate open graph tags.
+
+= 2.7.4 - October 5th, 2023 =
+* Improvement: Ability to turn off/on individual abandoned checkout flows for a customer.
+* Improvement: Add support for mandatory address field for Indian merchants using Stripe.
+* Improvement: Improve error message for when a customer reaches a purchase limit on checkout.
+* Improvement: Add php filter to filter "Back to home" and logo url on customer dashboard template.
+* Improvement: Don't allow quantity larger than purchase limit on product page.
+* Improvement: Fix location of purchase error message on default checkout.
+* Change: Deprecate tabbed customer dashboard.
+* Change: Remove "Draft/Published" tag in header for product page to avoid confusion.
+* Fix: Alignment of product page price not working on the front end for left and center alignment.
+* Fix: Discount duration default not being correct when creating a coupon.
 
 = 2.7.3 - September 26th, 2023 =
 * Fix: Performance issue with collections in menus using Full Site Editing themes.

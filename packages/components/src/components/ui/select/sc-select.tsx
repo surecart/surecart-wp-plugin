@@ -144,7 +144,7 @@ export class ScSelectDropdown {
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scChange: EventEmitter<void>;
+  scChange: EventEmitter<ChoiceItem>;
 
   /** Emitted when the list scrolls to the end. */
   @Event() scScrollEnd: EventEmitter<void>;
@@ -186,7 +186,7 @@ export class ScSelectDropdown {
       chosen = subchoices.find(choice => choice?.value == this.value);
     }
     if (chosen) {
-      return `${append ? append + ' - ' : ''}${chosen?.label}`;
+      return `${append ? append + ' — ' : ''}${chosen?.label}`;
     }
     return false;
   }
@@ -195,7 +195,7 @@ export class ScSelectDropdown {
     if (checked) {
       return true;
     }
-    return this.value === value;
+    return value && this.value === value;
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
@@ -215,7 +215,9 @@ export class ScSelectDropdown {
     this.scSearch.emit(this.searchTerm);
   }
 
-  handleSelect(value) {
+  handleSelect(choice) {
+    const { value } = choice;
+
     if (this.value === value && this.unselect) {
       this.value = '';
     } else {
@@ -226,7 +228,7 @@ export class ScSelectDropdown {
       this.searchTerm = '';
     }
 
-    this.scChange.emit();
+    this.scChange.emit(choice);
   }
 
   @Watch('searchTerm')
@@ -398,14 +400,25 @@ export class ScSelectDropdown {
 
     return (
       <sc-menu-item
+        class={{ 'is-unavailable': choice?.unavailable }}
         key={index}
         checked={this.isChecked(choice)}
         value={choice?.value}
-        onClick={() => !choice.disabled && this.handleSelect(choice.value)}
+        onClick={() => !choice.disabled && this.handleSelect(choice)}
+        onKeyDown={event => {
+          if ((event.key === 'Enter' || event.key === ' ') && !choice.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            this.handleSelect(choice);
+          }
+        }}
         disabled={choice.disabled}
       >
         {choice.label}
-        {!!choice?.suffix && <span slot="suffix">{choice.suffix}</span>}
+        {!!choice?.description && <div class="select__description">{choice?.description}</div>}
+        <div slot="suffix">
+          {choice?.suffix} {!!choice?.suffixDescription && <div class="select__suffix-description">{choice?.suffixDescription}</div>}
+        </div>
         {!!choice?.icon && this.renderIcon(choice.icon)}
       </sc-menu-item>
     );
@@ -464,7 +477,7 @@ export class ScSelectDropdown {
             onScHide={() => this.handleHide()}
           >
             <slot name="trigger" slot="trigger">
-              <div class="trigger">
+              <div class="trigger" role="button" tabIndex={0}>
                 <div class="select__value">
                   <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
                 </div>

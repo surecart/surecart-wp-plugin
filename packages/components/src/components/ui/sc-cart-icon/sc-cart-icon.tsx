@@ -1,6 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
-import { getOrder } from '@store/checkouts';
+import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
+import { __ } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -16,22 +17,9 @@ export class ScCartIcon {
   /** The icon to show. */
   @Prop() icon: string = 'shopping-bag';
 
-  /** The count to show in the cart icon. */
-  @Prop() count: number = 0;
-
-  /** The form id to use for the cart. */
-  @Prop({ reflect: true }) formId: string;
-
-  /** Are we in test or live mode. */
-  @Prop() mode: 'test' | 'live' = 'live';
-
-  order() {
-    return getOrder(this.formId, this.mode);
-  }
-
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState?.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;
@@ -39,12 +27,31 @@ export class ScCartIcon {
     return count;
   }
 
+  /** Toggle the cart in the ui. */
+  toggleCart() {
+    return uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
+  }
+
   render() {
-    if (!this.order()) {
+    if (!checkoutState?.checkout) {
       return null;
     }
     return (
-      <div class={{ cart: true }} part="base" onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}>
+      <div
+        class={{
+          cart: true,
+        }}
+        part="base"
+        onClick={() => this.toggleCart()}
+        onKeyDown={e => {
+          if ('Enter' === e?.code || 'Space' === e?.code) {
+            this.toggleCart();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label={!uiStore.state.cart.open ? __('Open Cart', 'surecart') : __('Close Cart', 'surecart')}
+      >
         <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
           <slot>
