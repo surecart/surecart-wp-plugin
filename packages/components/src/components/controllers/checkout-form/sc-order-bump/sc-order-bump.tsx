@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { isBumpInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { sizeImage } from '../../../../functions/media';
+import { getFeaturedProductMediaAttributes, sizeImage } from '../../../../functions/media';
 
 import { Bump, Checkout, LineItemData, Price, Product } from '../../../../types';
 
@@ -101,6 +101,7 @@ export class ScOrderBump {
 
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
+    const media = getFeaturedProductMediaAttributes(product);
 
     return (
       <sc-choice
@@ -124,7 +125,7 @@ export class ScOrderBump {
           <div slot="footer" class="bump__product--wrapper">
             <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
             <div class="bump__product">
-              {!!product?.image_url && <img src={sizeImage(product?.image_url, 130)} class="bump__image" />}
+              {!!media?.url && <img src={sizeImage(media?.url, 130)} title={media.title} alt={media.alt} class="bump__image" />}
               <div class="bump__product-text">
                 {!!this.bump?.metadata?.cta && <div class="bump__product-title">{this.bump.name || product?.name}</div>}
                 {!!this.bump?.metadata?.description && <div class="bump__product-description">{this.bump?.metadata?.description}</div>}
