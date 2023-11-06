@@ -187,7 +187,7 @@ export default ({
 							return (
 								<LineItem
 									key={index}
-									imageUrl={item?.price?.product?.image_url}
+									media={item?.price?.product}
 									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}

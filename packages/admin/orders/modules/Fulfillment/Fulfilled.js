@@ -14,6 +14,7 @@ import Box from '../../../ui/Box';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { ScFormatDate } from '@surecart/components-react';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import StatusDropdown from './components/StatusDropdown';
 import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
@@ -277,9 +278,9 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 								return (
 									<LineItem
 										key={id}
-										imageUrl={
-											line_item?.price?.product?.image_url
-										}
+										media={getFeaturedProductMediaAttributes(
+											line_item?.price?.product
+										)}
 										suffix={sprintf(
 											__('Qty: %d', 'surecart'),
 											quantity || 0

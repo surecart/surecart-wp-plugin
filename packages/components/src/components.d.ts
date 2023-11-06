@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData as LineItemData1, Price as Price1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -2948,6 +2948,14 @@ export namespace Components {
          */
         "fees": Fee[];
         /**
+          * Alternative description for the product image
+         */
+        "imageAlt": string;
+        /**
+          * Title for the product image
+         */
+        "imageTitle": string;
+        /**
           * Url for the product image
          */
         "imageUrl": string;
@@ -2959,10 +2967,6 @@ export namespace Components {
           * The max allowed.
          */
         "max": number;
-        /**
-          * The product media
-         */
-        "media": Media;
         /**
           * Product name
          */
@@ -8763,6 +8767,14 @@ declare namespace LocalJSX {
          */
         "fees"?: Fee[];
         /**
+          * Alternative description for the product image
+         */
+        "imageAlt"?: string;
+        /**
+          * Title for the product image
+         */
+        "imageTitle"?: string;
+        /**
           * Url for the product image
          */
         "imageUrl"?: string;
@@ -8774,10 +8786,6 @@ declare namespace LocalJSX {
           * The max allowed.
          */
         "max"?: number;
-        /**
-          * The product media
-         */
-        "media"?: Media;
         /**
           * Product name
          */

@@ -244,6 +244,7 @@ export interface Product extends Object {
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
+  featured_product_media?: string | ProductMedia;
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -1043,4 +1044,10 @@ export interface GoogleAnalyticsItem {
   coupon?: string;
   currency: string;
   discount?: number;
+}
+
+export interface FeaturedProductMediaAttributes {
+  alt: string;
+  url: string;
+  title: string;
 }

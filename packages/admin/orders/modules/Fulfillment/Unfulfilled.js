@@ -15,6 +15,7 @@ import { useState } from 'react';
 import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
 import { addQueryArgs } from '@wordpress/url';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
@@ -103,7 +104,9 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 						return (
 							<LineItem
 								key={item?.id}
-								imageUrl={item?.price?.product?.image_url}
+								media={getFeaturedProductMediaAttributes(
+									item?.price?.product
+								)}
 								suffix={sprintf(
 									__('Qty: %d', 'surecart'),
 									item.quantity - item.fulfilled_quantity || 0
