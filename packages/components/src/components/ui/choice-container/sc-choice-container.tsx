@@ -113,7 +113,7 @@ export class ScChoiceContainer {
   }
 
   getAllChoices() {
-    const choiceGroup = this.el.closest('sc-choices') || this.el.parentElement;
+    const choiceGroup = this.el.closest('sc-choices') || this.el.closest('sc-product-donation-choices') || this.el.parentElement;
     // Radios must be part of a radio group
     if (!choiceGroup) {
       return [];
@@ -176,7 +176,7 @@ export class ScChoiceContainer {
 
   render() {
     return (
-      <Host tabindex="0" onFocus={() => this.input.focus()}>
+      <Host tabindex="0">
         <div
           part="base"
           class={{
