@@ -1,15 +1,22 @@
 import { __ } from '@wordpress/i18n';
 import RevokeToggleButton from './RevokeToggleButton';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default (purchase) => {
 	const { id, quantity, revoked } = purchase;
 	const product = purchase.product;
+	const media = getFeaturedProductMediaAttributes(product);
 
 	return {
 		item: (
 			<sc-line-item key={id}>
-				{!!product?.image_url && (
-					<img src={product?.image_url} slot="image" />
+				{!!media?.url && (
+					<img
+						src={media?.url}
+						title={media.title}
+						alt={media.alt}
+						slot="image"
+					/>
 				)}
 				<span slot="title">{product?.name}</span>
 				<span className="product__description" slot="description">
