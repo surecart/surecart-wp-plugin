@@ -58,7 +58,7 @@ export default ({ media, onDeleted }) => {
 		try {
 			setBusy(true);
 			setError(null);
-			await saveEntityRecord(
+			const saved = await saveEntityRecord(
 				'surecart',
 				'media',
 				{
@@ -68,7 +68,7 @@ export default ({ media, onDeleted }) => {
 				},
 				{ throwOnError: true }
 			);
-			await fetchMedia(media?.id);
+			setUrl(saved?.url);
 		} catch (e) {
 			setError(e);
 		} finally {
