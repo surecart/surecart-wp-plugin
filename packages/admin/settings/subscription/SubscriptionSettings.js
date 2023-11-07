@@ -7,6 +7,7 @@ import {
 	ScUpgradeRequired,
 	ScFormControl,
 	ScInput,
+	ScDivider,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -143,6 +144,9 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
+
+				<ScDivider />
+
 				<ScUpgradeRequired
 					required={!scData?.entitlements?.subscription_cancel_window}
 				>
@@ -156,13 +160,13 @@ export default () => {
 							});
 						}}
 					>
-						{__('Delay Showing Cancel Plan Button', 'surecart')}
+						{__('Delay Self-Service Cancellations', 'surecart')}
 						{!scData?.entitlements?.subscription_cancel_window && (
 							<ScPremiumTag />
 						)}
 						<span slot="description" style={{ lineHeight: '1.4' }}>
 							{__(
-								'When enabled, this feature prevents customers from cancelling their subscription until a set number of days before renewal.',
+								'When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.',
 								'surecart'
 							)}
 						</span>
@@ -171,18 +175,24 @@ export default () => {
 				{!!item.cancel_window_enabled && (
 					<ScInput
 						value={item?.cancel_window_days}
-						label={__('Delay Duration', 'surecart')}
-						placeholder={__('Number of days to delay.', 'surecart')}
+						label={__(
+							'Allow Self-Service Cancellations',
+							'surecart'
+						)}
 						type="number"
 						onScInput={(e) =>
 							editItem({ cancel_window_days: e.target.value })
 						}
 						help={__(
-							'Choose how many days before the subscription renewal customers can access the "Cancel Plan" button. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week just before it renews, reducing early cancellations.',
+							'Choose how many days before the subscription renewal customers can cancel their plan through the customer dashboard. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week it renews.',
 							'surecart'
 						)}
 						required
-					></ScInput>
+					>
+						<span slot="suffix" style={{ opacity: '0.65' }}>
+							{__('Days Before Renewal', 'surecart')}
+						</span>
+					</ScInput>
 				)}
 			</SettingsBox>
 
