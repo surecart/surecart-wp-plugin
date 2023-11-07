@@ -103,7 +103,7 @@ export class ScImageSlider {
             {(this.imagesData || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
               <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
-                  <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} title={title} />
+                  <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} {...(title ? { title } : {})} />
                 </div>
               </div>
             ))}
@@ -131,7 +131,7 @@ export class ScImageSlider {
                       height={height}
                       sizes={sizes}
                       loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
-                      {...(title ? { title} : {})}
+                      {...(title ? { title } : {})}
                     />
                   </div>
                 ))}
