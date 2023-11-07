@@ -418,6 +418,7 @@
     "loading": true,
     "open": true,
     "placeholder": true,
+    "show-interval": true,
     "style": true,
     "id": true,
     "class": true,

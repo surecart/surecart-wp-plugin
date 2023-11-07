@@ -785,6 +785,10 @@ export namespace Components {
           * The placeholder for the input
          */
         "placeholder": string;
+        /**
+          * Has recurring
+         */
+        "showInterval": boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -6375,6 +6379,10 @@ declare namespace LocalJSX {
           * The placeholder for the input
          */
         "placeholder"?: string;
+        /**
+          * Has recurring
+         */
+        "showInterval"?: boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
