@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-05T13:53:58",
+  "timestamp": "2023-11-07T20:54:20",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10217,40 +10217,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "drawerCloseAnnouncement",
-          "type": "string",
-          "mutable": false,
-          "attr": "drawer-close-announcement",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Drawer Closed', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "drawerOpenAnnouncement",
-          "type": "string",
-          "mutable": false,
-          "attr": "drawer-open-announcement",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Drawer Opened', 'surecart')",
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -23673,15 +23639,15 @@
       "usage": {},
       "props": [
         {
-          "name": "productMedia",
-          "type": "FeaturedProductMediaAttributes",
+          "name": "product",
+          "type": "Product",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "FeaturedProductMediaAttributes"
+              "type": "Product"
             }
           ],
           "optional": false,

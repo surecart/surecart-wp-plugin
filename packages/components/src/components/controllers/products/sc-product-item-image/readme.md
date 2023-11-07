@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute | Description | Type                             | Default     |
-| -------------- | --------- | ----------- | -------------------------------- | ----------- |
-| `productMedia` | --        |             | `FeaturedProductMediaAttributes` | `undefined` |
-| `sizing`       | `sizing`  |             | `"contain" \| "cover"`           | `undefined` |
+| Property  | Attribute | Description | Type                   | Default     |
+| --------- | --------- | ----------- | ---------------------- | ----------- |
+| `product` | --        |             | `Product`              | `undefined` |
+| `sizing`  | `sizing`  |             | `"contain" \| "cover"` | `undefined` |
 
 
 ## Dependencies
