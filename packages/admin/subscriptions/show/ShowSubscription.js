@@ -52,12 +52,6 @@ export default () => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	useEffect(() => {
-		if (id) {
-			fetchUpcomingPeriod();
-		}
-	}, [id]);
-
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);
 		try {
@@ -165,6 +159,12 @@ export default () => {
 		},
 		[id]
 	);
+
+	useEffect(() => {
+		if (id) {
+			fetchUpcomingPeriod();
+		}
+	}, [id, subscription?.discount?.id]);
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {
