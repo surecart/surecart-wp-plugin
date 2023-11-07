@@ -18,7 +18,6 @@ import { __ } from '@wordpress/i18n';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
 import { getHumanDiscount } from '../../../util';
-import VariantLabel from '../../components/VariantLabel';
 import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
