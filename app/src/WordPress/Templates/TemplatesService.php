@@ -144,7 +144,7 @@ class TemplatesService {
 			return;
 		}
 
-		$product = \SureCart\Models\Product::with( [ 'image', 'prices','featured_product_media', 'product_medias', 'product_media.media', 'variant_options', 'variants', 'product_collections' ] )->find( $product_id );
+		$product = \SureCart\Models\Product::with( [ 'image', 'prices', 'featured_product_media', 'product_medias', 'product_media.media', 'variant_options', 'variants', 'product_collections' ] )->find( $product_id );
 		if ( is_wp_error( $product ) ) {
 			$wp_query->is_404 = true;
 			return;

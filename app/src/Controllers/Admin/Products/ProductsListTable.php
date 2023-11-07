@@ -197,9 +197,8 @@ class ProductsListTable extends ListTable {
 				'prices',
 				'product_collections',
 				'featured_product_media',
-				'product_media.media'
+				'product_media.media',
 			)
-
 		);
 
 		// Check if there is any sc_collection in the query, then filter it.
@@ -380,7 +379,7 @@ class ProductsListTable extends ListTable {
 
 		<div class="sc-product-name">
 		<?php if ( $media->url ) { ?>
-			<img src="<?php echo esc_url( $media->url ); ?>" alt="<?php echo esc_attr( $media->alt);?>" title="<?php echo esc_attr( $media->title );?>" class="sc-product-image-preview" />
+			<img src="<?php echo esc_url( $media->url ); ?>" alt="<?php echo esc_attr( $media->alt ); ?>" title="<?php echo esc_attr( $media->title ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
 			<div class="sc-product-image-preview">
 				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
