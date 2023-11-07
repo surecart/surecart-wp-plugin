@@ -6,13 +6,11 @@ use SureCart\Models\Product;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\ProductCollection;
-use SureCartCore\View\HasProductMediaTrait;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
 class ProductsListTable extends ListTable {
-	use HasProductMediaTrait;
 
 	public $checkbox = true;
 	public $error    = '';
@@ -373,13 +371,13 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$media = $this->getFeaturedProductMediaAttributes( $product );
+		$media = $product->featured_media;
 		ob_start();
 		?>
 
 		<div class="sc-product-name">
-		<?php if ( $media->url ) { ?>
-			<img src="<?php echo esc_url( $media->url ); ?>" alt="<?php echo esc_attr( $media->alt ); ?>" title="<?php echo esc_attr( $media->title ); ?>" class="sc-product-image-preview" />
+		<?php if ( $product->featured_media->url ) { ?>
+			<img src="<?php echo esc_url( $product->featured_media->url ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
 			<div class="sc-product-image-preview">
 				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -390,7 +388,7 @@ class ProductsListTable extends ListTable {
 
 		<div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
-			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
+			<?php echo esc_html( $product->name ); ?>
 		</a>
 
 		<?php
