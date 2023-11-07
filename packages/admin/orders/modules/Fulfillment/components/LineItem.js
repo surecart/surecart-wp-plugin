@@ -22,8 +22,8 @@ export default ({ className, media, children, suffix }) => {
 			{!!media.url && (
 				<img
 					src={media.url}
-					title={media.title}
 					alt={media.alt}
+					{...(media.title ? { title: media.title } : {})}
 					css={css`
 						width: var(--sc-product-line-item-image-size, 4em);
 						height: var(--sc-product-line-item-image-size, 4em);

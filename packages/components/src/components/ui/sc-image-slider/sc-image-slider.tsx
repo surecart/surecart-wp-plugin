@@ -131,7 +131,7 @@ export class ScImageSlider {
                       height={height}
                       sizes={sizes}
                       loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
-                      title={title}
+                      {...(title ? { title} : {})}
                     />
                   </div>
                 ))}

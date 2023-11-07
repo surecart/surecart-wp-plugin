@@ -72,7 +72,7 @@ export default ({ id, onSelect }) => {
 				<img
 					src={media.url}
 					alt={media.alt}
-					title={media.title}
+					{...(media.title ? { title: media.title } : {})}
 					css={css`
 						width: 40px;
 						height: 40px;

@@ -85,8 +85,8 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					border-radius: var(--sc-border-radius-medium);
 					pointer-events: none;
 				`}
-				title={productMedia?.media?.title}
 				alt={productMedia?.media?.alt}
+				{...(media.title ? { title: media.title } : {})}
 			/>
 		</div>
 	);

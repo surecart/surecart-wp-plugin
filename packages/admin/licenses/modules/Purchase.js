@@ -66,7 +66,7 @@ export default ({ licenseId }) => {
 					<img
 						src={media.url}
 						alt={media.alt}
-						title={media.title}
+						{...(media.title ? { title: media.title } : {})}
 						slot="image"
 					/>
 				)}

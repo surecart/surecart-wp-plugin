@@ -13,8 +13,8 @@ export default (purchase) => {
 				{!!media?.url && (
 					<img
 						src={media?.url}
-						title={media.title}
 						alt={media.alt}
+						{...(media.title ? { title: media.title } : {})}
 						slot="image"
 					/>
 				)}
