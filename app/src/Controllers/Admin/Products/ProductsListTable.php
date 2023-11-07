@@ -371,7 +371,6 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_name( $product ) {
-		$media = $product->featured_media;
 		ob_start();
 		?>
 
