@@ -1,7 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { Product } from '../../../../types';
 import { LayoutConfig } from '../sc-product-item-list/sc-product-item-list';
-import { getFeaturedProductMediaAttributes } from 'src/functions/media';
 
 @Component({
   tag: 'sc-product-item',
@@ -26,9 +25,7 @@ export class ScProductItem {
                 return <sc-product-item-title part="title">{this.product?.name}</sc-product-item-title>;
 
               case 'surecart/product-item-image':
-                return (
-                  <sc-product-item-image part="image" productMedia={getFeaturedProductMediaAttributes(this.product)} sizing={layout.attributes?.sizing}></sc-product-item-image>
-                );
+                return <sc-product-item-image part="image" product={this.product} sizing={layout.attributes?.sizing}></sc-product-item-image>;
 
               case 'surecart/product-item-price':
                 return <sc-product-item-price part="price" prices={this.product?.prices.data} range={!!attributes?.range} metrics={this.product?.metrics}></sc-product-item-price>;
