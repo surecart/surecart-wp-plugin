@@ -28,7 +28,7 @@ export class ScProductItem {
                 return <sc-product-item-image part="image" productMedia={this.product?.product_medias?.data?.[0]} sizing={layout.attributes?.sizing}></sc-product-item-image>;
 
               case 'surecart/product-item-price':
-                return <sc-product-item-price part="price" prices={this.product?.prices.data} range={!!attributes?.range}></sc-product-item-price>;
+                return <sc-product-item-price part="price" prices={this.product?.prices.data} range={!!attributes?.range} metrics={this.product?.metrics}></sc-product-item-price>;
 
               default:
                 return null;

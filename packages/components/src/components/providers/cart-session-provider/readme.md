@@ -5,19 +5,11 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property | Attribute | Description  | Type       | Default     |
-| -------- | --------- | ------------ | ---------- | ----------- |
-| `order`  | --        | Order Object | `Checkout` | `undefined` |
-
-
 ## Events
 
-| Event                | Description             | Type                                                         |
-| -------------------- | ----------------------- | ------------------------------------------------------------ |
-| `scSetState`         | Set the state           | `CustomEvent<"busy" \| "idle" \| "loading" \| "navigating">` |
-| `scUpdateOrderState` | Update line items event | `CustomEvent<Checkout>`                                      |
+| Event        | Description   | Type                                                         |
+| ------------ | ------------- | ------------------------------------------------------------ |
+| `scSetState` | Set the state | `CustomEvent<"busy" \| "idle" \| "loading" \| "navigating">` |
 
 
 ## Dependencies
