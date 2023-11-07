@@ -27,8 +27,8 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		global $content_width;
-		$product = get_query_var( 'surecart_current_product' );
-		$featured_media = $this->getFeaturedProductMediaAttributes($product);
+		$product        = get_query_var( 'surecart_current_product' );
+		$featured_media = $this->getFeaturedProductMediaAttributes( $product );
 		if ( empty( $product ) ) {
 			return '';
 		}
@@ -82,7 +82,7 @@ class Block extends BaseBlock {
 				"></sc-image-slider>
 		<?php else : ?>
 			<figure class="wp-block-image sc-block-image">
-				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 )  ); ?>" alt="<?php echo $featured_media->alt ?>" title="<?php echo $featured_media->title;?>" />
+				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo $featured_media->alt; ?>" title="<?php echo $featured_media->title; ?>" />
 			</figure>
 		<?php endif; ?>
 

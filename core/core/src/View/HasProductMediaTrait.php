@@ -9,23 +9,22 @@
 
 namespace SureCartCore\View;
 
-trait HasProductMediaTrait
-{
-    /**
-     * Returns the product media image attributes.
-     *
-     * @param Product $product
-     *
-     * @return object
-     */
-    public function getFeaturedProductMediaAttributes($product)
-    {
-        $featured_product_media = $product->featured_product_media;
+trait HasProductMediaTrait {
 
-        return (object) [
-            'alt' => $featured_product_media->media->alt ?? $product->title ?? $product->name ?? '',
-            'title' => $featured_product_media->media->title ?? '',
-			'url' => $featured_product_media->media->url ?? $product->image_url,
-        ];
-    }
+	/**
+	 * Returns the product media image attributes.
+	 *
+	 * @param Product $product
+	 *
+	 * @return object
+	 */
+	public function getFeaturedProductMediaAttributes( $product ) {
+		$featured_product_media = $product->featured_product_media;
+
+		return (object) [
+			'alt'   => $featured_product_media->media->alt ?? $product->title ?? $product->name ?? '',
+			'title' => $featured_product_media->media->title ?? '',
+			'url'   => $featured_product_media->media->url ?? $product->image_url,
+		];
+	}
 }
