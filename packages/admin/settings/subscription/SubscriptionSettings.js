@@ -5,7 +5,9 @@ import {
 	ScSelect,
 	ScSwitch,
 	ScUpgradeRequired,
-	ScFormControl
+	ScFormControl,
+	ScInput,
+	ScDivider,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -23,16 +25,13 @@ export default () => {
 		'store',
 		'subscription_protocol'
 	);
-	
-	const { 
-		item: portalItem, 
-		itemError: portalItemError, 
-		editItem: portalEditItem, 
-		hasLoadedItem: portalHasLoadedItem 
-	} = useEntity(
-		'store',
-		'portal_protocol'
-	);
+
+	const {
+		item: portalItem,
+		itemError: portalItemError,
+		editItem: portalEditItem,
+		hasLoadedItem: portalHasLoadedItem,
+	} = useEntity('store', 'portal_protocol');
 
 	/**
 	 * Form is submitted.
@@ -145,6 +144,56 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
+
+				<ScDivider />
+
+				<ScUpgradeRequired
+					required={!scData?.entitlements?.subscription_cancel_window}
+				>
+					<ScSwitch
+						checked={item.cancel_window_enabled}
+						onScChange={(e) => {
+							e.preventDefault();
+							editItem({
+								cancel_window_enabled:
+									!item.cancel_window_enabled,
+							});
+						}}
+					>
+						{__('Delay Self-Service Cancellations', 'surecart')}
+						{!scData?.entitlements?.subscription_cancel_window && (
+							<ScPremiumTag />
+						)}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</ScUpgradeRequired>
+				{!!item.cancel_window_enabled && (
+					<ScInput
+						value={item?.cancel_window_days}
+						label={__(
+							'Allow Self-Service Cancellations',
+							'surecart'
+						)}
+						type="number"
+						onScInput={(e) =>
+							editItem({ cancel_window_days: e.target.value })
+						}
+						help={__(
+							'Choose how many days before the subscription renewal customers can cancel their plan through the customer dashboard. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week it renews.',
+							'surecart'
+						)}
+						required
+					>
+						<span slot="suffix" style={{ opacity: '0.65' }}>
+							{__('Days Before Renewal', 'surecart')}
+						</span>
+					</ScInput>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
