@@ -1,9 +1,7 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
 
 import Box from '../../ui/Box';
 import { ScInput } from '@surecart/components-react';
-import { css, jsx } from '@emotion/core';
 
 export default ({ coupon, updateCoupon, loading }) => {
 	return (
