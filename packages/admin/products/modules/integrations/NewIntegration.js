@@ -1,5 +1,9 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
+
+/**
+ * External dependencies
+ */
 import { ScButton, ScForm } from '@surecart/components-react';
 import { Button, Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
@@ -8,6 +12,11 @@ import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
+/**
+ * Internal dependencies
+ */
+import { ScFormControl } from '@surecart/components-react';
+import PriceSelector from '@admin/components/PriceSelector';
 import Error from '../../../components/Error';
 import SelectIntegration from './SelectIntegration';
 
@@ -16,6 +25,7 @@ export default ({ onRequestClose, id }) => {
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [price, setPrice] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -31,6 +41,8 @@ export default ({ onRequestClose, id }) => {
 					model_name: 'product',
 					model_id: id,
 					integration_id: item,
+					price_id: price?.price_id || null,
+					variant_id: price?.variant_id || null,
 					provider,
 				},
 				{ throwOnError: true }
@@ -82,6 +94,29 @@ export default ({ onRequestClose, id }) => {
 						item={item}
 						setItem={setItem}
 					/>
+
+					{!!item && (
+						<div>
+							<ScFormControl
+								label={__('Select A Price', 'surecart')}
+							>
+								<PriceSelector
+									value={price?.price_id}
+									ad_hoc={false}
+									onSelect={({ price_id, variant_id }) =>
+										setPrice({
+											price_id,
+											variant_id,
+										})
+									}
+									requestQuery={{
+										archived: false,
+									}}
+									allowOutOfStockSelection={true}
+								/>
+							</ScFormControl>
+						</div>
+					)}
 
 					<div
 						css={css`
