@@ -6,7 +6,6 @@ import { state as donationState } from '@store/product-donation';
 @Component({
   tag: 'sc-product-donation-amount-choice',
   styleUrl: 'sc-product-donation-amount-choice.scss',
-  shadow: true,
 })
 export class ScProductDonationAmountChoice {
   @Element() el: HTMLScProductDonationAmountChoiceElement;

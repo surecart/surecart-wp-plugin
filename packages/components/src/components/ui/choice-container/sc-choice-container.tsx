@@ -176,7 +176,7 @@ export class ScChoiceContainer {
 
   render() {
     return (
-      <Host tabindex="0">
+      <Host>
         <div
           part="base"
           class={{
@@ -233,11 +233,11 @@ export class ScChoiceContainer {
                 aria-checked={this.checked ? 'true' : 'false'}
                 aria-disabled={this.disabled ? 'true' : 'false'}
                 aria-labelledby={this.labelId}
-                tabindex="0"
                 // required={this.required}
                 onBlur={() => this.handleBlur()}
                 onFocus={() => this.handleFocus()}
                 onChange={() => this.handleClickEvent()}
+                tabIndex={0}
               />
             </span>
             <span part="label" id={this.labelId} class="choice__label">

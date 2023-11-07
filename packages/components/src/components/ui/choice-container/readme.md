@@ -91,6 +91,7 @@ Type: `Promise<void>`
  - [sc-price-choice-container](../sc-price-choice-container)
  - [sc-product-donation-amount-choice](../../controllers/checkout-form/product-donation-amount-choice)
  - [sc-product-donation-choices](../../controllers/checkout-form/product-donation-choices)
+ - [sc-product-donation-custom-amount](../../controllers/checkout-form/product-donation-custom-amount)
  - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
 
 ### Graph
@@ -100,6 +101,7 @@ graph TD;
   sc-price-choice-container --> sc-choice-container
   sc-product-donation-amount-choice --> sc-choice-container
   sc-product-donation-choices --> sc-choice-container
+  sc-product-donation-custom-amount --> sc-choice-container
   sc-recurring-price-choice-container --> sc-choice-container
   style sc-choice-container fill:#f9f,stroke:#333,stroke-width:4px
 ```
