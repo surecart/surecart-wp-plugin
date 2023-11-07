@@ -1,6 +1,5 @@
 import { Component, Fragment, h, Listen, Prop, State, Watch } from '@stencil/core';
 import apiFetch from '../../../../functions/fetch';
-import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { baseUrl } from '../../../../services/session';
 import { getCheckout, setCheckout } from '@store/checkouts/mutations';
@@ -11,16 +10,12 @@ import { Checkout } from '../../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
 import { formBusy } from '@store/form/getters';
-
 @Component({
   tag: 'sc-cart',
   styleUrl: 'sc-cart.scss',
   shadow: true,
 })
 export class ScCart {
-  /** The drawer */
-  private drawer: HTMLScDrawerElement;
-
   /** Is this open or closed? */
   @State() open: boolean = null;
 
@@ -55,9 +50,8 @@ export class ScCart {
     uiStore.set('cart', { ...uiStore.state.cart, ...{ open: this.open } });
     if (this.open === true) {
       this.fetchOrder();
-      setTimeout(() => {
-        this.drawer.focus();
-      }, 500);
+    } else {
+      (document?.querySelector('sc-cart-icon')?.shadowRoot?.querySelector('.cart') as HTMLElement)?.focus();
     }
   }
 
@@ -143,7 +137,13 @@ export class ScCart {
   render() {
     return (
       <sc-cart-session-provider>
-        <sc-drawer ref={el => (this.drawer = el as HTMLScDrawerElement)} open={this.open} onScAfterHide={() => (this.open = false)} onScAfterShow={() => (this.open = true)}>
+        <sc-drawer
+          open={this.open}
+          onScAfterShow={() => (this.open = true)}
+          onScAfterHide={() => {
+            this.open = false;
+          }}
+        >
           {this.open === true && (
             <Fragment>
               <div class="cart__header-suffix" slot="header">

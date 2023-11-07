@@ -1,9 +1,10 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { isRtl } from '../../../functions/page-align';
+import { speak } from '@wordpress/a11y';
 
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
+import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -33,6 +34,8 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
+  private couponTag: HTMLScTagElement;
+  private addCouponTrigger: HTMLElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -82,6 +85,18 @@ export class ScCouponForm {
       setTimeout(() => this.input.triggerFocus(), 50);
     }
   }
+  // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
+  @Watch('discount')
+  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
+    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
+    setTimeout(() => {
+      if (this?.discount?.promotion?.code) {
+        this.couponTag.focus();
+      } else {
+        this.addCouponTrigger.focus();
+      }
+    }, 50);
+  }
 
   /** Close it when blurred and no value. */
   handleBlur() {
@@ -99,6 +114,9 @@ export class ScCouponForm {
   handleKeyDown(e) {
     if (e?.code === 'Enter') {
       this.applyCoupon();
+    } else if (e?.code === 'Escape') {
+      this.scApplyCoupon.emit(null);
+      this.open = false;
     }
   }
 
@@ -129,11 +147,12 @@ export class ScCouponForm {
                 this.open = false;
               }}
               onKeyDown={e => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' || e.key === 'Escape') {
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
               }}
+              ref={el => (this.couponTag = el as HTMLScTagElement)}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -172,15 +191,17 @@ export class ScCouponForm {
             this.open = true;
           }}
           onKeyDown={e => {
-            if (e.key !== 'Enter') {
+            if (e.key !== 'Enter' && e.key !== ' ') {
               return true;
             }
             if (this.open) {
               return;
             }
             this.open = true;
+            speak(__('Coupon code field opened. Press Escape button to close it.', 'surecart'), 'assertive');
           }}
           tabindex="0"
+          ref={el => (this.addCouponTrigger = el as HTMLElement)}
         >
           <slot name="label">{this.label}</slot>
         </div>

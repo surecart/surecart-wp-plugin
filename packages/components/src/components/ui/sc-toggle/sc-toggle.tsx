@@ -2,7 +2,8 @@ import { Component, Prop, h, Watch, Element, Event, EventEmitter } from '@stenci
 import { getAnimation, setDefaultAnimation } from '../../../functions/animation-registry';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../functions/animate';
 import { isRtl } from '../../../functions/page-align';
-
+import { speak } from '@wordpress/a11y';
+import { __ } from '@wordpress/i18n';
 @Component({
   tag: 'sc-toggle',
   styleUrl: 'sc-toggle.scss',
@@ -37,6 +38,10 @@ export class ScToggle {
   /** Are these collapsible? */
   @Prop() collapsible: boolean = true;
 
+  @Prop() openSpeakText: string = __('Summary Shown', 'surecart');
+
+  @Prop() closeSpeakText: string = __('Summary Hidden', 'surecart');
+
   /** Show the toggle */
   @Event() scShow: EventEmitter<void>;
 
@@ -54,6 +59,7 @@ export class ScToggle {
       return undefined;
     }
     this.open = true;
+    speak(this.openSpeakText);
   }
 
   /** Hides the details */
@@ -62,6 +68,7 @@ export class ScToggle {
       return undefined;
     }
     this.open = false;
+    speak(this.closeSpeakText);
   }
 
   handleSummaryClick() {

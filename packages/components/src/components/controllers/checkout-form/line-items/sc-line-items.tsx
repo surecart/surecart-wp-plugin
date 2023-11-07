@@ -8,6 +8,7 @@ import { LineItem, Product, FeaturedProductMediaAttributes } from '../../../../t
 import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
+import { listenTo } from '@store/checkout/functions';
 
 /**
  * @part base - The component base
@@ -38,6 +39,8 @@ import { formBusy } from '@store/form/getters';
   shadow: true,
 })
 export class ScLineItems {
+  /** The line items wrapper. */
+  private lineItemsWrapper: HTMLElement;
   /**
    * Is the line item editable?
    */
@@ -69,6 +72,20 @@ export class ScLineItems {
     };
   }
 
+  componentWillLoad() {
+    listenTo('checkout', 'line_items', this.onLineItemsChange.bind(this));
+  }
+
+  /**
+   * Listens to the checkout state for changes.
+   *
+   */
+  onLineItemsChange(newValue, oldValue) {
+    if (newValue?.data?.length === oldValue?.data?.length) return;
+
+    this.lineItemsWrapper?.focus();
+  }
+
   render() {
     if (!!formBusy() && !checkoutState?.checkout?.line_items?.data?.length) {
       return (
@@ -83,7 +100,7 @@ export class ScLineItems {
     }
 
     return (
-      <div class="line-items" part="base">
+      <div class="line-items" part="base" ref={el => (this.lineItemsWrapper = el as HTMLElement)} tabindex="0">
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
           return (
             <div class="line-item">

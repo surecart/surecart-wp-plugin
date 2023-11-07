@@ -23,6 +23,9 @@ export class ScMenuItem {
   /** Draws the menu item in a disabled state. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
+  /** Aria label */
+  @Prop({ reflect: false }) ariaLabel: string = '';
+
   /** Sets focus on the button. */
   @Method('setFocus')
   async setFocus(options?: FocusOptions) {
@@ -54,17 +57,23 @@ export class ScMenuItem {
           'menu-item--checked': this.checked,
           'menu-item--disabled': this.disabled,
           'menu-item--focused': this.hasFocus,
-          'menu-item--is-rtl':isRtl()
+          'menu-item--is-rtl': isRtl(),
         }}
         href={this.href}
         role="menuitem"
         aria-disabled={this.disabled ? 'true' : 'false'}
         aria-checked={this.checked ? 'true' : 'false'}
+        aria-label={this.ariaLabel}
         tabindex={!this.disabled ? '0' : undefined}
         onFocus={() => this.handleFocus()}
         onBlur={() => this.handleBlur()}
         onMouseEnter={() => this.handleFocus()}
         onMouseLeave={() => this.handleBlur()}
+        onKeyDown={e => {
+          if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
+            this.menuItem.click();
+          }
+        }}
       >
         <span part="checked-icon" class="menu-item__check">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">

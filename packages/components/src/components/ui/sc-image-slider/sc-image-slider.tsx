@@ -1,5 +1,5 @@
 import { Component, Prop, State, Watch, h } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import Swiper, { Navigation } from 'swiper';
 
 @Component({
@@ -119,9 +119,10 @@ export class ScImageSlider {
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
               <div class="swiper-wrapper">
                 {(thumbnails || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
-                  <div
+                  <button
                     class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                     onClick={() => this.swiper?.slideTo?.(index)}
+                    aria-label={sprintf(__('Product image number %d', 'sc-image-slider'), index + 1)}
                   >
                     <img
                       src={src}
@@ -133,7 +134,7 @@ export class ScImageSlider {
                       loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
                       {...(title ? { title } : {})}
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

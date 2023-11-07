@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-07T08:37:14",
+  "timestamp": "2023-11-05T13:53:58",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10223,6 +10223,40 @@
           "required": false
         },
         {
+          "name": "drawerCloseAnnouncement",
+          "type": "string",
+          "mutable": false,
+          "attr": "drawer-close-announcement",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Drawer Closed', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "drawerOpenAnnouncement",
+          "type": "string",
+          "mutable": false,
+          "attr": "drawer-open-announcement",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Drawer Opened', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -15842,7 +15876,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [
         {
@@ -15919,6 +15970,23 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "Aria label",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "checked",
           "type": "boolean",
@@ -30934,6 +31002,22 @@
       "usage": {},
       "props": [
         {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "Aria label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "clearable",
           "type": "boolean",
           "mutable": false,
@@ -32246,6 +32330,23 @@
           "required": false
         },
         {
+          "name": "closeSpeakText",
+          "type": "string",
+          "mutable": false,
+          "attr": "close-speak-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Summary Hidden', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "collapsible",
           "type": "boolean",
           "mutable": false,
@@ -32291,6 +32392,23 @@
           "values": [
             {
               "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "openSpeakText",
+          "type": "string",
+          "mutable": false,
+          "attr": "open-speak-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Summary Shown', 'surecart')",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

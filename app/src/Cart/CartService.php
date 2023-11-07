@@ -161,7 +161,7 @@ class CartService {
 
 		ob_start(); ?>
 			<li class='menu-item'>
-				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link">
+				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link" role="button" aria-label="Open Cart">
 					<sc-cart-button
 						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
 						form-id='<?php echo esc_attr( $form->ID ); ?>'
