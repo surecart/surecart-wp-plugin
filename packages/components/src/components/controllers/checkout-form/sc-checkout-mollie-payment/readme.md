@@ -13,13 +13,6 @@
 | `processorId` | `processor-id` |             | `string` | `undefined` |
 
 
-## Events
-
-| Event     | Description | Type                         |
-| --------- | ----------- | ---------------------------- |
-| `scError` | Error event | `CustomEvent<ResponseError>` |
-
-
 ## Dependencies
 
 ### Used by

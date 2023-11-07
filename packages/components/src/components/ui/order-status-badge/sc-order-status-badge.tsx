@@ -49,8 +49,6 @@ export class ScOrderStatusBadge {
       case 'canceled':
         return __('Canceled', 'surecart');
       case 'void':
-        return __('Void', 'surecart');
-      case 'canceled':
         return __('Canceled', 'surecart');
       default:
         return this.status;

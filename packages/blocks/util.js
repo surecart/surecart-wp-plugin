@@ -54,6 +54,55 @@ const getColorPresetCssVar = (value) => {
 	return `var(--wp--preset--color--${value})`;
 };
 
+export const updateCartLineItem = (data, existing = []) => {
+	if (data?.variant_id) {
+		const existingVariant = existing?.find(
+			(item) => item?.variant_id === data.variant_id
+		);
+		if (existingVariant) {
+			return existing.map((item) => {
+				if (item?.variant_id !== existingVariant?.variant_id)
+					return item;
+				return {
+					...item,
+					...{
+						quantity: data?.quantity
+							? data.quantity
+							: existingVariant?.quantity + 1,
+					},
+				};
+			});
+		}
+	}
+
+	// find existing price.
+	const existingPrice = existing?.find(
+		(item) => item?.id === data.id && !data?.variant_id
+	);
+	if (existingPrice) {
+		return existing.map((item) => {
+			if (item?.id !== existingPrice?.id) return item;
+			return {
+				...item,
+				...{
+					quantity: data?.quantity
+						? data.quantity
+						: existingPrice?.quantity + 1,
+				},
+			};
+		});
+	}
+
+	// add new.
+	return [
+		...existing,
+		{
+			...data,
+			quantity: 1,
+		},
+	];
+};
+
 export {
 	stripHTML,
 	getSpacingPresetCssVar,

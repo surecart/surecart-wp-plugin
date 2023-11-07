@@ -10,6 +10,8 @@
 | Property               | Attribute                | Description                                               | Type                                        | Default             |
 | ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ------------------- |
 | `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `collectionEnabled`    | `collection-enabled`     | Should allow collection filter                            | `boolean`                                   | `true`              |
+| `collectionId`         | `collection-id`          | Show for a specific collection                            | `string`                                    | `null`              |
 | `featured`             | `featured`               | Show only featured products.                              | `boolean`                                   | `false`             |
 | `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`         |
 | `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`         |
@@ -21,6 +23,13 @@
 | `searchEnabled`        | `search-enabled`         | Should allow search                                       | `boolean`                                   | `true`              |
 | `sort`                 | `sort`                   | Sort                                                      | `string`                                    | `'created_at:desc'` |
 | `sortEnabled`          | `sort-enabled`           | Should allow search                                       | `boolean`                                   | `true`              |
+
+
+## Events
+
+| Event        | Description          | Type                  |
+| ------------ | -------------------- | --------------------- |
+| `scSearched` | Product was searched | `CustomEvent<string>` |
 
 
 ## Dependencies
@@ -60,7 +69,6 @@ graph TD;
   sc-alert --> sc-icon
   sc-button --> sc-spinner
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-empty --> sc-icon
   sc-product-item --> sc-product-item-title
   sc-product-item --> sc-product-item-image

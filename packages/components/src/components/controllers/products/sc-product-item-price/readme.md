@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property | Attribute | Description       | Type      | Default     |
-| -------- | --------- | ----------------- | --------- | ----------- |
-| `prices` | --        |                   | `Price[]` | `undefined` |
-| `range`  | `range`   | Show price range? | `boolean` | `true`      |
+| Property  | Attribute | Description       | Type             | Default     |
+| --------- | --------- | ----------------- | ---------------- | ----------- |
+| `metrics` | --        | Product metrics   | `ProductMetrics` | `undefined` |
+| `prices`  | --        |                   | `Price[]`        | `undefined` |
+| `range`   | `range`   | Show price range? | `boolean`        | `true`      |
 
 
 ## Shadow Parts

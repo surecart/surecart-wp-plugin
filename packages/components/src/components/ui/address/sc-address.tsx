@@ -64,13 +64,16 @@ export class ScAddress {
   @Prop() label: string;
 
   /** Should we show name field? */
-  @Prop() showName: boolean;
+  @Prop({ reflect: true, mutable: true }) showName: boolean;
 
   /** Should we show name field? */
   @Prop() showLine2: boolean;
 
   /** Is this required? */
   @Prop({ reflect: true }) required: boolean = false;
+
+  /** Is the name required */
+  @Prop({ reflect: true }) requireName: boolean = false;
 
   /** Should we show the city field? */
   @State() showCity: boolean = true;
@@ -101,6 +104,13 @@ export class ScAddress {
     this.scInputAddress.emit(this.address);
   }
 
+  @Watch('requireName')
+  handleNameChange() {
+    if (this.requireName) {
+      this.showName = true;
+    }
+  }
+
   updateAddress(address: Partial<Address>) {
     this.address = { ...this.address, ...address };
   }
@@ -111,6 +121,7 @@ export class ScAddress {
 
   clearAddress() {
     this.address = {
+      name: this.address?.name,
       country: null,
       city: null,
       line_1: null,
@@ -135,6 +146,7 @@ export class ScAddress {
     this.handleAddressChange();
     const country = this.countryChoices.find(country => country.value === this.address.country)?.value || 'US';
     this.updateAddress({ country });
+    this.handleNameChange();
   }
 
   @Method()
@@ -157,6 +169,7 @@ export class ScAddress {
               name={this.names?.name}
               squared-bottom
               disabled={this.disabled}
+              required={this.requireName}
             />
           )}
 

@@ -5,13 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Events
-
-| Event     | Description | Type                         |
-| --------- | ----------- | ---------------------------- |
-| `scError` |             | `CustomEvent<ResponseError>` |
-
-
 ## Dependencies
 
 ### Used by

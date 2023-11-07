@@ -144,7 +144,7 @@ class TemplatesService {
 			return;
 		}
 
-		$product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $product_id );
+		$product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variant_options', 'variants', 'product_collections' ] )->find( $product_id );
 		if ( is_wp_error( $product ) ) {
 			$wp_query->is_404 = true;
 			return;
@@ -156,7 +156,7 @@ class TemplatesService {
 		$post                    = new \stdClass();
 		$post->post_title        = $product->name;
 		$post->post_name         = $product->slug;
-		$post->post_content      = '<div>' . ( $product->template_part->content ?? '' ) . '</div>';
+		$post->post_content      = '<div>' . ( $product->getTemplateContent() ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
 		$post->post_type         = 'sc_product'; // TODO: change to surecart-product-template post type?
 		$post->sc_id             = $product->id;
@@ -245,7 +245,7 @@ class TemplatesService {
 	/**
 	 * Add the templates. to the existing templates.
 	 *
-	 * @param array $posts_templates
+	 * @param array $posts_templates Existing templates.
 	 *
 	 * @return array
 	 */

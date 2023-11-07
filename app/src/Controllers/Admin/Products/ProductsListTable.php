@@ -3,10 +3,9 @@
 namespace SureCart\Controllers\Admin\Products;
 
 use SureCart\Models\Product;
-use SureCart\Support\Currency;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\Integration;
+use SureCart\Models\ProductCollection;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -14,12 +13,12 @@ use SureCart\Models\Integration;
 class ProductsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
-	public $pages    = [];
+	public $pages    = array();
 
 	/**
 	 * Prepare the items for the table to process
 	 *
-	 * @return Void
+	 * @return void
 	 */
 	public function prepare_items() {
 		$columns  = $this->get_columns();
@@ -32,35 +31,37 @@ class ProductsListTable extends ListTable {
 
 		if ( is_wp_error( $query ) ) {
 			$this->error = $query->get_error_message();
-			$this->items = [];
+			$this->items = array();
 			return;
 		}
 
 		$this->set_pagination_args(
-			[
+			array(
 				'total_items' => $query->pagination->count,
 				'per_page'    => $this->get_items_per_page( 'products' ),
-			]
+			)
 		);
 
 		$this->items = $query->data;
 	}
 
 	/**
+	 * Get views for the list table status links.
+	 *
 	 * @global int $post_id
 	 * @global string $comment_status
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$stati = [
+		$statuses = array(
 			'active'   => __( 'Active', 'surecart' ),
 			'archived' => __( 'Archived', 'surecart' ),
 			'all'      => __( 'All', 'surecart' ),
-		];
+		);
 
 		$link = admin_url( 'admin.php?page=sc-products' );
 
-		foreach ( $stati as $status => $label ) {
+		foreach ( $statuses as $status => $label ) {
 			$current_link_attributes = '';
 
 			if ( ! empty( $_GET['status'] ) ) {
@@ -91,19 +92,20 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
-		return [
+		return array(
 			// 'cb'          => '<input type="checkbox" />',
-			'name'         => __( 'Name', 'surecart' ),
-			// 'description' => __( 'Description', 'surecart' ),
-			'price'        => __( 'Price', 'surecart' ),
-			'integrations' => __( 'Integrations', 'surecart' ),
-			'status'       => __( 'Product Page', 'surecart' ),
-			'featured'     => __( 'Featured', 'surecart' ),
-			'date'         => __( 'Date', 'surecart' ),
-		];
+			'name'                => __( 'Name', 'surecart' ),
+			'price'               => __( 'Price', 'surecart' ),
+			'quantity'            => __( 'Quantity', 'surecart' ),
+			'integrations'        => __( 'Integrations', 'surecart' ),
+			'product_collections' => __( 'Collections', 'surecart' ),
+			'status'              => __( 'Product Page', 'surecart' ),
+			'featured'            => __( 'Featured', 'surecart' ),
+			'date'                => __( 'Date', 'surecart' ),
+		);
 	}
 
 	/**
@@ -119,6 +121,38 @@ class ProductsListTable extends ListTable {
 	}
 
 	/**
+	 * Show the quantity.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_quantity( $product ) {
+		// translators: %d is the number of available stock.
+		return $product->stock_enabled ? sprintf( __( '%d Available', 'surecart' ), $product->available_stock ) : '∞';
+	}
+
+	/**
+	 * Show collections as tags.
+	 *
+	 * @param Product $product The product model.
+	 */
+	public function column_product_collections( $product ) {
+		$product_collections = $product->product_collections->data ?? array();
+
+		// this has no collection.
+		if ( empty( $product_collections ) ) {
+			return '-';
+		}
+
+		$product_collections_tags = array();
+
+		foreach ( $product_collections as $product_collection ) {
+			$product_collections_tags[] = '<a href="' . esc_url( admin_url( 'admin.php?page=sc-products&sc_collection=' . $product_collection['id'] ) ) . '">' . $product_collection['name'] . '</a>';
+		}
+
+		return implode( ', ', $product_collections_tags );
+	}
+
+	/**
 	 * Show any integrations.
 	 */
 	public function column_integrations( $product ) {
@@ -129,7 +163,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
@@ -138,7 +172,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_sortable_columns() {
 		return array( 'title' => array( 'title', false ) );
@@ -147,23 +181,35 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function table_data() {
-		return Product::where(
-			[
+		$product_query = Product::where(
+			array(
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
-			]
+			)
 		)->with(
-			[
+			array(
 				'prices',
-			]
-		)->paginate(
-			[
+				'product_collections',
+			)
+		);
+
+		// Check if there is any sc_collection in the query, then filter it.
+		if ( ! empty( $_GET['sc_collection'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$product_query->where(
+				array(
+					'product_collection_ids' => array( sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) ),  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				)
+			);
+		}
+
+		return $product_query->paginate(
+			array(
 				'per_page' => $this->get_items_per_page( 'products' ),
 				'page'     => $this->get_pagenum(),
-			]
+			)
 		);
 	}
 
@@ -223,7 +269,7 @@ class ProductsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_price( $product ) {
-		$prices = $product->prices->data ?? [];
+		$prices = $product->prices->data ?? array();
 
 		// this has no prices.
 		if ( empty( $prices ) || ! is_array( $prices ) ) {
@@ -232,7 +278,7 @@ class ProductsListTable extends ListTable {
 
 		// map the prices into an array of formatted price strings.
 		$price_display = array_map(
-			function( $price ) {
+			function ( $price ) {
 				if ( $price->ad_hoc ) {
 					return esc_html__( 'Name your own price', 'surecart' );
 				}
@@ -336,7 +382,7 @@ class ProductsListTable extends ListTable {
 			</div>
 		<?php } ?>
 
-	  <div>
+		<div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
 			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
 		</a>
@@ -344,11 +390,11 @@ class ProductsListTable extends ListTable {
 		<?php
 		echo $this->row_actions(
 			array_filter(
-				[
+				array(
 					'edit'         => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ) . '" aria-label="' . esc_attr( 'Edit Product', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
 					'trash'        => $this->action_toggle_archive( $product ),
 					'view_product' => '<a href="' . esc_url( $product->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
-				]
+				)
 			),
 		);
 		?>
@@ -395,5 +441,88 @@ class ProductsListTable extends ListTable {
 			case 'description':
 				return $product->$column_name ?? '';
 		}
+	}
+
+	/**
+	 * Displays extra table navigation.
+	 *
+	 * @param string $which Top or bottom placement.
+	 */
+	protected function extra_tablenav( $which ) {
+		?>
+		<input type="hidden" name="page" value="sc-products" />
+
+		<?php if ( ! empty( $_GET['status'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+			<input type="hidden" name="status" value="<?php echo esc_attr( $_GET['status'] ); ?>" />
+		<?php endif; ?>
+
+		<div class="alignleft actions">
+		<?php
+		if ( 'top' === $which ) {
+			ob_start();
+			$this->product_collection_dropdown();
+
+			/**
+			 * Fires before the Filter button on the product list tables.
+			 *
+			 * The Filter button allows sorting by date and/or category on the
+			 * Posts list table, and sorting by date on the Pages list table.
+			 *
+			 * @param string $post_type The post type slug.
+			 * @param string $which     The location of the extra table nav markup:
+			 *                          'top' or 'bottom' for WP_Posts_List_Table,
+			 *                          'bar' for WP_Media_List_Table.
+			 */
+			do_action( 'restrict_manage_products', $this->screen->post_type, $which );
+
+			$output = ob_get_clean();
+
+			if ( ! empty( $output ) ) {
+				echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				submit_button( __( 'Filter', 'surecart' ), '', 'filter_action', false, array( 'id' => 'filter-by-collection-submit' ) );
+			}
+		}
+		?>
+		</div>
+
+		<?php
+		/**
+		 * Fires immediately following the closing "actions" div in the tablenav
+		 * for the products list table.
+		 *
+		 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
+		 */
+		do_action( 'manage_products_extra_tablenav', $which );
+	}
+
+	/**
+	 * Displays a a dropdown to filter by product collection.
+	 *
+	 * @access protected
+	 */
+	protected function product_collection_dropdown() {
+		/**
+		 * Filters whether to remove the 'Formats' drop-down from the product list table.
+		 *
+		 * @param bool   $disable   Whether to disable the drop-down. Default false.
+		 */
+		if ( apply_filters( 'surecart/disable_product_collection_dropdown', false ) ) {
+			return;
+		}
+
+		$product_collections  = ProductCollection::get( array( 'per_page' => -1 ) );
+		$displayed_collection = isset( $_GET['sc_collection'] ) ? sanitize_text_field( wp_unslash( $_GET['sc_collection'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		?>
+
+		<label for="filter-by-collection" class="screen-reader-text">
+			<?php esc_html_e( 'Filter by Product Collection', 'surecart' ); ?>
+		</label>
+		<select name="sc_collection" id="filter-by-collection">
+			<option<?php selected( $displayed_collection, '' ); ?> value=""><?php esc_html_e( 'All Product Collections', 'surecart' ); ?></option>
+			<?php foreach ( $product_collections as $collection ) : ?>
+				<option<?php selected( $displayed_collection, $collection->id ); ?> value="<?php echo esc_attr( $collection->id ); ?>"><?php echo esc_html( $collection->name ); ?></option>
+			<?php endforeach; ?>
+		</select>
+		<?php
 	}
 }

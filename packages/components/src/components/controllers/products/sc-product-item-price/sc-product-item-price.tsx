@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { Price } from 'src/types';
+import { Price, ProductMetrics } from 'src/types';
 
 @Component({
   tag: 'sc-product-item-price',
@@ -12,6 +12,25 @@ export class ScProductItemPrice {
 
   /** Show price range? */
   @Prop() range: boolean = true;
+
+  /** Product metrics */
+  @Prop() metrics: ProductMetrics;
+
+  componentWillLoad() {
+    // If min-max price is different, then generate a price range.
+    if (this.range && this.metrics?.min_price_amount !== this.metrics?.max_price_amount) {
+      this.prices = [
+        {
+          amount: this.metrics?.min_price_amount,
+          currency: this.metrics?.currency,
+        },
+        {
+          amount: this.metrics?.max_price_amount,
+          currency: this.metrics?.currency,
+        },
+      ] as Price[];
+    }
+  }
 
   render() {
     const price = (this.prices || []).sort((a, b) => a?.position - b?.position).find(price => !price?.archived);

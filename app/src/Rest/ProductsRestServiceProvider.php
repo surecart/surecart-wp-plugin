@@ -101,19 +101,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function get_collection_params() {
 		return [
-			'archived'          => [
+			'archived'               => [
 				'description' => esc_html__( 'Whether to get archived products or not.', 'surecart' ),
 				'type'        => 'boolean',
 			],
-			'recurring'         => [
+			'recurring'              => [
 				'description' => esc_html__( 'Only return products that are recurring or not recurring (one time).', 'surecart' ),
 				'type'        => 'boolean',
 			],
-			'query'             => [
+			'query'                  => [
 				'description' => __( 'The query to be used for full text search of this collection.', 'surecart' ),
 				'type'        => 'string',
 			],
-			'ids'               => [
+			'ids'                    => [
 				'description' => __( 'Ensure result set excludes specific IDs.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -121,7 +121,7 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
-			'product_group_ids' => [
+			'product_group_ids'      => [
 				'description' => __( 'Only return objects that belong to the given product groups.', 'surecart' ),
 				'type'        => 'array',
 				'items'       => [
@@ -129,11 +129,19 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 				],
 				'default'     => [],
 			],
-			'page'              => [
+			'product_collection_ids' => [
+				'description' => __( 'Only return objects that belong to the given product collections.', 'surecart' ),
+				'type'        => 'array',
+				'items'       => [
+					'type' => 'string',
+				],
+				'default'     => [],
+			],
+			'page'                   => [
 				'description' => esc_html__( 'The page of items you want returned.', 'surecart' ),
 				'type'        => 'integer',
 			],
-			'per_page'          => [
+			'per_page'               => [
 				'description' => esc_html__( 'A limit on the number of items to be returned, between 1 and 100.', 'surecart' ),
 				'type'        => 'integer',
 			],
@@ -208,5 +216,26 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	 */
 	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'delete_sc_products' );
+	}
+
+	/**
+	 * If we are editing, let's make sure the data comes back directly.
+	 *
+	 * @param \SureCart\Models\Product $model Product model.
+	 * @param string                   $context The context of the request.
+	 *
+	 * @return  array The filtered response.
+	 */
+	public function filter_response_by_context( $model, $context ) {
+		$response = parent::filter_response_by_context( $model, $context );
+
+		if ( 'edit' === $context && is_array( $response ) && ! empty( $response['id'] ) ) {
+			// Process the variants, it's in a data column, so we need to pull it out.
+			$response['variants'] = ! empty( $response['variants']['data'] ) ? $response['variants']['data'] : [];
+			// Process the variant_options, it's in a data column, so we need to pull it out.
+			$response['variant_options'] = ! empty( $response['variant_options']['data'] ) ? $response['variant_options']['data'] : [];
+		}
+
+		return $response;
 	}
 }
