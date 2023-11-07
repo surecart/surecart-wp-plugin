@@ -86,7 +86,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					pointer-events: none;
 				`}
 				alt={productMedia?.media?.alt}
-				{...(media.title ? { title: media.title } : {})}
+				{...(productMedia.title ? { title: productMedia.title } : {})}
 			/>
 		</div>
 	);
