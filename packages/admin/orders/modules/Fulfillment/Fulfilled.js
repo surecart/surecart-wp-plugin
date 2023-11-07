@@ -14,7 +14,6 @@ import Box from '../../../ui/Box';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { ScFormatDate } from '@surecart/components-react';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import StatusDropdown from './components/StatusDropdown';
 import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
