@@ -208,12 +208,23 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			return;
 		}
 
+		// purchase price and variant.
+		$price_id   = $purchase->price->id ?? $purchase->price ?? null;
+		$variant_id = $purchase->variant->id ?? $purchase->variant ?? null;
+
 		// run quantity updated method.
 		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
 		foreach ( $integrations as $integration ) {
 			if ( ! $integration->id ) {
 				continue;
 			}
+
+			// If integration has price_id or variant_id,
+			// then we need to match with specific price or variant.
+			if ( ( ! empty( $price_id ) && $integration->price_id !== $price_id ) || ( ! empty( $variant_id ) && $integration->variant_id !== $variant_id ) ) {
+				continue;
+			}
+
 			$this->onPurchaseQuantityUpdated( $data->quantity, $previous->quantity, $integration, $purchase->getWPUser() );
 		}
 	}
@@ -381,6 +392,22 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 		if ( ! $product_id ) {
 			return [];
 		}
-		return (array) Integration::where( 'model_id', $product_id )->andWhere( 'provider', $this->getName() )->get();
+
+		$query = Integration::where( 'model_id', $product_id )->andWhere( 'provider', $this->getName() );
+
+		// if purchase has a price_id or variant_id, then we need to
+		// get the integration for the specific price or variant.
+		$price_id   = $purchase->price->id ?? $purchase->price ?? null;
+		$variant_id = $purchase->variant->id ?? $purchase->variant ?? null;
+
+		if ( $price_id ) {
+			$query->andWhere( 'price_id', $price_id );
+		}
+
+		if ( $variant_id ) {
+			$query->andWhere( 'variant_id', $variant_id );
+		}
+
+		return (array) $query->get();
 	}
 }

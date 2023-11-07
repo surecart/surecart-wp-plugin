@@ -41,8 +41,8 @@ export default ({ onRequestClose, id }) => {
 					model_name: 'product',
 					model_id: id,
 					integration_id: item,
-					price_id: price?.price_id || null,
-					variant_id: price?.variant_id || null,
+					price_id: price?.priceId || null,
+					variant_id: price?.variantId || null,
 					provider,
 				},
 				{ throwOnError: true }
@@ -101,16 +101,17 @@ export default ({ onRequestClose, id }) => {
 								label={__('Select A Price', 'surecart')}
 							>
 								<PriceSelector
-									value={price?.price_id}
+									value={price?.priceId}
 									ad_hoc={false}
 									onSelect={({ price_id, variant_id }) =>
 										setPrice({
-											price_id,
-											variant_id,
+											priceId: price_id,
+											variantId: variant_id,
 										})
 									}
 									requestQuery={{
 										archived: false,
+										// ids: [id],
 									}}
 									allowOutOfStockSelection={true}
 								/>
