@@ -29,12 +29,13 @@ export default ({ media, onDeleted }) => {
 	const [url, setUrl] = useState(null);
 	const [imgAlt, setImgAlt] = useState('');
 	const [imgTitle, setImgTitle] = useState('');
+	const isImage = media?.content_type?.startsWith('image/');
 
 	useEffect(() => {
 		setUrl(null);
 		setImgAlt(media?.alt);
 		setImgTitle(media?.title);
-		if (!media?.content_type.startsWith('image/')) return; // do not fetch if no image.
+		if (!isImage) return; // do not fetch if no image.
 		if (!media?.id || media?.url) return; // media not loaded or we have a url.
 		fetchMedia(media?.id);
 	}, [media]);
@@ -112,7 +113,7 @@ export default ({ media, onDeleted }) => {
 			>
 				<Error error={error} setError={setError} margin="80px" />
 
-				{media?.content_type.startsWith('image/') &&
+				{isImage &&
 					(fetching ? (
 						<ScSkeleton
 							style={{
@@ -129,7 +130,7 @@ export default ({ media, onDeleted }) => {
 								height: auto;
 							`}
 							alt={media?.alt}
-							title={media?.title}
+							{...(media.title ? { title: media.title } : {})}
 						/>
 					))}
 
@@ -165,17 +166,19 @@ export default ({ media, onDeleted }) => {
 					</span>
 				</ScLineItem>
 
-				<ScTextarea
-					label={__('Alternative Text', 'surecart')}
-					help={__(
-						'Leave empty if the image is purely decorative.',
-						'surecart'
-					)}
-					onScInput={(e) => setImgAlt(e.target.value)}
-					value={imgAlt}
-					name="alternative-text"
-					onScBlur={() => media?.alt !== imgAlt && updateMedia()}
-				/>
+				{isImage && (
+					<ScTextarea
+						label={__('Alternative Text', 'surecart')}
+						help={__(
+							'Leave empty if the image is purely decorative.',
+							'surecart'
+						)}
+						onScInput={(e) => setImgAlt(e.target.value)}
+						value={imgAlt}
+						name="alternative-text"
+						onScBlur={() => media?.alt !== imgAlt && updateMedia()}
+					/>
+				)}
 				<ScInput
 					label={__('Title', 'surecart')}
 					onScInput={(e) => setImgTitle(e.target.value)}
