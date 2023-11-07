@@ -1,15 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
-  ScBadgeNotice,
 	ScButton,
 	ScDropdown,
+	ScFlex,
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-  ScSkeleton,
-  ScStackedListRow,
-  ScTag,
+	ScSkeleton,
+	ScStackedListRow,
+	ScTag,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch, useSelect } from '@wordpress/data';
@@ -17,6 +17,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 import useEntity from '../../../hooks/useEntity';
+import Price from './Price';
 
 export default ({ id }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
@@ -24,7 +25,7 @@ export default ({ id }) => {
 		'integration',
 		id
 	);
-	const { integration_id, provider } = integration;
+	const { integration_id, provider, price_id, variant_id } = integration;
 
 	const { providerData, loading } = useSelect(
 		(select) => {
@@ -84,20 +85,48 @@ export default ({ id }) => {
 		}
 	};
 
+	const renderSuffix = () => {
+		return (
+			<div
+				slot="suffix"
+				css={css`
+					position: relative;
+				`}
+			>
+				<ScFlex justifyContent="flex-start" alignItems="center">
+					{!!price_id && (
+						<Price price_id={price_id} variant_id={variant_id} />
+					)}
+
+					<ScDropdown placement="bottom-end">
+						<ScButton type="text" slot="trigger" circle>
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={onRemove}>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+				</ScFlex>
+			</div>
+		);
+	};
+
 	if (integration_id && integrationDataResolved && !integrationData?.label) {
 		return (
 			<ScStackedListRow style={{ position: 'relative' }} mobile-size={0}>
 				<div
 					css={css`
 						overflow: hidden;
-            align-items: center;
+						align-items: center;
 						text-overflow: ellipsis;
 						white-space: nowrap;
-            display: flex;
-            gap: 1em;
+						display: flex;
+						gap: 1em;
 					`}
 				>
-          <div
+					<div
 						css={css`
 							display: flex;
 							align-items: center;
@@ -135,7 +164,7 @@ export default ({ id }) => {
 							</div>
 						)}
 					</div>
-          <div
+					<div
 						css={css`
 							overflow: hidden;
 							text-overflow: ellipsis;
@@ -150,35 +179,35 @@ export default ({ id }) => {
 								font-weight: bold;
 							`}
 						>
-							{sprintf( __('%s not found', 'surecart'), providerData?.label)}
+							{sprintf(
+								__('%s not found', 'surecart'),
+								providerData?.label
+							)}
 						</div>
 						{sprintf(
-						__(
-							'The provider is not installed or unavailable.',
-							'surecart'
-						)
-					)}
+							__(
+								'The provider is not installed or unavailable.',
+								'surecart'
+							)
+						)}
 					</div>
 
-          <ScTag type='warning'>{__('Disabled', 'surecart')}</ScTag>
+					<ScTag type="warning">{__('Disabled', 'surecart')}</ScTag>
 				</div>
 
-        <ScDropdown slot="suffix" placement="bottom-end">
-          <ScButton type="text" slot="trigger" circle>
-            <ScIcon name="more-horizontal" />
-          </ScButton>
-          <ScMenu>
-            <ScMenuItem onClick={onRemove}>
-              {__('Delete', 'surecart')}
-            </ScMenuItem>
-          </ScMenu>
-        </ScDropdown>
+				{renderSuffix()}
 			</ScStackedListRow>
 		);
 	}
 
 	return (
-		<ScStackedListRow style={{ position: 'relative' }} mobile-size={0}>
+		<ScStackedListRow
+			style={{ position: 'relative' }}
+			mobile-size={0}
+			css={css`
+				padding: 10px;
+			`}
+		>
 			{loading || deletingIntegration ? (
 				<div
 					css={css`
@@ -238,7 +267,7 @@ export default ({ id }) => {
 									);
 								`}
 							>
-								{(providerData?.name || 'I' ).charAt(0)}
+								{(providerData?.name || 'I').charAt(0)}
 							</div>
 						)}
 					</div>
@@ -264,16 +293,7 @@ export default ({ id }) => {
 				</div>
 			)}
 
-			<ScDropdown slot="suffix" placement="bottom-end">
-				<ScButton type="text" slot="trigger" circle>
-					<ScIcon name="more-horizontal" />
-				</ScButton>
-				<ScMenu>
-					<ScMenuItem onClick={onRemove}>
-						{__('Delete', 'surecart')}
-					</ScMenuItem>
-				</ScMenu>
-			</ScDropdown>
+			{renderSuffix()}
 		</ScStackedListRow>
 	);
 };

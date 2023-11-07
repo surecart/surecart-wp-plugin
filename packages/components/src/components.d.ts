@@ -2601,6 +2601,10 @@ export namespace Components {
          */
         "prices": Prices;
         /**
+          * Stores the price
+         */
+        "product": Product;
+        /**
           * Product entity
          */
         "products": Products;
@@ -8392,6 +8396,10 @@ declare namespace LocalJSX {
           * Price entities
          */
         "prices"?: Prices;
+        /**
+          * Stores the price
+         */
+        "product"?: Product;
         /**
           * Product entity
          */
