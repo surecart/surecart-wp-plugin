@@ -23,13 +23,14 @@
 @media screen and (max-width: 720px) {
   .subscription {
     &__action-buttons {
+      --sc-flex-column-gap: var(--sc-spacing-xxx-small);
       &::part(base) {
         flex-direction: column;
-        gap: var(--sc-spacing-xx-small);
       }
 
       sc-button::part(base) {
         width: auto;
+        height: 2em;
       }
     }
   }
