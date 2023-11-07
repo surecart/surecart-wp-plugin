@@ -1548,7 +1548,7 @@
     "slot": true
   },
   "sc-product-item-image": {
-    "product-media": true,
+    "product": true,
     "sizing": true,
     "style": true,
     "id": true,
