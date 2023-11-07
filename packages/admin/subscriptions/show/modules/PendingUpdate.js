@@ -2,10 +2,11 @@
 import DataTable from '../../../components/DataTable';
 import { intervalString } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
-import { ScFormatDate } from '@surecart/components-react';
+import { ScFormatDate, ScFormatNumber } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ subscription }) => {
 	const { pending_update } = subscription || {};
@@ -33,6 +34,17 @@ export default ({ subscription }) => {
 			};
 		},
 		[pending_update]
+	);
+
+	const { variant } = useSelect(
+		(select) => {
+			if (!pending_update) return {};
+			const queryArgs = ['surecart', 'variant', pending_update?.variant];
+			return {
+				variant: select(coreStore).getEntityRecord(...queryArgs),
+			};
+		},
+		[pending_update?.variant]
 	);
 
 	return (
@@ -64,24 +76,31 @@ export default ({ subscription }) => {
 				{
 					product: (
 						<div>
-							{price?.product?.name}
-							<div
-								css={css`
-									opacity: 0.5;
-								`}
+							<div>{price?.product?.name}</div>
+							<LineItemLabel
+								lineItem={{
+									price: price,
+									variant_options: [
+										variant?.option_1,
+										variant?.option_2,
+										variant?.option_3,
+									],
+								}}
 							>
-								<sc-format-number
-									type="currency"
-									value={
-										pending_update?.ad_hoc_amount ||
-										price?.amount
-									}
-									currency={price?.currency}
-								/>
-								{intervalString(price, {
-									labels: { interval: '/' },
-								})}
-							</div>
+								<div>
+									<ScFormatNumber
+										type="currency"
+										value={
+											pending_update?.ad_hoc_amount ||
+											price?.amount
+										}
+										currency={price?.currency}
+									/>
+									{intervalString(price, {
+										labels: { interval: '/' },
+									})}
+								</div>
+							</LineItemLabel>
 						</div>
 					),
 					quantity:

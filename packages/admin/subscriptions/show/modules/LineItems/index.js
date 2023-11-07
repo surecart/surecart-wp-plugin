@@ -12,6 +12,7 @@ import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { formatTaxDisplay } from '../../../../util/tax';
 import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import { getVariantLabel } from '../../../../util/variation';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
@@ -54,6 +55,7 @@ export default ({ period, loading }) => {
 								key={item.id}
 								{...getImageAttributes(item?.price?.product)}
 								name={item?.price?.product?.name}
+								priceName={item?.price?.name}
 								editable={false}
 								removable={false}
 								fees={item?.fees?.data}
@@ -63,6 +65,9 @@ export default ({ period, loading }) => {
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
+								variantLabel={getVariantLabel(
+									item?.variant_options || []
+								)}
 								interval={intervalString(item?.price)}
 							></ScProductLineItem>
 						</>

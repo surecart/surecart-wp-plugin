@@ -31,7 +31,7 @@ export class ScProductItem {
                 );
 
               case 'surecart/product-item-price':
-                return <sc-product-item-price part="price" prices={this.product?.prices.data} range={!!attributes?.range}></sc-product-item-price>;
+                return <sc-product-item-price part="price" prices={this.product?.prices.data} range={!!attributes?.range} metrics={this.product?.metrics}></sc-product-item-price>;
 
               default:
                 return null;

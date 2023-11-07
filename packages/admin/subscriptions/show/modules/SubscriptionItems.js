@@ -58,8 +58,10 @@ export default () => {
 						return (
 							<sc-product-line-item
 								key={item.id}
+								imageUrl={item?.price?.product?.image_url}
+								name={item?.price?.product?.name}
 								{...getImageAttributes(item?.price?.product)}
-								name={`${item?.price?.product?.name} \u2013 ${item?.price?.name}`}
+								priceName={item?.price?.name}
 								editable={false}
 								removable={false}
 								quantity={item.quantity}

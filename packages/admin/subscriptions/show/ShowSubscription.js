@@ -131,6 +131,7 @@ export default () => {
 						'checkout.line_items',
 						'line_item.price',
 						'line_item.fees',
+						'line_item.variant',
 						'price',
 						'price.product',
 						'product.featured_product_media',

@@ -54,6 +54,7 @@ export default ({ checkout, loading, abandoned }) => {
 							key={item.id}
 							{...getImageAttributes(item?.price?.product)}
 							name={item?.price?.product?.name}
+							priceName={item?.price?.name}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}

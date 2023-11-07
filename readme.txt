@@ -3,8 +3,8 @@ Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
-Tested up to: 6.3
-Stable tag: 2.7.5
+Tested up to: 6.4
+Stable tag: 2.8.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,43 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.8.4 - November 5th, 2023 =
+* Fix: Issue where shop page images would sometimes overflow on mobile in some instances.
+
+= 2.8.3 - November 3rd, 2023 =
+* Fix: Issue with price selectors without price names not showing product name as fallback.
+
+= 2.8.2 - November 3rd, 2023 =
+* Fix: Google analytics not automatically tracking purchase events for some users.
+* Fix: Duplicate scOrderPaid analytics event was firing on some orders.
+* Fix: Currency conversion issue on google add to cart analytics events.
+* Fix: Checkout form with set products are not able to increment quantity in the admin.
+* Fix: PHP notice when no attributes are passed to a shortcode.
+* Fix: Issue with stock correction notice appearing in form admin when item is out of stock.
+
+= 2.8.1 - November 2nd, 2023 =
+* Fix: Theme conflict with GeneratePress causing product page out of stock buttons to appear.
+* Fix: Issue with images using special characters breaking product page slideshow.
+* Fix: Prevent name/company name fields from being emptied when address country changes.
+* Fix: Add theme support for block border settings missing if they are not set by the theme.
+* Fix: Issue where customer could enter a blank password when setting one for the first time on the customer dashboard.
+* Fix: Featured product list filter not working on product list blocks.
+
+= 2.8.0 - November 1st, 2023 =
+New: Product variants.
+New: Stock management.
+New: Product SKU.
+Improvement: Redesign of the line item quantity selector.
+Improvement: Display of price name on line items in addition to the variant.
+Improvement: Preloading of price choices to speed up checkout form loading.
+Improvement: Faster loading of checkout forms with preset prices.
+Fix: Issue with forms not loading properly when editing in admin.
+Fix: Typo in the deletion of webhook processes that prevented clearing of process logs older than 90 days.
+Fix: Z-index issue on the checkout page during the loading state.
+Fix: Improved handling of price version mismatches on the checkout form.
+Fix: Issue with customers not being able to add non-credit card Mollie payment methods on the customer dashboard.
+Fix: Use of hashed strings for transient caching to prevent excessively long transient names.
 
 = 2.7.5 - October 6th, 2023 =
 * Fix: Issue with some merchant admins not loading if using javascript browser caching.

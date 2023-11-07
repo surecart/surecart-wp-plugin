@@ -14,6 +14,7 @@ export const expand = [
   'line_items',
   'line_item.price',
   'line_item.fees',
+  'line_item.variant',
   'price.product',
   'product.featured_product_media',
   'product_media.media',
@@ -24,9 +25,9 @@ export const expand = [
   'discount.promotion',
   'recommended_bumps',
   'bump.price',
+  'product.variants',
   'discount.coupon',
   'shipping_address',
-  'staged_payment_intents',
   'tax_identifier',
   'manual_payment_method',
   'shipping_choices',
@@ -126,6 +127,13 @@ export const finalizeCheckout = async ({ id, data = {}, query = {}, processor }:
  * Add a line item.
  */
 export const addLineItem = async ({ checkout, data, live_mode = false }) => {
+  const existingLineItem = (checkout?.line_items?.data || []).find(item => {
+    if (!item?.variant?.id) {
+      return item.price.id === data.price;
+    }
+    return item.variant.id === data.variant && item.price.id === data.price;
+  });
+
   // create the checkout with the line item.
   if (!checkout?.id) {
     return (await apiFetch({
@@ -138,8 +146,13 @@ export const addLineItem = async ({ checkout, data, live_mode = false }) => {
     })) as Checkout;
   }
 
+  // handle existing line item.
+  if (!!existingLineItem) {
+    return await updateLineItem({ id: existingLineItem?.id, data: { ...data, quantity: existingLineItem?.quantity + data?.quantity } });
+  }
+
   const item = (await apiFetch({
-    path: addQueryArgs('surecart/v1/line_items', {
+    path: addQueryArgs(`surecart/v1/line_items/${existingLineItem?.id ? existingLineItem?.id : ''}`, {
       consolidate: true,
       expand: [
         ...(expand || []).map(item => {

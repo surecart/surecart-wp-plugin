@@ -3,8 +3,9 @@ import { sprintf, __ } from '@wordpress/i18n';
 import { isBumpInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
 import { getFeaturedProductMediaAttributes, sizeImage } from '../../../../functions/media';
+import { state as checkoutState } from '@store/checkout';
 
-import { Bump, Checkout, LineItemData, Price, Product } from '../../../../types';
+import { Bump, LineItemData, Price, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-bump',
@@ -14,9 +15,6 @@ import { Bump, Checkout, LineItemData, Price, Product } from '../../../../types'
 export class ScOrderBump {
   /** The bump */
   @Prop() bump: Bump;
-
-  /** The checkout */
-  @Prop() checkout: Checkout;
 
   /** Should we show the controls */
   @Prop({ reflect: true }) showControl: boolean;
@@ -108,7 +106,7 @@ export class ScOrderBump {
         value={this.bump?.id}
         type="checkbox"
         showControl={this.showControl}
-        checked={isBumpInOrder(this.bump, this.checkout)}
+        checked={isBumpInOrder(this.bump, checkoutState?.checkout)}
         onScChange={e => this.updateLineItem(e.target.checked)}
         exportparts="base, control, checked-icon, title"
       >

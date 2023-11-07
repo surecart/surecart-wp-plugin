@@ -106,10 +106,9 @@ export default ({ invoice, charge: chargeInput, loading }) => {
 						return (
 							<sc-product-line-item
 								key={item.id}
-								{...getFeaturedProductMediaAttributes(
-									item?.price?.product
-								)}
+								{...getImageAttributes(item?.price?.product)}
 								name={item?.price?.product?.name}
+								priceName={item?.price?.name}
 								editable={false}
 								removable={false}
 								quantity={item.quantity}

@@ -7,18 +7,26 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScTag,
-	ScFormatNumber,
 } from '@surecart/components-react';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { useState } from 'react';
-import LineItem from './components/LineItem';
 import CreateFulfillment from './CreateFulfillment';
-import { addQueryArgs } from '@wordpress/url';
 import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
+
+	const getImageAttributes = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
 
 	return (
 		<>
@@ -100,35 +108,21 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 						gap: var(--sc-spacing-large);
 					`}
 				>
-					{(items || []).map((item) => {
+					{(items || []).map((line_item) => {
 						return (
-							<LineItem
-								key={item?.id}
-								media={getFeaturedProductMediaAttributes(
-									item?.price?.product
+							<ProductLineItem
+								key={line_item?.id}
+								lineItem={line_item}
+								showWeight={true}
+								{...getImageAttributes(
+									line_item?.price?.product
 								)}
 								suffix={sprintf(
 									__('Qty: %d', 'surecart'),
-									item.quantity - item.fulfilled_quantity || 0
+									line_item.quantity -
+										line_item.fulfilled_quantity || 0
 								)}
-							>
-								<a
-									href={addQueryArgs('admin.php', {
-										page: 'sc-products',
-										action: 'edit',
-										id: item?.price?.product?.id,
-									})}
-								>
-									{item?.price?.product?.name}
-								</a>
-								{!!item?.price?.product?.weight && (
-									<ScFormatNumber
-										type="unit"
-										value={item?.price?.product?.weight}
-										unit={item?.price?.product?.weight_unit}
-									/>
-								)}
-							</LineItem>
+							/>
 						);
 					})}
 				</div>

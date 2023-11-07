@@ -53,7 +53,6 @@ graph TD;
   sc-subscription-payment-method --> sc-block-ui
   sc-empty --> sc-icon
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
