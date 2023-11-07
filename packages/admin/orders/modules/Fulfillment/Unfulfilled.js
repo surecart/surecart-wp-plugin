@@ -18,16 +18,6 @@ import ProductLineItem from '../../../ui/ProductLineItem';
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
 	const [modal, setModal] = useState(false);
 
-	const getImageAttributes = (product) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(product);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
-
 	return (
 		<>
 			<Box
@@ -114,9 +104,6 @@ export default ({ items, checkout, orderId, onCreateSuccess }) => {
 								key={line_item?.id}
 								lineItem={line_item}
 								showWeight={true}
-								{...getImageAttributes(
-									line_item?.price?.product
-								)}
 								suffix={sprintf(
 									__('Qty: %d', 'surecart'),
 									line_item.quantity -

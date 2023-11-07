@@ -20,7 +20,6 @@ import { useDispatch } from '@wordpress/data';
 import { ScBlockUi } from '@surecart/components-react';
 import AddTracking from './components/AddTracking';
 import ProductLineItem from '../../../ui/ProductLineItem';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ fulfillment, onDeleteSuccess }) => {
 	const [busy, setBusy] = useState(false);
@@ -68,16 +67,6 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 	const shippable = (fulfillment?.fulfillment_items?.data || []).some(
 		(item) => item?.line_item?.price?.product?.shipping_enabled
 	);
-
-	const getImageAttributes = (product) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(product);
-
-		return {
-			imageUrl: featuredMedia?.url,
-			imageAlt: featuredMedia?.alt,
-			imageTitle: featuredMedia?.title,
-		};
-	};
 
 	return (
 		<>
@@ -291,9 +280,6 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 									suffix={sprintf(
 										__('Qty: %d', 'surecart'),
 										quantity || 0
-									)}
-									{...getImageAttributes(
-										line_item?.price?.product
 									)}
 								/>
 							)
