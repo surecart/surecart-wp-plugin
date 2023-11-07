@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import { use, useDispatch } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 import apiFetch from '@wordpress/api-fetch';
