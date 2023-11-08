@@ -53,7 +53,10 @@ class Block extends BaseBlock {
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<?php echo wp_kses_post( $collection->name ); ?></a>
+					<span class="sc-sr-only"><?php esc_html_e( 'Link to ', 'surecart' ); ?></span>
+					<?php echo wp_kses_post( $collection->name ); ?>
+					<span class="sc-sr-only"><?php esc_html_e( ' product collection.', 'surecart' ); ?></span>
+				</a>
 				<?php endforeach; ?>
 			</div>
 		</div>
