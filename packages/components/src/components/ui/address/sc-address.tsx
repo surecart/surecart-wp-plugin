@@ -264,7 +264,7 @@ export class ScAddress {
               name={this.names?.state}
               autocomplete={'address-level1'}
               value={this?.address?.state}
-              onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
+              onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
               choices={this.regions}
               required={this.required}
               disabled={this.disabled}
