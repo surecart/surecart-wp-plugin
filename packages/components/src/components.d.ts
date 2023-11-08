@@ -2809,6 +2809,10 @@ export namespace Components {
           * Limit to a set of ids.
          */
         "ids": string[];
+        /**
+          * Is the store connected?
+         */
+        "isStoreConnected": boolean;
         "layoutConfig": LayoutConfig1;
         "limit": number;
         "paginationAlignment": string;
@@ -2820,6 +2824,7 @@ export namespace Components {
           * Should we paginate?
          */
         "paginationEnabled": boolean;
+        "products"?: Product[];
         /**
           * Query to search for
          */
@@ -8595,6 +8600,10 @@ declare namespace LocalJSX {
           * Limit to a set of ids.
          */
         "ids"?: string[];
+        /**
+          * Is the store connected?
+         */
+        "isStoreConnected"?: boolean;
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         /**
@@ -8610,6 +8619,7 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "paginationEnabled"?: boolean;
+        "products"?: Product[];
         /**
           * Query to search for
          */
