@@ -123,7 +123,7 @@ export default () => {
 					{__('Product Access Emails', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Send a product access email to your customer when a purchase has done for a licensed downloadable product.',
+							'Send a product access email to your customer when a purchase is made for a licensed and/or downloadable product.',
 							'surecart'
 						)}
 					</span>
