@@ -32,9 +32,6 @@ export class ScProductItemList {
   /** Query to search for */
   @Prop({ mutable: true }) query: string;
 
-  /** Is the store connected? */
-  @Prop() isStoreConnected: boolean = true;
-
   /** Should allow search */
   @Prop() searchEnabled: boolean = true;
 
@@ -97,7 +94,7 @@ export class ScProductItemList {
   @State() collections: Collection[];
 
   /** Selected collections */
-  @State() selectedCollections: Collection[];
+  @State() selectedCollections: Collection[] = [];
 
   componentWillLoad() {
     if (!this?.products?.length) {
@@ -107,8 +104,6 @@ export class ScProductItemList {
     if (this.collectionEnabled) {
       this.getCollections();
     }
-
-    this.selectedCollections = [];
   }
 
   // Append URL if no 'product-page' found
@@ -265,7 +260,7 @@ export class ScProductItemList {
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
-        {this.error && this.isStoreConnected && (
+        {this.error && (
           <sc-alert type="danger" open>
             {this.error}
           </sc-alert>
