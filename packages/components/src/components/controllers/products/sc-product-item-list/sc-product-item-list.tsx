@@ -461,7 +461,7 @@ export class ScProductItemList {
                       ? {
                           'aria-label': sprintf(
                             __('You have reached the end of product list. %s', 'surecart'),
-                            this.isPaginationAvailable() ? __('Use pagination to browse more products.', 'surecart') : __('No more products to browse.', 'surecart'),
+                            this.isPaginationAvailable() ? __('Press tab to browse more products using pagination.', 'surecart') : __('No more products to browse.', 'surecart'),
                           ),
                         }
                       : {})}
