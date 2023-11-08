@@ -312,12 +312,31 @@ export default () => {
 							model="customer_link"
 						/>
 						<EmailRow
-							title={__('Order Confirmation', 'surecart')}
+							title={__('Fulfillment Confirmation', 'surecart')}
 							description={__(
-								'Sent to customers after they place an order.',
+								'Sent to when a fulfillment is created (i.e. your order is on the way).',
 								'surecart'
 							)}
-							model="order"
+							model="fulfillment"
+							action="created_notification"
+						/>
+						<EmailRow
+							title={__('Fulfillment Updated', 'surecart')}
+							description={__(
+								'Sent to when a fulfillment is updated or a tracking number is added.',
+								'surecart'
+							)}
+							model="fulfillment"
+							action="updated_notification"
+						/>
+						<EmailRow
+							title={__('Fulfillment Delivered', 'surecart')}
+							description={__(
+								'Sent when a fulfillment is marked as delivered.',
+								'surecart'
+							)}
+							model="fulfillment"
+							action="delivered_notification"
 						/>
 						<EmailRow
 							title={__('Subscription Recovery', 'surecart')}
