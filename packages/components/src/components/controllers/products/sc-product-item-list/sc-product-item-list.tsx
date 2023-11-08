@@ -283,9 +283,9 @@ export class ScProductItemList {
                 {this.sortEnabled && (
                   <sc-dropdown style={{ '--panel-width': '15em' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">{__('Dropdown to sort products. ', 'surecart')}</span>
+                      <span class="sc-sr-only">{__('Dropdown to sort products.', 'surecart')} </span>
                       {this.renderSortName()}
-                      <span class="sc-sr-only">{__(' selected.', 'surecart')}</span>
+                      <span class="sc-sr-only"> {__('selected.', 'surecart')}</span>
                     </sc-button>
                     <sc-menu ariaLabel={__('Sort Products', 'surecart')}>
                       <sc-menu-item ariaLabel={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
