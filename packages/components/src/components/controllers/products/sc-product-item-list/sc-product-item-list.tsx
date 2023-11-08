@@ -271,6 +271,10 @@ export class ScProductItemList {
     });
   }
 
+  isPaginationAvailable() {
+    return !!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled;
+  }
+
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
@@ -310,9 +314,7 @@ export class ScProductItemList {
                 {this.collectionEnabled && (this.collections ?? []).length > 0 && (
                   <sc-dropdown style={{ '--panel-width': '15rem' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">
-                        {this.renderCollectionFilterHint()}
-                      </span>
+                      <span class="sc-sr-only">{this.renderCollectionFilterHint()}</span>
                       <span aria-hidden> {__('Filter', 'surecart')}</span>
                     </sc-button>
                     <sc-menu ariaLabel={__('Filter products', 'surecart')}>
@@ -451,11 +453,26 @@ export class ScProductItemList {
                   })}
                 </div>
               ))
-            : (this.products || []).map(product => {
-                return <sc-product-item key={product?.id} exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
+            : (this.products || []).map((product, index: number) => {
+                return (
+                  <sc-product-item
+                    key={product?.id}
+                    {...(this.products.length - 1 === index
+                      ? {
+                          'aria-label': sprintf(
+                            __('You have reached the end of product list. %s', 'surecart'),
+                            this.isPaginationAvailable() ? __('Use pagination to browse more products.', 'surecart') : __('No more products to browse.', 'surecart'),
+                          ),
+                        }
+                      : {})}
+                    exportparts="title, price, image"
+                    product={product}
+                    layoutConfig={this.layoutConfig}
+                  ></sc-product-item>
+                );
               })}
         </section>
-        {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
+        {this.isPaginationAvailable() && (
           <div
             class={{
               'product-item-list__pagination': true,
