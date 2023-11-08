@@ -4,6 +4,7 @@ import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
 import { __ } from '@wordpress/i18n';
 import { isValidURL } from '../../../functions/util';
+import { speak } from '@wordpress/a11y';
 
 let id = 0;
 let itemIndex = 0;
@@ -346,6 +347,8 @@ export class ScSelectDropdown {
 
         return;
       }
+
+      speak(`Menu item -  ${items[itemIndex].textContent || ''}`, 'assertive');
     }
 
     // Close select dropdown on Esc/Escape key
