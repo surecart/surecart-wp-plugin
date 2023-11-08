@@ -21,7 +21,8 @@ export class ScProductPillsVariantOption {
         <span slot="label">
           {this.label}
           <span class="sc-sr-only">
-            {sprintf(__(' options selector. There are %d options in this selector.', 'surecart'), state.variant_options[this.optionNumber - 1].values.length)}
+            {' '}
+            {sprintf(__('options selector. There are %d options in this selector.', 'surecart'), state.variant_options[this.optionNumber - 1].values.length)}
           </span>
         </span>
         <div class="sc-product-pills-variant-option__wrapper">
@@ -38,9 +39,9 @@ export class ScProductPillsVariantOption {
                   })
                 }
               >
-                <span class="sc-sr-only">{sprintf(__('Select %s ', 'surecart'), this.label)}</span>
+                <span class="sc-sr-only">{sprintf(__('Select %s', 'surecart'), this.label)} </span>
                 {value}
-                {state.variantValues[`option_${this.optionNumber}`] === value && <span class="sc-sr-only">{__('. This option is currently selected.', 'surecart')}</span>}
+                {state.variantValues[`option_${this.optionNumber}`] === value && <span class="sc-sr-only">. {__('This option is currently selected.', 'surecart')}</span>}
                 {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
               </sc-pill-option>
             );

@@ -626,8 +626,6 @@
   },
   "sc-drawer": {
     "contained": true,
-    "drawer-close-announcement": true,
-    "drawer-open-announcement": true,
     "label": true,
     "no-header": true,
     "open": true,
@@ -1465,6 +1463,7 @@
     "price": true,
     "price-id": true,
     "prices": true,
+    "product": true,
     "products": true,
     "quantity": true,
     "show-control": true,
