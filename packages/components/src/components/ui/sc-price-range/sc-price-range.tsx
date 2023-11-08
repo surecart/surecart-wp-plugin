@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop, Watch, State } from '@stencil/core';
 import { Price } from '../../../types';
+import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-price-range',
@@ -50,7 +51,10 @@ export class ScPriceRange {
           </span>
         ) : (
           <span>
-            <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number> {' — '}
+            <span class="sc-sr-only">{__('Price range from', 'surecart')} </span>
+            <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number>
+            <span aria-hidden>{' — '}</span>
+            <span class="sc-sr-only">{__('to', 'surecart')}</span>
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>
         )}
