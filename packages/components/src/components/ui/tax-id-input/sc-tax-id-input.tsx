@@ -1,5 +1,6 @@
 import { Component, h, Prop, Fragment, Watch, Event, EventEmitter } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 import { zones, getType } from '../../../functions/tax';
 
 @Component({
@@ -107,6 +108,7 @@ export class ScTaxIdInput {
           ref={el => (this.input = el as HTMLScInputElement)}
           label={zones?.[this?.type || 'other']?.label}
           aria-label={__('Tax ID', 'surecart')}
+          placeholder={__('Enter Tax ID', 'surecart')}
           name="tax_identifier.number"
           required={this.required}
           value={this.number}
@@ -157,9 +159,11 @@ export class ScTaxIdInput {
                       });
                       this.type = name;
                       this.input?.triggerFocus();
+                      speak(`${zones[name].label_small} selected`, 'assertive');
                     }
                   }}
                   checked={this.type === name}
+                  ariaLabel={zones[name].label_small}
                 >
                   {zones[name].label_small}
                 </sc-menu-item>
