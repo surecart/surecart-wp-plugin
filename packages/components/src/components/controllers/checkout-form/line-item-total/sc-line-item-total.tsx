@@ -31,6 +31,10 @@ export class ScLineItemTotal {
     return checkout?.full_amount !== checkout?.subtotal_amount;
   }
 
+  hasSubscription(checkout: Checkout) {
+    return (checkout?.line_items?.data || []).some(lineItem => lineItem?.price?.recurring_interval === 'month' && !!lineItem?.price?.recurring_interval && !lineItem?.price?.recurring_period_count);
+  }
+
   renderLineItemTitle(checkout: Checkout) {
     if (this.total === 'total' && this.hasInstallmentPlan(checkout)) {
       return (
@@ -109,9 +113,16 @@ export class ScLineItemTotal {
           )}
 
           <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
-            <span slot="title">
-              <slot name="subscription-title">{__('Total Due Today', 'surecart')}</slot>
-            </span>
+            {this.hasSubscription(checkout) ? (
+              <span slot="title">
+                <slot name="subscription-title">{__('Total Due Today', 'surecart')}</slot>
+              </span>
+            ) : (
+              <span slot="title">
+                <slot name="due-amount-description">{__('Total Due', 'surecart')}</slot>
+              </span>
+            )}
+
             <span slot="price">
               <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due}></sc-format-number>
             </span>

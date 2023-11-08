@@ -7,6 +7,7 @@ export default ({ attributes, setAttributes }) => {
 	const {
 		text,
 		subscription_text,
+		due_amount_text,
 		free_trial_text,
 		first_payment_total_text,
 	} = attributes;
@@ -45,6 +46,16 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
+							label={__('Amount Due Label', 'surecart')}
+							value={due_amount_text}
+							onChange={(due_amount_text) =>
+								setAttributes({ due_amount_text })
+							}
+							placeholder={__('Total Due', 'surecart')}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
 							label={__('Total Due Today Label', 'surecart')}
 							value={subscription_text}
 							onChange={(subscription_text) =>
@@ -67,6 +78,9 @@ export default ({ attributes, setAttributes }) => {
 				</span>
 				<span slot="free-trial-description">
 					{free_trial_text || __('Free Trial', 'surecart')}
+				</span>
+				<span slot="due-amount-description">
+					{due_amount_text || __('Total Due', 'surecart')}
 				</span>
 			</sc-line-item-total>
 		</Fragment>

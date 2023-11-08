@@ -9,6 +9,7 @@ export default ({ attributes }) => {
 		subscription_text,
 		free_trial_text,
 		first_payment_total_text,
+		due_amount_text,
 		className,
 	} = attributes;
 	return (
@@ -28,6 +29,9 @@ export default ({ attributes }) => {
 			</span>
 			<span slot="free-trial-description">
 				{free_trial_text || __('Free Trial', 'surecart')}
+			</span>
+			<span slot="due-amount-description">
+				{due_amount_text || __('Total Due', 'surecart')}
 			</span>
 		</sc-line-item-total>
 	);
