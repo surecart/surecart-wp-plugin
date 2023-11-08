@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 		}
 
 		// get the collections expanded on the product.
-		$collections = $product->product_collections->data ?? [];
+		$collections = $product->product_collections->data ?? array();
 
 		// Limit the number of items displayed based on the $attributes['count'] value.
 		if ( ! empty( $attributes['count'] ) ) {
@@ -39,10 +39,10 @@ class Block extends BaseBlock {
 		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
 		$wrapper_attributes = get_block_wrapper_attributes(
-			[
+			array(
 				'class' => 'is-layout-flex',
 				'style' => 'gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '3px' ),
-			]
+			)
 		);
 
 		ob_start(); ?>
@@ -53,9 +53,9 @@ class Block extends BaseBlock {
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<span class="sc-sr-only"><?php esc_html_e( 'Link to ', 'surecart' ); ?></span>
+					<span class="sc-sr-only"><?php esc_html_e( 'Link to', 'surecart' ); ?> </span>
 					<?php echo wp_kses_post( $collection->name ); ?>
-					<span class="sc-sr-only"><?php esc_html_e( ' product collection.', 'surecart' ); ?></span>
+					<span class="sc-sr-only"> <?php esc_html_e( 'product collection.', 'surecart' ); ?></span>
 				</a>
 				<?php endforeach; ?>
 			</div>
