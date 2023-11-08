@@ -1,20 +1,11 @@
 /** @jsx jsx */
-import {
-	ScChoiceContainer,
-	ScFormatNumber,
-	ScPriceInput,
-} from '@surecart/components-react';
+import { ScChoiceContainer, ScPriceInput } from '@surecart/components-react';
 import {
 	InspectorControls,
 	useBlockProps,
 	RichText,
 } from '@wordpress/block-editor';
-import {
-	Disabled,
-	PanelBody,
-	PanelRow,
-	TextControl,
-} from '@wordpress/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
