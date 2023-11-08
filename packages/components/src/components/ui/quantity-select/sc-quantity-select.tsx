@@ -91,7 +91,7 @@ export class ScQuantitySelect {
       >
         <button
           part="minus"
-          aria-label={__('decrease number', 'surecart')}
+          aria-label={__('Decrease quantity by one.', 'surecart')}
           aria-disabled={this.disabled || (this.quantity <= this.min && this.min > 1)}
           class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
           onClick={() => this.quantity > this.min && this.decrease()}
@@ -124,7 +124,7 @@ export class ScQuantitySelect {
 
         <button
           part="plus"
-          aria-label={__('increase number', 'surecart')}
+          aria-label={__('Increase quantity by one.', 'surecart')}
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
           onClick={() => this.quantity < this.max && this.increase()}
           aria-disabled={this.disabled || this.quantity >= this.max}
