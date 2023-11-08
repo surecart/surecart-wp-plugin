@@ -2,7 +2,7 @@
 	.column-mode {
 		width: 50px;
 	}
-	.column-total, .column-status{
+	.column-total, .column-status {
 		min-width: 96px;
 	}
 	.column-order {
@@ -14,7 +14,7 @@
 
 	/* on mobile screens less than 1024px */
 	@media (max-width: 1024px) {
-		 .column-status{
+		 .column-status {
 			width: 96px;
 		}
 	}
