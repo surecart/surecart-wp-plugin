@@ -13,7 +13,7 @@ export default ({ value, onChange, setAddingLink, addingLink, isActive }) => {
 	)?.attributes?.line_items;
 	const initialLineItems = initialLineItemsJSON
 		? JSON.parse(initialLineItemsJSON)
-		: [{ quantity: 1 }];
+		: [];
 	const [line_items, setLineItems] = useState(initialLineItems);
 
 	const removeLineItem = (index) => {

@@ -46,6 +46,9 @@
 		},
 		"price_id": {
 			"type": "string"
+		},
+		"variant_id": {
+			"type": "string"
 		}
 	},
 	"script": "surecart-components",
