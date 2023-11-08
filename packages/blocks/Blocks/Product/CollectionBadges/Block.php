@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 		}
 
 		// get the collections expanded on the product.
-		$collections = $product->product_collections->data ?? array();
+		$collections = $product->product_collections->data ?? [];
 
 		// Limit the number of items displayed based on the $attributes['count'] value.
 		if ( ! empty( $attributes['count'] ) ) {
@@ -39,10 +39,10 @@ class Block extends BaseBlock {
 		['styles' => $styles, 'classes' => $classes] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
 		$wrapper_attributes = get_block_wrapper_attributes(
-			array(
+			[
 				'class' => 'is-layout-flex',
 				'style' => 'gap: ' . $this->getSpacingPresetCssVar( $attr['style']['spacing']['blockGap'] ?? '3px' ),
-			)
+			]
 		);
 
 		ob_start(); ?>
