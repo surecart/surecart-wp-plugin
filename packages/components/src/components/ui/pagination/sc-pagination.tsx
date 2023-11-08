@@ -3,7 +3,7 @@ import { sprintf, __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-pagination',
-  styleUrl: 'sc-pagination.css',
+  styleUrl: 'sc-pagination.scss',
   shadow: true,
 })
 export class ScPagination {

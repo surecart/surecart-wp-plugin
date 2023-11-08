@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-price-range',
-  styleUrl: 'sc-price-range.css',
+  styleUrl: 'sc-price-range.scss',
   shadow: true,
 })
 export class ScPriceRange {
