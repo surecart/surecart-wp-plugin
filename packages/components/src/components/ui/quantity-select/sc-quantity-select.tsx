@@ -92,10 +92,10 @@ export class ScQuantitySelect {
         <button
           part="minus"
           aria-label={__('decrease number', 'surecart')}
-          aria-disabled={this.quantity <= this.min && this.min > 1}
-          tabIndex={this.quantity <= this.min && this.min > 1 ? -1 : 0}
+          aria-disabled={this.disabled || (this.quantity <= this.min && this.min > 1)}
           class={{ 'button__decrease': true, 'button--disabled': this.quantity <= this.min && this.min > 1 }}
           onClick={() => this.quantity > this.min && this.decrease()}
+          disabled={this.disabled || (this.quantity <= this.min && this.min > 1)}
         >
           <sc-icon name="minus" exportparts="base:minus__icon"></sc-icon>
         </button>
@@ -109,8 +109,8 @@ export class ScQuantitySelect {
           max={this.max}
           min={this.min}
           value={this.quantity}
+          disabled={this.disabled}
           autocomplete="off"
-          tabindex="0"
           role="spinbutton"
           aria-valuemax={this.max}
           aria-valuemin={this.min}
@@ -127,8 +127,8 @@ export class ScQuantitySelect {
           aria-label={__('increase number', 'surecart')}
           class={{ 'button__increase': true, 'button--disabled': this.quantity >= this.max }}
           onClick={() => this.quantity < this.max && this.increase()}
-          aria-disabled={this.quantity >= this.max}
-          tabIndex={this.quantity >= this.max ? -1 : 0}
+          aria-disabled={this.disabled || this.quantity >= this.max}
+          disabled={this.disabled || this.quantity >= this.max}
         >
           <sc-icon name="plus" exportparts="base:plus__icon"></sc-icon>
         </button>
