@@ -249,13 +249,6 @@ export class ScProductItemList {
     }
   }
 
-  renderCollectionFilterHint() {
-    return sprintf(
-      __('Dropdown to filter products by collection. %s selected.', 'surecart'),
-      this.selectedCollections?.length ? this.selectedCollections.map(collection => collection?.name).join(',') : __('None', 'surecart'),
-    );
-  }
-
   toggleSelectCollection(collection: Collection) {
     // if collection not in selectedCollections, add it, otherwise remove it
     if (!this.selectedCollections.find(c => c.id === collection.id)) {
@@ -314,7 +307,12 @@ export class ScProductItemList {
                 {this.collectionEnabled && (this.collections ?? []).length > 0 && (
                   <sc-dropdown style={{ '--panel-width': '15rem' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">{this.renderCollectionFilterHint()}</span>
+                      <span class="sc-sr-only">
+                        {sprintf(
+                          __('Dropdown to filter products by collection. %s selected.', 'surecart'),
+                          this.selectedCollections?.length ? this.selectedCollections.map(collection => collection?.name).join(',') : __('None', 'surecart'),
+                        )}
+                      </span>
                       <span aria-hidden> {__('Filter', 'surecart')}</span>
                     </sc-button>
                     <sc-menu ariaLabel={__('Filter products', 'surecart')}>
