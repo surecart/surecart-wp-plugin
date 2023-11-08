@@ -247,11 +247,11 @@ class Block extends BaseBlock {
 		}
 
 		// backwards compat.
+		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
+			$attributes['type'] = 'custom';
+		}
 		if ( empty( $attributes['type'] ) ) {
 			$attributes['type'] = '';
-			if ( ! empty( $attributes['ids'] ) ) {
-				$attributes['type'] = 'custom';
-			}
 		}
 
 		\SureCart::assets()->addComponentData(
@@ -267,7 +267,7 @@ class Block extends BaseBlock {
 				'ajaxPagination'       => $attributes['ajax_pagination'],
 				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
-				'isStoreConnected'        => \SureCart::account()->isConnected(),
+				'isStoreConnected'     => \SureCart::account()->isConnected(),
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
 				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
