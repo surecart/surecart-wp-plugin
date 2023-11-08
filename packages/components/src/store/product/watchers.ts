@@ -29,7 +29,6 @@ onChange('selectedVariant', () => {
 
   if (state?.selectedVariant.available_stock < state?.quantity) {
     state.quantity = state?.selectedVariant.available_stock || 1;
-    // let the user to know that the quantity has changed since the only available item in stock is selectedVariant.available_stock
     speak(sprintf(__('There are just %d items left in stock, and the quantity has been adjusted to %d.', 'surecart'), state.quantity, state.quantity), 'assertive');
   }
 });
