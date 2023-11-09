@@ -148,11 +148,13 @@ export class ScCouponForm {
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === 'Escape') {
+                  speak(__('Coupon was removed.', 'surecart'), 'assertive');
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
               }}
               ref={el => (this.couponTag = el as HTMLScTagElement)}
+              aria-label={__(`Coupon code ${this?.discount?.promotion?.code} applied discount of ${humanDiscount}. Press enter or escape to remove it.`)}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -215,6 +217,7 @@ export class ScCouponForm {
             onScBlur={() => this.handleBlur()}
             onKeyDown={e => this.handleKeyDown(e)}
             ref={el => (this.input = el as HTMLScInputElement)}
+            aria-label={__('Add Coupon code here Press enter or return and type coupon name then press enter or command key to apply', 'surecart')}
           >
             <sc-button
               exportparts="base:button__base, label:button_label"

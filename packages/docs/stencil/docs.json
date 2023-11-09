@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-05T13:53:58",
+  "timestamp": "2023-11-08T15:47:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -10217,40 +10217,6 @@
           "values": [
             {
               "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "drawerCloseAnnouncement",
-          "type": "string",
-          "mutable": false,
-          "attr": "drawer-close-announcement",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Drawer Closed', 'surecart')",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "drawerOpenAnnouncement",
-          "type": "string",
-          "mutable": false,
-          "attr": "drawer-open-announcement",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "default": "__('Drawer Opened', 'surecart')",
-          "values": [
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -22453,6 +22419,21 @@
           "values": [
             {
               "type": "{ [id: string]: Price; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Stores the price",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
             }
           ],
           "optional": false,
