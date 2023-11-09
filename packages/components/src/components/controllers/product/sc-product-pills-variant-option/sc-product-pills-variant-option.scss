@@ -1,13 +1,7 @@
-@import '../../../../styles/mixins/hide.scss';
-
 .sc-product-pills-variant-option {
   &__wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: var(--sc-spacing-x-small);
   }
-}
-
-.sc-sr-only {
-  @include visually-hidden();
 }

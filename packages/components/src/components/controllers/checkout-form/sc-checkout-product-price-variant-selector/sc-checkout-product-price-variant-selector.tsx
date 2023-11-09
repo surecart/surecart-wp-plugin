@@ -197,9 +197,9 @@ export class ScProductCheckoutSelectVariantOption {
                 const isUnavailable = isProductVariantOptionSoldOut.apply(void 0, args) || isProductVariantOptionMissing.apply(void 0, args);
                 return (
                   <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
-                    <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), name)} </span>
+                    <sc-visually-hidden>{sprintf(__('Select %s:', 'surecart'), name)} </sc-visually-hidden>
                     {value}
-                    {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+                    {isUnavailable && <sc-visually-hidden> {__('(option unavailable)', 'surecart')}</sc-visually-hidden>}
                   </sc-pill-option>
                 );
               })}
