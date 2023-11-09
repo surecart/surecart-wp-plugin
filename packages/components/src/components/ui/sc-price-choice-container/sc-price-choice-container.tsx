@@ -106,28 +106,50 @@ export class ScPriceChoiceContainer {
                 ) : (
                   <Fragment>
                     <sc-format-number type="currency" value={this.priceData?.amount} currency={this.priceData?.currency}></sc-format-number>
-                    {intervalString(this.priceData, {
-                      showOnce: true,
-                      abbreviate: true,
-                      labels: {
-                        interval: '/',
-                        period:
-                          /** translators: used as in time period: "for 3 months" */
-                          __('for', 'surecart'),
-                      },
-                    })}
+                    {this.priceData?.recurring_period_count && 1 <= this.priceData?.recurring_period_count && (
+                      <span class="sc-sr-only">
+                        {' '}
+                        {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
+                        {intervalString(this.priceData, {
+                          showOnce: true,
+                          abbreviate: false,
+                          labels: {
+                            interval: __('every', 'surecart'),
+                            period:
+                              /** translators: used as in time period: "for 3 months" */
+                              __('for', 'surecart'),
+                          },
+                        })}
+                      </span>
+                    )}
+                    <span aria-hidden="true">
+                      {intervalString(this.priceData, {
+                        showOnce: true,
+                        abbreviate: true,
+                        labels: {
+                          interval: '/',
+                          period:
+                            /** translators: used as in time period: "for 3 months" */
+                            __('for', 'surecart'),
+                        },
+                      })}
+                    </span>
                   </Fragment>
                 )}
               </div>
 
               {!!this.priceData?.trial_duration_days && (
-                <div class="price-choice__trial">
-                  {sprintf(_n('Starting in %s day', 'Starting in %s days', this.priceData.trial_duration_days, 'surecart'), this.priceData.trial_duration_days)}
-                </div>
+                <Fragment>
+                  <span class="sc-sr-only">{sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), this.priceData?.trial_duration_days)}</span>
+                  <div class="price-choice__trial" aria-hidden="true">
+                    {sprintf(_n('Starting in %s day', 'Starting in %s days', this.priceData.trial_duration_days, 'surecart'), this.priceData.trial_duration_days)}
+                  </div>
+                </Fragment>
               )}
 
               {!!this.priceData?.setup_fee_enabled && this.priceData?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
+                  <span class="sc-sr-only">{__('This payment plan has', 'surecart')} </span>
                   <sc-format-number type="currency" value={this.priceData.setup_fee_amount} currency={this.priceData?.currency}></sc-format-number>{' '}
                   {this.priceData?.setup_fee_name || __('Setup Fee', 'surecart')}
                 </div>

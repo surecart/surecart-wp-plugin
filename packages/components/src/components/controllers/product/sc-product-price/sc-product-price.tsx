@@ -56,20 +56,23 @@ export class ScProductPrice {
             {amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>}
 
             <div class="price__interval">
-              <span class="sc-sr-only">
-                {' '}
-                {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
-                {intervalString(price, {
-                  showOnce: true,
-                  abbreviate: false,
-                  labels: {
-                    interval: __('every', 'surecart'),
-                    period:
-                      /** translators: used as in time period: "for 3 months" */
-                      __('for', 'surecart'),
-                  },
-                })}
-              </span>
+              {price?.recurring_period_count && 1 < price?.recurring_period_count && (
+                <span class="sc-sr-only">
+                  {' '}
+                  {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
+                  {intervalString(price, {
+                    showOnce: true,
+                    abbreviate: false,
+                    labels: {
+                      interval: __('every', 'surecart'),
+                      period:
+                        /** translators: used as in time period: "for 3 months" */
+                        __('for', 'surecart'),
+                    },
+                  })}
+                </span>
+              )}
+
               <span aria-hidden="true">
                 {intervalString(price, {
                   showOnce: true,
@@ -88,8 +91,8 @@ export class ScProductPrice {
               <sc-tag type="primary" pill class="price__sale-badge">
                 {this.saleText || (
                   <Fragment>
-                    <span class="sc-sr-only">{__('This product is on ', 'surecart')} </span>
-                    {__('Sale', 'surecart')}
+                    <span class="sc-sr-only">{__('This product is available for sale.', 'surecart')} </span>
+                    <span aria-hidden="true">{__('Sale', 'surecart')}</span>
                   </Fragment>
                 )}
               </sc-tag>
