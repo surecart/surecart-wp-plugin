@@ -67,13 +67,6 @@ export class ScTaxIdInput {
     return this.input.reportValidity();
   }
 
-  @Watch('country')
-  handleCountryChange() {
-    if (this.country) {
-      this.type = getType(this.country);
-    }
-  }
-
   @Watch('otherLabel')
   @Watch('caGstLabel')
   @Watch('auAbnLabel')
@@ -88,7 +81,7 @@ export class ScTaxIdInput {
   }
 
   componentWillLoad() {
-    if (this.country) {
+    if (this.country && !this.type) {
       this.type = getType(this.country);
     }
     this.onLabelChange();
