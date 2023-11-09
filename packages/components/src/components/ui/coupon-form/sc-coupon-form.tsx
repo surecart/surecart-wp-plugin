@@ -89,23 +89,24 @@ export class ScCouponForm {
   @Watch('discount')
   handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
     if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
+    if (this?.discount?.promotion?.code) {
+      const message = sprintf(
+        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
+        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
+        newValue?.promotion?.code || this.input.value || '',
+        getHumanDiscount(this?.discount?.coupon),
+      );
+      speak(message, 'assertive');
+    } else {
+      // Translators: %s is the coupon code.
+      const message = sprintf(__('Coupon code %s removed.', 'sc-coupon-form'), newValue?.promotion?.code || this.input.value || '');
+      speak(message, 'assertive');
+    }
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         this.couponTag.focus();
-        const message = sprintf(
-          // Translators: %1$s is the coupon code, %2$s is the discount amount, %3$s is the currency, %4$s is the discounted amount
-          __('Coupon code %1$s added. %2$s %3$s  applied. Discounted amount is: %4$s  %3$s', 'sc-coupon-form'),
-          newValue?.promotion?.code || this.input.value || '',
-          this.getHumanReadableDiscount(),
-          newValue?.coupon?.currency || '',
-          newValue?.coupon?.amount_off || '',
-        );
-        speak(message, 'assertive');
       } else {
         this.addCouponTrigger.focus();
-        // Translators: %s is the coupon code.
-        const message = sprintf(__('Coupon code %s removed.', 'sc-coupon-form'), newValue?.promotion?.code || this.input.value || '');
-        speak(message, 'assertive');
       }
     }, 50);
   }
