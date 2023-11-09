@@ -184,7 +184,7 @@ export default () => {
 							editItem({ cancel_window_days: e.target.value })
 						}
 						help={__(
-							'Choose how many days before the subscription renewal customers can cancel their plan through the customer dashboard. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week it renews.',
+							'Choose how many days before the subscription renewal customers can cancel their plan through the customer dashboard. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week it renews. Please check for the legality of this setting in your region before enabling.',
 							'surecart'
 						)}
 						required
