@@ -155,7 +155,7 @@ export class ScProductLineItem {
         >
           {!!this.imageUrl && (
             <Fragment>
-              <span class="sc-sr-only">{sprintf(__('Product Image of %s', 'surecart'), this.name)}</span>
+              <sc-visually-hidden>{sprintf(__('Product Image of %s', 'surecart'), this.name)}</sc-visually-hidden>
               <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />
             </Fragment>
           )}
