@@ -3,6 +3,20 @@ import { getIconLibrary } from './library';
 import { requestIcon } from './request';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * The icon's label used for accessibility. Defaults to the icon name.
+ */
+const LABEL_MAPPINGS = {
+  'chevron-down': __('Open', 'surecart'),
+  'chevron-up': __('Close', 'surecart'),
+  'chevron-right': __('Next', 'surecart'),
+  'chevron-left': __('Previous', 'surecart'),
+  'arrow-right': __('Next', 'surecart'),
+  'arrow-left': __('Previous', 'surecart'),
+  'arrow-down': __('Down', 'surecart'),
+  'arrow-up': __('Up', 'surecart'),
+};
+
 const parser = new DOMParser();
 
 @Component({
@@ -26,25 +40,8 @@ export class ScIcon {
   /** The name of a registered custom icon library. */
   @Prop() library = 'default';
 
-  /** The icon's screen reader hidden or visible text. */
-  @Prop() ariaHidden: boolean = false;
-
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
-
-  /**
-   * The icon's label used for accessibility. Defaults to the icon name.
-   */
-  iconLabelMappings = {
-    'chevron-down': __('Open', 'surecart'),
-    'chevron-up': __('Close', 'surecart'),
-    'chevron-right': __('Next', 'surecart'),
-    'chevron-left': __('Previous', 'surecart'),
-    'arrow-right': __('Next', 'surecart'),
-    'arrow-left': __('Previous', 'surecart'),
-    'arrow-down': __('Down', 'surecart'),
-    'arrow-up': __('Up', 'surecart'),
-  };
 
   /** @internal Fetches the icon and redraws it. Used to handle library registrations. */
   redraw() {
@@ -58,9 +55,9 @@ export class ScIcon {
   getLabel() {
     let label = '';
     if (this.label) {
-      label = this.iconLabelMappings[this.label] || this.label;
+      label = LABEL_MAPPINGS[this.label] || this.label;
     } else if (this.name) {
-      label = (this.iconLabelMappings[this.name] || this.name).replace(/-/g, ' ');
+      label = (LABEL_MAPPINGS[this.name] || this.name).replace(/-/g, ' ');
     } else if (this.src) {
       label = this.src.replace(/.*\//, '').replace(/-/g, ' ').replace(/\.svg/i, '');
     }
@@ -118,6 +115,6 @@ export class ScIcon {
   }
 
   render() {
-    return <div part="base" class="icon" role="img" aria-label={this.ariaHidden ? '' : this.getLabel()} innerHTML={this.svg}></div>;
+    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg}></div>;
   }
 }
