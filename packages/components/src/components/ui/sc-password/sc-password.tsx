@@ -145,7 +145,7 @@ export class ScPassword {
 
     // must be at least 6 characters.
     if (this.input?.value.trim().length < 6) {
-      return (this.hintText = __('Passwords should at least 6 characters.', 'surecart'));
+      return (this.hintText = __('The password must be at least 6 characters in length.', 'surecart'));
     }
 
     // must contain a special charater.
