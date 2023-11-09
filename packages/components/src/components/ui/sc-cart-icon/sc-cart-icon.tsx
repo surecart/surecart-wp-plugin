@@ -51,7 +51,7 @@ export class ScCartIcon {
         }}
         tabIndex={0}
         role="button"
-        aria-label={!uiStore.state.cart.open ? __(`Open Cart Floating Icon with ${this.getItemsCount()} items.}`, 'surecart') : __('Close Cart Floating Icon', 'surecart')}
+        aria-label={!uiStore.state.cart.open ? __(`Open Cart Floating Icon with ${this.getItemsCount()} items`, 'surecart') : __('Close Cart Floating Icon', 'surecart')}
       >
         <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
