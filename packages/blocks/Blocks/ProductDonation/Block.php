@@ -41,8 +41,8 @@ class Block extends BaseBlock {
 		// set initial state.
 		sc_initial_state(
 			[
-				'checkout' => [
-					'initialLineItems' => $this->getInitialLineItems($product, $amounts),
+				'checkout'        => [
+					'initialLineItems' => $this->getInitialLineItems( $product, $amounts ),
 				],
 				'productDonation' => [
 					$attributes['product_id'] => [
@@ -80,7 +80,7 @@ class Block extends BaseBlock {
 	 * @return array
 	 */
 	public function getInitialLineItems( $product, $amounts ) {
-		if ( empty($product->prices->data[0]) || empty($amounts) ) {
+		if ( empty( $product->prices->data[0] ) || empty( $amounts ) ) {
 			return [];
 		}
 
@@ -94,15 +94,15 @@ class Block extends BaseBlock {
 			}
 		}
 
-		$line_items = array (
+		$line_items = array(
 			[
-				'price' => $product->prices->data[0]->id,
+				'price'         => $product->prices->data[0]->id,
 				'ad_hoc_amount' => $ad_hoc_amount,
-				'quantity'   => 1,
+				'quantity'      => 1,
 			],
 		);
 
-		$existing   = $this->getExistingLineItems();
+		$existing = $this->getExistingLineItems();
 
 		// merge any existing with the new ones.
 		return array_merge( $existing, $line_items );
