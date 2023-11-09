@@ -1,5 +1,5 @@
 sc-order-submit {
-  display:block;
+  display: block;
   width: auto;
   display: grid;
   gap: var(--sc-form-row-spacing);
@@ -8,15 +8,4 @@ sc-order-submit {
 .sc-secure-notice {
   display: flex;
   justify-content: center;
-}
-
-.sc-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
 }
