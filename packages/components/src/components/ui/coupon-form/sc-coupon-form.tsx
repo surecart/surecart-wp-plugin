@@ -94,7 +94,9 @@ export class ScCouponForm {
         this.couponTag.focus();
 
         speak(
-          `Coupon code ${newValue?.promotion?.code || this.input.value || ''} added. ${this.getHumanReadableDiscount()} ${newValue?.coupon?.currency || ''} applied.`,
+          `Coupon code ${newValue?.promotion?.code || this.input.value || ''} added. ${this.getHumanReadableDiscount()} ${
+            newValue?.coupon?.currency || ''
+          } applied. Discounted amount is : ${newValue?.coupon?.amount_off || ''} ${newValue?.coupon?.currency || ''}`,
           'assertive',
         );
       } else {
@@ -165,7 +167,7 @@ export class ScCouponForm {
               }}
               ref={el => (this.couponTag = el as HTMLScTagElement)}
               role="button"
-              ariaLabel={`Click to remove coupon code ${this?.discount?.promotion?.code || this.input.value || ''}`}
+              ariaLabel={`Press enter to remove coupon code ${this?.discount?.promotion?.code || this.input.value || ''}`}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
