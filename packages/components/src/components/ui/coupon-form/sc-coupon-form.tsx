@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 
 import { getHumanDiscount } from '../../../functions/price';
@@ -92,17 +92,19 @@ export class ScCouponForm {
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         this.couponTag.focus();
-
-        speak(
-          `Coupon code ${newValue?.promotion?.code || this.input.value || ''} added. ${this.getHumanReadableDiscount()} ${
-            newValue?.coupon?.currency || ''
-          } applied. Discounted amount is : ${newValue?.coupon?.amount_off || ''} ${newValue?.coupon?.currency || ''}`,
-          'assertive',
+        const message = sprintf(
+          __('Coupon code %s added. %s %s applied. Discounted amount is: %s %s', 'sc-coupon-form'),
+          newValue?.promotion?.code || this.input.value || '',
+          this.getHumanReadableDiscount(),
+          newValue?.coupon?.currency || '',
+          newValue?.coupon?.amount_off || '',
+          newValue?.coupon?.currency || '',
         );
+        speak(message, 'assertive');
       } else {
         this.addCouponTrigger.focus();
-
-        speak(`Coupon code ${newValue?.promotion?.code || this.input.value || ''} removed.`, 'assertive');
+        const message = sprintf(__('Coupon code %s removed.', 'sc-coupon-form'), newValue?.promotion?.code || this.input.value || '');
+        speak(message, 'assertive');
       }
     }, 50);
   }
