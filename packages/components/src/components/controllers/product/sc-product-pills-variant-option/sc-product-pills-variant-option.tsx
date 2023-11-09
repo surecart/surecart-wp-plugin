@@ -32,9 +32,9 @@ export class ScProductPillsVariantOption {
                   })
                 }
               >
-                <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), this.label)} </span>
+                <sc-visually-hidden>{sprintf(__('Select %s:', 'surecart'), this.label)} </sc-visually-hidden>
                 {value}
-                {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+                {isUnavailable && <sc-visually-hidden> {__('(option unavailable)', 'surecart')} </sc-visually-hidden>}
               </sc-pill-option>
             );
           })}

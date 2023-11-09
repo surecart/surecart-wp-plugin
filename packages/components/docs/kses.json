@@ -626,8 +626,6 @@
   },
   "sc-drawer": {
     "contained": true,
-    "drawer-close-announcement": true,
-    "drawer-open-announcement": true,
     "label": true,
     "no-header": true,
     "open": true,
@@ -1465,6 +1463,7 @@
     "price": true,
     "price-id": true,
     "prices": true,
+    "product": true,
     "products": true,
     "quantity": true,
     "show-control": true,
@@ -2209,6 +2208,12 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-visually-hidden": {
     "style": true,
     "id": true,
     "class": true,
