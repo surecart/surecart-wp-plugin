@@ -77,7 +77,6 @@ graph TD;
   sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner

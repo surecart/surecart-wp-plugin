@@ -55,8 +55,6 @@ export class ScOrderConfirmProvider {
         path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, { expand }),
       })) as Checkout;
       this.scSetState.emit('CONFIRMED');
-      // emit the order paid event for tracking scripts.
-      this.scOrderPaid.emit(checkoutState.checkout);
     } catch (e) {
       console.error(e);
       createErrorNotice(e);

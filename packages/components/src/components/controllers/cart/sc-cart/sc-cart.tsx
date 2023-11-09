@@ -79,7 +79,7 @@ export class ScCart {
 
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;
@@ -103,7 +103,7 @@ export class ScCart {
       updateFormState('FETCH');
       checkoutState.checkout = (await apiFetch({
         method: 'GET', // create or update
-        path: addQueryArgs(`${baseUrl}${this.order()?.id}`, {
+        path: addQueryArgs(`${baseUrl}${checkoutState.checkout?.id}`, {
           expand,
         }),
       })) as Checkout;

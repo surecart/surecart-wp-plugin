@@ -66,7 +66,6 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-cancel-survey --> sc-choices
   sc-checkout-product-price-variant-selector --> sc-choices
   sc-donation-choices --> sc-choices

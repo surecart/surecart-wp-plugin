@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import uiStore from '@store/ui';
 import { onChange } from '@store/checkouts';
-import { getCheckout } from '@store/checkouts/mutations';
+import { state as checkoutState } from '@store/checkout';
 
 /**
  * @part base - The elements base wrapper.
@@ -35,13 +35,9 @@ export class ScCartButton {
   /** Whether the cart count will be shown or not when the cart is empty */
   @Prop() showEmptyCount: boolean = false;
 
-  order() {
-    return getCheckout(this.formId, this.mode);
-  }
-
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState?.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;

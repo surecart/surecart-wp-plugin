@@ -1,12 +1,12 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Creator, Universe } from 'stencil-wormhole';
 
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { getCheckout, setCheckout } from '@store/checkouts/mutations';
+import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { Checkout, LineItemData } from '../../../../types';
+import { updateFormState } from '@store/form/mutations';
 const query = {
   expand: [
     'line_items',
@@ -46,16 +46,18 @@ export class ScCartForm {
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
 
-  @State() order: Checkout;
-
   /** Is it busy */
   @State() busy: boolean;
   @State() error: string;
 
   /** Find a line item with this price. */
   getLineItem() {
-    const order = this.getCheckout();
-    const lineItem = (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
+    const lineItem = (checkoutState?.checkout?.line_items?.data || []).find(item => {
+      if (this.variantId) {
+        return item.variant?.id === this.variantId && item.price?.id === this.priceId;
+      }
+      return item.price?.id === this.priceId;
+    });
     if (!lineItem?.id) {
       return false;
     }
@@ -66,28 +68,23 @@ export class ScCartForm {
     } as LineItemData;
   }
 
-  getCheckout() {
-    return getCheckout(this?.formId, this.mode);
-  }
-
   /** Add the item to cart. */
   async addToCart() {
     const { price } = await this.form.getFormJson();
     try {
-      this.busy = true;
+      updateFormState('FETCH');
       // if it's ad_hoc, update the amount. Otherwise increment the quantity.
-      const order = await this.addOrUpdateLineItem({
+      checkoutState.checkout = await this.addOrUpdateLineItem({
         ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}),
         ...(!!this.variantId ? { variant_id: (this.variantId as string) || null } : {}),
       });
+      updateFormState('RESOLVE');
       // store the checkout in localstorage and open the cart
-      setCheckout(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
     } catch (e) {
+      updateFormState('REJECT');
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
-    } finally {
-      this.busy = false;
     }
   }
 
@@ -96,11 +93,11 @@ export class ScCartForm {
     let lineItem = this.getLineItem() as LineItemData;
 
     // convert line items response to line items post.
-    let existingData = convertLineItemsToLineItemData(this.getCheckout()?.line_items || []);
+    let existingData = convertLineItemsToLineItemData(checkoutState?.checkout?.line_items || []);
 
     // Line item does not exist. Add it.
     return (await createOrUpdateCheckout({
-      id: this.getCheckout()?.id,
+      id: checkoutState?.checkout?.id,
       data: {
         live_mode: this.mode === 'live',
         line_items: [
@@ -137,18 +134,6 @@ export class ScCartForm {
     })) as Checkout;
   }
 
-  componentWillLoad() {
-    Universe.create(this as Creator, this.state());
-  }
-
-  state() {
-    return {
-      busy: this.busy,
-      error: this.error,
-      order: this.getCheckout(),
-    };
-  }
-
   render() {
     return (
       <sc-form
@@ -163,9 +148,7 @@ export class ScCartForm {
             {this.error}
           </sc-alert>
         )}
-        <Universe.Provider state={this.state()}>
-          <slot />
-        </Universe.Provider>
+        <slot />
       </sc-form>
     );
   }

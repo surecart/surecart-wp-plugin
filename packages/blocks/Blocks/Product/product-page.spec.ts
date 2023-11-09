@@ -11,7 +11,7 @@ test.describe('Product Page', () => {
 			method: 'POST',
 			path: '/surecart/v1/products',
 			data: {
-				name: 'Test Product',
+				name: 'Test Product Page',
 				status: 'published',
 			},
 		});
@@ -48,7 +48,9 @@ test.describe('Product Page', () => {
 		await page.goto(product.permalink);
 
 		// expect the product page title.
-		await expect(page.locator('.product-title')).toHaveText('Test Product');
+		await expect(page.locator('.product-title')).toHaveText(
+			'Test Product Page'
+		);
 
 		// expect the default price.
 		await expect(page.locator('.product-price')).toContainText('$20');

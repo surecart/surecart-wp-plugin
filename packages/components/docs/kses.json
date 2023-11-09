@@ -178,7 +178,6 @@
     "slot": true
   },
   "sc-cart-form-submit": {
-    "busy": true,
     "full": true,
     "icon": true,
     "size": true,
@@ -195,18 +194,13 @@
     "slot": true
   },
   "sc-cart-icon": {
-    "count": true,
-    "form-id": true,
     "icon": true,
-    "mode": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
   "sc-cart-loader": {
-    "form-id": true,
-    "mode": true,
     "template": true,
     "style": true,
     "id": true,
@@ -719,8 +713,6 @@
     "slot": true
   },
   "sc-form-control": {
-    "error-message": true,
-    "errors": true,
     "help": true,
     "help-id": true,
     "input-id": true,
@@ -949,8 +941,7 @@
     "slot": true
   },
   "sc-line-item-total": {
-    "loading": true,
-    "order": true,
+    "checkout": true,
     "size": true,
     "total": true,
     "style": true,

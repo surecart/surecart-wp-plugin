@@ -14,7 +14,7 @@ test.describe('Product Admin Page For Stock', () => {
 		requestUtils,
 	}) => {
 		const product = await createProduct(requestUtils, {
-			name: 'Test Product',
+			name: 'Test Product For Stock',
 			stock_enabled: true,
 			stock_adjustment: 10,
 		});
@@ -35,7 +35,7 @@ test.describe('Product Admin Page For Stock', () => {
 
 	test('Should edit a product stock', async ({ page, requestUtils }) => {
 		const product = await createProduct(requestUtils, {
-			name: 'Test Product',
+			name: 'Test Product For Stock 2',
 			stock_enabled: true,
 			stock_adjustment: 5,
 		});

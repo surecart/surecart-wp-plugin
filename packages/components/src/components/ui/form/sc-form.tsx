@@ -76,7 +76,6 @@ export class ScForm {
         const isValid = await el.reportValidity();
 
         if (!isValid) {
-          console.log(el);
           return false;
         }
       }

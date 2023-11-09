@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-
-import { clearCheckout, getCheckout } from '@store/checkouts/mutations';
+import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 
 @Component({
@@ -9,12 +8,6 @@ import uiStore from '@store/ui';
   shadow: false,
 })
 export class ScCartLoader {
-  /** The form id to use for the cart. */
-  @Prop({ reflect: true }) formId: string;
-
-  /** The mode for the form. */
-  @Prop() mode: 'live' | 'test' = 'live';
-
   /** The cart template to inject when opened. */
   @Prop() template: string;
 
@@ -25,13 +18,12 @@ export class ScCartLoader {
     }
 
     // clear the order if it's already paid.
-    const order = getCheckout(this.formId, this.mode);
-    if (order?.status === 'paid') {
-      clearCheckout(this.formId, this.mode);
+    if (checkoutState?.checkout?.status === 'paid') {
+      checkoutState.checkout = null;
       return null;
     }
 
     // return the loader.
-    return <div innerHTML={order?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
+    return <div innerHTML={checkoutState?.checkout?.line_items?.pagination?.count || uiStore?.state?.cart?.open ? this.template : ''}></div>;
   }
 }

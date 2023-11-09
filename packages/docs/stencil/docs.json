@@ -387,9 +387,6 @@
           "sc-select",
           "sc-block-ui"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -2104,9 +2101,6 @@
       "dependencyGraph": {
         "sc-button-group": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -2248,9 +2242,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-textarea": [
           "sc-form-control"
@@ -2494,9 +2485,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-textarea": [
           "sc-form-control"
@@ -3176,22 +3164,6 @@
       "usage": {},
       "props": [
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "Is the cart busy",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "full",
           "type": "boolean",
           "mutable": false,
@@ -3378,39 +3350,6 @@
       "usage": {},
       "props": [
         {
-          "name": "count",
-          "type": "number",
-          "mutable": false,
-          "attr": "count",
-          "reflectToAttr": false,
-          "docs": "The count to show in the cart icon.",
-          "docsTags": [],
-          "default": "0",
-          "values": [
-            {
-              "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "formId",
-          "type": "string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": true,
-          "docs": "The form id to use for the cart.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "icon",
           "type": "string",
           "mutable": false,
@@ -3421,28 +3360,6 @@
           "default": "'shopping-bag'",
           "values": [
             {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "Are we in test or live mode.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
               "type": "string"
             }
           ],
@@ -3488,44 +3405,6 @@
       "docsTags": [],
       "usage": {},
       "props": [
-        {
-          "name": "formId",
-          "type": "string",
-          "mutable": false,
-          "attr": "form-id",
-          "reflectToAttr": true,
-          "docs": "The form id to use for the cart.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "mode",
-          "type": "\"live\" | \"test\"",
-          "mutable": false,
-          "attr": "mode",
-          "reflectToAttr": false,
-          "docs": "The mode for the form.",
-          "docsTags": [],
-          "default": "'live'",
-          "values": [
-            {
-              "value": "live",
-              "type": "string"
-            },
-            {
-              "value": "test",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "template",
           "type": "string",
@@ -4549,9 +4428,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-form-state-provider": [
           "sc-block-ui"
         ],
@@ -4859,9 +4735,6 @@
           "sc-pill-option",
           "sc-choices",
           "sc-price-choice-container"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-choices": [
           "sc-form-control"
@@ -5943,9 +5816,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-cancel-survey": [
           "sc-choices"
         ],
@@ -6407,9 +6277,6 @@
           "sc-select",
           "sc-input",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-select": [
           "sc-icon",
@@ -6916,9 +6783,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -7151,9 +7015,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -7529,9 +7390,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-phone-input": [
           "sc-form-control"
@@ -7922,9 +7780,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -8272,9 +8127,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -8586,9 +8438,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -8884,9 +8733,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -9216,9 +9062,6 @@
         ],
         "sc-phone-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -10259,9 +10102,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-price-input": [
           "sc-input"
@@ -11810,9 +11650,6 @@
           "sc-select",
           "sc-block-ui"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -11914,38 +11751,6 @@
       ],
       "usage": {},
       "props": [
-        {
-          "name": "errorMessage",
-          "type": "string",
-          "mutable": true,
-          "attr": "error-message",
-          "reflectToAttr": false,
-          "docs": "Store the error message",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "errors",
-          "type": "any",
-          "mutable": false,
-          "attr": "errors",
-          "reflectToAttr": false,
-          "docs": "Display server-side validation errors.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "any"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "help",
           "type": "string",
@@ -12152,13 +11957,8 @@
         "sc-stripe-element",
         "sc-textarea"
       ],
-      "dependencies": [
-        "sc-tooltip"
-      ],
+      "dependencies": [],
       "dependencyGraph": {
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-address": [
           "sc-form-control"
         ],
@@ -14789,9 +14589,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-address": [
           "sc-input"
         ],
@@ -15087,9 +14884,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -15529,23 +15323,7 @@
       "usage": {},
       "props": [
         {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "order",
+          "name": "checkout",
           "type": "Checkout",
           "mutable": false,
           "reflectToAttr": false,
@@ -15985,9 +15763,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -16101,9 +15876,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-checkout": [
           "sc-login-provider"
@@ -16874,9 +16646,6 @@
           "sc-form-control",
           "sc-order-bump"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-order-bump": [
           "sc-format-number",
           "sc-choice",
@@ -17606,9 +17375,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -18293,9 +18059,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -18815,9 +18578,6 @@
           "sc-input",
           "sc-select",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-input": [
           "sc-form-control"
@@ -19731,9 +19491,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -20398,9 +20155,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-order-password": [
           "sc-password"
         ],
@@ -20550,9 +20304,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -20733,9 +20484,6 @@
         ],
         "sc-payment-selected": [
           "sc-divider"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-checkout-mollie-payment": [
           "sc-card",
@@ -22392,9 +22140,6 @@
         "sc-phone-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-customer-edit": [
           "sc-phone-input"
         ],
@@ -23184,9 +22929,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -23706,9 +23448,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-custom-order-price-input": [
           "sc-price-input"
@@ -24620,9 +24359,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-empty": [
           "sc-icon"
         ],
@@ -25336,9 +25072,6 @@
         "sc-product-pills-variant-option": [
           "sc-form-control",
           "sc-pill-option"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -25476,9 +25209,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
@@ -25568,9 +25298,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -25724,9 +25451,6 @@
           "sc-form-control",
           "sc-quantity-select"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-quantity-select": [
           "sc-icon"
         ]
@@ -25800,9 +25524,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -27188,9 +26909,6 @@
           "sc-button",
           "sc-icon"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ]
@@ -27981,9 +27699,6 @@
           "sc-spinner",
           "sc-menu"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -28202,9 +27917,6 @@
           "sc-radio",
           "sc-format-number",
           "sc-block-ui"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -29122,9 +28834,6 @@
         "sc-stripe-element": [
           "sc-form-control",
           "sc-text"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ]
       }
     },
@@ -29743,9 +29452,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-textarea": [
           "sc-form-control"
         ],
@@ -29835,9 +29541,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -30403,9 +30106,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-payment-method": [
           "sc-tooltip",
           "sc-button",
@@ -30516,9 +30216,6 @@
         ],
         "sc-choices": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"
@@ -30844,9 +30541,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-alert": [
           "sc-icon"
         ],
@@ -30975,9 +30669,6 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-input": [
           "sc-form-control"
@@ -32348,9 +32039,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -33088,9 +32776,6 @@
         "sc-textarea": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-cancel-survey": [
           "sc-textarea"
         ]
@@ -33574,14 +33259,10 @@
         }
       ],
       "dependents": [
-        "sc-form-control",
         "sc-payment-method"
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-payment-method": [
           "sc-tooltip"
         ]
@@ -33904,9 +33585,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -34139,9 +33817,6 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -34319,9 +33994,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"

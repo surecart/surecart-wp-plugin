@@ -65,7 +65,6 @@ Type: `Promise<any>`
 graph TD;
   sc-stripe-element --> sc-form-control
   sc-stripe-element --> sc-text
-  sc-form-control --> sc-tooltip
   style sc-stripe-element fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

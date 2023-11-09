@@ -140,7 +140,7 @@ export default ({
 									label: price?.ad_hoc
 										? __('Name Your Price', 'surecart')
 										: formatNumber(
-												price.amount,
+												variant?.amount || price.amount,
 												price.currency
 										  ),
 									suffix: `(${variantLabel}) ${intervalString(
