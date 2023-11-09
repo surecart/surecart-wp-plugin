@@ -153,7 +153,12 @@ export class ScProductLineItem {
             'product-line-item__removable': this.removable,
           }}
         >
-          {!!this.imageUrl && <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />}
+          {!!this.imageUrl && (
+            <Fragment>
+              <span class="sc-sr-only">{sprintf(__('Product Image of %s', 'surecart'), this.name)}</span>
+              <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />
+            </Fragment>
+          )}
           <div class="item__text" part="text">
             <div class="item__text-details">
               <div class="item__title" part="title">
