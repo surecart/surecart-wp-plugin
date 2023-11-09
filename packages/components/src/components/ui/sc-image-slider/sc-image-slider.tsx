@@ -113,7 +113,10 @@ export class ScImageSlider {
         {this.hasThumbnails && (
           <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.images.length > 5 }}>
             <div class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
-              <sc-icon name="chevron-left" />
+              <button>
+                <span class="sc-sr-only"></span>
+                <sc-icon aria-hidden="true" name="chevron-left" />
+              </button>
             </div>
 
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
@@ -122,16 +125,26 @@ export class ScImageSlider {
                   <button
                     class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                     onClick={() => this.swiper?.slideTo?.(index)}
-                    aria-label={sprintf(__('Product image number %d', 'sc-image-slider'), index + 1)}
                   >
-                    <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
+                    <img
+                      src={src}
+                      alt={sprintf(__('Product image number %d, %s', 'sc-image-slider'), index + 1, alt)}
+                      srcset={srcset}
+                      width={width}
+                      height={height}
+                      sizes={sizes}
+                      loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
+                    />
                   </button>
                 ))}
               </div>
             </div>
 
             <div class="image-slider__navigation image-slider--is-next" ref={el => (this.next = el)}>
-              <sc-icon name="chevron-right" />
+              <button>
+                <span class="sc-sr-only"></span>
+                <sc-icon aria-hidden="true" name="chevron-right" />
+              </button>
             </div>
           </div>
         )}
