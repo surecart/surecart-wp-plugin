@@ -1,3 +1,5 @@
+@import '../../../../styles/mixins/hide.scss';
+
 .sc-product-pills-variant-option {
   &__wrapper {
     display: flex;
@@ -7,12 +9,5 @@
 }
 
 .sc-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  @include visually-hidden();
 }
