@@ -2213,6 +2213,12 @@
     "class": true,
     "slot": true
   },
+  "sc-visually-hidden": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-wordpress-password-edit": {
     "enable-validation": true,
     "heading": true,

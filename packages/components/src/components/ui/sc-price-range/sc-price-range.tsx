@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-price-range',
-  styleUrl: 'sc-price-range.css',
+  styleUrl: 'sc-price-range.scss',
   shadow: true,
 })
 export class ScPriceRange {
@@ -50,11 +50,11 @@ export class ScPriceRange {
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>
         ) : (
-            <span>
-              <span class="sc-sr-only">{__('Price range from', 'surecart')} </span>
-              <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number>
-              <span aria-hidden>{' — '}</span>
-              <span class="sc-sr-only">{__('to') }</span>
+          <span>
+            <sc-visually-hidden>{__('Price range from', 'surecart')} </sc-visually-hidden>
+            <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number>
+            <span aria-hidden>{' — '}</span>
+            <sc-visually-hidden>{__('to', 'surecart')}</sc-visually-hidden>
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>
         )}

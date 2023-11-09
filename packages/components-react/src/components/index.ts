@@ -208,6 +208,7 @@ export const ScTooltip = /*@__PURE__*/createReactComponent<JSX.ScTooltip, HTMLSc
 export const ScTotal = /*@__PURE__*/createReactComponent<JSX.ScTotal, HTMLScTotalElement>('sc-total');
 export const ScUpcomingInvoice = /*@__PURE__*/createReactComponent<JSX.ScUpcomingInvoice, HTMLScUpcomingInvoiceElement>('sc-upcoming-invoice');
 export const ScUpgradeRequired = /*@__PURE__*/createReactComponent<JSX.ScUpgradeRequired, HTMLScUpgradeRequiredElement>('sc-upgrade-required');
+export const ScVisuallyHidden = /*@__PURE__*/createReactComponent<JSX.ScVisuallyHidden, HTMLScVisuallyHiddenElement>('sc-visually-hidden');
 export const ScWordpressPasswordEdit = /*@__PURE__*/createReactComponent<JSX.ScWordpressPasswordEdit, HTMLScWordpressPasswordEditElement>('sc-wordpress-password-edit');
 export const ScWordpressUser = /*@__PURE__*/createReactComponent<JSX.ScWordpressUser, HTMLScWordpressUserElement>('sc-wordpress-user');
 export const ScWordpressUserEdit = /*@__PURE__*/createReactComponent<JSX.ScWordpressUserEdit, HTMLScWordpressUserEditElement>('sc-wordpress-user-edit');

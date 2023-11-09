@@ -249,13 +249,6 @@ export class ScProductItemList {
     }
   }
 
-  renderCollectionFilterHint() {
-    return sprintf(
-      __('Dropdown to filter products by collection. %s selected.', 'surecart'),
-      this.selectedCollections?.length ? this.selectedCollections.map(collection => collection?.name).join(',') : __('None', 'surecart'),
-    );
-  }
-
   toggleSelectCollection(collection: Collection) {
     // if collection not in selectedCollections, add it, otherwise remove it
     if (!this.selectedCollections.find(c => c.id === collection.id)) {
@@ -290,9 +283,9 @@ export class ScProductItemList {
                 {this.sortEnabled && (
                   <sc-dropdown style={{ '--panel-width': '15em' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">{__('Dropdown to sort products. ', 'surecart')}</span>
+                      <sc-visually-hidden>{__('Dropdown to sort products.', 'surecart')} </sc-visually-hidden>
                       {this.renderSortName()}
-                      <span class="sc-sr-only">{__(' selected.', 'surecart')}</span>
+                      <sc-visually-hidden> {__('selected.', 'surecart')}</sc-visually-hidden>
                     </sc-button>
                     <sc-menu ariaLabel={__('Sort Products', 'surecart')}>
                       <sc-menu-item ariaLabel={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
@@ -314,7 +307,12 @@ export class ScProductItemList {
                 {this.collectionEnabled && (this.collections ?? []).length > 0 && (
                   <sc-dropdown style={{ '--panel-width': '15rem' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">{this.renderCollectionFilterHint()}</span>
+                      <sc-visually-hidden>
+                        {sprintf(
+                          __('Dropdown to filter products by collection. %s selected.', 'surecart'),
+                          this.selectedCollections?.length ? this.selectedCollections.map(collection => collection?.name).join(',') : __('None', 'surecart'),
+                        )}
+                      </sc-visually-hidden>
                       <span aria-hidden> {__('Filter', 'surecart')}</span>
                     </sc-button>
                     <sc-menu ariaLabel={__('Filter products', 'surecart')}>

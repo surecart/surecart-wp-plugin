@@ -39,10 +39,10 @@ export class ScProductPillsVariantOption {
                   })
                 }
               >
-                <span class="sc-sr-only">{sprintf(__('Select %s', 'surecart'), this.label)} </span>
+                <sc-visually-hidden>{sprintf(__('Select %s', 'surecart'), this.label)} </sc-visually-hidden>
                 {value}
-                {state.variantValues[`option_${this.optionNumber}`] === value && <span class="sc-sr-only">. {__('This option is currently selected.', 'surecart')}</span>}
-                {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+                {state.variantValues[`option_${this.optionNumber}`] === value && <sc-visually-hidden>. {__('This option is currently selected.', 'surecart')}</sc-visually-hidden>}
+                {isUnavailable && <sc-visually-hidden> {__('(option unavailable)', 'surecart')} </sc-visually-hidden>}
               </sc-pill-option>
             );
           })}
