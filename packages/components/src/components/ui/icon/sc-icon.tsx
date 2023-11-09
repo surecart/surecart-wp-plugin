@@ -1,6 +1,7 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { getIconLibrary } from './library';
 import { requestIcon } from './request';
+import { __ } from '@wordpress/i18n';
 
 const parser = new DOMParser();
 
@@ -31,6 +32,20 @@ export class ScIcon {
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
 
+  /**
+   * The icon's label used for accessibility. Defaults to the icon name.
+   */
+  iconLabelMappings = {
+    'chevron-down': __('Open', 'surecart'),
+    'chevron-up': __('Close', 'surecart'),
+    'chevron-right': __('Next', 'surecart'),
+    'chevron-left': __('Previous', 'surecart'),
+    'arrow-right': __('Next', 'surecart'),
+    'arrow-left': __('Previous', 'surecart'),
+    'arrow-down': __('Down', 'surecart'),
+    'arrow-up': __('Up', 'surecart'),
+  };
+
   /** @internal Fetches the icon and redraws it. Used to handle library registrations. */
   redraw() {
     this.setIcon();
@@ -43,9 +58,9 @@ export class ScIcon {
   getLabel() {
     let label = '';
     if (this.label) {
-      label = this.label;
+      label = this.iconLabelMappings[this.label] || this.label;
     } else if (this.name) {
-      label = this.name.replace(/-/g, ' ');
+      label = (this.iconLabelMappings[this.name] || this.name).replace(/-/g, ' ');
     } else if (this.src) {
       label = this.src.replace(/.*\//, '').replace(/-/g, ' ').replace(/\.svg/i, '');
     }
