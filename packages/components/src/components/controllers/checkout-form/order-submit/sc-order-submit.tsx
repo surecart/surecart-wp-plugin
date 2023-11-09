@@ -83,7 +83,7 @@ export class ScOrderSubmit {
     if (this.cannotShipToLocation() || checkoutIsLocked('OUT_OF_STOCK')) {
       return (
         <sc-button type={this.type} size={this.size} full={this.full} loading={this.loading || this.paying} disabled={true}>
-          {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
+          {!!this.icon && <sc-icon name={this.icon} slot="prefix" ariaHidden={true}></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>
           {this.showTotal && (
             <span>
@@ -91,6 +91,7 @@ export class ScOrderSubmit {
               <sc-total></sc-total>
             </span>
           )}
+          <span class="sc-sr-only">{__('Press enter to purchase', 'surecart')}</span>
         </sc-button>
       );
     }
@@ -108,7 +109,7 @@ export class ScOrderSubmit {
           loading={this.loading || this.paying}
           disabled={this.loading || this.paying || formBusy() || checkoutIsLocked() || this.cannotShipToLocation()}
         >
-          {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
+          {!!this.icon && <sc-icon name={this.icon} slot="prefix" ariaHidden={true}></sc-icon>}
           <slot>{__('Purchase', 'surecart')}</slot>
           {this.showTotal && (
             <span>
@@ -116,6 +117,7 @@ export class ScOrderSubmit {
               <sc-total></sc-total>
             </span>
           )}
+          <span class="sc-sr-only">{__('Press enter to purchase', 'surecart')}</span>
         </sc-button>
         {this.secureNotice && location.protocol === 'https:' && (
           <div class="sc-secure-notice">
