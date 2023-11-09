@@ -20,7 +20,6 @@ class Block extends BaseBlock {
 
 		ob_start(); ?>
 			<sc-product-donation-amount-choice
-				product-donation-id="<?php echo esc_attr( $this->block->context['surecart/product_donation/instance_id'] ); ?>"
 				value="<?php echo esc_attr( $attributes['amount'] ?? '' ); ?>"
 				product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
 				label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
