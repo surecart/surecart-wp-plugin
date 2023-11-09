@@ -1,5 +1,5 @@
-import { Component, h, Method, Prop, Watch } from '@stencil/core';
-import { state as checkoutState, onChange } from '@store/checkout';
+import { Component, h, Method, Prop } from '@stencil/core';
+import { state as checkoutState } from '@store/checkout';
 import { __ } from '@wordpress/i18n';
 import { createOrUpdateCheckout } from '../../../../services/session';
 
@@ -16,8 +16,6 @@ import { updateFormState } from '@store/form/mutations';
 export class ScOrderTaxIdInput {
   /** The tax id input */
   private input: HTMLScTaxIdInputElement;
-
-  private removeCheckoutListener: () => void;
 
   /** Force show the field. */
   @Prop() show: boolean = false;
@@ -37,11 +35,6 @@ export class ScOrderTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string;
 
-  @Prop({ mutable: true }) taxIdentifier: {
-    number: string;
-    number_type: string;
-  };
-
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
@@ -57,12 +50,12 @@ export class ScOrderTaxIdInput {
     return (checkoutState.checkout?.tax_identifier as TaxIdentifier)?.eu_vat_verified ? 'valid' : 'invalid';
   }
 
-  async maybeUpdateOrder() {
+  async updateOrder(tax_identifier: { number: string; number_type: string }) {
     try {
       updateFormState('FETCH');
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
-        data: { tax_identifier: this.taxIdentifier },
+        data: { tax_identifier },
       })) as Checkout;
       updateFormState('RESOLVE');
     } catch (e) {
@@ -72,24 +65,8 @@ export class ScOrderTaxIdInput {
     }
   }
 
-  componentDidLoad() {
-    this.taxIdentifier = checkoutState?.checkout?.tax_identifier;
-    this.removeCheckoutListener = onChange('checkout', (checkout: Checkout) => {
-      this.taxIdentifier = checkout?.tax_identifier;
-    });
-  }
-
-  disconnectedCallback() {
-    this.removeCheckoutListener();
-  }
-
   required() {
-    return checkoutState.taxProtocol?.eu_vat_required && this.taxIdentifier?.number_type === 'eu_vat';
-  }
-
-  @Watch('taxIdentifier')
-  handleTaxIdentifierChange() {
-    this.maybeUpdateOrder();
+    return checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
   }
 
   render() {
@@ -104,7 +81,7 @@ export class ScOrderTaxIdInput {
         loading={formBusy()}
         onScChange={e => {
           e.stopImmediatePropagation();
-          this.taxIdentifier = e.detail;
+          this.updateOrder(e.detail);
         }}
         otherLabel={this.otherLabel}
         caGstLabel={this.caGstLabel}
