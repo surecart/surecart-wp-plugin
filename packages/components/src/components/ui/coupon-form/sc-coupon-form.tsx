@@ -93,16 +93,17 @@ export class ScCouponForm {
       if (this?.discount?.promotion?.code) {
         this.couponTag.focus();
         const message = sprintf(
-          __('Coupon code %s added. %s %s applied. Discounted amount is: %s %s', 'sc-coupon-form'),
+          // Translators: %1$s is the coupon code, %2$s is the discount amount, %3$s is the currency, %4$s is the discounted amount
+          __('Coupon code %1$s added. %2$s %3$s  applied. Discounted amount is: %4$s  %3$s', 'sc-coupon-form'),
           newValue?.promotion?.code || this.input.value || '',
           this.getHumanReadableDiscount(),
           newValue?.coupon?.currency || '',
           newValue?.coupon?.amount_off || '',
-          newValue?.coupon?.currency || '',
         );
         speak(message, 'assertive');
       } else {
         this.addCouponTrigger.focus();
+        // Translators: %s is the coupon code.
         const message = sprintf(__('Coupon code %s removed.', 'sc-coupon-form'), newValue?.promotion?.code || this.input.value || '');
         speak(message, 'assertive');
       }
