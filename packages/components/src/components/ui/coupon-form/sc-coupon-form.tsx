@@ -171,7 +171,8 @@ export class ScCouponForm {
               }}
               ref={el => (this.couponTag = el as HTMLScTagElement)}
               role="button"
-              ariaLabel={`Press enter to remove coupon code ${this?.discount?.promotion?.code || this.input.value || ''}`}
+              // translators: %s is the coupon code.
+              aria-label={sprintf(__('Press enter to remove coupon code %s.', 'surecart'), this?.discount?.promotion?.code || this.input.value || '')}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
