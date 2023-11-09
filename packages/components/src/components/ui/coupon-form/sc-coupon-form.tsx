@@ -92,8 +92,15 @@ export class ScCouponForm {
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         this.couponTag.focus();
+
+        speak(
+          `Coupon code ${newValue?.promotion?.code || this.input.value || ''} added. ${this.getHumanReadableDiscount()} ${newValue?.coupon?.currency || ''} applied.`,
+          'assertive',
+        );
       } else {
         this.addCouponTrigger.focus();
+
+        speak(`Coupon code ${newValue?.promotion?.code || this.input.value || ''} removed.`, 'assertive');
       }
     }, 50);
   }
@@ -104,6 +111,13 @@ export class ScCouponForm {
       this.open = false;
       this.error = '';
     }
+  }
+
+  getHumanReadableDiscount() {
+    if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
+      return getHumanDiscount(this?.discount?.coupon);
+    }
+    return '';
   }
 
   /** Apply the coupon. */
@@ -117,6 +131,7 @@ export class ScCouponForm {
     } else if (e?.code === 'Escape') {
       this.scApplyCoupon.emit(null);
       this.open = false;
+      speak(__('Coupon code field closed.', 'surecart'), 'assertive');
     }
   }
 
@@ -126,11 +141,7 @@ export class ScCouponForm {
     }
 
     if (this?.discount?.promotion?.code) {
-      let humanDiscount = '';
-
-      if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
-        humanDiscount = getHumanDiscount(this?.discount?.coupon);
-      }
+      let humanDiscount = this.getHumanReadableDiscount();
 
       return (
         <sc-line-item exportparts="description:info, price-description:discount, price:amount">
@@ -153,6 +164,8 @@ export class ScCouponForm {
                 }
               }}
               ref={el => (this.couponTag = el as HTMLScTagElement)}
+              role="button"
+              ariaLabel={`Click to remove coupon code ${this?.discount?.promotion?.code || this.input.value || ''}`}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -202,6 +215,7 @@ export class ScCouponForm {
           }}
           tabindex="0"
           ref={el => (this.addCouponTrigger = el as HTMLElement)}
+          role="button"
         >
           <slot name="label">{this.label}</slot>
         </div>
