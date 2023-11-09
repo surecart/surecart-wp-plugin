@@ -1,7 +1,8 @@
-import { Component, Element, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Prop, State, Host } from '@stencil/core';
 import uiStore from '@store/ui';
 import { onChange } from '@store/checkouts';
 import { state as checkoutState } from '@store/checkout';
+import { __ } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -66,18 +67,30 @@ export class ScCartButton {
 
   render() {
     return (
-      <div class="cart__button" part="base">
-        <div class="cart__content">
-          {(this.showEmptyCount || !!this.getItemsCount()) && (
-            <span class="cart__count" part="count">
-              {this.getItemsCount()}
-            </span>
-          )}
-          <div class="cart__icon">
-            <slot />
+      <Host
+        tabindex={0}
+        role="button"
+        aria-label={__(`Open Cart Menu Icon with ${this.getItemsCount()} items.`, 'surecart')}
+        onKeyDown={e => {
+          if ('Enter' === e?.code || 'Space' === e?.code) {
+            uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
+            e.preventDefault();
+          }
+        }}
+      >
+        <div class="cart__button" part="base">
+          <div class="cart__content">
+            {(this.showEmptyCount || !!this.getItemsCount()) && (
+              <span class="cart__count" part="count">
+                {this.getItemsCount()}
+              </span>
+            )}
+            <div class="cart__icon">
+              <slot />
+            </div>
           </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }
