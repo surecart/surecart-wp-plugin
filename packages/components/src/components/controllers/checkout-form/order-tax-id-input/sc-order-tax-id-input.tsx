@@ -73,6 +73,7 @@ export class ScOrderTaxIdInput {
   }
 
   componentDidLoad() {
+    this.taxIdentifier = checkoutState?.checkout?.tax_identifier;
     this.removeCheckoutListener = onChange('checkout', (checkout: Checkout) => {
       this.taxIdentifier = checkout?.tax_identifier;
     });
