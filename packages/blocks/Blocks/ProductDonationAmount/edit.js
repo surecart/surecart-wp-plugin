@@ -68,7 +68,7 @@ export default ({ attributes, setAttributes }) => {
 					`}
 				>
 					<RichText
-						aria-label={__('Donation Amount text')}
+						aria-label={__('Donation Amount text', 'surecart')}
 						value={label}
 						onChange={(value) => setAttributes({ label: value })}
 						allowedFormats={[]}
