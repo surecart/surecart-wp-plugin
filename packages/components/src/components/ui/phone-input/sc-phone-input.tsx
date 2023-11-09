@@ -230,6 +230,7 @@ export class ScPhoneInput {
           helpId={this.helpId}
           labelId={this.labelId}
           name={this.name}
+          aria-label={this.label}
         >
           <slot name="label-end" slot="label-end"></slot>
           <div
