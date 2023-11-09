@@ -53,9 +53,9 @@ class SettingsController {
 			update_option( 'sc_uninstall', $request->get_param( 'uninstall' ) );
 		}
 
-		// update uninstall option.
+		// update stripe payment_element option - used to enable the stripe's legacy card element.
 		if ( isset( $request['stripe_payment_element'] ) ) {
-			update_option( 'sc_stripe_payment_element', $request->get_param( 'stripe_payment_element' ) );
+			update_option( 'sc_stripe_payment_element', $request->get_param( 'stripe_payment_element' ) === false ? 0 : 1 );
 		}
 
 		// update performance option.
