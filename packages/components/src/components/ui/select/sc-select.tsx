@@ -4,7 +4,6 @@ import Fuse from 'fuse.js';
 import { FormSubmitController } from '../../../functions/form-data';
 import { __ } from '@wordpress/i18n';
 import { isValidURL } from '../../../functions/util';
-import { speak } from '@wordpress/a11y';
 
 let id = 0;
 let itemIndex = 0;
@@ -347,8 +346,6 @@ export class ScSelectDropdown {
 
         return;
       }
-
-      speak(`Menu item -  ${items[itemIndex].textContent || ''}`, 'assertive');
     }
 
     // Close select dropdown on Esc/Escape key
@@ -416,6 +413,7 @@ export class ScSelectDropdown {
           }
         }}
         disabled={choice.disabled}
+        aria-label={choice.label}
       >
         {choice.label}
         {!!choice?.description && <div class="select__description">{choice?.description}</div>}
@@ -498,12 +496,19 @@ export class ScSelectDropdown {
                 part="search"
                 value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
+                aria-label={__('Type to search', 'surecart')}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)}>
+            <sc-menu
+              style={{ maxHeight: '210px', overflow: 'auto' }}
+              exportparts="base:menu__base"
+              onScroll={e => this.handleMenuScroll(e)}
+              role="listbox"
+              aria-multiselectable="false"
+            >
               <slot name="prefix"></slot>
               {(this.filteredChoices || []).map((choice, index) => {
                 return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
