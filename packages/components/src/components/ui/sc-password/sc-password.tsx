@@ -1,5 +1,6 @@
-import { Component, Prop, h, Method, State } from '@stencil/core';
+import { Component, Prop, h, Method, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 
 let showHintTimer, showVerificationTimer;
 
@@ -69,6 +70,12 @@ export class ScPassword {
   /** Verify Text. */
   @State() verifyText: string;
 
+  /** Password does not match text. */
+  @State() passwordDoesNotMatchText: string = __('Password does not match.', 'surecart');
+
+  /** Password matched text. */
+  @State() passwordMatchedText: string = __('Password is matched.', 'surecart');
+
   /** Sets focus on the input. */
   @Method()
   async triggerFocus(options?: FocusOptions) {
@@ -84,6 +91,7 @@ export class ScPassword {
     if (this.confirmation) {
       if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
         this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
+        speak(this.passwordDoesNotMatchText, 'assertive');
       }
     }
 
@@ -152,10 +160,21 @@ export class ScPassword {
   /** Verify the password confirmation. */
   verifyPassword() {
     if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
-      return (this.verifyText = __('Password does not match.', 'surecart'));
+      this.verifyText = __('Password does not match.', 'surecart');
+      speak(this.verifyText, 'assertive');
+      return;
+    }
+
+    if (!!this.input?.value && !!this.confirmInput?.value && this.input?.value === this.confirmInput?.value) {
+      speak(this.passwordMatchedText, 'assertive');
     }
 
     this.verifyText = '';
+  }
+
+  @Watch('hintText')
+  handleHintTextChange() {
+    speak(this.hintText, 'assertive');
   }
 
   render() {
