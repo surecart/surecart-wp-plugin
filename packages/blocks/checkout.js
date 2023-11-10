@@ -11,6 +11,8 @@ import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
 import * as productDonation from '@blocks/ProductDonation';
 import * as donationAmount from '@blocks/DonationAmount';
+import * as productDonationPrices from '@blocks/ProductDonationPrices';
+import * as productDonationAmounts from '@blocks/ProductDonationAmounts';
 import * as productDonationAmount from '@blocks/ProductDonationAmount';
 import * as customDonationAmount from '@blocks/CustomDonationAmount';
 import * as email from '@blocks/Email';
@@ -50,6 +52,8 @@ registerBlocks([
 	donation,
 	productDonation,
 	donationAmount,
+	productDonationPrices,
+	productDonationAmounts,
 	productDonationAmount,
 	customDonationAmount,
 	nameYourPrice,

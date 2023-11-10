@@ -13,8 +13,7 @@ import {
 	InspectorControls,
 	useBlockProps,
 	InnerBlocks,
-	useInnerBlocksProps as __stableUseInnerBlocksProps,
-	__experimentalUseInnerBlocksProps,
+	useInnerBlocksProps,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
@@ -30,18 +29,7 @@ import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 
-const TEMPLATE = [
-	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 200, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 500, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 1000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 2000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 5000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 10000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 20000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 50000, currency: 'USD' }],
-	['surecart/custom-donation-amount', { currency: 'USD' }],
-];
+const TEMPLATE = [['surecart/product-donation-amounts']];
 
 export default ({ attributes, setAttributes }) => {
 	const [query, setQuery] = useState(null);
@@ -69,43 +57,20 @@ export default ({ attributes, setAttributes }) => {
 		[query]
 	);
 
-	const {
-		product_id,
-		amount_label,
-		amount_columns,
-		recurring_label,
-		recurring_choice_label,
-		non_recurring_choice_label,
-	} = attributes;
-
-	const useInnerBlocksProps = __stableUseInnerBlocksProps
-		? __stableUseInnerBlocksProps
-		: __experimentalUseInnerBlocksProps;
+	const { product_id } = attributes;
 
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 
-	const blockProps = useBlockProps({
-		style: {
-			display: 'grid',
-			position: 'relative',
-			zIndex: 1,
-		},
-		css: css`
-			sc-choice.wp-block {
-				margin: 0;
-			}
-		`,
-	});
+	const blockProps = useBlockProps();
 
-	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: [
-			'surecart/product-donation-amount',
-			'surecart/custom-donation-amount',
+			'surecart/product-donation-amounts',
+			'surecart/product-donation-prices',
 		],
 		renderAppender: InnerBlocks.ButtonBlockAppender,
-		orientation: 'horizontal',
 		template: TEMPLATE,
 	});
 
@@ -120,7 +85,7 @@ export default ({ attributes, setAttributes }) => {
 		},
 		[product_id]
 	);
-
+	console.log({ product });
 	productDonationStore.state[product_id] = {
 		product,
 		amounts: product?.prices?.data.map((price) => price?.amount),
@@ -177,59 +142,8 @@ export default ({ attributes, setAttributes }) => {
 	}
 
 	return (
-		<>
-			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Amount Title', 'surecart')}
-							value={amount_label}
-							onChange={(amount_label) =>
-								setAttributes({ amount_label })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Recurring Title', 'surecart')}
-							value={recurring_label}
-							onChange={(recurring_label) =>
-								setAttributes({ recurring_label })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Recurring Choice Title', 'surecart')}
-							value={recurring_choice_label}
-							onChange={(recurring_choice_label) =>
-								setAttributes({ recurring_choice_label })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Non Recurring Choice Title', 'surecart')}
-							value={non_recurring_choice_label}
-							onChange={(non_recurring_choice_label) =>
-								setAttributes({ non_recurring_choice_label })
-							}
-						/>
-					</PanelRow>
-					<NumberControl
-						label={__('Amount Columns', 'surecart')}
-						value={amount_columns}
-						min={1}
-						onChange={(amount_columns) =>
-							setAttributes({
-								amount_columns: parseInt(amount_columns),
-							})
-						}
-					/>
-				</PanelBody>
-			</InspectorControls>
-			<div {...innerBlocksProps}>
-				<ScProductDonationChoices
+		<div {...innerBlocksProps}>
+			{/* <ScProductDonationChoices
 					amountLabel={amount_label}
 					recurringLabel={recurring_label}
 					recurringChoiceLabel={recurring_choice_label}
@@ -263,8 +177,7 @@ export default ({ attributes, setAttributes }) => {
 					}}
 				>
 					{children}
-				</ScProductDonationChoices>
-			</div>
-		</>
+				</ScProductDonationChoices> */}
+		</div>
 	);
 };

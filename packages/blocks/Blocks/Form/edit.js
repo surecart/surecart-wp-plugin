@@ -619,7 +619,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 								css={css`
 									*
 										> *
-										> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(:last-child) {
+										> .wp-block:not(sc-choice):not(sc-column):not(sc-radio):not(sc-price-choice):not(.wp-block-surecart-product-donation-amount):not(:last-child) {
 										margin-bottom: ${gap} !important;
 									}
 									// prevents issues with our shadow dom.

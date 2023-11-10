@@ -1461,6 +1461,7 @@
     "price": true,
     "price-id": true,
     "prices": true,
+    "product": true,
     "products": true,
     "quantity": true,
     "show-control": true,
@@ -1550,7 +1551,7 @@
   },
   "sc-product-donation-choices": {
     "amount-columns": true,
-    "amount-label": true,
+    "label": true,
     "non-recurring-choice-label": true,
     "product-id": true,
     "recurring-choice-label": true,

@@ -1,0 +1,31 @@
+<?php
+
+namespace SureCartBlocks\Blocks\ProductDonationPrices;
+
+use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Util\BlockStyleAttributes;
+
+/**
+ * Product Title Block
+ */
+class Block extends BaseBlock {
+	/**
+	 * Render the block
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content Post content.
+	 *
+	 * @return string
+	 */
+	public function render( $attributes, $content ) {
+		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
+		ob_start(); ?>
+		<div class="sc-product-donation-choices" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ); ?> <?php echo esc_attr( $styles ); ?> ">
+			<sc-choices label="<?php echo esc_attr( $attributes['label'] ); ?>">
+				<?php echo filter_block_content( $content ); ?>
+			</sc-choices>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+}

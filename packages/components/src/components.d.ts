@@ -2601,6 +2601,10 @@ export namespace Components {
          */
         "prices": Prices;
         /**
+          * Stores the price
+         */
+        "product": Product;
+        /**
           * Product entity
          */
         "products": Products;
@@ -2812,7 +2816,7 @@ export namespace Components {
         /**
           * The label for the field.
          */
-        "amountLabel": string;
+        "label": string;
         /**
           * The label for the non recurring choice field.
          */
@@ -8513,6 +8517,10 @@ declare namespace LocalJSX {
          */
         "prices"?: Prices;
         /**
+          * Stores the price
+         */
+        "product"?: Product;
+        /**
           * Product entity
          */
         "products"?: Products;
@@ -8736,7 +8744,7 @@ declare namespace LocalJSX {
         /**
           * The label for the field.
          */
-        "amountLabel"?: string;
+        "label"?: string;
         /**
           * The label for the non recurring choice field.
          */

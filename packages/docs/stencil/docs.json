@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-07T11:16:13",
+  "timestamp": "2023-11-09T21:24:01",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -22447,6 +22447,21 @@
           "required": false
         },
         {
+          "name": "product",
+          "type": "Product",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Stores the price",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "products",
           "type": "{ [id: string]: Product; }",
           "mutable": false,
@@ -23557,7 +23572,7 @@
     },
     {
       "filePath": "./src/components/controllers/checkout-form/product-donation-amount-choice/sc-product-donation-amount-choice.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-product-donation-amount-choice",
       "readme": "# sc-product-donation-amount-choice\n\n\n",
       "docs": "",
@@ -23788,9 +23803,6 @@
         "sc-choices": [
           "sc-form-control"
         ],
-        "sc-form-control": [
-          "sc-tooltip"
-        ],
         "sc-recurring-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
@@ -23887,9 +23899,6 @@
         ],
         "sc-input": [
           "sc-form-control"
-        ],
-        "sc-form-control": [
-          "sc-tooltip"
         ],
         "sc-button": [
           "sc-spinner"

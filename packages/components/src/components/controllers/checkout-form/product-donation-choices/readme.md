@@ -41,7 +41,6 @@ graph TD;
   sc-product-donation-choices --> sc-recurring-price-choice-container
   sc-product-donation-choices --> sc-choice-container
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
   sc-recurring-price-choice-container --> sc-format-number
   sc-recurring-price-choice-container --> sc-choice-container
   sc-recurring-price-choice-container --> sc-dropdown
