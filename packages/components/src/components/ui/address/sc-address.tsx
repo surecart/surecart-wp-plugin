@@ -170,6 +170,7 @@ export class ScAddress {
               squared-bottom
               disabled={this.disabled}
               required={this.requireName}
+              aria-lable={__('Name or Company Name', 'surecart')}
             />
           )}
 
@@ -191,6 +192,7 @@ export class ScAddress {
             squared={this.showName}
             disabled={this.disabled}
             required={this.required}
+            aria-label={__('Country name', 'surecart')}
           />
 
           <sc-input
@@ -204,6 +206,7 @@ export class ScAddress {
             squared
             disabled={this.disabled}
             required={this.required}
+            aria-label={__('Address', 'surecart')}
           />
 
           {this.showLine2 && (
@@ -217,6 +220,7 @@ export class ScAddress {
               name={this.names?.line_2}
               squared
               disabled={this.disabled}
+              aria-label={__('Address Line 2', 'surecart')}
             />
           )}
 
@@ -235,6 +239,7 @@ export class ScAddress {
                 squared-top
                 disabled={this.disabled}
                 squared-right={this.showPostal}
+                aria-label={__('City name', 'surecart')}
               />
             )}
 
@@ -253,6 +258,7 @@ export class ScAddress {
                 disabled={this.disabled}
                 maxlength={this.address?.country === 'US' ? 5 : null}
                 squared-left={this.showCity}
+                aria-label={__('Postal Code/Zip', 'surecart')}
               />
             )}
           </div>
