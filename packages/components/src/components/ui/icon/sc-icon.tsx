@@ -103,6 +103,6 @@ export class ScIcon {
   }
 
   render() {
-    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg} aria-hidden={this.ariaHidden}></div>;
+    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg} aria-hidden={!!this.ariaHidden ? 'true' : 'false'}></div>;
   }
 }
