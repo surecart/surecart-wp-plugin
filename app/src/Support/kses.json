@@ -1550,12 +1550,9 @@
     "slot": true
   },
   "sc-product-donation-choices": {
-    "amount-columns": true,
     "label": true,
-    "non-recurring-choice-label": true,
     "product-id": true,
-    "recurring-choice-label": true,
-    "recurring-label": true,
+    "recurring": true,
     "style": true,
     "id": true,
     "class": true,

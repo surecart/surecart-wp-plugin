@@ -20,7 +20,7 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
 		ob_start(); ?>
-		<div class="sc-product-donation-choices" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ); ?> <?php echo esc_attr( $styles ); ?> ">
+		<div class="sc-product-donation-choices" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ); ?>; border: none; <?php echo esc_attr( $styles ); ?>">
 			<sc-choices label="<?php echo esc_attr( $attributes['label'] ); ?>">
 				<?php echo filter_block_content( $content ); ?>
 			</sc-choices>

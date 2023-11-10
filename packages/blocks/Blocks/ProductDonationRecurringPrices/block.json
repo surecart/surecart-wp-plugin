@@ -1,11 +1,11 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/product-donation-prices",
-	"title": "Prices",
-	"description": "Displays a donation price and interval selector.",
+	"name": "surecart/product-donation-price",
+	"title": "Recurring Prices",
+	"description": "Displays an option to select between recurring prices.",
 	"category": "surecart",
-	"ancestor": ["surecart/form"],
-	"keywords": ["donation", "ad hoc", "custom", "amount"],
+	"ancestor": ["surecart/product-donation-prices"],
+	"keywords": ["donation", "ad hoc", "recurring", "amount"],
 	"textdomain": "surecart",
 	"usesContext": ["surecart/product-donation/product_id"],
 	"supports": {
@@ -50,11 +50,36 @@
 	"attributes": {
 		"label": {
 			"type": "string",
-			"default": "Make It Recurring"
+			"default": "Yes, count me in!"
 		},
-		"columns": {
-			"type": "number",
-			"default": 2
+		"recurring": {
+			"type": "boolean",
+			"default": true
 		}
-	}
+	},
+	"variations": [
+		{
+			"name": "recurring",
+			"title": "Recurring",
+			"description": "Add a button to add the product to the cart.",
+			"attributes": {
+				"recurring": true,
+				"label": "Yes, count me in!"
+			},
+			"isDefault": true,
+			"isActive": ["recurring"],
+			"scope": ["inserter", "block", "transform"]
+		},
+		{
+			"name": "non_recurring",
+			"title": "Non Recurring",
+			"description": "Add a button to add the product to the cart.",
+			"attributes": {
+				"recurring": false,
+				"label": "No, donate once."
+			},
+			"isActive": ["recurring"],
+			"scope": ["inserter", "block", "transform"]
+		}
+	]
 }

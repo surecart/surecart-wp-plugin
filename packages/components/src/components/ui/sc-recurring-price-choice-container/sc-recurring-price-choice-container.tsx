@@ -59,7 +59,9 @@ export class ScRecurringPriceChoiceContainer {
       >
         <div class="recurring-price-choice">
           <div class="recurring-price-choice__control">
-            <div class="recurring-price-choice__name">{this.label}</div>
+            <div class="recurring-price-choice__name">
+              <slot>{this.label}</slot>
+            </div>
 
             {this.prices?.length > 1 && (
               <div class="recurring-price-choice__description">

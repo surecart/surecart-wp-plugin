@@ -19,6 +19,7 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	BlockControls,
 	AlignmentControl,
+	RichText,
 } from '@wordpress/block-editor';
 import SelectModel from '../../../admin/components/SelectModel';
 
@@ -26,6 +27,7 @@ import {
 	ScProductDonationChoices,
 	ScButton,
 	ScIcon,
+	ScRecurringPriceChoiceContainer,
 } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
@@ -33,38 +35,30 @@ import { store as coreStore } from '@wordpress/core-data';
 import classNames from 'classnames';
 
 const TEMPLATE = [
-	[
-		'surecart/product-donation-price',
-		{ recurring: true, label: __('Yes, count me in!', 'surecart') },
-	],
-	[
-		'surecart/product-donation-price',
-		{ recurring: false, label: __('No, donate once.', 'surecart') },
-	],
+	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 200, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 500, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 1000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 2000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 5000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 10000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 20000, currency: 'USD' }],
+	['surecart/product-donation-amount', { amount: 50000, currency: 'USD' }],
+	['surecart/custom-donation-amount', { currency: 'USD' }],
 ];
 
 export default ({ attributes, setAttributes, context }) => {
-	const { label, columns } = attributes;
+	const { label, recurring } = attributes;
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
 
 	const blockProps = useBlockProps({
-		style: {
-			'--columns': columns,
-		},
 		css: css`
 			sc-product-donation-choices.wp-block {
 				margin: 0;
 			}
 		`,
-	});
-
-	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
-		allowedBlocks: ['surecart/product-donation-price'],
-		// renderAppender: false,
-		orientation: columns > 1 ? 'horizontal' : 'vertical',
-		template: TEMPLATE,
 	});
 
 	return (
@@ -78,30 +72,22 @@ export default ({ attributes, setAttributes, context }) => {
 							onChange={(label) => setAttributes({ label })}
 						/>
 					</PanelRow>
-					<RangeControl
-						__nextHasNoMarginBottom
-						label={__('Columns')}
-						value={columns}
-						onChange={(columns) => setAttributes({ columns })}
-						min={1}
-						max={Math.max(2, columns)}
-					/>
-					{columns > 2 && (
-						<Notice status="warning" isDismissible={false}>
-							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
-							)}
-						</Notice>
-					)}
 				</PanelBody>
 			</InspectorControls>
-			<div
-				class="sc-product-donation-choices"
-				{...innerBlocksProps}
+
+			<ScProductDonationChoices
+				recurring={recurring}
+				productId={context['surecart/product-donation/product_id']}
 				{...blockProps}
 			>
-				<sc-choices label={label}>{children}</sc-choices>
-			</div>
+				<RichText
+					aria-label={__('Price Selector Text', 'surecart')}
+					value={label}
+					onChange={(value) => setAttributes({ label: value })}
+					allowedFormats={[]}
+					withoutInteractiveFormatting
+				/>
+			</ScProductDonationChoices>
 		</>
 	);
 };

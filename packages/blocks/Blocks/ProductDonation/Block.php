@@ -4,7 +4,6 @@ namespace SureCartBlocks\Blocks\ProductDonation;
 
 use SureCart\Models\Product;
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block

@@ -12,6 +12,7 @@ import * as donation from '@blocks/Donation';
 import * as productDonation from '@blocks/ProductDonation';
 import * as donationAmount from '@blocks/DonationAmount';
 import * as productDonationPrices from '@blocks/ProductDonationPrices';
+import * as productDonationRecurringPrices from '@blocks/ProductDonationRecurringPrices';
 import * as productDonationAmounts from '@blocks/ProductDonationAmounts';
 import * as productDonationAmount from '@blocks/ProductDonationAmount';
 import * as customDonationAmount from '@blocks/CustomDonationAmount';
@@ -53,6 +54,7 @@ registerBlocks([
 	productDonation,
 	donationAmount,
 	productDonationPrices,
+	productDonationRecurringPrices,
 	productDonationAmounts,
 	productDonationAmount,
 	customDonationAmount,

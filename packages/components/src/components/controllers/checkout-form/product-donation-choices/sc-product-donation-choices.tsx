@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element } from '@stencil/core';
+import { Component, h, Prop, Element, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as donationState } from '@store/product-donation';
 
@@ -16,17 +16,7 @@ export class ScProductDonationChoice {
   /** The label for the field. */
   @Prop() label: string;
 
-  /** The label for the recurring fields. */
-  @Prop() recurringLabel: string;
-
-  /** The label for the recurring choice field. */
-  @Prop() recurringChoiceLabel: string;
-
-  /** The label for the non recurring choice field. */
-  @Prop() nonRecurringChoiceLabel: string;
-
-  /** Number of columns for amounts. */
-  @Prop() amountColumns: string;
+  @Prop() recurring: boolean;
 
   state() {
     return donationState[this.productId];
@@ -40,35 +30,30 @@ export class ScProductDonationChoice {
   }
 
   render() {
-    const nonRecurringPrice = (this.state()?.product?.prices?.data || [])?.find(price => !price?.recurring_interval && price?.ad_hoc);
-    const recurringPrices = (this.state()?.product?.prices?.data || [])?.filter(price => price?.recurring_interval && price?.ad_hoc);
+    const prices = (this.state()?.product?.prices?.data || [])?.filter(price =>
+      this.recurring ? price?.recurring_interval && price?.ad_hoc : !price?.recurring_interval && price?.ad_hoc,
+    );
+
+    // no prices, return nothing
+    if (!prices?.length) {
+      return <Host style={{ display: 'none' }}></Host>;
+    }
+
+    // return price choice container.
     return (
-      <sc-choices label={this.label} part="choices">
-        <sc-recurring-price-choice-container
-          label={this.recurringChoiceLabel}
-          prices={recurringPrices}
-          product={this.state()?.product}
-          selectedPrice={this.state().selectedPrice}
-          showDetails={false}
-          showAmount={false}
-          onScChange={e => {
-            const selectedPrice = (this.state().product?.prices?.data || []).find(({ id }) => id == e.detail);
-            this.updateState({ selectedPrice });
-          }}
-        />
-        <sc-recurring-price-choice-container
-          label={this.nonRecurringChoiceLabel}
-          prices={[nonRecurringPrice]}
-          product={this.state()?.product}
-          selectedPrice={this.state().selectedPrice}
-          showDetails={false}
-          showAmount={false}
-          onScChange={e => {
-            const selectedPrice = (this.state().product?.prices?.data || []).find(({ id }) => id == e.detail);
-            this.updateState({ selectedPrice });
-          }}
-        ></sc-recurring-price-choice-container>
-      </sc-choices>
+      <sc-recurring-price-choice-container
+        prices={prices}
+        product={this.state()?.product}
+        selectedPrice={this.state().selectedPrice}
+        showDetails={false}
+        showAmount={false}
+        onScChange={e => {
+          const selectedPrice = (this.state().product?.prices?.data || []).find(({ id }) => id == e.detail);
+          this.updateState({ selectedPrice });
+        }}
+      >
+        <slot>{this.label}</slot>
+      </sc-recurring-price-choice-container>
     );
   }
 }

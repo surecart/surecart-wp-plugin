@@ -170,6 +170,7 @@ return [
 		\SureCartBlocks\Blocks\ProductDonation\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationRecurringPrices\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
 		\SureCartBlocks\Blocks\CustomDonationAmount\Block::class,
 

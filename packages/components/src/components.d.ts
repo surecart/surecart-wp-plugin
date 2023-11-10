@@ -2810,29 +2810,14 @@ export namespace Components {
     }
     interface ScProductDonationChoices {
         /**
-          * Number of columns for amounts.
-         */
-        "amountColumns": string;
-        /**
           * The label for the field.
          */
         "label": string;
         /**
-          * The label for the non recurring choice field.
-         */
-        "nonRecurringChoiceLabel": string;
-        /**
           * The product id for the fields.
          */
         "productId": string;
-        /**
-          * The label for the recurring choice field.
-         */
-        "recurringChoiceLabel": string;
-        /**
-          * The label for the recurring fields.
-         */
-        "recurringLabel": string;
+        "recurring": boolean;
     }
     interface ScProductDonationCustomAmount {
         /**
@@ -8738,29 +8723,14 @@ declare namespace LocalJSX {
     }
     interface ScProductDonationChoices {
         /**
-          * Number of columns for amounts.
-         */
-        "amountColumns"?: string;
-        /**
           * The label for the field.
          */
         "label"?: string;
         /**
-          * The label for the non recurring choice field.
-         */
-        "nonRecurringChoiceLabel"?: string;
-        /**
           * The product id for the fields.
          */
         "productId"?: string;
-        /**
-          * The label for the recurring choice field.
-         */
-        "recurringChoiceLabel"?: string;
-        /**
-          * The label for the recurring fields.
-         */
-        "recurringLabel"?: string;
+        "recurring"?: boolean;
     }
     interface ScProductDonationCustomAmount {
         /**
