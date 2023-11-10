@@ -175,7 +175,7 @@ export class ScSubscriptionsList {
         {!!this.allLink && !!this.subscriptions?.length && (
           <sc-button type="link" href={this.allLink} slot="end" aria-label={__(`View all ${this.heading || 'Subscriptions'}`, 'surecart')}>
             {__('View all', 'surecart')}
-            <sc-icon ariaHidden={true} name="chevron-right" slot="suffix"></sc-icon>
+            <sc-icon aria-hidden="true" name="chevron-right" slot="suffix"></sc-icon>
           </sc-button>
         )}
 

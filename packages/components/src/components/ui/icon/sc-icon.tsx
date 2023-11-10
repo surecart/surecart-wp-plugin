@@ -25,9 +25,6 @@ export class ScIcon {
   /** The name of a registered custom icon library. */
   @Prop() library = 'default';
 
-  /** aria-hidden for sc-icon */
-  @Prop() ariaHidden: boolean;
-
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
 
@@ -103,6 +100,6 @@ export class ScIcon {
   }
 
   render() {
-    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg} aria-hidden={!!this.ariaHidden ? 'true' : 'false'}></div>;
+    return <div part="base" class="icon" role="img" aria-label={this.getLabel()} innerHTML={this.svg}></div>;
   }
 }
