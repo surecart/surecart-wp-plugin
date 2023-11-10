@@ -1,9 +1,10 @@
 import { Price, ProductState } from 'src/types';
+
 /**
  * Internal dependencies.
  */
 import state from './store';
-import { isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
+import { getSerializedState, isProductVariantOptionMissing, isProductVariantOptionSoldOut } from '@store/utils';
 import { getVariantFromValues } from '../../functions/util';
 
 /**
@@ -66,3 +67,19 @@ export const isProductOutOfStock = (productId: string) => {
 
 export const isSelectedVariantMissing = (productId: string) =>
   !!state[productId].variants?.length && getVariantFromValues({ variants: state[productId].variants, values: state[productId].variantValues })?.id === undefined;
+
+/**
+ * Get product default state
+ *
+ * @returns {ProductState} - Returns the product state
+ */
+export const getDefaultState = (): { [key: string]: ProductState } => {
+  const { product: productState } = getSerializedState();
+
+  // if the product state is not empty, return it.
+  if (!!productState && !!Object.values(productState).length) {
+    return productState;
+  }
+
+  return {};
+};

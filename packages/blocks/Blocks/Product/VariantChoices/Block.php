@@ -2,13 +2,13 @@
 
 namespace SureCartBlocks\Blocks\Product\VariantChoices;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Render the block
 	 *
@@ -19,7 +19,8 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		// check for product.
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProduct( $attributes );
+
 		if ( empty( $product ) || empty( $product->variant_options->data ) ) {
 			return '';
 		}
@@ -28,9 +29,9 @@ class Block extends BaseBlock {
 
 		// get wrapper attributes.
 		$wrapper_attributes = get_block_wrapper_attributes(
-			[
+			array(
 				'style' => 'border: none; display: block; margin-bottom: var(--sc-form-row-spacing, 0.75em);' . esc_attr( $this->getVars( $attributes, '--sc-pill-option' ) ),
-			]
+			)
 		);
 
 		ob_start(); ?>

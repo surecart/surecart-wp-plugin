@@ -2,6 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { isOptionMissing, isOptionSoldOut } from '@store/product/getters';
 import { __, sprintf } from '@wordpress/i18n';
+import { setProduct } from '@store/product/setters';
 
 @Component({
   tag: 'sc-product-pills-variant-option',
@@ -22,16 +23,18 @@ export class ScProductPillsVariantOption {
     return (
       <sc-form-control label={this.label}>
         <div class="sc-product-pills-variant-option__wrapper">
-          {(state.variant_options[this.optionNumber - 1].values || []).map(value => {
-            const isUnavailable = isOptionSoldOut(this.productId,this.optionNumber, value) || isOptionMissing(this.productId,this.optionNumber, value);
+          {(state[this.productId].variant_options[this.optionNumber - 1].values || []).map(value => {
+            const isUnavailable = isOptionSoldOut(this.productId, this.optionNumber, value) || isOptionMissing(this.productId, this.optionNumber, value);
             return (
               <sc-pill-option
                 isUnavailable={isUnavailable}
-                isSelected={state.variantValues[`option_${this.optionNumber}`] === value}
+                isSelected={state[this.productId].variantValues[`option_${this.optionNumber}`] === value}
                 onClick={() =>
-                  (state.variantValues = {
-                    ...state.variantValues,
-                    [`option_${this.optionNumber}`]: value,
+                  setProduct(this.productId, {
+                    variantValues: {
+                      ...state[this.productId].variantValues,
+                      [`option_${this.optionNumber}`]: value,
+                    },
                   })
                 }
               >

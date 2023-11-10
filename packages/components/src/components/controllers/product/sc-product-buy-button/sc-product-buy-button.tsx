@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { addProductToState, getProductBuyLink, submitCartForm } from '@store/product/mutations';
+import {  getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
@@ -57,10 +57,6 @@ export class ScProductBuyButton {
     this.link = this.el.querySelector('a');
     this.updateProductLink();
     onChange(this.product?.id, () => this.updateProductLink());
-
-    if (!state[this.product?.id]) {
-      addProductToState(this.product, this.formId, this.mode, this.checkoutLink);
-    }
   }
 
   private link: HTMLAnchorElement;

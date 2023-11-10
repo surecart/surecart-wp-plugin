@@ -1130,6 +1130,7 @@ export interface ProductState {
   error: string;
   selectedVariant?: Variant;
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
+  isProductPage?: boolean;
 }
 export interface PaymentInfoAddedParams {
   checkout_id: string;

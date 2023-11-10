@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-03T10:44:45",
+  "timestamp": "2023-11-10T15:56:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -22385,6 +22385,21 @@
           "values": [
             {
               "type": "{ [id: string]: Price; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Stores the price",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
             }
           ],
           "optional": false,

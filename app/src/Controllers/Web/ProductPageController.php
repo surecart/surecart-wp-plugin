@@ -40,6 +40,7 @@ class ProductPageController extends BasePageController {
 
 		// add the filters.
 		$this->filters();
+		$this->setInitialProductState();
 
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
@@ -63,23 +64,6 @@ class ProductPageController extends BasePageController {
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
-
-		// add data needed for product to load.
-		add_filter(
-			'surecart-components/scData',
-			function( $data ) {
-				$form = \SureCart::forms()->getDefault();
-
-				$data['product_data'] = [
-					'product'       => $this->model,
-					'form'          => $form,
-					'mode'          => Form::getMode( $form->ID ),
-					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
-				];
-
-				return $data;
-			}
-		);
 	}
 
 	/**
@@ -95,6 +79,101 @@ class ProductPageController extends BasePageController {
 				'id'    => 'edit-product',
 				'title' => __( 'Edit Product', 'surecart' ),
 				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->model->id ) ),
+			]
+		);
+	}
+
+	/**
+	 * Get selected price
+	 *
+	 * @param array $prices
+	 *
+	 * @return object|null
+	 */
+	private function getSelectedPrice(){
+		$prices = $this->model->prices->data ?? [];
+		usort($prices, function($a, $b){
+			return $a['position'] - $b['position'];
+		});
+
+		$selected_price_index = array_search(false, array_column($prices, 'archived'));
+
+		return $prices[$selected_price_index] ?? null;
+	}
+
+	/**
+	 * Get selected variant
+	 *
+	 * @param array $variants
+	 *
+	 * @return object|null
+	 */
+	private function getSelectedVariant(){
+		$variants = $this->model->variants->data ?? [];
+		if(empty($variants)){
+			return null;
+		}
+
+		if(!$this->model->stock_enabled || $this->model->allow_out_of_stock_purchases){
+			return $variants[0];
+		}
+
+		foreach($variants as $variant){
+			if($variant['stock'] > 0){
+				return $variant;
+			}
+		}
+
+		return null;
+	}
+
+	public function setInitialProductState(){
+		$form = \SureCart::forms()->getDefault();
+		$selected_price = $this->getSelectedPrice();
+		$add_hoc_amount = $selectedPrice['add_hoc_amount'] ?? null;
+		$variant_options = $this->model->variant_options->data ?? [];
+		$selected_variant = $this->getSelectedVariant();
+
+		$productState[$this->model->id] = array(
+			'formId' =>  $form->ID,
+			'mode'=> Form::getMode( $form->ID ),
+			'product'=> $this->model,
+			'prices' => $this->model->prices->data ?? [],
+			'quantity' => 1,
+			'selectedPrice' => $selected_price,
+			'total'=>null,
+			'dialog' => null,
+			'busy' => false,
+			'disabled'=> $selected_price['archived'] ?? false,
+			'addHocAmount' => $add_hoc_amount,
+			'error'=>null,
+			'checkoutUrl' => '',
+			'line_item' => array(
+				'price_id' => $selected_price['id'] ?? null,
+				'quantity' => 1,
+			),
+			'variant_options' => $variant_options,
+			'variants' => $this->model->variants->data ?? [],
+			'selectedVariant' => $selected_variant,
+			'isProductPage' => true,
+			'variantValues' => [
+				'option_1' => $selected_variant['option_1'] ?? null,
+				'option_2' => $selected_variant['option_2'] ?? null,
+				'option_3' => $selected_variant['option_3'] ?? null,
+			]
+		);
+
+		if($selected_price->ad_hoc){
+			$productState[$this->model->id]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
+		}
+
+		$productState[$this->model->id]['variantValues'] = array_filter($productState[$this->model->id]['variantValues'], function($value){
+			return !empty($value);
+		});
+
+		sc_initial_state(
+			[
+				'product'=> $productState
 			]
 		);
 	}
