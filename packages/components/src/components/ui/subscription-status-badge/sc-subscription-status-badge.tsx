@@ -79,6 +79,10 @@ export class ScSubscriptionStatusBadge {
   }
 
   render() {
-    return <sc-tag type={this.getType()}>{this.getText()}</sc-tag>;
+    return (
+      <sc-tag aria-label={__(`Plan Status - ${this.getText()}`, 'surecart')} type={this.getType()}>
+        {this.getText()}
+      </sc-tag>
+    );
   }
 }
