@@ -31,7 +31,7 @@ export default ({ attributes }) => {
 				{free_trial_text || __('Free Trial', 'surecart')}
 			</span>
 			<span slot="due-amount-description">
-				{due_amount_text || __('Total Due', 'surecart')}
+				{due_amount_text || __('Amount Due', 'surecart')}
 			</span>
 		</sc-line-item-total>
 	);

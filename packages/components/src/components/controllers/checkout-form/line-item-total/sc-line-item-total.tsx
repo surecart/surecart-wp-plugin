@@ -119,7 +119,7 @@ export class ScLineItemTotal {
               </span>
             ) : (
               <span slot="title">
-                <slot name="due-amount-description">{__('Total Due', 'surecart')}</slot>
+                <slot name="due-amount-description">{__('Amount Due', 'surecart')}</slot>
               </span>
             )}
 
