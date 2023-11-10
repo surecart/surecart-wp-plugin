@@ -38,7 +38,7 @@ class Block extends ProductBlock {
 
 		<div style="<?php echo esc_attr( $styles ); ?>">
 			<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-				<sc-product-pills-variant-option product-id="<?php echo esc_attr($product->id)?>" label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>" <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></sc-product-pills-variant-option>
+				<sc-product-pills-variant-option product-id="<?php echo esc_attr( $product->id ); ?>" label="<?php echo esc_attr( $option->name ); ?>" option-number="<?php echo (int) $key + 1; ?>" <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></sc-product-pills-variant-option>
 			<?php endforeach; ?>
 		</div>
 
