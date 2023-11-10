@@ -4,7 +4,7 @@ import { requestIcon } from './request';
 import { __ } from '@wordpress/i18n';
 
 /**
- * The icon's label used for accessibility. Defaults to the icon name.
+ * The icon's label used for accessibility.
  */
 const LABEL_MAPPINGS = {
   'chevron-down': __('Open', 'surecart'),
@@ -15,6 +15,7 @@ const LABEL_MAPPINGS = {
   'arrow-left': __('Previous', 'surecart'),
   'arrow-down': __('Down', 'surecart'),
   'arrow-up': __('Up', 'surecart'),
+  'alert-circle': __('Alert', 'surecart'),
 };
 
 const parser = new DOMParser();
