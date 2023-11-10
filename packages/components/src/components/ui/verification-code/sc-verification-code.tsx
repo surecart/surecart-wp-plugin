@@ -117,6 +117,7 @@ export class ScVerificationCode {
               onInput={e => this.handleInput(e, index)}
               onKeyDown={e => this.handleKeyDown(e, index)}
               onFocus={e => this.handleFocus(e)}
+              autocomplete="one-time-code"
               required
             />
           ))}

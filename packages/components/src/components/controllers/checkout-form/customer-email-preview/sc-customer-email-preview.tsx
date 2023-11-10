@@ -16,7 +16,7 @@ import { createOrUpdateCheckout } from '@services/session';
 @Component({
   tag: 'sc-customer-email-preview',
   styleUrl: 'sc-customer-email-preview.scss',
-  shadow: false,
+  shadow: true,
 })
 export class ScCustomerEmailPreview {
   @State() busy: boolean = false;

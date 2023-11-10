@@ -133,10 +133,6 @@ export class ScCustomerEmail {
     }
   }
 
-  isValidEmail() {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
-  }
-
   @Method()
   async reportValidity() {
     // if user is logged in, no need to validate.
