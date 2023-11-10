@@ -51,7 +51,7 @@ export default ({ attributes, setAttributes }) => {
 							onChange={(due_amount_text) =>
 								setAttributes({ due_amount_text })
 							}
-							placeholder={__('Total Due', 'surecart')}
+							placeholder={__('Amount Due', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
