@@ -69,6 +69,7 @@ export const getVariantFromValues = ({ variants, values }) => {
 export const isInRange = (value, price) => {
   const valueInt = parseInt(value);
   if (!price) return true;
+  if (!price?.ad_hoc_max_amount && !price?.ad_hoc_min_amount) return true;
   if (price?.ad_hoc_max_amount && valueInt > price?.ad_hoc_max_amount) return false;
   if (price?.ad_hoc_min_amount && valueInt < price?.ad_hoc_min_amount) return false;
   return true;

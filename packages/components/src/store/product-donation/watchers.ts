@@ -1,17 +1,19 @@
-import { getLineItem, getValidAdHocAmount } from './getters';
+import { getValidAdHocAmount } from './getters';
 import { updateLineItem } from './mutations';
 import state, { on, set } from './store';
 import { onChange } from '../checkout/store';
+import { getLineItemByProductId } from '@store/checkout/getters';
 
 // when the checkout changes, update the selected price and ad hoc amount
 onChange('checkout', () => {
   Object.keys(state).forEach(productId => {
-    const lineItem = getLineItem(productId);
+    const lineItem = getLineItemByProductId(productId);
     if (lineItem) {
       set(productId, {
         ...state[productId],
         selectedPrice: lineItem.price,
         ad_hoc_amount: lineItem.ad_hoc_amount,
+        custom_amount: (state[productId].amounts || []).includes(lineItem.ad_hoc_amount) ? null : lineItem.ad_hoc_amount,
       });
     }
   });
@@ -23,6 +25,16 @@ Object.keys(state).forEach(productId => {
   on('set', (prop, val, prev) => {
     // if the product is the one we're looking for
     if (prop !== productId) return;
+
+    // and the custom amount has changed
+    if (val?.custom_amount !== prev?.custom_amount) {
+      return updateLineItem(productId, {
+        price: val.selectedPrice?.id,
+        quantity: 1, // quantity should always be 1.
+        ad_hoc_amount: val?.custom_amount,
+      });
+    }
+
     // and the selectedPrice has changed
     if (val?.selectedPrice?.id !== prev?.selectedPrice?.id || val?.ad_hoc_amount !== prev?.ad_hoc_amount) {
       // update the line item

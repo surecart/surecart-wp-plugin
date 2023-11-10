@@ -1,8 +1,8 @@
 import { addCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
-import { getLineItem } from './getters';
+import { getLineItemByProductId } from '@store/checkout/getters';
 
 export const updateLineItem = (productId, data) => {
-  const lineItem = getLineItem(productId);
+  const lineItem = getLineItemByProductId(productId);
   // we have a line item, update it
   return lineItem?.id
     ? updateCheckoutLineItem({

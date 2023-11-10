@@ -27,39 +27,34 @@ export class ScProductDonationCustomAmount {
     };
   }
 
-  async handleButtonClick(e) {
-    e.stopImmediatePropagation();
-    this.updateState({
-      ad_hoc_amount: this.value,
-      amounts: [...this.state().amounts, this.value],
-    });
-  }
-
-  handlePriceChange(e) {
-    this.value = e?.target?.value;
-  }
-
   render() {
-    const checked = !this.state()?.amounts?.includes(this.state()?.ad_hoc_amount) || this.state()?.ad_hoc_amount === this.value;
-
     return (
       <Host class={{ 'sc-product-donation-custom-amount': true, 'sc-product-donation-custom-amount--has-value': !!this.value }}>
-        <sc-choice-container value={`${this.value}`} show-control="false" checked={checked}>
-          <sc-form onScFormSubmit={e => this.handleButtonClick(e)}>
-            <sc-price-input
-              currencyCode={this.currencyCode}
-              showCode={false}
-              showLabel={false}
-              onScInput={e => this.handlePriceChange(e)}
-              min={this.state()?.selectedPrice?.ad_hoc_min_amount}
-              max={this.state()?.selectedPrice?.ad_hoc_max_amount}
-              style={{ '--sc-input-border-color-focus': 'var(--sc-input-border-color-hover)', '--sc-focus-ring-color-primary': 'transparent' }}
-            >
-              <sc-button circle submit slot="suffix" size="small" type="primary">
-                <sc-icon name="arrow-right" />
-              </sc-button>
-            </sc-price-input>
-          </sc-form>
+        <sc-choice-container
+          value={`${this.state()?.custom_amount}`}
+          show-control="false"
+          checked={!!this.state().custom_amount}
+          onClick={() => {
+            if (!this.state().custom_amount) return;
+            this.updateState({
+              custom_amount: this.state().custom_amount,
+            });
+          }}
+        >
+          <sc-price-input
+            currencyCode={this.currencyCode}
+            showCode={false}
+            showLabel={false}
+            value={`${this.state()?.custom_amount || ''}`}
+            onScChange={e =>
+              this.updateState({
+                custom_amount: e.target.value,
+              })
+            }
+            min={this.state()?.selectedPrice?.ad_hoc_min_amount}
+            max={this.state()?.selectedPrice?.ad_hoc_max_amount}
+            style={{ '--sc-input-border-color-focus': 'var(--sc-input-border-color-hover)', '--sc-focus-ring-color-primary': 'transparent' }}
+          />
         </sc-choice-container>
       </Host>
     );

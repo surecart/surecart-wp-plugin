@@ -27,13 +27,24 @@ class Block extends BaseBlock {
 			return $product->get_error_message();
 		}
 
+		$amounts_block = array_filter(
+			$this->block->parsed_block['innerBlocks'],
+			function( $block ) {
+				return 'surecart/product-donation-amounts' === $block['blockName'];
+			},
+		);
+
+		if ( empty( $amounts_block[0]['innerBlocks'] ) ) {
+			return '';
+		}
+
 		// get amounts from inner blocks.
 		$amounts = array_filter(
 			array_map(
 				function( $block ) {
 					return $block['attrs']['amount'] ?? '';
 				},
-				$this->block->parsed_block['innerBlocks']
+				$amounts_block[0]['innerBlocks']
 			)
 		);
 
@@ -48,6 +59,7 @@ class Block extends BaseBlock {
 						'product'       => $product->toArray(),
 						'amounts'       => $amounts,
 						'ad_hoc_amount' => $amounts[0] ?? '' ?? '',
+						'custom_amount' => null,
 						'selectedPrice' => $product->prices->data[0]->toArray(),
 					],
 				],
