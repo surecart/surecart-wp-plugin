@@ -1,5 +1,5 @@
 import { Component, Fragment, h, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { Subscription, SubscriptionStatus } from '../../../types';
 
 @Component({
@@ -80,7 +80,7 @@ export class ScSubscriptionStatusBadge {
 
   render() {
     return (
-      <sc-tag aria-label={__(`Plan Status - ${this.getText()}`, 'surecart')} type={this.getType()}>
+      <sc-tag aria-label={sprintf(__('Plan Status - %s', 'surecart'), this.getText())} type={this.getType()}>
         {this.getText()}
       </sc-tag>
     );
