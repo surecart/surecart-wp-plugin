@@ -188,7 +188,7 @@ export class ScRadio {
             onFocus={() => this.handleFocus()}
           />
         </span>
-        <span part="label" id={this.labelId} class="radio__label">
+        <span part="label" id={this.labelId} class="radio__label" aria-hidden="true">
           <slot></slot>
         </span>
       </Tag>
