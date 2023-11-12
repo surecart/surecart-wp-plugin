@@ -62,7 +62,7 @@ export class ScSubscriptionDetails {
 
     if (this?.subscription?.cancel_at_period_end && this?.subscription?.current_period_end_at) {
       return (
-        <span aria-label={__(`Renewal Update - Your plan will be canceled on ${formatTime(this.subscription.current_period_end_at)}`, 'surecart')}>
+        <span aria-label={sprintf(__('Renewal Update - Your plan will be canceled on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
           {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
           <sc-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
