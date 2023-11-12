@@ -830,6 +830,7 @@
     "slot": true
   },
   "sc-icon": {
+    "aria-hidden": true,
     "label": true,
     "library": true,
     "name": true,
