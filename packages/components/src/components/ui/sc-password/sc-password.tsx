@@ -70,12 +70,6 @@ export class ScPassword {
   /** Verify Text. */
   @State() verifyText: string;
 
-  /** Password does not match text. */
-  @State() passwordDoesNotMatchText: string = __('Password does not match.', 'surecart');
-
-  /** Password matched text. */
-  @State() passwordMatchedText: string = __('Password is matched.', 'surecart');
-
   /** Sets focus on the input. */
   @Method()
   async triggerFocus(options?: FocusOptions) {
@@ -91,7 +85,7 @@ export class ScPassword {
     if (this.confirmation) {
       if (this.confirmInput?.value && this.input?.value !== this.confirmInput?.value) {
         this.confirmInput.setCustomValidity(__('Password does not match.', 'surecart'));
-        speak(this.passwordDoesNotMatchText, 'assertive');
+        speak(__('Password does not match.', 'surecart'), 'assertive');
       }
     }
 
@@ -166,7 +160,7 @@ export class ScPassword {
     }
 
     if (!!this.input?.value && !!this.confirmInput?.value && this.input?.value === this.confirmInput?.value) {
-      speak(this.passwordMatchedText, 'assertive');
+      speak(__('Password is matched.', 'surecart'), 'assertive');
     }
 
     this.verifyText = '';
