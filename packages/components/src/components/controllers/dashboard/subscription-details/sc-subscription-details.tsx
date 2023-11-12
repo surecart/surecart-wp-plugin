@@ -77,12 +77,10 @@ export class ScSubscriptionDetails {
       if (this.subscription?.pending_update?.ad_hoc_amount) {
         return (
           <span
-            aria-label={__(
-              `Renewal Update - Your plan switches to ${formatNumber(
-                this.subscription?.pending_update?.ad_hoc_amount,
-                this.pendingPrice?.currency || this.subscription?.price?.currency,
-              )} on ${formatTime(this.subscription.current_period_end_at)}`,
-              'surecart',
+            aria-label={sprintf(
+              __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
+              formatNumber(this.subscription?.pending_update?.ad_hoc_amount, this.pendingPrice?.currency || this.subscription?.price?.currency),
+              formatTime(this.subscription.current_period_end_at),
             )}
           >
             {__('Your plan switches to', 'surecart')}{' '}
