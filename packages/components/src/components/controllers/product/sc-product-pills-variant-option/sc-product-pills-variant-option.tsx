@@ -32,7 +32,8 @@ export class ScProductPillsVariantOption {
                   })
                 }
               >
-                <sc-visually-hidden>{sprintf(__('Select %s:', 'surecart'), this.label)} </sc-visually-hidden>
+                {/* Translators:  %s is the selected variant label*/}
+                <sc-visually-hidden>{sprintf(__('Select %s.', 'surecart'), this.label)} </sc-visually-hidden>
                 {value}
                 {isUnavailable && <sc-visually-hidden> {__('(option unavailable)', 'surecart')} </sc-visually-hidden>}
               </sc-pill-option>
