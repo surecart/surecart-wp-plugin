@@ -785,6 +785,10 @@ export namespace Components {
           * The placeholder for the input
          */
         "placeholder": string;
+        /**
+          * Has recurring
+         */
+        "showInterval": boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -2165,10 +2169,6 @@ export namespace Components {
          */
         "auAbnLabel": string;
         /**
-          * Is this busy
-         */
-        "busy": boolean;
-        /**
           * GST zone label
          */
         "caGstLabel": string;
@@ -2181,25 +2181,18 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
-          * The order
-         */
-        "order": Partial<Checkout>;
-        /**
           * Other zones label
          */
         "otherLabel": string;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Force show the field.
          */
         "show": boolean;
-        /**
-          * Tax identifier
-         */
-        "taxIdentifier": TaxIdentifier;
-        /**
-          * The tax protocol.
-         */
-        "taxProtocol": TaxProtocol;
+        "taxIdentifier": {
+    number: string;
+    number_type: string;
+  };
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2816,6 +2809,10 @@ export namespace Components {
           * Limit to a set of ids.
          */
         "ids": string[];
+        /**
+          * Is the store connected?
+         */
+        "isStoreConnected": boolean;
         "layoutConfig": LayoutConfig1;
         "limit": number;
         "paginationAlignment": string;
@@ -2827,6 +2824,7 @@ export namespace Components {
           * Should we paginate?
          */
         "paginationEnabled": boolean;
+        "products"?: Product[];
         /**
           * Query to search for
          */
@@ -3602,8 +3600,9 @@ export namespace Components {
           * Other zones label
          */
         "otherLabel": string;
+        "reportValidity": () => Promise<boolean>;
         /**
-          * Required?
+          * Whether tax input is required
          */
         "required": boolean;
         /**
@@ -4006,10 +4005,6 @@ export interface ScOrderShippingAddressCustomEvent<T> extends CustomEvent<T> {
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderSummaryElement;
-}
-export interface ScOrderTaxIdInputCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderTaxIdInputElement;
 }
 export interface ScPaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -6375,6 +6370,10 @@ declare namespace LocalJSX {
           * The placeholder for the input
          */
         "placeholder"?: string;
+        /**
+          * Has recurring
+         */
+        "showInterval"?: boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -7929,10 +7928,6 @@ declare namespace LocalJSX {
          */
         "auAbnLabel"?: string;
         /**
-          * Is this busy
-         */
-        "busy"?: boolean;
-        /**
           * GST zone label
          */
         "caGstLabel"?: string;
@@ -7945,17 +7940,6 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
-          * Make a request to update the order.
-         */
-        "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
-    data: Partial<Checkout>;
-    options?: { silent?: boolean };
-  }>) => void;
-        /**
-          * The order
-         */
-        "order"?: Partial<Checkout>;
-        /**
           * Other zones label
          */
         "otherLabel"?: string;
@@ -7963,14 +7947,10 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
-        /**
-          * Tax identifier
-         */
-        "taxIdentifier"?: TaxIdentifier;
-        /**
-          * The tax protocol.
-         */
-        "taxProtocol"?: TaxProtocol;
+        "taxIdentifier"?: {
+    number: string;
+    number_type: string;
+  };
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -8620,6 +8600,10 @@ declare namespace LocalJSX {
           * Limit to a set of ids.
          */
         "ids"?: string[];
+        /**
+          * Is the store connected?
+         */
+        "isStoreConnected"?: boolean;
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         /**
@@ -8635,6 +8619,7 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "paginationEnabled"?: boolean;
+        "products"?: Product[];
         /**
           * Query to search for
          */
@@ -9519,7 +9504,7 @@ declare namespace LocalJSX {
          */
         "otherLabel"?: string;
         /**
-          * Required?
+          * Whether tax input is required
          */
         "required"?: boolean;
         /**

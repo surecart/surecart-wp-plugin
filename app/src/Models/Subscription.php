@@ -427,6 +427,28 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Should delay subscription cancellation?
+	 *
+	 * @return boolean
+	 */
+	public function shouldDelayCancellation(): bool {
+		$protocol = \SureCart::account()->subscription_protocol;
+
+		if ( ! $protocol->cancel_window_enabled || empty( $protocol->cancel_window_days ) || empty( $this->attributes['current_period_end_at'] ) ) {
+			return false;
+		}
+
+		$cancel_window_days = $protocol->cancel_window_days;
+		$now                = (new \DateTime())->format('Y-m-d');
+		$end                = new \DateTime();
+		$end->setTimestamp( $this->attributes['current_period_end_at'] );
+		$end = $end->modify( "-{$cancel_window_days} days" );
+		$end = $end->format('Y-m-d');
+
+		return $now < $end;
+	}
+
+	/**
 	 * Can the subscription be canceled?
 	 *
 	 * @return boolean

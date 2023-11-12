@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 
 import { getHumanDiscount } from '../../../functions/price';
@@ -61,6 +61,9 @@ export class ScCouponForm {
   /** The discount amount */
   @Prop() discountAmount: number;
 
+  /** Has recurring */
+  @Prop() showInterval: boolean;
+
   /** Is it open */
   @Prop({ mutable: true }) open: boolean;
 
@@ -102,6 +105,22 @@ export class ScCouponForm {
     }
   }
 
+  translateHumanDiscountWithDuration(humanDiscount) {
+    if (!this.showInterval) return humanDiscount;
+
+    const { duration, duration_in_months } = this.discount?.coupon;
+    switch (duration) {
+      case 'once':
+        return `${humanDiscount} ${__('once', 'surecart')}`;
+      case 'repeating':
+        const monthsLabel = sprintf(_n('%d month', '%d months', duration_in_months, 'surecart'), duration_in_months);
+        // translators: %s is the discount amount, %s is the duration (e.g. 3 months)
+        return sprintf(__('%s for %s', 'surecart'), humanDiscount, monthsLabel);
+      default:
+        return humanDiscount;
+    }
+  }
+
   render() {
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
@@ -110,7 +129,7 @@ export class ScCouponForm {
     if (this?.discount?.promotion?.code) {
       let humanDiscount = '';
 
-      if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
+      if (this?.discount?.coupon) {
         humanDiscount = getHumanDiscount(this?.discount?.coupon);
       }
 
@@ -141,7 +160,7 @@ export class ScCouponForm {
 
           {humanDiscount && (
             <span class="coupon-human-discount" slot="price-description">
-              ({humanDiscount})
+              {this.translateHumanDiscountWithDuration(humanDiscount)}
             </span>
           )}
 

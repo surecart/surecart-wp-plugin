@@ -10,6 +10,7 @@ import {
 	ScFormControl,
 	ScTooltip,
 	ScBlockUi,
+	ScSwitch,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
@@ -289,7 +290,7 @@ export default ({
 						)}
 					</div>
 
-					{/* <ScDivider />
+					<ScDivider />
 
 					<div
 						css={css`
@@ -307,12 +308,12 @@ export default ({
 							{__('Notify customer of shipment', 'surecart')}
 							<span slot="description">
 								{__(
-									'Send shipping details to your customer',
+									'Send shipment details to your customer now',
 									'surecart'
 								)}
 							</span>
 						</ScSwitch>
-					</div> */}
+					</div>
 				</div>
 
 				<ScButton

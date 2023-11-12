@@ -1,4 +1,4 @@
-import { Component, h, Prop, Fragment, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, Fragment, Watch, Event, EventEmitter, Method } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { zones, getType } from '../../../functions/tax';
 
@@ -16,9 +16,6 @@ export class ScTaxIdInput {
 
   /** Force show the field. */
   @Prop() show: boolean = false;
-
-  /** Required? */
-  @Prop({ reflect: true }) required: boolean = false;
 
   /** Type of tax id */
   @Prop({ mutable: true }) type: string = 'other';
@@ -50,6 +47,9 @@ export class ScTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
+  /** Whether tax input is required */
+  @Prop({ reflect: true }) required: boolean = false;
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
 
@@ -62,11 +62,9 @@ export class ScTaxIdInput {
   /** Set the checkout state. */
   @Event() scSetState: EventEmitter<string>;
 
-  @Watch('country')
-  handleCountryChange() {
-    if (this.country) {
-      this.type = getType(this.country);
-    }
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
   }
 
   @Watch('otherLabel')
@@ -83,7 +81,7 @@ export class ScTaxIdInput {
   }
 
   componentWillLoad() {
-    if (this.country) {
+    if (this.country && !this.type) {
       this.type = getType(this.country);
     }
     this.onLabelChange();
@@ -107,7 +105,6 @@ export class ScTaxIdInput {
           ref={el => (this.input = el as HTMLScInputElement)}
           label={zones?.[this?.type || 'other']?.label}
           name="tax_identifier.number"
-          required={this.required}
           value={this.number}
           onScInput={(e: any) => {
             e.stopImmediatePropagation();
@@ -123,6 +120,7 @@ export class ScTaxIdInput {
               number_type: this.type || 'other',
             });
           }}
+          required={this.required}
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 

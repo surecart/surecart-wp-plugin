@@ -21,11 +21,17 @@
 | `taxProtocol`   | --             | The tax protocol.     | `TaxProtocol`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | `undefined` |
 
 
-## Events
+## Methods
 
-| Event           | Description                         | Type                                                                         |
-| --------------- | ----------------------------------- | ---------------------------------------------------------------------------- |
-| `scUpdateOrder` | Make a request to update the order. | `CustomEvent<{ data: Partial<Checkout>; options?: { silent?: boolean; }; }>` |
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ## Dependencies
