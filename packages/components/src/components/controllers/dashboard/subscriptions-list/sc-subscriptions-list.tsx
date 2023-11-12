@@ -1,5 +1,5 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { Subscription } from '../../../../types';
@@ -173,7 +173,7 @@ export class ScSubscriptionsList {
         </span>
 
         {!!this.allLink && !!this.subscriptions?.length && (
-          <sc-button type="link" href={this.allLink} slot="end" aria-label={__(`View all ${this.heading || 'Subscriptions'}`, 'surecart')}>
+          <sc-button type="link" href={this.allLink} slot="end" aria-label={sprintf(__('View all %s', 'surecart'), this.heading || 'Subscriptions')}>
             {__('View all', 'surecart')}
             <sc-icon aria-hidden="true" name="chevron-right" slot="suffix"></sc-icon>
           </sc-button>
