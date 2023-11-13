@@ -202,7 +202,7 @@ export class ScProductItemList {
     try {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
-          expand: ['prices', 'featured_product_media','product_medias', 'product_media.media', 'variants'],
+          expand: ['prices', 'featured_product_media', 'product_medias', 'product_media.media', 'variants'],
           archived: false,
           status: ['published'],
           per_page: this.limit,
@@ -287,17 +287,17 @@ export class ScProductItemList {
                       {this.renderSortName()}
                       <sc-visually-hidden> {__('selected.', 'surecart')}</sc-visually-hidden>
                     </sc-button>
-                    <sc-menu ariaLabel={__('Sort Products', 'surecart')}>
-                      <sc-menu-item ariaLabel={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
+                    <sc-menu aria-label={__('Sort Products', 'surecart')}>
+                      <sc-menu-item aria-label={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
                         {__('Latest', 'surecart')}
                       </sc-menu-item>
-                      <sc-menu-item ariaLabel={__('Sort by oldest', 'surecart')} disabled={this.sort === 'created_at:asc'}>
+                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} disabled={this.sort === 'created_at:asc'}>
                         {__('Oldest', 'surecart')}
                       </sc-menu-item>
-                      <sc-menu-item ariaLabel={__('Sort by name, A to Z', 'surecart')} onClick={() => (this.sort = 'name:asc')}>
+                      <sc-menu-item aria-label={__('Sort by name, A to Z', 'surecart')} onClick={() => (this.sort = 'name:asc')}>
                         {__('Alphabetical, A-Z', 'surecart')}
                       </sc-menu-item>
-                      <sc-menu-item ariaLabel={__('Sort by name, Z to A', 'surecart')} onClick={() => (this.sort = 'name:desc')}>
+                      <sc-menu-item aria-label={__('Sort by name, Z to A', 'surecart')} onClick={() => (this.sort = 'name:desc')}>
                         {__('Alphabetical, Z-A', 'surecart')}
                       </sc-menu-item>
                     </sc-menu>
@@ -315,14 +315,14 @@ export class ScProductItemList {
                       </sc-visually-hidden>
                       <span aria-hidden> {__('Filter', 'surecart')}</span>
                     </sc-button>
-                    <sc-menu ariaLabel={__('Filter products', 'surecart')}>
+                    <sc-menu aria-label={__('Filter products', 'surecart')}>
                       {(this.collections ?? []).map(collection => {
                         return (
                           <sc-menu-item
                             checked={this.selectedCollections.some(selected => selected?.id === collection?.id)}
                             onClick={() => this.toggleSelectCollection(collection)}
                             key={collection?.id}
-                            ariaLabel={sprintf(__('Filter by %s', 'surecart'), collection?.name)}
+                            aria-label={sprintf(__('Filter by %s', 'surecart'), collection?.name)}
                           >
                             {collection.name}
                           </sc-menu-item>
@@ -344,7 +344,7 @@ export class ScProductItemList {
                           this.currentQuery = '';
                           this.updateProducts();
                         }}
-                        ariaLabel={sprintf(__('Searched for %s. Press space to clear search.', 'surecart'), this.query)}
+                        aria-label={sprintf(__('Searched for %s. Press space to clear search.', 'surecart'), this.query)}
                       >
                         {this.query}
                       </sc-tag>

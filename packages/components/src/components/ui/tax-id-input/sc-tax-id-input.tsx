@@ -161,7 +161,7 @@ export class ScTaxIdInput {
                     }
                   }}
                   checked={this.type === name}
-                  ariaLabel={zones[name].label_small}
+                  aria-label={zones[name].label_small}
                 >
                   {zones[name].label_small}
                 </sc-menu-item>

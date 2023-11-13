@@ -23,9 +23,6 @@ export class ScMenuItem {
   /** Draws the menu item in a disabled state. */
   @Prop({ reflect: true }) disabled: boolean = false;
 
-  /** Aria label */
-  @Prop({ reflect: false }) ariaLabel: string = '';
-
   /** Sets focus on the button. */
   @Method('setFocus')
   async setFocus(options?: FocusOptions) {
@@ -63,7 +60,6 @@ export class ScMenuItem {
         role="menuitem"
         aria-disabled={this.disabled ? 'true' : 'false'}
         aria-checked={this.checked ? 'true' : 'false'}
-        aria-label={this.ariaLabel}
         tabindex={!this.disabled ? '0' : undefined}
         onFocus={() => this.handleFocus()}
         onBlur={() => this.handleBlur()}
