@@ -12,7 +12,6 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 import Box from '../../../ui/Box';
 import { useState } from 'react';
 import CreateFulfillment from './CreateFulfillment';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ items, checkout, orderId, onCreateSuccess }) => {
