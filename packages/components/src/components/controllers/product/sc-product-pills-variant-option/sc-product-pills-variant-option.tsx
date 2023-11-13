@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { isOptionMissing, isOptionSoldOut } from '@store/product/getters';
 import { __, sprintf } from '@wordpress/i18n';
@@ -19,12 +19,10 @@ export class ScProductPillsVariantOption {
     return (
       <sc-form-control label={this.label}>
         <span slot="label">
-          {this.label}
+          <span aria-hidden="true">{this.label}</span>
           <sc-visually-hidden>
-            {' '}
-            {sprintf(__('options selector. There are %d options in this selector.', 'surecart'), state.variant_options[this.optionNumber - 1].values.length)}
+            {sprintf(__('%s options selector. There are %d options in this selector.', 'surecart'), this.label, state.variant_options[this.optionNumber - 1].values.length)}
           </sc-visually-hidden>
-
         </span>
         <div class="sc-product-pills-variant-option__wrapper">
           {(state.variant_options[this.optionNumber - 1].values || []).map(value => {
@@ -40,10 +38,12 @@ export class ScProductPillsVariantOption {
                   })
                 }
               >
-                <sc-visually-hidden>{sprintf(__('Select %s', 'surecart'), this.label)} </sc-visually-hidden>
-                {value}
-                {state.variantValues[`option_${this.optionNumber}`] === value && <sc-visually-hidden>. {__('This option is currently selected.', 'surecart')}</sc-visually-hidden>}
-                {isUnavailable && <sc-visually-hidden> {__('(option unavailable)', 'surecart')} </sc-visually-hidden>}
+                <span aria-hidden="true">{value}</span>
+                <sc-visually-hidden>
+                  {sprintf(__('Select %s.', 'surecart'), this.label)}
+                  {isUnavailable && <Fragment> {__('(option unavailable)', 'surecart')}</Fragment>}
+                  {state.variantValues[`option_${this.optionNumber}`] === value && <Fragment> {__('This option is currently selected.', 'surecart')}</Fragment>}
+                </sc-visually-hidden>
               </sc-pill-option>
             );
           })}
