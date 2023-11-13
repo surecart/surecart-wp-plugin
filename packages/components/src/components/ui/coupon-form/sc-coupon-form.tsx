@@ -101,12 +101,12 @@ export class ScCouponForm {
       speak(message, 'assertive');
     } else {
       // Translators: %s is the coupon code.
-      const message = sprintf(__('Coupon code %s removed.', 'sc-coupon-form'), newValue?.promotion?.code || this.input.value || '');
+      const message = __('Coupon code removed.', 'sc-coupon-form');
       speak(message, 'assertive');
     }
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
-        this.couponTag.focus();
+        (this.couponTag.shadowRoot.querySelector('*') as any).focus();
       } else {
         this.addCouponTrigger.focus();
       }
