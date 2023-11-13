@@ -19,6 +19,7 @@
 | `paginationAlignment`  | `pagination-alignment`   |                                                           | `string`                                    | `'center'`          |
 | `paginationAutoScroll` | `pagination-auto-scroll` | Should we auto-scroll to the top when paginating via ajax | `boolean`                                   | `true`              |
 | `paginationEnabled`    | `pagination-enabled`     | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `products`             | --                       |                                                           | `Product[]`                                 | `undefined`         |
 | `query`                | `query`                  | Query to search for                                       | `string`                                    | `undefined`         |
 | `searchEnabled`        | `search-enabled`         | Should allow search                                       | `boolean`                                   | `true`              |
 | `sort`                 | `sort`                   | Sort                                                      | `string`                                    | `'created_at:desc'` |

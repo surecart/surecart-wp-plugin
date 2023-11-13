@@ -21,6 +21,7 @@
 | `loading`        | `loading`         | Is the form loading           | `boolean`          | `undefined` |
 | `open`           | `open`            | Is it open                    | `boolean`          | `undefined` |
 | `placeholder`    | `placeholder`     | The placeholder for the input | `string`           | `undefined` |
+| `showInterval`   | `show-interval`   | Has recurring                 | `boolean`          | `undefined` |
 
 
 ## Events

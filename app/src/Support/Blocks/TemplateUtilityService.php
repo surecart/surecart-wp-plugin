@@ -62,6 +62,10 @@ class TemplateUtilityService {
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
 			],
+			'cart'					 => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
+			]
 		];
 	}
 
