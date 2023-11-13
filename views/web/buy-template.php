@@ -6,6 +6,7 @@
 			<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
 				<sc-image-slider id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>" style="--sc-product-slider-height: 310px;"></sc-image-slider>
 				<?php
+				var_dump( $product->product_medias );
 				\SureCart::assets()->addComponentData(
 					'sc-image-slider',
 					'#sc-product-media-' . $product->id,
@@ -15,7 +16,7 @@
 							function ( $product_media ) use ( $product ) {
 								return array(
 									'src'   => $product_media->getUrl( 450 ),
-									'alt'   => $product_media->media->filename ?? $product->name ?? '',
+									'alt'   => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
 									'width' => 450,
 								);
 							},
@@ -27,7 +28,7 @@
 									'src'    => $product_media->getUrl( 90 ),
 									'srcset' => $product_media->getSrcset( array( 90, 120, 240 ) ),
 									'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
-									'alt'    => $product_media->media->filename ?? $product->name ?? '',
+									'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
 									'width'  => 90,
 								);
 							},
@@ -39,7 +40,7 @@
 			<?php else : ?>
 				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 					<figure class="wp-block-image size-full is-resized has-custom-border">
-						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>"  style="border-radius:5px" />
 					</figure>
 				<!-- /wp:image -->
 			<?php endif; ?>
