@@ -113,7 +113,7 @@ export class ScImageSlider {
         {this.hasThumbnails && (
           <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.images.length > 5 }}>
             <button disabled={this.thumbsSwiper?.isBeginning} class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
-              <span class="sc-sr-only">{__('Go to previous product slide.', 'surecart')}</span>
+              <sc-sc-visually-hidden>{__('Go to previous product slide.', 'surecart')}</sc-sc-visually-hidden>
               <sc-icon name="chevron-left" aria-hidden="true" tab-index="0" />
             </button>
 
@@ -146,7 +146,7 @@ export class ScImageSlider {
             </div>
 
             <button disabled={this.thumbsSwiper?.isEnd} class="image-slider__navigation image-slider--is-next" ref={el => (this.next = el)}>
-              <span class="sc-sr-only">{__('Go to next product slide.', 'surecart')}</span>
+              <sc-sc-visually-hidden>{__('Go to next product slide.', 'surecart')}</sc-sc-visually-hidden>
               <sc-icon name="chevron-right" aria-hidden="true" tab-index="0" />
             </button>
           </div>

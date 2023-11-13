@@ -20,10 +20,11 @@ export class ScProductPillsVariantOption {
       <sc-form-control label={this.label}>
         <span slot="label">
           {this.label}
-          <span class="sc-sr-only">
+          <sc-visually-hidden>
             {' '}
             {sprintf(__('options selector. There are %d options in this selector.', 'surecart'), state.variant_options[this.optionNumber - 1].values.length)}
-          </span>
+          </sc-visually-hidden>
+
         </span>
         <div class="sc-product-pills-variant-option__wrapper">
           {(state.variant_options[this.optionNumber - 1].values || []).map(value => {
