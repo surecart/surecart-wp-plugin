@@ -103,8 +103,7 @@
       color: var(--primary-background);
     }
 
-    &:focus:not(.button--disabled),
-    &.button--focused:not(.button--disabled) {
+    &:focus:not(.button--disabled) {
       background-color: var(--sc-button-default-focus-background-color, var(--sc-color-white));
       border-color: var(--sc-button-default-focus-border-color, var(--sc-color-white));
       color: var(--primary-background);
@@ -138,12 +137,6 @@
       background-color: var(--primary-background);
       border-color: var(--sc-color-white);
       color: var(--primary-color);
-    }
-  }
-
-  &.button--medium {
-    &:focus:not(.button--disabled) {
-      box-shadow: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
     }
   }
 
