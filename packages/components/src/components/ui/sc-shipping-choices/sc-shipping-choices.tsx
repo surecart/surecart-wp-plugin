@@ -7,7 +7,7 @@ import { createOrUpdateCheckout } from '@services/session';
 import { checkoutIsLocked } from '@store/checkout/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { speak } from '@wordpress/a11y';
-import { getFormattedPrice } from 'src/functions/price';
+import { getFormattedPrice } from '../../../functions/price';
 
 @Component({
   tag: 'sc-shipping-choices',
