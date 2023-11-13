@@ -158,7 +158,6 @@ export class ScCouponForm {
               type="success"
               class="coupon-tag"
               clearable
-              tabindex="0"
               onScClear={() => {
                 this.scApplyCoupon.emit(null);
                 this.open = false;
