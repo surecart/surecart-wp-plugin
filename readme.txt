@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.8.4
+Stable tag: 2.9.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,19 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.9.0 - November 10th, 2023 =
+* New: Delay self-service cancellations - prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.
+* New: Enable or disalbe fulfillment notifications on admin order screen.
+* New: Ability to add coupon to subscription on admin subscription screen.
+* Improvement: Show recurring details of a coupon at checkout.
+* Improvement: Show line items on customer dashboard order details page.
+* Fix: Price selector hide label, price, control not working as expected.
+* Fix: Show required symbol on tax input if it’s required.
+* Fix: Incorrect test mode notice on coupons page.
+* Fix: Subscription merchant admin columns getting squished.
+* Fix: Product email settings description for licensing is incorrect.
+* Fix: Admin console notice for duplicate store registration.
 
 = 2.8.4 - November 5th, 2023 =
 * Fix: Issue where shop page images would sometimes overflow on mobile in some instances.

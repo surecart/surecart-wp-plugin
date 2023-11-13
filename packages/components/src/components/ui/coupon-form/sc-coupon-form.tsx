@@ -1,6 +1,11 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+<<<<<<< HEAD
 import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
+=======
+import { __, sprintf, _n } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
+>>>>>>> origin/main
 
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
@@ -63,6 +68,9 @@ export class ScCouponForm {
 
   /** The discount amount */
   @Prop() discountAmount: number;
+
+  /** Has recurring */
+  @Prop() showInterval: boolean;
 
   /** Is it open */
   @Prop({ mutable: true }) open: boolean;
@@ -141,13 +149,37 @@ export class ScCouponForm {
     }
   }
 
+  translateHumanDiscountWithDuration(humanDiscount) {
+    if (!this.showInterval) return humanDiscount;
+
+    const { duration, duration_in_months } = this.discount?.coupon;
+    switch (duration) {
+      case 'once':
+        return `${humanDiscount} ${__('once', 'surecart')}`;
+      case 'repeating':
+        const monthsLabel = sprintf(_n('%d month', '%d months', duration_in_months, 'surecart'), duration_in_months);
+        // translators: %s is the discount amount, %s is the duration (e.g. 3 months)
+        return sprintf(__('%s for %s', 'surecart'), humanDiscount, monthsLabel);
+      default:
+        return humanDiscount;
+    }
+  }
+
   render() {
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
     }
 
     if (this?.discount?.promotion?.code) {
+<<<<<<< HEAD
       let humanDiscount = this.getHumanReadableDiscount();
+=======
+      let humanDiscount = '';
+
+      if (this?.discount?.coupon) {
+        humanDiscount = getHumanDiscount(this?.discount?.coupon);
+      }
+>>>>>>> origin/main
 
       return (
         <sc-line-item exportparts="description:info, price-description:discount, price:amount">
@@ -179,7 +211,7 @@ export class ScCouponForm {
 
           {humanDiscount && (
             <span class="coupon-human-discount" slot="price-description">
-              ({humanDiscount})
+              {this.translateHumanDiscountWithDuration(humanDiscount)}
             </span>
           )}
 

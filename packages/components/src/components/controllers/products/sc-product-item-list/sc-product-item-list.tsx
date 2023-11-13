@@ -67,7 +67,7 @@ export class ScProductItemList {
   @Prop() limit: number = 15;
 
   /* Product list */
-  @State() products: Product[];
+  @Prop({ mutable: true }) products?: Product[];
 
   /* Loading indicator */
   @State() loading: boolean = false;
@@ -98,16 +98,16 @@ export class ScProductItemList {
   @State() collections: Collection[];
 
   /** Selected collections */
-  @State() selectedCollections: Collection[];
+  @State() selectedCollections: Collection[] = [];
 
   componentWillLoad() {
-    this.getProducts();
+    if (!this?.products?.length) {
+      this.getProducts();
+    }
 
     if (this.collectionEnabled) {
       this.getCollections();
     }
-
-    this.selectedCollections = [];
   }
 
   // Append URL if no 'product-page' found
