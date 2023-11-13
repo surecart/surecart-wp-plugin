@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -51,7 +51,7 @@ export class ScCartIcon {
         }}
         tabIndex={0}
         role="button"
-        aria-label={!uiStore.state.cart.open ? __('Open Cart', 'surecart') : __('Close Cart', 'surecart')}
+        aria-label={!uiStore.state.cart.open ? sprintf(__('Open Cart Floating Icon with %s items', 'surecart'), this.getItemsCount()) : __('Close Cart Floating Icon', 'surecart')}
       >
         <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>

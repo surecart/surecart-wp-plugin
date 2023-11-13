@@ -182,6 +182,7 @@ export class ScCouponForm {
               }}
               onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === 'Escape') {
+                  speak(__('Coupon was removed.', 'surecart'), 'assertive');
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
@@ -253,6 +254,7 @@ export class ScCouponForm {
             onScBlur={() => this.handleBlur()}
             onKeyDown={e => this.handleKeyDown(e)}
             ref={el => (this.input = el as HTMLScInputElement)}
+            aria-label={__('Add coupon code.', 'surecart')}
           >
             <sc-button
               exportparts="base:button__base, label:button_label"

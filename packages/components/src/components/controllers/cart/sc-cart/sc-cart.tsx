@@ -1,4 +1,4 @@
-import { Component, Fragment, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Fragment, h, Listen, Prop, State, Watch, Element } from '@stencil/core';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { baseUrl } from '../../../../services/session';
@@ -16,6 +16,8 @@ import { formBusy } from '@store/form/getters';
   shadow: true,
 })
 export class ScCart {
+  @Element() el: HTMLScCartElement;
+
   /** Is this open or closed? */
   @State() open: boolean = null;
 

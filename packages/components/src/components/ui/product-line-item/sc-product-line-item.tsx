@@ -188,6 +188,7 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
               ></sc-quantity-select>
             )}
           </div>
@@ -197,7 +198,6 @@ export class ScProductLineItem {
                 exportparts="base:remove-icon__base"
                 class="item__remove"
                 name="x"
-                aria-label={__('Remove item', 'surecart')}
                 onClick={() => this.scRemove.emit()}
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
@@ -205,6 +205,7 @@ export class ScProductLineItem {
                   }
                 }}
                 tabindex="0"
+                aria-label={__(`Remove Item - ${this.name} ${this.priceName} `, 'surecart')}
               ></sc-icon>
             ) : (
               <div></div>
