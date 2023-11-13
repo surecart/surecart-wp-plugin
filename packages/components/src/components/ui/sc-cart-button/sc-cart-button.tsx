@@ -2,7 +2,7 @@ import { Component, Element, h, Prop, State, Host } from '@stencil/core';
 import uiStore from '@store/ui';
 import { onChange } from '@store/checkouts';
 import { state as checkoutState } from '@store/checkout';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -70,7 +70,7 @@ export class ScCartButton {
       <Host
         tabindex={0}
         role="button"
-        aria-label={__(`Open Cart Menu Icon with ${this.getItemsCount()} items.`, 'surecart')}
+        aria-label={sprintf(__('Open Cart Menu Icon with %d items.', 'surecart'), this.getItemsCount())}
         onKeyDown={e => {
           if ('Enter' === e?.code || 'Space' === e?.code) {
             uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
