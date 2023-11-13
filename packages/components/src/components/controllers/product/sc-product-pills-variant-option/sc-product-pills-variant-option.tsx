@@ -18,12 +18,7 @@ export class ScProductPillsVariantOption {
   render() {
     return (
       <sc-form-control label={this.label}>
-        <span slot="label">
-          <span aria-hidden="true">{this.label}</span>
-          <sc-visually-hidden>
-            {sprintf(__('%s options selector. There are %d options in this selector.', 'surecart'), this.label, state.variant_options[this.optionNumber - 1].values.length)}
-          </sc-visually-hidden>
-        </span>
+        <span slot="label">{this.label}</span>
         <div class="sc-product-pills-variant-option__wrapper">
           {(state.variant_options[this.optionNumber - 1].values || []).map(value => {
             const isUnavailable = isOptionSoldOut(this.optionNumber, value) || isOptionMissing(this.optionNumber, value);

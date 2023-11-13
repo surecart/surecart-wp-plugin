@@ -199,7 +199,7 @@ export class ScProductCheckoutSelectVariantOption {
                   <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
                     <span aria-hidden="true">{value}</span>
                     <sc-visually-hidden>
-                      {sprintf(__('Select %s: %s.', 'surecart'), name, value)}
+                      {sprintf(__('Select %s: %s', 'surecart'), name, value)}
                       {isUnavailable && <Fragment> {__('(option unavailable)', 'surecart')}</Fragment>}
                     </sc-visually-hidden>
                   </sc-pill-option>
