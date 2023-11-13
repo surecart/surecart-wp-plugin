@@ -56,9 +56,9 @@ export class ScIcon {
   getLabel() {
     let label = '';
     if (this.label) {
-      label = LABEL_MAPPINGS[this.label] || this.label;
+      label = LABEL_MAPPINGS?.[this.label] || this.label;
     } else if (this.name) {
-      label = (LABEL_MAPPINGS[this.name] || this.name).replace(/-/g, ' ');
+      label = (LABEL_MAPPINGS?.[this.name] || this.name).replace(/-/g, ' ');
     } else if (this.src) {
       label = this.src.replace(/.*\//, '').replace(/-/g, ' ').replace(/\.svg/i, '');
     }
