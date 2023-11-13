@@ -27,7 +27,7 @@ export class ScOrderCouponForm {
 
     return (
       <sc-coupon-form
-        label={this.label}
+        label={this.label || __('Add Coupon Code', 'surecart')}
         collapsed={this.collapsed}
         placeholder={this.placeholder}
         loading={formBusy() && !checkoutState.checkout?.line_items?.data?.length}
