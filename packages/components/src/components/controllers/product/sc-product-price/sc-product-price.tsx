@@ -104,7 +104,9 @@ export class ScProductPrice {
               {!!price?.trial_duration_days && (
                 <Fragment>
                   <sc-visually-hidden>{sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), price.trial_duration_days)}</sc-visually-hidden>
-                  <span class="price__trial">{sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)}</span>
+                  <span class="price__trial" aria-hidden="true">
+                    {sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)}
+                  </span>
                 </Fragment>
               )}
 
@@ -123,6 +125,24 @@ export class ScProductPrice {
   }
 
   render() {
-    return <Host role="paragraph">{state.selectedPrice ? this.renderPrice(state.selectedPrice) : state.prices.length ? this.renderRange() : <slot />}</Host>;
+    return (
+      <Host role="paragraph">
+        {(() => {
+          if (state?.selectedVariant) {
+            return this.renderVariantPrice(state?.selectedVariant);
+          }
+
+          if (state.selectedPrice) {
+            return this.renderPrice(state.selectedPrice);
+          }
+
+          if (state.prices.length) {
+            return this.renderRange();
+          }
+
+          return <slot />;
+        })()}
+      </Host>
+    );
   }
 }
