@@ -53,9 +53,9 @@ class Block extends BaseBlock {
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<sc-visually-hidden><?php esc_html_e( 'Link to', 'surecart' ); ?> </sc-visually-hidden>
-					<?php echo wp_kses_post( $collection->name ); ?>
-					<sc-visually-hidden> <?php esc_html_e( 'product collection.', 'surecart' ); ?></sc-visually-hidden>
+					<span aria-hidden="true"><?php echo wp_kses_post( $collection->name ); ?></span>
+					<?php // translators: %s: collection name. ?>
+					<sc-visually-hidden><?php echo esc_html( sprintf( __( 'Link to %s product collection.', 'surecart' ), $collection->name ) ); ?> </sc-visually-hidden>
 				</a>
 				<?php endforeach; ?>
 			</div>
