@@ -22,6 +22,9 @@ export class ScOrderCouponForm {
   @Event() scApplyCoupon: EventEmitter<string>;
 
   render() {
+    // Do any line items have a recurring price?
+    const hasRecurring = checkoutState?.checkout?.line_items?.data?.some(item => item?.price?.recurring_interval);
+
     return (
       <sc-coupon-form
         label={this.label}
@@ -36,6 +39,7 @@ export class ScOrderCouponForm {
           'order-coupon-form--is-rtl': isRtl(),
         }}
         button-text={this.buttonText || __('Apply', 'surecart')}
+        show-interval={hasRecurring}
       ></sc-coupon-form>
     );
   }

@@ -51,10 +51,10 @@ export class ScPriceRange {
           </span>
         ) : (
           <span>
-            <span class="sc-sr-only">{__('Price range from', 'surecart')} </span>
+            <sc-visually-hidden>{__('Price range from', 'surecart')} </sc-visually-hidden>
             <sc-format-number type="currency" currency={this.minPrice.currency} value={this.minPrice.amount}></sc-format-number>
             <span aria-hidden>{' — '}</span>
-            <span class="sc-sr-only">{__('to', 'surecart')}</span>
+            <sc-visually-hidden>{__('to', 'surecart')}</sc-visually-hidden>
             <sc-format-number type="currency" currency={this.maxPrice.currency} value={this.maxPrice.amount}></sc-format-number>
           </span>
         )}

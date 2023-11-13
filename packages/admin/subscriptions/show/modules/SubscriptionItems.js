@@ -10,6 +10,7 @@ import Definition from '../../ui/Definition';
 import useSubscriptionItemsData from '../hooks/useSubscriptionItemsData';
 import useSubscriptionData from '../hooks/useSubscriptionData';
 import { intervalString } from '../../../util/translations';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default () => {
 	const { subscription, loading } = useSubscriptionData();
@@ -34,6 +35,16 @@ export default () => {
 		</Fragment>
 	);
 
+	const getImageAttributes = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
+
 	return (
 		<Box
 			title={__('Subscription Details', 'surecart')}
@@ -49,6 +60,7 @@ export default () => {
 								key={item.id}
 								imageUrl={item?.price?.product?.image_url}
 								name={item?.price?.product?.name}
+								{...getImageAttributes(item?.price?.product)}
 								priceName={item?.price?.name}
 								editable={false}
 								removable={false}

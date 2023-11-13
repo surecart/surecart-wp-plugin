@@ -1,13 +1,7 @@
-@import '../../../styles/mixins/hide.scss';
-
 :host {
   display: block;
 }
 
 .pagination-display {
   opacity: 0.8;
-}
-
-.sc-sr-only {
-  @include visually-hidden();
 }

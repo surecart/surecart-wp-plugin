@@ -3,7 +3,11 @@
  * Plugin Name: SureCart
  * Plugin URI: https://surecart.com/
  * Description: A simple yet powerful headless e-commerce platform designed to grow your business with effortlessly selling online.
- * Version: 2.8.5-accessibility1
+<<<<<<< HEAD
+ * Version: 2.8.5-accessibility2
+=======
+ * Version: 2.9.0
+>>>>>>> origin/main
  * Requires at least: 6.2
  * Requires PHP: 7.4
  * Author: SureCart

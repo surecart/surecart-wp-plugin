@@ -1,5 +1,6 @@
 import { Component, h, Prop, Element } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
+import { __ } from '@wordpress/i18n';
 
 /**
  * @part form-control - The elements base wrapper.
@@ -62,6 +63,13 @@ export class ScFormControl {
         <label part="label" id={this.labelId} class="form-control__label" htmlFor={this.inputId} aria-hidden={!!this.label ? 'false' : 'true'}>
           <slot name="label">{this.label}</slot>
           <slot name="label-end"></slot>
+          {!!this.required && (
+            <span aria-hidden="true" class="required">
+              {' '}
+              *
+            </span>
+          )}
+          <sc-visually-hidden>{!!this.required ? __('Mandatory field', 'surecart') : ''}</sc-visually-hidden>
         </label>
         <div part="input" class="form-control__input">
           <slot />

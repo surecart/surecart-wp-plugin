@@ -220,7 +220,7 @@ msgstr ""
 #: src/Controllers/Admin/Products/ProductsListTable.php:57
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:61
 #: licenses/modules/Details/index.js:14
-#: util.js:71
+#: util.js:85
 msgid "Active"
 msgstr ""
 
@@ -233,7 +233,7 @@ msgstr ""
 #: products/EditProduct.js:157
 #: products/modules/Prices/Price/Header.js:224
 #: products/modules/SingleDownload.js:259
-#: util.js:69
+#: util.js:83
 msgid "Archived"
 msgstr ""
 
@@ -1266,6 +1266,7 @@ msgstr[1] ""
 
 #. translators: Coupon % off.
 #: src/Controllers/Admin/Subscriptions/SubscriptionsListTable.php:319
+#: util.js:46
 msgid "%1d%% off"
 msgstr ""
 
@@ -5496,7 +5497,6 @@ msgstr ""
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:60
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:68
 #: subscriptions/show/modules/Tax.js:42
-#: subscriptions/show/ShowSubscription.js:105
 msgid "Something went wrong"
 msgstr ""
 
@@ -5674,7 +5674,7 @@ msgstr ""
 #: settings/tax-region/RegistrationForm.js:135
 #: store/notices/reducer.js:25
 #: store/ui/reducer.js:130
-#: util.js:97
+#: util.js:111
 msgid "Something went wrong."
 msgstr ""
 
@@ -6195,6 +6195,7 @@ msgstr ""
 #: settings/shipping/profile/Products.js:328
 #: settings/shipping/zone/ShippingZone.js:154
 #: subscriptions/edit/modules/Trial.js:43
+#: subscriptions/show/modules/CouponDisplay.js:49
 #: Blocks/CheckoutForm/components/PriceChoice.js:82
 #: Blocks/ConditionalForm/selectors/SelectProcessors/ProcessorItem.js:26
 #: components/PriceChoice.js:147
@@ -11202,6 +11203,8 @@ msgid "Cancellation Acts"
 msgstr ""
 
 #: store/add-entities.js:67
+#: subscriptions/edit/modules/Coupon.js:45
+#: subscriptions/show/modules/CouponDisplay.js:33
 msgid "Coupon"
 msgstr ""
 
@@ -11444,7 +11447,7 @@ msgstr ""
 
 #: subscriptions/shared/EndDate.js:10
 #: subscriptions/show/modules/Details.js:18
-#: util.js:68
+#: util.js:82
 msgid "Lifetime"
 msgstr ""
 
@@ -11603,8 +11606,18 @@ msgstr ""
 msgid "Pay off"
 msgstr ""
 
+#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:52
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:61
+msgid "Subscription updated."
+msgstr ""
+
 #: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:87
 msgid "Renew Subscription At"
+msgstr ""
+
+#: subscriptions/show/modules/modals/RenewSubscriptionAtModal.js:120
+#: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:164
+msgid "Update Subscription"
 msgstr ""
 
 #: subscriptions/show/modules/modals/RestoreSubscriptionAtModal.js:108
@@ -11674,6 +11687,10 @@ msgstr ""
 
 #: subscriptions/show/modules/Periods.js:163
 msgid "Next retry:"
+msgstr ""
+
+#: subscriptions/show/modules/SubscriptionItems.js:39
+msgid "Subscription Details"
 msgstr ""
 
 #: subscriptions/show/modules/Tax.js:36

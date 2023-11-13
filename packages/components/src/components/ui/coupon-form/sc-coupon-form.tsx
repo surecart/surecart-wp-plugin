@@ -1,9 +1,9 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf, _n } from '@wordpress/i18n';
+import { isRtl } from '../../../functions/page-align';
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
-import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -176,7 +176,6 @@ export class ScCouponForm {
               type="success"
               class="coupon-tag"
               clearable
-              tabindex="0"
               onScClear={() => {
                 this.scApplyCoupon.emit(null);
                 this.open = false;

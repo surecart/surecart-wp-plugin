@@ -1,5 +1,3 @@
-@import '../../../../styles/mixins/hide.scss';
-
 :host {
   display: block;
 }
@@ -109,8 +107,4 @@ sc-dropdown sc-button::part(base):focus {
 
 sc-pagination {
   font-size: var(--sc-pagination-font-size);
-}
-
-.sc-sr-only {
-  @include visually-hidden();
 }

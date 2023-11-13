@@ -1,5 +1,7 @@
 import { Component, h, Event, EventEmitter, Element, Method, Prop } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
+
 @Component({
   tag: 'sc-menu',
   styleUrl: 'sc-menu.scss',
@@ -32,6 +34,8 @@ export class ScMenu {
       if (item) {
         this.scSelect.emit({ item });
       }
+
+      speak(sprintf(__('Menu %s selected', 'surecart'), item.textContent), 'assertive');
     }
 
     // Prevent scrolling when space is pressed

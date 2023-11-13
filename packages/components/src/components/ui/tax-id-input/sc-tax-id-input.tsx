@@ -1,5 +1,6 @@
-import { Component, h, Prop, Fragment, Watch, Event, EventEmitter } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { Component, h, Prop, Fragment, Watch, Event, EventEmitter, Method } from '@stencil/core';
+import { __, sprintf } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 import { zones, getType } from '../../../functions/tax';
 
 @Component({
@@ -16,9 +17,6 @@ export class ScTaxIdInput {
 
   /** Force show the field. */
   @Prop() show: boolean = false;
-
-  /** Required? */
-  @Prop({ reflect: true }) required: boolean = false;
 
   /** Type of tax id */
   @Prop({ mutable: true }) type: string = 'other';
@@ -50,6 +48,9 @@ export class ScTaxIdInput {
   /** EU zone label */
   @Prop() euVatLabel: string = __('EU VAT', 'surecart');
 
+  /** Whether tax input is required */
+  @Prop({ reflect: true }) required: boolean = false;
+
   /** Make a request to update the order. */
   @Event() scChange: EventEmitter<{ number: string; number_type: string }>;
 
@@ -62,11 +63,9 @@ export class ScTaxIdInput {
   /** Set the checkout state. */
   @Event() scSetState: EventEmitter<string>;
 
-  @Watch('country')
-  handleCountryChange() {
-    if (this.country) {
-      this.type = getType(this.country);
-    }
+  @Method()
+  async reportValidity() {
+    return this.input.reportValidity();
   }
 
   @Watch('otherLabel')
@@ -83,7 +82,7 @@ export class ScTaxIdInput {
   }
 
   componentWillLoad() {
-    if (this.country) {
+    if (this.country && !this.type) {
       this.type = getType(this.country);
     }
     this.onLabelChange();
@@ -107,8 +106,8 @@ export class ScTaxIdInput {
           ref={el => (this.input = el as HTMLScInputElement)}
           label={zones?.[this?.type || 'other']?.label}
           aria-label={__('Tax ID', 'surecart')}
+          placeholder={__('Enter Tax ID', 'surecart')}
           name="tax_identifier.number"
-          required={this.required}
           value={this.number}
           onScInput={(e: any) => {
             e.stopImmediatePropagation();
@@ -124,10 +123,11 @@ export class ScTaxIdInput {
               number_type: this.type || 'other',
             });
           }}
+          required={this.required}
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
-          <sc-dropdown slot="suffix" position="bottom-right">
+          <sc-dropdown slot="suffix" position="bottom-right" role="listbox" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
             <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
               {zones?.[this?.type || 'other']?.label_small}
             </sc-button>
@@ -157,9 +157,11 @@ export class ScTaxIdInput {
                       });
                       this.type = name;
                       this.input?.triggerFocus();
+                      speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
                     }
                   }}
                   checked={this.type === name}
+                  ariaLabel={zones[name].label_small}
                 >
                   {zones[name].label_small}
                 </sc-menu-item>
