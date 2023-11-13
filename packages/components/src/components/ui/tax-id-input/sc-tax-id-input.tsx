@@ -1,5 +1,5 @@
 import { Component, h, Prop, Fragment, Watch, Event, EventEmitter } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 import { zones, getType } from '../../../functions/tax';
 
@@ -159,7 +159,7 @@ export class ScTaxIdInput {
                       });
                       this.type = name;
                       this.input?.triggerFocus();
-                      speak(`${zones[name].label_small} selected`, 'assertive');
+                      speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
                     }
                   }}
                   checked={this.type === name}
