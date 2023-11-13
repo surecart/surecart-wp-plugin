@@ -69,6 +69,7 @@ export class ScPayment {
         <sc-payment-method-choice key={processor?.id} processor-id="paypal">
           <span slot="summary" class="sc-payment-toggle-summary">
             <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }} aria-hidden="true"></sc-icon>
+            <sc-visually-hidden>{__('PayPal', 'surecart')}</sc-visually-hidden>
           </span>
 
           <sc-card>
