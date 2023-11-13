@@ -38,10 +38,6 @@ export class ScToggle {
   /** Are these collapsible? */
   @Prop() collapsible: boolean = true;
 
-  @Prop() openSpeakText: string = __('Summary Shown', 'surecart');
-
-  @Prop() closeSpeakText: string = __('Summary Hidden', 'surecart');
-
   /** Show the toggle */
   @Event() scShow: EventEmitter<void>;
 
@@ -59,7 +55,7 @@ export class ScToggle {
       return undefined;
     }
     this.open = true;
-    speak(this.openSpeakText);
+    speak(__('Summary Shown', 'surecart'));
   }
 
   /** Hides the details */
@@ -68,7 +64,7 @@ export class ScToggle {
       return undefined;
     }
     this.open = false;
-    speak(this.closeSpeakText);
+    speak(__('Summary Hidden', 'surecart'));
   }
 
   handleSummaryClick() {
