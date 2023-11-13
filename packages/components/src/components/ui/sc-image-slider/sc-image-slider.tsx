@@ -16,16 +16,16 @@ export class ScImageSlider {
   private thumbsSwiper: Swiper;
 
   /** Accept a string or an array of objects */
-  @Prop() images: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
-  @Prop() thumbnails: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[] = [];
+  @Prop() images: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
+  @Prop() thumbnails: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[] = [];
   @Prop() hasThumbnails: boolean;
   @Prop() thumbnailsPerPage: number = 5;
   @Prop() autoHeight: boolean;
 
   /** Current Slide Index */
   @State() currentSliderIndex: number = 0;
-  @State() imagesData: { src: string; alt: string; srcset; width: number; height: number; sizes: string }[] = [];
-  @State() thumbnailsData: { src: string; alt: string; srcset; width: number; height: number; sizes: string }[] = [];
+  @State() imagesData: { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[] = [];
+  @State() thumbnailsData: { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[] = [];
 
   @Watch('currentSliderIndex')
   handleThumbPaginate() {
@@ -100,10 +100,10 @@ export class ScImageSlider {
       <div class={{ 'image-slider': true, 'image-slider--is-fixed-height': !this.autoHeight }} part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
-            {(this.imagesData || []).map(({ src, alt, srcset, width, height, sizes }, index) => (
+            {(this.imagesData || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
               <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
-                  <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} />
+                  <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} {...(title ? { title } : {})} />
                 </div>
               </div>
             ))}
@@ -123,14 +123,15 @@ export class ScImageSlider {
                 role="radiogroup"
                 aria-label={sprintf(__('Products slide options section. There are %d options present.', 'surecart'), thumbnails?.length || 0)}
               >
-                {(thumbnails || []).map(({ src, alt, srcset, width, height, sizes }, index) => (
-                  <div
+                {(thumbnails || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
+                  <button
                     class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                     onClick={() => this.swiper?.slideTo?.(index)}
                   >
                     <img
                       src={src}
                       alt={sprintf(__('Product image number %d, %s', 'sc-image-slider'), index + 1, alt)}
+                      {...(title ? { title } : {})}
                       srcset={srcset}
                       width={width}
                       height={height}
@@ -140,7 +141,7 @@ export class ScImageSlider {
                       aria-checked={this.currentSliderIndex === index?"true":"false"}
                       tabindex="0"
                     />
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

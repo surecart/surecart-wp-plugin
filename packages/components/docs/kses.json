@@ -1550,8 +1550,7 @@
     "slot": true
   },
   "sc-product-item-image": {
-    "alt": true,
-    "product-media": true,
+    "product": true,
     "sizing": true,
     "style": true,
     "id": true,
@@ -1598,10 +1597,11 @@
     "currency": true,
     "editable": true,
     "fees": true,
+    "image-alt": true,
+    "image-title": true,
     "image-url": true,
     "interval": true,
     "max": true,
-    "media": true,
     "name": true,
     "price-name": true,
     "quantity": true,

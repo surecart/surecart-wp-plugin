@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 
 import { getHumanDiscount } from '../../../functions/price';
@@ -89,6 +89,19 @@ export class ScCouponForm {
   @Watch('discount')
   handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
     if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
+    if (this?.discount?.promotion?.code) {
+      const message = sprintf(
+        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
+        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
+        newValue?.promotion?.code || this.input.value || '',
+        getHumanDiscount(this?.discount?.coupon),
+      );
+      speak(message, 'assertive');
+    } else {
+      // Translators: %s is the coupon code.
+      const message = sprintf(__('Coupon code %s removed.', 'sc-coupon-form'), newValue?.promotion?.code || this.input.value || '');
+      speak(message, 'assertive');
+    }
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         this.couponTag.focus();
@@ -106,6 +119,13 @@ export class ScCouponForm {
     }
   }
 
+  getHumanReadableDiscount() {
+    if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
+      return getHumanDiscount(this?.discount?.coupon);
+    }
+    return '';
+  }
+
   /** Apply the coupon. */
   applyCoupon() {
     this.scApplyCoupon.emit(this.input.value.toUpperCase());
@@ -117,6 +137,7 @@ export class ScCouponForm {
     } else if (e?.code === 'Escape') {
       this.scApplyCoupon.emit(null);
       this.open = false;
+      speak(__('Coupon code field closed.', 'surecart'), 'assertive');
     }
   }
 
@@ -126,11 +147,7 @@ export class ScCouponForm {
     }
 
     if (this?.discount?.promotion?.code) {
-      let humanDiscount = '';
-
-      if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
-        humanDiscount = getHumanDiscount(this?.discount?.coupon);
-      }
+      let humanDiscount = this.getHumanReadableDiscount();
 
       return (
         <sc-line-item exportparts="description:info, price-description:discount, price:amount">
@@ -141,7 +158,6 @@ export class ScCouponForm {
               type="success"
               class="coupon-tag"
               clearable
-              tabindex="0"
               onScClear={() => {
                 this.scApplyCoupon.emit(null);
                 this.open = false;
@@ -153,6 +169,9 @@ export class ScCouponForm {
                 }
               }}
               ref={el => (this.couponTag = el as HTMLScTagElement)}
+              role="button"
+              // translators: %s is the coupon code.
+              aria-label={sprintf(__('Press enter to remove coupon code %s.', 'surecart'), this?.discount?.promotion?.code || this.input.value || '')}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -202,6 +221,7 @@ export class ScCouponForm {
           }}
           tabindex="0"
           ref={el => (this.addCouponTrigger = el as HTMLElement)}
+          role="button"
         >
           <slot name="label">{this.label}</slot>
         </div>

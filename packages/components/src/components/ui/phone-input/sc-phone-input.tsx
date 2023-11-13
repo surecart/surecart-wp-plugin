@@ -230,6 +230,7 @@ export class ScPhoneInput {
           helpId={this.helpId}
           labelId={this.labelId}
           name={this.name}
+          aria-label={this.label}
         >
           <slot name="label-end" slot="label-end"></slot>
           <div
@@ -282,6 +283,7 @@ export class ScPhoneInput {
                 spellcheck={this.spellcheck}
                 pattern={applyFilters('surecart/sc-phone-input/pattern', this.pattern) as string}
                 inputmode={'numeric'}
+                aria-label={this.label}
                 aria-labelledby={this.label}
                 aria-invalid={this.invalid ? true : false}
                 value={this.value}
