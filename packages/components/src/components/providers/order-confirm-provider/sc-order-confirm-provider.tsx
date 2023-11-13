@@ -47,7 +47,7 @@ export class ScOrderConfirmProvider {
     if (this.checkoutStatus === 'confirming') {
       this.confirmOrder();
     } else if (this.checkoutStatus === 'confirmed') {
-      speak(__('Order has been confirmed. Please click on continue...'));
+      speak(__('Order has been confirmed. Please select continue to go to the next step.', 'surecart'));
     }
   }
 
