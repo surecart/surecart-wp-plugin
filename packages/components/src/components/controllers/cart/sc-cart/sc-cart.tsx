@@ -108,8 +108,6 @@ export class ScCart {
       console.error(e);
       updateFormState('REJECT');
       createErrorNotice(e);
-    } finally {
-      (this.el.querySelector('sc-cart-header')?.shadowRoot?.querySelector('.cart__close') as HTMLElement | null)?.focus();
     }
   }
 
