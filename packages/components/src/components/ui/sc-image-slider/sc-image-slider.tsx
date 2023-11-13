@@ -16,16 +16,16 @@ export class ScImageSlider {
   private thumbsSwiper: Swiper;
 
   /** Accept a string or an array of objects */
-  @Prop() images: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
-  @Prop() thumbnails: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[] = [];
+  @Prop() images: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
+  @Prop() thumbnails: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[] = [];
   @Prop() hasThumbnails: boolean;
   @Prop() thumbnailsPerPage: number = 5;
   @Prop() autoHeight: boolean;
 
   /** Current Slide Index */
   @State() currentSliderIndex: number = 0;
-  @State() imagesData: { src: string; alt: string; srcset; width: number; height: number; sizes: string }[] = [];
-  @State() thumbnailsData: { src: string; alt: string; srcset; width: number; height: number; sizes: string }[] = [];
+  @State() imagesData: { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[] = [];
+  @State() thumbnailsData: { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[] = [];
 
   @Watch('currentSliderIndex')
   handleThumbPaginate() {
@@ -100,10 +100,10 @@ export class ScImageSlider {
       <div class={{ 'image-slider': true, 'image-slider--is-fixed-height': !this.autoHeight }} part="base">
         <div class="swiper" ref={el => (this.swiperContainerRef = el)}>
           <div class="swiper-wrapper">
-            {(this.imagesData || []).map(({ src, alt, srcset, width, height, sizes }, index) => (
+            {(this.imagesData || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
               <div key={index} class="swiper-slide image-slider__slider">
                 <div class="swiper-slide-img">
-                  <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} />
+                  <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > 0 ? 'lazy' : 'eager'} {...(title ? { title } : {})} />
                 </div>
               </div>
             ))}
@@ -118,13 +118,22 @@ export class ScImageSlider {
 
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
               <div class="swiper-wrapper">
-                {(thumbnails || []).map(({ src, alt, srcset, width, height, sizes }, index) => (
+                {(thumbnails || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
                   <button
                     class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                     onClick={() => this.swiper?.slideTo?.(index)}
                     aria-label={sprintf(__('Product image number %d', 'sc-image-slider'), index + 1)}
                   >
-                    <img src={src} alt={alt} srcset={srcset} width={width} height={height} sizes={sizes} loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'} />
+                    <img
+                      src={src}
+                      alt={alt}
+                      srcset={srcset}
+                      width={width}
+                      height={height}
+                      sizes={sizes}
+                      loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
+                      {...(title ? { title } : {})}
+                    />
                   </button>
                 ))}
               </div>

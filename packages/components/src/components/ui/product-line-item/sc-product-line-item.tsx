@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, Media } from '../../../types';
+import { Fee } from '../../../types';
 import { sizeImage } from '../../../functions/media';
 
 /**
@@ -36,8 +36,11 @@ export class ScProductLineItem {
   /** Url for the product image */
   @Prop() imageUrl: string;
 
-  /** The product media */
-  @Prop() media: Media;
+  /** Title for the product image */
+  @Prop() imageTitle: string;
+
+  /** Alternative description for the product image */
+  @Prop() imageAlt: string;
 
   /** Product name */
   @Prop() name: string;
@@ -154,10 +157,7 @@ export class ScProductLineItem {
           }}
         >
           {!!this.imageUrl && (
-            <Fragment>
-              <sc-visually-hidden>{sprintf(__('Product Image of %s', 'surecart'), this.name)}</sc-visually-hidden>
-              <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />
-            </Fragment>
+            <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" alt={this.imageAlt} {...(this.imageTitle ? { title: this.imageTitle } : {})} />
           )}
           <div class="item__text" part="text">
             <div class="item__text-details">

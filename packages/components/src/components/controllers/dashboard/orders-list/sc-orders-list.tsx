@@ -209,9 +209,9 @@ export class ScOrdersList {
         </span>
 
         {!!this.allLink && !!this.orders?.length && (
-          <sc-button type="link" href={this.allLink} slot="end">
+          <sc-button type="link" href={this.allLink} slot="end" aria-label={sprintf(__('View all %s', 'surecart'), this.heading || __('Order History', 'surecart'))}>
             {__('View all', 'surecart')}
-            <sc-icon name="chevron-right" slot="suffix"></sc-icon>
+            <sc-icon aria-hidden="true" name="chevron-right" slot="suffix"></sc-icon>
           </sc-button>
         )}
 
