@@ -463,6 +463,7 @@ export class ScSelectDropdown {
             value={this.value}
             required={this.required}
             disabled={this.disabled}
+            aria-label={this.label}
             aria-hidden="true"
           ></input>
 
