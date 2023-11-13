@@ -6,7 +6,6 @@
 			<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
 				<sc-image-slider id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>" style="--sc-product-slider-height: 310px;"></sc-image-slider>
 				<?php
-				var_dump( $product->product_medias );
 				\SureCart::assets()->addComponentData(
 					'sc-image-slider',
 					'#sc-product-media-' . $product->id,
