@@ -69,7 +69,7 @@ export class ScFormControl {
               *
             </span>
           )}
-          <sc-visually-hidden>{!!this.required ? __('Mandatory field', 'surecart') : ''}</sc-visually-hidden>
+          <sc-visually-hidden>{!!this.required ? __('required', 'surecart') : ''}</sc-visually-hidden>
         </label>
         <div part="input" class="form-control__input">
           <slot />
