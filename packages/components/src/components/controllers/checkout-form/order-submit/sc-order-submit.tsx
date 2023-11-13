@@ -91,7 +91,7 @@ export class ScOrderSubmit {
               <sc-total></sc-total>
             </span>
           )}
-          <sc-visually-hidden>. {__('Press enter to purchase', 'surecart')}</sc-visually-hidden>
+          <sc-visually-hidden> {__('Press enter to purchase', 'surecart')}</sc-visually-hidden>
         </sc-button>
       );
     }
@@ -117,7 +117,7 @@ export class ScOrderSubmit {
               <sc-total></sc-total>
             </span>
           )}
-          <sc-visually-hidden>. {__('Press enter to purchase', 'surecart')}</sc-visually-hidden>
+          <sc-visually-hidden> {__('Press enter to purchase', 'surecart')}</sc-visually-hidden>
         </sc-button>
         {this.secureNotice && location.protocol === 'https:' && (
           <div class="sc-secure-notice">
