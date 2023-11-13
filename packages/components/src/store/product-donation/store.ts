@@ -7,7 +7,8 @@ interface Store {
   [key: string]: any;
 }
 
-const productDonationData = Object.keys(productDonation).reduce((acc, productId) => {
+// This gets initial checkout line items and updates the product donation store to match on load.
+const productDonationData = Object.keys(productDonation || {}).reduce((acc, productId) => {
   const lineItem = getLineItemByProductId(productId);
   if (lineItem?.id) {
     acc[productId] = {
