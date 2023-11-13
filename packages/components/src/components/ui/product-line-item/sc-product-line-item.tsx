@@ -205,7 +205,7 @@ export class ScProductLineItem {
                   }
                 }}
                 tabindex="0"
-                aria-label={__(`Remove Item - ${this.name} ${this.priceName} `, 'surecart')}
+                aria-label={sprintf(__('Remove Item - %s %s', 'surecart'), this.name, this.priceName)}
               ></sc-icon>
             ) : (
               <div></div>
