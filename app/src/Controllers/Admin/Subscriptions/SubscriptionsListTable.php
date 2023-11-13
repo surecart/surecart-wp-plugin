@@ -128,7 +128,12 @@ class SubscriptionsListTable extends ListTable {
 		if ( empty( $subscription->price->product ) ) {
 			return __( 'No product', 'surecart' );
 		}
-		return '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
+		$product_display = '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
+		if ( ! empty( $subscription->variant_options ) ) {
+			$product_display .= '<div>' . implode( ' / ', $subscription->variant_options ) . '</div>';
+		}
+
+		return $product_display;
 	}
 
 	/**
