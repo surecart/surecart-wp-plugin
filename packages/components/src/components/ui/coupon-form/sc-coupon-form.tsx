@@ -1,15 +1,9 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-<<<<<<< HEAD
-import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
-=======
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
->>>>>>> origin/main
-
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
-import { isRtl } from '../../../functions/page-align';
 
 /**
  * @part base - The elements base wrapper.
@@ -171,15 +165,7 @@ export class ScCouponForm {
     }
 
     if (this?.discount?.promotion?.code) {
-<<<<<<< HEAD
       let humanDiscount = this.getHumanReadableDiscount();
-=======
-      let humanDiscount = '';
-
-      if (this?.discount?.coupon) {
-        humanDiscount = getHumanDiscount(this?.discount?.coupon);
-      }
->>>>>>> origin/main
 
       return (
         <sc-line-item exportparts="description:info, price-description:discount, price:amount">
