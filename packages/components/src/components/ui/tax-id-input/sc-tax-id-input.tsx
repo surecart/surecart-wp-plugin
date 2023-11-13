@@ -129,7 +129,7 @@ export class ScTaxIdInput {
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
-          <sc-dropdown slot="suffix" position="bottom-right">
+          <sc-dropdown slot="suffix" position="bottom-right" role="listbox" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
             <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
               {zones?.[this?.type || 'other']?.label_small}
             </sc-button>
