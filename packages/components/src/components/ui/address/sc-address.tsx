@@ -170,7 +170,7 @@ export class ScAddress {
               squared-bottom
               disabled={this.disabled}
               required={this.requireName}
-              aria-label={this.names?.name}
+              aria-label={this.placeholders.name || __('Name or Company Name', 'surecart')}
             />
           )}
 
@@ -192,7 +192,7 @@ export class ScAddress {
             squared={this.showName}
             disabled={this.disabled}
             required={this.required}
-            aria-label={__('Country name', 'surecart')}
+            aria-label={this.placeholders.country || __('Country', 'surecart')}
           />
 
           <sc-input
@@ -206,7 +206,7 @@ export class ScAddress {
             squared
             disabled={this.disabled}
             required={this.required}
-            aria-label={__('Address', 'surecart')}
+            aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
           />
 
           {this.showLine2 && (
@@ -220,7 +220,7 @@ export class ScAddress {
               name={this.names?.line_2}
               squared
               disabled={this.disabled}
-              aria-label={__('Address Line 2', 'surecart')}
+              aria-label={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
             />
           )}
 
@@ -239,7 +239,7 @@ export class ScAddress {
                 squared-top
                 disabled={this.disabled}
                 squared-right={this.showPostal}
-                aria-label={__('City name', 'surecart')}
+                aria-label={this.placeholders.city || __('City', 'surecart')}
               />
             )}
 
@@ -258,7 +258,7 @@ export class ScAddress {
                 disabled={this.disabled}
                 maxlength={this.address?.country === 'US' ? 5 : null}
                 squared-left={this.showCity}
-                aria-label={__('Postal Code/Zip', 'surecart')}
+                aria-label={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
               />
             )}
           </div>
@@ -276,6 +276,7 @@ export class ScAddress {
               disabled={this.disabled}
               search
               squared-top
+              aria-label={this.placeholders.state || __('State/Province/Region', 'surecart')}
             />
           )}
         </sc-form-control>
