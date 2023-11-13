@@ -62,16 +62,6 @@ export class ScLineItems {
     return this.editable;
   }
 
-  getImageAttributes(product: Product) {
-    const media: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(product);
-
-    return {
-      imageUrl: media.url,
-      imageTitle: media.title,
-      imageAlt: media.alt,
-    };
-  }
-
   componentWillLoad() {
     listenTo('checkout', 'line_items', this.onLineItemsChange.bind(this));
   }
@@ -82,7 +72,6 @@ export class ScLineItems {
    */
   onLineItemsChange(newValue, oldValue) {
     if (newValue?.data?.length === oldValue?.data?.length) return;
-
     this.lineItemsWrapper?.focus();
   }
 
@@ -102,11 +91,14 @@ export class ScLineItems {
     return (
       <div class="line-items" part="base" ref={el => (this.lineItemsWrapper = el as HTMLElement)} tabindex="0">
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
+          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product);
           return (
             <div class="line-item">
               <sc-product-line-item
                 key={item.id}
-                {...this.getImageAttributes(item?.price?.product as Product)}
+                imageUrl={url}
+                imageTitle={title}
+                imageAlt={alt}
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
