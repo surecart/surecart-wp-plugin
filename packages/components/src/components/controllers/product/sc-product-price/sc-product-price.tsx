@@ -57,7 +57,7 @@ export class ScProductPrice {
 
             <div class="price__interval">
               {price?.recurring_period_count && 1 < price?.recurring_period_count && (
-                <sc-sc-visually-hidden>
+                <sc-visually-hidden>
                   {' '}
                   {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
                   {intervalString(price, {
@@ -70,7 +70,7 @@ export class ScProductPrice {
                         __('for', 'surecart'),
                     },
                   })}
-                </sc-sc-visually-hidden>
+                </sc-visually-hidden>
               )}
 
               <span aria-hidden="true">
