@@ -44,7 +44,11 @@ export class ScProductPrice {
                 {price?.scratch_amount === 0 ? (
                   __('Free', 'surecart')
                 ) : (
-                  <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
+                  <Fragment>
+                    <sc-visually-hidden>{__('The price was', 'surecart')} </sc-visually-hidden>
+                    <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
+                    <sc-visually-hidden> {__('now discounted to', 'surecart')}</sc-visually-hidden>
+                  </Fragment>
                 )}
               </Fragment>
             )}
@@ -52,21 +56,45 @@ export class ScProductPrice {
             {amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>}
 
             <div class="price__interval">
-              {intervalString(price, {
-                showOnce: true,
-                abbreviate: false,
-                labels: {
-                  interval: '/',
-                  period:
-                    /** translators: used as in time period: "for 3 months" */
-                    __('for', 'surecart'),
-                },
-              })}
+              {price?.recurring_period_count && 1 < price?.recurring_period_count && (
+                <sc-sc-visually-hidden>
+                  {' '}
+                  {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
+                  {intervalString(price, {
+                    showOnce: true,
+                    abbreviate: false,
+                    labels: {
+                      interval: __('every', 'surecart'),
+                      period:
+                        /** translators: used as in time period: "for 3 months" */
+                        __('for', 'surecart'),
+                    },
+                  })}
+                </sc-sc-visually-hidden>
+              )}
+
+              <span aria-hidden="true">
+                {intervalString(price, {
+                  showOnce: true,
+                  abbreviate: false,
+                  labels: {
+                    interval: '/',
+                    period:
+                      /** translators: used as in time period: "for 3 months" */
+                      __('for', 'surecart'),
+                  },
+                })}
+              </span>
             </div>
 
             {!!price?.scratch_amount && (
               <sc-tag type="primary" pill class="price__sale-badge">
-                {this.saleText || __('Sale', 'surecart')}
+                {this.saleText || (
+                  <Fragment>
+                    <sc-visually-hidden>{__('This product is available for sale.', 'surecart')} </sc-visually-hidden>
+                    <span aria-hidden="true">{__('Sale', 'surecart')}</span>
+                  </Fragment>
+                )}
               </sc-tag>
             )}
           </div>
@@ -74,11 +102,15 @@ export class ScProductPrice {
           {(!!price?.trial_duration_days || (!!price?.setup_fee_enabled && price?.setup_fee_amount)) && (
             <div class="price__details">
               {!!price?.trial_duration_days && (
-                <span class="price__trial">{sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)} </span>
+                <Fragment>
+                  <sc-visually-hidden>{sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), price.trial_duration_days)}</sc-visually-hidden>
+                  <span class="price__trial">{sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)}</span>
+                </Fragment>
               )}
 
               {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
                 <span class="price__setup-fee">
+                  <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>
                   <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
                   {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
                 </span>

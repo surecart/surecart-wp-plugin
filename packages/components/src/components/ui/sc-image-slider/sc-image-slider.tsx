@@ -10,8 +10,8 @@ import Swiper, { Navigation } from 'swiper';
 export class ScImageSlider {
   private swiperThumbsRef?: HTMLDivElement;
   private swiperContainerRef?: HTMLDivElement;
-  private previous: HTMLDivElement;
-  private next: HTMLDivElement;
+  private previous: HTMLButtonElement;
+  private next: HTMLButtonElement;
   private swiper: Swiper;
   private thumbsSwiper: Swiper;
 
@@ -112,36 +112,44 @@ export class ScImageSlider {
 
         {this.hasThumbnails && (
           <div class={{ 'image-slider__thumbs': true, 'image-slider__thumbs--has-navigation': this.images.length > 5 }}>
-            <div class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
-              <sc-icon name="chevron-left" />
-            </div>
+            <button disabled={this.thumbsSwiper?.isBeginning} class="image-slider__navigation image-slider--is-prev" ref={el => (this.previous = el)}>
+              <sc-sc-visually-hidden>{__('Go to previous product slide.', 'surecart')}</sc-sc-visually-hidden>
+              <sc-icon name="chevron-left" aria-hidden="true" tab-index="0" />
+            </button>
 
             <div class="swiper" ref={el => (this.swiperThumbsRef = el)}>
-              <div class="swiper-wrapper">
+              <div
+                class="swiper-wrapper"
+                role="radiogroup"
+                aria-label={sprintf(__('Products slide options section. There are %d options present.', 'surecart'), thumbnails?.length || 0)}
+              >
                 {(thumbnails || []).map(({ src, alt, srcset, width, height, sizes, title }, index) => (
                   <button
                     class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                     onClick={() => this.swiper?.slideTo?.(index)}
-                    aria-label={sprintf(__('Product image number %d', 'sc-image-slider'), index + 1)}
                   >
                     <img
                       src={src}
-                      alt={alt}
+                      alt={sprintf(__('Product image number %d, %s', 'sc-image-slider'), index + 1, alt)}
+                      {...(title ? { title } : {})}
                       srcset={srcset}
                       width={width}
                       height={height}
                       sizes={sizes}
                       loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
-                      {...(title ? { title } : {})}
+                      role="radio"
+                      aria-checked={this.currentSliderIndex === index?"true":"false"}
+                      tabindex="0"
                     />
                   </button>
                 ))}
               </div>
             </div>
 
-            <div class="image-slider__navigation image-slider--is-next" ref={el => (this.next = el)}>
-              <sc-icon name="chevron-right" />
-            </div>
+            <button disabled={this.thumbsSwiper?.isEnd} class="image-slider__navigation image-slider--is-next" ref={el => (this.next = el)}>
+              <sc-sc-visually-hidden>{__('Go to next product slide.', 'surecart')}</sc-sc-visually-hidden>
+              <sc-icon name="chevron-right" aria-hidden="true" tab-index="0" />
+            </button>
           </div>
         )}
       </div>
