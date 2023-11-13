@@ -1,5 +1,6 @@
 import { Component, h, Prop, Fragment, Watch, Event, EventEmitter } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 import { zones, getType } from '../../../functions/tax';
 
 @Component({
@@ -107,6 +108,7 @@ export class ScTaxIdInput {
           ref={el => (this.input = el as HTMLScInputElement)}
           label={zones?.[this?.type || 'other']?.label}
           aria-label={__('Tax ID', 'surecart')}
+          placeholder={__('Enter Tax ID', 'surecart')}
           name="tax_identifier.number"
           required={this.required}
           value={this.number}
@@ -127,7 +129,7 @@ export class ScTaxIdInput {
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
-          <sc-dropdown slot="suffix" position="bottom-right">
+          <sc-dropdown slot="suffix" position="bottom-right" role="listbox" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
             <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
               {zones?.[this?.type || 'other']?.label_small}
             </sc-button>
@@ -157,9 +159,11 @@ export class ScTaxIdInput {
                       });
                       this.type = name;
                       this.input?.triggerFocus();
+                      speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
                     }
                   }}
                   checked={this.type === name}
+                  ariaLabel={zones[name].label_small}
                 >
                   {zones[name].label_small}
                 </sc-menu-item>

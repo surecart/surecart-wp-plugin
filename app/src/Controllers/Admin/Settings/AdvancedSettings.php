@@ -30,7 +30,7 @@ class AdvancedSettings extends BaseSettings {
 		update_option( 'sc_uninstall', $request->body( 'uninstall' ) === 'on' );
 
 		// update uninstall option.
-		update_option( 'sc_stripe_payment_element', $request->body( 'stripe-payment-element' ) === 'on' );
+		update_option( 'sc_stripe_payment_element', $request->body( 'stripe-payment-element' ) !== 'off' );
 
 		// update performance option.
 		update_option( 'surecart_use_esm_loader', $request->body( 'use_esm_loader' ) === 'on' );
