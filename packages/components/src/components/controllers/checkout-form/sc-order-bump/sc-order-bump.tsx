@@ -90,22 +90,7 @@ export class ScOrderBump {
             currency={(this.bump?.price as Price)?.currency}
           ></sc-format-number>{' '}
         </span>
-        <span
-          aria-label={
-            /** translators: %s: new price */
-            sprintf(
-              __('Now available for %s.', 'surecart'),
-              this.newPrice() === 0
-                ? __('Free', 'surecart')
-                : this.newPrice() !== null &&
-                    this.newPrice() > 0 &&
-                    getFormattedPrice({
-                      amount: this.newPrice(),
-                      currency: (this.bump?.price as Price)?.currency,
-                    }),
-            )
-          }
-        >
+        <span>
           <span aria-hidden="true">
             {this.newPrice() === 0 && __('Free', 'surecart')}
             {this.newPrice() !== null && this.newPrice() > 0 && (
