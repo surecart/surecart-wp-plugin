@@ -188,7 +188,7 @@ export class ScProductLineItem {
                 quantity={this.quantity}
                 size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
-                aria-label={__(`Change Quantity - ${this.name} ${this.priceName} `, 'surecart')}
+                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
               ></sc-quantity-select>
             )}
           </div>
