@@ -1,5 +1,3 @@
-@import '../../../../styles/mixins/hide.scss';
-
 .sc-checkout-product-price-variant-selector {
   position: relative;
 
@@ -23,8 +21,4 @@
     pointer-events: none !important;
     width: 0 !important;
   }
-}
-
-.sc-sr-only {
-  @include visually-hidden();
 }

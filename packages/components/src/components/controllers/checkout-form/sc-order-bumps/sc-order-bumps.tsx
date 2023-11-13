@@ -20,7 +20,7 @@ export class ScOrderBumps {
 
     return (
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
-        <div class="bumps__list">
+        <div class="bumps__list" aria-label={__('Order bump summary', 'surecart')}>
           {(checkoutState?.checkout?.recommended_bumps?.data || [])
             .filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0) // exclude variants for now.
             .map(bump => (

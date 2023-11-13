@@ -6,6 +6,8 @@ import apiFetch from '../../../../functions/fetch';
 import { intervalString } from '../../../../functions/price';
 import { License, Price, Product, Purchase, Subscription } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
+import { formatTime } from '../../../../../../admin/util/time';
+import { formatNumber } from '../../../../../../admin/util';
 @Component({
   tag: 'sc-subscription-details',
   styleUrl: 'sc-subscription-details.css',
@@ -60,7 +62,7 @@ export class ScSubscriptionDetails {
 
     if (this?.subscription?.cancel_at_period_end && this?.subscription?.current_period_end_at) {
       return (
-        <span>
+        <span aria-label={sprintf(__('Renewal Update - Your plan will be canceled on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
           {tag} {sprintf(__('Your plan will be canceled on', 'surecart'))}{' '}
           <sc-format-date date={this.subscription.current_period_end_at * 1000} month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
@@ -74,7 +76,13 @@ export class ScSubscriptionDetails {
 
       if (this.subscription?.pending_update?.ad_hoc_amount) {
         return (
-          <span>
+          <span
+            aria-label={sprintf(
+              __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
+              formatNumber(this.subscription?.pending_update?.ad_hoc_amount, this.pendingPrice?.currency || this.subscription?.price?.currency),
+              formatTime(this.subscription.current_period_end_at),
+            )}
+          >
             {__('Your plan switches to', 'surecart')}{' '}
             <strong>
               <sc-format-number
@@ -90,7 +98,13 @@ export class ScSubscriptionDetails {
         );
       }
       return (
-        <span>
+        <span
+          aria-label={sprintf(
+            __('Renewal Update - Your plan switches to %1s on %2s', 'surecart'),
+            (this.pendingPrice.product as Product).name,
+            formatTime(this.subscription.current_period_end_at),
+          )}
+        >
           {__('Your plan switches to', 'surecart')} <strong>{(this.pendingPrice.product as Product).name}</strong> {__('on', 'surecart')}{' '}
           <sc-format-date date={this.subscription.current_period_end_at as number} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
@@ -99,7 +113,7 @@ export class ScSubscriptionDetails {
 
     if (this?.subscription?.status === 'trialing' && this?.subscription?.trial_end_at) {
       return (
-        <span>
+        <span aria-label={sprintf(__('Renewal Update - Your plan begins on %s.', 'surecart'), formatTime(this.subscription.trial_end_at))}>
           {tag} {sprintf(__('Your plan begins on', 'surecart'))}{' '}
           <sc-format-date date={this?.subscription?.trial_end_at} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
@@ -107,7 +121,7 @@ export class ScSubscriptionDetails {
     }
     if (this.subscription?.status === 'active' && this.subscription?.current_period_end_at) {
       return (
-        <span>
+        <span aria-label={sprintf(__('Renewal Update - Your next payment is on %s', 'surecart'), formatTime(this.subscription.current_period_end_at))}>
           {tag} {this.subscription?.remaining_period_count === null ? __('Your plan renews on', 'surecart') : __('Your next payment is on', 'surecart')}{' '}
           <sc-format-date date={this?.subscription?.current_period_end_at} type="timestamp" month="long" day="numeric" year="numeric"></sc-format-date>
         </span>
@@ -157,7 +171,9 @@ export class ScSubscriptionDetails {
         )}
 
         <sc-flex alignItems="center" justifyContent="flex-start">
-          <sc-text style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>{this.renderName()}</sc-text>
+          <sc-text aria-label={sprintf(__('Plan name - %s', 'surecart'), this.renderName())} style={{ '--font-weight': 'var(--sc-font-weight-bold)' }}>
+            {this.renderName()}
+          </sc-text>
           {this.renderActivations()}
         </sc-flex>
 

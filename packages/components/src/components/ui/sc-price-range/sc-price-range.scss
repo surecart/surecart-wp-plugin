@@ -1,10 +1,4 @@
-@import '../../../styles/mixins/hide.scss';
-
 :host {
   display: block;
   line-height: 1;
-}
-
-.sc-sr-only {
-  @include visually-hidden();
 }

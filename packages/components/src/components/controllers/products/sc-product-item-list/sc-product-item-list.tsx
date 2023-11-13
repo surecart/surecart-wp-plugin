@@ -67,7 +67,7 @@ export class ScProductItemList {
   @Prop() limit: number = 15;
 
   /* Product list */
-  @State() products: Product[];
+  @Prop({ mutable: true }) products?: Product[];
 
   /* Loading indicator */
   @State() loading: boolean = false;
@@ -98,16 +98,16 @@ export class ScProductItemList {
   @State() collections: Collection[];
 
   /** Selected collections */
-  @State() selectedCollections: Collection[];
+  @State() selectedCollections: Collection[] = [];
 
   componentWillLoad() {
-    this.getProducts();
+    if (!this?.products?.length) {
+      this.getProducts();
+    }
 
     if (this.collectionEnabled) {
       this.getCollections();
     }
-
-    this.selectedCollections = [];
   }
 
   // Append URL if no 'product-page' found
@@ -202,7 +202,7 @@ export class ScProductItemList {
     try {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
-          expand: ['prices', 'product_medias', 'product_media.media', 'variants'],
+          expand: ['prices', 'featured_product_media','product_medias', 'product_media.media', 'variants'],
           archived: false,
           status: ['published'],
           per_page: this.limit,
@@ -283,9 +283,9 @@ export class ScProductItemList {
                 {this.sortEnabled && (
                   <sc-dropdown style={{ '--panel-width': '15em' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">{__('Dropdown to sort products.', 'surecart')} </span>
+                      <sc-visually-hidden>{__('Dropdown to sort products.', 'surecart')} </sc-visually-hidden>
                       {this.renderSortName()}
-                      <span class="sc-sr-only"> {__('selected.', 'surecart')}</span>
+                      <sc-visually-hidden> {__('selected.', 'surecart')}</sc-visually-hidden>
                     </sc-button>
                     <sc-menu ariaLabel={__('Sort Products', 'surecart')}>
                       <sc-menu-item ariaLabel={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
@@ -307,12 +307,12 @@ export class ScProductItemList {
                 {this.collectionEnabled && (this.collections ?? []).length > 0 && (
                   <sc-dropdown style={{ '--panel-width': '15rem' }}>
                     <sc-button type="text" caret slot="trigger">
-                      <span class="sc-sr-only">
+                      <sc-visually-hidden>
                         {sprintf(
                           __('Dropdown to filter products by collection. %s selected.', 'surecart'),
                           this.selectedCollections?.length ? this.selectedCollections.map(collection => collection?.name).join(',') : __('None', 'surecart'),
                         )}
-                      </span>
+                      </sc-visually-hidden>
                       <span aria-hidden> {__('Filter', 'surecart')}</span>
                     </sc-button>
                     <sc-menu ariaLabel={__('Filter products', 'surecart')}>

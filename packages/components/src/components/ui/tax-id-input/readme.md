@@ -7,21 +7,21 @@
 
 ## Properties
 
-| Property     | Attribute      | Description           | Type                                | Default                        |
-| ------------ | -------------- | --------------------- | ----------------------------------- | ------------------------------ |
-| `auAbnLabel` | `au-abn-label` | AU zone label         | `string`                            | `__('ABN Number', 'surecart')` |
-| `caGstLabel` | `ca-gst-label` | GST zone label        | `string`                            | `__('GST Number', 'surecart')` |
-| `country`    | `country`      | The country code.     | `string`                            | `undefined`                    |
-| `euVatLabel` | `eu-vat-label` | EU zone label         | `string`                            | `__('EU VAT', 'surecart')`     |
-| `gbVatLabel` | `gb-vat-label` | UK zone label         | `string`                            | `__('UK VAT', 'surecart')`     |
-| `help`       | `help`         | Help text.            | `string`                            | `undefined`                    |
-| `loading`    | `loading`      | Is this loading?      | `boolean`                           | `undefined`                    |
-| `number`     | `number`       | Tax ID Number         | `string`                            | `null`                         |
-| `otherLabel` | `other-label`  | Other zones label     | `string`                            | `__('Tax ID', 'surecart')`     |
-| `required`   | `required`     | Required?             | `boolean`                           | `false`                        |
-| `show`       | `show`         | Force show the field. | `boolean`                           | `false`                        |
-| `status`     | `status`       | The status            | `"invalid" \| "unknown" \| "valid"` | `'unknown'`                    |
-| `type`       | `type`         | Type of tax id        | `string`                            | `'other'`                      |
+| Property     | Attribute      | Description                   | Type                                | Default                        |
+| ------------ | -------------- | ----------------------------- | ----------------------------------- | ------------------------------ |
+| `auAbnLabel` | `au-abn-label` | AU zone label                 | `string`                            | `__('ABN Number', 'surecart')` |
+| `caGstLabel` | `ca-gst-label` | GST zone label                | `string`                            | `__('GST Number', 'surecart')` |
+| `country`    | `country`      | The country code.             | `string`                            | `undefined`                    |
+| `euVatLabel` | `eu-vat-label` | EU zone label                 | `string`                            | `__('EU VAT', 'surecart')`     |
+| `gbVatLabel` | `gb-vat-label` | UK zone label                 | `string`                            | `__('UK VAT', 'surecart')`     |
+| `help`       | `help`         | Help text.                    | `string`                            | `undefined`                    |
+| `loading`    | `loading`      | Is this loading?              | `boolean`                           | `undefined`                    |
+| `number`     | `number`       | Tax ID Number                 | `string`                            | `null`                         |
+| `otherLabel` | `other-label`  | Other zones label             | `string`                            | `__('Tax ID', 'surecart')`     |
+| `required`   | `required`     | Whether tax input is required | `boolean`                           | `false`                        |
+| `show`       | `show`         | Force show the field.         | `boolean`                           | `false`                        |
+| `status`     | `status`       | The status                    | `"invalid" \| "unknown" \| "valid"` | `'unknown'`                    |
+| `type`       | `type`         | Type of tax id                | `string`                            | `'other'`                      |
 
 
 ## Events
@@ -32,6 +32,19 @@
 | `scInput`     | Make a request to update the order. | `CustomEvent<{ number?: string; number_type?: string; }>` |
 | `scInputType` | Change the Type                     | `CustomEvent<string>`                                     |
 | `scSetState`  | Set the checkout state.             | `CustomEvent<string>`                                     |
+
+
+## Methods
+
+### `reportValidity() => Promise<boolean>`
+
+
+
+#### Returns
+
+Type: `Promise<boolean>`
+
+
 
 
 ## Dependencies

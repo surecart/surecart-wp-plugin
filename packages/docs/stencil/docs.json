@@ -13650,7 +13650,7 @@
         },
         {
           "name": "images",
-          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]",
+          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]",
           "mutable": false,
           "attr": "images",
           "reflectToAttr": false,
@@ -13661,7 +13661,7 @@
               "type": "string"
             },
             {
-              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]"
+              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]"
             }
           ],
           "optional": false,
@@ -13669,7 +13669,7 @@
         },
         {
           "name": "thumbnails",
-          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]",
+          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]",
           "mutable": false,
           "attr": "thumbnails",
           "reflectToAttr": false,
@@ -13681,7 +13681,7 @@
               "type": "string"
             },
             {
-              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]"
+              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]"
             }
           ],
           "optional": false,
@@ -23639,31 +23639,15 @@
       "usage": {},
       "props": [
         {
-          "name": "alt",
-          "type": "string",
-          "mutable": false,
-          "attr": "alt",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "productMedia",
-          "type": "ProductMedia",
+          "name": "product",
+          "type": "Product",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "ProductMedia"
+              "type": "Product"
             }
           ],
           "optional": false,
@@ -24296,6 +24280,38 @@
           "required": false
         },
         {
+          "name": "imageAlt",
+          "type": "string",
+          "mutable": false,
+          "attr": "image-alt",
+          "reflectToAttr": false,
+          "docs": "Alternative description for the product image",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "imageTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "image-title",
+          "reflectToAttr": false,
+          "docs": "Title for the product image",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "imageUrl",
           "type": "string",
           "mutable": false,
@@ -24339,21 +24355,6 @@
           "values": [
             {
               "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "media",
-          "type": "Media",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The product media",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Media"
             }
           ],
           "optional": false,

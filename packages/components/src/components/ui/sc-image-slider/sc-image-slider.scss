@@ -21,6 +21,9 @@
     &--has-navigation {
       .image-slider__navigation {
         display: flex;
+        outline: none;
+        border: none;
+        background: none;
       }
     }
   }
