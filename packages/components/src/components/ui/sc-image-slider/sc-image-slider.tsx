@@ -127,6 +127,9 @@ export class ScImageSlider {
                   <button
                     class={{ 'swiper-slide': true, 'image-slider__thumb': true, 'image-slider__thumb--is-active': this.currentSliderIndex === index }}
                     onClick={() => this.swiper?.slideTo?.(index)}
+                    role="radio"
+                    aria-checked={this.currentSliderIndex === index ? 'true' : 'false'}
+                    tabindex="0"
                   >
                     <img
                       src={src}
@@ -137,9 +140,6 @@ export class ScImageSlider {
                       height={height}
                       sizes={sizes}
                       loading={index > this.thumbnailsPerPage - 1 ? 'lazy' : 'eager'}
-                      role="radio"
-                      aria-checked={this.currentSliderIndex === index ? 'true' : 'false'}
-                      tabindex="0"
                     />
                   </button>
                 ))}
