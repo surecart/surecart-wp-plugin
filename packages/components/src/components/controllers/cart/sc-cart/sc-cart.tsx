@@ -1,4 +1,4 @@
-import { Component, Fragment, h, Listen, Prop, State, Watch, Element, Host } from '@stencil/core';
+import { Component, Fragment, h, Listen, Prop, State, Watch, Element } from '@stencil/core';
 import apiFetch from '../../../../functions/fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { baseUrl } from '../../../../services/session';
@@ -138,28 +138,26 @@ export class ScCart {
 
   render() {
     return (
-      <Host tabindex="0">
-        <sc-cart-session-provider>
-          <sc-drawer
-            open={this.open}
-            onScAfterShow={() => (this.open = true)}
-            onScAfterHide={() => {
-              this.open = false;
-            }}
-          >
-            {this.open === true && (
-              <Fragment>
-                <div class="cart__header-suffix" slot="header">
-                  <slot name="cart-header" />
-                  <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header"></sc-error>
-                </div>
-                <slot />
-              </Fragment>
-            )}
-            {formBusy() && <sc-block-ui z-index={9}></sc-block-ui>}
-          </sc-drawer>
-        </sc-cart-session-provider>
-      </Host>
+      <sc-cart-session-provider>
+        <sc-drawer
+          open={this.open}
+          onScAfterShow={() => (this.open = true)}
+          onScAfterHide={() => {
+            this.open = false;
+          }}
+        >
+          {this.open === true && (
+            <Fragment>
+              <div class="cart__header-suffix" slot="header">
+                <slot name="cart-header" />
+                <sc-error style={{ '--sc-alert-border-radius': '0' }} slot="header"></sc-error>
+              </div>
+              <slot />
+            </Fragment>
+          )}
+          {formBusy() && <sc-block-ui z-index={9}></sc-block-ui>}
+        </sc-drawer>
+      </sc-cart-session-provider>
     );
   }
 }
