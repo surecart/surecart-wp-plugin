@@ -170,7 +170,7 @@ export class ScAddress {
               squared-bottom
               disabled={this.disabled}
               required={this.requireName}
-              aria-lable={__('Name or Company Name', 'surecart')}
+              aria-label={this.names?.name}
             />
           )}
 
