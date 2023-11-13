@@ -101,7 +101,7 @@ sc-product-item::part(image) {
   aspect-ratio: var(--sc-product-image-aspect-ratio);
 }
 
-sc-dropdown sc-button::part(base):focus {
+sc-dropdown sc-button::part(base):focus-visible {
   border: 1px dashed var(--sc-product-item-border-color, --sc-color-gray-50);
 }
 
