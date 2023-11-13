@@ -283,6 +283,7 @@ export class ScPhoneInput {
                 spellcheck={this.spellcheck}
                 pattern={applyFilters('surecart/sc-phone-input/pattern', this.pattern) as string}
                 inputmode={'numeric'}
+                aria-label={this.label}
                 aria-labelledby={this.label}
                 aria-invalid={this.invalid ? true : false}
                 value={this.value}
