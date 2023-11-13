@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { speak } from '@wordpress/a11y';
 
 import { state as checkoutState } from '@store/checkout';
@@ -77,11 +77,11 @@ export class ScOrderSummary {
           slot="title"
           onClick={e => this.handleClick(e)}
           tabIndex={0}
-          aria-label={__(`Order Summary ${this.collapsed ? 'collapsed' : 'expanded'}`, 'surecart')}
+          aria-label={sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart'))}
           onKeyDown={e => {
             if (e.key === ' ') {
               this.handleClick(e);
-              speak(__(`Order Summary ${this.collapsed ? 'collapsed' : 'expanded'}`, 'surecart'), 'assertive');
+              speak(sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart')), 'assertive');
             }
           }}
         >
