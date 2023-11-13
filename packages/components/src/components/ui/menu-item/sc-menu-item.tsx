@@ -1,4 +1,4 @@
-import { Component, Prop, State, h, Method } from '@stencil/core';
+import { Component, Prop, State, h, Method, Element } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
 
 @Component({
@@ -7,6 +7,8 @@ import { isRtl } from '../../../functions/page-align';
   shadow: true,
 })
 export class ScMenuItem {
+  @Element() el: HTMLScMenuItemElement;
+
   private menuItem: HTMLElement;
 
   @State() private hasFocus = false;
@@ -70,6 +72,7 @@ export class ScMenuItem {
             this.menuItem.click();
           }
         }}
+        aria-label={this.el.innerText}
       >
         <span part="checked-icon" class="menu-item__check">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
