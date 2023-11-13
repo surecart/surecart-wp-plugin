@@ -17,7 +17,11 @@ export default ({ subscriptionId }) => {
 				'purchase',
 				{
 					subscription_ids: subscriptionId ? [subscriptionId] : null,
-					expand: ['product'],
+					expand: [
+						'product',
+						'product.featured_product_media',
+						'product_media.media',
+					],
 				},
 			];
 			return {
