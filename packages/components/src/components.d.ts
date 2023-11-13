@@ -1541,10 +1541,6 @@ export namespace Components {
     }
     interface ScIcon {
         /**
-          * aria-hidden for sc-icon
-         */
-        "ariaHidden": boolean;
-        /**
           * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
          */
         "label": string;
@@ -7296,10 +7292,6 @@ declare namespace LocalJSX {
         "size"?: 'small' | 'medium' | 'large';
     }
     interface ScIcon {
-        /**
-          * aria-hidden for sc-icon
-         */
-        "ariaHidden"?: boolean;
         /**
           * An alternative description to use for accessibility. If omitted, the name or src will be used to generate it.
          */

@@ -107,7 +107,7 @@ export class ScPriceChoiceContainer {
                   <Fragment>
                     <sc-format-number type="currency" value={this.priceData?.amount} currency={this.priceData?.currency}></sc-format-number>
                     {this.priceData?.recurring_period_count && 1 <= this.priceData?.recurring_period_count && (
-                      <sc-sc-visually-hidden>
+                      <sc-visually-hidden>
                         {' '}
                         {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
                         {intervalString(this.priceData, {
@@ -120,7 +120,7 @@ export class ScPriceChoiceContainer {
                               __('for', 'surecart'),
                           },
                         })}
-                      </span>
+                      </sc-visually-hidden>
                     )}
                     <span aria-hidden="true">
                       {intervalString(this.priceData, {
@@ -140,7 +140,9 @@ export class ScPriceChoiceContainer {
 
               {!!this.priceData?.trial_duration_days && (
                 <Fragment>
-                  <sc-sc-visually-hidden>{sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), this.priceData?.trial_duration_days)}</sc-sc-visually-hidden>
+                  <sc-visually-hidden>
+                    {sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), this.priceData?.trial_duration_days)}
+                  </sc-visually-hidden>
                   <div class="price-choice__trial" aria-hidden="true">
                     {sprintf(_n('Starting in %s day', 'Starting in %s days', this.priceData.trial_duration_days, 'surecart'), this.priceData.trial_duration_days)}
                   </div>
@@ -149,7 +151,7 @@ export class ScPriceChoiceContainer {
 
               {!!this.priceData?.setup_fee_enabled && this.priceData?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
-                  <sc-sc-visually-hidden>{__('This payment plan has', 'surecart')} </sc-sc-visually-hidden>
+                  <sc-visually-hidden>{__('This payment plan has', 'surecart')} </sc-visually-hidden>
                   <sc-format-number type="currency" value={this.priceData.setup_fee_amount} currency={this.priceData?.currency}></sc-format-number>{' '}
                   {this.priceData?.setup_fee_name || __('Setup Fee', 'surecart')}
                 </div>
