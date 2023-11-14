@@ -361,7 +361,7 @@ export class ScSelectDropdown {
     // Open select dropdown with Enter
     if (event.key === 'Enter') {
       if (this.open) {
-        items[itemIndex - 1].click();
+        items[itemIndex - 1]?.click?.();
         this.handleHide();
         this.input.focus();
       } else {
@@ -456,8 +456,6 @@ export class ScSelectDropdown {
         >
           <input
             class="select__hidden-input"
-            onBlur={() => this.handleBlur()}
-            onFocus={() => this.handleFocus()}
             name={this.name}
             ref={el => (this.input = el as HTMLInputElement)}
             value={this.value}
@@ -465,6 +463,7 @@ export class ScSelectDropdown {
             disabled={this.disabled}
             aria-label={this.label}
             aria-hidden="true"
+            tabindex="-1"
           ></input>
 
           <sc-dropdown
