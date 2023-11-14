@@ -170,6 +170,7 @@ export class ScSelectDropdown {
 
   handleFocus() {
     this.hasFocus = true;
+    this.el.focus();
     this.scFocus.emit();
   }
 
@@ -414,6 +415,8 @@ export class ScSelectDropdown {
         }}
         disabled={choice.disabled}
         aria-label={choice.label}
+        aria-selected={this.isChecked(choice) ? 'true' : 'false'}
+        role="option"
       >
         {choice.label}
         {!!choice?.description && <div class="select__description">{choice?.description}</div>}
@@ -461,9 +464,10 @@ export class ScSelectDropdown {
             value={this.value}
             required={this.required}
             disabled={this.disabled}
-            aria-label={this.label}
             aria-hidden="true"
-            tabindex="-1"
+            aria-label={this.displayValue()}
+            onBlur={() => this.handleBlur()}
+            onFocus={() => this.handleFocus()}
           ></input>
 
           <sc-dropdown
@@ -477,9 +481,11 @@ export class ScSelectDropdown {
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}
+            role="select"
+            aria-open={this.open ? 'true' : 'false'}
           >
             <slot name="trigger" slot="trigger">
-              <div class="trigger" role="button" tabIndex={0}>
+              <div class="trigger" role="button" tabIndex={-1} onFocus={() => this.handleFocus()} onBlur={() => this.handleBlur()}>
                 <div class="select__value">
                   <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
                 </div>
@@ -503,13 +509,7 @@ export class ScSelectDropdown {
               </sc-input>
             )}
 
-            <sc-menu
-              style={{ maxHeight: '210px', overflow: 'auto' }}
-              exportparts="base:menu__base"
-              onScroll={e => this.handleMenuScroll(e)}
-              role="listbox"
-              aria-multiselectable="false"
-            >
+            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)} aria-multiselectable="false">
               <slot name="prefix"></slot>
               {(this.filteredChoices || []).map((choice, index) => {
                 return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];
