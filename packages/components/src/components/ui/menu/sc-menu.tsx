@@ -104,7 +104,7 @@ export class ScMenu {
 
   render() {
     return (
-      <div part="base" class="menu" role="menu" tabindex="0" onKeyDown={e => this.handleKeyDown(e)} aria-label={this.ariaLabel || 'Menus'}>
+      <div part="base" class="menu" tabindex="0" onKeyDown={e => this.handleKeyDown(e)}>
         <slot onSlotchange={() => this.handleSlotChange()}></slot>
       </div>
     );
