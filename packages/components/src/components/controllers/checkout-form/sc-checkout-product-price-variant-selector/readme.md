@@ -32,6 +32,7 @@ Type: `Promise<boolean>`
 
 - [sc-form-control](../../../ui/form-control)
 - [sc-pill-option](../../../ui/pill-option)
+- [sc-visually-hidden](../../../util/visually-hidden)
 - [sc-choices](../../../ui/choices)
 - [sc-price-choice-container](../../../ui/sc-price-choice-container)
 
@@ -40,12 +41,15 @@ Type: `Promise<boolean>`
 graph TD;
   sc-checkout-product-price-variant-selector --> sc-form-control
   sc-checkout-product-price-variant-selector --> sc-pill-option
+  sc-checkout-product-price-variant-selector --> sc-visually-hidden
   sc-checkout-product-price-variant-selector --> sc-choices
   sc-checkout-product-price-variant-selector --> sc-price-choice-container
+  sc-form-control --> sc-visually-hidden
   sc-choices --> sc-form-control
   sc-price-choice-container --> sc-format-number
   sc-price-choice-container --> sc-choice-container
   sc-price-choice-container --> sc-skeleton
+  sc-price-choice-container --> sc-visually-hidden
   style sc-checkout-product-price-variant-selector fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -83,6 +83,7 @@ graph TD;
   sc-compact-address --> sc-select
   sc-compact-address --> sc-input
   sc-compact-address --> sc-block-ui
+  sc-form-control --> sc-visually-hidden
   sc-select --> sc-icon
   sc-select --> sc-menu-label
   sc-select --> sc-menu-item

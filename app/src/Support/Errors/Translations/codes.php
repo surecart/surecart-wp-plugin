@@ -81,6 +81,7 @@ return [
 	'tax_protocol.eu_micro_exemption_enabled.address_outside_eu' => __( 'You cannot enable EU Micro Exemption if your address is outside of the EU.', 'surecart' ),
 	'tax_protocol.tax_enabled.invalid_address'             => __( 'You cannot enable taxes unless a valid tax address is provided', 'surecart' ),
 	'media.restrict_dependent_destroy.has_one'             => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
+	'media.content_type.unsupported'                       => __( 'This file type is not supported.', 'surecart' ),
 	'verification_code.email.blocked_duplicate'            => __( 'You have already requested a code in the last 60 seconds. Please wait before requesting again.', 'surecart' ),
 	'variant_option.name.taken'                            => __( 'This option name is already taken. Please use a different name.', 'surecart' ),
 	'product.variant_options.product.limit_reached'        => __( 'You have reached the maximum number of options for this product.', 'surecart' ),
