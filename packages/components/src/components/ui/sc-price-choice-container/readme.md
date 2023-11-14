@@ -40,6 +40,7 @@
 - [sc-format-number](../../util/format-number)
 - [sc-choice-container](../choice-container)
 - [sc-skeleton](../skeleton)
+- [sc-visually-hidden](../../util/visually-hidden)
 
 ### Graph
 ```mermaid
@@ -47,6 +48,7 @@ graph TD;
   sc-price-choice-container --> sc-format-number
   sc-price-choice-container --> sc-choice-container
   sc-price-choice-container --> sc-skeleton
+  sc-price-choice-container --> sc-visually-hidden
   sc-checkout-product-price-variant-selector --> sc-price-choice-container
   sc-product-price-choices --> sc-price-choice-container
   style sc-price-choice-container fill:#f9f,stroke:#333,stroke-width:4px

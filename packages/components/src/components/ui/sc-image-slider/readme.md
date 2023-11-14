@@ -27,11 +27,13 @@
 
 ### Depends on
 
+- [sc-visually-hidden](../../util/visually-hidden)
 - [sc-icon](../icon)
 
 ### Graph
 ```mermaid
 graph TD;
+  sc-image-slider --> sc-visually-hidden
   sc-image-slider --> sc-icon
   style sc-image-slider fill:#f9f,stroke:#333,stroke-width:4px
 ```

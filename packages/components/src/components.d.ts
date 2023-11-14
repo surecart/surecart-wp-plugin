@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1783,10 +1783,6 @@ export namespace Components {
     }
     interface ScMenuItem {
         /**
-          * Aria label
-         */
-        "ariaLabel": string;
-        /**
           * Draws the item in a checked state.
          */
         "checked": boolean;
@@ -2194,10 +2190,6 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
-        "taxIdentifier": {
-    number: string;
-    number_type: string;
-  };
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2817,10 +2809,6 @@ export namespace Components {
           * Limit to a set of ids.
          */
         "ids": string[];
-        /**
-          * Is the store connected?
-         */
-        "isStoreConnected": boolean;
         "layoutConfig": LayoutConfig1;
         "limit": number;
         "paginationAlignment": string;
@@ -3745,7 +3733,6 @@ export namespace Components {
           * Is this a borderless toggle?
          */
         "borderless": boolean;
-        "closeSpeakText": string;
         /**
           * Are these collapsible?
          */
@@ -3758,7 +3745,6 @@ export namespace Components {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open": boolean;
-        "openSpeakText": string;
         /**
           * Is this a shady
          */
@@ -7550,10 +7536,6 @@ declare namespace LocalJSX {
     }
     interface ScMenuItem {
         /**
-          * Aria label
-         */
-        "ariaLabel"?: string;
-        /**
           * Draws the item in a checked state.
          */
         "checked"?: boolean;
@@ -7979,10 +7961,6 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
-        "taxIdentifier"?: {
-    number: string;
-    number_type: string;
-  };
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -8635,10 +8613,6 @@ declare namespace LocalJSX {
           * Limit to a set of ids.
          */
         "ids"?: string[];
-        /**
-          * Is the store connected?
-         */
-        "isStoreConnected"?: boolean;
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         /**
@@ -9670,7 +9644,6 @@ declare namespace LocalJSX {
           * Is this a borderless toggle?
          */
         "borderless"?: boolean;
-        "closeSpeakText"?: string;
         /**
           * Are these collapsible?
          */
@@ -9691,7 +9664,6 @@ declare namespace LocalJSX {
           * Indicates whether or not the details is open. You can use this in lieu of the show/hide methods.
          */
         "open"?: boolean;
-        "openSpeakText"?: string;
         /**
           * Is this a shady
          */
