@@ -51,6 +51,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		gap,
 		color,
 		success_url,
+		do_not_persist_cart,
 	} = attributes;
 
 	const [showClaimNotice, setShowClaimNotice] = useState(false);
@@ -230,6 +231,10 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		setShowClaimNotice(false);
 	};
 
+	const isDefaultCheckout =
+		parseInt(window?.scData?.default_checkout_id || '') ===
+		parseInt(formId);
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -313,6 +318,28 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						</PanelRow>
 					)}
 				</PanelBody>
+
+				{!isDefaultCheckout && (
+					<PanelBody
+						title={__('Cart Persistence Settings', 'surecart')}
+					>
+						<PanelRow>
+							<ToggleControl
+								label={__(
+									'Do Not Persist Carts Across Pages',
+									'surecart'
+								)}
+								checked={do_not_persist_cart}
+								onChange={(nextValue) => {
+									setAttributes({
+										do_not_persist_cart: nextValue,
+									});
+								}}
+							/>
+						</PanelRow>
+					</PanelBody>
+				)}
+
 				<PanelBody
 					title={__('Loading Text', 'surecart')}
 					initialOpen={false}
