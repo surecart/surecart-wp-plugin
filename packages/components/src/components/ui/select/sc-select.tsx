@@ -465,7 +465,7 @@ export class ScSelectDropdown {
             required={this.required}
             disabled={this.disabled}
             aria-hidden="true"
-            aria-label={this.displayValue()}
+            aria-label={this.displayValue() || this.label || this.placeholder}
             onBlur={() => this.handleBlur()}
             onFocus={() => this.handleFocus()}
           ></input>
