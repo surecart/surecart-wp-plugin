@@ -243,6 +243,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.10.0 - November 14th, 2023 =
+* Improvement: Keyboard and screen reader accessibility of customer-facing UI.
+* Improvement: Make Stripe Payment Element the new default for the Stripe processor.
+
 = 2.9.0 - November 10th, 2023 =
 * New: Delay self-service cancellations - prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.
 * New: Enable or disalbe fulfillment notifications on admin order screen.
