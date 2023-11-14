@@ -52,7 +52,7 @@ class Block extends BaseBlock {
 		 */
 		$do_not_persist_cart = apply_filters( 'surecart/do_not_persist_cart', $attributes['do_not_persist_cart'] ?? true );
 
-		// If default Check out page, then window?.scData?.do_not_persist_cart would be false.
+		// If default Checkout page, then we need to persist the cart.
 		if ( \SureCart::forms()->getDefaultId() === $post->ID ) {
 			$do_not_persist_cart = false;
 		}
