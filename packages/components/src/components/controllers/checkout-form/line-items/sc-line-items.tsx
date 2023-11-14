@@ -58,6 +58,30 @@ export class ScLineItems {
     return this.editable;
   }
 
+  /**
+   * Get the max stock quantity for the line item.
+   */
+  getMaxStockQty(item: LineItem) {
+    const product = item?.price?.product as Product;
+
+    // check purchase limit.
+    if (product?.purchase_limit) {
+      return product.purchase_limit;
+    }
+
+    // If stock is not enabled, return null.
+    const isStockNeedsToBeChecked = !!(product?.stock_enabled && !product?.allow_out_of_stock_purchases);
+    if (!isStockNeedsToBeChecked) {
+      return null;
+    }
+
+    // If no variant is selected, check against product stock.
+    if (!item?.variant) return product?.available_stock;
+
+    // Check against selected variant's stock.
+    return item.variant?.available_stock;
+  }
+
   render() {
     if (!!formBusy() && !checkoutState?.checkout?.line_items?.data?.length) {
       return (
@@ -82,7 +106,7 @@ export class ScLineItems {
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
-                max={(item?.price?.product as Product)?.purchase_limit}
+                max={this.getMaxStockQty(item)}
                 editable={this.isEditable(item)}
                 removable={this.removable}
                 quantity={item.quantity}
