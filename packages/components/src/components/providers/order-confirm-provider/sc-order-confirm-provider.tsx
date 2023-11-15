@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Host, Watch, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { speak } from '@wordpress/a11y';
 
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
@@ -19,6 +20,7 @@ import { createErrorNotice } from '@store/notices/mutations';
   shadow: true,
 })
 export class ScOrderConfirmProvider {
+  private continueButton: HTMLScButtonElement;
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
@@ -44,6 +46,8 @@ export class ScOrderConfirmProvider {
   handleConfirmOrderEvent() {
     if (this.checkoutStatus === 'confirming') {
       this.confirmOrder();
+    } else if (this.checkoutStatus === 'confirmed') {
+      speak(__('Order has been confirmed. Please select continue to go to the next step.', 'surecart'));
     }
   }
 
@@ -78,6 +82,15 @@ export class ScOrderConfirmProvider {
     return url ? addQueryArgs(url, { sc_order: checkoutState.checkout?.id }) : window?.scData?.pages?.dashboard;
   }
 
+  @Watch('showSuccessModal')
+  handleSuccessModal() {
+    if (this.showSuccessModal) {
+      setTimeout(() => {
+        this.continueButton?.focus();
+      }, 50);
+    }
+  }
+
   render() {
     const manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
 
@@ -105,7 +118,7 @@ export class ScOrderConfirmProvider {
                 })}
               </sc-alert>
             )}
-            <sc-button href={this.getSuccessUrl()} size="large" type="primary">
+            <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
               {formState?.text?.success?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
