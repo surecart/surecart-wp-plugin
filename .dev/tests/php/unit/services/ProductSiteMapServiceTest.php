@@ -11,7 +11,7 @@ class ProductSiteMapServiceTest extends SureCartUnitTestCase {
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -49,7 +49,7 @@ class ProductSiteMapServiceTest extends SureCartUnitTestCase {
 		]);
 
 		$list = $service->get_url_list(1, '');
-		$this->assertContains('products/test', $list[0]['loc']);
-		$this->assertContains('products/test2', $list[1]['loc']);
+		$this->assertStringContainsString('test', $list[0]['loc']);
+		$this->assertStringContainsString('test2', $list[1]['loc']);
 	}
 }

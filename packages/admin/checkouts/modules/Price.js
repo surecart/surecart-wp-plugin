@@ -15,6 +15,8 @@ import {
 	ScPriceInput,
 	ScForm,
 } from '@surecart/components-react';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({
 	price,
@@ -24,8 +26,9 @@ export default ({
 	onChange,
 	subtotal_amount,
 	ad_hoc_amount,
+	lineItem,
 }) => {
-	const imageUrl = price?.product?.image_url;
+	const media = getFeaturedProductMediaAttributes(price?.product);
 	const [open, setOpen] = useState(false);
 	const [addHocAmount, setAddHocAmount] = useState(
 		ad_hoc_amount || price?.amount
@@ -40,20 +43,32 @@ export default ({
 			<ScTableRow>
 				<ScTableCell>
 					<ScFlex alignItems="center" justifyContent="flex-start">
-						{imageUrl ? (
+						{media?.url ? (
 							<img
-								src={imageUrl}
+								src={media.url}
+								alt={media.alt}
+								{...(media.title ? { title: media.title } : {})}
 								css={css`
-									width: 40px;
-									height: 40px;
-									object-fit: cover;
-									background: #f3f3f3;
-									display: flex;
-									align-items: center;
-									justify-content: center;
-									border-radius: var(
-										--sc-border-radius-small
+									width: var(
+										--sc-product-line-item-image-size,
+										4em
 									);
+									height: var(
+										--sc-product-line-item-image-size,
+										4em
+									);
+									object-fit: cover;
+									border-radius: 4px;
+									border: solid 1px
+										var(
+											--sc-input-border-color,
+											var(--sc-input-border)
+										);
+									display: block;
+									box-shadow: var(--sc-input-box-shadow);
+									-webkit-align-self: flex-start;
+									-ms-flex-item-align: start;
+									align-self: flex-start;
 								`}
 							/>
 						) : (
@@ -83,17 +98,21 @@ export default ({
 						<div>
 							<div>
 								<strong>{price?.product?.name}</strong>
+								<LineItemLabel lineItem={lineItem}>
+									<div>
+										<ScFormatNumber
+											type="currency"
+											currency={price?.currency || 'usd'}
+											value={
+												!!price?.ad_hoc && ad_hoc_amount
+													? ad_hoc_amount
+													: price?.amount
+											}
+										/>
+										{intervalString(price)}
+									</div>
+								</LineItemLabel>
 							</div>
-							<ScFormatNumber
-								type="currency"
-								currency={price?.currency || 'usd'}
-								value={
-									!!price?.ad_hoc && ad_hoc_amount
-										? ad_hoc_amount
-										: price?.amount
-								}
-							/>
-							{intervalString(price)}
 						</div>
 					</ScFlex>
 				</ScTableCell>

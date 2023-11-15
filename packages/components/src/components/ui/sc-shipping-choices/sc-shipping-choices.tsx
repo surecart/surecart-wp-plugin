@@ -1,11 +1,13 @@
 import { Component, Prop, h, Host } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
 import { Checkout, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { checkoutIsLocked } from '@store/checkout/getters';
 import { createErrorNotice } from '@store/notices/mutations';
+import { speak } from '@wordpress/a11y';
+import { getFormattedPrice } from '../../../functions/price';
 
 /**
  * @part base - The elements base wrapper.
@@ -39,6 +41,12 @@ export class ScShippingChoices {
           selected_shipping_choice_id: selectedShippingChoiceId,
         },
       })) as Checkout;
+
+      speak(__('Shipping choice updated.', 'surecart'), 'assertive');
+      const { total_amount, currency } = checkoutState.checkout;
+
+      /** translators: %1$s: formatted amount */
+      speak(sprintf(__('Your order total has changed to: %1$s.', 'surecart'), getFormattedPrice({ amount: total_amount, currency })), 'assertive');
     } catch (e) {
       console.error(e);
       createErrorNotice(e);
@@ -77,7 +85,7 @@ export class ScShippingChoices {
             </sc-radio>
           ))}
         </sc-radio-group>
-        {checkoutIsLocked() && <sc-block-ui part='block-ui'></sc-block-ui>}
+        {checkoutIsLocked('selected_shipping_choice') && <sc-block-ui></sc-block-ui>}
       </Host>
     );
   }

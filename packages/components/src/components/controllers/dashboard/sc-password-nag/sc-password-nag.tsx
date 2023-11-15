@@ -1,4 +1,4 @@
-import { Component, Fragment, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Fragment, h, Prop, State, Watch, Host } from '@stencil/core';
 import apiFetch from '../../../../functions/fetch';
 import { __ } from '@wordpress/i18n';
 
@@ -92,50 +92,53 @@ export class ScPasswordNag {
     }
 
     return (
-      <sc-alert type={this.type} open={this.open} exportparts="base, icon, text, title, message, close-icon" style={{ position: 'relative' }}>
-        {!!this.error && this.error}
-        {this.set ? (
-          <sc-dashboard-module class="customer-details">
-            <span slot="heading">{__('Set A Password', 'surecart')} </span>
-            <sc-button type="text" size="small" slot="end" onClick={() => (this.set = false)}>
-              <sc-icon name="x" slot="prefix" />
-              {__('Cancel', 'surecart')}
-            </sc-button>
-            <sc-card>
-              <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
-                <sc-password
-                  enableValidation={this.enableValidation}
-                  label={__('New Password', 'surecart')}
-                  name="password"
-                  confirmation={true}
-                  ref={el => (this.input = el as HTMLScPasswordElement)}
-                />
-                <div>
-                  <sc-button type="primary" full submit busy={this.loading}>
-                    {__('Set Password', 'surecart')}
-                  </sc-button>
-                </div>
-              </sc-form>
-            </sc-card>
-          </sc-dashboard-module>
-        ) : (
-          <Fragment>
-            <slot name="title" slot="title">
-              {__('Reminder', 'surecart')}
-            </slot>
-            <slot>{__('You have not yet set a password. Please set a password for your account.', 'surecart')}</slot>
-            <sc-flex justify-content="flex-start">
-              <sc-button size="small" type="primary" onClick={() => (this.set = true)}>
-                {__('Set A Password', 'surecart')}
+      <Host tabindex={0} aria-label={__('You have not yet set a password. Please set a password for your account.', 'surecart')}>
+        <sc-alert type={this.type} open={this.open} exportparts="base, icon, text, title, message, close-icon" style={{ position: 'relative' }}>
+          {!!this.error && this.error}
+          {this.set ? (
+            <sc-dashboard-module class="customer-details">
+              <span slot="heading">{__('Set A Password', 'surecart')} </span>
+              <sc-button type="text" size="small" slot="end" onClick={() => (this.set = false)}>
+                <sc-icon name="x" slot="prefix" />
+                {__('Cancel', 'surecart')}
               </sc-button>
-              <sc-button size="small" type="text" onClick={() => this.dismiss()}>
-                {__('Dismiss', 'surecart')}
-              </sc-button>
-            </sc-flex>
-          </Fragment>
-        )}
-        {this.loading && <sc-block-ui spinner></sc-block-ui>}
-      </sc-alert>
+              <sc-card>
+                <sc-form onScFormSubmit={e => this.handleSubmit(e)}>
+                  <sc-password
+                    enableValidation={this.enableValidation}
+                    label={__('New Password', 'surecart')}
+                    name="password"
+                    confirmation={true}
+                    ref={el => (this.input = el as HTMLScPasswordElement)}
+                    required
+                  />
+                  <div>
+                    <sc-button type="primary" full submit busy={this.loading}>
+                      {__('Set Password', 'surecart')}
+                    </sc-button>
+                  </div>
+                </sc-form>
+              </sc-card>
+            </sc-dashboard-module>
+          ) : (
+            <Fragment>
+              <slot name="title" slot="title">
+                {__('Reminder', 'surecart')}
+              </slot>
+              <slot>{__('You have not yet set a password. Please set a password for your account.', 'surecart')}</slot>
+              <sc-flex justify-content="flex-start">
+                <sc-button size="small" type="primary" onClick={() => (this.set = true)}>
+                  {__('Set A Password', 'surecart')}
+                </sc-button>
+                <sc-button size="small" type="text" onClick={() => this.dismiss()}>
+                  {__('Dismiss', 'surecart')}
+                </sc-button>
+              </sc-flex>
+            </Fragment>
+          )}
+          {this.loading && <sc-block-ui spinner></sc-block-ui>}
+        </sc-alert>
+      </Host>
     );
   }
 }
