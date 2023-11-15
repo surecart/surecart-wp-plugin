@@ -68,6 +68,10 @@ abstract class ProductBlock extends BaseBlock {
 	}
 
 	public function setInitialProductState( $product ) {
+		if(empty($product->id)){
+			return;
+		}
+
 		$form             = \SureCart::forms()->getDefault();
 		$prices           = $product->prices->data ?? [];
 		$selected_price   = $this->getSelectedPrice( $prices );
@@ -135,7 +139,8 @@ abstract class ProductBlock extends BaseBlock {
 		}
 
 		$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
+
 		$this->setInitialProductState( $product );
-		return $product;
+		return !empty($product->id) ? $product : null;
 	}
 }
