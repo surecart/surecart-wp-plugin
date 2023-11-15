@@ -77,11 +77,11 @@ export class ScOrderSummary {
           slot="title"
           onClick={e => this.handleClick(e)}
           tabIndex={0}
-          aria-label={sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart'))}
+          aria-label={sprintf(__('Order Summary %1$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart'))}
           onKeyDown={e => {
             if (e.key === ' ') {
               this.handleClick(e);
-              speak(sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart')), 'assertive');
+              speak(sprintf(__('Order Summary %1$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart')), 'assertive');
             }
           }}
         >
