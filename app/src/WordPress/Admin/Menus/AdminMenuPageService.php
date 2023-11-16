@@ -191,6 +191,11 @@ class AdminMenuPageService {
 	 * @return string
 	 */
 	public function getCartPage() {
+		// add filter to disable shop page menu item.
+		if ( ! apply_filters( 'surecart/admin/menu_item/cart', true ) ) {
+			return;
+		}
+
 		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
 
 		$status = '';
@@ -209,6 +214,11 @@ class AdminMenuPageService {
 	 * @return string
 	 */
 	public function getShopPage() {
+		// add filter to disable shop page menu item.
+		if ( ! apply_filters( 'surecart/admin/menu_item/shop', true ) ) {
+			return;
+		}
+
 		$shop_page_id = \SureCart::pages()->getId( 'shop' );
 		$status       = '';
 
@@ -226,6 +236,11 @@ class AdminMenuPageService {
 	 * @return string
 	 */
 	public function getCheckoutPage() {
+		// add filter to disable shop page menu item.
+		if ( ! apply_filters( 'surecart/admin/menu_item/checkout', true ) ) {
+			return;
+		}
+
 		$checkout_page_id = \SureCart::pages()->getId( 'checkout' );
 		$status           = '';
 
