@@ -9,22 +9,27 @@ import {
 	RichText,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalUseBorderProps as useBorderProps,
+	BlockControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
+	ToolbarButton,
+	ToolbarGroup,
 } from '@wordpress/components';
+import { useState } from '@wordpress/element';
+import { edit } from '@wordpress/icons';
 
 /**
  * Component Dependencies
  */
 import { ScButton, ScForm, ScPriceInput } from '@surecart/components-react';
-import PriceSelector from '@scripts/blocks/components/PriceSelector';
 import PriceInfo from '@scripts/blocks/components/PriceInfo';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
 	const {
@@ -45,16 +50,15 @@ export default ({ className, attributes, setAttributes }) => {
 			select(coreStore).getEntityRecord('root', 'price', price_id),
 		[price_id]
 	);
+	const [showChangePrice, setShowChangePrice] = useState(false);
 
-	if (!price_id) {
+	if (!price_id || showChangePrice) {
 		return (
 			<div {...blockProps}>
-				<PriceSelector
-					variable={true}
-					onSelect={({ price_id, variant_id }) =>
-						setAttributes({ price_id, variant_id })
-					}
-					allowOutOfStockSelection={true}
+				<Placeholder
+					selectedPriceId={price_id}
+					setAttributes={setAttributes}
+					setShowChangePrice={setShowChangePrice}
 				/>
 			</div>
 		);
@@ -62,6 +66,15 @@ export default ({ className, attributes, setAttributes }) => {
 
 	return (
 		<div className={className}>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						icon={edit}
+						label={__('Change selected price', 'surecart')}
+						onClick={() => setShowChangeProduct(true)}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					{price?.ad_hoc && (
