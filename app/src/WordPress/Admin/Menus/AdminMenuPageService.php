@@ -127,6 +127,9 @@ class AdminMenuPageService {
 				content: "";
 				width: calc(100% + 26px);
 			}
+			#toplevel_page_sc-dashboard .awaiting-mod {
+				background: rgba(255,255,255,0.1);
+			}
 		</style>';
 	}
 
@@ -154,7 +157,9 @@ class AdminMenuPageService {
 			return;
 		}
 
-		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+		$cart_page_id     = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+		$shop_page_id     = \SureCart::pages()->getId( 'shop' );
+		$checkout_page_id = \SureCart::pages()->getId( 'checkout' );
 
 		$this->pages = [
 			'get-started'         => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
@@ -172,10 +177,63 @@ class AdminMenuPageService {
 			'subscriptions'       => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
-			'cart'                => get_edit_post_link( $cart_page_id ) ? \add_submenu_page( $this->slug, __( 'Cart', 'surecart' ), __( 'Cart', 'surecart' ), 'manage_options', 'post.php?post=' . (int) $cart_page_id . '&action=edit', '' ) : null,
-			// 'upgrade-paths'   => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
-			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
+			'shop'                => $this->getShopPage(),
+			'cart'                => $this->getCartPage(),
+			'checkout'            => $this->getCheckoutPage(),
+			'forms'               => \add_submenu_page( $this->slug, __( 'Custom Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'            => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];
+	}
+
+	/**
+	 * Get the shop page.
+	 *
+	 * @return string
+	 */
+	public function getCartPage() {
+		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+
+		$status = '';
+
+		$post_status = get_post_status( $cart_page_id );
+		if ( 'publish' !== $post_status ) {
+			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
+		}
+
+		return \add_submenu_page( $this->slug, __( 'Cart', 'surecart' ), __( 'Cart', 'surecart' ) . $status, 'manage_options', 'post.php?post=' . (int) $cart_page_id . '&action=edit', '' );
+	}
+
+	/**
+	 * Get the shop page.
+	 *
+	 * @return string
+	 */
+	public function getShopPage() {
+		$shop_page_id = \SureCart::pages()->getId( 'shop' );
+		$status       = '';
+
+		$post_status = get_post_status( $shop_page_id );
+		if ( 'publish' !== $post_status ) {
+			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
+		}
+
+		return \add_submenu_page( $this->slug, __( 'Shop', 'surecart' ), __( 'Shop', 'surecart' ) . $status, 'manage_options', 'post.php?post=' . (int) $shop_page_id . '&action=edit', '' );
+	}
+
+	/**
+	 * Get the checkout page.
+	 *
+	 * @return string
+	 */
+	public function getCheckoutPage() {
+		$checkout_page_id = \SureCart::pages()->getId( 'checkout' );
+		$status           = '';
+
+		$post_status = get_post_status( $checkout_page_id );
+		if ( 'publish' !== $post_status ) {
+			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
+		}
+
+		return \add_submenu_page( $this->slug, __( 'Checkout', 'surecart' ), __( 'Checkout', 'surecart' ) . $status, 'manage_options', 'post.php?post=' . (int) $checkout_page_id . '&action=edit', '' );
 	}
 }
