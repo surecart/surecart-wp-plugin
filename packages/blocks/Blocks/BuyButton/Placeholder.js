@@ -46,16 +46,21 @@ export default ({
 				<div
 					css={css`
 						display: flex;
-						justify-content: space-between;
+						justify-content: ${!!selectedLineItems?.length
+							? 'space-between'
+							: 'flex-end'};
 					`}
 				>
-					<Button
-						onClick={() => {
-							setShowChangeProducts(false);
-						}}
-					>
-						{__('Cancel', 'surecart')}
-					</Button>
+					{!!selectedLineItems?.length && (
+						<Button
+							variant="secondary"
+							onClick={() => {
+								setLineItems([]);
+							}}
+						>
+							{__('Cancel', 'surecart')}
+						</Button>
+					)}
 					<Button
 						variant="primary"
 						onClick={() => {
