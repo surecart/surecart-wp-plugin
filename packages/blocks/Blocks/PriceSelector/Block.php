@@ -54,16 +54,6 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
-	}
-
-	/**
 	 * Get the inner price choice blocks.
 	 *
 	 * @return array

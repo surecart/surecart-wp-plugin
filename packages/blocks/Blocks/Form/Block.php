@@ -96,12 +96,11 @@ class Block extends BaseBlock {
 		);
 
 		if ( ! empty( $attributes['prices'] ) ) {
-			$existing   = $this->getExistingLineItems();
 			$line_items = $this->convertPricesToLineItems( $attributes['prices'] );
 			sc_initial_state(
 				[
 					'checkout' => [
-						'initialLineItems' => array_merge( $existing, $line_items ),
+						'initialLineItems' => sc_initial_line_items( $line_items ),
 					],
 				]
 			);
@@ -120,16 +119,6 @@ class Block extends BaseBlock {
 				'success_url'      => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 			]
 		);
-	}
-
-	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
 	}
 
 	/**
