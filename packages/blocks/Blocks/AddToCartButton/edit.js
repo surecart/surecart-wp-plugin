@@ -71,7 +71,7 @@ export default ({ className, attributes, setAttributes }) => {
 					<ToolbarButton
 						icon={edit}
 						label={__('Change selected price', 'surecart')}
-						onClick={() => setShowChangeProduct(true)}
+						onClick={() => setShowChangePrice(true)}
 					/>
 				</ToolbarGroup>
 			</BlockControls>
