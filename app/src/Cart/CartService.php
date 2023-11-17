@@ -36,8 +36,9 @@ class CartService {
 					array_filter(
 						[
 							'checkout' => [
-								'formId' => $form->ID,
-								'mode'   => Form::getMode( $form->ID ),
+								'formId'  => $form->ID,
+								'mode'    => Form::getMode( $form->ID ),
+								'persist' => 'browser',
 							],
 						]
 					)

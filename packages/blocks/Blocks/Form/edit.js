@@ -321,12 +321,14 @@ export default function edit({ clientId, attributes, setAttributes }) {
 
 				{!isDefaultCheckout && (
 					<PanelBody
-						title={__('Cart Persistence Settings', 'surecart')}
+						title={__('Form Cart Settings', 'surecart')}
+						initialOpen={false}
 					>
 						<PanelRow>
 							<ToggleControl
-								label={__(
-									'Do Not Persist Carts Across Pages',
+								label={__('Persist Across Pages', 'surecart')}
+								help={__(
+									'Allow the cart for this form to persist across page views instead using the chosen products each page view.',
 									'surecart'
 								)}
 								checked={persist_cart === 'browser'}

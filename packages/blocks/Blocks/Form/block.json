@@ -54,7 +54,7 @@
 		},
 		"persist_cart": {
 			"type": "string",
-			"default": "browser"
+			"default": "url"
 		}
 	},
 	"providesContext": {
