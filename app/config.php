@@ -167,6 +167,7 @@ return [
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
+		\SureCartBlocks\Blocks\Cart\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
