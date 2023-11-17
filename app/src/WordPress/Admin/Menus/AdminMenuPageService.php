@@ -77,17 +77,20 @@ class AdminMenuPageService {
 	 */
 	public function forceSelect( $file ) {
 		global $submenu_file;
-		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+		global $post;
 
-		if ( 'edit.php?post_type=sc_cart' === $submenu_file ) {
+		if ( ! empty( $post->ID ) && in_array(
+			$post->ID,
+			[
+				\SureCart::pages()->getId( 'cart', 'sc_cart' ),
+				\SureCart::pages()->getId( 'checkout' ),
+				\SureCart::pages()->getId( 'shop' ),
+				\SureCart::pages()->getId( 'dashboard' ),
+			]
+		) ) {
 			$file = 'sc-dashboard';
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$submenu_file = 'post.php?post=' . (int) $cart_page_id . '&action=edit';
-		}
-		if ( 'edit.php?post_type=sc_form' === $submenu_file ) {
-			$file = 'sc-dashboard';
-			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$submenu_file = 'edit.php?post_type=sc_form';
+			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
 		return $file;
@@ -157,10 +160,6 @@ class AdminMenuPageService {
 			return;
 		}
 
-		$cart_page_id     = \SureCart::pages()->getId( 'cart', 'sc_cart' );
-		$shop_page_id     = \SureCart::pages()->getId( 'shop' );
-		$checkout_page_id = \SureCart::pages()->getId( 'checkout' );
-
 		$this->pages = [
 			'get-started'         => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
 			'complete-signup'     => \add_submenu_page( '', __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
@@ -177,78 +176,30 @@ class AdminMenuPageService {
 			'subscriptions'       => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
-			'shop'                => $this->getShopPage(),
-			'cart'                => $this->getCartPage(),
-			'checkout'            => $this->getCheckoutPage(),
-			'forms'               => \add_submenu_page( $this->slug, __( 'Custom Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
+			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
+			'cart'                => $this->getPage( 'cart', __( 'Cart', 'surecart' ), 'sc_cart' ),
+			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
+			'dashboard'           => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
+			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'            => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];
 	}
 
-	/**
-	 * Get the shop page.
-	 *
-	 * @return string
-	 */
-	public function getCartPage() {
+	public function getPage( $slug, $name, $post_type = 'page' ) {
 		// add filter to disable shop page menu item.
-		if ( ! apply_filters( 'surecart/admin/menu_item/cart', true ) ) {
+		if ( ! apply_filters( 'surecart/admin/menu_item/' . $slug, true ) ) {
 			return;
 		}
 
-		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+		$page_id = \SureCart::pages()->getId( $slug, $post_type );
 
 		$status = '';
 
-		$post_status = get_post_status( $cart_page_id );
+		$post_status = get_post_status( $page_id );
 		if ( 'publish' !== $post_status ) {
 			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
 		}
 
-		return \add_submenu_page( $this->slug, __( 'Cart', 'surecart' ), __( 'Cart', 'surecart' ) . $status, 'manage_options', 'post.php?post=' . (int) $cart_page_id . '&action=edit', '' );
-	}
-
-	/**
-	 * Get the shop page.
-	 *
-	 * @return string
-	 */
-	public function getShopPage() {
-		// add filter to disable shop page menu item.
-		if ( ! apply_filters( 'surecart/admin/menu_item/shop', true ) ) {
-			return;
-		}
-
-		$shop_page_id = \SureCart::pages()->getId( 'shop' );
-		$status       = '';
-
-		$post_status = get_post_status( $shop_page_id );
-		if ( 'publish' !== $post_status ) {
-			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
-		}
-
-		return \add_submenu_page( $this->slug, __( 'Shop', 'surecart' ), __( 'Shop', 'surecart' ) . $status, 'manage_options', 'post.php?post=' . (int) $shop_page_id . '&action=edit', '' );
-	}
-
-	/**
-	 * Get the checkout page.
-	 *
-	 * @return string
-	 */
-	public function getCheckoutPage() {
-		// add filter to disable shop page menu item.
-		if ( ! apply_filters( 'surecart/admin/menu_item/checkout', true ) ) {
-			return;
-		}
-
-		$checkout_page_id = \SureCart::pages()->getId( 'checkout' );
-		$status           = '';
-
-		$post_status = get_post_status( $checkout_page_id );
-		if ( 'publish' !== $post_status ) {
-			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
-		}
-
-		return \add_submenu_page( $this->slug, __( 'Checkout', 'surecart' ), __( 'Checkout', 'surecart' ) . $status, 'manage_options', 'post.php?post=' . (int) $checkout_page_id . '&action=edit', '' );
+		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', 'post.php?post=' . (int) $page_id . '&action=edit', '' );
 	}
 }
