@@ -53,7 +53,7 @@ class CollectionSiteMap implements \RankMath\Sitemap\Providers\Provider {
 
 		$links = array_map(
 			function( $collection ) {
-				$lastmod     = new DateTime( '@' . $collection->updated_at );
+				$lastmod     = new \DateTime( '@' . $collection->updated_at );
 				$lastmod_w3c = $lastmod->format( 'Y-m-d' );
 				return [
 					'loc' => $collection->permalink,
