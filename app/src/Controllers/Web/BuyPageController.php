@@ -226,7 +226,7 @@ class BuyPageController extends BasePageController {
 	 * @return array
 	 */
 	public function doNotPersistCart( $data ) {
-		$data['do_not_persist_cart'] = true;
+		$data['persist_cart'] = 'url';
 		return $data;
 	}
 }

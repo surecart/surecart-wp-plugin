@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -2189,10 +2189,6 @@ export namespace Components {
           * Force show the field.
          */
         "show": boolean;
-        "taxIdentifier": {
-    number: string;
-    number_type: string;
-  };
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2594,6 +2590,10 @@ export namespace Components {
          */
         "prices": Prices;
         /**
+          * Stores the price
+         */
+        "product": Product;
+        /**
           * Product entity
          */
         "products": Products;
@@ -2809,10 +2809,6 @@ export namespace Components {
           * Limit to a set of ids.
          */
         "ids": string[];
-        /**
-          * Is the store connected?
-         */
-        "isStoreConnected": boolean;
         "layoutConfig": LayoutConfig1;
         "limit": number;
         "paginationAlignment": string;
@@ -7947,10 +7943,6 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
-        "taxIdentifier"?: {
-    number: string;
-    number_type: string;
-  };
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -8373,6 +8365,10 @@ declare namespace LocalJSX {
          */
         "prices"?: Prices;
         /**
+          * Stores the price
+         */
+        "product"?: Product;
+        /**
           * Product entity
          */
         "products"?: Products;
@@ -8600,10 +8596,6 @@ declare namespace LocalJSX {
           * Limit to a set of ids.
          */
         "ids"?: string[];
-        /**
-          * Is the store connected?
-         */
-        "isStoreConnected"?: boolean;
         "layoutConfig"?: LayoutConfig1;
         "limit"?: number;
         /**

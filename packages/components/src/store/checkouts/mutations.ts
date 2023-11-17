@@ -15,7 +15,7 @@ export const setCheckout = (data: Checkout, formId: number | string) => {
     checkoutState.checkout = data;
   }
   // set in url only if we are not persisting the cart.
-  if (window?.scData?.do_not_persist_cart && data?.id) {
+  if (window?.scData?.persist_cart === 'url' && data?.id) {
     window.history.replaceState({}, document.title, addQueryArgs(window.location.href, { checkout_id: data?.id }));
   }
 };

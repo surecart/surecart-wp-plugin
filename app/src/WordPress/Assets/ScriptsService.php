@@ -112,7 +112,7 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
-					'do_not_persist_cart'  => is_admin(),
+					'persist_cart'         => is_admin() ? false : 'browser',
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
@@ -392,7 +392,7 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
-					'do_not_persist_cart'  => is_admin(),
+					'persist_cart'         => is_admin() ? false : 'browser',
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),

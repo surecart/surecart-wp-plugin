@@ -51,7 +51,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		gap,
 		color,
 		success_url,
-		do_not_persist_cart,
+		persist_cart,
 	} = attributes;
 
 	const [showClaimNotice, setShowClaimNotice] = useState(false);
@@ -329,10 +329,12 @@ export default function edit({ clientId, attributes, setAttributes }) {
 									'Do Not Persist Carts Across Pages',
 									'surecart'
 								)}
-								checked={do_not_persist_cart}
+								checked={persist_cart === 'browser'}
 								onChange={(nextValue) => {
 									setAttributes({
-										do_not_persist_cart: nextValue,
+										persist_cart: nextValue
+											? 'browser'
+											: 'url',
 									});
 								}}
 							/>

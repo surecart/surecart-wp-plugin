@@ -45,22 +45,17 @@ class Block extends BaseBlock {
 			$processors = [];
 		}
 
-		/**
-		 * Filter - Do not persist the cart.
-		 *
-		 * @param bool $do_not_persist_cart Do not persist the cart.
-		 */
-		$do_not_persist_cart = apply_filters( 'surecart/do_not_persist_cart', $attributes['do_not_persist_cart'] ?? true );
-
-		// If default Checkout page, then we need to persist the cart.
-		if ( \SureCart::forms()->getDefaultId() === $post->ID ) {
-			$do_not_persist_cart = false;
-		}
-
+		// set cart persistence.
 		add_filter(
 			'surecart-components/scData',
-			function( $data ) use ( $do_not_persist_cart ) {
-				$data['do_not_persist_cart'] = $do_not_persist_cart;
+			function( $data ) use ( $attributes, $post ) {
+				if ( is_admin() ) {
+					$data['persist_cart'] = false;
+				} elseif ( \SureCart::forms()->getDefaultId() === $post->ID ) {
+					$data['persist_cart'] = 'browser';
+				} else {
+					$data['persist_cart'] = $attributes['persist_cart'];
+				}
 				return $data;
 			}
 		);

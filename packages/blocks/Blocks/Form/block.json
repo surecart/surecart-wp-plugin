@@ -52,9 +52,9 @@
 				"button": "Continue"
 			}
 		},
-		"do_not_persist_cart": {
-			"type": "boolean",
-			"default": true
+		"persist_cart": {
+			"type": "string",
+			"default": "browser"
 		}
 	},
 	"providesContext": {
