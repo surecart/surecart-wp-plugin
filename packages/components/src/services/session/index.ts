@@ -1,5 +1,4 @@
 import { state as checkoutState } from '@store/checkout';
-import { state as processorsState } from '@store/processors';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
