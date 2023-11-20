@@ -64,3 +64,5 @@ export const isProductVariantOptionMissing = (optionNumber: number, option: stri
     variant => variant?.option_1 === variantValues.option_1 && variant?.option_2 === variantValues.option_2 && variant.option_3 === option,
   );
 };
+
+export const getAdditionalErrorMessages = error => (error?.additional_errors || []).map(error => error.message);

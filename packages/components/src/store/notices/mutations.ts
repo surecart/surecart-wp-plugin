@@ -6,7 +6,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import state, { NoticeType, ScNoticeStore } from './store';
+import state from './store';
+import { NoticeType, ScNoticeStore } from '../../types';
 
 /**
  * Default notice options.
