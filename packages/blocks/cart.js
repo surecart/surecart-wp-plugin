@@ -22,6 +22,15 @@ registerBlocks([
 ]);
 
 registerBlocksForTemplates({
-	blocks: [cart],
+	blocks: [
+		cart,
+		cartItems,
+		cartCoupon,
+		cartSubtotal,
+		cartBumpLineItem,
+		cartMessage,
+		cartHeader,
+		cartSubmit,
+	],
 	include: ['surecart/surecart//cart'],
 });
