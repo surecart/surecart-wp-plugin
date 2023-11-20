@@ -13,6 +13,26 @@
 | `showDescription` | `show-description` | Whether to show the shipping choice description | `boolean` | `true`      |
 
 
+## Events
+
+| Event     | Description | Type                         |
+| --------- | ----------- | ---------------------------- |
+| `scError` | Error event | `CustomEvent<ResponseError>` |
+
+
+## Shadow Parts
+
+| Part                    | Description                |
+| ----------------------- | -------------------------- |
+| `"base"`                | The elements base wrapper. |
+| `"block-ui"`            | The block ui loader.       |
+| `"empty"`               | The empty message.         |
+| `"radio__base"`         | The radio base wrapper.    |
+| `"radio__checked-icon"` | The radio checked icon.    |
+| `"radio__control"`      | The radio control wrapper. |
+| `"radio__label"`        | The radio label.           |
+
+
 ## Dependencies
 
 ### Used by

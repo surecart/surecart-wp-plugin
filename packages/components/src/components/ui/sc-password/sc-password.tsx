@@ -143,7 +143,7 @@ export class ScPassword {
     }
 
     // must contain a special charater.
-    const regex = /[!@#$%^&*(),.?":{}|<>]/;
+    const regex = /[-'`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/;
     if (!regex.test(this.input?.value)) {
       return (this.hintText = __('Passwords must contain a special character.', 'surecart'));
     }
