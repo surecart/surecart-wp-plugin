@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { onChange } from '@store/product';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
-import { getAdditionalErrorMessages } from '@store/utils';
+import { getAdditionalErrorMessages, getTopLevelError } from '@store/utils';
 import { ScNoticeStore } from '../../../../types';
 @Component({
   tag: 'sc-product-buy-button',
@@ -60,14 +60,6 @@ export class ScProductBuyButton {
     this.link.href = getProductBuyLink(checkoutUrl, !this.addToCart ? { no_cart: true } : {});
   }
 
-  getTopLevelError() {
-    // checkout invalid is not friendly.
-    if (this.error?.code === 'checkout.invalid' && getAdditionalErrorMessages(this.error)?.length) {
-      return '';
-    }
-    return this.error?.message;
-  }
-
   render() {
     return (
       <Host
@@ -81,7 +73,7 @@ export class ScProductBuyButton {
       >
         {!!this.error && (
           <sc-alert type="danger" scrollOnOpen={true} open={!!this.error} closable={false}>
-            {!!this.getTopLevelError() && <span slot="title" innerHTML={this.getTopLevelError()}></span>}
+            {!!getTopLevelError(this.error) && <span slot="title" innerHTML={getTopLevelError(this.error)}></span>}
             {(getAdditionalErrorMessages(this.error) || []).map((message, index) => (
               <div innerHTML={message} key={index}></div>
             ))}
