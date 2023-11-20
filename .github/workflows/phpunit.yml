@@ -2,12 +2,11 @@ name: PHPUnit
 
 on:
   pull_request:
+    types: [assigned]
     branches:
       - main
       - next
       - fixes
-    paths:
-      - "app/**/*.php"
 
 jobs:
   test:
