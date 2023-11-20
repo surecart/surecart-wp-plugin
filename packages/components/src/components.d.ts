@@ -1833,6 +1833,21 @@ export namespace Components {
          */
         "showControl": boolean;
     }
+    interface ScOrderBumpCountdownTimer {
+        /**
+          * The URL to redirect to when the countdown completes.
+         */
+        "redirectUrl": string;
+        /**
+          * Whether to show the icon.
+         */
+        "showIcon": boolean;
+    }
+    interface ScOrderBumpNoThanksButton {
+    }
+    interface ScOrderBumpText {
+        "text": 'title' | 'description';
+    }
     interface ScOrderBumps {
         "help": string;
         "label": string;
@@ -4720,6 +4735,24 @@ declare global {
         prototype: HTMLScOrderBumpElement;
         new (): HTMLScOrderBumpElement;
     };
+    interface HTMLScOrderBumpCountdownTimerElement extends Components.ScOrderBumpCountdownTimer, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpCountdownTimerElement: {
+        prototype: HTMLScOrderBumpCountdownTimerElement;
+        new (): HTMLScOrderBumpCountdownTimerElement;
+    };
+    interface HTMLScOrderBumpNoThanksButtonElement extends Components.ScOrderBumpNoThanksButton, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpNoThanksButtonElement: {
+        prototype: HTMLScOrderBumpNoThanksButtonElement;
+        new (): HTMLScOrderBumpNoThanksButtonElement;
+    };
+    interface HTMLScOrderBumpTextElement extends Components.ScOrderBumpText, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpTextElement: {
+        prototype: HTMLScOrderBumpTextElement;
+        new (): HTMLScOrderBumpTextElement;
+    };
     interface HTMLScOrderBumpsElement extends Components.ScOrderBumps, HTMLStencilElement {
     }
     var HTMLScOrderBumpsElement: {
@@ -5464,6 +5497,9 @@ declare global {
         "sc-mollie-add-method": HTMLScMollieAddMethodElement;
         "sc-order": HTMLScOrderElement;
         "sc-order-bump": HTMLScOrderBumpElement;
+        "sc-order-bump-countdown-timer": HTMLScOrderBumpCountdownTimerElement;
+        "sc-order-bump-no-thanks-button": HTMLScOrderBumpNoThanksButtonElement;
+        "sc-order-bump-text": HTMLScOrderBumpTextElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-components-validator": HTMLScOrderConfirmComponentsValidatorElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
@@ -7585,6 +7621,21 @@ declare namespace LocalJSX {
           * Should we show the controls
          */
         "showControl"?: boolean;
+    }
+    interface ScOrderBumpCountdownTimer {
+        /**
+          * The URL to redirect to when the countdown completes.
+         */
+        "redirectUrl"?: string;
+        /**
+          * Whether to show the icon.
+         */
+        "showIcon"?: boolean;
+    }
+    interface ScOrderBumpNoThanksButton {
+    }
+    interface ScOrderBumpText {
+        "text"?: 'title' | 'description';
     }
     interface ScOrderBumps {
         "help"?: string;
@@ -9872,6 +9923,9 @@ declare namespace LocalJSX {
         "sc-mollie-add-method": ScMollieAddMethod;
         "sc-order": ScOrder;
         "sc-order-bump": ScOrderBump;
+        "sc-order-bump-countdown-timer": ScOrderBumpCountdownTimer;
+        "sc-order-bump-no-thanks-button": ScOrderBumpNoThanksButton;
+        "sc-order-bump-text": ScOrderBumpText;
         "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-components-validator": ScOrderConfirmComponentsValidator;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
@@ -10095,6 +10149,9 @@ declare module "@stencil/core" {
             "sc-mollie-add-method": LocalJSX.ScMollieAddMethod & JSXBase.HTMLAttributes<HTMLScMollieAddMethodElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
+            "sc-order-bump-countdown-timer": LocalJSX.ScOrderBumpCountdownTimer & JSXBase.HTMLAttributes<HTMLScOrderBumpCountdownTimerElement>;
+            "sc-order-bump-no-thanks-button": LocalJSX.ScOrderBumpNoThanksButton & JSXBase.HTMLAttributes<HTMLScOrderBumpNoThanksButtonElement>;
+            "sc-order-bump-text": LocalJSX.ScOrderBumpText & JSXBase.HTMLAttributes<HTMLScOrderBumpTextElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;
             /**

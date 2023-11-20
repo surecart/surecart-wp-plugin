@@ -1,0 +1,42 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/order-bump-product-quantity",
+	"title": "Order Bump Product Quantity",
+	"description": "Displays quantity selector for order bump product.",
+	"category": "surecart",
+	"keywords": ["quantity", "form", "product", "order", "bump"],
+	"attributes": {
+		"label": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true
+		},
+		"color": {
+			"gradients": false,
+			"background": false,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"radius": true
+			}
+		}
+	},
+	"style": "file:./preload.css"
+}

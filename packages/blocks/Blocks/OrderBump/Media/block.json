@@ -1,0 +1,30 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/order-bump-media",
+	"title": "Order Bump Product Media",
+	"description": "A container to display the order bump's product media",
+	"category": "surecart",
+	"keywords": ["image", "media", "order bump"],
+	"supports": {
+		"reusable": false,
+		"html": false
+	},
+	"attributes": {
+		"auto_height": {
+			"type": "boolean",
+			"default": true
+		},
+		"height": {
+			"type": "string",
+			"default": "310px"
+		},
+		"width": {
+			"type": "number"
+		},
+		"thumbnails_per_page": {
+			"type": "number",
+			"default": 5
+		}
+	},
+	"style": "file:./style.css"
+}

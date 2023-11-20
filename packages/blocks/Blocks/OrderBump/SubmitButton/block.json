@@ -1,0 +1,39 @@
+{
+	"name": "surecart/order-bump-submit",
+	"title": "Order Bump Submit Button",
+	"description": "Display a submit button for Order bump.",
+	"category": "surecart",
+	"keywords": ["submit", "button", "order", "bump"],
+	"textdomain": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Add To My Order"
+		},
+		"type": {
+			"type": "string",
+			"default": "primary"
+		},
+		"show_total": {
+			"type": "boolean",
+			"default": true
+		},
+		"show_icon": {
+			"type": "boolean",
+			"default": true
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		},
+		"size": {
+			"type": "string",
+			"default": "large"
+		}
+	}
+}

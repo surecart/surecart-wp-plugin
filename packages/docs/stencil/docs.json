@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-14T16:29:57",
+  "timestamp": "2023-11-20T05:48:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -13504,6 +13504,7 @@
         "sc-invoices-list",
         "sc-login-form",
         "sc-order",
+        "sc-order-bump-countdown-timer",
         "sc-order-confirm-provider",
         "sc-order-submit",
         "sc-orders-list",
@@ -13599,6 +13600,9 @@
           "sc-icon"
         ],
         "sc-order": [
+          "sc-icon"
+        ],
+        "sc-order-bump-countdown-timer": [
           "sc-icon"
         ],
         "sc-order-confirm-provider": [
@@ -16625,6 +16629,133 @@
           "sc-order-bump"
         ]
       }
+    },
+    {
+      "filePath": "./src/components/controllers/order-bump/sc-order-bump-countdown-timer/sc-order-bump-countdown-timer.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-bump-countdown-timer",
+      "readme": "# sc-countdown-timer\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "redirectUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "redirect-url",
+          "reflectToAttr": false,
+          "docs": "The URL to redirect to when the countdown completes.",
+          "docsTags": [],
+          "default": "'/'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "showIcon",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-icon",
+          "reflectToAttr": false,
+          "docs": "Whether to show the icon.",
+          "docsTags": [],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "resetCountdown",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-order-bump-countdown-timer": [
+          "sc-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/order-bump/sc-order-bump-no-thanks-button/sc-order-bump-no-thanks-button.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-bump-no-thanks-button",
+      "readme": "# sc-order-bump-no-thanks-button\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/order-bump/sc-order-bump-text/sc-order-bump-text.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-bump-text",
+      "readme": "# sc-product-text\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "text",
+          "type": "\"description\" | \"title\"",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'title'",
+          "values": [
+            {
+              "value": "description",
+              "type": "string"
+            },
+            {
+              "value": "title",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
     },
     {
       "filePath": "./src/components/controllers/checkout-form/sc-order-bumps/sc-order-bumps.tsx",

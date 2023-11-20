@@ -1038,6 +1038,27 @@
     "class": true,
     "slot": true
   },
+  "sc-order-bump-countdown-timer": {
+    "redirect-url": true,
+    "show-icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-bump-no-thanks-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-order-bump-text": {
+    "text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-bumps": {
     "help": true,
     "label": true,
