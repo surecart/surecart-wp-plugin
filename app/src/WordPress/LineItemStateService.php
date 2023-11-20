@@ -32,12 +32,20 @@ class LineItemStateService {
 	 * @return array The new line items.
 	 */
 	public function merge( $line_items = [] ) {
-		$encoded = wp_json_encode( \WP_Block_Supports::$block_to_render );
-		if ( in_array( $encoded, self::$parsed_blocks ) ) {
-			return $this->get();
-		}
-		self::$parsed_blocks[] = $encoded;
-		$existing              = $this->get();
-		return array_merge( $existing, $line_items );
+		$initial = sc_initial_state();
+
+		$merged_line_items = array_map(
+			function( $line_item ) use ( $initial ) {
+				foreach ( $initial['checkout']['initialLineItems'] as $key => $existing_line_item ) {
+					if ( $existing_line_item['price_id'] === $line_item['price_id'] && $existing_line_item['variant_id'] === $line_item['variant_id'] ) {
+						return $line_item;
+					}
+				}
+				return $existing_line_item;
+			},
+			$line_items
+		);
+
+		return array_merge( $initial['checkout']['initialLineItems'], $merged_line_items );
 	}
 }
