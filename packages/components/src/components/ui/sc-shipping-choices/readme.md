@@ -35,6 +35,7 @@ graph TD;
   sc-shipping-choices --> sc-radio
   sc-shipping-choices --> sc-format-number
   sc-shipping-choices --> sc-block-ui
+  sc-form-control --> sc-visually-hidden
   sc-block-ui --> sc-spinner
   sc-form-components-validator --> sc-shipping-choices
   style sc-shipping-choices fill:#f9f,stroke:#333,stroke-width:4px

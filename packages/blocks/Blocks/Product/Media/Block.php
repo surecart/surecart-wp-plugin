@@ -42,7 +42,8 @@ class Block extends ProductBlock {
 			function( $product_media ) use ( $product, $width ) {
 				return [
 					'src'    => esc_url( $product_media->getUrl( $width ) ),
-					'alt'    => esc_attr( esc_url( $product_media->media->filename ?? $product->name ?? '' ) ),
+					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
+					'title'  => $product_media->media->title ?? '',
 					'width'  => $product_media->width,
 					'height' => $product_media->height,
 				];
@@ -55,7 +56,8 @@ class Block extends ProductBlock {
 					'src'    => esc_url( $product_media->getUrl( 240 ) ),
 					'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
 					'sizes'  => '(min-width: 780px) 120px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
-					'alt'    => esc_attr( esc_url( $product_media->media->filename ?? $product->name ?? '' ) ),
+					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
+					'title'  => $product_media->media->title ?? '',
 					'width'  => $product_media->width,
 					'height' => $product_media->height,
 				];
@@ -78,7 +80,7 @@ class Block extends ProductBlock {
 				"></sc-image-slider>
 		<?php else : ?>
 			<figure class="wp-block-image sc-block-image">
-				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" />
+				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" />
 			</figure>
 		<?php endif; ?>
 

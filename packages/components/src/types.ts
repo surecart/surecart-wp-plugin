@@ -158,6 +158,8 @@ export interface Media {
   filename: string;
   public_access: boolean;
   release_json: any;
+  alt: string;
+  title: string;
   url?: string;
   url_expires_at?: number;
   updated_at: number;
@@ -286,6 +288,7 @@ export interface Product extends Object {
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
+  featured_product_media?: string | ProductMedia;
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -1131,6 +1134,11 @@ export interface ProductState {
   selectedVariant?: Variant;
   variantValues: { option_1?: string; option_2?: string; option_3?: string };
   isProductPage?: boolean;
+}
+export interface FeaturedProductMediaAttributes {
+  alt: string;
+  url: string;
+  title: string;
 }
 export interface PaymentInfoAddedParams {
   checkout_id: string;

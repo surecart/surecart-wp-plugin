@@ -54,6 +54,7 @@ graph TD;
   sc-order-password --> sc-password
   sc-password --> sc-input
   sc-input --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   style sc-order-password fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

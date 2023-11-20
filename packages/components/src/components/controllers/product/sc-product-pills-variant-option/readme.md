@@ -20,12 +20,15 @@
 
 - [sc-form-control](../../../ui/form-control)
 - [sc-pill-option](../../../ui/pill-option)
+- [sc-visually-hidden](../../../util/visually-hidden)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-product-pills-variant-option --> sc-form-control
   sc-product-pills-variant-option --> sc-pill-option
+  sc-product-pills-variant-option --> sc-visually-hidden
+  sc-form-control --> sc-visually-hidden
   style sc-product-pills-variant-option fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

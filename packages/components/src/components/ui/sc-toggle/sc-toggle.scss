@@ -4,7 +4,7 @@
   --sc-toggle-padding: var(--sc-spacing-medium);
 }
 
-::slotted([slot="summary"]) {
+::slotted([slot='summary']) {
   display: flex;
   align-items: center;
   flex-direction: flex-start;
@@ -31,8 +31,8 @@
     color: transparent;
     width: var(--sc-toggle-radio-size, var(--sc-radio-size));
     height: var(--sc-toggle-radio-size, var(--sc-radio-size));
-    transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color, var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
-
+    transition: var(--sc-input-transition, var(--sc-transition-medium)) border-color, var(--sc-input-transition, var(--sc-transition-medium)) background-color,
+      var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
     svg {
       width: 100%;
@@ -63,7 +63,7 @@
   gap: 0.75em;
 }
 .details__header:focus {
-  outline: none;
+  box-shadow: var(--sc-focus-ring);
 }
 .details__header:focus-visible {
   box-shadow: var(--sc-focus-ring);

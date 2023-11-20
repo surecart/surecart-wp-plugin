@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Fragment, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { isOptionMissing, isOptionSoldOut } from '@store/product/getters';
 import { __, sprintf } from '@wordpress/i18n';
@@ -22,6 +22,7 @@ export class ScProductPillsVariantOption {
   render() {
     return (
       <sc-form-control label={this.label}>
+        <span slot="label">{this.label}</span>
         <div class="sc-product-pills-variant-option__wrapper">
           {(state[this.productId].variant_options[this.optionNumber - 1].values || []).map(value => {
             const isUnavailable = isOptionSoldOut(this.productId, this.optionNumber, value) || isOptionMissing(this.productId, this.optionNumber, value);
@@ -38,9 +39,12 @@ export class ScProductPillsVariantOption {
                   })
                 }
               >
-                <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), this.label)} </span>
-                {value}
-                {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+                <span aria-hidden="true">{value}</span>
+                <sc-visually-hidden>
+                  {sprintf(__('Select %s: %s.', 'surecart'), this.label, value)}
+                  {isUnavailable && <Fragment> {__('(option unavailable)', 'surecart')}</Fragment>}
+                  {state.variantValues[`option_${this.optionNumber}`] === value && <Fragment> {__('This option is currently selected.', 'surecart')}</Fragment>}
+                </sc-visually-hidden>
               </sc-pill-option>
             );
           })}

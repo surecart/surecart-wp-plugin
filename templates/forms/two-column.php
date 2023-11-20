@@ -56,10 +56,6 @@ return [
 		<!-- /wp:surecart/price-choice --></div></sc-price-choices>
 		<!-- /wp:surecart/price-selector -->
 
-		<!-- wp:surecart/express-payment -->
-		<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-		<!-- /wp:surecart/express-payment -->
-
 		<!-- wp:surecart/heading {"title":"Contact Information"} -->
 		<sc-heading>Contact Information<span slot="description"></span><span slot="end"></span></sc-heading>
 		<!-- /wp:surecart/heading -->

@@ -170,6 +170,7 @@ export class ScSelectDropdown {
 
   handleFocus() {
     this.hasFocus = true;
+    this.el.focus();
     this.scFocus.emit();
   }
 
@@ -361,7 +362,7 @@ export class ScSelectDropdown {
     // Open select dropdown with Enter
     if (event.key === 'Enter') {
       if (this.open) {
-        items[itemIndex - 1].click();
+        items[itemIndex - 1]?.click?.();
         this.handleHide();
         this.input.focus();
       } else {
@@ -405,7 +406,17 @@ export class ScSelectDropdown {
         checked={this.isChecked(choice)}
         value={choice?.value}
         onClick={() => !choice.disabled && this.handleSelect(choice)}
+        onKeyDown={event => {
+          if ((event.key === 'Enter' || event.key === ' ') && !choice.disabled) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            this.handleSelect(choice);
+          }
+        }}
         disabled={choice.disabled}
+        aria-label={choice.label}
+        aria-selected={this.isChecked(choice) ? 'true' : 'false'}
+        role="option"
       >
         {choice.label}
         {!!choice?.description && <div class="select__description">{choice?.description}</div>}
@@ -448,13 +459,15 @@ export class ScSelectDropdown {
         >
           <input
             class="select__hidden-input"
-            onBlur={() => this.handleBlur()}
-            onFocus={() => this.handleFocus()}
             name={this.name}
             ref={el => (this.input = el as HTMLInputElement)}
             value={this.value}
             required={this.required}
             disabled={this.disabled}
+            aria-hidden="true"
+            aria-label={this.displayValue() || this.label || this.placeholder}
+            onBlur={() => this.handleBlur()}
+            onFocus={() => this.handleFocus()}
           ></input>
 
           <sc-dropdown
@@ -468,9 +481,11 @@ export class ScSelectDropdown {
             style={{ '--panel-width': '100%' }}
             onScShow={() => this.handleShow()}
             onScHide={() => this.handleHide()}
+            role="select"
+            aria-open={this.open ? 'true' : 'false'}
           >
             <slot name="trigger" slot="trigger">
-              <div class="trigger">
+              <div class="trigger" role="button" tabIndex={-1} onFocus={() => this.handleFocus()} onBlur={() => this.handleBlur()}>
                 <div class="select__value">
                   <slot>{this.displayValue() || this.placeholder || __('Select...', 'surecart')}</slot>
                 </div>
@@ -488,12 +503,13 @@ export class ScSelectDropdown {
                 part="search"
                 value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
+                aria-label={__('Type to search', 'surecart')}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
               </sc-input>
             )}
 
-            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)}>
+            <sc-menu style={{ maxHeight: '210px', overflow: 'auto' }} exportparts="base:menu__base" onScroll={e => this.handleMenuScroll(e)} aria-multiselectable="false">
               <slot name="prefix"></slot>
               {(this.filteredChoices || []).map((choice, index) => {
                 return [this.renderItem(choice, index), (choice.choices || []).map(choice => this.renderItem(choice, index))];

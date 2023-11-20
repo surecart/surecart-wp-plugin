@@ -3,6 +3,8 @@ import state, { on } from './store';
 import { setProduct } from './setters';
 import { getVariantFromValues } from '../../functions/util';
 import { isStockNeedsToBeChecked } from './getters';
+import { speak } from '@wordpress/a11y';
+import { __, sprintf } from '@wordpress/i18n';
 
 on('set', (productId: string, newValue: ProductState, oldValue: ProductState) => {
   if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
@@ -38,8 +40,9 @@ const onSelectedVariantChange = (productId: string) => {
     return;
   }
 
-  if(state[productId].selectedVariant.available_stock < state[productId].quantity) {
-    state[productId].quantity = state[productId].selectedVariant.available_stock || 1;
+  if (state[productId]?.selectedVariant.available_stock < state[productId]?.quantity) {
+    state[productId].quantity = state[productId]?.selectedVariant.available_stock || 1;
+    speak(sprintf(__('There are just %d items left in stock, and the quantity has been adjusted to %d.', 'surecart'), state[productId].quantity, state[productId].quantity), 'assertive');
   }
 };
 
