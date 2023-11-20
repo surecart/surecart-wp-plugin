@@ -275,10 +275,12 @@ class BumpsListTable extends ListTable {
 			<?php echo esc_html( $bump->name ? $bump->name : $bump->price->product->name ); ?>
 		</a>
 
+
 		<?php
 		echo $this->row_actions(
 			[
 				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'view' => '<a href="' . esc_url( $bump->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
 			],
 		);
 		?>

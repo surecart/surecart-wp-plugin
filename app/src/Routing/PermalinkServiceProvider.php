@@ -79,6 +79,27 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 				]
 			);
 		};
+
+		$container['surecart.settings.permalinks.bump'] = function() {
+			return new PermalinkSettingService(
+				[
+					'slug'        => 'bump',
+					'label'       => __( 'SureCart Order Bump Page Permalinks', 'surecart' ),
+					/* translators: %s: Home URL */
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your order bump URLs here. For example, using <code>bumps</code> would make your order bump\'s buy links like <code>%sbumps/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'options'     => [
+						[
+							'value' => 'bumps',
+							'label' => __( 'Default', 'surecart' ),
+						],
+						[
+							'value' => 'order-bump',
+							'label' => __( 'Order Bump', 'surecart' ),
+						],
+					],
+				]
+			);
+		};
 	}
 
 	/**
@@ -108,6 +129,14 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->params( [ 'sc_collection_page_id' ] )
 			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . '/([a-z0-9-]+)[/]?$' )
 			->query( 'index.php?sc_collection_page_id=$matches[1]' )
+			->create();
+
+		// Bump.
+		$container['surecart.settings.permalinks.bump']->bootstrap();
+		( new PermalinkService() )
+			->params( [ 'sc_bump_id' ] )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'bump_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_bump_id=$matches[1]' )
 			->create();
 
 		// Redirect.

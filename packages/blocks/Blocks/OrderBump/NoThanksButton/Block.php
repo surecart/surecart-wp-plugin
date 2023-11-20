@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\OrderBump\SubmitButton;
+namespace SureCartBlocks\Blocks\OrderBump\NoThanksButton;
 
 use SureCartBlocks\Blocks\BaseBlock;
 

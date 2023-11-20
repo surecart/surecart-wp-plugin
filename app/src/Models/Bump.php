@@ -95,4 +95,21 @@ class Bump extends Model {
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';
 	}
+
+	/**
+	 * Get the bump permalink.
+	 *
+	 * @return string
+	 */
+	public function getPermalinkAttribute(): string {
+		if ( empty( $this->attributes['id'] ) ) {
+			return '';
+		}
+		// permalinks off.
+		if ( ! get_option( 'permalink_structure' ) ) {
+			return add_query_arg( 'sc_bump_id', $this->id, get_home_url() );
+		}
+		// permalinks on.
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'bump_page' ) ) . $this->id;
+	}
 }
