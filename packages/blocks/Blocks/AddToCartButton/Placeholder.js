@@ -13,7 +13,7 @@ import { useEffect, useState } from '@wordpress/element';
  * Component Dependencies
  */
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 
 export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
 	const [showPriceSelector, setShowPriceSelector] = useState(false);
@@ -39,6 +39,10 @@ export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
 							setShowChangePrice(false);
 						}}
 						value={selectedPriceId}
+						requestQuery={{
+							archived: false,
+						}}
+						allowOutOfStockSelection={true}
 					/>
 					{selectedPriceId && (
 						<ScButton
@@ -66,10 +70,22 @@ export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
 							'surecart'
 						)}
 					</div>
-
-					<ScButton onClick={() => setShowPriceSelector(true)}>
-						{__('Select Product', 'surecart')}
-					</ScButton>
+					<PriceSelector
+						onSelect={({ price_id }) => {
+							setAttributes({ price_id });
+							setShowPriceSelector(false);
+							setShowChangePrice(false);
+						}}
+						value={selectedPriceId}
+						requestQuery={{
+							archived: false,
+						}}
+						allowOutOfStockSelection={true}
+					>
+						<ScButton slot="trigger">
+							{__('Select Product', 'surecart')}
+						</ScButton>
+					</PriceSelector>
 				</div>
 			)}
 		</Placeholder>
