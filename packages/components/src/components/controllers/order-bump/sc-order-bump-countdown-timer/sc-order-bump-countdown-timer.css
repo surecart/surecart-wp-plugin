@@ -1,0 +1,17 @@
+:host {
+  display: inline-block;
+}
+
+.sc-countdown-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 20px;
+  border-radius: 20px;
+  background-color: rgb(226, 249, 235);
+  color: rgb(71, 91, 80);
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}

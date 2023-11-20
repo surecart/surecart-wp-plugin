@@ -1,0 +1,58 @@
+{
+	"apiVersion": 2,
+	"name": "surecart/order-bump-countdown-timer",
+	"title": "Order Bump Countdown Timer",
+	"description": "Display Countdown timer for Order bump",
+	"category": "surecart",
+	"attributes": {
+		"textAlign": {
+			"type": "string",
+			"default": "left"
+		},
+		"offer_expire_text": {
+			"type": "string",
+			"default": "Offer Expires In"
+		},
+		"redirect_url": {
+			"type": "string",
+			"default": ""
+		},
+		"show_icon": {
+			"type": "boolean",
+			"default": true
+		}
+	},
+	"keywords": ["description"],
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
+	}
+}
