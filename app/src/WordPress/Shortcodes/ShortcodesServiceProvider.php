@@ -213,6 +213,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
 			[
 				'product_id' => null,
+				'is_shortcode' => true,
 			]
 		);
 	}
