@@ -78,4 +78,12 @@ describe('sc-order-shipping-address', () => {
     await page.waitForChanges();
     expect(page.root).toMatchSnapshot();
   });
+
+  it('Uses full address when requireName and showName is true',async()=>{
+    const page = await newSpecPage({
+      components: [ScOrderShippingAddress],
+      template: () => <sc-order-shipping-address requireName={true} showName={true}></sc-order-shipping-address>,
+    });
+    expect(page.root).toMatchSnapshot();
+  })
 });

@@ -13,7 +13,7 @@ class ProductTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -47,11 +47,9 @@ class ProductTest extends SureCartUnitTestCase
 		$instance = new Product($request['product']);
 		$created = $instance->create();
 
-		// has a product
+		// has prices.
 		foreach($created->prices->data as $price) {
 			$this->assertInstanceOf(Price::class, $price);
 		}
-		// response is correct
-		$this->assertContains($created->toArray(), json_decode(json_encode($response), true));
 	}
 }

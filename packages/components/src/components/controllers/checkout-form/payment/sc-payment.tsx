@@ -4,7 +4,13 @@ import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
-import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors, hasOtherAvailableCreditCardProcessor } from '@store/processors/getters';
+import {
+  getAvailableProcessor,
+  hasMultipleProcessorChoices,
+  availableManualPaymentMethods,
+  availableProcessors,
+  hasOtherAvailableCreditCardProcessor,
+} from '@store/processors/getters';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
@@ -46,7 +52,7 @@ export class ScPayment {
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="stripe" card={this.stripePaymentElement}>
         <span slot="summary" class="sc-payment-toggle-summary">
-          <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+          <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
           <span>{title}</span>
         </span>
 
@@ -62,12 +68,13 @@ export class ScPayment {
       <Fragment>
         <sc-payment-method-choice key={processor?.id} processor-id="paypal">
           <span slot="summary" class="sc-payment-toggle-summary">
-            <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+            <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }} aria-hidden="true"></sc-icon>
+            <sc-visually-hidden>{__('PayPal', 'surecart')}</sc-visually-hidden>
           </span>
 
           <sc-card>
             <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-              <sc-icon slot="icon" name="paypal" style={{ width: '80px' }}></sc-icon>
+              <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} aria-hidden="true"></sc-icon>
               {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
             </sc-payment-selected>
           </sc-card>
@@ -75,13 +82,13 @@ export class ScPayment {
         {!hasOtherAvailableCreditCardProcessor('paypal') && (
           <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
             <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+              <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
 
             <sc-card>
               <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-                <sc-icon name="credit-card" slot="icon" style={{ fontSize: '24px' }}></sc-icon>
+                <sc-icon name="credit-card" slot="icon" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
             </sc-card>
@@ -102,13 +109,13 @@ export class ScPayment {
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="paystack">
         <span slot="summary" class="sc-payment-toggle-summary">
-          <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+          <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
           <span>{title}</span>
         </span>
 
         <sc-card>
           <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-            <sc-icon slot="icon" name="credit-card"></sc-icon>
+            <sc-icon slot="icon" name="credit-card" aria-hidden="true"></sc-icon>
             {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
           </sc-payment-selected>
         </sc-card>
