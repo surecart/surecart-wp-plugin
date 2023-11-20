@@ -28,7 +28,7 @@ class CollectionSiteMap implements \RankMath\Sitemap\Providers\Provider {
 		return [
 			[
 				'loc'     => \RankMath\Sitemap\Router::get_base_url( 'sc_collection-sitemap.xml' ),
-				'lastmod' => '',
+				'lastmod' => date( 'c', time() ),
 			],
 		];
 	}
@@ -54,7 +54,7 @@ class CollectionSiteMap implements \RankMath\Sitemap\Providers\Provider {
 		$links = array_map(
 			function( $collection ) {
 				$lastmod     = new \DateTime( '@' . $collection->updated_at );
-				$lastmod_w3c = $lastmod->format( 'Y-m-d' );
+				$lastmod_w3c = $lastmod->format( 'c' );
 				return [
 					'loc' => $collection->permalink,
 					'mod' => $lastmod_w3c,
