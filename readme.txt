@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.10.0
+Stable tag: 2.10.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,13 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.10.1 - November 20th, 2023 =
+* Improvement: Show a notice if Gutenberg plugin is active as this plugin is experimental.
+* Fix: Ensure SureCart column block does not get top margin in editor.
+* Fix: Dark theme not applying to shipping choices on checkout page.
+* Fix: Apostrophe being displayed as HTML entity instead of plain text on State/Province selector.
+* Fix: Setting a password did not consider a "-" as a special character.
 
 = 2.10.0 - November 14th, 2023 =
 * Improvement: Keyboard and screen reader accessibility of customer-facing UI.
