@@ -194,13 +194,11 @@ class CartService {
 
 		// get cart block.
 		$template = get_block_template('surecart/surecart//cart','wp_template_part');
-		$content = $template->content ?? '';
-		$blocks = parse_blocks($content);
-
-
-		if ( ! empty( $blocks[0] ) ) {
-			$attributes = $blocks[0]['attrs'];
+		$output = $this->doBlocks( $template->content ?? '');
+		if ( ! empty( $output->blocks[0] ) ) {
+			$attributes = $output->blocks[0]['attrs'];
 		}
+
 
 		ob_start();
 		?>
@@ -212,9 +210,7 @@ class CartService {
 			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
 			<?php
-			foreach($blocks[0]['innerBlocks']??[] as $block){
-				echo render_block($block);
-			}
+			echo $output->content ?? '';
 			?>
 		</sc-cart>
 
@@ -279,5 +275,33 @@ class CartService {
 			return;
 		}
 		return in_array( $term_id, $cart_menu_ids );
+	}
+
+	/**
+	 * Extends the do_blocks function to allow for custom return types.
+	 *
+	 * @param string $content The block content.
+	 *
+	 * @return object
+	 */
+	public function doBlocks( $content ) {
+		$blocks = parse_blocks( $content );
+		$output = '';
+
+		foreach ( $blocks as $block ) {
+			$output .= render_block( $block );
+		}
+
+		// If there are blocks in this content, we shouldn't run wpautop() on it later.
+		$priority = has_filter( 'the_content', 'wpautop' );
+		if ( false !== $priority && doing_filter( 'the_content' ) && has_blocks( $content ) ) {
+			remove_filter( 'the_content', 'wpautop', $priority );
+			add_filter( 'the_content', '_restore_wpautop_hook', $priority + 1 );
+		}
+
+		return (object)[
+			'content' => $output,
+			'blocks'  => $blocks,
+		];
 	}
 }
