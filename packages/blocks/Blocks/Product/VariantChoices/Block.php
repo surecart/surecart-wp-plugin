@@ -54,7 +54,7 @@ class Block extends ProductBlock {
 			'style'=> 'border: none; display: block; margin-bottom: var(--sc-form-row-spacing, 0.75em);' . esc_attr( $this->getVars( $attributes, '--sc-pill-option' ) ),
 		);
 
-		if($attributes['is_shortcode']){
+		if(!empty($attributes['is_shortcode'])){
 			$attributes_string = '';
 			foreach($extra_attributes as $key => $value){
 				$attributes_string .= sprintf(' %s="%s"', esc_attr($key), esc_attr($value));
