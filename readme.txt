@@ -39,10 +39,7 @@ The plugin connects to the platform in real-time taking all the load away from y
 This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry about security, storage, or backups.
 
 ## Who Is SureCart For? ##
-SureCart is designed for entrepreneurs and businesses of all sizes who need a versatile and efficient platform to sell both digital and physical products.
-It caters to those seeking a reliable solution for managing shipping and fulfillment, enforcing country-specific restrictions, and handling inventory effectively.
-Additionally, SureCart is ideal for businesses requiring secure file delivery, robust licensing capabilities, and other advanced digital e-commerce functionalities.
-Whether you're a small startup or a large enterprise, SureCart offers the tools and flexibility needed to streamline your online sales processes.
+SureCart is designed for entrepreneurs and businesses of all sizes who need a versatile and efficient platform to sell both digital and physical products. It caters to those seeking a reliable solution for managing shipping and fulfillment, enforcing country-specific restrictions, and handling inventory effectively. Additionally, SureCart is ideal for businesses requiring secure file delivery, robust licensing capabilities, and other advanced digital e-commerce functionalities. Whether you're a small startup or a large enterprise, SureCart offers the tools and flexibility needed to streamline your online sales processes.
 `
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
@@ -1024,5 +1021,3 @@ Fix: Title/heading block overflowing container on some screen sizes.
 
 = 1.0.0 - July 20, 2022 =
 * Initial release
-
-
