@@ -39,9 +39,10 @@ The plugin connects to the platform in real-time taking all the load away from y
 This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry about security, storage, or backups.
 
 ## Who Is SureCart For? ##
-Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
-
-However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
+SureCart is designed for entrepreneurs and businesses of all sizes who need a versatile and efficient platform to sell both digital and physical products.
+It caters to those seeking a reliable solution for managing shipping and fulfillment, enforcing country-specific restrictions, and handling inventory effectively.
+Additionally, SureCart is ideal for businesses requiring secure file delivery, robust licensing capabilities, and other advanced digital e-commerce functionalities.
+Whether you're a small startup or a large enterprise, SureCart offers the tools and flexibility needed to streamline your online sales processes.
 `
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
@@ -49,16 +50,19 @@ However you can still sell physical products with SureCart and we have merchants
 These are just some of the features that make SureCart the perfect ecommerce platform for everyone.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe, PayPal or Mollie to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (PayStack, RazorPay, Mercado Pago) in the future.
+Easily connect to Stripe, PayPal, Mollie or PayStack(Premium) to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (RazorPay, Mercado Pago) in the future.
 
 * **Powerful Payment Options:**
-One-time payments, subscriptions, subscriptions with free trials, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
+One-time payments, subscriptions, subscriptions with free trials, setup fees, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
 
 * **Most Complete Subscription Payments System:**
 There is a lot more to subscriptions than simply rebilling on an interval. SureCart’s subscription engine is second to none. With our extensive subscription payments options you can sell your subscriptions how you want. But SureCart goes beyond other ecommerce platforms by offering prorated upgrades or downgrades. So if you are offering a monthly subscription or an annual subscription and your buyer wants to upgrade, SureCart can prorate the upgrade.
 
 * **Self Service Customer Area (Subscription Upgrades / Downgrades):**
 With our highly customizable customer area, you can have full control on what a customer sees and is able to do. For example, you can let your customers change their personal details, password, access secure digital downloads, update credit cards on file, upgrade a subscription, downgrade a subscription. All with a beautiful and modern user experience.
+
+* **Customizable Shopping Experience:**
+Customize product pages, shop pages, cart, and customer dashboard using a intuitive and powerful drag and drop editor that utilitzes the WordPress block editor.
 
 * **Flexible Checkout Form Builder:**
 Create a completely custom checkout form. In fact, create as many as you like. There is no other ecommerce platform with this much customizability. Simply drag and drop fields, price choosers, donation choosers, check boxes, and other parts to create the perfect checkout form.
@@ -100,26 +104,11 @@ SureCart also solves all the technician challenges that you run into with other 
 ## Our why in one word: CARE ##
 * **Connected:** Our platform must connect to everything inside of WordPress and outside
 
-* **Accessible:** Everyone should be welcome to use our platform. It must be accessible to everyone. Level the playing field.
+* **Accessible:** Everyone should be welcome to use our platform. It must be accessible to everyone. We want to level the playing field.
 
 * **Reliable:** You should feel SURE that everything is going to work.
 
 * **Easy:** Anyone should be able to start taking payment in under 10 minutes. It must be an elegant experience requiring no code.
-
-## Why Is SureCart Free? ##
-This is the magic question. When you look at the list of features we offer for free, those same features would cost you hundreds of dollars per year with any other ecommerce plugin for WordPress.
-
-But one of our why’s is that ecommerce should be accessible to all. That means we need to have a free version that has no caps, no hidden charges, no catches. It must be full featured and fully capable, so that is what we are doing.
-
-To us, this is the WordPress way!
-
-Nothing currently on the market even comes close to this.
-
-Just like how WordPress itself is free with a mission to democratize publishing, and the effect is that because it is free it's now powering 45% of the internet.
-
-We also want SureCart to become the standard way all Ecommerce is done in WordPress, and the only way to accomplish that is to make it free.
-
-Of course we have to keep the lights on, so at some point in the future we will have a very affordable pro plan with advanced features such as an affiliate platform, subscription saver, multi-currency, and other revenue boosters.
 
 ## SureCart Integrations ##
 
@@ -155,10 +144,13 @@ SureCart works with any theme, including:
 ### WordPress Plugins ###
 SureCart has 2 types of integrations. The first is available directly in the plugin, we call these purchase syncing integrations and they currently include:
 
+* AffiliateWP
+* BuddyBoss
 * SureMembers
 * LearnDash
 * AffiliateWP
 * MemberPress
+* Thrive Automator
 * And more are coming
 
 The second type of integrations are done with SureTriggers, which is like Zapier for WordPress. These will require you to add the SureTriggers plugin to your website to integrate with:
@@ -202,8 +194,6 @@ The second type of integrations are done with SureTriggers, which is like Zapier
 * Zoom
 * And more being added each week
 
-There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
-
 ## Join The SureCart Facebook Group ##
 Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
@@ -217,17 +207,13 @@ Join our [Facebook group community](https://www.facebook.com/groups/surecrafted)
 
 == Frequently Asked Questions ==
 
-= Is SureCart Free? =
-
-Yes, SureCart is free. In the future we will have a Pro plan with advanced features.
-
 = Why do I need a SureCart.com account? =
 
 There are 2 parts to SureCart, the platform and the plugin. In order for the plugin to function, it needs to be linked to your account on the platform.
 
 = What payment processors can I use? =
 
-SureCart currently supports Stripe and PayPal. We will be working to add payment gateways for each major region. This includes Mollie, Mercado Pago, PayStack, RazorPay, and more.
+SureCart currently supports Stripe, PayPal, Mollie and PayStack(Premium). We will be working to add payment gateways for each major region. This includes Mercado Pago, RazorPay, and more.
 
 = What technology powers SureCart? =
 
