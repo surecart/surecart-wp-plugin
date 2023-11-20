@@ -1,0 +1,31 @@
+{
+	"name": "surecart/order-bump-no-thanks",
+	"title": "Order Bump No Thanks Button",
+	"description": "Display a no thanks button for Order bump.",
+	"category": "surecart",
+	"keywords": ["no-thanks", "button", "order", "bump"],
+	"textdomain": "surecart",
+	"supports": {
+		"reusable": false,
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "No Thanks"
+		},
+		"type": {
+			"type": "string",
+			"default": "text"
+		},
+		"full": {
+			"type": "boolean",
+			"default": true
+		},
+		"size": {
+			"type": "string",
+			"default": "small"
+		}
+	}
+}
