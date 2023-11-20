@@ -49,6 +49,7 @@ graph TD;
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-input --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   style sc-licenses-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

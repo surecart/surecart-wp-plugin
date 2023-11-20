@@ -33,6 +33,7 @@
 graph TD;
   sc-price-choices --> sc-choices
   sc-choices --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   style sc-price-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -980,6 +980,7 @@
     "slot": true
   },
   "sc-menu": {
+    "aria-label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1545,8 +1546,7 @@
     "slot": true
   },
   "sc-product-item-image": {
-    "alt": true,
-    "product-media": true,
+    "product": true,
     "sizing": true,
     "style": true,
     "id": true,
@@ -1594,10 +1594,11 @@
     "currency": true,
     "editable": true,
     "fees": true,
+    "image-alt": true,
+    "image-title": true,
     "image-url": true,
     "interval": true,
     "max": true,
-    "media": true,
     "name": true,
     "price-name": true,
     "quantity": true,
@@ -2073,6 +2074,7 @@
     "slot": true
   },
   "sc-tag": {
+    "aria-label": true,
     "clearable": true,
     "pill": true,
     "size": true,
@@ -2201,6 +2203,12 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-visually-hidden": {
     "style": true,
     "id": true,
     "class": true,

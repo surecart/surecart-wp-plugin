@@ -73,7 +73,7 @@ class Block extends BaseBlock {
 						'manualPaymentMethods' => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 						'config'               => [
 							'stripe' => [
-								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', false ),
+								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', true ),
 							],
 						],
 					],

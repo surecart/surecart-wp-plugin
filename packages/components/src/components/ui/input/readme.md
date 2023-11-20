@@ -147,6 +147,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   sc-input --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   sc-address --> sc-input
   sc-compact-address --> sc-input
   sc-coupon-form --> sc-input

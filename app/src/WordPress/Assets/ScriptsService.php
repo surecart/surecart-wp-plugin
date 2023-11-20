@@ -427,7 +427,7 @@ class ScriptsService {
 				'entitlements'         => \SureCart::account()->entitlements,
 				'upgrade_url'          => \SureCart::config()->links->purchase,
 				'beta'                 => [
-					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', true ),
 				],
 				'pages'                => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),
