@@ -27,25 +27,42 @@ class LineItemStateService {
 	/**
 	 * Add line items to the checkout.
 	 *
-	 * @param array $line_items The line items to add.
+	 * @param array  $line_items The line items to add.
+	 * @param string $store The store name.
+	 * @param string $key The key to get.
 	 *
 	 * @return array The new line items.
 	 */
-	public function merge( $line_items = [] ) {
+	public function merge( $line_items = [], $store = 'checkout', $key = 'initialLineItems' ) {
 		$initial = sc_initial_state();
 
-		$merged_line_items = array_map(
-			function( $line_item ) use ( $initial ) {
-				foreach ( $initial['checkout']['initialLineItems'] as $key => $existing_line_item ) {
-					if ( $existing_line_item['price_id'] === $line_item['price_id'] && $existing_line_item['variant_id'] === $line_item['variant_id'] ) {
-						return $line_item;
-					}
-				}
-				return $existing_line_item;
-			},
-			$line_items
+		// filter out any line items that were already added.
+		$merged_line_items = array_filter(
+			$line_items,
+			function ( $line_item ) use ( $initial, $store, $key ) {
+				// if the line item does not exist, add it.
+				return ! $this->lineItemExists( $line_item, $initial[ $store ][ $key ] );
+			}
 		);
+		var_dump( 'running' );
 
-		return array_merge( $initial['checkout']['initialLineItems'], $merged_line_items );
+		return array_merge( $initial[ $store ][ $key ] ?? [], $merged_line_items );
+	}
+
+	/**
+	 * Does the line item exist?
+	 *
+	 * @param array $line_item The line item to check.
+	 *
+	 * @return boolean
+	 */
+	public function lineItemExists( $line_item, $line_items ) {
+		foreach ( $line_items as $existing_line_item ) {
+			if ( $existing_line_item['price_id'] === $line_item['price_id'] &&
+				( ! isset( $line_item['variant_id'] ) || $existing_line_item['variant_id'] === $line_item['variant_id'] ) ) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
