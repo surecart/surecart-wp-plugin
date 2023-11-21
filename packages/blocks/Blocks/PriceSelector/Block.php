@@ -118,10 +118,14 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function getRemovedPriceChoicesWrapper( $content ): string {
-		$content        = filter_block_content( $content, 'post' );
-		$unwrapped_html = strip_tags( $content, '<sc-price-choice>' );
-		$html_processor = new \WP_HTML_Tag_Processor( $unwrapped_html );
+		if(empty($content)){
+			return '';
+		}
 
-		return $html_processor->get_updated_html();
+		$price_choices_tag = trim(str_replace('</sc-price-choices>', '', strip_tags($content, '<sc-price-choices>')));
+		$content = str_replace($price_choices_tag, '', $content);
+		$content = str_replace('</sc-price-choices>', '', $content);
+
+		return filter_block_content( $content, 'post' );
 	}
 }
