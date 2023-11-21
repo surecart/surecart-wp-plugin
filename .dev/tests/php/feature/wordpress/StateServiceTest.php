@@ -24,7 +24,6 @@ class StateServiceTest extends SureCartUnitTestCase {
 	}
 
 	/**
-	 * @group failing
 	 *
 	 * @return void
 	 */
