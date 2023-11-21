@@ -33,7 +33,7 @@ class CompatibilityService {
 	 * @return void
 	 */
 	public function rankMathFix() {
-		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) ) {
+		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_bump' ) ) {
 			remove_all_actions( 'rank_math/opengraph/facebook' );
 			remove_all_actions( 'rank_math/opengraph/twitter' );
 		}

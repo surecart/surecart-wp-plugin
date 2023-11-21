@@ -26,6 +26,9 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.post_types.product_collection_page'] = function() {
 			return new ProductCollectionsPagePostTypeService();
 		};
+		$container['surecart.post_types.bump_page']               = function() {
+			return new ProductBumpPagePostTypeService();
+		};
 
 		$app = $container[ SURECART_APPLICATION_KEY ];
 		$app->alias( 'forms', 'surecart.forms' );
@@ -42,5 +45,6 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.cart.post']->bootstrap();
 		$container['surecart.post_types.product_page']->bootstrap();
 		$container['surecart.post_types.product_collection_page']->bootstrap();
+		$container['surecart.post_types.bump_page']->bootstrap();
 	}
 }
