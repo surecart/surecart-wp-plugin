@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 				],
 			]
 		);
-		return '<sc-price-choices label="' . esc_attr( $attributes['label'] ?? '' ) . '" type="' . esc_attr( $attributes['type'] ?? 'radio' ) . '" columns="' . intval( $attributes['columns'] ?? 1 ) . '">' . $this->removePriceChoicesWrapper($content) . '</sc-price-choices>';
+		return '<sc-price-choices class="wp-block-surecart-price-choice '.esc_attr( $this->getClasses( $attributes ) || '' ).'" label="' . esc_attr( $attributes['label'] ?? '' ) . '" type="' . esc_attr( $attributes['type'] ?? 'radio' ) . '" columns="' . intval( $attributes['columns'] ?? 1 ) . '">' . $this->removePriceChoicesWrapper($content) . '</sc-price-choices>';
 	}
 
 	/**
