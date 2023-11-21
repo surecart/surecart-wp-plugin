@@ -261,7 +261,9 @@ export class ScSubscriptionSwitch {
                   }}
                 >
                   <div>
-                    <strong>{price?.name || product?.name}</strong>
+                    <strong>
+                      {product?.name} {price?.name && <Fragment> — {price?.name}</Fragment>}
+                    </strong>
                   </div>
                   <div slot="description">
                     {price?.ad_hoc ? (
