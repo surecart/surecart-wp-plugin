@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 				],
 			]
 		);
-		return '<sc-price-choices label="' . esc_attr( $attributes['label'] ?? '' ) . '" type="' . esc_attr( $attributes['type'] ?? 'radio' ) . '" columns="' . intval( $attributes['columns'] ?? 1 ) . '">' . filter_block_content( $content, 'post' ) . '</sc-price-choices>';
+		return '<sc-price-choices label="' . esc_attr( $attributes['label'] ?? '' ) . '" type="' . esc_attr( $attributes['type'] ?? 'radio' ) . '" columns="' . intval( $attributes['columns'] ?? 1 ) . '">' . $this->removePriceChoicesWrapper($content) . '</sc-price-choices>';
 	}
 
 	/**
@@ -100,5 +100,20 @@ class Block extends BaseBlock {
 				$blocks
 			)
 		);
+	}
+
+	/**
+	 * Remove price choices wrapper.
+	 *
+	 * @param string $content Block content.
+	 *
+	 * @return string
+	 */
+	public function removePriceChoicesWrapper( $content ) {
+		$content = filter_block_content( $content, 'post' );
+		$unwrapped_html = strip_tags($content,'<sc-price-choice>');
+		$html_processor = new \WP_HTML_Tag_Processor( $unwrapped_html);
+		$final_html = $html_processor->get_updated_html();
+		return $final_html;
 	}
 }
