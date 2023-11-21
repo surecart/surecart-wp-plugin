@@ -24,7 +24,15 @@ class Block extends BaseBlock {
 				],
 			]
 		);
-		return '<sc-price-choices class="wp-block-surecart-price-choice '.esc_attr( $this->getClasses( $attributes ) || '' ).'" label="' . esc_attr( $attributes['label'] ?? '' ) . '" type="' . esc_attr( $attributes['type'] ?? 'radio' ) . '" columns="' . intval( $attributes['columns'] ?? 1 ) . '">' . $this->removePriceChoicesWrapper($content) . '</sc-price-choices>';
+
+		return '<sc-price-choices
+					class="wp-block-surecart-price-choice ' . esc_attr( $this->getClasses( $attributes ) || '' ) . '"
+					label="' . esc_attr( $attributes['label'] ?? '' ) . '"
+					type="' . esc_attr( $attributes['type'] ?? 'radio' ) . '"
+					columns="' . intval( $attributes['columns'] ?? 1 ) . '"
+				>' .
+					$this->getRemovedPriceChoicesWrapper( $content )
+				. '</sc-price-choices>';
 	}
 
 	/**
@@ -103,17 +111,17 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Remove price choices wrapper.
+	 * Remove price choice wrapper and return the html.
 	 *
 	 * @param string $content Block content.
 	 *
 	 * @return string
 	 */
-	public function removePriceChoicesWrapper( $content ) {
-		$content = filter_block_content( $content, 'post' );
-		$unwrapped_html = strip_tags($content,'<sc-price-choice>');
-		$html_processor = new \WP_HTML_Tag_Processor( $unwrapped_html);
-		$final_html = $html_processor->get_updated_html();
-		return $final_html;
+	public function getRemovedPriceChoicesWrapper( $content ): string {
+		$content        = filter_block_content( $content, 'post' );
+		$unwrapped_html = strip_tags( $content, '<sc-price-choice>' );
+		$html_processor = new \WP_HTML_Tag_Processor( $unwrapped_html );
+
+		return $html_processor->get_updated_html();
 	}
 }
