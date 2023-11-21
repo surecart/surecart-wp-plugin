@@ -5,7 +5,7 @@ import { css, Global, jsx } from '@emotion/core';
  * External dependencies
  */
 import { ScButton, ScForm } from '@surecart/components-react';
-import { Button, Modal } from '@wordpress/components';
+import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
@@ -16,16 +16,17 @@ import { store as noticesStore } from '@wordpress/notices';
  * Internal dependencies
  */
 import { ScFormControl } from '@surecart/components-react';
-import PriceSelector from '@admin/components/PriceSelector';
 import Error from '../../../components/Error';
 import SelectIntegration from './SelectIntegration';
+import SelectPrice from '../../../components/SelectPrice';
 
-export default ({ onRequestClose, id }) => {
+export default ({ onRequestClose, id, product }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [price, setPrice] = useState(null);
+	const [priceId, setPriceId] = useState(null);
+	const [variantId, setVariantId] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -41,8 +42,8 @@ export default ({ onRequestClose, id }) => {
 					model_name: 'product',
 					model_id: id,
 					integration_id: item,
-					price_id: price?.priceId || null,
-					variant_id: price?.variantId || null,
+					price_id: priceId || null,
+					variant_id: variantId || null,
 					provider,
 				},
 				{ throwOnError: true }
@@ -57,6 +58,16 @@ export default ({ onRequestClose, id }) => {
 			setLoading(false);
 		}
 	};
+
+	const products = [
+		{
+			...product,
+			variants: {
+				data: product.variants,
+			},
+		}
+	]
+
 
 	return (
 		<Fragment>
@@ -95,28 +106,58 @@ export default ({ onRequestClose, id }) => {
 						setItem={setItem}
 					/>
 
-					{!!item && (
-						<div>
-							<ScFormControl
-								label={__('Select A Price', 'surecart')}
-							>
-								<PriceSelector
-									value={price?.priceId}
-									ad_hoc={false}
-									onSelect={({ price_id, variant_id }) =>
-										setPrice({
-											priceId: price_id,
-											variantId: variant_id,
-										})
-									}
-									requestQuery={{
-										archived: false,
-										// ids: [id],
-									}}
-									allowOutOfStockSelection={true}
-								/>
-							</ScFormControl>
-						</div>
+					{!!item && !!product?.prices?.data?.length && (
+						<Fragment>
+							<div>
+								<ScFormControl
+									label={__('Select A Price', 'surecart')}
+								>
+									<SelectPrice
+										required={false}
+										css={css`
+											flex: 0 1 50%;
+										`}
+										open={false}
+										value={priceId}
+										ad_hoc={false}
+										variable={false}
+										loading={false}
+										products={[product]}
+										onSelect={({ price_id }) => setPriceId(price_id)}
+										placeholder={__(
+											'All Prices',
+											'surecart'
+										)}
+									/>
+								</ScFormControl>
+							</div>
+
+							{!!priceId && !!product?.variants?.length && (
+								<div>
+									<ScFormControl
+										label={__('Select A Variant', 'surecart')}
+									>
+										<SelectPrice
+											required={false}
+											css={css`
+												flex: 0 1 50%;
+											`}
+											open={false}
+											value={variantId}
+											ad_hoc={false}
+											variable={true}
+											loading={false}
+											products={products}
+											onSelect={({ variant_id }) => setVariantId(variant_id)}
+											placeholder={__(
+												'All Variants',
+												'surecart'
+											)}
+										/>
+									</ScFormControl>
+								</div>
+							)}
+						</Fragment>
 					)}
 
 					<div

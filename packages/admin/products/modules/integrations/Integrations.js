@@ -11,7 +11,7 @@ import NewIntegration from './NewIntegration';
 import IntegrationHelp from './IntegrationHelp';
 import Integration from './Integration';
 
-export default ({ id }) => {
+export default ({ product, id }) => {
 	const [modal, setModal] = useState(false);
 	const [guide, setGuide] = useState(false);
 
@@ -82,6 +82,7 @@ export default ({ id }) => {
 				<NewIntegration
 					id={id}
 					onRequestClose={() => setModal(false)}
+					product={product}
 				/>
 			)}
 
