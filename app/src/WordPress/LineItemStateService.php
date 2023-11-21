@@ -44,7 +44,6 @@ class LineItemStateService {
 				return ! $this->lineItemExists( $line_item, $initial[ $store ][ $key ] );
 			}
 		);
-		var_dump( 'running' );
 
 		return array_merge( $initial[ $store ][ $key ] ?? [], $merged_line_items );
 	}
