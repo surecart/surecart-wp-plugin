@@ -17,20 +17,22 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		// $product = get_query_var( 'surecart_current_product' );
-		// if ( empty( $product ) ) {
-		// 	return '';
-		// }
+		$bump = get_query_var( 'surecart_current_bump' );
 
-		// return sprintf(
-		// 	'<%1$s class="%2$s" style="%3$s">
-		// 		%4$s
-		// 	</%1$s>',
-		// 	'h' . (int) ( $attributes['level'] ?? 1 ),
-		// 	esc_attr( $this->getClasses( $attributes ) . ' surecart-block product-title' ),
-		// 	esc_attr( $this->getStyles( $attributes ) ),
-		// 	wp_kses_post( $product->name ?? '' )
-		// );
-		return "";
+		// If there is no bump call to action, return empty string.
+		if ( empty( $bump->metadata->cta ?? '' ) ) {
+			return '';
+		}
+
+		return sprintf(
+			'<%1$s class="%2$s" style="%3$s">
+				%4$s
+			</%1$s>',
+			'h' . (int) ( $attributes['level'] ?? 1 ),
+			esc_attr( $this->getClasses( $attributes ) . ' surecart-block bump-title' ),
+			esc_attr( $this->getStyles( $attributes ) ),
+			wp_kses_post( $bump->metadata->cta ?? '' )
+		);
+		return '';
 	}
 }
