@@ -114,7 +114,7 @@ class BuyPageController extends BasePageController {
 			sc_initial_state(
 				[
 					'checkout' => [
-						'initialLineItems' => sc_initial_line_items( $line_item ),
+						'initialLineItems' => sc_initial_line_items( [ $line_item ] ),
 					],
 				]
 			);
