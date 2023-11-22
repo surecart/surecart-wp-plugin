@@ -1,5 +1,8 @@
 <?php
-get_header();
+// die(var_dump(surecart_get_the_block_template_html( get_the_content() )));
+wp_head();
+
+// die('come');
 global $content_width;
 echo '<style>
 .wp-block-group {

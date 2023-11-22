@@ -117,7 +117,7 @@ class BumpTemplatesService {
 	 */
 	public function addCurrentBumpQueryVar( array $vars ): array {
 		$vars[] = 'surecart_current_bump';
-		$vars[] = 'surecart_current_product';
+		// $vars[] = 'surecart_current_product';
 		return $vars;
 	}
 

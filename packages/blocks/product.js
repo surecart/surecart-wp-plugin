@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies.
+ */
 import * as BuyButtons from './Blocks/Product/BuyButtons';
 import * as BuyButton from './Blocks/Product/BuyButton';
 import * as Description from './Blocks/Product/Description';
@@ -8,27 +11,34 @@ import * as Title from './Blocks/Product/Title';
 import * as PriceChoices from './Blocks/Product/PriceChoices';
 import * as Variants from './Blocks/Product/VariantChoices';
 import * as CollectionBadges from './Blocks/Product/CollectionBadges';
-import { __ } from '@wordpress/i18n';
 import { registerBlocksForTemplates } from './conditional-block-registration';
+import { bumpPageTemplates } from './order-bump';
 
+const productPageBlocks = [BuyButtons, BuyButton, CollectionBadges];
+const commonBlocks = [
+	Quantity,
+	Title,
+	Media,
+	Description,
+	Price,
+	PriceChoices,
+	Variants,
+];
+const productPageTemplates = [
+	'surecart/surecart//product-info',
+	'surecart/surecart//single-product',
+	'sc-products',
+	'sc-part-products-info',
+];
+
+// Common blocks for templates.
 registerBlocksForTemplates({
-	blocks: [
-		BuyButtons,
-		BuyButton,
-		Quantity,
-		Title,
-		Media,
-		Description,
-		Price,
-		PriceChoices,
-		Variants,
-		CollectionBadges,
-	],
-	// include only for these templates.
-	include: [
-		'surecart/surecart//product-info',
-		'surecart/surecart//single-product',
-		'sc-products',
-		'sc-part-products-info',
-	],
+	blocks: commonBlocks,
+	include: [...productPageTemplates, ...bumpPageTemplates],
+});
+
+// Product page specific blocks.
+registerBlocksForTemplates({
+	blocks: productPageBlocks,
+	include: productPageTemplates,
 });
