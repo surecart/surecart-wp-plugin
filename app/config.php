@@ -186,6 +186,11 @@ return [
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
+
+		\SureCartBlocks\Blocks\OrderBump\Cta\Block::class,
+		\SureCartBlocks\Blocks\OrderBump\Description\Block::class,
+		\SureCartBlocks\Blocks\OrderBump\CountdownTimer\Block::class,
+		\SureCartBlocks\Blocks\OrderBump\SubmitButton\Block::class,
 	],
 
 	/** Which components to preload for each block. */

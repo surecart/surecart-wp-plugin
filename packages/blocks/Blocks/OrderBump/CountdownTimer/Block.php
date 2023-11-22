@@ -35,8 +35,8 @@ class Block extends BaseBlock {
 			<sc-order-bump-countdown-timer
 				showIcon="<?php echo esc_attr( $attributes['showIcon'] ); ?>"
 			>
-				<span slot="offer_expire_text">
-					<?php echo wp_kses_post( $attributes['offer_expire_text'] ?? '' ); ?>
+				<span slot="offer-expire-text">
+					<?php echo esc_attr( $attributes['offer_expire_text'] ?? '' ); ?>
 				</span>
 			</sc-order-bump-countdown-timer>
 		</div>

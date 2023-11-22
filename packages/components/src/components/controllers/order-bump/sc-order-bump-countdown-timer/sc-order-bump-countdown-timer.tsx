@@ -1,3 +1,6 @@
+/**
+ * External dependencies.
+ */
 import { Component, Host, Prop, h, State, Listen } from '@stencil/core';
 
 @Component({

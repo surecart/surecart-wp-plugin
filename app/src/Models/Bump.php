@@ -2,10 +2,12 @@
 
 namespace SureCart\Models;
 
+use SureCart\Support\Contracts\PageModel;
+
 /**
- * Holds the data of the current account.
+ * Holds the data of the order bump.
  */
-class Bump extends Model {
+class Bump extends Model implements PageModel {
 	/**
 	 * Rest API endpoint
 	 *
@@ -111,5 +113,32 @@ class Bump extends Model {
 		}
 		// permalinks on.
 		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'bump_page' ) ) . $this->id;
+	}
+
+	/**
+	 * Get the page title.
+	 *
+	 * @return string
+	 */
+	public function getPageTitleAttribute(): string {
+		return $this->metadata->cta ?? $this->name ?? '';
+	}
+
+	/**
+	 * Get the meta description.
+	 *
+	 * @return string
+	 */
+	public function getMetaDescriptionAttribute(): string {
+		return $this->metadata->description ?? '';
+	}
+
+	/**
+	 * Get the JSON Schema Array
+	 *
+	 * @return array
+	 */
+	public function getJsonSchemaArray(): array {
+		return [];
 	}
 }

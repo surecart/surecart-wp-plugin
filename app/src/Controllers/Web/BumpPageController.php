@@ -23,28 +23,37 @@ class BumpPageController extends BasePageController {
 		parent::filters();
 
 		// Add edit product link to admin bar.
-		// add_action( 'admin_bar_menu', [ $this, 'addEditBumpLink' ], 99 );
+		add_action( 'admin_bar_menu', [ $this, 'addEditBumpLink' ], 99 );
 
 		// add data needed for product to load.
-		// add_filter(
-		// 	'surecart-components/scData',
-		// 	function( $data ) {
-		// 		$form = \SureCart::forms()->getDefault();
+		add_filter(
+			'surecart-components/scData',
+			function( $data ) {
+				$form = \SureCart::forms()->getDefault();
 
-		// 		$data['product_data'] = [
-		// 			'product'       => $this->product,
-		// 			'form'          => $form,
-		// 			'mode'          => Form::getMode( $form->ID ),
-		// 			'checkout_link' => \SureCart::pages()->url( 'checkout' ),
-		// 		];
+				$data['product_data'] = [
+					'product'       => $this->product,
+					'form'          => $form,
+					'mode'          => Form::getMode( $form->ID ),
+					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
+				];
 
-		// 		$data['bump_data'] = [
-		// 			'bump' => $this->model,
-		// 		];
+				$data['bump_data'] = [
+					'bump' => $this->model,
+				];
 
-		// 		return $data;
-		// 	}
-		// );
+				return $data;
+			}
+		);
+	}
+
+	/**
+	 * Add meta title and description.
+	 *
+	 * @return void
+	 */
+	public function addSeoMetaData(): void {
+		// TODO: Add meta title and description.
 	}
 
 	/**
