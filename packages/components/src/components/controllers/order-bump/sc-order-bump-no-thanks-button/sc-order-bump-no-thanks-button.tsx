@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 // import { state } from '@store/product';
 
 @Component({
@@ -9,7 +9,7 @@ import { Component, Host, h } from '@stencil/core';
 export class ScOrderBumpNoThanksButton {
   handleCloseBump(e) {
     // Stop the bump timer and redirect to no thanks URL.
-    console.log('e', e);
+    console.log('handleCloseBump::', e);
   }
 
   render() {

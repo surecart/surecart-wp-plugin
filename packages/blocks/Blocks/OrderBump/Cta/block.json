@@ -1,6 +1,6 @@
 {
 	"apiVersion": 2,
-	"name": "surecart/order-bump-title",
+	"name": "surecart/order-bump-cta",
 	"title": "Order Bump Call To Action",
 	"description": "Displays the Order bump Call To Action.",
 	"category": "surecart",

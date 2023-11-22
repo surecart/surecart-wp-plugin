@@ -24,6 +24,18 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		return "Order bump description";
+		$bump = get_query_var( 'surecart_current_bump' );
+		if ( empty( $bump->metadata->description ?? '' ) ) {
+			return '';
+		}
+		ob_start(); ?>
+
+		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<?php echo wp_kses_post( $bump->metadata->description ?? '' ); ?>
+		</div>
+
+		<?php
+		return ob_get_clean();
 	}
 }

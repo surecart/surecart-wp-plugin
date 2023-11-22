@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\OrderBump\Title;
+namespace SureCartBlocks\Blocks\OrderBump\Cta;
 
 use SureCartBlocks\Blocks\BaseBlock;
 

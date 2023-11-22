@@ -81,5 +81,10 @@ registerBlocksForTemplates({
 		'sc-part-products-info',
 		'sc-product-collection',
 		'sc-part-product-collection',
+
+		'surecart/surecart//bump-info',
+		'surecart/surecart//single-bump',
+		'sc-bump',
+		'sc-part-bump-info',
 	],
 });

@@ -13,7 +13,7 @@ export class ScOrderBumpCountdownTimer {
   @State() formattedTime: string;
 
   /** The URL to redirect to when the countdown completes. */
-  @Prop() redirectUrl: string = '/';
+  @State() redirectUrl: string = '/';
 
   /** Whether to show the icon. */
   @Prop() showIcon: boolean = true;

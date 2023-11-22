@@ -63,7 +63,7 @@ class BumpTemplatesService {
 		// Bump page query overrides.
 		add_filter( 'posts_pre_query', [ $this, 'overrideBumpPostQuery' ], 10, 2 );
 		add_filter( 'query_vars', [ $this, 'addCurrentBumpQueryVar' ] );
-		add_filter( 'get_post_metadata', [ $this, 'overrideBumpPostMeta' ], 10, 4 );
+		// add_filter( 'get_post_metadata', [ $this, 'overrideBumpPostMeta' ], 10, 4 );
 	}
 
 	/**
@@ -96,6 +96,8 @@ class BumpTemplatesService {
 			return $value;
 		}
 
+		die($bump->id);
+
 		// return the id.
 		if ( 'sc_bump_id' === $meta_key ) {
 			return $bump->id;
@@ -116,8 +118,8 @@ class BumpTemplatesService {
 	 * @return array
 	 */
 	public function addCurrentBumpQueryVar( array $vars ): array {
-		$vars[] = 'surecart_current_bump';
-		// $vars[] = 'surecart_current_product';
+		$vars[] = 'surecart_current_product';
+		// $vars[] = 'surecart_current_bump';
 		return $vars;
 	}
 
@@ -155,7 +157,7 @@ class BumpTemplatesService {
 
 		// create a fake post for the bump.
 		$post                    = new \stdClass();
-		$post->post_title        = $bump->title;
+		$post->post_title        = $bump->name;
 		$post->post_name         = $bump->id;
 		$post->post_content      = '<div>' . ( $bump->template_part->content ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
