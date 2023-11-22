@@ -63,6 +63,7 @@ export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
 					<div
 						css={css`
 							color: var(--sc-color-gray-500);
+							margin-bottom: 1em;
 						`}
 					>
 						{__(
