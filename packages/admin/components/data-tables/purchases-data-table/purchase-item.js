@@ -20,9 +20,9 @@ export default (purchase) => {
 	return {
 		item: (
 			<sc-line-item key={id}>
-				{!!media?.url && (
+				{(!!media?.url || variant?.image_url) && (
 					<img
-						src={media?.url}
+						src={variant?.image_url || media.url}
 						alt={media.alt}
 						{...(media.title ? { title: media.title } : {})}
 						slot="image"
