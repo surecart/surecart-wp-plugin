@@ -91,9 +91,9 @@ export class ScSubscriptionSwitch {
 
     this.hasFilters = {
       ...this.hasFilters,
-      split: this.prices.some(price => price.recurring_interval === 'month' && price?.recurring_period_count && !price?.archived),
+      split: this.prices.some(price => !!price?.recurring_period_count && !price?.archived),
       month: this.prices.some(price => price.recurring_interval === 'month' && !price?.recurring_period_count && !price?.archived),
-      year: this.prices.some(price => price.recurring_interval === 'year' && !price?.archived),
+      year: this.prices.some(price => price.recurring_interval === 'year' && !price?.recurring_period_count && !price?.archived),
       never: this.prices.some(price => (price.recurring_interval === 'never' || !price.recurring_interval) && !price?.archived),
     };
   }
