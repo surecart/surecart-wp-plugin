@@ -7,10 +7,9 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                          | Type      | Default |
-| ------------- | -------------- | ---------------------------------------------------- | --------- | ------- |
-| `redirectUrl` | `redirect-url` | The URL to redirect to when the countdown completes. | `string`  | `'/'`   |
-| `showIcon`    | `show-icon`    | Whether to show the icon.                            | `boolean` | `true`  |
+| Property   | Attribute   | Description               | Type      | Default |
+| ---------- | ----------- | ------------------------- | --------- | ------- |
+| `showIcon` | `show-icon` | Whether to show the icon. | `boolean` | `true`  |
 
 
 ## Dependencies

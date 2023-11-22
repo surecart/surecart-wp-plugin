@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-22T11:17:31",
+  "timestamp": "2023-11-22T14:38:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -16639,23 +16639,6 @@
       "docsTags": [],
       "usage": {},
       "props": [
-        {
-          "name": "redirectUrl",
-          "type": "string",
-          "mutable": false,
-          "attr": "redirect-url",
-          "reflectToAttr": false,
-          "docs": "The URL to redirect to when the countdown completes.",
-          "docsTags": [],
-          "default": "'/'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "showIcon",
           "type": "boolean",

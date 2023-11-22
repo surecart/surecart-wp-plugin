@@ -1039,7 +1039,6 @@
     "slot": true
   },
   "sc-order-bump-countdown-timer": {
-    "redirect-url": true,
     "show-icon": true,
     "style": true,
     "id": true,

@@ -1835,10 +1835,6 @@ export namespace Components {
     }
     interface ScOrderBumpCountdownTimer {
         /**
-          * The URL to redirect to when the countdown completes.
-         */
-        "redirectUrl": string;
-        /**
           * Whether to show the icon.
          */
         "showIcon": boolean;
@@ -7623,10 +7619,6 @@ declare namespace LocalJSX {
         "showControl"?: boolean;
     }
     interface ScOrderBumpCountdownTimer {
-        /**
-          * The URL to redirect to when the countdown completes.
-         */
-        "redirectUrl"?: string;
         /**
           * Whether to show the icon.
          */
