@@ -106,6 +106,6 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		}
 
 		// delete the old cart post.
-		wp_delete_post($existing_cart_post->ID);
+		// wp_delete_post($existing_cart_post->ID);
 	}
 }
