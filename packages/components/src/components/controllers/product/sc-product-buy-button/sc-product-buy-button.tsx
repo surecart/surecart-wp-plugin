@@ -43,6 +43,7 @@ export class ScProductBuyButton {
     try {
       await submitCartForm();
     } catch (e) {
+      console.error(e);
       this.error = e;
     }
   }
