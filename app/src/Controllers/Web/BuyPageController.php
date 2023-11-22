@@ -114,10 +114,7 @@ class BuyPageController extends BasePageController {
 			sc_initial_state(
 				[
 					'checkout' => [
-						'initialLineItems' => array_merge(
-							$this->getExistingLineItems(),
-							[ $line_item ]
-						),
+						'initialLineItems' => sc_initial_line_items( $line_item ),
 					],
 				]
 			);
@@ -143,16 +140,6 @@ class BuyPageController extends BasePageController {
 				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
 			]
 		);
-	}
-
-	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
 	}
 
 	/**
