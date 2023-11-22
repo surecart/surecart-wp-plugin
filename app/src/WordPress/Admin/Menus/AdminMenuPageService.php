@@ -130,9 +130,6 @@ class AdminMenuPageService {
 				content: "";
 				width: calc(100% + 26px);
 			}
-			#toplevel_page_sc-dashboard .awaiting-mod {
-				background: rgba(255,255,255,0.1);
-			}
 		</style>';
 	}
 
