@@ -4,8 +4,9 @@ import { __ } from '@wordpress/i18n';
 import { onChange } from '@store/product';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
-import { getAdditionalErrorMessages, getTopLevelError } from '@store/utils';
+import { getAdditionalErrorMessages, getTopLevelError } from '../../../../functions/error';
 import { ScNoticeStore } from '../../../../types';
+
 @Component({
   tag: 'sc-product-buy-button',
   styleUrl: 'sc-product-buy-button.scss',
