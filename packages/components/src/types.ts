@@ -21,6 +21,7 @@ declare global {
     sc?: {
       store?: {
         product?: any;
+        bump?: any;
       };
     };
     scStore: any;
@@ -45,6 +46,9 @@ declare global {
         };
         product: Product;
       };
+      bump_data: {
+        bump: Bump;
+      }
       pages: {
         dashboard: string;
         checkout: string;

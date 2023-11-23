@@ -2,6 +2,7 @@ import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price, Variant } from '../../../../types';
 import { state } from '@store/product';
+import { state as bumpState } from '@store/bump';
 import { intervalString } from '../../../../functions/price';
 
 @Component({
@@ -26,6 +27,37 @@ export class ScProductPrice {
   renderVariantPrice(selectedVariant: Variant) {
     const variant = state?.variants?.find(variant => variant?.id === selectedVariant?.id);
     return this.renderPrice(state.selectedPrice, variant?.amount);
+  }
+
+  // Check if the bump is the same as the product and price matches.
+  componentDidLoad() {
+    if (bumpState.product?.id !== state.product?.id) {
+      return;
+    }
+
+    // If price doesn't match, don't proceed.
+    const bumpPrice = bumpState.bump?.price as Price;
+    let price = state.prices.find(priceData => priceData?.id === bumpPrice?.id);
+    if (!price) return;
+
+    let amount = price?.amount || 0;
+    let initialAmount = bumpPrice?.amount || 0;
+    let scratchAmount = initialAmount;
+
+    if (bumpState.bump?.amount_off) {
+      amount = Math.max(0, initialAmount - bumpState.bump?.amount_off);
+    }
+
+    if (bumpState.bump?.percent_off) {
+      const off = initialAmount * (bumpState.bump?.percent_off / 100);
+      amount = Math.max(0, initialAmount - off);
+    }
+
+    state.selectedPrice = {
+      ...price,
+      amount,
+      scratch_amount: scratchAmount,
+    };
   }
 
   renderPrice(price: Price, variantAmount?: number) {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-22T16:23:46",
+  "timestamp": "2023-11-23T15:36:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -16690,6 +16690,35 @@
       "props": [],
       "methods": [],
       "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "./src/components/controllers/order-bump/sc-order-bump-submit-button/sc-order-bump-submit-button.tsx",
+      "encapsulation": "none",
+      "tag": "sc-order-bump-submit-button",
+      "readme": "# sc-order-bump-submit-button\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [
+        {
+          "event": "scAddLineItem",
+          "detail": "LineItemData",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Add line item event",
+          "docsTags": []
+        }
+      ],
       "listeners": [],
       "styles": [],
       "slots": [],

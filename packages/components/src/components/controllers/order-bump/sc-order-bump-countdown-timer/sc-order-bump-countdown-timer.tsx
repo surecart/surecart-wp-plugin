@@ -10,7 +10,7 @@ import { Component, Host, Prop, h, State, Listen } from '@stencil/core';
 })
 export class ScOrderBumpCountdownTimer {
   /** The time remaining in seconds. */
-  @State() timeRemaining: number = 1000;
+  @State() timeRemaining: number = 600; // 10 minutes
 
   /** The formatted time remaining. */
   @State() formattedTime: string;
@@ -65,8 +65,6 @@ export class ScOrderBumpCountdownTimer {
       } else {
         this.formattedTime = `00:${this.formatTimeUnit(seconds)}`;
       }
-
-      console.log(this.timeRemaining);
     }, 1000);
   }
 
@@ -87,7 +85,7 @@ export class ScOrderBumpCountdownTimer {
   @Listen('resetCountdown')
   handleResetCountdown() {
     // Handle the event to reset the countdown
-    this.timeRemaining = 60; // Set the desired countdown time
+    this.timeRemaining = 600; // Set the desired countdown time
     this.saveTimeToLocalStorage();
   }
 
