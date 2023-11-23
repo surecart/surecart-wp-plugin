@@ -1051,6 +1051,12 @@
     "class": true,
     "slot": true
   },
+  "sc-order-bump-submit-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-bump-text": {
     "text": true,
     "style": true,

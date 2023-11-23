@@ -1841,6 +1841,8 @@ export namespace Components {
     }
     interface ScOrderBumpNoThanksButton {
     }
+    interface ScOrderBumpSubmitButton {
+    }
     interface ScOrderBumpText {
         "text": 'title' | 'description';
     }
@@ -4743,6 +4745,12 @@ declare global {
         prototype: HTMLScOrderBumpNoThanksButtonElement;
         new (): HTMLScOrderBumpNoThanksButtonElement;
     };
+    interface HTMLScOrderBumpSubmitButtonElement extends Components.ScOrderBumpSubmitButton, HTMLStencilElement {
+    }
+    var HTMLScOrderBumpSubmitButtonElement: {
+        prototype: HTMLScOrderBumpSubmitButtonElement;
+        new (): HTMLScOrderBumpSubmitButtonElement;
+    };
     interface HTMLScOrderBumpTextElement extends Components.ScOrderBumpText, HTMLStencilElement {
     }
     var HTMLScOrderBumpTextElement: {
@@ -5495,6 +5503,7 @@ declare global {
         "sc-order-bump": HTMLScOrderBumpElement;
         "sc-order-bump-countdown-timer": HTMLScOrderBumpCountdownTimerElement;
         "sc-order-bump-no-thanks-button": HTMLScOrderBumpNoThanksButtonElement;
+        "sc-order-bump-submit-button": HTMLScOrderBumpSubmitButtonElement;
         "sc-order-bump-text": HTMLScOrderBumpTextElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-components-validator": HTMLScOrderConfirmComponentsValidatorElement;
@@ -7625,6 +7634,8 @@ declare namespace LocalJSX {
         "showIcon"?: boolean;
     }
     interface ScOrderBumpNoThanksButton {
+    }
+    interface ScOrderBumpSubmitButton {
     }
     interface ScOrderBumpText {
         "text"?: 'title' | 'description';
@@ -9917,6 +9928,7 @@ declare namespace LocalJSX {
         "sc-order-bump": ScOrderBump;
         "sc-order-bump-countdown-timer": ScOrderBumpCountdownTimer;
         "sc-order-bump-no-thanks-button": ScOrderBumpNoThanksButton;
+        "sc-order-bump-submit-button": ScOrderBumpSubmitButton;
         "sc-order-bump-text": ScOrderBumpText;
         "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-components-validator": ScOrderConfirmComponentsValidator;
@@ -10143,6 +10155,7 @@ declare module "@stencil/core" {
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
             "sc-order-bump-countdown-timer": LocalJSX.ScOrderBumpCountdownTimer & JSXBase.HTMLAttributes<HTMLScOrderBumpCountdownTimerElement>;
             "sc-order-bump-no-thanks-button": LocalJSX.ScOrderBumpNoThanksButton & JSXBase.HTMLAttributes<HTMLScOrderBumpNoThanksButtonElement>;
+            "sc-order-bump-submit-button": LocalJSX.ScOrderBumpSubmitButton & JSXBase.HTMLAttributes<HTMLScOrderBumpSubmitButtonElement>;
             "sc-order-bump-text": LocalJSX.ScOrderBumpText & JSXBase.HTMLAttributes<HTMLScOrderBumpTextElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;

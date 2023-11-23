@@ -1,30 +1,100 @@
 /**
- * @jsx jsx
+ * External dependencies
  */
-import { css, jsx } from '@emotion/core';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { RichText } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	__experimentalGetElementClassName,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
-	SelectControl,
 	TextControl,
 	ToggleControl,
+	Button,
+	ButtonGroup,
 } from '@wordpress/components';
+import { isKeyboardEvent } from '@wordpress/keycodes';
+import { useRef } from '@wordpress/element';
 
 /**
  * Component Dependencies
  */
-import { ScButton, ScFormatNumber } from '@surecart/components-react';
+import { ScFormatNumber, ScIcon } from '@surecart/components-react';
+
+function WidthPanel({ selectedWidth, setAttributes }) {
+	function handleChange(newWidth) {
+		// Check if we are toggling the width off
+		const width = selectedWidth === newWidth ? undefined : newWidth;
+
+		// Update attributes.
+		setAttributes({ width });
+	}
+
+	return (
+		<PanelBody title={__('Width settings', 'surecart')}>
+			<ButtonGroup aria-label={__('Button width', 'surecart')}>
+				{[25, 50, 75, 100].map((widthValue) => {
+					return (
+						<Button
+							key={widthValue}
+							isSmall
+							variant={
+								widthValue === selectedWidth
+									? 'primary'
+									: undefined
+							}
+							onClick={() => handleChange(widthValue)}
+						>
+							{widthValue}%
+						</Button>
+					);
+				})}
+			</ButtonGroup>
+		</PanelBody>
+	);
+}
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, text, submit, full, size, show_total, show_icon } =
-		attributes;
+	const {
+		text,
+		style,
+		textAlign,
+		show_total,
+		show_icon,
+		width,
+		out_of_stock_text,
+		unavailable_text,
+	} = attributes;
+
+	const borderProps = useBorderProps(attributes);
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
+	const ref = useRef();
+	const richTextRef = useRef();
+
+	function onKeyDown(event) {
+		if (isKeyboardEvent.primary(event, 'k')) {
+			startEditing(event);
+		} else if (isKeyboardEvent.primaryShift(event, 'k')) {
+			unlink();
+			richTextRef.current?.focus();
+		}
+	}
+
+	const blockProps = useBlockProps({
+		ref,
+		onKeyDown,
+	});
 
 	return (
 		<div className={className}>
@@ -35,13 +105,6 @@ export default ({ className, attributes, setAttributes }) => {
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Full', 'surecart')}
-							checked={full}
-							onChange={(full) => setAttributes({ full })}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -62,78 +125,71 @@ export default ({ className, attributes, setAttributes }) => {
 							}
 						/>
 					</PanelRow>
+				</PanelBody>
+
+				<PanelBody title={__('Text settings', 'surecart')}>
 					<PanelRow>
-						<SelectControl
-							label={__('Size', 'surecart')}
-							value={size}
-							onChange={(size) => {
-								setAttributes({ size });
-							}}
-							options={[
-								{
-									value: null,
-									label: 'Select a Size',
-									disabled: true,
-								},
-								{
-									value: 'small',
-									label: __('Small', 'surecart'),
-								},
-								{
-									value: 'medium',
-									label: __('Medium', 'surecart'),
-								},
-								{
-									value: 'large',
-									label: __('Large', 'surecart'),
-								},
-							]}
+						<TextControl
+							label={__('Out of stock label', 'surecart')}
+							value={out_of_stock_text}
+							onChange={(value) =>
+								setAttributes({ out_of_stock_text: value })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Unavailable label', 'surecart')}
+							value={unavailable_text}
+							onChange={(value) =>
+								setAttributes({ unavailable_text: value })
+							}
 						/>
 					</PanelRow>
 				</PanelBody>
+
+				<WidthPanel
+					selectedWidth={width}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
 
 			<div
-				css={css`
-					display: block;
-					width: auto;
-					display: grid;
-					gap: var(--sc-form-row-spacing);
-				`}
+				{...blockProps}
+				className={classnames(blockProps.className, {
+					'wp-block-button': true,
+					'sc-block-button': true,
+					[`has-custom-width sc-block-button__width-${width}`]: width,
+					[`has-custom-font-size`]: blockProps.style.fontSize,
+				})}
 			>
-				<ScButton
-					type={type}
-					submit={submit}
-					icon={show_icon ? 'lock' : false}
-					{...(full ? { full: true } : {})}
-					size={size}
-				>
-					{show_icon && (
-						<svg
-							slot="prefix"
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-							/>
-						</svg>
+				<a
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
+					className={classnames(
+						className,
+						'wp-block-button__link',
+						'sc-block-button__link',
+						colorProps.className,
+						borderProps.className,
+						{
+							[`has-text-align-${textAlign}`]: textAlign,
+							// For backwards compatibility add style that isn't
+							// provided via block support.
+							'no-border-radius': style?.border?.radius === 0,
+						},
+						__experimentalGetElementClassName('button')
 					)}
-					<RichText
-						aria-label={__('Button text')}
-						placeholder={__('Add text…')}
-						value={text}
-						onChange={(value) => setAttributes({ text: value })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
+					style={{
+						...borderProps.style,
+						...colorProps.style,
+						...spacingProps.style,
+						textDecoration: 'none',
+						display: 'block',
+					}}
+				>
+					{show_icon && <ScIcon name="lock" size="small"></ScIcon>}{' '}
+					{text}{' '}
 					{show_total && (
 						<span>
 							{'\u00A0'}
@@ -144,7 +200,7 @@ export default ({ className, attributes, setAttributes }) => {
 							></ScFormatNumber>
 						</span>
 					)}
-				</ScButton>
+				</a>
 			</div>
 		</div>
 	);

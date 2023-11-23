@@ -107,6 +107,7 @@ export const ScOrder = /*@__PURE__*/createReactComponent<JSX.ScOrder, HTMLScOrde
 export const ScOrderBump = /*@__PURE__*/createReactComponent<JSX.ScOrderBump, HTMLScOrderBumpElement>('sc-order-bump');
 export const ScOrderBumpCountdownTimer = /*@__PURE__*/createReactComponent<JSX.ScOrderBumpCountdownTimer, HTMLScOrderBumpCountdownTimerElement>('sc-order-bump-countdown-timer');
 export const ScOrderBumpNoThanksButton = /*@__PURE__*/createReactComponent<JSX.ScOrderBumpNoThanksButton, HTMLScOrderBumpNoThanksButtonElement>('sc-order-bump-no-thanks-button');
+export const ScOrderBumpSubmitButton = /*@__PURE__*/createReactComponent<JSX.ScOrderBumpSubmitButton, HTMLScOrderBumpSubmitButtonElement>('sc-order-bump-submit-button');
 export const ScOrderBumpText = /*@__PURE__*/createReactComponent<JSX.ScOrderBumpText, HTMLScOrderBumpTextElement>('sc-order-bump-text');
 export const ScOrderBumps = /*@__PURE__*/createReactComponent<JSX.ScOrderBumps, HTMLScOrderBumpsElement>('sc-order-bumps');
 export const ScOrderConfirmComponentsValidator = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmComponentsValidator, HTMLScOrderConfirmComponentsValidatorElement>('sc-order-confirm-components-validator');
