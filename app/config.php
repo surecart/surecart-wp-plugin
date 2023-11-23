@@ -191,6 +191,7 @@ return [
 		\SureCartBlocks\Blocks\OrderBump\Description\Block::class,
 		\SureCartBlocks\Blocks\OrderBump\CountdownTimer\Block::class,
 		\SureCartBlocks\Blocks\OrderBump\SubmitButton\Block::class,
+		\SureCartBlocks\Blocks\OrderBump\NoThanksButton\Block::class,
 	],
 
 	/** Which components to preload for each block. */

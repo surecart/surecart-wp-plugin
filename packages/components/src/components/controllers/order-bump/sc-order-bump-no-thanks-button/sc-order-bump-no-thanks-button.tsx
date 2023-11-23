@@ -1,5 +1,4 @@
 import { Component, Host, h } from '@stencil/core';
-// import { state } from '@store/product';
 
 @Component({
   tag: 'sc-order-bump-no-thanks-button',
@@ -7,14 +6,17 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class ScOrderBumpNoThanksButton {
-  handleCloseBump(e) {
-    // Stop the bump timer and redirect to no thanks URL.
-    console.log('handleCloseBump::', e);
+  handleCloseBump() {
+    // Redirect to checkout for now.
+    const checkoutUrl = window?.scData?.pages?.checkout;
+    if (!!checkoutUrl) {
+      window.location.href = checkoutUrl;
+    }
   }
 
   render() {
     return (
-      <Host onClick={e => this.handleCloseBump(e)}>
+      <Host onClick={() => this.handleCloseBump()}>
         <slot />
       </Host>
     );

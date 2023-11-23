@@ -3,7 +3,7 @@
 	"title": "Order Bump No Thanks Button",
 	"description": "Display a no thanks button for Order bump.",
 	"category": "surecart",
-	"keywords": ["no-thanks", "button", "order", "bump"],
+	"keywords": ["no", "thanks", "button", "order", "bump"],
 	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
