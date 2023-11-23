@@ -61,7 +61,7 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
-							label={__('Price selection label', 'surecart')}
+							label={__('Price selector label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 							style={{ width: '100%' }}
