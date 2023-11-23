@@ -133,7 +133,7 @@ abstract class ProductBlock extends BaseBlock {
 	 *
 	 * @return Product|null
 	 */
-	public function getProduct( array $attributes ): ?Product {
+	public function getProduct( array $attributes ) {
 		if ( empty( $attributes['product_id'] ) ) {
 			return get_query_var( 'surecart_current_product' );
 		}
