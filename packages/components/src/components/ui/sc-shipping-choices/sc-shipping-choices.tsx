@@ -9,6 +9,15 @@ import { createErrorNotice } from '@store/notices/mutations';
 import { speak } from '@wordpress/a11y';
 import { getFormattedPrice } from '../../../functions/price';
 
+/**
+ * @part base - The elements base wrapper.
+ * @part empty - The empty message.
+ * @part block-ui - The block ui loader.
+ * @part radio__base - The radio base wrapper.
+ * @part radio__label - The radio label.
+ * @part radio__control - The radio control wrapper.
+ * @part radio__checked-icon - The radio checked icon.
+ */
 @Component({
   tag: 'sc-shipping-choices',
   styleUrl: 'sc-shipping-choices.scss',
@@ -55,7 +64,7 @@ export class ScShippingChoices {
     // no shipping choices yet.
     if (!checkoutState?.checkout?.shipping_choices?.data?.length) {
       return (
-        <sc-form-control label={this.label || __('Shipping', 'surecart')}>
+        <sc-form-control part='empty' label={this.label || __('Shipping', 'surecart')}>
           <div class="shipping-choice__empty">{__('Sorry, we are not able to ship to your address.', 'surecart')}</div>
         </sc-form-control>
       );
@@ -63,9 +72,9 @@ export class ScShippingChoices {
 
     return (
       <Host>
-        <sc-radio-group label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
+        <sc-radio-group part='base' label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
           {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, amount, currency, shipping_method }) => (
-            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} class="shipping-choice" value={id}>
+            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} exportparts='base:radio__base,label:radio__label,control:radio__control,checked-icon:radio__checked-icon' class="shipping-choice" value={id}>
               <div class="shipping-choice__text">
                 <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name || __('Standard Shipping', 'surecart')}</div>
                 {this.showDescription && !!(shipping_method as ShippingMethod)?.description && (

@@ -112,6 +112,6 @@ class VerificationCodeController extends RestController {
 	 * @return \SureCart\Models\User|false
 	 */
 	public function getUser( $login ) {
-		return User::getUserby( strpos( $login, '@' ) ? 'email' : 'login', $login );
+		return User::getUserby( strpos( $login ?? '', '@' ) ? 'email' : 'login', $login );
 	}
 }

@@ -44,6 +44,15 @@ class StateService {
 	}
 
 	/**
+	 * Get the line items service.
+	 *
+	 * @return LineItemStateService
+	 */
+	public function lineItems() {
+		return new LineItemStateService();
+	}
+
+	/**
 	 * Merge data.
 	 *
 	 * @param array $data The data that will be merged with the existing store.
