@@ -4,7 +4,7 @@ import { css, Global, jsx } from '@emotion/core';
 /**
  * External dependencies
  */
-import { ScButton, ScForm } from '@surecart/components-react';
+import { ScButton, ScForm, ScSelect } from '@surecart/components-react';
 import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -19,16 +19,17 @@ import { ScFormControl } from '@surecart/components-react';
 import Error from '../../../components/Error';
 import SelectIntegration from './SelectIntegration';
 import SelectPrice from '../../../components/SelectPrice';
+import { formatNumber } from '../../../util';
+import { intervalString } from '../../../util/translations';
 
 export default ({ onRequestClose, id, product }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [priceId, setPriceId] = useState(null);
+	const [price, setPrice] = useState(product?.prices?.data?.[0] || null);
 	const [variantId, setVariantId] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-
 	const { saveEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async (e) => {
@@ -42,7 +43,7 @@ export default ({ onRequestClose, id, product }) => {
 					model_name: 'product',
 					model_id: id,
 					integration_id: item,
-					price_id: priceId || null,
+					price_id: price?.id || null,
 					variant_id: variantId || null,
 					provider,
 				},
@@ -59,15 +60,44 @@ export default ({ onRequestClose, id, product }) => {
 		}
 	};
 
-	const products = [
-		{
-			...product,
-			variants: {
-				data: product.variants,
-			},
-		}
-	]
+	const getFormattedVariants = () => {
+		if (!product?.variants?.length) return [];
 
+		return product.variants
+			.sort((a, b) => a?.position - b?.position)
+			.map((variant) => {
+				const variantUnavailable =
+					product?.stock_enabled &&
+					!product?.allow_out_of_stock_purchases &&
+					0 >= variant?.available_stock;
+				const variantLabel = [
+					variant?.option_1,
+					variant?.option_2,
+					variant?.option_3,
+				]
+					.filter(Boolean)
+					.join(' / ');
+				return {
+					value: variant.id,
+					label: `
+					(${variantLabel}) ${intervalString(
+						price,
+						{ showOnce: true }
+					)} - ${formatNumber(
+						variant?.amount ?? price.amount,
+						price.currency
+					)}${price?.archived ? ' (Archived)' : ''}`,
+					suffixDescription: product?.stock_enabled
+						? sprintf(
+							__('%s available', 'surecart'),
+							variant?.available_stock
+						)
+						: null,
+					disabled: variantUnavailable,
+					variant_id: variant?.id,
+				};
+			});
+	}
 
 	return (
 		<Fragment>
@@ -106,58 +136,47 @@ export default ({ onRequestClose, id, product }) => {
 						setItem={setItem}
 					/>
 
-					{!!item && !!product?.prices?.data?.length && (
-						<Fragment>
-							<div>
-								<ScFormControl
-									label={__('Select A Price', 'surecart')}
-								>
-									<SelectPrice
-										required={false}
-										css={css`
+					{!!item && !!product?.prices?.data?.length > 1 && (
+						<div>
+							<ScFormControl
+								label={__('Select A Price', 'surecart')}
+							>
+								<SelectPrice
+									required={false}
+									css={css`
 											flex: 0 1 50%;
 										`}
-										open={false}
-										value={priceId}
-										ad_hoc={false}
-										variable={false}
-										loading={false}
-										products={[product]}
-										onSelect={({ price_id }) => setPriceId(price_id)}
-										placeholder={__(
-											'All Prices',
-											'surecart'
-										)}
-									/>
-								</ScFormControl>
-							</div>
+									open={false}
+									value={price?.id}
+									ad_hoc={false}
+									variable={false}
+									loading={false}
+									products={[product]}
+									onSelect={(value) => setPrice(value)}
+									placeholder={__(
+										'All Prices',
+										'surecart'
+									)}
+								/>
+							</ScFormControl>
+						</div>
+					)}
 
-							{!!priceId && !!product?.variants?.length && (
-								<div>
-									<ScFormControl
-										label={__('Select A Variant', 'surecart')}
-									>
-										<SelectPrice
-											required={false}
-											css={css`
-												flex: 0 1 50%;
-											`}
-											open={false}
-											value={variantId}
-											ad_hoc={false}
-											variable={true}
-											loading={false}
-											products={products}
-											onSelect={({ variant_id }) => setVariantId(variant_id)}
-											placeholder={__(
-												'All Variants',
-												'surecart'
-											)}
-										/>
-									</ScFormControl>
-								</div>
-							)}
-						</Fragment>
+					{!!item && !!getFormattedVariants().length && (
+						<div>
+							<ScSelect
+								label={__('Select a variant', 'surecart')}
+								value={variantId}
+								choices={getFormattedVariants()}
+								onScChange={(e) =>
+									setVariantId(e.target.value)
+								}
+								placeholder={__(
+									'All Variants',
+									'surecart'
+								)}
+							/>
+						</div>
 					)}
 
 					<div

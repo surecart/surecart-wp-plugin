@@ -104,9 +104,6 @@ export default ({ price_id, variant_id }) => {
 				width: 200px;
 			`}
 		>
-			<div>
-				<strong>{price?.product?.name}</strong>
-			</div>
 			{!!variantLabel && <div>{variantLabel}</div>}
 			{!!productSku && (
 				<div>
