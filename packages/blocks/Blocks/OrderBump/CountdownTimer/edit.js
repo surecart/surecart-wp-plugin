@@ -24,7 +24,7 @@ import { ScOrderBumpCountdownTimer } from '@surecart/components-react';
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({
-	attributes: { textAlign, offer_expire_text, redirect_url, show_icon },
+	attributes: { textAlign, offer_expire_text, show_icon },
 	setAttributes,
 }) => {
 	const blockProps = useBlockProps({
@@ -58,19 +58,6 @@ export default ({
 							value={offer_expire_text}
 							onChange={(value) =>
 								setAttributes({ offer_expire_text: value })
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('No thanks Redirect URL', 'surecart')}
-							placeholder={__(
-								'Enter no thanks redirect URL',
-								'surecart'
-							)}
-							value={redirect_url}
-							onChange={(value) =>
-								setAttributes({ redirect_url: value })
 							}
 						/>
 					</PanelRow>

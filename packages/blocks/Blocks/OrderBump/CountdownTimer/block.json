@@ -13,10 +13,6 @@
 			"type": "string",
 			"default": "Offer Expires In"
 		},
-		"redirect_url": {
-			"type": "string",
-			"default": ""
-		},
 		"show_icon": {
 			"type": "boolean",
 			"default": true
