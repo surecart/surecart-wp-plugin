@@ -11,6 +11,7 @@ use SureCart\Models\ProductCollection;
  * Create a new table class that will extend the WP_List_Table
  */
 class ProductsListTable extends ListTable {
+
 	public $checkbox = true;
 	public $error    = '';
 	public $pages    = array();
@@ -193,6 +194,8 @@ class ProductsListTable extends ListTable {
 			array(
 				'prices',
 				'product_collections',
+				'featured_product_media',
+				'product_media.media',
 			)
 		);
 
@@ -372,8 +375,8 @@ class ProductsListTable extends ListTable {
 		?>
 
 		<div class="sc-product-name">
-		<?php if ( $product->image_url ) { ?>
-			<img src="<?php echo esc_url( $product->image_url ); ?>" class="sc-product-image-preview" />
+		<?php if ( $product->featured_media->url ) { ?>
+			<img src="<?php echo esc_url( $product->featured_media->url ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" class="sc-product-image-preview" />
 		<?php } else { ?>
 			<div class="sc-product-image-preview">
 				<svg xmlns="http://www.w3.org/2000/svg" style="width: 18px; height: 18px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -384,7 +387,7 @@ class ProductsListTable extends ListTable {
 
 		<div>
 		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Product', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'product', $product->id ) ); ?>">
-			<?php echo esc_html_e( $product->name, 'surecart' ); ?>
+			<?php echo esc_html( $product->name ); ?>
 		</a>
 
 		<?php

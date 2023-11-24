@@ -1,6 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -26,12 +27,32 @@ export class ScCartIcon {
     return count;
   }
 
+  /** Toggle the cart in the ui. */
+  toggleCart() {
+    return uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } });
+  }
+
   render() {
-    if (!checkoutState?.checkout) {
+    if (!checkoutState?.checkout || checkoutState?.checkout?.line_items?.data?.length === 0) {
       return null;
     }
     return (
-      <div class={{ cart: true }} part="base" onClick={() => uiStore.set('cart', { ...uiStore.state.cart, ...{ open: !uiStore.state.cart.open } })}>
+      <div
+        class={{
+          cart: true,
+        }}
+        part="base"
+        onClick={() => this.toggleCart()}
+        onKeyDown={e => {
+          if ('Enter' === e?.code || 'Space' === e?.code) {
+            this.toggleCart();
+            e.preventDefault();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label={!uiStore.state.cart.open ? sprintf(__('Open Cart Floating Icon with %s items', 'surecart'), this.getItemsCount()) : __('Close Cart Floating Icon', 'surecart')}
+      >
         <div class="cart__container" part="container">
           <div class={{ cart__counter: true }}>{this.getItemsCount()}</div>
           <slot>

@@ -32,6 +32,7 @@
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
 - [sc-total](../total)
+- [sc-visually-hidden](../../../util/visually-hidden)
 - [sc-secure-notice](../../../ui/secure-notice)
 
 ### Graph
@@ -41,6 +42,7 @@ graph TD;
   sc-order-submit --> sc-button
   sc-order-submit --> sc-icon
   sc-order-submit --> sc-total
+  sc-order-submit --> sc-visually-hidden
   sc-order-submit --> sc-secure-notice
   sc-paypal-buttons --> sc-skeleton
   sc-button --> sc-spinner

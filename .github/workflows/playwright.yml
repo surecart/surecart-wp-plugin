@@ -2,11 +2,11 @@ name: End-to-End Tests
 
 on:
   pull_request:
+    types: [assigned]
     branches:
       - main
       - next
       - fixes
-
 jobs:
     e2e-playwright:
         runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
                   yarn release:build
                   yarn wp-scripts build
                   yarn composer:release
-                  
+
             - name: Install WordPress and start the server
               run: |
                   yarn run wp-env start

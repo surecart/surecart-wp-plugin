@@ -259,15 +259,15 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Beta Features', 'surecart')}
+				title={__('Legacy Features', 'surecart')}
 				description={__(
-					'Opt-in to some beta features of the plugin.',
+					'Opt-in to some legacy features of the plugin.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
-					checked={item?.stripe_payment_element}
+					checked={item?.stripe_payment_element === false}
 					onClick={(e) => {
 						e.preventDefault();
 						editItem({
@@ -276,10 +276,10 @@ export default () => {
 						});
 					}}
 				>
-					{__('Use The Stripe Payment Element', 'surecart')}
+					{__('Use The Stripe Card Element', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							"Use Stripe's Payment Element instead of the Card Element in all forms.",
+							"Use Stripe's Card Element instead of the Payment Element in all forms.",
 							'surecart'
 						)}
 					</span>
