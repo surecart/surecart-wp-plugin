@@ -225,7 +225,7 @@ class ScriptsService {
 			'surecart-affiliate-tracking',
 			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),
 			[],
-			'1',
+			'1.1',
 			[
 				'strategy' => 'defer',
 			]
@@ -234,7 +234,7 @@ class ScriptsService {
 		wp_add_inline_script(
 			'surecart-affiliate-tracking',
 			'window.SureCartAffiliatesConfig = {
-				"accountSlug": "' . \SureCart::account()->slug . '",
+				"publicToken": "' . \SureCart::account()->public_token . '",
 				"baseURL":"' . esc_url_raw( untrailingslashit( SURECART_API_URL ) ) . '/v1"
 			};',
 			'before'
