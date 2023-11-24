@@ -70,7 +70,7 @@ export default ({ className, attributes, setAttributes }) => {
 				<ToolbarGroup>
 					<ToolbarButton
 						icon={edit}
-						label={__('Change selected price', 'surecart')}
+						label={__('Change selected product', 'surecart')}
 						onClick={() => setShowChangePrice(true)}
 					/>
 				</ToolbarGroup>

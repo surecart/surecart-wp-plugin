@@ -25,7 +25,7 @@ export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
 	}, []);
 
 	return (
-		<Placeholder icon={icon} label={__('Select a price', 'surecart')}>
+		<Placeholder icon={icon} label={__('Select a product', 'surecart')}>
 			{showPriceSelector ? (
 				<div
 					css={css`
