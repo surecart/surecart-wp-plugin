@@ -221,11 +221,19 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 
 			// If integration has price_id or variant_id,
 			// then we need to match with specific price or variant.
-			if ( ( ! empty( $price_id ) && $integration->price_id !== $price_id ) || ( ! empty( $variant_id ) && $integration->variant_id !== $variant_id ) ) {
+			if (
+				( ! empty( $price_id ) && $integration->price_id !== $price_id )
+				|| ( ! empty( $variant_id ) && $integration->variant_id !== $variant_id )
+			) {
 				continue;
 			}
 
-			$this->onPurchaseQuantityUpdated( $data->quantity, $previous->quantity, $integration, $purchase->getWPUser() );
+			$this->onPurchaseQuantityUpdated(
+				$data->quantity,
+				$previous->quantity,
+				$integration,
+				$purchase->getWPUser()
+			);
 		}
 	}
 
