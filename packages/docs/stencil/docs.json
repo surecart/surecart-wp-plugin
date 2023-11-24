@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-02T17:02:24",
+  "timestamp": "2023-11-24T11:30:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -689,6 +689,7 @@
         "sc-paypal-add-method",
         "sc-paystack-add-method",
         "sc-price-choice",
+        "sc-product-buy-button",
         "sc-product-item-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
@@ -757,6 +758,9 @@
           "sc-alert"
         ],
         "sc-price-choice": [
+          "sc-alert"
+        ],
+        "sc-product-buy-button": [
           "sc-alert"
         ],
         "sc-product-item-list": [
@@ -23492,8 +23496,17 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [],
-      "dependencyGraph": {}
+      "dependencies": [
+        "sc-alert"
+      ],
+      "dependencyGraph": {
+        "sc-product-buy-button": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ]
+      }
     },
     {
       "filePath": "./src/components/controllers/products/sc-product-item/sc-product-item.tsx",

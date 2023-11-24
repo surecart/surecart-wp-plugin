@@ -85,6 +85,7 @@ Type: `Promise<void>`
  - [sc-paypal-add-method](../sc-paypal-add-method)
  - [sc-paystack-add-method](../sc-paystack-add-method)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
+ - [sc-product-buy-button](../../controllers/product/sc-product-buy-button)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-request](../stripe-payment-request)
@@ -118,6 +119,7 @@ graph TD;
   sc-paypal-add-method --> sc-alert
   sc-paystack-add-method --> sc-alert
   sc-price-choice --> sc-alert
+  sc-product-buy-button --> sc-alert
   sc-product-item-list --> sc-alert
   sc-stripe-add-method --> sc-alert
   sc-stripe-payment-request --> sc-alert

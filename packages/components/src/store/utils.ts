@@ -1,4 +1,4 @@
-import { Product, ScNoticeStore } from '../types';
+import { Product } from '../types';
 
 const isObject = item => item && typeof item === 'object' && !Array.isArray(item);
 
