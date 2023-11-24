@@ -22,10 +22,6 @@ export default ({ price_id, variant_id }) => {
 				'surecart',
 				'price',
 				price_id,
-				{
-					expand: ['product'],
-					t: '1', // clear any cache to fetch fresh.
-				},
 			];
 			return {
 				price: select(coreStore)?.getEditedEntityRecord?.(
@@ -46,9 +42,6 @@ export default ({ price_id, variant_id }) => {
 				'surecart',
 				'variant',
 				variant_id,
-				{
-					t: '1', // clear any cache to fetch fresh.
-				},
 			];
 			return {
 				variant: select(coreStore)?.getEditedEntityRecord?.(
@@ -62,10 +55,6 @@ export default ({ price_id, variant_id }) => {
 		},
 		[variant_id]
 	);
-
-	if (!price) {
-		return null;
-	}
 
 	if (!hasLoadedPrice || !hasLoadedVariant) {
 		return (
@@ -114,7 +103,7 @@ export default ({ price_id, variant_id }) => {
 				<ScFormatNumber
 					type="currency"
 					currency={price?.currency || 'usd'}
-					value={!!price?.ad_hoc ? !!price?.ad_hoc : price?.amount}
+					value={!!price?.ad_hoc ? !!price?.ad_hoc : price?.amount || variant?.amount}
 				/>
 				{intervalString(price)}
 			</div>

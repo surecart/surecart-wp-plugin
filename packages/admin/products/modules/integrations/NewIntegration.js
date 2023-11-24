@@ -27,7 +27,7 @@ export default ({ onRequestClose, id, product }) => {
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	const [price, setPrice] = useState(product?.prices?.data?.[0] || null);
+	const [price, setPrice] = useState(null);
 	const [variantId, setVariantId] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
@@ -60,11 +60,17 @@ export default ({ onRequestClose, id, product }) => {
 		}
 	};
 
-	const getFormattedVariants = () => {
+	const getVariants = () => {
+		// If no variants, don't process further.
 		if (!product?.variants?.length) return [];
 
+		// If price is not set, then get the first price to get fallback variant amount.
+		const priceData = price || product?.prices?.data?.[0];
+
+		// Process the variants for the select.
 		return product.variants
 			.sort((a, b) => a?.position - b?.position)
+			.filter((variant) => !!variant?.id) // filter out variants without an id
 			.map((variant) => {
 				const variantUnavailable =
 					product?.stock_enabled &&
@@ -81,12 +87,12 @@ export default ({ onRequestClose, id, product }) => {
 					value: variant.id,
 					label: `
 					(${variantLabel}) ${intervalString(
-						price,
+						priceData,
 						{ showOnce: true }
 					)} - ${formatNumber(
-						variant?.amount ?? price.amount,
-						price.currency
-					)}${price?.archived ? ' (Archived)' : ''}`,
+						variant?.amount ?? (priceData?.amount || 0),
+						priceData?.currency || 'usd'
+					)}${priceData?.archived ? ' (Archived)' : ''}`,
 					suffixDescription: product?.stock_enabled
 						? sprintf(
 							__('%s available', 'surecart'),
@@ -136,7 +142,7 @@ export default ({ onRequestClose, id, product }) => {
 						setItem={setItem}
 					/>
 
-					{!!item && !!product?.prices?.data?.length > 1 && (
+					{!!item && product?.prices?.data?.length > 1 && (
 						<div>
 							<ScFormControl
 								label={__('Select A Price', 'surecart')}
@@ -152,7 +158,13 @@ export default ({ onRequestClose, id, product }) => {
 									variable={false}
 									loading={false}
 									products={[product]}
-									onSelect={(value) => setPrice(value)}
+									onSelect={({ price_id }) => {
+										// find the price and set it.
+										const value = product?.prices?.data?.find(
+											(p) => p.id === price_id
+										);
+										setPrice(value)
+									}}
 									placeholder={__(
 										'All Prices',
 										'surecart'
@@ -162,12 +174,12 @@ export default ({ onRequestClose, id, product }) => {
 						</div>
 					)}
 
-					{!!item && !!getFormattedVariants().length && (
+					{!!item && getVariants().length > 1 && (
 						<div>
 							<ScSelect
 								label={__('Select a variant', 'surecart')}
 								value={variantId}
-								choices={getFormattedVariants()}
+								choices={getVariants()}
 								onScChange={(e) =>
 									setVariantId(e.target.value)
 								}
