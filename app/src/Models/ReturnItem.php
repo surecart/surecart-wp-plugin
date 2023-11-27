@@ -8,6 +8,8 @@ namespace SureCart\Models;
 class ReturnItem extends Model {
 	/**
 	 * Rest API endpoint
+	 *
+	 * @var string
 	 */
 	protected $endpoint = 'return_items';
 
