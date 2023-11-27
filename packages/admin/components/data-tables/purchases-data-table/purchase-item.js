@@ -6,7 +6,7 @@ import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { ScFlex } from '@surecart/components-react';
 
 export default (purchase) => {
-	const { id, quantity, revoked, variant } = purchase;
+	const { id, quantity, revoked, variant, price } = purchase;
 	const product = purchase.product;
 	const media = getFeaturedProductMediaAttributes(product);
 	const variantLabel = [
@@ -48,7 +48,16 @@ export default (purchase) => {
 							</sc-tag>
 						)}
 					</ScFlex>
-					{variantLabel && <span>{variantLabel}</span>}
+					{variantLabel && (
+						<span
+							css={css`
+								display: block;
+							`}
+						>
+							{variantLabel}
+						</span>
+					)}
+					{price?.name && <span>{price?.name}</span>}
 				</span>
 			</sc-line-item>
 		),
