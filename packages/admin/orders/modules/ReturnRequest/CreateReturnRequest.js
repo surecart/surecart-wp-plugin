@@ -8,7 +8,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from '@wordpress/element';
 
 /**
@@ -19,15 +18,12 @@ import {
 	ScDrawer,
 	ScForm,
 	ScInput,
-	ScFormatNumber,
 	ScBlockUi,
 	ScFlex,
 } from '@surecart/components-react';
-import LineItem from './components/LineItem';
 import ReturnReasonsSelector from './ReturnReasonsSelector';
 import { createErrorString } from '../../../util';
-import { getVariantLabel } from '../../../util/variation';
-import { getSKUText } from '../../../util/products';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({
 	fulfillmentItems,
@@ -138,20 +134,20 @@ export default ({
 						height: 100%;
 					`}
 				>
-					<div
-						css={css`
-							display: grid;
-						`}
-					>
-						{(items || []).map((item, index) => {
-							const variantLabel = getVariantLabel(
-								item?.variant_options
-							);
-							const productSku = getSKUText(item);
-							return (
-								<LineItem
-									key={index}
-									imageUrl={item?.price?.product?.image_url}
+					{(items || []).map((item, index) => {
+						return (
+							<div
+								css={css`
+									padding: var(--sc-spacing-x-large);
+									border-bottom: 1px solid
+										var(--sc-color-gray-300);
+									display: grid;
+									gap: 0.5em;
+								`}
+							>
+								<ProductLineItem
+									lineItem={item}
+									showWeight={true}
 									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}
@@ -181,102 +177,61 @@ export default ({
 											</span>
 										</ScInput>
 									}
-									reason={
-										item?.quantity > 0 && (
-											<ScFlex>
-												<div
+								/>
+								{item?.quantity > 0 && (
+									<ScFlex>
+										<div
+											css={css`
+												margin-top: var(
+													--sc-spacing-small
+												);
+												flex: 1;
+											`}
+										>
+											<ReturnReasonsSelector
+												returnRequest={item}
+												onSelect={(value) => {
+													updateItems(index, {
+														return_reason: value,
+													});
+												}}
+											/>
+										</div>
+
+										<div
+											css={css`
+												flex: 1;
+											`}
+										>
+											{item?.return_reason ===
+												'other' && (
+												<ScInput
+													label={__(
+														'Reason',
+														'surecart'
+													)}
+													value={item?.note}
+													type="text"
+													required
 													css={css`
 														margin-top: var(
 															--sc-spacing-small
 														);
-														flex: 1;
 													`}
-												>
-													<ReturnReasonsSelector
-														returnRequest={item}
-														onSelect={(value) => {
-															updateItems(index, {
-																return_reason:
-																	value,
-															});
-														}}
-													/>
-												</div>
-
-												<div
-													css={css`
-														flex: 1;
-													`}
-												>
-													{item?.return_reason ===
-														'other' && (
-														<ScInput
-															label={__(
-																'Reason',
-																'surecart'
-															)}
-															value={item?.note}
-															type="text"
-															required
-															css={css`
-																margin-top: var(
-																	--sc-spacing-small
-																);
-															`}
-															onScInput={(e) => {
-																updateItems(
-																	index,
-																	{
-																		note: e
-																			.target
-																			.value,
-																	}
-																);
-															}}
-														/>
-													)}
-												</div>
-											</ScFlex>
-										)
-									}
-								>
-									<a
-										href={addQueryArgs('admin.php', {
-											page: 'sc-products',
-											action: 'edit',
-											id: item?.price?.product?.id,
-										})}
-									>
-										{item?.price?.product?.name}
-									</a>
-									{(!!variantLabel || !!productSku) && (
-										<div
-											css={css`
-												color: var(
-													--sc-input-help-text-color
-												);
-											`}
-										>
-											{!!variantLabel && (
-												<div>{variantLabel}</div>
-											)}
-											{!!productSku && (
-												<div>
-													{__('SKU:', 'surecart')}{' '}
-													{productSku}
-												</div>
+													onScInput={(e) => {
+														updateItems(index, {
+															note: e.target
+																.value,
+														});
+													}}
+												/>
 											)}
 										</div>
-									)}
-									<ScFormatNumber
-										type="unit"
-										value={item?.price?.product?.weight}
-										unit={item?.price?.product?.weight_unit}
-									/>
-								</LineItem>
-							);
-						})}
-					</div>
+									</ScFlex>
+								)}
+							</div>
+						);
+					})}
 				</div>
 
 				<ScButton
