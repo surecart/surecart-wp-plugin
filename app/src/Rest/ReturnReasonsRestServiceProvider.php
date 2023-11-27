@@ -24,6 +24,8 @@ class ReturnReasonsRestServiceProvider extends RestServiceProvider implements Re
 
 	/**
 	 * Methods allowed for the model.
+	 *
+	 * @var array
 	 */
 	protected $methods = [ 'index' ];
 
