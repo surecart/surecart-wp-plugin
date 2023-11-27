@@ -62,6 +62,7 @@ export default () => {
 					'line_item.fees',
 					'customer.balances',
 					'price.product',
+					'variant.image',
 				],
 				t: Date.now(), // prevents cache.
 			}),
@@ -94,6 +95,7 @@ export default () => {
 						'price.product',
 						'product.featured_product_media',
 						'product_media.media',
+						'variant.image',
 					],
 				},
 			];
