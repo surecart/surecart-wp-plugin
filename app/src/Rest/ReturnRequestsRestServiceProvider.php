@@ -164,6 +164,5 @@ class ReturnRequestsRestServiceProvider extends RestServiceProvider implements R
 	 */
 	public function complete_item_permissions_check( $request ) {
 		return current_user_can( 'edit_sc_orders' );
-
 	}
 }
