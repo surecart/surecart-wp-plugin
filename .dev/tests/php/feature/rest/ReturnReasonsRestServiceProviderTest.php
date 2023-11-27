@@ -5,13 +5,16 @@ namespace SureCart\Tests\Feature\Rest;
 use SureCart\Rest\ReturnReasonsRestServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
 
+/**
+ * Test the return reasons rest service provider.
+ */
 class ReturnReasonsRestServiceProviderTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp() {
+	public function setUp() : void {
 		parent::setUp();
 
 		// Set up an app instance with whatever stubs and mocks we need before every test.
@@ -29,9 +32,6 @@ class ReturnReasonsRestServiceProviderTest extends SureCartUnitTestCase {
 	}
 
 	public function requestProvider() {
-		$has_permissions = self::factory()->user->create_and_get();
-		$has_permissions->add_cap( 'read_sc_orders' );
-
 		return [
 			'List: Unauthenticated'    => [ null, 'GET', '/surecart/v1/return_reasons', 401 ],
 			'List: Missing Capability' => [ [], 'GET', '/surecart/v1/return_reasons', 403 ],
@@ -64,13 +64,11 @@ class ReturnReasonsRestServiceProviderTest extends SureCartUnitTestCase {
 			foreach ( $caps as $cap ) {
 				$user->add_cap( $cap );
 			}
-
 			wp_set_current_user( $user->ID ?? null );
 		}
 
 		$request  = new \WP_REST_Request( $method, $route );
 		$response = rest_do_request( $request );
 		$this->assertSame( $status, $response->get_status() );
-
 	}
 }
