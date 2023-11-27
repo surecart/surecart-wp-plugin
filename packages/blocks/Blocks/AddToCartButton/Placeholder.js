@@ -72,8 +72,8 @@ export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
 						)}
 					</div>
 					<PriceSelector
-						onSelect={({ price_id }) => {
-							setAttributes({ price_id });
+						onSelect={({ price_id, variant_id }) => {
+							setAttributes({ price_id, variant_id });
 							setShowPriceSelector(false);
 							setShowChangePrice(false);
 						}}
