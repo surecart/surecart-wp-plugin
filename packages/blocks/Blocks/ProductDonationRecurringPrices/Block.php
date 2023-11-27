@@ -21,7 +21,7 @@ class Block extends BaseBlock {
 		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
 		ob_start(); ?>
 		<sc-product-donation-choices
-			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ); ?> <?php echo esc_attr( $styles ); ?> "
+			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ?? 1 ); ?> <?php echo esc_attr( $styles ); ?> "
 			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
 			recurring="<?php echo ! empty( $attributes['recurring'] ) ? 'true' : 'false'; ?>"
 			product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
