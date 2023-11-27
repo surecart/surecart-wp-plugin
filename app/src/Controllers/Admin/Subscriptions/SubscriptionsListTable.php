@@ -133,6 +133,10 @@ class SubscriptionsListTable extends ListTable {
 			$product_display .= '<div>' . esc_html( implode( ' / ', $subscription->variant_options ) ) . '</div>';
 		}
 
+		if( ! empty( $subscription->price->name ) ) {
+			$product_display .= '<div>' . esc_html( $subscription->price->name ) . '</div>';
+		}
+
 		return $product_display;
 	}
 
