@@ -71,7 +71,7 @@ export class ScProductQuantity {
             quantity={Math.max(state.selectedPrice?.ad_hoc ? 1 : state.quantity, 1)}
             disabled={state.selectedPrice?.ad_hoc}
             onScInput={e => (state.quantity = e.detail)}
-            max={this.getMaxStockQty()}
+            {...(!!this.getMaxStockQty() ? { max: this.getMaxStockQty() } : {})}
           />
         </sc-form-control>
       </Host>

@@ -57,6 +57,8 @@ class Block extends BaseBlock {
 						'groupId'                  => 'sc-checkout-' . ( $attributes['form_id'] ?? $sc_form_id ),
 						'abandonedCheckoutEnabled' => ! is_admin(),
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
+						'isCheckoutPage'           => true,
+						'validateStock'            => ! is_admin(),
 					],
 					'processors' => [
 						'processors'           => array_values(
@@ -70,7 +72,7 @@ class Block extends BaseBlock {
 						'manualPaymentMethods' => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 						'config'               => [
 							'stripe' => [
-								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', false ),
+								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', true ),
 							],
 						],
 					],
@@ -94,12 +96,11 @@ class Block extends BaseBlock {
 		);
 
 		if ( ! empty( $attributes['prices'] ) ) {
-			$existing   = $this->getExistingLineItems();
 			$line_items = $this->convertPricesToLineItems( $attributes['prices'] );
 			sc_initial_state(
 				[
 					'checkout' => [
-						'initialLineItems' => array_merge( $existing, $line_items ),
+						'initialLineItems' => sc_initial_line_items( $line_items ),
 					],
 				]
 			);
@@ -121,16 +122,6 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
-	}
-
-	/**
 	 * Convert price blocks to line items
 	 *
 	 * @param array $prices Array of prices.
@@ -141,10 +132,13 @@ class Block extends BaseBlock {
 		return array_values(
 			array_map(
 				function( $price ) {
-					return [
-						'price'    => $price['id'],
-						'quantity' => $price['quantity'] ?? 1,
-					];
+					return array_filter(
+						[
+							'price'    => $price['id'],
+							'variant'  => $price['variant_id'] ?? null,
+							'quantity' => $price['quantity'] ?? 1,
+						]
+					);
 				},
 				$prices
 			)

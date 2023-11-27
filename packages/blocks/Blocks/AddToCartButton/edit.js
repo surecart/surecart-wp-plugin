@@ -39,10 +39,6 @@ export default ({ className, attributes, setAttributes }) => {
 		backgroundColor,
 		textColor,
 	} = attributes;
-	const borderProps = useBorderProps(attributes);
-	const { style: borderStyle } = borderProps;
-	const colorProps = useColorProps(attributes);
-	const { style: colorStyle } = colorProps;
 	const blockProps = useBlockProps();
 	const price = useSelect(
 		(select) =>
@@ -58,6 +54,7 @@ export default ({ className, attributes, setAttributes }) => {
 					onSelect={({ price_id, variant_id }) =>
 						setAttributes({ price_id, variant_id })
 					}
+					allowOutOfStockSelection={true}
 				/>
 			</div>
 		);

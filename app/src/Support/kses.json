@@ -178,7 +178,6 @@
     "slot": true
   },
   "sc-cart-form-submit": {
-    "busy": true,
     "full": true,
     "icon": true,
     "size": true,
@@ -189,25 +188,19 @@
     "slot": true
   },
   "sc-cart-header": {
-    "line-items": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
   "sc-cart-icon": {
-    "count": true,
-    "form-id": true,
     "icon": true,
-    "mode": true,
     "style": true,
     "id": true,
     "class": true,
     "slot": true
   },
   "sc-cart-loader": {
-    "form-id": true,
-    "mode": true,
     "template": true,
     "style": true,
     "id": true,
@@ -215,7 +208,6 @@
     "slot": true
   },
   "sc-cart-session-provider": {
-    "order": true,
     "style": true,
     "id": true,
     "class": true,
@@ -223,11 +215,6 @@
   },
   "sc-cart-submit": {
     "busy": true,
-    "checkout-link": true,
-    "full": true,
-    "icon": true,
-    "size": true,
-    "type": true,
     "style": true,
     "id": true,
     "class": true,
@@ -431,6 +418,7 @@
     "loading": true,
     "open": true,
     "placeholder": true,
+    "show-interval": true,
     "style": true,
     "id": true,
     "class": true,
@@ -727,8 +715,6 @@
     "slot": true
   },
   "sc-form-control": {
-    "error-message": true,
-    "errors": true,
     "help": true,
     "help-id": true,
     "input-id": true,
@@ -957,8 +943,7 @@
     "slot": true
   },
   "sc-line-item-total": {
-    "loading": true,
-    "order": true,
+    "checkout": true,
     "size": true,
     "total": true,
     "style": true,
@@ -967,14 +952,8 @@
     "slot": true
   },
   "sc-line-items": {
-    "busy": true,
-    "edit-line-items": true,
     "editable": true,
-    "locked-choices": true,
-    "order": true,
-    "prices": true,
     "removable": true,
-    "remove-line-items": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1002,6 +981,7 @@
     "slot": true
   },
   "sc-menu": {
+    "aria-label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1125,13 +1105,10 @@
     "slot": true
   },
   "sc-order-coupon-form": {
-    "busy": true,
     "button-text": true,
     "collapsed": true,
-    "error": true,
     "label": true,
     "loading": true,
-    "order": true,
     "placeholder": true,
     "style": true,
     "id": true,
@@ -1282,15 +1259,11 @@
   },
   "sc-order-tax-id-input": {
     "au-abn-label": true,
-    "busy": true,
     "ca-gst-label": true,
     "eu-vat-label": true,
     "gb-vat-label": true,
-    "order": true,
     "other-label": true,
     "show": true,
-    "tax-identifier": true,
-    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1497,6 +1470,7 @@
     "price": true,
     "price-id": true,
     "prices": true,
+    "product": true,
     "products": true,
     "quantity": true,
     "show-control": true,
@@ -1583,8 +1557,7 @@
     "slot": true
   },
   "sc-product-item-image": {
-    "alt": true,
-    "product-media": true,
+    "product": true,
     "sizing": true,
     "style": true,
     "id": true,
@@ -1602,6 +1575,7 @@
     "pagination-alignment": true,
     "pagination-auto-scroll": true,
     "pagination-enabled": true,
+    "products": true,
     "query": true,
     "search-enabled": true,
     "sort": true,
@@ -1631,10 +1605,11 @@
     "currency": true,
     "editable": true,
     "fees": true,
+    "image-alt": true,
+    "image-title": true,
     "image-url": true,
     "interval": true,
     "max": true,
-    "media": true,
     "name": true,
     "price-name": true,
     "quantity": true,
@@ -2110,6 +2085,7 @@
     "slot": true
   },
   "sc-tag": {
+    "aria-label": true,
     "clearable": true,
     "pill": true,
     "size": true,
@@ -2238,6 +2214,12 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-visually-hidden": {
     "style": true,
     "id": true,
     "class": true,

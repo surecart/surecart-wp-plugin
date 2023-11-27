@@ -9,7 +9,7 @@ import { updateFormState } from '@store/form/mutations';
 import { parseFormData } from '../../../functions/form-data';
 import { createOrUpdateCheckout, fetchCheckout, finalizeCheckout } from '../../../services/session';
 import { Checkout, FormStateSetter, LineItemData, PriceChoice } from '../../../types';
-import { createErrorNotice, removeNotice } from '@store/notices/mutations';
+import { createErrorNotice, createInfoNotice, removeNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-session-provider',
@@ -363,6 +363,7 @@ export class ScSessionProvider {
               }
             : {}),
           line_items,
+          ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
         },
       })) as Checkout;
       updateFormState('RESOLVE');
@@ -383,6 +384,7 @@ export class ScSessionProvider {
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
           refresh_price_versions: true,
+          ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
         },
       })) as Checkout;
       updateFormState('RESOLVE');
@@ -401,7 +403,8 @@ export class ScSessionProvider {
       return this.handleNewCheckout(false);
     }
 
-    if (e?.additional_errors?.[0]?.code === 'order.line_items.old_price_versions') {
+    // one of these is an old price version error.
+    if ((e?.additional_errors || []).some(error => error?.code == 'checkout.price.old_version')) {
       await this.loadUpdate({
         id: checkoutState?.checkout?.id,
         data: {
@@ -409,6 +412,7 @@ export class ScSessionProvider {
           refresh_price_versions: true,
         },
       });
+      createInfoNotice(__('The price a product in your order has changed. We have adjusted your order to the new price.', 'surecart'));
       return;
     }
 

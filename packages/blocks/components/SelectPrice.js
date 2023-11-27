@@ -140,7 +140,7 @@ export default ({
 									label: price?.ad_hoc
 										? __('Name Your Price', 'surecart')
 										: formatNumber(
-												price.amount,
+												variant?.amount || price.amount,
 												price.currency
 										  ),
 									suffix: `(${variantLabel}) ${intervalString(
@@ -171,7 +171,6 @@ export default ({
 			ref={selectRef}
 			value={value}
 			className={className}
-			open={open}
 			showParentLabel
 			loading={loading}
 			placeholder={__('Select a product', 'surecart')}

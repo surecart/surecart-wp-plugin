@@ -1,6 +1,8 @@
 import state, { onChange } from './store';
 import { getVariantFromValues } from '../../functions/util';
 import { isStockNeedsToBeChecked } from './getters';
+import { speak } from '@wordpress/a11y';
+import { __, sprintf } from '@wordpress/i18n';
 
 onChange('selectedPrice', value => {
   // update the total when the selected price changes.
@@ -27,6 +29,7 @@ onChange('selectedVariant', () => {
 
   if (state?.selectedVariant.available_stock < state?.quantity) {
     state.quantity = state?.selectedVariant.available_stock || 1;
+    speak(sprintf(__('There are just %d items left in stock, and the quantity has been adjusted to %d.', 'surecart'), state.quantity, state.quantity), 'assertive');
   }
 });
 

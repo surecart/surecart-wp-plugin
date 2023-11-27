@@ -54,7 +54,7 @@ graph TD;
   sc-select --> sc-input
   sc-select --> sc-spinner
   sc-select --> sc-menu
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-input --> sc-form-control
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner

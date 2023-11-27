@@ -86,7 +86,7 @@ export default ({
 
 	return (
 		<>
-			<td>
+			<td class="variant-image">
 				<div
 					css={css`
 						display: flex;
@@ -111,7 +111,7 @@ export default ({
 					</div>
 				</div>
 			</td>
-			<td>
+			<td class="variant-price">
 				<>
 					{!canOverride ? (
 						<ScTooltip
@@ -149,7 +149,7 @@ export default ({
 				</>
 			</td>
 			{quantityEnabled && (
-				<td>
+				<td class="variant-quantity">
 					<ScDropdown placement="bottom-end">
 						<ScButton
 							type="text"
@@ -245,7 +245,7 @@ export default ({
 					</ScDropdown>
 				</td>
 			)}
-			<td>
+			<td class="variant-sku">
 				<ScInput
 					value={sku}
 					placeholder={defaultSku}
@@ -258,11 +258,16 @@ export default ({
 			</td>
 			<td>
 				<ScDropdown placement="bottom-end">
-					<ScButton type="text" slot="trigger">
+					<ScButton
+						type="text"
+						slot="trigger"
+						aria-label={__('Open variant dropdown', 'surecart')}
+					>
 						<ScIcon name="more-horizontal" />
 					</ScButton>
 					<ScMenu>
 						<ScMenuItem
+							aria-label={__('Delete variant', 'surecart')}
 							onClick={() =>
 								updateVariant({
 									status:
@@ -277,7 +282,10 @@ export default ({
 								: __('Delete', 'surecart')}
 						</ScMenuItem>
 						{!!variant?.image_url && (
-							<ScMenuItem onClick={onUnlinkMedia}>
+							<ScMenuItem
+								onClick={onUnlinkMedia}
+								aria-label={__('Remove image', 'surecart')}
+							>
 								{__('Remove Image', 'surecart')}
 							</ScMenuItem>
 						)}

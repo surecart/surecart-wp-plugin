@@ -51,7 +51,7 @@ graph TD;
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-phone-input --> sc-form-control
   sc-address --> sc-form-control
   sc-address --> sc-input

@@ -8,24 +8,24 @@ sc-product-buy-button {
 
   .sc-block-button--sold-out,
   .sc-block-button--unavailable {
-    display: none;
+    display: none !important;
   }
 
   &.is-unavailable {
     a {
-      display: none;
+      display: none !important;
     }
     .sc-block-button--unavailable {
-      display: initial;
+      display: initial !important;
     }
   }
 
   &.is-sold-out {
     a {
-      display: none;
+      display: none !important;
     }
     .sc-block-button--sold-out {
-      display: initial;
+      display: initial !important;
     }
   }
 

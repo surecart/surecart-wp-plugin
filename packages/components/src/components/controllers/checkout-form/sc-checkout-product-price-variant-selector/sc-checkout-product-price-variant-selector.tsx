@@ -1,4 +1,4 @@
-import { Element, Method, State, Watch } from '@stencil/core';
+import { Element, Fragment, Method, State, Watch } from '@stencil/core';
 import { Component, h, Prop } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { Price, Product, Variant } from '../../../../types';
@@ -97,16 +97,24 @@ export class ScProductCheckoutSelectVariantOption {
     return this.input.reportValidity();
   }
 
+  getSelectedPrice() {
+    if (this.product?.prices?.data?.length === 1) {
+      return this.product?.prices?.data[0];
+    }
+    return this.selectedPrice;
+  }
+
   /** When selected variant and selected price are set, we can update the checkout. */
   @Watch('selectedVariant')
   @Watch('selectedPrice')
   async updateLineItems() {
+    const selectedPrice = this.getSelectedPrice();
     // We need a price.
-    if (!this.selectedPrice?.id) return;
+    if (!selectedPrice?.id) return;
     // get the existing line item.
     const lineItem = this.lineItem();
     // no changes.
-    if (lineItem?.price?.id === this.selectedPrice?.id && lineItem?.variant?.id === this.selectedVariant?.id) return;
+    if (lineItem?.price?.id === selectedPrice?.id && lineItem?.variant?.id === this.selectedVariant?.id) return;
     // We need a selected variant if this product has variants.
     if (!this.hasRequiredSelectedVariant()) return;
     // Don't let the person checkout with an out of stock selection.
@@ -120,7 +128,7 @@ export class ScProductCheckoutSelectVariantOption {
           id: lineItem?.id,
           data: {
             variant: this.selectedVariant?.id,
-            price: this.selectedPrice?.id,
+            price: selectedPrice?.id,
             quantity: 1,
           },
         });
@@ -129,7 +137,7 @@ export class ScProductCheckoutSelectVariantOption {
           checkout: checkoutState.checkout,
           data: {
             variant: this.selectedVariant?.id,
-            price: this.selectedPrice?.id,
+            price: selectedPrice?.id,
             quantity: 1,
           },
         });
@@ -189,9 +197,11 @@ export class ScProductCheckoutSelectVariantOption {
                 const isUnavailable = isProductVariantOptionSoldOut.apply(void 0, args) || isProductVariantOptionMissing.apply(void 0, args);
                 return (
                   <sc-pill-option isUnavailable={isUnavailable} isSelected={this[`option${index + 1}`] === value} onClick={() => (this[`option${index + 1}`] = value)}>
-                    <span class="sc-sr-only">{sprintf(__('Select %s:', 'surecart'), name)} </span>
-                    {value}
-                    {isUnavailable && <span class="sc-sr-only"> {__('(option unavailable)', 'surecart')} </span>}
+                    <span aria-hidden="true">{value}</span>
+                    <sc-visually-hidden>
+                      {sprintf(__('Select %s: %s', 'surecart'), name, value)}
+                      {isUnavailable && <Fragment> {__('(option unavailable)', 'surecart')}</Fragment>}
+                    </sc-visually-hidden>
                   </sc-pill-option>
                 );
               })}

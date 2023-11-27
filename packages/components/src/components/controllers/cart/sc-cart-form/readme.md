@@ -7,19 +7,13 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                      | Type               | Default     |
-| ---------- | ---------- | -------------------------------- | ------------------ | ----------- |
-| `formId`   | `form-id`  | The form id to use for the cart. | `string`           | `undefined` |
-| `mode`     | `mode`     | Are we in test or live mode.     | `"live" \| "test"` | `'live'`    |
-| `priceId`  | `price-id` | The price id to add.             | `string`           | `undefined` |
-| `quantity` | `quantity` | The quantity                     | `number`           | `1`         |
-
-
-## Events
-
-| Event           | Description        | Type                                   |
-| --------------- | ------------------ | -------------------------------------- |
-| `scAddedToCart` | Item added to cart | `CustomEvent<CartGoogleAnalyticsItem>` |
+| Property    | Attribute    | Description                      | Type               | Default     |
+| ----------- | ------------ | -------------------------------- | ------------------ | ----------- |
+| `formId`    | `form-id`    | The form id to use for the cart. | `string`           | `undefined` |
+| `mode`      | `mode`       | Are we in test or live mode.     | `"live" \| "test"` | `'live'`    |
+| `priceId`   | `price-id`   | The price id to add.             | `string`           | `undefined` |
+| `quantity`  | `quantity`   | The quantity                     | `number`           | `1`         |
+| `variantId` | `variant-id` | The variant id to add.           | `string`           | `undefined` |
 
 
 ## Dependencies

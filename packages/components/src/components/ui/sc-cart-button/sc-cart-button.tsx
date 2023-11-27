@@ -1,7 +1,8 @@
-import { Component, Element, h, Prop, State } from '@stencil/core';
+import { Component, Element, h, Prop, State, Host } from '@stencil/core';
 import uiStore from '@store/ui';
 import { onChange } from '@store/checkouts';
-import { getCheckout } from '@store/checkouts/mutations';
+import { state as checkoutState } from '@store/checkout';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * @part base - The elements base wrapper.
@@ -35,13 +36,9 @@ export class ScCartButton {
   /** Whether the cart count will be shown or not when the cart is empty */
   @Prop() showEmptyCount: boolean = false;
 
-  order() {
-    return getCheckout(this.formId, this.mode);
-  }
-
   /** Count the number of items in the cart. */
   getItemsCount() {
-    const items = this.order()?.line_items?.data;
+    const items = checkoutState?.checkout?.line_items?.data;
     let count = 0;
     (items || []).forEach(item => {
       count = count + item?.quantity;
@@ -70,18 +67,30 @@ export class ScCartButton {
 
   render() {
     return (
-      <div class="cart__button" part="base">
-        <div class="cart__content">
-          {(this.showEmptyCount || !!this.getItemsCount()) && (
-            <span class="cart__count" part="count">
-              {this.getItemsCount()}
-            </span>
-          )}
-          <div class="cart__icon">
-            <slot />
+      <Host
+        tabindex={0}
+        role="button"
+        aria-label={sprintf(__('Open Cart Menu Icon with %d items.', 'surecart'), this.getItemsCount())}
+        onKeyDown={e => {
+          if ('Enter' === e?.code || 'Space' === e?.code) {
+            uiStore.state.cart = { ...uiStore.state.cart, open: !uiStore.state.cart.open };
+            e.preventDefault();
+          }
+        }}
+      >
+        <div class="cart__button" part="base">
+          <div class="cart__content">
+            {(this.showEmptyCount || !!this.getItemsCount()) && (
+              <span class="cart__count" part="count">
+                {this.getItemsCount()}
+              </span>
+            )}
+            <div class="cart__icon">
+              <slot />
+            </div>
           </div>
         </div>
-      </div>
+      </Host>
     );
   }
 }

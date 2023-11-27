@@ -15,7 +15,7 @@ export const submitCartForm = async () => {
       checkout: savedCheckout,
       data: {
         price: state.selectedPrice?.id,
-        quantity: state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+        quantity: Math.max(state.selectedPrice?.ad_hoc ? 1 : state.quantity, 1),
         variant: state.selectedVariant?.id,
         ...(state.selectedPrice?.ad_hoc ? { ad_hoc_amount: state.adHocAmount } : {}),
       },
