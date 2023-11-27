@@ -6,6 +6,7 @@ import { state as donationState } from '@store/product-donation';
 })
 export class ScProductDonationCustomAmount {
   @Element() el: HTMLScProductDonationCustomAmountElement;
+  priceInput: HTMLScPriceInputElement;
 
   /** Currency code for the donation. */
   @Prop() currencyCode: string = 'usd';
@@ -34,20 +35,27 @@ export class ScProductDonationCustomAmount {
           value={`${this.state()?.custom_amount}`}
           show-control="false"
           checked={!!this.state().custom_amount}
+          onScFocus={() => {
+            console.log('focus');
+            this.priceInput.triggerFocus();
+          }}
           onClick={() => {
             if (!this.state().custom_amount) return;
             this.updateState({
+              ad_hoc_amount: null,
               custom_amount: this.state().custom_amount,
             });
           }}
         >
           <sc-price-input
+            ref={el => (this.priceInput = el)}
             currencyCode={this.currencyCode}
             showCode={false}
             showLabel={false}
             value={`${this.state()?.custom_amount || ''}`}
             onScChange={e =>
               this.updateState({
+                ad_hoc_amount: null,
                 custom_amount: e.target.value,
               })
             }

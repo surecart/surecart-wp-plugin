@@ -35,7 +35,11 @@ export class ScProductDonationAmountChoice {
   render() {
     if (!isInRange(this.value, this.state().selectedPrice)) return <Host style={{ display: 'none' }}></Host>;
     return (
-      <sc-choice-container show-control="false" checked={this.state().ad_hoc_amount === this.value} onScChange={() => this.updateState({ ad_hoc_amount: this.value })}>
+      <sc-choice-container
+        show-control="false"
+        checked={this.state().ad_hoc_amount === this.value}
+        onScChange={() => this.updateState({ ad_hoc_amount: this.value, custom_amount: null })}
+      >
         {this.label ? this.label : <sc-format-number type="currency" currency={this.currencyCode} value={this.value} minimum-fraction-digits="0"></sc-format-number>}
       </sc-choice-container>
     );
