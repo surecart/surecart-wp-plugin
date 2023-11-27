@@ -24,9 +24,8 @@ class ReturnRequestsController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function open( \WP_REST_Request $request ) {
-		$class     = new $this->class( $request->get_json_params() );
-		$class->id = $request['id'];
-		$model     = $this->middleware( $class, $request );
+		$class = new $this->class( $request->get_json_params() );
+		$model = $this->middleware( $class, $request );
 
 		if ( is_wp_error( $model ) ) {
 			return $model;
@@ -43,9 +42,8 @@ class ReturnRequestsController extends RestController {
 	 * @return \WP_REST_Response
 	 */
 	public function complete( \WP_REST_Request $request ) {
-		$class     = new $this->class( $request->get_json_params() );
-		$class->id = $request['id'];
-		$model     = $this->middleware( $class, $request );
+		$class = new $this->class( $request->get_json_params() );
+		$model = $this->middleware( $class, $request );
 
 		if ( is_wp_error( $model ) ) {
 			return $model;
