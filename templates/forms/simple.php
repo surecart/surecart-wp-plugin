@@ -12,10 +12,6 @@ return [
 		<!-- /wp:surecart/price-choice --></div></sc-price-choices>
 		<!-- /wp:surecart/price-selector -->
 
-		<!-- wp:surecart/express-payment -->
-		<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-		<!-- /wp:surecart/express-payment -->
-
 		<!-- wp:surecart/email -->
 		<sc-customer-email label="Email" autocomplete="email" inputmode="email" required class="wp-block-surecart-email"></sc-customer-email>
 		<!-- /wp:surecart/email -->

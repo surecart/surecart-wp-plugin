@@ -54,6 +54,7 @@ graph TD;
   sc-rich-text --> sc-form-control
   sc-rich-text --> sc-button
   sc-rich-text --> sc-icon
+  sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   style sc-rich-text fill:#f9f,stroke:#333,stroke-width:4px
 ```

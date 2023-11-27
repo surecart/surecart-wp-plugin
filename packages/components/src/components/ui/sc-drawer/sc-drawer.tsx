@@ -53,6 +53,7 @@ export class ScDrawer {
     if (this.open && !this.contained) {
       this.lockBodyScrolling();
     }
+    this.handleOpenChange();
   }
 
   disconnectedCallback() {

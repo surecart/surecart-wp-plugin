@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.9.0
+Stable tag: 2.10.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -242,6 +242,11 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.10.0 - November 14th, 2023 =
+* Improvement: Keyboard and screen reader accessibility of customer-facing UI.
+* Improvement: Make Stripe Payment Element the new default for the Stripe processor.
+* Update: Remove unnecessary express pay blocks from new form templates.
 
 = 2.9.0 - November 10th, 2023 =
 * New: Delay self-service cancellations - prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.

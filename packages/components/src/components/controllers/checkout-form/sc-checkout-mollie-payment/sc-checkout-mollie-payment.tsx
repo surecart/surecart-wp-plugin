@@ -96,7 +96,7 @@ export class ScCheckoutMolliePayment {
           {(availableMethodTypes() || []).map(method => (
             <sc-payment-method-choice processor-id="mollie" method-id={method?.id} key={method?.id}>
               <span slot="summary" class="sc-payment-toggle-summary">
-                {!!method?.image && <img src={method?.image} />}
+                {!!method?.image && <img src={method?.image} aria-hidden="true" />}
                 <span>{method?.description}</span>
               </span>
 
