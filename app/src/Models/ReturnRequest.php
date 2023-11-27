@@ -13,6 +13,8 @@ class ReturnRequest extends Model {
 
 	/**
 	 * Rest API endpoint
+	 *
+	 * @var string
 	 */
 	protected $endpoint = 'return_requests';
 
