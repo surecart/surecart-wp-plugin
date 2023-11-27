@@ -8,6 +8,8 @@ namespace SureCart\Models;
 class ReturnReason extends Model {
 	/**
 	 * Rest API endpoint
+	 *
+	 * @var string
 	 */
 	protected $endpoint = 'return_reasons';
 
