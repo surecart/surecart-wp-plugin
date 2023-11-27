@@ -71,7 +71,7 @@ class CompatibilityService {
 		$post_assets_instance->enqueue_scripts(); // This will enqueue the JS and CSS files.
 
 		if ( ! empty( $post_assets_instance->file_generation ) && 'disabled' === $post_assets_instance->file_generation ) {
-			$post_assets_instance->print_stylesheet(); // As on checkout page, the wp_head action is not present & Spectra prints inline CSS on that action for file_generation disabled case, we need to print the CSS inline.
+			add_action( 'wp_footer', array( $post_assets_instance, 'print_stylesheet' ) ); // As on checkout page, the wp_head action is loaded late & Spectra prints inline CSS on that action for file_generation disabled case, we need to print the CSS on footer.
 		}
 
 		return $parsed_block;
