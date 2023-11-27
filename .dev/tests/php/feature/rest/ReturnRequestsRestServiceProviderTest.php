@@ -26,12 +26,6 @@ class ReturnRequestsRestServiceProviderTest extends SureCartUnitTestCase{
 	}
 
 	public function requestProvider(){
-		$has_permissions = self::factory()->user->create_and_get();
-		$has_permissions->add_cap('read_sc_orders');
-		$has_permissions->add_cap('publish_sc_orders');
-		$has_permissions->add_cap('edit_sc_orders');
-		$has_permissions->add_cap('delete_sc_orders');
-
 		return [
 			'List: Unauthenticated' => [null, 'GET', '/surecart/v1/return_requests', 401],
 			'List: Missing Capability' => [[], 'GET', '/surecart/v1/return_requests', 403],
