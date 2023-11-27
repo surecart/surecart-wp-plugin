@@ -26,6 +26,7 @@ import { edit } from '@wordpress/icons';
  */
 import { ScButton } from '@surecart/components-react';
 import Placeholder from './Placeholder';
+import PriceInfo from '../../components/PriceInfo';
 
 export default ({ className, attributes, setAttributes }) => {
 	const { type, label, size, line_items, backgroundColor, textColor } =
@@ -153,6 +154,18 @@ export default ({ className, attributes, setAttributes }) => {
 						},
 					]}
 				></PanelColorSettings>
+				<PanelBody title={__('Products Info', 'surecart')}>
+					{line_items.map((line_item) => {
+						return (
+							<PanelRow key={line_item.id}>
+								<PriceInfo
+									price_id={line_item.id}
+									variant_id={line_item.variant_id}
+								/>
+							</PanelRow>
+						);
+					})}
+				</PanelBody>
 			</InspectorControls>
 
 			{renderButton()}
