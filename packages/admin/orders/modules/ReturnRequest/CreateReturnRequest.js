@@ -141,8 +141,6 @@ export default ({
 					<div
 						css={css`
 							display: grid;
-							gap: var(--sc-spacing-medium);
-							padding: var(--sc-spacing-x-large);
 						`}
 					>
 						{(items || []).map((item, index) => {

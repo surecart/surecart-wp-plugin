@@ -5,7 +5,6 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch, select } from '@wordpress/data';
@@ -21,17 +20,14 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
-	ScFormatNumber,
 	ScBlockUi,
 	ScFormatDate,
 	ScTag,
 } from '@surecart/components-react';
-import LineItemView from '../Fulfillment/components/LineItem';
 import Box from '../../../ui/Box';
 import ReturnCancelConfirmModal from './ReturnCancelConfirmModal';
 import { createErrorString } from '../../../util';
-import { getVariantLabel } from '../../../util/variation';
-import { getSKUText } from '../../../util/products';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 	if (!returnRequest?.id) {
@@ -260,76 +256,30 @@ export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 							return_reason_description,
 							note,
 						}) => {
-							const variantLabel = getVariantLabel(
-								line_item?.variant_options
-							);
-							const productSku = getSKUText(line_item);
 							return (
-								<LineItemView
+								<ProductLineItem
 									key={id}
-									imageUrl={
-										line_item?.price?.product?.image_url
-									}
+									lineItem={line_item}
+									showWeight={true}
 									suffix={sprintf(
 										__('Qty: %d', 'surecart'),
 										quantity || 0
 									)}
 								>
-									<a
-										href={addQueryArgs('admin.php', {
-											page: 'sc-products',
-											action: 'edit',
-											id: line_item?.price?.product?.id,
-										})}
+									<span
+										css={css`
+											color: ${returnRequest?.status ===
+											'completed'
+												? 'var(--sc-color-success-600);'
+												: 'var(--sc-color-warning-600);'};
+										`}
 									>
-										{line_item?.price?.product?.name}
-									</a>
-									{(!!variantLabel || !!productSku) && (
-										<div
-											css={css`
-												color: var(
-													--sc-input-help-text-color
-												);
-											`}
-										>
-											{!!variantLabel && (
-												<div>{variantLabel}</div>
-											)}
-											{!!productSku && (
-												<div>
-													{__('SKU:', 'surecart')}{' '}
-													{productSku}
-												</div>
-											)}
-										</div>
-									)}
-
-									{!!line_item?.price?.product?.weight && (
-										<ScFormatNumber
-											type="unit"
-											value={
-												line_item?.price?.product
-													?.weight
-											}
-											unit={
-												line_item?.price?.product
-													?.weight_unit
-											}
-										/>
-									)}
-									<div>
-										<span
-											css={css`
-												color: var(--sc-color-gray-600);
-											`}
-										>
-											{__('Reason', 'surecart')}:{' '}
-											{return_reason === 'other'
-												? note
-												: return_reason_description}
-										</span>
-									</div>
-								</LineItemView>
+										{__('Reason', 'surecart')}:{' '}
+										{return_reason === 'other'
+											? note
+											: return_reason_description}
+									</span>
+								</ProductLineItem>
 							);
 						}
 					)}

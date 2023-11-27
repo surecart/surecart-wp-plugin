@@ -133,6 +133,8 @@ export default () => {
 						'return_item.line_item',
 						'line_item.price',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
 					],
 				},
 			];

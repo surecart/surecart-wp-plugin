@@ -5,8 +5,8 @@ export default ({ className, imageUrl, children, suffix, reason }) => {
 	return (
 		<div
 			css={css`
-				border-bottom: 1px solid var(--sc-color-gray-100);
-				padding: 20px 0;
+				padding: var(--sc-spacing-x-large);
+				border-bottom: 1px solid var(--sc-color-gray-300);
 			`}
 		>
 			<div
