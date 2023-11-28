@@ -94,7 +94,7 @@ export default ({ id }) => {
 				`}
 			>
 				<ScFlex justifyContent="flex-start" alignItems="center">
-					{!!price_id || !!variant_id && (
+					{!!(price_id || variant_id) && (
 						<Price price_id={price_id} variant_id={variant_id} />
 					)}
 

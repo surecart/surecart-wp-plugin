@@ -72,10 +72,6 @@ export default ({ onRequestClose, id, product }) => {
 			.sort((a, b) => a?.position - b?.position)
 			.filter((variant) => !!variant?.id) // filter out variants without an id
 			.map((variant) => {
-				const variantUnavailable =
-					product?.stock_enabled &&
-					!product?.allow_out_of_stock_purchases &&
-					0 >= variant?.available_stock;
 				const variantLabel = [
 					variant?.option_1,
 					variant?.option_2,
@@ -99,7 +95,6 @@ export default ({ onRequestClose, id, product }) => {
 							variant?.available_stock
 						)
 						: null,
-					disabled: variantUnavailable,
 					variant_id: variant?.id,
 				};
 			});
@@ -156,6 +151,8 @@ export default ({ onRequestClose, id, product }) => {
 									value={price?.id}
 									ad_hoc={false}
 									variable={false}
+									includeVariants={false}
+									showOutOfStock={true}
 									loading={false}
 									products={[product]}
 									onSelect={({ price_id }) => {
