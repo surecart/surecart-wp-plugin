@@ -20,15 +20,11 @@ class InstallService {
 	public function createCheckoutForm() {
 		$forms = apply_filters(
 			'surecart/create_forms',
-			[
-				'checkout' => [
+			array(
+				'checkout' => array(
 					'name'      => _x( 'checkout', 'Form slug', 'surecart' ),
 					'title'     => _x( 'Checkout', 'Form title', 'surecart' ),
 					'content'   => '<!-- wp:surecart/form -->
-
-					<!-- wp:surecart/express-payment -->
-					<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-					<!-- /wp:surecart/express-payment -->
 
 					<!-- wp:surecart/heading {"title":"Contact Information"} -->
 					<sc-heading>Contact Information<span slot="description"></span><span slot="end"></span></sc-heading>
@@ -103,8 +99,8 @@ class InstallService {
 					<!-- /wp:surecart/form -->
 					',
 					'post_type' => 'sc_form',
-				],
-			]
+				),
+			)
 		);
 
 		$this->createPosts( $forms );
@@ -120,23 +116,23 @@ class InstallService {
 		$pages = apply_filters(
 			'surecart/create_pages',
 			array(
-				'checkout'           => [
+				'checkout'           => array(
 					'name'    => _x( 'checkout', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Checkout', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:surecart/checkout-form {"id":' . (int) $form->ID . '} -->
 					<!-- wp:surecart/form /-->
 					<!-- /wp:surecart/checkout-form -->',
-				],
-				'order-confirmation' => [
+				),
+				'order-confirmation' => array(
 					'name'    => _x( 'order-confirmation', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Thank you!', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:surecart/order-confirmation --> <!-- /wp:surecart/order-confirmation -->',
-				],
-				'dashboard'          => [
+				),
+				'dashboard'          => array(
 					'name'    => _x( 'customer-dashboard', 'Page slug', 'surecart' ),
 					'title'   => _x( 'Dashboard', 'Page title', 'surecart' ),
 					'content' => '<!-- wp:surecart/dashboard --> <!-- /wp:surecart/dashboard -->',
-				],
+				),
 			)
 		);
 

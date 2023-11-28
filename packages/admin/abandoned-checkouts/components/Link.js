@@ -59,7 +59,10 @@ export default ({ url, checkoutId, promotionCode }) => {
 					'--color': 'var(--sc-color-gray-500)',
 				}}
 			>
-				{__('To adjust your abandoned checkout notifications,')}{' '}
+				{__(
+					'To adjust your abandoned checkout notifications,',
+					'surecart'
+				)}{' '}
 				<a
 					href={addQueryArgs('admin.php', {
 						page: 'sc-settings',

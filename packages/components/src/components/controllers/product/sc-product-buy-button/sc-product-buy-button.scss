@@ -6,6 +6,29 @@ sc-product-buy-button {
     text-decoration: none;
   }
 
+  .sc-block-button--sold-out,
+  .sc-block-button--unavailable {
+    display: none !important;
+  }
+
+  &.is-unavailable {
+    a {
+      display: none !important;
+    }
+    .sc-block-button--unavailable {
+      display: initial !important;
+    }
+  }
+
+  &.is-sold-out {
+    a {
+      display: none !important;
+    }
+    .sc-block-button--sold-out {
+      display: initial !important;
+    }
+  }
+
   sc-spinner::part(base) {
     --indicator-color: currentColor;
     --spinner-size: 12px;
@@ -36,6 +59,12 @@ sc-product-buy-button {
     [data-loader] {
       opacity: 1;
       visibility: visible;
+    }
+  }
+
+  &.is-out-of-stock {
+    [data-text] {
+      opacity: 0.6;
     }
   }
 }

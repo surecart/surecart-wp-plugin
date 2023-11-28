@@ -2,6 +2,7 @@
 namespace SureCart\Account;
 
 use SureCart\Models\Account;
+use SureCart\Models\ApiToken;
 
 /**
  * Service for plugin activation.
@@ -20,6 +21,16 @@ class AccountService {
 	 * @var string
 	 */
 	protected $cache_key = 'surecart_account';
+
+	/**
+	 * Bootstrap the service.
+	 *
+	 * @return void
+	 */
+	public function bootstrap() {
+		// clear account cache when account is updated.
+		\add_action( 'surecart/account_updated', [ $this, 'clearCache' ] );
+	}
 
 	/**
 	 * We get the account when the service is loaded.
@@ -86,7 +97,7 @@ class AccountService {
 	 * @return \SureCart\Models\Account
 	 */
 	protected function fetchAccount() {
-		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'shipping_protocol' ] )->find();
+		$this->account = Account::with( [ 'brand', 'brand.address', 'portal_protocol', 'tax_protocol', 'tax_protocol.address', 'subscription_protocol', 'shipping_protocol', 'affiliation_protocol' ] )->find();
 		return $this->account;
 	}
 
@@ -97,6 +108,15 @@ class AccountService {
 	 */
 	public function clearCache() {
 		return delete_transient( $this->cache_key );
+	}
+
+	/**
+	 * Is the account connected?
+	 *
+	 * @return boolean
+	 */
+	public function isConnected() {
+		return ! empty( ApiToken::get() );
 	}
 
 	/**

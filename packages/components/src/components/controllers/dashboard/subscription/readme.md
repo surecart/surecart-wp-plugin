@@ -118,19 +118,20 @@ graph TD;
   sc-cancel-survey --> sc-button
   sc-cancel-survey --> sc-icon
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-textarea --> sc-form-control
   sc-cancel-discount --> sc-dashboard-module
   sc-cancel-discount --> sc-flex
   sc-cancel-discount --> sc-button
   sc-cancel-discount --> sc-block-ui
+  sc-subscription-reactivate --> sc-flex
+  sc-subscription-reactivate --> sc-skeleton
   sc-subscription-reactivate --> sc-dialog
   sc-subscription-reactivate --> sc-dashboard-module
   sc-subscription-reactivate --> sc-alert
   sc-subscription-reactivate --> sc-format-number
   sc-subscription-reactivate --> sc-text
   sc-subscription-reactivate --> sc-format-date
-  sc-subscription-reactivate --> sc-flex
   sc-subscription-reactivate --> sc-button
   sc-subscription-reactivate --> sc-block-ui
   style sc-subscription fill:#f9f,stroke:#333,stroke-width:4px

@@ -9,6 +9,8 @@ import {
 import { ScProductItemPrice } from '@surecart/components-react';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 export const DEMO_PRICES = [
 	{
@@ -30,7 +32,13 @@ export const DEMO_PRICES = [
 
 export default ({ attributes, setAttributes }) => {
 	const { align, range } = attributes;
+	const price = useRef(null);
 	const blockProps = useBlockProps();
+
+	useEffect(() => {
+		if (!price.current) return;
+		price.current.prices = DEMO_PRICES;
+	}, [price]);
 
 	return (
 		<>
@@ -39,7 +47,7 @@ export default ({ attributes, setAttributes }) => {
 					<ToggleControl
 						label={__('Price Range', 'surecart')}
 						help={__(
-							'Show a range of prices if multiple prices are available.',
+							'Show a range of prices if multiple prices are available or has variable products.',
 							'surecart'
 						)}
 						checked={range}
@@ -55,6 +63,7 @@ export default ({ attributes, setAttributes }) => {
 			</BlockControls>
 			<div {...blockProps}>
 				<ScProductItemPrice
+					ref={price}
 					style={{ '--sc-product-price-align': align }}
 					prices={DEMO_PRICES}
 					range={range}

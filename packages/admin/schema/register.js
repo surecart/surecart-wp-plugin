@@ -44,6 +44,11 @@ dispatch(dataStore).registerEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'product-collection',
+		baseURL: 'surecart/v1/product-collections',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'price',
 		baseURL: 'surecart/v1/prices',
 		baseURLParams: { context: 'edit' },
@@ -101,6 +106,11 @@ dispatch(dataStore).registerEntities([
 	{
 		name: 'customer_notification_protocol',
 		baseURL: 'surecart/v1/customer_notification_protocol',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'variant-option',
+		baseURL: 'surecart/v1/variant_options',
 		baseURLParams: { context: 'edit' },
 	},
 ]);

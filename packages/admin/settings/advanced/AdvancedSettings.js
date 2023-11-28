@@ -119,65 +119,6 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Beta Features', 'surecart')}
-				description={__(
-					'Opt-in to some beta features of the plugin.',
-					'surecart'
-				)}
-				loading={!hasLoadedItem}
-			>
-				<ScSwitch
-					checked={item?.stripe_payment_element}
-					onClick={(e) => {
-						e.preventDefault();
-						editItem({
-							stripe_payment_element:
-								!item?.stripe_payment_element,
-						});
-					}}
-				>
-					{__('Use The Stripe Payment Element', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							"Use Stripe's Payment Element instead of the Card Element in all forms.",
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-			</SettingsBox>
-
-			<SettingsBox
-				title={__('Syncing', 'surecart')}
-				description={__(
-					'Manually sync your WordPress install with SureCart.',
-					'surecart'
-				)}
-				noButton
-				loading={!hasLoadedItem}
-			>
-				<div
-					css={css`
-						display: grid;
-						gap: 0.5em;
-					`}
-				>
-					<ScFormControl
-						label={__('Customers', 'surecart')}
-						help={__(
-							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
-							'surecart'
-						)}
-					/>
-					<div>
-						<ScButton onClick={() => setModal('customer-sync')}>
-							<ScIcon name="users" slot="prefix"></ScIcon>
-							{__('Sync Customers', 'surecart')}
-						</ScButton>
-					</div>
-				</div>
-			</SettingsBox>
-
-			<SettingsBox
 				title={__('Spam Protection & Security', 'surecart')}
 				description={__(
 					'Change your checkout spam protection and security settings.',
@@ -315,6 +256,65 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Legacy Features', 'surecart')}
+				description={__(
+					'Opt-in to some legacy features of the plugin.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={item?.stripe_payment_element === false}
+					onClick={(e) => {
+						e.preventDefault();
+						editItem({
+							stripe_payment_element:
+								!item?.stripe_payment_element,
+						});
+					}}
+				>
+					{__('Use The Stripe Card Element', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							"Use Stripe's Card Element instead of the Payment Element in all forms.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Syncing', 'surecart')}
+				description={__(
+					'Manually sync your WordPress install with SureCart.',
+					'surecart'
+				)}
+				noButton
+				loading={!hasLoadedItem}
+			>
+				<div
+					css={css`
+						display: grid;
+						gap: 0.5em;
+					`}
+				>
+					<ScFormControl
+						label={__('Customers', 'surecart')}
+						help={__(
+							'Match all SureCart customers with WordPress users. This is helpful if you have migrated from another eCommerce platform.',
+							'surecart'
+						)}
+					/>
+					<div>
+						<ScButton onClick={() => setModal('customer-sync')}>
+							<ScIcon name="users" slot="prefix"></ScIcon>
+							{__('Sync Customers', 'surecart')}
+						</ScButton>
+					</div>
+				</div>
 			</SettingsBox>
 
 			<SettingsBox

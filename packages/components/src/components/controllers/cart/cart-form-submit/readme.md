@@ -9,7 +9,6 @@
 
 | Property | Attribute | Description               | Type                                                                                         | Default     |
 | -------- | --------- | ------------------------- | -------------------------------------------------------------------------------------------- | ----------- |
-| `busy`   | `busy`    | Is the cart busy          | `boolean`                                                                                    | `undefined` |
 | `full`   | `full`    | Show a full-width button. | `boolean`                                                                                    | `true`      |
 | `icon`   | `icon`    | Icon to show.             | `string`                                                                                     | `undefined` |
 | `size`   | `size`    | The button's size.        | `"large" \| "medium" \| "small"`                                                             | `'medium'`  |

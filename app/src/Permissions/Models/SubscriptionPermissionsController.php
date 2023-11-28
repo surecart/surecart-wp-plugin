@@ -32,6 +32,12 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 			return false;
 		}
 
+		// if we should delay cancellation.
+		$subscription = Subscription::find( $args[2] );
+		if ( $subscription->shouldDelayCancellation() ) {
+			return false;
+		}
+
 		return $this->belongsToUser( Subscription::class, $args[2], $user );
 	}
 
@@ -169,7 +175,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		if ( ! empty( $allcaps['read_sc_subscriptions'] ) ) {
 			return true;
 		}
-		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? [] );
+		return $this->isListingOwnCustomerIds( $user, $args[2]['customer_ids'] ?? array() );
 	}
 
 	/**
@@ -210,7 +216,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		$params = $args[3];
 
 		// request has blacklisted keys.
-		if ( ! $this->requestOnlyHasKeys( $params, [ 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'cancellation_act', 'ad_hoc_amount' ] ) ) {
+		if ( ! $this->requestOnlyHasKeys( $params, array( 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'cancellation_act', 'ad_hoc_amount', 'variant', 'discount' ) ) ) {
 			return false;
 		}
 

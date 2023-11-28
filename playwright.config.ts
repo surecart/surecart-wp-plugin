@@ -20,22 +20,26 @@ export default defineConfig({
 	testDir: 'packages',
 
 	/* Test file match extension. Currently only supporting `.spec.ts` extension */
-	testMatch: ['packages/blocks/Blocks/**/*.spec.ts', 'packages/admin/**/*.spec.ts', 'packages/admin/**/**/*.spec.ts'],
+	testMatch: [
+		'packages/blocks/Blocks/**/*.spec.ts',
+		'packages/admin/**/*.spec.ts',
+		'packages/admin/**/**/*.spec.ts',
+	],
 
 	/* Run tests for specific file matches [If needs] */
 	// testMatch: ["**/test/*-pw.spec.ts"],
 
 	/* Run tests in files in parallel */
-	fullyParallel: true,
+	// fullyParallel: false, // TODO: Enable this when API fixes Discard::RecordNotDiscarded
 
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!CI,
 
 	/* Retry only on CI */
-	retries: CI ? 4 : 0,
+	retries: 4,
 
 	/* Opt out of parallel tests on CI. */
-	workers: CI ? 1 : undefined,
+	// workers: CI ? 1 : undefined,
 
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
@@ -48,7 +52,7 @@ export default defineConfig({
 
 	/* Web-first assertions - separate timeout. See https://playwright.dev/docs/test-timeouts#expect-timeout */
 	expect: {
-		timeout: 30 * 1000, // 30 seconds
+		timeout: 10 * 1000, // 30 seconds
 	},
 
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */

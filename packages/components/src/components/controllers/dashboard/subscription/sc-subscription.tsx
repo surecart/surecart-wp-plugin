@@ -4,7 +4,7 @@ import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { Subscription, SubscriptionProtocol } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
-
+import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-subscription',
   styleUrl: 'sc-subscription.scss',
@@ -111,7 +111,7 @@ export class ScSubscription {
 
   renderName(subscription: Subscription) {
     if (typeof subscription?.price?.product !== 'string') {
-      return subscription?.price?.product?.name;
+      return productNameWithPrice(subscription?.price);
     }
     return __('Subscription', 'surecart');
   }

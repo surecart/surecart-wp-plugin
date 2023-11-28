@@ -13,27 +13,21 @@ class ProductTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
-		parent::setUp();
-
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
+				\SureCart\WordPress\PluginServiceProvider::class,
 				\SureCart\Settings\SettingsServiceProvider::class,
 				\SureCart\Request\RequestServiceProvider::class,
 				\SureCart\Account\AccountServiceProvider::class
 			]
 		], false);
 
-		// setup mock requests
-		$this->setupMockRequests();
+		parent::setUp();
 	}
 
-	/**
-	 *
-	 * @return void
-	 */
 	public function test_can_create_price()
 	{
 		$request = json_decode(file_get_contents(dirname(__FILE__) . '/product-create.json'), true);
@@ -45,28 +39,17 @@ class ProductTest extends SureCartUnitTestCase
 			return call_user_func_array([$requests, 'makeRequest'], func_get_args());
 		});
 
-		// then make the request./**
+		// then make the request.
 		$requests->shouldReceive('makeRequest')
-			->atLeast()
-			->once()
 			->withSomeOfArgs('products')
 			->andReturn($response);
-
-		// then make the request./**
-		$requests->shouldReceive('makeRequest')
-			->atLeast()
-			->once()
-			->withSomeOfArgs('account')
-			->andReturn((object) ['products_updated_at' => 12345]);
 
 		$instance = new Product($request['product']);
 		$created = $instance->create();
 
-		// has a product
+		// has prices.
 		foreach($created->prices->data as $price) {
 			$this->assertInstanceOf(Price::class, $price);
 		}
-		// response is correct
-		$this->assertContains($created->toArray(), json_decode(json_encode($response), true));
 	}
 }

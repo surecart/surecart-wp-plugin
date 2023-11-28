@@ -3,7 +3,6 @@
 namespace SureCartBlocks\Blocks\ProductItemList;
 
 use SureCartBlocks\Blocks\BaseBlock;
-
 /**
  * ProductItemList block
  */
@@ -93,7 +92,8 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Style variables.
+	 * @param  array  $attr Style variables.
+	 * @param  string $prefix Prefix for the css variable.
 	 * @return string
 	 */
 	public function getVars( $attr, $prefix ) {
@@ -160,7 +160,8 @@ class Block extends BaseBlock {
 	/**
 	 * Get the style for the block
 	 *
-	 * @param  array $attributes Product list & Product item attributes.
+	 * @param  array $attr Product List attributes.
+	 * @param  array $item_attributes Product item attributes.
 	 * @return string
 	 */
 	public function getStyle( $attr, $item_attributes ) {
@@ -170,6 +171,35 @@ class Block extends BaseBlock {
 		return $style;
 	}
 
+	/**
+	 * Get the dummy products array.
+	 *
+	 * @param  int $limit Limit per page.
+	 * @return array Dummy Products.
+	 */
+	public function getDummyProducts( $limit = 15 ) {
+		$dummy_products = array();
+
+		for ( $i = 1; $i <= $limit; $i++ ) {
+			$product = array(
+				'permalink'  => '#',
+				'name'       => __( 'Example Product Title', 'surecart' ),
+				'created_at' => wp_rand( 1, 40 ),
+				'prices'     => array(
+					'data' => array(
+						array(
+							'amount'   => 1900,
+							'currency' => 'USD',
+						),
+					),
+				),
+			);
+
+			$dummy_products[] = $product;
+		}
+
+		return $dummy_products;
+	}
 	/**
 	 * Render the block
 	 *
@@ -217,9 +247,11 @@ class Block extends BaseBlock {
 		}
 
 		// backwards compat.
-		$attributes['type'] = '';
 		if ( empty( $attributes['type'] ) && ! empty( $attributes['ids'] ) ) {
 			$attributes['type'] = 'custom';
+		}
+		if ( empty( $attributes['type'] ) ) {
+			$attributes['type'] = '';
 		}
 
 		\SureCart::assets()->addComponentData(
@@ -231,12 +263,14 @@ class Block extends BaseBlock {
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
-				'paginationEnabled'    => ! ! $attributes['pagination_enabled'],
-				'ajaxPagination'       => ! ! $attributes['ajax_pagination'],
-				'paginationAutoScroll' => ! ! $attributes['pagination_auto_scroll'],
-				'searchEnabled'        => ! ! $attributes['search_enabled'],
-				'sortEnabled'          => ! ! $attributes['sort_enabled'],
+				'paginationEnabled'    => \SureCart::account()->isConnected() ? $attributes['pagination_enabled'] : false,
+				'ajaxPagination'       => $attributes['ajax_pagination'],
+				'paginationAutoScroll' => $attributes['pagination_auto_scroll'],
+				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
+				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
+				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
 			]
 		);
 

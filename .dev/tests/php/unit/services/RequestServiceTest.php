@@ -15,7 +15,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -40,7 +40,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	/**
 	 * @dataProvider cacheProvider
 	 */
-	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args =[], bool $expected) {
+	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args, bool $expected) {
 		$service = new RequestService();
 		$this->assertSame($service->shouldFindCache($cachable, $cache_key, $args), $expected);
 	}
@@ -57,8 +57,6 @@ class RequestServiceTest extends SureCartUnitTestCase
 
 	/**
 	 * Should clear the token if a 401 issue.
-	 *
-	 * @group failing
 	 */
 	public function test_shouldNotMakeRequestIfNoToken() {
 		$service = new RequestService( null );
