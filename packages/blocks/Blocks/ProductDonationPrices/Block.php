@@ -2,6 +2,7 @@
 
 namespace SureCartBlocks\Blocks\ProductDonationPrices;
 
+use SureCart\Models\Product;
 use SureCartBlocks\Blocks\BaseBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
@@ -19,6 +20,16 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
+
+		$product = Product::with( [ 'prices' ] )->find( $attributes['product_id'] ?? '' );
+		if ( is_wp_error( $product ) ) {
+			return $product->get_error_message();
+		}
+
+		if ( count( $product->activePrices() ) < 2 ) {
+			return '';
+		}
+
 		ob_start(); ?>
 		<div class="sc-product-donation-choices" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ); ?>; border: none; <?php echo esc_attr( $styles ); ?>">
 			<sc-choices label="<?php echo esc_attr( $attributes['label'] ); ?>">
