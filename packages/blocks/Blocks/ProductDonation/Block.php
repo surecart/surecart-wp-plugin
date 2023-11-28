@@ -60,7 +60,7 @@ class Block extends BaseBlock {
 						'amounts'       => $amounts,
 						'ad_hoc_amount' => $amounts[0] ?? '' ?? '',
 						'custom_amount' => null,
-						'selectedPrice' => $product->prices->data[0]->toArray(),
+						'selectedPrice' => ( $product->activePrices() || [] )[0] ?? null,
 					],
 				],
 			]
