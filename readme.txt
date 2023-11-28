@@ -226,10 +226,10 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.11.3 - November 27th, 2023 =
+= 2.11.3 - November 28th, 2023 =
 * Improvement: Update SureCart menu to include shop, checkout, dashboard pages.
-* Improvement: Autmoatic integration with RankMath Sitemaps.
-* Fix: Issue with Spectra saving when inline css settting is used.
+* Improvement: Automatic integration with RankMath Sitemaps.
+* Fix: Issue with Spectra saving when inline CSS setting is used.
 * Fix: Responsive issue with plan actions on customer dashboard.
 * Fix: Properly handle error if WordPress user exists when creating customer on admin.
 * Fix: Issue with HUF currency.
