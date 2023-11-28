@@ -40,6 +40,7 @@ export default ({
 	const [busy, setBusy] = useState(false);
 	const [items, setItems] = useState([]);
 
+	// get the existing number of items already returned.
 	const getQtyReturned = (lineItemId) => {
 		return (returnRequests || []).reduce(
 			(total, returnRequest) =>
@@ -60,12 +61,10 @@ export default ({
 	useEffect(() => {
 		setItems(
 			(fulfillmentItems || [])
-				.filter(
-					({ id, fulfilled_quantity }) => {
-						const qtyReturned = getQtyReturned(id);
-						return fulfilled_quantity - qtyReturned > 0;
-					}
-				)
+				.filter(({ id, fulfilled_quantity }) => {
+					const qtyReturned = getQtyReturned(id);
+					return fulfilled_quantity - qtyReturned > 0;
+				})
 				.map(({ id, fulfilled_quantity, ...item }) => {
 					const qtyReturned = getQtyReturned(id);
 					return {
@@ -234,27 +233,27 @@ export default ({
 										>
 											{item?.return_reason ===
 												'other' && (
-													<ScInput
-														label={__(
-															'Reason',
-															'surecart'
-														)}
-														value={item?.note}
-														type="text"
-														required
-														css={css`
+												<ScInput
+													label={__(
+														'Reason',
+														'surecart'
+													)}
+													value={item?.note}
+													type="text"
+													required
+													css={css`
 														margin-top: var(
 															--sc-spacing-small
 														);
 													`}
-														onScInput={(e) => {
-															updateItems(index, {
-																note: e.target
-																	.value,
-															});
-														}}
-													/>
-												)}
+													onScInput={(e) => {
+														updateItems(index, {
+															note: e.target
+																.value,
+														});
+													}}
+												/>
+											)}
 										</div>
 									</ScFlex>
 								)}
