@@ -22,6 +22,7 @@ export default ({ customerId }) => {
 						'product.featured_product_media',
 						'product_media.media',
 						'variant',
+						'price',
 					],
 				},
 			];
