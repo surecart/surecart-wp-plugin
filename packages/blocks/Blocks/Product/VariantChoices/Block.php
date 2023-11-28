@@ -27,10 +27,11 @@ class Block extends BaseBlock {
 		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
 
 		// get wrapper attributes.
-		$extra_attributes = array(
-			'style'=> 'border: none; display: block; margin-bottom: var(--sc-form-row-spacing, 0.75em);' . esc_attr( $this->getVars( $attributes, '--sc-pill-option' ) ),
+		$wrapper_attributes = get_block_wrapper_attributes(
+			[
+				'style' => 'border: none; display: block; margin-bottom: var(--sc-form-row-spacing, 0.75em);' . esc_attr( $this->getVars( $attributes, '--sc-pill-option' ) ),
+			]
 		);
-		$wrapper_attributes = get_block_wrapper_attributes($extra_attributes);
 
 		ob_start(); ?>
 
