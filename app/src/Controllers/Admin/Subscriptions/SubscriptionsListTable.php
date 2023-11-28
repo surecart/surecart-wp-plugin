@@ -105,7 +105,6 @@ class SubscriptionsListTable extends ListTable {
 			'status'             => __( 'Status', 'surecart' ),
 			'plan'               => __( 'Plan', 'surecart' ),
 			'remaining_payments' => __( 'Remaining Payments', 'surecart' ),
-			'product'            => __( 'Product', 'surecart' ),
 			'integrations'       => __( 'Integrations', 'surecart' ),
 			'created'            => __( 'Created', 'surecart' ),
 			'mode'               => '',
@@ -122,22 +121,6 @@ class SubscriptionsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $product['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $product['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $product['id'] ); ?>" />
 			<?php
-	}
-
-	public function column_product( $subscription ) {
-		if ( empty( $subscription->price->product ) ) {
-			return __( 'No product', 'surecart' );
-		}
-		$product_display = '<a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>';
-		if ( ! empty( $subscription->variant_options ) ) {
-			$product_display .= '<div>' . esc_html( implode( ' / ', $subscription->variant_options ) ) . '</div>';
-		}
-
-		if( ! empty( $subscription->price->name ) ) {
-			$product_display .= '<div>' . esc_html( $subscription->price->name ) . '</div>';
-		}
-
-		return $product_display;
 	}
 
 	/**
@@ -245,6 +228,8 @@ class SubscriptionsListTable extends ListTable {
 		$interval     = $subscription->price->recurring_interval ?? '';
 		$count        = $subscription->price->recurring_interval_count ?? 1;
 		$period_count = $subscription->price->recurring_period_count ?? null;
+
+
 		ob_start();
 		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
 		echo esc_html( $this->getInterval( $interval, $count ) );
@@ -255,7 +240,22 @@ class SubscriptionsListTable extends ListTable {
 				echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
 			}
 		}
+		echo  $this->getProductDisplay( $subscription ) ;
+		if ( ! empty( $subscription->variant_options ) ) {
+			echo '<div>' . esc_html( implode( ' / ', $subscription->variant_options ) ) . '</div>';
+        }
+
 		return ob_get_clean();
+	}
+
+	private function getProductDisplay($subscription){
+		if(empty($subscription->price->product->name)){
+			return $subscription->price->name ?? __( 'No Product', 'surecart' );
+		}
+
+		$price_name = !empty($subscription->price->name) ? ' - '.$subscription->price->name : '';
+
+		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>'.$price_name;
 	}
 
 	public function getInterval( $interval, $count, $separator = '/', $show_single = false ) {
