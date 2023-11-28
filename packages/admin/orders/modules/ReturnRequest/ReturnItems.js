@@ -42,7 +42,7 @@ export default ({ returnRequest, onChangeRequestStatus, loading }) => {
 
 	let total = (returnRequest?.return_items?.data || []).reduce(
 		(accumulator, item) => {
-			return accumulator + item?.line_item?.quantity;
+			return accumulator + item?.quantity;
 		},
 		0
 	);

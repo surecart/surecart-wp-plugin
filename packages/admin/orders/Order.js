@@ -114,12 +114,12 @@ export default () => {
 		[id]
 	);
 
-	const { returnRequest, returnRequestLoading } = useSelect(
+	const { returnRequests, returnRequestsLoading } = useSelect(
 		(select) => {
 			if (!order?.id) {
 				return {
-					returnRequest: null,
-					returnRequestLoading: false,
+					returnRequests: [],
+					returnRequestsLoading: false,
 				};
 			}
 
@@ -139,10 +139,10 @@ export default () => {
 				},
 			];
 			return {
-				returnRequest: select(coreStore).getEntityRecords(
+				returnRequests: select(coreStore).getEntityRecords(
 					...queryArgs
-				)?.[0],
-				returnRequestLoading: select(coreStore).isResolving(
+				),
+				returnRequestsLoading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
 				),
@@ -151,9 +151,10 @@ export default () => {
 		[order?.id]
 	);
 
-	const fulfilledItems = order?.checkout?.line_items?.data?.filter(
+	const fulfilledItems = (order?.checkout?.line_items?.data?.filter(
 		(item) => item?.quantity === item?.fulfilled_quantity
-	);
+			|| (item?.fulfilled_quantity > 0 && item?.quantity !== item?.fulfilled_quantity)
+	) || []);
 
 	useEffect(() => {
 		if (orderError) {
@@ -180,9 +181,22 @@ export default () => {
 			});
 		}
 
-		// If there are fulfilled items and not already returned,
-		// then enable the Return action.
-		if ((fulfilledItems || []).length && !returnRequest?.id) {
+		const totalReturnQty = returnRequests?.reduce(
+			(total, returnRequest) =>
+				total +
+				returnRequest?.return_items?.data?.reduce(
+					(total, returnItem) => total + returnItem?.quantity,
+					0
+				),
+			0
+		);
+
+		const totalFulfilledItemsQty = fulfilledItems?.reduce(
+			(total, item) => total + item?.fulfilled_quantity,
+			0
+		);
+
+		if (totalFulfilledItemsQty > totalReturnQty) {
 			menuItems.push({
 				title: __('Return', 'surecart'),
 				modal: 'return_request',
@@ -267,15 +281,22 @@ export default () => {
 					order={order}
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
-					returnRequest={returnRequest}
+					returnRequests={returnRequests}
 				/>
-				<ReturnItems
-					loading={returnRequestLoading}
-					returnRequest={returnRequest}
-					checkout={order?.checkout}
-					onCreateSuccess={manuallyRefetchOrder}
-					onChangeRequestStatus={manuallyRefetchOrder}
-				/>
+
+				{
+					(returnRequests || []).map((returnRequest, index) => (
+						<ReturnItems
+							key={index}
+							loading={returnRequestsLoading}
+							returnRequest={returnRequest}
+							checkout={order?.checkout}
+							onCreateSuccess={manuallyRefetchOrder}
+							onChangeRequestStatus={manuallyRefetchOrder}
+						/>
+					))
+				}
+
 				<Fulfillment
 					loading={!hasLoadedOrder}
 					orderId={id}
@@ -310,6 +331,7 @@ export default () => {
 				/>
 				<CreateReturnRequest
 					fulfillmentItems={fulfilledItems}
+					returnRequests={returnRequests}
 					orderId={order?.id}
 					checkout={order?.checkout}
 					open={modal === 'return_request'}

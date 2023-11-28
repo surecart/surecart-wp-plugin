@@ -27,6 +27,7 @@ import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({
 	fulfillmentItems,
+	returnRequests,
 	orderId,
 	open,
 	onRequestClose,
@@ -39,15 +40,43 @@ export default ({
 	const [busy, setBusy] = useState(false);
 	const [items, setItems] = useState([]);
 
+	const getQtyReturned = (lineItemId) => {
+		return (returnRequests || []).reduce(
+			(total, returnRequest) =>
+				total +
+				(returnRequest?.return_items?.data || []).reduce(
+					(total, returnItem) => {
+						if (returnItem?.line_item?.id === lineItemId) {
+							return total + returnItem?.quantity;
+						}
+						return total;
+					},
+					0
+				),
+			0
+		);
+	};
+
 	useEffect(() => {
 		setItems(
-			(fulfillmentItems || []).map(({ fulfilled_quantity, ...item }) => {
-				return {
-					...item,
-					originalQuantity: fulfilled_quantity,
-					return_reason: 'unknown', // by default, set return reason to unknown
-				};
-			})
+			(fulfillmentItems || [])
+				.filter(
+					({ id, fulfilled_quantity }) => {
+						const qtyReturned = getQtyReturned(id);
+						return fulfilled_quantity - qtyReturned > 0;
+					}
+				)
+				.map(({ id, fulfilled_quantity, ...item }) => {
+					const qtyReturned = getQtyReturned(id);
+					return {
+						...item,
+						id,
+						quantity: fulfilled_quantity - qtyReturned,
+						fulfilled_quantity: fulfilled_quantity - qtyReturned,
+						originalQuantity: fulfilled_quantity - qtyReturned,
+						return_reason: 'unknown', // by default, set return reason to unknown
+					};
+				})
 		);
 	}, [fulfillmentItems]);
 
@@ -205,27 +234,27 @@ export default ({
 										>
 											{item?.return_reason ===
 												'other' && (
-												<ScInput
-													label={__(
-														'Reason',
-														'surecart'
-													)}
-													value={item?.note}
-													type="text"
-													required
-													css={css`
+													<ScInput
+														label={__(
+															'Reason',
+															'surecart'
+														)}
+														value={item?.note}
+														type="text"
+														required
+														css={css`
 														margin-top: var(
 															--sc-spacing-small
 														);
 													`}
-													onScInput={(e) => {
-														updateItems(index, {
-															note: e.target
-																.value,
-														});
-													}}
-												/>
-											)}
+														onScInput={(e) => {
+															updateItems(index, {
+																note: e.target
+																	.value,
+															});
+														}}
+													/>
+												)}
 										</div>
 									</ScFlex>
 								)}
