@@ -127,6 +127,7 @@ return [
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
+		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 	],
 
 	/**

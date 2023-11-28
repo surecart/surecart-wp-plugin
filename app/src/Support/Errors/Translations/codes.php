@@ -129,4 +129,5 @@ return array(
 	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
 	'return_request.return_items.quantity.over_returned'   => __( 'The quantity returned is greater than the quantity fulfilled.', 'surecart' ),
+	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 );
