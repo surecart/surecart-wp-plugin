@@ -182,9 +182,18 @@ class AdminMenuPageService {
 		];
 	}
 
+	/**
+	 * Get the page link.
+	 *
+	 * @param string $slug The slug.
+	 * @param string $name The name.
+	 * @param string $post_type The post type.
+	 *
+	 * @return void
+	 */
 	public function getPage( $slug, $name, $post_type = 'page' ) {
 		// add filter to disable shop page menu item.
-		if ( ! apply_filters( 'surecart/admin/menu_item/' . $slug, true ) ) {
+		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
 			return;
 		}
 
