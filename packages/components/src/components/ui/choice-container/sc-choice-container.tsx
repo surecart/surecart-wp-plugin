@@ -188,7 +188,7 @@ export class ScChoiceContainer {
           'choice--is-rtl': isRtl(),
           [`choice--size-${this.size}`]: true,
         }}
-        role="radio"
+        role='radio'
         aria-checked={this.checked ? 'true' : 'false'}
         aria-disabled={this.disabled ? 'true' : 'false'}
         onKeyDown={e => this.handleKeyDown(e)}
