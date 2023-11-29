@@ -1,4 +1,4 @@
-import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Host, Listen } from '@stencil/core';
+import { Component, Prop, h, Event, EventEmitter, Method, State, Element, Watch, Listen } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { FormSubmitController } from '../../../functions/form-data';
 import { isRtl } from '../../../functions/page-align';
@@ -126,7 +126,7 @@ export class ScChoiceContainer {
   }
 
   handleKeyDown(event: KeyboardEvent) {
-    // On arrow key press
+    // On arrow key press.
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
       const incr = ['ArrowUp', 'ArrowLeft'].includes(event.key) ? -1 : 1;
@@ -138,6 +138,13 @@ export class ScChoiceContainer {
       choices[index].checked = true;
 
       event.preventDefault();
+    }
+
+    // On space key press select the choice like handle mouse click.
+    if (event.key === ' ') {
+      event.preventDefault();
+      this.checked = true;
+      this.scChange.emit(this.input.checked);
     }
   }
 
@@ -176,76 +183,78 @@ export class ScChoiceContainer {
 
   render() {
     return (
-      <Host>
-        <div
-          part="base"
-          class={{
-            'choice': true,
-            'choice--checked': this.checked,
-            'choice--disabled': this.disabled,
-            'choice--focused': this.hasFocus,
-            'choice--is-rtl': isRtl(),
-            [`choice--size-${this.size}`]: true,
-          }}
-          onKeyDown={e => this.handleKeyDown(e)}
-          onMouseDown={e => this.handleMouseDown(e)}
-        >
-          <slot name="header" />
-          <label class="choice__content" part="content" htmlFor={this.labelId}>
-            <span
-              part="control"
-              class={{
-                choice__control: true,
-                choice__checkbox: this.type === 'checkbox',
-                choice__radio: this.type === 'radio',
-              }}
-              hidden={!this.showControl}
-            >
-              <span part="checked-icon" class="choice__icon">
-                {this.type === 'checkbox' ? (
-                  <svg viewBox="0 0 16 16">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-                      <g stroke="currentColor" stroke-width="2">
-                        <g transform="translate(3.428571, 3.428571)">
-                          <path d="M0,5.71428571 L3.42857143,9.14285714"></path>
-                          <path d="M9.14285714,0 L3.42857143,9.14285714"></path>
-                        </g>
+      <div
+        part="base"
+        class={{
+          'choice': true,
+          'choice--checked': this.checked,
+          'choice--disabled': this.disabled,
+          'choice--focused': this.hasFocus,
+          'choice--is-rtl': isRtl(),
+          [`choice--size-${this.size}`]: true,
+        }}
+        role="radio"
+        aria-checked={this.checked ? 'true' : 'false'}
+        aria-disabled={this.disabled ? 'true' : 'false'}
+        onKeyDown={e => this.handleKeyDown(e)}
+        onMouseDown={e => this.handleMouseDown(e)}
+      >
+        <slot name="header" />
+        <label class="choice__content" part="content" htmlFor={this.inputId}>
+          <span
+            part="control"
+            class={{
+              choice__control: true,
+              choice__checkbox: this.type === 'checkbox',
+              choice__radio: this.type === 'radio',
+            }}
+            hidden={!this.showControl}
+          >
+            <span part="checked-icon" class="choice__icon">
+              {this.type === 'checkbox' ? (
+                <svg viewBox="0 0 16 16">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+                    <g stroke="currentColor" stroke-width="2">
+                      <g transform="translate(3.428571, 3.428571)">
+                        <path d="M0,5.71428571 L3.42857143,9.14285714"></path>
+                        <path d="M9.14285714,0 L3.42857143,9.14285714"></path>
                       </g>
                     </g>
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 16 16">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                      <g fill="currentColor">
-                        <circle cx="8" cy="8" r="3.42857143"></circle>
-                      </g>
+                  </g>
+                </svg>
+              ) : (
+                <svg viewBox="0 0 16 16">
+                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g fill="currentColor">
+                      <circle cx="8" cy="8" r="3.42857143"></circle>
                     </g>
-                  </svg>
-                )}
-              </span>
-              <input
-                ref={el => (this.input = el as HTMLInputElement)}
-                type={this.type}
-                name={this.name}
-                value={this.value}
-                checked={this.checked}
-                disabled={this.disabled}
-                aria-checked={this.checked ? 'true' : 'false'}
-                aria-disabled={this.disabled ? 'true' : 'false'}
-                aria-labelledby={this.labelId}
-                // required={this.required}
-                onBlur={() => this.handleBlur()}
-                onFocus={() => this.handleFocus()}
-                onChange={() => this.handleClickEvent()}
-                tabIndex={0}
-              />
+                  </g>
+                </svg>
+              )}
             </span>
-            <span part="label" id={this.labelId} class="choice__label">
-              <slot />
-            </span>
-          </label>
-        </div>
-      </Host>
+            <input
+              id={this.inputId}
+              ref={el => (this.input = el as HTMLInputElement)}
+              type={this.type}
+              name={this.name}
+              value={this.value}
+              checked={this.checked}
+              disabled={this.disabled}
+              aria-checked={this.checked ? 'true' : 'false'}
+              aria-disabled={this.disabled ? 'true' : 'false'}
+              aria-labelledby={this.labelId}
+              tabindex="0"
+              // required={this.required}
+              onBlur={() => this.handleBlur()}
+              onFocus={() => this.handleFocus()}
+              onChange={() => this.handleClickEvent()}
+            />
+          </span>
+          <span part="label" id={this.labelId} class="choice__label">
+            <slot />
+          </span>
+        </label>
+      </div>
     );
   }
 }

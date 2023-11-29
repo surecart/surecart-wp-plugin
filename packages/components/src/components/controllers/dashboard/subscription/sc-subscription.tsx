@@ -181,7 +181,7 @@ export class ScSubscription {
     return (
       <sc-dashboard-module heading={this.heading || __('Current Plan', 'surecart')} class="subscription" error={this.error}>
         {!!this.subscription && (
-          <sc-flex slot="end">
+          <sc-flex slot="end" class="subscription__action-buttons">
             {getQueryArg(window.location.href, 'action') !== 'update_payment_method' && (
               <sc-button
                 type="link"

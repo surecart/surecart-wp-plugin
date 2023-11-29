@@ -76,6 +76,7 @@ export class ScOrderPassword {
     return (
       <sc-password
         label={this.label}
+        aria-label={this.label}
         help={this.help}
         autofocus={this.autofocus}
         placeholder={this.placeholder}

@@ -81,6 +81,7 @@ return [
 	'tax_protocol.eu_micro_exemption_enabled.address_outside_eu' => __( 'You cannot enable EU Micro Exemption if your address is outside of the EU.', 'surecart' ),
 	'tax_protocol.tax_enabled.invalid_address'             => __( 'You cannot enable taxes unless a valid tax address is provided', 'surecart' ),
 	'media.restrict_dependent_destroy.has_one'             => __( 'You cannot delete this media item because it is currently being used.', 'surecart' ),
+	'media.content_type.unsupported'                       => __( 'This file type is not supported.', 'surecart' ),
 	'verification_code.email.blocked_duplicate'            => __( 'You have already requested a code in the last 60 seconds. Please wait before requesting again.', 'surecart' ),
 	'variant_option.name.taken'                            => __( 'This option name is already taken. Please use a different name.', 'surecart' ),
 	'product.variant_options.product.limit_reached'        => __( 'You have reached the maximum number of options for this product.', 'surecart' ),
@@ -116,6 +117,7 @@ return [
 	'shipping_rate.max_amount.not_a_number'                => __( 'The maximum amount must be a number.', 'surecart' ),
 	'shipping_rate.min_amount.greater_than_or_equal_to'    => __( 'The minimum amount must be greater than or equal to zero.', 'surecart' ),
 	'shipping_rate.min_amount.not_a_number'                => __( 'The minimum amount must be a number.', 'surecart' ),
+	'subscription.discount.coupon.not_applicable'          => __( 'This coupon is not applicable to this subscription.', 'surecart' ),
 	'customer.shipping_address.blank'                      => __( 'Please fill out your address.', 'surecart' ),
 	'payment_method.invalid'                               => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'customer.default_payment_method.invalid'              => __( 'This payment method is not valid or reusable.', 'surecart' ),
@@ -127,4 +129,5 @@ return [
 	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 ];

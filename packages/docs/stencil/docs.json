@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-09T21:24:01",
+  "timestamp": "2023-11-14T16:29:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -386,6 +386,9 @@
           "sc-input",
           "sc-select",
           "sc-block-ui"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-input": [
           "sc-form-control"
@@ -2101,6 +2104,9 @@
       "dependencyGraph": {
         "sc-button-group": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -2242,6 +2248,9 @@
         ],
         "sc-choices": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-textarea": [
           "sc-form-control"
@@ -2485,6 +2494,9 @@
         ],
         "sc-choices": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-textarea": [
           "sc-form-control"
@@ -3701,6 +3713,7 @@
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -4428,6 +4441,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-form-state-provider": [
           "sc-block-ui"
         ],
@@ -4726,6 +4742,7 @@
       "dependencies": [
         "sc-form-control",
         "sc-pill-option",
+        "sc-visually-hidden",
         "sc-choices",
         "sc-price-choice-container"
       ],
@@ -4733,8 +4750,12 @@
         "sc-checkout-product-price-variant-selector": [
           "sc-form-control",
           "sc-pill-option",
+          "sc-visually-hidden",
           "sc-choices",
           "sc-price-choice-container"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-choices": [
           "sc-form-control"
@@ -4742,7 +4763,8 @@
         "sc-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
-          "sc-skeleton"
+          "sc-skeleton",
+          "sc-visually-hidden"
         ]
       }
     },
@@ -5816,6 +5838,9 @@
         "sc-choices": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-cancel-survey": [
           "sc-choices"
         ],
@@ -6278,6 +6303,9 @@
           "sc-input",
           "sc-block-ui"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-select": [
           "sc-icon",
           "sc-menu-label",
@@ -6656,6 +6684,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "showInterval",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "show-interval",
+          "reflectToAttr": false,
+          "docs": "Has recurring",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -6782,6 +6826,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -7015,6 +7062,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -7390,6 +7440,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-phone-input": [
           "sc-form-control"
@@ -7780,6 +7833,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -8127,6 +8183,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -8438,6 +8497,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -8733,6 +8795,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -9062,6 +9127,9 @@
         ],
         "sc-phone-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -9286,6 +9354,7 @@
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ]
       }
@@ -10102,6 +10171,9 @@
         ],
         "sc-choices": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-price-input": [
           "sc-input"
@@ -11650,6 +11722,9 @@
           "sc-select",
           "sc-block-ui"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -11957,8 +12032,13 @@
         "sc-stripe-element",
         "sc-textarea"
       ],
-      "dependencies": [],
+      "dependencies": [
+        "sc-visually-hidden"
+      ],
       "dependencyGraph": {
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-address": [
           "sc-form-control"
         ],
@@ -13698,7 +13778,7 @@
         },
         {
           "name": "images",
-          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]",
+          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]",
           "mutable": false,
           "attr": "images",
           "reflectToAttr": false,
@@ -13709,7 +13789,7 @@
               "type": "string"
             },
             {
-              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]"
+              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]"
             }
           ],
           "optional": false,
@@ -13717,7 +13797,7 @@
         },
         {
           "name": "thumbnails",
-          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]",
+          "type": "string | { src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]",
           "mutable": false,
           "attr": "thumbnails",
           "reflectToAttr": false,
@@ -13729,7 +13809,7 @@
               "type": "string"
             },
             {
-              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; }[]"
+              "type": "{ src: string; alt: string; srcset: any; width: number; height: number; sizes: string; title: string; }[]"
             }
           ],
           "optional": false,
@@ -13766,10 +13846,12 @@
       ],
       "dependents": [],
       "dependencies": [
+        "sc-visually-hidden",
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-image-slider": [
+          "sc-visually-hidden",
           "sc-icon"
         ]
       }
@@ -14589,6 +14671,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-address": [
           "sc-input"
         ],
@@ -14762,6 +14847,7 @@
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -14884,6 +14970,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -15763,6 +15852,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -15877,6 +15969,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-checkout": [
           "sc-login-provider"
         ]
@@ -15890,7 +15985,24 @@
       "docs": "",
       "docsTags": [],
       "usage": {},
-      "props": [],
+      "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
       "methods": [],
       "events": [
         {
@@ -16365,9 +16477,9 @@
         "sc-divider",
         "sc-line-item",
         "sc-format-number",
+        "sc-tag",
         "sc-spacing",
         "sc-dashboard-module",
-        "sc-tag",
         "sc-order-manual-instructions",
         "sc-card",
         "sc-stacked-list",
@@ -16388,9 +16500,9 @@
           "sc-divider",
           "sc-line-item",
           "sc-format-number",
+          "sc-tag",
           "sc-spacing",
           "sc-dashboard-module",
-          "sc-tag",
           "sc-order-manual-instructions",
           "sc-card",
           "sc-stacked-list",
@@ -16645,6 +16757,9 @@
         "sc-order-bumps": [
           "sc-form-control",
           "sc-order-bump"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-order-bump": [
           "sc-format-number",
@@ -17375,6 +17490,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -18059,6 +18177,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -18579,6 +18700,9 @@
           "sc-select",
           "sc-block-ui"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -19022,6 +19146,7 @@
         "sc-button",
         "sc-icon",
         "sc-total",
+        "sc-visually-hidden",
         "sc-secure-notice"
       ],
       "dependencyGraph": {
@@ -19030,6 +19155,7 @@
           "sc-button",
           "sc-icon",
           "sc-total",
+          "sc-visually-hidden",
           "sc-secure-notice"
         ],
         "sc-paypal-buttons": [
@@ -19255,23 +19381,6 @@
           "required": false
         },
         {
-          "name": "busy",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "busy",
-          "reflectToAttr": false,
-          "docs": "Is this busy",
-          "docsTags": [],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "caGstLabel",
           "type": "string",
           "mutable": false,
@@ -19320,76 +19429,6 @@
           "required": false
         },
         {
-          "name": "order",
-          "type": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The order",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "{ id?: string; status?: \"draft\""
-            },
-            {
-              "value": "paid",
-              "type": "string"
-            },
-            {
-              "value": "finalized",
-              "type": "string"
-            },
-            {
-              "value": "payment_failed",
-              "type": "string"
-            },
-            {
-              "value": "processing",
-              "type": "string"
-            },
-            {
-              "value": "canceled",
-              "type": "string"
-            },
-            {
-              "type": "\"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string"
-            },
-            {
-              "type": "ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string"
-            },
-            {
-              "type": "Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\""
-            },
-            {
-              "value": "address_invalid",
-              "type": "string"
-            },
-            {
-              "value": "estimated",
-              "type": "string"
-            },
-            {
-              "type": "\"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string"
-            },
-            {
-              "type": "Order; customer?: string"
-            },
-            {
-              "type": "Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string"
-            },
-            {
-              "type": "Address; shipping_amount?: number; shipping_address?: string"
-            },
-            {
-              "type": "Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string"
-            },
-            {
-              "type": "ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "otherLabel",
           "type": "string",
           "mutable": false,
@@ -19421,50 +19460,22 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "taxIdentifier",
-          "type": "TaxIdentifier",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Tax identifier",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "TaxIdentifier"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "taxProtocol",
-          "type": "TaxProtocol",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The tax protocol.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "TaxProtocol"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
-      "methods": [],
-      "events": [
+      "methods": [
         {
-          "event": "scUpdateOrder",
-          "detail": "{ data: Partial<Checkout>; options?: { silent?: boolean; }; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Make a request to update the order.",
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
           "docsTags": []
         }
       ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -19490,6 +19501,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -19640,6 +19654,7 @@
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -19778,12 +19793,14 @@
       "dependencies": [
         "sc-flex",
         "sc-button",
+        "sc-visually-hidden",
         "sc-icon"
       ],
       "dependencyGraph": {
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ],
         "sc-button": [
@@ -20155,6 +20172,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-order-password": [
           "sc-password"
         ],
@@ -20304,6 +20324,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -20459,6 +20482,7 @@
       "dependencies": [
         "sc-payment-method-choice",
         "sc-icon",
+        "sc-visually-hidden",
         "sc-card",
         "sc-payment-selected",
         "sc-checkout-paystack-payment-provider",
@@ -20471,6 +20495,7 @@
         "sc-payment": [
           "sc-payment-method-choice",
           "sc-icon",
+          "sc-visually-hidden",
           "sc-card",
           "sc-payment-selected",
           "sc-checkout-paystack-payment-provider",
@@ -20484,6 +20509,9 @@
         ],
         "sc-payment-selected": [
           "sc-divider"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-checkout-mollie-payment": [
           "sc-card",
@@ -22140,6 +22168,9 @@
         "sc-phone-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-customer-edit": [
           "sc-phone-input"
         ],
@@ -22827,13 +22858,15 @@
       "dependencies": [
         "sc-format-number",
         "sc-choice-container",
-        "sc-skeleton"
+        "sc-skeleton",
+        "sc-visually-hidden"
       ],
       "dependencyGraph": {
         "sc-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
-          "sc-skeleton"
+          "sc-skeleton",
+          "sc-visually-hidden"
         ],
         "sc-checkout-product-price-variant-selector": [
           "sc-price-choice-container"
@@ -22944,6 +22977,9 @@
         ],
         "sc-choices": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -23464,6 +23500,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-custom-order-price-input": [
           "sc-price-input"
         ],
@@ -23520,11 +23559,13 @@
         "sc-product-price"
       ],
       "dependencies": [
-        "sc-format-number"
+        "sc-format-number",
+        "sc-visually-hidden"
       ],
       "dependencyGraph": {
         "sc-price-range": [
-          "sc-format-number"
+          "sc-format-number",
+          "sc-visually-hidden"
         ],
         "sc-product-item-price": [
           "sc-price-range"
@@ -23983,7 +24024,8 @@
           "sc-price-range"
         ],
         "sc-price-range": [
-          "sc-format-number"
+          "sc-format-number",
+          "sc-visually-hidden"
         ],
         "sc-product-item-list": [
           "sc-product-item"
@@ -24000,31 +24042,15 @@
       "usage": {},
       "props": [
         {
-          "name": "alt",
-          "type": "string",
-          "mutable": false,
-          "attr": "alt",
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "productMedia",
-          "type": "ProductMedia",
+          "name": "product",
+          "type": "Product",
           "mutable": false,
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "ProductMedia"
+              "type": "Product"
             }
           ],
           "optional": false,
@@ -24244,6 +24270,21 @@
           "required": false
         },
         {
+          "name": "products",
+          "type": "Product[]",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product[]"
+            }
+          ],
+          "optional": true,
+          "required": false
+        },
+        {
           "name": "query",
           "type": "string",
           "mutable": true,
@@ -24332,6 +24373,7 @@
         "sc-alert",
         "sc-dropdown",
         "sc-button",
+        "sc-visually-hidden",
         "sc-menu",
         "sc-menu-item",
         "sc-tag",
@@ -24348,6 +24390,7 @@
           "sc-alert",
           "sc-dropdown",
           "sc-button",
+          "sc-visually-hidden",
           "sc-menu",
           "sc-menu-item",
           "sc-tag",
@@ -24368,6 +24411,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-empty": [
           "sc-icon"
         ],
@@ -24381,11 +24427,13 @@
           "sc-price-range"
         ],
         "sc-price-range": [
-          "sc-format-number"
+          "sc-format-number",
+          "sc-visually-hidden"
         ],
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -24474,7 +24522,8 @@
           "sc-price-range"
         ],
         "sc-price-range": [
-          "sc-format-number"
+          "sc-format-number",
+          "sc-visually-hidden"
         ],
         "sc-product-item": [
           "sc-product-item-price"
@@ -24657,6 +24706,38 @@
           "required": false
         },
         {
+          "name": "imageAlt",
+          "type": "string",
+          "mutable": false,
+          "attr": "image-alt",
+          "reflectToAttr": false,
+          "docs": "Alternative description for the product image",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "imageTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "image-title",
+          "reflectToAttr": false,
+          "docs": "Title for the product image",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "imageUrl",
           "type": "string",
           "mutable": false,
@@ -24700,21 +24781,6 @@
           "values": [
             {
               "type": "number"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "media",
-          "type": "Media",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "The product media",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Media"
             }
           ],
           "optional": false,
@@ -25075,12 +25141,17 @@
       "dependents": [],
       "dependencies": [
         "sc-form-control",
-        "sc-pill-option"
+        "sc-pill-option",
+        "sc-visually-hidden"
       ],
       "dependencyGraph": {
         "sc-product-pills-variant-option": [
           "sc-form-control",
-          "sc-pill-option"
+          "sc-pill-option",
+          "sc-visually-hidden"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -25139,17 +25210,20 @@
       "dependents": [],
       "dependencies": [
         "sc-price-range",
+        "sc-visually-hidden",
         "sc-format-number",
         "sc-tag"
       ],
       "dependencyGraph": {
         "sc-product-price": [
           "sc-price-range",
+          "sc-visually-hidden",
           "sc-format-number",
           "sc-tag"
         ],
         "sc-price-range": [
-          "sc-format-number"
+          "sc-format-number",
+          "sc-visually-hidden"
         ]
       }
     },
@@ -25218,18 +25292,14 @@
         "sc-choices": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-price-choice-container": [
           "sc-format-number",
           "sc-choice-container",
-          "sc-skeleton"
-        ],
-        "sc-recurring-price-choice-container": [
-          "sc-format-number",
-          "sc-choice-container",
-          "sc-dropdown",
-          "sc-icon",
-          "sc-menu",
-          "sc-menu-item"
+          "sc-skeleton",
+          "sc-visually-hidden"
         ]
       }
     },
@@ -25307,6 +25377,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -25460,6 +25533,9 @@
           "sc-form-control",
           "sc-quantity-select"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-quantity-select": [
           "sc-icon"
         ]
@@ -25533,6 +25609,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -26918,6 +26997,9 @@
           "sc-button",
           "sc-icon"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-button": [
           "sc-spinner"
         ]
@@ -27708,6 +27790,9 @@
           "sc-spinner",
           "sc-menu"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-input": [
           "sc-form-control"
         ],
@@ -27926,6 +28011,9 @@
           "sc-radio",
           "sc-format-number",
           "sc-block-ui"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-block-ui": [
           "sc-spinner"
@@ -28843,6 +28931,9 @@
         "sc-stripe-element": [
           "sc-form-control",
           "sc-text"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -29461,6 +29552,9 @@
         "sc-choices": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-textarea": [
           "sc-form-control"
         ],
@@ -29550,6 +29644,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -30115,6 +30212,9 @@
         "sc-choices": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-payment-method": [
           "sc-tooltip",
           "sc-button",
@@ -30225,6 +30325,9 @@
         ],
         "sc-choices": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -30550,6 +30653,9 @@
         "sc-choices": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-alert": [
           "sc-icon"
         ],
@@ -30678,6 +30784,9 @@
           "sc-input",
           "sc-spinner",
           "sc-menu"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-input": [
           "sc-form-control"
@@ -30858,6 +30967,7 @@
         "sc-pagination": [
           "sc-flex",
           "sc-button",
+          "sc-visually-hidden",
           "sc-icon"
         ],
         "sc-block-ui": [
@@ -31505,6 +31615,22 @@
       "usage": {},
       "props": [
         {
+          "name": "ariaLabel",
+          "type": "string",
+          "mutable": false,
+          "attr": "aria-label",
+          "reflectToAttr": false,
+          "docs": "Aria label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "clearable",
           "type": "boolean",
           "mutable": false,
@@ -31907,7 +32033,7 @@
           "mutable": false,
           "attr": "required",
           "reflectToAttr": true,
-          "docs": "Required?",
+          "docs": "Whether tax input is required",
           "docsTags": [],
           "default": "false",
           "values": [
@@ -31979,7 +32105,19 @@
           "required": false
         }
       ],
-      "methods": [],
+      "methods": [
+        {
+          "name": "reportValidity",
+          "returns": {
+            "type": "Promise<boolean>",
+            "docs": ""
+          },
+          "signature": "reportValidity() => Promise<boolean>",
+          "parameters": [],
+          "docs": "",
+          "docsTags": []
+        }
+      ],
       "events": [
         {
           "event": "scChange",
@@ -32047,6 +32185,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -32784,6 +32925,9 @@
       "dependencyGraph": {
         "sc-textarea": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-cancel-survey": [
           "sc-textarea"
@@ -33594,6 +33738,9 @@
         "sc-input": [
           "sc-form-control"
         ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
         "sc-button": [
           "sc-spinner"
         ],
@@ -33717,6 +33864,71 @@
       }
     },
     {
+      "filePath": "./src/components/util/visually-hidden/sc-visually-hidden.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-visually-hidden",
+      "readme": "# sc-visually-hidden\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-checkout-product-price-variant-selector",
+        "sc-form-control",
+        "sc-image-slider",
+        "sc-order-submit",
+        "sc-pagination",
+        "sc-payment",
+        "sc-price-choice-container",
+        "sc-price-range",
+        "sc-product-item-list",
+        "sc-product-pills-variant-option",
+        "sc-product-price"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-checkout-product-price-variant-selector": [
+          "sc-visually-hidden"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
+        "sc-image-slider": [
+          "sc-visually-hidden"
+        ],
+        "sc-order-submit": [
+          "sc-visually-hidden"
+        ],
+        "sc-pagination": [
+          "sc-visually-hidden"
+        ],
+        "sc-payment": [
+          "sc-visually-hidden"
+        ],
+        "sc-price-choice-container": [
+          "sc-visually-hidden"
+        ],
+        "sc-price-range": [
+          "sc-visually-hidden"
+        ],
+        "sc-product-item-list": [
+          "sc-visually-hidden"
+        ],
+        "sc-product-pills-variant-option": [
+          "sc-visually-hidden"
+        ],
+        "sc-product-price": [
+          "sc-visually-hidden"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/dashboard/wordpress-password-edit/sc-wordpress-password-edit.tsx",
       "encapsulation": "shadow",
       "tag": "sc-wordpress-password-edit",
@@ -33825,6 +34037,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"
@@ -34003,6 +34218,9 @@
         ],
         "sc-input": [
           "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
         ],
         "sc-button": [
           "sc-spinner"

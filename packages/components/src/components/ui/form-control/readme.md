@@ -51,9 +51,14 @@
  - [sc-stripe-element](../stripe-element)
  - [sc-textarea](../sc-textarea)
 
+### Depends on
+
+- [sc-visually-hidden](../../util/visually-hidden)
+
 ### Graph
 ```mermaid
 graph TD;
+  sc-form-control --> sc-visually-hidden
   sc-address --> sc-form-control
   sc-button-group --> sc-form-control
   sc-checkout-product-price-variant-selector --> sc-form-control

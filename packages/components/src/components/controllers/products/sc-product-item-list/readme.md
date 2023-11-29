@@ -19,6 +19,7 @@
 | `paginationAlignment`  | `pagination-alignment`   |                                                           | `string`                                    | `'center'`          |
 | `paginationAutoScroll` | `pagination-auto-scroll` | Should we auto-scroll to the top when paginating via ajax | `boolean`                                   | `true`              |
 | `paginationEnabled`    | `pagination-enabled`     | Should we paginate?                                       | `boolean`                                   | `true`              |
+| `products`             | --                       |                                                           | `Product[]`                                 | `undefined`         |
 | `query`                | `query`                  | Query to search for                                       | `string`                                    | `undefined`         |
 | `searchEnabled`        | `search-enabled`         | Should allow search                                       | `boolean`                                   | `true`              |
 | `sort`                 | `sort`                   | Sort                                                      | `string`                                    | `'created_at:desc'` |
@@ -39,6 +40,7 @@
 - [sc-alert](../../../ui/alert)
 - [sc-dropdown](../../../ui/dropdown)
 - [sc-button](../../../ui/button)
+- [sc-visually-hidden](../../../util/visually-hidden)
 - [sc-menu](../../../ui/menu)
 - [sc-menu-item](../../../ui/menu-item)
 - [sc-tag](../../../ui/tag)
@@ -56,6 +58,7 @@ graph TD;
   sc-product-item-list --> sc-alert
   sc-product-item-list --> sc-dropdown
   sc-product-item-list --> sc-button
+  sc-product-item-list --> sc-visually-hidden
   sc-product-item-list --> sc-menu
   sc-product-item-list --> sc-menu-item
   sc-product-item-list --> sc-tag
@@ -69,6 +72,7 @@ graph TD;
   sc-alert --> sc-icon
   sc-button --> sc-spinner
   sc-input --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   sc-empty --> sc-icon
   sc-product-item --> sc-product-item-title
   sc-product-item --> sc-product-item-image
@@ -76,8 +80,10 @@ graph TD;
   sc-product-item-price --> sc-format-number
   sc-product-item-price --> sc-price-range
   sc-price-range --> sc-format-number
+  sc-price-range --> sc-visually-hidden
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
+  sc-pagination --> sc-visually-hidden
   sc-pagination --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-product-item-list fill:#f9f,stroke:#333,stroke-width:4px

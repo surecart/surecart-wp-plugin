@@ -176,6 +176,15 @@ export class ScPriceInput {
     this.formController?.removeFormData();
   }
 
+  getFormattedValue() {
+    if (!this.value) return '';
+
+    const parsedAmount = parseFloat(this.value);
+    if (isNaN(parsedAmount)) return '';
+
+    return maybeConvertAmount(parsedAmount, this.currencyCode).toString();
+  }
+
   render() {
     return (
       <sc-input
@@ -204,7 +213,7 @@ export class ScPriceInput {
         onScBlur={() => this.scBlur.emit()}
         onScFocus={() => this.scFocus.emit()}
         pattern="^\d*(\.\d{0,2})?$" // This prevents more than two decimal places
-        value={this.value ? maybeConvertAmount(parseFloat(this.value), this.currencyCode).toString() : ''}
+        value={this.getFormattedValue()}
       >
         <span style={{ opacity: '0.5' }} slot="prefix">
           {getCurrencySymbol(this.currencyCode)}
