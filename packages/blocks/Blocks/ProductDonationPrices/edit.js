@@ -5,11 +5,8 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
-	__experimentalNumberControl as NumberControl,
-	Placeholder,
 	RangeControl,
 } from '@wordpress/components';
-import { productDonationStore } from '@surecart/components';
 import {
 	InspectorControls,
 	useBlockProps,
@@ -17,20 +14,10 @@ import {
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
-	BlockControls,
-	AlignmentControl,
 } from '@wordpress/block-editor';
-import SelectModel from '../../../admin/components/SelectModel';
-
-import {
-	ScProductDonationChoices,
-	ScButton,
-	ScIcon,
-} from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { getSpacingPresetCssVar } from '../../util';
 import { store as coreStore } from '@wordpress/core-data';
-import classNames from 'classnames';
+import { useSelect } from '@wordpress/data';
 
 const TEMPLATE = [
 	[
@@ -44,10 +31,27 @@ const TEMPLATE = [
 ];
 
 export default ({ attributes, setAttributes, context }) => {
-	const { label, columns } = attributes;
+	const { label, columns, style } = attributes;
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
+
+	const product_id = context['surecart/product-donation/product_id'];
+
+	const product = useSelect(
+		(select) =>
+			select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				product_id,
+				{ expand: ['prices'] }
+			),
+		[product_id]
+	);
+
+	const prices = (product?.prices?.data || []).filter(
+		(price) => price?.ad_hoc && !price?.archived
+	);
 
 	const blockProps = useBlockProps({
 		style: {
@@ -62,9 +66,12 @@ export default ({ attributes, setAttributes, context }) => {
 
 	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ['surecart/product-donation-price'],
-		// renderAppender: false,
+		renderAppender: false,
 		orientation: columns > 1 ? 'horizontal' : 'vertical',
 		template: TEMPLATE,
+		templateLock: {
+			remove: true,
+		},
 	});
 
 	return (
@@ -95,13 +102,49 @@ export default ({ attributes, setAttributes, context }) => {
 					)}
 				</PanelBody>
 			</InspectorControls>
-			<div
-				class="sc-product-donation-choices"
-				{...innerBlocksProps}
-				{...blockProps}
-			>
-				<sc-choices label={label}>{children}</sc-choices>
-			</div>
+
+			{prices?.length > 1 && (
+				<div
+					class="sc-product-donation-choices"
+					{...innerBlocksProps}
+					{...blockProps}
+				>
+					<sc-choices
+						label={label}
+						style={{
+							'--columns': columns,
+							border: 'none',
+							'--sc-choice-text-color': colorProps?.style?.color,
+							'--sc-choice-background-color':
+								colorProps?.style?.backgroundColor,
+							'--sc-choice-border-color':
+								borderProps?.style?.borderColor,
+							'--sc-choice-border-width':
+								borderProps?.style?.borderWidth,
+							'--sc-choice-border-radius':
+								borderProps?.style?.borderRadius,
+							'--sc-choice-padding-left':
+								spacingProps?.style?.paddingLeft,
+							'--sc-choice-padding-right':
+								spacingProps?.style?.paddingRight,
+							'--sc-choice-padding-top':
+								spacingProps?.style?.paddingTop,
+							'--sc-choice-padding-bottom':
+								spacingProps?.style?.paddingBottom,
+							'--sc-choices-gap':
+								getSpacingPresetCssVar(
+									style?.spacing?.blockGap
+								) || '10px',
+							marginTop: spacingProps?.style?.marginTop,
+							marginLeft: spacingProps?.style?.marginLeft,
+							marginRight: spacingProps?.style?.marginRight,
+							marginBottom: spacingProps?.style?.marginBottom,
+						}}
+					>
+						{children}
+					</sc-choices>
+				</div>
+			)}
 		</>
 	);
 };

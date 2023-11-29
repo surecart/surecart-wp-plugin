@@ -18,14 +18,30 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
-		ob_start(); ?>
-		<div class="sc-product-donation-choices" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ); ?> <?php echo esc_attr( $styles ); ?> ">
-			<sc-choices label="<?php echo esc_attr( $attributes['label'] ); ?>">
-				<?php echo filter_block_content( $content ); ?>
-			</sc-choices>
-		</div>
-		<?php
-		return ob_get_clean();
+		$wrapper_attributes = get_block_wrapper_attributes(
+			[
+				'class' => 'sc-product-donation-choices',
+				'style' => implode(
+					' ',
+					[
+						'border: none;',
+						esc_attr( $this->getVars( $attributes, '--sc-choice' ) ),
+						'--columns:' . intval( $attributes['columns'] ) . ';',
+						'--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';',
+					]
+				),
+			]
+		);
+
+		return sprintf(
+			'<div %s>
+				<sc-choices label="%s">
+					%s
+				</sc-choices>
+			</div>',
+			$wrapper_attributes,
+			esc_attr( $attributes['label'] ),
+			filter_block_content( $content )
+		);
 	}
 }

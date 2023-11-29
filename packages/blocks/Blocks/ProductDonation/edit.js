@@ -1,35 +1,22 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	__experimentalNumberControl as NumberControl,
-	Placeholder,
-} from '@wordpress/components';
+import { Placeholder } from '@wordpress/components';
 import { productDonationStore } from '@surecart/components';
 import {
-	InspectorControls,
 	useBlockProps,
 	InnerBlocks,
 	useInnerBlocksProps,
-	__experimentalUseBorderProps as useBorderProps,
-	__experimentalUseColorProps as useColorProps,
-	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import SelectModel from '../../../admin/components/SelectModel';
 
-import {
-	ScProductDonationChoices,
-	ScButton,
-	ScIcon,
-} from '@surecart/components-react';
+import { ScButton, ScIcon } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 
-const TEMPLATE = [['surecart/product-donation-amounts']];
+const TEMPLATE = [
+	['surecart/product-donation-amounts'],
+	['surecart/product-donation-prices'],
+];
 
 export default ({ attributes, setAttributes }) => {
 	const [query, setQuery] = useState(null);
@@ -59,10 +46,6 @@ export default ({ attributes, setAttributes }) => {
 
 	const { product_id } = attributes;
 
-	const borderProps = useBorderProps(attributes);
-	const colorProps = useColorProps(attributes);
-	const spacingProps = useSpacingProps(attributes);
-
 	const blockProps = useBlockProps();
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
@@ -72,6 +55,9 @@ export default ({ attributes, setAttributes }) => {
 		],
 		renderAppender: InnerBlocks.ButtonBlockAppender,
 		template: TEMPLATE,
+		templateLock: {
+			remove: true,
+		},
 	});
 
 	const product = useSelect(
@@ -85,7 +71,7 @@ export default ({ attributes, setAttributes }) => {
 		},
 		[product_id]
 	);
-	console.log({ product });
+
 	productDonationStore.state[product_id] = {
 		product,
 		amounts: product?.prices?.data.map((price) => price?.amount),
@@ -141,43 +127,5 @@ export default ({ attributes, setAttributes }) => {
 		);
 	}
 
-	return (
-		<div {...innerBlocksProps}>
-			{/* <ScProductDonationChoices
-					amountLabel={amount_label}
-					recurringLabel={recurring_label}
-					recurringChoiceLabel={recurring_choice_label}
-					nonRecurringChoiceLabel={non_recurring_choice_label}
-					amountColumns={amount_columns}
-					productId={product_id}
-					style={{
-						border: 'none',
-						'--sc-input-required-indicator': '/\\00a0',
-						'--sc-choice-text-color': colorProps?.style?.color,
-						'--sc-choice-background-color':
-							colorProps?.style?.backgroundColor,
-						'--sc-choice-border-color':
-							borderProps?.style?.borderColor,
-						'--sc-choice-border-width':
-							borderProps?.style?.borderWidth,
-						'--sc-choice-border-radius':
-							borderProps?.style?.borderRadius,
-						'--sc-choice-padding-left':
-							spacingProps?.style?.paddingLeft,
-						'--sc-choice-padding-right':
-							spacingProps?.style?.paddingRight,
-						'--sc-choice-padding-top':
-							spacingProps?.style?.paddingTop,
-						'--sc-choice-padding-bottom':
-							spacingProps?.style?.paddingBottom,
-						marginTop: spacingProps?.style?.marginTop,
-						marginLeft: spacingProps?.style?.marginLeft,
-						marginRight: spacingProps?.style?.marginRight,
-						marginBottom: spacingProps?.style?.marginBottom,
-					}}
-				>
-					{children}
-				</ScProductDonationChoices> */}
-		</div>
-	);
+	return <div {...innerBlocksProps}></div>;
 };

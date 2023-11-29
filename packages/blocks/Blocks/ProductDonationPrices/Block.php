@@ -21,11 +21,12 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
 
-		$product = Product::with( [ 'prices' ] )->find( $attributes['product_id'] ?? '' );
+		$product = Product::with( [ 'prices' ] )->find( $this->block->context['surecart/product-donation/product_id'] );
 		if ( is_wp_error( $product ) ) {
 			return $product->get_error_message();
 		}
 
+		// must have a minimum of 2 prices to show choices.
 		if ( count( $product->activePrices() ) < 2 ) {
 			return '';
 		}

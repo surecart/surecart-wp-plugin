@@ -30,11 +30,11 @@ export class ScProductDonationChoice {
   }
 
   render() {
-    const prices = (this.state()?.product?.prices?.data || [])?.filter(price =>
-      this.recurring ? price?.recurring_interval && price?.ad_hoc : !price?.recurring_interval && price?.ad_hoc,
-    );
+    const prices = (this.state()?.product?.prices?.data || [])
+      .filter(price => (this.recurring ? price?.recurring_interval && price?.ad_hoc : !price?.recurring_interval && price?.ad_hoc))
+      .filter(price => !price?.archived);
 
-    // no prices, return nothing
+    // no prices, or less than 2 prices, we have no choices.
     if (!prices?.length) {
       return <Host style={{ display: 'none' }}></Host>;
     }

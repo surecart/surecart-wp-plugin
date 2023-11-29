@@ -1,54 +1,21 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import {
-	PanelBody,
-	PanelRow,
-	TextControl,
-	__experimentalNumberControl as NumberControl,
-	Placeholder,
-	RangeControl,
-} from '@wordpress/components';
-import { productDonationStore } from '@surecart/components';
+import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import {
 	InspectorControls,
 	useBlockProps,
-	useInnerBlocksProps,
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUseColorProps as useColorProps,
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
-	BlockControls,
-	AlignmentControl,
 	RichText,
 } from '@wordpress/block-editor';
-import SelectModel from '../../../admin/components/SelectModel';
 
-import {
-	ScProductDonationChoices,
-	ScButton,
-	ScIcon,
-	ScRecurringPriceChoiceContainer,
-} from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
-import classNames from 'classnames';
-
-const TEMPLATE = [
-	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 200, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 500, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 1000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 2000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 5000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 10000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 20000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 50000, currency: 'USD' }],
-	['surecart/custom-donation-amount', { currency: 'USD' }],
-];
+import { ScProductDonationChoices } from '@surecart/components-react';
+import { getSpacingPresetCssVar } from '../../util';
 
 export default ({ attributes, setAttributes, context }) => {
-	const { label, recurring } = attributes;
+	const { label, recurring, style } = attributes;
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
