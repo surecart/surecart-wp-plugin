@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+import { LineItemData, Price as Price1, Product as Product1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+export { LineItemData, Price as Price1, Product as Product1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
