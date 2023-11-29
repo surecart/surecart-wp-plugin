@@ -15,6 +15,7 @@ export class ScChoiceContainer {
   private formController: any;
 
   private input: HTMLInputElement;
+  private inputId: string = `choice-container-${++id}`;
   private labelId: string = `choice-container-label-${id}`;
 
   /** Does the choice have focus */
@@ -113,7 +114,7 @@ export class ScChoiceContainer {
   }
 
   getAllChoices() {
-    const choiceGroup = this.el.closest('sc-choices') || this.el.closest('sc-product-donation-choices') || this.el.parentElement;
+    const choiceGroup = this.el.closest('sc-choices') || this.el.parentElement;
     // Radios must be part of a radio group
     if (!choiceGroup) {
       return [];
@@ -150,12 +151,6 @@ export class ScChoiceContainer {
 
   // Prevent clicks on the label from briefly blurring the input
   handleMouseDown(event: MouseEvent) {
-    const element = event.target as HTMLElement;
-
-    if (element.tagName !== 'label') {
-      return true;
-    }
-
     event.preventDefault();
     this.input.focus();
   }
