@@ -91,7 +91,7 @@ export class ScPriceInput {
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
-  scChange: EventEmitter<string>;
+  scChange: EventEmitter<void>;
 
   /** Emitted when the control's value changes. */
   @Event({ composed: true })
