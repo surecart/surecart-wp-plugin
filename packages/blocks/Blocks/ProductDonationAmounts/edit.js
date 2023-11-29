@@ -5,11 +5,8 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
-	__experimentalNumberControl as NumberControl,
-	Placeholder,
 	RangeControl,
 } from '@wordpress/components';
-import { productDonationStore } from '@surecart/components';
 import {
 	InspectorControls,
 	useBlockProps,
@@ -20,33 +17,54 @@ import {
 	BlockControls,
 	AlignmentControl,
 } from '@wordpress/block-editor';
-import SelectModel from '../../../admin/components/SelectModel';
-
-import {
-	ScProductDonationChoices,
-	ScButton,
-	ScIcon,
-} from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
-import { store as coreStore } from '@wordpress/core-data';
 import classNames from 'classnames';
+import { getSpacingPresetCssVar } from '../../util';
 
 const TEMPLATE = [
-	['surecart/product-donation-amount', { amount: 100, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 200, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 500, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 1000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 2000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 5000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 10000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 20000, currency: 'USD' }],
-	['surecart/product-donation-amount', { amount: 50000, currency: 'USD' }],
-	['surecart/custom-donation-amount', { currency: 'USD' }],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 100, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 200, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 500, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 1000, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 2000, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 5000, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 10000, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 20000, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/product-donation-amount',
+		{ amount: 50000, currency: scBlockData?.currency || 'usd' },
+	],
+	[
+		'surecart/custom-donation-amount',
+		{ currency: scBlockData?.currency || 'usd' },
+	],
 ];
 
 export default ({ attributes, setAttributes }) => {
-	const { label, columns, textAlign } = attributes;
+	const { label, columns, textAlign, style } = attributes;
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
@@ -119,7 +137,40 @@ export default ({ attributes, setAttributes }) => {
 				{...innerBlocksProps}
 				{...blockProps}
 			>
-				<sc-choices label={label}>{children}</sc-choices>
+				<sc-choices
+					label={label}
+					style={{
+						'--columns': columns,
+						border: 'none',
+						'--sc-input-required-indicator': '/\\00a0',
+						'--sc-choice-text-color': colorProps?.style?.color,
+						'--sc-choice-background-color':
+							colorProps?.style?.backgroundColor,
+						'--sc-choice-border-color':
+							borderProps?.style?.borderColor,
+						'--sc-choice-border-width':
+							borderProps?.style?.borderWidth,
+						'--sc-choice-border-radius':
+							borderProps?.style?.borderRadius,
+						'--sc-choice-padding-left':
+							spacingProps?.style?.paddingLeft,
+						'--sc-choice-padding-right':
+							spacingProps?.style?.paddingRight,
+						'--sc-choice-padding-top':
+							spacingProps?.style?.paddingTop,
+						'--sc-choice-padding-bottom':
+							spacingProps?.style?.paddingBottom,
+						'--sc-choices-gap':
+							getSpacingPresetCssVar(style?.spacing?.blockGap) ||
+							'10px',
+						marginTop: spacingProps?.style?.marginTop,
+						marginLeft: spacingProps?.style?.marginLeft,
+						marginRight: spacingProps?.style?.marginRight,
+						marginBottom: spacingProps?.style?.marginBottom,
+					}}
+				>
+					{children}
+				</sc-choices>
 			</div>
 		</>
 	);
