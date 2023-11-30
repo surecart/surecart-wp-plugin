@@ -32,7 +32,7 @@ Object.keys(state).forEach(productId => {
       const ad_hoc_amount = val?.custom_amount && isInRange(val?.custom_amount, val.selectedPrice) ? val?.custom_amount : getValidAdHocAmount(productId);
       // update the line item
       updateLineItem(productId, {
-        price: val.selectedPrice?.id,
+        price: val.selectedPrice?.id || val.product?.prices?.data[0]?.id,
         quantity: 1, // quantity should always be 1.
         ad_hoc_amount,
       });
