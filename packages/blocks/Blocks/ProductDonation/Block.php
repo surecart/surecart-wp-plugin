@@ -22,9 +22,15 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		// get the product.
 		$product = Product::with( [ 'prices' ] )->find( $attributes['product_id'] ?? '' );
 		if ( is_wp_error( $product ) ) {
 			return $product->get_error_message();
+		}
+
+		// no ad_hoc prices.
+		if ( ! count( $product->activeAdHocPrices() ) ) {
+			return false;
 		}
 
 		// get amounts from inner blocks.
@@ -43,7 +49,7 @@ class Block extends BaseBlock {
 					$attributes['product_id'] => [
 						'product'       => $product->toArray(),
 						'amounts'       => $amounts,
-						'ad_hoc_amount' => $amounts[0] ?? '' ?? '',
+						'ad_hoc_amount' => null,
 						'custom_amount' => null,
 						'selectedPrice' => ( $product->activePrices() || [] )[0] ?? null,
 					],
@@ -60,7 +66,7 @@ class Block extends BaseBlock {
 	 * @return array
 	 */
 	public function getInitialLineItems( $product, $amounts ) {
-		if ( empty( $product->prices->data[0] ) || empty( $amounts ) ) {
+		if ( empty( $product->activeAdHocPrices() ) || empty( $amounts ) ) {
 			return [];
 		}
 
@@ -68,7 +74,7 @@ class Block extends BaseBlock {
 		$ad_hoc_amount = $amounts[0] ?? '';
 
 		foreach ( $amounts as $amount ) {
-			if ( $amount >= $product->prices->data[0]->ad_hoc_min_amount && $amount <= $product->prices->data[0]->ad_hoc_max_amount ) {
+			if ( $amount >= $product->activeAdHocPrices()[0]->ad_hoc_min_amount && $amount <= $product->activeAdHocPrices()[0]->ad_hoc_max_amount ) {
 				$ad_hoc_amount = $amount;
 				break;
 			}
@@ -76,7 +82,7 @@ class Block extends BaseBlock {
 
 		return array(
 			[
-				'price'         => $product->prices->data[0]->id,
+				'price'         => $product->activeAdHocPrices()[0]->id,
 				'ad_hoc_amount' => $ad_hoc_amount,
 				'quantity'      => 1,
 			],

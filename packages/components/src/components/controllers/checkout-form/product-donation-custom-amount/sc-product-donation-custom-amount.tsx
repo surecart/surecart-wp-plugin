@@ -26,20 +26,10 @@ export class ScProductDonationCustomAmount {
   }
 
   render() {
+    const checked = !!this.state().custom_amount;
     return (
       <Host class={{ 'sc-product-donation-custom-amount': true, 'sc-product-donation-custom-amount--has-value': !!this.value }}>
-        <sc-choice-container
-          value={`${this.state()?.custom_amount}`}
-          show-control="false"
-          checked={!!this.state().custom_amount}
-          onClick={() => {
-            if (!this.state().custom_amount) return;
-            this.updateState({
-              ad_hoc_amount: null,
-              custom_amount: this.state().custom_amount,
-            });
-          }}
-        >
+        <sc-choice-container value={`${this.state()?.custom_amount}`} show-control="false" checked={checked} onClick={() => this.priceInput.triggerFocus()}>
           <sc-price-input
             ref={el => (this.priceInput = el)}
             currencyCode={this.state()?.selectedPrice?.currency}
