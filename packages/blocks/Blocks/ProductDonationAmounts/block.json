@@ -50,5 +50,6 @@
 			"type": "string",
 			"default": "center"
 		}
-	}
+	},
+	"style": "file:./preload.css"
 }

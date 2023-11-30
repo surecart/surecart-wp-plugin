@@ -19,14 +19,13 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		$wrapper_attributes = get_block_wrapper_attributes(
 			[
-				'class' => 'sc-product-donation-choices',
 				'style' => implode(
 					' ',
 					[
 						'border: none;',
 						esc_attr( $this->getVars( $attributes, '--sc-choice' ) ),
 						'--columns:' . intval( $attributes['columns'] ) . ';',
-						'--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';',
+						$this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
 					]
 				),
 			]
