@@ -92,4 +92,7 @@ export const config: Config = {
         ]
       : []),
   ],
+  extras: {
+    experimentalSlotFixes: true,
+  },
 };
