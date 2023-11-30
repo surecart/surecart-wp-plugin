@@ -8,7 +8,8 @@
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
 	"providesContext": {
-		"surecart/product-donation/product_id": "product_id"
+		"surecart/product-donation/product_id": "product_id",
+		"surecart/product-donation/required": "required"
 	},
 	"supports": {
 		"reusable": false,
@@ -50,35 +51,12 @@
 		}
 	},
 	"attributes": {
-		"id": {
-			"type": "string"
-		},
-		"amount_label": {
-			"type": "string",
-			"default": "Donation Amount"
-		},
-		"recurring_label": {
-			"type": "string",
-			"default": "Make it recurring"
-		},
-		"recurring_choice_label": {
-			"type": "string",
-			"default": "Yes, count me in!"
-		},
-		"non_recurring_choice_label": {
-			"type": "string",
-			"default": "No, donate once"
-		},
-		"amount_columns": {
-			"type": "number",
-			"default": 3
-		},
 		"product_id": {
 			"type": "string"
 		},
-		"currency": {
-			"type": "string",
-			"default": "USD"
+		"required": {
+			"type": "boolean",
+			"default": true
 		}
 	}
 }

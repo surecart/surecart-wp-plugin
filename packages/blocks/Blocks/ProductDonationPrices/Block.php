@@ -24,14 +24,7 @@ class Block extends BaseBlock {
 		}
 
 		// must have a minimum of 2 prices to show choices.
-		if ( count(
-			array_filter(
-				$product->activePrices() ?? [],
-				function( $price ) {
-					return $price->ad_hoc;
-				}
-			)
-		) < 2
+		if ( count( $product->activeAdHocPrices() ?? [] ) < 2
 		) {
 			return false;
 		}
@@ -44,7 +37,7 @@ class Block extends BaseBlock {
 						'border: none;',
 						esc_attr( $this->getVars( $attributes, '--sc-choice' ) ),
 						'--columns:' . intval( $attributes['columns'] ) . ';',
-						$this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
+						! empty( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
 					]
 				),
 			]

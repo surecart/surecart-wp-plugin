@@ -63,7 +63,7 @@ const TEMPLATE = [
 	],
 ];
 
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, context }) => {
 	const { label, columns, textAlign, style } = attributes;
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
@@ -139,6 +139,7 @@ export default ({ attributes, setAttributes }) => {
 			>
 				<sc-choices
 					label={label}
+					required={context['surecart/product-donation/required']}
 					style={{
 						'--columns': columns,
 						border: 'none',

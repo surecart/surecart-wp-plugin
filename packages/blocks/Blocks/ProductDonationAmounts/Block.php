@@ -25,7 +25,7 @@ class Block extends BaseBlock {
 						'border: none;',
 						esc_attr( $this->getVars( $attributes, '--sc-choice' ) ),
 						'--columns:' . intval( $attributes['columns'] ) . ';',
-						$this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
+						! empty( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
 					]
 				),
 			]
@@ -33,12 +33,13 @@ class Block extends BaseBlock {
 
 		return wp_sprintf(
 			'<div %s>
-				<sc-choices label="%s">
+				<sc-choices label="%s" required="%s">
 					%s
 				</sc-choices>
 			</div>',
 			$wrapper_attributes,
 			esc_attr( $attributes['label'] ),
+			$this->block->context['surecart/product-donation/required'] ? 'true' : 'false',
 			filter_block_content( $content )
 		);
 	}

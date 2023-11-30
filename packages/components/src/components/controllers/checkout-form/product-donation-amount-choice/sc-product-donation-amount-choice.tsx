@@ -33,6 +33,7 @@ export class ScProductDonationAmountChoice {
   }
 
   render() {
+    console.log(this.state().ad_hoc_amount, this.value);
     if (!isInRange(this.value, this.state().selectedPrice)) return <Host style={{ display: 'none' }}></Host>;
     return (
       <sc-choice-container

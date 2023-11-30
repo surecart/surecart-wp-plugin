@@ -1,10 +1,16 @@
 import { __ } from '@wordpress/i18n';
-import { Placeholder } from '@wordpress/components';
+import {
+	PanelBody,
+	PanelRow,
+	Placeholder,
+	ToggleControl,
+} from '@wordpress/components';
 import { productDonationStore } from '@surecart/components';
 import {
 	useBlockProps,
 	InnerBlocks,
 	useInnerBlocksProps,
+	InspectorControls,
 } from '@wordpress/block-editor';
 import SelectModel from '../../../admin/components/SelectModel';
 
@@ -19,6 +25,7 @@ const TEMPLATE = [
 ];
 
 export default ({ attributes, setAttributes }) => {
+	const { product_id, required } = attributes;
 	const [query, setQuery] = useState(null);
 
 	const { products, loading } = useSelect(
@@ -43,8 +50,6 @@ export default ({ attributes, setAttributes }) => {
 		},
 		[query]
 	);
-
-	const { product_id } = attributes;
 
 	const blockProps = useBlockProps();
 
@@ -127,5 +132,20 @@ export default ({ attributes, setAttributes }) => {
 		);
 	}
 
-	return <div {...innerBlocksProps}></div>;
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody>
+					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+			<div {...innerBlocksProps}></div>
+		</>
+	);
 };

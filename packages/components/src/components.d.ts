@@ -8638,7 +8638,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the control's value changes.
          */
-        "onScChange"?: (event: ScPriceInputCustomEvent<string>) => void;
+        "onScChange"?: (event: ScPriceInputCustomEvent<void>) => void;
         /**
           * Emitted when the control gains focus.
          */

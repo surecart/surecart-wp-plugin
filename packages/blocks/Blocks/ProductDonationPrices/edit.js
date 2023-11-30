@@ -111,6 +111,7 @@ export default ({ attributes, setAttributes, context }) => {
 				>
 					<sc-choices
 						label={label}
+						required={context['surecart/product-donation/required']}
 						style={{
 							'--columns': columns,
 							border: 'none',
