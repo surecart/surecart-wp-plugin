@@ -22,6 +22,7 @@ class Block extends BaseBlock {
 				'value'         => esc_attr( $attributes['amount'] ?? '' ),
 				'product-id'    => esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ),
 				'currency-code' => esc_attr( $attributes['currency'] ?? 'USD' ),
+				'label'         => esc_attr( $attributes['label'] ?? '' ),
 				'recurring'     => ! empty( $attributes['recurring'] ) ? 'true' : 'false',
 				'product-id'    => esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ),
 			]
@@ -30,7 +31,6 @@ class Block extends BaseBlock {
 		return wp_sprintf(
 			'<sc-product-donation-amount-choice %s>%s</sc-product-donation-amount-choice>',
 			$wrapper_attributes,
-			esc_attr( $attributes['label'] ?? '' )
 		);
 	}
 }
