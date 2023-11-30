@@ -87,6 +87,7 @@ Type: `Promise<void>`
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-product-buy-button](../../controllers/product/sc-product-buy-button)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-product-price-modal](../../controllers/product/sc-product-price-modal)
  - [sc-stripe-add-method](../sc-stripe-add-method)
  - [sc-stripe-payment-request](../stripe-payment-request)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -121,6 +122,7 @@ graph TD;
   sc-price-choice --> sc-alert
   sc-product-buy-button --> sc-alert
   sc-product-item-list --> sc-alert
+  sc-product-price-modal --> sc-alert
   sc-stripe-add-method --> sc-alert
   sc-stripe-payment-request --> sc-alert
   sc-subscription-switch --> sc-alert

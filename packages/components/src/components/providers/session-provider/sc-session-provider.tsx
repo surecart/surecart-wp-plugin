@@ -363,6 +363,7 @@ export class ScSessionProvider {
               }
             : {}),
           line_items,
+          ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
         },
       })) as Checkout;
       updateFormState('RESOLVE');
@@ -383,6 +384,7 @@ export class ScSessionProvider {
         data: {
           ...(promotion_code ? { discount: { promotion_code } } : {}),
           refresh_price_versions: true,
+          ...(checkoutState.taxProtocol?.eu_vat_required ? { tax_identifier: { number_type: 'eu_vat' } } : {}),
         },
       })) as Checkout;
       updateFormState('RESOLVE');

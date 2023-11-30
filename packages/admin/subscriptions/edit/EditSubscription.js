@@ -50,6 +50,7 @@ export default () => {
 						'current_period',
 						'current_period.checkout',
 						'discount',
+						'discount.coupon',
 					],
 				},
 			];
@@ -82,6 +83,7 @@ export default () => {
 		subscription?.price,
 		subscription?.ad_hoc_amount,
 		subscription?.trial_end_at,
+		subscription?.discount,
 		skipProration,
 		updateBehavior,
 	]);
@@ -164,6 +166,8 @@ export default () => {
 						'checkout.line_items',
 						'line_item.price',
 						'price.product',
+						'checkout.discount',
+						'discount.coupon',
 						'period.subscription',
 					],
 				}

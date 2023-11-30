@@ -156,7 +156,7 @@ export class ScChoice {
 
       event.preventDefault();
     }
-    if ('Enter' === event.key) {
+    if ('Enter' === event.key || ' ' === event.key) {
       this.handleClickEvent();
     }
   }

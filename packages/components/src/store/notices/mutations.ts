@@ -2,6 +2,7 @@
  * External dependencies.
  */
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 
 /**
  * Internal dependencies.
@@ -42,6 +43,9 @@ export const createNotice = (status: NoticeType, notice: ScNoticeStore, options 
 
   // Merge options and notice.
   notice = { ...options, ...notice };
+
+  // speak the error notice.
+  speak(notice.message, 'assertive');
 
   // Set notice properties to the state.
   Object.keys(notice).forEach(key => {

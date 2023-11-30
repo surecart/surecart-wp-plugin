@@ -22,6 +22,9 @@ export class ScPriceChoice {
   /** Stores the price */
   @Prop({ mutable: true }) price: Price;
 
+  /** Stores the price */
+  @Prop({ mutable: true }) product: Product;
+
   /** Is this loading */
   @Prop({ mutable: true }) loading: boolean = false;
 
@@ -81,8 +84,6 @@ export class ScPriceChoice {
 
   /** Stores the error message */
   @State() adHocErrorMessage: string;
-
-  @State() product: Product;
 
   /** Refetch if price changes */
   @Watch('priceId')

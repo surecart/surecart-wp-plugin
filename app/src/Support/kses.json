@@ -418,6 +418,7 @@
     "loading": true,
     "open": true,
     "placeholder": true,
+    "show-interval": true,
     "style": true,
     "id": true,
     "class": true,
@@ -979,6 +980,7 @@
     "slot": true
   },
   "sc-menu": {
+    "aria-label": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1246,15 +1248,11 @@
   },
   "sc-order-tax-id-input": {
     "au-abn-label": true,
-    "busy": true,
     "ca-gst-label": true,
     "eu-vat-label": true,
     "gb-vat-label": true,
-    "order": true,
     "other-label": true,
     "show": true,
-    "tax-identifier": true,
-    "tax-protocol": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1461,6 +1459,7 @@
     "price": true,
     "price-id": true,
     "prices": true,
+    "product": true,
     "products": true,
     "quantity": true,
     "show-control": true,
@@ -1547,8 +1546,7 @@
     "slot": true
   },
   "sc-product-item-image": {
-    "alt": true,
-    "product-media": true,
+    "product": true,
     "sizing": true,
     "style": true,
     "id": true,
@@ -1566,6 +1564,7 @@
     "pagination-alignment": true,
     "pagination-auto-scroll": true,
     "pagination-enabled": true,
+    "products": true,
     "query": true,
     "search-enabled": true,
     "sort": true,
@@ -1595,10 +1594,11 @@
     "currency": true,
     "editable": true,
     "fees": true,
+    "image-alt": true,
+    "image-title": true,
     "image-url": true,
     "interval": true,
     "max": true,
-    "media": true,
     "name": true,
     "price-name": true,
     "quantity": true,
@@ -2074,6 +2074,7 @@
     "slot": true
   },
   "sc-tag": {
+    "aria-label": true,
     "clearable": true,
     "pill": true,
     "size": true,
@@ -2202,6 +2203,12 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-visually-hidden": {
     "style": true,
     "id": true,
     "class": true,
