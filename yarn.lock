@@ -5701,12 +5701,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stencil/core@npm:4":
-  version: 4.8.0
-  resolution: "@stencil/core@npm:4.8.0"
+"@stencil/core@npm:3":
+  version: 3.2.1
+  resolution: "@stencil/core@npm:3.2.1"
   bin:
     stencil: bin/stencil
-  checksum: 5fb7f19077205f6993b1b501723b62e5edc9657b875efbb2a136c151aef0c6bf3df587d7674472c80cfe3a9891dbeaced68e70289a67c8354cda427da8ed4d53
+  checksum: b7349e0e7551d287264a6052ea0c3246ae6e55c173bffaf7b8db73e16f128ba1bb4e704b7b6d76810a22fc38b9e14daf67d273133f9c435ad327f1a4bd4434b5
   languageName: node
   linkType: hard
 
@@ -7255,7 +7255,7 @@ __metadata:
     "@floating-ui/dom": ^0.5.0
     "@mdx-js/react": ^1.6.22
     "@paypal/paypal-js": ^5.0.4
-    "@stencil/core": 4
+    "@stencil/core": 3
     "@stencil/react-output-target": ^0.5.0
     "@stencil/sass": ^1.4.0
     "@stencil/store": ^2.0.0
