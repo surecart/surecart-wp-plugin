@@ -67,7 +67,20 @@ export class ScRecurringPriceChoiceContainer {
               <div class="recurring-price-choice__description">
                 <sc-dropdown style={{ '--panel-width': 'max(100%, 11rem)', '--sc-menu-item-white-space': 'wrap' }}>
                   <button class="recurring-price-choice__button" slot="trigger">
-                    {this.value()?.name || (this.value()?.product as Product)?.name}
+                    {this.value()?.name || (this.value()?.product as Product)?.name || (
+                      <Fragment>
+                        {intervalString(this.value(), {
+                          showOnce: true,
+                          abbreviate: false,
+                          labels: {
+                            interval: __('Every', 'surecart'),
+                            period:
+                              /** translators: used as in time period: "for 3 months" */
+                              __('for', 'surecart'),
+                          },
+                        })}
+                      </Fragment>
+                    )}
                     <sc-icon name="chevron-down"></sc-icon>
                   </button>
                   <sc-menu>
@@ -75,7 +88,17 @@ export class ScRecurringPriceChoiceContainer {
                       const checked = price?.id === this.selectedPrice?.id;
                       return (
                         <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked}>
-                          {price?.name || this.product?.name}
+                          {price?.name ||
+                            intervalString(price, {
+                              showOnce: true,
+                              abbreviate: false,
+                              labels: {
+                                interval: __('Every', 'surecart'),
+                                period:
+                                  /** translators: used as in time period: "for 3 months" */
+                                  __('for', 'surecart'),
+                              },
+                            })}
                           {this.showAmount && <span slot="suffix">{this.renderPrice(price)}</span>}
                         </sc-menu-item>
                       );
