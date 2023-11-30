@@ -259,6 +259,40 @@ export default ({ product, updateProduct, loading }) => {
 						>
 							{__('Require terms and conditions', 'surecart')}
 						</ScSwitch>
+						<ScSwitch
+							checked={
+								product?.metadata
+									?.wp_buy_link_custom_thankyou_page ===
+								'true'
+							}
+							onScChange={(e) => {
+								updateMeta({
+									wp_buy_link_custom_thankyou_page: e.target
+										.checked
+										? 'true'
+										: 'false',
+								});
+							}}
+						>
+							{__('Custom Thank You Page', 'surecart')}
+						</ScSwitch>
+						{product?.metadata?.wp_buy_link_custom_thankyou_page ===
+							'true' && (
+							<ScInput
+								label={__('URL', 'surecart')}
+								value={
+									product?.metadata
+										?.wp_buy_link_custom_thankyou_page_url
+								}
+								onScChange={(e) => {
+									updateMeta({
+										wp_buy_link_custom_thankyou_page_url:
+											e.target.value,
+									});
+								}}
+								type="url"
+							/>
+						)}
 						<ScDivider />
 						<ScInput
 							label={__('Link', 'surecart')}

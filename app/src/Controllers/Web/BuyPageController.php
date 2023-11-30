@@ -119,7 +119,9 @@ class BuyPageController extends BasePageController {
 				]
 			);
 		}
-
+		
+		$success_url = ! empty( $this->model['metadata']->wp_buy_link_custom_thankyou_page ) && ! empty( $this->model['metadata']->wp_buy_link_custom_thankyou_page_url ) ? $this->model['metadata']->wp_buy_link_custom_thankyou_page_url : '';
+		
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
@@ -138,6 +140,7 @@ class BuyPageController extends BasePageController {
 				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
+				'success_url'      => $success_url,
 			]
 		);
 	}
