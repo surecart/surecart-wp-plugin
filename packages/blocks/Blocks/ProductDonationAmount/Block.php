@@ -29,7 +29,7 @@ class Block extends BaseBlock {
 		);
 
 		return wp_sprintf(
-			'<sc-product-donation-amount-choice %s>%s</sc-product-donation-amount-choice>',
+			'<sc-product-donation-amount-choice %s></sc-product-donation-amount-choice>',
 			$wrapper_attributes,
 		);
 	}

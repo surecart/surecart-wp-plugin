@@ -22,11 +22,6 @@ sc-product-donation-choices .block-list-appender.wp-block > .block-editor-insert
 }
 
 sc-product-donation-custom-amount sc-choice-container sc-form sc-price-input sc-button {
-	--sc-button-default-background-color: var(--sc-color-primary-500);
-	--sc-button-default-color: white;
-}
-
-sc-product-donation-custom-amount sc-choice-container sc-form sc-price-input sc-button {
 	margin: 5px;
 }
 
