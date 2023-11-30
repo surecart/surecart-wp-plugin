@@ -1,10 +1,17 @@
 import { createStore } from '@stencil/store';
 import { getSerializedState } from '@store/utils';
 import { getLineItemByProductId } from '@store/checkout/getters';
+import { Price, Product } from '../../types';
 const { productDonation } = getSerializedState();
 
 interface Store {
-  [key: string]: any;
+  [key: string]: {
+    product: Product;
+    selectedPrice: Price;
+    ad_hoc_amount: number;
+    custom_amount: number;
+    amounts: number[];
+  };
 }
 
 // This gets initial checkout line items and updates the product donation store to match on load.
