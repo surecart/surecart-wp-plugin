@@ -40,7 +40,7 @@ export class ScProductDonationAmountChoice {
         checked={this.state().ad_hoc_amount === this.value}
         onScChange={() => this.updateState({ ad_hoc_amount: this.value, custom_amount: null })}
       >
-        {this.label ? this.label : <sc-format-number type="currency" currency={this.currencyCode} value={this.value} minimum-fraction-digits="0"></sc-format-number>}
+        <slot>{this.label ? this.label : <sc-format-number type="currency" currency={this.currencyCode} value={this.value} minimum-fraction-digits="0"></sc-format-number>}</slot>
       </sc-choice-container>
     );
   }
