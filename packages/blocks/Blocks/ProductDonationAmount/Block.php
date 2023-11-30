@@ -17,16 +17,20 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		$wrapper_attributes = get_block_wrapper_attributes(
+			[
+				'value'         => esc_attr( $attributes['amount'] ?? '' ),
+				'product-id'    => esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ),
+				'currency-code' => esc_attr( $attributes['currency'] ?? 'USD' ),
+				'recurring'     => ! empty( $attributes['recurring'] ) ? 'true' : 'false',
+				'product-id'    => esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ),
+			]
+		);
 
-		ob_start(); ?>
-			<sc-product-donation-amount-choice
-				value="<?php echo esc_attr( $attributes['amount'] ?? '' ); ?>"
-				product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
-				label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-				currency-code="<?php echo esc_attr( $attributes['currency'] ?? 'USD' ); ?>"
-			>
-			</sc-product-donation-amount-choice>
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-product-donation-amount-choice %s>%s</sc-product-donation-amount-choice>',
+			$wrapper_attributes,
+			esc_attr( $attributes['label'] ?? '' )
+		);
 	}
 }

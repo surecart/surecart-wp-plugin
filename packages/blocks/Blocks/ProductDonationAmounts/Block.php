@@ -3,7 +3,6 @@
 namespace SureCartBlocks\Blocks\ProductDonationAmounts;
 
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
@@ -33,7 +32,7 @@ class Block extends BaseBlock {
 			]
 		);
 
-		return sprintf(
+		return wp_sprintf(
 			'<div %s>
 				<sc-choices label="%s">
 					%s

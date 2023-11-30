@@ -3,7 +3,6 @@
 namespace SureCartBlocks\Blocks\ProductDonationRecurringPrices;
 
 use SureCartBlocks\Blocks\BaseBlock;
-use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
@@ -18,15 +17,17 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		[ 'styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
-		ob_start(); ?>
-		<sc-product-donation-choices
-			style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns:<?php echo intval( $attributes['columns'] ?? 1 ); ?> <?php echo esc_attr( $styles ); ?> "
-			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-			recurring="<?php echo ! empty( $attributes['recurring'] ) ? 'true' : 'false'; ?>"
-			product-id="<?php echo esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ); ?>"
-		></sc-product-donation-choices>
-		<?php
-		return ob_get_clean();
+		$wrapper_attributes = get_block_wrapper_attributes(
+			[
+				'recurring'  => ! empty( $attributes['recurring'] ) ? 'true' : 'false',
+				'product-id' => esc_attr( $this->block->context['surecart/product-donation/product_id'] ?? '' ),
+			]
+		);
+
+		return wp_sprintf(
+			'<sc-product-donation-choices %s>%s</sc-product-donation-choices>',
+			$wrapper_attributes,
+			esc_attr( $attributes['label'] ?? '' )
+		);
 	}
 }

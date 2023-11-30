@@ -27,26 +27,11 @@ class Block extends BaseBlock {
 			return $product->get_error_message();
 		}
 
-		$amounts_block = array_filter(
-			$this->block->parsed_block['innerBlocks'],
-			function( $block ) {
-				return 'surecart/product-donation-amounts' === $block['blockName'];
-			},
-		);
-
-		if ( empty( $amounts_block[0]['innerBlocks'] ) ) {
-			return '';
-		}
-
 		// get amounts from inner blocks.
-		$amounts = array_filter(
-			array_map(
-				function( $block ) {
-					return $block['attrs']['amount'] ?? '';
-				},
-				$amounts_block[0]['innerBlocks']
-			)
-		);
+		$amounts = $this->getAmounts();
+		if ( empty( $amounts ) ) {
+			return false;
+		}
 
 		// set initial state.
 		sc_initial_state(
@@ -99,12 +84,30 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Get any existing line items.
+	 * Get the amounts.
 	 *
 	 * @return array
 	 */
-	public function getExistingLineItems() {
-		$initial = sc_initial_state();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
+	public function getAmounts() {
+		$amounts_block = array_filter(
+			$this->block->parsed_block['innerBlocks'],
+			function( $block ) {
+				return 'surecart/product-donation-amounts' === $block['blockName'];
+			},
+		);
+
+		if ( empty( $amounts_block[0]['innerBlocks'] ) ) {
+			return false;
+		}
+
+		// get amounts from inner blocks.
+		return array_filter(
+			array_map(
+				function( $block ) {
+					return $block['attrs']['amount'] ?? '';
+				},
+				$amounts_block[0]['innerBlocks']
+			)
+		);
 	}
 }
