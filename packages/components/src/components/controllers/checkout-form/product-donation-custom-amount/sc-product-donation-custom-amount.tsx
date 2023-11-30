@@ -32,10 +32,6 @@ export class ScProductDonationCustomAmount {
           value={`${this.state()?.custom_amount}`}
           show-control="false"
           checked={!!this.state().custom_amount}
-          onScFocus={() => {
-            console.log('focus');
-            this.priceInput.triggerFocus();
-          }}
           onClick={() => {
             if (!this.state().custom_amount) return;
             this.updateState({
