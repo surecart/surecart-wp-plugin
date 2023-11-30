@@ -8,9 +8,6 @@ export class ScProductDonationCustomAmount {
   @Element() el: HTMLScProductDonationCustomAmountElement;
   priceInput: HTMLScPriceInputElement;
 
-  /** Currency code for the donation. */
-  @Prop() currencyCode: string = 'usd';
-
   /** Selected Product Id for the donation. */
   @Prop() productId: string;
 
@@ -49,7 +46,7 @@ export class ScProductDonationCustomAmount {
         >
           <sc-price-input
             ref={el => (this.priceInput = el)}
-            currencyCode={this.currencyCode}
+            currencyCode={this.state()?.selectedPrice?.currency}
             showCode={false}
             showLabel={false}
             value={`${this.state()?.custom_amount || ''}`}

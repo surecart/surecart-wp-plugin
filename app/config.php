@@ -173,7 +173,7 @@ return [
 		\SureCartBlocks\Blocks\ProductDonationPrices\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationRecurringPrices\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
-		\SureCartBlocks\Blocks\CustomDonationAmount\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,

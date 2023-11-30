@@ -15,7 +15,7 @@ import * as productDonationPrices from '@blocks/ProductDonationPrices';
 import * as productDonationRecurringPrices from '@blocks/ProductDonationRecurringPrices';
 import * as productDonationAmounts from '@blocks/ProductDonationAmounts';
 import * as productDonationAmount from '@blocks/ProductDonationAmount';
-import * as customDonationAmount from '@blocks/CustomDonationAmount';
+import * as productDonationCustomAmount from '@blocks/ProductDonationCustomAmount';
 import * as email from '@blocks/Email';
 import * as phone from '@blocks/Phone';
 import * as expressPayment from '@blocks/ExpressPayment';
@@ -57,7 +57,7 @@ registerBlocks([
 	productDonationRecurringPrices,
 	productDonationAmounts,
 	productDonationAmount,
-	customDonationAmount,
+	productDonationCustomAmount,
 	nameYourPrice,
 	bumpLineItem,
 	checkoutErrors,

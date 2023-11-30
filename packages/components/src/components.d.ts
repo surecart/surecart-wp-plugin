@@ -2811,10 +2811,6 @@ export namespace Components {
     }
     interface ScProductDonationCustomAmount {
         /**
-          * Currency code for the donation.
-         */
-        "currencyCode": string;
-        /**
           * Selected Product Id for the donation.
          */
         "productId": string;
@@ -8719,10 +8715,6 @@ declare namespace LocalJSX {
         "recurring"?: boolean;
     }
     interface ScProductDonationCustomAmount {
-        /**
-          * Currency code for the donation.
-         */
-        "currencyCode"?: string;
         /**
           * Selected Product Id for the donation.
          */
