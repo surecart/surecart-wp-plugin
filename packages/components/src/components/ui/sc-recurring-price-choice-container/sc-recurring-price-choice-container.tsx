@@ -67,20 +67,19 @@ export class ScRecurringPriceChoiceContainer {
               <div class="recurring-price-choice__description">
                 <sc-dropdown style={{ '--panel-width': 'max(100%, 11rem)', '--sc-menu-item-white-space': 'wrap' }}>
                   <button class="recurring-price-choice__button" slot="trigger">
-                    {this.value()?.name || (this.value()?.product as Product)?.name || (
-                      <Fragment>
-                        {intervalString(this.value(), {
-                          showOnce: true,
-                          abbreviate: false,
-                          labels: {
-                            interval: __('Every', 'surecart'),
-                            period:
-                              /** translators: used as in time period: "for 3 months" */
-                              __('for', 'surecart'),
-                          },
-                        })}
-                      </Fragment>
-                    )}
+                    {this.value()?.name ||
+                      (this.value()?.recurring_interval
+                        ? intervalString(this.value(), {
+                            showOnce: true,
+                            abbreviate: false,
+                            labels: {
+                              interval: __('Every', 'surecart'),
+                              period:
+                                /** translators: used as in time period: "for 3 months" */
+                                __('for', 'surecart'),
+                            },
+                          })
+                        : this.product.name)}
                     <sc-icon name="chevron-down"></sc-icon>
                   </button>
                   <sc-menu>
@@ -89,16 +88,18 @@ export class ScRecurringPriceChoiceContainer {
                       return (
                         <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked}>
                           {price?.name ||
-                            intervalString(price, {
-                              showOnce: true,
-                              abbreviate: false,
-                              labels: {
-                                interval: __('Every', 'surecart'),
-                                period:
-                                  /** translators: used as in time period: "for 3 months" */
-                                  __('for', 'surecart'),
-                              },
-                            })}
+                            (price?.recurring_interval
+                              ? intervalString(price, {
+                                  showOnce: true,
+                                  abbreviate: false,
+                                  labels: {
+                                    interval: __('Every', 'surecart'),
+                                    period:
+                                      /** translators: used as in time period: "for 3 months" */
+                                      __('for', 'surecart'),
+                                  },
+                                })
+                              : this.product.name)}
                           {this.showAmount && <span slot="suffix">{this.renderPrice(price)}</span>}
                         </sc-menu-item>
                       );
