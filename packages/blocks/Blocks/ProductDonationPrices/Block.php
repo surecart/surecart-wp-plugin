@@ -24,13 +24,20 @@ class Block extends BaseBlock {
 		}
 
 		// must have a minimum of 2 prices to show choices.
-		if ( count( $product->activePrices() ) < 2 ) {
+		if ( count(
+			array_filter(
+				$product->activePrices() ?? [],
+				function( $price ) {
+					return $price->ad_hoc;
+				}
+			)
+		) < 2
+		) {
 			return false;
 		}
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			[
-				'class' => 'sc-product-donation-prices',
 				'style' => implode(
 					' ',
 					[
@@ -45,12 +52,13 @@ class Block extends BaseBlock {
 
 		return wp_sprintf(
 			'<div %s>
-				<sc-choices label="%s">
+				<sc-choices label="%s" required="%s">
 					%s
 				</sc-choices>
 			</div>',
 			$wrapper_attributes,
 			esc_attr( $attributes['label'] ),
+			$this->block->context['surecart/product-donation/required'] ? 'true' : 'false',
 			filter_block_content( $content )
 		);
 	}
