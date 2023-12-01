@@ -117,8 +117,12 @@
   border-left-width: initial;
 }
 
-
 sc-product-price-modal {
   position: fixed;
   z-index: 9999999;
+}
+
+/** Fix Flouc */
+sc-product-buy-button [disabled] {
+  display: none;
 }

@@ -53,6 +53,18 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Set attributes during write actions.
+	 *
+	 * @return void
+	 */
+	protected function setWriteAttributes() {
+		$this->setAttribute( 'ip_address', $this->getIPAddress() );
+		if ( isset( $_COOKIE['sc_click_id'] ) ) {
+			$this->setAttribute( 'last_click', $_COOKIE['sc_click_id'] );
+		}
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.
@@ -60,8 +72,20 @@ class Checkout extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function create( $attributes = [] ) {
-		$this->setAttribute( 'ip_address', $this->getIPAddress() );
+		$this->setWriteAttributes();
 		return parent::create( $attributes );
+	}
+
+	/**
+	 * Update the model
+	 *
+	 * @param array $attributes Attributes to create.
+	 *
+	 * @return $this|\WP_Error|false
+	 */
+	protected function update( $attributes = [] ) {
+		$this->setWriteAttributes();
+		return parent::update( $attributes );
 	}
 
 	/**

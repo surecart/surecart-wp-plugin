@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 
 export const maybeConvertAmount = (amount, currency) => {
 	return [
@@ -7,7 +7,6 @@ export const maybeConvertAmount = (amount, currency) => {
 		'CLP',
 		'DJF',
 		'GNF',
-		'HUF',
 		'ISK',
 		'JPY',
 		'KMF',
@@ -33,6 +32,20 @@ export const maybeConvertAmount = (amount, currency) => {
 	].includes(currency.toUpperCase())
 		? amount
 		: amount / 100;
+};
+
+export const getHumanDiscount = (coupon) => {
+	if (coupon?.amount_off && coupon?.currency) {
+		return getFormattedPrice({
+			amount: coupon.amount_off,
+		});
+	}
+
+	if (coupon?.percent_off) {
+		return sprintf(__('%1d%% off', 'surecart'), coupon.percent_off || 0);
+	}
+
+	return '';
 };
 
 export const getFormattedPrice = ({ amount, currency = 'usd' }) => {

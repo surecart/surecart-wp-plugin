@@ -1,6 +1,12 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScBlockUi, ScButton, ScEmpty, ScIcon, ScSpacing } from '@surecart/components-react';
+import {
+	ScBlockUi,
+	ScButton,
+	ScEmpty,
+	ScIcon,
+	ScSpacing,
+} from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 import { useState } from '@wordpress/element';
@@ -83,6 +89,10 @@ export default ({ product, productId }) => {
 	);
 
 	const footer = () => {
+		if (product?.variants_enabled || !product?.id) {
+			return null;
+		}
+
 		if (!archived?.length && !active?.length) {
 			return null;
 		}

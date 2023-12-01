@@ -64,6 +64,27 @@ export default () => {
 		'surecart_password_validation_enabled'
 	);
 
+	const [shopMenu, setShopMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_shop_admin_menu'
+	);
+	const [cartMenu, setCartMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_cart_admin_menu'
+	);
+	const [checkoutMenu, setCheckoutMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_admin_menu'
+	);
+	const [customerMenu, setCustomerMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_dashboard_admin_menu'
+	);
+
 	/**
 	 * Form is submitted.
 	 */
@@ -259,15 +280,70 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Beta Features', 'surecart')}
+				title={__('Admin Appearance', 'surecart')}
+				description={__('Change some admin UI options.', 'surecart')}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={shopMenu}
+					onScChange={(e) => setShopMenu(e.target.checked)}
+				>
+					{__('Shop Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the shop page in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={cartMenu}
+					onScChange={(e) => setCartMenu(e.target.checked)}
+				>
+					{__('Cart Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the cart in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={checkoutMenu}
+					onScChange={(e) => setCheckoutMenu(e.target.checked)}
+				>
+					{__('Checkout Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the checkout page in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={customerMenu}
+					onScChange={(e) => setCustomerMenu(e.target.checked)}
+				>
+					{__('Customer Area', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the customer area in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Legacy Features', 'surecart')}
 				description={__(
-					'Opt-in to some beta features of the plugin.',
+					'Opt-in to some legacy features of the plugin.',
 					'surecart'
 				)}
 				loading={!hasLoadedItem}
 			>
 				<ScSwitch
-					checked={item?.stripe_payment_element}
+					checked={item?.stripe_payment_element === false}
 					onClick={(e) => {
 						e.preventDefault();
 						editItem({
@@ -276,10 +352,10 @@ export default () => {
 						});
 					}}
 				>
-					{__('Use The Stripe Payment Element', 'surecart')}
+					{__('Use The Stripe Card Element', 'surecart')}
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							"Use Stripe's Payment Element instead of the Card Element in all forms.",
+							"Use Stripe's Card Element instead of the Payment Element in all forms.",
 							'surecart'
 						)}
 					</span>

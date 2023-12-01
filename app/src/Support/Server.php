@@ -47,7 +47,7 @@ class Server {
 	 * @return boolean
 	 */
 	public function isLocalDomain() {
-		$parsed = explode( '.', wp_parse_url( $this->url, PHP_URL_HOST ) );
+		$parsed = explode( '.', wp_parse_url( $this->url, PHP_URL_HOST ) ?? '' );
 		return in_array( end( $parsed ), array( 'local', 'test' ), true );
 	}
 

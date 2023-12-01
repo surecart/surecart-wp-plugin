@@ -184,7 +184,7 @@ export class ScPaymentMethodsList {
           </sc-flex>
           {typeof customer !== 'string' && customer?.default_payment_method !== id && (
             <sc-dropdown placement="bottom-end" slot="suffix">
-              <sc-icon name="more-horizontal" slot="trigger"></sc-icon>
+              <sc-icon role='button' tabIndex={0} name="more-horizontal" slot="trigger"></sc-icon>
               <sc-menu>
                 <sc-menu-item onClick={() => (this.editPaymentMethod = paymentMethod)}>{__('Make Default', 'surecart')}</sc-menu-item>
                 <sc-menu-item onClick={() => (this.deletePaymentMethod = paymentMethod)}>{__('Delete', 'surecart')}</sc-menu-item>

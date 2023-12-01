@@ -134,7 +134,6 @@ export class ScFormComponentsValidator {
     if (this.hasTaxIDField) return;
     const payment = this.el.querySelector('sc-payment');
     const taxInput = document.createElement('sc-order-tax-id-input');
-    taxInput.taxIdentifier?.number_type === 'eu_vat';
     payment.parentNode.insertBefore(taxInput, payment);
     this.hasTaxIDField = true;
   }
@@ -143,7 +142,6 @@ export class ScFormComponentsValidator {
     if (this.hasBumpsField) return;
     const payment = this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    bumps.bumps === checkoutState.checkout?.recommended_bumps?.data;
     payment.parentNode.insertBefore(bumps, payment.nextSibling);
     this.hasBumpsField = true;
   }

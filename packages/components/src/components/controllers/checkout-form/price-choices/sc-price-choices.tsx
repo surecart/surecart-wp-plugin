@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Fragment, h, Listen, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
 import { getLineItemByPriceId } from '../../../../functions/line-items';
-import { LineItemData, Checkout } from '../../../../types';
+import { LineItemData } from '../../../../types';
+import { state as checkoutState } from '@store/checkout';
 
 @Component({
   tag: 'sc-price-choices',
@@ -20,9 +20,6 @@ export class ScPriceChoices {
   /** Required by default */
   @Prop() required: boolean = true;
 
-  /** Session */
-  @Prop() order: Checkout;
-
   /** Toggle line item event */
   @Event() scRemoveLineItem: EventEmitter<LineItemData>;
 
@@ -36,7 +33,7 @@ export class ScPriceChoices {
       if (!choice?.checked) {
         this.scRemoveLineItem.emit({ price_id: priceChoice.priceId, quantity: priceChoice.quantity });
       } else {
-        const lineItem = getLineItemByPriceId(this.order?.line_items, choice.value);
+        const lineItem = getLineItemByPriceId(checkoutState.checkout?.line_items, choice.value);
         this.scUpdateLineItem.emit({ price_id: priceChoice.priceId, quantity: lineItem?.quantity || priceChoice?.quantity || 1 });
       }
     });
@@ -52,5 +49,3 @@ export class ScPriceChoices {
     );
   }
 }
-
-openWormhole(ScPriceChoices, ['order'], false);

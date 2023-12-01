@@ -103,6 +103,7 @@ export class ScCompactAddress {
 
   clearAddress() {
     this.address = {
+      name: this.address?.name,
       country: null,
       line_1: null,
       line_2: null,

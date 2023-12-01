@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { Fee, Media } from '../../../types';
+import { Fee } from '../../../types';
 import { sizeImage } from '../../../functions/media';
 
 /**
@@ -36,11 +36,20 @@ export class ScProductLineItem {
   /** Url for the product image */
   @Prop() imageUrl: string;
 
-  /** The product media */
-  @Prop() media: Media;
+  /** Title for the product image */
+  @Prop() imageTitle: string;
+
+  /** Alternative description for the product image */
+  @Prop() imageAlt: string;
 
   /** Product name */
   @Prop() name: string;
+
+  /** Price name */
+  @Prop() priceName?: string;
+
+  /** Product variant label */
+  @Prop() variantLabel: string = '';
 
   /** Quantity */
   @Prop() quantity: number;
@@ -74,6 +83,9 @@ export class ScProductLineItem {
 
   /** The max allowed. */
   @Prop() max: number = 100;
+
+  /** The SKU. */
+  @Prop() sku: string = '';
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
@@ -134,25 +146,50 @@ export class ScProductLineItem {
   render() {
     return (
       <div class="base" part="base">
-        <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
-          {!!this.imageUrl && <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" />}
+        <div
+          part="product-line-item"
+          class={{
+            'item': true,
+            'item--has-image': !!this.imageUrl,
+            'item--is-rtl': isRtl(),
+            'product-line-item__editable': this.editable,
+            'product-line-item__removable': this.removable,
+          }}
+        >
+          {!!this.imageUrl && (
+            <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" alt={this.imageAlt} {...(this.imageTitle ? { title: this.imageTitle } : {})} />
+          )}
           <div class="item__text" part="text">
-            <div class="item__title" part="title">
-              <slot name="title">{this.name}</slot>
+            <div class="item__text-details">
+              <div class="item__title" part="title">
+                <slot name="title">{this.name}</slot>
+              </div>
+              <div class="item__description item__price-variant" part="description">
+                <div>{this.variantLabel}</div>
+                <div>{this.priceName}</div>
+                {!!this.sku && (
+                  <div>
+                    {__('SKU:', 'surecart')} {this.sku}
+                  </div>
+                )}
+              </div>
+              {!this.editable && this.quantity > 1 && (
+                <span class="item__description" part="static-quantity">
+                  {__('Qty:', 'surecart')} {this.quantity}
+                </span>
+              )}
             </div>
+
             {this.editable && (
               <sc-quantity-select
                 max={this.max || Infinity}
                 exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
                 clickEl={this.el}
                 quantity={this.quantity}
+                size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
               ></sc-quantity-select>
-            )}
-            {!this.editable && this.quantity > 1 && (
-              <span class="item__description" part="static-quantity">
-                {__('Qty:', 'surecart')} {this.quantity}
-              </span>
             )}
           </div>
           <div class="item__suffix" part="suffix">
@@ -168,6 +205,7 @@ export class ScProductLineItem {
                   }
                 }}
                 tabindex="0"
+                aria-label={sprintf(__('Remove Item - %s %s', 'surecart'), this.name, this.priceName)}
               ></sc-icon>
             ) : (
               <div></div>

@@ -11,11 +11,14 @@ import {
 	ScDropdown,
 	ScMenu,
 	ScMenuItem,
+	ScTag,
 } from '@surecart/components-react';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
+import { getHumanDiscount } from '../../../util';
+import LineItemLabel from '../../components/LineItemLabel';
 
 export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const [price, setPrice] = useState(null);
@@ -27,6 +30,9 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 			setPrice(lineItem?.price);
 		}
 	}, [lineItem]);
+
+	const coupon =
+		upcoming?.checkout?.discount?.coupon || subscription?.discount?.coupon;
 
 	return (
 		<div
@@ -68,22 +74,24 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 								`}
 							>
 								<div>
-									{price?.product?.name}
-									<div style={{ opacity: 0.5 }}>
-										<ScFormatNumber
-											type="currency"
-											value={
-												price?.ad_hoc &&
-												subscription?.ad_hoc_amount
-													? subscription?.ad_hoc_amount
-													: price?.amount
-											}
-											currency={price?.currency}
-										/>
-										{intervalString(price, {
-											labels: { interval: '/' },
-										})}
-									</div>
+									<div>{price?.product?.name}</div>
+									<LineItemLabel lineItem={lineItem}>
+										<div>
+											<ScFormatNumber
+												type="currency"
+												value={
+													price?.ad_hoc &&
+													subscription?.ad_hoc_amount
+														? subscription?.ad_hoc_amount
+														: price?.amount
+												}
+												currency={price?.currency}
+											/>
+											{intervalString(price, {
+												labels: { interval: '/' },
+											})}
+										</div>
+									</LineItemLabel>
 								</div>
 
 								<ScDropdown
@@ -148,6 +156,18 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 							</div>
 						),
 					},
+					...(!!coupon?.id
+						? [
+								{
+									product: (
+										<ScTag type="default">
+											{coupon?.name}
+										</ScTag>
+									),
+									total: <>{getHumanDiscount(coupon)}</>,
+								},
+						  ]
+						: []),
 				]}
 			/>
 
@@ -164,7 +184,12 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 
 			<UpdatePrice
 				price={price}
-				onUpdatePrice={(price) => updateSubscription({ price })}
+				onUpdatePrice={(priceId, variantId) => {
+					updateSubscription({
+						price: priceId,
+						variant: variantId || null,
+					});
+				}}
 				open={dialog === 'price'}
 				onRequestClose={() => setDialog(null)}
 			/>

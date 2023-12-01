@@ -36,7 +36,7 @@ export class ScDashboardModule {
         <div class="heading" part="heading">
           <div class="heading__text" part="heading-text">
             <div class="heading__title" part="heading-title">
-              <slot name="heading">{this.heading}</slot>
+              <slot name="heading" aria-label={this.heading}>{this.heading}</slot>
             </div>
             <div class="heading__description" part="heading-description">
               <slot name="description"></slot>

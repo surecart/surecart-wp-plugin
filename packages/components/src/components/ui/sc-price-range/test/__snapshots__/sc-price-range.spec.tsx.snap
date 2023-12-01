@@ -15,7 +15,7 @@ exports[`sc-price-range It should render the correct minimum and maximum price i
   <mock:shadow-root>
     <span>
       <sc-format-number currency="usd" type="currency" value="120"></sc-format-number>
-      -
+      —
       <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
     </span>
   </mock:shadow-root>

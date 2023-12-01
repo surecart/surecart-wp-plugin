@@ -17,9 +17,20 @@ class ThemeService {
 	public function bootstrap() {
 		// add the "Brand" color to the theme's color palette.
 		add_action( 'after_setup_theme', [ $this, 'addColorToPalette' ], 99999 );
+		add_action( 'after_setup_theme', [ $this, 'addAppearanceToolsSupport' ], 99999 );
 		// add the theme class to the body tag.
 		add_filter( 'body_class', [ $this, 'themeBodyClass' ] );
 		add_filter( 'admin_body_class', [ $this, 'themeBodyClassAdmin' ] );
+	}
+
+	/**
+	 * Add support for Appearance Tools.
+	 *
+	 * @return void
+	 */
+	public function addAppearanceToolsSupport() {
+		add_theme_support( 'appearance-tools' );
+		add_theme_support( 'border' );
 	}
 
 	/**

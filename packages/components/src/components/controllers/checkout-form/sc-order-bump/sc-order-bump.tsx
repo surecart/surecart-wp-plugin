@@ -1,10 +1,12 @@
 import { Component, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 import { isBumpInOrder } from '../../../../functions/line-items';
-import { intervalString } from '../../../../functions/price';
-import { sizeImage } from '../../../../functions/media';
+import { getFormattedPrice, intervalString } from '../../../../functions/price';
+import { getFeaturedProductMediaAttributes, sizeImage } from '../../../../functions/media';
+import { state as checkoutState } from '@store/checkout';
 
-import { Bump, Checkout, LineItemData, Price, Product } from '../../../../types';
+import { Bump, LineItemData, Price, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-bump',
@@ -14,9 +16,6 @@ import { Bump, Checkout, LineItemData, Price, Product } from '../../../../types'
 export class ScOrderBump {
   /** The bump */
   @Prop() bump: Bump;
-
-  /** The checkout */
-  @Prop() checkout: Checkout;
 
   /** Should we show the controls */
   @Prop({ reflect: true }) showControl: boolean;
@@ -38,11 +37,13 @@ export class ScOrderBump {
         price_id,
         quantity: 1,
       });
+      speak(__('Order bump applied.', 'surecart'));
     } else {
       this.scRemoveLineItem.emit({
         price_id,
         quantity: 1,
       });
+      speak(__('Order bump Removed.', 'surecart'));
     }
   }
 
@@ -70,17 +71,34 @@ export class ScOrderBump {
   renderPrice() {
     return (
       <div slot="description" class={{ 'bump__price': true, 'bump__price--has-discount': !!this.bump?.percent_off || !!this.bump?.amount_off }} part="price">
-        <sc-format-number
-          type="currency"
-          class="bump__original-price"
-          value={(this.bump?.price as Price)?.amount}
-          currency={(this.bump?.price as Price)?.currency}
-        ></sc-format-number>{' '}
-        {this.newPrice() === 0 && __('Free', 'surecart')}
-        {this.newPrice() !== null && this.newPrice() > 0 && (
-          <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
-        )}
-        {this.renderInterval()}
+        <span
+          aria-label={
+            /** translators: %s: old price */
+            sprintf(
+              __('Originally priced at %s.', 'surecart'),
+              getFormattedPrice({
+                amount: (this.bump?.price as Price)?.amount,
+                currency: (this.bump?.price as Price)?.currency,
+              }),
+            )
+          }
+        >
+          <sc-format-number
+            type="currency"
+            class="bump__original-price"
+            value={(this.bump?.price as Price)?.amount}
+            currency={(this.bump?.price as Price)?.currency}
+          ></sc-format-number>{' '}
+        </span>
+        <span>
+          <span aria-hidden="true">
+            {this.newPrice() === 0 && __('Free', 'surecart')}
+            {this.newPrice() !== null && this.newPrice() > 0 && (
+              <sc-format-number type="currency" class="bump__new-price" value={this.newPrice()} currency={(this.bump?.price as Price).currency} />
+            )}
+            {this.renderInterval()}
+          </span>
+        </span>
       </div>
     );
   }
@@ -88,34 +106,70 @@ export class ScOrderBump {
   renderDiscount() {
     if (!!this.bump?.amount_off) {
       return (
-        <div class="bump__tag">
-          {__('Save', 'surecart')} <sc-format-number type="currency" value={-this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
+        <div
+          class="bump__tag"
+          aria-label={
+            /** translators: %1$s: amount off, %2$s: currency */
+            sprintf(__('You save %1$s%2$s.', 'surecart'), this.bump?.amount_off, (this.bump?.price as Price).currency)
+          }
+        >
+          <span aria-hidden="true">
+            {__('Save', 'surecart')} <sc-format-number type="currency" value={-this.bump?.amount_off} currency={(this.bump?.price as Price).currency}></sc-format-number>
+          </span>
         </div>
       );
     }
 
     if (!!this.bump?.percent_off) {
-      return <div class="bump__tag">{sprintf(__('Save %s%%', 'surecart'), this.bump?.percent_off)}</div>;
+      return (
+        <div
+          class="bump__tag"
+          aria-label={
+            /** translators: %s: amount percent off */
+            sprintf(__('You save %s%%.', 'surecart'), this.bump?.percent_off)
+          }
+        >
+          <span aria-hidden="true">{sprintf(__('Save %s%%', 'surecart'), this.bump?.percent_off)}</span>
+        </div>
+      );
     }
   }
 
   render() {
     const product = (this.bump?.price as Price)?.product as Product;
+    const media = getFeaturedProductMediaAttributes(product);
 
     return (
       <sc-choice
         value={this.bump?.id}
         type="checkbox"
         showControl={this.showControl}
-        checked={isBumpInOrder(this.bump, this.checkout)}
+        checked={isBumpInOrder(this.bump, checkoutState?.checkout)}
         onScChange={e => this.updateLineItem(e.target.checked)}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            this.updateLineItem(!isBumpInOrder(this.bump, checkoutState?.checkout));
+          }
+        }}
         exportparts="base, control, checked-icon, title"
       >
         <div part="base-content" class="bump">
           <div class="bump__text">
-            <div class="bump__title">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</div>
+            <div
+              class="bump__title"
+              aria-label={sprintf(
+                /* translators: %s: order bump name */
+                __('Product: %s.', 'surecart'),
+                this.bump?.metadata?.cta || this.bump?.name || product?.name,
+              )}
+            >
+              <span aria-hidden="true">{this.bump?.metadata?.cta || this.bump?.name || product?.name}</span>
+            </div>
             <div class="bump__amount">
-              {this.renderPrice()} {this.renderDiscount()}
+              <span>{this.renderPrice()}</span>
+              <span>{this.renderDiscount()}</span>
             </div>
           </div>
         </div>
@@ -124,10 +178,26 @@ export class ScOrderBump {
           <div slot="footer" class="bump__product--wrapper">
             <sc-divider style={{ '--spacing': 'var(--sc-spacing-medium)' }}></sc-divider>
             <div class="bump__product">
-              {!!product?.image_url && <img src={sizeImage(product?.image_url, 130)} class="bump__image" />}
+              {!!media?.url && <img src={sizeImage(media?.url, 130)} alt={media.alt} {...(media.title ? { title: media.title } : {})} class="bump__image" />}
               <div class="bump__product-text">
-                {!!this.bump?.metadata?.cta && <div class="bump__product-title">{this.bump.name || product?.name}</div>}
-                {!!this.bump?.metadata?.description && <div class="bump__product-description">{this.bump?.metadata?.description}</div>}
+                {!!this.bump?.metadata?.cta && (
+                  <div class="bump__product-title" aria-hidden="true">
+                    {this.bump.name || product?.name}
+                  </div>
+                )}
+
+                {!!this.bump?.metadata?.description && (
+                  <div
+                    class="bump__product-description"
+                    aria-label={sprintf(
+                      /* translators: %s: Product description */
+                      __('Product description: %s.', 'surecart'),
+                      this.bump?.metadata?.description,
+                    )}
+                  >
+                    <span aria-hidden="true">{this.bump?.metadata?.description}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

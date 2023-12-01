@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-
 import { getHumanDiscount } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
 
@@ -33,6 +33,8 @@ import { DiscountResponse } from '../../../types';
 })
 export class ScCouponForm {
   private input: HTMLScInputElement;
+  private couponTag: HTMLScTagElement;
+  private addCouponTrigger: HTMLElement;
 
   /** The label for the coupon form */
   @Prop() label: string;
@@ -61,6 +63,9 @@ export class ScCouponForm {
   /** The discount amount */
   @Prop() discountAmount: number;
 
+  /** Has recurring */
+  @Prop() showInterval: boolean;
+
   /** Is it open */
   @Prop({ mutable: true }) open: boolean;
 
@@ -82,6 +87,31 @@ export class ScCouponForm {
       setTimeout(() => this.input.triggerFocus(), 50);
     }
   }
+  // Focus the coupon tag when a coupon is applied & Focus the trigger when coupon is removed.
+  @Watch('discount')
+  handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
+    if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
+    if (this?.discount?.promotion?.code) {
+      const message = sprintf(
+        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
+        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
+        newValue?.promotion?.code || this.input.value || '',
+        getHumanDiscount(this?.discount?.coupon),
+      );
+      speak(message, 'assertive');
+    } else {
+      // Translators: %s is the coupon code.
+      const message = __('Coupon code removed.', 'sc-coupon-form');
+      speak(message, 'assertive');
+    }
+    setTimeout(() => {
+      if (this?.discount?.promotion?.code) {
+        (this.couponTag.shadowRoot.querySelector('*') as any).focus();
+      } else {
+        this.addCouponTrigger.focus();
+      }
+    }, 50);
+  }
 
   /** Close it when blurred and no value. */
   handleBlur() {
@@ -89,6 +119,13 @@ export class ScCouponForm {
       this.open = false;
       this.error = '';
     }
+  }
+
+  getHumanReadableDiscount() {
+    if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
+      return getHumanDiscount(this?.discount?.coupon);
+    }
+    return '';
   }
 
   /** Apply the coupon. */
@@ -99,6 +136,26 @@ export class ScCouponForm {
   handleKeyDown(e) {
     if (e?.code === 'Enter') {
       this.applyCoupon();
+    } else if (e?.code === 'Escape') {
+      this.scApplyCoupon.emit(null);
+      this.open = false;
+      speak(__('Coupon code field closed.', 'surecart'), 'assertive');
+    }
+  }
+
+  translateHumanDiscountWithDuration(humanDiscount) {
+    if (!this.showInterval) return humanDiscount;
+
+    const { duration, duration_in_months } = this.discount?.coupon;
+    switch (duration) {
+      case 'once':
+        return `${humanDiscount} ${__('once', 'surecart')}`;
+      case 'repeating':
+        const monthsLabel = sprintf(_n('%d month', '%d months', duration_in_months, 'surecart'), duration_in_months);
+        // translators: %s is the discount amount, %s is the duration (e.g. 3 months)
+        return sprintf(__('%s for %s', 'surecart'), humanDiscount, monthsLabel);
+      default:
+        return humanDiscount;
     }
   }
 
@@ -108,11 +165,7 @@ export class ScCouponForm {
     }
 
     if (this?.discount?.promotion?.code) {
-      let humanDiscount = '';
-
-      if (this?.discount?.coupon && this?.discount?.coupon.percent_off) {
-        humanDiscount = getHumanDiscount(this?.discount?.coupon);
-      }
+      let humanDiscount = this.getHumanReadableDiscount();
 
       return (
         <sc-line-item exportparts="description:info, price-description:discount, price:amount">
@@ -123,17 +176,21 @@ export class ScCouponForm {
               type="success"
               class="coupon-tag"
               clearable
-              tabindex="0"
               onScClear={() => {
                 this.scApplyCoupon.emit(null);
                 this.open = false;
               }}
               onKeyDown={e => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' || e.key === 'Escape') {
+                  speak(__('Coupon was removed.', 'surecart'), 'assertive');
                   this.scApplyCoupon.emit(null);
                   this.open = false;
                 }
               }}
+              ref={el => (this.couponTag = el as HTMLScTagElement)}
+              role="button"
+              // translators: %s is the coupon code.
+              aria-label={sprintf(__('Press enter to remove coupon code %s.', 'surecart'), this?.discount?.promotion?.code || this.input.value || '')}
             >
               {this?.discount?.promotion?.code}
             </sc-tag>
@@ -141,7 +198,7 @@ export class ScCouponForm {
 
           {humanDiscount && (
             <span class="coupon-human-discount" slot="price-description">
-              ({humanDiscount})
+              {this.translateHumanDiscountWithDuration(humanDiscount)}
             </span>
           )}
 
@@ -172,15 +229,18 @@ export class ScCouponForm {
             this.open = true;
           }}
           onKeyDown={e => {
-            if (e.key !== 'Enter') {
+            if (e.key !== 'Enter' && e.key !== ' ') {
               return true;
             }
             if (this.open) {
               return;
             }
             this.open = true;
+            speak(__('Coupon code field opened. Press Escape button to close it.', 'surecart'), 'assertive');
           }}
           tabindex="0"
+          ref={el => (this.addCouponTrigger = el as HTMLElement)}
+          role="button"
         >
           <slot name="label">{this.label}</slot>
         </div>
@@ -194,6 +254,7 @@ export class ScCouponForm {
             onScBlur={() => this.handleBlur()}
             onKeyDown={e => this.handleKeyDown(e)}
             ref={el => (this.input = el as HTMLScInputElement)}
+            aria-label={__('Add coupon code.', 'surecart')}
           >
             <sc-button
               exportparts="base:button__base, label:button_label"

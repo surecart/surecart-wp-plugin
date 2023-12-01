@@ -347,7 +347,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return this|false This object on success, false on failure.
 	 */
 	protected function getUserBy( $field, $value ) {
-		$this->user = get_user_by( $field, $value );
+		$this->user = get_user_by( $field, $value ?? '' );
 		return $this->user ? $this : false;
 	}
 

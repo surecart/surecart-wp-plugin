@@ -3,7 +3,6 @@ import CreateTemplate from '../templates/CreateModel';
 import Box from '../ui/Box';
 import { css, jsx } from '@emotion/core';
 import {
-	ScAlert,
 	ScButton,
 	ScForm,
 	ScFormRow,
@@ -14,13 +13,14 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useState } from 'react';
+import Error from '../components/Error';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [testMode, setTestMode] = useState(false);
-	const [error, setError] = useState('');
+	const [error, setError] = useState(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
 
 	// create the product.
@@ -41,16 +41,14 @@ export default ({ id, setId }) => {
 			setId(customer.id);
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 			setIsSaving(false);
 		}
 	};
 
 	return (
 		<CreateTemplate id={id}>
-			<ScAlert open={error?.length} type="danger" closable scrollOnOpen>
-				<span slot="title">{error}</span>
-			</ScAlert>
+			<Error error={error} />
 
 			<Box title={__('Create New Customer', 'surecart')}>
 				<ScForm onScSubmit={onSubmit}>

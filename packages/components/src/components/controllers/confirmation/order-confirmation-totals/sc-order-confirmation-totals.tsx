@@ -48,7 +48,7 @@ export class ScOrderConfirmationTotals {
   render() {
     return (
       <div class={{ 'line-item-totals': true }}>
-        <sc-line-item-total order={this.order} total="subtotal">
+        <sc-line-item-total checkout={this.order} total="subtotal">
           <span slot="description">{__('Subtotal', 'surecart')}</span>
         </sc-line-item-total>
         {this.renderDiscountLine()}
@@ -77,7 +77,7 @@ export class ScOrderConfirmationTotals {
         )}
 
         <sc-divider style={{ '--spacing': 'var(--sc-spacing-small)' }}></sc-divider>
-        <sc-line-item-total order={this.order} size="large" show-currency>
+        <sc-line-item-total checkout={this.order} size="large" show-currency>
           <span slot="description">{__('Total', 'surecart')}</span>
         </sc-line-item-total>
       </div>

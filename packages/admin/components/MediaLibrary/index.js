@@ -370,8 +370,9 @@ export default ({
 											_n(
 												'%s file',
 												'%s files',
-												Object.values(selectedMedia || {})
-													.length || 0,
+												Object.values(
+													selectedMedia || {}
+												).length || 0,
 												'surecart'
 											),
 											Object.values(selectedMedia || {})

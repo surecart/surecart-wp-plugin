@@ -6,25 +6,6 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 const API_BASE_PATH = '/surecart/v1/product_collections';
 
 test.describe('Product Collection Admin Page', () => {
-	test.beforeEach(async ({ requestUtils }) => {
-		const collections = await requestUtils.rest({
-			path: API_BASE_PATH,
-			params: {
-				per_page: 100,
-			},
-		});
-
-		// Delete all one by one.
-		await Promise.all(
-			collections.map((collection) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `${API_BASE_PATH}/${collection.id}`,
-				})
-			)
-		);
-	});
-
 	test('Should render product collection list page', async ({ page }) => {
 		await page.goto('/wp-admin/admin.php?page=sc-product-collections');
 

@@ -7,10 +7,11 @@
 
 ## Events
 
-| Event        | Description                     | Type                                                                                            |
-| ------------ | ------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `scPaid`     | The order/invoice was paid for. | `CustomEvent<void>`                                                                             |
-| `scSetState` | Set the state                   | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
+| Event                | Description                     | Type                                                                                            |
+| -------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `scPaid`             | The order/invoice was paid for. | `CustomEvent<void>`                                                                             |
+| `scPaymentInfoAdded` | Payment information was added   | `CustomEvent<PaymentInfoAddedParams>`                                                           |
+| `scSetState`         | Set the state                   | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 
 
 ## Methods

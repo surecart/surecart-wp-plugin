@@ -9,7 +9,7 @@ abstract class SureCartUnitTestCase extends WP_UnitTestCase
 {
 	public $mock_requests;
 
-	public function tearDown()
+	public function tearDown() : void
 	{
 		parent::tearDown();
 		\SureCart::setApplication(null);

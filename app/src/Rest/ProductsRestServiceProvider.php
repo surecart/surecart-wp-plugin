@@ -217,4 +217,25 @@ class ProductsRestServiceProvider extends RestServiceProvider implements RestSer
 	public function delete_item_permissions_check( $request ) {
 		return current_user_can( 'delete_sc_products' );
 	}
+
+	/**
+	 * If we are editing, let's make sure the data comes back directly.
+	 *
+	 * @param \SureCart\Models\Product $model Product model.
+	 * @param string                   $context The context of the request.
+	 *
+	 * @return  array The filtered response.
+	 */
+	public function filter_response_by_context( $model, $context ) {
+		$response = parent::filter_response_by_context( $model, $context );
+
+		if ( 'edit' === $context && is_array( $response ) && ! empty( $response['id'] ) ) {
+			// Process the variants, it's in a data column, so we need to pull it out.
+			$response['variants'] = ! empty( $response['variants']['data'] ) ? $response['variants']['data'] : [];
+			// Process the variant_options, it's in a data column, so we need to pull it out.
+			$response['variant_options'] = ! empty( $response['variant_options']['data'] ) ? $response['variant_options']['data'] : [];
+		}
+
+		return $response;
+	}
 }

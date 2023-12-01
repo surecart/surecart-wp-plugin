@@ -6,31 +6,12 @@ import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 test.describe('Product Page', () => {
 	let product;
 
-	test.beforeEach(async ({ requestUtils }) => {
-		const products = await requestUtils.rest({
-			path: '/surecart/v1/products',
-			params: {
-				per_page: 100,
-			},
-		});
-		// Delete all one by one.
-		// "surecart/v1/products" not yet supports batch requests.
-		await Promise.all(
-			products.map((post) =>
-				requestUtils.rest({
-					method: 'DELETE',
-					path: `/surecart/v1/products/${post.id}`,
-				})
-			)
-		);
-	});
-
 	test('Should have a product page', async ({ page, requestUtils }) => {
 		product = await requestUtils.rest({
 			method: 'POST',
 			path: '/surecart/v1/products',
 			data: {
-				name: 'Test Product',
+				name: 'Test Product Page',
 				status: 'published',
 			},
 		});
@@ -67,7 +48,9 @@ test.describe('Product Page', () => {
 		await page.goto(product.permalink);
 
 		// expect the product page title.
-		await expect(page.locator('.product-title')).toHaveText('Test Product');
+		await expect(page.locator('.product-title')).toHaveText(
+			'Test Product Page'
+		);
 
 		// expect the default price.
 		await expect(page.locator('.product-price')).toContainText('$20');

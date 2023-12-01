@@ -4,8 +4,9 @@ import { __ } from '@wordpress/i18n';
 import { openWormhole } from 'stencil-wormhole';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { Checkout, FormState, FormStateSetter, ProcessorName } from '../../../types';
+import { Checkout, FormState, FormStateSetter, PaymentInfoAddedParams, ProcessorName } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
+import { StripeElementChangeEvent } from '@stripe/stripe-js';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
 
@@ -51,9 +52,13 @@ export class ScStripeElement {
   /** The form state */
   @Prop() formState: FormState;
 
+  /** The order/invoice was paid for */
   @Event() scPaid: EventEmitter<void>;
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Payment information was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
 
   @State() error: string;
   @State() confirming: boolean;
@@ -104,6 +109,7 @@ export class ScStripeElement {
         this.error = response.error.message;
         throw response.error;
       }
+
       this.scSetState.emit('PAID');
       // paid
       this.scPaid.emit();
@@ -177,7 +183,22 @@ export class ScStripeElement {
 
     this.element = this.elements.getElement('card');
 
-    this.element.on('change', event => (this.error = event?.error?.message ? event.error.message : ''));
+    this.element.on('change', (event: StripeElementChangeEvent) => {
+      if (event.complete) {
+        this.scPaymentInfoAdded.emit({
+          processor_type: 'stripe',
+          checkout_id: this.order.id,
+          payment_method: {
+            billing_details: {
+              name: this?.order?.name ? this.order.name : '',
+              email: this?.order?.email ? this.order.email : '',
+            },
+          },
+        });
+      }
+
+      this.error = event?.error?.message ? event.error.message : '';
+    });
     this.element.on('focus', () => (this.hasFocus = true));
     this.element.on('blur', () => (this.hasFocus = false));
   }

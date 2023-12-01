@@ -3,7 +3,7 @@ import { sprintf, __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-pagination',
-  styleUrl: 'sc-pagination.css',
+  styleUrl: 'sc-pagination.scss',
   shadow: true,
 })
 export class ScPagination {
@@ -47,12 +47,14 @@ export class ScPagination {
         <div class="pagination-display">{sprintf(__('Displaying %1d to %2d of %3d items', 'surecart'), this.from, this.to, this.total)}</div>
         <sc-flex>
           <sc-button onClick={() => this.scPrevPage.emit()} type="text" disabled={!this.hasPreviousPage}>
-            {__('Previous', 'surecart')}
-            <sc-icon name="arrow-left" slot="prefix" />
+            <sc-visually-hidden>{__('Display previous page of items', 'surecart')}</sc-visually-hidden>
+            <span aria-hidden="true">{__('Previous', 'surecart')}</span>
+            <sc-icon aria-hidden="true" name="arrow-left" slot="prefix" />
           </sc-button>
           <sc-button onClick={() => this.scNextPage.emit()} type="text" disabled={!this.hasNextPage}>
-            {__('Next', 'surecart')}
-            <sc-icon name="arrow-right" slot="suffix" />
+            <sc-visually-hidden>{__('Display next page of items', 'surecart')}</sc-visually-hidden>
+            <span aria-hidden="true">{__('Next', 'surecart')}</span>
+            <sc-icon aria-hidden="true" name="arrow-right" slot="suffix" />
           </sc-button>
         </sc-flex>
       </sc-flex>

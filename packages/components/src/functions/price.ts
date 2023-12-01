@@ -125,3 +125,10 @@ export const periodCountString = (price: Price, abbreviate = false) => {
 export const translateRemainingPayments = payments => {
   return sprintf(_n('%d payment remaining', '%d payments remaining', payments, 'surecart'), payments);
 };
+
+export const productNameWithPrice = price => {
+  if (!price) {
+    return '';
+  }
+  return `${price?.product?.name} ${price?.name ? `— ${price.name}` : ''}`;
+};

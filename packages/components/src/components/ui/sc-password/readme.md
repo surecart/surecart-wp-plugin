@@ -68,7 +68,7 @@ Type: `Promise<void>`
 graph TD;
   sc-password --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-order-password --> sc-password
   sc-password-nag --> sc-password
   sc-wordpress-password-edit --> sc-password

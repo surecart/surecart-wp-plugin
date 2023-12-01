@@ -15,7 +15,7 @@ class ShippingMethodRestServiceProviderTest extends SureCartUnitTestCase
     /**
      * Set up a new app instance to use for tests.
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 

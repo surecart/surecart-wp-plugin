@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
 import { ScSelect, ScDivider, ScMenuItem } from '@surecart/components-react';
 import throttle from 'lodash/throttle';
@@ -18,8 +18,10 @@ export default ({
 	onNew,
 	children,
 	ad_hoc = true,
+	variable = true,
 	loading,
 	onScrollEnd = () => {},
+	includeVariants = true,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -31,29 +33,94 @@ export default ({
 		{ leading: false }
 	);
 
-	const choices = (products || []).map((product) => {
-		return {
-			label: product?.name,
-			id: product.id,
-			disabled: false,
-			choices: (product?.prices?.data || [])
-				.filter((price) => {
-					if (!ad_hoc && price?.ad_hoc) {
-						return false;
-					}
-					return true;
-				})
-				.map((price) => {
-					return {
-						value: price?.id,
-						label: `${formatNumber(price.amount, price.currency)}${
-							price?.archived ? ' (Archived)' : ''
-						}`,
-						suffix: intervalString(price, { showOnce: true }),
-					};
-				}),
-		};
-	});
+	const choices = (products || [])
+		.filter((product) => {
+			if (!variable && product?.variants?.data?.length) {
+				return false;
+			}
+			if (!product?.prices?.data?.length) {
+				return false;
+			}
+			return true;
+		})
+		.map((product) => {
+			return {
+				label: product?.name,
+				id: product.id,
+				disabled: false,
+				choices: (product?.prices?.data || [])
+					.filter((price) => {
+						if (!ad_hoc && price?.ad_hoc) {
+							return false;
+						}
+						return true;
+					})
+					.filter((price) => !price?.archived)
+					.map((price) => {
+						const variants = product?.variants?.data || [];
+
+						if (!includeVariants || !variants.length) {
+							const priceUnavailable =
+								product?.stock_enabled &&
+								!product?.allow_out_of_stock_purchases &&
+								0 >= product?.available_stock;
+							return {
+								value: price.id,
+								label: `${formatNumber(
+									price.amount,
+									price.currency
+								)}${price?.archived ? ' (Archived)' : ''}`,
+								disabled: priceUnavailable,
+								suffixDescription: product?.stock_enabled
+									? sprintf(
+											__('%s available', 'surecart'),
+											product?.available_stock
+									  )
+									: null,
+								suffix: intervalString(price, {
+									showOnce: true,
+								}),
+							};
+						}
+
+						return variants
+							.sort((a, b) => a?.position - b?.position)
+							.map((variant) => {
+								const variantUnavailable =
+									product?.stock_enabled &&
+									!product?.allow_out_of_stock_purchases &&
+									0 >= variant?.available_stock;
+								const variantLabel = [
+									variant?.option_1,
+									variant?.option_2,
+									variant?.option_3,
+								]
+									.filter(Boolean)
+									.join(' / ');
+								return {
+									value: price.id,
+									label: `${formatNumber(
+										variant?.amount ?? price.amount,
+										price.currency
+									)}${price?.archived ? ' (Archived)' : ''}`,
+									suffix: `(${variantLabel}) ${intervalString(
+										price,
+										{ showOnce: true }
+									)}`,
+									suffixDescription: product?.stock_enabled
+										? sprintf(
+												__('%s available', 'surecart'),
+												variant?.available_stock
+										  )
+										: null,
+									disabled: variantUnavailable,
+									variant_id: variant?.id,
+								};
+							});
+					})
+					.flat(),
+			};
+		});
 
 	return (
 		<ScSelect
@@ -70,7 +137,14 @@ export default ({
 			onScOpen={onFetch}
 			onScSearch={(e) => findProduct(e.detail)}
 			onScChange={(e) => {
-				onSelect(e.target.value);
+				if (e?.detail?.suffixUnavailable) {
+					alert(__('Variant Out of Stock.', 'surecart'));
+					return;
+				}
+				onSelect({
+					price_id: e?.target?.value,
+					variant_id: e?.detail?.variant_id,
+				});
 			}}
 			choices={choices}
 			onScScrollEnd={onScrollEnd}

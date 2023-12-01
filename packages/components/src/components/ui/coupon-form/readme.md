@@ -21,6 +21,7 @@
 | `loading`        | `loading`         | Is the form loading           | `boolean`          | `undefined` |
 | `open`           | `open`            | Is it open                    | `boolean`          | `undefined` |
 | `placeholder`    | `placeholder`     | The placeholder for the input | `string`           | `undefined` |
+| `showInterval`   | `show-interval`   | Has recurring                 | `boolean`          | `undefined` |
 
 
 ## Events
@@ -86,7 +87,7 @@ graph TD;
   sc-coupon-form --> sc-alert
   sc-coupon-form --> sc-block-ui
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner

@@ -3,7 +3,7 @@
 exports[`sc-order-tax-id-input Defaults to type and number first 1`] = `
 <sc-order-tax-id-input>
   <mock:shadow-root>
-    <sc-tax-id-input country="AU" number="123456" status="unknown" type="eu_vat"></sc-tax-id-input>
+    <sc-tax-id-input country="AU" number="123" status="invalid" type="eu_vat"></sc-tax-id-input>
   </mock:shadow-root>
 </sc-order-tax-id-input>
 `;

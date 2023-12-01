@@ -1,7 +1,7 @@
 :host {
   display: inline-block;
   --panel-height: 75vh;
-  --panel-width:  11rem;
+  --panel-width: 11rem;
 }
 
 .dropdown {
@@ -18,6 +18,9 @@
   &__trigger {
     display: block;
     cursor: pointer;
+    border-width: 0;
+    outline: none;
+    background-color: unset;
   }
 
   &--disabled,

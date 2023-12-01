@@ -63,6 +63,8 @@ export default () => {
 						'line_item.fees',
 						'customer.balances',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
 					],
 				},
 			];

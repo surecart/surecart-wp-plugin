@@ -7,12 +7,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import {
-	ScAlert,
-	ScInput,
-	ScPriceInput,
-	ScSwitch,
-} from '@surecart/components-react';
+import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -133,13 +128,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 						</div>
 					)}
 				</div>
-
-				<ScAlert open type="info">
-					{__(
-						'Note: Redemption limits are not applied in test mode.',
-						'surecart'
-					)}
-				</ScAlert>
 			</div>
 		</Box>
 	);

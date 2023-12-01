@@ -12,6 +12,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import ModelSelector from '../../components/ModelSelector';
 import { intervalString } from '../../util/translations';
 import { _n, sprintf, __ } from '@wordpress/i18n';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ id, onSelect }) => {
 	const { product, loading } = useSelect(
@@ -21,7 +22,13 @@ export default ({ id, onSelect }) => {
 				'surecart',
 				'product',
 				id,
-				{ expand: ['prices'] },
+				{
+					expand: [
+						'prices',
+						'featured_product_media',
+						'product_media.media',
+					],
+				},
 			];
 			return {
 				product: select(coreStore)?.getEditedEntityRecord?.(
@@ -57,12 +64,15 @@ export default ({ id, onSelect }) => {
 	);
 	const firstPrice = activePrices?.[0];
 	const totalPrices = activePrices?.length;
+	const media = getFeaturedProductMediaAttributes(product);
 
 	return (
 		<ScFlex alignItems="center" justifyContent="flex-start">
-			{product?.image_url ? (
+			{media.url ? (
 				<img
-					src={product.image_url}
+					src={media.url}
+					alt={media.alt}
+					{...(media.title ? { title: media.title } : {})}
 					css={css`
 						width: 40px;
 						height: 40px;

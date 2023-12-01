@@ -97,7 +97,7 @@ export class ScSubscriptionNextPayment {
                 <strong>
                   <sc-format-number type="currency" currency={checkout?.currency} value={checkout?.amount_due} />
                 </strong>{' '}
-                {!!this.subscription?.finite && ' - ' + translateRemainingPayments(this.subscription?.remaining_period_count)}
+                {!!this.subscription?.finite && ' — ' + translateRemainingPayments(this.subscription?.remaining_period_count)}
               </div>
             </sc-subscription-details>
           </span>
@@ -107,6 +107,8 @@ export class ScSubscriptionNextPayment {
               <sc-product-line-item
                 imageUrl={(item.price?.product as Product)?.image_url}
                 name={(item.price?.product as Product)?.name}
+                priceName={item?.price?.name}
+                variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
                 editable={false}
                 removable={false}
                 quantity={item?.quantity}

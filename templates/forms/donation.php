@@ -10,10 +10,6 @@ return [
 					<sc-donation-choices label="Donation Amount" currency="USD"><sc-choice show-control="false" size="small" value="ad_hoc">Other</sc-choice></sc-donation-choices>
 					<!-- /wp:surecart/donation -->
 
-					<!-- wp:surecart/express-payment -->
-					<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-					<!-- /wp:surecart/express-payment -->
-
 					<!-- wp:surecart/columns -->
 					<sc-columns class="wp-block-surecart-columns"><!-- wp:surecart/column -->
 					<sc-column class="wp-block-surecart-column"><!-- wp:surecart/email -->

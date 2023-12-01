@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
+import { updateCartLineItem } from '../../../util';
 
 export default ({ attributes, setAttributes }) => {
 	const { prices } = attributes;
@@ -13,28 +14,8 @@ export default ({ attributes, setAttributes }) => {
 		});
 	};
 
-	const updateChoice = (data, index) => {
-		setAttributes({
-			prices: prices.map((item, i) => {
-				if (i !== index) return item;
-				return {
-					...item,
-					...data,
-				};
-			}),
-		});
-	};
-
-	const addProduct = () => {
-		setAttributes({
-			prices: [
-				...(prices || []),
-				{
-					quantity: 1,
-				},
-			],
-		});
-	};
+	const updateChoice = (data) =>
+		setAttributes({ prices: updateCartLineItem(data, prices) });
 
 	return (
 		<div
@@ -45,7 +26,6 @@ export default ({ attributes, setAttributes }) => {
 		>
 			<PriceChoices
 				choices={prices}
-				onAddProduct={addProduct}
 				onUpdate={updateChoice}
 				onRemove={removeChoice}
 			/>

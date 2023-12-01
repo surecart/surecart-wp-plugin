@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                    | Default     |
-| --------- | --------- | ----------- | ----------------------- | ----------- |
-| `loading` | `loading` |             | `boolean`               | `undefined` |
-| `order`   | --        |             | `Checkout`              | `undefined` |
-| `size`    | `size`    |             | `"large" \| "medium"`   | `undefined` |
-| `total`   | `total`   |             | `"subtotal" \| "total"` | `'total'`   |
+| Property   | Attribute | Description | Type                    | Default     |
+| ---------- | --------- | ----------- | ----------------------- | ----------- |
+| `checkout` | --        |             | `Checkout`              | `undefined` |
+| `size`     | `size`    |             | `"large" \| "medium"`   | `undefined` |
+| `total`    | `total`   |             | `"subtotal" \| "total"` | `'total'`   |
 
 
 ## Dependencies

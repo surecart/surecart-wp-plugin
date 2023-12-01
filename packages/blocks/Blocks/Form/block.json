@@ -5,7 +5,7 @@
 	"category": "surecart",
 	"parent": ["surecart/checkout-form"],
 	"keywords": ["email", "mail"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -37,18 +37,19 @@
 		"loading_text": {
 			"type": "object",
 			"default": {
-				"finalizing": "",
-				"paying": "",
-				"confirming": "",
-				"confirmed": ""
+				"finalizing": "Submitting order...",
+				"paying": "Processing payment...",
+				"confirming": "Finalizing order...",
+				"confirmed": "Success!",
+				"redirecting": "Success! Redirecting..."
 			}
 		},
 		"success_text": {
 			"type": "object",
 			"default": {
-				"title": "",
-				"description": "",
-				"button": ""
+				"title": "Thanks for your order!",
+				"description": "Your payment was successful, and your order is complete. A receipt is on its way to your inbox.",
+				"button": "Continue"
 			}
 		}
 	},

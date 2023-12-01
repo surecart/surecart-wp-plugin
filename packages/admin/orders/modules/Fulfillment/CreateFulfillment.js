@@ -7,20 +7,20 @@ import {
 	ScForm,
 	ScIcon,
 	ScInput,
-	ScFormatNumber,
 	ScFormControl,
 	ScTooltip,
 	ScBlockUi,
+	ScSwitch,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
 import { useState, useEffect } from 'react';
 import AddressDisplay from '../../../components/AddressDisplay';
 import Tracking from './components/Tracking';
-import LineItem from './components/LineItem';
+import ProductLineItem from '../../../ui/ProductLineItem';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({
 	items: fulfillmentItems,
@@ -147,6 +147,16 @@ export default ({
 		(item) => item?.price?.product?.shipping_enabled
 	);
 
+	const getImageAttributes = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
+
 	return (
 		<ScForm
 			style={{
@@ -185,9 +195,13 @@ export default ({
 					>
 						{(items || []).map((item, index) => {
 							return (
-								<LineItem
-									key={index}
-									imageUrl={item?.price?.product?.image_url}
+								<ProductLineItem
+									key={item?.id}
+									lineItem={item}
+									showWeight={true}
+									{...getImageAttributes(
+										item?.price?.product
+									)}
 									suffix={
 										<ScInput
 											label={__('Quantity', 'surecart')}
@@ -219,22 +233,7 @@ export default ({
 											</span>
 										</ScInput>
 									}
-								>
-									<a
-										href={addQueryArgs('admin.php', {
-											page: 'sc-products',
-											action: 'edit',
-											id: item?.price?.product?.id,
-										})}
-									>
-										{item?.price?.product?.name}
-									</a>
-									<ScFormatNumber
-										type="unit"
-										value={item?.price?.product?.weight}
-										unit={item?.price?.product?.weight_unit}
-									/>
-								</LineItem>
+								/>
 							);
 						})}
 					</div>
@@ -305,7 +304,7 @@ export default ({
 						)}
 					</div>
 
-					{/* <ScDivider />
+					<ScDivider />
 
 					<div
 						css={css`
@@ -323,12 +322,12 @@ export default ({
 							{__('Notify customer of shipment', 'surecart')}
 							<span slot="description">
 								{__(
-									'Send shipping details to your customer',
+									'Send shipment details to your customer now',
 									'surecart'
 								)}
 							</span>
 						</ScSwitch>
-					</div> */}
+					</div>
 				</div>
 
 				<ScButton

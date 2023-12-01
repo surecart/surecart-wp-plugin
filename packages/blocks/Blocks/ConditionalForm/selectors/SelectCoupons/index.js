@@ -70,7 +70,7 @@ export default (props) => {
 							archived: false,
 						}}
 						display={(item) =>
-							`${item?.name} - ${formattedDiscount(item)}`
+							`${item?.name} — ${formattedDiscount(item)}`
 						}
 						exclude={value}
 						onSelect={(id) => {

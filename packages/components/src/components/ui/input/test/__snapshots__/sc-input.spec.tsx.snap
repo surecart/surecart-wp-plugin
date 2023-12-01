@@ -10,7 +10,7 @@ exports[`sc-input renders 1`] = `
           <slot name="prefix"></slot>
         </span>
         <slot>
-          <input class="input__control" id="input-1" part="input" type="text" value="">
+          <input aria-labelledby="input-label-1" class="input__control" id="input-1" part="input" type="text" value="">
         </slot>
         <span class="input__suffix" part="suffix">
           <slot name="suffix"></slot>

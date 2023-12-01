@@ -65,13 +65,13 @@ export class ScTab {
           'tab--disabled': this.disabled,
           'tab--has-prefix': this.hasPrefix,
           'tab--has-suffix': this.hasSuffix,
-          'tab--is-rtl':isRtl()
+          'tab--is-rtl': isRtl(),
         }}
         ref={el => (this.tab = el)}
         role="tab"
         aria-disabled={this.disabled ? 'true' : 'false'}
         aria-selected={this.active ? 'true' : 'false'}
-        tabindex={this.disabled || !this.active ? '-1' : '0'}
+        tabindex={this.disabled ? '-1' : '0'}
       >
         <span part="prefix" class="tab__prefix">
           <slot onSlotchange={() => this.handleSlotChange()} name="prefix"></slot>

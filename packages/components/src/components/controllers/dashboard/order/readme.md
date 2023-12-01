@@ -25,9 +25,9 @@
 - [sc-divider](../../../ui/divider)
 - [sc-line-item](../../../ui/line-item)
 - [sc-format-number](../../../util/format-number)
+- [sc-tag](../../../ui/tag)
 - [sc-spacing](../../../ui/spacing)
 - [sc-dashboard-module](../../../ui/dashboard-module)
-- [sc-tag](../../../ui/tag)
 - [sc-order-manual-instructions](../../confirmation/manual-instructions)
 - [sc-card](../../../ui/card)
 - [sc-stacked-list](../../../ui/stacked-list)
@@ -49,9 +49,9 @@ graph TD;
   sc-order --> sc-divider
   sc-order --> sc-line-item
   sc-order --> sc-format-number
+  sc-order --> sc-tag
   sc-order --> sc-spacing
   sc-order --> sc-dashboard-module
-  sc-order --> sc-tag
   sc-order --> sc-order-manual-instructions
   sc-order --> sc-card
   sc-order --> sc-stacked-list

@@ -9,6 +9,8 @@
 
 namespace SureCart\WordPress;
 
+use SureCart\WordPress\Admin\Notices\AdminNoticesService;
+
 /**
  * Provides compatibility with other plugins.
  */
@@ -25,6 +27,8 @@ class CompatibilityService {
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+		// Show gutenberg active notice.
+		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 	}
 
 	/**
@@ -67,7 +71,7 @@ class CompatibilityService {
 		$post_assets_instance->enqueue_scripts(); // This will enqueue the JS and CSS files.
 
 		if ( ! empty( $post_assets_instance->file_generation ) && 'disabled' === $post_assets_instance->file_generation ) {
-			$post_assets_instance->print_stylesheet(); // As on checkout page, the wp_head action is not present & Spectra prints inline CSS on that action for file_generation disabled case, we need to print the CSS inline.
+			add_action( 'wp_footer', array( $post_assets_instance, 'print_stylesheet' ) ); // As on checkout page, the wp_head action is loaded late & Spectra prints inline CSS on that action for file_generation disabled case, we need to print the CSS on footer.
 		}
 
 		return $parsed_block;
@@ -104,4 +108,23 @@ class CompatibilityService {
 
 		return $output;
 	}
+
+	/**
+	 * Show the Gutenberg active notice.
+	 *
+	 * @return void
+	 */
+	public function gutenbergActiveNotice(): void {
+		if ( is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
+			( new AdminNoticesService() )->add(
+				[
+					'name'  => 'gutenberg_active_notice',
+					'type'  => 'warning',
+					'title' => esc_html__( 'SureCart', 'surecart' ),
+					'text'  => wp_kses_post( __( '<p>The Gutenberg plugin is currently active. SureCart blocks might not perform as expected within the block editor. If you encounter any issues, consider disabling the Gutenberg plugin.<p>', 'surecart' ) ),
+				]
+			);
+		}
+	}
 }
+

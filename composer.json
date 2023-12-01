@@ -22,7 +22,7 @@
 		"php": "^7.4|^8.0|^8.1",
 		"filp/whoops": "^2.2",
 		"htmlburger/wpemerge-cli": "~0.16.0",
-		"wp-phpunit/wp-phpunit": "5.8.3",
+		"wp-phpunit/wp-phpunit": "^5.8.3",
 		"wp-cli/wp-cli-bundle": "*",
 		"mockery/mockery": "^1.4",
 		"symfony/debug": "~3.0",

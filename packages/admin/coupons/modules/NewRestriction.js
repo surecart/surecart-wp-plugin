@@ -104,9 +104,9 @@ export default ({ onRequestClose, coupon, updateCoupon }) => {
 									archived: false,
 									ad_hoc: false,
 								}}
-								onSelect={(price) => {
+								onSelect={({price_id}) => {
 									setType('price_ids');
-									setId(price);
+									setId(price_id);
 								}}
 							/>
 						</ScFormControl>

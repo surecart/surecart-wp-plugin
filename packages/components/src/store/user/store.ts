@@ -1,4 +1,6 @@
 import { createStore } from '@stencil/store';
+import { getSerializedState } from '@store/utils';
+const { user } = getSerializedState();
 
 interface Store {
   loggedIn: boolean;
@@ -12,6 +14,7 @@ const { state, onChange, dispose } = createStore<Store>({
   email: '',
   name: '',
   matched: false,
+  ...user,
 });
 
 export default state;

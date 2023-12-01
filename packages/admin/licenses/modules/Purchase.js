@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import Box from '../../ui/Box';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ licenseId }) => {
 	const { purchase, loading, loadingError } = useSelect(
@@ -15,7 +16,11 @@ export default ({ licenseId }) => {
 				{
 					context: 'edit',
 					license_ids: [licenseId],
-					expand: ['product'],
+					expand: [
+						'product',
+						'product.featured_product_media',
+						'product_media.media',
+					],
 					per_page: 100,
 				},
 			];
@@ -33,6 +38,8 @@ export default ({ licenseId }) => {
 		},
 		[licenseId]
 	);
+
+	const media = getFeaturedProductMediaAttributes(purchase?.product);
 
 	return (
 		<Box
@@ -55,8 +62,13 @@ export default ({ licenseId }) => {
 			}
 		>
 			<ScLineItem>
-				{!!purchase?.product?.image_url && (
-					<img src={purchase?.product?.image_url} slot="image" />
+				{!!media?.url && (
+					<img
+						src={media.url}
+						alt={media.alt}
+						{...(media.title ? { title: media.title } : {})}
+						slot="image"
+					/>
 				)}
 				<span slot="title">{purchase?.product?.name}</span>
 				<span className="product__description" slot="description">

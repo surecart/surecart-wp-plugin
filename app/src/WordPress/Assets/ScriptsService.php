@@ -71,7 +71,6 @@ class ScriptsService {
 	 * @return void
 	 */
 	public function register() {
-
 		// should we use the esm loader directly?
 		if ( ! is_admin() && \SureCart::assets()->usesEsmLoader() ) {
 			wp_register_script(
@@ -108,26 +107,28 @@ class ScriptsService {
 			apply_filters(
 				'surecart-components/scData',  // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
-					'cdn_root'            => SURECART_CDN_IMAGE_BASE,
-					'root_url'            => esc_url_raw( get_rest_url() ),
-					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
-					'api_url'             => \SureCart::requests()->getBaseUrl(),
-					'currency'            => \SureCart::account()->currency,
-					'do_not_persist_cart' => is_admin(),
-					'theme'               => get_option( 'surecart_theme', 'light' ),
-					'pages'               => [
+					'cdn_root'             => SURECART_CDN_IMAGE_BASE,
+					'root_url'             => esc_url_raw( get_rest_url() ),
+					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+					'api_url'              => \SureCart::requests()->getBaseUrl(),
+					'currency'             => \SureCart::account()->currency,
+					'do_not_persist_cart'  => is_admin(),
+					'theme'                => get_option( 'surecart_theme', 'light' ),
+					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
 					],
-					'page_id'             => get_the_ID(),
-					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
-					'claim_url'           => $this->getAccountClaimUrl(),
-					'admin_url'           => trailingslashit( admin_url() ),
-					'user_permissions'    => array(
+					'page_id'              => get_the_ID(),
+					'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+					'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+					'recaptcha_site_key'   => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'claim_url'            => $this->getAccountClaimUrl(),
+					'admin_url'            => trailingslashit( admin_url() ),
+					'getting_started_url'  => untrailingslashit( admin_url( 'admin.php?page=sc-getting-started' ) ),
+					'user_permissions'     => array(
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
+					'is_account_connected' => \SureCart::account()->isConnected(),
 				]
 			)
 		);
@@ -219,6 +220,25 @@ class ScriptsService {
 			trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/styles/webhook-notice.css',
 			$asset_file['dependencies'],
 			$asset_file['version']
+		);
+
+		wp_register_script(
+			'surecart-affiliate-tracking',
+			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),
+			[],
+			'1.1',
+			[
+				'strategy' => 'defer',
+			]
+		);
+
+		wp_add_inline_script(
+			'surecart-affiliate-tracking',
+			'window.SureCartAffiliatesConfig = {
+				"publicToken": "' . \SureCart::account()->public_token . '",
+				"baseURL":"' . esc_url_raw( untrailingslashit( SURECART_API_URL ) ) . '/v1"
+			};',
+			'before'
 		);
 	}
 
@@ -368,25 +388,27 @@ class ScriptsService {
 			apply_filters(
 				'surecart-components/scData', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores,WordPress.NamingConventions.ValidHookName.NotLowercase
 				[
-					'root_url'            => esc_url_raw( get_rest_url() ),
-					'plugin_url'          => \SureCart::core()->assets()->getUrl(),
-					'api_url'             => \SureCart::requests()->getBaseUrl(),
-					'currency'            => \SureCart::account()->currency,
-					'do_not_persist_cart' => is_admin(),
-					'theme'               => get_option( 'surecart_theme', 'light' ),
-					'pages'               => [
+					'root_url'             => esc_url_raw( get_rest_url() ),
+					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
+					'api_url'              => \SureCart::requests()->getBaseUrl(),
+					'currency'             => \SureCart::account()->currency,
+					'do_not_persist_cart'  => is_admin(),
+					'theme'                => get_option( 'surecart_theme', 'light' ),
+					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
 					],
-					'page_id'             => get_the_ID(),
-					'nonce'               => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
-					'nonce_endpoint'      => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
-					'recaptcha_site_key'  => \SureCart::settings()->recaptcha()->getSiteKey(),
-					'claim_url'           => $this->getAccountClaimUrl(),
-					'admin_url'           => trailingslashit( admin_url() ),
-					'user_permissions'    => array(
+					'page_id'              => get_the_ID(),
+					'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
+					'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),
+					'recaptcha_site_key'   => \SureCart::settings()->recaptcha()->getSiteKey(),
+					'claim_url'            => $this->getAccountClaimUrl(),
+					'admin_url'            => trailingslashit( admin_url() ),
+					'getting_started_url'  => untrailingslashit( admin_url( 'admin.php?page=sc-getting-started' ) ),
+					'user_permissions'     => array(
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
+					'is_account_connected' => \SureCart::account()->isConnected(),
 				]
 			)
 		);
@@ -406,7 +428,7 @@ class ScriptsService {
 				'entitlements'         => \SureCart::account()->entitlements,
 				'upgrade_url'          => \SureCart::config()->links->purchase,
 				'beta'                 => [
-					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', true ),
 				],
 				'pages'                => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),

@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-cart-form-submit',
@@ -7,9 +7,6 @@ import { openWormhole } from 'stencil-wormhole';
   shadow: false,
 })
 export class ScCartFormSubmit {
-  /** Is the cart busy */
-  @Prop() busy: boolean;
-
   /** The button type. */
   @Prop({ reflect: true }) type: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link' = 'primary';
 
@@ -24,11 +21,10 @@ export class ScCartFormSubmit {
 
   render() {
     return (
-      <sc-button submit type={this.type} size={this.size} full={this.full} loading={this.busy} disabled={this.busy}>
+      <sc-button submit type={this.type} size={this.size} full={this.full} loading={formBusy()} disabled={formBusy()}>
         {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
         <slot />
       </sc-button>
     );
   }
 }
-openWormhole(ScCartFormSubmit, ['busy'], false);

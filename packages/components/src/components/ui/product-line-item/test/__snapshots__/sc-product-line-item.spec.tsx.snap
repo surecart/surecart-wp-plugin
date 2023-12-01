@@ -4,12 +4,18 @@ exports[`sc-product-line-item does not render scratch amount if the same as amou
 <sc-product-line-item amount="1000" currency="CAD" scratch-amount="1000">
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -29,12 +35,18 @@ exports[`sc-product-line-item renders 1`] = `
 <sc-product-line-item amount="1000" currency="CAD">
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -54,12 +66,18 @@ exports[`sc-product-line-item renders fees 1`] = `
 <sc-product-line-item>
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -91,12 +109,18 @@ exports[`sc-product-line-item renders scratch amount if different from amount 1`
 <sc-product-line-item amount="1000" currency="CAD" scratch-amount="2000">
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -117,12 +141,18 @@ exports[`sc-product-line-item renders trial duration 1`] = `
 <sc-product-line-item trial-duration-days="30">
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -147,12 +177,18 @@ exports[`sc-product-line-item renders trial duration with setup fee 1`] = `
 <sc-product-line-item setup-fee-trial-enabled="" trial-duration-days="30">
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -183,12 +219,18 @@ exports[`sc-product-line-item renders trial duration without setup fee 1`] = `
 <sc-product-line-item trial-duration-days="30">
   <mock:shadow-root>
     <div class="base" part="base">
-      <div class="item" part="product-line-item">
+      <div class="item product-line-item__editable" part="product-line-item">
         <div class="item__text" part="text">
-          <div class="item__title" part="title">
-            <slot name="title"></slot>
+          <div class="item__text-details">
+            <div class="item__title" part="title">
+              <slot name="title"></slot>
+            </div>
+            <div class="item__description item__price-variant" part="description">
+              <div></div>
+              <div></div>
+            </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100"></sc-quantity-select>
+          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>

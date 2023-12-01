@@ -2,6 +2,11 @@ name: Cypress e2e Component Tests
 
 on:
   pull_request:
+    types: [assigned]
+    branches:
+      - main
+      - next
+      - fixes
     paths:
       - "packages/components/src/**/*.tsx"
       - "packages/components/src/**/*.ts"

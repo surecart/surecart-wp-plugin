@@ -1,5 +1,5 @@
 import state, { onChange, on } from './store';
-import { getCheckout, setCheckout } from '../checkouts';
+import { getCheckout, setCheckout } from '../checkouts/mutations';
 
 /**
  * When the checkout changes, update the

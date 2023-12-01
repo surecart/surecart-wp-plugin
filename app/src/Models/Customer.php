@@ -33,16 +33,26 @@ class Customer extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function create( $attributes = [], $create_user = true ) {
-		parent::create( $attributes );
+		/** @var Customer|\WP_Error $customer */
+		$customer = parent::create( $attributes );
+		if ( $this->isError( $customer ) ) {
+			return $customer;
+		}
 
 		// maybe create a WordPress user.
 		if ( $create_user ) {
-			$user = User::create(
-				[
-					'user_name'  => $this->attributes['name'] ?? null,
-					'user_email' => $this->attributes['email'],
-				]
-			);
+			// Find the user by email.
+			$user = User::getUserBy( 'email', $this->attributes['email'] );
+
+			// if no user, create one.
+			if ( empty( $user ) ) {
+				$user = User::create(
+					[
+						'user_name'  => $this->attributes['name'] ?? null,
+						'user_email' => $this->attributes['email'],
+					]
+				);
+			}
 
 			// handle error creating user.
 			if ( is_wp_error( $user ) ) {

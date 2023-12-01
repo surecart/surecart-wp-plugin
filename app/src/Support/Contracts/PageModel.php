@@ -58,4 +58,11 @@ interface PageModel {
 	 * @return array
 	 */
 	public function getJsonSchemaArray(): array;
+
+	/**
+	 * Get the content.
+	 *
+	 * @return string
+	 */
+	public function getTemplateContent(): string;
 }

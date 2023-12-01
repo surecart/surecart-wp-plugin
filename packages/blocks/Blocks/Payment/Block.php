@@ -31,7 +31,7 @@ class Block extends BaseBlock {
 
 		$processors      = Processor::where( [ 'live_mode' => 'test' === $mode ? false : true ] )->get();
 		$stripe          = $this->getProcessorByType( 'stripe', $processors ) ?? null;
-		$payment_element = (bool) get_option( 'sc_stripe_payment_element', false );
+		$payment_element = (bool) get_option( 'sc_stripe_payment_element', true );
 
 		\SureCart::assets()->addComponentData(
 			'sc-payment',

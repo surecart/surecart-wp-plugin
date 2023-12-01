@@ -7,9 +7,11 @@ import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { addQueryArgs } from '@wordpress/url';
 import { intervalString } from '../../admin/util/translations';
+import LineItemLabel from '../../admin/ui/LineItemLabel';
+import { ScFormatNumber } from '@surecart/components-react';
 
-export default ({ price_id }) => {
-	const { price, product, loading } = useSelect((select) => {
+export default ({ price_id, variant_id }) => {
+	const { price, product, variant, loading } = useSelect((select) => {
 		const queryArgs = [
 			'root',
 			'price',
@@ -19,8 +21,14 @@ export default ({ price_id }) => {
 			},
 		];
 		const price = select(coreStore).getEntityRecord(...queryArgs);
+		const variant = select(coreStore).getEntityRecord(
+			'surecart',
+			'variant',
+			variant_id
+		);
 		return {
 			price,
+			variant,
 			product: price?.product,
 			loading: select(coreStore).isResolving(
 				'getEntityRecord',
@@ -54,14 +62,29 @@ export default ({ price_id }) => {
 				{price?.ad_hoc ? (
 					__('Name Your Price', 'surecart')
 				) : (
-					<>
-						<sc-format-number
-							type="currency"
-							currency={price?.currency}
-							value={price?.amount}
-						></sc-format-number>{' '}
-						{intervalString(price)}
-					</>
+					<LineItemLabel
+						lineItem={{
+							price,
+							variant_options: [
+								variant?.option_1,
+								variant?.option_2,
+								variant?.option_3,
+							],
+						}}
+					>
+						<div>
+							<ScFormatNumber
+								type="currency"
+								currency={price?.currency || 'usd'}
+								value={
+									!!price?.ad_hoc && ad_hoc_amount
+										? ad_hoc_amount
+										: price?.amount
+								}
+							/>
+							{intervalString(price)}
+						</div>
+					</LineItemLabel>
 				)}
 			</p>
 			<Button

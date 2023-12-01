@@ -23,6 +23,7 @@ export const convertLineItemsToLineItemData = (
 }> => {
   return (lineItems?.data || []).map(item => {
     return {
+      ...(!!item?.id ? { id: item.id } : {}),
       price_id: item.price.id,
       quantity: item.quantity,
     };

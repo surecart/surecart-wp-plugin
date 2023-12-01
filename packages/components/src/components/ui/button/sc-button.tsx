@@ -196,6 +196,7 @@ export class ScButton {
         rel={this.target ? 'noreferrer noopener' : undefined}
         role="button"
         aria-disabled={this.disabled ? 'true' : 'false'}
+        aria-busy={this.busy || this.loading ? 'true' : 'false'}
         tabindex={this.disabled ? '-1' : '0'}
         disabled={this.disabled || this.busy}
         type={this.submit ? 'submit' : 'button'}

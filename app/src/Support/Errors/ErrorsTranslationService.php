@@ -70,6 +70,14 @@ class ErrorsTranslationService {
 			return sprintf( __( 'You must enter an amount between %1$s and %2$s', 'surecart' ), $options['min'] / 100, $options['max'] / 100 );
 		}
 
+		if ( 'line_items.quantity' === $attribute && 'greater_than_or_equal_to' === $type ) {
+			if ( $options['value'] < 1 ) {
+				return __( 'The product is out of stock. Please remove it from your cart.', 'surecart' );
+			}
+
+			return sprintf( __( 'You must enter a quantity greater than or equal to %s', 'surecart' ), $options['value'] );
+		}
+
 		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type ) {
 			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ?? 'usd' ) );
 		}

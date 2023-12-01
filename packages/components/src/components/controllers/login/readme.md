@@ -39,7 +39,7 @@ graph TD;
   sc-login-form --> sc-alert
   sc-login-form --> sc-block-ui
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   sc-alert --> sc-icon
   sc-block-ui --> sc-spinner

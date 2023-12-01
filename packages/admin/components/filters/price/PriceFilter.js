@@ -4,6 +4,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../admin/util/translations';
 import FilterItem from '../FilterItem';
+import LineItemLabel from '../../../ui/LineItemLabel';
 
 export default ({ id, onRemove }) => {
 	const { price, hasLoadedPrice } = useSelect(
@@ -41,12 +42,14 @@ export default ({ id, onRemove }) => {
 				<div>
 					<strong>{price?.product?.name}</strong>
 				</div>
-				<ScFormatNumber
-					type="currency"
-					currency={price?.currency || 'usd'}
-					value={price?.amount}
-				/>
-				{intervalString(price)}
+				<LineItemLabel lineItem={{ price: price }}>
+					<ScFormatNumber
+						type="currency"
+						currency={price?.currency || 'usd'}
+						value={price?.amount}
+					/>
+					{intervalString(price)}
+				</LineItemLabel>
 			</div>
 		</FilterItem>
 	);

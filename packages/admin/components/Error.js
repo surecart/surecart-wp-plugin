@@ -7,6 +7,7 @@ export default ({
 	margin = '0',
 	scrollOnOpen = true,
 	children,
+	...rest
 }) => {
 	if (!error) {
 		return null;
@@ -24,6 +25,7 @@ export default ({
 			scrollOnOpen={scrollOnOpen}
 			scrollMargin={margin}
 			onScHide={() => !!setError && setError(null)}
+			{...rest}
 		>
 			<span slot="title">
 				{error?.message || __('Something went wrong.', 'surecart')}

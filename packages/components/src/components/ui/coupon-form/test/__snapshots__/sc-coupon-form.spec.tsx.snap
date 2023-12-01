@@ -13,7 +13,76 @@ exports[`sc-coupon-form handles applied coupons 1`] = `
         </sc-tag>
       </span>
       <span class="coupon-human-discount" slot="price-description">
-        (25% off)
+        25% off
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form handles recurring coupons with forever duration 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+      <span slot="description">
+        <div part="discount-label">
+          Discount
+        </div>
+        <sc-tag class="coupon-tag" clearable="" exportparts="base:coupon-tag" tabindex="0" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        25% off
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form handles recurring coupons with once duration 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+      <span slot="description">
+        <div part="discount-label">
+          Discount
+        </div>
+        <sc-tag class="coupon-tag" clearable="" exportparts="base:coupon-tag" tabindex="0" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        25% off once
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form handles recurring coupons with repeating duration 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+      <span slot="description">
+        <div part="discount-label">
+          Discount
+        </div>
+        <sc-tag class="coupon-tag" clearable="" exportparts="base:coupon-tag" tabindex="0" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        25% off for 3 months
       </span>
       <span slot="price">
         <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>

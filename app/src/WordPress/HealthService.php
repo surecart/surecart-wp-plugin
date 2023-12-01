@@ -46,6 +46,11 @@ class HealthService {
 					'value'   => \SureCart::account()->url,
 					'private' => false,
 				),
+				'webhook_url'         => array(
+					'label'   => __( 'Registered Webhook URL', 'surecart' ),
+					'value'   => RegisteredWebhook::registration()->get()->url ?? __( 'Not registered', 'surecart' ),
+					'private' => false,
+				),
 				'webhooks_processing' => array(
 					'label'   => __( 'Webhooks Processing', 'surecart' ),
 					'value'   => ! empty( $total_failed ) ? sprintf( __( '%d Unprocessed webhooks', 'surecart' ), $total_failed ) : __( 'Working', 'surecart' ),

@@ -24,11 +24,38 @@ class ProductsController extends RestController {
 	 * @return \SureCart\Models\Model
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
-		// if we are in edit context, we want to fetch the variants and variant options.
+		// if we are in edit context, we want to fetch the variants, variant options and prices.
 		if ( 'edit' === $request->get_param( 'context' ) || in_array( $request->get_method(), [ 'POST', 'PUT', 'PATCH', 'DELETE' ] ) ) {
-			$class->with( [ ...[ 'variants', 'variant_options', 'product_collections' ], ...$request->get_param( 'expand' ) ?? [] ] );
+			$class->with( [ 'variants', 'variant_options', 'variants.image', 'prices', 'product_collections' ] );
+		}
+		return parent::middleware( $class, $request );
+	}
+
+	/**
+	 * Edit model.
+	 *
+	 * Filter out variations which statuses are draft.
+	 *
+	 * @param \WP_REST_Request $request Rest Request.
+	 *
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function edit( \WP_REST_Request $request ) {
+		// Stop if we are not editing a variable product.
+		if ( empty( $request['variants'] ) ) {
+			return parent::edit( $request );
 		}
 
-		return parent::middleware( $class, $request );
+		// Filter draft variations.
+		$request['variants'] = array_values(
+			array_filter(
+				$request['variants'],
+				function( $variation ) {
+					return ! in_array( $variation['status'] ?? 'publish', [ 'draft', 'deleted' ] );
+				}
+			)
+		);
+
+		return parent::edit( $request );
 	}
 }

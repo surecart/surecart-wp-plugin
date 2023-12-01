@@ -23,4 +23,14 @@ class LineItem extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'line_item';
+
+	/**
+	 * Set the variant attribute.
+	 *
+	 * @param  string $value Variant properties.
+	 * @return void
+	 */
+	public function setVariantAttribute( $value ) {
+		$this->setRelation( 'variant', $value, Variant::class );
+	}
 }

@@ -13,16 +13,20 @@
 | `currency`             | `currency`                | Currency for the product                         | `string`  | `undefined` |
 | `editable`             | `editable`                | Can we select the quantity                       | `boolean` | `true`      |
 | `fees`                 | --                        | Product line item fees.                          | `Fee[]`   | `undefined` |
+| `imageAlt`             | `image-alt`               | Alternative description for the product image    | `string`  | `undefined` |
+| `imageTitle`           | `image-title`             | Title for the product image                      | `string`  | `undefined` |
 | `imageUrl`             | `image-url`               | Url for the product image                        | `string`  | `undefined` |
 | `interval`             | `interval`                | Recurring interval (i.e. monthly, once, etc.)    | `string`  | `undefined` |
 | `max`                  | `max`                     | The max allowed.                                 | `number`  | `100`       |
-| `media`                | --                        | The product media                                | `Media`   | `undefined` |
 | `name`                 | `name`                    | Product name                                     | `string`  | `undefined` |
+| `priceName`            | `price-name`              | Price name                                       | `string`  | `undefined` |
 | `quantity`             | `quantity`                | Quantity                                         | `number`  | `undefined` |
 | `removable`            | `removable`               | Is the line item removable                       | `boolean` | `undefined` |
 | `scratchAmount`        | `scratch-amount`          | The line item scratch amount                     | `number`  | `undefined` |
 | `setupFeeTrialEnabled` | `setup-fee-trial-enabled` | Is the setup fee not included in the free trial? | `boolean` | `true`      |
+| `sku`                  | `sku`                     | The SKU.                                         | `string`  | `''`        |
 | `trialDurationDays`    | `trial-duration-days`     | Trial duration days                              | `number`  | `undefined` |
+| `variantLabel`         | `variant-label`           | Product variant label                            | `string`  | `''`        |
 
 
 ## Events
@@ -38,6 +42,7 @@
 | Part                             | Description                     |
 | -------------------------------- | ------------------------------- |
 | `"base"`                         | The component base              |
+| `"description"`                  |                                 |
 | `"image"`                        | The product image               |
 | `"line-item__price-description"` | The line item price description |
 | `"price"`                        | The product price               |

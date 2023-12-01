@@ -20,6 +20,7 @@
 | `price`       | --             | Stores the price                | `Price`                      | `undefined` |
 | `priceId`     | `price-id`     | Id of the price.                | `string`                     | `undefined` |
 | `prices`      | --             | Price entities                  | `{ [id: string]: Price; }`   | `{}`        |
+| `product`     | --             | Stores the price                | `Product`                    | `undefined` |
 | `products`    | --             | Product entity                  | `{ [id: string]: Product; }` | `{}`        |
 | `quantity`    | `quantity`     | Default quantity                | `number`                     | `1`         |
 | `showControl` | `show-control` | Show the radio/checkbox control | `boolean`                    | `true`      |

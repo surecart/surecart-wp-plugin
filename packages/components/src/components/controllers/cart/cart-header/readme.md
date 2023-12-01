@@ -5,13 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property    | Attribute | Description | Type         | Default     |
-| ----------- | --------- | ----------- | ------------ | ----------- |
-| `lineItems` | --        |             | `LineItem[]` | `undefined` |
-
-
 ## Events
 
 | Event         | Description | Type                |

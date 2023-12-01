@@ -7,7 +7,7 @@ import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
 import { Checkout, PaymentMethod, Period, Price, Product } from '../../../../types';
-
+import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-upcoming-invoice',
   styleUrl: 'sc-upcoming-invoice.scss',
@@ -20,6 +20,7 @@ export class ScUpcomingInvoice {
   @Prop() successUrl: string;
   @Prop() subscriptionId: string;
   @Prop() priceId: string;
+  @Prop() variantId: string;
   @Prop() quantity: number;
   @Prop({ mutable: true }) discount: {
     promotion_code?: string;
@@ -92,6 +93,7 @@ export class ScUpcomingInvoice {
       }),
       data: {
         price: this.priceId,
+        variant: this.variantId,
         quantity: this.quantity,
         ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
         ...(this.discount ? { discount: this.discount } : {}),
@@ -138,6 +140,7 @@ export class ScUpcomingInvoice {
         data: {
           price: this.priceId,
           quantity: this.quantity,
+          variant: this.variantId,
           ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
           ...(this.discount ? { discount: this.discount } : {}),
         },
@@ -155,7 +158,7 @@ export class ScUpcomingInvoice {
 
   renderName(price: Price) {
     if (typeof price?.product !== 'string') {
-      return price?.product?.name;
+      return productNameWithPrice(price);
     }
     return __('Plan', 'surecart');
   }
@@ -232,6 +235,8 @@ export class ScUpcomingInvoice {
           <sc-product-line-item
             imageUrl={(item.price?.product as Product)?.image_url}
             name={(item.price?.product as Product)?.name}
+            priceName={item?.price?.name}
+            variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
             editable={this.quantityUpdatesEnabled}
             removable={false}
             quantity={item?.quantity}

@@ -1,5 +1,5 @@
 ---
-id: components
+slug: /
 ---
 
 # Introduction

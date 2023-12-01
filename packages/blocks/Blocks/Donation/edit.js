@@ -116,7 +116,7 @@ export default ({ attributes, setAttributes, isSelected, clientId }) => {
 		setShowModal(false);
 	};
 
-	const priceSelected = async (price_id) => {
+	const priceSelected = async ({price_id}) => {
 		const price = await select(coreStore).getEntityRecord(
 			'root',
 			'price',

@@ -1,9 +1,12 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Listen } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { state as checkoutState } from '@store/checkout';
 
 import { updateCheckout } from '../../../services/session';
 import { Checkout, LineItemData } from '../../../types';
 import { createErrorNotice, removeNotice } from '@store/notices/mutations';
+import { updateFormState } from '@store/form/mutations';
+import { clearCheckout } from '@store/checkout/mutations';
 
 @Component({
   tag: 'sc-cart-session-provider',
@@ -13,23 +16,8 @@ export class ScCartSessionProvider {
   /** Element */
   @Element() el: HTMLElement;
 
-  /** Order Object */
-  @Prop() order: Checkout;
-
-  /** Update line items event */
-  @Event() scUpdateOrderState: EventEmitter<Checkout>;
-
   /** Set the state */
   @Event() scSetState: EventEmitter<'loading' | 'busy' | 'navigating' | 'idle'>;
-
-  /** Holds the checkout session to update. */
-  @State() session: Checkout;
-
-  /** Sync this session back to parent. */
-  @Watch('session')
-  handleSessionUpdate(val) {
-    this.scUpdateOrderState.emit(val);
-  }
 
   @Listen('scUpdateOrder')
   handleUpdateSession(e) {
@@ -56,12 +44,12 @@ export class ScCartSessionProvider {
   /** Handle the error response. */
   handleErrorResponse(e) {
     if (e?.code === 'readonly' || e?.additional_errors?.[0]?.code === 'checkout.customer.account_mismatch') {
-      this.scUpdateOrderState.emit(null);
+      clearCheckout();
     }
 
     // expired
     if (e?.code === 'rest_cookie_invalid_nonce') {
-      this.scSetState.emit('idle');
+      updateFormState('EXPIRE');
       return;
     }
 
@@ -74,8 +62,6 @@ export class ScCartSessionProvider {
     if (e?.code === 'http_request_failed') {
       createErrorNotice(__('Something went wrong. Please reload the page and try again.', 'surecart'));
     }
-
-    this.scSetState.emit('idle');
   }
 
   /** Fetch a session. */
@@ -86,8 +72,8 @@ export class ScCartSessionProvider {
   /** Update a the order */
   async update(data = {}, query = {}) {
     try {
-      this.session = (await updateCheckout({
-        id: this.order?.id,
+      checkoutState.checkout = (await updateCheckout({
+        id: checkoutState.checkout?.id,
         data: {
           ...data,
         },
@@ -104,17 +90,18 @@ export class ScCartSessionProvider {
   /** Updates a session with loading status changes. */
   async loadUpdate(data = {}) {
     try {
-      this.scSetState.emit('busy');
+      updateFormState('FETCH');
       await this.update(data);
-      this.scSetState.emit('idle');
+      updateFormState('RESOLVE');
     } catch (e) {
+      updateFormState('REJECT');
       this.handleErrorResponse(e);
     }
   }
 
   render() {
     return (
-      <sc-line-items-provider order={this.order} onScUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
+      <sc-line-items-provider order={checkoutState.checkout} onScUpdateLineItems={e => this.loadUpdate({ line_items: e.detail as Array<LineItemData> })}>
         <slot />
       </sc-line-items-provider>
     );

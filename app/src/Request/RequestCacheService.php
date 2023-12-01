@@ -60,7 +60,6 @@ class RequestCacheService {
 			}
 		}
 		return true;
-
 	}
 
 	/**
@@ -82,8 +81,8 @@ class RequestCacheService {
 		if ( ! $timestamp ) {
 			return false;
 		}
-
-		return $this->endpoint . wp_json_encode( $this->args ) . $timestamp;
+		// we need to hash this this because there is a limit on string size for the key on the options table.
+		return wp_hash( $this->endpoint . wp_json_encode( $this->args ) . $timestamp );
 	}
 
 	/**
