@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Fragment, h, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Fragment, h, Prop, State, Host, Event, EventEmitter } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { state as userState } from '@store/user';
+import { resetUser } from '@store/user/mutations';
 
 @Component({
   tag: 'sc-customer-login',
@@ -164,7 +165,7 @@ export class ScCustomerLogin {
 
   renderPasswordView() {
     return (
-      <div class="use-password">
+      <div class="customer-password">
         <sc-flex alignItems="center">
           <sc-input
             type="password"
@@ -192,12 +193,12 @@ export class ScCustomerLogin {
 
   renderCodeView() {
     return (
-      <div>
-        <p class="code-hint">
-          {__('Enter the code sent to', 'surecart')} <span class="reset-email-preview">{userState.email}</span> {__('to securely use your saved information.', 'surecart')}
+      <div class="customer-code">
+        <p class="customer-code__hint">
+          {__('Enter the code sent to', 'surecart')} <span class="customer-code__preview">{userState.email}</span> {__('to securely use your saved information.', 'surecart')}
         </p>
         <div>
-          <div class="reset-code-area">
+          <div class="customer-code__reset">
             <sc-verification-code total={6} onChange={value => this.verifyCode(value)} showClearButton={this.showVerificationClearButton} />
             <div class="matched-icon">
               {this.verifying && <sc-spinner />}
@@ -207,8 +208,8 @@ export class ScCustomerLogin {
           {(!!this.error || !!this.codeError) && <p class="login-error">{this.error || this.codeError}</p>}
         </div>
 
-        <div class="resend-code-button">
-          <sc-button type="text" style={{ color: 'var(--sc-color-primary-500)' }} onClick={() => this.resendCode()} disabled={this.codeResending}>
+        <div class="customer-code__resend">
+          <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending}>
             {this.codeResending ? (
               <sc-spinner />
             ) : (
@@ -229,19 +230,37 @@ export class ScCustomerLogin {
 
   render() {
     return (
-      <div class="customer-login-area">
-        <sc-customer-email-preview></sc-customer-email-preview>
-        <sc-divider></sc-divider>
+      <Host>
+        <div class="customer-login">
+          <div class="customer-login__email">
+            <div class="customer-login__email-text">
+              <div class="customer-login__email-label">{__('Email', 'surecart')}</div>
+              <div class="customer-login__email-value">{userState.email}</div>
+            </div>
+            <div class="customer-login__back">
+              <sc-button type="text" size="small" onClick={() => resetUser()}>
+                <sc-icon name="x" class="customer-login__back-icon" />
+              </sc-button>
+            </div>
+          </div>
 
-        {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
-
-        {/* Change mode UI - Password view or code view */}
-        <div class="change-mode">
-          <a href="#" onClick={() => (this.mode = this.mode === 'code' ? 'password' : 'code')}>
-            {this.mode === 'code' ? __('Use Password', 'surecart') : __('Use Code', 'surecart')} {this.mode === 'code' ? <sc-icon name="lock" /> : '→'}
-          </a>
+          {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
         </div>
-      </div>
+
+        <div class="customer-login__mode">
+          {this.mode === 'code' ? (
+            <sc-button type="text" size="small" onClick={() => (this.mode = 'password')}>
+              <sc-icon name="lock" slot="prefix" />
+              {__('Use Password', 'surecart')}
+            </sc-button>
+          ) : (
+            <sc-button type="text" size="small" onClick={() => (this.mode = 'code')}>
+              <sc-icon name="key" slot="prefix" />
+              {__('Use Login Code', 'surecart')}
+            </sc-button>
+          )}
+        </div>
+      </Host>
     );
   }
 }

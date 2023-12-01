@@ -3843,6 +3843,20 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScVerificationCode {
+        /**
+          * On change verification code
+         */
+        "onChange": (value: string) => void;
+        /**
+          * Show clear button
+         */
+        "showClearButton": boolean;
+        /**
+          * Total number of inputs
+         */
+        "total": number;
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -5366,6 +5380,12 @@ declare global {
         prototype: HTMLScUpgradeRequiredElement;
         new (): HTMLScUpgradeRequiredElement;
     };
+    interface HTMLScVerificationCodeElement extends Components.ScVerificationCode, HTMLStencilElement {
+    }
+    var HTMLScVerificationCodeElement: {
+        prototype: HTMLScVerificationCodeElement;
+        new (): HTMLScVerificationCodeElement;
+    };
     interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
     }
     var HTMLScVisuallyHiddenElement: {
@@ -5593,6 +5613,7 @@ declare global {
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
         "sc-upgrade-required": HTMLScUpgradeRequiredElement;
+        "sc-verification-code": HTMLScVerificationCodeElement;
         "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
@@ -9792,6 +9813,20 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScVerificationCode {
+        /**
+          * On change verification code
+         */
+        "onChange"?: (value: string) => void;
+        /**
+          * Show clear button
+         */
+        "showClearButton"?: boolean;
+        /**
+          * Total number of inputs
+         */
+        "total"?: number;
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -10015,6 +10050,7 @@ declare namespace LocalJSX {
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
         "sc-upgrade-required": ScUpgradeRequired;
+        "sc-verification-code": ScVerificationCode;
         "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
@@ -10244,6 +10280,7 @@ declare module "@stencil/core" {
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
             "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
+            "sc-verification-code": LocalJSX.ScVerificationCode & JSXBase.HTMLAttributes<HTMLScVerificationCodeElement>;
             "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;

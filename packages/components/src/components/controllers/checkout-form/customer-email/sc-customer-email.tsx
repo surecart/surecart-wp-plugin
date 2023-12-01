@@ -5,7 +5,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { createOrUpdateCheckout } from '../../../../services/session';
 import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
-import { state as userState } from '@store/user';
+import { state as userState, onChange as onChangeUser } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
 
 @Component({
@@ -17,6 +17,7 @@ export class ScCustomerEmail {
   private input: HTMLScInputElement;
 
   private removeCheckoutListener: () => void;
+  private removeUserListener: () => void;
 
   /** A message for tracking confirmation. */
   @Prop() trackingConfirmationMessage: string;
@@ -171,6 +172,9 @@ export class ScCustomerEmail {
   componentWillLoad() {
     this.handleSessionChange();
     this.removeCheckoutListener = onChange('checkout', () => this.handleSessionChange());
+    this.removeUserListener = onChangeUser('email', val => {
+      this.value = val;
+    });
   }
 
   handleCodeSendError(error: any) {
@@ -187,6 +191,7 @@ export class ScCustomerEmail {
   /** Remove listener. */
   disconnectedCallback() {
     this.removeCheckoutListener();
+    this.removeUserListener();
   }
 
   renderOptIn() {
@@ -221,7 +226,7 @@ export class ScCustomerEmail {
       return <sc-customer-email-preview></sc-customer-email-preview>;
     }
 
-    if (!userState.matched) {
+    if (userState.matched) {
       return <sc-customer-login codeError={this.error}></sc-customer-login>;
     }
 
@@ -250,13 +255,9 @@ export class ScCustomerEmail {
           }}
           onScFocus={() => this.scFocus.emit()}
           onScBlur={() => this.scBlur.emit()}
-        ></sc-input>
-
-        {this.busy && (
-          <div class="account-loader">
-            <sc-spinner />
-          </div>
-        )}
+        >
+          {this.busy && <sc-spinner slot="suffix" class="account-loader" />}
+        </sc-input>
 
         {this.renderOptIn()}
       </Fragment>

@@ -1,20 +1,81 @@
-:host {
-  display: block;
+sc-customer-login {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
-a {
-  color: var(--sc-color-primary-500);
-}
+.customer-login {
+  box-sizing: border-box;
+  font-family: var(--sc-input-font-family);
+  font-weight: var(--sc-input-font-weight);
+  letter-spacing: var(--sc-input-letter-spacing);
+  background-color: var(--sc-input-background-color);
+  border: solid 1px var(--sc-input-border-color, var(--sc-input-border));
+  vertical-align: middle;
+  box-shadow: var(--sc-input-box-shadow);
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  border-radius: var(--sc-input-border-radius-medium);
+  font-size: var(--sc-font-size-small);
 
-.customer-login-area {
-  padding: 0px 1rem;
-  border: 1px solid #ccc;
-  margin: 10px 0px;
-  border-radius: 10px;
-  padding-bottom: 20px;
+  a {
+    color: var(--sc-color-primary-500);
+  }
 
   // Open it with animation.
   animation: open 0.5s ease-in-out;
+
+  &__email {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sc-input-spacing-medium);
+    border-bottom: solid 1px var(--sc-input-border-color, var(--sc-input-border));
+  }
+
+  &__email-text {
+    display: flex;
+    align-items: center;
+    gap: var(--sc-spacing-medium);
+  }
+
+  &__email-label {
+    color: var(--sc-input-help-text-color);
+  }
+
+  &__email-value {
+    color: var(--sc-input-label-color);
+    font-weight: var(--sc-input-label-font-weight);
+  }
+
+  &__back-icon {
+    font-size: 1.5em;
+  }
+
+  &__mode {
+    text-align: center;
+  }
+}
+
+.customer-code {
+  padding: var(--sc-input-spacing-medium);
+
+  &__hint {
+    margin: 0;
+    color: var(--sc-input-help-text-color);
+  }
+
+  &__resend {
+    text-align: center;
+  }
+
+  &__preview {
+    font-weight: var(--sc-font-weight-semibold);
+  }
+}
+
+.customer-password {
+  padding: var(--sc-input-spacing-medium);
 }
 
 .customer-email {
@@ -27,14 +88,12 @@ a {
 
 .reset-email-preview {
   font-weight: bold;
-  font-style: italic;
 }
 
 .reset-code-area {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 0px;
 }
 
 .reset-code-area input {
@@ -53,18 +112,7 @@ a {
   margin-left: 6px;
 }
 
-.resend-code-button {
-  margin-top: 1rem;
-  text-align: center;
-}
-
 .resend-code-button a {
-  text-decoration: none;
-}
-
-.use-password {
-  margin-top: 1rem;
-  text-align: center;
   text-decoration: none;
 }
 

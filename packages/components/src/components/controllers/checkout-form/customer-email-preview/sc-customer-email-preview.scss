@@ -20,6 +20,7 @@
     var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
   border-radius: var(--sc-input-border-radius-medium);
   padding: var(--sc-input-spacing-small);
+  font-size: var(--sc-font-size-small);
 
   sc-avatar {
     --sc-avatar-size: 38px;
