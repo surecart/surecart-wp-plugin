@@ -2782,10 +2782,6 @@ export namespace Components {
     }
     interface ScProductDonationAmountChoice {
         /**
-          * The currency code for the field.
-         */
-        "currencyCode": string;
-        /**
           * The label for the field.
          */
         "label": string;
@@ -8686,10 +8682,6 @@ declare namespace LocalJSX {
         "addToCart"?: boolean;
     }
     interface ScProductDonationAmountChoice {
-        /**
-          * The currency code for the field.
-         */
-        "currencyCode"?: string;
         /**
           * The label for the field.
          */

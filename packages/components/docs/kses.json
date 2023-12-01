@@ -1538,7 +1538,6 @@
     "slot": true
   },
   "sc-product-donation-amount-choice": {
-    "currency-code": true,
     "label": true,
     "product-id": true,
     "value": true,

@@ -34,7 +34,7 @@ export class ScProductDonationCustomAmount {
           <sc-visually-hidden>{__('Press Tab then Enter an amount you want to donate and press enter/return.', 'surecart')} </sc-visually-hidden>
           <sc-price-input
             ref={el => (this.priceInput = el)}
-            currencyCode={this.state()?.selectedPrice?.currency}
+            currencyCode={this.state()?.selectedPrice?.currency || window?.scData?.currency || 'usd'}
             showCode={false}
             showLabel={false}
             value={`${this.state()?.custom_amount || ''}`}

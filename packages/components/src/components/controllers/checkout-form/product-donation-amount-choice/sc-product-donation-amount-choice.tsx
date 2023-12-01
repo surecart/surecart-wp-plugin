@@ -19,9 +19,6 @@ export class ScProductDonationAmountChoice {
   /** The label for the field. */
   @Prop() label: string;
 
-  /** The currency code for the field. */
-  @Prop() currencyCode: string = 'USD';
-
   state() {
     return donationState[this.productId];
   }
@@ -35,7 +32,11 @@ export class ScProductDonationAmountChoice {
         onScChange={() => update(this.productId, { ad_hoc_amount: this.value, custom_amount: null })}
         aria-label={sprintf(__('Press Enter if you want to donate %s', 'surecart'), this.label ? this.label : this.value)}
       >
-        {this.label ? this.label : <sc-format-number type="currency" currency={this.currencyCode} value={this.value} minimum-fraction-digits="0"></sc-format-number>}
+        {this.label ? (
+          this.label
+        ) : (
+          <sc-format-number type="currency" currency={this.state().selectedPrice?.currency} value={this.value} minimum-fraction-digits="0"></sc-format-number>
+        )}
       </sc-choice-container>
     );
   }

@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 
 	useEffect(() => {
 		if (label) return;
-		const formattedNumber = getFormattedPrice(amount, currency);
+		const formattedNumber = getFormattedPrice({ amount, currency });
 		setAttributes({
 			label: formattedNumber,
 		});

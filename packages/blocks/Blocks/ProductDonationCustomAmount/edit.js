@@ -17,10 +17,7 @@ export default ({ attributes, context }) => {
 
 	return (
 		<div {...blockProps}>
-			<ScProductDonationCustomAmount
-				currencyCode={currency}
-				productId={product_id}
-			/>
+			<ScProductDonationCustomAmount productId={product_id} />
 		</div>
 	);
 };
