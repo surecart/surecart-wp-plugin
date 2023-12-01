@@ -58,7 +58,7 @@ const TEMPLATE = [
 		{ amount: 50000, currency: scBlockData?.currency || 'usd' },
 	],
 	[
-		'surecart/custom-donation-amount',
+		'surecart/product-donation-custom-amount',
 		{ currency: scBlockData?.currency || 'usd' },
 	],
 ];

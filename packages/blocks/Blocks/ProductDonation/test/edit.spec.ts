@@ -88,7 +88,7 @@ test.describe('surecart/product-donation', () => {
 		<!-- wp:surecart/product-donation-amount {"amount":10000,"currency":"USD"} /-->
 		<!-- wp:surecart/product-donation-amount {"amount":20000,"currency":"USD"} /-->
 		<!-- wp:surecart/product-donation-amount {"amount":50000,"currency":"USD"} /-->
-		<!-- wp:surecart/custom-donation-amount {"currency":"USD"} /-->
+		<!-- wp:surecart/product-donation-custom-amount {"currency":"USD"} /-->
 		<!-- /wp:surecart/product-donation -->
 		<!-- wp:surecart/express-payment -->
 		<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>

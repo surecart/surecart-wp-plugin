@@ -9,7 +9,7 @@ import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
 import { Fragment, useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { css, jsx } from '@emotion/core';
-import { formatNumber } from '../../../admin/util';
+import { getFormattedPrice } from '../../../admin/util';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, amount, currency } = attributes;
@@ -22,7 +22,7 @@ export default ({ attributes, setAttributes }) => {
 
 	useEffect(() => {
 		if (label) return;
-		const formattedNumber = formatNumber(amount, currency);
+		const formattedNumber = getFormattedPrice(amount, currency);
 		setAttributes({
 			label: formattedNumber,
 		});
