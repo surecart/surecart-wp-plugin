@@ -149,12 +149,6 @@ export class ScChoiceContainer {
     }
   }
 
-  // Prevent clicks on the label from briefly blurring the input
-  handleMouseDown(event: MouseEvent) {
-    event.preventDefault();
-    this.input.focus();
-  }
-
   componentDidLoad() {
     this.formController = new FormSubmitController(this.el, {
       value: (control: HTMLScChoiceElement) => (control.checked ? control.value : undefined),
@@ -188,14 +182,13 @@ export class ScChoiceContainer {
           'choice--is-rtl': isRtl(),
           [`choice--size-${this.size}`]: true,
         }}
-        role='radio'
+        role="radio"
         aria-checked={this.checked ? 'true' : 'false'}
         aria-disabled={this.disabled ? 'true' : 'false'}
         onKeyDown={e => this.handleKeyDown(e)}
-        onMouseDown={e => this.handleMouseDown(e)}
       >
         <slot name="header" />
-        <label class="choice__content" part="content" htmlFor={this.inputId}>
+        <div class="choice__content" part="content">
           <span
             part="control"
             class={{
@@ -245,10 +238,10 @@ export class ScChoiceContainer {
               onChange={() => this.handleClickEvent()}
             />
           </span>
-          <span part="label" id={this.labelId} class="choice__label">
+          <label part="label" id={this.labelId} class="choice__label">
             <slot />
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     );
   }
