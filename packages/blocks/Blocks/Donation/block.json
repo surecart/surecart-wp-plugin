@@ -9,7 +9,8 @@
 	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"inserter": false
 	},
 	"attributes": {
 		"label": {
