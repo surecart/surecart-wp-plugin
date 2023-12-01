@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { Component, Fragment, h, Host, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { Component, Fragment, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
@@ -229,21 +229,19 @@ export class ScCustomerLogin {
 
   render() {
     return (
-      <Host>
-        <div class="customer-login-area">
-          <sc-customer-email-preview></sc-customer-email-preview>
-          <sc-divider></sc-divider>
+      <div class="customer-login-area">
+        <sc-customer-email-preview></sc-customer-email-preview>
+        <sc-divider></sc-divider>
 
-          {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
+        {this.mode === 'code' ? this.renderCodeView() : this.renderPasswordView()}
 
-          {/* Change mode UI - Password view or code view */}
-          <div class="change-mode">
-            <a href="#" onClick={() => (this.mode = this.mode === 'code' ? 'password' : 'code')}>
-              {this.mode === 'code' ? __('Use Password', 'surecart') : __('Use Code', 'surecart')} {this.mode === 'code' ? <sc-icon name="lock" /> : '→'}
-            </a>
-          </div>
+        {/* Change mode UI - Password view or code view */}
+        <div class="change-mode">
+          <a href="#" onClick={() => (this.mode = this.mode === 'code' ? 'password' : 'code')}>
+            {this.mode === 'code' ? __('Use Password', 'surecart') : __('Use Code', 'surecart')} {this.mode === 'code' ? <sc-icon name="lock" /> : '→'}
+          </a>
         </div>
-      </Host>
+      </div>
     );
   }
 }
