@@ -111,7 +111,7 @@ graph TD;
   sc-login-provider --> sc-input
   sc-login-provider --> sc-button
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-form-state-provider --> sc-block-ui
   sc-form-error-provider --> sc-checkout-form-errors
   sc-checkout-form-errors --> sc-alert

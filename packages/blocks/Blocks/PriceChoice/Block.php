@@ -25,7 +25,12 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$price = Price::find( $attributes['price_id'] );
+		$price = Price::with( array( 'product' ) )->find( $attributes['price_id'] );
+
+		// empty check.
+		if ( is_wp_error( $price ) || empty( $price->id ) ) {
+			return null;
+		}
 
 		self::$instance++;
 
@@ -33,7 +38,8 @@ class Block extends BaseBlock {
 			'sc-price-choice',
 			'#sc-price-choice-' . (int) self::$instance,
 			[
-				'price' => $price,
+				'price'   => $price->toArray(),
+				'product' => $price->product->toArray(),
 			]
 		);
 
@@ -44,10 +50,10 @@ class Block extends BaseBlock {
 			type="<?php echo esc_attr( $attributes['type'] ?? 'radio' ); ?>"
 			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
 			description="<?php echo esc_attr( $attributes['description'] ?? '' ); ?>"
-			checked="<?php echo esc_attr( $attributes['checked'] ?? 'false' ); ?>"
-			show-label="<?php echo esc_attr( $attributes['show_label'] ?? 'false' ); ?>"
-			show-price="<?php echo esc_attr( $attributes['show_price'] ?? 'false' ); ?>"
-			show-control="<?php echo esc_attr( $attributes['show_control'] ?? 'false' ); ?>"
+			checked="<?php echo esc_attr( ! empty( $attributes['checked'] ) ? 'true' : 'false' ); ?>"
+			show-label="<?php echo esc_attr( ! empty( $attributes['show_label'] ) ? 'true' : 'false' ); ?>"
+			show-price="<?php echo esc_attr( ! empty( $attributes['show_price'] ) ? 'true' : 'false' ); ?>"
+			show-control="<?php echo esc_attr( ! empty( $attributes['show_control'] ) ? 'true' : 'false' ); ?>"
 			quantity="<?php echo esc_attr( $attributes['quantity'] ?? '1' ); ?>"
 		></sc-price-choice>
 		<?php

@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Media, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, ProductMedia, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxIdentifier, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -325,10 +325,6 @@ export namespace Components {
     }
     interface ScCartFormSubmit {
         /**
-          * Is the cart busy
-         */
-        "busy": boolean;
-        /**
           * Show a full-width button.
          */
         "full": boolean;
@@ -349,31 +345,11 @@ export namespace Components {
     }
     interface ScCartIcon {
         /**
-          * The count to show in the cart icon.
-         */
-        "count": number;
-        /**
-          * The form id to use for the cart.
-         */
-        "formId": string;
-        /**
           * The icon to show.
          */
         "icon": string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode": 'test' | 'live';
     }
     interface ScCartLoader {
-        /**
-          * The form id to use for the cart.
-         */
-        "formId": string;
-        /**
-          * The mode for the form.
-         */
-        "mode": 'live' | 'test';
         /**
           * The cart template to inject when opened.
          */
@@ -809,6 +785,10 @@ export namespace Components {
           * The placeholder for the input
          */
         "placeholder": string;
+        /**
+          * Has recurring
+         */
+        "showInterval": boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -1353,14 +1333,6 @@ export namespace Components {
     }
     interface ScFormControl {
         /**
-          * Store the error message
-         */
-        "errorMessage": string;
-        /**
-          * Display server-side validation errors.
-         */
-        "errors": any;
-        /**
           * Help text
          */
         "help": string;
@@ -1595,8 +1567,8 @@ export namespace Components {
         /**
           * Accept a string or an array of objects
          */
-        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
-        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
+        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -1774,8 +1746,7 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScLineItemTotal {
-        "loading": boolean;
-        "order": Checkout;
+        "checkout": Checkout;
         "size": 'large' | 'medium';
         "total": 'total' | 'subtotal';
     }
@@ -1805,6 +1776,7 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScMenu {
+        "ariaLabel": string;
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
     }
     interface ScMenuDivider {
@@ -2198,10 +2170,6 @@ export namespace Components {
          */
         "auAbnLabel": string;
         /**
-          * Is this busy
-         */
-        "busy": boolean;
-        /**
           * GST zone label
          */
         "caGstLabel": string;
@@ -2214,25 +2182,14 @@ export namespace Components {
          */
         "gbVatLabel": string;
         /**
-          * The order
-         */
-        "order": Partial<Checkout>;
-        /**
           * Other zones label
          */
         "otherLabel": string;
+        "reportValidity": () => Promise<boolean>;
         /**
           * Force show the field.
          */
         "show": boolean;
-        /**
-          * Tax identifier
-         */
-        "taxIdentifier": TaxIdentifier;
-        /**
-          * The tax protocol.
-         */
-        "taxProtocol": TaxProtocol;
     }
     interface ScOrdersList {
         "allLink": string;
@@ -2634,6 +2591,10 @@ export namespace Components {
          */
         "prices": Prices;
         /**
+          * Stores the price
+         */
+        "product": Product;
+        /**
           * Product entity
          */
         "products": Products;
@@ -2824,8 +2785,7 @@ export namespace Components {
         "product": Product;
     }
     interface ScProductItemImage {
-        "alt": string;
-        "productMedia": ProductMedia;
+        "product": Product;
         "sizing": 'cover' | 'contain';
     }
     interface ScProductItemList {
@@ -2860,6 +2820,7 @@ export namespace Components {
           * Should we paginate?
          */
         "paginationEnabled": boolean;
+        "products"?: Product[];
         /**
           * Query to search for
          */
@@ -2908,6 +2869,14 @@ export namespace Components {
          */
         "fees": Fee[];
         /**
+          * Alternative description for the product image
+         */
+        "imageAlt": string;
+        /**
+          * Title for the product image
+         */
+        "imageTitle": string;
+        /**
           * Url for the product image
          */
         "imageUrl": string;
@@ -2919,10 +2888,6 @@ export namespace Components {
           * The max allowed.
          */
         "max": number;
-        /**
-          * The product media
-         */
-        "media": Media;
         /**
           * Product name
          */
@@ -3582,6 +3547,10 @@ export namespace Components {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel": string;
+        /**
           * Makes the tag clearable.
          */
         "clearable": boolean;
@@ -3635,8 +3604,9 @@ export namespace Components {
           * Other zones label
          */
         "otherLabel": string;
+        "reportValidity": () => Promise<boolean>;
         /**
-          * Required?
+          * Whether tax input is required
          */
         "required": boolean;
         /**
@@ -3865,6 +3835,8 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScVisuallyHidden {
+    }
     interface ScWordpressPasswordEdit {
         /**
           * Ensures strong password validation.
@@ -4039,10 +4011,6 @@ export interface ScOrderShippingAddressCustomEvent<T> extends CustomEvent<T> {
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderSummaryElement;
-}
-export interface ScOrderTaxIdInputCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderTaxIdInputElement;
 }
 export interface ScPaginationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5374,6 +5342,12 @@ declare global {
         prototype: HTMLScUpgradeRequiredElement;
         new (): HTMLScUpgradeRequiredElement;
     };
+    interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
+    }
+    var HTMLScVisuallyHiddenElement: {
+        prototype: HTMLScVisuallyHiddenElement;
+        new (): HTMLScVisuallyHiddenElement;
+    };
     interface HTMLScWordpressPasswordEditElement extends Components.ScWordpressPasswordEdit, HTMLStencilElement {
     }
     var HTMLScWordpressPasswordEditElement: {
@@ -5593,6 +5567,7 @@ declare global {
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
         "sc-upgrade-required": HTMLScUpgradeRequiredElement;
+        "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
         "sc-wordpress-user-edit": HTMLScWordpressUserEditElement;
@@ -5931,10 +5906,6 @@ declare namespace LocalJSX {
     }
     interface ScCartFormSubmit {
         /**
-          * Is the cart busy
-         */
-        "busy"?: boolean;
-        /**
           * Show a full-width button.
          */
         "full"?: boolean;
@@ -5956,31 +5927,11 @@ declare namespace LocalJSX {
     }
     interface ScCartIcon {
         /**
-          * The count to show in the cart icon.
-         */
-        "count"?: number;
-        /**
-          * The form id to use for the cart.
-         */
-        "formId"?: string;
-        /**
           * The icon to show.
          */
         "icon"?: string;
-        /**
-          * Are we in test or live mode.
-         */
-        "mode"?: 'test' | 'live';
     }
     interface ScCartLoader {
-        /**
-          * The form id to use for the cart.
-         */
-        "formId"?: string;
-        /**
-          * The mode for the form.
-         */
-        "mode"?: 'live' | 'test';
         /**
           * The cart template to inject when opened.
          */
@@ -6432,6 +6383,10 @@ declare namespace LocalJSX {
           * The placeholder for the input
          */
         "placeholder"?: string;
+        /**
+          * Has recurring
+         */
+        "showInterval"?: boolean;
     }
     interface ScCustomOrderPriceInput {
         /**
@@ -7110,14 +7065,6 @@ declare namespace LocalJSX {
     }
     interface ScFormControl {
         /**
-          * Store the error message
-         */
-        "errorMessage"?: string;
-        /**
-          * Display server-side validation errors.
-         */
-        "errors"?: any;
-        /**
           * Help text
          */
         "help"?: string;
@@ -7360,8 +7307,8 @@ declare namespace LocalJSX {
         /**
           * Accept a string or an array of objects
          */
-        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
-        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
+        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {
@@ -7546,8 +7493,7 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScLineItemTotal {
-        "loading"?: boolean;
-        "order"?: Checkout;
+        "checkout"?: Checkout;
         "size"?: 'large' | 'medium';
         "total"?: 'total' | 'subtotal';
     }
@@ -7583,6 +7529,7 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScMenu {
+        "ariaLabel"?: string;
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
     interface ScMenuDivider {
@@ -7995,10 +7942,6 @@ declare namespace LocalJSX {
          */
         "auAbnLabel"?: string;
         /**
-          * Is this busy
-         */
-        "busy"?: boolean;
-        /**
           * GST zone label
          */
         "caGstLabel"?: string;
@@ -8011,17 +7954,6 @@ declare namespace LocalJSX {
          */
         "gbVatLabel"?: string;
         /**
-          * Make a request to update the order.
-         */
-        "onScUpdateOrder"?: (event: ScOrderTaxIdInputCustomEvent<{
-    data: Partial<Checkout>;
-    options?: { silent?: boolean };
-  }>) => void;
-        /**
-          * The order
-         */
-        "order"?: Partial<Checkout>;
-        /**
           * Other zones label
          */
         "otherLabel"?: string;
@@ -8029,14 +7961,6 @@ declare namespace LocalJSX {
           * Force show the field.
          */
         "show"?: boolean;
-        /**
-          * Tax identifier
-         */
-        "taxIdentifier"?: TaxIdentifier;
-        /**
-          * The tax protocol.
-         */
-        "taxProtocol"?: TaxProtocol;
     }
     interface ScOrdersList {
         "allLink"?: string;
@@ -8459,6 +8383,10 @@ declare namespace LocalJSX {
          */
         "prices"?: Prices;
         /**
+          * Stores the price
+         */
+        "product"?: Product;
+        /**
           * Product entity
          */
         "products"?: Products;
@@ -8661,8 +8589,7 @@ declare namespace LocalJSX {
         "product"?: Product;
     }
     interface ScProductItemImage {
-        "alt"?: string;
-        "productMedia"?: ProductMedia;
+        "product"?: Product;
         "sizing"?: 'cover' | 'contain';
     }
     interface ScProductItemList {
@@ -8701,6 +8628,7 @@ declare namespace LocalJSX {
           * Should we paginate?
          */
         "paginationEnabled"?: boolean;
+        "products"?: Product[];
         /**
           * Query to search for
          */
@@ -8749,6 +8677,14 @@ declare namespace LocalJSX {
          */
         "fees"?: Fee[];
         /**
+          * Alternative description for the product image
+         */
+        "imageAlt"?: string;
+        /**
+          * Title for the product image
+         */
+        "imageTitle"?: string;
+        /**
           * Url for the product image
          */
         "imageUrl"?: string;
@@ -8760,10 +8696,6 @@ declare namespace LocalJSX {
           * The max allowed.
          */
         "max"?: number;
-        /**
-          * The product media
-         */
-        "media"?: Media;
         /**
           * Product name
          */
@@ -9514,6 +9446,10 @@ declare namespace LocalJSX {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
+        /**
           * Makes the tag clearable.
          */
         "clearable"?: boolean;
@@ -9585,7 +9521,7 @@ declare namespace LocalJSX {
          */
         "otherLabel"?: string;
         /**
-          * Required?
+          * Whether tax input is required
          */
         "required"?: boolean;
         /**
@@ -9818,6 +9754,8 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScVisuallyHidden {
+    }
     interface ScWordpressPasswordEdit {
         /**
           * Ensures strong password validation.
@@ -10037,6 +9975,7 @@ declare namespace LocalJSX {
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
         "sc-upgrade-required": ScUpgradeRequired;
+        "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
         "sc-wordpress-user-edit": ScWordpressUserEdit;
@@ -10263,6 +10202,7 @@ declare module "@stencil/core" {
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
             "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
+            "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;
             "sc-wordpress-user-edit": LocalJSX.ScWordpressUserEdit & JSXBase.HTMLAttributes<HTMLScWordpressUserEditElement>;

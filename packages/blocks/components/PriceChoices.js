@@ -8,7 +8,7 @@ import { ScButton, ScIcon } from '@surecart/components-react';
 import { styles } from '@admin/styles/admin';
 import PriceSelector from './PriceSelector';
 
-export default ({ choices, onUpdate, onRemove, description }) => {
+export default ({ choices, onUpdate, onRemove, description, ...rest }) => {
 	const renderTable = () => {
 		return (
 			<sc-card no-padding>
@@ -85,6 +85,7 @@ export default ({ choices, onUpdate, onRemove, description }) => {
 						archived: false,
 					}}
 					allowOutOfStockSelection={true}
+					{...rest}
 				>
 					<ScButton slot="trigger" type="default">
 						<ScIcon name="plus" slot="prefix" />

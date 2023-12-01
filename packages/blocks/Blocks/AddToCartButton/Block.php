@@ -55,9 +55,9 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 					'href'  => $this->href(
 						[
 							[
-								'id'       => $price->id,
+								'id'         => $price->id,
 								'variant_id' => $attributes['variant_id'] ?? null,
-								'quantity' => 1,
+								'quantity'   => 1,
 							],
 						]
 					),

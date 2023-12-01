@@ -693,6 +693,7 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			return $items;
 		}
 
+		// check empty.
 		if ( empty( $items->data ) ) {
 			return [];
 		}

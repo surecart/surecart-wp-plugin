@@ -63,6 +63,7 @@ export default () => {
 					'customer.balances',
 					'price.product',
 				],
+				t: Date.now(), // prevents cache.
 			}),
 		});
 
@@ -91,6 +92,8 @@ export default () => {
 						'line_item.variant',
 						'customer.balances',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
 					],
 				},
 			];

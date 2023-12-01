@@ -1,5 +1,10 @@
 :host {
   display: block;
+  --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+}
+
+:host:focus-visible .cart {
+  box-shadow: var(--focus-ring);
 }
 
 .cart {
