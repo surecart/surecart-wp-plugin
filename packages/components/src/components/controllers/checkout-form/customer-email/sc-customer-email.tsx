@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Host, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
@@ -109,6 +109,7 @@ export class ScCustomerEmail {
   @Watch('value')
   async createLoginCode() {
     if (!this.value) return;
+    if (userState.loggedIn) return;
 
     // Check if a valid email using regex, if not return.
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
@@ -216,53 +217,49 @@ export class ScCustomerEmail {
   }
 
   render() {
-    return (
-      <Host>
-        {userState.matched && !userState.loggedIn && <sc-customer-login codeError={this.error}></sc-customer-login>}
+    if (userState.loggedIn) {
+      return <sc-customer-email-preview></sc-customer-email-preview>;
+    }
 
-        {userState.matched && userState.loggedIn && (
-          <div style={{ border: '1px solid #dcdfe5', padding: '0 10px', borderRadius: '4px' }}>
-            <sc-customer-email-preview></sc-customer-email-preview>
+    if (!userState.matched) {
+      return <sc-customer-login codeError={this.error}></sc-customer-login>;
+    }
+
+    return (
+      <Fragment>
+        <sc-input
+          exportparts="base, input, form-control, label, help-text, prefix, suffix"
+          type="email"
+          name="email"
+          ref={el => (this.input = el as HTMLScInputElement)}
+          value={this.value}
+          help={this.help}
+          label={this.label}
+          autocomplete={'email'}
+          placeholder={this.placeholder}
+          disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
+          readonly={this.readonly}
+          required={true}
+          invalid={this.invalid}
+          autofocus={this.autofocus}
+          hasFocus={this.hasFocus}
+          onScChange={() => this.handleChange()}
+          onScInput={() => {
+            this.scInput.emit();
+            this.createLoginCode();
+          }}
+          onScFocus={() => this.scFocus.emit()}
+          onScBlur={() => this.scBlur.emit()}
+        ></sc-input>
+
+        {this.busy && (
+          <div class="account-loader">
+            <sc-spinner />
           </div>
         )}
 
-        {!userState.matched && !userState.loggedIn && (
-          <Fragment>
-            <sc-input
-              exportparts="base, input, form-control, label, help-text, prefix, suffix"
-              type="email"
-              name="email"
-              ref={el => (this.input = el as HTMLScInputElement)}
-              value={this.value}
-              help={this.help}
-              label={this.label}
-              autocomplete={'email'}
-              placeholder={this.placeholder}
-              disabled={!!userState.loggedIn && !!this.value?.length && !this.invalid}
-              readonly={this.readonly}
-              required={true}
-              invalid={this.invalid}
-              autofocus={this.autofocus}
-              hasFocus={this.hasFocus}
-              onScChange={() => this.handleChange()}
-              onScInput={() => {
-                this.scInput.emit();
-                this.createLoginCode();
-              }}
-              onScFocus={() => this.scFocus.emit()}
-              onScBlur={() => this.scBlur.emit()}
-            ></sc-input>
-
-            {this.busy && (
-              <div class="account-loader">
-                <sc-spinner />
-              </div>
-            )}
-
-            {this.renderOptIn()}
-          </Fragment>
-        )}
-      </Host>
+        {this.renderOptIn()}
+      </Fragment>
     );
   }
 }

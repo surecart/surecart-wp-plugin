@@ -7,6 +7,10 @@ a {
   color: var(--sc-color-primary-500);
 }
 
+sc-customer-preview {
+  width: 100%;
+}
+
 a.customer-email {
   &__login-link {
     color: var(--sc-customer-login-link-color, var(--sc-input-placeholder-color));
