@@ -72,14 +72,4 @@ class Block extends BaseBlock {
 			)->render( '' )
 		);
 	}
-
-	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	private function getExistingLineItems(): array {
-		$initial_state = \SureCart::state()->getData();
-		return $initial_state['checkout']['initialLineItems'] ?? [];
-	}
 }
