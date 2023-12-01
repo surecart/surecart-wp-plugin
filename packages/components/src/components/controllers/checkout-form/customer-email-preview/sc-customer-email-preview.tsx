@@ -1,9 +1,10 @@
 /**
  * External dependencies.
  */
-import { Component, h, Host, State } from '@stencil/core';
+import { Component, h, State } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { state as checkoutState } from '@store/checkout';
+import MD5 from 'crypto-js/md5';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -47,23 +48,29 @@ export class ScCustomerEmailPreview {
 
   render() {
     return (
-      <Host>
-        <sc-flex alignItems="center" justifyContent="space-between">
-          <p>{__('Email', 'surecart')}</p>
-          <sc-flex justifyContent="flex-end" alignItems="center">
-            <span class="customer-email">{userState.email}</span>
-
-            <sc-tooltip type="text" text={__('Logout', 'surecart')}>
-              {(userState.loggedIn && (
-                <sc-button type="text" onClick={() => this.logout()} loading={this.busy}>
-                  <sc-icon name="log-out" />
-                </sc-button>
-              )) ||
-                ''}
-            </sc-tooltip>
-          </sc-flex>
-        </sc-flex>
-      </Host>
+      <div class="email-preview">
+        <div class="email-preview__info">
+          <sc-avatar
+            image={`https://secure.gravatar.com/avatar/${MD5((userState.email || '').toLowerCase().trim())}?size=48&default=404`}
+            initials={(userState?.name || userState?.email).charAt(0)}
+          />
+          <div class="email-preview__text">
+            <div class="email-preview__name">{userState.name}</div>
+            <div class="email-preview__email">{userState.email}</div>
+          </div>
+        </div>
+        <sc-dropdown placement="bottom-end">
+          <sc-button type="text" slot="trigger" loading={this.busy}>
+            <sc-icon name="chevron-down" />
+          </sc-button>
+          <sc-menu>
+            <sc-menu-item onClick={() => this.logout()}>
+              <sc-icon slot="prefix" name="log-out"></sc-icon>
+              {__('Logout', 'surecart')}
+            </sc-menu-item>
+          </sc-menu>
+        </sc-dropdown>
+      </div>
     );
   }
 }
