@@ -215,6 +215,7 @@ export class ScDropdown {
     // Up/down opens the menu
     if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
+      event.stopImmediatePropagation();
 
       // Show the menu if it's not already open
       if (!this.open) {
@@ -266,6 +267,8 @@ export class ScDropdown {
       if (this.open) {
         this.handleHide();
       } else {
+        event.stopImmediatePropagation();
+        event.preventDefault();
         this.open = true;
       }
     }
