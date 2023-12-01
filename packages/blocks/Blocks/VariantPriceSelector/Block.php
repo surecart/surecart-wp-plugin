@@ -55,10 +55,7 @@ class Block extends BaseBlock {
 			sc_initial_state(
 				[
 					'checkout' => [
-						'initialLineItems' => array_merge(
-							$this->getExistingLineItems(),
-							[ $line_item ]
-						),
+						'initialLineItems' => sc_initial_line_items( [ $line_item ] ),
 					],
 				]
 			);
