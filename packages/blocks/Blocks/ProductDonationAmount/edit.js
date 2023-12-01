@@ -62,7 +62,6 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				<ScChoiceContainer
 					showControl={false}
-					size="small"
 					css={css`
 						width: 100%;
 					`}
