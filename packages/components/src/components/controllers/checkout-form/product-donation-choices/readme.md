@@ -7,40 +7,23 @@
 
 ## Properties
 
-| Property                  | Attribute                    | Description                                   | Type     | Default     |
-| ------------------------- | ---------------------------- | --------------------------------------------- | -------- | ----------- |
-| `amountColumns`           | `amount-columns`             | Number of columns for amounts.                | `string` | `undefined` |
-| `amountLabel`             | `amount-label`               | The label for the field.                      | `string` | `undefined` |
-| `nonRecurringChoiceLabel` | `non-recurring-choice-label` | The label for the non recurring choice field. | `string` | `undefined` |
-| `productId`               | `product-id`                 | The product id for the fields.                | `string` | `undefined` |
-| `recurringChoiceLabel`    | `recurring-choice-label`     | The label for the recurring choice field.     | `string` | `undefined` |
-| `recurringLabel`          | `recurring-label`            | The label for the recurring fields.           | `string` | `undefined` |
-
-
-## Shadow Parts
-
-| Part        | Description |
-| ----------- | ----------- |
-| `"base"`    |             |
-| `"choice"`  |             |
-| `"choices"` |             |
+| Property    | Attribute    | Description                    | Type      | Default     |
+| ----------- | ------------ | ------------------------------ | --------- | ----------- |
+| `label`     | `label`      | The label for the field.       | `string`  | `undefined` |
+| `productId` | `product-id` | The product id for the fields. | `string`  | `undefined` |
+| `recurring` | `recurring`  |                                | `boolean` | `undefined` |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [sc-choices](../../../ui/choices)
 - [sc-recurring-price-choice-container](../../../ui/sc-recurring-price-choice-container)
-- [sc-choice-container](../../../ui/choice-container)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-product-donation-choices --> sc-choices
   sc-product-donation-choices --> sc-recurring-price-choice-container
-  sc-product-donation-choices --> sc-choice-container
-  sc-choices --> sc-form-control
   sc-recurring-price-choice-container --> sc-format-number
   sc-recurring-price-choice-container --> sc-choice-container
   sc-recurring-price-choice-container --> sc-dropdown

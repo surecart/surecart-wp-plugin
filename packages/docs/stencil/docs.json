@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-14T16:29:57",
+  "timestamp": "2023-12-01T06:18:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1872,7 +1872,6 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-paystack-add-method",
-        "sc-product-donation-custom-amount",
         "sc-product-item-list",
         "sc-product-price-modal",
         "sc-product-selected-price",
@@ -1977,9 +1976,6 @@
           "sc-button"
         ],
         "sc-paystack-add-method": [
-          "sc-button"
-        ],
-        "sc-product-donation-custom-amount": [
           "sc-button"
         ],
         "sc-product-item-list": [
@@ -5563,7 +5559,6 @@
         "sc-price-choice",
         "sc-price-choice-container",
         "sc-product-donation-amount-choice",
-        "sc-product-donation-choices",
         "sc-product-donation-custom-amount",
         "sc-recurring-price-choice-container"
       ],
@@ -5576,9 +5571,6 @@
           "sc-choice-container"
         ],
         "sc-product-donation-amount-choice": [
-          "sc-choice-container"
-        ],
-        "sc-product-donation-choices": [
           "sc-choice-container"
         ],
         "sc-product-donation-custom-amount": [
@@ -5825,7 +5817,6 @@
         "sc-checkout-product-price-variant-selector",
         "sc-donation-choices",
         "sc-price-choices",
-        "sc-product-donation-choices",
         "sc-product-price-choices",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
@@ -5851,9 +5842,6 @@
           "sc-choices"
         ],
         "sc-price-choices": [
-          "sc-choices"
-        ],
-        "sc-product-donation-choices": [
           "sc-choices"
         ],
         "sc-product-price-choices": [
@@ -11571,7 +11559,6 @@
         "sc-login-provider",
         "sc-mollie-add-method",
         "sc-password-nag",
-        "sc-product-donation-custom-amount",
         "sc-product-price-modal",
         "sc-product-selected-price",
         "sc-stripe-add-method",
@@ -11605,9 +11592,6 @@
           "sc-form"
         ],
         "sc-password-nag": [
-          "sc-form"
-        ],
-        "sc-product-donation-custom-amount": [
           "sc-form"
         ],
         "sc-product-price-modal": [
@@ -13552,7 +13536,6 @@
         "sc-payment",
         "sc-payment-method",
         "sc-payment-methods-list",
-        "sc-product-donation-custom-amount",
         "sc-product-item-list",
         "sc-product-line-item",
         "sc-product-selected-price",
@@ -13665,9 +13648,6 @@
           "sc-icon"
         ],
         "sc-payment-methods-list": [
-          "sc-icon"
-        ],
-        "sc-product-donation-custom-amount": [
           "sc-icon"
         ],
         "sc-product-item-list": [
@@ -23431,7 +23411,7 @@
         },
         {
           "event": "scChange",
-          "detail": "string",
+          "detail": "void",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -23714,44 +23694,12 @@
       "usage": {},
       "props": [
         {
-          "name": "amountColumns",
+          "name": "label",
           "type": "string",
           "mutable": false,
-          "attr": "amount-columns",
-          "reflectToAttr": false,
-          "docs": "Number of columns for amounts.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "amountLabel",
-          "type": "string",
-          "mutable": false,
-          "attr": "amount-label",
+          "attr": "label",
           "reflectToAttr": false,
           "docs": "The label for the field.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "nonRecurringChoiceLabel",
-          "type": "string",
-          "mutable": false,
-          "attr": "non-recurring-choice-label",
-          "reflectToAttr": false,
-          "docs": "The label for the non recurring choice field.",
           "docsTags": [],
           "values": [
             {
@@ -23778,32 +23726,16 @@
           "required": false
         },
         {
-          "name": "recurringChoiceLabel",
-          "type": "string",
+          "name": "recurring",
+          "type": "boolean",
           "mutable": false,
-          "attr": "recurring-choice-label",
+          "attr": "recurring",
           "reflectToAttr": false,
-          "docs": "The label for the recurring choice field.",
+          "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "recurringLabel",
-          "type": "string",
-          "mutable": false,
-          "attr": "recurring-label",
-          "reflectToAttr": false,
-          "docs": "The label for the recurring fields.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "string"
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -23815,34 +23747,14 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [
-        {
-          "name": "base",
-          "docs": ""
-        },
-        {
-          "name": "choice",
-          "docs": ""
-        },
-        {
-          "name": "choices",
-          "docs": ""
-        }
-      ],
+      "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-choices",
-        "sc-recurring-price-choice-container",
-        "sc-choice-container"
+        "sc-recurring-price-choice-container"
       ],
       "dependencyGraph": {
         "sc-product-donation-choices": [
-          "sc-choices",
-          "sc-recurring-price-choice-container",
-          "sc-choice-container"
-        ],
-        "sc-choices": [
-          "sc-form-control"
+          "sc-recurring-price-choice-container"
         ],
         "sc-recurring-price-choice-container": [
           "sc-format-number",
@@ -23863,23 +23775,6 @@
       "docsTags": [],
       "usage": {},
       "props": [
-        {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "Currency code for the donation.",
-          "docsTags": [],
-          "default": "'usd'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
         {
           "name": "productId",
           "type": "string",
@@ -23922,18 +23817,12 @@
       "dependents": [],
       "dependencies": [
         "sc-choice-container",
-        "sc-form",
-        "sc-price-input",
-        "sc-button",
-        "sc-icon"
+        "sc-price-input"
       ],
       "dependencyGraph": {
         "sc-product-donation-custom-amount": [
           "sc-choice-container",
-          "sc-form",
-          "sc-price-input",
-          "sc-button",
-          "sc-icon"
+          "sc-price-input"
         ],
         "sc-price-input": [
           "sc-input"
@@ -23941,8 +23830,8 @@
         "sc-input": [
           "sc-form-control"
         ],
-        "sc-button": [
-          "sc-spinner"
+        "sc-form-control": [
+          "sc-visually-hidden"
         ]
       }
     },
@@ -25300,6 +25189,14 @@
           "sc-choice-container",
           "sc-skeleton",
           "sc-visually-hidden"
+        ],
+        "sc-recurring-price-choice-container": [
+          "sc-format-number",
+          "sc-choice-container",
+          "sc-dropdown",
+          "sc-icon",
+          "sc-menu",
+          "sc-menu-item"
         ]
       }
     },
@@ -27951,7 +27848,36 @@
       "tag": "sc-shipping-choices",
       "readme": "# sc-shipping-choices\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "empty - The empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui loader."
+        },
+        {
+          "name": "part",
+          "text": "radio__base - The radio base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "radio__label - The radio label."
+        },
+        {
+          "name": "part",
+          "text": "radio__control - The radio control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "radio__checked-icon - The radio checked icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -27993,7 +27919,36 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui loader."
+        },
+        {
+          "name": "empty",
+          "docs": "The empty message."
+        },
+        {
+          "name": "radio__base",
+          "docs": "The radio base wrapper."
+        },
+        {
+          "name": "radio__checked-icon",
+          "docs": "The radio checked icon."
+        },
+        {
+          "name": "radio__control",
+          "docs": "The radio control wrapper."
+        },
+        {
+          "name": "radio__label",
+          "docs": "The radio label."
+        }
+      ],
       "dependents": [
         "sc-form-components-validator"
       ],

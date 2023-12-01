@@ -6,9 +6,36 @@ return [
 	'title'      => __( 'Donation', 'surecart' ),
 	'categories' => [ 'surecart_form' ],
 	'blockTypes' => [ 'surecart/form' ],
-	'content'    => '<!-- wp:surecart/donation -->
-					<sc-donation-choices label="Donation Amount" currency="USD"><sc-choice show-control="false" size="small" value="ad_hoc">Other</sc-choice></sc-donation-choices>
-					<!-- /wp:surecart/donation -->
+	'content'    => '
+				<!-- wp:surecart/product-donation {"product_id":"5d8e1295-84df-41db-b68b-5cbb4a4a39eb"} -->
+				<!-- wp:surecart/product-donation-amounts -->
+				<!-- wp:surecart/product-donation-amount {"amount":100,"label":"US$1.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":200,"label":"US$2.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":500,"label":"US$5.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":1000,"label":"US$10.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":2000,"label":"US$20.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":5000,"label":"US$50.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":10000,"label":"US$100.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":20000,"label":"US$200.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/product-donation-amount {"amount":50000,"label":"US$500.00","currency":"usd"} /-->
+				
+				<!-- wp:surecart/custom-donation-amount {"currency":"usd"} /-->
+				<!-- /wp:surecart/product-donation-amounts -->
+				
+				<!-- wp:surecart/product-donation-prices -->
+				<!-- wp:surecart/product-donation-price /-->
+				
+				<!-- wp:surecart/product-donation-price {"label":"No, donate once.","recurring":false} /-->
+				<!-- /wp:surecart/product-donation-prices -->
+				<!-- /wp:surecart/product-donation -->
 
 					<!-- wp:surecart/columns -->
 					<sc-columns class="wp-block-surecart-columns"><!-- wp:surecart/column -->

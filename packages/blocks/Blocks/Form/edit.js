@@ -137,6 +137,11 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		parsed = populateChoicesBlock(parsed, choices, choice_type);
 		parsed = populateBlock(parsed, choices, 'surecart/donation');
 		parsed = populateBlock(parsed, choices, 'surecart/name-your-price');
+		parsed = populateProductDonationBlock(
+			parsed,
+			choices,
+			'surecart/product-donation'
+		);
 
 		return parsed;
 	};
@@ -187,6 +192,26 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					blocks.splice(index, 1);
 				} else {
 					blocks[index].attributes.price_id = choices[0].id;
+				}
+			}
+			Array.isArray(block.innerBlocks) && block.innerBlocks.forEach(iter);
+		});
+
+		return blocks;
+	};
+
+	/**
+	 * Maybe populated the donation block with the correct price.
+	 */
+	const populateProductDonationBlock = (blocks, choices, name) => {
+		const remove = !choices?.length;
+		// look through nested blocks and add or remove prices.
+		blocks.forEach(function iter(block, index, blocks) {
+			if (block.name === name) {
+				if (remove) {
+					blocks.splice(index, 1);
+				} else {
+					blocks[index].attributes.product_id = choices[0].id;
 				}
 			}
 			Array.isArray(block.innerBlocks) && block.innerBlocks.forEach(iter);

@@ -52,7 +52,6 @@ Type: `Promise<void>`
  - [sc-checkout-product-price-variant-selector](../../controllers/checkout-form/sc-checkout-product-price-variant-selector)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choices](../../controllers/checkout-form/price-choices)
- - [sc-product-donation-choices](../../controllers/checkout-form/product-donation-choices)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
@@ -71,7 +70,6 @@ graph TD;
   sc-checkout-product-price-variant-selector --> sc-choices
   sc-donation-choices --> sc-choices
   sc-price-choices --> sc-choices
-  sc-product-donation-choices --> sc-choices
   sc-product-price-choices --> sc-choices
   sc-subscription-payment --> sc-choices
   sc-subscription-payment-method --> sc-choices
