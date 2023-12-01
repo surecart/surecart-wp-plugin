@@ -66,7 +66,7 @@ export class ScRecurringPriceChoiceContainer {
             {this.prices?.length > 1 && (
               <div class="recurring-price-choice__description">
                 <sc-dropdown style={{ '--panel-width': 'max(100%, 11rem)', '--sc-menu-item-white-space': 'wrap' }}>
-                  <button class="recurring-price-choice__button" slot="trigger">
+                  <button class="recurring-price-choice__button" slot="trigger" aria-label={__('Press Up/Down Arrow & select the recurring interval you want.', 'surecart')}>
                     {this.value()?.name ||
                       (this.value()?.recurring_interval
                         ? intervalString(this.value(), {
@@ -85,21 +85,23 @@ export class ScRecurringPriceChoiceContainer {
                   <sc-menu>
                     {(this.prices || []).map(price => {
                       const checked = price?.id === this.selectedPrice?.id;
+                      const label =
+                        price?.name ||
+                        (price?.recurring_interval
+                          ? intervalString(price, {
+                              showOnce: true,
+                              abbreviate: false,
+                              labels: {
+                                interval: __('Every', 'surecart'),
+                                period:
+                                  /** translators: used as in time period: "for 3 months" */
+                                  __('for', 'surecart'),
+                              },
+                            })
+                          : this.product.name);
                       return (
-                        <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked}>
-                          {price?.name ||
-                            (price?.recurring_interval
-                              ? intervalString(price, {
-                                  showOnce: true,
-                                  abbreviate: false,
-                                  labels: {
-                                    interval: __('Every', 'surecart'),
-                                    period:
-                                      /** translators: used as in time period: "for 3 months" */
-                                      __('for', 'surecart'),
-                                  },
-                                })
-                              : this.product.name)}
+                        <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked} aria-label={label}>
+                          {label}
                           {this.showAmount && <span slot="suffix">{this.renderPrice(price)}</span>}
                         </sc-menu-item>
                       );

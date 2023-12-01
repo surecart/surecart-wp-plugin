@@ -1,4 +1,5 @@
 import { Component, h, Prop, Element, Host } from '@stencil/core';
+import { __ } from '@wordpress/i18n';
 import { state as donationState } from '@store/product-donation';
 @Component({
   tag: 'sc-product-donation-custom-amount',
@@ -30,6 +31,7 @@ export class ScProductDonationCustomAmount {
     return (
       <Host class={{ 'sc-product-donation-custom-amount': true, 'sc-product-donation-custom-amount--has-value': !!this.value }}>
         <sc-choice-container value={`${this.state()?.custom_amount}`} show-control="false" checked={checked} onClick={() => this.priceInput.triggerFocus()}>
+          <sc-visually-hidden>{__('Press Tab then Enter an amount you want to donate and press enter/return.', 'surecart')} </sc-visually-hidden>
           <sc-price-input
             ref={el => (this.priceInput = el)}
             currencyCode={this.state()?.selectedPrice?.currency}

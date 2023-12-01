@@ -51,6 +51,11 @@ export class ScProductDonationChoice {
           const selectedPrice = (this.state().product?.prices?.data || []).find(({ id }) => id == e.detail);
           this.updateState({ selectedPrice });
         }}
+        aria-label={
+          this.recurring
+            ? __('If you want to make your donation recurring then Press Tab once & select the recurring interval from the dropdown. ', 'surecart')
+            : __('If you want to make your donation once then Press Enter. ', 'surecart')
+        }
       >
         <slot>{this.label}</slot>
       </sc-recurring-price-choice-container>
