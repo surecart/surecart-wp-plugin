@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.11.3
+Stable tag: 2.11.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,10 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.11.4 - December 2nd, 2023 =
+* Fix: Issue with donation sometimes prices not properly updating on instant checkout.
+* Fix: Better error handling with customer link middleware.
 
 = 2.11.3 - November 28th, 2023 =
 * Improvement: Update SureCart menu to include shop, checkout, dashboard pages.
