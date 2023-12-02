@@ -128,4 +128,5 @@ return [
 	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 ];
