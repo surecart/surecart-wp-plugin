@@ -48,7 +48,7 @@ const withToolbarButton = createHigherOrderComponent((BlockEdit) => {
 
 		useEffect(() => {
 			if (!url) {
-				setAttributes({ line_items: [{ quantity: 1 }] });
+				setAttributes({ line_items: [] });
 			}
 		}, [url]);
 

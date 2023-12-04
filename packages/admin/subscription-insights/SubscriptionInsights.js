@@ -8,7 +8,7 @@ import Error from '../components/Error';
 import InsightsPeriodFilter from '../ui/InsightsPeriodFilter';
 import Stat from '../ui/Stat';
 import { getFilterData } from '../util/filter';
-import { averageProperties, totalProperties } from '../util/stats';
+import { totalProperties } from '../util/stats';
 import { ScFormatNumber } from '@surecart/components-react';
 
 export default () => {
@@ -98,14 +98,17 @@ export default () => {
 
 					// 3 col, desktop.
 					@media screen and (min-width: 1280px) {
-						grid-template-columns: repeat(4, 1fr);
+						grid-template-columns: repeat(3, 1fr);
 					}
 					gap: 1.5em;
 				`}
 			>
 				<Stat
 					title={__('Total Subscriptions', 'surecart')}
-					description={__('Number Of Subscriptions', 'surecart')}
+					description={__(
+						'Total Number Of Subscriptions',
+						'surecart'
+					)}
 					loading={loading}
 					compare={{
 						current: data[data.length - 1]?.total_count || 0,
@@ -128,7 +131,7 @@ export default () => {
 					{totalProperties('new_count', data)}
 				</Stat>
 
-				<Stat
+				{/* <Stat
 					title={__('Trial Conversion', 'surecart')}
 					description={__(
 						'Conversion Rate From Trial To Paid',
@@ -152,7 +155,7 @@ export default () => {
 						maximumFractionDigits={2}
 						minimumFractionDigits={0}
 					/>
-				</Stat>
+				</Stat> */}
 
 				<Stat
 					title={__('New Trials', 'surecart')}
@@ -187,7 +190,7 @@ export default () => {
 					/>
 				</Stat>
 
-				<Stat
+				{/* <Stat
 					title={__('MRR Churn Rate', 'surecart')}
 					description={__(
 						'Monthly Recurring Revenue Churn Rate',
@@ -206,7 +209,7 @@ export default () => {
 						maximumFractionDigits={2}
 						minimumFractionDigits={0}
 					/>
-				</Stat>
+				</Stat> */}
 
 				<Stat
 					title={__('MRR Lost', 'surecart')}

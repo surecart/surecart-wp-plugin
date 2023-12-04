@@ -6,7 +6,7 @@ exports[`sc-tax-id-input Renders AU Tax Type 1`] = `
     <sc-input name="tax_identifier.number_type" value="au_abn" style="display: none;"></sc-input>
     <sc-input label="ABN Number" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
-        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+        <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           AU ABN
         </sc-button>
         <sc-menu>
@@ -38,7 +38,7 @@ exports[`sc-tax-id-input Renders CA Tax Type 1`] = `
     <sc-input name="tax_identifier.number_type" value="ca_gst" style="display: none;"></sc-input>
     <sc-input label="GST Number" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
-        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+        <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           CA GST
         </sc-button>
         <sc-menu>
@@ -70,7 +70,7 @@ exports[`sc-tax-id-input Renders EU VAT Tax Type 1`] = `
     <sc-input name="tax_identifier.number_type" value="eu_vat" style="display: none;"></sc-input>
     <sc-input label="EU VAT" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
-        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+        <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           EU VAT
         </sc-button>
         <sc-menu>
@@ -102,7 +102,7 @@ exports[`sc-tax-id-input Renders UK VAT Tax Type 1`] = `
     <sc-input name="tax_identifier.number_type" value="gb_vat" style="display: none;"></sc-input>
     <sc-input label="UK VAT" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
-        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+        <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           UK VAT
         </sc-button>
         <sc-menu>
@@ -134,7 +134,7 @@ exports[`sc-tax-id-input Shows the updated labels when modified labels are passe
     <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
     <sc-input label="Other test" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
-        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+        <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           Other
         </sc-button>
         <sc-menu>
@@ -166,7 +166,7 @@ exports[`sc-tax-id-input renders 1`] = `
     <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
     <sc-input label="Tax ID" name="tax_identifier.number">
       <sc-dropdown position="bottom-right" slot="suffix">
-        <sc-button caret="" slot="trigger" type="text" style="color: var(--sc-input-label-color);">
+        <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           Other
         </sc-button>
         <sc-menu>

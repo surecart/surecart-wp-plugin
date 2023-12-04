@@ -3,43 +3,92 @@
 namespace SureCart\Webhooks;
 
 use SureCart\Models\ApiToken;
-use SureCart\Models\Webhook;
+use SureCart\Models\IncomingWebhook;
 use SureCart\Support\Encryption;
+use SureCart\Support\Server;
+use SureCart\Support\URL;
 
 /**
- * WordPress Users service.
+ * Webhooks service.
  */
 class WebhooksService {
 	/**
-	 * Option value for signing key.
+	 * The registered webhook.
 	 *
-	 * @var string
+	 * @var \SureCart\Models\RegisteredWebhook
 	 */
-	protected $signing_key = 'sc_webhook_signing_secret';
+	protected $webhook;
 
 	/**
-	 * Hold the domain service.
+	 * Get the registered webhook.
 	 *
-	 * @var \SureCart\Webhooks\WebhooksHistoryService
+	 * @param \SureCart\Models\RegisteredWebhook $webhook The registered webhook.
 	 */
-	protected $domain_service;
-
-	/**
-	 * Get the domain service.
-	 *
-	 * @param WebhooksHistoryService $domain_service The domain service.
-	 */
-	public function __construct( WebhooksHistoryService $domain_service ) {
-		$this->domain_service = $domain_service;
+	public function __construct( \SureCart\Models\RegisteredWebhook $webhook ) {
+		$this->webhook = $webhook;
 	}
 
 	/**
-	 * Listen for domain changes.
+	 * Bootstrap the integration.
 	 *
-	 * @return function
+	 * @return void
 	 */
-	public function listenForDomainChanges() {
-		return $this->domain_service->listen();
+	public function bootstrap() {
+		// delete any old webhook processes.
+		add_action( 'delete_expired_transients', [ $this, 'deleteOldWebhookProcesses' ] );
+		// we can skip this for localhost or non-secure connections.
+		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) || ! is_ssl() ) {
+			return;
+		}
+		// maybe create webhooks if they are not yet created.
+		\add_action( 'admin_init', [ $this, 'maybeCreate' ] );
+		// listen for any domain changes and show notice.
+		\add_action( 'admin_notices', [ $this, 'maybeShowDomainChangeNotice' ] );
+		// verify existing webhooks are functioning properly.
+		// \add_action( 'admin_init', [ $this, 'verify' ] );
+	}
+
+	/**
+	 * Delete any webhook processes older than 30 days.
+	 *
+	 * @return void
+	 */
+	public function deleteOldWebhookProcesses() {
+		IncomingWebhook::deleteExpired( apply_filters( 'surecart/webhook/processes/log_expiration', '30 days' ) );
+	}
+
+	/**
+	 * Maybe show a notice to the user that the domain has changed.
+	 *
+	 * This will prompt them to take action to either update the webhook or create a new webhook.
+	 *
+	 * @return string|null
+	 */
+	public function maybeShowDomainChangeNotice() {
+		$webhook = $this->webhook->get();
+
+		// let's handle the error elsewhere.
+		if ( is_wp_error( $webhook ) || empty( $webhook['id'] ) || empty( $webhook['url'] ) ) {
+			return;
+		}
+
+		// the domain matches, so everything is good.
+		if ( $this->webhook->currentDomainMatches() ) {
+			return;
+		}
+
+		// if domain does not match, then show notice.
+		wp_enqueue_style( 'surecart-webhook-admin-notices' );
+		return \SureCart::render(
+			'admin/notices/webhook-change',
+			[
+				'previous_webhook' => $webhook,
+				'update_url'       => esc_url( \SureCart::getUrl()->editModel( 'update_webhook', $webhook['id'] ) ),
+				'add_url'          => esc_url( \SureCart::getUrl()->editModel( 'create_webhook', '0' ) ),
+				'previous_web_url' => esc_url_raw( URL::getSchemeAndHttpHost( $webhook['url'] ) ),
+				'current_web_url'  => esc_url_raw( URL::getSchemeAndHttpHost( $this->webhook->getListenerUrl() ) ),
+			]
+		);
 	}
 
 	/**
@@ -47,80 +96,120 @@ class WebhooksService {
 	 *
 	 * @return boolean
 	 */
-	public function hasToken() {
-		$token = ApiToken::get();
-		return ! empty( ApiToken::get() ) && 'test' !== $token;
+	public function hasToken(): bool {
+		return ! empty( ApiToken::get() );
 	}
 
 	/**
-	 * Create webhooks for this site.
+	 * May be Create webhooks for this site.
 	 *
 	 * @return void
 	 */
-	public function maybeCreateWebooks() {
+	public function maybeCreate(): void {
 		// Check for API key and early return if not.
 		if ( ! $this->hasToken() ) {
 			return;
 		}
 
-		// skip if we've already registered for this domain and has a signing secret saved.
-		if ( $this->domainMatches() && $this->hasSigningSecret() ) {
+		// get the saved webhook.
+		$registered = $this->webhook->get();
+
+		// We have one registered already.
+		if ( ! empty( $registered->id ) ) {
 			return;
 		}
 
 		// register the webhooks.
-		$registered = $this->register();
+		$registered = $this->webhook->create();
 
 		// handle error and show notice to user.
 		if ( is_wp_error( $registered ) ) {
-			return add_action(
-				'admin_notices',
-				function() use ( $registered ) {
-					$this->showWebhooksErrorNotice( $registered );
-				}
-			);
-		}
-
-		// if successful, update the domain and signing secret.
-		if ( ! empty( $registered['signing_secret'] ) ) {
-			$this->setSigningSecret( $registered['signing_secret'] );
-			$this->saveRegisteredWebhook(
+			\SureCart::notices()->add(
 				[
-					'id'  => $registered['id'],
-					'url' => $registered['url'],
+					'name'  => 'webhooks_registration_error',
+					'type'  => 'warning',
+					'title' => esc_html__( 'SureCart Webhook Registration Error', 'surecart' ),
+					'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $registered->get_error_messages() ?? [] ) ) ),
 				]
 			);
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Register webhooks for this site.
-	 *
-	 * @return \WP_Error|\SureCart\Models\Webhook;
-	 */
-	public function register() {
-		if ( defined( 'SURECART_RUNNING_TESTS' ) ) {
 			return;
 		}
-		return Webhook::register();
+
+		// send a test.
+		$registered->test();
 	}
 
 	/**
-	 * Show a notice if webhook creation failed.
+	 * Is this localhost?
 	 *
-	 * @param  \WP_Error $error Error object.
-	 *
-	 * @return void
+	 * @return boolean
 	 */
-	public function showWebhooksErrorNotice( \WP_Error $error ) {
-		$messages = implode( '<br>', $error->get_error_messages() );
-		$class    = 'notice notice-error';
-		$message  = __( 'SureCart webhooks could not be created.', 'surecart' ) . $messages;
-		printf( '<div class ="%1$s"><p>%2$s</p></div>', esc_attr( $class ), wp_kses_post( $message ) );
+	public function isLocalHost() {
+		return ( new Server( $this->webhook->getListenerUrl() ) )->isLocalHost();
 	}
+
+	/**
+	 * Verify webhooks.
+	 *
+	 * @return function
+	 */
+	// public function verify() {
+	// $webhook = $this->webhook->get();
+
+	// if ( is_wp_error( $webhook ) ) {
+	// not found, let's recreate one.
+	// if ( 'webhook_endpoint.not_found' === $webhook->get_error_code() ) {
+	// delete saved.
+	// $this->webhook->registration()->delete();
+	// create.
+	// return $this->maybeCreate();
+	// }
+
+	// handle other errors.
+	// return \SureCart::notices()->add(
+	// [
+	// 'name'  => 'webhooks_general_error',
+	// 'type'  => 'error',
+	// 'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
+	// 'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $webhook->get_error_messages() ?? [] ) ) ),
+	// ]
+	// );
+	// }
+
+	// If webhook is not created, show notice.
+	// This should not happen, but just in case.
+	// if ( ! $webhook || empty( $webhook->id ) ) {
+	// return \SureCart::notices()->add(
+	// [
+	// 'name'  => 'webhooks_not_created',
+	// 'type'  => 'error',
+	// 'title' => esc_html__( 'SureCart Webhooks Error', 'surecart' ),
+	// 'text'  => '<p>' . esc_html__( 'Webhooks cannot be created.', 'surecart' ) . '</p>',
+	// ]
+	// );
+	// }
+
+	// Show the grace period notice.
+	// if ( ! empty( $webhook->erroring_grace_period_ends_at ) ) {
+	// $message   = [];
+	// $message[] = $webhook->erroring_grace_period_ends_at > time() ? esc_html__( 'Your SureCart webhook connection is being monitored due to errors. This can cause issues with any of your SureCart integrations.', 'surecart' ) : esc_html__( 'Your SureCart webhook connection was disabled due to repeated errors. This can cause issues with any of your SureCart integrations.', 'surecart' );
+	// $message[] = $webhook->erroring_grace_period_ends_at > time() ? sprintf( wp_kses( 'These errors will automatically attempt to be retried, however, we will disable this in <strong>%s</strong> if it continues to fail.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) ) : sprintf( wp_kses( 'It was automatically disabled %s ago.', 'surecart' ), human_time_diff( $webhook->erroring_grace_period_ends_at ) );
+	// $message[] = __( 'If you have already fixed this you can dismiss this notice.', 'surecart' );
+	// $message[] = '<p>
+	// <a href="' . esc_url( \SureCart::getUrl()->editModel( 'resync_webhook', $webhook['id'] ) ) . '" class="button">' . esc_html__( 'Resync Webhook', 'surecart' ) . '</a>
+	// &nbsp;<a href="' . esc_url( untrailingslashit( SURECART_APP_URL ) . '/developer' ) . '" target="_blank">' . esc_html__( 'Troubleshoot Connection', 'surecart' ) . '</a>
+	// </p>';
+
+	// return \SureCart::notices()->add(
+	// [
+	// 'name'  => 'webhooks_erroring_grace_period_' . $webhook->erroring_grace_period_ends_at,
+	// 'type'  => 'warning',
+	// 'title' => esc_html__( 'SureCart Webhook Connection', 'surecart' ),
+	// 'text'  => sprintf( '<p>%s</p>', ( implode( '<br />', $message ) ) ),
+	// ]
+	// );
+	// }
+	// }
 
 	/**
 	 * Get the signing secret stored as encrypted data in the WP database.
@@ -128,69 +217,9 @@ class WebhooksService {
 	 * @return string|bool Decrypted value, or false on failure.
 	 */
 	public function getSigningSecret() {
-		return Encryption::decrypt( get_option( $this->signing_key, '' ) );
-	}
-
-	/**
-	 * Set the signing secret as encrypted data in the WP database.
-	 *
-	 * @param string $value The secret.
-	 * @return string|bool Encrypted value, or false on failure.
-	 */
-	public function setSigningSecret( $value ) {
-		$this->deleteSigningSecret();
-		return update_option( $this->signing_key, Encryption::encrypt( $value ), false );
-	}
-
-	/**
-	 * Delete the existing signing secret from the WP database.
-	 *
-	 * @return bool
-	 */
-	public function deleteSigningSecret() {
-		return delete_option( $this->signing_key );
-	}
-
-	/**
-	 * Does the webhook have a signing secret?
-	 *
-	 * @return boolean
-	 */
-	public function hasSigningSecret() {
-		return (bool) $this->getSigningSecret();
-	}
-
-	/**
-	 * Save the domain for the webhooks
-	 *
-	 * @return bool
-	 */
-	public function saveRegisteredWebhook( $webhook ) {
-		return $this->domain_service->saveRegisteredWebhook( $webhook );
-	}
-
-	/**
-	 * Does the webhook domain match?
-	 *
-	 * @return boolean
-	 */
-	public function domainMatches() {
-		return $this->domain_service->domainMatches();
-	}
-
-	/**
-	 * Broadcast the php hook.
-	 * This sets the webhook in a transient so that
-	 * it is not accidentally broadcasted twice.
-	 *
-	 * @return void
-	 */
-	public function broadcast( $event, $model ) {
-		$webhook = get_transient( 'surecart_webhook_' . $event . $model->id, false );
-		if ( false === $webhook ) {
-			// perform the action.
-			do_action( $event, $model );
-			set_transient( 'surecart_webhook_' . $event . $model->id, true, HOUR_IN_SECONDS );
-		}
+		// Get the registered webhook.
+		$webhook = $this->webhook->get();
+		// Return the signing secret from the registered webhook.
+		return Encryption::decrypt( $webhook['signing_secret'] ?? '' );
 	}
 }

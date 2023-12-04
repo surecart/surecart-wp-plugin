@@ -2,6 +2,7 @@ import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import FilterItem from '../FilterItem';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default (props) => {
 	const { id } = props;
@@ -11,7 +12,13 @@ export default (props) => {
 				'surecart',
 				'product',
 				id,
-				{ expand: ['prices'] },
+				{
+					expand: [
+						'prices',
+						'featured_product_media',
+						'product_media.media',
+					],
+				},
 			];
 			return {
 				item: select(coreStore).getEntityRecord(...queryArgs),
@@ -27,7 +34,7 @@ export default (props) => {
 	return (
 		<FilterItem
 			loading={!hasLoadedItem}
-			imageUrl={item?.image_url}
+			media={getFeaturedProductMediaAttributes(item)}
 			icon={'image'}
 			{...props}
 		>

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { ScFlex } from '@surecart/components-react';
 import Tab from './Tab';

@@ -43,6 +43,7 @@ graph TD;
   sc-product-item-price --> sc-format-number
   sc-product-item-price --> sc-price-range
   sc-price-range --> sc-format-number
+  sc-price-range --> sc-visually-hidden
   sc-product-item-list --> sc-product-item
   style sc-product-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
