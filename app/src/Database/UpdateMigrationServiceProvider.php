@@ -74,7 +74,7 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	 */
 	public function handleCartMigration() {
 
-		$existing_cart_post = \Surecart::cartPost()->get();
+		$existing_cart_post = \SureCart::cartPost()->get();
 		if(empty($existing_cart_post->post_content)){
 			return;
 		}
