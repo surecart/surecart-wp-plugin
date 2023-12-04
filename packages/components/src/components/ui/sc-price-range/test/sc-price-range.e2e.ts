@@ -1,5 +1,4 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Price } from '../../../../types';
 
 describe('sc-price-range', () => {
   it('renders', async () => {

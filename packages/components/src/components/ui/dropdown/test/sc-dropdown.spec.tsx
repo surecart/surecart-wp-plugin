@@ -2,21 +2,6 @@ import { newSpecPage } from '@stencil/core/testing';
 import { ScDropdown } from '../dropdown';
 
 describe('sc-dropdown', () => {
-  function withPanelClass(name) {
-    return `
-    <sc-dropdown close-on-select="">
-      <mock:shadow-root>
-      <div class="dropdown">
-        <span aria-expanded="true" aria-haspopup="true" class="dropdown__trigger" part="trigger">
-          <slot name="trigger"></slot>
-        </span>
-        <div aria-labelledby="menu-button" aria-orientation="vertical" class="dropdown__panel ${name}" part="panel" role="menu" tabindex="-1">
-          <slot></slot>
-        </div>
-      </mock:shadow-root>
-    </sc-dropdown>
-  `;
-  }
   it('renders', async () => {
     const page = await newSpecPage({
       components: [ScDropdown],

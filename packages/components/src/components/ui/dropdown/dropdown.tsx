@@ -1,6 +1,9 @@
-import { Component, Element, Prop, Event, EventEmitter, Watch, State, h } from '@stencil/core';
+import { Component, Element, Prop, Event, EventEmitter, Watch, State, h, Listen } from '@stencil/core';
 import { autoUpdate, computePosition, flip, offset, shift, size } from '@floating-ui/dom';
 import { ScMenu } from '../menu/sc-menu';
+
+let itemIndex = 0;
+let arrowFlag = '';
 
 /**
  * @part base - The elements base wrapper.
@@ -156,6 +159,9 @@ export class ScDropdown {
     this.stopPositioner();
     this.isVisible = false;
     this.open = false;
+    const slotted = this.el.shadowRoot.querySelector('slot[name="trigger"]') as HTMLSlotElement;
+    const trigger = slotted.assignedElements({ flatten: true })[0] as HTMLElement;
+    trigger.focus();
   }
 
   handleClick(e) {
@@ -183,6 +189,93 @@ export class ScDropdown {
     }) as unknown as ScMenu;
   }
 
+  getItems() {
+    return [...this.el.querySelectorAll<HTMLScMenuItemElement>('sc-menu-item')];
+  }
+
+  handleHide() {
+    this.open = false;
+    itemIndex = 0;
+    this.trigger.focus();
+  }
+
+  @Listen('keydown')
+  handleKeyDown(event: KeyboardEvent) {
+    const items = this.getItems();
+
+    // Tabbing out of the control closes it
+    if (event.key === 'Tab') {
+      if (this.open) {
+        this.handleHide();
+      }
+
+      return;
+    }
+
+    // Up/down opens the menu
+    if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
+      event.preventDefault();
+
+      // Show the menu if it's not already open
+      if (!this.open) {
+        this.open = true;
+      }
+
+      // Focus on a menu item
+      // Focus on a menu item
+      if (event.key === 'ArrowDown') {
+        if (arrowFlag == 'up') {
+          itemIndex = itemIndex + 2;
+        }
+        if (itemIndex > items.length - 1) {
+          itemIndex = 0;
+        }
+        items[itemIndex].setFocus();
+        arrowFlag = 'down';
+        itemIndex++;
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        if (arrowFlag == 'down') {
+          itemIndex = itemIndex - 2;
+        }
+        if (itemIndex < 0) {
+          itemIndex = items.length - 1;
+        }
+
+        items[itemIndex].setFocus();
+
+        arrowFlag = 'up';
+        itemIndex--;
+
+        return;
+      }
+    }
+
+    // Close select dropdown on Esc/Escape key
+    if (event.key === 'Escape') {
+      if (this.open) {
+        this.handleHide();
+      }
+      return;
+    }
+
+    // Open select dropdown with Enter
+    if (event.key === 'Enter') {
+      if (this.open) {
+        this.handleHide();
+      } else {
+        this.open = true;
+      }
+    }
+
+    // don't open the menu when a CTRL/Command key is pressed
+    if (event.ctrlKey || event.metaKey) {
+      return;
+    }
+  }
+
   render() {
     return (
       <div
@@ -207,7 +300,7 @@ export class ScDropdown {
               }, 0);
             }
           }}
-          aria-expanded="true"
+          aria-expanded={this.open ? 'true' : 'false'}
           aria-haspopup="true"
         >
           <slot name="trigger"></slot>
@@ -225,9 +318,7 @@ export class ScDropdown {
               'position--bottom-left': this.position === 'bottom-left',
               'position--bottom-right': this.position === 'bottom-right',
             }}
-            role="menu"
             aria-orientation="vertical"
-            aria-labelledby="menu-button"
             tabindex="-1"
             onClick={e => this.handleClick(e)}
             ref={el => (this.panel = el as HTMLElement)}

@@ -1,9 +1,10 @@
 /**
  * External dependencies.
  */
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, h, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { addQueryArgs, getQueryArgs } from '@wordpress/url';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 
 /**
  * Internal dependencies.
@@ -66,7 +67,7 @@ export class ScProductItemList {
   @Prop() limit: number = 15;
 
   /* Product list */
-  @State() products: Product[];
+  @Prop({ mutable: true }) products?: Product[];
 
   /* Loading indicator */
   @State() loading: boolean = false;
@@ -76,6 +77,9 @@ export class ScProductItemList {
 
   /** Error notice. */
   @State() error: string;
+
+  /** Product was searched */
+  @Event() scSearched: EventEmitter<string>;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -94,16 +98,16 @@ export class ScProductItemList {
   @State() collections: Collection[];
 
   /** Selected collections */
-  @State() selectedCollections: Collection[];
+  @State() selectedCollections: Collection[] = [];
 
   componentWillLoad() {
-    this.getProducts();
+    if (!this?.products?.length) {
+      this.getProducts();
+    }
 
     if (this.collectionEnabled) {
       this.getCollections();
     }
-
-    this.selectedCollections = [];
   }
 
   // Append URL if no 'product-page' found
@@ -198,7 +202,7 @@ export class ScProductItemList {
     try {
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/products/`, {
-          expand: ['prices', 'product_medias', 'product_media.media'],
+          expand: ['prices', 'featured_product_media', 'product_medias', 'product_media.media', 'variants'],
           archived: false,
           status: ['published'],
           per_page: this.limit,
@@ -217,6 +221,9 @@ export class ScProductItemList {
         total_pages: parseInt(response.headers.get('X-WP-TotalPages')),
       };
       this.products = (await response.json()) as Product[];
+      if (!!collectionIds.length || !!this.query) {
+        speak(sprintf(__('%s products found', 'surecart'), this.pagination.total));
+      }
     } catch (response) {
       // we will want to handle nonce error if we are bypassing the apiFetch parser.
       await handleNonceError(response)
@@ -257,6 +264,10 @@ export class ScProductItemList {
     });
   }
 
+  isPaginationAvailable() {
+    return !!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled;
+  }
+
   render() {
     return (
       <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
@@ -272,13 +283,23 @@ export class ScProductItemList {
                 {this.sortEnabled && (
                   <sc-dropdown style={{ '--panel-width': '15em' }}>
                     <sc-button type="text" caret slot="trigger">
+                      <sc-visually-hidden>{__('Dropdown to sort products.', 'surecart')} </sc-visually-hidden>
                       {this.renderSortName()}
+                      <sc-visually-hidden> {__('selected.', 'surecart')}</sc-visually-hidden>
                     </sc-button>
-                    <sc-menu>
-                      <sc-menu-item onClick={() => (this.sort = 'created_at:desc')}>{__('Latest', 'surecart')}</sc-menu-item>
-                      <sc-menu-item onClick={() => (this.sort = 'created_at:asc')}>{__('Oldest', 'surecart')}</sc-menu-item>
-                      <sc-menu-item onClick={() => (this.sort = 'name:asc')}>{__('Alphabetical, A-Z', 'surecart')}</sc-menu-item>
-                      <sc-menu-item onClick={() => (this.sort = 'name:desc')}>{__('Alphabetical, Z-A', 'surecart')}</sc-menu-item>
+                    <sc-menu aria-label={__('Sort Products', 'surecart')}>
+                      <sc-menu-item aria-label={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
+                        {__('Latest', 'surecart')}
+                      </sc-menu-item>
+                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} disabled={this.sort === 'created_at:asc'}>
+                        {__('Oldest', 'surecart')}
+                      </sc-menu-item>
+                      <sc-menu-item aria-label={__('Sort by name, A to Z', 'surecart')} onClick={() => (this.sort = 'name:asc')}>
+                        {__('Alphabetical, A-Z', 'surecart')}
+                      </sc-menu-item>
+                      <sc-menu-item aria-label={__('Sort by name, Z to A', 'surecart')} onClick={() => (this.sort = 'name:desc')}>
+                        {__('Alphabetical, Z-A', 'surecart')}
+                      </sc-menu-item>
                     </sc-menu>
                   </sc-dropdown>
                 )}
@@ -286,15 +307,22 @@ export class ScProductItemList {
                 {this.collectionEnabled && (this.collections ?? []).length > 0 && (
                   <sc-dropdown style={{ '--panel-width': '15rem' }}>
                     <sc-button type="text" caret slot="trigger">
-                      {__('Filter', 'surecart')}
+                      <sc-visually-hidden>
+                        {sprintf(
+                          __('Dropdown to filter products by collection. %s selected.', 'surecart'),
+                          this.selectedCollections?.length ? this.selectedCollections.map(collection => collection?.name).join(',') : __('None', 'surecart'),
+                        )}
+                      </sc-visually-hidden>
+                      <span aria-hidden> {__('Filter', 'surecart')}</span>
                     </sc-button>
-                    <sc-menu>
+                    <sc-menu aria-label={__('Filter products', 'surecart')}>
                       {(this.collections ?? []).map(collection => {
                         return (
                           <sc-menu-item
                             checked={this.selectedCollections.some(selected => selected?.id === collection?.id)}
                             onClick={() => this.toggleSelectCollection(collection)}
                             key={collection?.id}
+                            aria-label={sprintf(__('Filter by %s', 'surecart'), collection?.name)}
                           >
                             {collection.name}
                           </sc-menu-item>
@@ -316,6 +344,7 @@ export class ScProductItemList {
                           this.currentQuery = '';
                           this.updateProducts();
                         }}
+                        aria-label={sprintf(__('Searched for %s. Press space to clear search.', 'surecart'), this.query)}
                       >
                         {this.query}
                       </sc-tag>
@@ -328,6 +357,7 @@ export class ScProductItemList {
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           this.updateProducts();
+                          this.scSearched.emit(this.query);
                         }
                       }}
                       value={this.query}
@@ -345,7 +375,16 @@ export class ScProductItemList {
                       ) : (
                         <sc-icon slot="prefix" name="search" />
                       )}
-                      <sc-button class="search-button" type="link" slot="suffix" busy={this.busy} onClick={() => this.updateProducts()}>
+                      <sc-button
+                        class="search-button"
+                        type="link"
+                        slot="suffix"
+                        busy={this.busy}
+                        onClick={() => {
+                          this.updateProducts();
+                          this.scSearched.emit(this.query);
+                        }}
+                      >
                         {__('Search', 'surecart')}
                       </sc-button>
                     </sc-input>
@@ -376,7 +415,7 @@ export class ScProductItemList {
           </sc-empty>
         )}
 
-        <div class="product-item-list">
+        <section class="product-item-list" aria-label={__('Product list', 'surecart')}>
           {this.loading
             ? [...Array(this.products?.length || this.limit || 10)].map((_, index) => (
                 <div class="product-item-list__loader" key={index}>
@@ -412,11 +451,26 @@ export class ScProductItemList {
                   })}
                 </div>
               ))
-            : (this.products || []).map(product => {
-                return <sc-product-item key={product?.id} exportparts="title, price, image" product={product} layoutConfig={this.layoutConfig}></sc-product-item>;
+            : (this.products || []).map((product, index: number) => {
+                return (
+                  <sc-product-item
+                    key={product?.id}
+                    {...(this.products.length - 1 === index
+                      ? {
+                          'aria-label': sprintf(
+                            __('You have reached the end of product list. %s', 'surecart'),
+                            this.isPaginationAvailable() ? __('Press tab to browse more products using pagination.', 'surecart') : __('No more products to browse.', 'surecart'),
+                          ),
+                        }
+                      : {})}
+                    exportparts="title, price, image"
+                    product={product}
+                    layoutConfig={this.layoutConfig}
+                  ></sc-product-item>
+                );
               })}
-        </div>
-        {!!this.products?.length && this.pagination.total > this.products.length && this.paginationEnabled && (
+        </section>
+        {this.isPaginationAvailable() && (
           <div
             class={{
               'product-item-list__pagination': true,

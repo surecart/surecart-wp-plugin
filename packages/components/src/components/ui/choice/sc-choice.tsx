@@ -156,6 +156,9 @@ export class ScChoice {
 
       event.preventDefault();
     }
+    if ('Enter' === event.key || ' ' === event.key) {
+      this.handleClickEvent();
+    }
   }
 
   // Prevent clicks on the label from briefly blurring the input
