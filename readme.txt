@@ -226,6 +226,17 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.12.0 - December 4th, 2023 =
+* New: Returns - create and manage return reqeusts on the admin order screen.
+* Improvement: List the variant and price with the purchase in the customer's purchase list on the admin.
+* Improvement: Add shortcode for product variant choices to be used in custom page builder product page templates.
+* Improvement: Handle out of stock errors better when the item is added to the cart.
+* Fix: Draft orders having wrong status on admin orders screen.
+* Fix: Admin order pages showing product image on line items instead of variant image.
+* Fix: CSS conflict with some themes causing password field inspector controls to be pushed offscreen.
+* Fix: Customers not syncing with users when "Create New Users" is unchecked in the manual customer sync button.
+* Fix: Duplication of labels on the price selector.
+
 = 2.11.4 - December 2nd, 2023 =
 * Fix: Issue with donation sometimes prices not properly updating on instant checkout.
 * Fix: Better error handling with customer link middleware.
