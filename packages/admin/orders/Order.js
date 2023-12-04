@@ -62,6 +62,7 @@ export default () => {
 					'discount.promotion',
 					'line_item.price',
 					'line_item.fees',
+					'line_item.variant',
 					'customer.balances',
 					'price.product',
 					'variant.image',
