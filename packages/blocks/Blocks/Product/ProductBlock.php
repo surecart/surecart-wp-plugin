@@ -18,7 +18,13 @@ abstract class ProductBlock extends BaseBlock {
 	 * @return string
 	 */
 	public function getProductId( array $attributes ): string {
-		return $attributes['product_id'] ?? get_query_var( 'surecart_current_product' )->id ?? '';
+		if ( ! empty( $attributes['product_id'] ) ) {
+			$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
+			$this->setInitialProductState( $product );
+			return $attributes['product_id'];
+		}
+
+		return get_query_var( 'surecart_current_product' )->id ?? '';
 	}
 
 	/**
@@ -68,19 +74,19 @@ abstract class ProductBlock extends BaseBlock {
 	}
 
 	public function setInitialProductState( $product ) {
-		if(empty($product->id)){
+		if ( empty( $product->id ) ) {
 			return;
 		}
 
 		$form             = \SureCart::forms()->getDefault();
 		$prices           = $product->prices->data ?? [];
 		$selected_price   = $this->getSelectedPrice( $prices );
-		$add_hoc_amount   = $selectedPrice['add_hoc_amount'] ?? null;
+		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
 		$variant_options  = $product->variant_options->data ?? [];
 		$variants         = $product->variants->data ?? [];
 		$selected_variant = $this->getSelectedVariant( $variants, $product );
 
-		$productState[ $product->id ] = array(
+		$product_state[ $product->id ] = array(
 			'formId'          => $form->ID,
 			'mode'            => Form::getMode( $form->ID ),
 			'product'         => $product,
@@ -109,11 +115,11 @@ abstract class ProductBlock extends BaseBlock {
 		);
 
 		if ( $selected_price->ad_hoc ) {
-			$productState[ $product->id ]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
+			$product_state[ $product->id ]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
 		}
 
-		$productState[ $product->id ]['variantValues'] = array_filter(
-			$productState[ $product->id ]['variantValues'],
+		$product_state[ $product->id ]['variantValues'] = array_filter(
+			$product_state[ $product->id ]['variantValues'],
 			function( $value ) {
 				return ! empty( $value );
 			}
@@ -121,7 +127,7 @@ abstract class ProductBlock extends BaseBlock {
 
 		sc_initial_state(
 			[
-				'product' => $productState,
+				'product' => $product_state,
 			]
 		);
 	}
@@ -141,6 +147,6 @@ abstract class ProductBlock extends BaseBlock {
 		$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
 
 		$this->setInitialProductState( $product );
-		return !empty($product->id) ? $product : null;
+		return ! empty( $product->id ) ? $product : null;
 	}
 }
