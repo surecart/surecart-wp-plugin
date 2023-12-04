@@ -134,9 +134,11 @@ export default () => {
 						'return_items',
 						'return_item.line_item',
 						'line_item.price',
+						'line_item.variant',
 						'price.product',
 						'product.featured_product_media',
 						'product_media.media',
+						'variant.image',
 					],
 				},
 			];
@@ -153,10 +155,13 @@ export default () => {
 		[order?.id]
 	);
 
-	const fulfilledItems = (order?.checkout?.line_items?.data?.filter(
-		(item) => item?.quantity === item?.fulfilled_quantity
-			|| (item?.fulfilled_quantity > 0 && item?.quantity !== item?.fulfilled_quantity)
-	) || []);
+	const fulfilledItems =
+		order?.checkout?.line_items?.data?.filter(
+			(item) =>
+				item?.quantity === item?.fulfilled_quantity ||
+				(item?.fulfilled_quantity > 0 &&
+					item?.quantity !== item?.fulfilled_quantity)
+		) || [];
 
 	useEffect(() => {
 		if (orderError) {
@@ -286,18 +291,16 @@ export default () => {
 					returnRequests={returnRequests}
 				/>
 
-				{
-					(returnRequests || []).map((returnRequest, index) => (
-						<ReturnItems
-							key={index}
-							loading={returnRequestsLoading}
-							returnRequest={returnRequest}
-							checkout={order?.checkout}
-							onCreateSuccess={manuallyRefetchOrder}
-							onChangeRequestStatus={manuallyRefetchOrder}
-						/>
-					))
-				}
+				{(returnRequests || []).map((returnRequest, index) => (
+					<ReturnItems
+						key={index}
+						loading={returnRequestsLoading}
+						returnRequest={returnRequest}
+						checkout={order?.checkout}
+						onCreateSuccess={manuallyRefetchOrder}
+						onChangeRequestStatus={manuallyRefetchOrder}
+					/>
+				))}
 
 				<Fulfillment
 					loading={!hasLoadedOrder}
