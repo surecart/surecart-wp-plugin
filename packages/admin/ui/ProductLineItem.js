@@ -39,7 +39,6 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 			</span>
 
 			<LineItemLabel lineItem={lineItem}>
-				{children}
 				{showWeight && !!lineItem?.price?.product?.weight && (
 					<div>
 						<ScFormatNumber
@@ -58,6 +57,7 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						)}
 					</div>
 				)}
+				{children}
 			</LineItemLabel>
 		</LineItem>
 	);
