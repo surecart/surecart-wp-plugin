@@ -76,7 +76,7 @@ export class ScLineItems {
     return (
       <div class="line-items" part="base" tabindex="0">
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
-          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product);
+          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           return (
             <div class="line-item">
               <sc-product-line-item

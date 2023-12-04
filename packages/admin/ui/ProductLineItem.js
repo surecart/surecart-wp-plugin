@@ -7,7 +7,8 @@ import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 	const { url, alt, title } = getFeaturedProductMediaAttributes(
-		lineItem?.price?.product
+		lineItem?.price?.product,
+		lineItem?.variant
 	);
 
 	return (
