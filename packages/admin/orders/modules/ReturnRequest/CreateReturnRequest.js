@@ -73,7 +73,6 @@ export default ({
 						quantity: fulfilled_quantity - qtyReturned,
 						fulfilled_quantity: fulfilled_quantity - qtyReturned,
 						originalQuantity: fulfilled_quantity - qtyReturned,
-						return_reason: 'unknown', // by default, set return reason to unknown
 					};
 				})
 		);
@@ -217,6 +216,7 @@ export default ({
 											`}
 										>
 											<ReturnReasonsSelector
+												required
 												returnRequest={item}
 												onSelect={(value) => {
 													updateItems(index, {
