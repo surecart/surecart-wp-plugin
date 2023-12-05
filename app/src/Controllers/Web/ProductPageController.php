@@ -130,14 +130,19 @@ class ProductPageController extends BasePageController {
 		return null;
 	}
 
+	/**
+	 * Set initial product state
+	 *
+	 * @return void
+	 */
 	public function setInitialProductState() {
 		$form             = \SureCart::forms()->getDefault();
 		$selected_price   = $this->getSelectedPrice();
-		$add_hoc_amount   = $selectedPrice['add_hoc_amount'] ?? null;
+		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
 		$variant_options  = $this->model->variant_options->data ?? [];
 		$selected_variant = $this->getSelectedVariant();
 
-		$productState[ $this->model->id ] = array(
+		$product_state[ $this->model->id ] = array(
 			'formId'          => $form->ID,
 			'mode'            => Form::getMode( $form->ID ),
 			'product'         => $this->model,
@@ -167,11 +172,11 @@ class ProductPageController extends BasePageController {
 		);
 
 		if ( $selected_price->ad_hoc ) {
-			$productState[ $this->model->id ]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
+			$product_state[ $this->model->id ]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
 		}
 
-		$productState[ $this->model->id ]['variantValues'] = array_filter(
-			$productState[ $this->model->id ]['variantValues'],
+		$product_state[ $this->model->id ]['variantValues'] = array_filter(
+			$product_state[ $this->model->id ]['variantValues'],
 			function( $value ) {
 				return ! empty( $value );
 			}
@@ -179,7 +184,7 @@ class ProductPageController extends BasePageController {
 
 		sc_initial_state(
 			[
-				'product' => $productState,
+				'product' => $product_state,
 			]
 		);
 	}
