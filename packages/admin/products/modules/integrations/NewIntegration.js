@@ -112,9 +112,17 @@ export default ({ onRequestClose, id, product }) => {
 			<Modal
 				title={__('Add Integration', 'surecart')}
 				css={css`
-					max-width: 500px !important;
+					width: 600px !important;
 					.components-modal__content {
 						overflow: visible !important;
+					}
+
+					@media (max-width: 782px) {
+						width: 100% !important;
+
+						.components-modal__content {
+							overflow: visible !important;
+						}
 					}
 				`}
 				overlayClassName={'sc-modal-overflow'}
