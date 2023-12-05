@@ -20,7 +20,7 @@ class Block extends BaseBlock {
 		sc_initial_state(
 			[
 				'checkout' => [
-					'initialLineItems' => $this->getInitialLineItems(),
+					'initialLineItems' => sc_initial_line_items( $this->getInitialLineItems() ),
 				],
 			]
 		);
@@ -50,21 +50,7 @@ class Block extends BaseBlock {
 		}
 
 		// get the line items.
-		$line_items = $this->convertPriceBlocksToLineItems( $checked );
-		$existing   = $this->getExistingLineItems();
-
-		// merge any existing with the new ones.
-		return array_merge( $existing, $line_items );
-	}
-
-	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
+		return $this->convertPriceBlocksToLineItems( $checked );
 	}
 
 	/**

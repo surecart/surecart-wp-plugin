@@ -215,6 +215,21 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Returns the product media image attributes.
+	 *
+	 * @return object
+	 */
+	public function getFeaturedMediaAttribute() {
+		$featured_product_media = $this->featured_product_media;
+
+		return (object) array(
+			'alt'   => $featured_product_media->media->alt ?? $this->title ?? $this->name ?? '',
+			'title' => $featured_product_media->media->title ?? '',
+			'url'   => $featured_product_media->media->url ?? $this->image_url,
+		);
+	}
+
+	/**
 	 * Get the JSON Schema Array
 	 *
 	 * @return array

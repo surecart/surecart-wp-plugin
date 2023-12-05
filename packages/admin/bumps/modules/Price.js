@@ -12,6 +12,7 @@ import Box from '../../ui/Box';
 import { intervalString } from '../../util/translations';
 
 import ModelRow from '../components/ModelRow';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({ loading, bump, updateBump }) => {
@@ -19,7 +20,11 @@ export default ({ loading, bump, updateBump }) => {
 		'price',
 		bump?.price,
 		{
-			expand: ['product'],
+			expand: [
+				'product',
+				'product.featured_product_media',
+				'product_media.media',
+			],
 		},
 		[bump?.price]
 	);
@@ -35,7 +40,9 @@ export default ({ loading, bump, updateBump }) => {
 						<ScStackedList>
 							<ModelRow
 								icon={'image'}
-								imageUrl={price?.product?.image_url}
+								media={getFeaturedProductMediaAttributes(
+									price?.product
+								)}
 								loading={!hasLoadedPrice}
 								suffix={
 									<div>
