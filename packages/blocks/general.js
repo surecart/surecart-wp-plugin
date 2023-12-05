@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import { registerBlocks } from './register-block';
 
 import './controls';
 import './formats';
@@ -28,6 +29,7 @@ import * as dashboardPages from '@blocks/Dashboard/DashboardPages';
 import * as dashboardTab from '@blocks/Dashboard/DashboardTab';
 import * as dashboardTabs from '@blocks/Dashboard/DashboardTabs';
 import * as storeLogo from '@blocks/StoreLogo';
+import * as collectionPage from '@blocks/CollectionPage';
 
 // deprecated
 import * as customerCharges from '@blocks/Dashboard/Deprecated/CustomerCharges';
@@ -35,15 +37,20 @@ import * as customerInvoices from '@blocks/Dashboard/Deprecated/CustomerInvoices
 import * as customerShippingAddress from '@blocks/Dashboard/Deprecated/CustomerShippingAddress';
 import { registerBlocksForTemplates } from './conditional-block-registration';
 
+registerBlocks([
+	collectionPage,
+	cartMenuButton,
+	storeLogo,
+	buyButton,
+	addToCartButton,
+	logoutButton,
+]);
+
 // unregister these blocks on product page templates.
 // @todo Refactor when there will be possible to show a block according on a template/post with a Gutenberg API. https://github.com/WordPress/gutenberg/pull/41718
 registerBlocksForTemplates({
 	blocks: [
 		checkout,
-		buyButton,
-		addToCartButton,
-		cartMenuButton,
-		logoutButton,
 		card,
 		confirmation,
 		confirmationLineItems,
@@ -63,13 +70,16 @@ registerBlocksForTemplates({
 		dashboardPages,
 		dashboardTab,
 		dashboardTabs,
-		storeLogo,
 	],
 	// exclude for these templates.
 	exclude: [
 		'surecart/surecart//product-info',
 		'surecart/surecart//single-product',
+		'surecart/surecart//product-collection-part',
+		'surecart/surecart//product-collection',
 		'sc-products',
 		'sc-part-products-info',
+		'sc-product-collection',
+		'sc-part-product-collection',
 	],
 });

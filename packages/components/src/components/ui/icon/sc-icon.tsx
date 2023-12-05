@@ -1,6 +1,22 @@
 import { Component, Watch, h, Prop, State, Event, EventEmitter } from '@stencil/core';
 import { getIconLibrary } from './library';
 import { requestIcon } from './request';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * The icon's label used for accessibility.
+ */
+const LABEL_MAPPINGS = {
+  'chevron-down': __('Open', 'surecart'),
+  'chevron-up': __('Close', 'surecart'),
+  'chevron-right': __('Next', 'surecart'),
+  'chevron-left': __('Previous', 'surecart'),
+  'arrow-right': __('Next', 'surecart'),
+  'arrow-left': __('Previous', 'surecart'),
+  'arrow-down': __('Down', 'surecart'),
+  'arrow-up': __('Up', 'surecart'),
+  'alert-circle': __('Alert', 'surecart'),
+};
 
 const parser = new DOMParser();
 
@@ -28,9 +44,6 @@ export class ScIcon {
   /** Emitted when the icon has loaded. */
   @Event() scLoad: EventEmitter<void>;
 
-  /** Emitted when the icon failed to load.  */
-  @Event() scError: EventEmitter<{ status: number }>;
-
   /** @internal Fetches the icon and redraws it. Used to handle library registrations. */
   redraw() {
     this.setIcon();
@@ -43,9 +56,9 @@ export class ScIcon {
   getLabel() {
     let label = '';
     if (this.label) {
-      label = this.label;
+      label = LABEL_MAPPINGS?.[this.label] || this.label;
     } else if (this.name) {
-      label = this.name.replace(/-/g, ' ');
+      label = (LABEL_MAPPINGS?.[this.name] || this.name).replace(/-/g, ' ');
     } else if (this.src) {
       label = this.src.replace(/.*\//, '').replace(/-/g, ' ').replace(/\.svg/i, '');
     }
@@ -78,14 +91,14 @@ export class ScIcon {
             this.scLoad.emit();
           } else {
             this.svg = '';
-            this.scError.emit({ status: file.status });
+            console.error({ status: file?.status });
           }
         } else {
           this.svg = '';
-          this.scError.emit({ status: file.status });
+          console.error({ status: file?.status });
         }
       } catch {
-        this.scError.emit({ status: -1 });
+        console.error({ status: -1 });
       }
     } else if (this.svg) {
       // If we can't resolve a URL and an icon was previously set, remove it

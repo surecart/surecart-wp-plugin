@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { formatAddress } from 'localized-address-format';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 export default ({ address = {} }) => {
 	const [countryName, setCountryName] = useState();
@@ -27,13 +27,17 @@ export default ({ address = {} }) => {
 		<>
 			{(parsedAddress || []).map((attribute, index) => {
 				const isLast = parsedAddress.length === index + 1;
-				return !isLast ? (
-					<>
-						{attribute}
-						<br />
-					</>
-				) : (
-					attribute
+				return (
+					<Fragment key={index}>
+						{!isLast ? (
+							<>
+								{attribute}
+								<br />
+							</>
+						) : (
+							attribute
+						)}
+					</Fragment>
 				);
 			})}
 			<br />

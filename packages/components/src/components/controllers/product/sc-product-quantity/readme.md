@@ -30,7 +30,7 @@
 graph TD;
   sc-product-quantity --> sc-form-control
   sc-product-quantity --> sc-quantity-select
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-quantity-select --> sc-icon
   style sc-product-quantity fill:#f9f,stroke:#333,stroke-width:4px
 ```

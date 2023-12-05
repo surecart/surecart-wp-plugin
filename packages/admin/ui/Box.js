@@ -43,11 +43,14 @@ export default ({
 			isBorderless={isBorderLess}
 			className={className}
 		>
-			{ ('' !== title || header_action ) &&
+			{('' !== title || header_action) && (
 				<CardHeader
 					isBorderless={!hasDivider}
 					css={css`
 						${!hasDivider ? 'padding-bottom: 0 !important' : ''};
+						> sc-tag {
+							min-width: unset;
+						}
 					`}
 				>
 					<sc-text
@@ -62,7 +65,7 @@ export default ({
 					</sc-text>
 					{header_action}
 				</CardHeader>
-			}
+			)}
 			{(loading || hasChildren()) && (
 				<CardBody
 					css={css`

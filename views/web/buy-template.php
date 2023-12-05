@@ -1,5 +1,5 @@
 <!-- wp:surecart/columns {"isFullHeight":true,"style":{"spacing":{"blockGap":{"top":"0px","left":"0px"}}}} -->
-<sc-columns is-stacked-on-mobile="1" is-full-height class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
+<sc-columns is-stacked-on-mobile="1" is-full-height class="is-layout-constrained is-horizontally-aligned-right is-full-height" style="gap:0px 0px;"><!-- wp:surecart/column {"layout":{"type":"constrained","contentSize":"550px","justifyContent":"right"},"width":"","style":{"spacing":{"padding":{"top":"100px","right":"100px","bottom":"100px","left":"100px"},"blockGap":"30px"},"border":{"width":"0px","style":"none"},"color":{"background":"#fafafa"}}} -->
 	<sc-column class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-right" style="border-style:none;border-width:0px;padding:30px 5rem 5rem 5rem;--sc-column-content-width:450px;--sc-form-row-spacing:30px">
 
 		<?php if ( $show_image && ! empty( $product->product_medias->data ) ) : ?>
@@ -9,44 +9,43 @@
 				\SureCart::assets()->addComponentData(
 					'sc-image-slider',
 					'#sc-product-media-' . $product->id,
-					[
+					array(
 						'hasThumbnails' => true,
 						'images'        => array_map(
-							function( $product_media ) use ( $product ) {
-								return [
+							function ( $product_media ) use ( $product ) {
+								return array(
 									'src'   => $product_media->getUrl( 450 ),
-									'alt'   => $product_media->media->filename ?? $product->name ?? '',
+									'alt'   => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
 									'width' => 450,
-								];
+								);
 							},
 							$product->product_medias->data
 						),
 						'thumbnails'    => array_map(
-							function( $product_media ) use ( $product ) {
-								return [
+							function ( $product_media ) use ( $product ) {
+								return array(
 									'src'    => $product_media->getUrl( 90 ),
-									'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
+									'srcset' => $product_media->getSrcset( array( 90, 120, 240 ) ),
 									'sizes'  => '(min-width: 780px) 90px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
-									'alt'    => $product_media->media->filename ?? $product->name ?? '',
+									'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
 									'width'  => 90,
-								];
+								);
 							},
 							$product->product_medias->data
 						),
-					]
+					)
 				);
 				?>
 			<?php else : ?>
 				<!-- wp:image {"sizeSlug":"full","linkDestination":"none","style":{"border":{"radius":"5px"}}} -->
 					<figure class="wp-block-image size-full is-resized has-custom-border">
-						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->name ); ?>" style="border-radius:5px" />
+						<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 450 ) ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>"  style="border-radius:5px" />
 					</figure>
 				<!-- /wp:image -->
 			<?php endif; ?>
 		<?php endif; ?>
 
-
-		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1">
+		<sc-text style="--font-size: var(--sc-font-size-x-large); font-weight: var(--sc-font-weight-bold); --line-height: 1" aria-label="<?php echo esc_attr_e( 'Product name', 'surecart' ); ?>">
 			<?php echo wp_kses_post( $product->name ); ?>
 		</sc-text>
 
@@ -54,22 +53,23 @@
 
 		<?php if ( $show_description ) : ?>
 			<sc-prose>
-				<?php echo wp_kses_post( $product->description ); ?>
+				<span class="screen-reader-text"><?php echo esc_attr_e( 'Product description', 'surecart' ); ?></span>
+				<?php echo wp_kses_post( $product->description ?? '' ); ?>
 			</sc-prose>
 		<?php endif; ?>
 
-		<?php if ( ! empty( $prices ) && count( $prices ) > 1 ) : ?>
-			<!-- wp:surecart/price-selector -->
-			<sc-price-choices type="radio" columns="1">
-				<?php foreach ( $prices as $key => $option ) : ?>
-					<!-- wp:surecart/price-choice {"price_id":"<?php echo esc_attr( $option->id ); ?>","checked":true} -->
-					<sc-price-choice price-id="<?php echo esc_attr( $option->id ); ?>" type="radio" show-control="false"></sc-price-choice>
-					<!-- /wp:surecart/price-choice -->
-				<?php endforeach; ?>
-			</sc-price-choices>
-			<!-- /wp:surecart/price-selector -->
-		<?php endif; ?>
-
+		<div>
+		<sc-checkout-product-price-variant-selector label="<?php esc_attr_e( 'Pricing', 'surecart' ); ?>" id="sc-product-price-variant-selector-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"></sc-checkout-product-price-variant-selector>
+		<?php
+		\SureCart::assets()->addComponentData(
+			'sc-checkout-product-price-variant-selector',
+			'#sc-product-price-variant-selector-' . $product->id,
+			array(
+				'product' => $product->toArray(),
+			)
+		);
+		?>
+		</div>
 
 	</sc-column>
 	<!-- /wp:surecart/column -->

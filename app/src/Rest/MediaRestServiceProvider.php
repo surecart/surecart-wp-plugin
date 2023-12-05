@@ -28,7 +28,7 @@ class MediaRestServiceProvider extends RestServiceProvider implements RestServic
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'create', 'find', 'delete' ];
+	protected $methods = [ 'index', 'create', 'find', 'delete', 'edit' ];
 
 
 	/**

@@ -54,6 +54,7 @@
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-cart-form-submit](../../controllers/cart/cart-form-submit)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-coupon-form](../coupon-form)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
@@ -86,6 +87,7 @@
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-tax-id-input](../tax-id-input)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -107,6 +109,7 @@ graph TD;
   sc-cancel-survey --> sc-button
   sc-cart-form-submit --> sc-button
   sc-charges-list --> sc-button
+  sc-checkout-stock-alert --> sc-button
   sc-coupon-form --> sc-button
   sc-customer-details --> sc-button
   sc-customer-edit --> sc-button
@@ -139,6 +142,7 @@ graph TD;
   sc-subscription-payment --> sc-button
   sc-subscription-payment-method --> sc-button
   sc-subscription-switch --> sc-button
+  sc-subscription-variation-confirm --> sc-button
   sc-subscriptions-list --> sc-button
   sc-tax-id-input --> sc-button
   sc-upcoming-invoice --> sc-button

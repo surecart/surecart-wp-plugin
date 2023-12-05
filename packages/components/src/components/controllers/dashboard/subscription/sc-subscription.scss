@@ -20,6 +20,22 @@
   }
 }
 
+@media screen and (max-width: 720px) {
+  .subscription {
+    &__action-buttons {
+      --sc-flex-column-gap: var(--sc-spacing-xxx-small);
+      &::part(base) {
+        flex-direction: column;
+      }
+
+      sc-button::part(base) {
+        width: auto;
+        height: 2em;
+      }
+    }
+  }
+}
+
 // .subscription {
 //   position: relative;
 
@@ -38,4 +54,3 @@
 //     color: var(--sc-color-gray-500);
 //   }
 // }
-

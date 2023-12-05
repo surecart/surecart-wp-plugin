@@ -87,3 +87,41 @@ exports[`sc-address renders loading 1`] = `
   </mock:shadow-root>
 </sc-address>
 `;
+
+exports[`sc-address shows and requires name if requireName is true 1`] = `
+<sc-address require-name="" show-name="">
+  <mock:shadow-root>
+    <div class="sc-address" part="base">
+      <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
+        <sc-input autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_name" placeholder="Name or Company Name" required="" squared-bottom=""></sc-input>
+        <sc-select autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squared="" squared-bottom="" value="US"></sc-select>
+        <sc-input autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared=""></sc-input>
+        <div class="sc-address__columns" part="columns">
+          <sc-input exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" squared-right="" squared-top=""></sc-input>
+          <sc-input autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared="" squared-left="" squared-top=""></sc-input>
+        </div>
+        <sc-select autocomplete="address-level1" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_state" placeholder="State/Province/Region" search="" squared-top=""></sc-select>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-address>
+`;
+
+exports[`sc-address shows the name field if showName is true 1`] = `
+<sc-address show-name="">
+  <mock:shadow-root>
+    <div class="sc-address" part="base">
+      <sc-form-control class="sc-address__control" exportparts="label, help-text, form-control">
+        <sc-input autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_name" placeholder="Name or Company Name" squared-bottom=""></sc-input>
+        <sc-select autocomplete="country-name" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_country" part="name__input" placeholder="Country" search="" squared="" squared-bottom="" value="US"></sc-select>
+        <sc-input autocomplete="street-address" exportparts="base:input__base, input, form-control, label, help-text" name="shipping_line_1" placeholder="Address" squared=""></sc-input>
+        <div class="sc-address__columns" part="columns">
+          <sc-input exportparts="base:input__base, input, form-control, label, help-text" name="shipping_city" placeholder="City" squared="" squared-right="" squared-top=""></sc-input>
+          <sc-input autocomplete="postal-code" exportparts="base:input__base, input, form-control, label, help-text" maxlength="5" name="shipping_postal_code" placeholder="Postal Code/Zip" squared="" squared-left="" squared-top=""></sc-input>
+        </div>
+        <sc-select autocomplete="address-level1" exportparts="base:select__base, input, form-control, label, help-text, trigger, panel, caret, search__base, search__input, search__form-control, menu__base, spinner__base, empty" name="shipping_state" placeholder="State/Province/Region" search="" squared-top=""></sc-select>
+      </sc-form-control>
+    </div>
+  </mock:shadow-root>
+</sc-address>
+`;

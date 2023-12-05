@@ -1,3 +1,6 @@
-const { registerStore } = wp.data;
+const { registerStore, select } = wp.data;
 import { store, config } from './index';
-registerStore(store, config);
+
+if (!select(store)) {
+	registerStore(store, config);
+}

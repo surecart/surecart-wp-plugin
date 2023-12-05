@@ -8,6 +8,7 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\ShippingProtocolRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
+use SureCart\WordPress\PluginServiceProvider;
 
 class ShippingProtocolRestServiceProviderTest extends SureCartUnitTestCase
 {
@@ -16,13 +17,14 @@ class ShippingProtocolRestServiceProviderTest extends SureCartUnitTestCase
     /**
      * Set up a new app instance to use for tests.
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
         //Set up an app instance with whatever stubs and mocks we need before every test.
         \SureCart::make()->bootstrap([
             'providers' => [
+				\SureCart\WordPress\PluginServiceProvider::class,
 				AccountServiceProvider::class,
                 ShippingProtocolRestServiceProvider::class,
                 RequestServiceProvider::class,
