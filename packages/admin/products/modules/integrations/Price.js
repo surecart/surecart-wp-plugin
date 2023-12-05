@@ -6,6 +6,7 @@ import { css, jsx } from '@emotion/core';
  */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
+import { Fragment } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 
 /**
@@ -93,20 +94,26 @@ export default ({ price_id, variant_id }) => {
 				width: 200px;
 			`}
 		>
+			<div>
+				{
+					!!price?.name ? price?.name : (
+						<Fragment>
+							<ScFormatNumber
+								type="currency"
+								currency={price?.currency || 'usd'}
+								value={!!price?.ad_hoc ? !!price?.ad_hoc : price?.amount || variant?.amount}
+							/>
+							{intervalString(price)}
+						</Fragment>
+					)
+				}
+			</div>
 			{!!variantLabel && <div>{variantLabel}</div>}
 			{!!productSku && (
 				<div>
 					{__('SKU:', 'surecart')} {productSku}
 				</div>
 			)}
-			<div>
-				<ScFormatNumber
-					type="currency"
-					currency={price?.currency || 'usd'}
-					value={!!price?.ad_hoc ? !!price?.ad_hoc : price?.amount || variant?.amount}
-				/>
-				{intervalString(price)}
-			</div>
 			<>
 				<div
 					css={css`
