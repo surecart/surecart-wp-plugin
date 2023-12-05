@@ -40,13 +40,12 @@ class Block extends BaseBlock {
 		}
 
 		// prepare data.
-		$product                  = $product->withActiveAndSortedPrices();
 		$first_variant_with_stock = $product->getFirstVariantWithStock();
 
-		if ( ! empty( $product->prices->data[0]->id ) ) {
+		if ( ! empty( $active_prices[0]->id ) ) {
 			$line_item = array_merge(
 				[
-					'price_id' => $product->prices->data[0]->id,
+					'price_id' => $active_prices[0]->id,
 					'quantity' => 1,
 				],
 				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
