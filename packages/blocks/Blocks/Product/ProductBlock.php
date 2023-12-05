@@ -28,63 +28,23 @@ abstract class ProductBlock extends BaseBlock {
 	}
 
 	/**
-	 * Get selected price
+	 * Set initial product state
 	 *
-	 * @param array $prices
+	 * @param Product $product The current product.
 	 *
-	 * @return object|null
+	 * @return void
 	 */
-	private function getSelectedPrice( $prices ) {
-		usort(
-			$prices,
-			function( $a, $b ) {
-				return $a['position'] - $b['position'];
-			}
-		);
-
-		$selected_price_index = array_search( false, array_column( $prices, 'archived' ) );
-
-		return $prices[ $selected_price_index ] ?? null;
-	}
-
-	/**
-	 * Get selected variant
-	 *
-	 * @param array   $variants
-	 * @param Product $product
-	 *
-	 * @return object|null
-	 */
-	private function getSelectedVariant( $variants, $product ) {
-		if ( empty( $variants ) ) {
-			return null;
-		}
-
-		if ( ! $product->stock_enabled || $product->allow_out_of_stock_purchases ) {
-			return $variants[0];
-		}
-
-		foreach ( $variants as $variant ) {
-			if ( $variant['stock'] > 0 ) {
-				return $variant;
-			}
-		}
-
-		return null;
-	}
-
 	public function setInitialProductState( $product ) {
 		if ( empty( $product->id ) ) {
 			return;
 		}
 
 		$form             = \SureCart::forms()->getDefault();
-		$prices           = $product->prices->data ?? [];
-		$selected_price   = $this->getSelectedPrice( $prices );
+		$selected_price   = ( $product->activePrices() ?? [] )[0] ?? null;
 		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
 		$variant_options  = $product->variant_options->data ?? [];
 		$variants         = $product->variants->data ?? [];
-		$selected_variant = $this->getSelectedVariant( $variants, $product );
+		$selected_variant = $product->getFirstVariantWithStock() ?? null;
 
 		$product_state[ $product->id ] = array(
 			'formId'          => $form->ID,
@@ -99,7 +59,7 @@ abstract class ProductBlock extends BaseBlock {
 			'disabled'        => $selected_price['archived'] ?? false,
 			'addHocAmount'    => $add_hoc_amount,
 			'error'           => null,
-			'checkoutUrl'     => '',
+			'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 			'line_item'       => array(
 				'price_id' => $selected_price['id'] ?? null,
 				'quantity' => 1,

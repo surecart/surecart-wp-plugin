@@ -83,33 +83,6 @@ class ProductPageController extends BasePageController {
 		);
 	}
 
-
-	/**
-	 * Get selected variant
-	 *
-	 * @param array $variants
-	 *
-	 * @return object|null
-	 */
-	private function getSelectedVariant() {
-		$variants = $this->model->variants->data ?? [];
-		if ( empty( $variants ) ) {
-			return null;
-		}
-
-		if ( ! $this->model->stock_enabled || $this->model->allow_out_of_stock_purchases ) {
-			return $variants[0];
-		}
-
-		foreach ( $variants as $variant ) {
-			if ( $variant['stock'] > 0 ) {
-				return $variant;
-			}
-		}
-
-		return null;
-	}
-
 	/**
 	 * Set initial product state
 	 *
@@ -120,7 +93,7 @@ class ProductPageController extends BasePageController {
 		$selected_price   = ( $this->model->activePrices() ?? [] )[0] ?? null;
 		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
 		$variant_options  = $this->model->variant_options->data ?? [];
-		$selected_variant = $this->getSelectedVariant();
+		$selected_variant = $this->model->getFirstVariantWithStock() ?? null;
 
 		$product_state[ $this->model->id ] = array(
 			'formId'          => $form->ID,
@@ -135,7 +108,7 @@ class ProductPageController extends BasePageController {
 			'disabled'        => $selected_price['archived'] ?? false,
 			'addHocAmount'    => $add_hoc_amount,
 			'error'           => null,
-			'checkoutUrl'     => '',
+			'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 			'line_item'       => array(
 				'price_id' => $selected_price['id'] ?? null,
 				'quantity' => 1,
