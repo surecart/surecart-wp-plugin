@@ -136,7 +136,7 @@ export class ScLineItemTotal {
         {this.total === 'subtotal' && this.hasInstallmentPlan(checkout) && (
           <sc-line-item style={this.size === 'large' ? { '--price-size': 'var(--sc-font-size-x-large)' } : {}}>
             <span slot="description">
-              <slot name="total-payments-description">{__('Total Payments', 'surecart')}</slot>
+              <slot name="total-payments-description">{__('Total Installment Payments', 'surecart')}</slot>
             </span>
             <span slot="price">
               <sc-format-number type="currency" value={checkout?.full_amount} currency={checkout?.currency || 'usd'} />

@@ -18,7 +18,7 @@
 		},
 		"total_payments_text": {
 			"type": "string",
-			"default": "Total Payments"
+			"default": "Total Installment Payments"
 		},
 		"first_payment_subtotal_text": {
 			"type": "string",

@@ -14,7 +14,7 @@ export default ({ attributes }) => {
 		<sc-line-item-total class={className} total="subtotal">
 			<span slot="description">{text || __('Subtotal', 'surecart')}</span>
 			<span slot="total-payments-description">
-				{total_payments_text || __('Total Payments', 'surecart')}
+				{total_payments_text || __('Total Installment Payments', 'surecart')}
 			</span>
 			<span slot="first-payment-subtotal-description">
 				{first_payment_subtotal_text ||
