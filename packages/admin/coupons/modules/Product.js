@@ -18,18 +18,7 @@ export default ({ id, onSelect }) => {
 	const { product, loading } = useSelect(
 		(select) => {
 			if (!id) return { product: null, loading: false };
-			const entityData = [
-				'surecart',
-				'product',
-				id,
-				{
-					expand: [
-						'prices',
-						'featured_product_media',
-						'product_media.media',
-					],
-				},
-			];
+			const entityData = ['surecart', 'product', id];
 			return {
 				product: select(coreStore)?.getEditedEntityRecord?.(
 					...entityData
