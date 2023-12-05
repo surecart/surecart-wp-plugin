@@ -75,34 +75,34 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	public function handleCartMigration() {
 
 		$existing_cart_post = \SureCart::cartPost()->get();
-		if(empty($existing_cart_post->post_content)){
+		if ( empty( $existing_cart_post->post_content ) ) {
 			return;
 		}
 
 		$cart = [
-			'post_name' => _x( 'cart', 'Cart slug', 'surecart' ),
-			'post_title' => _x( 'Cart', 'Cart title', 'surecart' ),
+			'post_name'    => _x( 'cart', 'Cart slug', 'surecart' ),
+			'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
 			'post_content' => $existing_cart_post->post_content,
-			'post_type' => 'wp_template_part',
-			'post_author' => $existing_cart_post->post_author,
-			'post_status' => $existing_cart_post->post_status ?? 'publish',
-			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' )
+			'post_type'    => 'wp_template_part',
+			'post_author'  => $existing_cart_post->post_author,
+			'post_status'  => $existing_cart_post->post_status ?? 'publish',
+			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
 		];
 
 		// if a post with title 'Cart' exists and post_type is 'wp_template_part' then update the post.
-		$query = new \WP_Query([
-			'post_type' => 'wp_template_part',
-			'post_title' => _x( 'Cart', 'Cart title', 'surecart' ),
-			'posts_per_page' => 1,
-		]);
+		$query = new \WP_Query(
+			[
+				'post_type'      => 'wp_template_part',
+				'post_title'     => _x( 'Cart', 'Cart title', 'surecart' ),
+				'posts_per_page' => 1,
+			]
+		);
 
-
-		if($query->have_posts()){
+		if ( $query->have_posts() ) {
 			$cart['ID'] = $query->posts[0]->ID;
-			wp_update_post($cart);
-		}
-		else {
-			wp_insert_post($cart);
+			wp_update_post( $cart );
+		} else {
+			wp_insert_post( $cart );
 		}
 
 		// delete the old cart post.
