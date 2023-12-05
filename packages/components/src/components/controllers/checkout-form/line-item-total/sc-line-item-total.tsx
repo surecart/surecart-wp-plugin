@@ -39,7 +39,7 @@ export class ScLineItemTotal {
     if (this.total === 'total' && this.hasInstallmentPlan(checkout)) {
       return (
         <span slot="title">
-          <slot name="first-payment-total-description">{__('First Payment Total', 'surecart')}</slot>
+          <slot name="first-payment-total-description">{__('Subtotal', 'surecart')}</slot>
         </span>
       );
     }
@@ -55,7 +55,7 @@ export class ScLineItemTotal {
     if (this.total === 'subtotal' && this.hasInstallmentPlan(checkout)) {
       return (
         <span slot="description">
-          <slot name="first-payment-subtotal-description">{__('First Payment Subtotal', 'surecart')}</slot>
+          <slot name="first-payment-subtotal-description">{__('Initial Payment', 'surecart')}</slot>
         </span>
       );
     }

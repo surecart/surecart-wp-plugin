@@ -25,7 +25,7 @@ export default ({ attributes }) => {
 			</span>
 			<span slot="first-payment-total-description">
 				{first_payment_total_text ||
-					__('First Payment Total', 'surecart')}
+					__('Subtotal', 'surecart')}
 			</span>
 			<span slot="free-trial-description">
 				{free_trial_text || __('Free Trial', 'surecart')}

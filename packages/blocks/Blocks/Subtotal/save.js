@@ -18,7 +18,7 @@ export default ({ attributes }) => {
 			</span>
 			<span slot="first-payment-subtotal-description">
 				{first_payment_subtotal_text ||
-					__('First Payment Subtotal', 'surecart')}
+					__('Initial Payment', 'surecart')}
 			</span>
 		</sc-line-item-total>
 	);

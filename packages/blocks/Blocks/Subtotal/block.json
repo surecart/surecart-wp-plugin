@@ -22,7 +22,7 @@
 		},
 		"first_payment_subtotal_text": {
 			"type": "string",
-			"default": "First Payment Subtotal"
+			"default": "Initial Payment"
 		}
 	}
 }

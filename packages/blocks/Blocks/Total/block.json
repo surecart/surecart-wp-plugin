@@ -17,7 +17,7 @@
 		},
 		"due_amount_text": {
 			"type": "string",
-			"default": "Total Due"
+			"default": "Amount Due"
 		},
 		"subscription_text": {
 			"type": "string",
@@ -25,7 +25,7 @@
 		},
 		"first_payment_total_text": {
 			"type": "string",
-			"default": "First Payment Total"
+			"default": "Subtotal"
 		},
 		"free_trial_text": {
 			"type": "string",

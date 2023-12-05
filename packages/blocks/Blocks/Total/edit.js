@@ -36,12 +36,12 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('First Payment Total Label', 'surecart')}
+							label={__('Subtotal Label', 'surecart')}
 							value={first_payment_total_text}
 							onChange={(first_payment_total_text) =>
 								setAttributes({ first_payment_total_text })
 							}
-							placeholder={__('First Payment Total', 'surecart')}
+							placeholder={__('Subtotal', 'surecart')}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -74,13 +74,13 @@ export default ({ attributes, setAttributes }) => {
 				</span>
 				<span slot="first-payment-total-description">
 					{first_payment_total_text ||
-						__('First Payment Total', 'surecart')}
+						__('Subtotal', 'surecart')}
 				</span>
 				<span slot="free-trial-description">
 					{free_trial_text || __('Free Trial', 'surecart')}
 				</span>
 				<span slot="due-amount-description">
-					{due_amount_text || __('Total Due', 'surecart')}
+					{due_amount_text || __('Amount Due', 'surecart')}
 				</span>
 			</sc-line-item-total>
 		</Fragment>

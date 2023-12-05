@@ -32,7 +32,7 @@ export default ({ attributes, setAttributes }) => {
 					<PanelRow>
 						<TextControl
 							label={__(
-								'First Payment Subtotal Label',
+								'Initial Payment Label',
 								'surecart'
 							)}
 							value={first_payment_subtotal_text}
@@ -40,7 +40,7 @@ export default ({ attributes, setAttributes }) => {
 								setAttributes({ first_payment_subtotal_text })
 							}
 							placeholder={__(
-								'First Payment Subtotal',
+								'Initial Payment',
 								'surecart'
 							)}
 						/>
@@ -57,7 +57,7 @@ export default ({ attributes, setAttributes }) => {
 				</span>
 				<span slot="first-payment-subtotal-description">
 					{first_payment_subtotal_text ||
-						__('First Payment Subtotal', 'surecart')}
+						__('Initial Payment', 'surecart')}
 				</span>
 			</sc-line-item-total>
 		</Fragment>
