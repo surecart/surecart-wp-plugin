@@ -39,51 +39,7 @@ abstract class ProductBlock extends BaseBlock {
 			return;
 		}
 
-		$form             = \SureCart::forms()->getDefault();
-		$selected_price   = ( $product->activePrices() ?? [] )[0] ?? null;
-		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
-		$variant_options  = $product->variant_options->data ?? [];
-		$variants         = $product->variants->data ?? [];
-		$selected_variant = $product->getFirstVariantWithStock() ?? null;
-
-		$product_state[ $product->id ] = array(
-			'formId'          => $form->ID,
-			'mode'            => Form::getMode( $form->ID ),
-			'product'         => $product,
-			'prices'          => $product->prices->data ?? [],
-			'quantity'        => 1,
-			'selectedPrice'   => $selected_price,
-			'total'           => null,
-			'dialog'          => null,
-			'busy'            => false,
-			'disabled'        => $selected_price['archived'] ?? false,
-			'addHocAmount'    => $add_hoc_amount,
-			'error'           => null,
-			'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-			'line_item'       => array(
-				'price_id' => $selected_price['id'] ?? null,
-				'quantity' => 1,
-			),
-			'variant_options' => $variant_options,
-			'variants'        => $variants,
-			'selectedVariant' => $selected_variant,
-			'variantValues'   => [
-				'option_1' => $selected_variant['option_1'] ?? null,
-				'option_2' => $selected_variant['option_2'] ?? null,
-				'option_3' => $selected_variant['option_3'] ?? null,
-			],
-		);
-
-		if ( $selected_price->ad_hoc ) {
-			$product_state[ $product->id ]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
-		}
-
-		$product_state[ $product->id ]['variantValues'] = array_filter(
-			$product_state[ $product->id ]['variantValues'],
-			function( $value ) {
-				return ! empty( $value );
-			}
-		);
+		$product_state[ $product->id ] = $product->productPageInitialState( false );
 
 		sc_initial_state(
 			[

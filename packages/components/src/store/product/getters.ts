@@ -74,12 +74,44 @@ export const isSelectedVariantMissing = (productId: string) =>
  * @returns {ProductState} - Returns the product state
  */
 export const getDefaultState = (): { [key: string]: ProductState } => {
-  const { product: productState } = getSerializedState();
+  const { product: serializedProductState } = getSerializedState();
 
-  // if the product state is not empty, return it.
-  if (!!productState && !!Object.values(productState).length) {
-    return productState;
+  const defaultStateProps: Partial<ProductState> = {
+    quantity: 1,
+    total: null,
+    dialog: null,
+    busy: false,
+    error: null,
+    disabled: false,
+  };
+
+  if (!Object.values(serializedProductState || {})?.length) {
+    console.log('No product state found.');
+    return;
   }
 
-  return {};
+  // Add default state props to each product state.
+  return Object.values(serializedProductState as { [key: string]: ProductState }).reduce((acc, productState) => {
+    const { selectedPrice, product, selectedVariant } = productState || {};
+    const current: ProductState = {
+      ...productState,
+      ...defaultStateProps,
+      adHocAmount: selectedPrice?.amount || null,
+      disabled: selectedPrice?.archived || product?.archived,
+      line_item: {
+        price_id: selectedPrice?.id,
+        quantity: 1,
+        ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: selectedPrice?.amount } : {}),
+      },
+      variantValues: {
+        ...(selectedVariant?.option_1 ? { option_1: selectedVariant?.option_1 } : {}),
+        ...(selectedVariant?.option_2 ? { option_2: selectedVariant?.option_2 } : {}),
+        ...(selectedVariant?.option_3 ? { option_3: selectedVariant?.option_3 } : {}),
+      },
+    };
+
+    acc[product.id] = current;
+
+    return acc;
+  }, {}) as { [key: string]: ProductState };
 };

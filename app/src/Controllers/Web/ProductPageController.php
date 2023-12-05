@@ -89,51 +89,7 @@ class ProductPageController extends BasePageController {
 	 * @return void
 	 */
 	public function setInitialProductState() {
-		$form             = \SureCart::forms()->getDefault();
-		$selected_price   = ( $this->model->activePrices() ?? [] )[0] ?? null;
-		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
-		$variant_options  = $this->model->variant_options->data ?? [];
-		$selected_variant = $this->model->getFirstVariantWithStock() ?? null;
-
-		$product_state[ $this->model->id ] = array(
-			'formId'          => $form->ID,
-			'mode'            => Form::getMode( $form->ID ),
-			'product'         => $this->model,
-			'prices'          => $this->model->prices->data ?? [],
-			'quantity'        => 1,
-			'selectedPrice'   => $selected_price,
-			'total'           => null,
-			'dialog'          => null,
-			'busy'            => false,
-			'disabled'        => $selected_price['archived'] ?? false,
-			'addHocAmount'    => $add_hoc_amount,
-			'error'           => null,
-			'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-			'line_item'       => array(
-				'price_id' => $selected_price['id'] ?? null,
-				'quantity' => 1,
-			),
-			'variant_options' => $variant_options,
-			'variants'        => $this->model->variants->data ?? [],
-			'selectedVariant' => $selected_variant,
-			'isProductPage'   => true,
-			'variantValues'   => [
-				'option_1' => $selected_variant['option_1'] ?? null,
-				'option_2' => $selected_variant['option_2'] ?? null,
-				'option_3' => $selected_variant['option_3'] ?? null,
-			],
-		);
-
-		if ( $selected_price->ad_hoc ) {
-			$product_state[ $this->model->id ]['line_item']['ad_hoc_amount'] = $add_hoc_amount;
-		}
-
-		$product_state[ $this->model->id ]['variantValues'] = array_filter(
-			$product_state[ $this->model->id ]['variantValues'],
-			function( $value ) {
-				return ! empty( $value );
-			}
-		);
+		$product_state[ $this->model->id ] = $this->model->productPageInitialState();
 
 		sc_initial_state(
 			[

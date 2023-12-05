@@ -370,4 +370,33 @@ class Product extends Model implements PageModel {
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';
 	}
+
+	/**
+	 * Get the product page initial state
+	 *
+	 * @param boolean $is_product_page Is this a product page.
+	 *
+	 * @return array
+	 */
+	public function productPageInitialState( $is_product_page = true ) {
+		$form             = \SureCart::forms()->getDefault();
+		$selected_price   = ( $this->activePrices() ?? [] )[0] ?? null;
+		$variant_options  = $this->variant_options->data ?? [];
+		$selected_variant = $this->getFirstVariantWithStock() ?? null;
+
+		$state = array(
+			'formId'          => $form->ID,
+			'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
+			'product'         => $this,
+			'prices'          => $this->activePrices(),
+			'selectedPrice'   => $selected_price,
+			'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+			'variant_options' => $variant_options,
+			'variants'        => $this->variants->data ?? [],
+			'selectedVariant' => $selected_variant,
+			'isProductPage'   => $is_product_page,
+		);
+
+		return $state;
+	}
 }
