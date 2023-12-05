@@ -153,8 +153,9 @@ export default ({ onRequestClose, id, product }) => {
 								<SelectPrice
 									required={false}
 									css={css`
-											flex: 0 1 50%;
-										`}
+										flex: 0 1 50%;
+									`}
+									style={{ '--sc-input-placeholder-color': 'var(--sc-input-label-color)' }}
 									open={false}
 									value={price?.id}
 									ad_hoc={false}
@@ -192,6 +193,7 @@ export default ({ onRequestClose, id, product }) => {
 									'All Variants',
 									'surecart'
 								)}
+								style={{ '--sc-input-placeholder-color': 'var(--sc-input-label-color)' }}
 							/>
 						</div>
 					)}
