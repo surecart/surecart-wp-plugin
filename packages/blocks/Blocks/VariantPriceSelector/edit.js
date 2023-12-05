@@ -5,9 +5,20 @@ import { css, jsx } from '@emotion/core';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
-import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
+import {
+	BlockControls,
+	InspectorControls,
+	useBlockProps,
+} from '@wordpress/block-editor';
+import {
+	PanelBody,
+	PanelRow,
+	TextControl,
+	ToolbarButton,
+	ToolbarGroup,
+} from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
+import { edit } from '@wordpress/icons';
 
 /**
  * Component Dependencies
@@ -57,6 +68,15 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<Fragment>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						icon={edit}
+						label={__('Change selected product', 'surecart')}
+						onClick={() => setAttributes({ product_id: null })}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
@@ -65,21 +85,6 @@ export default ({ attributes, setAttributes }) => {
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 							style={{ width: '100%' }}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ScSelect
-							style={{ width: '100%' }}
-							search
-							label={__('Product', 'surecart')}
-							placeholder={__('Select product', 'surecart')}
-							choices={productChoices}
-							value={product_id}
-							onScChange={(e) =>
-								setAttributes({
-									product_id: e.target.value,
-								})
-							}
 						/>
 					</PanelRow>
 				</PanelBody>

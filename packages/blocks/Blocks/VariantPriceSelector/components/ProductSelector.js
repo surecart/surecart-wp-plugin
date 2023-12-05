@@ -7,11 +7,8 @@ import { ScButton, ScSelect } from '@surecart/components-react';
  */
 import { __ } from '@wordpress/i18n';
 import { Placeholder, Spinner } from '@wordpress/components';
-import { useState } from '@wordpress/element';
 
 export default ({ onSelectProduct, productChoices, loadingProducts }) => {
-	const [showSelect, setShowSelect] = useState(false);
-
 	if (loadingProducts) {
 		return (
 			<Placeholder>
@@ -28,39 +25,37 @@ export default ({ onSelectProduct, productChoices, loadingProducts }) => {
 				'surecart'
 			)}
 		>
-			{showSelect ? (
-				<>
-					<div
-						css={css`
-							width: 100%;
-							display: flex;
-							margin-bottom: var(--sc-spacing-medium);
-						`}
-					>
-						<ScSelect
-							placeholder={__('Choose product', 'surecart')}
-							search
-							choices={productChoices}
-							css={css`
-								width: 100%;
-							`}
-							onScChange={(e) => {
-								onSelectProduct(e.target.value);
-							}}
-						/>
-					</div>
-				</>
-			) : (
-				<ScButton
-					type="default"
-					onClick={() => setShowSelect(true)}
+			<>
+				<div
 					css={css`
-						width: auto;
+						width: 100%;
+						display: flex;
+						margin-bottom: var(--sc-spacing-medium);
 					`}
 				>
-					{__('Select Product', 'surecart')}
-				</ScButton>
-			)}
+					<ScSelect
+						placeholder={__('Choose product', 'surecart')}
+						search
+						choices={productChoices}
+						css={css`
+							width: 100%;
+						`}
+						onScChange={(e) => {
+							onSelectProduct(e.target.value);
+						}}
+					>
+						<ScButton
+							type="default"
+							css={css`
+								width: auto;
+							`}
+							slot="trigger"
+						>
+							{__('Select Product', 'surecart')}
+						</ScButton>
+					</ScSelect>
+				</div>
+			</>
 		</Placeholder>
 	);
 };
