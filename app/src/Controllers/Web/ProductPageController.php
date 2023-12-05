@@ -83,26 +83,6 @@ class ProductPageController extends BasePageController {
 		);
 	}
 
-	/**
-	 * Get selected price
-	 *
-	 * @param array $prices
-	 *
-	 * @return object|null
-	 */
-	private function getSelectedPrice() {
-		$prices = $this->model->prices->data ?? [];
-		usort(
-			$prices,
-			function( $a, $b ) {
-				return $a['position'] - $b['position'];
-			}
-		);
-
-		$selected_price_index = array_search( false, array_column( $prices, 'archived' ) );
-
-		return $prices[ $selected_price_index ] ?? null;
-	}
 
 	/**
 	 * Get selected variant
@@ -137,7 +117,7 @@ class ProductPageController extends BasePageController {
 	 */
 	public function setInitialProductState() {
 		$form             = \SureCart::forms()->getDefault();
-		$selected_price   = $this->getSelectedPrice();
+		$selected_price   = ( $this->model->activePrices() ?? [] )[0] ?? null;
 		$add_hoc_amount   = $selected_price['add_hoc_amount'] ?? null;
 		$variant_options  = $this->model->variant_options->data ?? [];
 		$selected_variant = $this->getSelectedVariant();
