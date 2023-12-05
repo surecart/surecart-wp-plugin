@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.11.4
+Stable tag: 2.12.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -226,13 +226,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.12.0 - December 4th, 2023 =
-* New: Returns - create and manage return reqeusts on the admin order screen.
+= 2.12.0 - December 5th, 2023 =
+* New: Returns - create and manage return requests on the admin order screen.
 * Improvement: List the variant and price with the purchase in the customer's purchase list on the admin.
 * Improvement: Add shortcode for product variant choices to be used in custom page builder product page templates.
-* Improvement: Handle out of stock errors better when the item is added to the cart.
-* Fix: Draft orders having wrong status on admin orders screen.
-* Fix: Admin order pages showing product image on line items instead of variant image.
+* Improvement: Handle out-of-stock errors better when the item is added to the cart.
+* Fix: Draft orders having the wrong status on the admin orders screen.
+* Fix: Admin order pages showing the product image on line items instead of the variant image.
 * Fix: CSS conflict with some themes causing password field inspector controls to be pushed offscreen.
 * Fix: Customers not syncing with users when "Create New Users" is unchecked in the manual customer sync button.
 * Fix: Duplication of labels on the price selector.
