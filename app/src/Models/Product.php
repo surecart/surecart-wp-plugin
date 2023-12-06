@@ -374,15 +374,14 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the product page initial state
 	 *
-	 * @param boolean $is_product_page Is this a product page.
-	 *
 	 * @return array
 	 */
-	public function productPageInitialState( $is_product_page = true ) {
+	public function productPageInitialState() {
 		$form             = \SureCart::forms()->getDefault();
 		$selected_price   = ( $this->activePrices() ?? [] )[0] ?? null;
 		$variant_options  = $this->variant_options->data ?? [];
 		$selected_variant = $this->getFirstVariantWithStock() ?? null;
+		$is_product_page  = ! empty( get_query_var( 'surecart_current_product' )->id );
 
 		$state = array(
 			'formId'          => $form->ID,
