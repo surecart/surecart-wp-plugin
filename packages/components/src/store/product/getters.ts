@@ -52,7 +52,7 @@ export const isProductOutOfStock = (productId: string) => {
   }
 
   // If no variant is selected, check against product stock.
-  if (!state?.selectedVariant) return state[productId].product?.available_stock <= 0;
+  if (!state?.[productId]?.selectedVariant?.id) return state[productId].product?.available_stock <= 0;
 
   // Check against selected variant's stock.
   return state[productId].selectedVariant?.available_stock <= 0;

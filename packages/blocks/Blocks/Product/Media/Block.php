@@ -26,7 +26,7 @@ class Block extends ProductBlock {
 	public function render( $attributes, $content ) {
 		global $content_width;
 
-		$product = $this->getProductAndSetInitialState( $attributes['id'] );
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product ) ) {
 			return '';
 		}
@@ -45,13 +45,7 @@ class Block extends ProductBlock {
 
 		// get images and thumbnails.
 		$images     = $this->getImages( $product, $attributes['width'] ?? $content_width ?? 1170 );
-		$thumbnails = array_map(
-			function( $media ) {
-				$media['srcset'] = $media->getSrcset( [ 90, 120, 240 ] );
-				return $media;
-			},
-			$this->getImages( $product, 240 )
-		);
+		$thumbnails = $this->getImages( $product, 240, [ 90, 120, 240 ] );
 
 		// if we have more than one, show the slider.
 		if ( count( $product->product_medias->data ) > 1 ) {
@@ -96,18 +90,22 @@ class Block extends ProductBlock {
 	 *
 	 * @return array
 	 */
-	public function getImages( $product, $width ) {
+	public function getImages( $product, $width, $srcset = [] ) {
 		$width = $width ?? 1170;
 
 		return array_map(
 			function( $product_media ) use ( $product, $width ) {
-				return [
+				$items = [
 					'src'    => esc_url( $product_media->getUrl( $width ) ),
 					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
 					'title'  => $product_media->media->title ?? '',
 					'width'  => $product_media->width,
 					'height' => $product_media->height,
 				];
+				if ( ! empty( $srcset ) ) {
+					$items['srcset'] = $product_media->getSrcset( $srcset );
+				}
+				return $items;
 			},
 			$product->product_medias->data
 		);

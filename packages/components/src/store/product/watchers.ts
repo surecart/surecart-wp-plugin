@@ -8,12 +8,12 @@ import { __, sprintf } from '@wordpress/i18n';
 
 /** Handle set event on products store. */
 on('set', (productId: string, newValue: ProductState, oldValue: ProductState) => {
-  if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
+  if (newValue?.selectedPrice?.id !== oldValue?.selectedPrice?.id) {
     updateSelectedPrice(productId, newValue);
   }
 
   // if variants change, check the stock.
-  if (JSON.stringify(newValue?.selectedVariant) !== JSON.stringify(oldValue?.selectedVariant)) {
+  if (newValue?.selectedVariant?.id !== oldValue?.selectedVariant?.id) {
     handleStockWithSelectedVariant(productId);
   }
 
@@ -35,7 +35,7 @@ const updateSelectedVariant = (productId: string, newValue: ProductState) => {
   const matchedVariant = getVariantFromValues({ variants: state[productId].variants, values: newValue?.variantValues });
 
   if (matchedVariant) {
-    state[productId].selectedVariant = matchedVariant;
+    setProduct(productId, { selectedVariant: matchedVariant });
   }
 };
 
@@ -59,12 +59,14 @@ const handleStockWithSelectedVariant = (productId: string) => {
 };
 
 const updateSelectedPrice = (productId: string, newValue: ProductState) => {
-  // update the total when the selected price changes.
-  state[productId].total = state[productId].adHocAmount || newValue?.selectedPrice?.amount || 0;
-  // set the ad hoc amount to the selected product amount.
-  state[productId].adHocAmount = newValue?.selectedPrice?.amount;
-  // update disabled based on if price is archived or product is archived.
-  state[productId].disabled = newValue?.selectedPrice?.archived || state[productId].product?.archived;
+  setProduct(productId, {
+    // update the total when the selected price changes.
+    total: state[productId].adHocAmount || newValue?.selectedPrice?.amount || 0,
+    // set the ad hoc amount to the selected product amount.
+    adHocAmount: newValue?.selectedPrice?.amount,
+    // update disabled based on if price is archived or product is archived.
+    disabled: newValue?.selectedPrice?.archived || state[productId].product?.archived,
+  });
 };
 
 const setLineItem = (productId: string) => {

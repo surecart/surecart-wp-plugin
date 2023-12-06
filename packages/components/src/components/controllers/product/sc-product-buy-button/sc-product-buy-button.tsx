@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import {  getProductBuyLink, submitCartForm } from '@store/product/mutations';
+import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
