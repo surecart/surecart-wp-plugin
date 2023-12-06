@@ -74,7 +74,15 @@ export class ScProductBuyButton {
         onClick={e => this.handleCartClick(e)}
       >
         {!!this.error && (
-          <sc-alert type="danger" scrollOnOpen={true} open={!!this.error} closable={false}>
+          <sc-alert
+            onClick={event => {
+              event.stopPropagation();
+            }}
+            type="danger"
+            scrollOnOpen={true}
+            open={!!this.error}
+            closable={false}
+          >
             {!!getTopLevelError(this.error) && <span slot="title" innerHTML={getTopLevelError(this.error)}></span>}
             {(getAdditionalErrorMessages(this.error) || []).map((message, index) => (
               <div innerHTML={message} key={index}></div>
