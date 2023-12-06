@@ -23,7 +23,7 @@ export class ScSubscriptionReactivate {
 
   @State() busy: boolean;
   @State() error: string;
-  @State() amountDue: number;
+  @State() upcomingPeriod: Period;
   @State() loading: boolean = false;
 
   @Watch('open')
@@ -36,7 +36,7 @@ export class ScSubscriptionReactivate {
   async fetchUpcoming() {
     this.loading = true;
     try {
-      const upcoming: Period = await apiFetch({
+      this.upcomingPeriod = await apiFetch({
         method: 'PATCH',
         path: addQueryArgs(`surecart/v1/subscriptions/${this.subscription?.id}/upcoming_period`, {
           skip_product_group_validation: true,
@@ -46,8 +46,6 @@ export class ScSubscriptionReactivate {
           purge_pending_update: false,
         },
       });
-
-      this.amountDue = (upcoming?.checkout as Checkout)?.amount_due;
     } catch (e) {
       this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
@@ -98,7 +96,8 @@ export class ScSubscriptionReactivate {
             <Fragment>
               <div slot="description">
                 <sc-alert open type="warning" title={__('Confirm Charge', 'surecart')}>
-                  {__('You will be charged', 'surecart')} <sc-format-number type="currency" value={this.amountDue} currency={this.subscription?.currency}></sc-format-number>{' '}
+                  {__('You will be charged', 'surecart')}{' '}
+                  <sc-format-number type="currency" value={(this.upcomingPeriod?.checkout as Checkout)?.amount_due} currency={this.subscription?.currency}></sc-format-number>{' '}
                   {__('immediately for your subscription.', 'surecart')}
                 </sc-alert>
                 <sc-text
@@ -109,9 +108,9 @@ export class ScSubscriptionReactivate {
                     'margin-top': 'var(--sc-spacing-medium)',
                   }}
                 >
-                  {__('Your subscription will be reactivated and will renew automatically on ', 'surecart')}
+                  {__('Your subscription will be reactivated and will renew automatically on', 'surecart')}{' '}
                   <strong>
-                    <sc-format-date type="timestamp" date={this.subscription?.current_period_end_at as number} month="long" day="numeric" year="numeric"></sc-format-date>.
+                    <sc-format-date type="timestamp" date={this.upcomingPeriod?.end_at} month="long" day="numeric" year="numeric"></sc-format-date>
                   </strong>
                 </sc-text>
               </div>
