@@ -181,22 +181,21 @@ class CartService {
 	 */
 	public function cartTemplate() {
 		$form = $this->getForm();
-
 		if ( empty( $form->ID ) ) {
-			return '';
-		}
-
-		$cart = \SureCart::cartPost()->get();
-
-		if ( empty( $cart->post_content ) ) {
 			return '';
 		}
 
 		// get cart block.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
-		$output   = $this->doBlocks( $template->content ?? '' );
-		if ( ! empty( $output->blocks[0] ) ) {
-			$attributes = $output->blocks[0]['attrs'];
+		if ( ! $template || empty( $template->content ) ) {
+			return;
+		}
+
+		// get first block attributes.
+		$template_blocks    = parse_blocks( $template->content );
+		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart' );
+		if ( isset( $post_content_block['attrs'] ) ) {
+			$attributes = $post_content_block['attrs'];
 		}
 
 		ob_start();
@@ -209,7 +208,7 @@ class CartService {
 			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
 			<?php
-			echo $output->content ?? '';
+			echo wp_kses_post( do_blocks( $template->content ) );
 			?>
 		</sc-cart>
 
@@ -274,33 +273,5 @@ class CartService {
 			return;
 		}
 		return in_array( $term_id, $cart_menu_ids );
-	}
-
-	/**
-	 * Extends the do_blocks function to allow for custom return types.
-	 *
-	 * @param string $content The block content.
-	 *
-	 * @return object
-	 */
-	public function doBlocks( $content ) {
-		$blocks = parse_blocks( $content );
-		$output = '';
-
-		foreach ( $blocks as $block ) {
-			$output .= render_block( $block );
-		}
-
-		// If there are blocks in this content, we shouldn't run wpautop() on it later.
-		$priority = has_filter( 'the_content', 'wpautop' );
-		if ( false !== $priority && doing_filter( 'the_content' ) && has_blocks( $content ) ) {
-			remove_filter( 'the_content', 'wpautop', $priority );
-			add_filter( 'the_content', '_restore_wpautop_hook', $priority + 1 );
-		}
-
-		return (object) [
-			'content' => $output,
-			'blocks'  => $blocks,
-		];
 	}
 }
