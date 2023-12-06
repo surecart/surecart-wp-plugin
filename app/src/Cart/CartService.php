@@ -193,12 +193,11 @@ class CartService {
 		}
 
 		// get cart block.
-		$template = get_block_template('surecart/surecart//cart','wp_template_part');
-		$output = $this->doBlocks( $template->content ?? '');
+		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
+		$output   = $this->doBlocks( $template->content ?? '' );
 		if ( ! empty( $output->blocks[0] ) ) {
 			$attributes = $output->blocks[0]['attrs'];
 		}
-
 
 		ob_start();
 		?>
@@ -299,7 +298,7 @@ class CartService {
 			add_filter( 'the_content', '_restore_wpautop_hook', $priority + 1 );
 		}
 
-		return (object)[
+		return (object) [
 			'content' => $output,
 			'blocks'  => $blocks,
 		];
