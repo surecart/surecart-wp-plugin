@@ -32,15 +32,13 @@ class Block extends BaseBlock {
 		}
 
 		// active prices.
-		$active_prices = $product->activePrices();
+		$active_prices            = $product->activePrices();
+		$first_variant_with_stock = $product->getFirstVariantWithStock();
 
 		// must have at least one active price.
 		if ( empty( $active_prices[0] ) ) {
 			return '';
 		}
-
-		// prepare data.
-		$first_variant_with_stock = $product->getFirstVariantWithStock();
 
 		if ( ! empty( $active_prices[0]->id ) ) {
 			$line_item = array_merge(
