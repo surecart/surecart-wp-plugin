@@ -376,7 +376,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return array
 	 */
-	public function getInitialPageState() {
+	public function getInitialPageState( $args = [] ) {
 		$form             = \SureCart::forms()->getDefault();
 		$selected_price   = ( $this->activePrices() ?? [] )[0] ?? null;
 		$variant_options  = $this->variant_options->data ?? [];
@@ -396,6 +396,6 @@ class Product extends Model implements PageModel {
 			'isProductPage'   => $is_product_page,
 		);
 
-		return $state;
+		return wp_parse_args( $args, $state );
 	}
 }
