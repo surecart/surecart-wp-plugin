@@ -31,7 +31,7 @@ class Block extends ProductBlock {
 
 		return sprintf(
 			'<%1$s %2$s>
-				%4$s
+				%3$s
 			</%1$s>',
 			'h' . (int) ( $attributes['level'] ?? 1 ),
 			$attributes,
