@@ -85,11 +85,6 @@ export const getDefaultState = (): { [key: string]: ProductState } => {
     disabled: false,
   };
 
-  if (!Object.values(serializedProductState || {})?.length) {
-    console.log('No product state found.');
-    return {}
-  }
-
   return Object.values(serializedProductState as { [key: string]: ProductState }).reduce((acc, productState) => {
     const { selectedPrice, product, selectedVariant } = productState || {};
     const current: ProductState = {
@@ -112,5 +107,5 @@ export const getDefaultState = (): { [key: string]: ProductState } => {
     acc[product.id] = current;
 
     return acc;
-  }, {}) ;
+  }, {}) || {} ;
 };
