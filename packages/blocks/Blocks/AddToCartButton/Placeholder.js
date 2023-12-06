@@ -7,88 +7,43 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { Placeholder } from '@wordpress/components';
 import { button as icon } from '@wordpress/icons';
-import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Component Dependencies
  */
 import PriceSelector from '@scripts/blocks/components/PriceSelector';
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 
-export default ({ setAttributes, selectedPriceId, setShowChangePrice }) => {
-	const [showPriceSelector, setShowPriceSelector] = useState(false);
-
-	useEffect(() => {
-		if (!!selectedPriceId) {
-			setShowPriceSelector(true);
-		}
-	}, []);
-
+export default ({ setAttributes, selectedPriceId }) => {
 	return (
 		<Placeholder icon={icon} label={__('Select a product', 'surecart')}>
-			{showPriceSelector ? (
+			<div>
 				<div
 					css={css`
-						width: inherit;
+						color: var(--sc-color-gray-500);
+						margin-bottom: 1em;
 					`}
 				>
-					<PriceSelector
-						onSelect={({ price_id, variant_id }) => {
-							setAttributes({ price_id, variant_id });
-							setShowPriceSelector(false);
-							setShowChangePrice(false);
-						}}
-						value={selectedPriceId}
-						requestQuery={{
-							archived: false,
-						}}
-						allowOutOfStockSelection={true}
-					/>
-					{selectedPriceId && (
-						<ScButton
-							onClick={() => {
-								setShowPriceSelector(false);
-								setShowChangePrice(false);
-							}}
-							css={css`
-								margin-top: var(--sc-spacing-small);
-							`}
-						>
-							{__('Cancel', 'surecart')}
-						</ScButton>
+					{__(
+						'To add a product for the cart button, click the "Select Product" button.',
+						'surecart'
 					)}
 				</div>
-			) : (
-				<div>
-					<div
-						css={css`
-							color: var(--sc-color-gray-500);
-							margin-bottom: 1em;
-						`}
-					>
-						{__(
-							'To add a product for the cart button, click the "Select Product" button.',
-							'surecart'
-						)}
-					</div>
-					<PriceSelector
-						onSelect={({ price_id, variant_id }) => {
-							setAttributes({ price_id, variant_id });
-							setShowPriceSelector(false);
-							setShowChangePrice(false);
-						}}
-						value={selectedPriceId}
-						requestQuery={{
-							archived: false,
-						}}
-						allowOutOfStockSelection={true}
-					>
-						<ScButton slot="trigger">
-							{__('Select Product', 'surecart')}
-						</ScButton>
-					</PriceSelector>
-				</div>
-			)}
+				<PriceSelector
+					onSelect={({ price_id, variant_id }) => {
+						setAttributes({ price_id, variant_id });
+					}}
+					value={selectedPriceId}
+					requestQuery={{
+						archived: false,
+					}}
+					allowOutOfStockSelection={true}
+				>
+					<ScButton slot="trigger">
+						{__('Select Product', 'surecart')}
+					</ScButton>
+				</PriceSelector>
+			</div>
 		</Placeholder>
 	);
 };
