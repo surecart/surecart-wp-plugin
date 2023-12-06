@@ -37,7 +37,7 @@ export class ScProductPriceModal {
 
   componentWillLoad() {
     // focus on price input when opened.
-    onChange(this.productId, (_) => {
+    onChange(this.productId, () => {
       setTimeout(() => {
         this.priceInput?.triggerFocus();
       }, 50);

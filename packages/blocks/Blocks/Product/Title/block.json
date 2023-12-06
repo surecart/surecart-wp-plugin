@@ -13,7 +13,7 @@
 			"type": "number",
 			"default": 2
 		},
-		"product_id": {
+		"id": {
 			"type": "string"
 		}
 	},

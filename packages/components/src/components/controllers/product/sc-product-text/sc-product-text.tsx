@@ -11,8 +11,10 @@ export class ScProductText {
   @Prop() productId: string;
 
   render() {
-    if (state[this.productId].product?.[this.text]) {
-      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={state[this.productId].product[this.text]}></span>;
+    const product = state[this.productId].product;
+
+    if (product?.[this.text]) {
+      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={product[this.text]}></span>;
     }
     return (
       <Host>

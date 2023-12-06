@@ -6,43 +6,55 @@ import { isStockNeedsToBeChecked } from './getters';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf } from '@wordpress/i18n';
 
+/** Handle set event on products store. */
 on('set', (productId: string, newValue: ProductState, oldValue: ProductState) => {
   if (JSON.stringify(newValue?.selectedPrice) !== JSON.stringify(oldValue?.selectedPrice)) {
     updateSelectedPrice(productId, newValue);
   }
 
+  // if variants change, check the stock.
   if (JSON.stringify(newValue?.selectedVariant) !== JSON.stringify(oldValue?.selectedVariant)) {
-    onSelectedVariantChange(productId);
+    handleStockWithSelectedVariant(productId);
   }
 
   const shouldUpdateLineItem = !oldValue || ['selectedPrice', 'adHocAmount', 'quantity'].some(key => JSON.stringify(newValue[key]) !== JSON.stringify(oldValue[key]));
-  const shouldUpdateVariants = !oldValue || JSON.stringify(newValue?.variantValues) !== JSON.stringify(oldValue?.variantValues);
-
   if (shouldUpdateLineItem) {
     setLineItem(productId);
   }
 
+  const shouldUpdateVariants = !oldValue || JSON.stringify(newValue?.variantValues) !== JSON.stringify(oldValue?.variantValues);
   if (shouldUpdateVariants) {
     updateSelectedVariant(productId, newValue);
   }
 });
 
+/**
+ * Update the selected variant based on chosen values.
+ */
 const updateSelectedVariant = (productId: string, newValue: ProductState) => {
   const matchedVariant = getVariantFromValues({ variants: state[productId].variants, values: newValue?.variantValues });
 
   if (matchedVariant) {
     state[productId].selectedVariant = matchedVariant;
   }
-}
+};
 
-const onSelectedVariantChange = (productId: string) => {
-  if(!state[productId].selectedVariant || !isStockNeedsToBeChecked) {
+/**
+ * Handle when the selected variant changes.
+ */
+const handleStockWithSelectedVariant = (productId: string) => {
+  // make sure we have a selected variant and stock needs to be checked.
+  if (!state[productId].selectedVariant || !isStockNeedsToBeChecked) {
     return;
   }
 
+  // if available stock is less than the quantity, adjust the quantity to the max available.
   if (state[productId]?.selectedVariant.available_stock < state[productId]?.quantity) {
     state[productId].quantity = state[productId]?.selectedVariant.available_stock || 1;
-    speak(sprintf(__('There are just %d items left in stock, and the quantity has been adjusted to %d.', 'surecart'), state[productId].quantity, state[productId].quantity), 'assertive');
+    speak(
+      sprintf(__('There are just %d items left in stock, and the quantity has been adjusted to %d.', 'surecart'), state[productId].quantity, state[productId].quantity),
+      'assertive',
+    );
   }
 };
 
@@ -64,6 +76,4 @@ const setLineItem = (productId: string) => {
       variant: state[productId].selectedVariant?.id,
     },
   });
-}
-
-
+};

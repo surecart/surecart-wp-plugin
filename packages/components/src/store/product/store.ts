@@ -24,8 +24,3 @@ const store = createStore<Store>(defaultState, (newValue, oldValue) => {
 const { state, onChange, on, dispose, forceUpdate } = store;
 export default state;
 export { state, onChange, on, dispose, forceUpdate };
-
-if (window?.sc?.store) {
-  window.sc.store.product = store; // need to deprecate this
-  window.sc.store.products = store;
-}

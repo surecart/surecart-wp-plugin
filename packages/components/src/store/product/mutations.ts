@@ -1,10 +1,8 @@
-import { addLineItem } from '../../services/session';
 import state from './store';
-import { getCheckout, setCheckout } from '@store/checkouts/mutations';
-import { Checkout } from 'src/types';
 import { toggleCart } from '@store/ui';
 import { addQueryArgs } from '@wordpress/url';
 import { setProduct } from './setters';
+import { addCheckoutLineItem } from '@store/checkout/mutations';
 
 export const submitCartForm = async (productId: string) => {
   const productState = state[productId];
@@ -14,17 +12,12 @@ export const submitCartForm = async (productId: string) => {
 
   try {
     setProduct(productId, { busy: true });
-    const checkout = await addLineItem({
-      checkout: getCheckout(productState?.formId, productState.mode),
-      data: {
-        price: productState.selectedPrice?.id,
-        quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
-        ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
-        variant: productState.selectedVariant?.id,
-      },
-      live_mode: productState.mode !== 'test',
+    await addCheckoutLineItem({
+      price: productState.selectedPrice?.id,
+      quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
+      ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
+      variant: productState.selectedVariant?.id,
     });
-    setCheckout(checkout as Checkout, productState.formId);
     toggleCart(true);
     setProduct(productId, { dialog: null });
   } catch (e) {
@@ -35,6 +28,9 @@ export const submitCartForm = async (productId: string) => {
   }
 };
 
+/**
+ * Get the product buy link.
+ */
 export const getProductBuyLink = (productId: string, url: string, query = {}) => {
   const productState = state[productId];
 
@@ -49,7 +45,6 @@ export const getProductBuyLink = (productId: string, url: string, query = {}) =>
         quantity: Math.max(productState.selectedPrice?.ad_hoc ? 1 : productState.quantity, 1),
         ...(productState.selectedPrice?.ad_hoc ? { ad_hoc_amount: productState.adHocAmount } : {}),
         ...(productState.selectedVariant?.id ? { variant: productState.selectedVariant?.id } : {}),
-
       },
     ],
     ...query,

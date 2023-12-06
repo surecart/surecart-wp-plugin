@@ -18,16 +18,9 @@ export const availablePrices = (productId: string): Price[] => (state[productId]
 
 /**
  * Get Product
- *
- * @param {string} productId - Product ID
- *
- * @returns {ProductState} - Returns the product state
  */
-export const getProduct = (productId?: string): ProductState => {
-  if (!productId) return null;
+export const getProduct = (productId?: string): ProductState => state[productId] ?? null;
 
-  return state[productId];
-};
 /**
  * Check if product label stock is enabled and not out of stock purchases are allowed.
  *
@@ -65,6 +58,9 @@ export const isProductOutOfStock = (productId: string) => {
   return state[productId].selectedVariant?.available_stock <= 0;
 };
 
+/**
+ * Is the selected variant missing.
+ */
 export const isSelectedVariantMissing = (productId: string) =>
   !!state[productId].variants?.length && getVariantFromValues({ variants: state[productId].variants, values: state[productId].variantValues })?.id === undefined;
 
@@ -76,36 +72,33 @@ export const isSelectedVariantMissing = (productId: string) =>
 export const getDefaultState = (): { [key: string]: ProductState } => {
   const { product: serializedProductState } = getSerializedState();
 
-  const defaultStateProps: Partial<ProductState> = {
-    quantity: 1,
-    total: null,
-    dialog: null,
-    busy: false,
-    error: null,
-    disabled: false,
-  };
-
-  return Object.values(serializedProductState as { [key: string]: ProductState }).reduce((acc, productState) => {
-    const { selectedPrice, product, selectedVariant } = productState || {};
-    const current: ProductState = {
-      ...productState,
-      ...defaultStateProps,
-      adHocAmount: selectedPrice?.amount || null,
-      disabled: selectedPrice?.archived || product?.archived,
-      line_item: {
-        price_id: selectedPrice?.id,
+  return (
+    Object.values(serializedProductState as { [key: string]: ProductState }).reduce((acc, productState) => {
+      const { selectedPrice, product, selectedVariant } = productState || {};
+      const current: ProductState = {
+        ...productState,
         quantity: 1,
-        ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: selectedPrice?.amount } : {}),
-      },
-      variantValues: {
-        ...(selectedVariant?.option_1 ? { option_1: selectedVariant?.option_1 } : {}),
-        ...(selectedVariant?.option_2 ? { option_2: selectedVariant?.option_2 } : {}),
-        ...(selectedVariant?.option_3 ? { option_3: selectedVariant?.option_3 } : {}),
-      },
-    };
+        total: null,
+        dialog: null,
+        busy: false,
+        error: null,
+        adHocAmount: selectedPrice?.amount || null,
+        disabled: selectedPrice?.archived || product?.archived,
+        line_item: {
+          price_id: selectedPrice?.id,
+          quantity: 1,
+          ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: selectedPrice?.amount } : {}),
+        },
+        variantValues: {
+          ...(selectedVariant?.option_1 ? { option_1: selectedVariant?.option_1 } : {}),
+          ...(selectedVariant?.option_2 ? { option_2: selectedVariant?.option_2 } : {}),
+          ...(selectedVariant?.option_3 ? { option_3: selectedVariant?.option_3 } : {}),
+        },
+      };
 
-    acc[product.id] = current;
+      acc[product.id] = current;
 
-    return acc;
-  }, {}) || {} ;
+      return acc;
+    }, {}) || {}
+  );
 };
