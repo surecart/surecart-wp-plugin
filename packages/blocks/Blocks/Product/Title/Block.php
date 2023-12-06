@@ -22,13 +22,19 @@ class Block extends ProductBlock {
 			return '';
 		}
 
+		$attributes = get_block_wrapper_attributes(
+			[
+				'class' => esc_attr( $this->getClasses( $attributes ) . ' surecart-block product-title' ),
+				'style' => esc_attr( $this->getStyles( $attributes ) ),
+			]
+		);
+
 		return sprintf(
-			'<%1$s class="%2$s" style="%3$s">
+			'<%1$s %2$s>
 				%4$s
 			</%1$s>',
 			'h' . (int) ( $attributes['level'] ?? 1 ),
-			esc_attr( $this->getClasses( $attributes ) . ' surecart-block product-title' ),
-			esc_attr( $this->getStyles( $attributes ) ),
+			$attributes,
 			wp_kses_post( $product->name ?? '' )
 		);
 	}

@@ -45,7 +45,7 @@
 			"type": "number",
 			"default": 100
 		},
-		"product_id": {
+		"id": {
 			"type": "string"
 		}
 	},

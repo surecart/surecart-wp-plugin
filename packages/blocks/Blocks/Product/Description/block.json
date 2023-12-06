@@ -8,14 +8,12 @@
 		"textAlign": {
 			"type": "string",
 			"default": "left"
-		}
-	},
-	"keywords": ["description"],
-	"attributes": {
-		"product_id": {
+		},
+		"id": {
 			"type": "string"
 		}
 	},
+	"keywords": ["description"],
 	"supports": {
 		"reusable": false,
 		"html": false,

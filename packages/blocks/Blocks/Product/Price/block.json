@@ -10,7 +10,7 @@
 			"type": "string",
 			"default": "Sale"
 		},
-		"product_id": {
+		"id": {
 			"type": "string"
 		},
 		"alignment": {

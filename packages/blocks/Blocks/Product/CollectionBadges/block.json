@@ -10,7 +10,7 @@
 			"type": "number",
 			"default": 1
 		},
-		"product_id": {
+		"id": {
 			"type": "string"
 		}
 	},

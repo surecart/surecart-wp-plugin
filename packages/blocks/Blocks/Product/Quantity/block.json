@@ -9,7 +9,7 @@
 		"label": {
 			"type": "string"
 		},
-		"product_id": {
+		"id": {
 			"type": "string"
 		}
 	},
