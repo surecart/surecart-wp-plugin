@@ -89,7 +89,7 @@ class ProductPageController extends BasePageController {
 	 * @return void
 	 */
 	public function setInitialProductState() {
-		$product_state[ $this->model->id ] = $this->model->productPageInitialState();
+		$product_state[ $this->model->id ] = $this->model->getInitialPageState();
 
 		sc_initial_state(
 			[

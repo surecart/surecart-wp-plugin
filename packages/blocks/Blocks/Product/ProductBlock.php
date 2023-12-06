@@ -39,7 +39,7 @@ abstract class ProductBlock extends BaseBlock {
 			return;
 		}
 
-		$product_state[ $product->id ] = $product->productPageInitialState();
+		$product_state[ $product->id ] = $product->getInitialPageState();
 
 		sc_initial_state(
 			[
