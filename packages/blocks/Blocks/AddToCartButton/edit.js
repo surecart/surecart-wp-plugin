@@ -7,8 +7,6 @@ import {
 	PanelColorSettings,
 	useBlockProps,
 	RichText,
-	__experimentalUseColorProps as useColorProps,
-	__experimentalUseBorderProps as useBorderProps,
 	BlockControls,
 } from '@wordpress/block-editor';
 import {
@@ -19,7 +17,6 @@ import {
 	ToolbarButton,
 	ToolbarGroup,
 } from '@wordpress/components';
-import { useState } from '@wordpress/element';
 import { edit } from '@wordpress/icons';
 
 /**
@@ -47,18 +44,18 @@ export default ({ className, attributes, setAttributes }) => {
 	const blockProps = useBlockProps();
 	const price = useSelect(
 		(select) =>
-			select(coreStore).getEntityRecord('root', 'price', price_id),
-		[price_id]
+			select(coreStore).getEntityRecord('root', 'price', price_id, {
+				expand: ['product'],
+			}),
+		[price_id, variant_id]
 	);
-	const [showChangePrice, setShowChangePrice] = useState(false);
 
-	if (!price_id || showChangePrice) {
+	if (!price_id) {
 		return (
 			<div {...blockProps}>
 				<Placeholder
 					selectedPriceId={price_id}
 					setAttributes={setAttributes}
-					setShowChangePrice={setShowChangePrice}
 				/>
 			</div>
 		);
@@ -71,7 +68,9 @@ export default ({ className, attributes, setAttributes }) => {
 					<ToolbarButton
 						icon={edit}
 						label={__('Change selected product', 'surecart')}
-						onClick={() => setShowChangePrice(true)}
+						onClick={() =>
+							setAttributes({ price_id: null, variant_id: null })
+						}
 					/>
 				</ToolbarGroup>
 			</BlockControls>
