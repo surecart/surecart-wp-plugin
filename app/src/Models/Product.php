@@ -374,28 +374,27 @@ class Product extends Model implements PageModel {
 	/**
 	 * Get the product page initial state
 	 *
+	 * @param array $args Array of arguments.
+	 *
 	 * @return array
 	 */
 	public function getInitialPageState( $args = [] ) {
-		$form             = \SureCart::forms()->getDefault();
-		$selected_price   = ( $this->activePrices() ?? [] )[0] ?? null;
-		$variant_options  = $this->variant_options->data ?? [];
-		$selected_variant = $this->getFirstVariantWithStock() ?? null;
-		$is_product_page  = ! empty( get_query_var( 'surecart_current_product' )->id );
+		$form = \SureCart::forms()->getDefault();
 
-		$state = array(
-			'formId'          => $form->ID,
-			'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
-			'product'         => $this,
-			'prices'          => $this->activePrices(),
-			'selectedPrice'   => $selected_price,
-			'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
-			'variant_options' => $variant_options,
-			'variants'        => $this->variants->data ?? [],
-			'selectedVariant' => $selected_variant,
-			'isProductPage'   => $is_product_page,
+		return wp_parse_args(
+			$args,
+			[
+				'formId'          => $form->ID,
+				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
+				'product'         => $this,
+				'prices'          => $this->activePrices(),
+				'selectedPrice'   => ( $this->activePrices() ?? [] )[0] ?? null,
+				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+				'variant_options' => $this->variant_options->data ?? [],
+				'variants'        => $this->variants->data ?? [],
+				'selectedVariant' => $this->getFirstVariantWithStock() ?? null,
+				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
+			]
 		);
-
-		return wp_parse_args( $args, $state );
 	}
 }
