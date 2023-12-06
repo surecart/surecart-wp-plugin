@@ -2,7 +2,6 @@
 
 namespace SureCartBlocks\Blocks\Product;
 
-use SureCart\Models\Form;
 use SureCart\Models\Product;
 use SureCartBlocks\Blocks\BaseBlock;
 
@@ -11,30 +10,13 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 abstract class ProductBlock extends BaseBlock {
 	/**
-	 * Get the product id
-	 *
-	 * @param array $attributes Array of block attributes.
-	 *
-	 * @return string
-	 */
-	public function getProductId( array $attributes ): string {
-		if ( ! empty( $attributes['product_id'] ) ) {
-			$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
-			$this->setInitialProductState( $product );
-			return $attributes['product_id'];
-		}
-
-		return get_query_var( 'surecart_current_product' )->id ?? '';
-	}
-
-	/**
 	 * Set initial product state
 	 *
 	 * @param Product $product The current product.
 	 *
 	 * @return void
 	 */
-	public function setInitialProductState( $product ) {
+	public function setInitialState( $product ) {
 		if ( empty( $product->id ) ) {
 			return;
 		}
@@ -51,18 +33,36 @@ abstract class ProductBlock extends BaseBlock {
 	/**
 	 * Get the product
 	 *
-	 * @param array $attributes Array of block attributes.
+	 * @param string $id The product id.
 	 *
 	 * @return Product|null
 	 */
-	public function getProduct( array $attributes ) {
-		if ( empty( $attributes['product_id'] ) ) {
+	public function getProduct( string $id ) {
+		if ( empty( $id ) ) {
 			return get_query_var( 'surecart_current_product' );
 		}
 
-		$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $attributes['product_id'] );
+		$product = Product::with( [ 'image', 'prices', 'product_medias', 'variant_options', 'variants', 'product_media.media', 'product_collections' ] )->find( $id );
 
-		$this->setInitialProductState( $product );
 		return ! empty( $product->id ) ? $product : null;
+	}
+
+	/**
+	 * Get product and call set state.
+	 *
+	 * @param string $id The product id.
+	 *
+	 * @return \SureCart\Models\Product|null
+	 */
+	public function getProductAndSetInitialState( $id ) {
+		$product = $this->getProduct( $id );
+
+		if ( empty( $product ) ) {
+			return;
+		}
+
+		$this->setInitialState( $product );
+
+		return $product;
 	}
 }

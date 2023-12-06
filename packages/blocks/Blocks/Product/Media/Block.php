@@ -25,20 +25,81 @@ class Block extends ProductBlock {
 	 */
 	public function render( $attributes, $content ) {
 		global $content_width;
-		$product = $this->getProduct( $attributes );
+
+		$product = $this->getProductAndSetInitialState( $attributes['id'] );
 		if ( empty( $product ) ) {
 			return '';
 		}
 
+		// no product media, show placeholder.
 		if ( empty( $product->product_medias->data ) ) {
-			return '<figure class="wp-block-image sc-block-image">
-			<img src="' . esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ) . '" alt="' . esc_attr( $product->name ) . '" />
-		</figure>';
+			return wp_sprintf(
+				'<figure %1$s>
+					<img src="%2$s" alt="%3$s" />
+				</figure>',
+				get_block_wrapper_attributes(),
+				esc_url( trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'images/placeholder.jpg' ),
+				esc_attr( $product->name )
+			);
 		}
 
-		$width = $attributes['width'] ?? $content_width ?? 1170;
+		// get images and thumbnails.
+		$images     = $this->getImages( $product, $attributes['width'] ?? $content_width ?? 1170 );
+		$thumbnails = array_map(
+			function( $media ) {
+				$media['srcset'] = $media->getSrcset( [ 90, 120, 240 ] );
+				return $media;
+			},
+			$this->getImages( $product, 240 )
+		);
 
-		$images     = array_map(
+		// if we have more than one, show the slider.
+		if ( count( $product->product_medias->data ) > 1 ) {
+			return wp_sprintf(
+				'<sc-image-slider
+					%1$s
+					product-id="%2$s"
+					images=\'%3$s\'
+					thumbnails=\'%4$s\'
+					has-thumbnails
+					thumbnails-per-page="%5$s"
+					auto-height="%6$s"
+					style="--sc-product-slider-height: %7$s"
+				></sc-image-slider>',
+				get_block_wrapper_attributes(),
+				esc_attr( $product->id ),
+				wp_json_encode( $images ),
+				wp_json_encode( $thumbnails ),
+				esc_attr( $attributes['thumbnails_per_page'] ?? 5 ),
+				esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ),
+				esc_attr( ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ) )
+			);
+		}
+
+		// show a single image.
+		return wp_sprintf(
+			'<figure %1$s>
+				<img src="%2$s" alt="%3$s" title="%4$s" />
+			</figure>',
+			get_block_wrapper_attributes(),
+			esc_url( $product->product_medias->data[0]->getUrl( 800 ) ),
+			esc_attr( $product->featured_media->alt ),
+			esc_attr( $product->featured_media->title )
+		);
+	}
+
+	/**
+	 * Get the block classes.
+	 *
+	 * @param \SureCart\Models\Product` $product Product object.
+	 * @param integer                   $width Image width.
+	 *
+	 * @return array
+	 */
+	public function getImages( $product, $width ) {
+		$width = $width ?? 1170;
+
+		return array_map(
 			function( $product_media ) use ( $product, $width ) {
 				return [
 					'src'    => esc_url( $product_media->getUrl( $width ) ),
@@ -50,41 +111,5 @@ class Block extends ProductBlock {
 			},
 			$product->product_medias->data
 		);
-		$thumbnails = array_map(
-			function( $product_media ) use ( $product ) {
-				return [
-					'src'    => esc_url( $product_media->getUrl( 240 ) ),
-					'srcset' => $product_media->getSrcset( [ 90, 120, 240 ] ),
-					'sizes'  => '(min-width: 780px) 120px, 13vw', // 13vw = 13% of the viewport width because of 5 thumbnails per page, plus spacing for arrows.
-					'alt'    => esc_attr( $product_media->media->alt ?? $product_media->media->filename ?? $product->name ?? '' ),
-					'title'  => $product_media->media->title ?? '',
-					'width'  => $product_media->width,
-					'height' => $product_media->height,
-				];
-			},
-			$product->product_medias->data
-		);
-
-		ob_start(); ?>
-
-		<?php if ( count( $product->product_medias->data ) > 1 ) : ?>
-			<sc-image-slider
-				id="sc-product-media-<?php echo esc_attr( esc_attr( $product->id ) ); ?>"
-				product-id="<?php echo esc_attr( $product->id ); ?>"
-				images='<?php echo wp_json_encode( $images ); ?>'
-				thumbnails='<?php echo wp_json_encode( $thumbnails ); ?>'
-				has-thumbnails
-				thumbnails-per-page="<?php echo esc_attr( $attributes['thumbnails_per_page'] ?? 5 ); ?>"
-				auto-height="<?php echo esc_attr( ! empty( $attributes['auto_height'] ) ? 'true' : 'false' ); ?>"
-				style="--sc-product-slider-height: <?php echo ! empty( $attributes['auto_height'] ) ? 'auto' : ( esc_attr( $attributes['height'] ?? 'auto' ) ); ?>
-				"></sc-image-slider>
-		<?php else : ?>
-			<figure class="wp-block-image sc-block-image">
-				<img src="<?php echo esc_url( $product->product_medias->data[0]->getUrl( 800 ) ); ?>" alt="<?php echo esc_attr( $product->featured_media->alt ); ?>" title="<?php echo esc_attr( $product->featured_media->title ); ?>" />
-			</figure>
-		<?php endif; ?>
-
-		<?php
-		return ob_get_clean();
 	}
 }

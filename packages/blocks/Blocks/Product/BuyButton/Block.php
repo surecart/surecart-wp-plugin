@@ -98,7 +98,8 @@ class Block extends ProductBlock {
 	 */
 	public function render( $attributes, $content ) {
 		self::$instance++;
-		$product = $this->getProduct( $attributes );
+
+		$product = $this->getProductAndSetInitialState( $attributes['id'] );
 
 		if ( empty( $product ) ) {
 			return '';

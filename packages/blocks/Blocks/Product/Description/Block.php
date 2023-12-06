@@ -24,18 +24,22 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = $this->getProduct( $attributes );
+		$product = $this->getProductAndSetInitialState( $attributes['id'] );
 		if ( empty( $product->description ) ) {
 			return '';
 		}
-		ob_start(); ?>
 
-		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-				<?php echo wp_kses_post( $product->description ?? '' ); ?>
-		</div>
+		$attributes = get_block_wrapper_attributes(
+			[
+				'class' => esc_attr( $this->getClasses( $attributes ) ),
+				'style' => esc_attr( $this->getStyles( $attributes ) ),
+			]
+		);
 
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-product-description %1$s>%2$s</sc-product-description>',
+			$attributes,
+			wp_kses_post( $product->description ?? '' )
+		);
 	}
 }

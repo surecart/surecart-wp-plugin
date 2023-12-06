@@ -19,14 +19,25 @@ class Block extends ProductBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product_id           = $this->getProductId( $attributes );
+		$product = $this->getProductAndSetInitialState( $attributes['id'] );
+		if ( empty( $product->id ) ) {
+			return '';
+		}
 		['styles' => $styles] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
-		ob_start(); ?>
 
-		<sc-product-price-choices label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>" class="surecart-block product-price-choices" product-id="<?php echo esc_attr( $product_id ); ?>" style="<?php echo esc_attr( $this->getVars( $attributes, '--sc-choice' ) ); ?> --columns: <?php echo esc_attr( $attributes['columns'] ?? 2 ); ?>; border: none; <?php echo esc_attr( $styles ); ?>" <?php echo ( ! empty( $attributes['show_price'] ) ? 'show-price' : '' ); ?>>
-		</sc-product-price-choices>
+		$attributes = get_block_wrapper_attributes(
+			[
+				'label'      => esc_attr( $attributes['label'] ?? '' ),
+				'class'      => 'surecart-block product-price-choices',
+				'product-id' => esc_attr( $product->id ),
+				'style'      => esc_attr( $this->getVars( $attributes, '--sc-choice' ) . ' --columns: ' . $attributes['columns'] ?? 2 . '; border: none; ' . $styles ),
+				'show-price' => ! empty( $attributes['show_price'] ) ? 'true' : 'false',
+			]
+		);
 
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-product-price-choices %1$s></sc-product-price-choices>',
+			$attributes
+		);
 	}
 }
