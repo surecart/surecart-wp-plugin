@@ -11,6 +11,7 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 import {
+	Button,
 	PanelBody,
 	PanelRow,
 	Placeholder,
@@ -27,10 +28,7 @@ import { edit } from '@wordpress/icons';
  */
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import {
-	ScButton,
-	ScCheckoutProductPriceVariantSelector,
-} from '@surecart/components-react';
+import { ScCheckoutProductPriceVariantSelector } from '@surecart/components-react';
 import ModelSelector from '../../../admin/components/ModelSelector';
 
 export default ({ attributes, setAttributes }) => {
@@ -117,6 +115,16 @@ export default ({ attributes, setAttributes }) => {
 									width: 100%;
 									display: flex;
 									margin-bottom: var(--sc-spacing-medium);
+									--sc-color-primary-500: var(
+										--wp-admin-theme-color
+									);
+									--sc-focus-ring-color-primary: var(
+										--wp-admin-theme-color
+									);
+									--sc-input-border-color-focus: var(
+										--wp-admin-theme-color
+									);
+									--sc-color-primary-text: '#fff';
 								`}
 							>
 								<ModelSelector
@@ -137,22 +145,33 @@ export default ({ attributes, setAttributes }) => {
 										archived: false,
 										expand: ['variants', 'prices'],
 									}}
-									renderModelsCallback={(models) => {
-										return models.filter(
-											(item) =>
-												!!item?.prices?.data?.length
+									renderChoices={(models) => {
+										return (
+											models
+												// model must have more than one price or variant
+												.filter(
+													(item) =>
+														item?.prices?.data
+															?.length > 1 ||
+														item?.variants?.data
+															?.length > 1
+												)
+												.map((item) => ({
+													label: item.name,
+													value: item.id,
+												}))
 										);
 									}}
 								>
-									<ScButton
-										type="default"
+									<Button
+										variant="primary"
 										css={css`
 											width: auto;
 										`}
 										slot="trigger"
 									>
 										{__('Select Product', 'surecart')}
-									</ScButton>
+									</Button>
 								</ModelSelector>
 							</div>
 						</>

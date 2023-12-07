@@ -13,9 +13,8 @@ export default (props) => {
 		requestQuery = {},
 		display,
 		exclude = [],
-		fetchOnLoad = false,
 		onChangeQuery = () => {},
-		renderModelsCallback,
+		renderChoices,
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -99,8 +98,8 @@ export default (props) => {
 	const getChoices = () => {
 		let choices = [...(models || [])];
 
-		if (renderModelsCallback) {
-			choices = renderModelsCallback(choices);
+		if (renderChoices) {
+			return renderChoices(choices);
 		}
 
 		return choices.map((item) => ({
