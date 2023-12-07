@@ -1,8 +1,8 @@
 {
 	"apiVersion": 2,
 	"name": "surecart/variant-price-selector",
-	"title": "Variant Price Selector",
-	"description": "Displays a selector for product variant prices.",
+	"title": "Product Options Selector",
+	"description": "Displays a selector for selecting product prices and/or variants.",
 	"category": "surecart",
 	"keywords": ["price", "product", "choice", "checkout", "variant"],
 	"textdomain": "surecart",
