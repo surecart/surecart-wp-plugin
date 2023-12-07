@@ -16,7 +16,7 @@ onChange('checkout', () => {
         ...state[productId],
         selectedPrice: lineItem.price,
         ad_hoc_amount: lineItem.ad_hoc_amount,
-        custom_amount: (state[productId].amounts || []).includes(lineItem.ad_hoc_amount) ? null : lineItem.ad_hoc_amount,
+        custom_amount: (state[productId].amounts || [])?.includes(lineItem.ad_hoc_amount) ? null : lineItem.ad_hoc_amount,
       });
     }
 

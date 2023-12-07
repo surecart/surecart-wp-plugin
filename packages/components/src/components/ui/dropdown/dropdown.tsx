@@ -1,6 +1,8 @@
 import { Component, Element, Prop, Event, EventEmitter, Watch, State, h, Listen } from '@stencil/core';
 import { autoUpdate, computePosition, flip, offset, shift, size } from '@floating-ui/dom';
 import { ScMenu } from '../menu/sc-menu';
+import { speak } from '@wordpress/a11y';
+import { __ } from '@wordpress/i18n';
 
 let itemIndex = 0;
 let arrowFlag = '';
@@ -139,6 +141,7 @@ export class ScDropdown {
   }
 
   show() {
+    speak(__('Menu Selection Dropdown opened. Press Up/Down arrow to toggle between menu items.', 'surecart'), 'assertive');
     this.scShow.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (this.isVisible) {
@@ -151,6 +154,7 @@ export class ScDropdown {
   }
 
   hide() {
+    speak(__('Menu Selection Dropdown closed.', 'surecart'), 'assertive');
     this.scHide.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (!this.isVisible) {

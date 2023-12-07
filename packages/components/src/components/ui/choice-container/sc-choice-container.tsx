@@ -48,6 +48,12 @@ export class ScChoiceContainer {
   /** Show the radio/checkbox control */
   @Prop() showControl: boolean = true;
 
+  /** Is Component used in editor */
+  @Prop() inEditor: boolean = true;
+
+  /** Role of radio/checkbox control */
+  @Prop() role: string;
+
   /** Emitted when the control loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
@@ -127,6 +133,9 @@ export class ScChoiceContainer {
   }
 
   handleKeyDown(event: KeyboardEvent) {
+    if (this.inEditor) {
+      return;
+    }
     // On arrow key press.
     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
       const choices = this.getAllChoices().filter(choice => !choice.disabled);
@@ -236,6 +245,7 @@ export class ScChoiceContainer {
               onBlur={() => this.handleBlur()}
               onFocus={() => this.handleFocus()}
               onChange={() => this.handleClickEvent()}
+              role={this.role}
             />
           </span>
           <label part="label" id={this.labelId} class="choice__label">

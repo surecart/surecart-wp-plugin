@@ -18,12 +18,14 @@
 ### Depends on
 
 - [sc-choice-container](../../../ui/choice-container)
+- [sc-visually-hidden](../../../util/visually-hidden)
 - [sc-price-input](../../../ui/price-input)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-product-donation-custom-amount --> sc-choice-container
+  sc-product-donation-custom-amount --> sc-visually-hidden
   sc-product-donation-custom-amount --> sc-price-input
   sc-price-input --> sc-input
   sc-input --> sc-form-control

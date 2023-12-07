@@ -22,7 +22,7 @@ const productDonationData = Object.keys(productDonation || {}).reduce((acc, prod
       ...acc[productId],
       ...(lineItem?.ad_hoc_amount ? { ad_hoc_amount: lineItem.ad_hoc_amount } : {}),
       ...(lineItem?.price ? { selectedPrice: lineItem.price } : {}),
-      custom_amount: (acc[productId].amounts || []).includes(lineItem.ad_hoc_amount) ? null : lineItem.ad_hoc_amount,
+      custom_amount: (acc[productId].amounts || [])?.includes(lineItem.ad_hoc_amount) ? null : lineItem.ad_hoc_amount,
     };
   }
   return acc;

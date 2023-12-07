@@ -609,6 +609,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Is Component used in editor
+         */
+        "inEditor": boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid": boolean;
@@ -624,6 +628,10 @@ export namespace Components {
           * Is this required
          */
         "required": boolean;
+        /**
+          * Role of radio/checkbox control
+         */
+        "role": string;
         /**
           * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
          */
@@ -6294,6 +6302,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * Is Component used in editor
+         */
+        "inEditor"?: boolean;
+        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid"?: boolean;
@@ -6317,6 +6329,10 @@ declare namespace LocalJSX {
           * Is this required
          */
         "required"?: boolean;
+        /**
+          * Role of radio/checkbox control
+         */
+        "role"?: string;
         /**
           * Show the radio/checkbox control
          */

@@ -107,13 +107,13 @@ class Block extends BaseBlock {
 		}
 
 		// get amounts from inner blocks.
-		return array_filter(
+		return array_values( array_filter(
 			array_map(
 				function( $block ) {
 					return $block['attrs']['amount'] ?? '';
 				},
 				$amounts_block[0]['innerBlocks']
 			)
-		);
+		) );
 	}
 }

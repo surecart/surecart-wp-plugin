@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property       | Attribute       | Description                      | Type     | Default     |
-| -------------- | --------------- | -------------------------------- | -------- | ----------- |
-| `currencyCode` | `currency-code` | The currency code for the field. | `string` | `'USD'`     |
-| `label`        | `label`         | The label for the field.         | `string` | `undefined` |
-| `productId`    | `product-id`    | The product id for the fields.   | `string` | `undefined` |
-| `value`        | `value`         | The value of the field.          | `number` | `undefined` |
+| Property    | Attribute    | Description                    | Type     | Default     |
+| ----------- | ------------ | ------------------------------ | -------- | ----------- |
+| `label`     | `label`      | The label for the field.       | `string` | `undefined` |
+| `productId` | `product-id` | The product id for the fields. | `string` | `undefined` |
+| `value`     | `value`      | The value of the field.        | `number` | `undefined` |
 
 
 ## Dependencies

@@ -31,6 +31,7 @@ export class ScProductDonationAmountChoice {
         checked={this.state().ad_hoc_amount === this.value}
         onScChange={() => update(this.productId, { ad_hoc_amount: this.value, custom_amount: null })}
         aria-label={sprintf(__('Press Enter if you want to donate %s', 'surecart'), this.label ? this.label : this.value)}
+        role="button"
       >
         {this.label ? (
           this.label

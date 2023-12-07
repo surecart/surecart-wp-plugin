@@ -82,7 +82,7 @@ export class ScRecurringPriceChoiceContainer {
                         : this.product.name)}
                     <sc-icon name="chevron-down"></sc-icon>
                   </button>
-                  <sc-menu>
+                  <sc-menu aria-label={__('Recurring Interval selection Dropdown opened, Press Up/Down Arrow & select the recurring interval you want.', 'surecart')}>
                     {(this.prices || []).map(price => {
                       const checked = price?.id === this.selectedPrice?.id;
                       const label =

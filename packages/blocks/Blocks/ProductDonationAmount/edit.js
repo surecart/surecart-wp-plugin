@@ -49,11 +49,14 @@ export default ({ attributes, setAttributes }) => {
 							label={__('Amount', 'surecart')}
 							currencyCode={currency}
 							value={amount}
-							onScInput={(e) =>
+							onScChange={(e) => {
+								const value = isNaN(parseFloat(e.target.value))
+									? 0
+									: parseFloat(e.target.value);
 								setAttributes({
-									amount: parseInt(e.target.value),
-								})
-							}
+									amount: value,
+								});
+							}}
 						></ScPriceInput>
 					</PanelRow>
 				</PanelBody>
@@ -65,6 +68,7 @@ export default ({ attributes, setAttributes }) => {
 					css={css`
 						width: 100%;
 					`}
+					inEditor={true}
 				>
 					<RichText
 						aria-label={__('Donation Amount text', 'surecart')}

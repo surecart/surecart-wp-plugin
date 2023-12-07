@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-12-01T06:18:14",
+  "timestamp": "2023-12-07T05:56:22",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -23601,23 +23601,6 @@
       "usage": {},
       "props": [
         {
-          "name": "currencyCode",
-          "type": "string",
-          "mutable": false,
-          "attr": "currency-code",
-          "reflectToAttr": false,
-          "docs": "The currency code for the field.",
-          "docsTags": [],
-          "default": "'USD'",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "label",
           "type": "string",
           "mutable": false,
@@ -23817,11 +23800,13 @@
       "dependents": [],
       "dependencies": [
         "sc-choice-container",
+        "sc-visually-hidden",
         "sc-price-input"
       ],
       "dependencyGraph": {
         "sc-product-donation-custom-amount": [
           "sc-choice-container",
+          "sc-visually-hidden",
           "sc-price-input"
         ],
         "sc-price-input": [
@@ -33842,6 +33827,7 @@
         "sc-payment",
         "sc-price-choice-container",
         "sc-price-range",
+        "sc-product-donation-custom-amount",
         "sc-product-item-list",
         "sc-product-pills-variant-option",
         "sc-product-price"
@@ -33870,6 +33856,9 @@
           "sc-visually-hidden"
         ],
         "sc-price-range": [
+          "sc-visually-hidden"
+        ],
+        "sc-product-donation-custom-amount": [
           "sc-visually-hidden"
         ],
         "sc-product-item-list": [

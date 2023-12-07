@@ -336,9 +336,11 @@
   "sc-choice-container": {
     "checked": true,
     "disabled": true,
+    "in-editor": true,
     "invalid": true,
     "name": true,
     "required": true,
+    "role": true,
     "show-control": true,
     "size": true,
     "type": true,
