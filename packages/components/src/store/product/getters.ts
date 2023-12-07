@@ -70,7 +70,7 @@ export const isSelectedVariantMissing = (productId: string) =>
  * @returns {ProductState} - Returns the product state
  */
 export const getDefaultState = (): { [key: string]: ProductState } => {
-  const { product: serializedProductState } = getSerializedState();
+  const { product: serializedProductState = {} } = getSerializedState();
 
   return (
     Object.values(serializedProductState as { [key: string]: ProductState }).reduce((acc, productState) => {
