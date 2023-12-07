@@ -33,7 +33,8 @@
     gap: var(--sc-spacing-xx-small);
     text-decoration: none;
     user-select: none;
-    white-space: nowrap;
+    white-space: var(--sc-recurring-price-choice-white-space, nowrap);
+    text-align: var(--sc-recurring-price-choice-text-align, center);
     vertical-align: middle;
     padding: 0;
     border: none;
