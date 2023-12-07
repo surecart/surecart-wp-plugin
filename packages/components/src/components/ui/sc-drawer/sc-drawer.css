@@ -68,6 +68,12 @@
   width: var(--sc-drawer-size, 400px);
   height: 100%;
 }
+.header__sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+}
 .drawer__header {
   display: flex;
   align-items: center;
@@ -93,7 +99,6 @@
 .drawer__body {
   flex: 1 1 auto;
 }
-
 
 .drawer--has-footer .drawer__footer {
   border-top: var(--sc-drawer-border);

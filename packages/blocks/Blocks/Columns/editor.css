@@ -20,3 +20,7 @@ div[data-type='surecart/columns']
 		flex-basis: content;
 	}
 }
+
+.editor-styles-wrapper :where(body .is-layout-flow) > :last-child:last-child {
+    margin-top: 0;
+}

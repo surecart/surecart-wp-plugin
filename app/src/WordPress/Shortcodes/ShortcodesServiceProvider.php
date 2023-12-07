@@ -216,6 +216,11 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 				'id' => null,
 			]
 		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_variant_choices',
+			'surecart/product-variant-choices',
+			[]
+		);
 	}
 
 	/**

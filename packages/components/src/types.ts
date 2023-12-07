@@ -843,6 +843,7 @@ export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'c
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
 export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
 export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
+export type ReturnRequestStatus = 'open' | 'completed';
 
 export interface PaymentMethod extends Object {
   id: string;
