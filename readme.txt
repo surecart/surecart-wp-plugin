@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.11.2
+Stable tag: 2.12.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,29 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.12.0 - December 5th, 2023 =
+* New: Returns - create and manage return requests on the admin order screen.
+* Improvement: List the variant and price with the purchase in the customer's purchase list on the admin.
+* Improvement: Add shortcode for product variant choices to be used in custom page builder product page templates.
+* Improvement: Handle out-of-stock errors better when the item is added to the cart.
+* Fix: Draft orders having the wrong status on the admin orders screen.
+* Fix: Admin order pages showing the product image on line items instead of the variant image.
+* Fix: CSS conflict with some themes causing password field inspector controls to be pushed offscreen.
+* Fix: Customers not syncing with users when "Create New Users" is unchecked in the manual customer sync button.
+* Fix: Duplication of labels on the price selector.
+
+= 2.11.4 - December 2nd, 2023 =
+* Fix: Issue with donation sometimes prices not properly updating on instant checkout.
+* Fix: Better error handling with customer link middleware.
+
+= 2.11.3 - November 28th, 2023 =
+* Improvement: Update SureCart menu to include shop, checkout, dashboard pages.
+* Improvement: Automatic integration with RankMath Sitemaps.
+* Fix: Issue with Spectra saving when inline CSS setting is used.
+* Fix: Responsive issue with plan actions on customer dashboard.
+* Fix: Properly handle error if WordPress user exists when creating customer on admin.
+* Fix: Issue with HUF currency.
 
 = 2.11.2 - November 22nd, 2023 =
 * Fix: Instant checkout errors for new checkouts due to duplicate line item fix.

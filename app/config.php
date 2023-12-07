@@ -100,6 +100,9 @@ return [
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
+		\SureCart\Rest\ReturnItemsRestServiceProvider::class,
+		\SureCart\Rest\ReturnReasonsRestServiceProvider::class,
+		\SureCart\Rest\ReturnRequestsRestServiceProvider::class,
 		\SureCart\Rest\ShippingProfileRestServiceProvider::class,
 		\SureCart\Rest\ShippingMethodRestServiceProvider::class,
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
@@ -124,6 +127,7 @@ return [
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
+		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 	],
 
 	/**
