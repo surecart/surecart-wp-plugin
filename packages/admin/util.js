@@ -7,7 +7,6 @@ export const maybeConvertAmount = (amount, currency) => {
 		'CLP',
 		'DJF',
 		'GNF',
-		'HUF',
 		'ISK',
 		'JPY',
 		'KMF',
