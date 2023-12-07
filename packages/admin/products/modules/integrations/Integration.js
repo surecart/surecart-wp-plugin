@@ -19,7 +19,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import useEntity from '../../../hooks/useEntity';
 import Price from './Price';
 
-export default ({ id }) => {
+export default ({ id, total, product }) => {
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { integration, deleteIntegration, deletingIntegration } = useEntity(
 		'integration',
@@ -94,9 +94,12 @@ export default ({ id }) => {
 				`}
 			>
 				<ScFlex justifyContent="flex-start" alignItems="center">
-					{!!(price_id || variant_id) && (
-						<Price price_id={price_id} variant_id={variant_id} />
-					)}
+					<Price
+						price_id={price_id}
+						variant_id={variant_id}
+						product={product}
+						total_integrations={total}
+					/>
 
 					<ScDropdown placement="bottom-end">
 						<ScButton type="text" slot="trigger" circle>

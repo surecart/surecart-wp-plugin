@@ -61,7 +61,12 @@ export default ({ product, id }) => {
 				<ScCard noPadding>
 					<ScStackedList>
 						{(integrations || []).map(({ id }) => (
-							<Integration key={id} id={id} />
+							<Integration
+								key={id}
+								id={id}
+								total={integrations?.length}
+								product={product}
+							/>
 						))}
 					</ScStackedList>
 				</ScCard>

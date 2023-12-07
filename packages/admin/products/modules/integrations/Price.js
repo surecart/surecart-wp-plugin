@@ -16,7 +16,7 @@ import { ScFormatNumber, ScSkeleton } from '@surecart/components-react';
 import { intervalString } from '../../../util/translations';
 import { getSKUTextByVariantAndPrice } from '../../../util/products';
 
-export default ({ price_id, variant_id }) => {
+export default ({ price_id, variant_id, product, total_integrations }) => {
 	const { price, hasLoadedPrice } = useSelect(
 		(select) => {
 			const entityData = [
@@ -86,35 +86,62 @@ export default ({ price_id, variant_id }) => {
 		.join(' / ');
 
 	const productSku = getSKUTextByVariantAndPrice(variant, price);
+	const hasAllPrices = !price_id && product?.prices?.data?.length > 1 && total_integrations > 1;
+	const hasAllVariants = !variant_id && product?.variants?.length > 1 && total_integrations > 1;
 
-	return (
-		<div
-			css={css`
-				padding: 0 30px;
-				width: 200px;
-			`}
-		>
-			<div>
-				{
-					!!price?.name ? price?.name : (
-						<Fragment>
-							<ScFormatNumber
-								type="currency"
-								currency={price?.currency || 'usd'}
-								value={!!price?.ad_hoc ? !!price?.ad_hoc : price?.amount || variant?.amount}
-							/>
-							{intervalString(price)}
-						</Fragment>
-					)
-				}
-			</div>
-			{!!variantLabel && <div>{variantLabel}</div>}
-			{!!productSku && (
-				<div>
-					{__('SKU:', 'surecart')} {productSku}
+	const renderPrice = () => {
+		if (hasAllPrices) {
+			return (
+				<div
+					css={css`
+						opacity: 0.9;
+						text-transform: uppercase;
+					`}
+				>
+					{__('All Prices', 'surecart')}
 				</div>
-			)}
-			<>
+			);
+		}
+
+		return (
+			<div>
+				{!!price?.name ? price?.name : (
+					<Fragment>
+						<ScFormatNumber
+							type="currency"
+							currency={price?.currency || 'usd'}
+							value={!!price?.ad_hoc ? !!price?.ad_hoc : price?.amount || variant?.amount}
+						/>
+						{intervalString(price)}
+					</Fragment>
+				)}
+			</div>
+		);
+	}
+
+	const renderVariant = () => {
+		if (hasAllVariants) {
+			return (
+				<div
+					css={css`
+						opacity: 0.9;
+						text-transform: uppercase;
+					`}
+				>
+					{__('All Variants', 'surecart')}
+				</div>
+			);
+		}
+
+		return (
+			<div>
+				{!!variantLabel && <div>{variantLabel}</div>}
+				{!!productSku && (
+					<div>
+						{__('SKU:', 'surecart')} {productSku}
+					</div>
+				)}
+
 				<div
 					css={css`
 						display: grid;
@@ -155,7 +182,19 @@ export default ({ price_id, variant_id }) => {
 						</div>
 					)}
 				</div>
-			</>
+			</div>
+		);
+	}
+
+	return (
+		<div
+			css={css`
+				padding: 0 30px;
+				width: 200px;
+			`}
+		>
+			{renderPrice()}
+			{renderVariant()}
 		</div>
 	);
 };
