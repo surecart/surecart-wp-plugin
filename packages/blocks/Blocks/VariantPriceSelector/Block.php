@@ -32,7 +32,7 @@ class Block extends BaseBlock {
 		}
 
 		// only active prices.
-		$product = $product->withActiveAndSortedPrices();
+		$product = $product->withActivePrices()->withSortedPrices();
 
 		// active prices.
 		$first_variant_with_stock = $product->getFirstVariantWithStock();
