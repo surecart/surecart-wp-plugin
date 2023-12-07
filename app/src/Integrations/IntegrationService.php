@@ -208,10 +208,6 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			return;
 		}
 
-		// purchase price and variant.
-		$price_id   = $purchase->price->id ?? $purchase->price ?? null;
-		$variant_id = $purchase->variant->id ?? $purchase->variant ?? null;
-
 		// run quantity updated method.
 		$integrations = (array) $this->getIntegrationData( $purchase ) ?? [];
 		foreach ( $integrations as $integration ) {
@@ -219,12 +215,7 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 				continue;
 			}
 
-			// If integration has price_id or variant_id,
-			// then we need to match with specific price or variant.
-			if (
-				( ! empty( $integration->price_id ) && $integration->price_id !== $price_id )
-				|| ( ! empty( $integration->variant_id ) && $integration->variant_id !== $variant_id )
-			) {
+			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $purchase ) ) {
 				continue;
 			}
 
@@ -255,6 +246,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			if ( ! $integration->id ) {
 				continue;
 			}
+
+			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $purchase ) ) {
+				continue;
+			}
+
 			$this->onPurchaseProductAdded( $integration, $purchase->getWPUser(), $purchase );
 		}
 
@@ -264,6 +260,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 			if ( ! $integration->id ) {
 				continue;
 			}
+
+			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $previous_purchase ) ) {
+				continue;
+			}
+
 			$this->onPurchaseProductRemoved( $integration, $previous_purchase->getWPUser(), $previous_purchase );
 		}
 	}
@@ -403,19 +404,31 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 
 		$query = Integration::where( 'model_id', $product_id )->andWhere( 'provider', $this->getName() );
 
-		// if purchase has a price_id or variant_id, then we need to
-		// get the integration for the specific price or variant.
+		return (array) $query->get();
+	}
+
+	/**
+	 * Check if the integration does not match with purchase price or variant.
+	 *
+	 * @param Integration $integration
+	 * @param Purchase    $purchase
+	 *
+	 * @return boolean
+	 */
+	public function purchaseIsNotMatchedWithPriceOrVariant( $integration, $purchase ): bool {
+		// Get Purchase price and variant.
 		$price_id   = $purchase->price->id ?? $purchase->price ?? null;
 		$variant_id = $purchase->variant->id ?? $purchase->variant ?? null;
 
-		if ( $price_id ) {
-			$query->andWhere( 'price_id', $price_id );
+		// If integration has price_id or variant_id,
+		// then we need to match with specific price or variant.
+		if (
+			( ! empty( $integration->price_id ) && $integration->price_id !== $price_id )
+			|| ( ! empty( $integration->variant_id ) && $integration->variant_id !== $variant_id )
+		) {
+			return true;
 		}
 
-		if ( $variant_id ) {
-			$query->andWhere( 'variant_id', $variant_id );
-		}
-
-		return (array) $query->get();
+		return false;
 	}
 }
