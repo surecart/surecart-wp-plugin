@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+import { list as icon } from '@wordpress/icons';
 
 /**
  * WordPress dependencies
@@ -105,9 +106,10 @@ export default ({ attributes, setAttributes }) => {
 					<Placeholder
 						label={__('Select a product', 'surecart')}
 						instructions={__(
-							'Please select a product with variants and/or prices.',
+							'Please select a product with variants and/or prices. The product for this block must have more than one variant or price to select from.',
 							'surecart'
 						)}
+						icon={icon}
 					>
 						<>
 							<div
