@@ -93,6 +93,12 @@ export default ({ attributes, setAttributes }) => {
 					<ScCheckoutProductPriceVariantSelector
 						product={{
 							...product,
+							prices: {
+								...product.prices,
+								data: product.prices.data.filter(
+									(price) => !price?.archived
+								),
+							},
 							variant_options: {
 								data: product.variant_options || [],
 							},

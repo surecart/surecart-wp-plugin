@@ -31,19 +31,21 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		// only active prices.
+		$product = $product->withActiveAndSortedPrices();
+
 		// active prices.
-		$active_prices            = $product->activePrices();
 		$first_variant_with_stock = $product->getFirstVariantWithStock();
 
 		// must have at least one active price.
-		if ( empty( $active_prices[0] ) ) {
+		if ( empty( $product->prices->data[0] ) ) {
 			return '';
 		}
 
-		if ( ! empty( $active_prices[0]->id ) ) {
+		if ( ! empty( $product->prices->data[0]->id ) ) {
 			$line_item = array_merge(
 				[
-					'price_id' => $active_prices[0]->id,
+					'price_id' => $product->prices->data[0]->id,
 					'quantity' => 1,
 				],
 				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
