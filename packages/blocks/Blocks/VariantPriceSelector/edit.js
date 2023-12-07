@@ -13,6 +13,8 @@ import {
 import {
 	PanelBody,
 	PanelRow,
+	Placeholder,
+	Spinner,
 	TextControl,
 	ToolbarButton,
 	ToolbarGroup,
@@ -26,45 +28,43 @@ import { edit } from '@wordpress/icons';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import {
+	ScButton,
 	ScCheckoutProductPriceVariantSelector,
-	ScSelect,
 } from '@surecart/components-react';
-import ProductSelector from './components/ProductSelector';
+import ModelSelector from '../../../admin/components/ModelSelector';
 
 export default ({ attributes, setAttributes }) => {
 	const { label, product_id } = attributes;
 	const blockProps = useBlockProps();
-	const { products, productChoices, loadingProducts } = useSelect(
+
+	const { product, loadingProduct } = useSelect(
 		(select) => {
-			if (!open) return {};
-			const queryArgs = [
-				'surecart',
-				'product',
-				{
-					context: 'edit',
-					per_page: 50,
-				},
-			];
-			const productsFetched = (
-				select(coreStore).getEntityRecords(...queryArgs) || []
-			).filter((product) => !!product.variants?.data?.length);
+			if (!product_id)
+				return {
+					product: null,
+					loadingProduct: false,
+				};
+
+			const queryArgs = ['surecart', 'product', product_id];
 
 			return {
-				products: productsFetched,
-				productChoices: productsFetched.map((product) => ({
-					label: product.name,
-					value: product.id,
-				})),
-				loadingProducts: select(coreStore).isResolving(
-					'getEntityRecords',
+				product: select(coreStore).getEntityRecord(...queryArgs),
+				loadingProduct: select(coreStore).isResolving(
+					'getEntityRecord',
 					queryArgs
 				),
 			};
 		},
-		[]
+		[product_id]
 	);
 
-	const product = products.find((product) => product.id === product_id);
+	if (loadingProduct) {
+		return (
+			<Placeholder>
+				<Spinner />
+			</Placeholder>
+		);
+	}
 
 	return (
 		<Fragment>
@@ -92,17 +92,71 @@ export default ({ attributes, setAttributes }) => {
 			<div {...blockProps}>
 				{!!product_id && !!product ? (
 					<ScCheckoutProductPriceVariantSelector
-						product={product}
+						product={{
+							...product,
+							variant_options: {
+								data: product.variant_options || [],
+							},
+							variants: {
+								data: product.variants || [],
+							},
+						}}
 						label={label}
 					/>
 				) : (
-					<ProductSelector
-						onSelectProduct={(productId) => {
-							setAttributes({ product_id: productId });
-						}}
-						productChoices={productChoices}
-						loadingProducts={loadingProducts}
-					/>
+					<Placeholder
+						label={__('Select a product', 'surecart')}
+						instructions={__(
+							'Please select a product with variants and/or prices.',
+							'surecart'
+						)}
+					>
+						<>
+							<div
+								css={css`
+									width: 100%;
+									display: flex;
+									margin-bottom: var(--sc-spacing-medium);
+								`}
+							>
+								<ModelSelector
+									name="product"
+									placeholder={__(
+										'Choose product',
+										'surecart'
+									)}
+									css={css`
+										width: 100%;
+									`}
+									onScChange={(e) => {
+										setAttributes({
+											product_id: e.target.value,
+										});
+									}}
+									requestQuery={{
+										archived: false,
+										expand: ['variants', 'prices'],
+									}}
+									renderModelsCallback={(models) => {
+										return models.filter(
+											(item) =>
+												!!item?.prices?.data?.length
+										);
+									}}
+								>
+									<ScButton
+										type="default"
+										css={css`
+											width: auto;
+										`}
+										slot="trigger"
+									>
+										{__('Select Product', 'surecart')}
+									</ScButton>
+								</ModelSelector>
+							</div>
+						</>
+					</Placeholder>
 				)}
 			</div>
 		</Fragment>

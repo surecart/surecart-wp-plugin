@@ -15,6 +15,7 @@ export default (props) => {
 		exclude = [],
 		fetchOnLoad = false,
 		onChangeQuery = () => {},
+		renderModelsCallback,
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -95,13 +96,23 @@ export default (props) => {
 		}
 	}, [page]);
 
+	const getChoices = () => {
+		let choices = [...(models || [])];
+
+		if (renderModelsCallback) {
+			choices = renderModelsCallback(choices);
+		}
+
+		return choices.map((item) => ({
+			label: !!display ? display(item) : item.name,
+			value: item.id,
+			disabled: exclude.includes(item.id),
+		}));
+	};
+
 	return (
 		<SelectModel
-			choices={(models || []).map((item) => ({
-				label: !!display ? display(item) : item.name,
-				value: item.id,
-				disabled: exclude.includes(item.id),
-			}))}
+			choices={getChoices()}
 			onQuery={handleOnChangeQuery}
 			onFetch={fetchData}
 			loading={isLoading}
