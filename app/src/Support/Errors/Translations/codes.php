@@ -5,7 +5,7 @@
  * @package SureCart
  */
 
-return [
+return array(
 	'http_request_failed'                                  => __( 'Could not complete the request. Please try again.', 'surecart' ),
 	'coupon.invalid'                                       => __( 'Failed to save coupon.', 'surecart' ),
 	'checkout.discount.coupon.currency_mismatch'           => __( 'This coupon is for a different currency and cannot be applied.', 'surecart' ),
@@ -128,5 +128,6 @@ return [
 	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'return_request.return_items.quantity.over_returned'   => __( 'The quantity returned is greater than the quantity fulfilled.', 'surecart' ),
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
-];
+);
