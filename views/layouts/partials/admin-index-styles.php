@@ -12,13 +12,6 @@
 		width: 120px;
 	}
 
-	/* on screens less than 1400px */
-	@media (max-width: 1400px) {
-		.column-plan{
-			width: 200px;
-		}
-	}
-
 	/* on mobile screens less than 1024px */
 	@media (max-width: 1024px) {
 		 .column-status {
