@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Posts\PricePost;
 use SureCart\Models\Product;
 
 /**
@@ -37,24 +38,11 @@ class Price extends Model {
 	protected $cache_key = 'products_updated_at';
 
 	/**
-	 * Set the WP Attachment based on the saved id
+	 * The syncable post class.
 	 *
-	 * @param object $meta Meta value.
-	 *
-	 * @return void
+	 * @var \SureCart\Models\PostModel
 	 */
-	public function filterMetaData( $meta_data ) {
-		// get attachment source if we have an id.
-		if ( ! empty( $meta_data->wp_attachment_id ) ) {
-			$attachment = wp_get_attachment_image_src( $meta_data->wp_attachment_id );
-
-			if ( ! empty( $attachment[0] ) ) {
-				$meta_data->wp_attachment_src = $attachment[0];
-			}
-		}
-
-		return $meta_data;
-	}
+	protected $post = PricePost::class;
 
 	/**
 	 * Set the product attribute

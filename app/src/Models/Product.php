@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Posts\ProductPost;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
@@ -38,6 +39,13 @@ class Product extends Model implements PageModel {
 	 * @var string
 	 */
 	protected $cache_key = 'products_updated_at';
+
+	/**
+	 * The syncable post class.
+	 *
+	 * @var \SureCart\Models\PostModel
+	 */
+	protected $post = ProductPost::class;
 
 	/**
 	 * Create a new model

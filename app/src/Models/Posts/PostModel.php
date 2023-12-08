@@ -1,10 +1,10 @@
 <?php
-namespace SureCart\Models;
+namespace SureCart\Models\Posts;
 
 /**
  * Handles the product post type.
  */
-class ProductPost {
+abstract class PostModel {
 	/**
 	 * Holds the user.
 	 *
@@ -17,7 +17,7 @@ class ProductPost {
 	 *
 	 * @var string
 	 */
-	protected $post_type = 'sc_product';
+	protected $post_type = '';
 
 	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
@@ -30,26 +30,9 @@ class ProductPost {
 	 *
 	 * @param string $model_id The model id.
 	 *
-	 * @return \SureCart\Models\ProductPost
+	 * @return $this
 	 */
 	public function findByModelId( $model_id ) {
-		/**
-		 * Filters the block template object before the query takes place.
-		 *
-		 * Return a non-null value to bypass the WordPress queries.
-		 *
-		 * @since 5.9.0
-		 *
-		 * @param WP_Post|null $post Return post object to short-circuit the default query,
-		 *                           or null to allow WP to run its normal queries.
-		 * @param string $id             Template unique identifier (example: 'theme_slug//template_slug').
-		 * @param string $template_type  Template type: 'wp_template' or 'wp_template_part'.
-		 */
-		$post = apply_filters( 'surecart_pre_get_product_post', null, $model_id );
-		if ( ! is_null( $post ) ) {
-			return $post;
-		}
-
 		$wp_query_args  = [
 			'post_type'      => $this->post_type,
 			'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash' ),
@@ -65,7 +48,7 @@ class ProductPost {
 		$template_query = new \WP_Query( $wp_query_args );
 		$posts          = $template_query->posts;
 
-		$this->post = apply_filters( 'surecart_get_product_post', $posts[0] ?? null, $model_id );
+		$this->post = apply_filters( "surecart_get_{$this->post_type}_post", $posts[0] ?? null, $model_id );
 
 		return $this;
 	}
@@ -75,7 +58,7 @@ class ProductPost {
 	 *
 	 * @param string $id The model id.
 	 *
-	 * @return \SureCart\Models\ProductPost
+	 * @return $this
 	 */
 	public function find( $id ) {
 		$this->post = get_post( $id );
@@ -85,12 +68,12 @@ class ProductPost {
 	/**
 	 * Create the post.
 	 *
-	 * @param \SureCart\Models\Product $product Product model.
+	 * @param \SureCart\Models\Model $model The model.
 	 *
-	 * @return \SureCart\Models\ProductPost
+	 * @return $this
 	 */
-	public function create( \SureCart\Models\Product $product ) {
-		$props         = $this->getProductProperties( $product );
+	public function create( \SureCart\Models\Model $model ) {
+		$props         = $this->getSchemaMap( $model );
 		$prepared_post = array_merge(
 			$props,
 			[
@@ -109,13 +92,23 @@ class ProductPost {
 	/**
 	 * Sync the product with the post.
 	 *
-	 * @param \SureCart\Models\Product $product The product.
+	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return $this
 	 */
-	public function sync( $product ) {
-		$post       = $this->findPost( $product->id );
-		$props      = $this->getProductProperties( $product );
+	public function sync( \SureCart\Models\Model $model ) {
+		$post = $this->findByModelId( $model->id );
+
+		if ( is_wp_error( $post ) ) {
+			return $post;
+		}
+
+		if ( empty( $post->ID ) ) {
+			$this->post = $this->create( $model );
+			return $this;
+		}
+
+		$props      = $this->getSchemaMap( $model );
 		$this->post = wp_update_post(
 			array_merge(
 				$props,
@@ -128,19 +121,23 @@ class ProductPost {
 	}
 
 	/**
-	 * Prepare the product for the database.
+	 * Prepare the model schema for syncing to the post.
 	 *
-	 * @param \SureCart\Models\Product $product Product model.
+	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return array
 	 */
-	protected function getProductProperties( \SureCart\Models\Product $product ) {
+	protected function getSchemaMap( \SureCart\Models\Model $model ) {
 		return [
-			'post_title'   => $product->name,
-			'post_excerpt' => $product->description,
-			'post_type'    => $this->post_type,
-			'post_status'  => 'published' === $this->status ? 'publish' : 'draft',
-			'meta_input'   => array_filter( $product->toArray(), 'is_scalar' ),
+			'post_title'        => $model->name,
+			'post_type'         => $this->post_type,
+			'menu_order'        => $model->position ?? 0,
+			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
+			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
+			'post_status'       => ! property_exists( $model, 'status' ) || 'published' === $model->status ? 'publish' : 'draft',
+			'meta_input'        => array_filter( $model->toArray(), 'is_scalar' ),
 		];
 	}
 

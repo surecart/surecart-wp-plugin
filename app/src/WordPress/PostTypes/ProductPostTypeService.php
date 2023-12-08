@@ -5,7 +5,7 @@ namespace SureCart\WordPress\PostTypes;
 /**
  * Form post type service class.
  */
-class ProductPagePostTypeService {
+class ProductPostTypeService {
 	/**
 	 * The post type slug.
 	 *
@@ -53,15 +53,21 @@ class ProductPagePostTypeService {
 					'item_updated'             => __( 'SureCart Product updated.', 'surecart' ),
 				),
 				'public'            => true,
-				'show_ui'           => false,
-				'show_in_menu'      => false,
-				'rewrite'           => false,
+				'show_ui'           => true,
+				'show_in_menu'      => true,
+				'rewrite'           => [
+					'slug'       => 'products-new',
+					'with_front' => false,
+				],
 				'show_in_rest'      => false,
 				'show_in_nav_menus' => false,
 				'can_export'        => false,
 				'capability_type'   => 'post',
 				'map_meta_cap'      => true,
 				'supports'          => array(
+					'title',
+					'editor',
+					'excerpt',
 					'custom-fields',
 				),
 			)

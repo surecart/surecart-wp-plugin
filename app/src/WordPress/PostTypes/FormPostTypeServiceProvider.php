@@ -20,8 +20,11 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 		$container['surecart.cart.post']                          = function( $container ) {
 			return new CartPostTypeService( $container['surecart.pages'] );
 		};
-		$container['surecart.post_types.product_page']            = function() {
-			return new ProductPagePostTypeService();
+		$container['surecart.post_types.product']                 = function() {
+			return new ProductPostTypeService();
+		};
+		$container['surecart.post_types.price']                   = function() {
+			return new PricePostTypeService();
 		};
 		$container['surecart.post_types.product_collection_page'] = function() {
 			return new ProductCollectionsPagePostTypeService();
@@ -40,7 +43,8 @@ class FormPostTypeServiceProvider implements ServiceProviderInterface {
 	public function bootstrap( $container ) {
 		$container['surecart.forms']->bootstrap();
 		$container['surecart.cart.post']->bootstrap();
-		$container['surecart.post_types.product_page']->bootstrap();
+		$container['surecart.post_types.product']->bootstrap();
+		$container['surecart.post_types.price']->bootstrap();
 		$container['surecart.post_types.product_collection_page']->bootstrap();
 	}
 }

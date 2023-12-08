@@ -130,6 +130,13 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected $clears_account_cache = false;
 
 	/**
+	 * The syncable post class.
+	 *
+	 * @var \SureCart\Models\PostModel
+	 */
+	protected $post;
+
+	/**
 	 * Model constructor
 	 *
 	 * @param array $attributes Optional attributes.
@@ -875,6 +882,40 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			\SureCart::account()->clearCache();
 		}
 
+		$this->sync();
+
+		return $this;
+	}
+
+	/**
+	 * The product post.
+	 *
+	 * @return \SureCart\Models\PostModel
+	 */
+	protected function post() {
+		if ( empty( $this->post ) ) {
+			return false;
+		}
+		$post_class = $this->post;
+		return ( new $post_class() )->findByModelId( $this->id );
+	}
+
+	/**
+	 * Possibly sync this with a post.
+	 *
+	 * @return $this
+	 */
+	protected function sync() {
+		if ( empty( $this->post() ) ) {
+			return new \WP_Error( 'no_post', 'This model does not have an associated post.' );
+		}
+
+		$post = $this->post()->sync( $this );
+
+		if ( is_wp_error( $post ) ) {
+			return $post->get_error_message();
+		}
+
 		return $this;
 	}
 
@@ -921,6 +962,8 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 		if ( $this->cachable || $this->clears_account_cache ) {
 			\SureCart::account()->clearCache();
 		}
+
+		$this->sync();
 
 		return $this;
 	}
