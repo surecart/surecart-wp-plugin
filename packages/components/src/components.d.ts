@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1239,6 +1239,10 @@ export namespace Components {
           * The direction from which the drawer will open.
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
+        /**
+          * Sticky drawer header
+         */
+        "stickyHeader": boolean;
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -2010,6 +2014,24 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": string;
+    }
+    interface ScOrderReturnBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": ReturnRequestStatus;
     }
     interface ScOrderShipmentBadge {
         /**
@@ -4879,6 +4901,12 @@ declare global {
         prototype: HTMLScOrderPasswordElement;
         new (): HTMLScOrderPasswordElement;
     };
+    interface HTMLScOrderReturnBadgeElement extends Components.ScOrderReturnBadge, HTMLStencilElement {
+    }
+    var HTMLScOrderReturnBadgeElement: {
+        prototype: HTMLScOrderReturnBadgeElement;
+        new (): HTMLScOrderReturnBadgeElement;
+    };
     interface HTMLScOrderShipmentBadgeElement extends Components.ScOrderShipmentBadge, HTMLStencilElement {
     }
     var HTMLScOrderShipmentBadgeElement: {
@@ -5578,6 +5606,7 @@ declare global {
         "sc-order-fulfillment-badge": HTMLScOrderFulfillmentBadgeElement;
         "sc-order-manual-instructions": HTMLScOrderManualInstructionsElement;
         "sc-order-password": HTMLScOrderPasswordElement;
+        "sc-order-return-badge": HTMLScOrderReturnBadgeElement;
         "sc-order-shipment-badge": HTMLScOrderShipmentBadgeElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
@@ -7059,6 +7088,10 @@ declare namespace LocalJSX {
           * The direction from which the drawer will open.
          */
         "placement"?: 'top' | 'end' | 'bottom' | 'start';
+        /**
+          * Sticky drawer header
+         */
+        "stickyHeader"?: boolean;
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -7873,6 +7906,24 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
+    }
+    interface ScOrderReturnBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: ReturnRequestStatus;
     }
     interface ScOrderShipmentBadge {
         /**
@@ -10067,6 +10118,7 @@ declare namespace LocalJSX {
         "sc-order-fulfillment-badge": ScOrderFulfillmentBadge;
         "sc-order-manual-instructions": ScOrderManualInstructions;
         "sc-order-password": ScOrderPassword;
+        "sc-order-return-badge": ScOrderReturnBadge;
         "sc-order-shipment-badge": ScOrderShipmentBadge;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
@@ -10298,6 +10350,7 @@ declare module "@stencil/core" {
             "sc-order-fulfillment-badge": LocalJSX.ScOrderFulfillmentBadge & JSXBase.HTMLAttributes<HTMLScOrderFulfillmentBadgeElement>;
             "sc-order-manual-instructions": LocalJSX.ScOrderManualInstructions & JSXBase.HTMLAttributes<HTMLScOrderManualInstructionsElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
+            "sc-order-return-badge": LocalJSX.ScOrderReturnBadge & JSXBase.HTMLAttributes<HTMLScOrderReturnBadgeElement>;
             "sc-order-shipment-badge": LocalJSX.ScOrderShipmentBadge & JSXBase.HTMLAttributes<HTMLScOrderShipmentBadgeElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
