@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { __, _n } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
@@ -77,17 +77,10 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 		);
 	}
 
-	const variantLabel = [
-		variant?.option_1,
-		variant?.option_2,
-		variant?.option_3,
-	]
-		.filter(Boolean)
-		.join(' / ');
-
-	const productSku = getSKUTextByVariantAndPrice(variant, price);
-	const hasAllPrices = !price_id && product?.prices?.data?.length > 1 && total_integrations > 1;
-	const hasAllVariants = !variant_id && product?.variants?.length > 1 && total_integrations > 1;
+	const totalPrices = product?.prices?.data?.length;
+	const totalVariants = product?.variants?.length;
+	const hasAllPrices = !price_id && totalPrices > 1 && total_integrations > 1;
+	const hasAllVariants = !variant_id && totalVariants > 1 && total_integrations > 1;
 
 	const renderPrice = () => {
 		if (hasAllPrices) {
@@ -95,7 +88,6 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 				<div
 					css={css`
 						opacity: 0.9;
-						text-transform: uppercase;
 					`}
 				>
 					{__('All Prices', 'surecart')}
@@ -103,13 +95,13 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 			);
 		}
 
-		if (!!price) {
+		if (!price || totalPrices < 2) {
 			return null;
 		}
 
 		return (
 			<div>
-				{!!price?.name ? price?.name : (
+				{price?.name ? price?.name : (
 					<Fragment>
 						<ScFormatNumber
 							type="currency"
@@ -129,7 +121,6 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 				<div
 					css={css`
 						opacity: 0.9;
-						text-transform: uppercase;
 					`}
 				>
 					{__('All Variants', 'surecart')}
@@ -137,6 +128,18 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 			);
 		}
 
+		if (!variant || totalVariants < 2) {
+			return null;
+		}
+
+		const variantLabel = [
+			variant?.option_1,
+			variant?.option_2,
+			variant?.option_3,
+		]
+			.filter(Boolean)
+			.join(' / ');
+		const productSku = getSKUTextByVariantAndPrice(variant, price);
 		return (
 			<div>
 				{!!variantLabel && <div>{variantLabel}</div>}
