@@ -609,10 +609,6 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * Is Component used in editor
-         */
-        "inEditor": boolean;
-        /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */
         "invalid": boolean;
@@ -6330,10 +6326,6 @@ declare namespace LocalJSX {
           * Is the choice disabled
          */
         "disabled"?: boolean;
-        /**
-          * Is Component used in editor
-         */
-        "inEditor"?: boolean;
         /**
           * This will be true when the control is in an invalid state. Validity is determined by the `required` prop.
          */

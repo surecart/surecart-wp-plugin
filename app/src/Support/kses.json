@@ -336,7 +336,6 @@
   "sc-choice-container": {
     "checked": true,
     "disabled": true,
-    "in-editor": true,
     "invalid": true,
     "name": true,
     "required": true,

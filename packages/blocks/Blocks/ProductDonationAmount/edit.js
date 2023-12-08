@@ -68,7 +68,6 @@ export default ({ attributes, setAttributes }) => {
 					css={css`
 						width: 100%;
 					`}
-					inEditor={true}
 				>
 					<RichText
 						aria-label={__('Donation Amount text', 'surecart')}
