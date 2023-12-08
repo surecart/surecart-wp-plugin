@@ -3,6 +3,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { isInRange } from '../../../../functions/util';
 import { state as donationState } from '@store/product-donation';
 import { updateDonationState as update } from '@store/product-donation/mutations';
+import { getInRangeAmounts } from '@store/product-donation/getters';
 
 @Component({
   tag: 'sc-product-donation-amount-choice',
@@ -24,13 +25,15 @@ export class ScProductDonationAmountChoice {
   }
 
   render() {
+    const amounts = getInRangeAmounts(this.productId);
+    const order = amounts.indexOf(this.value);
     if (!isInRange(this.value, this.state().selectedPrice)) return <Host style={{ display: 'none' }}></Host>;
     return (
       <sc-choice-container
         show-control="false"
         checked={this.state().ad_hoc_amount === this.value}
         onScChange={() => update(this.productId, { ad_hoc_amount: this.value, custom_amount: null })}
-        aria-label={sprintf(__('Press Enter if you want to donate %s', 'surecart'), this.label ? this.label : this.value)}
+        aria-label={sprintf(__('%s of %s', 'surecart'), order + 1, amounts.length)}
         role="button"
       >
         {this.label ? (

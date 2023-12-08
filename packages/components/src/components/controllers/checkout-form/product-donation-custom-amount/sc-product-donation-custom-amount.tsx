@@ -30,8 +30,18 @@ export class ScProductDonationCustomAmount {
     const checked = !!this.state().custom_amount;
     return (
       <Host class={{ 'sc-product-donation-custom-amount': true, 'sc-product-donation-custom-amount--has-value': !!this.value }}>
-        <sc-choice-container value={`${this.state()?.custom_amount}`} show-control="false" checked={checked} onClick={() => this.priceInput.triggerFocus()}>
-          <sc-visually-hidden>{__('Press Tab then Enter an amount you want to donate and press enter/return.', 'surecart')} </sc-visually-hidden>
+        <sc-choice-container
+          value={`${this.state()?.custom_amount}`}
+          show-control="false"
+          checked={checked}
+          onClick={() => this.priceInput.triggerFocus()}
+          onKeyDown={e => {
+            this.priceInput.value = e.key;
+            this.priceInput.triggerFocus();
+          }}
+          role="button"
+        >
+          <sc-visually-hidden>{__('Enter a custom amount.', 'surecart')}</sc-visually-hidden>
           <sc-price-input
             ref={el => (this.priceInput = el)}
             currencyCode={this.state()?.selectedPrice?.currency || window?.scData?.currency || 'usd'}

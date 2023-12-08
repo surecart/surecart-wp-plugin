@@ -63,6 +63,7 @@ export class ScRecurringPriceChoiceContainer {
           e.stopPropagation();
           this.scChange.emit(this.value()?.id);
         }}
+        role="button"
       >
         <div class="recurring-price-choice">
           <div class="recurring-price-choice__control">
