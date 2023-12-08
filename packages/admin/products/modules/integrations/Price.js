@@ -103,6 +103,10 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 			);
 		}
 
+		if (!!price) {
+			return null;
+		}
+
 		return (
 			<div>
 				{!!price?.name ? price?.name : (
@@ -161,26 +165,6 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 							value={price?.ad_hoc}
 						/>
 					</div>
-
-					{!!price?.trial_duration_days && (
-						<div
-							css={css`
-								opacity: 0.65;
-								font-size: 12px;
-								line-height: 1.2;
-							`}
-						>
-							{sprintf(
-								_n(
-									'Starting in %s day',
-									'Starting in %s days',
-									price.trial_duration_days,
-									'surecart'
-								),
-								price.trial_duration_days
-							)}
-						</div>
-					)}
 				</div>
 			</div>
 		);
