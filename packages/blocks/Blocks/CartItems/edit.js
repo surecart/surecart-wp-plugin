@@ -62,6 +62,7 @@ export default ({ attributes, setAttributes }) => {
 							margin-top: 20px;
 						}
 					`}
+					style={{ minHeight: '400px' }}
 				>
 					<ScProductLineItem
 						removable={removable}
