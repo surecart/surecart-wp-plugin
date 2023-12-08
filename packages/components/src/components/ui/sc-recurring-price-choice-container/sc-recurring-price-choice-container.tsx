@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, Host } from '@stencil/core';
+import { Component, Event, EventEmitter, Fragment, h, Prop, Host, State } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Price, Product } from 'src/types';
 import { intervalString } from '../../../functions/price';
@@ -14,6 +14,9 @@ export class ScRecurringPriceChoiceContainer {
 
   /** The currently selected price */
   @Prop() selectedPrice: Price;
+
+  /** The internal currently selected option state */
+  @State() selectedOption: Price;
 
   /** The product. */
   @Prop() product: Product;
@@ -38,7 +41,11 @@ export class ScRecurringPriceChoiceContainer {
   }
 
   value() {
-    return this.prices.find(price => price.id === this.selectedPrice?.id) || this.prices[0];
+    return this.prices.find(price => price.id === this.selectedPriceState()?.id) || this.prices[0];
+  }
+
+  selectedPriceState() {
+    return this.prices.find(price => price.id === this.selectedPrice?.id) || this.selectedOption || this.prices[0];
   }
 
   render() {
@@ -84,7 +91,7 @@ export class ScRecurringPriceChoiceContainer {
                   </button>
                   <sc-menu aria-label={__('Recurring Interval selection Dropdown opened, Press Up/Down Arrow & select the recurring interval you want.', 'surecart')}>
                     {(this.prices || []).map(price => {
-                      const checked = price?.id === this.selectedPrice?.id;
+                      const checked = price?.id === this.selectedPriceState()?.id;
                       const label =
                         price?.name ||
                         (price?.recurring_interval
@@ -100,7 +107,14 @@ export class ScRecurringPriceChoiceContainer {
                             })
                           : this.product.name);
                       return (
-                        <sc-menu-item onClick={() => this.scChange.emit(price?.id)} checked={checked} aria-label={label}>
+                        <sc-menu-item
+                          onClick={() => {
+                            this.selectedOption = price;
+                            this.scChange.emit(price?.id);
+                          }}
+                          checked={checked}
+                          aria-label={label}
+                        >
                           {label}
                           {this.showAmount && <span slot="suffix">{this.renderPrice(price)}</span>}
                         </sc-menu-item>
@@ -115,12 +129,12 @@ export class ScRecurringPriceChoiceContainer {
           {this.showDetails && (
             <div class="recurring-price-choice__details">
               <div class="recurring-price-choice__price">
-                {this.selectedPrice?.ad_hoc ? (
+                {this.selectedPriceState()?.ad_hoc ? (
                   __('Custom Amount', 'surecart')
                 ) : (
                   <Fragment>
-                    <sc-format-number type="currency" value={this.selectedPrice?.amount} currency={this.selectedPrice?.currency}></sc-format-number>
-                    {intervalString(this.selectedPrice, {
+                    <sc-format-number type="currency" value={this.selectedPriceState()?.amount} currency={this.selectedPriceState()?.currency}></sc-format-number>
+                    {intervalString(this.selectedPriceState(), {
                       showOnce: true,
                       abbreviate: true,
                       labels: {
@@ -134,16 +148,19 @@ export class ScRecurringPriceChoiceContainer {
                 )}
               </div>
 
-              {!!this.selectedPrice?.trial_duration_days && (
+              {!!this.selectedPriceState()?.trial_duration_days && (
                 <div class="recurring-price-choice__trial">
-                  {sprintf(_n('Starting in %s day', 'Starting in %s days', this.selectedPrice.trial_duration_days, 'surecart'), this.selectedPrice.trial_duration_days)}
+                  {sprintf(
+                    _n('Starting in %s day', 'Starting in %s days', this.selectedPriceState().trial_duration_days, 'surecart'),
+                    this.selectedPriceState().trial_duration_days,
+                  )}
                 </div>
               )}
 
-              {!!this.selectedPrice?.setup_fee_enabled && this.selectedPrice?.setup_fee_amount && (
+              {!!this.selectedPriceState()?.setup_fee_enabled && this.selectedPriceState()?.setup_fee_amount && (
                 <div class="recurring-price-choice__setup-fee">
-                  <sc-format-number type="currency" value={this.selectedPrice.setup_fee_amount} currency={this.selectedPrice?.currency}></sc-format-number>{' '}
-                  {this.selectedPrice?.setup_fee_name || __('Setup Fee', 'surecart')}
+                  <sc-format-number type="currency" value={this.selectedPriceState().setup_fee_amount} currency={this.selectedPriceState()?.currency}></sc-format-number>{' '}
+                  {this.selectedPriceState()?.setup_fee_name || __('Setup Fee', 'surecart')}
                 </div>
               )}
             </div>
