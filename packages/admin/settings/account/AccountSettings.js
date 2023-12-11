@@ -78,11 +78,12 @@ export default () => {
 	 * Get the symbol for the currency.
 	 */
 	const getCurrencySymbol = (code) => {
-		const [currency] = new Intl.NumberFormat(undefined, {
+		const formattedParts = new Intl.NumberFormat(undefined, {
 			style: 'currency',
 			currency: code,
 		}).formatToParts();
-		return currency?.value;
+
+		return formattedParts.find((part) => part.type === 'currency')?.value;
 	};
 
 	return (
