@@ -54,16 +54,7 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<div
-					css={css`
-						min-height: 400px;
-						sc-product-line-item ~ sc-product-line-item,
-						sc-line-item ~ sc-line-item {
-							margin-top: 20px;
-						}
-					`}
-					style={{ minHeight: '400px' }}
-				>
+				<div style={{ minHeight: '400px' }}>
 					<ScProductLineItem
 						removable={removable}
 						editable={editable}
@@ -82,6 +73,7 @@ export default ({ attributes, setAttributes }) => {
 						imageUrl="https://source.unsplash.com/daily"
 						name={__('Example Product', 'surecart')}
 						priceName={__('Monthly', 'surecart')}
+						style={{ marginTop: '20px' }}
 					></ScProductLineItem>
 				</div>
 			</div>
