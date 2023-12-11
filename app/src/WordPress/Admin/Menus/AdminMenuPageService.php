@@ -174,7 +174,8 @@ class AdminMenuPageService {
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
-			'cart'                => $this->getPage( 'cart', __( 'Cart', 'surecart' ), 'sc_cart' ),
+			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
+			'cart'                => $this->getTemplatePart( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
 			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
 			'dashboard'           => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
 			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
@@ -207,5 +208,45 @@ class AdminMenuPageService {
 		}
 
 		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', 'post.php?post=' . (int) $page_id . '&action=edit', '' );
+	}
+
+	/**
+	 * Get template part
+	 *
+	 * @param string $slug The slug.
+	 * @param string $name The name.
+	 * @param string $template_slug The template slug.
+	 *
+	 * @return void
+	 */
+	public function getTemplatePart( $slug, $name, $template_slug ) {
+		// add filter to disable shop page menu item.
+		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
+			return;
+		}
+
+		$template_part_post = get_posts(
+			[
+				'post_type'  => 'wp_template_part',
+				'post_title' => $name,
+			]
+		)[0] ?? null;
+
+		$status      = '';
+		$post_status = get_post_status( $template_part_post->ID );
+
+		if ( 'publish' !== $post_status ) {
+			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
+		}
+
+		$edit_path_url = add_query_arg(
+			[
+				'postId'   => rawurlencode( $template_slug ),
+				'postType' => 'wp_template_part',
+			],
+			'site-editor.php'
+		);
+
+		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', $edit_path_url, '' );
 	}
 }
