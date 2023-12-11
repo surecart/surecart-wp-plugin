@@ -68,6 +68,7 @@ graph TD;
   sc-cancel-survey --> sc-button
   sc-cancel-survey --> sc-icon
   sc-choices --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   sc-textarea --> sc-form-control
   sc-cancel-discount --> sc-dashboard-module
   sc-cancel-discount --> sc-flex

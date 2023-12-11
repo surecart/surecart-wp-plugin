@@ -157,6 +157,8 @@ export interface Media {
   filename: string;
   public_access: boolean;
   release_json: any;
+  alt: string;
+  title: string;
   url?: string;
   url_expires_at?: number;
   updated_at: number;
@@ -285,6 +287,7 @@ export interface Product extends Object {
   permalink: string;
   weight: number;
   weight_unit: 'kg' | 'lb' | 'g' | 'oz';
+  featured_product_media?: string | ProductMedia;
   prices: {
     object: 'list';
     pagination: Pagination;
@@ -839,6 +842,7 @@ export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'c
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
 export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
 export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
+export type ReturnRequestStatus = 'open' | 'completed';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -1109,6 +1113,11 @@ export interface GoogleAnalyticsItem {
   discount?: number;
 }
 
+export interface FeaturedProductMediaAttributes {
+  alt: string;
+  url: string;
+  title: string;
+}
 export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';

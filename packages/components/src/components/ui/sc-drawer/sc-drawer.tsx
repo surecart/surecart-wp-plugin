@@ -48,11 +48,15 @@ export class ScDrawer {
    */
   @Prop({ attribute: 'no-header', reflect: true }) noHeader: boolean = false;
 
+  /** Sticky drawer header */
+  @Prop() stickyHeader: boolean = false;
+
   componentDidLoad() {
     this.drawer.hidden = !this.open;
     if (this.open && !this.contained) {
       this.lockBodyScrolling();
     }
+    this.handleOpenChange();
   }
 
   disconnectedCallback() {
@@ -204,7 +208,7 @@ export class ScDrawer {
           ref={el => (this.panel = el as HTMLElement)}
         >
           {!this.noHeader && (
-            <header part="header">
+            <header part="header" class={this.stickyHeader ? 'header__sticky' : ''}>
               <slot name="header">
                 <div class="drawer__header">
                   <h2 part="title" class="drawer__title" id="title">

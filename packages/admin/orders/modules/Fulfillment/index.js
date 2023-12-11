@@ -26,7 +26,10 @@ export default ({
 						'fulfillment_item.line_item',
 						'line_item.price',
 						'line_item.variant',
+						'variant.image',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
 					],
 				},
 			];

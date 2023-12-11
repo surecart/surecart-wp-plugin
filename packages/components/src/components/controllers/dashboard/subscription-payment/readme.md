@@ -48,6 +48,7 @@ graph TD;
   sc-button --> sc-spinner
   sc-empty --> sc-icon
   sc-choices --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   sc-payment-method --> sc-tooltip
   sc-payment-method --> sc-button
   sc-payment-method --> sc-icon

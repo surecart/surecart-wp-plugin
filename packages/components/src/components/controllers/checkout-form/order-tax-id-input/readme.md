@@ -52,6 +52,7 @@ graph TD;
   sc-tax-id-input --> sc-menu
   sc-tax-id-input --> sc-menu-item
   sc-input --> sc-form-control
+  sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   sc-form-components-validator --> sc-order-tax-id-input
   style sc-order-tax-id-input fill:#f9f,stroke:#333,stroke-width:4px

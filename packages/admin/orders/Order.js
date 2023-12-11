@@ -30,6 +30,8 @@ import Refunds from './modules/Refunds';
 import Subscriptions from './modules/Subscriptions';
 import Sidebar from './Sidebar';
 import Fulfillment from './modules/Fulfillment';
+import CreateReturnRequest from './modules/ReturnRequest/CreateReturnRequest';
+import ReturnItems from './modules/ReturnRequest/ReturnItems';
 
 export default () => {
 	const [modal, setModal] = useState();
@@ -60,8 +62,10 @@ export default () => {
 					'discount.promotion',
 					'line_item.price',
 					'line_item.fees',
+					'line_item.variant',
 					'customer.balances',
 					'price.product',
+					'variant.image',
 				],
 				t: Date.now(), // prevents cache.
 			}),
@@ -92,6 +96,9 @@ export default () => {
 						'line_item.variant',
 						'customer.balances',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
+						'variant.image',
 					],
 				},
 			];
@@ -109,6 +116,53 @@ export default () => {
 		},
 		[id]
 	);
+
+	const { returnRequests, returnRequestsLoading } = useSelect(
+		(select) => {
+			if (!order?.id) {
+				return {
+					returnRequests: [],
+					returnRequestsLoading: false,
+				};
+			}
+
+			const queryArgs = [
+				'surecart',
+				'return_request',
+				{
+					order_ids: [order?.id],
+					expand: [
+						'return_items',
+						'return_item.line_item',
+						'line_item.price',
+						'line_item.variant',
+						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
+						'variant.image',
+					],
+				},
+			];
+			return {
+				returnRequests: select(coreStore).getEntityRecords(
+					...queryArgs
+				),
+				returnRequestsLoading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[order?.id]
+	);
+
+	const fulfilledItems =
+		order?.checkout?.line_items?.data?.filter(
+			(item) =>
+				item?.quantity === item?.fulfilled_quantity ||
+				(item?.fulfilled_quantity > 0 &&
+					item?.quantity !== item?.fulfilled_quantity)
+		) || [];
 
 	useEffect(() => {
 		if (orderError) {
@@ -132,6 +186,28 @@ export default () => {
 			menuItems.push({
 				title: __('Cancel Order', 'surecart'),
 				modal: 'order_cancel',
+			});
+		}
+
+		const totalReturnQty = returnRequests?.reduce(
+			(total, returnRequest) =>
+				total +
+				returnRequest?.return_items?.data?.reduce(
+					(total, returnItem) => total + returnItem?.quantity,
+					0
+				),
+			0
+		);
+
+		const totalFulfilledItemsQty = fulfilledItems?.reduce(
+			(total, item) => total + item?.fulfilled_quantity,
+			0
+		);
+
+		if (totalFulfilledItemsQty > totalReturnQty) {
+			menuItems.push({
+				title: __('Return', 'surecart'),
+				modal: 'return_request',
 			});
 		}
 
@@ -213,7 +289,20 @@ export default () => {
 					order={order}
 					checkout={order?.checkout}
 					loading={!hasLoadedOrder}
+					returnRequests={returnRequests}
 				/>
+
+				{(returnRequests || []).map((returnRequest, index) => (
+					<ReturnItems
+						key={index}
+						loading={returnRequestsLoading}
+						returnRequest={returnRequest}
+						checkout={order?.checkout}
+						onCreateSuccess={manuallyRefetchOrder}
+						onChangeRequestStatus={manuallyRefetchOrder}
+					/>
+				))}
+
 				<Fulfillment
 					loading={!hasLoadedOrder}
 					orderId={id}
@@ -245,6 +334,15 @@ export default () => {
 					open={modal === 'order_cancel'}
 					onRequestClose={() => setModal(false)}
 					loading={!hasLoadedOrder}
+				/>
+				<CreateReturnRequest
+					fulfillmentItems={fulfilledItems}
+					returnRequests={returnRequests}
+					orderId={order?.id}
+					checkout={order?.checkout}
+					open={modal === 'return_request'}
+					onRequestClose={() => setModal(false)}
+					onCreateSuccess={manuallyRefetchOrder}
 				/>
 			</>
 		</UpdateModel>
