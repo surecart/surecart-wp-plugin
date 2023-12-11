@@ -11,6 +11,7 @@ import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import { getCurrencySymbol } from '../../util';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -72,18 +73,6 @@ export default () => {
 			console.error(e);
 			setError(e);
 		}
-	};
-
-	/**
-	 * Get the symbol for the currency.
-	 */
-	const getCurrencySymbol = (code) => {
-		const formattedParts = new Intl.NumberFormat(undefined, {
-			style: 'currency',
-			currency: code,
-		}).formatToParts();
-
-		return formattedParts.find((part) => part.type === 'currency')?.value;
 	};
 
 	return (
