@@ -82,23 +82,22 @@ export default ({ onRequestClose, id, product }) => {
 				return {
 					value: variant.id,
 					label: `
-					(${variantLabel}) ${intervalString(
-						priceData,
-						{ showOnce: true }
-					)} - ${formatNumber(
+					(${variantLabel}) ${intervalString(priceData, {
+						showOnce: true,
+					})} - ${formatNumber(
 						variant?.amount ?? (priceData?.amount || 0),
 						priceData?.currency || 'usd'
 					)}${priceData?.archived ? ' (Archived)' : ''}`,
 					suffixDescription: product?.stock_enabled
 						? sprintf(
-							__('%s available', 'surecart'),
-							variant?.available_stock
-						)
+								__('%s available', 'surecart'),
+								variant?.available_stock
+						  )
 						: null,
 					variant_id: variant?.id,
 				};
 			});
-	}
+	};
 
 	return (
 		<Fragment>
@@ -149,13 +148,20 @@ export default ({ onRequestClose, id, product }) => {
 						<div>
 							<ScFormControl
 								label={__('Select A Price', 'surecart')}
+								help={__(
+									'Optionally select a price to sync with this integration.',
+									'surecart'
+								)}
 							>
 								<SelectPrice
 									required={false}
 									css={css`
 										flex: 0 1 50%;
 									`}
-									style={{ '--sc-input-placeholder-color': 'var(--sc-input-label-color)' }}
+									style={{
+										'--sc-input-placeholder-color':
+											'var(--sc-input-label-color)',
+									}}
 									open={false}
 									value={price?.id}
 									ad_hoc={false}
@@ -166,15 +172,13 @@ export default ({ onRequestClose, id, product }) => {
 									products={[product]}
 									onSelect={({ price_id }) => {
 										// find the price and set it.
-										const value = product?.prices?.data?.find(
-											(p) => p.id === price_id
-										);
-										setPrice(value)
+										const value =
+											product?.prices?.data?.find(
+												(p) => p.id === price_id
+											);
+										setPrice(value);
 									}}
-									placeholder={__(
-										'All Prices',
-										'surecart'
-									)}
+									placeholder={__('All Prices', 'surecart')}
 								/>
 							</ScFormControl>
 						</div>
@@ -183,17 +187,19 @@ export default ({ onRequestClose, id, product }) => {
 					{!!item && getVariants().length > 1 && (
 						<div>
 							<ScSelect
-								label={__('Select a variant', 'surecart')}
-								value={variantId}
-								choices={getVariants()}
-								onScChange={(e) =>
-									setVariantId(e.target.value)
-								}
-								placeholder={__(
-									'All Variants',
+								label={__('Select A Variant', 'surecart')}
+								help={__(
+									'Optionally select a variant to sync with this integration.',
 									'surecart'
 								)}
-								style={{ '--sc-input-placeholder-color': 'var(--sc-input-label-color)' }}
+								value={variantId}
+								choices={getVariants()}
+								onScChange={(e) => setVariantId(e.target.value)}
+								placeholder={__('All Variants', 'surecart')}
+								style={{
+									'--sc-input-placeholder-color':
+										'var(--sc-input-label-color)',
+								}}
 							/>
 						</div>
 					)}

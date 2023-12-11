@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
@@ -63,15 +65,15 @@ export default ({
 
 	return (
 		<Fragment>
-			<p>
-				{__(
-					'A product purchase will be automatically synced with this item.',
-					'surecart'
-				)}
-			</p>
-
 			<div>
-				<ScFormControl label={__('Integration', 'surecart')} required>
+				<ScFormControl
+					label={__('Integration', 'surecart')}
+					help={__(
+						'Select an integration to sync with this product.',
+						'surecart'
+					)}
+					required
+				>
 					<SelectModel
 						placeholder={__('Select An Integration', 'surecart')}
 						position={position || 'bottom-left'}
