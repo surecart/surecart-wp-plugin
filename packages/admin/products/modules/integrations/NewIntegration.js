@@ -82,12 +82,14 @@ export default ({ onRequestClose, id, product }) => {
 				return {
 					value: variant.id,
 					label: `
-					(${variantLabel}) ${intervalString(priceData, {
-						showOnce: true,
-					})} - ${formatNumber(
-						variant?.amount ?? (priceData?.amount || 0),
-						priceData?.currency || 'usd'
-					)}${priceData?.archived ? ' (Archived)' : ''}`,
+					(${variantLabel}) ${
+						variant?.amount
+							? ` - ${formatNumber(
+									variant?.amount,
+									priceData?.currency || 'usd'
+							  )}`
+							: ''
+					}`,
 					suffixDescription: product?.stock_enabled
 						? sprintf(
 								__('%s available', 'surecart'),
