@@ -22,11 +22,14 @@ export default ({ price_id, variant_id }) => {
 				},
 			];
 			const price = select(coreStore).getEntityRecord(...queryArgs);
-			const variant = select(coreStore).getEntityRecord(
-				'surecart',
-				'variant',
-				variant_id
-			);
+			const variant = !!variant_id
+				? select(coreStore).getEntityRecord(
+						'surecart',
+						'variant',
+						variant_id
+				  )
+				: null;
+
 			return {
 				price,
 				variant,
