@@ -36,7 +36,8 @@
     white-space: var(--sc-recurring-price-choice-white-space, nowrap);
     text-align: var(--sc-recurring-price-choice-text-align, center);
     vertical-align: middle;
-    padding: 0;
+    padding: 13px;
+    margin: -13px;
     border: none;
     background: transparent;
     font-size: inherit;
