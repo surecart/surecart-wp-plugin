@@ -298,6 +298,7 @@
   "sc-checkout-product-price-variant-selector": {
     "label": true,
     "product": true,
+    "selector-title": true,
     "style": true,
     "id": true,
     "class": true,

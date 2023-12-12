@@ -65,8 +65,9 @@ class Block extends BaseBlock {
 			->id( 'sc-checkout-product-price-variant-selector' )
 			->with(
 				[
-					'product' => $product,
-					'label'   => ! empty( $attributes['label'] ) ? $attributes['label'] : '',
+					'product'       => $product,
+					'label'         => ! empty( $attributes['label'] ) ? $attributes['label'] : '',
+					'selectorTitle' => ! empty( $attributes['selectorTitle'] ) ? $attributes['selectorTitle'] : '',
 				]
 			)->render( '' )
 		);

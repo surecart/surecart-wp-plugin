@@ -33,7 +33,7 @@ import { ScCheckoutProductPriceVariantSelector } from '@surecart/components-reac
 import ModelSelector from '../../../admin/components/ModelSelector';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, product_id } = attributes;
+	const { label, product_id, selectorTitle } = attributes;
 	const blockProps = useBlockProps();
 
 	const { product, loadingProduct } = useSelect(
@@ -80,6 +80,16 @@ export default ({ attributes, setAttributes }) => {
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
 						<TextControl
+							label={__('Selector title', 'surecart')}
+							value={selectorTitle}
+							onChange={(selectorTitle) =>
+								setAttributes({ selectorTitle })
+							}
+							style={{ width: '100%' }}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
 							label={__('Price selector label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
@@ -106,6 +116,7 @@ export default ({ attributes, setAttributes }) => {
 								data: product.variants || [],
 							},
 						}}
+						selectorTitle={selectorTitle}
 						label={label}
 					/>
 				) : (

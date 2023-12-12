@@ -18,6 +18,9 @@
 		},
 		"product_id": {
 			"type": "string"
+		},
+		"selectorTitle": {
+			"type": "string"
 		}
 	}
 }
