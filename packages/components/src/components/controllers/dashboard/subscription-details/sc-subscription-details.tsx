@@ -202,6 +202,13 @@ export class ScSubscriptionDetails {
             </sc-stacked-list>
           </sc-card>
         </sc-dialog>
+
+        {!this.subscription.payment_method && (
+          <sc-text style={{ '--font-size': 'var(--sc-font-size-small)', '--font-weight': 'var(--sc-font-weight-bold)', 'marginTop': '4px' }}>
+            <sc-icon name="alert-circle" style={{ 'color': 'var(--sc-color-danger-500)', '--margin-right': '0.5em' }}></sc-icon>{' '}
+            {__('Payment methods are currently not available. Please add one.', 'surecart')}
+          </sc-text>
+        )}
       </div>
     );
   }
