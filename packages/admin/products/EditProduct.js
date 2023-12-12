@@ -295,10 +295,7 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				<Integrations
-					id={id}
-					product={product}
-				/>
+				<Integrations id={id} product={product} />
 
 				<Downloads
 					id={id}
