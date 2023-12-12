@@ -3,6 +3,7 @@
 namespace SureCartBlocks\Blocks\ProductDonationAmounts;
 
 use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
@@ -17,6 +18,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		[ 'styles' => $styles ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes, [ 'margin' ] );
+
 		$wrapper_attributes = get_block_wrapper_attributes(
 			[
 				'style' => implode(
@@ -26,6 +29,7 @@ class Block extends BaseBlock {
 						esc_attr( $this->getVars( $attributes, '--sc-choice' ) ),
 						'--columns:' . intval( $attributes['columns'] ) . ';',
 						! empty( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
+						$styles
 					]
 				),
 			]
