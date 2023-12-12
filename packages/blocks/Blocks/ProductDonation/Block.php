@@ -4,6 +4,7 @@ namespace SureCartBlocks\Blocks\ProductDonation;
 
 use SureCart\Models\Product;
 use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Title Block
@@ -55,6 +56,25 @@ class Block extends BaseBlock {
 					],
 				],
 			]
+		);
+
+		[ 'styles' => $styles, 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
+
+		$styles .= '--sc-input-label-color: ' . $attributes['textColor'] . '; ';
+
+		$wrapper_attributes = get_block_wrapper_attributes(
+			[
+				'style' => esc_attr($styles),
+				'class' => esc_attr($classes)
+			]
+		);
+
+		return wp_sprintf(
+			'<div %s>
+				%s
+			</div>',
+			$wrapper_attributes,
+			filter_block_content( $content )
 		);
 
 		return filter_block_content( $content );

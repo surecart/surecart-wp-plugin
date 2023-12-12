@@ -11,6 +11,9 @@ import {
 	InnerBlocks,
 	useInnerBlocksProps,
 	InspectorControls,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 import SelectModel from '../../../admin/components/SelectModel';
 
@@ -51,7 +54,27 @@ export default ({ attributes, setAttributes }) => {
 		[query]
 	);
 
-	const blockProps = useBlockProps();
+	const colorProps = useColorProps(attributes);
+	const borderProps = useBorderProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
+
+	const blockProps = useBlockProps({
+		style: {
+			'--sc-input-label-color': colorProps?.style?.color,
+			backgroundColor: colorProps?.style?.backgroundColor,
+			borderColor: borderProps?.style?.borderColor,
+			borderWidth: borderProps?.style?.borderWidth,
+			borderRadius: borderProps?.style?.borderRadius,
+			paddingLeft: spacingProps?.style?.paddingLeft,
+			paddingRight: spacingProps?.style?.paddingRight,
+			paddingTop: spacingProps?.style?.paddingTop,
+			paddingBottom: spacingProps?.style?.paddingBottom,
+			marginTop: spacingProps?.style?.marginTop,
+			marginLeft: spacingProps?.style?.marginLeft,
+			marginRight: spacingProps?.style?.marginRight,
+			marginBottom: spacingProps?.style?.marginBottom,
+		},
+	});
 
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: [
@@ -145,7 +168,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div {...innerBlocksProps}></div>
+			<div {...innerBlocksProps} {...blockProps}></div>
 		</>
 	);
 };
