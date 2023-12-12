@@ -20,6 +20,7 @@ import { useEntityProp } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor';
 
 export default ({ product, updateProduct, loading }) => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -278,20 +279,34 @@ export default ({ product, updateProduct, loading }) => {
 						</ScSwitch>
 						{product?.metadata?.wp_buy_link_custom_thankyou_page ===
 							'true' && (
-							<ScInput
-								label={__('URL', 'surecart')}
-								value={
-									product?.metadata
-										?.wp_buy_link_custom_thankyou_page_url
-								}
-								onScChange={(e) => {
-									updateMeta({
-										wp_buy_link_custom_thankyou_page_url:
-											e.target.value,
-									});
-								}}
-								type="url"
-							/>
+							<>
+								<ScInput
+									label={__('URL', 'surecart')}
+									value={
+										product?.metadata
+											?.wp_buy_link_custom_thankyou_page_url
+									}
+									onScChange={(e) => {
+										updateMeta({
+											wp_buy_link_custom_thankyou_page_url:
+												e.target.value,
+										});
+									}}
+									type="url"
+								/>
+								<LinkControl
+									value={
+										product?.metadata
+											?.wp_buy_link_custom_thankyou_page_url
+									}
+									onChange={(nextValue) => {
+										updateMeta({
+											wp_buy_link_custom_thankyou_page_url:
+												nextValue.url,
+										});
+									}}
+								/>
+							</>
 						)}
 						<ScDivider />
 						<ScInput
