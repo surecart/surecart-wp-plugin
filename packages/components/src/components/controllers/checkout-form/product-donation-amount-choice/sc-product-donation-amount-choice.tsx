@@ -27,7 +27,7 @@ export class ScProductDonationAmountChoice {
   render() {
     const amounts = getInRangeAmounts(this.productId);
     const order = amounts.indexOf(this.value);
-    if (!isInRange(this.value, this.state().selectedPrice)) return <Host style={{ display: 'none' }}></Host>;
+    if (!isInRange(this.value, this.state().selectedPrice) || order < 0) return <Host style={{ display: 'none' }}></Host>;
     return (
       <sc-choice-container
         show-control="false"
