@@ -3386,13 +3386,32 @@ export namespace Components {
         "theme": string;
     }
     interface ScSubscription {
+        /**
+          * Whether there are payment methods
+         */
+        "hasPaymentMethods": boolean;
+        /**
+          * Heading to display
+         */
         "heading": string;
+        /**
+          * The subscription protocol
+         */
         "protocol": SubscriptionProtocol;
+        /**
+          * Query to pass to the API
+         */
         "query": object;
+        /**
+          * Whether to show the cancel button
+         */
         "showCancel": boolean;
+        /**
+          * The subscription
+         */
         "subscription": Subscription;
         /**
-          * Customer id to fetch subscriptions
+          * The subscription ID
          */
         "subscriptionId": string;
     }
@@ -9327,13 +9346,32 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface ScSubscription {
+        /**
+          * Whether there are payment methods
+         */
+        "hasPaymentMethods"?: boolean;
+        /**
+          * Heading to display
+         */
         "heading"?: string;
+        /**
+          * The subscription protocol
+         */
         "protocol"?: SubscriptionProtocol;
+        /**
+          * Query to pass to the API
+         */
         "query"?: object;
+        /**
+          * Whether to show the cancel button
+         */
         "showCancel"?: boolean;
+        /**
+          * The subscription
+         */
         "subscription"?: Subscription;
         /**
-          * Customer id to fetch subscriptions
+          * The subscription ID
          */
         "subscriptionId"?: string;
     }

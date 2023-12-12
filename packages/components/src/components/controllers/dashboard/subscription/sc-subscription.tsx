@@ -2,7 +2,7 @@ import { Component, Element, Fragment, h, Prop, State } from '@stencil/core';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { Subscription, SubscriptionProtocol } from '../../../../types';
+import {  Subscription, SubscriptionProtocol } from '../../../../types';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
@@ -12,13 +12,26 @@ import { productNameWithPrice } from '../../../../functions/price';
 })
 export class ScSubscription {
   @Element() el: HTMLScSubscriptionsListElement;
-  /** Customer id to fetch subscriptions */
+
+  /** The subscription ID */
   @Prop() subscriptionId: string;
+
+  /** Whether to show the cancel button */
   @Prop() showCancel: boolean;
+
+  /** Heading to display */
   @Prop() heading: string;
+
+  /** Query to pass to the API */
   @Prop() query: object;
+
+  /** The subscription protocol */
   @Prop() protocol: SubscriptionProtocol;
 
+  /** Whether there are payment methods */
+  @Prop() hasPaymentMethods: boolean;
+
+  /** The subscription */
   @Prop({ mutable: true }) subscription: Subscription;
 
   /** Loading state */
@@ -218,7 +231,18 @@ export class ScSubscription {
               )
             )}
             {this.subscription?.status === 'canceled' && (
-              <sc-button type="link" onClick={() => (this.resubscribeModal = true)}>
+              <sc-button
+                type="link"
+                {...(this.hasPaymentMethods
+                  ? {
+                      onClick: () => (this.resubscribeModal = true),
+                    }
+                  : {
+                      href: addQueryArgs(window.location.href, {
+                        action: 'update_payment_method',
+                      }),
+                    })}
+              >
                 <sc-icon name="repeat" slot="prefix"></sc-icon>
                 {__('Resubscribe', 'surecart')}
               </sc-button>

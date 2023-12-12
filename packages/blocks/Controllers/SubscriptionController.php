@@ -145,10 +145,11 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'surecart' ),
-						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
-						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
-						'subscription' => $subscription,
+						'heading'           => __( 'Current Plan', 'surecart' ),
+						'showCancel'        => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'protocol'          => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
+						'subscription'      => $subscription,
+						'hasPaymentMethods' => count( User::current()->getPaymentMethods() ) > 0,
 					]
 				)->render()
 			);
@@ -254,9 +255,10 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'      => __( 'Current Plan', 'surecart' ),
-						'showCancel'   => false,
-						'subscription' => $subscription,
+						'heading'           => __( 'Current Plan', 'surecart' ),
+						'showCancel'        => false,
+						'subscription'      => $subscription,
+						'hasPaymentMethods' => count( User::current()->getPaymentMethods() ) > 0,
 					]
 				)->render()
 			);
@@ -351,7 +353,7 @@ class SubscriptionController extends BaseController {
 					[
 						'heading' => __( 'Enter An Amount', 'surecart' ),
 						'price'   => $price,
-						'variant' => $this->getParam( 'variant' )
+						'variant' => $this->getParam( 'variant' ),
 					]
 				)->render()
 			);
@@ -370,7 +372,7 @@ class SubscriptionController extends BaseController {
 	 */
 	public function confirm_variation() {
 		$price = Price::find( $this->getParam( 'price_id' ) );
-		$id = $this->getId();
+		$id    = $this->getId();
 
 		if ( ! $id ) {
 			return $this->notFound();
@@ -383,7 +385,7 @@ class SubscriptionController extends BaseController {
 				'price.product',
 			]
 		)->find( $id );
-		
+
 		if ( ! $subscription ) {
 			return $this->notFound();
 		}
@@ -391,9 +393,9 @@ class SubscriptionController extends BaseController {
 		// fetch subscription product.
 		$product = Product::with(
 			[
-				'variants', 
-				'variant_options', 
-				'prices'
+				'variants',
+				'variant_options',
+				'prices',
 			]
 		)->find( $price->product );
 
@@ -434,10 +436,10 @@ class SubscriptionController extends BaseController {
 				->id( 'subscription-ad-hoc-confirm' )
 				->with(
 					[
-						'heading' => __( 'Choose a Variation', 'surecart' ),
-						'product' => $product,
+						'heading'      => __( 'Choose a Variation', 'surecart' ),
+						'product'      => $product,
 						'subscription' => $subscription,
-						'price' => $price
+						'price'        => $price,
 					]
 				)->render()
 			);
