@@ -145,11 +145,10 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'           => __( 'Current Plan', 'surecart' ),
-						'showCancel'        => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
-						'protocol'          => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
-						'subscription'      => $subscription,
-						'hasPaymentMethods' => count( User::current()->getPaymentMethods() ) > 0,
+						'heading'      => __( 'Current Plan', 'surecart' ),
+						'showCancel'   => \SureCart::account()->portal_protocol->subscription_cancellations_enabled && ! $subscription->remaining_period_count && ! $should_delay_cancellation,
+						'protocol'     => SubscriptionProtocol::with( [ 'preservation_coupon' ] )->find(), // \SureCart::account()->subscription_protocol,
+						'subscription' => $subscription,
 					]
 				)->render()
 			);
@@ -255,10 +254,9 @@ class SubscriptionController extends BaseController {
 				->id( 'customer-subscription-edit' )
 				->with(
 					[
-						'heading'           => __( 'Current Plan', 'surecart' ),
-						'showCancel'        => false,
-						'subscription'      => $subscription,
-						'hasPaymentMethods' => count( User::current()->getPaymentMethods() ) > 0,
+						'heading'      => __( 'Current Plan', 'surecart' ),
+						'showCancel'   => false,
+						'subscription' => $subscription,
 					]
 				)->render()
 			);

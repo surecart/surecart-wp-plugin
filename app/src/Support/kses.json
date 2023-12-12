@@ -1908,7 +1908,6 @@
     "slot": true
   },
   "sc-subscription": {
-    "has-payment-methods": true,
     "heading": true,
     "protocol": true,
     "query": true,

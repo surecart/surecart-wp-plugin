@@ -591,20 +591,4 @@ class User implements ArrayAccess, JsonSerializable {
 	public static function __callStatic( $method, $params ) {
 		return call_user_func_array( [ new static(), $method ], $params );
 	}
-
-	/**
-	 * Get the user's payment methods
-	 *
-	 * @return PaymentMethod[]
-	 */
-	public function getPaymentMethods() {
-
-		return \SureCart\Models\PaymentMethod::where(
-			[
-				'customer_ids' => array_values( $this->customerIds() ),
-			]
-		)
-		->get() ?? [];
-	}
-
 }

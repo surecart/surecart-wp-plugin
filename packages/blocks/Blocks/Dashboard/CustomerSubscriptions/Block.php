@@ -56,9 +56,8 @@ class Block extends DashboardPage {
 			'sc-subscription',
 			'#customer-subscription',
 			[
-				'heading'           => $attributes['title'] ?? __( 'Update Plan', 'surecart' ),
-				'subscription'      => $subscription,
-				'hasPaymentMethods' => count( User::current()->getPaymentMethods() ) > 0,
+				'heading'      => $attributes['title'] ?? __( 'Update Plan', 'surecart' ),
+				'subscription' => $subscription,
 			]
 		);
 		\SureCart::assets()->addComponentData(

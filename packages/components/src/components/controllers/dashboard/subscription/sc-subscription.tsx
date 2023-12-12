@@ -28,9 +28,6 @@ export class ScSubscription {
   /** The subscription protocol */
   @Prop() protocol: SubscriptionProtocol;
 
-  /** Whether there are payment methods */
-  @Prop() hasPaymentMethods: boolean;
-
   /** The subscription */
   @Prop({ mutable: true }) subscription: Subscription;
 
@@ -233,7 +230,7 @@ export class ScSubscription {
             {this.subscription?.status === 'canceled' && (
               <sc-button
                 type="link"
-                {...(this.hasPaymentMethods
+                {...(!!this.subscription?.payment_method
                   ? {
                       onClick: () => (this.resubscribeModal = true),
                     }

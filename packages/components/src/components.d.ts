@@ -3387,10 +3387,6 @@ export namespace Components {
     }
     interface ScSubscription {
         /**
-          * Whether there are payment methods
-         */
-        "hasPaymentMethods": boolean;
-        /**
           * Heading to display
          */
         "heading": string;
@@ -9346,10 +9342,6 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface ScSubscription {
-        /**
-          * Whether there are payment methods
-         */
-        "hasPaymentMethods"?: boolean;
         /**
           * Heading to display
          */

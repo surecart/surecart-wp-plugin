@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                        | Type                   | Default     |
-| ---------------- | ----------------- | ---------------------------------- | ---------------------- | ----------- |
-| `heading`        | `heading`         |                                    | `string`               | `undefined` |
-| `protocol`       | --                |                                    | `SubscriptionProtocol` | `undefined` |
-| `query`          | --                |                                    | `object`               | `undefined` |
-| `showCancel`     | `show-cancel`     |                                    | `boolean`              | `undefined` |
-| `subscription`   | --                |                                    | `Subscription`         | `undefined` |
-| `subscriptionId` | `subscription-id` | Customer id to fetch subscriptions | `string`               | `undefined` |
+| Property            | Attribute             | Description                       | Type                   | Default     |
+| ------------------- | --------------------- | --------------------------------- | ---------------------- | ----------- |
+| `hasPaymentMethods` | `has-payment-methods` | Whether there are payment methods | `boolean`              | `undefined` |
+| `heading`           | `heading`             | Heading to display                | `string`               | `undefined` |
+| `protocol`          | --                    | The subscription protocol         | `SubscriptionProtocol` | `undefined` |
+| `query`             | --                    | Query to pass to the API          | `object`               | `undefined` |
+| `showCancel`        | `show-cancel`         | Whether to show the cancel button | `boolean`              | `undefined` |
+| `subscription`      | --                    | The subscription                  | `Subscription`         | `undefined` |
+| `subscriptionId`    | `subscription-id`     | The subscription ID               | `string`               | `undefined` |
 
 
 ## Dependencies
