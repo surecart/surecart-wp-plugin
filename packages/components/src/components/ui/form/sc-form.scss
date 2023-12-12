@@ -9,7 +9,8 @@
     margin-bottom: 0;
   }
 }
-::slotted(*:focus-within) {
+::slotted(*:focus-within),
+::slotted(*:active) {
   position: relative;
   z-index: 1;
 }
