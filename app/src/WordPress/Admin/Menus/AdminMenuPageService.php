@@ -233,7 +233,7 @@ class AdminMenuPageService {
 		)[0] ?? null;
 
 		$status      = '';
-		$post_status = get_post_status( $template_part_post->ID );
+		$post_status = get_post_status( $template_part_post->ID ?? null );
 
 		if ( 'publish' !== $post_status ) {
 			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
