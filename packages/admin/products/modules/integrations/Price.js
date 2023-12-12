@@ -80,7 +80,8 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 			return <div>{__('All Prices', 'surecart')}</div>;
 		}
 
-		if (!price || totalPrices < 2) {
+		// Return null if price is missing, or there's less than 2 total prices.
+		if (!price?.id || totalPrices < 2) {
 			return null;
 		}
 
@@ -127,7 +128,8 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 			);
 		}
 
-		if (!variant || totalVariants < 2) {
+		// Return null if variant is missing, or there's less than 2 total variants.
+		if (!variant?.id || totalVariants < 2) {
 			return null;
 		}
 
