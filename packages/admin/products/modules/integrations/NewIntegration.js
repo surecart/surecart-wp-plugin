@@ -20,7 +20,7 @@ import Error from '../../../components/Error';
 import SelectIntegration from './SelectIntegration';
 import SelectPrice from '../../../components/SelectPrice';
 import { formatNumber } from '../../../util';
-import { intervalString } from '../../../util/translations';
+import useSelectPrices from '../../hooks/useSelectPrices';
 
 export default ({ onRequestClose, id, product }) => {
 	const [provider, setProvider] = useState(null);
@@ -31,6 +31,8 @@ export default ({ onRequestClose, id, product }) => {
 	const [variantId, setVariantId] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEntityRecord } = useDispatch(coreStore);
+
+	const { active } = useSelectPrices({ productId: id });
 
 	const onSubmit = async (e) => {
 		try {
@@ -171,7 +173,14 @@ export default ({ onRequestClose, id, product }) => {
 									includeVariants={false}
 									showOutOfStock={true}
 									loading={false}
-									products={[product]}
+									products={[
+										{
+											...product,
+											prices: {
+												data: active, // merge active prices with product data
+											},
+										},
+									]}
 									onSelect={({ price_id }) => {
 										// find the price and set it.
 										const value =
