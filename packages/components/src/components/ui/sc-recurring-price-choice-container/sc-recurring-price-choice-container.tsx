@@ -88,7 +88,7 @@ export class ScRecurringPriceChoiceContainer {
                             },
                           })
                         : this.product.name)}
-                    <sc-icon name="chevron-down"></sc-icon>
+                    <sc-icon style={{ minWidth: 'var(--width)' }} name="chevron-down"></sc-icon>
                   </button>
                   <sc-menu aria-label={__('Recurring Interval selection Dropdown opened, Press Up/Down Arrow & select the recurring interval you want.', 'surecart')}>
                     {(this.prices || []).map(price => {

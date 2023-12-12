@@ -130,7 +130,7 @@ class Block extends BaseBlock {
 		return array_values( array_filter(
 			array_map(
 				function( $block ) {
-					return $block['attrs']['amount'] ?? '';
+					return $block['attrs']['amount'] ?? 0;
 				},
 				$amounts_block[0]['innerBlocks']
 			)
