@@ -29,7 +29,7 @@ class Block extends BaseBlock {
 						esc_attr( $this->getVars( $attributes, '--sc-choice' ) ),
 						'--columns:' . intval( $attributes['columns'] ) . ';',
 						! empty( $attributes['style']['spacing']['blockGap'] ) ? '--sc-choices-gap:' . $this->getSpacingPresetCssVar( $attributes['style']['spacing']['blockGap'] ) . ';' : '',
-						$styles
+						$styles,
 					]
 				),
 			]
