@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
@@ -59,6 +61,11 @@ export default ({ attributes, setAttributes }) => {
 	const spacingProps = useSpacingProps(attributes);
 
 	const blockProps = useBlockProps({
+		css: css`
+			&.has-child-selected {
+				z-index: 1;
+			}
+		`,
 		style: {
 			'--sc-input-label-color': colorProps?.style?.color,
 			backgroundColor: colorProps?.style?.backgroundColor,
@@ -168,7 +175,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>
-			<div {...innerBlocksProps} {...blockProps}></div>
+			<div {...innerBlocksProps}></div>
 		</>
 	);
 };
