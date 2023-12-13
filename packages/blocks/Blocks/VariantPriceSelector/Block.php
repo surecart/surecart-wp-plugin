@@ -27,7 +27,7 @@ class Block extends BaseBlock {
 			]
 		)->find( $attributes['product_id'] );
 
-		if ( empty( $product ) ) {
+		if ( empty( $product ) || is_wp_error( $product ) ) {
 			return '';
 		}
 
