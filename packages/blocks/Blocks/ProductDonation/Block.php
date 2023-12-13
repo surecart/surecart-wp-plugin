@@ -24,7 +24,7 @@ class Block extends BaseBlock {
 		}
 
 		// get the product.
-		$product = Product::with( [ 'prices' ] )->find( $attributes['product_id'] ?? '' );
+		$product = Product::with( array( 'prices' ) )->find( $attributes['product_id'] ?? '' );
 		if ( is_wp_error( $product ) ) {
 			return $product->get_error_message();
 		}
@@ -42,20 +42,20 @@ class Block extends BaseBlock {
 
 		// set initial state.
 		sc_initial_state(
-			[
-				'checkout'        => [
+			array(
+				'checkout'        => array(
 					'initialLineItems' => sc_initial_line_items( $this->getInitialLineItems( $product, $amounts ) ),
-				],
-				'productDonation' => [
-					$attributes['product_id'] => [
+				),
+				'productDonation' => array(
+					$attributes['product_id'] => array(
 						'product'       => $product->toArray(),
 						'amounts'       => $amounts,
 						'ad_hoc_amount' => null,
 						'custom_amount' => null,
-						'selectedPrice' => ( $product->activePrices() || [] )[0] ?? null,
-					],
-				],
-			]
+						'selectedPrice' => ( $product->activePrices() || array() )[0] ?? null,
+					),
+				),
+			)
 		);
 
 		[ 'styles' => $styles, 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
@@ -63,10 +63,10 @@ class Block extends BaseBlock {
 		$styles .= '--sc-input-label-color: ' . $attributes['textColor'] . '; ';
 
 		$wrapper_attributes = get_block_wrapper_attributes(
-			[
+			array(
 				'style' => esc_attr( $styles ),
 				'class' => esc_attr( $classes ),
-			]
+			)
 		);
 
 		return wp_sprintf(
@@ -86,26 +86,16 @@ class Block extends BaseBlock {
 	 * @return array
 	 */
 	public function getInitialLineItems( $product, $amounts ) {
-		if ( empty( $product->activeAdHocPrices() ) || empty( $amounts ) ) {
-			return [];
-		}
-
-		// Get first value from amounts that is in range of price ad_hoc_min_amount & ad_hoc_max_amount.
-		$ad_hoc_amount = $amounts[0] ?? '';
-
-		foreach ( $amounts as $amount ) {
-			if ( $amount >= $product->activeAdHocPrices()[0]->ad_hoc_min_amount && $amount <= $product->activeAdHocPrices()[0]->ad_hoc_max_amount ) {
-				$ad_hoc_amount = $amount;
-				break;
-			}
+		if ( empty( $product->activeAdHocPrices()[0] ) ) {
+			return array();
 		}
 
 		return array(
-			[
+			array(
 				'price'         => $product->activeAdHocPrices()[0]->id,
-				'ad_hoc_amount' => $ad_hoc_amount,
+				'ad_hoc_amount' => $product->activeAdHocPrices()[0]->amount,
 				'quantity'      => 1,
-			],
+			),
 		);
 	}
 
@@ -117,7 +107,7 @@ class Block extends BaseBlock {
 	public function getAmounts() {
 		$amounts_block = array_filter(
 			$this->block->parsed_block['innerBlocks'],
-			function( $block ) {
+			function ( $block ) {
 				return 'surecart/product-donation-amounts' === $block['blockName'];
 			},
 		);
@@ -129,7 +119,7 @@ class Block extends BaseBlock {
 		// get amounts from inner blocks.
 		return array_values(
 			array_map(
-				function( $block ) {
+				function ( $block ) {
 					return $block['attrs']['amount'] ?? 0;
 				},
 				$amounts_block[0]['innerBlocks']
