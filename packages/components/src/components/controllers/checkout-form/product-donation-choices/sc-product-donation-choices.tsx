@@ -42,7 +42,7 @@ export class ScProductDonationChoice {
     // return price choice container.
     return (
       <sc-recurring-price-choice-container
-        prices={prices}
+        prices={prices.sort((a, b) => a?.position - b?.position)}
         product={this.state()?.product}
         selectedPrice={this.state().selectedPrice}
         showDetails={false}
