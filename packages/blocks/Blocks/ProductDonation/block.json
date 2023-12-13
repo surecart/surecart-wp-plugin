@@ -42,5 +42,6 @@
 			"type": "boolean",
 			"default": true
 		}
-	}
+	},
+	"style": "file:./style.css"
 }
