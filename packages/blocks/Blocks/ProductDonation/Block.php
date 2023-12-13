@@ -64,8 +64,8 @@ class Block extends BaseBlock {
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			[
-				'style' => esc_attr($styles),
-				'class' => esc_attr($classes)
+				'style' => esc_attr( $styles ),
+				'class' => esc_attr( $classes ),
 			]
 		);
 
@@ -127,13 +127,13 @@ class Block extends BaseBlock {
 		}
 
 		// get amounts from inner blocks.
-		return array_values( array_filter(
+		return array_values(
 			array_map(
 				function( $block ) {
 					return $block['attrs']['amount'] ?? 0;
 				},
 				$amounts_block[0]['innerBlocks']
 			)
-		) );
+		);
 	}
 }
