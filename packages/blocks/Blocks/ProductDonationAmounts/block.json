@@ -4,7 +4,7 @@
 	"title": "Amounts",
 	"description": "Displays a donation amounts for the user to choose from.",
 	"category": "surecart",
-	"ancestor": ["surecart/form"],
+	"ancestor": ["surecart/product-donation"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
 	"usesContext": [

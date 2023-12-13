@@ -4,7 +4,7 @@
 	"title": "Prices",
 	"description": "Displays a donation price and interval selector.",
 	"category": "surecart",
-	"ancestor": ["surecart/form"],
+	"ancestor": ["surecart/product-donation"],
 	"keywords": ["donation", "ad hoc", "custom", "amount"],
 	"textdomain": "surecart",
 	"usesContext": [
