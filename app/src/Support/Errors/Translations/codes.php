@@ -123,6 +123,7 @@ return array(
 	'customer.default_payment_method.invalid'              => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'payment_method.not_detachable'                        => __( 'This payment method cannot be deleted because there are no other valid or reusable saved payment methods available.', 'surecart' ),
 	'line_item.price.exceeds_purchase_limit'               => __( 'You have exceeded the purchase limit for this product.', 'surecart' ),
+	'line_item.ad_hoc_amount.outside_range'                => __( 'This amount is outside the allowed amount.', 'surecart' ),
 	'checkout.price.exceeds_purchase_limit'                => __( 'You have exceeded the purchase limit for this product.', 'surecart' ),
 	'checkout.product.out_of_stock'                        => __( 'This product is out of stock.', 'surecart' ),
 	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),

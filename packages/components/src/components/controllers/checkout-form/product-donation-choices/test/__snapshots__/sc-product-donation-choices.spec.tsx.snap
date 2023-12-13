@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-product-donation-choices renders 1`] = `
+<sc-product-donation-choices>
+  <mock:shadow-root>
+    <div class="sc-product-donation-choices">
+      <sc-skeleton style="width: 20%; display: inline-block;"></sc-skeleton>
+      <sc-skeleton style="width: 60%; display: inline-block;"></sc-skeleton>
+      <sc-skeleton style="width: 40%; display: inline-block;"></sc-skeleton>
+    </div>
+  </mock:shadow-root>
+</sc-product-donation-choices>
+`;

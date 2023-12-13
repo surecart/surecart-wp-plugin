@@ -625,6 +625,10 @@ export namespace Components {
          */
         "required": boolean;
         /**
+          * Role of radio/checkbox control
+         */
+        "role": string;
+        /**
           * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
          */
         "setCustomValidity": (message: string) => Promise<void>;
@@ -2802,6 +2806,41 @@ export namespace Components {
     interface ScProductBuyButton {
         "addToCart": boolean;
     }
+    interface ScProductDonationAmountChoice {
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * The product id for the fields.
+         */
+        "productId": string;
+        /**
+          * The value of the field.
+         */
+        "value": number;
+    }
+    interface ScProductDonationChoices {
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * The product id for the fields.
+         */
+        "productId": string;
+        "recurring": boolean;
+    }
+    interface ScProductDonationCustomAmount {
+        /**
+          * Selected Product Id for the donation.
+         */
+        "productId": string;
+        /**
+          * Custom Amount of the donation.
+         */
+        "value": number;
+    }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
         "product": Product;
@@ -3105,6 +3144,36 @@ export namespace Components {
           * The selected value of the control.
          */
         "value": string;
+    }
+    interface ScRecurringPriceChoiceContainer {
+        /**
+          * Label for the choice.
+         */
+        "label": string;
+        /**
+          * The prices to choose from.
+         */
+        "prices": Price1[];
+        /**
+          * The product.
+         */
+        "product": Product1;
+        /**
+          * The currently selected price
+         */
+        "selectedPrice": Price1;
+        /**
+          * Should we show the price?
+         */
+        "showAmount": boolean;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
+        /**
+          * Should we show the price details?
+         */
+        "showDetails": boolean;
     }
     interface ScRichText {
         /**
@@ -4115,6 +4184,10 @@ export interface ScRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRadioGroupElement;
 }
+export interface ScRecurringPriceChoiceContainerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScRecurringPriceChoiceContainerElement;
+}
 export interface ScRichTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRichTextElement;
@@ -5021,6 +5094,24 @@ declare global {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
     };
+    interface HTMLScProductDonationAmountChoiceElement extends Components.ScProductDonationAmountChoice, HTMLStencilElement {
+    }
+    var HTMLScProductDonationAmountChoiceElement: {
+        prototype: HTMLScProductDonationAmountChoiceElement;
+        new (): HTMLScProductDonationAmountChoiceElement;
+    };
+    interface HTMLScProductDonationChoicesElement extends Components.ScProductDonationChoices, HTMLStencilElement {
+    }
+    var HTMLScProductDonationChoicesElement: {
+        prototype: HTMLScProductDonationChoicesElement;
+        new (): HTMLScProductDonationChoicesElement;
+    };
+    interface HTMLScProductDonationCustomAmountElement extends Components.ScProductDonationCustomAmount, HTMLStencilElement {
+    }
+    var HTMLScProductDonationCustomAmountElement: {
+        prototype: HTMLScProductDonationCustomAmountElement;
+        new (): HTMLScProductDonationCustomAmountElement;
+    };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
     var HTMLScProductItemElement: {
@@ -5140,6 +5231,12 @@ declare global {
     var HTMLScRadioGroupElement: {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
+    };
+    interface HTMLScRecurringPriceChoiceContainerElement extends Components.ScRecurringPriceChoiceContainer, HTMLStencilElement {
+    }
+    var HTMLScRecurringPriceChoiceContainerElement: {
+        prototype: HTMLScRecurringPriceChoiceContainerElement;
+        new (): HTMLScRecurringPriceChoiceContainerElement;
     };
     interface HTMLScRichTextElement extends Components.ScRichText, HTMLStencilElement {
     }
@@ -5568,6 +5665,9 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
+        "sc-product-donation-amount-choice": HTMLScProductDonationAmountChoiceElement;
+        "sc-product-donation-choices": HTMLScProductDonationChoicesElement;
+        "sc-product-donation-custom-amount": HTMLScProductDonationCustomAmountElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
@@ -5588,6 +5688,7 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
@@ -6285,6 +6386,10 @@ declare namespace LocalJSX {
           * Is this required
          */
         "required"?: boolean;
+        /**
+          * Role of radio/checkbox control
+         */
+        "role"?: string;
         /**
           * Show the radio/checkbox control
          */
@@ -8671,6 +8776,41 @@ declare namespace LocalJSX {
     interface ScProductBuyButton {
         "addToCart"?: boolean;
     }
+    interface ScProductDonationAmountChoice {
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * The product id for the fields.
+         */
+        "productId"?: string;
+        /**
+          * The value of the field.
+         */
+        "value"?: number;
+    }
+    interface ScProductDonationChoices {
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * The product id for the fields.
+         */
+        "productId"?: string;
+        "recurring"?: boolean;
+    }
+    interface ScProductDonationCustomAmount {
+        /**
+          * Selected Product Id for the donation.
+         */
+        "productId"?: string;
+        /**
+          * Custom Amount of the donation.
+         */
+        "value"?: number;
+    }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
         "product"?: Product;
@@ -9005,6 +9145,40 @@ declare namespace LocalJSX {
           * The selected value of the control.
          */
         "value"?: string;
+    }
+    interface ScRecurringPriceChoiceContainer {
+        /**
+          * Label for the choice.
+         */
+        "label"?: string;
+        /**
+          * Change event.
+         */
+        "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<string>) => void;
+        /**
+          * The prices to choose from.
+         */
+        "prices"?: Price1[];
+        /**
+          * The product.
+         */
+        "product"?: Product1;
+        /**
+          * The currently selected price
+         */
+        "selectedPrice"?: Price1;
+        /**
+          * Should we show the price?
+         */
+        "showAmount"?: boolean;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
+        /**
+          * Should we show the price details?
+         */
+        "showDetails"?: boolean;
     }
     interface ScRichText {
         /**
@@ -10033,6 +10207,9 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-buy-button": ScProductBuyButton;
+        "sc-product-donation-amount-choice": ScProductDonationAmountChoice;
+        "sc-product-donation-choices": ScProductDonationChoices;
+        "sc-product-donation-custom-amount": ScProductDonationCustomAmount;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
@@ -10053,6 +10230,7 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
@@ -10262,6 +10440,9 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
+            "sc-product-donation-amount-choice": LocalJSX.ScProductDonationAmountChoice & JSXBase.HTMLAttributes<HTMLScProductDonationAmountChoiceElement>;
+            "sc-product-donation-choices": LocalJSX.ScProductDonationChoices & JSXBase.HTMLAttributes<HTMLScProductDonationChoicesElement>;
+            "sc-product-donation-custom-amount": LocalJSX.ScProductDonationCustomAmount & JSXBase.HTMLAttributes<HTMLScProductDonationCustomAmountElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;
@@ -10282,6 +10463,7 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
