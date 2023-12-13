@@ -243,6 +243,13 @@ export class ScSubscriptionSwitch {
           {(this.prices || [])
             .filter(price => !price.archived)
             .filter(price => price?.currency === this.subscription?.currency)
+            .sort((a, b) => {
+              if (a.amount !== b.amount) {
+                return a.amount - b.amount;
+              }
+
+              return a.position - b.position;
+            })
             .map(price => {
               const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
               const product = this.products.find(product => product.id === price?.product);
