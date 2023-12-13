@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { LineItemData, Price as Price1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { LineItemData, Price as Price1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -3386,13 +3386,28 @@ export namespace Components {
         "theme": string;
     }
     interface ScSubscription {
+        /**
+          * Heading to display
+         */
         "heading": string;
+        /**
+          * The subscription protocol
+         */
         "protocol": SubscriptionProtocol;
+        /**
+          * Query to pass to the API
+         */
         "query": object;
+        /**
+          * Whether to show the cancel button
+         */
         "showCancel": boolean;
+        /**
+          * The subscription
+         */
         "subscription": Subscription;
         /**
-          * Customer id to fetch subscriptions
+          * The subscription ID
          */
         "subscriptionId": string;
     }
@@ -3434,6 +3449,16 @@ export namespace Components {
           * The subscription
          */
         "subscription": Subscription;
+    }
+    interface ScSubscriptionReactivate {
+        /**
+          * Whether it is open
+         */
+        "open": boolean;
+        /**
+          * The subscription to reactivate
+         */
+        "subscription": Subscription1;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -4117,6 +4142,10 @@ export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
 export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSubscriptionCancelElement;
+}
+export interface ScSubscriptionReactivateCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSubscriptionReactivateElement;
 }
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5238,6 +5267,12 @@ declare global {
         prototype: HTMLScSubscriptionPaymentMethodElement;
         new (): HTMLScSubscriptionPaymentMethodElement;
     };
+    interface HTMLScSubscriptionReactivateElement extends Components.ScSubscriptionReactivate, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionReactivateElement: {
+        prototype: HTMLScSubscriptionReactivateElement;
+        new (): HTMLScSubscriptionReactivateElement;
+    };
     interface HTMLScSubscriptionStatusBadgeElement extends Components.ScSubscriptionStatusBadge, HTMLStencilElement {
     }
     var HTMLScSubscriptionStatusBadgeElement: {
@@ -5574,6 +5609,7 @@ declare global {
         "sc-subscription-next-payment": HTMLScSubscriptionNextPaymentElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
+        "sc-subscription-reactivate": HTMLScSubscriptionReactivateElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
@@ -9306,13 +9342,28 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface ScSubscription {
+        /**
+          * Heading to display
+         */
         "heading"?: string;
+        /**
+          * The subscription protocol
+         */
         "protocol"?: SubscriptionProtocol;
+        /**
+          * Query to pass to the API
+         */
         "query"?: object;
+        /**
+          * Whether to show the cancel button
+         */
         "showCancel"?: boolean;
+        /**
+          * The subscription
+         */
         "subscription"?: Subscription;
         /**
-          * Customer id to fetch subscriptions
+          * The subscription ID
          */
         "subscriptionId"?: string;
     }
@@ -9356,6 +9407,24 @@ declare namespace LocalJSX {
           * The subscription
          */
         "subscription"?: Subscription;
+    }
+    interface ScSubscriptionReactivate {
+        /**
+          * Refresh subscriptions
+         */
+        "onScRefresh"?: (event: ScSubscriptionReactivateCustomEvent<void>) => void;
+        /**
+          * Reactivate modal closed
+         */
+        "onScRequestClose"?: (event: ScSubscriptionReactivateCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        /**
+          * Whether it is open
+         */
+        "open"?: boolean;
+        /**
+          * The subscription to reactivate
+         */
+        "subscription"?: Subscription1;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -10005,6 +10074,7 @@ declare namespace LocalJSX {
         "sc-subscription-next-payment": ScSubscriptionNextPayment;
         "sc-subscription-payment": ScSubscriptionPayment;
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
+        "sc-subscription-reactivate": ScSubscriptionReactivate;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
@@ -10233,6 +10303,7 @@ declare module "@stencil/core" {
             "sc-subscription-next-payment": LocalJSX.ScSubscriptionNextPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionNextPaymentElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
+            "sc-subscription-reactivate": LocalJSX.ScSubscriptionReactivate & JSXBase.HTMLAttributes<HTMLScSubscriptionReactivateElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;

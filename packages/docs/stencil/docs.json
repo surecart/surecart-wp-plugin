@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-15T13:59:29",
+  "timestamp": "2023-12-07T12:53:13",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -695,6 +695,7 @@
         "sc-product-item-list",
         "sc-stripe-add-method",
         "sc-stripe-payment-request",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -769,6 +770,9 @@
           "sc-alert"
         ],
         "sc-stripe-payment-request": [
+          "sc-alert"
+        ],
+        "sc-subscription-reactivate": [
           "sc-alert"
         ],
         "sc-subscription-switch": [
@@ -1133,6 +1137,7 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
@@ -1229,6 +1234,9 @@
           "sc-block-ui"
         ],
         "sc-subscription-payment-method": [
+          "sc-block-ui"
+        ],
+        "sc-subscription-reactivate": [
           "sc-block-ui"
         ],
         "sc-subscription-switch": [
@@ -1883,6 +1891,7 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
@@ -2009,6 +2018,9 @@
           "sc-button"
         ],
         "sc-subscription-payment-method": [
+          "sc-button"
+        ],
+        "sc-subscription-reactivate": [
           "sc-button"
         ],
         "sc-subscription-switch": [
@@ -9504,6 +9516,7 @@
         "sc-subscription-cancel",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
@@ -9586,6 +9599,9 @@
           "sc-dashboard-module"
         ],
         "sc-subscription-payment-method": [
+          "sc-dashboard-module"
+        ],
+        "sc-subscription-reactivate": [
           "sc-dashboard-module"
         ],
         "sc-subscription-switch": [
@@ -9774,6 +9790,7 @@
         "sc-payment-methods-list",
         "sc-product-price-modal",
         "sc-subscription-details",
+        "sc-subscription-reactivate",
         "sc-upgrade-required"
       ],
       "dependencies": [
@@ -9807,6 +9824,9 @@
           "sc-dialog"
         ],
         "sc-subscription-details": [
+          "sc-dialog"
+        ],
+        "sc-subscription-reactivate": [
           "sc-dialog"
         ],
         "sc-upgrade-required": [
@@ -10370,6 +10390,23 @@
             {
               "value": "top",
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "stickyHeader",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "sticky-header",
+          "reflectToAttr": false,
+          "docs": "Sticky drawer header",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -11356,6 +11393,7 @@
         "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-upcoming-invoice"
       ],
@@ -11404,6 +11442,9 @@
           "sc-flex"
         ],
         "sc-subscription-payment-method": [
+          "sc-flex"
+        ],
+        "sc-subscription-reactivate": [
           "sc-flex"
         ],
         "sc-subscription-switch": [
@@ -12618,6 +12659,7 @@
         "sc-subscription",
         "sc-subscription-cancel",
         "sc-subscription-details",
+        "sc-subscription-reactivate",
         "sc-subscription-status-badge",
         "sc-upcoming-invoice"
       ],
@@ -12642,6 +12684,9 @@
           "sc-format-date"
         ],
         "sc-subscription-details": [
+          "sc-format-date"
+        ],
+        "sc-subscription-reactivate": [
           "sc-format-date"
         ],
         "sc-subscription-status-badge": [
@@ -13023,6 +13068,7 @@
         "sc-shipping-choices",
         "sc-subscription-details",
         "sc-subscription-next-payment",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-total",
         "sc-upcoming-invoice"
@@ -13102,6 +13148,9 @@
           "sc-format-number"
         ],
         "sc-subscription-next-payment": [
+          "sc-format-number"
+        ],
+        "sc-subscription-reactivate": [
           "sc-format-number"
         ],
         "sc-subscription-switch": [
@@ -18124,6 +18173,113 @@
         ],
         "sc-form-control": [
           "sc-visually-hidden"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/order-return-badge/sc-order-return-badge.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-order-return-badge",
+      "readme": "# sc-order-return-badge\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "clearable",
+          "reflectToAttr": false,
+          "docs": "Makes the tag clearable.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pill",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "pill",
+          "reflectToAttr": true,
+          "docs": "Draws a pill-style tag with rounded edges.",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"medium\" | \"small\"",
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": true,
+          "docs": "The tag's size.",
+          "docsTags": [],
+          "default": "'medium'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "medium",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "\"completed\" | \"open\"",
+          "mutable": false,
+          "attr": "status",
+          "reflectToAttr": false,
+          "docs": "The tag's statux type.",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "completed",
+              "type": "string"
+            },
+            {
+              "value": "open",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-order-return-badge": [
+          "sc-tag"
         ]
       }
     },
@@ -27387,7 +27543,36 @@
       "tag": "sc-shipping-choices",
       "readme": "# sc-shipping-choices\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "empty - The empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui loader."
+        },
+        {
+          "name": "part",
+          "text": "radio__base - The radio base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "radio__label - The radio label."
+        },
+        {
+          "name": "part",
+          "text": "radio__control - The radio control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "radio__checked-icon - The radio checked icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -27429,7 +27614,36 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui loader."
+        },
+        {
+          "name": "empty",
+          "docs": "The empty message."
+        },
+        {
+          "name": "radio__base",
+          "docs": "The radio base wrapper."
+        },
+        {
+          "name": "radio__checked-icon",
+          "docs": "The radio checked icon."
+        },
+        {
+          "name": "radio__control",
+          "docs": "The radio control wrapper."
+        },
+        {
+          "name": "radio__label",
+          "docs": "The radio label."
+        }
+      ],
       "dependents": [
         "sc-form-components-validator"
       ],
@@ -27560,6 +27774,7 @@
         "sc-subscription-next-payment",
         "sc-subscription-payment",
         "sc-subscription-payment-method",
+        "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscriptions-list",
         "sc-upcoming-invoice"
@@ -27663,6 +27878,9 @@
           "sc-skeleton"
         ],
         "sc-subscription-payment-method": [
+          "sc-skeleton"
+        ],
+        "sc-subscription-reactivate": [
           "sc-skeleton"
         ],
         "sc-subscription-switch": [
@@ -28871,7 +29089,8 @@
         "sc-icon",
         "sc-card",
         "sc-block-ui",
-        "sc-cancel-dialog"
+        "sc-cancel-dialog",
+        "sc-subscription-reactivate"
       ],
       "dependencyGraph": {
         "sc-subscription": [
@@ -28887,7 +29106,8 @@
           "sc-icon",
           "sc-card",
           "sc-block-ui",
-          "sc-cancel-dialog"
+          "sc-cancel-dialog",
+          "sc-subscription-reactivate"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -28997,6 +29217,18 @@
         "sc-cancel-discount": [
           "sc-dashboard-module",
           "sc-flex",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-subscription-reactivate": [
+          "sc-flex",
+          "sc-skeleton",
+          "sc-dialog",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-format-number",
+          "sc-text",
+          "sc-format-date",
           "sc-button",
           "sc-block-ui"
         ]
@@ -29787,6 +30019,121 @@
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/dashboard/subscription-reactivate/sc-subscription-reactivate.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-subscription-reactivate",
+      "readme": "# sc-subscription-reactivate\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "open",
+          "reflectToAttr": false,
+          "docs": "Whether it is open",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "subscription",
+          "type": "Subscription",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "The subscription to reactivate",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scRefresh",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Refresh subscriptions",
+          "docsTags": []
+        },
+        {
+          "event": "scRequestClose",
+          "detail": "\"close-button\" | \"keyboard\" | \"overlay\"",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Reactivate modal closed",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-subscription"
+      ],
+      "dependencies": [
+        "sc-flex",
+        "sc-skeleton",
+        "sc-dialog",
+        "sc-dashboard-module",
+        "sc-alert",
+        "sc-format-number",
+        "sc-text",
+        "sc-format-date",
+        "sc-button",
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-subscription-reactivate": [
+          "sc-flex",
+          "sc-skeleton",
+          "sc-dialog",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-format-number",
+          "sc-text",
+          "sc-format-date",
+          "sc-button",
+          "sc-block-ui"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ],
+        "sc-subscription": [
+          "sc-subscription-reactivate"
         ]
       }
     },
@@ -31205,6 +31552,7 @@
         "sc-order-confirmation-details",
         "sc-order-confirmation-totals",
         "sc-order-fulfillment-badge",
+        "sc-order-return-badge",
         "sc-order-shipment-badge",
         "sc-order-status-badge",
         "sc-orders-list",
@@ -31261,6 +31609,9 @@
           "sc-tag"
         ],
         "sc-order-fulfillment-badge": [
+          "sc-tag"
+        ],
+        "sc-order-return-badge": [
           "sc-tag"
         ],
         "sc-order-shipment-badge": [
@@ -31720,6 +32071,7 @@
         "sc-stripe-element",
         "sc-stripe-payment-element",
         "sc-subscription-details",
+        "sc-subscription-reactivate",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
@@ -31746,6 +32098,9 @@
           "sc-text"
         ],
         "sc-subscription-details": [
+          "sc-text"
+        ],
+        "sc-subscription-reactivate": [
           "sc-text"
         ],
         "sc-upcoming-invoice": [

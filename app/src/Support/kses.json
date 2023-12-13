@@ -1976,6 +1976,14 @@
     "class": true,
     "slot": true
   },
+  "sc-subscription-reactivate": {
+    "open": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-subscription-status-badge": {
     "clearable": true,
     "pill": true,
