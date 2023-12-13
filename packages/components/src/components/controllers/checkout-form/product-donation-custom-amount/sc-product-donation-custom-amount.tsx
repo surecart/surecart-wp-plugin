@@ -27,7 +27,7 @@ export class ScProductDonationCustomAmount {
   }
 
   render() {
-    const checked = !!this.state().custom_amount;
+    const checked = !!this.state()?.custom_amount;
     return (
       <Host class={{ 'sc-product-donation-custom-amount': true, 'sc-product-donation-custom-amount--has-value': !!this.value }}>
         <sc-choice-container
