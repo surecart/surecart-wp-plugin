@@ -226,6 +226,16 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.14.0 - December 13th, 2023 =
+- New: Donations block to accept one-time and recurring donations.
+- New: Added user option to reactivate canceled subscriptions on customer dashboard.
+- Improvement: Display price and variant name on subscription index page.
+- Improvement: Updated address fields to not inherit the store's country.
+- Improvement: Improved error handling for 'Add to Cart' on product pages.
+- Improvement: Updated checkout totals for installments and trial periods to be more clear.
+- Fix: Fixed currency symbol issue in dropdowns not appearing properly for some users in the admin.
+- Fix: Corrected a typo in the Order Bump feature.
+
 = 2.13.0 - December 11th, 2023 =
 * Fix: Issue with upgrade group cache not clearing on merchant admin when updating status.
 * Fix: Issue with upgrade group incorrectly showing in customer dashboard when archived.
