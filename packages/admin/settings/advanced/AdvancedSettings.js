@@ -64,6 +64,27 @@ export default () => {
 		'surecart_password_validation_enabled'
 	);
 
+	const [shopMenu, setShopMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_shop_admin_menu'
+	);
+	const [cartMenu, setCartMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_cart_admin_menu'
+	);
+	const [checkoutMenu, setCheckoutMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_checkout_admin_menu'
+	);
+	const [customerMenu, setCustomerMenu] = useEntityProp(
+		'root',
+		'site',
+		'surecart_dashboard_admin_menu'
+	);
+
 	/**
 	 * Form is submitted.
 	 */
@@ -252,6 +273,61 @@ export default () => {
 					<span slot="description">
 						{__(
 							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Admin Appearance', 'surecart')}
+				description={__('Change some admin UI options.', 'surecart')}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={shopMenu}
+					onScChange={(e) => setShopMenu(e.target.checked)}
+				>
+					{__('Shop Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the shop page in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={cartMenu}
+					onScChange={(e) => setCartMenu(e.target.checked)}
+				>
+					{__('Cart Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the cart in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={checkoutMenu}
+					onScChange={(e) => setCheckoutMenu(e.target.checked)}
+				>
+					{__('Checkout Page', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the checkout page in the menu.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={customerMenu}
+					onScChange={(e) => setCustomerMenu(e.target.checked)}
+				>
+					{__('Customer Area', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Show a link to edit the customer area in the menu.',
 							'surecart'
 						)}
 					</span>

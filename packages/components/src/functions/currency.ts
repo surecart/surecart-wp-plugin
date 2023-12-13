@@ -4,7 +4,6 @@ export const zeroDecimalCurrencies = [
   'clp',
   'djf',
   'gnf',
-  'huf',
   'isk',
   'jpy',
   'kmf',
