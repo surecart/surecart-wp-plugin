@@ -9,7 +9,8 @@
 	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
-		"html": false
+		"html": false,
+		"multiple": false
 	},
 	"usesContext": ["surecart/product-donation/product_id"],
 	"attributes": {

@@ -16,6 +16,7 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	BlockControls,
 	AlignmentControl,
+	InnerBlocks,
 } from '@wordpress/block-editor';
 import classNames from 'classnames';
 import { getSpacingPresetCssVar } from '../../util';
@@ -83,17 +84,23 @@ export default ({ attributes, setAttributes, context }) => {
 			sc-choice.wp-block {
 				margin: 0;
 			}
+			.block-list-appender {
+				width: 100%;
+				position: relative;
+				display: block;
+			}
 		`,
 	});
 
 	const { children, innerBlocksProps } = useInnerBlocksProps(blockProps, {
 		allowedBlocks: [
-			'surecart/product-donation-amounts',
-			'surecart/product-donation-prices',
+			'surecart/product-donation-amount',
+			'surecart/product-donation-custom-amount',
 		],
-		renderAppender: false,
+		renderAppender: InnerBlocks.ButtonBlockAppender,
 		orientation: columns > 1 ? 'horizontal' : 'vertical',
 		template: TEMPLATE,
+		templateLock: false,
 	});
 
 	return (
