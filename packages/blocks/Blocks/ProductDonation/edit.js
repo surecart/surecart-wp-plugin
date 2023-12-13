@@ -21,7 +21,7 @@ import SelectModel from '../../../admin/components/SelectModel';
 
 import { ScButton, ScIcon } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
 
 const TEMPLATE = [
@@ -107,12 +107,15 @@ export default ({ attributes, setAttributes }) => {
 		[product_id]
 	);
 
-	productDonationStore.state[product_id] = {
-		product,
-		amounts: product?.prices?.data.map((price) => price?.amount),
-		ad_hoc_amount: product?.prices?.data[0]?.amount,
-		selectedPrice: product?.prices?.data[0],
-	};
+	useEffect(() => {
+		if (!product) return;
+		productDonationStore.state[product_id] = {
+			product,
+			amounts: product?.prices?.data.map((price) => price?.amount),
+			ad_hoc_amount: product?.prices?.data[0]?.amount,
+			selectedPrice: product?.prices?.data[0],
+		};
+	}, [product]);
 
 	if (!product_id) {
 		return (
