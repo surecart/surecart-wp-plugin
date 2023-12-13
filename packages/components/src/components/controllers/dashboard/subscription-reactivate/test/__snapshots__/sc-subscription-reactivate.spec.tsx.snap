@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-subscription-reactivate displays the correct subscription information 1`] = `
+<sc-subscription-reactivate>
+  <mock:shadow-root>
+    <sc-dialog noheader="" open="" style="--width: 600px; --body-spacing: var(--sc-spacing-xxx-large);">
+      <sc-dashboard-module class="subscription-reactivate" heading="Resubscribe" style="--sc-dashboard-module-spacing: 1em;">
+        <div slot="description">
+          <sc-alert open="" title="Confirm Charge" type="warning">
+            You will immediately be charged [object Object] for your subscription.
+          </sc-alert>
+          <sc-text style="--font-size: var(--sc-font-size-medium); --color: var(--sc-input-label-color); --line-height: var(--sc-line-height-dense); margin-top: var(--sc-spacing-medium);">
+            Your subscription will be reactivated and will renew automatically on [object Object].
+          </sc-text>
+        </div>
+        <sc-flex justifycontent="flex-start">
+          <sc-button type="primary">
+            Yes, Reactivate
+          </sc-button>
+          <sc-button type="text" style="color: var(--sc-color-gray-500);">
+            No, Keep Inactive
+          </sc-button>
+        </sc-flex>
+      </sc-dashboard-module>
+    </sc-dialog>
+  </mock:shadow-root>
+</sc-subscription-reactivate>
+`;
+
+exports[`sc-subscription-reactivate renders 1`] = `
+<sc-subscription-reactivate open="">
+  <mock:shadow-root>
+    <sc-dialog noheader="" open="" style="--width: 600px; --body-spacing: var(--sc-spacing-xxx-large);">
+      <sc-dashboard-module class="subscription-reactivate" heading="Resubscribe" style="--sc-dashboard-module-spacing: 1em;">
+        <div slot="description">
+          <sc-alert open="" title="Confirm Charge" type="warning">
+            You will immediately be charged [object Object] for your subscription.
+          </sc-alert>
+          <sc-text style="--font-size: var(--sc-font-size-medium); --color: var(--sc-input-label-color); --line-height: var(--sc-line-height-dense); margin-top: var(--sc-spacing-medium);">
+            Your subscription will be reactivated and will renew automatically on [object Object].
+          </sc-text>
+        </div>
+        <sc-flex justifycontent="flex-start">
+          <sc-button type="primary">
+            Yes, Reactivate
+          </sc-button>
+          <sc-button type="text" style="color: var(--sc-color-gray-500);">
+            No, Keep Inactive
+          </sc-button>
+        </sc-flex>
+      </sc-dashboard-module>
+    </sc-dialog>
+  </mock:shadow-root>
+</sc-subscription-reactivate>
+`;

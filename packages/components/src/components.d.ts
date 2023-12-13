@@ -6,11 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-import { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+import { LineItemData, Price as Price1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
-export { LineItemData, Price as Price1, ProductMetrics } from "src/types";
+export { LineItemData, Price as Price1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export namespace Components {
@@ -624,6 +624,10 @@ export namespace Components {
           * Is this required
          */
         "required": boolean;
+        /**
+          * Role of radio/checkbox control
+         */
+        "role": string;
         /**
           * Sets a custom validation message. If `message` is not empty, the field will be considered invalid.
          */
@@ -2802,6 +2806,41 @@ export namespace Components {
     interface ScProductBuyButton {
         "addToCart": boolean;
     }
+    interface ScProductDonationAmountChoice {
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * The product id for the fields.
+         */
+        "productId": string;
+        /**
+          * The value of the field.
+         */
+        "value": number;
+    }
+    interface ScProductDonationChoices {
+        /**
+          * The label for the field.
+         */
+        "label": string;
+        /**
+          * The product id for the fields.
+         */
+        "productId": string;
+        "recurring": boolean;
+    }
+    interface ScProductDonationCustomAmount {
+        /**
+          * Selected Product Id for the donation.
+         */
+        "productId": string;
+        /**
+          * Custom Amount of the donation.
+         */
+        "value": number;
+    }
     interface ScProductItem {
         "layoutConfig": LayoutConfig;
         "product": Product;
@@ -3106,6 +3145,36 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScRecurringPriceChoiceContainer {
+        /**
+          * Label for the choice.
+         */
+        "label": string;
+        /**
+          * The prices to choose from.
+         */
+        "prices": Price1[];
+        /**
+          * The product.
+         */
+        "product": Product1;
+        /**
+          * The currently selected price
+         */
+        "selectedPrice": Price1;
+        /**
+          * Should we show the price?
+         */
+        "showAmount": boolean;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl": boolean;
+        /**
+          * Should we show the price details?
+         */
+        "showDetails": boolean;
+    }
     interface ScRichText {
         /**
           * Disables the textarea.
@@ -3386,13 +3455,28 @@ export namespace Components {
         "theme": string;
     }
     interface ScSubscription {
+        /**
+          * Heading to display
+         */
         "heading": string;
+        /**
+          * The subscription protocol
+         */
         "protocol": SubscriptionProtocol;
+        /**
+          * Query to pass to the API
+         */
         "query": object;
+        /**
+          * Whether to show the cancel button
+         */
         "showCancel": boolean;
+        /**
+          * The subscription
+         */
         "subscription": Subscription;
         /**
-          * Customer id to fetch subscriptions
+          * The subscription ID
          */
         "subscriptionId": string;
     }
@@ -3434,6 +3518,16 @@ export namespace Components {
           * The subscription
          */
         "subscription": Subscription;
+    }
+    interface ScSubscriptionReactivate {
+        /**
+          * Whether it is open
+         */
+        "open": boolean;
+        /**
+          * The subscription to reactivate
+         */
+        "subscription": Subscription1;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -4090,6 +4184,10 @@ export interface ScRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRadioGroupElement;
 }
+export interface ScRecurringPriceChoiceContainerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScRecurringPriceChoiceContainerElement;
+}
 export interface ScRichTextCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScRichTextElement;
@@ -4117,6 +4215,10 @@ export interface ScStripePaymentRequestCustomEvent<T> extends CustomEvent<T> {
 export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSubscriptionCancelElement;
+}
+export interface ScSubscriptionReactivateCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSubscriptionReactivateElement;
 }
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4992,6 +5094,24 @@ declare global {
         prototype: HTMLScProductBuyButtonElement;
         new (): HTMLScProductBuyButtonElement;
     };
+    interface HTMLScProductDonationAmountChoiceElement extends Components.ScProductDonationAmountChoice, HTMLStencilElement {
+    }
+    var HTMLScProductDonationAmountChoiceElement: {
+        prototype: HTMLScProductDonationAmountChoiceElement;
+        new (): HTMLScProductDonationAmountChoiceElement;
+    };
+    interface HTMLScProductDonationChoicesElement extends Components.ScProductDonationChoices, HTMLStencilElement {
+    }
+    var HTMLScProductDonationChoicesElement: {
+        prototype: HTMLScProductDonationChoicesElement;
+        new (): HTMLScProductDonationChoicesElement;
+    };
+    interface HTMLScProductDonationCustomAmountElement extends Components.ScProductDonationCustomAmount, HTMLStencilElement {
+    }
+    var HTMLScProductDonationCustomAmountElement: {
+        prototype: HTMLScProductDonationCustomAmountElement;
+        new (): HTMLScProductDonationCustomAmountElement;
+    };
     interface HTMLScProductItemElement extends Components.ScProductItem, HTMLStencilElement {
     }
     var HTMLScProductItemElement: {
@@ -5111,6 +5231,12 @@ declare global {
     var HTMLScRadioGroupElement: {
         prototype: HTMLScRadioGroupElement;
         new (): HTMLScRadioGroupElement;
+    };
+    interface HTMLScRecurringPriceChoiceContainerElement extends Components.ScRecurringPriceChoiceContainer, HTMLStencilElement {
+    }
+    var HTMLScRecurringPriceChoiceContainerElement: {
+        prototype: HTMLScRecurringPriceChoiceContainerElement;
+        new (): HTMLScRecurringPriceChoiceContainerElement;
     };
     interface HTMLScRichTextElement extends Components.ScRichText, HTMLStencilElement {
     }
@@ -5237,6 +5363,12 @@ declare global {
     var HTMLScSubscriptionPaymentMethodElement: {
         prototype: HTMLScSubscriptionPaymentMethodElement;
         new (): HTMLScSubscriptionPaymentMethodElement;
+    };
+    interface HTMLScSubscriptionReactivateElement extends Components.ScSubscriptionReactivate, HTMLStencilElement {
+    }
+    var HTMLScSubscriptionReactivateElement: {
+        prototype: HTMLScSubscriptionReactivateElement;
+        new (): HTMLScSubscriptionReactivateElement;
     };
     interface HTMLScSubscriptionStatusBadgeElement extends Components.ScSubscriptionStatusBadge, HTMLStencilElement {
     }
@@ -5533,6 +5665,9 @@ declare global {
         "sc-price-input": HTMLScPriceInputElement;
         "sc-price-range": HTMLScPriceRangeElement;
         "sc-product-buy-button": HTMLScProductBuyButtonElement;
+        "sc-product-donation-amount-choice": HTMLScProductDonationAmountChoiceElement;
+        "sc-product-donation-choices": HTMLScProductDonationChoicesElement;
+        "sc-product-donation-custom-amount": HTMLScProductDonationCustomAmountElement;
         "sc-product-item": HTMLScProductItemElement;
         "sc-product-item-image": HTMLScProductItemImageElement;
         "sc-product-item-list": HTMLScProductItemListElement;
@@ -5553,6 +5688,7 @@ declare global {
         "sc-quantity-select": HTMLScQuantitySelectElement;
         "sc-radio": HTMLScRadioElement;
         "sc-radio-group": HTMLScRadioGroupElement;
+        "sc-recurring-price-choice-container": HTMLScRecurringPriceChoiceContainerElement;
         "sc-rich-text": HTMLScRichTextElement;
         "sc-secure-notice": HTMLScSecureNoticeElement;
         "sc-select": HTMLScSelectElement;
@@ -5574,6 +5710,7 @@ declare global {
         "sc-subscription-next-payment": HTMLScSubscriptionNextPaymentElement;
         "sc-subscription-payment": HTMLScSubscriptionPaymentElement;
         "sc-subscription-payment-method": HTMLScSubscriptionPaymentMethodElement;
+        "sc-subscription-reactivate": HTMLScSubscriptionReactivateElement;
         "sc-subscription-status-badge": HTMLScSubscriptionStatusBadgeElement;
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
@@ -6249,6 +6386,10 @@ declare namespace LocalJSX {
           * Is this required
          */
         "required"?: boolean;
+        /**
+          * Role of radio/checkbox control
+         */
+        "role"?: string;
         /**
           * Show the radio/checkbox control
          */
@@ -8635,6 +8776,41 @@ declare namespace LocalJSX {
     interface ScProductBuyButton {
         "addToCart"?: boolean;
     }
+    interface ScProductDonationAmountChoice {
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * The product id for the fields.
+         */
+        "productId"?: string;
+        /**
+          * The value of the field.
+         */
+        "value"?: number;
+    }
+    interface ScProductDonationChoices {
+        /**
+          * The label for the field.
+         */
+        "label"?: string;
+        /**
+          * The product id for the fields.
+         */
+        "productId"?: string;
+        "recurring"?: boolean;
+    }
+    interface ScProductDonationCustomAmount {
+        /**
+          * Selected Product Id for the donation.
+         */
+        "productId"?: string;
+        /**
+          * Custom Amount of the donation.
+         */
+        "value"?: number;
+    }
     interface ScProductItem {
         "layoutConfig"?: LayoutConfig;
         "product"?: Product;
@@ -8969,6 +9145,40 @@ declare namespace LocalJSX {
           * The selected value of the control.
          */
         "value"?: string;
+    }
+    interface ScRecurringPriceChoiceContainer {
+        /**
+          * Label for the choice.
+         */
+        "label"?: string;
+        /**
+          * Change event.
+         */
+        "onScChange"?: (event: ScRecurringPriceChoiceContainerCustomEvent<string>) => void;
+        /**
+          * The prices to choose from.
+         */
+        "prices"?: Price1[];
+        /**
+          * The product.
+         */
+        "product"?: Product1;
+        /**
+          * The currently selected price
+         */
+        "selectedPrice"?: Price1;
+        /**
+          * Should we show the price?
+         */
+        "showAmount"?: boolean;
+        /**
+          * Show the radio/checkbox control
+         */
+        "showControl"?: boolean;
+        /**
+          * Should we show the price details?
+         */
+        "showDetails"?: boolean;
     }
     interface ScRichText {
         /**
@@ -9306,13 +9516,28 @@ declare namespace LocalJSX {
         "theme"?: string;
     }
     interface ScSubscription {
+        /**
+          * Heading to display
+         */
         "heading"?: string;
+        /**
+          * The subscription protocol
+         */
         "protocol"?: SubscriptionProtocol;
+        /**
+          * Query to pass to the API
+         */
         "query"?: object;
+        /**
+          * Whether to show the cancel button
+         */
         "showCancel"?: boolean;
+        /**
+          * The subscription
+         */
         "subscription"?: Subscription;
         /**
-          * Customer id to fetch subscriptions
+          * The subscription ID
          */
         "subscriptionId"?: string;
     }
@@ -9356,6 +9581,24 @@ declare namespace LocalJSX {
           * The subscription
          */
         "subscription"?: Subscription;
+    }
+    interface ScSubscriptionReactivate {
+        /**
+          * Refresh subscriptions
+         */
+        "onScRefresh"?: (event: ScSubscriptionReactivateCustomEvent<void>) => void;
+        /**
+          * Reactivate modal closed
+         */
+        "onScRequestClose"?: (event: ScSubscriptionReactivateCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        /**
+          * Whether it is open
+         */
+        "open"?: boolean;
+        /**
+          * The subscription to reactivate
+         */
+        "subscription"?: Subscription1;
     }
     interface ScSubscriptionStatusBadge {
         /**
@@ -9964,6 +10207,9 @@ declare namespace LocalJSX {
         "sc-price-input": ScPriceInput;
         "sc-price-range": ScPriceRange;
         "sc-product-buy-button": ScProductBuyButton;
+        "sc-product-donation-amount-choice": ScProductDonationAmountChoice;
+        "sc-product-donation-choices": ScProductDonationChoices;
+        "sc-product-donation-custom-amount": ScProductDonationCustomAmount;
         "sc-product-item": ScProductItem;
         "sc-product-item-image": ScProductItemImage;
         "sc-product-item-list": ScProductItemList;
@@ -9984,6 +10230,7 @@ declare namespace LocalJSX {
         "sc-quantity-select": ScQuantitySelect;
         "sc-radio": ScRadio;
         "sc-radio-group": ScRadioGroup;
+        "sc-recurring-price-choice-container": ScRecurringPriceChoiceContainer;
         "sc-rich-text": ScRichText;
         "sc-secure-notice": ScSecureNotice;
         "sc-select": ScSelect;
@@ -10005,6 +10252,7 @@ declare namespace LocalJSX {
         "sc-subscription-next-payment": ScSubscriptionNextPayment;
         "sc-subscription-payment": ScSubscriptionPayment;
         "sc-subscription-payment-method": ScSubscriptionPaymentMethod;
+        "sc-subscription-reactivate": ScSubscriptionReactivate;
         "sc-subscription-status-badge": ScSubscriptionStatusBadge;
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
@@ -10192,6 +10440,9 @@ declare module "@stencil/core" {
             "sc-price-input": LocalJSX.ScPriceInput & JSXBase.HTMLAttributes<HTMLScPriceInputElement>;
             "sc-price-range": LocalJSX.ScPriceRange & JSXBase.HTMLAttributes<HTMLScPriceRangeElement>;
             "sc-product-buy-button": LocalJSX.ScProductBuyButton & JSXBase.HTMLAttributes<HTMLScProductBuyButtonElement>;
+            "sc-product-donation-amount-choice": LocalJSX.ScProductDonationAmountChoice & JSXBase.HTMLAttributes<HTMLScProductDonationAmountChoiceElement>;
+            "sc-product-donation-choices": LocalJSX.ScProductDonationChoices & JSXBase.HTMLAttributes<HTMLScProductDonationChoicesElement>;
+            "sc-product-donation-custom-amount": LocalJSX.ScProductDonationCustomAmount & JSXBase.HTMLAttributes<HTMLScProductDonationCustomAmountElement>;
             "sc-product-item": LocalJSX.ScProductItem & JSXBase.HTMLAttributes<HTMLScProductItemElement>;
             "sc-product-item-image": LocalJSX.ScProductItemImage & JSXBase.HTMLAttributes<HTMLScProductItemImageElement>;
             "sc-product-item-list": LocalJSX.ScProductItemList & JSXBase.HTMLAttributes<HTMLScProductItemListElement>;
@@ -10212,6 +10463,7 @@ declare module "@stencil/core" {
             "sc-quantity-select": LocalJSX.ScQuantitySelect & JSXBase.HTMLAttributes<HTMLScQuantitySelectElement>;
             "sc-radio": LocalJSX.ScRadio & JSXBase.HTMLAttributes<HTMLScRadioElement>;
             "sc-radio-group": LocalJSX.ScRadioGroup & JSXBase.HTMLAttributes<HTMLScRadioGroupElement>;
+            "sc-recurring-price-choice-container": LocalJSX.ScRecurringPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScRecurringPriceChoiceContainerElement>;
             "sc-rich-text": LocalJSX.ScRichText & JSXBase.HTMLAttributes<HTMLScRichTextElement>;
             "sc-secure-notice": LocalJSX.ScSecureNotice & JSXBase.HTMLAttributes<HTMLScSecureNoticeElement>;
             "sc-select": LocalJSX.ScSelect & JSXBase.HTMLAttributes<HTMLScSelectElement>;
@@ -10233,6 +10485,7 @@ declare module "@stencil/core" {
             "sc-subscription-next-payment": LocalJSX.ScSubscriptionNextPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionNextPaymentElement>;
             "sc-subscription-payment": LocalJSX.ScSubscriptionPayment & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentElement>;
             "sc-subscription-payment-method": LocalJSX.ScSubscriptionPaymentMethod & JSXBase.HTMLAttributes<HTMLScSubscriptionPaymentMethodElement>;
+            "sc-subscription-reactivate": LocalJSX.ScSubscriptionReactivate & JSXBase.HTMLAttributes<HTMLScSubscriptionReactivateElement>;
             "sc-subscription-status-badge": LocalJSX.ScSubscriptionStatusBadge & JSXBase.HTMLAttributes<HTMLScSubscriptionStatusBadgeElement>;
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
