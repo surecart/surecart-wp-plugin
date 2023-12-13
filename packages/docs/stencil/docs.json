@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-12-07T12:53:13",
+  "timestamp": "2023-12-13T17:22:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -5329,23 +5329,6 @@
           "docs": "Is the choice disabled",
           "docsTags": [],
           "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "inEditor",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "in-editor",
-          "reflectToAttr": false,
-          "docs": "Is Component used in editor",
-          "docsTags": [],
-          "default": "true",
           "values": [
             {
               "type": "boolean"
@@ -29482,7 +29465,7 @@
           "mutable": false,
           "attr": "heading",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Heading to display",
           "docsTags": [],
           "values": [
             {
@@ -29497,7 +29480,7 @@
           "type": "SubscriptionProtocol",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The subscription protocol",
           "docsTags": [],
           "values": [
             {
@@ -29512,7 +29495,7 @@
           "type": "object",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Query to pass to the API",
           "docsTags": [],
           "values": [
             {
@@ -29528,7 +29511,7 @@
           "mutable": false,
           "attr": "show-cancel",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Whether to show the cancel button",
           "docsTags": [],
           "values": [
             {
@@ -29543,7 +29526,7 @@
           "type": "Subscription",
           "mutable": true,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The subscription",
           "docsTags": [],
           "values": [
             {
@@ -29559,7 +29542,7 @@
           "mutable": false,
           "attr": "subscription-id",
           "reflectToAttr": false,
-          "docs": "Customer id to fetch subscriptions",
+          "docs": "The subscription ID",
           "docsTags": [],
           "values": [
             {

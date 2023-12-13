@@ -11,7 +11,6 @@
 | ------------- | -------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------- | ----------- |
 | `checked`     | `checked`      | Draws the choice in a checked state.                                                                      | `boolean`                        | `false`     |
 | `disabled`    | `disabled`     | Is the choice disabled                                                                                    | `boolean`                        | `false`     |
-| `inEditor`    | `in-editor`    | Is Component used in editor                                                                               | `boolean`                        | `true`      |
 | `invalid`     | `invalid`      | This will be true when the control is in an invalid state. Validity is determined by the `required` prop. | `boolean`                        | `false`     |
 | `name`        | `name`         | The choice name attribute                                                                                 | `string`                         | `undefined` |
 | `required`    | `required`     | Is this required                                                                                          | `boolean`                        | `false`     |
