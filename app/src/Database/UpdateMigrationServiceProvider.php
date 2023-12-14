@@ -79,6 +79,19 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
+		$existing_template_part_query = new \WP_Query(
+			[
+				'post_type'      => 'wp_template_part',
+				'name'           => _x( 'cart', 'Cart slug', 'surecart' ),
+				'posts_per_page' => 1,
+			]
+		);
+
+		// if the template part already exists, don't create it.
+		if ( $existing_template_part_query->have_posts() ) {
+			return;
+		}
+
 		$cart = [
 			'post_name'    => _x( 'cart', 'Cart slug', 'surecart' ),
 			'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
@@ -89,23 +102,6 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
 		];
 
-		// if a post with title 'Cart' exists and post_type is 'wp_template_part' then update the post.
-		$query = new \WP_Query(
-			[
-				'post_type'      => 'wp_template_part',
-				'post_title'     => _x( 'Cart', 'Cart title', 'surecart' ),
-				'posts_per_page' => 1,
-			]
-		);
-
-		if ( $query->have_posts() ) {
-			$cart['ID'] = $query->posts[0]->ID;
-			wp_update_post( $cart );
-		} else {
-			wp_insert_post( $cart );
-		}
-
-		// delete the old cart post.
-		// wp_delete_post($existing_cart_post->ID);
+		wp_insert_post( $cart );
 	}
 }
