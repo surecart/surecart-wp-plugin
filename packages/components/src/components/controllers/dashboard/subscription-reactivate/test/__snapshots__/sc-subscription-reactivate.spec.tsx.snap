@@ -7,10 +7,15 @@ exports[`sc-subscription-reactivate displays the correct subscription informatio
       <sc-dashboard-module class="subscription-reactivate" heading="Resubscribe" style="--sc-dashboard-module-spacing: 1em;">
         <div slot="description">
           <sc-alert open="" title="Confirm Charge" type="warning">
-            You will immediately be charged [object Object] for your subscription.
+            You will be charged
+            <sc-format-number currency="USD" type="currency"></sc-format-number>
+            immediately for your subscription.
           </sc-alert>
           <sc-text style="--font-size: var(--sc-font-size-medium); --color: var(--sc-input-label-color); --line-height: var(--sc-line-height-dense); margin-top: var(--sc-spacing-medium);">
-            Your subscription will be reactivated and will renew automatically on [object Object].
+            Your subscription will be reactivated and will renew automatically on
+            <strong>
+              <sc-format-date day="numeric" month="long" type="timestamp" year="numeric"></sc-format-date>
+            </strong>
           </sc-text>
         </div>
         <sc-flex justifycontent="flex-start">
@@ -34,10 +39,15 @@ exports[`sc-subscription-reactivate renders 1`] = `
       <sc-dashboard-module class="subscription-reactivate" heading="Resubscribe" style="--sc-dashboard-module-spacing: 1em;">
         <div slot="description">
           <sc-alert open="" title="Confirm Charge" type="warning">
-            You will immediately be charged [object Object] for your subscription.
+            You will be charged
+            <sc-format-number type="currency"></sc-format-number>
+            immediately for your subscription.
           </sc-alert>
           <sc-text style="--font-size: var(--sc-font-size-medium); --color: var(--sc-input-label-color); --line-height: var(--sc-line-height-dense); margin-top: var(--sc-spacing-medium);">
-            Your subscription will be reactivated and will renew automatically on [object Object].
+            Your subscription will be reactivated and will renew automatically on
+            <strong>
+              <sc-format-date day="numeric" month="long" type="timestamp" year="numeric"></sc-format-date>
+            </strong>
           </sc-text>
         </div>
         <sc-flex justifycontent="flex-start">

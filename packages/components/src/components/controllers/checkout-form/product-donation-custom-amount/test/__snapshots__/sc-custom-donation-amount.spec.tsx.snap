@@ -2,14 +2,11 @@
 
 exports[`sc-product-donation-custom-amount renders 1`] = `
 <sc-product-donation-custom-amount class="sc-product-donation-custom-amount">
-  <sc-choice-container show-control="false">
-    <sc-form>
-      <sc-price-input currencycode="usd" style="--sc-input-border-color-focus: var(--sc-input-border-color-hover); --sc-focus-ring-color-primary: transparent;">
-        <sc-button circle="" size="small" slot="suffix" submit="" type="primary">
-          <sc-icon name="arrow-right"></sc-icon>
-        </sc-button>
-      </sc-price-input>
-    </sc-form>
+  <sc-choice-container role="button" show-control="false" value="undefined">
+    <sc-visually-hidden>
+      Enter a custom amount.
+    </sc-visually-hidden>
+    <sc-price-input currencycode="usd" value="" style="--sc-input-border-color-focus: var(--sc-input-border-color-hover); --sc-focus-ring-color-primary: transparent;"></sc-price-input>
   </sc-choice-container>
 </sc-product-donation-custom-amount>
 `;

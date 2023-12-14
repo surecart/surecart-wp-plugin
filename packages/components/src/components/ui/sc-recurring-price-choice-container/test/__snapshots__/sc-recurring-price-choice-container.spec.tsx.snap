@@ -2,38 +2,36 @@
 
 exports[`sc-recurring-price-choice-container It should render the Price choices with the Label 1`] = `
 <sc-recurring-price-choice-container>
-  <sc-choice-container>
-    <div class="price-choice__title">
-      <div class="price-choice__name">
-        Subscribe and Save
-      </div>
-      <div class="recurring-price-choice__description-details-wrap">
+  <!---->
+  <sc-choice-container role="button" type="radio">
+    <div class="recurring-price-choice">
+      <div class="recurring-price-choice__control">
+        <div class="recurring-price-choice__name">
+          <slot-fb>
+            Subscribe and Save
+          </slot-fb>
+        </div>
         <div class="recurring-price-choice__description">
-          <sc-dropdown style="--panel-width: 25em;">
-            <sc-button caret="" slot="trigger" type="text">
+          <sc-dropdown style="--panel-width: max(100%, 11rem); --sc-menu-item-white-space: wrap;">
+            <button aria-label="Press Up/Down Arrow &amp; select the recurring interval you want." class="recurring-price-choice__button" slot="trigger">
               Monthly
-            </sc-button>
-            <sc-menu>
-              <sc-menu-item class="recurring-price-choice__menu-item">
-                <span class="menu-item__label" part="label">
-                  Monthly
-                </span>
+              <sc-icon name="chevron-down" style="min-width: var(--width);"></sc-icon>
+            </button>
+            <sc-menu aria-label="Recurring Interval selection Dropdown opened, Press Up/Down Arrow &amp; select the recurring interval you want.">
+              <sc-menu-item aria-label="Monthly" checked="">
+                Monthly
                 <span slot="suffix">
                   <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
                 </span>
               </sc-menu-item>
-              <sc-menu-item class="recurring-price-choice__menu-item">
-                <span class="menu-item__label" part="label">
-                  Yearly
-                </span>
+              <sc-menu-item aria-label="Yearly">
+                Yearly
                 <span slot="suffix">
                   <sc-format-number currency="usd" type="currency" value="20000"></sc-format-number>
                 </span>
               </sc-menu-item>
-              <sc-menu-item class="recurring-price-choice__menu-item">
-                <span class="menu-item__label" part="label">
-                  Weekly
-                </span>
+              <sc-menu-item aria-label="Weekly">
+                Weekly
                 <span slot="suffix">
                   <sc-format-number currency="usd" type="currency" value="1200"></sc-format-number>
                 </span>
@@ -41,10 +39,10 @@ exports[`sc-recurring-price-choice-container It should render the Price choices 
             </sc-menu>
           </sc-dropdown>
         </div>
-        <div class="recurring-price-choice__details">
-          <div class="price-choice__price">
-            <sc-format-number type="currency"></sc-format-number>
-          </div>
+      </div>
+      <div class="recurring-price-choice__details">
+        <div class="recurring-price-choice__price">
+          <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
         </div>
       </div>
     </div>
@@ -52,4 +50,8 @@ exports[`sc-recurring-price-choice-container It should render the Price choices 
 </sc-recurring-price-choice-container>
 `;
 
-exports[`sc-recurring-price-choice-container renders 1`] = `<sc-recurring-price-choice-container></sc-recurring-price-choice-container>`;
+exports[`sc-recurring-price-choice-container renders 1`] = `
+<sc-recurring-price-choice-container style="display: none;">
+  <!---->
+</sc-recurring-price-choice-container>
+`;
