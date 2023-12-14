@@ -36,7 +36,7 @@ export default ({ liveMode }) => {
 		} else if (diffDays < 32 && 'month' === reportBy) {
 			setStartDate(dayjs(startDate).subtract(2, 'month'));
 		} else if (diffDays > 200 && 'day' === reportBy) {
-			setStartDate(dayjs(startDate).subtract(199, 'day'));
+			setStartDate(dayjs(endDate).subtract(199, 'day'));
 		} else {
 			getOrderStats(startDate.format(), endDate.format());
 			getPreviousOrderStats(

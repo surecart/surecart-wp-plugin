@@ -39,6 +39,7 @@
 
 - [sc-flex](../flex)
 - [sc-button](../button)
+- [sc-visually-hidden](../../util/visually-hidden)
 - [sc-icon](../icon)
 
 ### Graph
@@ -46,6 +47,7 @@
 graph TD;
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
+  sc-pagination --> sc-visually-hidden
   sc-pagination --> sc-icon
   sc-button --> sc-spinner
   sc-charges-list --> sc-pagination

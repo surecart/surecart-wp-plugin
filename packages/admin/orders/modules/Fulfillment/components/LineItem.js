@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 
-export default ({ className, imageUrl, children, suffix }) => {
+export default ({ className, media, children, suffix }) => {
 	return (
 		<div
 			className={className}
@@ -15,13 +15,15 @@ export default ({ className, imageUrl, children, suffix }) => {
 				align-items: stretch;
 				width: 100%;
 				border-bottom: none;
-				${!!imageUrl ? 'align-items: center' : ''};
-				${!!imageUrl ? 'container-type: inline-size' : ''};
+				${!!media?.url ? 'align-items: center' : ''};
+				${!!media?.url ? 'container-type: inline-size' : ''};
 			`}
 		>
-			{!!imageUrl && (
+			{!!media?.url && (
 				<img
-					src={imageUrl}
+					src={media.url}
+					alt={media.alt}
+					{...(media.title ? { title: media.title } : {})}
 					css={css`
 						width: var(--sc-product-line-item-image-size, 4em);
 						height: var(--sc-product-line-item-image-size, 4em);
@@ -31,6 +33,7 @@ export default ({ className, imageUrl, children, suffix }) => {
 							var(--sc-input-border-color, var(--sc-input-border));
 						display: block;
 						box-shadow: var(--sc-input-box-shadow);
+						align-self: flex-start;
 					`}
 				/>
 			)}
@@ -56,7 +59,13 @@ export default ({ className, imageUrl, children, suffix }) => {
 				</div>
 			</div>
 
-			<div>{suffix}</div>
+			<div
+				css={css`
+					align-self: flex-start;
+				`}
+			>
+				{suffix}
+			</div>
 		</div>
 	);
 };

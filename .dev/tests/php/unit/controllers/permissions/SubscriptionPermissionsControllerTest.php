@@ -14,7 +14,7 @@ class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -43,7 +43,7 @@ class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 		$user_fail->setCustomerId('testcustomeridfail');
 
 		$requests->shouldReceive('makeRequest')
-		->twice()
+		->times(3)
 		->withSomeOfArgs('subscriptions/testid')
 		->andReturn([
 			'customer' => 'testcustomerid'
@@ -53,8 +53,9 @@ class SubscriptionPermissionsControllerTest extends SureCartUnitTestCase {
 
 		// user should be able to get this request.
 		$this->assertTrue($controller->edit_sc_subscription( $user, [null, null, 'testid', [] ], ['edit_sc_subscription' => false]));
+		$this->assertTrue($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'discount' => 'something' ] ], ['edit_sc_subscription' => false]));
+
 		// trying to update something they shouldn't
-		$this->assertFalse($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'discount' => 'something' ] ], ['edit_sc_subscription' => false]));
 		$this->assertFalse($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'customer' => 'something' ] ], ['edit_sc_subscription' => false]));
 		$this->assertFalse($controller->edit_sc_subscription( $user, [null, null, 'testid', [ 'trial_end_at' => 'something' ] ], ['edit_sc_subscription' => false]));
 

@@ -14,10 +14,6 @@ return [
 	<sc-custom-order-price-input label="Invoice Amount" show-code="false" required class="wp-block-surecart-name-your-price"></sc-custom-order-price-input>
 	<!-- /wp:surecart/name-your-price -->
 
-	<!-- wp:surecart/express-payment -->
-	<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-	<!-- /wp:surecart/express-payment -->
-
 	<!-- wp:surecart/columns -->
 	<sc-columns class="wp-block-surecart-columns"><!-- wp:surecart/column -->
 	<sc-column class="wp-block-surecart-column"><!-- wp:surecart/email -->

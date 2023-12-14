@@ -17,7 +17,7 @@ use SureCartCore\Requests\RequestInterface;
 // {
 // 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-// 	public function setUp()
+// 	public function setUp() : void
 // 	{
 // 		parent::setUp();
 

@@ -17,7 +17,13 @@ export default ({ customerId }) => {
 				'purchase',
 				{
 					customer_ids: customerId ? [customerId] : null,
-					expand: ['product'],
+					expand: [
+						'product',
+						'product.featured_product_media',
+						'product_media.media',
+						'variant',
+						'price',
+					],
 				},
 			];
 			return {

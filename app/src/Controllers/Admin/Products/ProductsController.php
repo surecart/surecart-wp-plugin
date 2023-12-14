@@ -90,16 +90,6 @@ class ProductsController extends AdminController {
 		return '<div id="app"></div>';
 	}
 
-	public function addInstantCheckoutLink( $wp_admin_bar ) {
-		$wp_admin_bar->add_node(
-			[
-				'id'    => 'edit',
-				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => '#',
-			]
-		);
-	}
-
 	/**
 	 * Change the archived attribute in the model
 	 *

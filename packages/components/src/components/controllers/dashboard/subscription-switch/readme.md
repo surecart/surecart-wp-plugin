@@ -51,7 +51,7 @@ graph TD;
   sc-subscription-switch --> sc-block-ui
   sc-button --> sc-spinner
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-alert --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-block-ui --> sc-spinner

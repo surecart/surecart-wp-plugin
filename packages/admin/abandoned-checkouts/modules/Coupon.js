@@ -7,7 +7,7 @@ import {
 import { sprintf, __ } from '@wordpress/i18n';
 import Box from '../../ui/Box';
 
-export default ({ promotion, coupon }) => {
+export default ({ promotion, coupon, loading }) => {
 	if (!promotion || !coupon) {
 		return null;
 	}
@@ -26,7 +26,7 @@ export default ({ promotion, coupon }) => {
 	};
 
 	return (
-		<Box title={__('Discount', 'surecart')}>
+		<Box title={__('Discount', 'surecart')} loading={loading}>
 			<ScLineItem>
 				<span slot="description">{__('Discount', 'surecart')}</span>
 				<span slot="price">{renderDiscount()}</span>

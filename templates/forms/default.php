@@ -12,10 +12,6 @@ return [
 		<!-- /wp:surecart/price-choice --></div></sc-price-choices>
 		<!-- /wp:surecart/price-selector -->
 
-		<!-- wp:surecart/express-payment -->
-		<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-		<!-- /wp:surecart/express-payment -->
-
 		<!-- wp:surecart/columns -->
 		<sc-columns class="wp-block-surecart-columns"><!-- wp:surecart/column -->
 		<sc-column class="wp-block-surecart-column"><!-- wp:surecart/name -->
