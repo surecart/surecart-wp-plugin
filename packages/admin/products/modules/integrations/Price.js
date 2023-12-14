@@ -15,8 +15,11 @@ import { store as coreStore } from '@wordpress/core-data';
 import { ScFormatNumber, ScSkeleton } from '@surecart/components-react';
 import { intervalString } from '../../../util/translations';
 import LineItemLabel from '../../../ui/LineItemLabel';
+import useSelectPrices from '../../hooks/useSelectPrices';
 
 export default ({ price_id, variant_id, product, total_integrations }) => {
+	const { active: prices } = useSelectPrices({ productId: product?.id });
+
 	const { price, hasLoadedPrice } = useSelect(
 		(select) => {
 			const entityData = ['surecart', 'price', price_id];
@@ -69,7 +72,7 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 		);
 	}
 
-	const totalPrices = product?.prices?.data?.length;
+	const totalPrices = prices?.length;
 	const totalVariants = product?.variants?.length;
 	const hasAllPrices = !price_id && totalPrices > 1 && total_integrations > 1;
 	const hasAllVariants =

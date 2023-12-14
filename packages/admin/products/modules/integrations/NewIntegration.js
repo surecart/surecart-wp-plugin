@@ -67,7 +67,7 @@ export default ({ onRequestClose, id, product }) => {
 		if (!product?.variants?.length) return [];
 
 		// If price is not set, then get the first price to get fallback variant amount.
-		const priceData = price || product?.prices?.data?.[0];
+		const priceData = price || active?.[0];
 
 		// Process the variants for the select.
 		return product.variants
@@ -147,7 +147,7 @@ export default ({ onRequestClose, id, product }) => {
 						setItem={setItem}
 					/>
 
-					{!!item && product?.prices?.data?.length > 1 && (
+					{!!item && active?.length > 1 && (
 						<div>
 							<ScFormControl
 								label={__('Select A Price', 'surecart')}
