@@ -52,6 +52,7 @@ class ProductPostTypeService {
 					'item_scheduled'           => __( 'SureCart Product scheduled.', 'surecart' ),
 					'item_updated'             => __( 'SureCart Product updated.', 'surecart' ),
 				),
+				'hierarchical'      => true,
 				'public'            => true,
 				'show_ui'           => true,
 				'show_in_menu'      => true,
