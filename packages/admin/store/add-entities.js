@@ -315,6 +315,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'incoming_webhook',
+		kind: 'surecart',
+		label: __('Incoming Webhook', 'surecart'),
+		baseURL: '/surecart/v1/incoming_webhooks',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'variant-option',
 		kind: 'surecart',
 		label: __('Variant Option', 'surecart'),
@@ -327,5 +334,18 @@ dispatch(coreStore).addEntities([
 		label: __('Variant', 'surecart'),
 		baseURL: '/surecart/v1/variants',
 		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'return_request',
+		kind: 'surecart',
+		label: __('Return Request', 'surecart'),
+		baseURL: '/surecart/v1/return_requests',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'return_reason',
+		kind: 'surecart',
+		label: __('Return Reason', 'surecart'),
+		baseURL: '/surecart/v1/return_reasons',
 	},
 ]);
