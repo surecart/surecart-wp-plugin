@@ -20,9 +20,41 @@ abstract class PostModel {
 	protected $post_type = '';
 
 	/**
+	 * The model type
+	 *
+	 * @var string
+	 */
+	protected $model_type = '';
+
+	/**
+	 * If this has a post parent class, set it here.
+	 *
+	 * @var string
+	 */
+	protected $parent = '';
+
+	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 */
 	final public function __construct() {
+	}
+
+	/**
+	 * Get the post type.
+	 *
+	 * @return string
+	 */
+	public function getModelType() {
+		return $this->model_type;
+	}
+
+	/**
+	 * Get the post type.
+	 *
+	 * @return string
+	 */
+	public function getPostType() {
+		return $this->post_type;
 	}
 
 	/**
@@ -32,23 +64,41 @@ abstract class PostModel {
 	 *
 	 * @return $this
 	 */
-	public function findByModelId( $model_id ) {
-		$wp_query_args  = [
-			'post_type'      => $this->post_type,
-			'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash' ),
-			'posts_per_page' => 1,
-			'no_found_rows'  => true,
-			'meta_query'     => array(
-				array(
-					'key'   => 'id',
-					'value' => $model_id, // query by model id.
+	public function findByModelId( string $model_id ) {
+		$query = new \WP_Query(
+			[
+				'post_type'      => $this->post_type,
+				'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash' ),
+				'posts_per_page' => 1,
+				'no_found_rows'  => true,
+				'meta_query'     => array(
+					array(
+						'key'   => 'id',
+						'value' => $model_id, // query by model id.
+					),
 				),
-			),
-		];
-		$template_query = new \WP_Query( $wp_query_args );
-		$posts          = $template_query->posts;
+			]
+		);
 
-		$this->post = apply_filters( "surecart_get_{$this->post_type}_post", $posts[0] ?? null, $model_id );
+		error_log(
+			print_r(
+				[
+					'post_type'      => $this->post_type,
+					'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash' ),
+					'posts_per_page' => 1,
+					'no_found_rows'  => true,
+					'meta_query'     => array(
+						array(
+							'key'   => 'id',
+							'value' => $model_id, // query by model id.
+						),
+					),
+				],
+				1
+			)
+		);
+
+		$this->post = apply_filters( "surecart_get_{$this->post_type}_post", $query->posts[0] ?? null, $model_id );
 
 		return $this;
 	}
@@ -62,6 +112,7 @@ abstract class PostModel {
 	 */
 	public function find( $id ) {
 		$this->post = get_post( $id );
+
 		return $this;
 	}
 
@@ -73,19 +124,26 @@ abstract class PostModel {
 	 * @return $this
 	 */
 	public function create( \SureCart\Models\Model $model ) {
-		$props         = $this->getSchemaMap( $model );
-		$prepared_post = array_merge(
-			$props,
-			[
-				'tax_input' => [ // TODO: Add this custom taxonomy. We might want to query by store in case of store switch, or at least warn the user.
-					'sc_store' => \SureCart::account()->id,
-				],
-			]
+		$props = $this->getSchemaMap( $model );
+
+		$post_id = wp_insert_post(
+			wp_slash(
+				array_merge(
+					$props,
+					[
+						'tax_input' => [ // TODO: Add this custom taxonomy. We might want to query by store in case of store switch, or at least warn the user.
+							'sc_store' => \SureCart::account()->id,
+						],
+					]
+				)
+			),
+			true
 		);
-		$post_id       = wp_insert_post( wp_slash( $prepared_post ), true );
+
 		if ( is_wp_error( $post_id ) ) {
 			return $post_id;
 		}
+
 		return $this->find( $post_id );
 	}
 
@@ -131,6 +189,7 @@ abstract class PostModel {
 		return [
 			'post_title'        => $model->name,
 			'post_type'         => $this->post_type,
+			'post_parent'       => $this->getPostParentId( $model ),
 			'menu_order'        => $model->position ?? 0,
 			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
@@ -139,6 +198,46 @@ abstract class PostModel {
 			'post_status'       => ! property_exists( $model, 'status' ) || 'published' === $model->status ? 'publish' : 'draft',
 			'meta_input'        => array_filter( $model->toArray(), 'is_scalar' ),
 		];
+	}
+
+	/**
+	 * Get the id of the post parent.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return integer
+	 */
+	protected function getPostParentId( \SureCart\Models\Model $model ) {
+		// there is no parent, so don't set one.
+		if ( ! $this->parent ) {
+			return null;
+		}
+
+		$parent = new $this->parent();
+
+		// must be a post model class.
+		// if ( ! is_a( $parent, self::class ) ) {
+		// throw new \Exception( 'Parent class is not a ' . self::class );
+		// }
+
+		// get the parent model type.
+		$model_type = $parent->getModelType();
+
+		// model type is not set.
+		// if ( empty( $model_type ) ) {
+		// throw new \Exception( 'Model type not set in' . $this->parent );
+		// }
+
+		// We can assume $model->property is the a string of the parent model id.
+		// if ( ! is_string( $model->{$model_type} ) ) {
+		// throw new \Exception( 'Parent model id is missing or invalid' );
+		// }
+
+		// find the post by the parent model id.
+		$post = $parent->findModelById( $model->{$model_type} );
+
+		// return the post id.
+		return $post->id ?? null;
 	}
 
 	/**

@@ -8,6 +8,9 @@
  * @package SureCart
  */
 
+use SureCart\Models\Posts\Relation;
+use SureCart\Support\Currency;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -60,3 +63,97 @@ add_filter(
 	}
 );
 
+
+add_action(
+	'wp',
+	function() {
+		// $products = new \WP_Query(
+		// [
+		// 'post_type' => 'sc_product',
+		// ]
+		// );
+
+		// while ( $products->have_posts() ) :
+		// $products->the_post();
+
+		// the_title( '<h2>', '</h2>' );
+		// echo wp_kses_post( get_post_meta( get_the_ID(), 'display_price', true ) );
+		// the_excerpt();
+
+		// endwhile;
+	}
+);
+
+add_filter(
+	'get_post_metadata',
+	function( $metadata, $object_id, $meta_key, $single, $meta_type ) {
+		if ( 'sc_product' === get_post_type( $object_id ) && 'display_price' === $meta_key ) {
+			// this is likely being fetched from cache already.
+			$prices = get_posts(
+				array(
+					'post_type'      => 'sc_price',
+					'post_parent'    => $object_id,
+					'posts_per_page' => -1, // Get all related posts.
+				)
+			);
+			return Currency::format( $prices[0]->amount, $prices[0]->currency ?? 'usd' );
+		}
+		return $metadata;
+	},
+	9,
+	5
+);
+
+function add_prices_to_sc_product( $post ) {
+	global $wpdb;
+
+	// Check if the post is an 'sc_product'
+	if ( 'sc_product' === get_post_type( $post ) ) {
+		// Get the related 'sc_price' posts
+		$price_posts = get_posts(
+			array(
+				'post_type'      => 'sc_price',
+				'post_parent'    => $post->ID,
+				'posts_per_page' => -1, // Get all related posts
+			)
+		);
+
+		// Add the prices array to the post object
+		$post->prices = $price_posts;
+	}
+}
+add_action( 'the_post', 'add_prices_to_sc_product' );
+
+function add_prices_to_sc_product_posts( $posts, $query ) {
+	// Check if we're in the main query and dealing with 'sc_product' post type.
+	if ( 'sc_product' === $query->get( 'post_type' ) ) {
+		// Gather the IDs of the sc_product posts.
+		$product_ids = wp_list_pluck( $posts, 'ID' );
+
+		// Fetch all sc_price posts whose parent is in the sc_product posts.
+		$price_posts = get_posts(
+			array(
+				'post_type'       => 'sc_price',
+				'post_parent__in' => $product_ids,
+				'posts_per_page'  => -1,
+				'nopaging'        => true,
+			)
+		);
+
+		// Map sc_price posts to their respective sc_product.
+		$prices_by_product = array();
+		foreach ( $price_posts as $price_post ) {
+			$prices_by_product[ $price_post->post_parent ][] = $price_post;
+		}
+
+		// Assign prices array to each sc_product post.
+		foreach ( $posts as $post ) {
+			if ( 'sc_product' === get_post_type( $post ) ) {
+				$post->prices = $prices_by_product[ $post->ID ] ?? array();
+			}
+		}
+	}
+
+	return $posts;
+}
+add_filter( 'posts_results', 'add_prices_to_sc_product_posts', 10, 2 );

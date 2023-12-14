@@ -13,6 +13,13 @@ class ProductPost extends PostModel {
 	protected $post_type = 'sc_product';
 
 	/**
+	 * The model type
+	 *
+	 * @var string
+	 */
+	protected $model_type = 'product';
+
+	/**
 	 * Prepare the product for the database.
 	 *
 	 * @param \SureCart\Models\Model $product Product model.

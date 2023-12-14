@@ -195,6 +195,7 @@ class Currency {
 	public static function format( $amount, $currency_code = 'USD' ) {
 		if ( class_exists( 'NumberFormatter' ) ) {
 			$fmt = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
+			$fmt->setAttribute( \NumberFormatter::MAX_FRACTION_DIGITS, apply_filters( 'surecart/currency/max_cents', 0 ) );
 			return $fmt->formatCurrency( self::maybeConvertAmount( $amount, $currency_code ), strtoupper( $currency_code ) );
 		}
 
