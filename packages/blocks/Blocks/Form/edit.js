@@ -344,9 +344,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 				>
 					<PanelRow>
 						<TextControl
-							label={__('Submitting Order', 'surecart')}
+							label={__('Submitting', 'surecart')}
 							value={loading_text?.finalizing}
-							placeholder={__('Submitting Order...', 'surecart')}
+							placeholder={__('Submitting...', 'surecart')}
 							onChange={(finalizing) =>
 								setAttributes({
 									loading_text: {
@@ -359,12 +359,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Processing Payment', 'surecart')}
+							label={__('Processing', 'surecart')}
 							value={loading_text?.paying}
-							placeholder={__(
-								'Processing payment...',
-								'surecart'
-							)}
+							placeholder={__('Processing...', 'surecart')}
 							onChange={(paying) =>
 								setAttributes({
 									loading_text: {
@@ -377,9 +374,9 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Confirming Payment', 'surecart')}
+							label={__('Confirming', 'surecart')}
 							value={loading_text?.confirming}
-							placeholder={__('Finalizing order...', 'surecart')}
+							placeholder={__('Finalizing...', 'surecart')}
 							onChange={(confirming) =>
 								setAttributes({
 									loading_text: {
@@ -413,57 +410,50 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					title={__('Success Text', 'surecart')}
 					initialOpen={false}
 				>
-					<PanelRow>
-						<TextControl
-							label={__('Title', 'surecart')}
-							value={success_text?.title}
-							placeholder={__(
-								'Thanks for your order!',
-								'surecart'
-							)}
-							onChange={(title) =>
-								setAttributes({
-									success_text: {
-										...success_text,
-										title,
-									},
-								})
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextareaControl
-							label={__('Description', 'surecart')}
-							value={success_text?.description}
-							placeholder={__(
-								'Your payment was successful, and your order is complete. A receipt is on its way to your inbox.',
-								'surecart'
-							)}
-							onChange={(description) =>
-								setAttributes({
-									success_text: {
-										...success_text,
-										description,
-									},
-								})
-							}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Button Text', 'surecart')}
-							value={success_text?.button}
-							placeholder={__('Continue', 'surecart')}
-							onChange={(button) =>
-								setAttributes({
-									success_text: {
-										...success_text,
-										button,
-									},
-								})
-							}
-						/>
-					</PanelRow>
+					<TextControl
+						label={__('Title', 'surecart')}
+						value={success_text?.title}
+						placeholder={__('Thank you!', 'surecart')}
+						onChange={(title) =>
+							setAttributes({
+								success_text: {
+									...success_text,
+									title,
+								},
+							})
+						}
+					/>
+
+					<TextareaControl
+						label={__('Description', 'surecart')}
+						value={success_text?.description}
+						placeholder={__(
+							'Your payment was successful. A receipt is on its way to your inbox.',
+							'surecart'
+						)}
+						onChange={(description) =>
+							setAttributes({
+								success_text: {
+									...success_text,
+									description,
+								},
+							})
+						}
+					/>
+
+					<TextControl
+						label={__('Button Text', 'surecart')}
+						value={success_text?.button}
+						placeholder={__('Continue', 'surecart')}
+						onChange={(button) =>
+							setAttributes({
+								success_text: {
+									...success_text,
+									button,
+								},
+							})
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
 

@@ -12,5 +12,5 @@
 ::slotted(*:focus-within),
 ::slotted(*:active) {
   position: relative;
-  z-index: 1;
+  z-index: 5;
 }
