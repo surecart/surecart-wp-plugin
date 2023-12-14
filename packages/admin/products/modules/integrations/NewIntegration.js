@@ -84,19 +84,18 @@ export default ({ onRequestClose, id, product }) => {
 				return {
 					value: variant.id,
 					label: `
-					(${variantLabel}) ${
-						variant?.amount
+					(${variantLabel}) ${variant?.amount
 							? ` - ${formatNumber(
-									variant?.amount,
-									priceData?.currency || 'usd'
-							  )}`
+								variant?.amount,
+								priceData?.currency || 'usd'
+							)}`
 							: ''
-					}`,
+						}`,
 					suffixDescription: product?.stock_enabled
 						? sprintf(
-								__('%s available', 'surecart'),
-								variant?.available_stock
-						  )
+							__('%s available', 'surecart'),
+							variant?.available_stock
+						)
 						: null,
 					variant_id: variant?.id,
 				};
@@ -183,11 +182,7 @@ export default ({ onRequestClose, id, product }) => {
 									]}
 									onSelect={({ price_id }) => {
 										// find the price and set it.
-										const value =
-											product?.prices?.data?.find(
-												(p) => p.id === price_id
-											);
-										setPrice(value);
+										setPrice(active?.find((p) => p.id === price_id));
 									}}
 									placeholder={__('All Prices', 'surecart')}
 								/>
