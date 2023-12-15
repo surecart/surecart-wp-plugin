@@ -9,9 +9,10 @@ import {
 	ScSkeleton,
 	ScTag,
 	ScOrderFulfillmentBadge,
+	ScOrderReturnBadge,
 } from '@surecart/components-react';
 
-export default ({ order, checkout, loading }) => {
+export default ({ order, checkout, loading, returnRequests }) => {
 	if (loading) {
 		return (
 			<div
@@ -27,6 +28,11 @@ export default ({ order, checkout, loading }) => {
 			</div>
 		);
 	}
+
+	// if any return request with status 'open' then make the status as 'open'
+	const returnRequestStatus = returnRequests?.some(
+		(returnRequest) => returnRequest?.status === 'open')
+		? 'open' : 'completed';
 
 	if (!order?.id) {
 		return null;
@@ -56,6 +62,13 @@ export default ({ order, checkout, loading }) => {
 						status={order?.fulfillment_status}
 						pill
 					/>
+
+					{!!returnRequests?.length && (
+						<ScOrderReturnBadge
+							status={returnRequestStatus}
+							pill
+						/>
+					)}
 				</div>
 				{sprintf(
 					__('Created on %s', 'surecart'),

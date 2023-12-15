@@ -100,6 +100,9 @@ return [
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
+		\SureCart\Rest\ReturnItemsRestServiceProvider::class,
+		\SureCart\Rest\ReturnReasonsRestServiceProvider::class,
+		\SureCart\Rest\ReturnRequestsRestServiceProvider::class,
 		\SureCart\Rest\ShippingProfileRestServiceProvider::class,
 		\SureCart\Rest\ShippingMethodRestServiceProvider::class,
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
@@ -169,6 +172,12 @@ return [
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
 		\SureCartBlocks\Blocks\VariantPriceSelector\Block::class,
+		\SureCartBlocks\Blocks\ProductDonation\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationRecurringPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,

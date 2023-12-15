@@ -5,7 +5,7 @@
 	"category": "surecart",
 	"ancestor": ["surecart/totals"],
 	"keywords": ["checkout", "engine", "total", "subtotal"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false
@@ -15,9 +15,21 @@
 			"type": "string",
 			"default": "Total"
 		},
+		"due_amount_text": {
+			"type": "string",
+			"default": "Amount Due"
+		},
 		"subscription_text": {
 			"type": "string",
 			"default": "Total Due Today"
+		},
+		"first_payment_total_text": {
+			"type": "string",
+			"default": "Subtotal"
+		},
+		"free_trial_text": {
+			"type": "string",
+			"default": "Free Trial"
 		}
 	}
 }

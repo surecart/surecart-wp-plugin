@@ -68,6 +68,10 @@ abstract class AdminModelEditController {
 			'surecart-themes-default',
 			':root { --sc-color-primary-text: #fff; }' // this is important in case the user has a dark primary text.
 		);
+		wp_add_inline_style(
+			'surecart-themes-default',
+			'.sc-dragging { z-index: 1 }' // this is required for dragging.
+		);
 	}
 
 	/**

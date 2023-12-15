@@ -215,6 +215,18 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Return attached active prices.
+	 */
+	public function activeAdHocPrices() {
+		return array_filter(
+			$this->activePrices() ?? [],
+			function( $price ) {
+				return $price->ad_hoc;
+			}
+		);
+	}
+
+	/**
 	 * Returns the product media image attributes.
 	 *
 	 * @return object

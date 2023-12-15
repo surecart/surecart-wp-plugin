@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.11.3
+Stable tag: 2.14.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,36 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.14.0 - December 14th, 2023 =
+- New: Donations block to accept one-time and recurring donations.
+- New: Added user option to reactivate canceled subscriptions on customer dashboard.
+- Improvement: Display price and variant name on subscription index page.
+- Improvement: Updated address fields to not inherit the store's country.
+- Improvement: Improved error handling for 'Add to Cart' on product pages.
+- Improvement: Updated checkout totals for installments and trial periods to be more clear.
+- Improvement: Make default loading text less specific to account for different payment options.
+- Fix: Fixed currency symbol issue in dropdowns not appearing properly for some users in the admin.
+- Fix: Corrected a typo in the Order Bump feature.
+
+= 2.13.0 - December 11th, 2023 =
+* Fix: Issue with upgrade group cache not clearing on merchant admin when updating status.
+* Fix: Issue with upgrade group incorrectly showing in customer dashboard when archived.
+
+= 2.12.0 - December 5th, 2023 =
+* New: Returns - create and manage return requests on the admin order screen.
+* Improvement: List the variant and price with the purchase in the customer's purchase list on the admin.
+* Improvement: Add shortcode for product variant choices to be used in custom page builder product page templates.
+* Improvement: Handle out-of-stock errors better when the item is added to the cart.
+* Fix: Draft orders having the wrong status on the admin orders screen.
+* Fix: Admin order pages showing the product image on line items instead of the variant image.
+* Fix: CSS conflict with some themes causing password field inspector controls to be pushed offscreen.
+* Fix: Customers not syncing with users when "Create New Users" is unchecked in the manual customer sync button.
+* Fix: Duplication of labels on the price selector.
+
+= 2.11.4 - December 2nd, 2023 =
+* Fix: Issue with donation sometimes prices not properly updating on instant checkout.
+* Fix: Better error handling with customer link middleware.
 
 = 2.11.3 - November 28th, 2023 =
 * Improvement: Update SureCart menu to include shop, checkout, dashboard pages.
