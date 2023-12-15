@@ -172,3 +172,24 @@
     border-left: 0;
   }
 }
+
+@supports (-webkit-touch-callout: none) {
+  /* CSS specific to iOS devices */
+  .quantity--small,
+  .quantity {
+    width: max-content;
+  }
+
+  .button__decrease,
+  .button__increase {
+    display: inline-block;
+    position: relative;
+
+    sc-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
