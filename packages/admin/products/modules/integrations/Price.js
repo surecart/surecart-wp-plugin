@@ -146,6 +146,7 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 						variant?.option_3,
 					],
 				}}
+				showPriceName={false}
 			>
 				{!!variant?.sku && (
 					<div>
