@@ -370,8 +370,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 									type: e.target.value,
 								});
 								if (
-									'all' === e.target.value ||
-									'featured' === e.target.value
+									ids?.length &&
+									('all' === e.target.value ||
+										'featured' === e.target.value)
 								) {
 									setAttributes({ ids: [] });
 								}
