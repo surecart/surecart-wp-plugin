@@ -136,17 +136,19 @@ export default ({ price_id, variant_id, product, total_integrations }) => {
 			return null;
 		}
 
+		// remove name.
+		const { name, ...priceData } = price;
+
 		return (
 			<LineItemLabel
 				lineItem={{
-					price,
+					price: priceData,
 					variant_options: [
 						variant?.option_1,
 						variant?.option_2,
 						variant?.option_3,
 					],
 				}}
-				showPriceName={false}
 			>
 				{!!variant?.sku && (
 					<div>
