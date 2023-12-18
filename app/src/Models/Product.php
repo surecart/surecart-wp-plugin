@@ -299,6 +299,10 @@ class Product extends Model implements PageModel {
 	 * @return this
 	 */
 	public function withSortedPrices() {
+		if ( empty( $this->prices->data ) ) {
+			return $this;
+		}
+
 		$filtered = clone $this;
 
 		// Sort prices by position.
@@ -318,12 +322,16 @@ class Product extends Model implements PageModel {
 	 * @return this
 	 */
 	public function withActivePrices() {
+		if ( empty( $this->prices->data ) ) {
+			return $this;
+		}
+
 		$filtered = clone $this;
 
 		// Filter out archived prices.
 		$filtered->prices->data = array_values(
 			array_filter(
-				$filtered->prices->data,
+				$filtered->prices->data ?? [],
 				function( $price ) {
 					return ! $price->archived;
 				}
