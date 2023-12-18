@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
