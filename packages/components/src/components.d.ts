@@ -531,6 +531,10 @@ export namespace Components {
          */
         "product": Product;
         "reportValidity": () => Promise<boolean>;
+        /**
+          * The title for price and variant selections
+         */
+        "selectorTitle": string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.
@@ -6282,6 +6286,10 @@ declare namespace LocalJSX {
           * The product.
          */
         "product"?: Product;
+        /**
+          * The title for price and variant selections
+         */
+        "selectorTitle"?: string;
     }
     /**
      * This component listens for stock requirements and displays a dialog to the user.

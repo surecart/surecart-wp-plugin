@@ -294,11 +294,30 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get with sorted prices.
+	 *
+	 * @return this
+	 */
+	public function withSortedPrices() {
+		$filtered = clone $this;
+
+		// Sort prices by position.
+		usort(
+			$filtered->prices->data,
+			function( $a, $b ) {
+				return $a->position - $b->position;
+			}
+		);
+
+		return $filtered;
+	}
+
+	/**
 	 * Get product with acgive and sorted prices.
 	 *
 	 * @return this
 	 */
-	public function withActiveAndSortedPrices() {
+	public function withActivePrices() {
 		$filtered = clone $this;
 
 		// Filter out archived prices.
@@ -309,14 +328,6 @@ class Product extends Model implements PageModel {
 					return ! $price->archived;
 				}
 			)
-		);
-
-		// Sort prices by position.
-		usort(
-			$filtered->prices->data,
-			function( $a, $b ) {
-				return $a->position - $b->position;
-			}
 		);
 
 		return $filtered;
