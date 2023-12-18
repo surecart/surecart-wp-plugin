@@ -204,9 +204,14 @@ export class ScSubscriptionDetails {
         </sc-dialog>
 
         {!this.subscription.payment_method && (
-          <sc-alert type="warning" style={{ marginTop: 'var(--sc-spacing-small)' }} open>
-            {__('This plan has no associated payment method. Click to add a payment method.', 'surecart')}
-          </sc-alert>
+          <div>
+            <sc-tag type="warning">
+              <div class="subscription-details__missing-method">
+                <sc-icon name="alert-triangle"></sc-icon>
+                {__('Payment Method Missing', 'surecart')}
+              </div>
+            </sc-tag>
+          </div>
         )}
       </div>
     );
