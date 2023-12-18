@@ -393,4 +393,31 @@ class Product extends Model implements PageModel {
 			$this->template->content ?? '' :
 			$this->template_part->content ?? '';
 	}
+
+	/**
+	 * Get the product page initial state
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return array
+	 */
+	public function getInitialPageState( $args = [] ) {
+		$form = \SureCart::forms()->getDefault();
+
+		return wp_parse_args(
+			$args,
+			[
+				'formId'          => $form->ID,
+				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
+				'product'         => $this,
+				'prices'          => $this->activePrices(),
+				'selectedPrice'   => ( $this->activePrices() ?? [] )[0] ?? null,
+				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+				'variant_options' => $this->variant_options->data ?? [],
+				'variants'        => $this->variants->data ?? [],
+				'selectedVariant' => $this->getFirstVariantWithStock() ?? null,
+				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
+			]
+		);
+	}
 }

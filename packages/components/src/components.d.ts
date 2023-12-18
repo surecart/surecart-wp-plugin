@@ -2809,6 +2809,10 @@ export namespace Components {
     }
     interface ScProductBuyButton {
         "addToCart": boolean;
+        "checkoutLink": string;
+        "formId": number;
+        "mode": 'live' | 'test';
+        "product": Product;
     }
     interface ScProductDonationAmountChoice {
         /**
@@ -2999,24 +3003,52 @@ export namespace Components {
           * Which option number?
          */
         "optionNumber": 1 | 2 | 3;
+        /**
+          * The product id
+         */
+        "productId": string;
     }
     interface ScProductPrice {
         /**
-          * The prices list
+          * The product's prices.
          */
         "prices": Price[];
+        /**
+          * The product id
+         */
+        "productId": string;
         /**
           * The sale text
          */
         "saleText": string;
     }
     interface ScProductPriceChoices {
+        /**
+          * The product price choice label
+         */
         "label": string;
+        /**
+          * The product id
+         */
+        "productId": string;
+        /**
+          * Whether to show the price
+         */
         "showPrice": boolean;
     }
     interface ScProductPriceModal {
+        /**
+          * Whether to add to cart
+         */
         "addToCart": boolean;
+        /**
+          * The button text
+         */
         "buttonText": string;
+        /**
+          * The product id
+         */
+        "productId": string;
     }
     interface ScProductQuantity {
         /**
@@ -3035,6 +3067,10 @@ export namespace Components {
           * Name for the input. Used for validation errors.
          */
         "name": string;
+        /**
+          * The product id
+         */
+        "productId": string;
         /**
           * Whether the input is required.
          */
@@ -3055,6 +3091,7 @@ export namespace Components {
         "productId": string;
     }
     interface ScProductText {
+        "productId": string;
         "text": 'name' | 'description';
     }
     interface ScProse {
@@ -8783,6 +8820,10 @@ declare namespace LocalJSX {
     }
     interface ScProductBuyButton {
         "addToCart"?: boolean;
+        "checkoutLink"?: string;
+        "formId"?: number;
+        "mode"?: 'live' | 'test';
+        "product"?: Product;
     }
     interface ScProductDonationAmountChoice {
         /**
@@ -8985,24 +9026,52 @@ declare namespace LocalJSX {
           * Which option number?
          */
         "optionNumber"?: 1 | 2 | 3;
+        /**
+          * The product id
+         */
+        "productId"?: string;
     }
     interface ScProductPrice {
         /**
-          * The prices list
+          * The product's prices.
          */
         "prices"?: Price[];
+        /**
+          * The product id
+         */
+        "productId"?: string;
         /**
           * The sale text
          */
         "saleText"?: string;
     }
     interface ScProductPriceChoices {
+        /**
+          * The product price choice label
+         */
         "label"?: string;
+        /**
+          * The product id
+         */
+        "productId"?: string;
+        /**
+          * Whether to show the price
+         */
         "showPrice"?: boolean;
     }
     interface ScProductPriceModal {
+        /**
+          * Whether to add to cart
+         */
         "addToCart"?: boolean;
+        /**
+          * The button text
+         */
         "buttonText"?: string;
+        /**
+          * The product id
+         */
+        "productId"?: string;
     }
     interface ScProductQuantity {
         /**
@@ -9021,6 +9090,10 @@ declare namespace LocalJSX {
           * Name for the input. Used for validation errors.
          */
         "name"?: string;
+        /**
+          * The product id
+         */
+        "productId"?: string;
         /**
           * Whether the input is required.
          */
@@ -9045,6 +9118,7 @@ declare namespace LocalJSX {
         "productId"?: string;
     }
     interface ScProductText {
+        "productId"?: string;
         "text"?: 'name' | 'description';
     }
     interface ScProse {
