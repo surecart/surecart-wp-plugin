@@ -1,10 +1,10 @@
-import { Component, Element, h, Host, Prop } from '@stencil/core';
+import { Component, Element, h, Host, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
-import { Product } from 'src/types';
+import { Product, ScNoticeStore } from 'src/types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 
 @Component({
@@ -30,7 +30,10 @@ export class ScProductBuyButton {
   // checkout link
   @Prop() checkoutLink: string;
 
-  handleCartClick(e) {
+  // Is add to cart enabled
+  @State() error: ScNoticeStore;
+
+  async handleCartClick(e) {
     e.preventDefault();
 
     // already busy, do nothing.
@@ -50,7 +53,12 @@ export class ScProductBuyButton {
     }
 
     // submit the cart form.
-    submitCartForm(this.product?.id);
+    try {
+      await submitCartForm();
+    } catch (e) {
+      console.error(e);
+      this.error = e;
+    }
   }
 
   componentDidLoad() {
@@ -78,6 +86,22 @@ export class ScProductBuyButton {
         }}
         onClick={e => this.handleCartClick(e)}
       >
+        {!!this.error && (
+          <sc-alert
+            onClick={event => {
+              event.stopPropagation();
+            }}
+            type="danger"
+            scrollOnOpen={true}
+            open={!!this.error}
+            closable={false}
+          >
+            {!!getTopLevelError(this.error) && <span slot="title" innerHTML={getTopLevelError(this.error)}></span>}
+            {(getAdditionalErrorMessages(this.error) || []).map((message, index) => (
+              <div innerHTML={message} key={index}></div>
+            ))}
+          </sc-alert>
+        )}
         <slot />
       </Host>
     );

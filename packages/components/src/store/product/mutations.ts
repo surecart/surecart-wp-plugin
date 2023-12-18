@@ -23,6 +23,7 @@ export const submitCartForm = async (productId: string) => {
   } catch (e) {
     console.error(e);
     state.error = e;
+    throw e; // Re-throw the caught error
   } finally {
     setProduct(productId, { busy: false });
   }

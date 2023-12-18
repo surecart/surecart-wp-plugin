@@ -3,7 +3,7 @@
 exports[`sc-tab renders 1`] = `
 <sc-tab id="tab-1" panel="">
   <mock:shadow-root>
-    <div aria-disabled="false" aria-selected="false" class="tab" part="base " role="tab" tabindex="-1">
+    <div aria-disabled="false" aria-selected="false" class="tab" part="base " role="tab" tabindex="0">
       <span class="tab__prefix" part="prefix">
         <slot name="prefix"></slot>
       </span>

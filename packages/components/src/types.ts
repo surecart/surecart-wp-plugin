@@ -1165,3 +1165,30 @@ export interface CheckoutInitiatedParams {
     quantity: number;
   }>;
 }
+
+export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
+
+interface AdditionalError {
+  code: string;
+  message: string;
+  data: {
+    attribute: string;
+    type: string;
+    options: {
+      if: string[];
+      value: string;
+    };
+  };
+}
+export interface ScNoticeStore {
+  type: NoticeType | 'default';
+  code: string;
+  message: string;
+  data?: {
+    status: number;
+    type: string;
+    http_status: string;
+  };
+  additional_errors?: AdditionalError[] | null;
+  dismissible?: boolean;
+}

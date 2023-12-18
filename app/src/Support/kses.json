@@ -339,6 +339,7 @@
     "invalid": true,
     "name": true,
     "required": true,
+    "role": true,
     "show-control": true,
     "size": true,
     "type": true,
@@ -1552,6 +1553,32 @@
     "class": true,
     "slot": true
   },
+  "sc-product-donation-amount-choice": {
+    "label": true,
+    "product-id": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-donation-choices": {
+    "label": true,
+    "product-id": true,
+    "recurring": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-donation-custom-amount": {
+    "product-id": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-product-item": {
     "layout-config": true,
     "product": true,
@@ -1757,6 +1784,19 @@
     "label": true,
     "required": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-recurring-price-choice-container": {
+    "label": true,
+    "prices": true,
+    "product": true,
+    "selected-price": true,
+    "show-amount": true,
+    "show-control": true,
+    "show-details": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1980,6 +2020,14 @@
   },
   "sc-subscription-payment-method": {
     "heading": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-subscription-reactivate": {
+    "open": true,
     "subscription": true,
     "style": true,
     "id": true,

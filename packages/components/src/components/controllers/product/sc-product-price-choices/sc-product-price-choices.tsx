@@ -2,7 +2,7 @@ import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../functions/price';
 import { state } from '@store/product';
-import { availablePrices } from '@store/product/getters';
+import { availablePrices, availableNonSubscriptionPrices, availableSubscriptionPrices } from '@store/product/getters';
 import { setProduct } from '@store/product/setters';
 
 @Component({
@@ -42,9 +42,11 @@ export class ScProductPriceChoices {
     const prices = availablePrices(this.productId);
     if (prices?.length < 2) return <Host style={{ display: 'none' }}></Host>;
 
+    const nonSubscriptionPrices = availableNonSubscriptionPrices();
+
     return (
       <sc-choices label={this.label} required style={{ '--sc-input-required-indicator': ' ' }}>
-        {(prices || []).map(price => (
+        {(nonSubscriptionPrices || []).map(price => (
           <sc-price-choice-container
             label={price?.name || state[this.productId]?.product?.name}
             showPrice={!!this.showPrice}
@@ -52,11 +54,22 @@ export class ScProductPriceChoices {
             checked={state[this.productId]?.selectedPrice?.id === price?.id}
             onScChange={e => {
               if (e.target.checked) {
-                setProduct(this.productId, { selectedPrice: price })
+                setProduct(this.productId, { selectedPrice: price });
               }
             }}
           />
         ))}
+        <sc-recurring-price-choice-container
+          label={__('Subscribe and Save', 'surecart')}
+          prices={availableSubscriptionPrices()}
+          product={state?.product}
+          selectedPrice={state?.selectedPrice}
+          onScChange={e => {
+            if (e.detail) {
+              state.selectedPrice = prices?.find(price => price.id === e.detail);
+            }
+          }}
+        />
       </sc-choices>
     );
   }

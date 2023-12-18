@@ -1,0 +1,184 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { __ } from '@wordpress/i18n';
+import {
+	PanelBody,
+	PanelRow,
+	Placeholder,
+	ToggleControl,
+} from '@wordpress/components';
+import { productDonationStore } from '@surecart/components';
+import {
+	useBlockProps,
+	InnerBlocks,
+	useInnerBlocksProps,
+	InspectorControls,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+} from '@wordpress/block-editor';
+import SelectModel from '../../../admin/components/SelectModel';
+
+import { ScButton, ScIcon } from '@surecart/components-react';
+import { useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+
+const TEMPLATE = [
+	['surecart/product-donation-amounts'],
+	['surecart/product-donation-prices'],
+];
+
+export default ({ attributes, setAttributes }) => {
+	const { product_id, required } = attributes;
+	const [query, setQuery] = useState(null);
+
+	const { products, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				{
+					query,
+					archived: false,
+					ad_hoc: true,
+					expand: ['prices'],
+				},
+			];
+			return {
+				products: select(coreStore).getEntityRecords(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[query]
+	);
+
+	const colorProps = useColorProps(attributes);
+	const borderProps = useBorderProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
+
+	const blockProps = useBlockProps({
+		css: css`
+			&.has-child-selected {
+				z-index: 1;
+			}
+		`,
+		style: {
+			'--sc-input-label-color': colorProps?.style?.color,
+			backgroundColor: colorProps?.style?.backgroundColor,
+			borderColor: borderProps?.style?.borderColor,
+			borderWidth: borderProps?.style?.borderWidth,
+			borderRadius: borderProps?.style?.borderRadius,
+			paddingLeft: spacingProps?.style?.paddingLeft,
+			paddingRight: spacingProps?.style?.paddingRight,
+			paddingTop: spacingProps?.style?.paddingTop,
+			paddingBottom: spacingProps?.style?.paddingBottom,
+			marginTop: spacingProps?.style?.marginTop,
+			marginLeft: spacingProps?.style?.marginLeft,
+			marginRight: spacingProps?.style?.marginRight,
+			marginBottom: spacingProps?.style?.marginBottom,
+		},
+	});
+
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		allowedBlocks: [
+			'surecart/product-donation-amounts',
+			'surecart/product-donation-prices',
+		],
+		renderAppender: InnerBlocks.ButtonBlockAppender,
+		template: TEMPLATE,
+		templateLock: {
+			remove: true,
+		},
+	});
+
+	const product = useSelect(
+		(select) => {
+			return select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				product_id,
+				{ expand: ['prices'] }
+			);
+		},
+		[product_id]
+	);
+
+	useEffect(() => {
+		if (!product) return;
+		productDonationStore.state[product_id] = {
+			product,
+			amounts: product?.prices?.data.map((price) => price?.amount),
+			ad_hoc_amount: product?.prices?.data[0]?.amount,
+			selectedPrice: product?.prices?.data[0],
+		};
+	}, [product]);
+
+	if (!product_id) {
+		return (
+			<div {...blockProps}>
+				<Placeholder
+					icon={
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							style={{ fill: 'none' }}
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+						>
+							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+							<circle cx="12" cy="12" r="3"></circle>
+						</svg>
+					}
+					label={__('Select a Product', 'surecart')}
+					instructions={__(
+						'Select a product to display donation choices according to the prices of the product.',
+						'surecart'
+					)}
+				>
+					<SelectModel
+						choices={(products || []).map((product) => ({
+							label: product.name,
+							value: product.id,
+						}))}
+						onQuery={setQuery}
+						onFetch={() => setQuery('')}
+						loading={loading}
+						onSelect={(product_id) => setAttributes({ product_id })}
+						style={{ width: '100%' }}
+					>
+						<ScButton slot="trigger" type="primary">
+							<ScIcon name="plus" slot="prefix" />
+							{__('Select Product', 'surecart')}
+						</ScButton>
+					</SelectModel>
+				</Placeholder>
+			</div>
+		);
+	}
+
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody>
+					<PanelRow>
+						<ToggleControl
+							label={__('Required', 'surecart')}
+							checked={required}
+							onChange={(required) => setAttributes({ required })}
+						/>
+					</PanelRow>
+				</PanelBody>
+			</InspectorControls>
+			<div {...innerBlocksProps}></div>
+		</>
+	);
+};
