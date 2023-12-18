@@ -104,9 +104,10 @@
 
 .button__decrease,
 .button__increase {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 0;
   height: auto;
   top: 1px;
   bottom: 1px;
@@ -117,6 +118,7 @@
   font-size: 13px;
   user-select: none;
   border-width: 0;
+  padding: 0;
 
   &:hover:not(.button--disabled) {
     .quantity__control {
@@ -170,26 +172,5 @@
     left: 1px;
     border-right: var(--sc-input-border);
     border-left: 0;
-  }
-}
-
-@supports (-webkit-touch-callout: none) {
-  /* CSS specific to iOS devices */
-  .quantity--small,
-  .quantity {
-    width: max-content;
-  }
-
-  .button__decrease,
-  .button__increase {
-    display: inline-block;
-    position: relative;
-
-    sc-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
   }
 }
