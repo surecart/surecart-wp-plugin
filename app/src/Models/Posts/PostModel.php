@@ -1,10 +1,14 @@
 <?php
 namespace SureCart\Models\Posts;
 
+use SureCart\Models\Concerns\Facade;
+
 /**
  * Handles the product post type.
  */
 abstract class PostModel {
+	use Facade;
+
 	/**
 	 * Holds the user.
 	 *
@@ -20,32 +24,40 @@ abstract class PostModel {
 	protected $post_type = '';
 
 	/**
-	 * The model type
-	 *
-	 * @var string
-	 */
-	protected $model_type = '';
-
-	/**
 	 * If this has a post parent class, set it here.
 	 *
-	 * @var string
+	 * @var \SureCart\Models\Posts\PostModel
 	 */
-	protected $parent = '';
+	protected $parent = null;
+
+	/**
+	 * Product Model
+	 *
+	 * @var \SureCart\Models\Model
+	 */
+	protected $model;
 
 	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 */
-	final public function __construct() {
+	public function __construct( $post = null ) {
+		// if ( is_int( $post ) ) {
+		// $post = get_post( $post );
+		// } else if ( is_null( $post ) ) {
+		// $post = get_post();
+		// } else if ( is_string( $post ) ) {
+		// $post = $this-
+		// }
+		$this->post = $post;
 	}
 
 	/**
-	 * Get the post type.
+	 * Get the model type
 	 *
 	 * @return string
 	 */
 	public function getModelType() {
-		return $this->model_type;
+		return $this->model::getObjectName();
 	}
 
 	/**
@@ -55,6 +67,17 @@ abstract class PostModel {
 	 */
 	public function getPostType() {
 		return $this->post_type;
+	}
+
+	/**
+	 * Additional schema.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return array
+	 */
+	protected function additionalSchema( $model ) {
+		return [];
 	}
 
 	/**
@@ -80,25 +103,9 @@ abstract class PostModel {
 			]
 		);
 
-		error_log(
-			print_r(
-				[
-					'post_type'      => $this->post_type,
-					'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash' ),
-					'posts_per_page' => 1,
-					'no_found_rows'  => true,
-					'meta_query'     => array(
-						array(
-							'key'   => 'id',
-							'value' => $model_id, // query by model id.
-						),
-					),
-				],
-				1
-			)
-		);
+		$post = ! empty( $query->posts[0] ) ? $query->posts[0] : null;
 
-		$this->post = apply_filters( "surecart_get_{$this->post_type}_post", $query->posts[0] ?? null, $model_id );
+		$this->post = apply_filters( "surecart_get_{$this->post_type}_post", $post, $model_id, $this );
 
 		return $this;
 	}
@@ -112,8 +119,20 @@ abstract class PostModel {
 	 */
 	public function find( $id ) {
 		$this->post = get_post( $id );
-
 		return $this;
+	}
+
+	public function get( $args ) {
+		$products = new \WP_Query(
+			array_merge(
+				$args,
+				[
+					'post_type' => 'sc_product',
+				]
+			)
+		);
+
+		// while $products->have_posts() :
 	}
 
 	/**
@@ -186,18 +205,21 @@ abstract class PostModel {
 	 * @return array
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
-		return [
-			'post_title'        => $model->name,
-			'post_type'         => $this->post_type,
-			'post_parent'       => $this->getPostParentId( $model ),
-			'menu_order'        => $model->position ?? 0,
-			'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
-			'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
-			'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
-			'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
-			'post_status'       => ! property_exists( $model, 'status' ) || 'published' === $model->status ? 'publish' : 'draft',
-			'meta_input'        => array_filter( $model->toArray(), 'is_scalar' ),
-		];
+		return array_merge(
+			$this->additionalSchema( $model ),
+			[
+				'post_title'        => $model->name,
+				'post_type'         => $this->post_type,
+				'post_parent'       => $this->getPostParentId( $model ),
+				'menu_order'        => $model->position ?? 0,
+				'post_date'         => ( new \DateTime( "@$model->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+				'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
+				'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
+				'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
+				'post_status'       => ! property_exists( $model, 'status' ) || 'published' === $model->status ? 'publish' : 'draft',
+				'meta_input'        => array_filter( $model->toArray(), 'is_scalar' ),
+			]
+		);
 	}
 
 	/**
@@ -205,39 +227,41 @@ abstract class PostModel {
 	 *
 	 * @param \SureCart\Models\Model $model The model.
 	 *
-	 * @return integer
+	 * @return integer|null
+	 * @throws \Exception If the parent model type is not set.
 	 */
 	protected function getPostParentId( \SureCart\Models\Model $model ) {
 		// there is no parent, so don't set one.
-		if ( ! $this->parent ) {
+		if ( empty( $this->parent ) ) {
 			return null;
 		}
 
 		$parent = new $this->parent();
 
-		// must be a post model class.
-		// if ( ! is_a( $parent, self::class ) ) {
-		// throw new \Exception( 'Parent class is not a ' . self::class );
-		// }
-
 		// get the parent model type.
 		$model_type = $parent->getModelType();
 
 		// model type is not set.
-		// if ( empty( $model_type ) ) {
-		// throw new \Exception( 'Model type not set in' . $this->parent );
-		// }
+		if ( empty( $model_type ) ) {
+			throw new \Exception( 'Model not set in' . $this->parent );
+		}
 
 		// We can assume $model->property is the a string of the parent model id.
-		// if ( ! is_string( $model->{$model_type} ) ) {
-		// throw new \Exception( 'Parent model id is missing or invalid' );
-		// }
+		if ( ! is_string( $model->{$model_type} ) ) {
+			throw new \Exception( 'Parent model id is missing or invalid' );
+		}
 
 		// find the post by the parent model id.
-		$post = $parent->findModelById( $model->{$model_type} );
+		$post = $parent->findByModelId( $model->{$model_type} );
+
+		// the parent id did not get created, let's create it.
+		if ( empty( $post->ID ) ) {
+			return null;
+			// TODO: something was deleted, re-sync everything.
+		}
 
 		// return the post id.
-		return $post->id ?? null;
+		return $post->ID ?? null;
 	}
 
 	/**
@@ -254,7 +278,35 @@ abstract class PostModel {
 			$attribute = $this->post->$key;
 		}
 
+		$getter = $this->getMutator( $key, 'get' );
+
+		if ( $getter ) {
+			return $this->{$getter}( $attribute );
+		} elseif ( ! is_null( $attribute ) ) {
+			return $attribute;
+		}
+
 		return $attribute;
+	}
+
+	/**
+	 * Calls a mutator based on set{Attribute}Attribute
+	 *
+	 * @param string $key Attribute key.
+	 * @param mixed  $type 'get' or 'set'.
+	 *
+	 * @return string|false
+	 */
+	public function getMutator( $key, $type ) {
+		$key = ucwords( str_replace( [ '-', '_' ], ' ', $key ) );
+
+		$method = $type . str_replace( ' ', '', $key ) . 'Attribute';
+
+		if ( method_exists( $this, $method ) ) {
+			return $method;
+		}
+
+		return false;
 	}
 
 	/**
@@ -383,27 +435,5 @@ abstract class PostModel {
 	 */
 	public function __unset( $key ) {
 		$this->offsetUnset( $key );
-	}
-
-	/**
-	 * Forward call to method
-	 *
-	 * @param string $method Method to call.
-	 * @param mixed  $params Method params.
-	 */
-	public function __call( $method, $params ) {
-		return call_user_func_array( [ $this, $method ], $params );
-	}
-
-	/**
-	 * Static Facade Accessor
-	 *
-	 * @param string $method Method to call.
-	 * @param mixed  $params Method params.
-	 *
-	 * @return mixed
-	 */
-	public static function __callStatic( $method, $params ) {
-		return call_user_func_array( [ new static(), $method ], $params );
 	}
 }

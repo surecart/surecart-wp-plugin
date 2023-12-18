@@ -156,6 +156,15 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	}
 
 	/**
+	 * Get the object name
+	 *
+	 * @return string
+	 */
+	protected function getObjectName() {
+		return $this->object_name;
+	}
+
+	/**
 	 * Get the cache status for the model.
 	 *
 	 * @return string|null;

@@ -20,6 +20,79 @@ class ProductPostTypeService {
 	 */
 	public function bootstrap() {
 		add_action( 'init', [ $this, 'registerPostType' ] );
+		add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
+		add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
+	}
+
+	/**
+	 * Add children to products.
+	 *
+	 * @param \WP_Post[] $posts The posts.
+	 * @param \WP_Query  $query  The query.
+	 *
+	 * @return \WP_Post[]
+	 */
+	public function addChildrenToProducts( $posts, $query ) {
+		// Check if we're in the main query and dealing with 'sc_product' post type.
+		if ( $this->post_type === $query->get( 'post_type' ) ) {
+			// Gather the IDs of the sc_product posts.
+			$product_ids = wp_list_pluck( $posts, 'ID' );
+
+			// Fetch all sc_price posts whose parent is in the sc_product posts.
+			$price_posts = get_posts(
+				array(
+					'post_type'       => 'sc_price',
+					'post_parent__in' => $product_ids,
+					'posts_per_page'  => -1,
+					'nopaging'        => true,
+				)
+			);
+
+			// Map sc_price posts to their respective sc_product.
+			$prices_by_product = array();
+			foreach ( $price_posts as $price_post ) {
+				$prices_by_product[ $price_post->post_parent ][] = $price_post;
+			}
+
+			// Assign prices array to each sc_product post.
+			foreach ( $posts as $post ) {
+				if ( 'sc_product' === get_post_type( $post ) ) {
+					$post->prices = $prices_by_product[ $post->ID ] ?? array();
+				}
+			}
+		}
+
+		return $posts;
+	}
+
+	/**
+	 * Add children to an individual product.
+	 *
+	 * @param \WP_Post $post The post.
+	 *
+	 * @return void
+	 */
+	public function addChildrenToProduct( $post ) {
+		// Check if the post is an 'sc_product'.
+		if ( 'sc_product' === get_post_type( $post ) ) {
+			// already got it through eager loading.
+			if ( ! empty( $post->prices ) ) {
+				return;
+			}
+
+			// Get the related 'sc_price' posts.
+			$price_posts = get_posts(
+				array(
+					'post_type'      => 'sc_price',
+					'post_parent'    => $post->ID,
+					'posts_per_page' => -1, // Get all related posts.
+					'nopaging'       => true,
+				)
+			);
+
+			// Add the prices array to the post object.
+			$post->prices = $price_posts;
+		}
 	}
 
 	/**

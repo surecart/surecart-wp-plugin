@@ -2,7 +2,7 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Posts\PricePost;
+use SureCart\Models\Posts\Price as PricePost;
 use SureCart\Models\Product;
 
 /**

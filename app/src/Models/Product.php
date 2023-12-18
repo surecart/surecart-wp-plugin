@@ -2,7 +2,7 @@
 
 namespace SureCart\Models;
 
-use SureCart\Models\Posts\ProductPost;
+use SureCart\Models\Posts\Product as ProductPost;
 use SureCart\Support\Contracts\PageModel;
 use SureCart\Support\Currency;
 
