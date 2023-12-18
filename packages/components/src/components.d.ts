@@ -2808,7 +2808,7 @@ export namespace Components {
         "checkoutLink": string;
         "formId": number;
         "mode": 'live' | 'test';
-        "product": Product1;
+        "product": Product;
     }
     interface ScProductDonationAmountChoice {
         /**
@@ -8815,7 +8815,7 @@ declare namespace LocalJSX {
         "checkoutLink"?: string;
         "formId"?: number;
         "mode"?: 'live' | 'test';
-        "product"?: Product1;
+        "product"?: Product;
     }
     interface ScProductDonationAmountChoice {
         /**

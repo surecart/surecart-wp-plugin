@@ -4,8 +4,9 @@ import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
-import { Product, ScNoticeStore } from 'src/types';
+import { Product, ScNoticeStore } from '../../../../types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
+import { getTopLevelError, getAdditionalErrorMessages } from '../../../../functions/error';
 
 @Component({
   tag: 'sc-product-buy-button',
@@ -54,7 +55,7 @@ export class ScProductBuyButton {
 
     // submit the cart form.
     try {
-      await submitCartForm();
+      await submitCartForm(this.product?.id);
     } catch (e) {
       console.error(e);
       this.error = e;
