@@ -41,13 +41,12 @@ abstract class PostModel {
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
 	 */
 	public function __construct( $post = null ) {
-		// if ( is_int( $post ) ) {
-		// $post = get_post( $post );
-		// } else if ( is_null( $post ) ) {
-		// $post = get_post();
-		// } else if ( is_string( $post ) ) {
-		// $post = $this-
-		// }
+		// either get by model id or integer (or global post).
+		if ( is_string( $post ) ) {
+			$post = $this->findBuModelId( $post );
+		} else {
+			$post = get_post( $post );
+		}
 		$this->post = $post;
 	}
 
