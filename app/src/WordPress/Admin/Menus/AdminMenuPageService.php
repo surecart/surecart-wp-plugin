@@ -175,7 +175,7 @@ class AdminMenuPageService {
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
 			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
-			'cart'                => $this->getTemplatePart( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
+			'cart'                => $this->addTemplateSubMenuPage( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
 			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
 			'dashboard'           => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
 			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
@@ -211,7 +211,7 @@ class AdminMenuPageService {
 	}
 
 	/**
-	 * Get template part
+	 * Add a submenu page for a template.
 	 *
 	 * @param string $slug The slug.
 	 * @param string $name The name.
@@ -219,7 +219,7 @@ class AdminMenuPageService {
 	 *
 	 * @return null|string|false
 	 */
-	public function getTemplatePart( $slug, $name, $template_slug ) {
+	public function addTemplateSubMenuPage( $slug, $name, $template_slug ) {
 		// add filter to disable shop page menu item.
 		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
 			return;
