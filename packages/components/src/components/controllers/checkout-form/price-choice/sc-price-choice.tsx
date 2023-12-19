@@ -270,7 +270,7 @@ export class ScPriceChoice {
 
               {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
-                  <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
+                  <sc-format-number type="currency" value={Math.abs(this.price.setup_fee_amount)} currency={this.price.currency}></sc-format-number>{' '}
                   {this.price.setup_fee_name || (this.price?.setup_fee_amount < 0 ? __('Setup Discount', 'surecart') : __('Setup Fee', 'surecart'))}
                 </div>
               )}

@@ -113,7 +113,7 @@ export class ScProductPrice {
               {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
                 <span class="price__setup-fee">
                   <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>
-                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
+                  <sc-format-number type="currency" value={Math.abs(price.setup_fee_amount)} currency={price?.currency}></sc-format-number>{' '}
                   {price?.setup_fee_name || (price?.setup_fee_amount < 0 ? __('Setup Discount', 'surecart') : __('Setup Fee', 'surecart'))}.
                 </span>
               )}

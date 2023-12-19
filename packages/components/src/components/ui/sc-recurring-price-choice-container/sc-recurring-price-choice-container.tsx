@@ -160,7 +160,7 @@ export class ScRecurringPriceChoiceContainer {
 
               {!!this.selectedPriceState()?.setup_fee_enabled && this.selectedPriceState()?.setup_fee_amount && (
                 <div class="recurring-price-choice__setup-fee">
-                  <sc-format-number type="currency" value={this.selectedPriceState().setup_fee_amount} currency={this.selectedPriceState()?.currency}></sc-format-number>{' '}
+                  <sc-format-number type="currency" value={Math.abs(this.selectedPriceState().setup_fee_amount)} currency={this.selectedPriceState()?.currency}></sc-format-number>{' '}
                   {this.selectedPriceState()?.setup_fee_name || (this.selectedPriceState()?.setup_fee_amount < 0 ? __('Setup Discount', 'surecart') : __('Setup Fee', 'surecart'))}
                 </div>
               )}
