@@ -102,15 +102,8 @@ export default ({ price, updatePrice }) => {
 								margin-right: var(--sc-spacing-x-small);
 							`}
 						>
-							<ScButton
-								type="text"
-								slot="trigger"
-								circle
-								css={css`
-									text-transform: capitalize;
-								`}
-							>
-								{SETUP_AMOUNT_TYPES[amountType]}
+							<ScButton type="text" slot="trigger" circle>
+								<span>{SETUP_AMOUNT_TYPES[amountType]}</span>
 								<ScIcon name="chevron-down" />
 							</ScButton>
 							<ScMenu>
@@ -130,9 +123,6 @@ export default ({ price, updatePrice }) => {
 											});
 										}}
 										key={type}
-										css={css`
-											text-transform: capitalize;
-										`}
 									>
 										{SETUP_AMOUNT_TYPES[type]}
 									</ScMenuItem>
