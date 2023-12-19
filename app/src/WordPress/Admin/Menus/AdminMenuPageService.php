@@ -217,7 +217,7 @@ class AdminMenuPageService {
 	 * @param string $name The name.
 	 * @param string $template_slug The template slug.
 	 *
-	 * @return void
+	 * @return null|string|false
 	 */
 	public function getTemplatePart( $slug, $name, $template_slug ) {
 		// add filter to disable shop page menu item.
