@@ -12,19 +12,18 @@ class LoginController extends RestController {
 	 * @return Model
 	 */
 	public function authenticate( \WP_REST_Request $request ) {
-		$user = wp_signon(
-			[
-				'user_login'    => $request->get_param( 'login' ),
-				'user_password' => $request->get_param( 'password' ),
-			]
-		);
-
+		// Authenticate the user
+		$user = wp_authenticate( $request->get_param( 'login' ), $request->get_param( 'password' ) );
 		// flush all caches.
 		wp_cache_flush();
-
+		
 		if ( is_wp_error( $user ) ) {
 			return $user;
 		}
+
+		// Set the current user
+		wp_set_current_user( $user->ID );
+		wp_set_auth_cookie( $user->ID );
 
 		return [
 			'name'         => $user->display_name,
