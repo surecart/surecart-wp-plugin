@@ -47,6 +47,7 @@ class Product extends PostModel {
 	 * @return string
 	 */
 	protected function getDisplayPriceAttribute() {
+		// TODO: Decide on how to show the display price, range?
 		return Currency::format( $this->prices[0]->amount, $this->prices[0]->currency ?? 'usd' );
 	}
 }

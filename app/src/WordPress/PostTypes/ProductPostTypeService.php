@@ -19,8 +19,11 @@ class ProductPostTypeService {
 	 * @return void
 	 */
 	public function bootstrap() {
+		// register.
 		add_action( 'init', [ $this, 'registerPostType' ] );
+		// add child posts to posts results to prevent n+1 queries.
 		add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
+		// add necessary data to product.
 		add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
 	}
 
@@ -75,6 +78,10 @@ class ProductPostTypeService {
 	public function addChildrenToProduct( $post ) {
 		// Check if the post is an 'sc_product'.
 		if ( 'sc_product' === get_post_type( $post ) ) {
+			// set global product.
+			global $sc_product;
+			$sc_product = sc_get_product( $post );
+
 			// already got it through eager loading.
 			if ( ! empty( $post->prices ) ) {
 				return;

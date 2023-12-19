@@ -121,17 +121,50 @@ abstract class PostModel {
 		return $this;
 	}
 
-	public function get( $args ) {
-		$products = new \WP_Query(
-			array_merge(
-				$args,
-				[
-					'post_type' => 'sc_product',
-				]
-			)
+	/**
+	 * Get the posts.
+	 *
+	 * @param array $args \WP_Query args.
+	 *
+	 * @return array
+	 */
+	protected function get( $args ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'post_type' => $this->post_type,
+			]
 		);
 
-		// while $products->have_posts() :
+		$posts = get_posts( $args );
+
+		// map posts to a collection of post models.
+		$posts = array_map(
+			function( $post ) {
+				return new static( $post );
+			},
+			$posts
+		);
+
+		return $posts;
+	}
+
+	/**
+	 * Query the posts.
+	 *
+	 * @param array $args \WP_Query args.
+	 *
+	 * @return \WP_Query
+	 */
+	protected function query( $args ) {
+		$args = wp_parse_args(
+			$args,
+			[
+				'post_type' => $this->post_type,
+			]
+		);
+
+		return new \WP_Query( $args );
 	}
 
 	/**
@@ -141,7 +174,7 @@ abstract class PostModel {
 	 *
 	 * @return $this
 	 */
-	public function create( \SureCart\Models\Model $model ) {
+	protected function create( \SureCart\Models\Model $model ) {
 		$props = $this->getSchemaMap( $model );
 
 		$post_id = wp_insert_post(
@@ -172,7 +205,7 @@ abstract class PostModel {
 	 *
 	 * @return $this
 	 */
-	public function sync( \SureCart\Models\Model $model ) {
+	protected function sync( \SureCart\Models\Model $model ) {
 		$post = $this->findByModelId( $model->id );
 
 		if ( is_wp_error( $post ) ) {

@@ -28,8 +28,21 @@ if ( ! function_exists( 'sc_get_products' ) ) {
 	 * @return array|stdClass Number of pages and an array of product objects if
 	 */
 	function sc_get_products( $args ) {
-		// $query = new WC_Product_Query( $args );
-		// return $query->get_products();
+		return Product::get( $args );
 	}
 }
 
+if ( ! function_exists( 'sc_query_products' ) ) {
+	/**
+	 * Standard way of retrieving products based on certain parameters.
+	 *
+	 * This function should be used for product retrieval so that we have a data agnostic
+	 * way to query a list of products.
+	 *
+	 * @param  array $args Array of args (above).
+	 * @return \WP_Query The query.
+	 */
+	function sc_query_products( $args ) {
+		return Product::query( $args );
+	}
+}
