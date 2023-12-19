@@ -37,8 +37,51 @@ class Product extends PostModel {
 	 */
 	protected function additionalSchema( $model ) {
 		return [
-			'post_excerpt' => $model->description,
+			'min_price_amount' => $model->metrics->min_price_amount,
+			'max_price_amount' => $model->metrics->max_price_amount,
+			'prices_count'     => $model->metrics->prices_count,
+			'post_excerpt'     => $model->description,
 		];
+	}
+
+	/**
+	 * Get the active prices.
+	 *
+	 * @return array
+	 */
+	protected function getActivePricesAttribute() {
+		return array_filter(
+			$this->prices ?? [],
+			function( $price ) {
+				return ! $price->archived;
+			}
+		);
+	}
+
+	/**
+	 * Get the amount attribute.
+	 *
+	 * @return string
+	 */
+	protected function getAmountAttribute() {
+		$active = $this->getActivePricesAttribute();
+		if ( empty( $active[0] ) ) {
+			return '';
+		}
+		return $active[0]->amount;
+	}
+
+	/**
+	 * Get the currency attribute.
+	 *
+	 * @return string
+	 */
+	protected function getCurrencyAttribute() {
+		$active = $this->getActivePricesAttribute();
+		if ( empty( $active[0] ) ) {
+			return '';
+		}
+		return $active[0]->currency ?? 'usd';
 	}
 
 	/**
@@ -47,7 +90,10 @@ class Product extends PostModel {
 	 * @return string
 	 */
 	protected function getDisplayPriceAttribute() {
-		// TODO: Decide on how to show the display price, range?
-		return Currency::format( $this->prices[0]->amount, $this->prices[0]->currency ?? 'usd' );
+		$amount = $this->getAmountAttribute();
+		if ( empty( $amount ) ) {
+			return '';
+		}
+		return Currency::format( $amount, $this->getCurrencyAttribute() );
 	}
 }
