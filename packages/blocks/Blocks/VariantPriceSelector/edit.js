@@ -102,7 +102,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 		removeBlock(clientId);
 	};
 
-	const hasMultipleVariants = product?.variants?.data?.length > 1;
+	const hasMultipleVariants = product?.variants.length > 1;
 	const hasMultiplePrices =
 		product?.prices?.data.filter((v) => !v?.archived)?.length > 1;
 
@@ -191,8 +191,17 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<Placeholder>
 					<Notice
 						isDismissible={false}
+						politeness="polite"
 						css={css`
 							margin: 0;
+							.components-notice__actions {
+								display: flex;
+								gap: 1em;
+								margin-top: 1em;
+							}
+							.components-button {
+								margin: 0;
+							}
 						`}
 						actions={[
 							{
@@ -215,8 +224,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 			);
 		}
 
-		console.log({ product });
-
 		return (
 			<ScCheckoutProductPriceVariantSelector
 				product={{
@@ -226,6 +233,14 @@ export default ({ attributes, setAttributes, clientId }) => {
 						data: product.prices.data.filter(
 							(price) => !price?.archived
 						),
+					},
+					variants: {
+						...product.variants,
+						data: product.variants,
+					},
+					variant_options: {
+						...product.variant_options,
+						data: product.variant_options,
 					},
 				}}
 				selectorTitle={selectorTitle}
