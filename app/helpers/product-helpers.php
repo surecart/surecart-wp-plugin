@@ -27,7 +27,7 @@ if ( ! function_exists( 'sc_get_products' ) ) {
 	 * @param  array $args Array of args (above).
 	 * @return array|stdClass Number of pages and an array of product objects if
 	 */
-	function sc_get_products( $args ) {
+	function sc_get_products( $args = [] ) {
 		return Product::get( $args );
 	}
 }
