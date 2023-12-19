@@ -90,7 +90,7 @@ abstract class PostModel {
 		$query = new \WP_Query(
 			[
 				'post_type'      => $this->post_type,
-				'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash' ),
+				'post_status'    => array( 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ),
 				'posts_per_page' => 1,
 				'no_found_rows'  => true,
 				'meta_query'     => array(
@@ -129,21 +129,14 @@ abstract class PostModel {
 	 * @return array
 	 */
 	protected function get( $args ) {
-		$args = wp_parse_args(
-			$args,
-			[
-				'post_type' => $this->post_type,
-			]
-		);
-
-		$posts = get_posts( $args );
+		$query = $this->query( $args );
 
 		// map posts to a collection of post models.
 		$posts = array_map(
 			function( $post ) {
 				return new static( $post );
 			},
-			$posts
+			$query->posts
 		);
 
 		return $posts;
@@ -160,7 +153,8 @@ abstract class PostModel {
 		$args = wp_parse_args(
 			$args,
 			[
-				'post_type' => $this->post_type,
+				'post_type'   => $this->post_type,
+				'post_status' => 'publish',
 			]
 		);
 
@@ -248,10 +242,32 @@ abstract class PostModel {
 				'post_date_gmt'     => date_i18n( 'Y-m-d H:i:s', $model->created_at, true ),
 				'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 				'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
-				'post_status'       => ! property_exists( $model, 'status' ) || 'published' === $model->status ? 'publish' : 'draft',
+				'post_status'       => $this->getPostStatusFromModel( $model ),
 				'meta_input'        => array_filter( $model->toArray(), 'is_scalar' ),
 			]
 		);
+	}
+
+	/**
+	 * Add archived to the post meta.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return string
+	 */
+	protected function getPostStatusFromModel( \SureCart\Models\Model $model ) {
+		// if it's archived, use that.
+		if ( $model->archived ) {
+			return 'sc_archived';
+		}
+
+		// if it's draft, use that.
+		if ( 'draft' === ( $model->status ?? '' ) ) {
+			return 'draft';
+		}
+
+		// default to publish.
+		return 'publish';
 	}
 
 	/**
@@ -407,6 +423,14 @@ abstract class PostModel {
 					$value              = array_key_exists( $key, $this->post->to_array() ?? [] ) ? $this->post->to_array()[ $key ] : null;
 					$attributes[ $key ] = $this->{$method}( $value );
 				}
+			}
+		}
+
+		// fetch with post meta.
+		if ( $this->post->ID ) {
+			$meta = get_post_meta( $this->post->ID );
+			foreach ( $meta as $key => $value ) {
+				$attributes[ $key ] = maybe_unserialize( $value[0] );
 			}
 		}
 

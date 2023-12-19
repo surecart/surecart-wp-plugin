@@ -25,6 +25,8 @@ class ProductPostTypeService {
 		add_action( 'posts_results', [ $this, 'addChildrenToProducts' ], 10, 2 );
 		// add necessary data to product.
 		add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
+		// register post status.
+		add_action( 'init', [ $this, 'registerPostStatus' ] );
 	}
 
 	/**
@@ -48,6 +50,8 @@ class ProductPostTypeService {
 					'post_parent__in' => $product_ids,
 					'posts_per_page'  => -1,
 					'nopaging'        => true,
+					'orderby'         => 'menu_order',
+					'order'           => 'ASC',
 				)
 			);
 
@@ -94,6 +98,8 @@ class ProductPostTypeService {
 					'post_parent'    => $post->ID,
 					'posts_per_page' => -1, // Get all related posts.
 					'nopaging'       => true,
+					'orderby'        => 'menu_order',
+					'order'          => 'ASC',
 				)
 			);
 
@@ -151,6 +157,29 @@ class ProductPostTypeService {
 					'excerpt',
 					'custom-fields',
 				),
+			)
+		);
+	}
+
+	/**
+	 * Register the archived post status for all post types.
+	 *
+	 * @return void
+	 */
+	public function registerPostStatus() {
+		register_post_status(
+			'sc_archived',
+			array(
+				'label'                     => _x( 'Archived', 'post', 'surecart' ),
+				'public'                    => false,
+				'exclude_from_search'       => true,
+				'show_in_admin_all_list'    => true,
+				'show_in_admin_status_list' => true,
+				'private'                   => true,
+				'show_in_admin_all_list'    => true,
+				'show_in_admin_status_list' => true,
+				// translators: %s: number of posts.
+				'label_count'               => _n_noop( 'Archived <span class="count">(%s)</span>', 'Archived <span class="count">(%s)</span>', 'surecart' ),
 			)
 		);
 	}
