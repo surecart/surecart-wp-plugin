@@ -187,7 +187,7 @@ class CartService {
 
 		// get cart block.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
-		if ( ! $template || empty( $template->content ) ) {
+		if ( empty( $template->content ) ) {
 			return;
 		}
 
