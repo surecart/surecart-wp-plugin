@@ -11,6 +11,13 @@ use SureCartBlocks\Blocks\BaseBlock;
  */
 class Block extends BaseBlock {
 	/**
+	 * Keep track of number of instances.
+	 *
+	 * @var integer
+	 */
+	public static $instance = 0;
+
+	/**
 	 * Render the block
 	 *
 	 * @param array  $attributes Block attributes.
@@ -60,9 +67,11 @@ class Block extends BaseBlock {
 			);
 		}
 
+		self::$instance++;
+
 		return wp_kses_post(
 			Component::tag( 'sc-checkout-product-price-variant-selector' )
-			->id( 'sc-checkout-product-price-variant-selector' )
+			->id( 'sc-checkout-product-price-variant-selector-' . (int) self::$instance )
 			->with(
 				[
 					'product'       => $product,
