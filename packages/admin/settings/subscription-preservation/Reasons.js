@@ -64,7 +64,10 @@ export default ({ reasons, loading }) => {
 					) : (
 						<ScStackedList>
 							<ScCard noPadding>
-								<SortableList onSortEnd={applyDrag}>
+								<SortableList
+									onSortEnd={applyDrag}
+									draggedItemClassName="sc-dragging"
+								>
 									{(reasons || []).map((reason) => (
 										<SortableItem key={reason.id}>
 											<div

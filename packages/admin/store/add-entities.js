@@ -315,6 +315,13 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'incoming_webhook',
+		kind: 'surecart',
+		label: __('Incoming Webhook', 'surecart'),
+		baseURL: '/surecart/v1/incoming_webhooks',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'variant-option',
 		kind: 'surecart',
 		label: __('Variant Option', 'surecart'),

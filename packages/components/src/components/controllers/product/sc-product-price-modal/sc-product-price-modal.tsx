@@ -1,9 +1,10 @@
-import { Component, Element, h, Prop } from '@stencil/core';
+import { Component, Element, h, Prop, State } from '@stencil/core';
 import { onChange, state } from '@store/product';
 import { __ } from '@wordpress/i18n';
 
 import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
-
+import { getAdditionalErrorMessages, getTopLevelError } from '../../../../functions/error';
+import { ScNoticeStore } from '../../../../types';
 @Component({
   tag: 'sc-product-price-modal',
   styleUrl: 'sc-product-price-modal.scss',
@@ -18,7 +19,10 @@ export class ScProductPriceModal {
 
   @Prop() addToCart: boolean;
 
-  submit() {
+  // Is add to cart enabled.
+  @State() error: ScNoticeStore;
+
+  async submit() {
     // if add to cart is undefined/false navigate to buy url
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
@@ -26,7 +30,13 @@ export class ScProductPriceModal {
       return window.location.assign(getProductBuyLink(checkoutUrl));
     }
 
-    submitCartForm();
+    // submit the cart form.
+    try {
+      await submitCartForm();
+    } catch (e) {
+      console.error(e);
+      this.error = e;
+    }
   }
 
   componentWillLoad() {
@@ -64,6 +74,14 @@ export class ScProductPriceModal {
           }}
           onScFormSubmit={e => e.stopImmediatePropagation()}
         >
+          {!!this.error && (
+            <sc-alert type="danger" scrollOnOpen={true} open={!!this.error} closable={false}>
+              {!!getTopLevelError(this.error) && <span slot="title" innerHTML={getTopLevelError(this.error)}></span>}
+              {(getAdditionalErrorMessages(this.error) || []).map((message, index) => (
+                <div innerHTML={message} key={index}></div>
+              ))}
+            </sc-alert>
+          )}
           <sc-price-input
             ref={el => (this.priceInput = el as HTMLScPriceInputElement)}
             value={state.adHocAmount?.toString?.()}

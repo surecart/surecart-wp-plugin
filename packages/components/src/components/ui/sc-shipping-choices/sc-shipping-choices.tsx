@@ -1,7 +1,7 @@
 import { Component, Prop, h, Host } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
-import { Checkout, ShippingMethod } from '../../../types';
+import { Address, Checkout, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { checkoutIsLocked } from '@store/checkout/getters';
@@ -59,6 +59,15 @@ export class ScShippingChoices {
     // shipping choice is not rewquired.
     if (!checkoutState?.checkout?.selected_shipping_choice_required) {
       return <Host style={{ display: 'none' }}></Host>;
+    }
+
+    // no shipping choices but no country either
+    if (!checkoutState?.checkout?.shipping_choices?.data?.length && !(checkoutState?.checkout?.shipping_address as Address)?.country) {
+      return (
+        <sc-form-control label={this.label || __('Shipping', 'surecart')}>
+          <div class="shipping-choice__empty">{__('To check available shipping choices, please provide your shipping country in the address section.', 'surecart')}</div>
+        </sc-form-control>
+      );
     }
 
     // no shipping choices yet.
