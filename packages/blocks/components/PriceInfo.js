@@ -13,15 +13,14 @@ import { ScFormatNumber } from '@surecart/components-react';
 export default ({ price_id, variant_id }) => {
 	const { price, product, variant, loading } = useSelect(
 		(select) => {
-			const queryArgs = [
-				'root',
-				'price',
-				price_id,
-				{
-					expand: ['product'],
-				},
-			];
+			const queryArgs = ['surecart', 'price', price_id];
 			const price = select(coreStore).getEntityRecord(...queryArgs);
+			const product = select(coreStore).getEntityRecord(
+				'surecart',
+				'product',
+				price?.product
+			);
+
 			const variant = !!variant_id
 				? select(coreStore).getEntityRecord(
 						'surecart',
@@ -33,7 +32,7 @@ export default ({ price_id, variant_id }) => {
 			return {
 				price,
 				variant,
-				product: price?.product,
+				product,
 				loading: select(coreStore).isResolving(
 					'getEntityRecord',
 					queryArgs
