@@ -2,6 +2,8 @@
 
 namespace SureCart\Controllers\Rest;
 
+use SureCart\Models\User;
+
 /**
  * Handle coupon requests through the REST API
  */
@@ -24,12 +26,8 @@ class LoginController extends RestController {
 			return $user;
 		}
 
-		// Set the current user.
-		clean_user_cache( $user->ID );
-		wp_clear_auth_cookie();
-		wp_set_current_user( $user->ID );
-		wp_set_auth_cookie( $user->ID, true, false );
-		update_user_caches( $user->getUser() );
+		$user = User::find( $user->ID );
+		\SureCart::users()->loginUser( $user );
 
 		return [
 			'name'         => $user->display_name,

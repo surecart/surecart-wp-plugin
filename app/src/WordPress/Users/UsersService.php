@@ -215,4 +215,19 @@ class UsersService {
 
 		return $args;
 	}
+
+	/**
+	 * Login the user.
+	 *
+	 * @param \SureCart\Models\User $user The user model.
+	 *
+	 * @return void
+	 */
+	public function loginUser( \SureCart\Models\User $user ) {
+		clean_user_cache( $user->ID );
+		wp_clear_auth_cookie();
+		wp_set_current_user( $user->ID );
+		wp_set_auth_cookie( $user->ID, true, false );
+		update_user_caches( $user->getUser() );
+	}
 }

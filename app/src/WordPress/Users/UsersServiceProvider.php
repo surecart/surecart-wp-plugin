@@ -18,6 +18,9 @@ class UsersServiceProvider implements ServiceProviderInterface {
 		$container['surecart.users'] = function () {
 			return new UsersService();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'users', 'surecart.users' );
 	}
 
 	/**
