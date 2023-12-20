@@ -101,6 +101,10 @@ class AssetsService {
 	 * @return void
 	 */
 	public function enqueueGlobals() {
+		if ( ! \SureCart::account()->isConnected() ) {
+			return;
+		}
+
 		if ( \SureCart::account()->affiliation_protocol->wordpress_plugin_tracking_enabled || ( defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT ) ) ) {
 			if ( \SureCart::account()->entitlements->affiliates ) {
 				wp_enqueue_script( 'surecart-affiliate-tracking' );
