@@ -2,7 +2,7 @@
 import { css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
-import { select, useDispatch } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -45,6 +45,35 @@ export default ({ id }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
+
+	const { post, loadingPost } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'postType',
+				'sc_product',
+				{
+					sc_id: id,
+				},
+			];
+			const posts =
+				select(coreStore).getEntityRecords(...queryArgs) || [];
+
+			return {
+				post: posts?.[0]
+					? select(coreStore).getEditedEntityRecord(
+							'postType',
+							'sc_product',
+							posts?.[0]?.id
+					  )
+					: null,
+				loadingPost: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[id]
+	);
 
 	/**
 	 * Handle the form submission
@@ -269,11 +298,7 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				<Image
-					productId={id}
-					updateProduct={editProduct}
-					loading={!hasLoadedProduct}
-				/>
+				<Image post={post} loadingPost={loadingPost} />
 
 				<Prices
 					productId={id}

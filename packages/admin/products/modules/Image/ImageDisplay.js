@@ -1,9 +1,15 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScIcon, ScTag } from '@surecart/components-react';
+import { ScIcon, ScSkeleton, ScTag } from '@surecart/components-react';
+import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
 
-export default ({ productMedia, onDeleteImage, isFeatured }) => {
+export default ({ id, onRemove, isFeatured }) => {
+	const media = useSelect((select) => {
+		return select(coreStore).getMedia(id);
+	});
+
 	return (
 		<div
 			css={css`
@@ -27,7 +33,6 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 					visibility: visible;
 				}
 			`}
-			media-id={productMedia.id}
 		>
 			{isFeatured && (
 				<ScTag
@@ -46,7 +51,7 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 
 			<ScIcon
 				className="delete-icon"
-				onClick={() => onDeleteImage(productMedia)}
+				onClick={onRemove}
 				css={css`
 					position: absolute;
 					top: 4px;
@@ -74,20 +79,34 @@ export default ({ productMedia, onDeleteImage, isFeatured }) => {
 				`}
 			></div>
 
-			<img
-				src={productMedia?.url || productMedia?.media?.url}
-				css={css`
-					max-width: 100%;
-					aspect-ratio: 1 / 1;
-					object-fit: contain;
-					height: auto;
-					display: block;
-					border-radius: var(--sc-border-radius-medium);
-					pointer-events: none;
-				`}
-				alt={productMedia?.media?.alt}
-				{...(productMedia.title ? { title: productMedia.title } : {})}
-			/>
+			{media?.source_url ? (
+				<img
+					src={
+						media?.media_details?.sizes?.medium?.source_url ||
+						media?.source_url
+					}
+					css={css`
+						max-width: 100%;
+						aspect-ratio: 1 / 1;
+						object-fit: contain;
+						height: auto;
+						display: block;
+						border-radius: var(--sc-border-radius-medium);
+						pointer-events: none;
+					`}
+					alt={media?.alt_text}
+					{...(media?.title?.rendered
+						? { title: media?.title?.rendered }
+						: {})}
+				/>
+			) : (
+				<ScSkeleton
+					style={{
+						aspectRatio: '1 / 1',
+						'--border-radius': 'var(--sc-border-radius-medium)',
+					}}
+				/>
+			)}
 		</div>
 	);
 };
