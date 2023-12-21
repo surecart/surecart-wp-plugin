@@ -314,6 +314,11 @@ export interface Product extends Object {
     pagination: Pagination;
     data: Array<Download>;
   };
+  product_collections: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Collection>;
+  };
   stock_enabled: boolean;
   allow_out_of_stock_purchases: boolean;
   stock: number;
