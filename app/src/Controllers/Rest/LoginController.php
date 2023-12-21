@@ -27,8 +27,8 @@ class LoginController extends RestController {
 		}
 
 		$user = User::find( $user->ID );
-		\SureCart::users()->loginUser( $user );
-
+		$user->login();
+		
 		return [
 			'name'         => $user->display_name,
 			'email'        => $user->user_email,

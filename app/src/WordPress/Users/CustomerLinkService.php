@@ -133,7 +133,7 @@ class CustomerLinkService {
 
 		// login the user.
 		if ( apply_filters( 'surecart/checkout/auto-login-new-user', true ) ) {
-			\SureCart::users()->loginUser( $created );
+			User::find( $created->ID )->login();
 		}
 
 		// set the customer id for the user.
