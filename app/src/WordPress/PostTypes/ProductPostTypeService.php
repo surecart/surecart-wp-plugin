@@ -2,6 +2,9 @@
 
 namespace SureCart\WordPress\PostTypes;
 
+use SureCart\Models\Product;
+use SureCart\Models\ProductMedia;
+
 /**
  * Form post type service class.
  */
@@ -46,8 +49,63 @@ class ProductPostTypeService {
 	 * @return void
 	 */
 	public function automaticallySetFeaturedImage( $meta_id, $post_id, $meta_key, $meta_value ) {
-		if ( 'gallery' === $meta_key && is_array( $meta_value ) && ! empty( $meta_value[0] ) ) {
-			set_post_thumbnail( $post_id, $meta_value[0] );
+		// get the post.
+		$post = get_post( $post_id );
+
+		// if the surecart id is missing.
+		if ( empty( $post->sc_id ) ) {
+			return;
+		}
+
+		// check it's our data.
+		if ( get_post_type( $post ) !== $this->post_type || 'gallery' !== $meta_key ) {
+			return;
+		}
+
+		// check data integrity.
+		if ( ! is_array( $meta_value ) || empty( $meta_value[0] ) ) {
+			return;
+		}
+
+		// set the post thumbnail.
+		set_post_thumbnail( $post_id, $meta_value[0] );
+
+		// get the attachment url.
+		$attachment_url = wp_get_attachment_url( $meta_value[0] );
+
+		// if the attachment url is missing.
+		if ( empty( $attachment_url ) ) {
+			throw new \Exception( 'Attachment URL is missing.' );
+		}
+
+		$product = Product::find( $post->sc_id );
+		if ( is_wp_error( $product ) ) {
+			throw new \Exception( $product->get_error_message() );
+		}
+
+		if ( ! empty( $product->featured_product_media ) ) {
+			$updated = ProductMedia::update(
+				[
+					'id'       => $product->featured_product_media,
+					'url'      => $attachment_url,
+					'media_id' => null, // make sure to clear the media id.
+					'position' => 0,
+				]
+			);
+			if ( is_wp_error( $updated ) ) {
+				throw new \Exception( $updated->get_error_message() );
+			}
+		} else {
+			$created = ProductMedia::create(
+				[
+					'url'      => $attachment_url,
+					'product'  => $product->id,
+					'media_id' => null,
+				]
+			);
+			if ( is_wp_error( $created ) ) {
+				throw new \Exception( $created->get_error_message() );
+			}
 		}
 	}
 
