@@ -21,6 +21,12 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
     content_ids: [product.id],
     content_name: product?.name + (item?.variant_options?.length ? ` - ${item?.variant_options.join(' / ')}` : ''),
     content_type: 'product',
+    contents: [
+      {
+        id: product.id,
+        quantity: item.quantity,
+      },
+    ],
     currency: item?.price?.currency,
     value: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
   });
@@ -35,10 +41,6 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
   const checkout = e.detail;
   // content_category, content_ids, contents, currency, num_items, value
   window.fbq('track', 'InitiateCheckout', {
-    content_ids: (checkout?.line_items?.data || []).map(item => (item?.price?.product as Product)?.id),
-    content_type: 'product',
-    currency: checkout?.currency,
-    value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
-    num_items: (checkout?.line_items?.data || []).reduce((total, item) => total + item.quantity, 0),
+
   });
 });
