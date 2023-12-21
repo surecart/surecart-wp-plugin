@@ -26,8 +26,7 @@ class LoginController extends RestController {
 			return $user;
 		}
 
-		$user = User::find( $user->ID );
-		$user->login();
+		User::find( $user->ID )->login();
 		
 		return [
 			'name'         => $user->display_name,
