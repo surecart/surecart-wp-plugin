@@ -67,6 +67,8 @@ class ProductPostTypeService {
 			return;
 		}
 
+		// TODO: Check for image type before setting as featured image.
+
 		// set the post thumbnail.
 		set_post_thumbnail( $post_id, $meta_value[0] );
 
