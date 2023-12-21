@@ -9,7 +9,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product } from '../../../../types';
+import { Collection, Product, ProductsSearchedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 
 export type LayoutConfig = {
@@ -79,7 +79,7 @@ export class ScProductItemList {
   @State() error: string;
 
   /** Product was searched */
-  @Event() scSearched: EventEmitter<string>;
+  @Event() scSearched: EventEmitter<ProductsSearchedParams>;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -165,6 +165,14 @@ export class ScProductItemList {
     try {
       this.busy = true;
       await this.fetchProducts();
+      if (!!this.query) {
+        this.scSearched.emit({
+          search_string: this.query,
+          ...(!!this.collectionId ? { search_collection_id: this.collections?.find(collection => collection.id === this.collectionId)?.name } : {}),
+          search_result_count: this.products?.length,
+          search_result_ids: this.products.map(product => product.id),
+        });
+      }
     } catch (error) {
       console.log('error');
       console.error(error);
@@ -357,7 +365,6 @@ export class ScProductItemList {
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
                           this.updateProducts();
-                          this.scSearched.emit(this.query);
                         }
                       }}
                       value={this.query}
@@ -382,7 +389,6 @@ export class ScProductItemList {
                         busy={this.busy}
                         onClick={() => {
                           this.updateProducts();
-                          this.scSearched.emit(this.query);
                         }}
                       >
                         {__('Search', 'surecart')}
