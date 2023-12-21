@@ -210,6 +210,7 @@ class ProductPostTypeService {
 				$post->prices          = isset( $children_by_type['prices'][ $post->ID ] ) ? $children_by_type['prices'][ $post->ID ] : array();
 				$post->variants        = isset( $children_by_type['variants'][ $post->ID ] ) ? $children_by_type['variants'][ $post->ID ] : array();
 				$post->variant_options = isset( $children_by_type['variant_options'][ $post->ID ] ) ? $children_by_type['variant_options'][ $post->ID ] : array();
+				$post->eager_loaded    = true;
 			}
 		}
 
@@ -231,14 +232,15 @@ class ProductPostTypeService {
 			$sc_product = sc_get_product( $post );
 
 			// already got it through eager loading.
-			if ( ! empty( $post->prices ) ) {
+			// prevents n+1 queries.
+			if ( ! empty( $post->eager_loaded ) ) {
 				return;
 			}
 
 			// Get the related 'sc_price' posts.
-			$price_posts = get_posts(
+			$children = get_posts(
 				array(
-					'post_type'      => 'sc_price',
+					'post_type'      => [ 'sc_price', 'sc_variant', 'sc_variant_option' ],
 					'post_parent'    => $post->ID,
 					'posts_per_page' => -1, // Get all related posts.
 					'nopaging'       => true,
@@ -247,8 +249,20 @@ class ProductPostTypeService {
 				)
 			);
 
-			// Add the prices array to the post object.
-			$post->prices = $price_posts;
+			$post->prices          = [];
+			$post->variants        = [];
+			$post->variant_options = [];
+
+			// add to the post object.
+			foreach ( $children as $child ) {
+				if ( 'sc_price' === $child->post_type ) {
+					$post->prices[] = $child;
+				} elseif ( 'sc_variant' === $child->post_type ) {
+					$post->variants[] = $child;
+				} elseif ( 'sc_variant_option' === $child->post_type ) {
+					$post->variant_options[] = $child;
+				}
+			}
 		}
 	}
 
