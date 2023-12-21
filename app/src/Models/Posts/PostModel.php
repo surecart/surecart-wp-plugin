@@ -95,7 +95,7 @@ abstract class PostModel {
 				'no_found_rows'  => true,
 				'meta_query'     => array(
 					array(
-						'key'   => 'id',
+						'key'   => 'sc_id',
 						'value' => $model_id, // query by model id.
 					),
 				),
@@ -243,7 +243,10 @@ abstract class PostModel {
 				'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 				'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 				'post_status'       => $this->getPostStatusFromModel( $model ),
-				'meta_input'        => array_filter( $model->toArray(), 'is_scalar' ),
+				'meta_input'        => array_filter(
+					array_merge( $model->toArray(), [ 'sc_id' => $model->id ] ),
+					'is_scalar'
+				),
 			]
 		);
 	}
