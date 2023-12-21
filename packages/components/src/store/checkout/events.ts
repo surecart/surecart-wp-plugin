@@ -56,4 +56,11 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
     const event = new CustomEvent('scTrialStarted', { detail: trialLineItems, bubbles: true });
     document.dispatchEvent(event);
   }
+
+  // get subscription line items and emit subscription event if there are any.
+  const subscriptionLineItems: LineItem[] = (checkout?.line_items?.data || []).filter(item => item?.price?.recurring_interval_count > 0);
+  if (subscriptionLineItems.length > 0) {
+    const event = new CustomEvent('scSubscriptionStarted', { detail: subscriptionLineItems, bubbles: true });
+    document.dispatchEvent(event);
+  }
 });
