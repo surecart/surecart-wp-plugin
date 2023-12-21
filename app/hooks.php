@@ -85,14 +85,26 @@ add_action(
 
 			echo wp_kses_post( '<p>' . $sc_product->display_price . '</p>' );
 
-			$stock = $sc_product->available_stock ?? 0;
-			if ( $stock < 1 ) {
+			the_post_thumbnail( 'medium' );
+
+			if ( $sc_product->is_out_of_stock ) {
 				echo wp_kses_post( '<p>Out of stock</p>' );
-			} elseif ( $stock < 10 ) {
-				echo wp_kses_post( '<p>Low stock</p>' );
 			} else {
-				echo wp_kses_post( '<p>In stock</p>' );
+				if ( $sc_product->is_low_stock ) {
+					echo wp_kses_post( '<p>Low stock</p>' );
+				} else {
+					echo wp_kses_post( '<p>In stock</p>' );
+				}
 			}
+
+			// $stock = $sc_product->isInStock ?? 0;
+			// if ( $stock < 1 ) {
+			// echo wp_kses_post( '<p>Out of stock</p>' );
+			// } elseif ( $stock < 10 ) {
+			// echo wp_kses_post( '<p>Low stock</p>' );
+			// } else {
+			// echo wp_kses_post( '<p>In stock</p>' );
+			// }
 
 			the_excerpt();
 
