@@ -18,6 +18,7 @@ declare global {
     };
     dataLayer: any;
     gtag: any;
+    fbq: any;
     sc?: {
       store?: {
         product?: any;
