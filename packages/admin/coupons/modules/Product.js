@@ -16,9 +16,12 @@ import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import apiFetch from '@wordpress/api-fetch';
 import { useState, useEffect } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
+import Error from '../../components/Error';
 
 export default ({ id, onSelect }) => {
 	const [product, setProduct] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
 		if (!id) return;
@@ -27,21 +30,30 @@ export default ({ id, onSelect }) => {
 	}, [id]);
 
 	const fetchProduct = async () => {
-		const { baseURL } = select(coreStore).getEntityConfig(
-			'surecart',
-			'product'
-		);
-		if (!baseURL) return;
-		const data = await apiFetch({
-			path: addQueryArgs(`${baseURL}/${id}`, {
-				expand: [
-					'prices',
-					'featured_product_media',
-					'product_media.media',
-				],
-			}),
-		});
-		setProduct(data);
+		try {
+			setLoading(true);
+			const { baseURL } = select(coreStore).getEntityConfig(
+				'surecart',
+				'product'
+			);
+			if (!baseURL) return;
+			const data = await apiFetch({
+				path: addQueryArgs(`${baseURL}/${id}`, {
+					expand: [
+						'prices',
+						'featured_product_media',
+						'product_media.media',
+					],
+				}),
+			});
+			setProduct(data);
+		} catch (e) {
+			console.error(e);
+			setError(e);
+			setLoading(false);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	if (!id) {
@@ -56,8 +68,12 @@ export default ({ id, onSelect }) => {
 		);
 	}
 
-	if (!product) {
+	if (loading) {
 		return <ScSkeleton />;
+	}
+
+	if (error) {
+		return <Error error={error} setError={setError} children={false} />;
 	}
 
 	const activePrices = product?.prices?.data?.filter(
