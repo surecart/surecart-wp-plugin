@@ -68,3 +68,51 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
     value: maybeConvertAmount(checkout?.value, checkout?.currency || 'USD'),
   });
 });
+
+/**
+ * Handle trial started event.
+ */
+window.addEventListener('scTrialStarted', function (e: CustomEvent) {
+  if (!window?.fbq) return;
+
+  const items: LineItem[] = e.detail;
+
+  items.forEach(item => {
+    window.fbq('track', 'StartTrial', {
+      currency: item.price?.currency,
+      value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
+      predicted_ltv: maybeConvertAmount(item.price?.full_amount || 0, item.price?.currency || 'USD'),
+    });
+  });
+});
+
+/**
+ * Handle subscription started event.
+ */
+window.addEventListener('scSubscriptionStarted', function (e: CustomEvent) {
+  if (!window?.fbq) return;
+
+  const items: LineItem[] = e.detail;
+
+  items.forEach(item => {
+    window.fbq('track', 'Subscribe', {
+      currency: item.price?.currency,
+      value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
+      predicted_ltv: maybeConvertAmount(item.price?.full_amount || 0, item.price?.currency || 'USD'),
+    });
+  });
+});
+
+/**
+ * Handle payment info added event.
+ */
+window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
+  if (!window?.fbq) return;
+
+  const detail = e.detail;
+
+  window.fbq('track', 'AddPaymentInfo', {
+    content_category: 'Payment Info Added',
+    currency: detail?.currency,
+  });
+});

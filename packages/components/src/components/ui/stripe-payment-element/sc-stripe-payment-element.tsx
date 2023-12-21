@@ -200,6 +200,7 @@ export class ScStripePaymentElement {
         if (event.complete) {
           this.scPaymentInfoAdded.emit({
             checkout_id: checkoutState.checkout?.id,
+            currency: checkoutState.checkout?.currency,
             processor_type: 'stripe',
             payment_method: {
               billing_details: {

@@ -92,6 +92,7 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
+  full_amount: number;
   currency: string;
   recurring: boolean;
   recurring_interval?: 'week' | 'month' | 'year' | 'never';
@@ -1127,6 +1128,7 @@ export interface FeaturedProductMediaAttributes {
 export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
+  currency: string;
   payment_method: {
     billing_details: {
       name: string;
