@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Posts\Variant as VariantPost;
 /**
  * Variant model
  */
@@ -20,6 +21,13 @@ class Variant extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'variant';
+
+	/**
+	 * The syncable post class.
+	 *
+	 * @var \SureCart\Models\PostModel
+	 */
+	protected $post = VariantPost::class;
 
 	/**
 	 * Set the product attribute

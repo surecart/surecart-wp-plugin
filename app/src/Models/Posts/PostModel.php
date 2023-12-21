@@ -193,7 +193,7 @@ abstract class PostModel {
 	}
 
 	/**
-	 * Sync the product with the post.
+	 * Sync the model with the post.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
 	 *
@@ -232,7 +232,6 @@ abstract class PostModel {
 	 */
 	protected function getSchemaMap( \SureCart\Models\Model $model ) {
 		return array_merge(
-			$this->additionalSchema( $model ),
 			[
 				'post_title'        => $model->name,
 				'post_type'         => $this->post_type,
@@ -244,10 +243,17 @@ abstract class PostModel {
 				'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 				'post_status'       => $this->getPostStatusFromModel( $model ),
 				'meta_input'        => array_filter(
-					array_merge( $model->toArray(), [ 'sc_id' => $model->id ] ),
+					array_merge(
+						$model->toArray(),
+						[
+							'sc_id' => $model->id, // this replaces id with sc_id.
+							'id'    => null,
+						]
+					),
 					'is_scalar'
 				),
-			]
+			],
+			$this->additionalSchema( $model ),
 		);
 	}
 

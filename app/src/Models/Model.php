@@ -734,7 +734,11 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 			return $items;
 		}
 
-		return ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
+		$item = ! empty( $items->data[0] ) ? new static( $items->data[0] ) : null;
+
+		$item->sync();
+
+		return $item;
 	}
 
 	/**
@@ -917,6 +921,10 @@ abstract class Model implements ArrayAccess, JsonSerializable, Arrayable, ModelI
 	protected function sync() {
 		if ( empty( $this->post() ) ) {
 			return new \WP_Error( 'no_post', 'This model does not have an associated post.' );
+		}
+
+		if ( empty( $this->id ) ) {
+			return new \WP_Error( 'no_id', 'This model does not have an ID.' );
 		}
 
 		$post = $this->post()->sync( $this );

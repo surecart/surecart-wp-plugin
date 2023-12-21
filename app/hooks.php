@@ -67,6 +67,7 @@ add_filter(
 add_action(
 	'wp',
 	function() {
+		return false;
 		$products = sc_query_products(
 			[
 				'post_status'    => 'publish',

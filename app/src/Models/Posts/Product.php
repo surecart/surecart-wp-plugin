@@ -45,6 +45,34 @@ class Product extends PostModel {
 	}
 
 	/**
+	 * Sync the product with the post.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return $this
+	 */
+	protected function sync( \SureCart\Models\Model $model ) {
+		parent::sync( $model );
+
+		// sync each price.
+		foreach ( $model->prices->data as $price ) {
+			$price->sync();
+		}
+
+		// sync each variant.
+		foreach ( $model->variants->data as $variant ) {
+			$variant->sync();
+		}
+
+		// sync each variant option.
+		foreach ( $model->variant_options->data as $variant_option ) {
+			$variant_option->sync();
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Get the active prices.
 	 *
 	 * @return array

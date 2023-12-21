@@ -122,6 +122,16 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Set the variants attribute.
+	 *
+	 * @param  object $value Array of price objects.
+	 * @return void
+	 */
+	public function setVariantOptionsAttribute( $value ) {
+		$this->setCollection( 'variant_options', $value, VariantOption::class );
+	}
+
+	/**
 	 * Set the product attribute
 	 *
 	 * @param  string $value Product properties.
