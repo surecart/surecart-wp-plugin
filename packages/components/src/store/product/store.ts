@@ -38,7 +38,7 @@ const selectedVariant = variants?.length
 const adHocAmount = selectedPrice?.amount || null;
 
 if (product) {
-  productViewed(product);
+  productViewed(product, selectedPrice);
 }
 
 const store = createStore<Store>(
