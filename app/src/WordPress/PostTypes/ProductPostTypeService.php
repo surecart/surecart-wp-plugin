@@ -173,10 +173,10 @@ class ProductPostTypeService {
 			// Gather the IDs of the sc_product posts.
 			$product_ids = wp_list_pluck( $posts, 'ID' );
 
-			// Fetch all sc_price posts whose parent is in the sc_product posts.
-			$price_posts = get_posts(
+			// Fetch all sc_price, sc_variant, and sc_variant_option posts whose parent is in the sc_product posts.
+			$child_posts = get_posts(
 				array(
-					'post_type'       => 'sc_price',
+					'post_type'       => [ 'sc_price', 'sc_variant', 'sc_variant_option' ],
 					'post_parent__in' => $product_ids,
 					'posts_per_page'  => -1,
 					'nopaging'        => true,
@@ -185,17 +185,31 @@ class ProductPostTypeService {
 				)
 			);
 
-			// Map sc_price posts to their respective sc_product.
-			$prices_by_product = array();
-			foreach ( $price_posts as $price_post ) {
-				$prices_by_product[ $price_post->post_parent ][] = $price_post;
+			// Map child posts to their respective types.
+			$children_by_type = array(
+				'prices'          => array(),
+				'variants'        => array(),
+				'variant_options' => array(),
+			);
+			foreach ( $child_posts as $child_post ) {
+				switch ( $child_post->post_type ) {
+					case 'sc_price':
+						$children_by_type['prices'][ $child_post->post_parent ][] = $child_post;
+						break;
+					case 'sc_variant':
+						$children_by_type['variants'][ $child_post->post_parent ][] = $child_post;
+						break;
+					case 'sc_variant_option':
+						$children_by_type['variant_options'][ $child_post->post_parent ][] = $child_post;
+						break;
+				}
 			}
 
-			// Assign prices array to each sc_product post.
+			// Assign child posts arrays to each sc_product post.
 			foreach ( $posts as $post ) {
-				if ( 'sc_product' === get_post_type( $post ) ) {
-					$post->prices = $prices_by_product[ $post->ID ] ?? array();
-				}
+				$post->prices          = isset( $children_by_type['prices'][ $post->ID ] ) ? $children_by_type['prices'][ $post->ID ] : array();
+				$post->variants        = isset( $children_by_type['variants'][ $post->ID ] ) ? $children_by_type['variants'][ $post->ID ] : array();
+				$post->variant_options = isset( $children_by_type['variant_options'][ $post->ID ] ) ? $children_by_type['variant_options'][ $post->ID ] : array();
 			}
 		}
 
