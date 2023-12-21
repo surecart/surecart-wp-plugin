@@ -96,4 +96,37 @@ class Product extends PostModel {
 		}
 		return Currency::format( $amount, $this->getCurrencyAttribute() );
 	}
+
+	/**
+	 * Is in stock attribute.
+	 *
+	 * @return boolean
+	 */
+	protected function getIsInStockAttribute() : bool {
+		if ( $this->allow_out_of_stock_purchases ) {
+			return true;
+		}
+		return $this->available_stock > 0;
+	}
+
+	/**
+	 * Is out of stock attribute.
+	 *
+	 * @return boolean
+	 */
+	protected function getIsOutOfStockAttribute() : bool {
+		return ! $this->is_in_stock;
+	}
+
+	/**
+	 * Is low stock attribute.
+	 *
+	 * @return boolean
+	 */
+	protected function getIslowStockAttribute() : bool {
+		if ( $this->allow_out_of_stock_purchases ) {
+			return true;
+		}
+		return $this->available_stock <= apply_filters( 'surecart/low_stock_threshold', 10 );
+	}
 }
