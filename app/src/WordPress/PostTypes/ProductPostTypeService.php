@@ -27,6 +27,76 @@ class ProductPostTypeService {
 		add_action( 'the_post', [ $this, 'addChildrenToProduct' ], 10, 2 );
 		// register post status.
 		add_action( 'init', [ $this, 'registerPostStatus' ] );
+		// add the rest api meta query.
+		add_action( "rest_{$this->post_type}_query", [ $this, 'addMetaQuery' ], 10, 2 );
+		// register rest fields.
+		add_action( 'rest_api_init', [ $this, 'registerRestFields' ] );
+		// when gallery is updated on the post, set the first as the featured image.
+		add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
+	}
+
+	/**
+	 * When the gallery post meta is updated, automatically make the first item the featured image.
+	 *
+	 * @param integer $meta_id The meta ID.
+	 * @param integer $post_id The post ID.
+	 * @param string  $meta_key The meta key.
+	 * @param mixed   $meta_value The meta value.
+	 *
+	 * @return void
+	 */
+	public function automaticallySetFeaturedImage( $meta_id, $post_id, $meta_key, $meta_value ) {
+		if ( 'gallery' === $meta_key && is_array( $meta_value ) && ! empty( $meta_value[0] ) ) {
+			set_post_thumbnail( $post_id, $meta_value[0] );
+		}
+	}
+
+	/**
+	 * Register the rest fields.
+	 *
+	 * @return void
+	 */
+	public function registerRestFields() {
+		register_rest_field(
+			$this->post_type,
+			'gallery',
+			[
+				'get_callback'    => function( $post ) {
+					return ! empty( get_post_meta( $post['id'], 'gallery', true ) ) ? get_post_meta( $post['id'], 'gallery', true ) : [];
+				},
+				'update_callback' => function( $value, $post ) {
+					return update_post_meta( $post->ID, 'gallery', $value );
+				},
+				'schema'          => [
+					'description' => __( 'Product gallery', 'surecart' ),
+					'type'        => 'array',
+					'items'       => [
+						'type' => 'integer',
+					],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add the sc_id meta query to the REST API request.
+	 *
+	 * @param array            $args   The args.
+	 * @param \WP_REST_Request $request The request.
+	 *
+	 * @return array
+	 */
+	public function addMetaQuery( $args, $request ) {
+		if ( ! empty( $request['sc_id'] ) ) {
+			$args['meta_query'][]   = [
+				'key'   => 'id',
+				'value' => $request['sc_id'],
+			];
+			$args['post_status']    = [ 'auto-draft', 'draft', 'publish', 'trash', 'sc_archived' ];
+			$args['posts_per_page'] = 1;
+			$args['no_found_rows']  = true;
+		}
+		return $args;
 	}
 
 	/**
@@ -146,7 +216,7 @@ class ProductPostTypeService {
 					'slug'       => 'products-new',
 					'with_front' => false,
 				],
-				'show_in_rest'      => false,
+				'show_in_rest'      => true,
 				'show_in_nav_menus' => false,
 				'can_export'        => false,
 				'capability_type'   => 'post',
