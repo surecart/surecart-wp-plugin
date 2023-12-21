@@ -25,4 +25,19 @@ class VariantOption extends PostModel {
 	 * @var \SureCart\Models\Posts\PostModel
 	 */
 	protected $parent = Product::class;
+
+	/**
+	 * Additional meta input.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return array
+	 */
+	protected function getMetaInput( $model ) {
+		$input = parent::getMetaInput( $model );
+		if ( $model->values ) {
+			$input['values'] = $model->values;
+		}
+		return $input;
+	}
 }

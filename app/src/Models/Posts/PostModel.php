@@ -211,7 +211,8 @@ abstract class PostModel {
 			return $this;
 		}
 
-		$props      = $this->getSchemaMap( $model );
+		$props = $this->getSchemaMap( $model );
+		error_log( print_r( $props, 1 ) );
 		$this->post = wp_update_post(
 			array_merge(
 				$props,
@@ -221,6 +222,26 @@ abstract class PostModel {
 			)
 		);
 		return $this;
+	}
+
+	/**
+	 * Prepare the model schema for syncing to the post.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return array
+	 */
+	protected function getMetaInput( \SureCart\Models\Model $model ) {
+		return array_filter(
+			array_merge(
+				$model->toArray(),
+				[
+					'sc_id' => $model->id, // this replaces id with sc_id.
+					'id'    => null,
+				]
+			),
+			'is_scalar'
+		);
 	}
 
 	/**
@@ -242,16 +263,7 @@ abstract class PostModel {
 				'post_modified'     => ( new \DateTime( "@$model->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' ),
 				'post_modified_gmt' => date_i18n( 'Y-m-d H:i:s', $model->updated_at, true ),
 				'post_status'       => $this->getPostStatusFromModel( $model ),
-				'meta_input'        => array_filter(
-					array_merge(
-						$model->toArray(),
-						[
-							'sc_id' => $model->id, // this replaces id with sc_id.
-							'id'    => null,
-						]
-					),
-					'is_scalar'
-				),
+				'meta_input'        => $this->getMetaInput( $model ),
 			],
 			$this->additionalSchema( $model ),
 		);
