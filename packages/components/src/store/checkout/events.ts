@@ -21,9 +21,11 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
       ...(checkout?.tax_amount ? { tax: maybeConvertAmount(checkout?.tax_amount, checkout?.currency || 'USD') } : {}),
       items: (checkout?.line_items?.data || []).map(item => ({
         item_name: (item?.price?.product as Product)?.name || '',
+        item_id: (item?.price?.product as Product)?.id,
         discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
         price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
         quantity: item?.quantity || 1,
+        item_collections: (item?.price?.product as Product)?.product_collections?.data?.map(collection => collection.name).join(', ') || '',
       })),
     },
     bubbles: true,
