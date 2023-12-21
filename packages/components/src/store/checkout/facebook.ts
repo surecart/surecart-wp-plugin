@@ -40,10 +40,28 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
 
   const checkout = e.detail;
 
-  // content_category, content_ids, contents, currency, num_items, value
   window.fbq('track', 'InitiateCheckout', {
     content_category: checkout?.items?.map(item => item.item_collections).join(', '),
     content_ids: checkout?.items?.map(item => item.item_id),
+    contents: checkout?.items?.map(item => ({ id: item.item_id, quantity: item.quantity })),
+    currency: checkout?.currency,
+    num_items: checkout?.items?.length,
+    value: maybeConvertAmount(checkout?.value, checkout?.currency || 'USD'),
+  });
+});
+
+/**
+ * Handle purchase complete event.
+ */
+window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
+  if (!window?.fbq) return;
+
+  const checkout = e.detail;
+
+  window.fbq('track', 'Purchase', {
+    content_ids: checkout?.items?.map(item => item.item_id),
+    content_name: 'Purchase',
+    content_type: 'product',
     contents: checkout?.items?.map(item => ({ id: item.item_id, quantity: item.quantity })),
     currency: checkout?.currency,
     num_items: checkout?.items?.length,
