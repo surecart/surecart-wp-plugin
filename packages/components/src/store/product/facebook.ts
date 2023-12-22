@@ -11,16 +11,15 @@ window.addEventListener('scSearched', function (e: CustomEvent) {
   window.fbq('track', 'Search', {
     search_string: eventDetail.search_string,
     content_ids: eventDetail.search_result_ids,
-    content_category: eventDetail.search_collection,
-    ...(!!eventDetail.search_collection ? { content_category: eventDetail.search_collection } : {}),
+    ...(!!eventDetail?.search_collections?.length ? { content_category: eventDetail.search_collections.join(',') } : {}),
   });
 });
-
 
 /**
  * Handle view content event.
  */
 window.addEventListener('scProductViewed', function (e: CustomEvent) {
+  alert('event triggered');
   if (!window?.fbq) return;
 
   const product = e.detail;
