@@ -66,7 +66,7 @@ class TemplateUtilityService {
 			],
 			'cart'                    => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
-				'description' => __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
+				'description' => __( 'The slide-out cart template.', 'surecart' ),
 			],
 		];
 	}
