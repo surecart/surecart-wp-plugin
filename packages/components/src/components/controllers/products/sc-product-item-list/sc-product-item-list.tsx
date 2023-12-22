@@ -168,9 +168,9 @@ export class ScProductItemList {
       await this.fetchProducts();
       if (!!this.query && emitSearchEvent) {
         this.scSearched.emit({
-          search_string: this.query,
-          search_result_count: this.products?.length,
-          search_result_ids: this.products.map(product => product.id),
+          searchString: this.query,
+          searchResultCount: this.products?.length,
+          searchResultIds: this.products.map(product => product.id),
         });
       }
     } catch (error) {

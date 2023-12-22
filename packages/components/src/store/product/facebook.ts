@@ -10,9 +10,9 @@ window.addEventListener('scSearched', function (e: CustomEvent) {
   const eventDetail: ProductsSearchedParams = e.detail;
 
   window.fbq('track', 'Search', {
-    search_string: eventDetail.search_string,
-    content_ids: eventDetail.search_result_ids,
-    ...(!!eventDetail?.search_collections?.length ? { content_category: eventDetail.search_collections.join(',') } : {}),
+    search_string: eventDetail.searchString,
+    content_ids: eventDetail.searchResultIds,
+    ...(!!eventDetail?.searchCollections?.length ? { content_category: eventDetail.searchCollections.join(',') } : {}),
   });
 });
 

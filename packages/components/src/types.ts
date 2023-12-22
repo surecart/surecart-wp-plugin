@@ -1152,10 +1152,10 @@ export interface CheckoutInitiatedParams {
 }
 
 export interface ProductsSearchedParams {
-  search_string: string;
-  search_collections?: string[];
-  search_result_count: number;
-  search_result_ids: string[];
+  searchString: string;
+  searchCollections?: string[];
+  searchResultCount: number;
+  searchResultIds: string[];
 }
 
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
