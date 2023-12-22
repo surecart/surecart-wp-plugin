@@ -67,7 +67,6 @@ add_filter(
 add_action(
 	'wp',
 	function() {
-		return false;
 		$products = sc_query_products(
 			[
 				'post_status'    => 'publish',
@@ -96,6 +95,15 @@ add_action(
 				} else {
 					echo wp_kses_post( '<p>In stock</p>' );
 				}
+			}
+
+			foreach ( $sc_product->variant_options as $key => $option ) {
+				echo '<label>' . esc_html( $option->post_title ) . '</label>';
+				echo '<select>';
+				foreach ( $option->values as $value ) {
+					echo '<option value="' . esc_attr( $value ) . '">' . esc_html( $value ) . '</option>';
+				}
+				echo '</select>';
 			}
 
 			// $stock = $sc_product->isInStock ?? 0;
