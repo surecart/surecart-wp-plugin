@@ -172,6 +172,12 @@ return [
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
 		\SureCartBlocks\Blocks\Cart\Block::class,
+		\SureCartBlocks\Blocks\ProductDonation\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationRecurringPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
