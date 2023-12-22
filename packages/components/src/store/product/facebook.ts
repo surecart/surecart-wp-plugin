@@ -19,7 +19,6 @@ window.addEventListener('scSearched', function (e: CustomEvent) {
  * Handle view content event.
  */
 window.addEventListener('scProductViewed', function (e: CustomEvent) {
-  alert('event triggered');
   if (!window?.fbq) return;
 
   const product = e.detail;
