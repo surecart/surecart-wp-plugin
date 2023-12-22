@@ -41,7 +41,6 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
   const checkout = e.detail;
 
   window.fbq('track', 'InitiateCheckout', {
-    content_category: checkout?.items?.map(item => item.item_collections).join(', '),
     content_ids: checkout?.items?.map(item => item.item_id),
     contents: checkout?.items?.map(item => ({ id: item.item_id, quantity: item.quantity })),
     currency: checkout?.currency,
@@ -81,7 +80,6 @@ window.addEventListener('scTrialStarted', function (e: CustomEvent) {
     window.fbq('track', 'StartTrial', {
       currency: item.price?.currency,
       value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
-      predicted_ltv: maybeConvertAmount(item.price?.full_amount || 0, item.price?.currency || 'USD'),
     });
   });
 });
@@ -98,7 +96,6 @@ window.addEventListener('scSubscriptionStarted', function (e: CustomEvent) {
     window.fbq('track', 'Subscribe', {
       currency: item.price?.currency,
       value: maybeConvertAmount(item.price?.amount || 0, item.price?.currency || 'USD'),
-      predicted_ltv: maybeConvertAmount(item.price?.full_amount || 0, item.price?.currency || 'USD'),
     });
   });
 });

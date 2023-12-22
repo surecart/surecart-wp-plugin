@@ -25,7 +25,6 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
         discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
         price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
         quantity: item?.quantity || 1,
-        item_collections: (item?.price?.product as Product)?.product_collections?.data?.map(collection => collection.name).join(', ') || '',
       })),
     },
     bubbles: true,
