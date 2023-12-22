@@ -225,28 +225,19 @@ class AdminMenuPageService {
 			return;
 		}
 
-		$template_part_post = get_posts(
-			[
-				'post_type'  => 'wp_template_part',
-				'post_title' => $name,
-			]
-		)[0] ?? null;
-
-		$status      = '';
-		$post_status = get_post_status( $template_part_post->ID ?? null );
-
-		if ( 'publish' !== $post_status ) {
-			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
-		}
-
-		$edit_path_url = add_query_arg(
-			[
-				'postId'   => rawurlencode( $template_slug ),
-				'postType' => 'wp_template_part',
-			],
-			'site-editor.php'
+		return \add_submenu_page(
+			$this->slug,
+			$name,
+			$name,
+			'manage_options',
+			add_query_arg(
+				[
+					'postId'   => rawurlencode( $template_slug ),
+					'postType' => 'wp_template_part',
+				],
+				'site-editor.php'
+			),
+			''
 		);
-
-		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', $edit_path_url, '' );
 	}
 }
