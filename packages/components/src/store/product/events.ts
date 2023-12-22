@@ -11,7 +11,7 @@ export const productViewed = (product: Product,selectedPrice: Price) => {
       price: selectedPrice,
       permalink: product?.permalink,
       prices: product?.prices,
-      variant_options: product?.variant_options,
+      variant_options: product?.variant_options?.data,
       product_collections: product?.product_collections,
     },
     bubbles: true,
