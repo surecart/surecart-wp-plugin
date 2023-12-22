@@ -90,7 +90,7 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		}
 
 		$cart = [
-			'post_name'    => _x( 'cart', 'Cart slug', 'surecart' ),
+			'post_name'    => 'cart',
 			'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
 			'post_content' => $existing_cart_post->post_content,
 			'post_type'    => 'wp_template_part',
@@ -99,7 +99,7 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
 		];
 
-		$inserted = wp_insert_post( $cart );
+		$inserted = wp_insert_post( wp_slash( $cart ), true );
 
 		// insertion failed.
 		if ( is_wp_error( $inserted ) ) {
