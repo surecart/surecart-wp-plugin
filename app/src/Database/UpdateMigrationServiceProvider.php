@@ -36,12 +36,10 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		if ( ! $this->versionChanged() ) {
 			return;
 		}
-
 		// flush roles on every update.
 		\SureCart::plugin()->roles()->create();
 		// make sure to check for and create cart post on every update.
 		\SureCart::page_seeder()->createShopPage();
-
 		// make sure to check for and create cart post on every update.
 		$this->handleCartMigration();
 	}
@@ -102,6 +100,14 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
 		];
 
-		wp_insert_post( $cart );
+		$inserted = wp_insert_post( $cart );
+
+		// insertion failed.
+		if ( is_wp_error( $inserted ) ) {
+			return;
+		}
+
+		// delete cart post so migration does not run next time.
+		wp_delete_post( $existing_cart_post->ID, true );
 	}
 }
