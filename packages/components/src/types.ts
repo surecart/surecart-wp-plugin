@@ -1153,7 +1153,7 @@ export interface CheckoutInitiatedParams {
 
 export interface ProductsSearchedParams {
   search_string: string;
-  search_collection?: string;
+  search_collections?: string[];
   search_result_count: number;
   search_result_ids: string[];
 }

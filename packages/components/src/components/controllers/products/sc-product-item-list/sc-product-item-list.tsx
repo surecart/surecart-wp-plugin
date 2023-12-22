@@ -11,6 +11,7 @@ import { speak } from '@wordpress/a11y';
  */
 import { Collection, Product, ProductsSearchedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
+import '@store/product/facebook';
 
 export type LayoutConfig = {
   blockName: string;
@@ -161,14 +162,14 @@ export class ScProductItemList {
     this.updateProducts();
   }
 
-  async updateProducts() {
+  async updateProducts(emitSearchEvent: boolean = false) {
     try {
       this.busy = true;
       await this.fetchProducts();
-      if (!!this.query) {
+      if (!!this.query && emitSearchEvent) {
         this.scSearched.emit({
           search_string: this.query,
-          ...(!!this.collectionId ? { search_collection_id: this.collections?.find(collection => collection.id === this.collectionId)?.name } : {}),
+          ...(!!this.selectedCollections?.length ? { search_collections: (this.selectedCollections || []).map(collection => collection.name) } : {}),
           search_result_count: this.products?.length,
           search_result_ids: this.products.map(product => product.id),
         });
@@ -364,7 +365,7 @@ export class ScProductItemList {
                       size="small"
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
-                          this.updateProducts();
+                          this.updateProducts(true);
                         }
                       }}
                       value={this.query}
@@ -388,7 +389,7 @@ export class ScProductItemList {
                         slot="suffix"
                         busy={this.busy}
                         onClick={() => {
-                          this.updateProducts();
+                          this.updateProducts(true);
                         }}
                       >
                         {__('Search', 'surecart')}
