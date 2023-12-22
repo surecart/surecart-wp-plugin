@@ -162,27 +162,16 @@ export class ScProductItemList {
     this.updateProducts();
   }
 
-  handleEmittedSearch() {
-    const searchCollections = this.selectedCollections || [];
-    if (!!this.collectionId) {
-      searchCollections.push(this.collections?.find(collection => collection.id === this.collectionId));
-    }
-
-
-    this.scSearched.emit({
-      search_string: this.query,
-      ...(!!this.selectedCollections?.length ? { search_collections: searchCollections.map(collection => collection.name) } : {}),
-      search_result_count: this.products?.length,
-      search_result_ids: this.products.map(product => product.id),
-    });
-  }
-
   async updateProducts(emitSearchEvent: boolean = false) {
     try {
       this.busy = true;
       await this.fetchProducts();
       if (!!this.query && emitSearchEvent) {
-        this.handleEmittedSearch();
+        this.scSearched.emit({
+          search_string: this.query,
+          search_result_count: this.products?.length,
+          search_result_ids: this.products.map(product => product.id),
+        });
       }
     } catch (error) {
       console.log('error');
