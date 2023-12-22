@@ -194,9 +194,7 @@ class CartService {
 		// get first block attributes.
 		$template_blocks    = parse_blocks( $template->content );
 		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart' );
-		if ( isset( $post_content_block['attrs'] ) ) {
-			$attributes = $post_content_block['attrs'];
-		}
+		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : [];
 
 		ob_start();
 		?>
