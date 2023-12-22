@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.14.0
+Stable tag: 2.14.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,11 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.14.1 - December 21st, 2023 =
+- Improvement: Allow customers to add payment methods on subscriptions without payment methods on customer dashboard.
+- Fix: Issue with canceled orders not able to be filtered on merchant admin.
+- Fix: Issue with recurring prices being combined in price selector showing wrong label.
 
 = 2.14.0 - December 14th, 2023 =
 - New: Donations block to accept one-time and recurring donations.
