@@ -202,6 +202,17 @@ export class ScSubscriptionDetails {
             </sc-stacked-list>
           </sc-card>
         </sc-dialog>
+
+        {!this.subscription.payment_method && (
+          <div>
+            <sc-tag type="warning">
+              <div class="subscription-details__missing-method">
+                <sc-icon name="alert-triangle"></sc-icon>
+                {__('Payment Method Missing', 'surecart')}
+              </div>
+            </sc-tag>
+          </div>
+        )}
       </div>
     );
   }
