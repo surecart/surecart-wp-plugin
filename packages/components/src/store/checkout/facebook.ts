@@ -45,7 +45,7 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
     contents: checkout?.items?.map(item => ({ id: item.item_id, quantity: item.quantity })),
     currency: checkout?.currency,
     num_items: checkout?.items?.length,
-    value: maybeConvertAmount(checkout?.value, checkout?.currency || 'USD'),
+    value: checkout.value,
   });
 });
 
@@ -64,7 +64,7 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
     contents: checkout?.items?.map(item => ({ id: item.item_id, quantity: item.quantity })),
     currency: checkout?.currency,
     num_items: checkout?.items?.length,
-    value: maybeConvertAmount(checkout?.value, checkout?.currency || 'USD'),
+    value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
   });
 });
 

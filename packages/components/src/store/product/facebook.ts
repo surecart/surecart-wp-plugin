@@ -1,3 +1,4 @@
+import { maybeConvertAmount } from 'src/functions/currency';
 import { ProductsSearchedParams } from 'src/types';
 
 /**
@@ -35,6 +36,6 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
       },
     ],
     currency: product?.price?.currency,
-    value: product?.price?.amount || 0,
+    value: maybeConvertAmount(product.price?.amount || 0, product.price?.currency || 'USD'),
   });
 });
