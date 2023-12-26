@@ -76,16 +76,10 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			return;
 		}
 
-		$existing_template_part_query = new \WP_Query(
-			[
-				'post_type'      => 'wp_template_part',
-				'name'           => _x( 'cart', 'Cart slug', 'surecart' ),
-				'posts_per_page' => 1,
-			]
-		);
+		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
 
-		// if the template part already exists, don't create it.
-		if ( $existing_template_part_query->have_posts() ) {
+		// the template part has already been modified.
+		if ( ! empty( $template->wp_id ) ) {
 			return;
 		}
 
@@ -96,6 +90,9 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			'post_type'    => 'wp_template_part',
 			'post_author'  => $existing_cart_post->post_author,
 			'post_status'  => $existing_cart_post->post_status ?? 'publish',
+			'tax_input'    => [
+				'wp_theme' => 'surecart/surecart',
+			],
 			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
 		];
 
@@ -107,6 +104,8 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 		}
 
 		// delete cart post so migration does not run next time.
-		wp_delete_post( $existing_cart_post->ID, true );
+		// wp_delete_post( $existing_cart_post->ID, true );
+
+		// also delete option?
 	}
 }
