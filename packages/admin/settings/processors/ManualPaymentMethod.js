@@ -14,8 +14,9 @@ import { store as coreStore } from '@wordpress/core-data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-import { useState } from 'react';
+import { useState } from '@wordpress/element';
 import CreateEditPaymentMethod from './CreateEditPaymentMethod';
+import { stripHtml } from '../../util/text';
 
 export default ({ paymentMethod }) => {
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
@@ -91,7 +92,9 @@ export default ({ paymentMethod }) => {
 			<ScStackedListRow>
 				<div>
 					<strong>{paymentMethod?.name} </strong>
-					<div>{paymentMethod?.description}</div>
+					<div style={{ paddingRight: '4rem' }}>
+						{stripHtml(paymentMethod?.description, 200, true)}
+					</div>
 				</div>
 				<ScFlex slot="suffix" alignItems="center">
 					<ScSwitch

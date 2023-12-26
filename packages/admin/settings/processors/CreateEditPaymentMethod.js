@@ -5,9 +5,7 @@ import {
 	ScDialog,
 	ScForm,
 	ScInput,
-	ScSwitch,
-	ScTextarea,
-	ScToggle,
+	ScRichText,
 } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
@@ -50,7 +48,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 			console.error(e);
 			setError(
 				e?.message ||
-					__('Something went wrong. Please try again.', 'surecart')
+				__('Something went wrong. Please try again.', 'surecart')
 			);
 		} finally {
 			setBusy(false);
@@ -88,7 +86,10 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					onScInput={(e) => updateData({ name: e.target.value })}
 					required
 				/>
-				<ScTextarea
+				<ScRichText
+					style={{
+						'--sc-rich-text-max-height': '100px',
+					}}
 					label={__('Description', 'surecart')}
 					help={__(
 						'The description of this payment method that will be shown in the checkout.',
@@ -104,7 +105,10 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					}
 					required
 				/>
-				<ScTextarea
+				<ScRichText
+					style={{
+						'--sc-rich-text-max-height': '100px',
+					}}
 					label={__('Payment instructions', 'surecart')}
 					help={__(
 						'The instructions that you want your customers to follow to pay for an order. These instructions are shown on the confirmation page after a customer completes the checkout.',
