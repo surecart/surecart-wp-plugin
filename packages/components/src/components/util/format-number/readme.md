@@ -45,14 +45,17 @@
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../../ui/sc-price-choice-container)
  - [sc-price-range](../../ui/sc-price-range)
+ - [sc-product-donation-amount-choice](../../controllers/checkout-form/product-donation-amount-choice)
  - [sc-product-item-price](../../controllers/products/sc-product-item-price)
  - [sc-product-line-item](../../ui/product-line-item)
  - [sc-product-price](../../controllers/product/sc-product-price)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
+ - [sc-recurring-price-choice-container](../../ui/sc-recurring-price-choice-container)
  - [sc-shipping-choices](../../ui/sc-shipping-choices)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-total](../../controllers/checkout-form/total)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
@@ -77,14 +80,17 @@ graph TD;
   sc-price-choice --> sc-format-number
   sc-price-choice-container --> sc-format-number
   sc-price-range --> sc-format-number
+  sc-product-donation-amount-choice --> sc-format-number
   sc-product-item-price --> sc-format-number
   sc-product-line-item --> sc-format-number
   sc-product-price --> sc-format-number
   sc-product-price-choices --> sc-format-number
   sc-product-selected-price --> sc-format-number
+  sc-recurring-price-choice-container --> sc-format-number
   sc-shipping-choices --> sc-format-number
   sc-subscription-details --> sc-format-number
   sc-subscription-next-payment --> sc-format-number
+  sc-subscription-reactivate --> sc-format-number
   sc-subscription-switch --> sc-format-number
   sc-total --> sc-format-number
   sc-upcoming-invoice --> sc-format-number

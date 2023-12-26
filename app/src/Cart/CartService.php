@@ -232,6 +232,19 @@ class CartService {
 			return;
 		}
 		$template = $this->cartTemplate();
+		$state    = sc_initial_state();
+
+		if ( empty( $state['checkout']['formId'] ) ) {
+			sc_initial_state(
+				array_filter(
+					[
+						'checkout' => [
+							'formId' => $form->ID,
+						],
+					]
+				)
+			);
+		}
 		?>
 
 		<sc-cart-loader
