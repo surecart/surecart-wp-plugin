@@ -18,9 +18,7 @@ export class ScOrderManualInstructions {
     return (
       <sc-alert type="info" open>
         <span slot="title">{this.manualPaymentTitle}</span>
-        {this.manualPaymentInstructions.split('\n').map(i => {
-          return <p>{i}</p>;
-        })}
+        <p innerHTML={this.manualPaymentInstructions}></p>
       </sc-alert>
     );
   }
