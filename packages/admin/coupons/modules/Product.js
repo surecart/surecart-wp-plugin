@@ -50,7 +50,6 @@ export default ({ id, onSelect }) => {
 		} catch (e) {
 			console.error(e);
 			setError(e);
-			setLoading(false);
 		} finally {
 			setLoading(false);
 		}
