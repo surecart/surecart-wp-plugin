@@ -73,7 +73,7 @@ export default ({ id, onSelect }) => {
 	}
 
 	if (error) {
-		return <Error error={error} setError={setError} children={false} />;
+		return <Error error={error} setError={setError} />;
 	}
 
 	const activePrices = product?.prices?.data?.filter(
