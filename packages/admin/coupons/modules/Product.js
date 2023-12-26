@@ -31,6 +31,7 @@ export default ({ id, onSelect }) => {
 
 	const fetchProduct = async () => {
 		try {
+			setError(false);
 			setLoading(true);
 			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
