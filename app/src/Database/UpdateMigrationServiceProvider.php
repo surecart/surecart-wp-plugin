@@ -71,13 +71,21 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	 * @return \WP_Post|WP_Error
 	 */
 	public function handleCartMigration() {
+		// get the existing cart post.
 		$existing_cart_post = \SureCart::cartPost()->get();
+
+		// we don't have a cart post - it's possibly been deleted or not seeded.
 		if ( empty( $existing_cart_post ) || empty( $existing_cart_post->post_content ) ) {
 			return;
 		}
 
 		// get the defined template.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
+
+		// it has already been modified.
+		if ( ! empty( $template->wp_id ) ) {
+			return;
+		}
 
 		$cart = [
 			'post_name'    => 'cart',
@@ -95,12 +103,8 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 			'post_excerpt' => $template->description,
 		];
 
-		// If the template already exists, update it, otherwise create it.
-		if ( ! empty( $template->wp_id ) ) {
-			$result = wp_update_post( wp_slash( array_merge( [ 'ID' => $template->wp_id ], $cart ), false ) );
-		} else {
-			$result = wp_insert_post( wp_slash( $cart, false ) );
-		}
+		// Create the template.
+		$result = wp_insert_post( wp_slash( $cart, false ) );
 
 		// insertion failed.
 		if ( is_wp_error( $result ) ) {
