@@ -67,6 +67,8 @@ export default () => {
 							'line_item.price',
 							'price.product',
 							'period.subscription',
+							'product.featured_product_media',
+							'product_media.media',
 						],
 					}
 				),
@@ -126,6 +128,8 @@ export default () => {
 						'line_item.variant',
 						'price',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
 						'customer',
 						'customer.balances',
 						'purchase',

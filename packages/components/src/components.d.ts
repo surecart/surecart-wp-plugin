@@ -1231,6 +1231,10 @@ export namespace Components {
           * The direction from which the drawer will open.
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
+        /**
+          * Sticky drawer header
+         */
+        "stickyHeader": boolean;
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -1567,8 +1571,8 @@ export namespace Components {
         /**
           * Accept a string or an array of objects
          */
-        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
-        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "images": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
+        "thumbnails": string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
         "thumbnailsPerPage": number;
     }
     interface ScInput {
@@ -1776,6 +1780,7 @@ export namespace Components {
         "order": Checkout;
     }
     interface ScMenu {
+        "ariaLabel": string;
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
     }
     interface ScMenuDivider {
@@ -2001,6 +2006,24 @@ export namespace Components {
           * The input's value attribute.
          */
         "value": string;
+    }
+    interface ScOrderReturnBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable": boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The tag's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status": ReturnRequestStatus;
     }
     interface ScOrderShipmentBadge {
         /**
@@ -2784,8 +2807,7 @@ export namespace Components {
         "product": Product;
     }
     interface ScProductItemImage {
-        "alt": string;
-        "productMedia": ProductMedia;
+        "product": Product;
         "sizing": 'cover' | 'contain';
     }
     interface ScProductItemList {
@@ -2869,6 +2891,14 @@ export namespace Components {
          */
         "fees": Fee[];
         /**
+          * Alternative description for the product image
+         */
+        "imageAlt": string;
+        /**
+          * Title for the product image
+         */
+        "imageTitle": string;
+        /**
           * Url for the product image
          */
         "imageUrl": string;
@@ -2880,10 +2910,6 @@ export namespace Components {
           * The max allowed.
          */
         "max": number;
-        /**
-          * The product media
-         */
-        "media": Media;
         /**
           * Product name
          */
@@ -3543,6 +3569,10 @@ export namespace Components {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel": string;
+        /**
           * Makes the tag clearable.
          */
         "clearable": boolean;
@@ -3826,6 +3856,8 @@ export namespace Components {
           * The tag's size.
          */
         "size": 'small' | 'medium' | 'large';
+    }
+    interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
         /**
@@ -4792,6 +4824,12 @@ declare global {
         prototype: HTMLScOrderPasswordElement;
         new (): HTMLScOrderPasswordElement;
     };
+    interface HTMLScOrderReturnBadgeElement extends Components.ScOrderReturnBadge, HTMLStencilElement {
+    }
+    var HTMLScOrderReturnBadgeElement: {
+        prototype: HTMLScOrderReturnBadgeElement;
+        new (): HTMLScOrderReturnBadgeElement;
+    };
     interface HTMLScOrderShipmentBadgeElement extends Components.ScOrderShipmentBadge, HTMLStencilElement {
     }
     var HTMLScOrderShipmentBadgeElement: {
@@ -5332,6 +5370,12 @@ declare global {
         prototype: HTMLScUpgradeRequiredElement;
         new (): HTMLScUpgradeRequiredElement;
     };
+    interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
+    }
+    var HTMLScVisuallyHiddenElement: {
+        prototype: HTMLScVisuallyHiddenElement;
+        new (): HTMLScVisuallyHiddenElement;
+    };
     interface HTMLScWordpressPasswordEditElement extends Components.ScWordpressPasswordEdit, HTMLStencilElement {
     }
     var HTMLScWordpressPasswordEditElement: {
@@ -5461,6 +5505,7 @@ declare global {
         "sc-order-fulfillment-badge": HTMLScOrderFulfillmentBadgeElement;
         "sc-order-manual-instructions": HTMLScOrderManualInstructionsElement;
         "sc-order-password": HTMLScOrderPasswordElement;
+        "sc-order-return-badge": HTMLScOrderReturnBadgeElement;
         "sc-order-shipment-badge": HTMLScOrderShipmentBadgeElement;
         "sc-order-shipping-address": HTMLScOrderShippingAddressElement;
         "sc-order-status-badge": HTMLScOrderStatusBadgeElement;
@@ -5551,6 +5596,7 @@ declare global {
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
         "sc-upgrade-required": HTMLScUpgradeRequiredElement;
+        "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
         "sc-wordpress-user-edit": HTMLScWordpressUserEditElement;
@@ -6929,6 +6975,10 @@ declare namespace LocalJSX {
           * The direction from which the drawer will open.
          */
         "placement"?: 'top' | 'end' | 'bottom' | 'start';
+        /**
+          * Sticky drawer header
+         */
+        "stickyHeader"?: boolean;
     }
     interface ScDropdown {
         "clickEl"?: HTMLElement;
@@ -7290,8 +7340,8 @@ declare namespace LocalJSX {
         /**
           * Accept a string or an array of objects
          */
-        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
-        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string }[];
+        "images"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
+        "thumbnails"?: string | { src: string; alt: string; srcset; width: number; height: number; sizes: string; title: string }[];
         "thumbnailsPerPage"?: number;
     }
     interface ScInput {
@@ -7512,6 +7562,7 @@ declare namespace LocalJSX {
         "order"?: Checkout;
     }
     interface ScMenu {
+        "ariaLabel"?: string;
         "onScSelect"?: (event: ScMenuCustomEvent<{ item: HTMLScMenuItemElement }>) => void;
     }
     interface ScMenuDivider {
@@ -7742,6 +7793,24 @@ declare namespace LocalJSX {
           * The input's value attribute.
          */
         "value"?: string;
+    }
+    interface ScOrderReturnBadge {
+        /**
+          * Makes the tag clearable.
+         */
+        "clearable"?: boolean;
+        /**
+          * Draws a pill-style tag with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The tag's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The tag's statux type.
+         */
+        "status"?: ReturnRequestStatus;
     }
     interface ScOrderShipmentBadge {
         /**
@@ -8571,8 +8640,7 @@ declare namespace LocalJSX {
         "product"?: Product;
     }
     interface ScProductItemImage {
-        "alt"?: string;
-        "productMedia"?: ProductMedia;
+        "product"?: Product;
         "sizing"?: 'cover' | 'contain';
     }
     interface ScProductItemList {
@@ -8660,6 +8728,14 @@ declare namespace LocalJSX {
          */
         "fees"?: Fee[];
         /**
+          * Alternative description for the product image
+         */
+        "imageAlt"?: string;
+        /**
+          * Title for the product image
+         */
+        "imageTitle"?: string;
+        /**
           * Url for the product image
          */
         "imageUrl"?: string;
@@ -8671,10 +8747,6 @@ declare namespace LocalJSX {
           * The max allowed.
          */
         "max"?: number;
-        /**
-          * The product media
-         */
-        "media"?: Media;
         /**
           * Product name
          */
@@ -9425,6 +9497,10 @@ declare namespace LocalJSX {
     }
     interface ScTag {
         /**
+          * Aria label
+         */
+        "ariaLabel"?: string;
+        /**
           * Makes the tag clearable.
          */
         "clearable"?: boolean;
@@ -9729,6 +9805,8 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScVisuallyHidden {
+    }
     interface ScWordpressPasswordEdit {
         /**
           * Ensures strong password validation.
@@ -9858,6 +9936,7 @@ declare namespace LocalJSX {
         "sc-order-fulfillment-badge": ScOrderFulfillmentBadge;
         "sc-order-manual-instructions": ScOrderManualInstructions;
         "sc-order-password": ScOrderPassword;
+        "sc-order-return-badge": ScOrderReturnBadge;
         "sc-order-shipment-badge": ScOrderShipmentBadge;
         "sc-order-shipping-address": ScOrderShippingAddress;
         "sc-order-status-badge": ScOrderStatusBadge;
@@ -9948,6 +10027,7 @@ declare namespace LocalJSX {
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
         "sc-upgrade-required": ScUpgradeRequired;
+        "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
         "sc-wordpress-user-edit": ScWordpressUserEdit;
@@ -10084,6 +10164,7 @@ declare module "@stencil/core" {
             "sc-order-fulfillment-badge": LocalJSX.ScOrderFulfillmentBadge & JSXBase.HTMLAttributes<HTMLScOrderFulfillmentBadgeElement>;
             "sc-order-manual-instructions": LocalJSX.ScOrderManualInstructions & JSXBase.HTMLAttributes<HTMLScOrderManualInstructionsElement>;
             "sc-order-password": LocalJSX.ScOrderPassword & JSXBase.HTMLAttributes<HTMLScOrderPasswordElement>;
+            "sc-order-return-badge": LocalJSX.ScOrderReturnBadge & JSXBase.HTMLAttributes<HTMLScOrderReturnBadgeElement>;
             "sc-order-shipment-badge": LocalJSX.ScOrderShipmentBadge & JSXBase.HTMLAttributes<HTMLScOrderShipmentBadgeElement>;
             "sc-order-shipping-address": LocalJSX.ScOrderShippingAddress & JSXBase.HTMLAttributes<HTMLScOrderShippingAddressElement>;
             "sc-order-status-badge": LocalJSX.ScOrderStatusBadge & JSXBase.HTMLAttributes<HTMLScOrderStatusBadgeElement>;
@@ -10174,6 +10255,7 @@ declare module "@stencil/core" {
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
             "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
+            "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;
             "sc-wordpress-user-edit": LocalJSX.ScWordpressUserEdit & JSXBase.HTMLAttributes<HTMLScWordpressUserEditElement>;

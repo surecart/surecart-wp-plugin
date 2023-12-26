@@ -225,7 +225,7 @@ class ScriptsService {
 			'surecart-affiliate-tracking',
 			esc_url_raw( untrailingslashit( SURECART_JS_URL ) . '/v1/affiliates' ),
 			[],
-			'1',
+			'1.1',
 			[
 				'strategy' => 'defer',
 			]
@@ -234,7 +234,7 @@ class ScriptsService {
 		wp_add_inline_script(
 			'surecart-affiliate-tracking',
 			'window.SureCartAffiliatesConfig = {
-				"accountSlug": "' . \SureCart::account()->slug . '",
+				"publicToken": "' . \SureCart::account()->public_token . '",
 				"baseURL":"' . esc_url_raw( untrailingslashit( SURECART_API_URL ) ) . '/v1"
 			};',
 			'before'
@@ -427,7 +427,7 @@ class ScriptsService {
 				'entitlements'         => \SureCart::account()->entitlements,
 				'upgrade_url'          => \SureCart::config()->links->purchase,
 				'beta'                 => [
-					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', false ),
+					'stripe_payment_element' => (bool) get_option( 'sc_stripe_payment_element', true ),
 				],
 				'pages'                => [
 					'dashboard' => \SureCart::pages()->url( 'dashboard' ),

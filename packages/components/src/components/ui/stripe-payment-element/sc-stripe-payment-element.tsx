@@ -160,6 +160,7 @@ export class ScStripePaymentElement {
   createOrUpdateElements() {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
+    if (!this.stripe) return;
 
     // create the elements if they have not yet been created.
     if (!this.elements) {

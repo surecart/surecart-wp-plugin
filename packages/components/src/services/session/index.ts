@@ -1,5 +1,4 @@
 import { state as checkoutState } from '@store/checkout';
-import { state as processorsState } from '@store/processors';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
@@ -15,7 +14,10 @@ export const expand = [
   'line_item.price',
   'line_item.fees',
   'line_item.variant',
+  'variant.image',
   'price.product',
+  'product.featured_product_media',
+  'product_media.media',
   'customer',
   'customer.shipping_address',
   'payment_intent',
@@ -43,6 +45,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
     ...(checkoutState?.product?.id && { buy_page_product_id: checkoutState?.product?.id }),
     page_url: window.location.href,
   },
+  ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
   ...data,
 });
 
@@ -50,7 +53,6 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
 export const withDefaultQuery = (query = {}) => ({
   ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
   ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
-  ...(!!processorsState.config.stripe.paymentElement && { stage_processor_type: 'stripe' }),
   ...query,
 });
 

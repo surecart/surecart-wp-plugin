@@ -4,7 +4,6 @@ import { __ } from '@wordpress/i18n';
 
 export default ({ media, render }) => {
 	const [downloading, setLoading] = useState(false);
-	console.log(media);
 
 	const onDownload = () => {
 		if (media.public_access && media.url) {

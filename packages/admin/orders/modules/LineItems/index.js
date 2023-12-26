@@ -20,6 +20,7 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 import { getSKUText } from '../../../util/products';
 
 const status = {
@@ -108,6 +109,19 @@ export default ({ order, checkout, loading }) => {
 		[checkout?.id]
 	);
 
+	const getImageAttributes = (item) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(
+			item?.price?.product,
+			item?.variant
+		);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
+
 	return (
 		<Box
 			title={
@@ -193,7 +207,7 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.product?.image_url}
+							{...getImageAttributes(item)}
 							name={item?.price?.product?.name}
 							priceName={item?.price?.name}
 							variantLabel={

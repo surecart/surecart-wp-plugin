@@ -73,7 +73,7 @@ class Block extends BaseBlock {
 						'manualPaymentMethods' => (array) ManualPaymentMethod::where( [ 'archived' => false ] )->get() ?? [],
 						'config'               => [
 							'stripe' => [
-								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', false ),
+								'paymentElement' => (bool) get_option( 'sc_stripe_payment_element', true ),
 							],
 						],
 					],
@@ -97,12 +97,11 @@ class Block extends BaseBlock {
 		);
 
 		if ( ! empty( $attributes['prices'] ) ) {
-			$existing   = $this->getExistingLineItems();
 			$line_items = $this->convertPricesToLineItems( $attributes['prices'] );
 			sc_initial_state(
 				[
 					'checkout' => [
-						'initialLineItems' => array_merge( $existing, $line_items ),
+						'initialLineItems' => sc_initial_line_items( $line_items ),
 					],
 				]
 			);

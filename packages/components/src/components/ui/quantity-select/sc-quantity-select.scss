@@ -116,6 +116,7 @@
   cursor: pointer;
   font-size: 13px;
   user-select: none;
+  border-width: 0;
 
   &:hover:not(.button--disabled) {
     .quantity__control {
