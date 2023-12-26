@@ -146,16 +146,6 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Get any existing line items.
-	 *
-	 * @return array
-	 */
-	public function getExistingLineItems() {
-		$initial = \SureCart::state()->getData();
-		return ! empty( $initial['checkout']['initialLineItems'] ) ? $initial['checkout']['initialLineItems'] : [];
-	}
-
-	/**
 	 * Convert price blocks to line items
 	 *
 	 * @param array $prices Array of prices.
