@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 import {
@@ -17,8 +17,8 @@ import {
 } from '@surecart/components-react';
 
 const SETUP_AMOUNT_TYPES = {
-	fee: __('fee', 'surecart'),
-	discount: __('discount', 'surecart'),
+	fee: __('Setup Fee', 'surecart'),
+	discount: __('Initial Discount', 'surecart'),
 };
 
 export default ({ price, updatePrice }) => {
@@ -44,7 +44,7 @@ export default ({ price, updatePrice }) => {
 					updatePrice({ setup_fee_enabled: e.target.checked })
 				}
 			>
-				{__('Add discount/fee', 'surecart')}
+				{__('Setup fee or discount', 'surecart')}
 				{!scData?.entitlements?.subscription_setup_fees && (
 					<>
 						{' '}
@@ -65,10 +65,7 @@ export default ({ price, updatePrice }) => {
 					`}
 				>
 					<ScInput
-						label={sprintf(
-							__('Setup %s name', 'surecart'),
-							SETUP_AMOUNT_TYPES[amountType]
-						)}
+						label={SETUP_AMOUNT_TYPES[amountType]}
 						value={price?.setup_fee_name}
 						onScInput={(e) => {
 							updatePrice({
@@ -79,10 +76,7 @@ export default ({ price, updatePrice }) => {
 						required
 					/>
 					<ScPriceInput
-						label={sprintf(
-							__('Setup %s amount', 'surecart'),
-							SETUP_AMOUNT_TYPES[amountType]
-						)}
+						label={SETUP_AMOUNT_TYPES[amountType]}
 						currencyCode={price?.currency || scData.currency_code}
 						value={Math.abs(price?.setup_fee_amount)}
 						onScInput={(e) =>
@@ -95,38 +89,48 @@ export default ({ price, updatePrice }) => {
 						}
 						required
 					>
-						<ScDropdown
-							slot="suffix"
-							placement="bottom-end"
-							css={css`
-								margin-right: var(--sc-spacing-x-small);
-							`}
-						>
-							<ScButton type="text" slot="trigger" circle>
-								<span>{SETUP_AMOUNT_TYPES[amountType]}</span>
+						<ScDropdown slot="suffix" placement="bottom-end">
+							<ScButton
+								type="text"
+								slot="trigger"
+								css={css`
+									&::part(label) {
+										padding-right: 0;
+									}
+								`}
+							>
+								<span>
+									{amountType === 'fee'
+										? __('Fee', 'surecart')
+										: __('Discount', 'surecart')}
+								</span>
 								<ScIcon name="chevron-down" />
 							</ScButton>
 							<ScMenu>
-								{Object.keys(SETUP_AMOUNT_TYPES).map((type) => (
-									<ScMenuItem
-										onClick={() => {
-											setAmountType(type);
-											updatePrice({
-												setup_fee_amount:
-													type === 'fee'
-														? Math.abs(
-																price.setup_fee_amount
-														  )
-														: -Math.abs(
-																price.setup_fee_amount
-														  ),
-											});
-										}}
-										key={type}
-									>
-										{SETUP_AMOUNT_TYPES[type]}
-									</ScMenuItem>
-								))}
+								<ScMenuItem
+									onClick={() => {
+										setAmountType('fee');
+										updatePrice({
+											setup_fee_amount: Math.abs(
+												price.setup_fee_amount
+											),
+										});
+									}}
+								>
+									{__('Fee', 'surecart')}
+								</ScMenuItem>
+								<ScMenuItem
+									onClick={() => {
+										setAmountType('discount');
+										updatePrice({
+											setup_fee_amount: -Math.abs(
+												price.setup_fee_amount
+											),
+										});
+									}}
+								>
+									{__('Discount', 'surecart')}
+								</ScMenuItem>
 							</ScMenu>
 						</ScDropdown>
 					</ScPriceInput>

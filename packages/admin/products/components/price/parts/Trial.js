@@ -25,7 +25,7 @@ export default ({ className, price, updatePrice }) => {
 					})
 				}
 			>
-				{__('Free Trial', 'surecart')}
+				{__('Free trial', 'surecart')}
 				{!scData?.entitlements?.subscription_trials && (
 					<>
 						{' '}
