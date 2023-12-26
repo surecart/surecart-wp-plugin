@@ -68,44 +68,58 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 	/**
 	 * Handle cart migration
 	 *
-	 * @return void
+	 * @return \WP_Post|WP_Error
 	 */
 	public function handleCartMigration() {
 		$existing_cart_post = \SureCart::cartPost()->get();
-		if ( empty( $existing_cart_post->post_content ) ) {
+		if ( empty( $existing_cart_post ) || empty( $existing_cart_post->post_content ) ) {
 			return;
 		}
 
+		// get the defined template.
 		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
-
-		// the template part has already been modified.
-		if ( ! empty( $template->wp_id ) ) {
-			return;
-		}
 
 		$cart = [
 			'post_name'    => 'cart',
-			'post_title'   => _x( 'Cart', 'Cart title', 'surecart' ),
-			'post_content' => $existing_cart_post->post_content,
-			'post_type'    => 'wp_template_part',
-			'post_author'  => $existing_cart_post->post_author,
-			'post_status'  => $existing_cart_post->post_status ?? 'publish',
+			'post_title'   => $template->title,
+			'post_status'  => 'publish',
 			'tax_input'    => [
-				'wp_theme' => 'surecart/surecart',
+				'wp_template_part_area' => WP_TEMPLATE_PART_AREA_UNCATEGORIZED,
+				'wp_theme'              => $template->theme,
 			],
-			'post_excerpt' => $existing_cart_post->post_excerpt ?? __( 'Display all individual cart content unless a custom template has been applied.', 'surecart' ),
+			'meta_input'   => [
+				'origin' => 'plugin',
+			],
+			'post_type'    => 'wp_template_part',
+			'post_content' => $existing_cart_post->post_content,
+			'post_excerpt' => $template->description,
 		];
 
-		$inserted = wp_insert_post( wp_slash( $cart ), true );
-
-		// insertion failed.
-		if ( is_wp_error( $inserted ) ) {
-			return;
+		// If the template already exists, update it, otherwise create it.
+		if ( ! empty( $template->wp_id ) ) {
+			$result = wp_update_post( wp_slash( array_merge( [ 'ID' => $template->wp_id ], $cart ), false ) );
+		} else {
+			$result = wp_insert_post( wp_slash( $cart, false ) );
 		}
 
-		// delete cart post so migration does not run next time.
-		// wp_delete_post( $existing_cart_post->ID, true );
+		// insertion failed.
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
 
-		// also delete option?
+		// delete all cart posts.
+		$allposts = get_posts(
+			array(
+				'post_type'   => 'sc_cart',
+				'numberposts' => -1,
+				'fields'      => 'ids',
+			)
+		);
+		foreach ( $allposts as $eachpost ) {
+			wp_delete_post( $eachpost, true );
+		}
+
+		// return result.
+		return $result;
 	}
 }
