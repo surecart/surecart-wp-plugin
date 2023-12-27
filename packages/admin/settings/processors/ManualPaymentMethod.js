@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import {
 	ScStackedListRow,
 	ScIcon,
@@ -16,7 +18,6 @@ import { useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import CreateEditPaymentMethod from './CreateEditPaymentMethod';
-import { stripHtml } from '../../util/text';
 
 export default ({ paymentMethod }) => {
 	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
@@ -92,8 +93,14 @@ export default ({ paymentMethod }) => {
 			<ScStackedListRow>
 				<div>
 					<strong>{paymentMethod?.name} </strong>
-					<div style={{ paddingRight: '4rem' }}>
-						{stripHtml(paymentMethod?.description, 200, true)}
+					<div
+						css={css`
+							padding-right: 4rem;
+							max-height: 50px;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						`}
+						dangerouslySetInnerHTML={{ __html: paymentMethod?.description }}>
 					</div>
 				</div>
 				<ScFlex slot="suffix" alignItems="center">
