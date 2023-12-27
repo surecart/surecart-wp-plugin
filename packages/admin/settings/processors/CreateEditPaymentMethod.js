@@ -63,7 +63,6 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 					: __('Create Manual Payment Method', 'surecart')
 			}
 			open={open}
-			style={{ '--dialog-body-overflow': 'visible' }}
 			onScRequestClose={onRequestClose}
 		>
 			<ScForm
@@ -88,7 +87,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 				/>
 				<ScRichText
 					style={{
-						'--sc-rich-text-max-height': '100px',
+						'--sc-rich-text-max-height': '120px',
 					}}
 					label={__('Description', 'surecart')}
 					help={__(
@@ -107,7 +106,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 				/>
 				<ScRichText
 					style={{
-						'--sc-rich-text-max-height': '100px',
+						'--sc-rich-text-max-height': '120px',
 					}}
 					label={__('Payment instructions', 'surecart')}
 					help={__(
