@@ -98,6 +98,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 						'I.E. Pay with cash upon delivery.',
 						'surecart'
 					)}
+					maxlength={500}
 					value={description}
 					onScInput={(e) =>
 						updateData({ description: e.target.value })
@@ -114,6 +115,7 @@ export default ({ open, onRequestClose, paymentMethod }) => {
 						'surecart'
 					)}
 					placeholder={__('Instructions on how to pay.', 'surecart')}
+					maxlength={3000}
 					value={instructions}
 					onScInput={(e) =>
 						updateData({ instructions: e.target.value })
