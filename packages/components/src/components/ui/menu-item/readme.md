@@ -51,6 +51,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-select](../select)
@@ -59,6 +60,7 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  sc-customer-email-preview --> sc-menu-item
   sc-payment-methods-list --> sc-menu-item
   sc-product-item-list --> sc-menu-item
   sc-select --> sc-menu-item

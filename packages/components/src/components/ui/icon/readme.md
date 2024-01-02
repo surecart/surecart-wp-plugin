@@ -45,7 +45,6 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-customer-details](../customer-details)
- - [sc-customer-email](../../controllers/checkout-form/customer-email)
  - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-dialog](../sc-dialog)
@@ -103,7 +102,6 @@ graph TD;
   sc-charges-list --> sc-icon
   sc-checkout-stock-alert --> sc-icon
   sc-customer-details --> sc-icon
-  sc-customer-email --> sc-icon
   sc-customer-email-preview --> sc-icon
   sc-customer-login --> sc-icon
   sc-dialog --> sc-icon

@@ -26,7 +26,6 @@
  - [sc-block-ui](../block-ui)
  - [sc-button](../button)
  - [sc-customer-email](../../controllers/checkout-form/customer-email)
- - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
 
@@ -36,7 +35,6 @@ graph TD;
   sc-block-ui --> sc-spinner
   sc-button --> sc-spinner
   sc-customer-email --> sc-spinner
-  sc-customer-login --> sc-spinner
   sc-select --> sc-spinner
   sc-tax-id-input --> sc-spinner
   style sc-spinner fill:#f9f,stroke:#333,stroke-width:4px

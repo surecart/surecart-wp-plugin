@@ -28,6 +28,7 @@
 
 ### Used by
 
+ - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-select](../select)
@@ -36,6 +37,7 @@
 ### Graph
 ```mermaid
 graph TD;
+  sc-customer-email-preview --> sc-menu
   sc-payment-methods-list --> sc-menu
   sc-product-item-list --> sc-menu
   sc-select --> sc-menu

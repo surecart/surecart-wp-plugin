@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-11-14T16:29:57",
+  "timestamp": "2024-01-01T14:06:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -911,9 +911,15 @@
           "docs": ""
         }
       ],
-      "dependents": [],
+      "dependents": [
+        "sc-customer-email-preview"
+      ],
       "dependencies": [],
-      "dependencyGraph": {}
+      "dependencyGraph": {
+        "sc-customer-email-preview": [
+          "sc-avatar"
+        ]
+      }
     },
     {
       "filePath": "./src/components/ui/badge-notice/sc-badge-notice.tsx",
@@ -1855,6 +1861,8 @@
         "sc-coupon-form",
         "sc-customer-details",
         "sc-customer-edit",
+        "sc-customer-email-preview",
+        "sc-customer-login",
         "sc-dialog",
         "sc-donation-choices",
         "sc-downloads-list",
@@ -1889,6 +1897,7 @@
         "sc-tax-id-input",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
+        "sc-verification-code",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -1925,6 +1934,12 @@
           "sc-button"
         ],
         "sc-customer-edit": [
+          "sc-button"
+        ],
+        "sc-customer-email-preview": [
+          "sc-button"
+        ],
+        "sc-customer-login": [
           "sc-button"
         ],
         "sc-dialog": [
@@ -2027,6 +2042,9 @@
           "sc-button"
         ],
         "sc-upgrade-required": [
+          "sc-button"
+        ],
+        "sc-verification-code": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -4428,9 +4446,9 @@
           "sc-spinner"
         ],
         "sc-login-provider": [
-          "sc-alert",
           "sc-dialog",
           "sc-form",
+          "sc-alert",
           "sc-input",
           "sc-button"
         ],
@@ -7801,17 +7819,89 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-input"
+        "sc-customer-email-preview",
+        "sc-customer-login",
+        "sc-input",
+        "sc-spinner"
       ],
       "dependencyGraph": {
         "sc-customer-email": [
-          "sc-input"
+          "sc-customer-email-preview",
+          "sc-customer-login",
+          "sc-input",
+          "sc-spinner"
+        ],
+        "sc-customer-email-preview": [
+          "sc-avatar",
+          "sc-dropdown",
+          "sc-button",
+          "sc-icon",
+          "sc-menu",
+          "sc-menu-item"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-customer-login": [
+          "sc-flex",
+          "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-verification-code"
         ],
         "sc-input": [
           "sc-form-control"
         ],
         "sc-form-control": [
           "sc-visually-hidden"
+        ],
+        "sc-verification-code": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/customer-email-preview/sc-customer-email-preview.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-customer-email-preview",
+      "readme": "# sc-customer-login\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-customer-email"
+      ],
+      "dependencies": [
+        "sc-avatar",
+        "sc-dropdown",
+        "sc-button",
+        "sc-icon",
+        "sc-menu",
+        "sc-menu-item"
+      ],
+      "dependencyGraph": {
+        "sc-customer-email-preview": [
+          "sc-avatar",
+          "sc-dropdown",
+          "sc-button",
+          "sc-icon",
+          "sc-menu",
+          "sc-menu-item"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-customer-email": [
+          "sc-customer-email-preview"
         ]
       }
     },
@@ -8476,6 +8566,76 @@
         ],
         "sc-form-control": [
           "sc-visually-hidden"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/controllers/checkout-form/customer-login/sc-customer-login.tsx",
+      "encapsulation": "none",
+      "tag": "sc-customer-login",
+      "readme": "# sc-customer-login\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "codeError",
+          "type": "string",
+          "mutable": false,
+          "attr": "code-error",
+          "reflectToAttr": false,
+          "docs": "Code Error comin from the parent",
+          "docsTags": [],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-customer-email"
+      ],
+      "dependencies": [
+        "sc-flex",
+        "sc-input",
+        "sc-button",
+        "sc-icon",
+        "sc-verification-code"
+      ],
+      "dependencyGraph": {
+        "sc-customer-login": [
+          "sc-flex",
+          "sc-input",
+          "sc-button",
+          "sc-icon",
+          "sc-verification-code"
+        ],
+        "sc-input": [
+          "sc-form-control"
+        ],
+        "sc-form-control": [
+          "sc-visually-hidden"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-verification-code": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-customer-email": [
+          "sc-customer-login"
         ]
       }
     },
@@ -10764,6 +10924,7 @@
         }
       ],
       "dependents": [
+        "sc-customer-email-preview",
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-select",
@@ -10771,6 +10932,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-customer-email-preview": [
+          "sc-dropdown"
+        ],
         "sc-payment-methods-list": [
           "sc-dropdown"
         ],
@@ -11344,6 +11508,7 @@
         "sc-cancel-discount",
         "sc-cancel-survey",
         "sc-checkout-stock-alert",
+        "sc-customer-login",
         "sc-downloads-list",
         "sc-fulfillments",
         "sc-login-form",
@@ -11368,6 +11533,9 @@
           "sc-flex"
         ],
         "sc-checkout-stock-alert": [
+          "sc-flex"
+        ],
+        "sc-customer-login": [
           "sc-flex"
         ],
         "sc-downloads-list": [
@@ -13494,6 +13662,8 @@
         "sc-charges-list",
         "sc-checkout-stock-alert",
         "sc-customer-details",
+        "sc-customer-email-preview",
+        "sc-customer-login",
         "sc-dialog",
         "sc-downloads-list",
         "sc-drawer",
@@ -13531,6 +13701,7 @@
         "sc-toggle",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
+        "sc-verification-code",
         "sc-wordpress-user"
       ],
       "dependencies": [],
@@ -13569,6 +13740,12 @@
           "sc-icon"
         ],
         "sc-customer-details": [
+          "sc-icon"
+        ],
+        "sc-customer-email-preview": [
+          "sc-icon"
+        ],
+        "sc-customer-login": [
           "sc-icon"
         ],
         "sc-dialog": [
@@ -13680,6 +13857,9 @@
           "sc-icon"
         ],
         "sc-upgrade-required": [
+          "sc-icon"
+        ],
+        "sc-verification-code": [
           "sc-icon"
         ],
         "sc-wordpress-user": [
@@ -14605,6 +14785,7 @@
         "sc-customer-email",
         "sc-customer-firstname",
         "sc-customer-lastname",
+        "sc-customer-login",
         "sc-customer-name",
         "sc-licenses-list",
         "sc-login-form",
@@ -14645,6 +14826,9 @@
           "sc-input"
         ],
         "sc-customer-lastname": [
+          "sc-input"
+        ],
+        "sc-customer-login": [
           "sc-input"
         ],
         "sc-customer-name": [
@@ -15894,22 +16078,19 @@
         "sc-checkout"
       ],
       "dependencies": [
-        "sc-alert",
         "sc-dialog",
         "sc-form",
+        "sc-alert",
         "sc-input",
         "sc-button"
       ],
       "dependencyGraph": {
         "sc-login-provider": [
-          "sc-alert",
           "sc-dialog",
           "sc-form",
+          "sc-alert",
           "sc-input",
           "sc-button"
-        ],
-        "sc-alert": [
-          "sc-icon"
         ],
         "sc-dialog": [
           "sc-button",
@@ -15917,6 +16098,9 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ],
         "sc-input": [
           "sc-form-control"
@@ -15977,6 +16161,7 @@
         }
       ],
       "dependents": [
+        "sc-customer-email-preview",
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-select",
@@ -15984,6 +16169,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-customer-email-preview": [
+          "sc-menu"
+        ],
         "sc-payment-methods-list": [
           "sc-menu"
         ],
@@ -16150,6 +16338,7 @@
         }
       ],
       "dependents": [
+        "sc-customer-email-preview",
         "sc-payment-methods-list",
         "sc-product-item-list",
         "sc-select",
@@ -16157,6 +16346,9 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "sc-customer-email-preview": [
+          "sc-menu-item"
+        ],
         "sc-payment-methods-list": [
           "sc-menu-item"
         ],
@@ -27387,7 +27579,36 @@
       "tag": "sc-shipping-choices",
       "readme": "# sc-shipping-choices\n\n\n",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "part",
+          "text": "base - The elements base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "empty - The empty message."
+        },
+        {
+          "name": "part",
+          "text": "block-ui - The block ui loader."
+        },
+        {
+          "name": "part",
+          "text": "radio__base - The radio base wrapper."
+        },
+        {
+          "name": "part",
+          "text": "radio__label - The radio label."
+        },
+        {
+          "name": "part",
+          "text": "radio__control - The radio control wrapper."
+        },
+        {
+          "name": "part",
+          "text": "radio__checked-icon - The radio checked icon."
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -27429,7 +27650,36 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [],
+      "parts": [
+        {
+          "name": "base",
+          "docs": "The elements base wrapper."
+        },
+        {
+          "name": "block-ui",
+          "docs": "The block ui loader."
+        },
+        {
+          "name": "empty",
+          "docs": "The empty message."
+        },
+        {
+          "name": "radio__base",
+          "docs": "The radio base wrapper."
+        },
+        {
+          "name": "radio__checked-icon",
+          "docs": "The radio checked icon."
+        },
+        {
+          "name": "radio__control",
+          "docs": "The radio control wrapper."
+        },
+        {
+          "name": "radio__label",
+          "docs": "The radio label."
+        }
+      ],
       "dependents": [
         "sc-form-components-validator"
       ],
@@ -27748,6 +27998,7 @@
       "dependents": [
         "sc-block-ui",
         "sc-button",
+        "sc-customer-email",
         "sc-select",
         "sc-tax-id-input"
       ],
@@ -27757,6 +28008,9 @@
           "sc-spinner"
         ],
         "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-customer-email": [
           "sc-spinner"
         ],
         "sc-select": [
@@ -32848,11 +33102,15 @@
         }
       ],
       "dependents": [
-        "sc-payment-method"
+        "sc-payment-method",
+        "sc-verification-code"
       ],
       "dependencies": [],
       "dependencyGraph": {
         "sc-payment-method": [
+          "sc-tooltip"
+        ],
+        "sc-verification-code": [
           "sc-tooltip"
         ]
       }
@@ -33296,6 +33554,82 @@
         ],
         "sc-button": [
           "sc-spinner"
+        ]
+      }
+    },
+    {
+      "filePath": "./src/components/ui/verification-code/sc-verification-code.tsx",
+      "encapsulation": "none",
+      "tag": "sc-verification-code",
+      "readme": "# sc-verification-code\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "onChange",
+          "type": "(value: string) => void",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "On change verification code",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "(value: string) => void"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "total",
+          "type": "number",
+          "mutable": false,
+          "attr": "total",
+          "reflectToAttr": false,
+          "docs": "Total number of inputs",
+          "docsTags": [],
+          "default": "6",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [
+        {
+          "event": "keydown",
+          "capture": false,
+          "passive": false
+        }
+      ],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-customer-login"
+      ],
+      "dependencies": [
+        "sc-tooltip",
+        "sc-button",
+        "sc-icon"
+      ],
+      "dependencyGraph": {
+        "sc-verification-code": [
+          "sc-tooltip",
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-customer-login": [
+          "sc-verification-code"
         ]
       }
     },

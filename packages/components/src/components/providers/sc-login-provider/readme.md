@@ -29,24 +29,24 @@
 
 ### Depends on
 
-- [sc-alert](../../ui/alert)
 - [sc-dialog](../../ui/sc-dialog)
 - [sc-form](../../ui/form)
+- [sc-alert](../../ui/alert)
 - [sc-input](../../ui/input)
 - [sc-button](../../ui/button)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-login-provider --> sc-alert
   sc-login-provider --> sc-dialog
   sc-login-provider --> sc-form
+  sc-login-provider --> sc-alert
   sc-login-provider --> sc-input
   sc-login-provider --> sc-button
-  sc-alert --> sc-icon
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
+  sc-alert --> sc-icon
   sc-input --> sc-form-control
   sc-form-control --> sc-visually-hidden
   sc-checkout --> sc-login-provider

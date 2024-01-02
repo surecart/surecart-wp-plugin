@@ -21,7 +21,6 @@
 ### Used by
 
  - [sc-customer-details](../customer-details)
- - [sc-customer-login](../../controllers/checkout-form/customer-login)
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
@@ -41,7 +40,6 @@
 ```mermaid
 graph TD;
   sc-customer-details --> sc-divider
-  sc-customer-login --> sc-divider
   sc-express-payment --> sc-divider
   sc-invoices-list --> sc-divider
   sc-login-form --> sc-divider

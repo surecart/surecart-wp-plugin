@@ -105,9 +105,9 @@ graph TD;
   sc-button --> sc-spinner
   sc-dashboard-module --> sc-alert
   sc-block-ui --> sc-spinner
-  sc-login-provider --> sc-alert
   sc-login-provider --> sc-dialog
   sc-login-provider --> sc-form
+  sc-login-provider --> sc-alert
   sc-login-provider --> sc-input
   sc-login-provider --> sc-button
   sc-input --> sc-form-control

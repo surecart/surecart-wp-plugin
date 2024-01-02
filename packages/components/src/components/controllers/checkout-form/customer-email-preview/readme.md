@@ -10,23 +10,27 @@
 ### Used by
 
  - [sc-customer-email](../customer-email)
- - [sc-customer-login](../customer-login)
 
 ### Depends on
 
-- [sc-flex](../../../ui/flex)
+- [sc-avatar](../../../ui/sc-avatar)
+- [sc-dropdown](../../../ui/dropdown)
 - [sc-button](../../../ui/button)
 - [sc-icon](../../../ui/icon)
+- [sc-menu](../../../ui/menu)
+- [sc-menu-item](../../../ui/menu-item)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-customer-email-preview --> sc-flex
+  sc-customer-email-preview --> sc-avatar
+  sc-customer-email-preview --> sc-dropdown
   sc-customer-email-preview --> sc-button
   sc-customer-email-preview --> sc-icon
+  sc-customer-email-preview --> sc-menu
+  sc-customer-email-preview --> sc-menu-item
   sc-button --> sc-spinner
   sc-customer-email --> sc-customer-email-preview
-  sc-customer-login --> sc-customer-email-preview
   style sc-customer-email-preview fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

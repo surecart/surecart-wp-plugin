@@ -3849,10 +3849,6 @@ export namespace Components {
          */
         "onChange": (value: string) => void;
         /**
-          * Show clear button
-         */
-        "showClearButton": boolean;
-        /**
           * Total number of inputs
          */
         "total": number;
@@ -3957,10 +3953,6 @@ export interface ScCustomerFirstnameCustomEvent<T> extends CustomEvent<T> {
 export interface ScCustomerLastnameCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScCustomerLastnameElement;
-}
-export interface ScCustomerLoginCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScCustomerLoginElement;
 }
 export interface ScCustomerNameCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -6740,10 +6732,6 @@ declare namespace LocalJSX {
           * Code Error comin from the parent
          */
         "codeError"?: string;
-        /**
-          * Clear Codes event
-         */
-        "onScClearVerificationCodes"?: (event: ScCustomerLoginCustomEvent<void>) => void;
     }
     interface ScCustomerName {
         /**
@@ -9818,10 +9806,6 @@ declare namespace LocalJSX {
           * On change verification code
          */
         "onChange"?: (value: string) => void;
-        /**
-          * Show clear button
-         */
-        "showClearButton"?: boolean;
         /**
           * Total number of inputs
          */

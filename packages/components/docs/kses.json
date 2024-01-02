@@ -2223,7 +2223,6 @@
   },
   "sc-verification-code": {
     "on-change": true,
-    "show-clear-button": true,
     "total": true,
     "style": true,
     "id": true,
