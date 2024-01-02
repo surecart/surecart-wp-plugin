@@ -354,14 +354,17 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get the customer from the user.
 	 *
+	 * @param string $mode Customer mode.
+	 * @param array  $with With array.
+	 *
 	 * @return \SureCart\Models\Customer|false
 	 */
-	protected function customer( $mode = 'live' ) {
+	protected function customer( $mode = 'live', $with = [] ) {
 		$id = $this->customerId( $mode );
 		if ( ! $id ) {
 			return false;
 		}
-		return Customer::find( $this->customerId( $mode ) );
+		return Customer::with( $with )->find( $this->customerId( $mode ) );
 	}
 
 	/**

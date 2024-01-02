@@ -48,7 +48,7 @@ class VerificationCodeController extends RestController {
 	 *
 	 * @param \WP_REST_Request $request  Rest Request.
 	 *
-	 * @return \SureCart\Models\VerificationCode|\WP_Error
+	 * @return mixed|\WP_Error
 	 */
 	public function verify( \WP_REST_Request $request ) {
 		// run middleware.
@@ -100,7 +100,21 @@ class VerificationCodeController extends RestController {
 			return $logged_in;
 		}
 
-		// return the model.
+		// Modify the verify object to include the customer data based on the user and checkout mode.
+		$mode = $request->get_param( 'checkout_mode' ) ?? 'live';
+
+		/** @var \SureCart\Models\Customer $customer */
+		$customer = $user->customer( $mode, [ 'shipping_address' ] );
+		$verify->customer = [
+			'first_name'         => $customer->first_name ?? $user->display_name ?? $user->user_login,
+			'last_name'          => $customer->last_name ?? '',
+			'phone'              => $customer->phone ?? '',
+			'shipping_address'   => $customer->shipping_address ?? [], // skjjkdshdkjshdkjs
+		];
+
+		// return the data.
+		$verify->name = $user->display_name ?? $user->user_login;
+
 		return $verify;
 	}
 
