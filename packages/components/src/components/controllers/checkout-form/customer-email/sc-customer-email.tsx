@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Fragment, h, Method, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 import apiFetch from '@wordpress/api-fetch';
 
 import { createOrUpdateCheckout } from '../../../../services/session';
@@ -7,6 +8,7 @@ import { Checkout, Customer } from '../../../../types';
 import { getValueFromUrl } from '../../../../functions/util';
 import { state as userState, onChange as onChangeUser } from '@store/user';
 import { state as checkoutState, onChange } from '@store/checkout';
+import { MATCHED, UNVERIFIED, VERIFYING } from '@store/user/constants';
 
 @Component({
   tag: 'sc-customer-email',
@@ -124,10 +126,13 @@ export class ScCustomerEmail {
         path: 'surecart/v1/verification_codes',
         data: {
           login: this.value,
+          checkout_mode: checkoutState.mode,
         },
       });
       userState.email = this.value;
-      userState.matched = true;
+      userState.verificationStatus = MATCHED;
+
+      speak(__('Verification code is sent to your email. Please check your email.', 'surecart'), 'assertive');
     } catch (e) {
       this.handleCodeSendError(e);
     } finally {
@@ -181,7 +186,7 @@ export class ScCustomerEmail {
     (error?.additional_errors || []).forEach((e: any) => {
       if (e?.code === 'verification_code.email.blocked_duplicate') {
         userState.email = this.input?.value || '';
-        userState.matched = true;
+        userState.verificationStatus = MATCHED;
       }
 
       this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
@@ -226,7 +231,7 @@ export class ScCustomerEmail {
       return <sc-customer-email-preview></sc-customer-email-preview>;
     }
 
-    if (userState.matched) {
+    if (userState.verificationStatus === MATCHED || userState.verificationStatus === VERIFYING || userState.verificationStatus === UNVERIFIED) {
       return <sc-customer-login codeError={this.error}></sc-customer-login>;
     }
 
