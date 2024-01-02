@@ -6,11 +6,13 @@ import apiFetch from '@wordpress/api-fetch';
 import { state as checkoutState } from '@store/checkout';
 import MD5 from 'crypto-js/md5';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 
 /**
  * Internal dependencies.
  */
 import { state as userState } from '@store/user';
+import { resetUser } from '@store/user/mutations';
 import { Checkout } from 'src/types';
 import { createOrUpdateCheckout } from '@services/session';
 
@@ -35,10 +37,10 @@ export class ScCustomerEmailPreview {
         path: 'surecart/v1/logout',
       });
 
-      userState.loggedIn = false;
-      userState.matched = false;
-      userState.email = '';
-      userState.name = '';
+      // Reset user state.
+      resetUser();
+
+      speak(__('Logged out successfully.', 'surecart'), 'assertive');
     } catch (e) {
       console.error(e);
     } finally {
