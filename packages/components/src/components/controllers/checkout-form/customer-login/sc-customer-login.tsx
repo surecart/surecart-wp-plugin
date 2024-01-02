@@ -1,15 +1,20 @@
 /**
  * External dependencies.
  */
-import { Component, Fragment, h, Prop, State, Host, Event, EventEmitter } from '@stencil/core';
+import { Component, h, Prop, State, Host } from '@stencil/core';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
 
 /**
  * Internal dependencies.
  */
 import { state as userState } from '@store/user';
 import { resetUser } from '@store/user/mutations';
+import { VERIFYING, VERIFIED, UNVERIFIED } from '@store/user/constants';
+import { createOrUpdateCheckout } from '@services/session';
+import { state as checkoutState } from '@store/checkout';
+import { Checkout } from 'src/types';
 
 @Component({
   tag: 'sc-customer-login',
@@ -23,14 +28,11 @@ export class ScCustomerLogin {
   /** Is the component busy */
   @State() busy: boolean = false;
 
-  /** Is verifying code */
-  @State() verifying: boolean = false;
-
   /** Is code resending */
   @State() codeResending: boolean = false;
 
   /** Code sent label */
-  @State() codeSentLabel: string = __('Resend Code', 'surecart');
+  @State() codeSentLabel: string = '';
 
   /** Code sent icon */
   @State() codeSentIcon: string = '';
@@ -47,12 +49,6 @@ export class ScCustomerLogin {
   /** Login Password */
   @State() password: string = '';
 
-  /** Show Verification clear button or not */
-  @State() showVerificationClearButton: boolean = false;
-
-  /** Clear Codes event */
-  @Event() scClearVerificationCodes: EventEmitter<void>;
-
   async verifyCode(code: string) {
     // If not valid email and code, then return.
     if (!userState.email || !code) {
@@ -61,8 +57,9 @@ export class ScCustomerLogin {
 
     try {
       this.error = '';
-      this.verifying = true;
-      this.showVerificationClearButton = false;
+      userState.verificationStatus = VERIFYING;
+      this.busy = true;
+      speak(__('Verifying code...', 'surecart'), 'assertive');
 
       const user = (await apiFetch({
         method: 'POST',
@@ -72,7 +69,7 @@ export class ScCustomerLogin {
           code: code,
         },
       })) as any;
-      this.verified = user?.verified;
+      userState.verificationStatus = VERIFIED;
 
       if (!user?.verified) {
         throw { message: __('Verification code is not valid. Please try again.', 'surecart') };
@@ -80,18 +77,38 @@ export class ScCustomerLogin {
 
       // Update userState and make the user as logged in user.
       userState.loggedIn = true;
-      userState.name = user?.name || 'N/A';
+      userState.name = user?.customer?.first_name + ' ' + user?.customer?.last_name || 'N/A';
+
+      speak(__('Verification is successfull. Please continue your purchase.', 'surecart'), 'assertive');
+
+      // Update checkout with the shipping address.
+      await this.updateCheckout({
+        shipping_address: user?.customer?.shipping_address,
+        first_name: user?.customer?.first_name,
+        last_name: user?.customer?.last_name,
+        phone: user?.customer?.phone,
+      });
     } catch (e) {
       if (e.code === 'not_found') {
         this.error = __('Verification code is not valid. Please try again.', 'surecart');
       } else {
         this.error = e?.message || __('Verification code is not valid. Please try again.', 'surecart');
       }
-      this.verified = false;
-      this.showVerificationClearButton = true;
+
+      userState.verificationStatus = UNVERIFIED;
+    }
+  }
+
+  async updateCheckout(data: any) {
+    try {
+      checkoutState.checkout = (await createOrUpdateCheckout({
+        id: checkoutState.checkout.id,
+        data,
+      })) as Checkout;
+    } catch (error) {
+      console.error(error);
     } finally {
-      this.scClearVerificationCodes.emit();
-      this.verifying = false;
+      this.busy = false;
     }
   }
 
@@ -99,7 +116,6 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.codeResending = true;
-      this.scClearVerificationCodes.emit();
       await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
@@ -153,7 +169,7 @@ export class ScCustomerLogin {
       this.verified = true;
 
       userState.loggedIn = true;
-      userState.matched = true;
+      userState.verificationStatus = VERIFIED;
       userState.name = name;
       userState.email = email;
     } catch (e) {
@@ -199,28 +215,19 @@ export class ScCustomerLogin {
         </p>
         <div>
           <div class="customer-code__reset">
-            <sc-verification-code total={6} onChange={value => this.verifyCode(value)} showClearButton={this.showVerificationClearButton} />
-            <div class="matched-icon">
-              {this.verifying && <sc-spinner />}
-              {this.verified && <sc-icon name="check" />}
-            </div>
+            <sc-verification-code total={6} onChange={value => this.verifyCode(value)} />
           </div>
           {(!!this.error || !!this.codeError) && <p class="login-error">{this.error || this.codeError}</p>}
         </div>
 
         <div class="customer-code__resend">
-          <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending}>
-            {this.codeResending ? (
-              <sc-spinner />
+          <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending} loading={this.codeResending}>
+            {!!this.codeSentIcon ? (
+              <span style={{ color: 'var(--sc-color-success-900)' }}>
+                <sc-icon name={this.codeSentIcon} />
+              </span>
             ) : (
-              <Fragment>
-                {!!this.codeSentIcon && (
-                  <span style={{ color: 'var(--sc-color-success-900)' }}>
-                    {this.codeSentLabel} <sc-icon name={this.codeSentIcon} />
-                  </span>
-                )}
-                {!this.codeSentIcon && this.codeSentLabel}
-              </Fragment>
+              <span>{this.codeSentLabel || __('Resend Code', 'surecart')}</span>
             )}
           </sc-button>
         </div>

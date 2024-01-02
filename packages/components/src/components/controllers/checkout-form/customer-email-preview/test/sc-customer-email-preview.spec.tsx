@@ -2,6 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { dispose as disposeCheckout } from '@store/checkout';
 import { dispose as disposeUser, state as userState } from '@store/user';
 import { ScCustomerEmailPreview } from '../sc-customer-email-preview';
+import { MATCHED } from '@store/user/constants';
 
 describe('sc-customer-email-preview', () => {
   beforeEach(() => {
@@ -20,7 +21,7 @@ describe('sc-customer-email-preview', () => {
   it('renders with user logged in', async () => {
     userState.loggedIn = true;
     userState.email = 'test@example.com';
-    userState.matched = true;
+    userState.verificationStatus = MATCHED;
     userState.name = 'Test User';
 
     const page = await newSpecPage({
