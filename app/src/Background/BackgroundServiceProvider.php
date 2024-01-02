@@ -2,6 +2,7 @@
 
 namespace SureCart\Background;
 
+use SureCart\Background\Migration\MigrationService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**

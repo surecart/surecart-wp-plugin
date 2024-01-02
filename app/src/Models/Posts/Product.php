@@ -37,39 +37,11 @@ class Product extends PostModel {
 	 */
 	protected function additionalSchema( $model ) {
 		return [
-			'min_price_amount' => $model->metrics->min_price_amount,
-			'max_price_amount' => $model->metrics->max_price_amount,
-			'prices_count'     => $model->metrics->prices_count,
-			'post_excerpt'     => $model->description,
+			'min_price_amount' => ( (object) $model->metrics )->min_price_amount,
+			'max_price_amount' => ( (object) $model->metrics )->max_price_amount,
+			'prices_count'     => ( (object) $model->metrics )->prices_count ?? 0,
+			'post_excerpt'     => $model->description ?? '',
 		];
-	}
-
-	/**
-	 * Sync the product with the post.
-	 *
-	 * @param \SureCart\Models\Model $model The model.
-	 *
-	 * @return $this
-	 */
-	protected function sync( \SureCart\Models\Model $model ) {
-		parent::sync( $model );
-
-		// sync each price.
-		foreach ( $model->prices->data as $price ) {
-			$price->sync();
-		}
-
-		// sync each variant.
-		foreach ( $model->variants->data as $variant ) {
-			$variant->sync();
-		}
-
-		// sync each variant option.
-		foreach ( $model->variant_options->data as $variant_option ) {
-			$variant_option->sync();
-		}
-
-		return $this;
 	}
 
 	/**

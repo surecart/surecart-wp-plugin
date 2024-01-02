@@ -2,6 +2,7 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Posts\ProductMedia as ProductMediaPost;
 /**
  * ProductMedia model
  */
@@ -26,6 +27,13 @@ class ProductMedia extends Model {
 	 * @var boolean
 	 */
 	protected $clears_account_cache = true;
+
+	/**
+	 * The syncable post class.
+	 *
+	 * @var \SureCart\Models\PostModel
+	 */
+	protected $post = ProductMediaPost::class;
 
 	/**
 	 * Set the media attribute

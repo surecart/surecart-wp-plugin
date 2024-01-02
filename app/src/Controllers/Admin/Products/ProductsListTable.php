@@ -353,11 +353,20 @@ class ProductsListTable extends ListTable {
 	 */
 	public function column_status( $product ) {
 		ob_start();
+		$status = get_post_status_object( $product->post()->post_status ?? '' );
 		?>
-		<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
-			<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+
+		<?php if ( $status ) : ?>
+			<sc-tag type="<?php echo ( 'publish' === $status->name ) ? 'success' : ''; ?>">
+				<?php echo esc_html( $status->label ); ?>
+			</sc-tag>
 		<?php else : ?>
-			<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+
+			<?php if ( 'published' === ( $product->status ?? '' ) ) : ?>
+				<sc-tag type="success"><?php esc_html_e( 'Published', 'surecart' ); ?></sc-tag>
+			<?php else : ?>
+				<sc-tag><?php esc_html_e( 'Draft', 'surecart' ); ?></sc-tag>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 		return ob_get_clean();

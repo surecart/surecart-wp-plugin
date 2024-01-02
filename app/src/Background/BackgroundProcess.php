@@ -8,7 +8,6 @@ namespace SureCart\Background;
  * @extends WP_Async_Request
  */
 abstract class BackgroundProcess extends AsyncRequest {
-
 	/**
 	 * Action
 	 *
@@ -63,8 +62,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * Initiate new background process.
 	 */
 	public function __construct() {
-		parent::__construct();
-
+		parent::bootstrap();
 		$this->cron_hook_identifier     = $this->identifier . '_cron';
 		$this->cron_interval_identifier = $this->identifier . '_cron_interval';
 
@@ -104,6 +102,15 @@ abstract class BackgroundProcess extends AsyncRequest {
 		$this->data[] = $data;
 
 		return $this;
+	}
+
+	/**
+	 * Does this have a queue?
+	 *
+	 * @return array
+	 */
+	public function has_queue() {
+		return ! empty( $this->data );
 	}
 
 	/**
@@ -288,7 +295,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 *
 	 * @return string
 	 */
-	protected function get_status_key() {
+	public function get_status_key() {
 		return $this->identifier . '_status';
 	}
 
@@ -465,7 +472,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 		if ( ! empty( $items ) ) {
 			$batches = array_map(
 				function ( $item ) use ( $column, $value_column ) {
-					$batch       = new stdClass();
+					$batch       = new \stdClass();
 					$batch->key  = $item->{$column};
 					$batch->data = maybe_unserialize( $item->{$value_column} );
 
@@ -484,7 +491,7 @@ abstract class BackgroundProcess extends AsyncRequest {
 	 * Pass each queue item to the task handler, while remaining
 	 * within server memory and time limit constraints.
 	 */
-	protected function handle() {
+	public function handle() {
 		$this->lock_process();
 
 		/**

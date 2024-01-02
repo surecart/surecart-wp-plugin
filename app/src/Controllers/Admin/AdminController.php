@@ -32,15 +32,16 @@ abstract class AdminController {
 	 *
 	 * @return void
 	 */
-	public function withHeader( $breadcrumbs ) {
+	public function withHeader( $breadcrumbs, $suffix = null ) {
 		add_action(
 			'in_admin_header',
-			function() use ( $breadcrumbs ) {
+			function() use ( $breadcrumbs, $suffix ) {
 				return \SureCart::render(
 					'layouts/partials/admin-header',
 					[
 						'breadcrumbs' => $breadcrumbs,
 						'claim_url'   => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
+						'suffix'      => $suffix,
 					]
 				);
 			}

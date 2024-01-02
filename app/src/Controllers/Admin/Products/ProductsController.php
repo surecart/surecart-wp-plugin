@@ -11,6 +11,23 @@ use SureCart\Controllers\Admin\Products\ProductsListTable;
  * Handles product admin requests.
  */
 class ProductsController extends AdminController {
+
+	/**
+	 * Get the sync url.
+	 *
+	 * @return string
+	 */
+	protected function getSyncUrl() {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => 'sync_products',
+					'nonce'  => wp_create_nonce( 'sync_products' ),
+				],
+			)
+		);
+	}
+
 	/**
 	 * Products index.
 	 */
@@ -22,7 +39,8 @@ class ProductsController extends AdminController {
 				'products' => [
 					'title' => __( 'Products', 'surecart' ),
 				],
-			]
+			],
+			'<div><a href="' . esc_url( $this->getSyncUrl() ) . '" class="button button-primary">' . __( 'Sync Products', 'surecart' ) . '</a></div>',
 		);
 		return \SureCart::view( 'admin/products/index' )->with( [ 'table' => $table ] );
 	}
@@ -121,6 +139,28 @@ class ProductsController extends AdminController {
 		return $this->redirectBack( $request );
 	}
 
+	/**
+	 * Start product sync.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function sync( $request ) {
+		\SureCart::migration()->deleteAll();
+		// dispatch job.
+		\SureCart::migration()->models()->dispatch();
+
+		return $this->redirectBack( $request );
+	}
+
+	/**
+	 * Redirect back.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
 	public function redirectBack( $request ) {
 		return ( new RedirectResponse( $request ) )->back();
 	}

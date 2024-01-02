@@ -8,6 +8,7 @@
  * @package SureCart
  */
 
+use SureCart\Background\Migration\ProductsSyncProcess;
 use SureCart\Models\Posts\Relation;
 use SureCart\Support\Currency;
 
@@ -63,60 +64,23 @@ add_filter(
 	}
 );
 
+// add_action(
+// 'wp',
+// function() {
+// $post = get_post( 6595 );
+// var_dump( $post );
+// }
+// );
 
-add_action(
-	'wp',
-	function() {
-		$products = sc_query_products(
-			[
-				'post_status'    => 'publish',
-				'posts_per_page' => 10,
-			]
-		);
 
-		while ( $products->have_posts() ) :
-			$products->the_post();
+function external_mediaurl( $wp_get_attachment_url, $id ) {
+	$post = get_post( $id );
 
-			global $sc_product;
-			// or
-			// $product = sc_get_product();
+	return [
+		$post->guid,
+		100,
+		100,
+	];
 
-			the_title( '<h2>', '</h2>' );
-
-			echo wp_kses_post( '<p>' . $sc_product->display_price . '</p>' );
-
-			the_post_thumbnail( 'medium' );
-
-			if ( $sc_product->is_out_of_stock ) {
-				echo wp_kses_post( '<p>Out of stock</p>' );
-			} else {
-				if ( $sc_product->is_low_stock ) {
-					echo wp_kses_post( '<p>Low stock</p>' );
-				} else {
-					echo wp_kses_post( '<p>In stock</p>' );
-				}
-			}
-
-			foreach ( $sc_product->variant_options as $key => $option ) {
-				echo '<label>' . esc_html( $option->post_title ) . '</label>';
-				echo '<select>';
-				foreach ( $option->values as $value ) {
-					echo '<option value="' . esc_attr( $value ) . '">' . esc_html( $value ) . '</option>';
-				}
-				echo '</select>';
-			}
-
-			// $stock = $sc_product->isInStock ?? 0;
-			// if ( $stock < 1 ) {
-			// echo wp_kses_post( '<p>Out of stock</p>' );
-			// } elseif ( $stock < 10 ) {
-			// echo wp_kses_post( '<p>Low stock</p>' );
-			// } else {
-			// echo wp_kses_post( '<p>In stock</p>' );
-			// }
-
-			the_excerpt();
-
-		endwhile;
-	}
-);
+}
+add_filter( 'wp_get_attachment_image_src', 'external_mediaurl', 10, 2 );

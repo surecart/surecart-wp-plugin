@@ -18,14 +18,18 @@ export class ScOrderBumps {
       return null;
     }
 
+    const bumps = (checkoutState?.checkout?.recommended_bumps?.data || []).filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0);
+
+    if (!bumps.length) {
+      return null;
+    }
+
     return (
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
         <div class="bumps__list" aria-label={__('Order bump summary', 'surecart')}>
-          {(checkoutState?.checkout?.recommended_bumps?.data || [])
-            .filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0) // exclude variants for now.
-            .map(bump => (
-              <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} />
-            ))}
+          {(bumps || []).map(bump => (
+            <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} />
+          ))}
         </div>
       </sc-form-control>
     );

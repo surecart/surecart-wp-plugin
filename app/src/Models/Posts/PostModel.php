@@ -212,7 +212,7 @@ abstract class PostModel {
 		}
 
 		$props = $this->getSchemaMap( $model );
-		error_log( print_r( $props, 1 ) );
+
 		$this->post = wp_update_post(
 			array_merge(
 				$props,
