@@ -9,7 +9,7 @@ import { Component, Element, h, Host } from '@stencil/core';
 import { state as bumpState } from '@store/bump';
 import { state as checkoutState } from '@store/checkout';
 import { state as productState } from '@store/product';
-import { Checkout, Price } from 'src/types';
+import { Checkout, Price, Product } from 'src/types';
 import { updateCheckout } from '@services/session';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { createErrorNotice } from '@store/notices/mutations';
@@ -21,6 +21,10 @@ import { createErrorNotice } from '@store/notices/mutations';
 })
 export class ScOrderBumpSubmitButton {
   @Element() el: HTMLScOrderBumpSubmitButtonElement;
+
+  getProductId() {
+    return ((bumpState.bump?.price as Price)?.product as Product)?.id || ((bumpState.bump?.price as Price)?.product as string);
+  }
 
   async handleAddToOrderClick(e) {
     e.preventDefault();
@@ -72,8 +76,8 @@ export class ScOrderBumpSubmitButton {
         class={{
           'is-busy': bumpState.busy,
           'is-disabled': bumpState.disabled,
-          'is-sold-out': isProductOutOfStock() && !isSelectedVariantMissing(),
-          'is-unavailable': isSelectedVariantMissing(),
+          'is-sold-out': isProductOutOfStock(this.getProductId()) && !isSelectedVariantMissing(this.getProductId()),
+          'is-unavailable': isSelectedVariantMissing(this.getProductId()),
         }}
         onClick={e => this.handleAddToOrderClick(e)}
       >

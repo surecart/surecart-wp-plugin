@@ -34,13 +34,13 @@ export class ScProductPrice {
 
   // Check if the bump is the same as the product and price matches.
   componentDidLoad() {
-    if (bumpState.product?.id !== state.product?.id) {
+    if (bumpState.product?.id !== this.productId) {
       return;
     }
 
     // If price doesn't match, don't proceed.
     const bumpPrice = bumpState.bump?.price as Price;
-    let price = state.prices.find(priceData => priceData?.id === bumpPrice?.id);
+    let price = state[this.productId]?.prices.find(priceData => priceData?.id === bumpPrice?.id);
     if (!price) return;
 
     let amount = price?.amount || 0;
@@ -56,7 +56,7 @@ export class ScProductPrice {
       amount = Math.max(0, initialAmount - off);
     }
 
-    state.selectedPrice = {
+    state[this.productId].selectedPrice = {
       ...price,
       amount,
       scratch_amount: scratchAmount,
