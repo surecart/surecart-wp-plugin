@@ -22,6 +22,8 @@ class AdminRouteService {
 		'checkout'            => 'sc-checkouts',
 		'bump'                => 'sc-bumps',
 		'bumps'               => 'sc-bumps',
+		'upsell'                => 'sc-upsells',
+		'upsells'               => 'sc-upsells',
 		'invoice'             => 'sc-invoices',
 		'invoices'            => 'sc-invoices',
 		'customers'           => 'sc-customers',

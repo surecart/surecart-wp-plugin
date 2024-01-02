@@ -319,6 +319,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+
+/*
+|--------------------------------------------------------------------------
+| Upsell Paths
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-upsells' )
+->middleware( 'user.can:edit_sc_products' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Upsells\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'UpsellsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'UpsellsController@edit' );
+	}
+);
+
 /*
 |--------------------------------------------------------------------------
 | Settings

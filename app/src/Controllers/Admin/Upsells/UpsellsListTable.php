@@ -1,15 +1,15 @@
 <?php
 
-namespace SureCart\Controllers\Admin\Bumps;
+namespace SureCart\Controllers\Admin\Upsells;
 
-use SureCart\Models\Bump;
+use SureCart\Models\Upsell;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class BumpsListTable extends ListTable {
+class UpsellsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
 
@@ -35,7 +35,7 @@ class BumpsListTable extends ListTable {
 		$this->set_pagination_args(
 			[
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'bumps' ),
+				'per_page'    => $this->get_items_per_page( 'upsells' ),
 			]
 		);
 
@@ -54,7 +54,7 @@ class BumpsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=sc-bumps' );
+		$link = admin_url( 'admin.php?page=sc-upsells' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -75,9 +75,6 @@ class BumpsListTable extends ListTable {
 		/**
 		 * Filters the comment status links.
 		 *
-		 * @since 2.5.0
-		 * @since 5.1.0 The 'Mine' link was added.
-		 *
 		 * @param string[] $status_links An associative array of fully-formed comment status links. Includes 'All', 'Mine',
 		 *                              'Pending', 'Approved', 'Spam', and 'Trash'.
 		 */
@@ -87,7 +84,7 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_columns() {
 		return [
@@ -104,27 +101,28 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Displays the checkbox column.
 	 *
-	 * @param Bump $bump The bump model.
+	 * @param Upsell $upsell The upsell model.
 	 */
-	public function column_cb( $bump ) {
+	public function column_cb( $upsell ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $bump['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $bump['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $bump['id'] ); ?>" />
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
+		<input id="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $upsell['id'] ); ?>" />
 		<?php
 	}
 
 	/**
 	 * Show any integrations.
 	 */
-	public function column_integrations( $bump ) {
-		$list = $this->bumpIntegrationsList( $bump->id );
-		return $list ? $list : '-';
+	public function column_integrations( $upsell ) {
+		// $list = $this->upsellIntegrationsList( $upsell->id );
+		// return $list ? $list : '-';
+		return '';
 	}
 
 	/**
 	 * Define which columns are hidden
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_hidden_columns() {
 		return array();
@@ -133,7 +131,7 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Define the sortable columns
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function get_sortable_columns() {
 		return array( 'title' => array( 'title', false ) );
@@ -142,10 +140,10 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	private function table_data() {
-		return Bump::where(
+		return Upsell::where(
 			[
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
@@ -154,7 +152,7 @@ class BumpsListTable extends ListTable {
 		->with( [ 'price', 'price.product' ] )
 		->paginate(
 			[
-				'per_page' => $this->get_items_per_page( 'bumps' ),
+				'per_page' => $this->get_items_per_page( 'upsells' ),
 				'page'     => $this->get_pagenum(),
 			]
 		);
@@ -170,18 +168,18 @@ class BumpsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No order bumps found.', 'surecart' );
+		echo esc_html_e( 'No upsells found.', 'surecart' );
 	}
 
 	/**
 	 * Handle the type column output.
 	 *
-	 * @param \SureCart\Models\Price $bump Bump model.
+	 * @param \SureCart\Models\Upsell $upsell Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_type( $bump ) {
-		if ( $bump->recurring ) {
+	public function column_type( $upsell ) {
+		if ( $upsell->recurring ) {
 			return '<sc-tag type="success">
 			<div
 				style="
@@ -211,23 +209,23 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\Price $bump Bump model.
+	 * @param \SureCart\Models\Upsell $upsell Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $bump ) {
+	public function column_date( $upsell ) {
 		$created = sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $bump->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $bump->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $bump->created_at ) )
+			esc_attr( $upsell->created_at ),
+			esc_html( TimeDate::formatDateAndTime( $upsell->created_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $upsell->created_at ) )
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
 			__( 'Updated', 'surecart' ),
-			esc_attr( $bump->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $bump->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $bump->updated_at ) )
+			esc_attr( $upsell->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $upsell->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $upsell->updated_at ) )
 		);
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
@@ -235,16 +233,16 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Price
 	 *
-	 * @param \SureCart\Models\Bump $bump Bump model.
+	 * @param \SureCart\Models\Upsell $upsell Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_price( $bump ) {
-		if ( empty( $bump->price->id ) ) {
+	public function column_price( $upsell ) {
+		if ( empty( $upsell->price->id ) ) {
 			return;
 		}
 
-		$price = $bump->price ?? null;
+		$price = $upsell->price ?? null;
 
 		ob_start();
 		?>
@@ -260,25 +258,25 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Name column
 	 *
-	 * @param \SureCart\Models\Bump $bump Bump model.
+	 * @param \SureCart\Models\Upsell $upsell Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_name( $bump ) {
+	public function column_name( $upsell ) {
 		ob_start();
 		?>
 
 	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Bump', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ); ?>">
-			<?php echo esc_html( $bump->name ? $bump->name : $bump->price->product->name ); ?>
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell->id ) ); ?>">
+			<?php echo esc_html( $upsell->name ? $upsell->name : $upsell->price->product->name ); ?>
 		</a>
 
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'bump', $bump->id ) ) . '" aria-label="' . esc_attr( 'Edit Bump', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'view' => '<a href="' . esc_url( $bump->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
+				'view' => '<a href="' . esc_url( $upsell->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -292,18 +290,19 @@ class BumpsListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \SureCart\Models\Bump $bump Bump model.
-	 * @param String                $column_name - Current column name.
+	 * @param \SureCart\Models\Upsell $upsell Upsell model.
+	 * @param string                  $column_name - Current column name.
 	 *
-	 * @return Mixed
+	 * @return mixed
 	 */
-	public function column_default( $bump, $column_name ) {
+	public function column_default( $upsell, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return ' < a href     = "' . \SureCart::getUrl()->edit( 'bump', $bump->id ) . '" > ' . $bump->name . ' < / a > ';
-			case 'name':
+				return ' < a href     = "' . \SureCart::getUrl()->edit( 'upsell', $upsell->id ) . '" > ' . $upsell->name . ' < / a > ';
+
+		case 'name':
 			case 'description':
-				return $bump->$column_name ?? '';
+				return $upsell->$column_name ?? '';
 		}
 	}
 }
