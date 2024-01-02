@@ -53,6 +53,7 @@ return [
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\BumpRestServiceProvider::class,
+		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
