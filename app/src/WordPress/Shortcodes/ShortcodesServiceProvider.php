@@ -152,45 +152,75 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_description',
-			\SureCartBlocks\Blocks\Product\Description\Block::class,
+			'surecart/product-description',
+			[
+				'id' => null,
+			]
 		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_title',
-			\SureCartBlocks\Blocks\Product\Title\Block::class,
+			'surecart/product-title',
+			[
+				'id'    => null,
+				'level' => 1,
+			]
 		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_price',
-			\SureCartBlocks\Blocks\Product\Price\Block::class,
+			'surecart/product-price',
+			[
+				'id' => null,
+			]
 		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_price_choices',
-			\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+			'surecart/product-price-choices',
 			[
 				'label'      => __( 'Pricing', 'surecart' ),
 				'columns'    => 2,
 				'show_price' => true,
+				'id'         => null,
 			]
 		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_media',
-			\SureCartBlocks\Blocks\Product\Media\Block::class,
+			'surecart/product-media',
 			[
 				'auto_height' => true,
+				'id'          => null,
 			]
 		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_quantity',
-			\SureCartBlocks\Blocks\Product\Quantity\Block::class,
+			'surecart/product-quantity',
+			[
+				'id' => null,
+			]
 		);
-		$container['surecart.shortcodes']->registerBlockShortcode(
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
 			'sc_product_cart_button',
-			\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
+			'surecart/product-buy-button',
 			[
 				'add_to_cart' => true,
 				'text'        => __( 'Add To Cart', 'surecart' ),
 				'width'       => 100,
+				'id'          => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_variant_choices',
+			'surecart/product-variant-choices',
+			[
+				'id' => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_variant_choices',
+			'surecart/product-variant-choices',
+			[
+				'id' => null,
 			]
 		);
 	}

@@ -2,12 +2,12 @@
 
 namespace SureCartBlocks\Blocks\Product\Quantity;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Render the block
 	 *
@@ -17,15 +17,23 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		ob_start(); ?>
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
+		if ( empty( $product->id ) ) {
+			return '';
+		}
 
-		<sc-product-quantity
-			label="<?php echo esc_attr( $attributes['label'] ?? '' ); ?>"
-			class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-		</sc-product-quantity>
+		$attributes = get_block_wrapper_attributes(
+			[
+				'label'      => esc_attr( $attributes['label'] ?? '' ),
+				'product-id' => esc_attr( $product->id ),
+				'class'      => esc_attr( $this->getClasses( $attributes ) ),
+				'style'      => esc_attr( $this->getStyles( $attributes ) ),
+			]
+		);
 
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-product-quantity %1$s></sc-product-quantity>',
+			$attributes
+		);
 	}
 }

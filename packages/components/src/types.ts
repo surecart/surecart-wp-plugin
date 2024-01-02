@@ -22,6 +22,7 @@ declare global {
       store?: {
         product?: any;
         bump?: any;
+        products?: any;
       };
     };
     scStore: any;
@@ -846,6 +847,7 @@ export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'c
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
 export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
 export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
+export type ReturnRequestStatus = 'open' | 'completed';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -1116,6 +1118,28 @@ export interface GoogleAnalyticsItem {
   discount?: number;
 }
 
+
+export interface ProductState {
+  formId: number;
+  mode: 'live' | 'test';
+  product: Product;
+  prices: Price[];
+  variants: Variant[];
+  variant_options: VariantOption[];
+  quantity: number;
+  selectedPrice: Price;
+  total: number;
+  busy: boolean;
+  disabled: boolean;
+  checkoutUrl: string;
+  adHocAmount: number;
+  dialog: string;
+  line_item: LineItemData;
+  error: string;
+  selectedVariant?: Variant;
+  variantValues: { option_1?: string; option_2?: string; option_3?: string };
+  isProductPage?: boolean;
+}
 export interface FeaturedProductMediaAttributes {
   alt: string;
   url: string;
@@ -1144,4 +1168,31 @@ export interface CheckoutInitiatedParams {
     price: number;
     quantity: number;
   }>;
+}
+
+export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
+
+interface AdditionalError {
+  code: string;
+  message: string;
+  data: {
+    attribute: string;
+    type: string;
+    options: {
+      if: string[];
+      value: string;
+    };
+  };
+}
+export interface ScNoticeStore {
+  type: NoticeType | 'default';
+  code: string;
+  message: string;
+  data?: {
+    status: number;
+    type: string;
+    http_status: string;
+  };
+  additional_errors?: AdditionalError[] | null;
+  dismissible?: boolean;
 }

@@ -7,7 +7,6 @@ export const maybeConvertAmount = (amount, currency) => {
 		'CLP',
 		'DJF',
 		'GNF',
-		'HUF',
 		'ISK',
 		'JPY',
 		'KMF',
@@ -67,11 +66,11 @@ export const formatNumber = (value, currency = '') =>
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = (code = 'usd') => {
-	const [currency] = new Intl.NumberFormat(undefined, {
+	const formattedParts = new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency: code,
 	}).formatToParts();
-	return currency?.value;
+	return formattedParts.find((part) => part.type === 'currency')?.value;
 };
 
 export const translate = (key) => {

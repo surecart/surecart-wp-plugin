@@ -1,6 +1,7 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
-import { isStockNeedsToBeChecked } from '@store/product/getters';
+import { setProduct } from '@store/product/setters';
+import { getMaxStockQuantity } from '../../../../functions/quantity';
 let id = 0;
 
 @Component({
@@ -34,24 +35,12 @@ export class ScProductQuantity {
   /** Help text */
   @Prop() help: string;
 
-  getMaxStockQty() {
-    // check purchase limit.
-    if (state.product?.purchase_limit) {
-      return state.product.purchase_limit;
-    }
-
-    // If stock is not enabled, return null.
-    if (!isStockNeedsToBeChecked) {
-      return null;
-    }
-
-    // If no variant is selected, check against product stock.
-    if (!state?.selectedVariant) return state.product?.available_stock;
-    // Check against selected variant's stock.
-    return state.selectedVariant?.available_stock;
-  }
+  /** The product id */
+  @Prop() productId: string;
 
   render() {
+    const maxStockQuantity = getMaxStockQuantity(state[this.productId]?.product, state[this.productId]?.selectedVariant);
+
     return (
       <Host>
         <sc-form-control
@@ -68,11 +57,11 @@ export class ScProductQuantity {
         >
           <sc-quantity-select
             size={this.size}
-            quantity={Math.max(state.selectedPrice?.ad_hoc ? 1 : state.quantity, 1)}
-            disabled={state.selectedPrice?.ad_hoc}
-            onScInput={e => (state.quantity = e.detail)}
-            {...(!!this.getMaxStockQty() ? { max: this.getMaxStockQty() } : {})}
-          />
+            quantity={Math.max(state[this.productId].selectedPrice?.ad_hoc ? 1 : state[this.productId].quantity, 1)}
+            disabled={state[this.productId]?.selectedPrice?.ad_hoc}
+            onScInput={e => setProduct(this.productId, { quantity: e.detail })}
+            {...(!!maxStockQuantity ? { max: maxStockQuantity } : {})}
+          ></sc-quantity-select>
         </sc-form-control>
       </Host>
     );

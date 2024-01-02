@@ -111,6 +111,10 @@ export class ScAddress {
     }
   }
 
+  decodeHtmlEntities(html: string) {
+    return new DOMParser().parseFromString(html, 'text/html')?.body.textContent || html;
+  }
+
   updateAddress(address: Partial<Address>) {
     this.address = { ...this.address, ...address };
   }
@@ -135,7 +139,12 @@ export class ScAddress {
   setRegions() {
     if (hasState(this.address.country)) {
       import('./countries.json').then(module => {
-        this.regions = module?.[this.address.country] as Array<{ value: string; label: string }>;
+        const countryRegions = module?.[this.address.country] as Array<{ value: string; label: string }>;
+
+        this.regions = (countryRegions || []).map(region => ({
+          ...region,
+          label: this.decodeHtmlEntities(region.label),
+        }));
       });
     } else {
       this.regions = [];
@@ -144,7 +153,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || 'US';
+    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || null;
     this.updateAddress({ country });
     this.handleNameChange();
   }

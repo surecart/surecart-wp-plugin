@@ -61,6 +61,9 @@ sc-product-buy-button {
       visibility: visible;
     }
   }
+  sc-alert {
+    margin-bottom: var(--sc-spacing-medium);
+  }
 
   &.is-out-of-stock {
     [data-text] {

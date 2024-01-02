@@ -213,7 +213,6 @@ class Currency {
 			'CLP',
 			'DJF',
 			'GNF',
-			'HUF',
 			'ISK',
 			'JPY',
 			'KMF',

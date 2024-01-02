@@ -27,15 +27,15 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     formState: checkoutMachine.initialState,
     text: {
       loading: {
-        finalizing: __('Submitting order...', 'surecart'),
-        paying: __('Processing payment...', 'surecart'),
-        confirming: __('Finalizing order...', 'surecart'),
+        finalizing: __('Submitting...', 'surecart'),
+        paying: __('Processing...', 'surecart'),
+        confirming: __('Finalizing...', 'surecart'),
         confirmed: __('Success!', 'surecart'),
         redirecting: __('Success! Redirecting...', 'surecart'),
       },
       success: {
-        title: __('Thanks for your order!', 'surecart'),
-        description: __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart'),
+        title: __('Thank you!', 'surecart'),
+        description: __('Your payment was successful. A receipt is on its way to your inbox.', 'surecart'),
         button: __('Continue', 'surecart'),
       },
     },
