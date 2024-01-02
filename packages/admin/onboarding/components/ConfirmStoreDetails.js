@@ -6,6 +6,7 @@ import ProgressIndicator from './ProgressIndicator';
 import { ScFormControl, ScInput, ScSelect } from '@surecart/components-react';
 import ColorPopup from '../../../blocks/components/ColorPopup';
 import { ScIcon } from '@surecart/components-react';
+import { getCurrencySymbol } from '../../util';
 
 export default ({
 	currentStep,
@@ -15,14 +16,6 @@ export default ({
 	brandColor,
 	onBrandColorChange,
 }) => {
-	const getCurrencySymbol = (code) => {
-		const [currency] = new Intl.NumberFormat(undefined, {
-			style: 'currency',
-			currency: code,
-		}).formatToParts();
-		return currency?.value;
-	};
-
 	return (
 		<>
 			<Step

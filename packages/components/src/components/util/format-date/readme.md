@@ -36,6 +36,7 @@
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-status-badge](../../ui/subscription-status-badge)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -49,6 +50,7 @@ graph TD;
   sc-subscription --> sc-format-date
   sc-subscription-cancel --> sc-format-date
   sc-subscription-details --> sc-format-date
+  sc-subscription-reactivate --> sc-format-date
   sc-subscription-status-badge --> sc-format-date
   sc-upcoming-invoice --> sc-format-date
   style sc-format-date fill:#f9f,stroke:#333,stroke-width:4px

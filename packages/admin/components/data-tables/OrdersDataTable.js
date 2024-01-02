@@ -30,9 +30,8 @@ export default ({
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
-				.map(({ checkout, number, id, created_at }) => {
-					const { line_items, amount_due, currency, status } =
-						checkout;
+				.map(({ checkout, number, id, created_at, status }) => {
+					const { line_items, amount_due, currency } = checkout;
 					return {
 						number: (
 							<ScText
@@ -70,11 +69,7 @@ export default ({
 								value={amount_due}
 							></ScFormatNumber>
 						),
-						status: (
-							<ScOrderStatusBadge
-								status={status}
-							></ScOrderStatusBadge>
-						),
+						status: <ScOrderStatusBadge status={status} />,
 						date: (
 							<ScFormatDate
 								type="timestamp"

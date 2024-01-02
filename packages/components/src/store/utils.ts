@@ -51,16 +51,16 @@ export const isProductVariantOptionSoldOut = (optionNumber, option, variantValue
 export const isProductVariantOptionMissing = (optionNumber: number, option: string, variantValues, product: Product) => {
   // if this is option 1, check to see if there are any variants with this option.
   if (optionNumber === 1) {
-    return !(product.variants?.data || []).some(variant => variant.option_1 === option);
+    return !(product?.variants?.data || []).some(variant => variant.option_1 === option);
   }
 
   // if this is option 2, check to see if there are any variants with this option and option 1
   if (optionNumber === 2) {
-    return !(product.variants?.data || []).some(variant => variant?.option_1 === variantValues.option_1 && variant.option_2 === option);
+    return !(product?.variants?.data || []).some(variant => variant?.option_1 === variantValues.option_1 && variant.option_2 === option);
   }
 
   // if this is option 3, check to see if there are any variants with all the options.
-  return !(product.variants?.data || []).some(
+  return !(product?.variants?.data || []).some(
     variant => variant?.option_1 === variantValues.option_1 && variant?.option_2 === variantValues.option_2 && variant.option_3 === option,
   );
 };

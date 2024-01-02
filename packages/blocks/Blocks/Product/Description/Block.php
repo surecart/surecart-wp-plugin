@@ -2,12 +2,12 @@
 
 namespace SureCartBlocks\Blocks\Product\Description;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Keep track of the instance number of this block.
 	 *
@@ -24,18 +24,22 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product->description ) ) {
 			return '';
 		}
-		ob_start(); ?>
 
-		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-				<?php echo wp_kses_post( $product->description ?? '' ); ?>
-		</div>
+		$attributes = get_block_wrapper_attributes(
+			[
+				'class' => esc_attr( $this->getClasses( $attributes ) ),
+				'style' => esc_attr( $this->getStyles( $attributes ) ),
+			]
+		);
 
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-product-description %1$s>%2$s</sc-product-description>',
+			$attributes,
+			wp_kses_post( $product->description ?? '' )
+		);
 	}
 }

@@ -4,10 +4,11 @@ import { __ } from '@wordpress/i18n';
 import { state as checkoutState } from '@store/checkout';
 import { hasSubscription } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
-import { LineItem, Product, FeaturedProductMediaAttributes } from '../../../../types';
+import { LineItem, Product, FeaturedProductMediaAttributes, Variant } from '../../../../types';
 import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
+import { getMaxStockQuantity } from '../../../../functions/quantity';
 
 /**
  * @part base - The component base
@@ -75,7 +76,7 @@ export class ScLineItems {
     return (
       <div class="line-items" part="base" tabindex="0">
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
-          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product);
+          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           return (
             <div class="line-item">
               <sc-product-line-item
@@ -86,7 +87,7 @@ export class ScLineItems {
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
-                max={(item?.price?.product as Product)?.purchase_limit}
+                max={getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant)}
                 editable={this.isEditable(item)}
                 removable={this.removable}
                 quantity={item.quantity}

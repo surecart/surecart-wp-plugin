@@ -109,8 +109,11 @@ export default ({ order, checkout, loading }) => {
 		[checkout?.id]
 	);
 
-	const getImageAttributes = (product) => {
-		const featuredMedia = getFeaturedProductMediaAttributes(product);
+	const getImageAttributes = (item) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(
+			item?.price?.product,
+			item?.variant
+		);
 
 		return {
 			imageUrl: featuredMedia?.url,
@@ -204,7 +207,7 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							{...getImageAttributes(item?.price?.product)}
+							{...getImageAttributes(item)}
 							name={item?.price?.product?.name}
 							priceName={item?.price?.name}
 							variantLabel={

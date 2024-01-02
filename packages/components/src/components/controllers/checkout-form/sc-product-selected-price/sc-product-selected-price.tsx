@@ -70,7 +70,7 @@ export class ScProductSelectedPrice {
       <div class={{ 'selected-price': true }}>
         {this.showInput ? (
           <sc-form
-            onScSubmit={this.onSubmit}
+            onScSubmit={e => this.onSubmit(e)}
             onScFormSubmit={e => {
               e.preventDefault();
               e.stopImmediatePropagation();

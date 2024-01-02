@@ -13,6 +13,7 @@ const ALLOWED_BLOCKS = [
 	'surecart/input',
 	'surecart/password',
 	'surecart/price-selector',
+	'surecart/variant-price-selector',
 	'surecart/checkbox',
 	'surecart/divider',
 	'surecart/button',

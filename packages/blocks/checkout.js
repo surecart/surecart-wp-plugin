@@ -9,7 +9,13 @@ import * as columns from '@blocks/Columns';
 import * as coupon from '@blocks/Coupon';
 import * as divider from '@blocks/Divider';
 import * as donation from '@blocks/Donation';
+import * as productDonation from '@blocks/ProductDonation';
 import * as donationAmount from '@blocks/DonationAmount';
+import * as productDonationPrices from '@blocks/ProductDonationPrices';
+import * as productDonationRecurringPrices from '@blocks/ProductDonationRecurringPrices';
+import * as productDonationAmounts from '@blocks/ProductDonationAmounts';
+import * as productDonationAmount from '@blocks/ProductDonationAmount';
+import * as productDonationCustomAmount from '@blocks/ProductDonationCustomAmount';
 import * as email from '@blocks/Email';
 import * as phone from '@blocks/Phone';
 import * as expressPayment from '@blocks/ExpressPayment';
@@ -26,6 +32,7 @@ import * as password from '@blocks/Password';
 import * as payment from '@blocks/Payment';
 import * as priceChoice from '@blocks/PriceChoice';
 import * as priceSelector from '@blocks/PriceSelector';
+import * as variantPriceSelector from '@blocks/VariantPriceSelector';
 import * as radio from '@blocks/Radio';
 import * as radioGroup from '@blocks/RadioGroup';
 import * as submit from '@blocks/Submit';
@@ -45,7 +52,13 @@ import { registerBlocks } from './register-block';
 registerBlocks([
 	button,
 	donation,
+	productDonation,
 	donationAmount,
+	productDonationPrices,
+	productDonationRecurringPrices,
+	productDonationAmounts,
+	productDonationAmount,
+	productDonationCustomAmount,
 	nameYourPrice,
 	bumpLineItem,
 	checkoutErrors,
@@ -74,6 +87,7 @@ registerBlocks([
 	payment,
 	priceChoice,
 	priceSelector,
+	variantPriceSelector,
 	submit,
 	subtotal,
 	switchBlock,

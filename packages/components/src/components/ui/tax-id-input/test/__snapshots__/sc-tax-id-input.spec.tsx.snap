@@ -3,26 +3,26 @@
 exports[`sc-tax-id-input Renders AU Tax Type 1`] = `
 <sc-tax-id-input country="AU">
   <mock:shadow-root>
-    <sc-input name="tax_identifier.number_type" value="au_abn" style="display: none;"></sc-input>
-    <sc-input label="ABN Number" name="tax_identifier.number">
-      <sc-dropdown position="bottom-right" slot="suffix">
+    <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
+    <sc-input aria-label="Tax ID" label="Tax ID" name="tax_identifier.number" placeholder="Enter Tax ID">
+      <sc-dropdown aria-label="Select number type" aria-multiselectable="false" position="bottom-right" role="select" slot="suffix">
         <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
-          AU ABN
+          Other
         </sc-button>
         <sc-menu>
-          <sc-menu-item>
+          <sc-menu-item aria-label="CA GST" aria-selected="false" role="option">
             CA GST
           </sc-menu-item>
-          <sc-menu-item checked="">
+          <sc-menu-item aria-label="AU ABN" aria-selected="false" role="option">
             AU ABN
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="UK VAT" aria-selected="false" role="option">
             UK VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="EU VAT" aria-selected="false" role="option">
             EU VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="Other" aria-selected="true" checked="" role="option">
             Other
           </sc-menu-item>
         </sc-menu>
@@ -35,26 +35,26 @@ exports[`sc-tax-id-input Renders AU Tax Type 1`] = `
 exports[`sc-tax-id-input Renders CA Tax Type 1`] = `
 <sc-tax-id-input country="CA">
   <mock:shadow-root>
-    <sc-input name="tax_identifier.number_type" value="ca_gst" style="display: none;"></sc-input>
-    <sc-input label="GST Number" name="tax_identifier.number">
-      <sc-dropdown position="bottom-right" slot="suffix">
+    <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
+    <sc-input aria-label="Tax ID" label="Tax ID" name="tax_identifier.number" placeholder="Enter Tax ID">
+      <sc-dropdown aria-label="Select number type" aria-multiselectable="false" position="bottom-right" role="select" slot="suffix">
         <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
-          CA GST
+          Other
         </sc-button>
         <sc-menu>
-          <sc-menu-item checked="">
+          <sc-menu-item aria-label="CA GST" aria-selected="false" role="option">
             CA GST
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="AU ABN" aria-selected="false" role="option">
             AU ABN
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="UK VAT" aria-selected="false" role="option">
             UK VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="EU VAT" aria-selected="false" role="option">
             EU VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="Other" aria-selected="true" checked="" role="option">
             Other
           </sc-menu-item>
         </sc-menu>
@@ -67,26 +67,26 @@ exports[`sc-tax-id-input Renders CA Tax Type 1`] = `
 exports[`sc-tax-id-input Renders EU VAT Tax Type 1`] = `
 <sc-tax-id-input country="DE">
   <mock:shadow-root>
-    <sc-input name="tax_identifier.number_type" value="eu_vat" style="display: none;"></sc-input>
-    <sc-input label="EU VAT" name="tax_identifier.number">
-      <sc-dropdown position="bottom-right" slot="suffix">
+    <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
+    <sc-input aria-label="Tax ID" label="Tax ID" name="tax_identifier.number" placeholder="Enter Tax ID">
+      <sc-dropdown aria-label="Select number type" aria-multiselectable="false" position="bottom-right" role="select" slot="suffix">
         <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
-          EU VAT
+          Other
         </sc-button>
         <sc-menu>
-          <sc-menu-item>
+          <sc-menu-item aria-label="CA GST" aria-selected="false" role="option">
             CA GST
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="AU ABN" aria-selected="false" role="option">
             AU ABN
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="UK VAT" aria-selected="false" role="option">
             UK VAT
           </sc-menu-item>
-          <sc-menu-item checked="">
+          <sc-menu-item aria-label="EU VAT" aria-selected="false" role="option">
             EU VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="Other" aria-selected="true" checked="" role="option">
             Other
           </sc-menu-item>
         </sc-menu>
@@ -99,26 +99,26 @@ exports[`sc-tax-id-input Renders EU VAT Tax Type 1`] = `
 exports[`sc-tax-id-input Renders UK VAT Tax Type 1`] = `
 <sc-tax-id-input country="GB">
   <mock:shadow-root>
-    <sc-input name="tax_identifier.number_type" value="gb_vat" style="display: none;"></sc-input>
-    <sc-input label="UK VAT" name="tax_identifier.number">
-      <sc-dropdown position="bottom-right" slot="suffix">
+    <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
+    <sc-input aria-label="Tax ID" label="Tax ID" name="tax_identifier.number" placeholder="Enter Tax ID">
+      <sc-dropdown aria-label="Select number type" aria-multiselectable="false" position="bottom-right" role="select" slot="suffix">
         <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
-          UK VAT
+          Other
         </sc-button>
         <sc-menu>
-          <sc-menu-item>
+          <sc-menu-item aria-label="CA GST" aria-selected="false" role="option">
             CA GST
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="AU ABN" aria-selected="false" role="option">
             AU ABN
           </sc-menu-item>
-          <sc-menu-item checked="">
+          <sc-menu-item aria-label="UK VAT" aria-selected="false" role="option">
             UK VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="EU VAT" aria-selected="false" role="option">
             EU VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="Other" aria-selected="true" checked="" role="option">
             Other
           </sc-menu-item>
         </sc-menu>
@@ -132,25 +132,25 @@ exports[`sc-tax-id-input Shows the updated labels when modified labels are passe
 <sc-tax-id-input other-label="Other test">
   <mock:shadow-root>
     <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
-    <sc-input label="Other test" name="tax_identifier.number">
-      <sc-dropdown position="bottom-right" slot="suffix">
+    <sc-input aria-label="Tax ID" label="Other test" name="tax_identifier.number" placeholder="Enter Tax ID">
+      <sc-dropdown aria-label="Select number type" aria-multiselectable="false" position="bottom-right" role="select" slot="suffix">
         <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           Other
         </sc-button>
         <sc-menu>
-          <sc-menu-item>
+          <sc-menu-item aria-label="CA GST" aria-selected="false" role="option">
             CA GST
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="AU ABN" aria-selected="false" role="option">
             AU ABN
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="UK VAT" aria-selected="false" role="option">
             UK VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="EU VAT" aria-selected="false" role="option">
             EU VAT
           </sc-menu-item>
-          <sc-menu-item checked="">
+          <sc-menu-item aria-label="Other" aria-selected="true" checked="" role="option">
             Other
           </sc-menu-item>
         </sc-menu>
@@ -164,25 +164,25 @@ exports[`sc-tax-id-input renders 1`] = `
 <sc-tax-id-input>
   <mock:shadow-root>
     <sc-input name="tax_identifier.number_type" value="other" style="display: none;"></sc-input>
-    <sc-input label="Tax ID" name="tax_identifier.number">
-      <sc-dropdown position="bottom-right" slot="suffix">
+    <sc-input aria-label="Tax ID" label="Tax ID" name="tax_identifier.number" placeholder="Enter Tax ID">
+      <sc-dropdown aria-label="Select number type" aria-multiselectable="false" position="bottom-right" role="select" slot="suffix">
         <sc-button caret="" slot="trigger" tabindex="0" type="text" style="color: var(--sc-input-label-color);">
           Other
         </sc-button>
         <sc-menu>
-          <sc-menu-item>
+          <sc-menu-item aria-label="CA GST" aria-selected="false" role="option">
             CA GST
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="AU ABN" aria-selected="false" role="option">
             AU ABN
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="UK VAT" aria-selected="false" role="option">
             UK VAT
           </sc-menu-item>
-          <sc-menu-item>
+          <sc-menu-item aria-label="EU VAT" aria-selected="false" role="option">
             EU VAT
           </sc-menu-item>
-          <sc-menu-item checked="">
+          <sc-menu-item aria-label="Other" aria-selected="true" checked="" role="option">
             Other
           </sc-menu-item>
         </sc-menu>

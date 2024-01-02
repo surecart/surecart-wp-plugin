@@ -130,18 +130,29 @@ export class ScSubscriptionsList {
     );
   }
 
+  getSubscriptionLink(subscription: Subscription) {
+    // If subscription has no payment_method,
+    // then, we'll redirect to add payment method page.
+    if (!subscription.payment_method) {
+      return addQueryArgs(window.location.href, {
+        action: 'create',
+        model: 'payment_method',
+        id: subscription.id,
+        ...(subscription?.live_mode === false ? { live_mode: false } : {}),
+      });
+    }
+
+    return addQueryArgs(window.location.href, {
+      action: 'edit',
+      model: 'subscription',
+      id: subscription.id,
+    });
+  }
+
   renderList() {
     return this.subscriptions.map(subscription => {
       return (
-        <sc-stacked-list-row
-          href={addQueryArgs(window.location.href, {
-            action: 'edit',
-            model: 'subscription',
-            id: subscription.id,
-          })}
-          key={subscription.id}
-          mobile-size={0}
-        >
+        <sc-stacked-list-row href={this.getSubscriptionLink(subscription)} key={subscription.id} mobile-size={0}>
           <sc-subscription-details subscription={subscription}></sc-subscription-details>
           <sc-icon name="chevron-right" slot="suffix"></sc-icon>
         </sc-stacked-list-row>

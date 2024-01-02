@@ -3,7 +3,7 @@
 exports[`sc-cart-icon renders 1`] = `
 <sc-cart-icon>
   <mock:shadow-root>
-    <div class="cart" part="base">
+    <div aria-label="Open Cart Floating Icon with 0 items" class="cart" part="base" role="button" tabindex="0">
       <div class="cart__container" part="container">
         <div class="cart__counter">
           0

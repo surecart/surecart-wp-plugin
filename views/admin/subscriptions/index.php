@@ -1,3 +1,9 @@
+<style>
+
+	.wp-list-table {
+		table-layout: auto !important;
+	}
+</style>
 <div class="wrap">
 
 	<?php

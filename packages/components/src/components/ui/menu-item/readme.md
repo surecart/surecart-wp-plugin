@@ -54,6 +54,7 @@ Type: `Promise<void>`
  - [sc-customer-email-preview](../../controllers/checkout-form/customer-email-preview)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
 
@@ -63,6 +64,7 @@ graph TD;
   sc-customer-email-preview --> sc-menu-item
   sc-payment-methods-list --> sc-menu-item
   sc-product-item-list --> sc-menu-item
+  sc-recurring-price-choice-container --> sc-menu-item
   sc-select --> sc-menu-item
   sc-tax-id-input --> sc-menu-item
   style sc-menu-item fill:#f9f,stroke:#333,stroke-width:4px

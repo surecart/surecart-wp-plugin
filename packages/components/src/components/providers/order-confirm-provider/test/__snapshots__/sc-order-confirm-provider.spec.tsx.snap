@@ -10,9 +10,9 @@ exports[`sc-order-confirm-provider renders 1`] = `
           <sc-icon name="check"></sc-icon>
         </div>
       </div>
-      <sc-dashboard-module heading="Thanks for your order!" style="--sc-dashboard-module-spacing: var(--sc-spacing-x-large); text-align: center;">
+      <sc-dashboard-module heading="Thank you!" style="--sc-dashboard-module-spacing: var(--sc-spacing-x-large); text-align: center;">
         <span slot="description">
-          Your payment was successful, and your order is complete. A receipt is on its way to your inbox.
+          Your payment was successful. A receipt is on its way to your inbox.
         </span>
         <sc-button size="large" type="primary">
           Continue

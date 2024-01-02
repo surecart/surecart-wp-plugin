@@ -16,7 +16,7 @@ export default ({ loading, bump, updateBump }) => {
 			<ScTextarea
 				label={__('Bump Description', 'surecart')}
 				help={__(
-					'Add a descirption that will get your customers excited about the offer.',
+					'Add a description that will get your customers excited about the offer.',
 					'surecart'
 				)}
 				onScInput={(e) =>

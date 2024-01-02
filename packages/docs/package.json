@@ -20,7 +20,7 @@
 		"@docusaurus/core": "2.4.0",
 		"@docusaurus/preset-classic": "2.4.0",
 		"@mdx-js/react": "^1.6.22",
-		"@surecart/components": "^1.0.0",
+		"@surecart/components": "^2",
 		"@surecart/components-react": "^1.0.1",
 		"clsx": "^1.1.1",
 		"docusaurus-plugin-sass": "^0.1.14",

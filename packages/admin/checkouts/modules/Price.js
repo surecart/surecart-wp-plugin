@@ -15,7 +15,10 @@ import {
 	ScPriceInput,
 	ScForm,
 } from '@surecart/components-react';
-import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import {
+	getFeaturedProductMediaAttributes,
+	getMaxStockQuantity,
+} from '@surecart/components';
 import LineItemLabel from '../../ui/LineItemLabel';
 
 export default ({
@@ -30,6 +33,10 @@ export default ({
 }) => {
 	const media = getFeaturedProductMediaAttributes(price?.product);
 	const [open, setOpen] = useState(false);
+	const maxStockQuantity = getMaxStockQuantity(
+		price?.product,
+		lineItem?.variant
+	);
 	const [addHocAmount, setAddHocAmount] = useState(
 		ad_hoc_amount || price?.amount
 	);
@@ -120,10 +127,27 @@ export default ({
 					{!!price?.ad_hoc ? (
 						__('--', 'surecart')
 					) : (
-						<ScQuantitySelect
-							quantity={quantity}
-							onScChange={(e) => onChange({ quantity: e.detail })}
-						/>
+						<>
+							<ScQuantitySelect
+								quantity={quantity}
+								onScChange={(e) =>
+									onChange({ quantity: e.detail })
+								}
+								{...(!!maxStockQuantity
+									? { max: maxStockQuantity }
+									: {})}
+							/>
+							<div
+								css={css`
+									margin-top: var(--sc-spacing-small);
+								`}
+							>
+								{sprintf(
+									__('Available: %d', 'surecart'),
+									maxStockQuantity
+								)}
+							</div>
+						</>
 					)}
 				</ScTableCell>
 				<ScTableCell>

@@ -8,6 +8,9 @@
 		"textAlign": {
 			"type": "string",
 			"default": "left"
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"keywords": ["description"],

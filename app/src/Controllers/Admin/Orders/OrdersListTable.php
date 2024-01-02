@@ -184,7 +184,7 @@ class OrdersListTable extends ListTable {
 			return [ 'processing' ];
 		}
 		if ( 'canceled' === $status ) {
-			return [ 'canceled' ];
+			return [ 'void' ];
 		}
 		if ( 'all' === $status ) {
 			return [];

@@ -31,7 +31,10 @@ export default ({ prices, product, children }) => {
 				position: relative;
 			`}
 		>
-			<SortableList onSortEnd={applyDrag}>
+			<SortableList
+				onSortEnd={applyDrag}
+				draggedItemClassName="sc-dragging"
+			>
 				{(prices || []).map((price) => {
 					return (
 						<SortableItem key={price.id}>

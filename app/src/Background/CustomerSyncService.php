@@ -109,16 +109,14 @@ class CustomerSyncService {
 			return $customer;
 		}
 
-		// create user.
-		if ( $create_user ) {
-			$user = $customer->getUser();
-			if ( ! $user ) {
-				$user = User::getUserBy( 'email', $customer->email );
-				if ( $user ) {
-					$user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test', true ); // force update.
-				} else {
-					$customer->createUser();
-				}
+		// Create or link a user.
+		$user = $customer->getUser();
+		if ( ! $user ) {
+			$user = User::getUserBy( 'email', $customer->email );
+			if ( $user ) {
+				$user->setCustomerId( $customer->id, $customer->live_mode ? 'live' : 'test', true ); // force update.
+			} elseif ( $create_user ) {
+				$customer->createUser();
 			}
 		}
 

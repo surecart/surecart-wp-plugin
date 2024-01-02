@@ -13,6 +13,7 @@
 | `help`      | `help`       | Help text                                       | `string`                         | `undefined` |
 | `label`     | `label`      | Input label.                                    | `string`                         | `undefined` |
 | `name`      | `name`       | Name for the input. Used for validation errors. | `string`                         | `undefined` |
+| `productId` | `product-id` | The product id                                  | `string`                         | `undefined` |
 | `required`  | `required`   | Whether the input is required.                  | `boolean`                        | `false`     |
 | `showLabel` | `show-label` | Show the label.                                 | `boolean`                        | `true`      |
 | `size`      | `size`       | Size of the control                             | `"large" \| "medium" \| "small"` | `'medium'`  |

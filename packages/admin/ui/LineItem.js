@@ -15,11 +15,11 @@ export default ({ className, media, children, suffix }) => {
 				align-items: stretch;
 				width: 100%;
 				border-bottom: none;
-				${!!media.url ? 'align-items: center' : ''};
-				${!!media.url ? 'container-type: inline-size' : ''};
+				${!!media?.url ? 'align-items: center' : ''};
+				${!!media?.url ? 'container-type: inline-size' : ''};
 			`}
 		>
-			{!!media.url && (
+			{!!media?.url && (
 				<img
 					src={media.url}
 					alt={media.alt}

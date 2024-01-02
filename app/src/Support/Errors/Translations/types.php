@@ -38,7 +38,7 @@ return [
 	'send_after.too_late'      => __( 'must be less than 1 week', 'surecart' ),
 	'send_after.too_close'     => __( 'must be at least 12 hours between emails', 'surecart' ),
 	'send_after.too_many'      => __( 'max count reached', 'surecart' ),
-	'outside_range'            => __( 'must be between %1$s and %2$s', 'surecart' ),
+	'outside_range'            => __( 'This is outside the allowed amount.', 'surecart' ),
 ];
 
 

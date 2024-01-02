@@ -15,7 +15,7 @@ exports[`sc-product-line-item does not render scratch amount if the same as amou
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -46,7 +46,7 @@ exports[`sc-product-line-item renders 1`] = `
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -77,7 +77,7 @@ exports[`sc-product-line-item renders fees 1`] = `
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -120,7 +120,7 @@ exports[`sc-product-line-item renders scratch amount if different from amount 1`
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -152,7 +152,7 @@ exports[`sc-product-line-item renders trial duration 1`] = `
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -188,7 +188,7 @@ exports[`sc-product-line-item renders trial duration with setup fee 1`] = `
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>
@@ -230,7 +230,7 @@ exports[`sc-product-line-item renders trial duration without setup fee 1`] = `
               <div></div>
             </div>
           </div>
-          <sc-quantity-select exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
+          <sc-quantity-select aria-label="Change Quantity - undefined undefined" exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input" max="100" size="small"></sc-quantity-select>
         </div>
         <div class="item__suffix" part="suffix">
           <div></div>

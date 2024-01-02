@@ -56,7 +56,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'complete' ),
-					'permission_callback' => [ $this, 'cancel_permissions_check' ],
+					'permission_callback' => [ $this, 'complete_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -70,7 +70,7 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'restore' ),
-					'permission_callback' => [ $this, 'cancel_permissions_check' ],
+					'permission_callback' => [ $this, 'restore_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -207,6 +207,27 @@ class SubscriptionRestServiceProvider extends RestServiceProvider implements Res
 	 */
 	public function cancel_permissions_check( $request ) {
 		return current_user_can( 'cancel_sc_subscription', $request['id'] );
+	}
+
+	/**
+	 * Check cancel permissions.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function restore_permissions_check( $request ) {
+		return current_user_can( 'restore_sc_subscription', $request['id'] );
+	}
+
+	/**
+	 * Check complete permissions.
+	 * Only users who can edit all subscriptions can complete a subscription.
+	 *
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
+	 */
+	public function complete_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_subscriptions' );
 	}
 
 	/**

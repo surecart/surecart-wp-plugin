@@ -3,12 +3,12 @@
 namespace SureCartBlocks\Blocks\Product\Price;
 
 use SureCart\Support\Currency;
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Keep track of the instance number of this block.
 	 *
@@ -25,34 +25,29 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = get_query_var( 'surecart_current_product' );
-		if ( empty( $product ) ) {
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
+		if ( empty( $product ) || empty( $product->activePrices() ) ) {
 			return '';
 		}
 
-		$active_prices = array_values(
-			array_filter(
-				$product->prices->data ?? [],
-				function( $price ) {
-					return ! $price->archived;
-				}
-			)
+		$attributes = get_block_wrapper_attributes(
+			[
+				'sale-text'  => esc_attr( $attributes['sale_text'] ?? '' ),
+				'class'      => esc_attr( $this->getClasses( $attributes ) . ' product-price surecart-block' ),
+				'style'      => esc_attr( $this->getStyles( $attributes ) . ' --sc-product-price-alignment:' . esc_attr( $attributes['alignment'] ?? 'left' ) ),
+				'product-id' => esc_attr( $product->id ),
+			]
 		);
 
-		ob_start(); ?>
+		// first price.
+		$first_price = $product->activePrices()[0];
 
-		<sc-product-price
-			sale-text="<?php echo esc_attr( $attributes['sale_text'] ?? '' ); ?>"
-			class="<?php echo esc_attr( $this->getClasses( $attributes ) . ' product-price surecart-block' ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>;--sc-product-price-alignment:<?php echo esc_attr( $attributes['alignment'] ?? 'left' ); ?>"
-			>
-
-			<?php if ( ! empty( $active_prices[0] ) ) : ?>
-				<?php echo esc_html( Currency::format( $active_prices[0]->amount, $active_prices[0]->currency ) ); ?>
-			<?php endif; ?>
-		</sc-product-price>
-
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-product-price %1$s>
+				%2$s
+			</sc-product-price>',
+			$attributes,
+			esc_html( Currency::format( $first_price->amount, $first_price->currency ) )
+		);
 	}
 }

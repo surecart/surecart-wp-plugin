@@ -7,7 +7,8 @@ import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 	const { url, alt, title } = getFeaturedProductMediaAttributes(
-		lineItem?.price?.product
+		lineItem?.price?.product,
+		lineItem?.variant
 	);
 
 	return (
@@ -39,7 +40,6 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 			</span>
 
 			<LineItemLabel lineItem={lineItem}>
-				{children}
 				{showWeight && !!lineItem?.price?.product?.weight && (
 					<div>
 						<ScFormatNumber
@@ -58,6 +58,7 @@ export default ({ lineItem, suffix, showWeight, showQuantity, children }) => {
 						)}
 					</div>
 				)}
+				{children}
 			</LineItemLabel>
 		</LineItem>
 	);

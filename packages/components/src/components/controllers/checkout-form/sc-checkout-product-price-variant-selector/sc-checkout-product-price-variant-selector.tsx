@@ -25,6 +25,9 @@ export class ScProductCheckoutSelectVariantOption {
   /** The label for the price. */
   @Prop() label: string;
 
+  /** The title for price and variant selections */
+  @Prop() selectorTitle: string;
+
   /** Currently selected variant */
   @State() selectedVariant: Variant;
 
@@ -179,7 +182,7 @@ export class ScProductCheckoutSelectVariantOption {
 
   render() {
     return (
-      <div class="sc-checkout-product-price-variant-selector">
+      <sc-form-control class="sc-checkout-product-price-variant-selector" label={this.selectorTitle}>
         {(this.product.variant_options.data || []).map(({ name, values }, index) => (
           <sc-form-control label={name}>
             <div class="sc-checkout-product-price-variant-selector__pills-wrapper">
@@ -232,7 +235,7 @@ export class ScProductCheckoutSelectVariantOption {
         )}
 
         <input class="sc-checkout-product-price-variant-selector__hidden-input" ref={el => (this.input = el as HTMLInputElement)} value={this.selectedVariant?.id}></input>
-      </div>
+      </sc-form-control>
     );
   }
 }

@@ -8,10 +8,13 @@ import { state } from '@store/product';
 })
 export class ScProductText {
   @Prop() text: 'name' | 'description' = 'name';
+  @Prop() productId: string;
 
   render() {
-    if (state.product?.[this.text]) {
-      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={state.product[this.text]}></span>;
+    const product = state[this.productId].product;
+
+    if (product?.[this.text]) {
+      return <span style={{ whiteSpace: 'pre-line' }} innerHTML={product[this.text]}></span>;
     }
     return (
       <Host>

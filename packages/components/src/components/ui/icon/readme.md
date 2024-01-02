@@ -71,6 +71,7 @@
  - [sc-provisional-banner](../sc-provisional-banner)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
  - [sc-rich-text](../rich-text)
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -128,6 +129,7 @@ graph TD;
   sc-provisional-banner --> sc-icon
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-recurring-price-choice-container --> sc-icon
   sc-rich-text --> sc-icon
   sc-select --> sc-icon
   sc-subscription --> sc-icon

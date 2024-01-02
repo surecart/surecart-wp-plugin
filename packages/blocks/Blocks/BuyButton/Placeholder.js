@@ -13,8 +13,12 @@ import { button as icon } from '@wordpress/icons';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import { updateCartLineItem } from '../../util';
 
-export default ({ setAttributes }) => {
-	const [line_items, setLineItems] = useState([]);
+export default ({
+	setAttributes,
+	selectedLineItems,
+	setShowChangeProducts,
+}) => {
+	const [line_items, setLineItems] = useState(selectedLineItems || []);
 
 	const removeLineItem = (index) => {
 		setLineItems(line_items.filter((_, i) => i !== index));
@@ -42,14 +46,31 @@ export default ({ setAttributes }) => {
 				<div
 					css={css`
 						display: flex;
-						justify-content: flex-end;
+						justify-content: ${!!selectedLineItems?.length
+							? 'space-between'
+							: 'flex-end'};
 					`}
 				>
+					{!!selectedLineItems?.length && (
+						<Button
+							variant="secondary"
+							onClick={() => {
+								setLineItems([]);
+							}}
+						>
+							{__('Cancel', 'surecart')}
+						</Button>
+					)}
 					<Button
 						variant="primary"
-						onClick={() => setAttributes({ line_items })}
+						onClick={() => {
+							setAttributes({ line_items });
+							setShowChangeProducts(false);
+						}}
 					>
-						{__('Create Buy Button', 'surecart')}
+						{!!selectedLineItems?.length
+							? __('Update Buy Button', 'surecart')
+							: __('Create Buy Button', 'surecart')}
 					</Button>
 				</div>
 			</div>

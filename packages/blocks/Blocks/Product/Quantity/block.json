@@ -8,6 +8,9 @@
 	"attributes": {
 		"label": {
 			"type": "string"
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {

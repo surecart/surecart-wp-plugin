@@ -15,11 +15,11 @@ export default ({ className, media, children, suffix }) => {
 				align-items: stretch;
 				width: 100%;
 				border-bottom: none;
-				${!!media.url ? 'align-items: center' : ''};
-				${!!media.url ? 'container-type: inline-size' : ''};
+				${!!media?.url ? 'align-items: center' : ''};
+				${!!media?.url ? 'container-type: inline-size' : ''};
 			`}
 		>
-			{!!media.url && (
+			{!!media?.url && (
 				<img
 					src={media.url}
 					alt={media.alt}
@@ -33,6 +33,7 @@ export default ({ className, media, children, suffix }) => {
 							var(--sc-input-border-color, var(--sc-input-border));
 						display: block;
 						box-shadow: var(--sc-input-box-shadow);
+						align-self: flex-start;
 					`}
 				/>
 			)}
@@ -58,7 +59,13 @@ export default ({ className, media, children, suffix }) => {
 				</div>
 			</div>
 
-			<div>{suffix}</div>
+			<div
+				css={css`
+					align-self: flex-start;
+				`}
+			>
+				{suffix}
+			</div>
 		</div>
 	);
 };
