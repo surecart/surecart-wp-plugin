@@ -1,13 +1,18 @@
 /**
  * External dependencies.
  */
-import { Component, h, Element, Prop, State, Listen, Host } from '@stencil/core';
+import { Component, h, Element, Prop, State, Listen, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
+import { state as userState } from '@store/user';
+import { MATCHED, VERIFYING } from '@store/user/constants';
 
 @Component({
   tag: 'sc-verification-code',
   styleUrl: 'sc-verification-code.scss',
-  shadow: true,
 })
 export class ScVerificationCode {
   @Element() el: HTMLScVerificationCodeElement;
@@ -18,11 +23,11 @@ export class ScVerificationCode {
   /** The verification codes */
   @State() codes: string[] = Array(this.total).fill('');
 
+  /** Verification status */
+  @State() verificationStatus: string = userState.verificationStatus;
+
   /** On change verification code */
   @Prop() onChange: (value: string) => void;
-
-  /** Show clear button */
-  @Prop() showClearButton: boolean = false;
 
   @Listen('keydown')
   handleKeyDown(e: KeyboardEvent, index: number) {
@@ -71,7 +76,10 @@ export class ScVerificationCode {
       this.getElementByIndex(index).blur();
     }
 
-    this.handleCodeChange();
+    // Submit the code, only for the last input changes.
+    if (index === this.codes.length - 1) {
+      this.handleCodeChange();
+    }
   }
 
   handleCodeChange() {
@@ -91,7 +99,7 @@ export class ScVerificationCode {
   }
 
   getElementByIndex(index: number): HTMLInputElement | null {
-    return this.el.shadowRoot.querySelector(`.code-input-${index}`) as HTMLInputElement;
+    return this.el.querySelector(`#code-input-${index}`) as HTMLInputElement;
   }
 
   handleFocus(e: FocusEvent) {
@@ -99,50 +107,71 @@ export class ScVerificationCode {
     target.select();
   }
 
-  @Listen('scClearVerificationCodes')
-  handleClearVerificationCodes() {
+  reset() {
     this.codes = Array(this.total).fill('');
-    this.getElementByIndex(0).focus();
+    this.getElementByIndex(0)?.focus();
   }
 
-  render() {
+  @Watch('verificationStatus')
+  resetAfterCodeWatches() {
+    this.getElementByIndex(0)?.focus();
+  }
+
+  renderDummyInput() {
     return (
-      <Host>
-        <div class="verification-code-area">
-          {this.codes.map((value, index) => (
-            <input
-              key={index}
-              class={`code-input code-input-${index}`}
-              value={value}
-              onInput={e => this.handleInput(e, index)}
-              onKeyDown={e => this.handleKeyDown(e, index)}
-              onFocus={e => this.handleFocus(e)}
-              autocomplete="one-time-code"
-              required
-            />
-          ))}
+      <input
+        style={{
+          visibility: 'hidden',
+        }}
+        aria-hidden="true"
+      />
+    );
+  }
 
-          {/* If codes length and total is same after trimming then, add a clear button */}
-          {this.codes.join('').trim().length === this.total && this.showClearButton && (
-            <sc-tooltip text={__('Clear code', 'surecart')} type="text" style={{ display: 'inline-block', cursor: 'help' }}>
-              <sc-button
-                type="text"
-                onClick={() => {
-                  this.codes = Array(this.total).fill('');
-                  this.getElementByIndex(0).focus();
-                }}
-              >
-                <sc-icon name="x-circle" />
-              </sc-button>
-            </sc-tooltip>
-          )}
+  filledAllInputs = () => {
+    return this.codes.join('').trim().length === this.total;
+  };
 
-          {/* Hidden Submit button for screen readers */}
-          <button type="submit" style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" onClick={() => this.onChange(this.codes.join(''))}>
-            {__('Submit', 'surecart')}
-          </button>
-        </div>
-      </Host>
+  render() {
+    if (userState.verificationStatus === MATCHED) {
+      this.verificationStatus = userState.verificationStatus;
+      this.reset();
+    }
+
+    return (
+      <div class="sc-verification-code">
+        {this.renderDummyInput()}
+        {this.renderDummyInput()}
+        {Array.from({ length: this.total }).map((_, index) => (
+          <input
+            key={index}
+            id={`code-input-${index}`}
+            value={!!this.codes[index] ? this.codes[index] : ''}
+            onInput={e => this.handleInput(e, index)}
+            onKeyDown={e => this.handleKeyDown(e, index)}
+            onFocus={e => this.handleFocus(e)}
+            autocomplete="one-time-code"
+            autofocus={index === 0}
+            required
+            aria-label={__(`Verification code ${index + 1} of ${this.total}`, 'surecart')}
+          />
+        ))}
+        <sc-tooltip
+          text={__('Clear code', 'surecart')}
+          type="text"
+          style={{ display: 'inline-block', cursor: 'help', height: '36px', visibility: this.filledAllInputs() ? 'visible' : 'hidden' }}
+        >
+          <sc-button type="text" onClick={() => this.reset()} loading={userState.verificationStatus === VERIFYING}>
+            <sc-icon name="x-circle" />
+          </sc-button>
+        </sc-tooltip>
+        {this.renderDummyInput()}
+
+        {/* Hidden Submit button for screen readers */}
+        <button type="submit" style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" onClick={() => this.onChange(this.codes.join(''))}>
+          {__('Submit', 'surecart')}
+        </button>
+      </div>
     );
   }
 }

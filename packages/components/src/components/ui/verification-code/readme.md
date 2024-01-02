@@ -7,11 +7,10 @@
 
 ## Properties
 
-| Property          | Attribute           | Description                 | Type                      | Default     |
-| ----------------- | ------------------- | --------------------------- | ------------------------- | ----------- |
-| `onChange`        | --                  | On change verification code | `(value: string) => void` | `undefined` |
-| `showClearButton` | `show-clear-button` | Show clear button           | `boolean`                 | `false`     |
-| `total`           | `total`             | Total number of inputs      | `number`                  | `6`         |
+| Property   | Attribute | Description                 | Type                      | Default     |
+| ---------- | --------- | --------------------------- | ------------------------- | ----------- |
+| `onChange` | --        | On change verification code | `(value: string) => void` | `undefined` |
+| `total`    | `total`   | Total number of inputs      | `number`                  | `6`         |
 
 
 ## Dependencies
