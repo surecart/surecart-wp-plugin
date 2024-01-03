@@ -27,75 +27,194 @@ class ProductMedia extends PostModel {
 	protected $parent = Product::class;
 
 	/**
-	 * Create the attachment.
+	 * Sync the model with the post.
 	 *
 	 * @param \SureCart\Models\Model $model The model.
 	 *
 	 * @return $this
 	 */
-	protected function create( \SureCart\Models\Model $model ) {
-		// TODO: check _source_url for attachment to see if it already exists.
-		$url = ! empty( $model->media->url ) ? $model->media->url . '?/.' . $model->media->extension : $model->url;
+	protected function sync( \SureCart\Models\Model $model ) {
+		$result = $this->findOrCreate( $model );
 
-		if ( empty( $url ) ) {
-			error_log( 'no url found' );
-			return false;
+		if ( is_wp_error( $result ) ) {
+			error_log( $result->get_error_message() );
+			return $result;
 		}
 
-		$attachment = wp_insert_attachment(
+		if ( ! empty( $result ) ) {
+			$this->post = $result->post;
+		}
+
+		// get the product post type.
+		$product_post = new Product( $model->product );
+		// set the featured image if this is the first image.
+		if ( 0 === $model->position ) {
+			// set the featured image .
+			set_post_thumbnail( $product_post->ID, $this->post->ID );
+		}
+
+		// update the gallery.
+		$existing = get_post_meta( $product_post->ID, 'gallery', true );
+		$updated  = array_values( array_unique( array_filter( array_merge( (array) $existing, [ $this->post->ID ] ) ) ) );
+		update_post_meta( $product_post->ID, 'gallery', $updated );
+	}
+
+	/**
+	 * Get the url.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return string
+	 */
+	public function getUrl( \SureCart\Models\Model $model ) {
+		return ! empty( $model->media->url ) ? $model->media->url . '?/' . $model->media->title . '.' . $model->media->extension : $model->url;
+	}
+
+	/**
+	 * Create the attachment.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 *
+	 * @return int|\WP_Error
+	 */
+	public function findOrCreate( \SureCart\Models\Model $model ) {
+		$product    = ! empty( $model->product ) && is_string( $model->product ) ? new Product( $model->product ) : null;
+		$product_id = $product->ID ?? 0;
+
+		// find by url and handle.
+		$attachment = $this->findByUrl( $this->getUrl( $model ) );
+		if ( is_wp_error( $attachment ) ) {
+			return $attachment;
+		}
+		if ( ! empty( $attachment ) ) {
+			if ( ! empty( $product_id ) && ! empty( $attachment->ID ) ) {
+				wp_update_post(
+					array(
+						'ID'          => $attachment->ID,
+						'post_parent' => $product_id,
+					),
+					true
+				);
+			}
+			$this->post = $attachment;
+			return $this;
+		}
+
+		// upload from url and handle.
+		// $attachment_id = $this->uploadFromUrl( $url, $title, $product_id );
+		// if ( is_wp_error( $attachment_id ) ) {
+		// return $attachment_id;
+		// }
+		// if ( ! empty( $attachment_id ) ) {
+		// $this->post = get_post( $attachment_id );
+		// return $this;
+		// }
+
+		// create with url reference and handle.
+		$attachment_id = $this->createWithUrlReference( $model, $product_id );
+		if ( is_wp_error( $attachment_id ) ) {
+			return $attachment_id;
+		}
+		if ( ! empty( $attachment_id ) ) {
+			$this->post = get_post( $attachment_id );
+			return $this;
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Create the attachment.
+	 *
+	 * @param string $url The url.
+	 * @param string $title The title.
+	 * @param string $product_id The product id.
+	 *
+	 * @return int|\WP_Error
+	 */
+	public function uploadFromUrl( $url, $title, $product_id = 0 ) {
+		require_once ABSPATH . 'wp-admin/includes/media.php';
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		return \media_sideload_image( $url, $product_id, $title, 'id' );
+	}
+
+	/**
+	 * Create the attachment.
+	 *
+	 * @param \SureCart\Models\Model $model The model.
+	 * @param string                 $product_id The product id.
+	 *
+	 * @return int|\WP_Error
+	 */
+	public function createWithUrlReference( \SureCart\Models\Model $model, $product_id = 0 ) {
+		$url       = $this->getUrl( $model );
+		$title     = $model->title ?? $model->media->title ?? '';
+		$mime_type = $model->media->mime_type ?? null;
+		$width     = $model->media->width ?? null;
+		$height    = $model->media->height ?? null;
+
+		// fetch the mime type if not provided.
+		if ( empty( $mime_type ) && ! empty( $model->url ) ) {
+			$response  = wp_remote_head( $model->url );
+			$headers   = wp_remote_retrieve_headers( $response );
+			$mime_type = $headers['content-type'];
+		}
+
+		$attachment_id = wp_insert_attachment(
 			[
-				'post_title'     => $model->title,
+				'post_title'     => $title,
+				'post_parent'    => $product_id,
 				'post_status'    => 'inherit',
-				'post_mime_type' => $model->media->mime_type ?? 'image/jpeg',
-				'guid'           => $url,
+				'post_mime_type' => $mime_type,
 			],
 		);
 
-		error_log( 'attachment: ' . print_r( $attachment, true ) );
-		return $this;
-
-		error_log( 'creating attachment: ' . $url );
-
-		// add the attachment to the media library.
-		$attachment_id = media_sideload_image( $url, 0, $model->title, 'id' );
-
-		// sideload failed, we need some sort of fallback.
+		// handle error.
 		if ( is_wp_error( $attachment_id ) ) {
 			error_log( $attachment_id->get_error_message() );
-			// TODO: fallback for if the image fails to download.
-			error_log( 'failed to upload' );
 			return $this;
 		}
 
-		error_log( 'attachment id: ' . $attachment_id );
+		wp_update_attachment_metadata(
+			$attachment_id,
+			[
+				'file'   => false,
+				'width'  => $width,
+				'height' => $height,
+			]
+		);
 
-		return $this;
+		// Store the original attachment source in meta.
+		add_post_meta( $attachment_id, '_source_url', $url );
 
-		// get the product.
-		$product_post = new Product( $model->product );
-		// if we have an error, bail.
-		if ( is_wp_error( $product_post ) ) {
-			error_log( $product_post->get_error_message() );
-			return $this;
-		}
-		// Check for the post ID..
-		if ( empty( $product_post->ID ) ) {
-			error_log( 'no product found' );
-			return $this;
-		}
+		// return the attachment id.
+		return $attachment_id;
+	}
 
-		// set the featured image if this is the first image.
-		if ( 0 === $model->position ) {
-			// set the featured image.
-			set_post_thumbnail( $product_post->ID, $attachment_id );
-		}
+	/**
+	 * Find the attachment by url.
+	 *
+	 * @param string $url The url.
+	 *
+	 * @return \WP_Post|false
+	 */
+	public function findByUrl( $url ) {
+		$args = array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 1,
+			'meta_query'     => array(
+				array(
+					'key'     => '_source_url',
+					'value'   => $url,
+					'compare' => '=',
+				),
+			),
+		);
 
-		// update gallery ids.
-		$existing = get_post_meta( $model->product, 'gallery', true );
-		$updated  = array_unique( array_filter( array_merge( $existing, [ $attachment_id ] ) ) );
-		error_log( 'updating gallery: ' . print_r( $updated, true ) );
-		update_post_meta( $model->product, 'gallery', $updated );
+		$attachments = get_posts( $args );
 
-		return $this;
+		return ! empty( $attachments ) ? $attachments[0] : false;
 	}
 }

@@ -63,24 +63,3 @@ add_filter(
 		return $url;
 	}
 );
-
-// add_action(
-// 'wp',
-// function() {
-// $post = get_post( 6595 );
-// var_dump( $post );
-// }
-// );
-
-
-function external_mediaurl( $wp_get_attachment_url, $id ) {
-	$post = get_post( $id );
-
-	return [
-		$post->guid,
-		100,
-		100,
-	];
-
-}
-add_filter( 'wp_get_attachment_image_src', 'external_mediaurl', 10, 2 );
