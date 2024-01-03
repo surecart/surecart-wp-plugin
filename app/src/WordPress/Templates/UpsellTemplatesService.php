@@ -7,7 +7,7 @@ namespace SureCart\WordPress\Templates;
 use \SureCartVendors\Pimple\Container;
 
 /**
- * The Order bump template service.
+ * The Upsell template service.
  */
 class UpsellTemplatesService {
 	/**
@@ -29,7 +29,7 @@ class UpsellTemplatesService {
 	 *
 	 * @var string
 	 */
-	private string $post_type = 'sc_bump';
+	private string $post_type = 'sc_upsell';
 
 	/**
 	 * SureCart plugin slug.
@@ -60,10 +60,10 @@ class UpsellTemplatesService {
 		add_filter( 'theme_' . $this->post_type . '_templates', [ $this, 'addTemplates' ] );
 		add_filter( 'template_include', [ $this, 'includeTemplate' ], 9 );
 
-		// Bump page query overrides.
-		add_filter( 'posts_pre_query', [ $this, 'overrideBumpPostQuery' ], 10, 2 );
-		add_filter( 'query_vars', [ $this, 'addCurrentBumpQueryVar' ] );
-		// add_filter( 'get_post_metadata', [ $this, 'overrideBumpPostMeta' ], 10, 4 );
+		// Upsell page query overrides.
+		add_filter( 'posts_pre_query', [ $this, 'overrideUpsellPostQuery' ], 10, 2 );
+		add_filter( 'query_vars', [ $this, 'addCurrentUpsellQueryVar' ] );
+		// add_filter( 'get_post_metadata', [ $this, 'overrideUpsellPostMeta' ], 10, 4 );
 	}
 
 	/**
@@ -77,49 +77,47 @@ class UpsellTemplatesService {
 	 *
 	 * @return mixed
 	 */
-	public function overrideBumpPostMeta( $value, $object_id, $meta_key, $single ) {
+	public function overrideUpsellPostMeta( $value, $object_id, $meta_key, $single ) {
 		// not our meta query.
-		if ( 'sc_bump_id' !== $meta_key && 'sc_bump_slug' !== $meta_key ) {
+		if ( 'sc_upsell_id' !== $meta_key && 'sc_upsell_slug' !== $meta_key ) {
 			return $value;
 		}
 
-		$bump = get_query_var( 'surecart_current_bump' );
+		$upsell = get_query_var( 'surecart_current_upsell' );
 
-		if ( ! $bump ) {
-			// get the bump in case the bump page id query var is the slug.
-			$bump_id = get_query_var( 'sc_bump_id' );
-			$bump    = \SureCart\Models\Bump::with( [ 'price' ] )->find( $bump_id );
+		if ( ! $upsell ) {
+			// get the upsell in case the upsell page id query var is the slug.
+			$upsell_id = get_query_var( 'sc_upsell_id' );
+			$upsell    = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell_id );
 		}
 
 		// we don't have an id or slug.
-		if ( empty( $bump->id ) || empty( $bump->slug ) ) {
+		if ( empty( $upsell->id ) || empty( $upsell->slug ) ) {
 			return $value;
 		}
 
-		die($bump->id);
-
 		// return the id.
-		if ( 'sc_bump_id' === $meta_key ) {
-			return $bump->id;
+		if ( 'sc_upsell_id' === $meta_key ) {
+			return $upsell->id;
 		}
 
 		// return the slug.
-		if ( 'sc_bump_slug' === $meta_key ) {
-			return $bump->id; // TODO: for now, we don't have the slug for bump.
+		if ( 'sc_upsell_slug' === $meta_key ) {
+			return $upsell->id; // TODO: for now, we don't have the slug for upsell.
 		}
 
 		return $value;
 	}
 
 	/**
-	 * Add surecart_current_bump to list of query vars.
+	 * Add surecart_current_upsell to list of query vars.
 	 *
 	 * @param array $vars The query vars.
 	 * @return array
 	 */
-	public function addCurrentBumpQueryVar( array $vars ): array {
+	public function addCurrentUpsellQueryVar( array $vars ): array {
 		$vars[] = 'surecart_current_product';
-		// $vars[] = 'surecart_current_bump';
+		// $vars[] = 'surecart_current_upsell';
 		return $vars;
 	}
 
@@ -138,32 +136,32 @@ class UpsellTemplatesService {
 	 *
 	 * @return WP_Post[]|null Array of post data, or null to allow WP to run its normal queries.
 	 */
-	public function overrideBumpPostQuery( $posts, \WP_Query $wp_query ) {
-		$bump_id = isset( $wp_query->query['sc_bump_id'] ) ? $wp_query->query['sc_bump_id'] : null;
-		if ( ! $bump_id ) {
+	public function overrideUpsellPostQuery( $posts, \WP_Query $wp_query ) {
+		$upsell_id = isset( $wp_query->query['sc_upsell_id'] ) ? $wp_query->query['sc_upsell_id'] : null;
+		if ( ! $upsell_id ) {
 			return $posts;
 		}
 
-		$bump = \SureCart\Models\Bump::with( [ 'price' ] )->find( $bump_id );
-		if ( is_wp_error( $bump ) ) {
+		$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell_id );
+		if ( is_wp_error( $upsell ) ) {
 			$wp_query->is_404 = true;
 			return $posts;
 		}
 
-		set_query_var( 'surecart_current_bump', $bump );
+		set_query_var( 'surecart_current_upsell', $upsell );
 
-		$product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $bump->price->product ?? '' );
+		$product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $upsell->price->product ?? '' );
 		set_query_var( 'surecart_current_product', $product );
 
-		// create a fake post for the bump.
+		// create a fake post for the upsell.
 		$post                    = new \stdClass();
-		$post->post_title        = $bump->name;
-		$post->post_name         = $bump->id;
-		$post->post_content      = '<div>' . ( $bump->template_part->content ?? '' ) . '</div>';
+		$post->post_title        = $upsell->name;
+		$post->post_name         = $upsell->id;
+		$post->post_content      = '<div>' . ( $upsell->template_part->content ?? '' ) . '</div>';
 		$post->post_status       = 'publish';
 		$post->post_type         = $this->post_type;
-		$post->sc_id             = $bump->id;
-		$post->bump              = $bump;
+		$post->sc_id             = $upsell->id;
+		$post->upsell            = $upsell;
 		$post->product           = $product;
 		$post->post_author       = 1;
 		$post->post_parent       = 0;
@@ -172,10 +170,10 @@ class UpsellTemplatesService {
 		$post->ping_status       = 'closed';
 		$post->post_password     = '';
 		$post->post_excerpt      = '';
-		$post->post_date         = ( new \DateTime( "@$bump->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
-		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $bump->created_at, true );
-		$post->post_modified     = ( new \DateTime( "@$bump->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
-		$post->post_modified_gmt = date_i18n( 'Y-m-d H:i:s', $bump->updated_at, true );
+		$post->post_date         = ( new \DateTime( "@$upsell->created_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
+		$post->post_date_gmt     = date_i18n( 'Y-m-d H:i:s', $upsell->created_at, true );
+		$post->post_modified     = ( new \DateTime( "@$upsell->updated_at" ) )->setTimezone( new \DateTimeZone( wp_timezone_string() ) )->format( 'Y-m-d H:i:s' );
+		$post->post_modified_gmt = date_i18n( 'Y-m-d H:i:s', $upsell->updated_at, true );
 		$post->ID                = 999999999;
 		$posts                   = array( $post );
 
@@ -216,11 +214,11 @@ class UpsellTemplatesService {
 		global $post;
 		$id = $post->ID ?? null;
 
-		// check for bump and use the template id.
-		$bump = get_query_var( 'surecart_current_bump' );
+		// check for upsell and use the template id.
+		$upsell = get_query_var( 'surecart_current_upsell' );
 
-		if ( ! empty( $bump->metadata->wp_template_id ) ) {
-			$page_template = $bump->metadata->wp_template_id;
+		if ( ! empty( $upsell->metadata->wp_template_id ) ) {
+			$page_template = $upsell->metadata->wp_template_id;
 		} else {
 			$page_template = get_post_meta( $id, '_wp_page_template', true );
 		}

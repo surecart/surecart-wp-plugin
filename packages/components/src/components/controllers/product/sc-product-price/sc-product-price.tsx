@@ -46,12 +46,12 @@ export class ScProductPrice {
     }
 
     // If price doesn't match, don't proceed.
-    const bumpPrice = upsellState.upsell?.price as Price;
-    let price = state[this.productId]?.prices.find(priceData => priceData?.id === bumpPrice?.id);
+    const upsellPrice = upsellState.upsell?.price as Price;
+    let price = state[this.productId]?.prices.find(priceData => priceData?.id === upsellPrice?.id);
     if (!price) return;
 
     let amount = price?.amount || 0;
-    let initialAmount = bumpPrice?.amount || 0;
+    let initialAmount = upsellPrice?.amount || 0;
     let scratchAmount = initialAmount;
 
     if (upsellState.upsell?.amount_off) {

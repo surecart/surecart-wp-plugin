@@ -49,6 +49,7 @@ declare global {
       };
       upsell_data: {
         upsell: Upsell;
+        checkout: Checkout;
       }
       pages: {
         dashboard: string;

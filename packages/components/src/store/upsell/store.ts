@@ -1,15 +1,17 @@
 import { createStore } from '@stencil/store';
-import { Product, Upsell } from 'src/types';
+import { Checkout, Product, Upsell } from 'src/types';
 
 interface Store {
   upsell: Upsell | null;
   product: Product | null;
   busy: boolean;
   disabled: boolean;
+  checkout: Checkout | null;
 }
 
 const product = window?.scData?.product_data?.product || null;
 const upsell = window?.scData?.upsell_data?.upsell || null;
+const checkout = window?.scData?.upsell_data?.checkout || null;
 
 const store = createStore<Store>(
   {
@@ -17,6 +19,7 @@ const store = createStore<Store>(
     product,
     busy: false,
     disabled: false,
+    checkout: checkout,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

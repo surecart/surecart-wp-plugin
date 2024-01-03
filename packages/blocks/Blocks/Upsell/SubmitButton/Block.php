@@ -98,9 +98,9 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$bump    = get_query_var( 'surecart_current_bump' );
+		$upsell  = get_query_var( 'surecart_current_upsell' );
 		$product = get_query_var( 'surecart_current_product' );
-		if ( empty( $bump ) ) {
+		if ( empty( $upsell ) ) {
 			return '';
 		}
 
@@ -113,10 +113,10 @@ class Block extends BaseBlock {
 			)
 		);
 
-		$bump_price  = $this->getBumpPrice( $bump );
-		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
-		$icon        = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
-		$show_total  = ! empty( $attributes['show_total'] ) ? 'true' : false;
+		$upsell_price  = $this->getUpsellPrice( $upsell );
+		$width_class   = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
+		$icon          = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
+		$show_total    = ! empty( $attributes['show_total'] ) ? 'true' : false;
 
 		ob_start();
 		?>
@@ -135,7 +135,7 @@ class Block extends BaseBlock {
 
 					<?php if ( ! empty( $show_total ) ) : ?>
 						<?php if ( ! empty( $active_prices[0] ) ) : ?>
-							<?php echo esc_html( Currency::format( $bump_price, $active_prices[0]->currency ) ); ?>
+							<?php echo esc_html( Currency::format( $upsell_price, $active_prices[0]->currency ) ); ?>
 						<?php endif; ?>
 					<?php endif; ?>
 				</span>
@@ -169,22 +169,22 @@ class Block extends BaseBlock {
 	}
 
 	/**
-	 * Get the price of the bump
+	 * Get the price of the upsell
 	 *
-	 * @param  object $bump Bump object.
+	 * @param  object $upsell Upsell object.
 	 *
 	 * @return float
 	 */
-	private function getBumpPrice( $bump ) {
+	private function getUpsellPrice( $upsell ) {
 		$amount         = null;
-		$initial_amount = $bump->price->amount ?? 0;
+		$initial_amount = $upsell->price->amount ?? 0;
 
-		if ( isset( $bump->amount_off ) ) {
-			$amount = max( 0, $initial_amount - $bump->amount_off );
+		if ( isset( $upsell->amount_off ) ) {
+			$amount = max( 0, $initial_amount - $upsell->amount_off );
 		}
 
-		if ( isset( $bump->percent_off ) ) {
-			$off    = $initial_amount * ( $bump->percent_off / 100 );
+		if ( isset( $upsell->percent_off ) ) {
+			$off    = $initial_amount * ( $upsell->percent_off / 100 );
 			$amount = max( 0, $initial_amount - $off );
 		}
 

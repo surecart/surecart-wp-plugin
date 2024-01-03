@@ -80,21 +80,21 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$container['surecart.settings.permalinks.bump'] = function() {
+		$container['surecart.settings.permalinks.upsell'] = function() {
 			return new PermalinkSettingService(
 				[
-					'slug'        => 'bump',
-					'label'       => __( 'SureCart Order Bump Page Permalinks', 'surecart' ),
+					'slug'        => 'upsell',
+					'label'       => __( 'SureCart Upsell Page Permalinks', 'surecart' ),
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your order bump URLs here. For example, using <code>bumps</code> would make your order bump\'s buy links like <code>%sbumps/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your order upsell URLs here. For example, using <code>upsells</code> would make your upsell\'s buy links like <code>%upsells/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
 					'options'     => [
 						[
-							'value' => 'bumps',
+							'value' => 'upsells',
 							'label' => __( 'Default', 'surecart' ),
 						],
 						[
-							'value' => 'order-bump',
-							'label' => __( 'Order Bump', 'surecart' ),
+							'value' => 'upsell',
+							'label' => __( 'Upsell', 'surecart' ),
 						],
 					],
 				]
@@ -131,12 +131,12 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->query( 'index.php?sc_collection_page_id=$matches[1]' )
 			->create();
 
-		// Bump.
-		$container['surecart.settings.permalinks.bump']->bootstrap();
+		// Upsell.
+		$container['surecart.settings.permalinks.upsell']->bootstrap();
 		( new PermalinkService() )
-			->params( [ 'sc_bump_id' ] )
-			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'bump_page' ) ) . '/([a-z0-9-]+)[/]?$' )
-			->query( 'index.php?sc_bump_id=$matches[1]' )
+			->params( [ 'sc_upsell_id' ] )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'upsell_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_upsell_id=$matches[1]' )
 			->create();
 
 		// Redirect.

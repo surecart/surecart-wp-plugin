@@ -42,13 +42,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Order Bump Page
+|  Upsell Page
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
 ->get()
-->where( 'query_var', 'sc_bump_id' )
-->handle( 'BumpPageController@show' );
+->where( 'query_var', 'sc_upsell_id' )
+->handle( 'UpsellPageController@show' );
 
 /*
 |--------------------------------------------------------------------------

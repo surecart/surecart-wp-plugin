@@ -96,14 +96,14 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$bump = get_query_var( 'surecart_current_bump' );
-		if ( empty( $bump ) ) {
+		$upsell = get_query_var( 'surecart_current_upsell' );
+		if ( empty( $upsell ) ) {
 			return '';
 		}
 
 		ob_start();
 		?>
-		<sc-order-bump-no-thanks-button>
+		<sc-upsell-no-thanks-button>
 			<sc-button
 				type="<?php echo esc_attr( $attributes['type'] ?? 'default' ); ?>"
 				submit="false"
@@ -112,7 +112,7 @@ class Block extends BaseBlock {
 			>
 				<?php echo wp_kses_post( $attributes['text'] ?? '' ); ?>
 			</sc-button>
-		</sc-order-bump-no-thanks-button>
+		</sc-upsell-no-thanks-button>
 
 		<?php
 		return ob_get_clean();

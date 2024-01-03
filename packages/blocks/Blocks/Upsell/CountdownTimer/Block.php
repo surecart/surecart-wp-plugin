@@ -24,8 +24,8 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$bump = get_query_var( 'surecart_current_bump' );
-		if ( empty( $bump ) ) {
+		$upsell = get_query_var( 'surecart_current_upsell' );
+		if ( empty( $upsell ) ) {
 			return '';
 		}
 		ob_start(); ?>

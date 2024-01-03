@@ -1,12 +1,13 @@
 <?php
+
 namespace SureCart\Controllers\Web;
 
 use SureCart\Models\Form;
 
 /**
- * Handles Bump Page requests for frontend.
+ * Handles Upsell Page requests for frontend.
  */
-class BumpPageController extends BasePageController {
+class UpsellPageController extends BasePageController {
 	/**
 	 * The product model.
 	 *
@@ -23,7 +24,7 @@ class BumpPageController extends BasePageController {
 		parent::filters();
 
 		// Add edit product link to admin bar.
-		add_action( 'admin_bar_menu', [ $this, 'addEditBumpLink' ], 99 );
+		add_action( 'admin_bar_menu', [ $this, 'addEditUpsellLink' ], 99 );
 
 		// add data needed for product to load.
 		add_filter(
@@ -38,8 +39,8 @@ class BumpPageController extends BasePageController {
 					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
 				];
 
-				$data['bump_data'] = [
-					'bump' => $this->model,
+				$data['upsell_data'] = [
+					'upsell' => $this->model,
 				];
 
 				return $data;
@@ -63,15 +64,15 @@ class BumpPageController extends BasePageController {
 	 *
 	 * @return void
 	 */
-	public function addEditBumpLink( $wp_admin_bar ) {
+	public function addEditUpsellLink( $wp_admin_bar ) {
 		if ( empty( $this->model->id ) ) {
 			return;
 		}
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit',
-				'title' => __( 'Edit Bump', 'surecart' ),
-				'href'  => esc_url( \SureCart::getUrl()->edit( 'bump', $this->model->id ) ),
+				'title' => __( 'Edit Upsell', 'surecart' ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( 'upsell', $this->model->id ) ),
 			]
 		);
 	}
@@ -85,10 +86,10 @@ class BumpPageController extends BasePageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
-		$id = get_query_var( 'sc_bump_id' );
+		$id = get_query_var( 'sc_upsell_id' );
 
 		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Bump::with( [ 'price' ] )->find( $id );
+		$this->model = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
@@ -108,8 +109,8 @@ class BumpPageController extends BasePageController {
 		// Set the product page id.
 		set_query_var( 'sc_product_page_id', $this->product->id );
 
-		// Set the bump id.
-		set_query_var( 'sc_bump_id', $this->model->id );
+		// Set the upsell id.
+		set_query_var( 'sc_upsell_id', $this->model->id );
 
 		// add the filters.
 		$this->filters();
