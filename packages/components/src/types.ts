@@ -164,6 +164,7 @@ export interface Upsell {
   price: string | Price;
   priority: 1 | 2 | 3 | 4 | 5;
   times_remaining?: number;
+  permalink: string;
   created_at: number;
   updated_at: number;
 }

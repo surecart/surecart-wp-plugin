@@ -86,15 +86,15 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 					'slug'        => 'upsell',
 					'label'       => __( 'SureCart Upsell Page Permalinks', 'surecart' ),
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your order upsell URLs here. For example, using <code>upsells</code> would make your upsell\'s buy links like <code>%upsells/sample-product/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>upsells</code> would make your upsell\'s links like <code>%supsells/upsell-id/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
 					'options'     => [
 						[
 							'value' => 'upsells',
 							'label' => __( 'Default', 'surecart' ),
 						],
 						[
-							'value' => 'upsell',
-							'label' => __( 'Upsell', 'surecart' ),
+							'value' => 'product-upsell',
+							'label' => __( 'Product Upsell', 'surecart' ),
 						],
 					],
 				]

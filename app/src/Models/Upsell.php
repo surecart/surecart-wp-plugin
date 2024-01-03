@@ -112,7 +112,7 @@ class Upsell extends Model implements PageModel {
 			return add_query_arg( 'sc_upsell_id', $this->id, get_home_url() );
 		}
 		// permalinks on.
-		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'bump_page' ) ) . $this->id;
+		return trailingslashit( get_home_url() ) . trailingslashit( \SureCart::settings()->permalinks()->getBase( 'upsell_page' ) ) . $this->id;
 	}
 
 	/**

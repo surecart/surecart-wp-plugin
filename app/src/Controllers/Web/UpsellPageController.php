@@ -86,6 +86,7 @@ class UpsellPageController extends BasePageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
+		$checkout_id = get_query_var( 'sc_checkout' );
 		$id = get_query_var( 'sc_upsell_id' );
 
 		// fetch the product by id/slug.

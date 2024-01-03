@@ -208,6 +208,26 @@ class CheckoutsController extends RestController {
 			]
 		)->find( $request['id'] );
 
+		// Check if recommended_upsells is there.
+		if ( ! empty( $checkout->recommended_upsells ) ) {
+			error_log(print_r( $checkout, true ));
+
+			$upsells = [];
+			// Get the upsells so that it could fetch the permalink.
+			foreach ($checkout->recommended_upsells->data ?? [] as $upsell) {
+				$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell->id );
+				if ( is_wp_error( $upsell ) ) {
+					return $upsell;
+				}
+
+				// Set the permalink.
+				$upsell->permalink = $upsell->getPermalinkAttribute() ?? '';
+				$upsells[] = $upsell;
+			}
+
+			$checkout->recommended_upsells->data = $upsells;
+		}
+
 		// bail if error.
 		if ( is_wp_error( $checkout ) ) {
 			return $checkout;
