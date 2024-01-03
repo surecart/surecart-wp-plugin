@@ -39,8 +39,8 @@ export class ScProductPrice {
     return this.renderPrice(state[this.productId].selectedPrice, variant?.amount);
   }
 
-  // Check if the bump is the same as the product and price matches.
-  componentDidLoad() {
+  // Check if the upsell is the same as the product and price matches.
+  componentWillLoad() {
     if (upsellState.product?.id !== this.productId) {
       return;
     }
