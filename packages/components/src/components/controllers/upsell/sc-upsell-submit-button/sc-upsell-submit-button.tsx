@@ -7,17 +7,17 @@ import { Component, Element, h, Host } from '@stencil/core';
  * Internal dependencies.
  */
 import { state as upsellState } from '@store/upsell';
-import { state as checkoutState } from '@store/checkout';
 import { state as productState } from '@store/product';
-import { Checkout, Price, Product } from 'src/types';
-import { updateCheckout } from '@services/session';
+import { Price, Product } from 'src/types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { createErrorNotice } from '@store/notices/mutations';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
+import { redirectUpsell } from '@store/upsell/mutations';
 
 @Component({
   tag: 'sc-upsell-submit-button',
   styleUrl: 'sc-upsell-submit-button.scss',
-  shadow: false,
 })
 export class ScUpsellSubmitButton {
   @Element() el: HTMLScUpsellSubmitButtonElement;
@@ -38,31 +38,24 @@ export class ScUpsellSubmitButton {
       // Get the upsell price.
       const priceId = (upsellState.upsell.price as Price)?.id || (upsellState.upsell?.price as string);
 
-      const previousLineItems = (checkoutState.checkout.line_items.data || []).map(lineItem => ({
-        id: lineItem.id,
-        price_id: lineItem.price.id,
-        quantity: lineItem.quantity,
-      }));
+      // Add Upsell to line item.
+      const upsellLineItem = {
+        upsell: upsellState.upsell?.id,
+        price: priceId,
+        quantity: productState.quantity || 1,
+        checkout: upsellState.checkout?.id,
+      };
 
-      checkoutState.checkout = (await updateCheckout({
-        id: checkoutState.checkout.id,
+      (await apiFetch({
+        path: addQueryArgs(`surecart/v1/line_items/upsell`),
+        method: 'POST',
         data: {
-          line_items: [
-            ...previousLineItems,
-            {
-              price_id: priceId,
-              quantity: productState.quantity,
-              upsell: upsellState.upsell?.id,
-            },
-          ],
+          line_item: upsellLineItem,
         },
-      })) as Checkout;
+      }) as any);
 
-      // Redirect to checkout.
-      const checkoutUrl = window?.scData?.pages?.checkout;
-      if (!!checkoutUrl) {
-        window.location.href = checkoutUrl;
-      }
+      // Redirect to next Upsell or checkout success URL.
+      redirectUpsell();
     } catch (error) {
       createErrorNotice(error);
     } finally {

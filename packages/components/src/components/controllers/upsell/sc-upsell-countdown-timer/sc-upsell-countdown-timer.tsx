@@ -92,7 +92,7 @@ export class ScUpsellCountdownTimer {
   render() {
     return (
       <Host>
-        <span class="sc-countdown-badge">
+        <span class="sc-upsell-countdown-badge">
           {this.showIcon && <sc-icon name="clock" />}
           <slot name="offer-expire-text" />
           <strong>{this.formattedTime}</strong>

@@ -132,4 +132,5 @@ return array(
 	'line_item.price.currency_mismatch'					   => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
 	'return_request.return_items.quantity.over_returned'   => __( 'The quantity returned is greater than the quantity fulfilled.', 'surecart' ),
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
+	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
 );

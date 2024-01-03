@@ -113,10 +113,10 @@ class Block extends BaseBlock {
 			)
 		);
 
-		$upsell_price  = $this->getUpsellPrice( $upsell );
-		$width_class   = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
-		$icon          = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
-		$show_total    = ! empty( $attributes['show_total'] ) ? 'true' : false;
+		$upsell_price = $this->getUpsellPrice( $upsell );
+		$width_class  = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
+		$icon         = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
+		$show_total   = ! empty( $attributes['show_total'] ) ? 'true' : false;
 
 		ob_start();
 		?>
@@ -158,9 +158,9 @@ class Block extends BaseBlock {
 			'wp_footer',
 			function() use ( $attributes, $product ) {
 				?>
-		<sc-product-price-modal <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
-				<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
-		</sc-product-price-modal>
+				<sc-product-price-modal addToCart="false" ?>>
+					<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
+				</sc-product-price-modal>
 				<?php
 			}
 		);
