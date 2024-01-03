@@ -1,0 +1,21 @@
+// import { ScOrderBump } from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+
+export default ({ upsell, loading }) => {
+	if (loading) return null;
+	return (
+		<div style={{ position: 'sticky' }}>
+			<sc-text
+				tag="h2"
+				style={{
+					'--font-size': '15px',
+					'--font-weight': 'var(--sc-font-weight-bold)',
+					marginBottom: 'var(--sc-spacing-medium)',
+				}}
+			>
+				{__('Preview', 'surecart')}
+			</sc-text>
+			{/* <ScOrderBump upsell={upsell} /> */}
+		</div>
+	);
+};
