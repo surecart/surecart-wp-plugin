@@ -1,0 +1,41 @@
+<?php
+
+namespace SureCartBlocks\Blocks\Upsell\Description;
+
+use SureCartBlocks\Blocks\BaseBlock;
+
+/**
+ * Upsell Description Block
+ */
+class Block extends BaseBlock {
+	/**
+	 * Keep track of the instance number of this block.
+	 *
+	 * @var integer
+	 */
+	public static $instance;
+
+	/**
+	 * Render the block
+	 *
+	 * @param array  $attributes Block attributes.
+	 * @param string $content Post content.
+	 *
+	 * @return string
+	 */
+	public function render( $attributes, $content ) {
+		$bump = get_query_var( 'surecart_current_bump' );
+		if ( empty( $bump->metadata->description ?? '' ) ) {
+			return '';
+		}
+		ob_start(); ?>
+
+		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
+			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<?php echo wp_kses_post( $bump->metadata->description ?? '' ); ?>
+		</div>
+
+		<?php
+		return ob_get_clean();
+	}
+}

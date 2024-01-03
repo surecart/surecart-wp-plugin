@@ -1845,19 +1845,6 @@ export namespace Components {
          */
         "showControl": boolean;
     }
-    interface ScOrderBumpCountdownTimer {
-        /**
-          * Whether to show the icon.
-         */
-        "showIcon": boolean;
-    }
-    interface ScOrderBumpNoThanksButton {
-    }
-    interface ScOrderBumpSubmitButton {
-    }
-    interface ScOrderBumpText {
-        "text": 'title' | 'description';
-    }
     interface ScOrderBumps {
         "help": string;
         "label": string;
@@ -4005,6 +3992,19 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScUpsellCountdownTimer {
+        /**
+          * Whether to show the icon.
+         */
+        "showIcon": boolean;
+    }
+    interface ScUpsellNoThanksButton {
+    }
+    interface ScUpsellSubmitButton {
+    }
+    interface ScUpsellText {
+        "text": 'title' | 'description';
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -4898,30 +4898,6 @@ declare global {
         prototype: HTMLScOrderBumpElement;
         new (): HTMLScOrderBumpElement;
     };
-    interface HTMLScOrderBumpCountdownTimerElement extends Components.ScOrderBumpCountdownTimer, HTMLStencilElement {
-    }
-    var HTMLScOrderBumpCountdownTimerElement: {
-        prototype: HTMLScOrderBumpCountdownTimerElement;
-        new (): HTMLScOrderBumpCountdownTimerElement;
-    };
-    interface HTMLScOrderBumpNoThanksButtonElement extends Components.ScOrderBumpNoThanksButton, HTMLStencilElement {
-    }
-    var HTMLScOrderBumpNoThanksButtonElement: {
-        prototype: HTMLScOrderBumpNoThanksButtonElement;
-        new (): HTMLScOrderBumpNoThanksButtonElement;
-    };
-    interface HTMLScOrderBumpSubmitButtonElement extends Components.ScOrderBumpSubmitButton, HTMLStencilElement {
-    }
-    var HTMLScOrderBumpSubmitButtonElement: {
-        prototype: HTMLScOrderBumpSubmitButtonElement;
-        new (): HTMLScOrderBumpSubmitButtonElement;
-    };
-    interface HTMLScOrderBumpTextElement extends Components.ScOrderBumpText, HTMLStencilElement {
-    }
-    var HTMLScOrderBumpTextElement: {
-        prototype: HTMLScOrderBumpTextElement;
-        new (): HTMLScOrderBumpTextElement;
-    };
     interface HTMLScOrderBumpsElement extends Components.ScOrderBumps, HTMLStencilElement {
     }
     var HTMLScOrderBumpsElement: {
@@ -5580,6 +5556,30 @@ declare global {
         prototype: HTMLScUpgradeRequiredElement;
         new (): HTMLScUpgradeRequiredElement;
     };
+    interface HTMLScUpsellCountdownTimerElement extends Components.ScUpsellCountdownTimer, HTMLStencilElement {
+    }
+    var HTMLScUpsellCountdownTimerElement: {
+        prototype: HTMLScUpsellCountdownTimerElement;
+        new (): HTMLScUpsellCountdownTimerElement;
+    };
+    interface HTMLScUpsellNoThanksButtonElement extends Components.ScUpsellNoThanksButton, HTMLStencilElement {
+    }
+    var HTMLScUpsellNoThanksButtonElement: {
+        prototype: HTMLScUpsellNoThanksButtonElement;
+        new (): HTMLScUpsellNoThanksButtonElement;
+    };
+    interface HTMLScUpsellSubmitButtonElement extends Components.ScUpsellSubmitButton, HTMLStencilElement {
+    }
+    var HTMLScUpsellSubmitButtonElement: {
+        prototype: HTMLScUpsellSubmitButtonElement;
+        new (): HTMLScUpsellSubmitButtonElement;
+    };
+    interface HTMLScUpsellTextElement extends Components.ScUpsellText, HTMLStencilElement {
+    }
+    var HTMLScUpsellTextElement: {
+        prototype: HTMLScUpsellTextElement;
+        new (): HTMLScUpsellTextElement;
+    };
     interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
     }
     var HTMLScVisuallyHiddenElement: {
@@ -5702,10 +5702,6 @@ declare global {
         "sc-mollie-add-method": HTMLScMollieAddMethodElement;
         "sc-order": HTMLScOrderElement;
         "sc-order-bump": HTMLScOrderBumpElement;
-        "sc-order-bump-countdown-timer": HTMLScOrderBumpCountdownTimerElement;
-        "sc-order-bump-no-thanks-button": HTMLScOrderBumpNoThanksButtonElement;
-        "sc-order-bump-submit-button": HTMLScOrderBumpSubmitButtonElement;
-        "sc-order-bump-text": HTMLScOrderBumpTextElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-components-validator": HTMLScOrderConfirmComponentsValidatorElement;
         "sc-order-confirm-provider": HTMLScOrderConfirmProviderElement;
@@ -5815,6 +5811,10 @@ declare global {
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
         "sc-upgrade-required": HTMLScUpgradeRequiredElement;
+        "sc-upsell-countdown-timer": HTMLScUpsellCountdownTimerElement;
+        "sc-upsell-no-thanks-button": HTMLScUpsellNoThanksButtonElement;
+        "sc-upsell-submit-button": HTMLScUpsellSubmitButtonElement;
+        "sc-upsell-text": HTMLScUpsellTextElement;
         "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
@@ -7845,19 +7845,6 @@ declare namespace LocalJSX {
           * Should we show the controls
          */
         "showControl"?: boolean;
-    }
-    interface ScOrderBumpCountdownTimer {
-        /**
-          * Whether to show the icon.
-         */
-        "showIcon"?: boolean;
-    }
-    interface ScOrderBumpNoThanksButton {
-    }
-    interface ScOrderBumpSubmitButton {
-    }
-    interface ScOrderBumpText {
-        "text"?: 'title' | 'description';
     }
     interface ScOrderBumps {
         "help"?: string;
@@ -10184,6 +10171,19 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScUpsellCountdownTimer {
+        /**
+          * Whether to show the icon.
+         */
+        "showIcon"?: boolean;
+    }
+    interface ScUpsellNoThanksButton {
+    }
+    interface ScUpsellSubmitButton {
+    }
+    interface ScUpsellText {
+        "text"?: 'title' | 'description';
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -10302,10 +10302,6 @@ declare namespace LocalJSX {
         "sc-mollie-add-method": ScMollieAddMethod;
         "sc-order": ScOrder;
         "sc-order-bump": ScOrderBump;
-        "sc-order-bump-countdown-timer": ScOrderBumpCountdownTimer;
-        "sc-order-bump-no-thanks-button": ScOrderBumpNoThanksButton;
-        "sc-order-bump-submit-button": ScOrderBumpSubmitButton;
-        "sc-order-bump-text": ScOrderBumpText;
         "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-components-validator": ScOrderConfirmComponentsValidator;
         "sc-order-confirm-provider": ScOrderConfirmProvider;
@@ -10415,6 +10411,10 @@ declare namespace LocalJSX {
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
         "sc-upgrade-required": ScUpgradeRequired;
+        "sc-upsell-countdown-timer": ScUpsellCountdownTimer;
+        "sc-upsell-no-thanks-button": ScUpsellNoThanksButton;
+        "sc-upsell-submit-button": ScUpsellSubmitButton;
+        "sc-upsell-text": ScUpsellText;
         "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
@@ -10535,10 +10535,6 @@ declare module "@stencil/core" {
             "sc-mollie-add-method": LocalJSX.ScMollieAddMethod & JSXBase.HTMLAttributes<HTMLScMollieAddMethodElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
-            "sc-order-bump-countdown-timer": LocalJSX.ScOrderBumpCountdownTimer & JSXBase.HTMLAttributes<HTMLScOrderBumpCountdownTimerElement>;
-            "sc-order-bump-no-thanks-button": LocalJSX.ScOrderBumpNoThanksButton & JSXBase.HTMLAttributes<HTMLScOrderBumpNoThanksButtonElement>;
-            "sc-order-bump-submit-button": LocalJSX.ScOrderBumpSubmitButton & JSXBase.HTMLAttributes<HTMLScOrderBumpSubmitButtonElement>;
-            "sc-order-bump-text": LocalJSX.ScOrderBumpText & JSXBase.HTMLAttributes<HTMLScOrderBumpTextElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;
             /**
@@ -10652,6 +10648,10 @@ declare module "@stencil/core" {
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
             "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
+            "sc-upsell-countdown-timer": LocalJSX.ScUpsellCountdownTimer & JSXBase.HTMLAttributes<HTMLScUpsellCountdownTimerElement>;
+            "sc-upsell-no-thanks-button": LocalJSX.ScUpsellNoThanksButton & JSXBase.HTMLAttributes<HTMLScUpsellNoThanksButtonElement>;
+            "sc-upsell-submit-button": LocalJSX.ScUpsellSubmitButton & JSXBase.HTMLAttributes<HTMLScUpsellSubmitButtonElement>;
+            "sc-upsell-text": LocalJSX.ScUpsellText & JSXBase.HTMLAttributes<HTMLScUpsellTextElement>;
             "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;

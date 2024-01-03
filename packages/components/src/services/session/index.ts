@@ -25,6 +25,7 @@ export const expand = [
   'discount.promotion',
   'recommended_bumps',
   'bump.price',
+  'recommended_upsells',
   'product.variants',
   'discount.coupon',
   'shipping_address',

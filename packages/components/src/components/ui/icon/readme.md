@@ -55,7 +55,6 @@
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
- - [sc-order-bump-countdown-timer](../../controllers/order-bump/sc-order-bump-countdown-timer)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -75,6 +74,7 @@
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -84,6 +84,7 @@
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell-countdown-timer](../../controllers/upsell/sc-upsell-countdown-timer)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
@@ -111,7 +112,6 @@ graph TD;
   sc-invoices-list --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
-  sc-order-bump-countdown-timer --> sc-icon
   sc-order-confirm-provider --> sc-icon
   sc-order-submit --> sc-icon
   sc-orders-list --> sc-icon
@@ -131,6 +131,7 @@ graph TD;
   sc-select --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon
+  sc-subscription-details --> sc-icon
   sc-subscription-next-payment --> sc-icon
   sc-subscription-payment-method --> sc-icon
   sc-subscription-switch --> sc-icon
@@ -140,6 +141,7 @@ graph TD;
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
   sc-upgrade-required --> sc-icon
+  sc-upsell-countdown-timer --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

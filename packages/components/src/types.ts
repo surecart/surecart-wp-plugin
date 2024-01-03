@@ -21,7 +21,7 @@ declare global {
     sc?: {
       store?: {
         product?: any;
-        bump?: any;
+        upsell?: any;
         products?: any;
       };
     };
@@ -47,8 +47,8 @@ declare global {
         };
         product: Product;
       };
-      bump_data: {
-        bump: Bump;
+      upsell_data: {
+        upsell: Upsell;
       }
       pages: {
         dashboard: string;
@@ -162,6 +162,7 @@ export interface Upsell {
   percent_off: number;
   price: string | Price;
   priority: 1 | 2 | 3 | 4 | 5;
+  times_remaining?: number;
   created_at: number;
   updated_at: number;
 }
@@ -632,6 +633,11 @@ export interface Checkout extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Bump>;
+  };
+  recommended_upsells?: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Upsell>;
   };
   metadata?: any;
   payment_intent?: PaymentIntent;

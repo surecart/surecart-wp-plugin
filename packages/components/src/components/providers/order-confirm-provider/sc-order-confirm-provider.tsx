@@ -65,6 +65,16 @@ export class ScOrderConfirmProvider {
     } finally {
       // always clear the checkout.
       clearCheckout();
+
+      // Check if there is recommended_upsells, if so, redirect to first upsell.
+      if (checkoutState.checkout?.recommended_upsells?.data?.length) {
+        this.scSetState.emit('REDIRECT');
+        if (checkoutState.checkout?.recommended_upsells[0].permalink) {
+          const upsellRedirectUrl = checkoutState.checkout?.recommended_upsells[0].permalink + '?sc_checkout=' + checkoutState.checkout?.id;
+          window.location.assign(upsellRedirectUrl);
+        }
+      }
+
       // get success url.
       const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
       if (successUrl) {

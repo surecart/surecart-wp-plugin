@@ -12,7 +12,7 @@ import * as PriceChoices from './Blocks/Product/PriceChoices';
 import * as Variants from './Blocks/Product/VariantChoices';
 import * as CollectionBadges from './Blocks/Product/CollectionBadges';
 import { registerBlocksForTemplates } from './conditional-block-registration';
-import { bumpPageTemplates } from './order-bump';
+import { upsellPageTemplates } from './upsell';
 
 const productPageBlocks = [BuyButtons, BuyButton, CollectionBadges];
 const commonBlocks = [
@@ -34,7 +34,7 @@ const productPageTemplates = [
 // Common blocks for templates.
 registerBlocksForTemplates({
 	blocks: commonBlocks,
-	include: [...productPageTemplates, ...bumpPageTemplates],
+	include: [...productPageTemplates, ...upsellPageTemplates],
 });
 
 // Product page specific blocks.

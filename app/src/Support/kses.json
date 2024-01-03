@@ -1041,32 +1041,6 @@
     "class": true,
     "slot": true
   },
-  "sc-order-bump-countdown-timer": {
-    "show-icon": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-order-bump-no-thanks-button": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-order-bump-submit-button": {
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
-  "sc-order-bump-text": {
-    "text": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-order-bumps": {
     "help": true,
     "label": true,
@@ -2299,6 +2273,32 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-countdown-timer": {
+    "show-icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-no-thanks-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-submit-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-text": {
+    "text": true,
     "style": true,
     "id": true,
     "class": true,

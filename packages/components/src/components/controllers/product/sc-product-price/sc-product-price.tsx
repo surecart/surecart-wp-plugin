@@ -1,8 +1,15 @@
+/**
+ * External dependencies.
+ */
 import { Component, h, Prop, Fragment, Host } from '@stencil/core';
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { Price, Variant } from '../../../../types';
+
+/**
+ * Internal dependencies.
+ */
 import { state } from '@store/product';
-import { state as bumpState } from '@store/bump';
+import { state as upsellState } from '@store/upsell';
+import { Price, Variant } from '../../../../types';
 import { intervalString } from '../../../../functions/price';
 
 @Component({
@@ -34,12 +41,12 @@ export class ScProductPrice {
 
   // Check if the bump is the same as the product and price matches.
   componentDidLoad() {
-    if (bumpState.product?.id !== this.productId) {
+    if (upsellState.product?.id !== this.productId) {
       return;
     }
 
     // If price doesn't match, don't proceed.
-    const bumpPrice = bumpState.bump?.price as Price;
+    const bumpPrice = upsellState.upsell?.price as Price;
     let price = state[this.productId]?.prices.find(priceData => priceData?.id === bumpPrice?.id);
     if (!price) return;
 
@@ -47,12 +54,12 @@ export class ScProductPrice {
     let initialAmount = bumpPrice?.amount || 0;
     let scratchAmount = initialAmount;
 
-    if (bumpState.bump?.amount_off) {
-      amount = Math.max(0, initialAmount - bumpState.bump?.amount_off);
+    if (upsellState.upsell?.amount_off) {
+      amount = Math.max(0, initialAmount - upsellState.upsell?.amount_off);
     }
 
-    if (bumpState.bump?.percent_off) {
-      const off = initialAmount * (bumpState.bump?.percent_off / 100);
+    if (upsellState.upsell?.percent_off) {
+      const off = initialAmount * (upsellState.upsell?.percent_off / 100);
       amount = Math.max(0, initialAmount - off);
     }
 

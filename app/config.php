@@ -199,11 +199,11 @@ return [
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
 
-		\SureCartBlocks\Blocks\OrderBump\Cta\Block::class,
-		\SureCartBlocks\Blocks\OrderBump\Description\Block::class,
-		\SureCartBlocks\Blocks\OrderBump\CountdownTimer\Block::class,
-		\SureCartBlocks\Blocks\OrderBump\SubmitButton\Block::class,
-		\SureCartBlocks\Blocks\OrderBump\NoThanksButton\Block::class,
+		\SureCartBlocks\Blocks\Upsell\Cta\Block::class,
+		\SureCartBlocks\Blocks\Upsell\Description\Block::class,
+		\SureCartBlocks\Blocks\Upsell\CountdownTimer\Block::class,
+		\SureCartBlocks\Blocks\Upsell\SubmitButton\Block::class,
+		\SureCartBlocks\Blocks\Upsell\NoThanksButton\Block::class,
 	],
 
 	/** Which components to preload for each block. */

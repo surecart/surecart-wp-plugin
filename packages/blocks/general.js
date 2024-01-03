@@ -84,7 +84,7 @@ registerBlocksForTemplates({
 
 		'surecart/surecart//upsell-info',
 		'surecart/surecart//single-upsell',
-		'sc-bump',
+		'sc-upsell',
 		'sc-part-upsell-info',
 	],
 });
