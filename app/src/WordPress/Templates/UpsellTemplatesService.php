@@ -9,7 +9,7 @@ use \SureCartVendors\Pimple\Container;
 /**
  * The Order bump template service.
  */
-class BumpTemplatesService {
+class UpsellTemplatesService {
 	/**
 	 * The service container.
 	 *

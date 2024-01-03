@@ -31,7 +31,7 @@ export default function PostTemplate({ upsell, updateUpsell }) {
 					'postType',
 					'wp_template_part',
 					upsell?.metadata?.wp_template_part_id ||
-						'surecart/surecart//bump-info'
+						'surecart/surecart//upsell-info'
 				)
 			);
 		},

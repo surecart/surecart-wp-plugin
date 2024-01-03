@@ -34,7 +34,7 @@ export default function PostTemplateForm({
 				}) || []
 			).filter((template) => {
 				return (
-					template.id === 'surecart/surecart//bump-info' ||
+					template.id === 'surecart/surecart//upsell-info' ||
 					template.slug.includes('sc-part-bumps-info')
 				);
 			});
@@ -113,7 +113,7 @@ export default function PostTemplateForm({
 			<SelectControl
 				__nextHasNoMarginBottom
 				label={__('Template')}
-				value={template?.id || 'surecart/surecart//bump-info'}
+				value={template?.id || 'surecart/surecart//upsell-info'}
 				options={(parts ?? []).map((part) => {
 					return {
 						value: part?.id,
@@ -138,7 +138,7 @@ export default function PostTemplateForm({
 							postType: 'wp_template_part',
 							postId:
 								template?.id ||
-								'surecart/surecart//bump-info',
+								'surecart/surecart//upsell-info',
 							canvas: 'edit',
 						})}
 					>

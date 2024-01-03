@@ -33,7 +33,7 @@ class Upsell extends Model implements PageModel {
 		if ( ! wp_is_block_theme() ) {
 			$attributes['metadata'] = [
 				...$attributes['metadata'] ?? [],
-				'wp_template_id' => apply_filters( 'surecart/templates/bumps/default', 'pages/template-surecart-bump.php' ),
+				'wp_template_id' => apply_filters( 'surecart/templates/upsells/default', 'pages/template-surecart-upsell.php' ),
 			];
 		}
 
@@ -41,7 +41,7 @@ class Upsell extends Model implements PageModel {
 	}
 
 	/**
-	 * Get the bump template id.
+	 * Get the upsell template id.
 	 *
 	 * @return string
 	 */
@@ -49,13 +49,13 @@ class Upsell extends Model implements PageModel {
 		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
 			// we have a php file, switch to default.
 			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
-				return 'surecart/surecart//single-bump';
+				return 'surecart/surecart//single-upsell';
 			}
 
 			// this is acceptable.
 			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'surecart/surecart//single-bump';
+		return 'surecart/surecart//single-upsell';
 	}
 	/**
 	 * Get the bump template
@@ -75,7 +75,7 @@ class Upsell extends Model implements PageModel {
 		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
 			return $this->attributes['metadata']->wp_template_part_id;
 		}
-		return 'surecart/surecart//bump-info';
+		return 'surecart/surecart//upsell-info';
 	}
 
 	/**
