@@ -2,7 +2,6 @@
 
 namespace SureCart\Controllers\Web;
 
-use SureCart\Models\Checkout;
 use SureCart\Models\Form;
 
 /**
@@ -15,13 +14,6 @@ class UpsellPageController extends BasePageController {
 	 * @var \SureCart\Models\Product
 	 */
 	protected $product;
-
-	/**
-	 * Checkout model for this upsell.
-	 *
-	 * @var \SureCart\Models\Checkout
-	 */
-	protected $checkout;
 
 	/**
 	 * Handle filters.
@@ -49,7 +41,6 @@ class UpsellPageController extends BasePageController {
 
 				$data['upsell_data'] = [
 					'upsell'   => $this->model,
-					'checkout' => $this->checkout,
 				];
 
 				return $data;
@@ -98,7 +89,6 @@ class UpsellPageController extends BasePageController {
 		$id = get_query_var( 'sc_upsell_id' );
 		// fetch the product by id/slug.
 		$this->model = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $id );
-		$this->setCheckout();
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
@@ -134,21 +124,5 @@ class UpsellPageController extends BasePageController {
 		include $view;
 
 		return \SureCart::response();
-	}
-
-	/**
-	 * Set checkout model for this upsell.
-	 *
-	 * @return void
-	 */
-	private function setCheckout(): void {
-		$checkout_id = isset( $_GET['sc_order']) ? sanitize_text_field( wp_unslash( $_GET['sc_order'] ) ) : '';
-		if ( ! empty( $checkout_id ) ) {
-			try {
-				$this->checkout = Checkout::find( $checkout_id );
-			} catch ( \Throwable $th ) {
-				$this->checkout = null;
-			}
-		}
 	}
 }
