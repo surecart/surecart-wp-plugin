@@ -21,7 +21,7 @@ class ProductsController extends AdminController {
 		return esc_url(
 			add_query_arg(
 				[
-					'action' => 'sync_products',
+					'action' => 'sync',
 					'nonce'  => wp_create_nonce( 'sync_products' ),
 				],
 			)
@@ -150,6 +150,19 @@ class ProductsController extends AdminController {
 		\SureCart::migration()->deleteAll();
 		// dispatch job.
 		\SureCart::migration()->models()->dispatch();
+
+		return $this->redirectBack( $request );
+	}
+
+	/**
+	 * Cancel product sync.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function cancelSync( $request ) {
+		\SureCart::migration()->deleteAll();
 
 		return $this->redirectBack( $request );
 	}

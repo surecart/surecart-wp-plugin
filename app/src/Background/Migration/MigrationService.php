@@ -94,8 +94,16 @@ class MigrationService {
 					'title' => esc_html__( 'SureCart Product Sync In Progress', 'surecart' ),
 					'text'  => wp_sprintf(
 						'<p>%s</p>
-						<p><button class="button button-secondary" id="surecart-migration-cancel">%s</button></p>',
+						<p><a href="%s" class="button button-secondary" id="surecart-migration-cancel">%s</a></p>',
 						esc_html__( 'SureCart is syncing products in the background. The process may take a little while, so please be patient.', 'surecart' ),
+						esc_url(
+							add_query_arg(
+								[
+									'action' => 'cancel_sync_products',
+									'nonce'  => wp_create_nonce( 'cancel_sync_products' ),
+								],
+							)
+						),
 						esc_html__( 'Cancel', 'surecart' )
 					),
 				]

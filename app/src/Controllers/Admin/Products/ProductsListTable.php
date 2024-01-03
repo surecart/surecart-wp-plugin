@@ -182,7 +182,7 @@ class ProductsListTable extends ListTable {
 	/**
 	 * Get the table data
 	 *
-	 * @return array
+	 * @return array|\WP_Error
 	 */
 	private function table_data() {
 		$product_query = Product::where(
