@@ -51,7 +51,7 @@ test.describe('Product Page With Variant', () => {
 			.getByRole('radio', { name: 'Select Color: Red' })
 			.click({ force: true });
 
-		await page.getByText('Add To Cart').first().click({ force: true });
+		await page.getByRole('link', { name: 'Add To Cart' }).click();
 
 		// expect the cart to have the product.
 		await expect(page.locator('#sc-cart')).toContainText('Test Product');
@@ -143,7 +143,9 @@ export const createVariantProduct = async (requestUtils) => {
 				data: price,
 			})
 		)
-	);
+	).catch((e) => {
+		console.error(e);
+	});
 
 	return product;
 };
