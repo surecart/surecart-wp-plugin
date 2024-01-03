@@ -36,6 +36,121 @@ class ProductPostTypeService {
 		add_action( 'rest_api_init', [ $this, 'registerRestFields' ] );
 		// when gallery is updated on the post, set the first as the featured image.
 		add_action( 'updated_post_meta', [ $this, 'automaticallySetFeaturedImage' ], 10, 4 );
+		// add the external media url.
+		add_filter( 'wp_get_attachment_image_src', [ $this, 'externalMediaUrl' ], 10, 3 );
+		// add the external media metadata.
+		add_action( 'wp_get_attachment_metadata', [ $this, 'externalAttachmentMetaData' ], 10, 2 );
+		// when a product media is deleted, remove it from the gallery.
+		add_action( 'delete_attachment', [ $this, 'removeFromGallery' ], 10, 1 );
+	}
+
+	/**
+	 * Add the external media metadata.
+	 *
+	 * @param mixed  $data          The data.
+	 * @param string $attachment_id     The object ID.
+	 *
+	 * @return mixed
+	 */
+	public function externalAttachmentMetaData( $data, $attachment_id ) {
+		$source_url = get_post_meta( $attachment_id, '_source_url', true );
+
+		$sizes = wp_get_registered_image_subsizes();
+
+		foreach ( $sizes as $name => $size ) {
+			$width  = $size['width'] ?? null;
+			$height = $size['height'] ?? null;
+
+			$data['sizes'][ $name ] = [
+				'file'       => $source_url,
+				'width'      => $width,
+				'height'     => $height,
+				'source_url' => $source_url . '?fit=scale-down,format=auto,width=' . $width . ',height=' . $height,
+			];
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Add the external media url.
+	 *
+	 * @param array   $image The image.
+	 * @param integer $id    The ID.
+	 * @param array   $size  The size.
+	 *
+	 * @return array
+	 */
+	public function externalMediaUrl( $image, $id, $size ) {
+		// if ( ! empty( $image[0] ) && strpos( $image[0], 'default.png' ) === false ) {
+		// return $image;
+		// }
+
+		// get the post.
+		$source_url = get_post_meta( $id, '_source_url', true );
+
+		// not a surecart image.
+		// if ( strpos( $source_url, 'media.surecart.com' ) === false ) {
+		// return $image;
+		// }
+
+		if ( is_string( $size ) ) {
+			$sizes = wp_get_registered_image_subsizes();
+
+			if ( isset( $sizes[ $size ] ) ) {
+				$size = [
+					$sizes[ $size ]['width'],
+					$sizes[ $size ]['height'],
+				];
+			} else {
+				$size = [
+					null,
+					null,
+				];
+			}
+		}
+
+		return [
+			$source_url . '?fit=scale-down,format=auto,width=' . $size[0] . ',height=' . $size[1],
+			$size[0],
+			$size[1],
+		];
+	}
+
+	/**
+	 * When a product media is deleted, remove it from the gallery.
+	 *
+	 * @param integer $post_id The post ID.
+	 *
+	 * @return void
+	 */
+	public function removeFromGallery( $post_id ) {
+		// get the post.
+		$post = get_post( $post_id );
+
+		// if the post is not a product media.
+		if ( 'attachment' !== $post->post_type ) {
+			return;
+		}
+
+		// get the gallery.
+		$gallery = get_post_meta( $post->post_parent, 'gallery', true );
+
+		// if the gallery is empty.
+		if ( empty( $gallery ) ) {
+			return;
+		}
+
+		// remove the post id from the gallery.
+		$updated = array_filter(
+			$gallery,
+			function( $id ) use ( $post_id ) {
+				return $id !== $post_id;
+			}
+		);
+
+		// update the gallery.
+		update_post_meta( $post->post_parent, 'gallery', $updated );
 	}
 
 	/**
@@ -57,7 +172,7 @@ class ProductPostTypeService {
 			return;
 		}
 
-		// check it's our data.
+		// check it's our data .
 		if ( get_post_type( $post ) !== $this->post_type || 'gallery' !== $meta_key ) {
 			return;
 		}
@@ -74,6 +189,8 @@ class ProductPostTypeService {
 
 		// get the attachment url.
 		$attachment_url = wp_get_attachment_url( $meta_value[0] );
+
+		return false;
 
 		// if the attachment url is missing.
 		if ( empty( $attachment_url ) ) {

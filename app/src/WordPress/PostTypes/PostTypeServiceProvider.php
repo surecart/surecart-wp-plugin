@@ -7,7 +7,7 @@ use SureCartCore\ServiceProviders\ServiceProviderInterface;
 /**
  * Register our form post type
  */
-class FormPostTypeServiceProvider implements ServiceProviderInterface {
+class PostTypeServiceProvider implements ServiceProviderInterface {
 	/**
 	 * {@inheritDoc}
 	 *
