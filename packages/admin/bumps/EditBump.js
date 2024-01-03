@@ -30,7 +30,6 @@ import Price from './modules/Price';
 import Priority from './modules/Priority';
 import Description from './modules/Description';
 import CTA from './modules/CTA';
-import Template from './modules/Template';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -170,12 +169,6 @@ export default () => {
 				<>
 					{/* <Preview bump={bump} loading={!hasLoadedBump} /> */}
 					<Priority
-						bump={bump}
-						updateBump={editBump}
-						loading={!hasLoadedBump}
-					/>
-
-					<Template
 						bump={bump}
 						updateBump={editBump}
 						loading={!hasLoadedBump}
