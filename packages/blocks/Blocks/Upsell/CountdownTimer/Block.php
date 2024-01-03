@@ -32,13 +32,13 @@ class Block extends BaseBlock {
 
 		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
 			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-			<sc-order-bump-countdown-timer
+			<sc-upsell-countdown-timer
 				showIcon="<?php echo esc_attr( $attributes['show_icon'] ); ?>"
 			>
 				<span slot="offer-expire-text">
 					<?php echo esc_attr( $attributes['offer_expire_text'] ?? '' ); ?>
 				</span>
-			</sc-order-bump-countdown-timer>
+			</sc-upsell-countdown-timer>
 		</div>
 
 		<?php
