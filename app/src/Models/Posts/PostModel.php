@@ -39,15 +39,16 @@ abstract class PostModel {
 
 	/**
 	 * Disallow overriding the constructor in child classes and make the code safe that way.
+	 *
+	 * @throws \Exception If the post is not found.
 	 */
 	public function __construct( $post = null ) {
 		// either get by model id or integer (or global post).
 		if ( is_string( $post ) ) {
-			$post = $this->findBuModelId( $post );
+			$this->findByModelId( $post );
 		} else {
-			$post = get_post( $post );
+			$this->find( $post );
 		}
-		$this->post = $post;
 	}
 
 	/**
