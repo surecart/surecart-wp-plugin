@@ -16,7 +16,6 @@ import {
 	ScSelect,
 } from '@surecart/components-react';
 import useEntity from '../../hooks/useEntity';
-import Behavior from './Behavior';
 
 export default ({ upsell, updateUpsell, loading }) => {
 	const [type, setType] = useState('percentage');
@@ -103,15 +102,6 @@ export default ({ upsell, updateUpsell, loading }) => {
 						)}
 					</ScFlex>
 				</ScFormControl>
-				{(upsell?.amount_off || upsell?.percent_off) && (
-					<ScFlex>
-						<Behavior
-							upsell={upsell}
-							updateUpsell={updateUpsell}
-							loading={loading}
-						/>
-					</ScFlex>
-				)}
 			</ScFlex>
 		</Box>
 	);

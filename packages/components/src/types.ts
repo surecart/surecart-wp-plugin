@@ -149,6 +149,23 @@ export interface Bump {
   updated_at: number;
 }
 
+export interface Upsell {
+  id: string;
+  object: 'upsell';
+  amount_off: number;
+  archived: boolean;
+  archived_at: number;
+  filter_match_type: 'all' | 'any' | 'none';
+  filters: any;
+  metadata: any;
+  name: string;
+  percent_off: number;
+  price: string | Price;
+  priority: 1 | 2 | 3 | 4 | 5;
+  created_at: number;
+  updated_at: number;
+}
+
 export type Prices = {
   [id: string]: Price;
 };
