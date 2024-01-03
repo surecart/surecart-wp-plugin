@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 import {
@@ -65,7 +65,10 @@ export default ({ price, updatePrice }) => {
 					`}
 				>
 					<ScInput
-						label={SETUP_AMOUNT_TYPES[amountType]}
+						label={sprintf(
+							__('%s Name', 'surecart'),
+							SETUP_AMOUNT_TYPES[amountType]
+						)}
 						value={price?.setup_fee_name}
 						onScInput={(e) => {
 							updatePrice({
