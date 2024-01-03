@@ -8,6 +8,7 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { productDonationStore } from '@surecart/components';
+import { currencyDollar as icon } from '@wordpress/icons';
 import {
 	useBlockProps,
 	InnerBlocks,
@@ -19,7 +20,7 @@ import {
 } from '@wordpress/block-editor';
 import SelectModel from '../../../admin/components/SelectModel';
 
-import { ScButton, ScIcon } from '@surecart/components-react';
+import { ScButton } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
 import { useEffect, useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
@@ -119,26 +120,18 @@ export default ({ attributes, setAttributes }) => {
 
 	if (!product_id) {
 		return (
-			<div {...blockProps}>
+			<div
+				{...blockProps}
+				css={css`
+					--sc-color-primary-500: var(--wp-admin-theme-color);
+					--sc-focus-ring-color-primary: var(--wp-admin-theme-color);
+					--sc-input-border-color-focus: var(--wp-admin-theme-color);
+					--sc-color-primary-text: #fff;
+				`}
+			>
 				<Placeholder
-					icon={
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="16"
-							height="16"
-							viewBox="0 0 24 24"
-							fill="none"
-							style={{ fill: 'none' }}
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-						>
-							<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-							<circle cx="12" cy="12" r="3"></circle>
-						</svg>
-					}
-					label={__('Select a Product', 'surecart')}
+					icon={icon}
+					label={__('Select A Product', 'surecart')}
 					instructions={__(
 						'Select a product to display donation choices according to the prices of the product.',
 						'surecart'
@@ -156,7 +149,6 @@ export default ({ attributes, setAttributes }) => {
 						style={{ width: '100%' }}
 					>
 						<ScButton slot="trigger" type="primary">
-							<ScIcon name="plus" slot="prefix" />
 							{__('Select Product', 'surecart')}
 						</ScButton>
 					</SelectModel>

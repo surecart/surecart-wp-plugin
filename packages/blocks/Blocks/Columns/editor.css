@@ -9,11 +9,6 @@ html :where(.wp-block-column) {
 	margin-bottom: 0;
 }
 
-div[data-type='surecart/columns']
-	:is(div[data-type='surecart/column'], div[data-type='core/column']) {
-	margin-block-start: auto;
-}
-
 @media screen and (min-width: 782px) {
 	.wp-block-surecart-columns:not(.is-not-stacked-on-mobile)
 		> .wp-block-surecart-column {
