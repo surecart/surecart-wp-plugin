@@ -677,4 +677,19 @@ class BlockStyleAttributes {
 
 		return $color_value;
 	}
+
+	/**
+	 * If the color is in hex format then sanitize else return same value.
+	 *
+	 * @param string $color_value value to be processed.
+	 *
+	 * @return (string)
+	 */
+	public static function maybeSanitizeHexColor( $color_value ) {
+		if ( is_string( $color_value ) && str_contains( $color_value, 'var(' ) ) {
+			return $color_value;
+		}
+
+		return sanitize_hex_color( $color_value );
+	}
 }
