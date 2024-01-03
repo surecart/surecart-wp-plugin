@@ -48,7 +48,7 @@ export default ({ post, loading }) => {
 					})
 				) : (
 					<>
-						{post?.gallery.map((id, index) => (
+						{(post?.gallery || []).map((id, index) => (
 							<SortableItem key={id}>
 								<div
 									css={css`
