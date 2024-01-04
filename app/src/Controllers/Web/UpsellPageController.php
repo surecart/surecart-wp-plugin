@@ -78,7 +78,7 @@ class UpsellPageController extends BasePageController {
 			return $this->notFound();
 		}
 
-		$this->product = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $this->model->price->product );
+		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $this->model->price->product );
 
 		// Stop if the product is not found.
 		if ( empty( $this->product ) ) {
@@ -86,14 +86,25 @@ class UpsellPageController extends BasePageController {
 		}
 
 		// Set the product page id.
-		set_query_var( 'sc_product_page_id', $this->product->id );
-
-		// Set the upsell id.
-		set_query_var( 'sc_upsell_id', $this->model->id );
+		set_query_var( 'surecart_current_product', $this->product );
 
 		// add the filters.
 		$this->filters();
-		$this->setInitialUpsellState( $request );
+
+		// Set initial state.
+		sc_initial_state(
+			[
+				'product' => [
+					$this->product->id => $this->product->getInitialPageState(),
+				],
+				'upsell'  => [
+					'product'     => $this->product,
+					'upsell'      => $this->model,
+					'checkout_id' => $request->query( 'sc_checkout_id' ) ?? '',
+					'success_url' => $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ),
+				],
+			]
+		);
 
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
@@ -110,11 +121,11 @@ class UpsellPageController extends BasePageController {
 	/**
 	 * Get the success url by form id.
 	 *
-	 * @param  int $formId Checkout form id.
+	 * @param  int $form_id Checkout form id.
 	 * @return string         The success url.
 	 */
-	public function getCheckoutSuccessUrl( int $formId ): string {
-		$form = get_post( $formId );
+	public function getCheckoutSuccessUrl( int $form_id ): string {
+		$form = get_post( $form_id );
 
 		if ( is_wp_error( $form ) || empty( $form ) ) {
 			return '';
@@ -127,32 +138,5 @@ class UpsellPageController extends BasePageController {
 		}
 
 		return $block['attrs']['success_url'];
-	}
-
-	/**
-	 * Set initial upsell state.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
-	 * @return void
-	 */
-	public function setInitialUpsellState( $request ): void {
-		// Get checkout form id.
-		$form_id = (int) $request->query( 'sc_form_id' ) ?? '';
-
-		// Product state.
-		$product_state[ $this->product->id ] = $this->product->getInitialPageState();
-
-		// Set initial upsell state.
-		sc_initial_state(
-			[
-				'product' => $product_state,
-				'upsell'  => [
-					'product'     => $this->product,
-					'upsell'      => $this->model,
-					'checkout_id' => $request->query( 'sc_checkout_id' ) ?? '',
-					'success_url' => $this->getCheckoutSuccessUrl( $form_id ),
-				],
-			]
-		);
 	}
 }

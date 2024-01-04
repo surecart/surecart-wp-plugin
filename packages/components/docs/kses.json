@@ -1460,6 +1460,23 @@
     "class": true,
     "slot": true
   },
+  "sc-price": {
+    "ad-hoc": true,
+    "amount": true,
+    "currency": true,
+    "recurring-interval": true,
+    "recurring-interval-count": true,
+    "recurring-period-count": true,
+    "sale-text": true,
+    "scratch-amount": true,
+    "setup-fee-amount": true,
+    "setup-fee-name": true,
+    "trial-duration-days": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-price-choice": {
     "blank": true,
     "checked": true,

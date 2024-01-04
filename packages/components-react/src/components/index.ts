@@ -140,6 +140,7 @@ export const ScPaystackAddMethod = /*@__PURE__*/createReactComponent<JSX.ScPayst
 export const ScPhoneInput = /*@__PURE__*/createReactComponent<JSX.ScPhoneInput, HTMLScPhoneInputElement>('sc-phone-input');
 export const ScPillOption = /*@__PURE__*/createReactComponent<JSX.ScPillOption, HTMLScPillOptionElement>('sc-pill-option');
 export const ScPremiumTag = /*@__PURE__*/createReactComponent<JSX.ScPremiumTag, HTMLScPremiumTagElement>('sc-premium-tag');
+export const ScPrice = /*@__PURE__*/createReactComponent<JSX.ScPrice, HTMLScPriceElement>('sc-price');
 export const ScPriceChoice = /*@__PURE__*/createReactComponent<JSX.ScPriceChoice, HTMLScPriceChoiceElement>('sc-price-choice');
 export const ScPriceChoiceContainer = /*@__PURE__*/createReactComponent<JSX.ScPriceChoiceContainer, HTMLScPriceChoiceContainerElement>('sc-price-choice-container');
 export const ScPriceChoices = /*@__PURE__*/createReactComponent<JSX.ScPriceChoices, HTMLScPriceChoicesElement>('sc-price-choices');

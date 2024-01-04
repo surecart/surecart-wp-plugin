@@ -1,15 +1,15 @@
 /**
  * External dependencies.
  */
-import { Component, h, Prop, Fragment, Host } from '@stencil/core';
-import { __, _n, sprintf } from '@wordpress/i18n';
+import { Component, h, Prop, Host } from '@stencil/core';
+import { __, _n } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import { state } from '@store/product';
 import { Price, Variant } from '../../../../types';
-import { intervalString } from '../../../../functions/price';
+import { getDiscountedAmount as getUpsellDiscountAmount } from '@store/upsell/getters';
 
 @Component({
   tag: 'sc-product-price',
@@ -39,98 +39,26 @@ export class ScProductPrice {
   }
 
   renderPrice(price: Price, variantAmount?: number) {
-    const amount = variantAmount ?? price?.amount ?? 0;
+    const originalAmount = variantAmount ?? price?.amount ?? 0;
+    let scratch_amount = price?.scratch_amount;
 
-    if (price?.ad_hoc) {
-      return __('Custom Amount', 'surecart');
+    const amount = getUpsellDiscountAmount(originalAmount);
+
+    if (amount !== originalAmount) {
+      scratch_amount = originalAmount;
     }
 
     return (
-      <Fragment>
-        <div class="price" id="price">
-          <div class="price__amounts">
-            {!!price?.scratch_amount && price?.scratch_amount !== amount && (
-              <Fragment>
-                {price?.scratch_amount === 0 ? (
-                  __('Free', 'surecart')
-                ) : (
-                  <Fragment>
-                    <sc-visually-hidden>{__('The price was', 'surecart')} </sc-visually-hidden>
-                    <sc-format-number class="price__scratch" part="price__scratch" type="currency" currency={price.currency} value={price?.scratch_amount}></sc-format-number>
-                    <sc-visually-hidden> {__('now discounted to', 'surecart')}</sc-visually-hidden>
-                  </Fragment>
-                )}
-              </Fragment>
-            )}
-
-            {amount === 0 ? __('Free', 'surecart') : <sc-format-number class="price__amount" type="currency" value={amount} currency={price?.currency}></sc-format-number>}
-
-            <div class="price__interval">
-              {price?.recurring_period_count && 1 < price?.recurring_period_count && (
-                <sc-visually-hidden>
-                  {' '}
-                  {__('This is a repeating price. Payment will happen', 'surecart')}{' '}
-                  {intervalString(price, {
-                    showOnce: true,
-                    abbreviate: false,
-                    labels: {
-                      interval: __('every', 'surecart'),
-                      period:
-                        /** translators: used as in time period: "for 3 months" */
-                        __('for', 'surecart'),
-                    },
-                  })}
-                </sc-visually-hidden>
-              )}
-
-              <span aria-hidden="true">
-                {intervalString(price, {
-                  showOnce: true,
-                  abbreviate: false,
-                  labels: {
-                    interval: '/',
-                    period:
-                      /** translators: used as in time period: "for 3 months" */
-                      __('for', 'surecart'),
-                  },
-                })}
-              </span>
-            </div>
-
-            {!!price?.scratch_amount && (
-              <sc-tag type="primary" pill class="price__sale-badge">
-                {this.saleText || (
-                  <Fragment>
-                    <sc-visually-hidden>{__('This product is available for sale.', 'surecart')} </sc-visually-hidden>
-                    <span aria-hidden="true">{__('Sale', 'surecart')}</span>
-                  </Fragment>
-                )}
-              </sc-tag>
-            )}
-          </div>
-
-          {(!!price?.trial_duration_days || (!!price?.setup_fee_enabled && price?.setup_fee_amount)) && (
-            <div class="price__details">
-              {!!price?.trial_duration_days && (
-                <Fragment>
-                  <sc-visually-hidden>{sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), price.trial_duration_days)}</sc-visually-hidden>
-                  <span class="price__trial" aria-hidden="true">
-                    {sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)}
-                  </span>
-                </Fragment>
-              )}
-
-              {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
-                <span class="price__setup-fee">
-                  <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>
-                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
-                  {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
-                </span>
-              )}
-            </div>
-          )}
-        </div>
-      </Fragment>
+      <sc-price
+        currency={price?.currency}
+        amount={amount}
+        scratchAmount={scratch_amount}
+        saleText={this.saleText}
+        adHoc={price?.ad_hoc}
+        recurringPeriodCount={price?.recurring_period_count}
+        recurringInterval={price?.recurring_interval}
+        recurringIntervalCount={price?.recurring_interval_count}
+      />
     );
   }
 

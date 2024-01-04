@@ -2575,6 +2575,55 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    /**
+     * Internal dependencies.
+     */
+    interface ScPrice {
+        /**
+          * Is the product ad_hoc?
+         */
+        "adHoc": boolean;
+        /**
+          * The amount
+         */
+        "amount": number;
+        /**
+          * The currency.
+         */
+        "currency": string;
+        /**
+          * The recurring interval
+         */
+        "recurringInterval": 'week' | 'month' | 'year' | 'never';
+        /**
+          * The recurring interval count
+         */
+        "recurringIntervalCount": number;
+        /**
+          * The recurring period count
+         */
+        "recurringPeriodCount": number;
+        /**
+          * The sale text
+         */
+        "saleText": string;
+        /**
+          * The scratch amount
+         */
+        "scratchAmount": number;
+        /**
+          * The setup fee amount
+         */
+        "setupFeeAmount": number;
+        /**
+          * The setup fee name
+         */
+        "setupFeeName": string;
+        /**
+          * The trial duration days
+         */
+        "trialDurationDays": number;
+    }
     interface ScPriceChoice {
         /**
           * Is this blank?
@@ -5112,6 +5161,15 @@ declare global {
         prototype: HTMLScPremiumTagElement;
         new (): HTMLScPremiumTagElement;
     };
+    /**
+     * Internal dependencies.
+     */
+    interface HTMLScPriceElement extends Components.ScPrice, HTMLStencilElement {
+    }
+    var HTMLScPriceElement: {
+        prototype: HTMLScPriceElement;
+        new (): HTMLScPriceElement;
+    };
     interface HTMLScPriceChoiceElement extends Components.ScPriceChoice, HTMLStencilElement {
     }
     var HTMLScPriceChoiceElement: {
@@ -5737,6 +5795,7 @@ declare global {
         "sc-phone-input": HTMLScPhoneInputElement;
         "sc-pill-option": HTMLScPillOptionElement;
         "sc-premium-tag": HTMLScPremiumTagElement;
+        "sc-price": HTMLScPriceElement;
         "sc-price-choice": HTMLScPriceChoiceElement;
         "sc-price-choice-container": HTMLScPriceChoiceContainerElement;
         "sc-price-choices": HTMLScPriceChoicesElement;
@@ -8603,6 +8662,55 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    /**
+     * Internal dependencies.
+     */
+    interface ScPrice {
+        /**
+          * Is the product ad_hoc?
+         */
+        "adHoc"?: boolean;
+        /**
+          * The amount
+         */
+        "amount"?: number;
+        /**
+          * The currency.
+         */
+        "currency"?: string;
+        /**
+          * The recurring interval
+         */
+        "recurringInterval"?: 'week' | 'month' | 'year' | 'never';
+        /**
+          * The recurring interval count
+         */
+        "recurringIntervalCount"?: number;
+        /**
+          * The recurring period count
+         */
+        "recurringPeriodCount"?: number;
+        /**
+          * The sale text
+         */
+        "saleText"?: string;
+        /**
+          * The scratch amount
+         */
+        "scratchAmount"?: number;
+        /**
+          * The setup fee amount
+         */
+        "setupFeeAmount"?: number;
+        /**
+          * The setup fee name
+         */
+        "setupFeeName"?: string;
+        /**
+          * The trial duration days
+         */
+        "trialDurationDays"?: number;
+    }
     interface ScPriceChoice {
         /**
           * Is this blank?
@@ -10337,6 +10445,7 @@ declare namespace LocalJSX {
         "sc-phone-input": ScPhoneInput;
         "sc-pill-option": ScPillOption;
         "sc-premium-tag": ScPremiumTag;
+        "sc-price": ScPrice;
         "sc-price-choice": ScPriceChoice;
         "sc-price-choice-container": ScPriceChoiceContainer;
         "sc-price-choices": ScPriceChoices;
@@ -10574,6 +10683,10 @@ declare module "@stencil/core" {
             "sc-phone-input": LocalJSX.ScPhoneInput & JSXBase.HTMLAttributes<HTMLScPhoneInputElement>;
             "sc-pill-option": LocalJSX.ScPillOption & JSXBase.HTMLAttributes<HTMLScPillOptionElement>;
             "sc-premium-tag": LocalJSX.ScPremiumTag & JSXBase.HTMLAttributes<HTMLScPremiumTagElement>;
+            /**
+             * Internal dependencies.
+             */
+            "sc-price": LocalJSX.ScPrice & JSXBase.HTMLAttributes<HTMLScPriceElement>;
             "sc-price-choice": LocalJSX.ScPriceChoice & JSXBase.HTMLAttributes<HTMLScPriceChoiceElement>;
             "sc-price-choice-container": LocalJSX.ScPriceChoiceContainer & JSXBase.HTMLAttributes<HTMLScPriceChoiceContainerElement>;
             "sc-price-choices": LocalJSX.ScPriceChoices & JSXBase.HTMLAttributes<HTMLScPriceChoicesElement>;

@@ -1,7 +1,9 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 
-import { Coupon, Price } from '../types';
+import { Coupon } from '../types';
 import { zeroDecimalCurrencies } from './currency';
+
+type recurringPriceDetails = { recurring_interval_count?: number; recurring_interval?: 'week' | 'month' | 'year' | 'never'; recurring_period_count: number };
 
 export const convertAmount = (amount: number, currency: string) => {
   return zeroDecimalCurrencies.includes(currency) ? amount : amount / 100;
@@ -91,7 +93,7 @@ interface IntervalOptions {
     once?: string;
   };
 }
-export const intervalString = (price: Price, options: IntervalOptions = {}) => {
+export const intervalString = (price: recurringPriceDetails, options: IntervalOptions = {}) => {
   if (!price) {
     return '';
   }
@@ -101,7 +103,12 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
   return `${intervalCountString(price, interval, !!showOnce ? __('once', 'surecart') : '', abbreviate)} ${periodCountString(price, abbreviate)}`;
 };
 
-export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart'), abbreviate = false) => {
+export const intervalCountString = (
+  price: { recurring_interval_count?: number; recurring_interval?: 'week' | 'month' | 'year' | 'never'; recurring_period_count: number },
+  prefix,
+  fallback = __('once', 'surecart'),
+  abbreviate = false,
+) => {
   if (!price.recurring_interval_count || !price.recurring_interval || 1 === price?.recurring_period_count) {
     return '';
   }
@@ -111,7 +118,7 @@ export const intervalCountString = (price: Price, prefix, fallback = __('once', 
   return translateInterval(price.recurring_interval_count, price.recurring_interval, ` ${prefix}`, fallback);
 };
 
-export const periodCountString = (price: Price, abbreviate = false) => {
+export const periodCountString = (price: recurringPriceDetails, abbreviate = false) => {
   if (!price?.recurring_period_count || 1 === price?.recurring_period_count) {
     return '';
   }
