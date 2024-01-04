@@ -9,22 +9,25 @@ import { addQueryArgs } from '@wordpress/url';
 import { state } from './store';
 import { state as checkoutState } from '../checkout/store';
 
-export const redirectUpsell = () => {
+export const getNextUpsell = () => {
   // Get current upsell.
-  const { upsell, checkout_id } = state;
-
+  const { upsell } = state;
   const { recommended_upsells } = checkoutState.checkout;
 
   // Get the next upsell by priority from recommended upsells.
-  const nextUpsell = (recommended_upsells?.data || []).find(item => {
+  return (recommended_upsells?.data || []).find(item => {
     return item.priority > upsell.priority;
   });
+};
+
+export const redirectUpsell = () => {
+  const nextUpsell = getNextUpsell();
 
   // Redirect to next upsell permalink with checkout_id and form_id.
   if (!!nextUpsell?.permalink) {
     window.location.assign(
       addQueryArgs(nextUpsell.permalink, {
-        sc_checkout_id: checkout_id,
+        sc_checkout_id: checkoutState?.checkout?.id,
         sc_form_id: checkoutState.formId,
       }),
     );

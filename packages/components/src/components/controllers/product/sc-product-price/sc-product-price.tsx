@@ -8,7 +8,6 @@ import { __, _n, sprintf } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import { state } from '@store/product';
-import { state as upsellState } from '@store/upsell';
 import { Price, Variant } from '../../../../types';
 import { intervalString } from '../../../../functions/price';
 
@@ -37,36 +36,6 @@ export class ScProductPrice {
   renderVariantPrice(selectedVariant: Variant) {
     const variant = state[this.productId]?.variants?.find(variant => variant?.id === selectedVariant?.id);
     return this.renderPrice(state[this.productId].selectedPrice, variant?.amount);
-  }
-
-  // Check if the upsell is the same as the product and price matches.
-  componentWillLoad() {
-    // Return if no upsell is selected.
-    if (upsellState.product?.id !== this.productId) return;
-
-    // If price doesn't match, don't proceed.
-    const upsellPrice = upsellState.upsell?.price as Price;
-    let price = state[this.productId]?.prices.find(priceData => priceData?.id === upsellPrice?.id);
-    if (!price) return;
-
-    let amount = price?.amount || 0;
-    let initialAmount = upsellPrice?.amount || 0;
-    let scratchAmount = initialAmount;
-
-    if (upsellState.upsell?.amount_off) {
-      amount = Math.max(0, initialAmount - upsellState.upsell?.amount_off);
-    }
-
-    if (upsellState.upsell?.percent_off) {
-      const off = initialAmount * (upsellState.upsell?.percent_off / 100);
-      amount = Math.max(0, initialAmount - off);
-    }
-
-    state[this.productId].selectedPrice = {
-      ...price,
-      amount,
-      scratch_amount: scratchAmount,
-    };
   }
 
   renderPrice(price: Price, variantAmount?: number) {
