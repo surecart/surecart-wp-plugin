@@ -8,7 +8,6 @@ import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
-import { clearCheckout } from '@store/checkout/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
 /**
  * This component listens to the order status
@@ -63,9 +62,6 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
-      // always clear the checkout.
-      clearCheckout();
-
       // Check if there is recommended_upsells, if so, redirect to first upsell.
       const upsellRedirectUrl = checkoutState.checkout?.recommended_upsells?.data?.[0]?.permalink;
       if (upsellRedirectUrl) {
