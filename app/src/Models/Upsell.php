@@ -145,7 +145,7 @@ class Upsell extends Model implements PageModel {
 	/**
 	 * Add a line item to the upsell.
 	 *
-	 * @param string $id Model id.
+	 * @param array $data The data to add.
 	 * @return \WP_Error|mixed
 	 */
 	protected function addLineItem( $data = [] ) {
@@ -153,21 +153,15 @@ class Upsell extends Model implements PageModel {
 			return new \WP_Error( 'not_saved', 'No upsell line item found.' );
 		}
 
-		$added = $this->makeRequest(
+		return $this->makeRequest(
 			[
 				'method' => 'POST',
 				'query'  => $this->query,
 				'body'   => [
 					'line_item' => $data['line_item'],
-				]
+				],
 			],
 			'line_items/upsell'
 		);
-
-		if ( is_wp_error( $added ) ) {
-			return $added;
-		}
-
-		return $added;
 	}
 }
