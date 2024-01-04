@@ -110,7 +110,7 @@ class UpsellPageController extends BasePageController {
 	/**
 	 * Get the success url by form id.
 	 *
-	 * @param  int    $formId Checkout form id.
+	 * @param  int $formId Checkout form id.
 	 * @return string         The success url.
 	 */
 	public function getCheckoutSuccessUrl( int $formId ): string {
@@ -146,12 +146,12 @@ class UpsellPageController extends BasePageController {
 		sc_initial_state(
 			[
 				'product' => $product_state,
-				'upsell' => [
+				'upsell'  => [
 					'product'     => $this->product,
 					'upsell'      => $this->model,
 					'checkout_id' => $request->query( 'sc_checkout_id' ) ?? '',
 					'success_url' => $this->getCheckoutSuccessUrl( $form_id ),
-				]
+				],
 			]
 		);
 	}
