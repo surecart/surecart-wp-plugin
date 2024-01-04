@@ -262,31 +262,31 @@ export default ({ product, updateProduct, loading }) => {
 						<ScSwitch
 							checked={
 								product?.metadata
-									?.wp_buy_link_custom_thankyou_page ===
+									?.wp_buy_link_success_page_enabled ===
 								'true'
 							}
 							onScChange={(e) => {
 								updateMeta({
-									wp_buy_link_custom_thankyou_page: e.target
+									wp_buy_link_success_page_enabled: e.target
 										.checked
 										? 'true'
 										: 'false',
 								});
 							}}
 						>
-							{__('Custom Thank You Page', 'surecart')}
+							{__('Custom thank you page', 'surecart')}
 						</ScSwitch>
-						{product?.metadata?.wp_buy_link_custom_thankyou_page ===
+						{product?.metadata?.wp_buy_link_success_page_enabled ===
 							'true' && (
 							<ScInput
 								label={__('URL', 'surecart')}
 								value={
 									product?.metadata
-										?.wp_buy_link_custom_thankyou_page_url
+										?.wp_buy_link_success_page_url
 								}
 								onScChange={(e) => {
 									updateMeta({
-										wp_buy_link_custom_thankyou_page_url:
+										wp_buy_link_success_page_url:
 											e.target.value,
 									});
 								}}
