@@ -53,6 +53,8 @@ class ProductPostTypeService {
 	 * @return mixed
 	 */
 	public function externalAttachmentMetaData( $data, $attachment_id ) {
+		// TODO: check to make sure it's surecart.
+
 		$source_url = get_post_meta( $attachment_id, '_source_url', true );
 
 		$sizes = wp_get_registered_image_subsizes();
@@ -61,11 +63,15 @@ class ProductPostTypeService {
 			$width  = $size['width'] ?? null;
 			$height = $size['height'] ?? null;
 
+			if ( strpos( $source_url, 'media.surecart.com' ) !== false ) {
+				$source_url = 'https://surecart.com/cdn-cgi/image/fit=' . ( $size['crop'] ? 'crop' : 'scale-down' ) . ',format=auto,width=' . $width . ',height=' . $height . '/' . $source_url;
+			}
+
 			$data['sizes'][ $name ] = [
 				'file'       => $source_url,
 				'width'      => $width,
 				'height'     => $height,
-				'source_url' => $source_url . '?fit=scale-down,format=auto,width=' . $width . ',height=' . $height,
+				'source_url' => $source_url,
 			];
 		}
 
@@ -82,17 +88,13 @@ class ProductPostTypeService {
 	 * @return array
 	 */
 	public function externalMediaUrl( $image, $id, $size ) {
-		// if ( ! empty( $image[0] ) && strpos( $image[0], 'default.png' ) === false ) {
-		// return $image;
-		// }
-
 		// get the post.
 		$source_url = get_post_meta( $id, '_source_url', true );
 
 		// not a surecart image.
-		// if ( strpos( $source_url, 'media.surecart.com' ) === false ) {
-		// return $image;
-		// }
+		if ( strpos( $source_url, 'media.surecart.com' ) === false ) {
+			return $image;
+		}
 
 		if ( is_string( $size ) ) {
 			$sizes = wp_get_registered_image_subsizes();
@@ -111,7 +113,7 @@ class ProductPostTypeService {
 		}
 
 		return [
-			$source_url . '?fit=scale-down,format=auto,width=' . $size[0] . ',height=' . $size[1],
+			'https://surecart.com/cdn-cgi/image/fit=crop,format=auto,width=' . $size[0] . ',height=' . $size[1] . '/' . $source_url,
 			$size[0],
 			$size[1],
 		];
