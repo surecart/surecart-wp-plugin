@@ -2,8 +2,6 @@
 
 namespace SureCartBlocks\Blocks;
 
-use SureCartBlocks\Util\BlockStyleAttributes;
-
 /**
  * Cart block.
  */
@@ -21,12 +19,12 @@ abstract class CartBlock extends BaseBlock {
 			$styles .= 'border-bottom:var(--sc-drawer-border);';
 		}
 		if ( ! empty( $attributes['backgroundColor'] ) ) {
-			$styles .= 'background-color:' . BlockStyleAttributes::maybeSanitizeHexColor( $attributes['backgroundColor'] ) . ';';
+			$styles .= 'background-color:' . esc_attr( $attributes['backgroundColor'] ) . ';';
 		}
 		if ( ! empty( $attributes['textColor'] ) ) {
-			$styles .= 'color:' . BlockStyleAttributes::maybeSanitizeHexColor( $attributes['textColor'] ) . ';';
-			$styles .= '--sc-input-label-color:' . BlockStyleAttributes::maybeSanitizeHexColor( $attributes['textColor'] ) . ';';
-			$styles .= '--sc-line-item-description-color:' . BlockStyleAttributes::maybeSanitizeHexColor( $attributes['textColor'] ) . ';';
+			$styles .= 'color:' . esc_attr( $attributes['textColor'] ) . ';';
+			$styles .= '--sc-input-label-color:' . esc_attr( $attributes['textColor'] ) . ';';
+			$styles .= '--sc-line-item-description-color:' . esc_attr( $attributes['textColor'] ) . ';';
 		}
 		if ( ! empty( $attributes['padding']['top'] ) ) {
 			$styles .= 'padding-top:' . esc_attr( $attributes['padding']['top'] ) . ';';
