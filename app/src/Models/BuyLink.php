@@ -49,6 +49,15 @@ class BuyLink {
 	}
 
 	/**
+	 * Get the success url.
+	 *
+	 * @return string
+	 */
+	public function getSuccessUrl() {
+		return $this->product->metadata->wp_buy_link_success_url ?? '';
+	}
+
+	/**
 	 * Should we show this item?
 	 *
 	 * @param string $item The name of the item.
