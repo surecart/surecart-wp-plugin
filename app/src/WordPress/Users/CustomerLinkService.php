@@ -103,13 +103,13 @@ class CustomerLinkService {
 
 		// if no user, create one with a password if provided.
 		$created = User::create(
-			[
+			array(
 				'user_name'  => $this->checkout->customer->name ?? $this->checkout->name ?? null,
 				'user_email' => $this->checkout->customer->email ?? $this->checkout->email ?? null,
 				'first_name' => $this->checkout->customer->first_name ?? null,
 				'last_name'  => $this->checkout->customer->last_name ?? null,
 				'phone'      => $this->checkout->customer->phone ?? null,
-			]
+			)
 		);
 
 		// bail if error.
@@ -133,7 +133,7 @@ class CustomerLinkService {
 
 		// login the user.
 		if ( apply_filters( 'surecart/checkout/auto-login-new-user', true ) ) {
-			User::find( $created->ID )->login();
+			$created->login();
 		}
 
 		// set the customer id for the user.
