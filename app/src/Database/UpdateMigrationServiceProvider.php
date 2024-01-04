@@ -99,7 +99,7 @@ class UpdateMigrationServiceProvider implements ServiceProviderInterface {
 				'origin' => 'plugin',
 			],
 			'post_type'    => 'wp_template_part',
-			'post_content' => $existing_cart_post->post_content,
+			'post_content' => \SureCart\Cart\CartService::removeDeprecatedCartContent( $existing_cart_post->post_content ),
 			'post_excerpt' => $template->description,
 		];
 

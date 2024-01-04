@@ -285,4 +285,22 @@ class CartService {
 		}
 		return in_array( $term_id, $cart_menu_ids );
 	}
+
+	/**
+	 * Remove deprecated cart content.
+	 *
+	 * @param string $content Cart content.
+	 *
+	 * @return string
+	 */
+	public static function removeDeprecatedCartContent( $content ) {
+		$review_cart_present = strpos( $content, 'wp:surecart/cart-header {"text":"Review Your Cart"' );
+		$my_cart_present     = strpos( $content, '<sc-cart-header><span>My Cart</span></sc-cart-header>' );
+
+		if ( false !== $review_cart_present && false !== $my_cart_present ) {
+			$content = str_replace( '<sc-cart-header><span>My Cart</span></sc-cart-header>', '<sc-cart-header><span>Review Your Cart</span></sc-cart-header>', $content );
+		}
+
+		return $content;
+	}
 }
