@@ -88,12 +88,8 @@ class UpsellsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			// 'cb'          => '<input type="checkbox" />',
 			'name'  => __( 'Name', 'surecart' ),
-			// 'description' => __( 'Description', 'surecart' ),
 			'price' => __( 'Price', 'surecart' ),
-			// 'type'         => __( 'Type', 'surecart' ),
-			// 'integrations' => __( 'Integrations', 'surecart' ),
 			'date'  => __( 'Date', 'surecart' ),
 		];
 	}
@@ -108,15 +104,6 @@ class UpsellsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $upsell['id'] ); ?>" />
 		<?php
-	}
-
-	/**
-	 * Show any integrations.
-	 */
-	public function column_integrations( $upsell ) {
-		// $list = $this->upsellIntegrationsList( $upsell->id );
-		// return $list ? $list : '-';
-		return '';
 	}
 
 	/**
@@ -300,7 +287,7 @@ class UpsellsListTable extends ListTable {
 			case 'name':
 				return ' < a href     = "' . \SureCart::getUrl()->edit( 'upsell', $upsell->id ) . '" > ' . $upsell->name . ' < / a > ';
 
-		case 'name':
+			case 'name':
 			case 'description':
 				return $upsell->$column_name ?? '';
 		}
