@@ -1,4 +1,5 @@
 import { Component, Host, h } from '@stencil/core';
+import { redirectUpsell } from '@store/upsell/mutations';
 
 @Component({
   tag: 'sc-upsell-no-thanks-button',
@@ -6,17 +7,13 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class ScUpsellNoThanksButton {
-  handleCloseBump() {
-    // Redirect to checkout for now.
-    const checkoutUrl = window?.scData?.pages?.checkout;
-    if (!!checkoutUrl) {
-      window.location.href = checkoutUrl;
-    }
+  handleNoThanksClick() {
+    redirectUpsell();
   }
 
   render() {
     return (
-      <Host onClick={() => this.handleCloseBump()}>
+      <Host onClick={() => this.handleNoThanksClick()}>
         <slot />
       </Host>
     );

@@ -41,9 +41,8 @@ export class ScProductPrice {
 
   // Check if the upsell is the same as the product and price matches.
   componentWillLoad() {
-    if (upsellState.product?.id !== this.productId) {
-      return;
-    }
+    // Return if no upsell is selected.
+    if (upsellState.product?.id !== this.productId) return;
 
     // If price doesn't match, don't proceed.
     const upsellPrice = upsellState.upsell?.price as Price;

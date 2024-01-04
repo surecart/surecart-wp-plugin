@@ -69,9 +69,17 @@ export class ScOrderConfirmProvider {
       // Check if there is recommended_upsells, if so, redirect to first upsell.
       if (checkoutState.checkout?.recommended_upsells?.data?.length) {
         if (checkoutState.checkout?.recommended_upsells?.data?.[0]?.permalink) {
-          const upsellRedirectUrl = checkoutState.checkout?.recommended_upsells?.data?.[0].permalink
-          setTimeout(() => window.location.assign(addQueryArgs(upsellRedirectUrl, { sc_order: checkoutState.checkout?.id })), 50);
-          return;
+          const upsellRedirectUrl = checkoutState.checkout?.recommended_upsells?.data?.[0].permalink;
+          setTimeout(
+            () =>
+              window.location.assign(
+                addQueryArgs(upsellRedirectUrl, {
+                  sc_checkout_id: checkoutState.checkout?.id,
+                  sc_form_id: checkoutState.formId,
+                }),
+              ),
+            50,
+          );
         }
       }
 

@@ -1,7 +1,7 @@
 /**
  * External dependencies.
  */
-import { getQueryArg } from '@wordpress/url';
+// import { getQueryArg } from '@wordpress/url';
 import { createStore } from '@stencil/store';
 
 /**
@@ -12,24 +12,27 @@ import { Checkout, Product, Upsell } from 'src/types';
 interface Store {
   upsell: Upsell | null;
   product: Product | null;
+  checkout_id: string | null;
   busy: boolean;
   disabled: boolean;
-  checkout_id: string | null;
   checkout: Checkout | null;
+  success_url: string | null;
 }
 
-const product = window?.scData?.product_data?.product || null;
-const upsell = window?.scData?.upsell_data?.upsell || null;
-const checkout_id = (getQueryArg(window.location.href, 'sc_order') as string) || null;
+// TODO: Remove this if sc_initial_state works.
+// const product = window?.scData?.product_data?.product || null;
+// const upsell = window?.scData?.upsell_data?.upsell || null;
+// const checkout_id = (getQueryArg(window.location.href, 'sc_checkout_id') as string) || null;
 
 const store = createStore<Store>(
   {
-    upsell: upsell,
-    product,
+    upsell: null,
+    product : null,
+    checkout_id : null,
     busy: false,
     disabled: false,
-    checkout_id,
     checkout: null,
+    success_url: null,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);

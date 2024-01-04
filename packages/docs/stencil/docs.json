@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-01-03T09:03:42",
+  "timestamp": "2024-01-04T18:05:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -34388,7 +34388,7 @@
     },
     {
       "filePath": "./src/components/controllers/upsell/sc-upsell-submit-button/sc-upsell-submit-button.tsx",
-      "encapsulation": "none",
+      "encapsulation": "shadow",
       "tag": "sc-upsell-submit-button",
       "readme": "# sc-upsell-submit-button\n\n\n",
       "docs": "",

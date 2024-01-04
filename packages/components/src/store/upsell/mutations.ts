@@ -1,16 +1,42 @@
+/**
+ * External dependencies.
+ */
+import { addQueryArgs } from '@wordpress/url';
+
+/**
+ * Internal dependencies.
+ */
 import { state } from './store';
+import { state as checkoutState } from '../checkout/store';
 
 export const redirectUpsell = () => {
-    // Get current upsell.
-    const { upsell, checkout } = state;
+  // Get current upsell.
+  const { upsell, checkout_id } = state;
 
-    // Check if there is more upsell or not for this checkout.
-    console.log('upsell', upsell);
+  const { recommended_upsells } = checkoutState.checkout;
 
-    // If there is more upsell, redirect to the next upsell.
-    console.log('checkout', checkout);
+  // Get the next upsell by priority from recommended upsells.
+  const nextUpsell = (recommended_upsells?.data || []).find(item => {
+    return item.priority > upsell.priority;
+  });
 
-    // If there is no more upsell to traverse, redirect to the checkout success page.
-    // const successUrl = upsellLineItemAdded?.success_url || window?.scData?.pages?.checkout;
-    // window.location.href = successUrl;
+  // Redirect to next upsell permalink with checkout_id and form_id.
+  if (!!nextUpsell?.permalink) {
+    window.location.assign(
+      addQueryArgs(nextUpsell.permalink, {
+        sc_checkout_id: checkout_id,
+        sc_form_id: checkoutState.formId,
+      }),
+    );
+  }
+
+  // If no next upsell, and has success_url, redirect to success_url.
+  if (!nextUpsell?.permalink && !!checkoutState.checkout.metadata?.success_url) {
+    window.location.assign(checkoutState.checkout.metadata?.success_url);
+  }
+
+  // If no next upsell, and has no success_url, show popup.
+  if (!nextUpsell?.permalink && !checkoutState.checkout.metadata?.success_url) {
+    // checkoutState.showPopup = true;
+  }
 };

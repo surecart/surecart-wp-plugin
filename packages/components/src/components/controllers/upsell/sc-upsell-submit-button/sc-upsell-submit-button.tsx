@@ -10,7 +10,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import { state as upsellState } from '@store/upsell';
 import { state as productState } from '@store/product';
-import { Price, Product } from 'src/types';
+import { Price } from 'src/types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { redirectUpsell } from '@store/upsell/mutations';
@@ -22,8 +22,8 @@ import { redirectUpsell } from '@store/upsell/mutations';
 export class ScUpsellSubmitButton {
   @Element() el: HTMLScUpsellSubmitButtonElement;
 
-  getProductId() {
-    return ((upsellState.upsell?.price as Price)?.product as Product)?.id || ((upsellState.upsell?.price as Price)?.product as string);
+  getUpsellProductId() {
+    return upsellState.product?.id || '';
   }
 
   async handleAddToOrderClick(e) {
@@ -69,8 +69,8 @@ export class ScUpsellSubmitButton {
         class={{
           'is-busy': upsellState.busy,
           'is-disabled': upsellState.disabled,
-          'is-sold-out': isProductOutOfStock(this.getProductId()) && !isSelectedVariantMissing(this.getProductId()),
-          'is-unavailable': isSelectedVariantMissing(this.getProductId()),
+          'is-sold-out': isProductOutOfStock(this.getUpsellProductId()) && !isSelectedVariantMissing(this.getUpsellProductId()),
+          'is-unavailable': isSelectedVariantMissing(this.getUpsellProductId()),
         }}
         onClick={e => this.handleAddToOrderClick(e)}
       >

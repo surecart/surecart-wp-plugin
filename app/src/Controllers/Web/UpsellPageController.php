@@ -25,27 +25,6 @@ class UpsellPageController extends BasePageController {
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditUpsellLink' ], 99 );
-
-		// add data needed for product to load.
-		add_filter(
-			'surecart-components/scData',
-			function( $data ) {
-				$form = \SureCart::forms()->getDefault();
-
-				$data['product_data'] = [
-					'product'       => $this->product,
-					'form'          => $form,
-					'mode'          => Form::getMode( $form->ID ),
-					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
-				];
-
-				$data['upsell_data'] = [
-					'upsell'   => $this->model,
-				];
-
-				return $data;
-			}
-		);
 	}
 
 	/**
@@ -87,6 +66,7 @@ class UpsellPageController extends BasePageController {
 	 */
 	public function show( $request, $view, $id ) {
 		$id = get_query_var( 'sc_upsell_id' );
+
 		// fetch the product by id/slug.
 		$this->model = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $id );
 
@@ -113,6 +93,7 @@ class UpsellPageController extends BasePageController {
 
 		// add the filters.
 		$this->filters();
+		$this->setInitialUpsellState( $request );
 
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
@@ -124,5 +105,54 @@ class UpsellPageController extends BasePageController {
 		include $view;
 
 		return \SureCart::response();
+	}
+
+	/**
+	 * Get the success url by form id.
+	 *
+	 * @param  int    $formId Checkout form id.
+	 * @return string         The success url.
+	 */
+	public function getCheckoutSuccessUrl( int $formId ): string {
+		$form = get_post( $formId );
+
+		if ( is_wp_error( $form ) || empty( $form ) ) {
+			return '';
+		}
+
+		$block = parse_blocks( $form->post_content )[0] ?? [];
+
+		if ( empty( $block ) || empty( $block['attrs']['success_url'] ) ) {
+			return '';
+		}
+
+		return $block['attrs']['success_url'];
+	}
+
+	/**
+	 * Set initial upsell state.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 * @return void
+	 */
+	public function setInitialUpsellState( $request ): void {
+		// Get checkout form id.
+		$form_id = (int) $request->query( 'sc_form_id' ) ?? '';
+
+		// Product state.
+		$product_state[ $this->product->id ] = $this->product->getInitialPageState();
+
+		// Set initial upsell state.
+		sc_initial_state(
+			[
+				'product' => $product_state,
+				'upsell' => [
+					'product'     => $this->product,
+					'upsell'      => $this->model,
+					'checkout_id' => $request->query( 'sc_checkout_id' ) ?? '',
+					'success_url' => $this->getCheckoutSuccessUrl( $form_id ),
+				]
+			]
+		);
 	}
 }
