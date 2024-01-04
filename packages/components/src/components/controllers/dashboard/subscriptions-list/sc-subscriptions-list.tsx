@@ -133,7 +133,7 @@ export class ScSubscriptionsList {
   getSubscriptionLink(subscription: Subscription) {
     // If subscription has no payment_method,
     // then, we'll redirect to add payment method page.
-    if (!subscription.payment_method) {
+    if (!subscription.payment_method && ((subscription?.price?.ad_hoc && 0 !== subscription?.ad_hoc_amount) || (0 !== subscription?.price?.amount && !subscription?.price?.ad_hoc))) {
       return addQueryArgs(window.location.href, {
         action: 'create',
         model: 'payment_method',
@@ -151,6 +151,8 @@ export class ScSubscriptionsList {
 
   renderList() {
     return this.subscriptions.map(subscription => {
+      console.log(subscription);
+      
       return (
         <sc-stacked-list-row href={this.getSubscriptionLink(subscription)} key={subscription.id} mobile-size={0}>
           <sc-subscription-details subscription={subscription}></sc-subscription-details>

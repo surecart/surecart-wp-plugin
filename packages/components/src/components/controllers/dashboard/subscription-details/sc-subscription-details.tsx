@@ -203,7 +203,7 @@ export class ScSubscriptionDetails {
           </sc-card>
         </sc-dialog>
 
-        {!this.subscription.payment_method && (
+        {!this.subscription.payment_method && ((this.subscription?.price?.ad_hoc && 0 !== this.subscription?.ad_hoc_amount) || (!this.subscription?.price?.ad_hoc && 0 !== this.subscription?.price?.amount)) && (
           <div>
             <sc-tag type="warning">
               <div class="subscription-details__missing-method">
