@@ -54,7 +54,10 @@ class BuyLink {
 	 * @return string
 	 */
 	public function getSuccessUrl() {
-		return $this->product->metadata->wp_buy_link_success_url ?? '';
+		if ( 'true' !== ( $this->product->metadata->wp_buy_link_success_page_enabled ?? '' ) ) {
+			return '';
+		}
+		return $this->product->metadata->wp_buy_link_success_page_url ?? '';
 	}
 
 	/**
