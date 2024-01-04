@@ -2,6 +2,8 @@
  * External dependencies.
  */
 import { Component, Element, h, Host } from '@stencil/core';
+import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -11,8 +13,6 @@ import { state as productState } from '@store/product';
 import { Price, Product } from 'src/types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { createErrorNotice } from '@store/notices/mutations';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 import { redirectUpsell } from '@store/upsell/mutations';
 
 @Component({
@@ -43,7 +43,7 @@ export class ScUpsellSubmitButton {
         upsell: upsellState.upsell?.id,
         price: priceId,
         quantity: productState.quantity || 1,
-        checkout: upsellState.checkout?.id,
+        checkout: upsellState.checkout_id,
       };
 
       (await apiFetch({

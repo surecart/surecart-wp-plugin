@@ -1,4 +1,12 @@
+/**
+ * External dependencies.
+ */
+import { getQueryArg } from '@wordpress/url';
 import { createStore } from '@stencil/store';
+
+/**
+ * Internal dependencies.
+ */
 import { Checkout, Product, Upsell } from 'src/types';
 
 interface Store {
@@ -6,20 +14,22 @@ interface Store {
   product: Product | null;
   busy: boolean;
   disabled: boolean;
+  checkout_id: string | null;
   checkout: Checkout | null;
 }
 
 const product = window?.scData?.product_data?.product || null;
 const upsell = window?.scData?.upsell_data?.upsell || null;
-const checkout = window?.scData?.upsell_data?.checkout || null;
+const checkout_id = (getQueryArg(window.location.href, 'sc_order') as string) || null;
 
 const store = createStore<Store>(
   {
-    upsell : upsell,
+    upsell: upsell,
     product,
     busy: false,
     disabled: false,
-    checkout: checkout,
+    checkout_id,
+    checkout: null,
   },
   (newValue, oldValue) => {
     return JSON.stringify(newValue) !== JSON.stringify(oldValue);
