@@ -88,6 +88,7 @@ export const getDefaultState = (): { [key: string]: ProductState } => {
           price_id: selectedPrice?.id,
           quantity: 1,
           ...(selectedPrice?.ad_hoc ? { ad_hoc_amount: selectedPrice?.amount } : {}),
+          ...(selectedVariant?.id ? { variant_id: selectedVariant?.id } : {}),
         },
         variantValues: {
           ...(selectedVariant?.option_1 ? { option_1: selectedVariant?.option_1 } : {}),
