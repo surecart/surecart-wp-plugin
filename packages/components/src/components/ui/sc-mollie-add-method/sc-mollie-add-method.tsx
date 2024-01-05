@@ -16,6 +16,7 @@ export class ScMollieAddMethod {
   @Prop() currency: string;
   @Prop() liveMode: boolean;
   @Prop() customerId: string;
+  @Prop() subscriptionId: string;
 
   @State() methods: PaymentMethodType[] = [];
   @State() loading: boolean;
@@ -41,6 +42,21 @@ export class ScMollieAddMethod {
           return_url: this.successUrl,
           payment_method_type: this.selectedMethodId,
           currency: this.currency,
+          refresh_status: true,
+        },
+      });
+      const intent = (await apiFetch({
+        method: 'GET',
+        path: addQueryArgs(`surecart/v1/payment_intents/${this.paymentIntent?.id}`, {
+          refresh_status: true,
+        })
+      })) as PaymentIntent;
+      
+      await apiFetch({
+        path: `/surecart/v1/subscriptions/${this.subscriptionId}`,
+        method: 'PATCH',
+        data: {
+          payment_method: intent?.payment_method,
         },
       });
       if (this.paymentIntent.processor_data?.mollie?.checkout_url) {

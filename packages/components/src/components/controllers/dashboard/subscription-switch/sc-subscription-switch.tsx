@@ -141,6 +141,7 @@ export class ScSubscriptionSwitch {
               model: 'payment_method',
               ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
               success_url: window.location.href,
+              subscription_id: this.subscription?.id,
         }),
       );
     }

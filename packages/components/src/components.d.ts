@@ -1827,6 +1827,7 @@ export namespace Components {
         "customerId": string;
         "liveMode": boolean;
         "processorId": string;
+        "subscriptionId": string;
         "successUrl": string;
     }
     interface ScOrder {
@@ -2392,6 +2393,7 @@ export namespace Components {
         "currency": string;
         "customerId": string;
         "liveMode": boolean;
+        "subscriptionId": string;
         "successUrl": string;
     }
     interface ScPaypalButtons {
@@ -2436,6 +2438,7 @@ export namespace Components {
         "currency": string;
         "customerId": string;
         "liveMode": boolean;
+        "subscriptionId": string;
         "successUrl": string;
     }
     interface ScPhoneInput {
@@ -3395,6 +3398,7 @@ export namespace Components {
     interface ScStripeAddMethod {
         "customerId": string;
         "liveMode": boolean;
+        "subscriptionId": string;
         "successUrl": string;
     }
     interface ScStripeElement {
@@ -7779,6 +7783,7 @@ declare namespace LocalJSX {
         "customerId"?: string;
         "liveMode"?: boolean;
         "processorId"?: string;
+        "subscriptionId"?: string;
         "successUrl"?: string;
     }
     interface ScOrder {
@@ -8367,6 +8372,7 @@ declare namespace LocalJSX {
         "currency"?: string;
         "customerId"?: string;
         "liveMode"?: boolean;
+        "subscriptionId"?: string;
         "successUrl"?: string;
     }
     interface ScPaypalButtons {
@@ -8416,6 +8422,7 @@ declare namespace LocalJSX {
         "currency"?: string;
         "customerId"?: string;
         "liveMode"?: boolean;
+        "subscriptionId"?: string;
         "successUrl"?: string;
     }
     interface ScPhoneInput {
@@ -9476,6 +9483,7 @@ declare namespace LocalJSX {
     interface ScStripeAddMethod {
         "customerId"?: string;
         "liveMode"?: boolean;
+        "subscriptionId"?: string;
         "successUrl"?: string;
     }
     interface ScStripeElement {

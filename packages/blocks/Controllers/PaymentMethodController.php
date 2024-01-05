@@ -119,6 +119,8 @@ class PaymentMethodController extends BaseController {
 
 		$success_url = esc_url( $_GET['success_url'] ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+		$subscription_id = sanitize_text_field( $_GET['subscription_id'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
 		ob_start();
 		?>
 
@@ -161,6 +163,7 @@ class PaymentMethodController extends BaseController {
 				<?php $customer = Customer::with( [ 'shipping_address' ] )->find( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>
 				<sc-mollie-add-method
 					processor-id="<?php echo esc_attr( $mollie->id ); ?>"
+					subscription-id="<?php echo esc_attr( $subscription_id ); ?>"
 					success-url="<?php echo esc_url( $success_url ); ?>"
 					live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 					country="<?php echo esc_attr( $customer->shipping_address->country ?? '' ); ?>"
@@ -180,6 +183,7 @@ class PaymentMethodController extends BaseController {
 						</span>
 						<sc-stripe-add-method
 							success-url="<?php echo esc_url( $success_url ); ?>"
+							subscription-id="<?php echo esc_attr( $subscription_id ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
 						</sc-stripe-add-method>
@@ -193,6 +197,7 @@ class PaymentMethodController extends BaseController {
 						</span>
 						<sc-paypal-add-method
 							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							subscription-id="<?php echo esc_attr( $subscription_id ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
@@ -210,6 +215,7 @@ class PaymentMethodController extends BaseController {
 						</span>
 						<sc-paystack-add-method
 							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							subscription-id="<?php echo esc_attr( $subscription_id ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">

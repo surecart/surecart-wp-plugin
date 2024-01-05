@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from '../paypal-buttons/functions';
-
+import { addQueryArgs } from '@wordpress/url';
 @Component({
   tag: 'sc-paypal-add-method',
   styleUrl: 'sc-paypal-add-method.scss',
@@ -20,6 +20,7 @@ export class ScPaypalAddMethod {
   @Prop() customerId: string;
   @Prop() successUrl: string;
   @Prop() currency: string;
+  @Prop() subscriptionId: string;
 
   @State() loading: boolean;
   @State() loaded: boolean;
@@ -64,6 +65,20 @@ export class ScPaypalAddMethod {
                   method: 'PATCH',
                   path: `surecart/v1/payment_intents/${this.paymentIntent?.id}/capture`,
                 })) as PaymentIntent;
+                const paymentIntent = (await apiFetch({
+                  method: 'GET',
+                  path: addQueryArgs(`surecart/v1/payment_intents/${this.paymentIntent?.id}`, {
+                    refresh_status: true,
+                  })
+                })) as PaymentIntent;
+                
+                await apiFetch({
+                  path: `/surecart/v1/subscriptions/${this.subscriptionId}`,
+                  method: 'PATCH',
+                  data: {
+                    payment_method: paymentIntent?.payment_method,
+                  },
+                });
                 if (['succeeded', 'pending', 'requires_approval'].includes(intent?.status)) {
                   window.location.assign(this.successUrl);
                 } else {
@@ -101,6 +116,7 @@ export class ScPaypalAddMethod {
           live_mode: this.liveMode,
           customer_id: this.customerId,
           currency: this.currency,
+          refresh_status: true,
         },
       });
     } catch (e) {

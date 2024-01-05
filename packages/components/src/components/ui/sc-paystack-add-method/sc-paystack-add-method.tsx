@@ -14,6 +14,7 @@ import { Component, h, Host, Prop, State, Watch } from '@stencil/core';
  */
 import apiFetch from '../../../functions/fetch';
 import { PaymentIntent } from '../../../types';
+import { addQueryArgs } from '@wordpress/url';
 
 @Component({
   tag: 'sc-paystack-add-method',
@@ -25,6 +26,7 @@ export class ScPaystackAddMethod {
   @Prop() customerId: string;
   @Prop() successUrl: string;
   @Prop() currency: string;
+  @Prop() subscriptionId: string;
 
   @State() loading: boolean;
   @State() loaded: boolean;
@@ -69,6 +71,21 @@ export class ScPaystackAddMethod {
           live_mode: this.liveMode,
           customer_id: this.customerId,
           currency: this.currency,
+          refresh_status: true,
+        },
+      });
+      const intent = (await apiFetch({
+        method: 'GET',
+        path: addQueryArgs(`surecart/v1/payment_intents/${this.paymentIntent?.id}`, {
+          refresh_status: true,
+        })
+      })) as PaymentIntent;
+      
+      await apiFetch({
+        path: `/surecart/v1/subscriptions/${this.subscriptionId}`,
+        method: 'PATCH',
+        data: {
+          payment_method: intent?.payment_method,
         },
       });
     } catch (e) {

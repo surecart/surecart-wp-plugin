@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { PaymentIntent } from '../../../types';
-
+import { addQueryArgs } from '@wordpress/url';
 @Component({
   tag: 'sc-stripe-add-method',
   styleUrl: 'sc-stripe-add-method.scss',
@@ -23,6 +23,7 @@ export class ScStripeAddMethod {
   @Prop() liveMode: boolean = true;
   @Prop() customerId: string;
   @Prop() successUrl: string;
+  @Prop() subscriptionId: string;
 
   @State() loading: boolean;
   @State() loaded: boolean;
@@ -105,6 +106,7 @@ export class ScStripeAddMethod {
           processor_type: 'stripe',
           live_mode: this.liveMode,
           customer_id: this.customerId,
+          refresh_status: true,
         },
       });
     } catch (e) {
@@ -128,6 +130,22 @@ export class ScStripeAddMethod {
         },
         redirect: 'always',
       });
+
+      const intent = (await apiFetch({
+        method: 'GET',
+        path: addQueryArgs(`surecart/v1/payment_intents/${this.paymentIntent?.id}`, {
+          refresh_status: true,
+        })
+      })) as PaymentIntent;
+      
+      await apiFetch({
+        path: `/surecart/v1/subscriptions/${this.subscriptionId}`,
+        method: 'PATCH',
+        data: {
+          payment_method: intent?.payment_method,
+        },
+      });
+
       if (confirmed?.error) {
         this.error = confirmed.error.message;
         throw confirmed.error;

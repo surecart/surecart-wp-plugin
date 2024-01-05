@@ -970,6 +970,7 @@ export interface PaymentIntent extends Object {
   customer: Customer | string;
   created_at: number;
   updated_at: number;
+  payment_method: PaymentMethod | string;
 }
 
 export interface PaymentIntents {
