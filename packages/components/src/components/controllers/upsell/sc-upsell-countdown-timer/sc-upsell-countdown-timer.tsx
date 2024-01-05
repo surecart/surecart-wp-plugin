@@ -1,7 +1,9 @@
 /**
  * External dependencies.
  */
-import { Component, Host, Prop, h, State, Listen } from '@stencil/core';
+import { Component, Host, Prop, h, State } from '@stencil/core';
+import { getUpsellRemainingTime, isUpsellExpired } from '@store/upsell/getters';
+import { redirectUpsell } from '@store/upsell/mutations';
 
 @Component({
   tag: 'sc-upsell-countdown-timer',
@@ -10,7 +12,7 @@ import { Component, Host, Prop, h, State, Listen } from '@stencil/core';
 })
 export class ScUpsellCountdownTimer {
   /** The time remaining in seconds. */
-  @State() timeRemaining: number = 1800; // 30 minutes
+  @State() timeRemaining: number = Infinity; // Initial time is many, would be updated later.
 
   /** The formatted time remaining. */
   @State() formattedTime: string;
@@ -21,40 +23,28 @@ export class ScUpsellCountdownTimer {
   /** Whether to show the icon. */
   @Prop() showIcon: boolean = true;
 
-  // Use local storage key for storing countdown time
-  localStorageKey = 'countdownTime';
-
   constructor() {
-    this.loadTimeFromLocalStorage();
-    this.startCountdown();
+    this.timeRemaining = getUpsellRemainingTime();
   }
 
   componentDidLoad() {
     this.updateCountdown();
+    this.maybeRedirectUpsell();
   }
 
-  loadTimeFromLocalStorage() {
-    const savedTime = localStorage.getItem(this.localStorageKey);
-    this.timeRemaining = savedTime ? parseInt(savedTime, 10) : 0;
-  }
-
-  startCountdown() {
-    setInterval(() => {
-      if (this.timeRemaining > 0) {
-        this.timeRemaining -= 1;
-        this.saveTimeToLocalStorage();
-      } else {
-        this.handleCountdownComplete();
-      }
-    }, 1000);
+  maybeRedirectUpsell() {
+    if (isUpsellExpired()) {
+      redirectUpsell();
+    }
   }
 
   updateCountdown() {
     setInterval(() => {
+      this.timeRemaining = getUpsellRemainingTime(); // in seconds.
       const days = Math.floor(this.timeRemaining / (60 * 60 * 24));
       const hours = Math.floor((this.timeRemaining % (60 * 60 * 24)) / (60 * 60));
       const minutes = Math.floor((this.timeRemaining % (60 * 60)) / 60);
-      const seconds = this.timeRemaining % 60;
+      const seconds = Math.floor(this.timeRemaining % 60);
 
       if (days > 0) {
         this.formattedTime = `${this.formatTimeUnit(days)}:${this.formatTimeUnit(hours)}:${this.formatTimeUnit(minutes)}:${this.formatTimeUnit(seconds)}`;
@@ -72,24 +62,9 @@ export class ScUpsellCountdownTimer {
     return unit < 10 ? `0${unit}` : `${unit}`;
   }
 
-  saveTimeToLocalStorage() {
-    localStorage.setItem(this.localStorageKey, this.timeRemaining.toString());
-  }
-
-  handleCountdownComplete() {
-    if (!!this.redirectUrl) {
-      window.location.href = this.redirectUrl;
-    }
-  }
-
-  @Listen('resetCountdown')
-  handleResetCountdown() {
-    // Handle the event to reset the countdown
-    this.timeRemaining = 600; // Set the desired countdown time
-    this.saveTimeToLocalStorage();
-  }
-
   render() {
+    console.log('getUpsellRemainingTime()', getUpsellRemainingTime());
+
     return (
       <Host>
         <span class="sc-upsell-countdown-badge">
