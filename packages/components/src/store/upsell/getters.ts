@@ -42,7 +42,11 @@ export const formatTimeUnit = unit => (unit < 10 ? `0${unit}` : `${unit}`);
  * Get formatted remaining time.
  */
 export const getFormattedRemainingTime = () => {
+  // not loaded.
+  if (!state.checkout?.upsells_expire_at) return '--:--';
+
   const time = getUpsellRemainingTime('seconds');
+
   const days = Math.floor(time / (60 * 60 * 24));
   const hours = Math.floor((time % (60 * 60 * 24)) / (60 * 60));
   const minutes = Math.floor((time % (60 * 60)) / 60);
