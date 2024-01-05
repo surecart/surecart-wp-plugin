@@ -144,7 +144,7 @@ export class ScProductPrice {
 
               {!!this?.setupFeeAmount && (
                 <span class="price__setup-fee">
-                  <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>
+                  <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>{' '}
                   <sc-format-number type="currency" value={this?.setupFeeAmount} currency={this.currency}></sc-format-number> {this?.setupFeeName || __('Setup Fee', 'surecart')}.
                 </span>
               )}
