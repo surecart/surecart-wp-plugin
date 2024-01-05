@@ -5,6 +5,7 @@
 	"description": "Displays the Upsell Call To Action.",
 	"category": "surecart",
 	"keywords": ["title", "form", "upsell", "cta"],
+	"ancestor": ["surecart/upsell"],
 	"attributes": {
 		"textAlign": {
 			"type": "string"

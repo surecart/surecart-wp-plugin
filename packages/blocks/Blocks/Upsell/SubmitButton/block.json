@@ -4,6 +4,7 @@
 	"description": "Display a submit button for Upsell.",
 	"category": "surecart",
 	"keywords": ["submit", "button", "order", "upsell"],
+	"ancestor": ["surecart/upsell"],
 	"textdomain": "surecart",
 	"supports": {
 		"html": false,

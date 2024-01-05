@@ -11,6 +11,7 @@
 		}
 	},
 	"keywords": ["description", "order", "upsell"],
+	"ancestor": ["surecart/upsell"],
 	"supports": {
 		"reusable": false,
 		"html": false,

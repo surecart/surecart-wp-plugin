@@ -4,6 +4,7 @@
 	"title": "Upsell Countdown Timer",
 	"description": "Display Countdown timer for Upsell",
 	"category": "surecart",
+	"ancestor": ["surecart/upsell"],
 	"attributes": {
 		"textAlign": {
 			"type": "string",

@@ -2,6 +2,7 @@
  * Internal dependencies.
  */
 import * as Upsell from './Blocks/Upsell/Upsell';
+import * as UpsellTotals from './Blocks/Upsell/UpsellTotals';
 import * as CountdownTimer from './Blocks/Upsell/CountdownTimer';
 import * as Cta from './Blocks/Upsell/Cta';
 import * as Description from './Blocks/Upsell/Description';
@@ -19,6 +20,7 @@ export const upsellPageTemplates = [
 registerBlocksForTemplates({
 	blocks: [
 		Upsell,
+		UpsellTotals,
 		Cta,
 		Description,
 		CountdownTimer,

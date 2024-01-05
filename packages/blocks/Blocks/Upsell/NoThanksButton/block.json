@@ -4,6 +4,7 @@
 	"description": "Display a no thanks button for Upsell.",
 	"category": "surecart",
 	"keywords": ["no", "thanks", "button", "order", "upsell"],
+	"ancestor": ["surecart/upsell"],
 	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
