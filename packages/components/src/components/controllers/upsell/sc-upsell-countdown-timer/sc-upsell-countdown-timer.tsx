@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { Component, Host, Prop, h, State } from '@stencil/core';
-import { getUpsellRemainingTime, isUpsellExpired } from '@store/upsell/getters';
+import { getFormattedRemainingTime, isUpsellExpired } from '@store/upsell/getters';
 import { redirectUpsell } from '@store/upsell/mutations';
 
 @Component({
@@ -35,27 +35,10 @@ export class ScUpsellCountdownTimer {
   }
 
   updateCountdown() {
+    this.formattedTime = getFormattedRemainingTime();
     setInterval(() => {
-      this.timeRemaining = getUpsellRemainingTime(); // in seconds.
-      const days = Math.floor(this.timeRemaining / (60 * 60 * 24));
-      const hours = Math.floor((this.timeRemaining % (60 * 60 * 24)) / (60 * 60));
-      const minutes = Math.floor((this.timeRemaining % (60 * 60)) / 60);
-      const seconds = Math.floor(this.timeRemaining % 60);
-
-      if (days > 0) {
-        this.formattedTime = `${this.formatTimeUnit(days)}:${this.formatTimeUnit(hours)}:${this.formatTimeUnit(minutes)}:${this.formatTimeUnit(seconds)}`;
-      } else if (hours > 0) {
-        this.formattedTime = `${this.formatTimeUnit(hours)}:${this.formatTimeUnit(minutes)}:${this.formatTimeUnit(seconds)}`;
-      } else if (minutes > 0) {
-        this.formattedTime = `${this.formatTimeUnit(minutes)}:${this.formatTimeUnit(seconds)}`;
-      } else {
-        this.formattedTime = `00:${this.formatTimeUnit(seconds)}`;
-      }
+      this.formattedTime = getFormattedRemainingTime();
     }, 1000);
-  }
-
-  formatTimeUnit(unit: number): string {
-    return unit < 10 ? `0${unit}` : `${unit}`;
   }
 
   render() {
@@ -63,8 +46,9 @@ export class ScUpsellCountdownTimer {
       <Host>
         <span class="sc-upsell-countdown-badge">
           {this.showIcon && <sc-icon name="clock" />}
-          <slot name="offer-expire-text" />
-          <strong>{this.formattedTime}</strong>
+          <span>
+            <slot name="offer-expire-text" /> <strong>{this.formattedTime}</strong>
+          </span>
         </span>
       </Host>
     );

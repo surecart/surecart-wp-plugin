@@ -49,7 +49,7 @@ class TemplatesServiceProvider implements ServiceProviderInterface {
 			return new UpsellTemplatesService(
 				$c,
 				[
-					'pages/template-surecart-upsell.php' => esc_html__( 'SureCart Layout', 'surecart' ),
+					'pages/template-surecart-blank.php' => esc_html__( 'SureCart Layout', 'surecart' ),
 				],
 			);
 		};

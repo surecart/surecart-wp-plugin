@@ -37,7 +37,7 @@ class Block extends ProductBlock {
 		);
 
 		return wp_sprintf(
-			'<sc-product-description %1$s>%2$s</sc-product-description>',
+			'<div %1$s>%2$s</div>',
 			$attributes,
 			wp_kses_post( $product->description ?? '' )
 		);

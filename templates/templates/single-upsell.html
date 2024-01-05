@@ -1,41 +1,50 @@
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group">
-	<!-- wp:surecart/upsell-countdown-timer {"textAlign":"center","offer_expire_text":"Offer Expires In"} /-->
+<!-- wp:group {"style":{"color":{"background":"#f9fafb"}},"layout":{"type":"default"}} -->
+<div class="wp-block-group has-background" style="background-color:#f9fafb"><!-- wp:surecart/upsell -->
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"80px","bottom":"80px"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group" style="padding-top:80px;padding-bottom:80px">
+		<!-- wp:surecart/upsell-countdown-timer {"textAlign":"center","style":{"typography":{"fontSize":"16px","fontStyle":"normal","fontWeight":"500"}}} /-->
 
-	<!-- wp:surecart/upsell-cta {"textAlign":"center"} /-->
+		<!-- wp:surecart/upsell-cta {"textAlign":"center","style":{"typography":{"fontSize":"34px","fontStyle":"normal","fontWeight":"600"}}} /-->
 
-	<!-- wp:surecart/upsell-description {"textAlign":"center"} /-->
-</div>
-<!-- /wp:group -->
-
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group"><!-- wp:surecart/columns -->
-	<div class="wp-block-surecart-columns">
-		<!-- wp:surecart/column {"width":"64%","layout":{"type":"constrained","justifyContent":"center","contentSize":"100%"}} -->
-		<div class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-center"
-			style="flex-basis:64%;--sc-column-content-width:100%">
-			<!-- wp:surecart/product-media /-->
-		</div>
-		<!-- /wp:surecart/column -->
-
-		<!-- wp:surecart/column {"width":"36%","style":{"spacing":{"blockGap":"24px","padding":{"top":"0"}}}} -->
-		<div class="wp-block-surecart-column" style="padding-top:0;flex-basis:36%;--sc-form-row-spacing:24px">
-			<!-- wp:surecart/product-title {"style":{"spacing":{"margin":{"top":"0"}}}} /-->
-
-			<!-- wp:surecart/product-price {"fontSize":"medium","style":{"typography":{"textTransform":"capitalize"}}} /-->
-
-			<!-- wp:surecart/product-description /-->
-
-			<!-- wp:surecart/product-variant-choices {"style":{"typography":{"fontSize":"16px"}}} /-->
-
-			<!-- wp:surecart/product-quantity {"label":"Quantity","style":{"typography":{"fontSize":"16px"}}} /-->
-
-			<!-- wp:surecart/upsell-submit /-->
-
-			<!-- wp:surecart/upsell-no-thanks /-->
-		</div>
-		<!-- /wp:surecart/column -->
+		<!-- wp:surecart/upsell-description {"textAlign":"center","style":{"color":{"text":"#343b47"},"elements":{"link":{"color":{"text":"#343b47"}}}}} /-->
 	</div>
-	<!-- /wp:surecart/columns -->
+	<!-- /wp:group -->
+
+	<!-- wp:group {"layout":{"type":"constrained","contentSize":"1180px"}} -->
+	<div class="wp-block-group">
+		<!-- wp:group {"style":{"border":{"color":"#dfe4ea","style":"solid","width":"1px","radius":"4px"},"spacing":{"padding":{"top":"50px","bottom":"50px","left":"50px","right":"50px"}}},"backgroundColor":"base","layout":{"type":"default"}} -->
+		<div class="wp-block-group has-border-color has-base-background-color has-background"
+			style="border-color:#dfe4ea;border-style:solid;border-width:1px;border-radius:4px;padding-top:50px;padding-right:50px;padding-bottom:50px;padding-left:50px">
+			<!-- wp:surecart/columns -->
+			<div class="wp-block-surecart-columns">
+				<!-- wp:surecart/column {"layout":{"type":"constrained","justifyContent":"center","contentSize":"100%"},"width":"60%"} -->
+				<div class="wp-block-surecart-column is-layout-constrained is-horizontally-aligned-center"
+					style="flex-basis:60%;--sc-column-content-width:100%"><!-- wp:surecart/product-media /--></div>
+				<!-- /wp:surecart/column -->
+
+				<!-- wp:surecart/column {"width":"40%","style":{"spacing":{"blockGap":"24px","padding":{"top":"0"}}}} -->
+				<div class="wp-block-surecart-column" style="padding-top:0;flex-basis:40%;--sc-form-row-spacing:24px">
+					<!-- wp:surecart/product-title {"style":{"spacing":{"margin":{"top":"0"}},"typography":{"fontSize":"34px","fontStyle":"normal","fontWeight":"600"}}} /-->
+
+					<!-- wp:surecart/product-price {"style":{"typography":{"textTransform":"capitalize"}},"fontSize":"medium"} /-->
+
+					<!-- wp:surecart/product-description {"style":{"typography":{"fontSize":"16px","lineHeight":"1.6"},"color":{"text":"#343b47"},"elements":{"link":{"color":{"text":"#343b47"}}}}} /-->
+
+					<!-- wp:surecart/product-variant-choices {"style":{"typography":{"fontSize":"16px"}}} /-->
+
+					<!-- wp:surecart/product-quantity {"label":"Quantity","style":{"typography":{"fontSize":"16px"}}} /-->
+
+					<!-- wp:surecart/upsell-submit /-->
+
+					<!-- wp:surecart/upsell-no-thanks /-->
+				</div>
+				<!-- /wp:surecart/column -->
+			</div>
+			<!-- /wp:surecart/columns -->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+	<!-- /wp:surecart/upsell -->
 </div>
 <!-- /wp:group -->

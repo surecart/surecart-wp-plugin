@@ -33,7 +33,7 @@ class Upsell extends Model implements PageModel {
 		if ( ! wp_is_block_theme() ) {
 			$attributes['metadata'] = [
 				...$attributes['metadata'] ?? [],
-				'wp_template_id' => apply_filters( 'surecart/templates/upsells/default', 'pages/template-surecart-upsell.php' ),
+				'wp_template_id' => apply_filters( 'surecart/templates/upsells/default', 'pages/template-surecart-blank.php' ),
 			];
 		}
 

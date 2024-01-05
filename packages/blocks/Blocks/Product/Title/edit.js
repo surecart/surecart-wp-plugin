@@ -9,10 +9,8 @@ import classnames from 'classnames';
 import {
 	AlignmentControl,
 	BlockControls,
-	Warning,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { ScProductText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -50,11 +48,7 @@ export default ({ attributes: { level, textAlign }, setAttributes }) => {
 				/>
 			</BlockControls>
 
-			<TagName {...blockProps}>
-				<ScProductText text="name">
-					{__('Product Title', 'surecart')}
-				</ScProductText>
-			</TagName>
+			<TagName {...blockProps}>{__('Product Title', 'surecart')}</TagName>
 		</>
 	);
 };

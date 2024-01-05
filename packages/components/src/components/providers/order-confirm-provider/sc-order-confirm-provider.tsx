@@ -9,6 +9,7 @@ import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
+import { clearCheckout } from '@store/checkout/mutations';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -75,6 +76,8 @@ export class ScOrderConfirmProvider {
             ),
           50,
         );
+        clearCheckout();
+        return;
       }
 
       // get success url.
@@ -86,6 +89,7 @@ export class ScOrderConfirmProvider {
       } else {
         this.showSuccessModal = true;
       }
+      clearCheckout();
     }
   }
 

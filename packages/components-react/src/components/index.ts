@@ -215,6 +215,7 @@ export const ScTooltip = /*@__PURE__*/createReactComponent<JSX.ScTooltip, HTMLSc
 export const ScTotal = /*@__PURE__*/createReactComponent<JSX.ScTotal, HTMLScTotalElement>('sc-total');
 export const ScUpcomingInvoice = /*@__PURE__*/createReactComponent<JSX.ScUpcomingInvoice, HTMLScUpcomingInvoiceElement>('sc-upcoming-invoice');
 export const ScUpgradeRequired = /*@__PURE__*/createReactComponent<JSX.ScUpgradeRequired, HTMLScUpgradeRequiredElement>('sc-upgrade-required');
+export const ScUpsell = /*@__PURE__*/createReactComponent<JSX.ScUpsell, HTMLScUpsellElement>('sc-upsell');
 export const ScUpsellCountdownTimer = /*@__PURE__*/createReactComponent<JSX.ScUpsellCountdownTimer, HTMLScUpsellCountdownTimerElement>('sc-upsell-countdown-timer');
 export const ScUpsellNoThanksButton = /*@__PURE__*/createReactComponent<JSX.ScUpsellNoThanksButton, HTMLScUpsellNoThanksButtonElement>('sc-upsell-no-thanks-button');
 export const ScUpsellSubmitButton = /*@__PURE__*/createReactComponent<JSX.ScUpsellSubmitButton, HTMLScUpsellSubmitButtonElement>('sc-upsell-submit-button');

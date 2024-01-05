@@ -8,7 +8,7 @@ import { Component, Element, h, Host } from '@stencil/core';
  */
 import { state as upsellState } from '@store/upsell';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
-import { createOrUpdateUpsell, redirectUpsell } from '@store/upsell/mutations';
+import { createOrUpdateUpsell } from '@store/upsell/mutations';
 
 @Component({
   tag: 'sc-upsell-submit-button',
@@ -23,24 +23,7 @@ export class ScUpsellSubmitButton {
 
   async handleAddToOrderClick(e) {
     e.preventDefault();
-
-    // already busy, do nothing.
-    if (upsellState.busy) return;
-
-    try {
-      upsellState.busy = true;
-
-      // Create or update the upsell. states
-      await createOrUpdateUpsell();
-      upsellState.busy = false;
-
-      // Redirect to next Upsell or checkout success URL.
-      redirectUpsell();
-    } catch (error) {
-      console.error(error); // Errors handled by the store.
-    } finally {
-      upsellState.busy = false;
-    }
+    createOrUpdateUpsell();
   }
 
   render() {

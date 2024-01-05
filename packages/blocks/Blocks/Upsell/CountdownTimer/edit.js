@@ -75,8 +75,9 @@ export default ({
 
 			<div {...blockProps}>
 				<ScUpsellCountdownTimer showIcon={show_icon}>
-					<div slot="offer-expire-text">
+					<span slot="offer-expire-text">
 						<RichText
+							tagName="span"
 							aria-label={__('Offer Expire text', 'surecart')}
 							placeholder={__('Offer Expires in', 'surecart')}
 							value={offer_expire_text}
@@ -86,7 +87,7 @@ export default ({
 							withoutInteractiveFormatting
 							allowedFormats={['core/bold', 'core/italic']}
 						/>
-					</div>
+					</span>
 				</ScUpsellCountdownTimer>
 			</div>
 		</>

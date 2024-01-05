@@ -1,19 +1,17 @@
 import { state } from './store';
 
 export const getDiscountedAmount = amount => {
-  if (state.upsell?.amount_off) {
-    return Math.max(0, amount - state.upsell?.amount_off);
-  }
-
-  if (state.upsell?.percent_off) {
-    const off = amount * (state.upsell?.percent_off / 100);
-    return Math.max(0, amount - off);
-  }
-
-  return amount;
+  return state?.line_item?.total_amount || amount;
 };
 
-export const getUpsellRemainingTime = ( timeFormat = 'seconds' ) => {
+export const getScratchAmount = amount => {
+  return state?.line_item?.scratch_amount || amount;
+};
+
+/**
+ * Get upsell remaining time.
+ */
+export const getUpsellRemainingTime = (timeFormat = 'seconds') => {
   // Get upsell expiration timestamp from checkout.
   const expiresAt = state.checkout?.upsells_expire_at; // in seconds
 
@@ -35,6 +33,37 @@ export const getUpsellRemainingTime = ( timeFormat = 'seconds' ) => {
   if (timeFormat === 'hours') return Math.floor(remaining / 60 / 60);
 };
 
+/**
+ * Format time unit - add a zero if unit is less than 10.
+ */
+export const formatTimeUnit = unit => (unit < 10 ? `0${unit}` : `${unit}`);
+
+/**
+ * Get formatted remaining time.
+ */
+export const getFormattedRemainingTime = () => {
+  // not loaded.
+  if (!state.checkout?.upsells_expire_at) return '--:--';
+
+  const time = getUpsellRemainingTime('seconds');
+
+  const days = Math.floor(time / (60 * 60 * 24));
+  const hours = Math.floor((time % (60 * 60 * 24)) / (60 * 60));
+  const minutes = Math.floor((time % (60 * 60)) / 60);
+  const seconds = Math.floor(time % 60);
+
+  if (days > 0) {
+    return `${formatTimeUnit(days)}:${formatTimeUnit(hours)}:${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
+  }
+  if (hours > 0) {
+    return `${formatTimeUnit(hours)}:${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
+  }
+  return `${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
+};
+
+/**
+ * Is upsell expired.
+ */
 export const isUpsellExpired = () => {
   // Get remaining time in seconds.
   const remaining = getUpsellRemainingTime();
@@ -44,4 +73,4 @@ export const isUpsellExpired = () => {
 
   // Otherwise, return false.
   return false;
-}
+};
