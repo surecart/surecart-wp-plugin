@@ -125,23 +125,23 @@ class Block extends BaseBlock {
 			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
 		>
-			<button type="button" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text>
 					<?php if ( ! empty( $icon ) ) : ?>
-						<sc-icon name="<?php echo esc_attr( $icon ); ?>" slot="prefix" aria-hidden="true"></sc-icon>
+						<sc-icon slot="prefix" name="<?php echo esc_attr( $icon ); ?>" slot="prefix" aria-hidden="true"></sc-icon>
 					<?php endif; ?>
 
 					<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
 
 					<?php if ( ! empty( $show_total ) ) : ?>
 						<?php if ( ! empty( $active_prices[0] ) ) : ?>
-							<?php echo esc_html( Currency::format( $upsell_price, $active_prices[0]->currency ) ); ?>
+							&nbsp;<?php echo esc_html( Currency::format( $upsell_price, $active_prices[0]->currency ) ); ?>
 						<?php endif; ?>
 					<?php endif; ?>
 				</span>
 
 				<sc-spinner data-loader></sc-spinner>
-			</button>
+			</a>
 			<button disabled class="wp-block-button__link sc-block-button__link wp-element-button sc-block-button--sold-out <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo esc_html( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ); ?></span>
 				<sc-spinner data-loader></sc-spinner>

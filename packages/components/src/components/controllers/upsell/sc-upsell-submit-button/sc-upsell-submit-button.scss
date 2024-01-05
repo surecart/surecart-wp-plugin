@@ -5,6 +5,18 @@ sc-upsell-submit-button {
   .wp-block-button__link {
     position: relative;
     text-decoration: none;
+
+    span {
+      sc-icon {
+        padding-right: var(--sc-spacing-small);
+      }
+    }
+
+    [data-text], sc-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .sc-block-button--sold-out,
