@@ -11,7 +11,6 @@ import {
 	BlockControls,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { ScProductText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
@@ -39,12 +38,10 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 			</BlockControls>
 
 			<div {...blockProps}>
-				<ScProductText text="description">
-					{__(
-						'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle.',
-						'surecart'
-					)}
-				</ScProductText>
+				{__(
+					'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle.',
+					'surecart'
+				)}
 			</div>
 		</>
 	);
