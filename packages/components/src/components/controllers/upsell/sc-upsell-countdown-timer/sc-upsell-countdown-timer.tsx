@@ -17,9 +17,6 @@ export class ScUpsellCountdownTimer {
   /** The formatted time remaining. */
   @State() formattedTime: string;
 
-  /** The URL to redirect to when the countdown completes. */
-  @State() redirectUrl: string = '/';
-
   /** Whether to show the icon. */
   @Prop() showIcon: boolean = true;
 
@@ -29,10 +26,10 @@ export class ScUpsellCountdownTimer {
   }
 
   maybeRedirectUpsell() {
-    if (isUpsellExpired()) {
-      redirectUpsell();
-    }
-  }
+          if (isUpsellExpired()) {
+        redirectUpsell();
+      }
+      }
 
   updateCountdown() {
     this.formattedTime = getFormattedRemainingTime();
