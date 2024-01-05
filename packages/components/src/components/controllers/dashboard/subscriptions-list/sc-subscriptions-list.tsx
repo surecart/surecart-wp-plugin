@@ -151,8 +151,6 @@ export class ScSubscriptionsList {
 
   renderList() {
     return this.subscriptions.map(subscription => {
-      console.log(subscription);
-      
       return (
         <sc-stacked-list-row href={this.getSubscriptionLink(subscription)} key={subscription.id} mobile-size={0}>
           <sc-subscription-details subscription={subscription}></sc-subscription-details>
