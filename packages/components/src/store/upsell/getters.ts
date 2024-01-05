@@ -1,11 +1,14 @@
 import { state } from './store';
 
 export const getDiscountedAmount = amount => {
-  return state?.line_item?.total_amount || amount;
+  return state?.line_item?.total_amount ?? amount;
 };
 
 export const getScratchAmount = amount => {
-  return state?.line_item?.scratch_amount || amount;
+  if (!state?.line_item?.total_savings_amount) {
+    return amount;
+  }
+  return -state?.line_item?.total_savings_amount + state?.line_item?.total_amount;
 };
 
 /**
