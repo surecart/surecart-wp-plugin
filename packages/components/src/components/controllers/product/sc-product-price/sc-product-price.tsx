@@ -51,6 +51,9 @@ export class ScProductPrice {
         scratchAmount={scratch_amount}
         saleText={this.saleText}
         adHoc={price?.ad_hoc}
+        trialDurationDays={price?.trial_duration_days}
+        setupFeeAmount={price?.setup_fee_enabled ? price?.setup_fee_amount : null}
+        setupFeeName={price?.setup_fee_enabled ? price?.setup_fee_name : null}
         recurringPeriodCount={price?.recurring_period_count}
         recurringInterval={price?.recurring_interval}
         recurringIntervalCount={price?.recurring_interval_count}
