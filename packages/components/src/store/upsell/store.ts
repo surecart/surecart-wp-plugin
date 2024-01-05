@@ -7,28 +7,35 @@ import { createStore } from '@stencil/store';
 /**
  * Internal dependencies.
  */
-import { Checkout, Product, Upsell } from 'src/types';
+import { Checkout, LineItem, Product, Upsell } from 'src/types';
 
+/**
+ * Get upsell from serialized state.
+ */
 const { upsell } = getSerializedState();
 
 interface Store {
-  upsell: Upsell | null;
-  product: Product | null;
-  checkout_id: string | null;
+  upsell: Upsell;
+  product: Product;
+  line_item: LineItem;
+  checkout_id: string;
+  checkout: Checkout;
+  form_id: number;
   busy: boolean;
   disabled: boolean;
-  checkout: Checkout | null;
-  success_url: string | null;
+  success_url: string;
 }
 
 const store = createStore<Store>(
   {
     upsell: null,
     product: null,
+    line_item: null,
     checkout_id: null,
+    checkout: null,
+    form_id: null,
     busy: false,
     disabled: false,
-    checkout: null,
     success_url: null,
     ...upsell,
   },
