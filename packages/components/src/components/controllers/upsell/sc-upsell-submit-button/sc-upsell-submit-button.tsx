@@ -2,18 +2,13 @@
  * External dependencies.
  */
 import { Component, Element, h, Host } from '@stencil/core';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
 import { state as upsellState } from '@store/upsell';
-import { state as productState } from '@store/product';
-import { Price } from 'src/types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
-import { createErrorNotice } from '@store/notices/mutations';
-import { redirectUpsell } from '@store/upsell/mutations';
+import { createOrUpdateUpsell, redirectUpsell } from '@store/upsell/mutations';
 
 @Component({
   tag: 'sc-upsell-submit-button',
@@ -35,29 +30,14 @@ export class ScUpsellSubmitButton {
     try {
       upsellState.busy = true;
 
-      // Get the upsell price.
-      const priceId = (upsellState.upsell.price as Price)?.id || (upsellState.upsell?.price as string);
-
-      // Add Upsell to line item.
-      const upsellLineItem = {
-        upsell: upsellState.upsell?.id,
-        price: priceId,
-        quantity: productState.quantity || 1,
-        checkout: upsellState.checkout_id,
-      };
-
-      (await apiFetch({
-        path: addQueryArgs(`surecart/v1/line_items/upsell`),
-        method: 'POST',
-        data: {
-          line_item: upsellLineItem,
-        },
-      }) as any);
+      // Create or update the upsell. states
+      await createOrUpdateUpsell();
+      upsellState.busy = false;
 
       // Redirect to next Upsell or checkout success URL.
       redirectUpsell();
     } catch (error) {
-      createErrorNotice(error);
+      console.error(error); // Errors handled by the store.
     } finally {
       upsellState.busy = false;
     }

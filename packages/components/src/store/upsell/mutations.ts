@@ -2,12 +2,16 @@
  * External dependencies.
  */
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
  */
+import { Price } from 'src/types';
 import { state } from './store';
 import { state as checkoutState } from '../checkout/store';
+import { state as productState } from '../product';
+import { createErrorNotice } from '@store/notices/mutations';
 
 export const getNextUpsell = () => {
   // Get current upsell.
@@ -41,5 +45,31 @@ export const redirectUpsell = () => {
   // If no next upsell, and has no success_url, show popup.
   if (!nextUpsell?.permalink && !checkoutState.checkout.metadata?.success_url) {
     // checkoutState.showPopup = true;
+  }
+};
+
+export const createOrUpdateUpsell = async () => {
+  try {
+    state.disabled = true;
+    const priceId = (state.upsell.price as Price)?.id || (state.upsell?.price as string);
+
+    // Add Upsell to line item.
+    (await apiFetch({
+      path: addQueryArgs(`surecart/v1/line_items/upsell`),
+      method: 'POST',
+      data: {
+        line_item: {
+          upsell: state.upsell?.id,
+          price: priceId,
+          quantity: productState[state.product?.id]?.quantity || 1,
+          checkout: state.checkout_id,
+        },
+      },
+    })) as any;
+  } catch (error) {
+    console.error(error);
+    createErrorNotice(error);
+  } finally {
+    state.disabled = false;
   }
 };

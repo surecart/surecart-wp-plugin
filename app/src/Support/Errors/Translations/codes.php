@@ -133,4 +133,5 @@ return array(
 	'return_request.return_items.quantity.over_returned'   => __( 'The quantity returned is greater than the quantity fulfilled.', 'surecart' ),
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
+	'line_item.upsell.expired'                             => __( 'This upsell has expired.', 'surecart' ),
 );
