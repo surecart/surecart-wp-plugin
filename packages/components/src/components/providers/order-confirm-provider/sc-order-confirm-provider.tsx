@@ -76,6 +76,8 @@ export class ScOrderConfirmProvider {
             ),
           50,
         );
+        clearCheckout();
+        return;
       }
 
       // get success url.
@@ -87,9 +89,8 @@ export class ScOrderConfirmProvider {
       } else {
         this.showSuccessModal = true;
       }
+      clearCheckout();
     }
-
-    clearCheckout();
   }
 
   getSuccessUrl() {
