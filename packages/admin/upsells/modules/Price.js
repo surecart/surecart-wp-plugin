@@ -76,7 +76,7 @@ export default ({ loading, upsell, updateUpsell }) => {
 						open
 						value={upsell?.price?.id || upsell?.price}
 						ad_hoc={false}
-						variable={false}
+						includeVariants={false}
 						onSelect={({ price_id }) =>
 							updateUpsell({ price: price_id })
 						}
