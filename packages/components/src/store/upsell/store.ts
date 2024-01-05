@@ -18,6 +18,7 @@ interface Store {
   upsell: Upsell;
   product: Product;
   line_item: LineItem;
+  amount_due: number;
   checkout_id: string;
   checkout: Checkout;
   form_id: number;

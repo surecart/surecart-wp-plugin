@@ -54,7 +54,7 @@ export const createOrUpdateUpsell = async ({ preview } = { preview: true }) => {
     const { checkout, ...lineItem } = (await apiFetch({
       path: addQueryArgs('surecart/v1/line_items/upsell', {
         preview,
-        expand: ['checkout', 'checkout.recommended_upsells'],
+        expand: ['checkout', 'checkout.recommended_upsells', 'fees'],
       }),
       method: 'POST',
       data: {
