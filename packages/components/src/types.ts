@@ -49,7 +49,7 @@ declare global {
       };
       upsell_data: {
         upsell: Upsell;
-      }
+      };
       pages: {
         dashboard: string;
         checkout: string;
@@ -406,7 +406,11 @@ export interface LineItem extends Object {
   discount_amount: number;
   subtotal_amount: number;
   total_amount: number;
+  trial_amount: number;
+  tax_amount: number;
+  fees_amount: number;
   scratch_amount: number;
+  trial: boolean;
   total_savings_amount: number;
   created_at: number;
   updated_at: number;
@@ -428,7 +432,7 @@ export interface Fee {
   object: 'fee';
   amount: number;
   description: string;
-  fee_type: 'manual' | 'bump' | 'setup';
+  fee_type: 'manual' | 'bump' | 'setup' | 'upsell';
   line_item: string | LineItem;
   created_at: number;
   updated_at: number;
@@ -1142,7 +1146,6 @@ export interface GoogleAnalyticsItem {
   currency: string;
   discount?: number;
 }
-
 
 export interface ProductState {
   formId: number;
