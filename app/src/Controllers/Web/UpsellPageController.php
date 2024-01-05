@@ -100,8 +100,9 @@ class UpsellPageController extends BasePageController {
 				'upsell'  => [
 					'product'     => $this->product,
 					'upsell'      => $this->model,
-					'checkout_id' => $request->query( 'sc_checkout_id' ) ?? '',
-					'success_url' => $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ),
+					'form_id'     => (int) $request->query( 'sc_form_id' ) ?? null,
+					'checkout_id' => esc_attr( $request->query( 'sc_checkout_id' ) ?? null ),
+					'success_url' => esc_url( $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ) ),
 				],
 			]
 		);
