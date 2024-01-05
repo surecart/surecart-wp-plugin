@@ -45,8 +45,9 @@ export class ScUpsellCountdownTimer {
       <Host>
         <span class="sc-upsell-countdown-badge">
           {this.showIcon && <sc-icon name="clock" />}
-          <slot name="offer-expire-text" />
-          <strong>{this.formattedTime}</strong>
+          <span>
+            <slot name="offer-expire-text" /> <strong>{this.formattedTime}</strong>
+          </span>
         </span>
       </Host>
     );
