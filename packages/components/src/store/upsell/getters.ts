@@ -15,7 +15,7 @@ export const getDiscountedAmount = amount => {
 
 export const getUpsellRemainingTime = ( timeFormat = 'seconds' ) => {
   // Get upsell expiration timestamp from checkout.
-  const expiresAt = state.checkout?.upsells_expire_at;
+  const expiresAt = state.checkout?.upsells_expire_at; // in seconds
 
   // If no expiration timestamp, return 0.
   if (!expiresAt) return 0;
@@ -24,7 +24,10 @@ export const getUpsellRemainingTime = ( timeFormat = 'seconds' ) => {
   const now = Date.now();
 
   // Get remaining time in seconds.
-  const remaining = Math.floor((expiresAt - now) / 1000);
+  const remaining = Math.floor((expiresAt * 1000 - now) / 1000);
+
+  // If remaining time is less than 0, return 0.
+  if (remaining < 0) return 0;
 
   // Check time format - seconds, minues, hours.
   if (timeFormat === 'seconds') return remaining;

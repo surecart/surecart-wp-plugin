@@ -23,10 +23,6 @@ export class ScUpsellCountdownTimer {
   /** Whether to show the icon. */
   @Prop() showIcon: boolean = true;
 
-  constructor() {
-    this.timeRemaining = getUpsellRemainingTime();
-  }
-
   componentDidLoad() {
     this.updateCountdown();
     this.maybeRedirectUpsell();
@@ -63,8 +59,6 @@ export class ScUpsellCountdownTimer {
   }
 
   render() {
-    console.log('getUpsellRemainingTime()', getUpsellRemainingTime());
-
     return (
       <Host>
         <span class="sc-upsell-countdown-badge">
