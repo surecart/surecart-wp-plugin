@@ -9,7 +9,7 @@ import { __, _n } from '@wordpress/i18n';
  */
 import { state } from '@store/product';
 import { Price, Variant } from '../../../../types';
-import { getDiscountedAmount as getUpsellDiscountAmount } from '@store/upsell/getters';
+import { getDiscountedAmount as getUpsellDiscountAmount, getScratchAmount as getUpsellScratchAmount } from '@store/upsell/getters';
 
 @Component({
   tag: 'sc-product-price',
@@ -40,13 +40,9 @@ export class ScProductPrice {
 
   renderPrice(price: Price, variantAmount?: number) {
     const originalAmount = variantAmount ?? price?.amount ?? 0;
-    let scratch_amount = price?.scratch_amount;
 
     const amount = getUpsellDiscountAmount(originalAmount);
-
-    if (amount !== originalAmount) {
-      scratch_amount = originalAmount;
-    }
+    const scratch_amount = getUpsellScratchAmount(price?.scratch_amount);
 
     return (
       <sc-price

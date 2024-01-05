@@ -4041,6 +4041,8 @@ export namespace Components {
          */
         "size": 'small' | 'medium' | 'large';
     }
+    interface ScUpsell {
+    }
     interface ScUpsellCountdownTimer {
         /**
           * Whether to show the icon.
@@ -5614,6 +5616,12 @@ declare global {
         prototype: HTMLScUpgradeRequiredElement;
         new (): HTMLScUpgradeRequiredElement;
     };
+    interface HTMLScUpsellElement extends Components.ScUpsell, HTMLStencilElement {
+    }
+    var HTMLScUpsellElement: {
+        prototype: HTMLScUpsellElement;
+        new (): HTMLScUpsellElement;
+    };
     interface HTMLScUpsellCountdownTimerElement extends Components.ScUpsellCountdownTimer, HTMLStencilElement {
     }
     var HTMLScUpsellCountdownTimerElement: {
@@ -5870,6 +5878,7 @@ declare global {
         "sc-total": HTMLScTotalElement;
         "sc-upcoming-invoice": HTMLScUpcomingInvoiceElement;
         "sc-upgrade-required": HTMLScUpgradeRequiredElement;
+        "sc-upsell": HTMLScUpsellElement;
         "sc-upsell-countdown-timer": HTMLScUpsellCountdownTimerElement;
         "sc-upsell-no-thanks-button": HTMLScUpsellNoThanksButtonElement;
         "sc-upsell-submit-button": HTMLScUpsellSubmitButtonElement;
@@ -10279,6 +10288,8 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'medium' | 'large';
     }
+    interface ScUpsell {
+    }
     interface ScUpsellCountdownTimer {
         /**
           * Whether to show the icon.
@@ -10520,6 +10531,7 @@ declare namespace LocalJSX {
         "sc-total": ScTotal;
         "sc-upcoming-invoice": ScUpcomingInvoice;
         "sc-upgrade-required": ScUpgradeRequired;
+        "sc-upsell": ScUpsell;
         "sc-upsell-countdown-timer": ScUpsellCountdownTimer;
         "sc-upsell-no-thanks-button": ScUpsellNoThanksButton;
         "sc-upsell-submit-button": ScUpsellSubmitButton;
@@ -10761,6 +10773,7 @@ declare module "@stencil/core" {
             "sc-total": LocalJSX.ScTotal & JSXBase.HTMLAttributes<HTMLScTotalElement>;
             "sc-upcoming-invoice": LocalJSX.ScUpcomingInvoice & JSXBase.HTMLAttributes<HTMLScUpcomingInvoiceElement>;
             "sc-upgrade-required": LocalJSX.ScUpgradeRequired & JSXBase.HTMLAttributes<HTMLScUpgradeRequiredElement>;
+            "sc-upsell": LocalJSX.ScUpsell & JSXBase.HTMLAttributes<HTMLScUpsellElement>;
             "sc-upsell-countdown-timer": LocalJSX.ScUpsellCountdownTimer & JSXBase.HTMLAttributes<HTMLScUpsellCountdownTimerElement>;
             "sc-upsell-no-thanks-button": LocalJSX.ScUpsellNoThanksButton & JSXBase.HTMLAttributes<HTMLScUpsellNoThanksButtonElement>;
             "sc-upsell-submit-button": LocalJSX.ScUpsellSubmitButton & JSXBase.HTMLAttributes<HTMLScUpsellSubmitButtonElement>;

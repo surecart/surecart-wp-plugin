@@ -2295,6 +2295,12 @@
     "class": true,
     "slot": true
   },
+  "sc-upsell": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-upsell-countdown-timer": {
     "show-icon": true,
     "style": true,
