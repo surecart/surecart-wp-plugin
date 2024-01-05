@@ -2,7 +2,7 @@ sc-upsell-submit-button {
   position: relative;
   display: block;
 
-  a.wp-block-button__link {
+  .wp-block-button__link {
     position: relative;
     text-decoration: none;
   }
@@ -13,7 +13,7 @@ sc-upsell-submit-button {
   }
 
   &.is-unavailable {
-    a {
+    .sc-block-button__link {
       display: none !important;
     }
     .sc-block-button--unavailable {
@@ -22,7 +22,7 @@ sc-upsell-submit-button {
   }
 
   &.is-sold-out {
-    a {
+    .sc-block-button__link {
       display: none !important;
     }
     .sc-block-button--sold-out {
