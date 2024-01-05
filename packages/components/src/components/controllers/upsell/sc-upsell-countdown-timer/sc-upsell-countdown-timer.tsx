@@ -26,10 +26,10 @@ export class ScUpsellCountdownTimer {
   }
 
   maybeRedirectUpsell() {
-          if (isUpsellExpired()) {
-        redirectUpsell();
-      }
-      }
+    if (isUpsellExpired()) {
+      redirectUpsell();
+    }
+  }
 
   updateCountdown() {
     this.formattedTime = getFormattedRemainingTime();
