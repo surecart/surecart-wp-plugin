@@ -35,6 +35,7 @@ export class ScUpsellCountdownTimer {
   }
 
   updateCountdown() {
+    this.formattedTime = getFormattedRemainingTime();
     setInterval(() => {
       this.formattedTime = getFormattedRemainingTime();
     }, 1000);
