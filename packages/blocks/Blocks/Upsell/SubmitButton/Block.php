@@ -130,14 +130,7 @@ class Block extends BaseBlock {
 					<?php if ( ! empty( $icon ) ) : ?>
 						<sc-icon slot="prefix" name="<?php echo esc_attr( $icon ); ?>" slot="prefix" aria-hidden="true"></sc-icon>
 					<?php endif; ?>
-
 					<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
-
-					<?php if ( ! empty( $show_total ) ) : ?>
-						<?php if ( ! empty( $active_prices[0] ) ) : ?>
-							&nbsp;<?php echo esc_html( Currency::format( $upsell_price, $active_prices[0]->currency ) ); ?>
-						<?php endif; ?>
-					<?php endif; ?>
 				</span>
 
 				<sc-spinner data-loader></sc-spinner>
