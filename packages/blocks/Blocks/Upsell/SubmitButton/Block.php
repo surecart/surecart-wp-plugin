@@ -104,19 +104,8 @@ class Block extends BaseBlock {
 			return '';
 		}
 
-		$active_prices = array_values(
-			array_filter(
-				$product->prices->data ?? [],
-				function( $price ) {
-					return ! $price->archived;
-				}
-			)
-		);
-
-		$upsell_price = $this->getUpsellPrice( $upsell );
-		$width_class  = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
-		$icon         = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
-		$show_total   = ! empty( $attributes['show_total'] ) ? 'true' : false;
+		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
+		$icon        = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
 
 		ob_start();
 		?>
@@ -161,28 +150,5 @@ class Block extends BaseBlock {
 		);
 
 		return ob_get_clean();
-	}
-
-	/**
-	 * Get the price of the upsell
-	 *
-	 * @param  object $upsell Upsell object.
-	 *
-	 * @return float
-	 */
-	private function getUpsellPrice( $upsell ) {
-		$amount         = null;
-		$initial_amount = $upsell->price->amount ?? 0;
-
-		if ( isset( $upsell->amount_off ) ) {
-			$amount = max( 0, $initial_amount - $upsell->amount_off );
-		}
-
-		if ( isset( $upsell->percent_off ) ) {
-			$off    = $initial_amount * ( $upsell->percent_off / 100 );
-			$amount = max( 0, $initial_amount - $off );
-		}
-
-		return $amount;
 	}
 }

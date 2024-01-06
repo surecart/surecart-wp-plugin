@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-01-04T18:05:34",
+  "timestamp": "2024-01-06T09:03:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -1150,6 +1150,7 @@
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
+        "sc-upsell",
         "sc-wordpress-password-edit",
         "sc-wordpress-user-edit"
       ],
@@ -1257,6 +1258,9 @@
           "sc-block-ui"
         ],
         "sc-upcoming-invoice": [
+          "sc-block-ui"
+        ],
+        "sc-upsell": [
           "sc-block-ui"
         ],
         "sc-wordpress-password-edit": [
@@ -8201,7 +8205,7 @@
         },
         {
           "event": "scUpdateOrderState",
-          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
+          "detail": "{ id?: string; status?: \"draft\" | \"paid\" | \"finalized\" | \"payment_failed\" | \"processing\" | \"canceled\" | \"payment_intent_canceled\"; staged_payment_intents?: { object: \"list\"; pagination: Pagination; data: PaymentIntent[]; }; abandoned_checkout_enabled?: boolean; bump_amount?: number; payment_method_required?: boolean; manual_payment?: boolean; manual_payment_method?: string | ManualPaymentMethod; reusable_payment_method_required?: boolean; number?: string; amount_due?: number; trial_amount?: number; charge?: string | Charge; name?: string; first_name?: string; last_name?: string; email?: string; phone?: string; live_mode?: boolean; currency?: string; total_amount?: number; subtotal_amount?: number; full_amount?: number; proration_amount?: number; total_savings_amount?: number; applied_balance_amount?: number; discounts?: number; shipping_address_required?: boolean; tax_enabled?: boolean; tax_amount?: number; email_exists?: boolean; tax_inclusive_amount?: number; tax_exclusive_amount?: number; tax_status?: \"disabled\" | \"address_invalid\" | \"estimated\" | \"calculated\"; tax_label?: string; tax_percent?: number; line_items?: lineItems; recommended_bumps?: { object: \"list\"; pagination: Pagination; data: Bump[]; }; recommended_upsells?: { object: \"list\"; pagination: Pagination; data: Upsell[]; }; metadata?: any; payment_intent?: PaymentIntent; payment_method?: PaymentMethod; order?: string | Order; customer?: string | Customer; subscriptions?: { object: \"list\"; pagination: Pagination; data: Subscription[]; }; purchases?: { object: \"list\"; pagination: Pagination; data: Purchase[]; }; discount_amount?: number; discount?: DiscountResponse; billing_address?: string | Address; shipping_amount?: number; shipping_address?: string | Address; shipping_enabled?: boolean; shipping_choices?: { object: \"list\"; pagination: Pagination; data: ShippingChoice[]; }; selected_shipping_choice?: string | ShippingChoice; selected_shipping_choice_required?: boolean; processor_data?: ProcessorData; tax_identifier?: { number: string; number_type: string; }; url?: string; created_at?: number; variant?: string; upsells_expire_at?: number; constructor?: Function; toString?: () => string; toLocaleString?: () => string; valueOf?: () => Object; hasOwnProperty?: (v: PropertyKey) => boolean; isPrototypeOf?: (v: Object) => boolean; propertyIsEnumerable?: (v: PropertyKey) => boolean; }",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -9958,7 +9962,8 @@
         "sc-purchase-downloads-list",
         "sc-subscription-next-payment",
         "sc-subscriptions-list",
-        "sc-upcoming-invoice"
+        "sc-upcoming-invoice",
+        "sc-upsell-totals"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -10005,6 +10010,9 @@
           "sc-divider"
         ],
         "sc-upcoming-invoice": [
+          "sc-divider"
+        ],
+        "sc-upsell-totals": [
           "sc-divider"
         ]
       }
@@ -13113,13 +13121,13 @@
         "sc-order-detail",
         "sc-order-summary",
         "sc-orders-list",
+        "sc-price",
         "sc-price-choice",
         "sc-price-choice-container",
         "sc-price-range",
         "sc-product-donation-amount-choice",
         "sc-product-item-price",
         "sc-product-line-item",
-        "sc-product-price",
         "sc-product-price-choices",
         "sc-product-selected-price",
         "sc-recurring-price-choice-container",
@@ -13129,7 +13137,8 @@
         "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-total",
-        "sc-upcoming-invoice"
+        "sc-upcoming-invoice",
+        "sc-upsell-totals"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -13175,6 +13184,9 @@
         "sc-orders-list": [
           "sc-format-number"
         ],
+        "sc-price": [
+          "sc-format-number"
+        ],
         "sc-price-choice": [
           "sc-format-number"
         ],
@@ -13191,9 +13203,6 @@
           "sc-format-number"
         ],
         "sc-product-line-item": [
-          "sc-format-number"
-        ],
-        "sc-product-price": [
           "sc-format-number"
         ],
         "sc-product-price-choices": [
@@ -13224,6 +13233,9 @@
           "sc-format-number"
         ],
         "sc-upcoming-invoice": [
+          "sc-format-number"
+        ],
+        "sc-upsell-totals": [
           "sc-format-number"
         ]
       }
@@ -15241,7 +15253,9 @@
         "sc-order-summary",
         "sc-product-line-item",
         "sc-subscription-next-payment",
-        "sc-upcoming-invoice"
+        "sc-summary",
+        "sc-upcoming-invoice",
+        "sc-upsell-totals"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -15284,7 +15298,13 @@
         "sc-subscription-next-payment": [
           "sc-line-item"
         ],
+        "sc-summary": [
+          "sc-line-item"
+        ],
         "sc-upcoming-invoice": [
+          "sc-line-item"
+        ],
+        "sc-upsell-totals": [
           "sc-line-item"
         ]
       }
@@ -22478,6 +22498,235 @@
       }
     },
     {
+      "filePath": "./src/components/ui/price/sc-price.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-price",
+      "readme": "# sc-price\n\n\n",
+      "docs": "Internal dependencies.",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "adHoc",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "ad-hoc",
+          "reflectToAttr": false,
+          "docs": "Is the product ad_hoc?",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "mutable": false,
+          "attr": "amount",
+          "reflectToAttr": false,
+          "docs": "The amount",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "currency",
+          "type": "string",
+          "mutable": false,
+          "attr": "currency",
+          "reflectToAttr": false,
+          "docs": "The currency.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringInterval",
+          "type": "\"month\" | \"never\" | \"week\" | \"year\"",
+          "mutable": false,
+          "attr": "recurring-interval",
+          "reflectToAttr": false,
+          "docs": "The recurring interval",
+          "docsTags": [],
+          "values": [
+            {
+              "value": "month",
+              "type": "string"
+            },
+            {
+              "value": "never",
+              "type": "string"
+            },
+            {
+              "value": "week",
+              "type": "string"
+            },
+            {
+              "value": "year",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringIntervalCount",
+          "type": "number",
+          "mutable": false,
+          "attr": "recurring-interval-count",
+          "reflectToAttr": false,
+          "docs": "The recurring interval count",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "recurringPeriodCount",
+          "type": "number",
+          "mutable": false,
+          "attr": "recurring-period-count",
+          "reflectToAttr": false,
+          "docs": "The recurring period count",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "saleText",
+          "type": "string",
+          "mutable": false,
+          "attr": "sale-text",
+          "reflectToAttr": false,
+          "docs": "The sale text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "scratchAmount",
+          "type": "number",
+          "mutable": false,
+          "attr": "scratch-amount",
+          "reflectToAttr": false,
+          "docs": "The scratch amount",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "setupFeeAmount",
+          "type": "number",
+          "mutable": false,
+          "attr": "setup-fee-amount",
+          "reflectToAttr": false,
+          "docs": "The setup fee amount",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "setupFeeName",
+          "type": "string",
+          "mutable": false,
+          "attr": "setup-fee-name",
+          "reflectToAttr": false,
+          "docs": "The setup fee name",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "trialDurationDays",
+          "type": "number",
+          "mutable": false,
+          "attr": "trial-duration-days",
+          "reflectToAttr": false,
+          "docs": "The trial duration days",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "price__scratch",
+          "docs": ""
+        }
+      ],
+      "dependents": [
+        "sc-product-price"
+      ],
+      "dependencies": [
+        "sc-visually-hidden",
+        "sc-format-number",
+        "sc-tag"
+      ],
+      "dependencyGraph": {
+        "sc-price": [
+          "sc-visually-hidden",
+          "sc-format-number",
+          "sc-tag"
+        ],
+        "sc-product-price": [
+          "sc-price"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/checkout-form/price-choice/sc-price-choice.tsx",
       "encapsulation": "none",
       "tag": "sc-price-choice",
@@ -25389,29 +25638,25 @@
       "listeners": [],
       "styles": [],
       "slots": [],
-      "parts": [
-        {
-          "name": "price__scratch",
-          "docs": ""
-        }
-      ],
+      "parts": [],
       "dependents": [],
       "dependencies": [
         "sc-price-range",
-        "sc-visually-hidden",
-        "sc-format-number",
-        "sc-tag"
+        "sc-price"
       ],
       "dependencyGraph": {
         "sc-product-price": [
           "sc-price-range",
-          "sc-visually-hidden",
-          "sc-format-number",
-          "sc-tag"
+          "sc-price"
         ],
         "sc-price-range": [
           "sc-format-number",
           "sc-visually-hidden"
+        ],
+        "sc-price": [
+          "sc-visually-hidden",
+          "sc-format-number",
+          "sc-tag"
         ]
       }
     },
@@ -28436,6 +28681,7 @@
         "sc-subscription-reactivate",
         "sc-subscription-switch",
         "sc-subscriptions-list",
+        "sc-summary",
         "sc-upcoming-invoice"
       ],
       "dependencies": [],
@@ -28546,6 +28792,9 @@
           "sc-skeleton"
         ],
         "sc-subscriptions-list": [
+          "sc-skeleton"
+        ],
+        "sc-summary": [
           "sc-skeleton"
         ],
         "sc-upcoming-invoice": [
@@ -31423,6 +31672,191 @@
       }
     },
     {
+      "filePath": "./src/components/ui/sc-summary/sc-summary.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-summary",
+      "readme": "# sc-summary\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "busy",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "busy",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "closedText",
+          "type": "string",
+          "mutable": false,
+          "attr": "closed-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Show Summary', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsed",
+          "type": "boolean",
+          "mutable": true,
+          "attr": "collapsed",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsedOnDesktop",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed-on-desktop",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsedOnMobile",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsed-on-mobile",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "collapsible",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "loading",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "openText",
+          "type": "string",
+          "mutable": false,
+          "attr": "open-text",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "__('Summary', 'surecart')",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "scHide",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        },
+        {
+          "event": "scShow",
+          "detail": "void",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Show the toggle",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-upsell-totals"
+      ],
+      "dependencies": [
+        "sc-line-item",
+        "sc-skeleton"
+      ],
+      "dependencyGraph": {
+        "sc-summary": [
+          "sc-line-item",
+          "sc-skeleton"
+        ],
+        "sc-upsell-totals": [
+          "sc-summary"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/ui/switch/sc-switch.tsx",
       "encapsulation": "shadow",
       "tag": "sc-switch",
@@ -32224,8 +32658,8 @@
         "sc-payment-method",
         "sc-payment-methods-list",
         "sc-premium-tag",
+        "sc-price",
         "sc-product-item-list",
-        "sc-product-price",
         "sc-subscription-details",
         "sc-subscription-payment-method",
         "sc-subscription-status-badge",
@@ -32299,10 +32733,10 @@
         "sc-premium-tag": [
           "sc-tag"
         ],
-        "sc-product-item-list": [
+        "sc-price": [
           "sc-tag"
         ],
-        "sc-product-price": [
+        "sc-product-item-list": [
           "sc-tag"
         ],
         "sc-subscription-details": [
@@ -34319,6 +34753,34 @@
       }
     },
     {
+      "filePath": "./src/components/controllers/upsell/sc-upsell/sc-upsell.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upsell",
+      "readme": "# sc-upsell\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-block-ui"
+      ],
+      "dependencyGraph": {
+        "sc-upsell": [
+          "sc-block-ui"
+        ],
+        "sc-block-ui": [
+          "sc-spinner"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/controllers/upsell/sc-upsell-countdown-timer/sc-upsell-countdown-timer.tsx",
       "encapsulation": "shadow",
       "tag": "sc-upsell-countdown-timer",
@@ -34347,13 +34809,7 @@
       ],
       "methods": [],
       "events": [],
-      "listeners": [
-        {
-          "event": "resetCountdown",
-          "capture": false,
-          "passive": false
-        }
-      ],
+      "listeners": [],
       "styles": [],
       "slots": [],
       "parts": [],
@@ -34369,7 +34825,7 @@
     },
     {
       "filePath": "./src/components/controllers/upsell/sc-upsell-no-thanks-button/sc-upsell-no-thanks-button.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-upsell-no-thanks-button",
       "readme": "# sc-upsell-no-thanks-button\n\n\n",
       "docs": "",
@@ -34388,7 +34844,7 @@
     },
     {
       "filePath": "./src/components/controllers/upsell/sc-upsell-submit-button/sc-upsell-submit-button.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-upsell-submit-button",
       "readme": "# sc-upsell-submit-button\n\n\n",
       "docs": "",
@@ -34448,6 +34904,41 @@
       "dependencyGraph": {}
     },
     {
+      "filePath": "./src/components/controllers/upsell/sc-upsell-totals/sc-upsell-totals.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-upsell-totals",
+      "readme": "# sc-upsell\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-format-number",
+        "sc-summary",
+        "sc-divider",
+        "sc-line-item"
+      ],
+      "dependencyGraph": {
+        "sc-upsell-totals": [
+          "sc-format-number",
+          "sc-summary",
+          "sc-divider",
+          "sc-line-item"
+        ],
+        "sc-summary": [
+          "sc-line-item",
+          "sc-skeleton"
+        ]
+      }
+    },
+    {
       "filePath": "./src/components/util/visually-hidden/sc-visually-hidden.tsx",
       "encapsulation": "shadow",
       "tag": "sc-visually-hidden",
@@ -34469,12 +34960,12 @@
         "sc-order-submit",
         "sc-pagination",
         "sc-payment",
+        "sc-price",
         "sc-price-choice-container",
         "sc-price-range",
         "sc-product-donation-custom-amount",
         "sc-product-item-list",
-        "sc-product-pills-variant-option",
-        "sc-product-price"
+        "sc-product-pills-variant-option"
       ],
       "dependencies": [],
       "dependencyGraph": {
@@ -34496,6 +34987,9 @@
         "sc-payment": [
           "sc-visually-hidden"
         ],
+        "sc-price": [
+          "sc-visually-hidden"
+        ],
         "sc-price-choice-container": [
           "sc-visually-hidden"
         ],
@@ -34509,9 +35003,6 @@
           "sc-visually-hidden"
         ],
         "sc-product-pills-variant-option": [
-          "sc-visually-hidden"
-        ],
-        "sc-product-price": [
           "sc-visually-hidden"
         ]
       }

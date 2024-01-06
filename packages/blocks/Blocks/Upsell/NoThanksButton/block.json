@@ -6,11 +6,6 @@
 	"keywords": ["no", "thanks", "button", "order", "upsell"],
 	"ancestor": ["surecart/upsell"],
 	"textdomain": "surecart",
-	"supports": {
-		"reusable": false,
-		"html": false,
-		"multiple": false
-	},
 	"attributes": {
 		"text": {
 			"type": "string",
@@ -27,6 +22,58 @@
 		"size": {
 			"type": "string",
 			"default": "small"
+		},
+		"width": {
+			"type": "number",
+			"default": 100
 		}
-	}
+	},
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"anchor": true,
+		"align": false,
+		"alignWide": false,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"__experimentalSelector": ".wp-block-button .wp-block-button__link",
+		"typography": {
+			"fontSize": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true
+		},
+		"reusable": false,
+		"shadow": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
+	},
+	"styles": [
+		{ "name": "fill", "label": "Fill" },
+		{ "name": "outline", "label": "Outline", "isDefault": true }
+	],
+	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"]
 }

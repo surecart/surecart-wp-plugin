@@ -69,6 +69,7 @@
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-summary](../sc-summary)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
@@ -110,6 +111,7 @@ graph TD;
   sc-subscription-reactivate --> sc-skeleton
   sc-subscription-switch --> sc-skeleton
   sc-subscriptions-list --> sc-skeleton
+  sc-summary --> sc-skeleton
   sc-upcoming-invoice --> sc-skeleton
   style sc-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```

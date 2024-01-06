@@ -116,13 +116,3 @@
 .sc-block-button .sc-block-button__link:where([style*="border-left-style"]) {
   border-left-width: initial;
 }
-
-sc-product-price-modal {
-  position: fixed;
-  z-index: 9999999;
-}
-
-/** Fix Flouc */
-sc-product-buy-button [disabled] {
-  display: none;
-}

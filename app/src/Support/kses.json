@@ -2096,6 +2096,20 @@
     "class": true,
     "slot": true
   },
+  "sc-summary": {
+    "busy": true,
+    "closed-text": true,
+    "collapsed": true,
+    "collapsed-on-desktop": true,
+    "collapsed-on-mobile": true,
+    "collapsible": true,
+    "loading": true,
+    "open-text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-switch": {
     "checked": true,
     "disabled": true,
@@ -2322,6 +2336,12 @@
   },
   "sc-upsell-text": {
     "text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-totals": {
     "style": true,
     "id": true,
     "class": true,

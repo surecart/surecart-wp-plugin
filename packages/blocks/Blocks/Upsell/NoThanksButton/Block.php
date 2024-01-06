@@ -101,17 +101,21 @@ class Block extends BaseBlock {
 			return '';
 		}
 
+		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
+
 		ob_start();
 		?>
-		<sc-upsell-no-thanks-button>
-			<sc-button
+		<sc-upsell-no-thanks-button
+			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
+		>
+			<a
+				class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
 				type="<?php echo esc_attr( $attributes['type'] ?? 'default' ); ?>"
-				submit="false"
 				full="<?php echo esc_attr( $attributes['full'] ?? true ); ?>"
 				size="<?php echo esc_attr( $attributes['size'] ?? 'small' ); ?>"
 			>
 				<?php echo wp_kses_post( $attributes['text'] ?? '' ); ?>
-			</sc-button>
+			</a>
 		</sc-upsell-no-thanks-button>
 
 		<?php

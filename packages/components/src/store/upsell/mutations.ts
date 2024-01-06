@@ -30,6 +30,7 @@ export const redirectUpsell = () => {
     }
 
     // TODO: update state to complete to show popup.
+    return;
   }
 
   // Redirect to next upsell permalink with checkout_id and form_id.

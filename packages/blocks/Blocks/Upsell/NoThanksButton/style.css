@@ -75,14 +75,17 @@
 .sc-block-button.no-border-radius, .sc-block-button__link.no-border-radius {
   border-radius: 0 !important;
 }
-.sc-block-button.is-style-outline > .sc-block-button__link, .sc-block-button .sc-block-button__link.is-style-outline {
-  border: 2px solid currentColor;
+sc-upsell-no-thanks-button.sc-block-button.is-style-outline > .sc-block-button__link,
+sc-upsell-no-thanks-button.sc-block-button .sc-block-button__link.is-style-outline {
+  border: 0px !important;
   padding: 0.667em 1.333em;
 }
-.sc-block-button.is-style-outline > .sc-block-button__link:not(.has-text-color), .sc-block-button .sc-block-button__link.is-style-outline:not(.has-text-color) {
+sc-upsell-no-thanks-button.sc-block-button.is-style-outline > .sc-block-button__link:not(.has-text-color),
+sc-upsell-no-thanks-button.sc-block-button .sc-block-button__link.is-style-outline:not(.has-text-color) {
   color: currentColor;
 }
-.sc-block-button.is-style-outline > .sc-block-button__link:not(.has-background), .sc-block-button .sc-block-button__link.is-style-outline:not(.has-background) {
+sc-upsell-no-thanks-button.sc-block-button.is-style-outline > .sc-block-button__link:not(.has-background),
+sc-upsell-no-thanks-button.sc-block-button .sc-block-button__link.is-style-outline:not(.has-background) {
   background-color: transparent;
   background-image: none;
 }
@@ -115,14 +118,4 @@
 }
 .sc-block-button .sc-block-button__link:where([style*="border-left-style"]) {
   border-left-width: initial;
-}
-
-sc-product-price-modal {
-  position: fixed;
-  z-index: 9999999;
-}
-
-/** Fix Flouc */
-sc-product-buy-button [disabled] {
-  display: none;
 }

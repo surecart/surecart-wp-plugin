@@ -3671,6 +3671,16 @@ export namespace Components {
     per_page: number;
   };
     }
+    interface ScSummary {
+        "busy": boolean;
+        "closedText": string;
+        "collapsed": boolean;
+        "collapsedOnDesktop": boolean;
+        "collapsedOnMobile": boolean;
+        "collapsible": boolean;
+        "loading": boolean;
+        "openText": string;
+    }
     interface ScSwitch {
         /**
           * Draws the switch in a checked state.
@@ -4056,6 +4066,8 @@ export namespace Components {
     interface ScUpsellText {
         "text": 'title' | 'description';
     }
+    interface ScUpsellTotals {
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -4324,6 +4336,10 @@ export interface ScSubscriptionCancelCustomEvent<T> extends CustomEvent<T> {
 export interface ScSubscriptionReactivateCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSubscriptionReactivateElement;
+}
+export interface ScSummaryCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLScSummaryElement;
 }
 export interface ScSwitchCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -5508,6 +5524,12 @@ declare global {
         prototype: HTMLScSubscriptionsListElement;
         new (): HTMLScSubscriptionsListElement;
     };
+    interface HTMLScSummaryElement extends Components.ScSummary, HTMLStencilElement {
+    }
+    var HTMLScSummaryElement: {
+        prototype: HTMLScSummaryElement;
+        new (): HTMLScSummaryElement;
+    };
     interface HTMLScSwitchElement extends Components.ScSwitch, HTMLStencilElement {
     }
     var HTMLScSwitchElement: {
@@ -5645,6 +5667,12 @@ declare global {
     var HTMLScUpsellTextElement: {
         prototype: HTMLScUpsellTextElement;
         new (): HTMLScUpsellTextElement;
+    };
+    interface HTMLScUpsellTotalsElement extends Components.ScUpsellTotals, HTMLStencilElement {
+    }
+    var HTMLScUpsellTotalsElement: {
+        prototype: HTMLScUpsellTotalsElement;
+        new (): HTMLScUpsellTotalsElement;
     };
     interface HTMLScVisuallyHiddenElement extends Components.ScVisuallyHidden, HTMLStencilElement {
     }
@@ -5860,6 +5888,7 @@ declare global {
         "sc-subscription-switch": HTMLScSubscriptionSwitchElement;
         "sc-subscription-variation-confirm": HTMLScSubscriptionVariationConfirmElement;
         "sc-subscriptions-list": HTMLScSubscriptionsListElement;
+        "sc-summary": HTMLScSummaryElement;
         "sc-switch": HTMLScSwitchElement;
         "sc-tab": HTMLScTabElement;
         "sc-tab-group": HTMLScTabGroupElement;
@@ -5883,6 +5912,7 @@ declare global {
         "sc-upsell-no-thanks-button": HTMLScUpsellNoThanksButtonElement;
         "sc-upsell-submit-button": HTMLScUpsellSubmitButtonElement;
         "sc-upsell-text": HTMLScUpsellTextElement;
+        "sc-upsell-totals": HTMLScUpsellTotalsElement;
         "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
         "sc-wordpress-user": HTMLScWordpressUserElement;
@@ -9892,6 +9922,24 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
+    interface ScSummary {
+        "busy"?: boolean;
+        "closedText"?: string;
+        "collapsed"?: boolean;
+        "collapsedOnDesktop"?: boolean;
+        "collapsedOnMobile"?: boolean;
+        "collapsible"?: boolean;
+        "loading"?: boolean;
+        /**
+          * Show the toggle
+         */
+        "onScHide"?: (event: ScSummaryCustomEvent<void>) => void;
+        /**
+          * Show the toggle
+         */
+        "onScShow"?: (event: ScSummaryCustomEvent<void>) => void;
+        "openText"?: string;
+    }
     interface ScSwitch {
         /**
           * Draws the switch in a checked state.
@@ -10303,6 +10351,8 @@ declare namespace LocalJSX {
     interface ScUpsellText {
         "text"?: 'title' | 'description';
     }
+    interface ScUpsellTotals {
+    }
     interface ScVisuallyHidden {
     }
     interface ScWordpressPasswordEdit {
@@ -10513,6 +10563,7 @@ declare namespace LocalJSX {
         "sc-subscription-switch": ScSubscriptionSwitch;
         "sc-subscription-variation-confirm": ScSubscriptionVariationConfirm;
         "sc-subscriptions-list": ScSubscriptionsList;
+        "sc-summary": ScSummary;
         "sc-switch": ScSwitch;
         "sc-tab": ScTab;
         "sc-tab-group": ScTabGroup;
@@ -10536,6 +10587,7 @@ declare namespace LocalJSX {
         "sc-upsell-no-thanks-button": ScUpsellNoThanksButton;
         "sc-upsell-submit-button": ScUpsellSubmitButton;
         "sc-upsell-text": ScUpsellText;
+        "sc-upsell-totals": ScUpsellTotals;
         "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
         "sc-wordpress-user": ScWordpressUser;
@@ -10755,6 +10807,7 @@ declare module "@stencil/core" {
             "sc-subscription-switch": LocalJSX.ScSubscriptionSwitch & JSXBase.HTMLAttributes<HTMLScSubscriptionSwitchElement>;
             "sc-subscription-variation-confirm": LocalJSX.ScSubscriptionVariationConfirm & JSXBase.HTMLAttributes<HTMLScSubscriptionVariationConfirmElement>;
             "sc-subscriptions-list": LocalJSX.ScSubscriptionsList & JSXBase.HTMLAttributes<HTMLScSubscriptionsListElement>;
+            "sc-summary": LocalJSX.ScSummary & JSXBase.HTMLAttributes<HTMLScSummaryElement>;
             "sc-switch": LocalJSX.ScSwitch & JSXBase.HTMLAttributes<HTMLScSwitchElement>;
             "sc-tab": LocalJSX.ScTab & JSXBase.HTMLAttributes<HTMLScTabElement>;
             "sc-tab-group": LocalJSX.ScTabGroup & JSXBase.HTMLAttributes<HTMLScTabGroupElement>;
@@ -10778,6 +10831,7 @@ declare module "@stencil/core" {
             "sc-upsell-no-thanks-button": LocalJSX.ScUpsellNoThanksButton & JSXBase.HTMLAttributes<HTMLScUpsellNoThanksButtonElement>;
             "sc-upsell-submit-button": LocalJSX.ScUpsellSubmitButton & JSXBase.HTMLAttributes<HTMLScUpsellSubmitButtonElement>;
             "sc-upsell-text": LocalJSX.ScUpsellText & JSXBase.HTMLAttributes<HTMLScUpsellTextElement>;
+            "sc-upsell-totals": LocalJSX.ScUpsellTotals & JSXBase.HTMLAttributes<HTMLScUpsellTotalsElement>;
             "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
             "sc-wordpress-user": LocalJSX.ScWordpressUser & JSXBase.HTMLAttributes<HTMLScWordpressUserElement>;

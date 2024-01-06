@@ -105,5 +105,6 @@
 	"styles": [
 		{ "name": "fill", "label": "Fill", "isDefault": true },
 		{ "name": "outline", "label": "Outline" }
-	]
+	],
+	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"]
 }

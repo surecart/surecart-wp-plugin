@@ -15,12 +15,12 @@
  - [sc-order-submit](../../controllers/checkout-form/order-submit)
  - [sc-pagination](../../ui/pagination)
  - [sc-payment](../../controllers/checkout-form/payment)
+ - [sc-price](../../ui/price)
  - [sc-price-choice-container](../../ui/sc-price-choice-container)
  - [sc-price-range](../../ui/sc-price-range)
  - [sc-product-donation-custom-amount](../../controllers/checkout-form/product-donation-custom-amount)
  - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-product-pills-variant-option](../../controllers/product/sc-product-pills-variant-option)
- - [sc-product-price](../../controllers/product/sc-product-price)
 
 ### Graph
 ```mermaid
@@ -31,12 +31,12 @@ graph TD;
   sc-order-submit --> sc-visually-hidden
   sc-pagination --> sc-visually-hidden
   sc-payment --> sc-visually-hidden
+  sc-price --> sc-visually-hidden
   sc-price-choice-container --> sc-visually-hidden
   sc-price-range --> sc-visually-hidden
   sc-product-donation-custom-amount --> sc-visually-hidden
   sc-product-item-list --> sc-visually-hidden
   sc-product-pills-variant-option --> sc-visually-hidden
-  sc-product-price --> sc-visually-hidden
   style sc-visually-hidden fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

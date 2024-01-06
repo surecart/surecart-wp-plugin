@@ -4,26 +4,90 @@
 import { css, jsx } from '@emotion/core';
 
 /**
- * WordPress dependencies
+ * External dependencies.
  */
+import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
-import { InspectorControls } from '@wordpress/block-editor';
-import { RichText } from '@wordpress/block-editor';
+import { useRef } from '@wordpress/element';
+import {
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
+	__experimentalGetElementClassName,
+} from '@wordpress/block-editor';
+// import { RichText } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
 	ToggleControl,
+	Button,
+	ButtonGroup,
 } from '@wordpress/components';
 
 /**
- * Component Dependencies
+ * Internal Dependencies.
  */
 import { ScButton, ScFormatNumber } from '@surecart/components-react';
 
+function WidthPanel({ selectedWidth, setAttributes }) {
+	function handleChange(newWidth) {
+		// Check if we are toggling the width off
+		const width = selectedWidth === newWidth ? undefined : newWidth;
+
+		// Update attributes.
+		setAttributes({ width });
+	}
+
+	return (
+		<PanelBody title={__('Width settings', 'surecart')}>
+			<ButtonGroup aria-label={__('Button width', 'surecart')}>
+				{[25, 50, 75, 100].map((widthValue) => {
+					return (
+						<Button
+							key={widthValue}
+							isSmall
+							variant={
+								widthValue === selectedWidth
+									? 'primary'
+									: undefined
+							}
+							onClick={() => handleChange(widthValue)}
+						>
+							{widthValue}%
+						</Button>
+					);
+				})}
+			</ButtonGroup>
+		</PanelBody>
+	);
+}
+
 export default ({ className, attributes, setAttributes }) => {
-	const { type, text, full, size } = attributes;
+	const { type, text, full, size, width, textAlign, style } = attributes;
+
+	const borderProps = useBorderProps(attributes);
+	const colorProps = useColorProps(attributes);
+	const spacingProps = useSpacingProps(attributes);
+	const ref = useRef();
+	const richTextRef = useRef();
+
+	function onKeyDown(event) {
+		if (isKeyboardEvent.primary(event, 'k')) {
+			startEditing(event);
+		} else if (isKeyboardEvent.primaryShift(event, 'k')) {
+			unlink();
+			richTextRef.current?.focus();
+		}
+	}
+
+	const blockProps = useBlockProps({
+		ref,
+		onKeyDown,
+	});
 
 	return (
 		<div className={className}>
@@ -72,9 +136,13 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</PanelRow>
 				</PanelBody>
+				<WidthPanel
+					selectedWidth={width}
+					setAttributes={setAttributes}
+				/>
 			</InspectorControls>
 
-			<div
+			{/* <div
 				css={css`
 					display: block;
 					width: auto;
@@ -97,6 +165,44 @@ export default ({ className, attributes, setAttributes }) => {
 						allowedFormats={['core/bold', 'core/italic']}
 					/>
 				</ScButton>
+			</div> */}
+
+			<div
+				{...blockProps}
+				className={classnames(blockProps.className, {
+					'wp-block-button': true,
+					'sc-block-button': true,
+					[`has-custom-width sc-block-button__width-${width}`]: width,
+					[`has-custom-font-size`]: blockProps.style.fontSize,
+				})}
+			>
+				<a
+					aria-label={__('Button text', 'surecart')}
+					placeholder={__('Add text…', 'surecart')}
+					className={classnames(
+						className,
+						'wp-block-button__link',
+						'sc-block-button__link',
+						colorProps.className,
+						borderProps.className,
+						{
+							[`has-text-align-${textAlign}`]: textAlign,
+							// For backwards compatibility add style that isn't
+							// provided via block support.
+							'no-border-radius': style?.border?.radius === 0,
+						},
+						__experimentalGetElementClassName('button')
+					)}
+					style={{
+						...borderProps.style,
+						...colorProps.style,
+						...spacingProps.style,
+						textDecoration: 'none',
+						display: 'block',
+					}}
+				>
+					{text}
+				</a>
 			</div>
 		</div>
 	);

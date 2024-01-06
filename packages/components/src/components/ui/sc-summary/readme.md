@@ -29,6 +29,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-upsell-totals](../../controllers/upsell/sc-upsell-totals)
+
 ### Depends on
 
 - [sc-line-item](../line-item)
@@ -39,6 +43,7 @@
 graph TD;
   sc-summary --> sc-line-item
   sc-summary --> sc-skeleton
+  sc-upsell-totals --> sc-summary
   style sc-summary fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
