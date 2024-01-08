@@ -64,13 +64,11 @@ export class ScOrderConfirmProvider {
       createErrorNotice(e);
     } finally {
       // Filter out ad-hoc price from recommended_upsells for now, as we don't support them yet.
-      const upsellItems = (checkoutState.checkout?.recommended_upsells?.data || []).filter(
-        u => (u.price as Price)?.ad_hoc === false
-      );
+      const upsell = (checkoutState.checkout?.recommended_upsells?.data || []).sort((a, b) => a?.priority - b?.priority).find(u => (u.price as Price)?.ad_hoc === false);
 
       // If there is pos, redirect to first upsell.
-      const upsellRedirectUrl = upsellItems?.[0]?.permalink;
-      if (upsellRedirectUrl) {
+      const upsellRedirectUrl = upsell?.permalink;
+      if (upsell?.permalink) {
         setTimeout(
           () =>
             window.location.assign(
