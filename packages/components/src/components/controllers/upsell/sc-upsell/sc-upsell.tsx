@@ -37,10 +37,10 @@ export class ScUpsell {
             </div>
           </div>
           <sc-dashboard-module
-            heading={state?.text?.success?.title || __('Thanks for your order!', 'surecart')}
+            heading={state?.text?.success?.title || __('Thank you!', 'surecart')}
             style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
           >
-            <span slot="description">{state?.text?.success?.description || __('Your payment was successful. A receipt is on its way to your inbox.', 'surecart')}</span>
+            <span slot="description">{state?.text?.success?.description || __('Your purchase was successful. A receipt is on its way to your inbox.', 'surecart')}</span>
 
             {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
