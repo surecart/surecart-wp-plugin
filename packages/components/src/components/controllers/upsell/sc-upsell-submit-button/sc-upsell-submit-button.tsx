@@ -8,7 +8,8 @@ import { Component, Element, h, Host } from '@stencil/core';
  */
 import { state as upsellState } from '@store/upsell';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
-import { purchaseUpsell } from '@store/upsell/mutations';
+import { purchase } from '@store/upsell/mutations';
+import { isBusy } from '@store/upsell/getters';
 
 @Component({
   tag: 'sc-upsell-submit-button',
@@ -23,14 +24,14 @@ export class ScUpsellSubmitButton {
 
   async handleAddToOrderClick(e) {
     e.preventDefault();
-    purchaseUpsell();
+    purchase();
   }
 
   render() {
     return (
       <Host
         class={{
-          'is-busy': upsellState.loading === 'busy',
+          'is-busy': isBusy(),
           'is-disabled': upsellState.disabled,
           'is-sold-out': isProductOutOfStock(this.getUpsellProductId()) && !isSelectedVariantMissing(this.getUpsellProductId()),
           'is-unavailable': isSelectedVariantMissing(this.getUpsellProductId()),
