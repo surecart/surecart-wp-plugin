@@ -141,27 +141,4 @@ class Upsell extends Model implements PageModel {
 	public function getJsonSchemaArray(): array {
 		return [];
 	}
-
-	/**
-	 * Add a line item to the upsell.
-	 *
-	 * @param array $data The data to add.
-	 * @return \WP_Error|mixed
-	 */
-	protected function addLineItem( $data = [] ) {
-		if ( empty( $data['line_item'] ) ) {
-			return new \WP_Error( 'not_saved', 'No upsell line item found.' );
-		}
-
-		return $this->makeRequest(
-			[
-				'method' => 'POST',
-				'query'  => $this->query,
-				'body'   => [
-					'line_item' => $data['line_item'],
-				],
-			],
-			'line_items/upsell'
-		);
-	}
 }

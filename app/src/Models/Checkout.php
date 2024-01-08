@@ -65,6 +65,26 @@ class Checkout extends Model {
 	}
 
 	/**
+	 * Set the recommended upsells attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setRecommendedUpsellsAttribute( $value ) {
+		$this->setCollection( 'recommended_upsells', $value, Upsell::class );
+	}
+
+	/**
+	 * Set the recommended bumps attribute
+	 *
+	 * @param  object $value Subscription data array.
+	 * @return void
+	 */
+	public function setRecommendedBumpsAttribute( $value ) {
+		$this->setCollection( 'recommended_bumps', $value, Bump::class );
+	}
+
+	/**
 	 * Create a new model
 	 *
 	 * @param array $attributes Attributes to create.

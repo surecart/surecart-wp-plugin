@@ -78,6 +78,8 @@ class UpsellPageController extends BasePageController {
 			return $this->notFound();
 		}
 
+		$checkout = \SureCart\Models\Checkout::with(['recommended_upsells', 'upsell.price'])->find( $request->query( 'sc_checkout_id' ) );
+
 		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $this->model->price->product );
 
 		// Stop if the product is not found.
@@ -102,6 +104,7 @@ class UpsellPageController extends BasePageController {
 					'upsell'      => $this->model,
 					'form_id'     => (int) $request->query( 'sc_form_id' ) ?? null,
 					'checkout_id' => esc_attr( $request->query( 'sc_checkout_id' ) ?? null ),
+					'checkout' 	  => $checkout,
 					'success_url' => esc_url( $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ) ),
 				],
 			]
