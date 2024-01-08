@@ -2,17 +2,43 @@
  * Internal dependencies.
  */
 import { on } from '../product';
-import { createOrUpdateUpsell } from './mutations';
+import { isUpsellExpired } from './getters';
+import { update, redirect } from './mutations';
 import state, { onChange } from './store';
 
+/**
+ * When line itme changes, update totals.
+ */
 on('set', (_, newValue, oldValue) => {
-  // when line itme changes, update totals.
   if (JSON.stringify(newValue?.line_item) !== JSON.stringify(oldValue?.line_item)) {
-    createOrUpdateUpsell();
+    update();
   }
 });
 
-// dynamically update amount_due when line_item changes.
+/**
+ * Watch for upsell to expire.
+ */
+setInterval(() => {
+  maybeRedirectUpsell();
+}, 1000);
+export const maybeRedirectUpsell = () => {
+  if (isUpsellExpired()) {
+    state.loading = 'complete';
+  }
+};
+
+/**
+ * Dynamically update amount_due when line_item changes.
+ */
 onChange('line_item', () => {
   state.amount_due = state?.line_item?.total_amount + (state?.line_item?.trial_amount ?? 0);
+});
+
+/**
+ * When loading is complete, redirect.
+ */
+onChange('loading', val => {
+  if (val === 'redirecting') {
+    redirect();
+  }
 });

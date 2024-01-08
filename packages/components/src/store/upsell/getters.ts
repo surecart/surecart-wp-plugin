@@ -1,9 +1,50 @@
+import { Price } from 'src/types';
 import { state } from './store';
+import { addQueryArgs } from '@wordpress/url';
 
+/**
+ * Is it busy
+ */
+export const isBusy = () => ['loading', 'busy', 'redirecting'].includes(state.loading);
+
+/**
+ * Get the next upsell.
+ */
+export const getNextUpsell = () =>
+  (state?.checkout?.recommended_upsells?.data || [])
+    .sort((a, b) => a?.priority - b?.priority) // sort by priority.
+    .filter(u => (u.price as Price)?.ad_hoc === false) // filter out ad_hoc
+    .find(item => item.priority > state.upsell.priority); // get the first upsell with priority greater than current upsell.
+
+/**
+ * Get the next link.
+ */
+export const getNextLink = () => {
+  const nextUpsell = getNextUpsell();
+  if (nextUpsell?.permalink) {
+    return addQueryArgs(nextUpsell.permalink, {
+      sc_checkout_id: state?.checkout?.id,
+      sc_form_id: state.form_id,
+    });
+  }
+  return state?.checkout?.metadata?.success_url || state.success_url || null;
+};
+
+/**
+ * Check if there is a next link.
+ */
+export const hasNextLink = () => !!getNextLink();
+
+/**
+ * Get the discounted amount.
+ */
 export const getDiscountedAmount = amount => {
   return state?.line_item?.total_amount ?? amount;
 };
 
+/**
+ * Get the scratch amount.
+ */
 export const getScratchAmount = amount => {
   if (!state?.line_item?.total_savings_amount) {
     return amount;

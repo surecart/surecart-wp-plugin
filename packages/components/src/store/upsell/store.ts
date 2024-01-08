@@ -26,7 +26,7 @@ interface Store {
   disabled: boolean;
   success_url: string;
   completed: boolean;
-  loading: 'loading' | 'busy' | 'idle' | 'complete';
+  loading: 'loading' | 'busy' | 'idle' | 'complete' | 'redirecting';
   text: {
     success: {
       title: string;
