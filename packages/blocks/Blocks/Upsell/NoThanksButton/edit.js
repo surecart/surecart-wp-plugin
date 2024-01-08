@@ -1,15 +1,11 @@
 /**
- * @jsx jsx
- */
-import { css, jsx } from '@emotion/core';
-
-/**
  * External dependencies.
  */
 import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { useRef } from '@wordpress/element';
 import {
+	RichText,
 	InspectorControls,
 	useBlockProps,
 	__experimentalUseBorderProps as useBorderProps,
@@ -17,21 +13,15 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
-// import { RichText } from '@wordpress/block-editor';
+import { isKeyboardEvent } from '@wordpress/keycodes';
 import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
-	ToggleControl,
 	Button,
 	ButtonGroup,
 } from '@wordpress/components';
-
-/**
- * Internal Dependencies.
- */
-import { ScButton, ScFormatNumber } from '@surecart/components-react';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
 	function handleChange(newWidth) {
@@ -67,7 +57,7 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 }
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, text, full, size, width, textAlign, style } = attributes;
+	const { type, text, size, width, textAlign, style } = attributes;
 
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
@@ -98,13 +88,6 @@ export default ({ className, attributes, setAttributes }) => {
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Full', 'surecart')}
-							checked={full}
-							onChange={(full) => setAttributes({ full })}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -142,31 +125,6 @@ export default ({ className, attributes, setAttributes }) => {
 				/>
 			</InspectorControls>
 
-			{/* <div
-				css={css`
-					display: block;
-					width: auto;
-					display: grid;
-					gap: var(--sc-form-row-spacing);
-				`}
-			>
-				<ScButton
-					type={type}
-					submit={false}
-					{...(full ? { full: true } : {})}
-					size={size}
-				>
-					<RichText
-						aria-label={__('No Thanks Button text')}
-						placeholder={__('Add text…')}
-						value={text}
-						onChange={(value) => setAttributes({ text: value })}
-						withoutInteractiveFormatting
-						allowedFormats={['core/bold', 'core/italic']}
-					/>
-				</ScButton>
-			</div> */}
-
 			<div
 				{...blockProps}
 				className={classnames(blockProps.className, {
@@ -176,7 +134,8 @@ export default ({ className, attributes, setAttributes }) => {
 					[`has-custom-font-size`]: blockProps.style.fontSize,
 				})}
 			>
-				<a
+				<RichText
+					tag="a"
 					aria-label={__('Button text', 'surecart')}
 					placeholder={__('Add text…', 'surecart')}
 					className={classnames(
@@ -200,9 +159,9 @@ export default ({ className, attributes, setAttributes }) => {
 						textDecoration: 'none',
 						display: 'block',
 					}}
-				>
-					{text}
-				</a>
+					onChange={(text) => setAttributes({ text })}
+					value={text}
+				/>
 			</div>
 		</div>
 	);
