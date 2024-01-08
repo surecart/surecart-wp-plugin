@@ -21,6 +21,13 @@ abstract class ProductBlock extends BaseBlock {
 			return;
 		}
 
+		$state = sc_initial_state();
+
+		// we already have state for this product.
+		if ( ! empty( $state['product'][ $product->id ] ) ) {
+			return;
+		}
+
 		$product_state[ $product->id ] = $product->getInitialPageState();
 
 		sc_initial_state(
