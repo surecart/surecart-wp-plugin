@@ -2,8 +2,7 @@
  * External dependencies.
  */
 import { Component, Host, Prop, h, State } from '@stencil/core';
-import { getFormattedRemainingTime, isUpsellExpired } from '@store/upsell/getters';
-import { redirectUpsell } from '@store/upsell/mutations';
+import { getFormattedRemainingTime } from '@store/upsell/getters';
 
 @Component({
   tag: 'sc-upsell-countdown-timer',
@@ -22,13 +21,6 @@ export class ScUpsellCountdownTimer {
 
   componentDidLoad() {
     this.updateCountdown();
-    this.maybeRedirectUpsell();
-  }
-
-  maybeRedirectUpsell() {
-    if (isUpsellExpired()) {
-      redirectUpsell();
-    }
   }
 
   updateCountdown() {

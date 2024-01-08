@@ -2,8 +2,13 @@
  * External dependencies.
  */
 import { Component, Host, h } from '@stencil/core';
+
+/**
+ * Internal dependencies.
+ */
 import { state } from '@store/upsell';
-import { createOrUpdateUpsell } from '@store/upsell/mutations';
+import { createOrUpdateUpsell, redirectUpsell } from '@store/upsell/mutations';
+import { isUpsellExpired } from '@store/upsell/getters';
 
 @Component({
   tag: 'sc-upsell',
@@ -13,6 +18,16 @@ import { createOrUpdateUpsell } from '@store/upsell/mutations';
 export class ScUpsell {
   componentWillLoad() {
     createOrUpdateUpsell();
+  }
+
+  componentDidLoad() {
+    this.maybeRedirectUpsell();
+  }
+
+  maybeRedirectUpsell() {
+    if (isUpsellExpired()) {
+      redirectUpsell();
+    }
   }
 
   render() {
