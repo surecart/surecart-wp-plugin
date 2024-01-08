@@ -19,11 +19,6 @@ class Block extends BaseBlock {
 	public function render( $attributes, $content ) {
 		$upsell = get_query_var( 'surecart_current_upsell' );
 
-		// If there is no upsell call to action, return empty string.
-		if ( empty( $upsell->metadata->cta ?? '' ) ) {
-			return '';
-		}
-
 		return sprintf(
 			'<%1$s class="%2$s" style="%3$s">
 				%4$s
@@ -31,7 +26,7 @@ class Block extends BaseBlock {
 			'h' . (int) ( $attributes['level'] ?? 1 ),
 			esc_attr( $this->getClasses( $attributes ) . ' surecart-block upsell-title' ),
 			esc_attr( $this->getStyles( $attributes ) ),
-			wp_kses_post( $upsell->metadata->cta ?? '' )
+			wp_kses_post( $upsell->metadata->cta ?? __("Wait! Here's an exclusive offer for you.", 'surecart') )
 		);
 		return '';
 	}
