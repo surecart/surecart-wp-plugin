@@ -7,7 +7,7 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies.
  */
-import { Checkout, LineItem } from 'src/types';
+import { Checkout, LineItem, Price } from 'src/types';
 import { state } from './store';
 import { state as productState } from '../product';
 import { createErrorNotice } from '@store/notices/mutations';
@@ -61,6 +61,7 @@ export const createOrUpdateUpsell = async ({ preview } = { preview: true }) => {
       data: {
         line_item: {
           ...productState[state.product?.id]?.line_item,
+          price_id: (state.upsell?.price as Price)?.id,
           upsell: state.upsell?.id,
           checkout: state.checkout_id,
         },
