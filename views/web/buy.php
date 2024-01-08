@@ -29,7 +29,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 		<div class="sc-buy-logo">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<?php if ( $show_logo ) : ?>
-					<img src="<?php echo esc_url( $logo_url ); ?>"
+					<img src="<?php echo esc_url( $logo_url ?? '' ); ?>"
 						style="max-width: <?php echo esc_attr( $logo_width ?? '180px' ); ?>; width: 100%; height: auto;"
 						alt="<?php echo esc_attr( get_bloginfo() ); ?>"
 					/>
