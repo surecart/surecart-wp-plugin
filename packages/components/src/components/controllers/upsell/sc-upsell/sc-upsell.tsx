@@ -2,6 +2,7 @@
  * External dependencies.
  */
 import { Component, Host, h } from '@stencil/core';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Internal dependencies.
@@ -21,6 +22,12 @@ export class ScUpsell {
   }
 
   componentDidLoad() {
+    // For Preview mode, prevent it from redirecting to the upsell page.
+    const isPreviewed = addQueryArgs(window.location.href, { preview: true });
+    if (isPreviewed) {
+      return;
+    }
+
     this.maybeRedirectUpsell();
   }
 
