@@ -19,7 +19,7 @@ export const getUpsellRemainingTime = (timeFormat = 'seconds') => {
   const expiresAt = state.checkout?.upsells_expire_at; // in seconds
 
   // If no expiration timestamp, return 0.
-  if (!expiresAt) return 0;
+  if (!expiresAt) return null;
 
   // Get current timestamp.
   const now = Date.now();
@@ -71,9 +71,10 @@ export const isUpsellExpired = () => {
   // Get remaining time in seconds.
   const remaining = getUpsellRemainingTime();
 
-  // If no remaining time, return true.
-  if (!remaining || remaining < 0) return true;
+  // Make sure we wait until it's set.
+  if (remaining === null) {
+    return false;
+  }
 
-  // Otherwise, return false.
-  return false;
+  return remaining <= 0;
 };
