@@ -97,7 +97,7 @@ class UpsellPageController extends BasePageController {
 		sc_initial_state(
 			[
 				'product' => [
-					$this->product->id => $this->product->getInitialPageState(),
+					$this->product->id => $this->product->getInitialPageState([ 'selectedPrice' => $this->model->price ]),
 				],
 				'upsell'  => [
 					'product'     => $this->product,
@@ -105,6 +105,7 @@ class UpsellPageController extends BasePageController {
 					'form_id'     => (int) $request->query( 'sc_form_id' ) ?? null,
 					'checkout_id' => esc_attr( $request->query( 'sc_checkout_id' ) ?? null ),
 					'checkout' 	  => $checkout,
+					'text' 		  => $this->getCheckoutText( (int) $request->query( 'sc_form_id' ) ?? '' ),
 					'success_url' => esc_url( $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ) ),
 				],
 			]
@@ -123,6 +124,28 @@ class UpsellPageController extends BasePageController {
 	}
 
 	/**
+	 * Get the checkout success text.
+	 *
+	 * @return array
+	 */
+	public function getCheckoutText( int $form_id ) {
+		$form = get_post( $form_id );
+
+		if ( is_wp_error( $form ) || empty( $form ) ) {
+			return '';
+		}
+
+		$block = wp_get_first_block( parse_blocks( $form->post_content), 'surecart/form' );
+		$attributes = $block['attrs'] ?? [];
+
+		return array_filter(
+			[
+				'success' => array_filter( $attributes['success_text'] ?? [] ),
+			]
+		);
+	}
+
+	/**
 	 * Get the success url by form id.
 	 *
 	 * @param  int $form_id Checkout form id.
@@ -135,7 +158,7 @@ class UpsellPageController extends BasePageController {
 			return '';
 		}
 
-		$block = parse_blocks( $form->post_content )[0] ?? [];
+		$block = wp_get_first_block( parse_blocks( $form->post_content), 'surecart/form' );
 
 		if ( empty( $block ) || empty( $block['attrs']['success_url'] ) ) {
 			return '';
