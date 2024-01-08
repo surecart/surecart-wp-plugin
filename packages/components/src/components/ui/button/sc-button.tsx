@@ -70,6 +70,9 @@ export class ScButton {
   /** Tells the browser to download the linked file as this filename. Only used when `href` is set. */
   @Prop() download: string;
 
+  /** Tells the browser to autofocus. */
+  @Prop() autofocus: boolean;
+
   /** Emitted when the button loses focus. */
   @Event() scBlur: EventEmitter<void>;
 
@@ -193,6 +196,7 @@ export class ScButton {
         href={this.href}
         target={this.target}
         download={this.download}
+        autoFocus={this.autofocus}
         rel={this.target ? 'noreferrer noopener' : undefined}
         role="button"
         aria-disabled={this.disabled ? 'true' : 'false'}

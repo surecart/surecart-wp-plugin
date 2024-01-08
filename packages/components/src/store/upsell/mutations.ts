@@ -19,6 +19,8 @@ export const getNextUpsell = () => (state?.checkout?.recommended_upsells?.data |
 export const redirectUpsell = () => {
   const nextUpsell = getNextUpsell();
 
+  state.loading = 'busy';
+
   // we don't have an upsell.
   if (!nextUpsell?.permalink) {
     // checkout metadata has success_url, redirect to success_url.
@@ -28,6 +30,8 @@ export const redirectUpsell = () => {
     if (state.success_url) {
       return window.location.assign(state.success_url);
     }
+
+    state.loading = 'idle';
 
     // TODO: update state to complete to show popup.
     return;
@@ -41,6 +45,9 @@ export const redirectUpsell = () => {
     }),
   );
 };
+
+// purchase the upsell.
+export const purchaseUpsell = () => createOrUpdateUpsell({ preview: false });
 
 // create or update upsell.
 export const createOrUpdateUpsell = async ({ preview } = { preview: true }) => {
@@ -70,15 +77,13 @@ export const createOrUpdateUpsell = async ({ preview } = { preview: true }) => {
 
     state.checkout = checkout as Checkout;
     state.line_item = lineItem as LineItem;
-
-    // we have paid, handle the redirect.
-    if (preview === false) {
-      redirectUpsell();
-    }
+    state.loading = preview === false ? 'idle' : 'complete';
   } catch (error) {
-    console.error(error);
+    if (error?.additional_errors[0]?.code === 'line_item.upsell.already_applied') {
+      state.loading = 'complete';
+      return;
+    }
+    state.loading = 'idle';
     createErrorNotice(error);
-  } finally {
-    state.busy = false;
   }
 };

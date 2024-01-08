@@ -25,6 +25,15 @@ interface Store {
   busy: boolean;
   disabled: boolean;
   success_url: string;
+  completed: boolean;
+  loading: 'loading' | 'busy' | 'idle' | 'complete';
+  text: {
+    success: {
+      title: string;
+      description: string;
+      button: string;
+    };
+  };
 }
 
 const store = createStore<Store>(
@@ -38,6 +47,14 @@ const store = createStore<Store>(
     busy: false,
     disabled: false,
     success_url: null,
+    completed: false,
+    text: {
+      success: {
+        title: '',
+        description: '',
+        button: '',
+      },
+    },
     ...upsell,
   },
   (newValue, oldValue) => {

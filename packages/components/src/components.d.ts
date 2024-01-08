@@ -147,6 +147,10 @@ export namespace Components {
     }
     interface ScButton {
         /**
+          * Tells the browser to autofocus.
+         */
+        "autofocus": boolean;
+        /**
           * Draws the button in a busy state.
          */
         "busy"?: boolean;
@@ -6059,6 +6063,10 @@ declare namespace LocalJSX {
         "label"?: string;
     }
     interface ScButton {
+        /**
+          * Tells the browser to autofocus.
+         */
+        "autofocus"?: boolean;
         /**
           * Draws the button in a busy state.
          */
