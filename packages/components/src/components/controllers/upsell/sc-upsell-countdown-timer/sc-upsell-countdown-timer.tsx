@@ -40,12 +40,15 @@ export class ScUpsellCountdownTimer {
 
   render() {
     return (
-      <Host>
-        <span class="sc-upsell-countdown-badge">
-          {this.showIcon && <sc-icon name="clock" />}
-          <span>
-            <slot name="offer-expire-text" /> <strong>{this.formattedTime}</strong>
-          </span>
+      <Host
+        role="timer"
+        class={{
+          'sc-upsell-countdown-timer': true,
+        }}
+      >
+        {this.showIcon && <sc-icon name="clock" />}
+        <span>
+          <slot name="offer-expire-text" /> <strong>{this.formattedTime}</strong>
         </span>
       </Host>
     );

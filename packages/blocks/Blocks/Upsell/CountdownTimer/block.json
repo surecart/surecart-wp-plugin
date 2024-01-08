@@ -8,7 +8,7 @@
 	"attributes": {
 		"textAlign": {
 			"type": "string",
-			"default": "left"
+			"default": "center"
 		},
 		"offer_expire_text": {
 			"type": "string",
@@ -17,39 +17,54 @@
 		"show_icon": {
 			"type": "boolean",
 			"default": true
+		},
+		"width": {
+			"type": "number",
+			"default": 25
 		}
 	},
 	"keywords": ["description"],
 	"supports": {
-		"reusable": false,
 		"html": false,
+		"multiple": false,
+		"anchor": true,
+		"align": false,
+		"alignWide": false,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": ["horizontal", "vertical"],
+			"margin": ["top", "bottom"]
+		},
 		"color": {
+			"__experimentalSkipSerialization": true,
 			"gradients": true,
-			"link": false,
 			"__experimentalDefaultControls": {
 				"background": true,
-				"text": true,
-				"link": true
+				"text": true
 			}
-		},
-		"spacing": {
-			"margin": true,
-			"padding": true
 		},
 		"typography": {
 			"fontSize": true,
-			"lineHeight": true,
 			"__experimentalFontFamily": true,
 			"__experimentalFontWeight": true,
 			"__experimentalFontStyle": true,
-			"__experimentalTextTransform": true,
-			"__experimentalTextDecoration": true,
-			"__experimentalLetterSpacing": true,
+			"__experimentalTextTransform": true
+		},
+		"reusable": false,
+		"shadow": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
 			"__experimentalDefaultControls": {
-				"fontSize": true,
-				"fontAppearance": true,
-				"textTransform": true
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
 			}
 		}
-	}
+	},
+	"style": ["file:./style.css", "surecart-themes-default"]
 }
