@@ -20,7 +20,7 @@
 		},
 		"width": {
 			"type": "number",
-			"default": 25
+			"default": null
 		}
 	},
 	"keywords": ["description"],
