@@ -120,6 +120,9 @@ export default ({ className, attributes, setAttributes }) => {
 							...colorProps.style,
 							...spacingProps.style,
 							width: '100%',
+							...(blockProps?.style?.fontSize
+								? { fontSize: blockProps?.style?.fontSize }
+								: {}),
 						}}
 						value={text}
 						onChange={(value) => setAttributes({ text: value })}
