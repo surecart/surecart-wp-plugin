@@ -90,6 +90,7 @@ class UpsellsListTable extends ListTable {
 		return [
 			'name'  => __( 'Name', 'surecart' ),
 			'price' => __( 'Price', 'surecart' ),
+			'priority' => __( 'Priority', 'surecart' ),
 			'date'  => __( 'Date', 'surecart' ),
 		];
 	}
@@ -104,6 +105,15 @@ class UpsellsListTable extends ListTable {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
 		<input id="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $upsell['id'] ); ?>" />
 		<?php
+	}
+
+	/**
+	 * Get the priority column
+	 *
+	 * @return bool
+	 */
+	public function column_priority( $upsell ) {
+		echo (int) $upsell->priority;
 	}
 
 	/**
@@ -137,6 +147,7 @@ class UpsellsListTable extends ListTable {
 			]
 		)
 		->with( [ 'price', 'price.product' ] )
+		->where( [ 'sort' => 'priority:desc' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'upsells' ),
