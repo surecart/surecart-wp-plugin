@@ -31,29 +31,6 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
 
 	/**
-	 * Register REST Routes.
-	 *
-	 * @return void
-	 */
-	public function registerRoutes() {
-		parent::registerRoutes();
-
-		register_rest_route(
-			"$this->name/v$this->version",
-			"line_items/upsell",
-			array_filter(
-				[
-					[
-						'methods'             => \WP_REST_Server::CREATABLE,
-						'callback'            => $this->callback( $this->controller, 'addLineItem' ),
-						'permission_callback' => [ $this, 'update_item_permissions_check' ],
-					]
-				]
-			)
-		);
-	}
-
-	/**
 	 * Get our sample schema for a post.
 	 *
 	 * @return array The sample schema for a post

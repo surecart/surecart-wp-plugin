@@ -30,6 +30,28 @@ class LineItemsRestServiceProvider extends RestServiceProvider implements RestSe
 	 */
 	protected $methods = [ 'index', 'edit', 'create', 'find', 'delete' ];
 
+	/**
+	 * Register REST Routes.
+	 *
+	 * @return void
+	 */
+	public function registerRoutes() {
+		parent::registerRoutes();
+
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/upsell/',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'upsell' ),
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
