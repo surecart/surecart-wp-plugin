@@ -1,0 +1,7 @@
+.editor-styles-wrapper .wp-block-surecart-upsell-submit {
+	text-decoration: none;
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	gap: var(--sc-spacing-small);
+}

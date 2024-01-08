@@ -8,6 +8,7 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import {
+	RichText,
 	InspectorControls,
 	useBlockProps,
 	__experimentalUseBorderProps as useBorderProps,
@@ -29,7 +30,7 @@ import { useRef } from '@wordpress/element';
 /**
  * Component Dependencies
  */
-import { ScFormatNumber, ScIcon } from '@surecart/components-react';
+import { ScIcon } from '@surecart/components-react';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
 	function handleChange(newWidth) {
@@ -69,7 +70,6 @@ export default ({ className, attributes, setAttributes }) => {
 		text,
 		style,
 		textAlign,
-		show_total,
 		show_icon,
 		width,
 		out_of_stock_text,
@@ -105,15 +105,6 @@ export default ({ className, attributes, setAttributes }) => {
 							label={__('Button Text', 'surecart')}
 							value={text}
 							onChange={(text) => setAttributes({ text })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={__('Show total in button text.', 'surecart')}
-							checked={show_total}
-							onChange={(show_total) =>
-								setAttributes({ show_total })
-							}
 						/>
 					</PanelRow>
 					<PanelRow>
@@ -189,17 +180,12 @@ export default ({ className, attributes, setAttributes }) => {
 					}}
 				>
 					{show_icon && <ScIcon name="lock" size="small"></ScIcon>}{' '}
-					{text}{' '}
-					{show_total && (
-						<span>
-							{'\u00A0'}
-							<ScFormatNumber
-								type="currency"
-								currency={'usd'}
-								value={1200}
-							></ScFormatNumber>
-						</span>
-					)}
+					<RichText
+						tag="span"
+						allowedFormats={[]}
+						value={text}
+						onChange={(text) => setAttributes({ text })}
+					/>
 				</a>
 			</div>
 		</div>

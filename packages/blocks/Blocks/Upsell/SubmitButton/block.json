@@ -58,10 +58,6 @@
 			"type": "string",
 			"default": "primary"
 		},
-		"show_total": {
-			"type": "boolean",
-			"default": true
-		},
 		"show_icon": {
 			"type": "boolean",
 			"default": true
@@ -106,5 +102,6 @@
 		{ "name": "fill", "label": "Fill", "isDefault": true },
 		{ "name": "outline", "label": "Outline" }
 	],
+	"editorStyle": ["file:./editor.css"],
 	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"]
 }
