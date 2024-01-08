@@ -110,6 +110,10 @@ class Block extends BaseBlock {
 		ob_start();
 		?>
 
+		<div>
+			<sc-error />
+		</div>
+
 		<sc-upsell-submit-button
 			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
 			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
