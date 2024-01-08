@@ -22,6 +22,9 @@ export class ScUpsell {
 
   componentDidLoad() {
     this.maybeRedirectUpsell();
+    setInterval(() => {
+      this.maybeRedirectUpsell();
+    }, 1000);
   }
 
   maybeRedirectUpsell() {
