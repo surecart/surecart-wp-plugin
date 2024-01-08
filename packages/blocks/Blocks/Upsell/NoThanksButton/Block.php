@@ -111,7 +111,6 @@ class Block extends BaseBlock {
 			<a
 				class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
 				type="<?php echo esc_attr( $attributes['type'] ?? 'default' ); ?>"
-				full="<?php echo esc_attr( $attributes['full'] ?? true ); ?>"
 				size="<?php echo esc_attr( $attributes['size'] ?? 'small' ); ?>"
 			>
 				<?php echo wp_kses_post( $attributes['text'] ?? '' ); ?>

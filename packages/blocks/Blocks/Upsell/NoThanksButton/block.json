@@ -15,10 +15,6 @@
 			"type": "string",
 			"default": "text"
 		},
-		"full": {
-			"type": "boolean",
-			"default": true
-		},
 		"size": {
 			"type": "string",
 			"default": "small"

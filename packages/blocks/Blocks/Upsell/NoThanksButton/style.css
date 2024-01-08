@@ -22,39 +22,30 @@
 .sc-block-button[style*="text-decoration"] .sc-block-button__link {
   text-decoration: inherit;
 }
-.sc-block-buttons > .sc-block-button.has-custom-width {
-  max-width: none;
-}
 .sc-block-button.has-custom-width .sc-block-button__link {
   width: 100%;
 }
 .sc-block-buttons > .sc-block-button.has-custom-font-size .sc-block-button__link {
   font-size: inherit;
 }
-
 .sc-block-buttons > .sc-block-button.has-custom-width {
   width: 100%;
 }
-
 .sc-block-button {
   display: inline-block
 }
-
 .sc-block-buttons > .sc-block-button.sc-block-button__width-25,
 .sc-block-button.sc-block-button__width-25 {
   width: calc(25% - (var(--wp--style--block-gap, 0.5em) * 0.75));
 }
-
 .sc-block-buttons > .sc-block-button.sc-block-button__width-50,
 .sc-block-button.sc-block-button__width-50 {
   width: calc(50% - (var(--wp--style--block-gap, 0.5em) * 0.5));
 }
-
 .sc-block-buttons > .sc-block-button.sc-block-button__width-75,
 .sc-block-button.sc-block-button__width-75 {
   width: calc(75% - (var(--wp--style--block-gap, 0.5em) * 0.25));
 }
-
 .sc-block-buttons > .sc-block-button.sc-block-button__width-100,
 .sc-block-button.sc-block-button__width-100 {
   width: 100%;
