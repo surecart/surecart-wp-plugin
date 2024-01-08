@@ -263,7 +263,7 @@ class UpsellsListTable extends ListTable {
 		echo $this->row_actions(
 			[
 				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'view' => '<a href="' . esc_url( add_query_arg( [ 'preview' => 'true' ], $upsell->permalink ) ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				'view' => '<a href="' . esc_url( $upsell->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
 			],
 		);
 		?>
