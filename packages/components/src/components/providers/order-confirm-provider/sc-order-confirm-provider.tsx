@@ -7,9 +7,10 @@ import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
-import { Checkout, ManualPaymentMethod, Price } from '../../../types';
+import { Checkout, ManualPaymentMethod } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 import { clearCheckout } from '@store/checkout/mutations';
+import { getUpsell } from '@store/checkout/getters';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -63,18 +64,13 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
-      // Filter out ad-hoc price from recommended_upsells for now, as we don't support them yet.
-      const upsellItems = (checkoutState.checkout?.recommended_upsells?.data || []).filter(
-        u => (u.price as Price)?.ad_hoc === false
-      );
-
+      const upsell = getUpsell();
       // If there is pos, redirect to first upsell.
-      const upsellRedirectUrl = upsellItems?.[0]?.permalink;
-      if (upsellRedirectUrl) {
+      if (!!upsell?.permalink) {
         setTimeout(
           () =>
             window.location.assign(
-              addQueryArgs(upsellRedirectUrl, {
+              addQueryArgs(upsell?.permalink, {
                 sc_checkout_id: checkoutState.checkout?.id,
                 sc_form_id: checkoutState.formId,
               }),
