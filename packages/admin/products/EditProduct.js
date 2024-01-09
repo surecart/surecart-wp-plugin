@@ -32,7 +32,6 @@ import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 
 export default ({ id, setBrowserURL }) => {
-	const publishStatus = getQueryArg(window.location.href, 'status');
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
@@ -48,11 +47,38 @@ export default ({ id, setBrowserURL }) => {
 		productError,
 	} = useEntity('product', id);
 
+	/**
+	 * Whether the product should be published.
+	 */
+	const shouldPublish = () => {
+		if (getQueryArg(window.location.href, 'status') === 'publish') {
+			return true;
+		}
+
+		const existingStatus = select(coreStore).getEntityRecord(
+			'surecart',
+			'product',
+			id
+		)?.status;
+
+		if (existingStatus === 'published') return false;
+
+		const editedStatus = select(coreStore).getEditedEntityRecord(
+			'surecart',
+			'product',
+			id
+		)?.status;
+
+		return editedStatus === 'published';
+	};
 	useEffect(() => {
-		if (publishStatus === 'publish' && hasLoadedProduct) {
+		if (
+			getQueryArg(window.location.href, 'status') === 'publish' &&
+			hasLoadedProduct
+		) {
 			editProduct({ status: 'published' });
 		}
-	}, [publishStatus, hasLoadedProduct]);
+	}, [hasLoadedProduct]);
 
 	/**
 	 * Handle the form submission
@@ -97,7 +123,7 @@ export default ({ id, setBrowserURL }) => {
 			}
 
 			// remove the status arg from the url.
-			if (!!publishStatus) {
+			if (!!getQueryArg(window.location.href, 'status')) {
 				setBrowserURL({ id });
 			}
 			// save success.
@@ -232,7 +258,7 @@ export default ({ id, setBrowserURL }) => {
 							!hasLoadedProduct
 						}
 					>
-						{publishStatus === 'publish'
+						{shouldPublish()
 							? __('Save & Publish', 'surecart')
 							: __('Save Product', 'surecart')}
 					</SaveButton>
