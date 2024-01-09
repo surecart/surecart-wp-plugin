@@ -18,12 +18,7 @@ import { addQueryArgs } from '@wordpress/url';
 import PostTemplateCreateModal from './create-modal';
 import { getTemplateTitle } from '../../../util/templates';
 
-export default function PostTemplateForm({
-	onClose,
-	upsell,
-	updateUpsell,
-	template,
-}) {
+export default function PostTemplateForm({ onClose, upsell, updateUpsell }) {
 	const { templates, defaultTemplate, canCreate, canEdit } = useSelect(
 		(select) => {
 			const { canUser, getEntityRecords } = select(coreStore);
