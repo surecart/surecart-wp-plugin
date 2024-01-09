@@ -63,50 +63,6 @@ class UpsellTemplatesService {
 		// Upsell page query overrides.
 		add_filter( 'posts_pre_query', [ $this, 'overrideUpsellPostQuery' ], 10, 2 );
 		add_filter( 'query_vars', [ $this, 'addCurrentUpsellQueryVar' ] );
-		// add_filter( 'get_post_metadata', [ $this, 'overrideUpsellPostMeta' ], 10, 4 );
-	}
-
-	/**
-	 * Short-circuits the return value of a meta field for our post type.
-	 *
-	 * @param mixed  $value     The value to return, either a single metadata value or an array
-	 *                          of values depending on the value of `$single`. Default null.
-	 * @param int    $object_id ID of the object metadata is for.
-	 * @param string $meta_key  Metadata key.
-	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
-	 *
-	 * @return mixed
-	 */
-	public function overrideUpsellPostMeta( $value, $object_id, $meta_key, $single ) {
-		// not our meta query.
-		if ( 'sc_upsell_id' !== $meta_key && 'sc_upsell_slug' !== $meta_key ) {
-			return $value;
-		}
-
-		$upsell = get_query_var( 'surecart_current_upsell' );
-
-		if ( ! $upsell ) {
-			// get the upsell in case the upsell page id query var is the slug.
-			$upsell_id = get_query_var( 'sc_upsell_id' );
-			$upsell    = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell_id );
-		}
-
-		// we don't have an id or slug.
-		if ( empty( $upsell->id ) || empty( $upsell->slug ) ) {
-			return $value;
-		}
-
-		// return the id.
-		if ( 'sc_upsell_id' === $meta_key ) {
-			return $upsell->id;
-		}
-
-		// return the slug.
-		if ( 'sc_upsell_slug' === $meta_key ) {
-			return $upsell->id; // TODO: for now, we don't have the slug for upsell.
-		}
-
-		return $value;
 	}
 
 	/**
@@ -116,8 +72,7 @@ class UpsellTemplatesService {
 	 * @return array
 	 */
 	public function addCurrentUpsellQueryVar( array $vars ): array {
-		$vars[] = 'surecart_current_product';
-		// $vars[] = 'surecart_current_upsell';
+		$vars[] = 'surecart_current_upsell';
 		return $vars;
 	}
 
@@ -213,6 +168,11 @@ class UpsellTemplatesService {
 	public function includeTemplate( string $template ): string {
 		global $post;
 		$id = $post->ID ?? null;
+
+		// if block theme, short circuit and return template-canvas probably.
+		if ( wp_is_block_theme() ) {
+			return $template;
+		}
 
 		// check for upsell and use the template id.
 		$upsell = get_query_var( 'surecart_current_upsell' );
