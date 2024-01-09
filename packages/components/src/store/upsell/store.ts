@@ -25,8 +25,9 @@ interface Store {
   busy: boolean;
   disabled: boolean;
   success_url: string;
-  completed: boolean;
-  loading: 'loading' | 'busy' | 'idle' | 'complete' | 'redirecting';
+  accept_action: 'continue' | 'exit';
+  decline_action: 'continue' | 'exit';
+  loading: 'loading' | 'busy' | 'idle' | 'accepted' | 'declined' | 'complete' | 'redirecting';
   text: {
     success: {
       title: string;
@@ -47,7 +48,6 @@ const store = createStore<Store>(
     busy: false,
     disabled: false,
     success_url: null,
-    completed: false,
     text: {
       success: {
         title: '',

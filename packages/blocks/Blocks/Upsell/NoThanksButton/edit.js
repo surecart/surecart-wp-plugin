@@ -17,10 +17,9 @@ import { isKeyboardEvent } from '@wordpress/keycodes';
 import {
 	PanelBody,
 	PanelRow,
-	SelectControl,
-	TextControl,
 	Button,
 	ButtonGroup,
+	RadioControl,
 } from '@wordpress/components';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
@@ -57,7 +56,7 @@ function WidthPanel({ selectedWidth, setAttributes }) {
 }
 
 export default ({ className, attributes, setAttributes }) => {
-	const { type, text, size, width, textAlign, style } = attributes;
+	const { next_action, text, width, textAlign, style } = attributes;
 
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
@@ -82,6 +81,35 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className}>
 			<InspectorControls>
+				<PanelBody>
+					<PanelRow>
+						<RadioControl
+							label={__('Next Step', 'surecart')}
+							selected={next_action}
+							help={__(
+								'Select what happens when the upsell is declined.',
+								'surecart'
+							)}
+							options={[
+								{
+									label: __('Exit funnel', 'surecart'),
+									value: 'exit',
+								},
+								{
+									label: __(
+										'Go to next available upsell',
+										'surecart'
+									),
+									value: 'continue',
+								},
+							]}
+							onChange={(next_action) =>
+								setAttributes({ next_action })
+							}
+						/>
+					</PanelRow>
+				</PanelBody>
+
 				<WidthPanel
 					selectedWidth={width}
 					setAttributes={setAttributes}

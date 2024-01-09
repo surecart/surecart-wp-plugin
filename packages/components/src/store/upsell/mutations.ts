@@ -11,15 +11,25 @@ import { Checkout, LineItem, Price } from 'src/types';
 import { state } from './store';
 import { state as productState } from '../product';
 import { createErrorNotice } from '@store/notices/mutations';
-import { hasNextLink, getNextLink } from './getters';
+import { getNextLink } from './getters';
 
 /**
- * Maybe redirect to next upsell.
+ * Handle accepted
  */
-export const redirect = () => {
+export const handleAccepted = () => (state.accept_action === 'exit' ? (state.loading = 'complete') : maybeRedirect());
+
+/**
+ * Handle declined
+ */
+export const handleDeclined = () => (state.decline_action === 'exit' ? (state.loading = 'complete') : maybeRedirect());
+
+/**
+ * Redirect to next link.
+ */
+export const maybeRedirect = () => {
   const nextLink = getNextLink();
   if (!nextLink) {
-    return null;
+    return (state.loading = 'complete');
   }
   state.loading = 'redirecting';
   window.location.assign(nextLink);
@@ -28,7 +38,7 @@ export const redirect = () => {
 /**
  * Cancel the upsell.
  */
-export const cancel = () => (state.loading = hasNextLink() ? 'redirecting' : 'complete');
+export const cancel = () => (state.loading = 'declined');
 
 /**
  * Purchase the upsell
@@ -68,10 +78,10 @@ export const update = async ({ preview } = { preview: true }) => {
       return (state.loading = 'idle');
     }
 
-    state.loading = hasNextLink() ? 'redirecting' : 'complete';
+    state.loading = 'accepted';
   } catch (error) {
     if (error?.additional_errors?.[0]?.code === 'line_item.upsell.already_applied') {
-      return (state.loading = hasNextLink() ? 'redirecting' : 'complete');
+      return (state.loading = 'accepted');
     }
     state.loading = 'idle';
     createErrorNotice(error);

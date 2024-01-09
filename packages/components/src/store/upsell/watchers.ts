@@ -3,7 +3,7 @@
  */
 import { on } from '../product';
 import { isUpsellExpired } from './getters';
-import { update, redirect } from './mutations';
+import { update, handleDeclined, handleAccepted } from './mutations';
 import state, { onChange } from './store';
 
 /**
@@ -38,7 +38,10 @@ onChange('line_item', () => {
  * When loading is complete, redirect.
  */
 onChange('loading', val => {
-  if (val === 'redirecting') {
-    redirect();
+  if (val === 'accepted') {
+    handleAccepted();
+  }
+  if (val === 'declined') {
+    handleDeclined();
   }
 });

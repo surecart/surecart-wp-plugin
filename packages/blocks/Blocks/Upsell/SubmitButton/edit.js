@@ -23,6 +23,8 @@ import {
 	ToggleControl,
 	Button,
 	ButtonGroup,
+	SelectControl,
+	RadioControl,
 } from '@wordpress/components';
 import { isKeyboardEvent } from '@wordpress/keycodes';
 import { useRef } from '@wordpress/element';
@@ -74,6 +76,7 @@ export default ({ className, attributes, setAttributes }) => {
 		width,
 		out_of_stock_text,
 		unavailable_text,
+		next_action,
 	} = attributes;
 
 	const borderProps = useBorderProps(attributes);
@@ -99,13 +102,39 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className}>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
+				<PanelBody>
 					<PanelRow>
 						<ToggleControl
 							label={__('Show a secure lock icon.', 'surecart')}
 							checked={show_icon}
 							onChange={(show_icon) =>
 								setAttributes({ show_icon })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<RadioControl
+							label={__('Next Step', 'surecart')}
+							selected={next_action}
+							help={__(
+								'Select what happens after the item is added to the order.',
+								'surecart'
+							)}
+							options={[
+								{
+									label: __('Exit funnel', 'surecart'),
+									value: 'exit',
+								},
+								{
+									label: __(
+										'Go to next available upsell',
+										'surecart'
+									),
+									value: 'continue',
+								},
+							]}
+							onChange={(next_action) =>
+								setAttributes({ next_action })
 							}
 						/>
 					</PanelRow>

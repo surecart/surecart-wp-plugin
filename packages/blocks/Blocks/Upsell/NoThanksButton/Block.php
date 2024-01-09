@@ -103,6 +103,12 @@ class Block extends BaseBlock {
 
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 
+		sc_initial_state( [
+			'upsell' => [
+				'decline_action' => $attributes['next_action'] ?? 'continue'
+			]
+		] );
+
 		return wp_sprintf(
 			'<sc-upsell-no-thanks-button class="%s">
 				<a %s>%s</a>
