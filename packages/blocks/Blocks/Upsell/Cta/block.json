@@ -2,7 +2,7 @@
 	"apiVersion": 2,
 	"name": "surecart/upsell-cta",
 	"title": "Upsell Call To Action",
-	"description": "Displays the Upsell Call To Action.",
+	"description": "Displays the upsell call to action.",
 	"category": "surecart",
 	"keywords": ["title", "form", "upsell", "cta"],
 	"ancestor": ["surecart/upsell"],
