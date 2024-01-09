@@ -28,14 +28,14 @@ class Block extends BaseBlock {
 		if ( empty( $upsell->metadata->description ?? '' ) ) {
 			return '';
 		}
-		ob_start(); ?>
 
-		<div class="<?php echo esc_attr( $this->getClasses( $attributes, 'surecart-block' ) ); ?>"
-			style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
-				<?php echo wp_kses_post( $upsell->metadata->description ?? '' ); ?>
-		</div>
-
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<div %s>%s</div>',
+			get_block_wrapper_attributes( [
+				'class' => esc_attr( $this->getClasses( $attributes ) . ' surecart-block upsell-description' ),
+				'style' => esc_attr( $this->getStyles( $attributes ) ),
+			] ),
+			wp_kses_post( $upsell->metadata->description ?? '' )
+		);
 	}
 }
