@@ -116,7 +116,6 @@ class Block extends BaseBlock {
 
 		<sc-upsell-submit-button
 			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
-			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
 		>
 			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text>
