@@ -124,7 +124,10 @@ export default ({ product, updateProduct }) => {
 			`}
 		>
 			<Error error={error} setError={setError} />
-			<SortableList onSortEnd={applyDrag}>
+			<SortableList
+				onSortEnd={applyDrag}
+				draggedItemClassName="sc-dragging"
+			>
 				{product?.variant_options.map((option, index) => {
 					const options = product?.variant_options || [];
 					const total =

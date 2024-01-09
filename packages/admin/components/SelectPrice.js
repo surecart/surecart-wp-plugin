@@ -22,6 +22,7 @@ export default ({
 	loading,
 	onScrollEnd = () => {},
 	includeVariants = true,
+	showOutOfStock = false,
 	...props
 }) => {
 	const selectRef = useRef();
@@ -70,7 +71,7 @@ export default ({
 									price.amount,
 									price.currency
 								)}${price?.archived ? ' (Archived)' : ''}`,
-								disabled: priceUnavailable,
+								disabled: priceUnavailable && !showOutOfStock,
 								suffixDescription: product?.stock_enabled
 									? sprintf(
 											__('%s available', 'surecart'),
@@ -113,7 +114,7 @@ export default ({
 												variant?.available_stock
 										  )
 										: null,
-									disabled: variantUnavailable,
+									disabled: variantUnavailable && !showOutOfStock,
 									variant_id: variant?.id,
 								};
 							});

@@ -69,10 +69,12 @@
  - [sc-provisional-banner](../sc-provisional-banner)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-quantity-select](../quantity-select)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
  - [sc-rich-text](../rich-text)
  - [sc-select](../select)
  - [sc-subscription](../../controllers/dashboard/subscription)
  - [sc-subscription-ad-hoc-confirm](../../controllers/dashboard/subscription-ad-hoc-confirm)
+ - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -123,10 +125,12 @@ graph TD;
   sc-provisional-banner --> sc-icon
   sc-purchase-downloads-list --> sc-icon
   sc-quantity-select --> sc-icon
+  sc-recurring-price-choice-container --> sc-icon
   sc-rich-text --> sc-icon
   sc-select --> sc-icon
   sc-subscription --> sc-icon
   sc-subscription-ad-hoc-confirm --> sc-icon
+  sc-subscription-details --> sc-icon
   sc-subscription-next-payment --> sc-icon
   sc-subscription-payment-method --> sc-icon
   sc-subscription-switch --> sc-icon

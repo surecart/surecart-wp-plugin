@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.13.0
+Stable tag: 2.15.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,35 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.15.0 - January 4th, 2023 =
+- New: Use product shortcodes outside of product pages.
+- New: Checkout form product price/variant selector block.
+- Improvement: Allow integrations to work for specific prices and variants.
+- Improvement: Ability to turn off tax for specific customers.
+- Improvement: Buy now and add to cart button placeholder improvements.
+- Fix: Issue with product media taking up too much space on product template edit page.
+- Fix: 2FA conflicts with SureCart sign-in.
+- Fix: Issue with php notice showing when account is not connected on certain pages.
+- Fix: Issue with Stripe showing "Your Card Nubmer Is Incomplete" after some free purchases are made.
+- Fix: Quantity selector styling issue on iOS.
+- Fix: UI bug when adding product restrictions to coupon where product price and image were not loading.
+
+= 2.14.1 - December 21st, 2023 =
+- Improvement: Allow customers to add payment methods on subscriptions without payment methods on customer dashboard.
+- Fix: Issue with canceled orders not able to be filtered on merchant admin.
+- Fix: Issue with recurring prices being combined in price selector showing wrong label.
+
+= 2.14.0 - December 14th, 2023 =
+- New: Donations block to accept one-time and recurring donations.
+- New: Added user option to reactivate canceled subscriptions on customer dashboard.
+- Improvement: Display price and variant name on subscription index page.
+- Improvement: Updated address fields to not inherit the store's country.
+- Improvement: Improved error handling for 'Add to Cart' on product pages.
+- Improvement: Updated checkout totals for installments and trial periods to be more clear.
+- Improvement: Make default loading text less specific to account for different payment options.
+- Fix: Fixed currency symbol issue in dropdowns not appearing properly for some users in the admin.
+- Fix: Corrected a typo in the Order Bump feature.
 
 = 2.13.0 - December 11th, 2023 =
 * Fix: Issue with upgrade group cache not clearing on merchant admin when updating status.

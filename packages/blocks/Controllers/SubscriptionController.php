@@ -34,12 +34,15 @@ class SubscriptionController extends BaseController {
 						],
 						remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					),
-					'query'      => [
-						'customer_ids' => array_values( User::current()->customerIds() ),
-						'status'       => [ 'active', 'trialing', 'past_due', 'canceled' ],
-						'page'         => 1,
-						'per_page'     => 5,
-					],
+					'query'      => apply_filters(
+						'surecart/dashboard/subscription_list/query',
+						[
+							'customer_ids' => array_values( User::current()->customerIds() ),
+							'status'       => [ 'active', 'trialing', 'past_due', 'canceled' ],
+							'page'         => 1,
+							'per_page'     => 5,
+						]
+					),
 				]
 			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
 		);
@@ -57,12 +60,15 @@ class SubscriptionController extends BaseController {
 			[
 				'heading'    => $attributes['title'] ?? __( 'Plans', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
-				'query'      => [
-					'customer_ids' => array_values( User::current()->customerIds() ),
-					'status'       => [ 'active', 'trialing', 'canceled' ],
-					'page'         => 1,
-					'per_page'     => 20,
-				],
+				'query'      => apply_filters(
+					'surecart/dashboard/subscription_list/query',
+					[
+						'customer_ids' => array_values( User::current()->customerIds() ),
+						'status'       => [ 'active', 'trialing', 'canceled' ],
+						'page'         => 1,
+						'per_page'     => 20,
+					]
+				),
 			]
 		);
 		ob_start();

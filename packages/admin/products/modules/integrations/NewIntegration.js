@@ -1,24 +1,38 @@
 /** @jsx jsx */
 import { css, Global, jsx } from '@emotion/core';
-import { ScButton, ScForm } from '@surecart/components-react';
-import { Button, Modal } from '@wordpress/components';
+
+/**
+ * External dependencies
+ */
+import { ScButton, ScForm, ScSelect } from '@surecart/components-react';
+import { Modal } from '@wordpress/components';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
+/**
+ * Internal dependencies
+ */
+import { ScFormControl } from '@surecart/components-react';
 import Error from '../../../components/Error';
 import SelectIntegration from './SelectIntegration';
+import SelectPrice from '../../../components/SelectPrice';
+import { formatNumber } from '../../../util';
+import useSelectPrices from '../../hooks/useSelectPrices';
 
-export default ({ onRequestClose, id }) => {
+export default ({ onRequestClose, id, product }) => {
 	const [provider, setProvider] = useState(null);
 	const [item, setItem] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [price, setPrice] = useState(null);
+	const [variantId, setVariantId] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-
 	const { saveEntityRecord } = useDispatch(coreStore);
+
+	const { active } = useSelectPrices({ productId: id });
 
 	const onSubmit = async (e) => {
 		try {
@@ -31,6 +45,8 @@ export default ({ onRequestClose, id }) => {
 					model_name: 'product',
 					model_id: id,
 					integration_id: item,
+					price_id: price?.id || null,
+					variant_id: variantId || null,
 					provider,
 				},
 				{ throwOnError: true }
@@ -46,6 +62,46 @@ export default ({ onRequestClose, id }) => {
 		}
 	};
 
+	const getVariants = () => {
+		// If no variants, don't process further.
+		if (!product?.variants?.length) return [];
+
+		// If price is not set, then get the first price to get fallback variant amount.
+		const priceData = price || active?.[0];
+
+		// Process the variants for the select.
+		return product.variants
+			.sort((a, b) => a?.position - b?.position)
+			.filter((variant) => !!variant?.id) // filter out variants without an id
+			.map((variant) => {
+				const variantLabel = [
+					variant?.option_1,
+					variant?.option_2,
+					variant?.option_3,
+				]
+					.filter(Boolean)
+					.join(' / ');
+				return {
+					value: variant.id,
+					label: `
+					(${variantLabel}) ${variant?.amount
+							? ` - ${formatNumber(
+								variant?.amount,
+								priceData?.currency || 'usd'
+							)}`
+							: ''
+						}`,
+					suffixDescription: product?.stock_enabled
+						? sprintf(
+							__('%s available', 'surecart'),
+							variant?.available_stock
+						)
+						: null,
+					variant_id: variant?.id,
+				};
+			});
+	};
+
 	return (
 		<Fragment>
 			<Global
@@ -58,9 +114,17 @@ export default ({ onRequestClose, id }) => {
 			<Modal
 				title={__('Add Integration', 'surecart')}
 				css={css`
-					max-width: 500px !important;
+					width: 600px !important;
 					.components-modal__content {
 						overflow: visible !important;
+					}
+
+					@media (max-width: 782px) {
+						width: 100% !important;
+
+						.components-modal__content {
+							overflow: visible !important;
+						}
 					}
 				`}
 				overlayClassName={'sc-modal-overflow'}
@@ -82,6 +146,69 @@ export default ({ onRequestClose, id }) => {
 						item={item}
 						setItem={setItem}
 					/>
+
+					{!!item && active?.length > 1 && (
+						<div>
+							<ScFormControl
+								label={__('Select A Price', 'surecart')}
+								help={__(
+									'Optionally select a price to sync with this integration.',
+									'surecart'
+								)}
+							>
+								<SelectPrice
+									required={false}
+									css={css`
+										flex: 0 1 50%;
+									`}
+									style={{
+										'--sc-input-placeholder-color':
+											'var(--sc-input-label-color)',
+									}}
+									open={false}
+									value={price?.id}
+									ad_hoc={false}
+									variable={false}
+									includeVariants={false}
+									showOutOfStock={true}
+									loading={false}
+									products={[
+										{
+											...product,
+											prices: {
+												data: active, // merge active prices with product data
+											},
+										},
+									]}
+									onSelect={({ price_id }) => {
+										// find the price and set it.
+										setPrice(active?.find((p) => p.id === price_id));
+									}}
+									placeholder={__('All Prices', 'surecart')}
+								/>
+							</ScFormControl>
+						</div>
+					)}
+
+					{!!item && getVariants().length > 1 && (
+						<div>
+							<ScSelect
+								label={__('Select A Variant', 'surecart')}
+								help={__(
+									'Optionally select a variant to sync with this integration.',
+									'surecart'
+								)}
+								value={variantId}
+								choices={getVariants()}
+								onScChange={(e) => setVariantId(e.target.value)}
+								placeholder={__('All Variants', 'surecart')}
+								style={{
+									'--sc-input-placeholder-color':
+										'var(--sc-input-label-color)',
+								}}
+							/>
+						</div>
+					)}
 
 					<div
 						css={css`
