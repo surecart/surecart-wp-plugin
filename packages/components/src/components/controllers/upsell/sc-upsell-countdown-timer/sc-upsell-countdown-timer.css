@@ -1,6 +1,5 @@
 :host {
   display: flex;
-
   justify-content: var(--sc-upsell-countdown-timer-justify-content, center);
   align-items: var(--sc-upsell-countdown-timer-align-items, center);
   text-align: var(--sc-upsell-countdown-timer-text-align, center);
