@@ -2335,13 +2335,6 @@
     "class": true,
     "slot": true
   },
-  "sc-upsell-text": {
-    "text": true,
-    "style": true,
-    "id": true,
-    "class": true,
-    "slot": true
-  },
   "sc-upsell-totals": {
     "style": true,
     "id": true,

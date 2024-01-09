@@ -4067,9 +4067,6 @@ export namespace Components {
     }
     interface ScUpsellSubmitButton {
     }
-    interface ScUpsellText {
-        "text": 'title' | 'description';
-    }
     interface ScUpsellTotals {
     }
     interface ScVisuallyHidden {
@@ -5666,12 +5663,6 @@ declare global {
         prototype: HTMLScUpsellSubmitButtonElement;
         new (): HTMLScUpsellSubmitButtonElement;
     };
-    interface HTMLScUpsellTextElement extends Components.ScUpsellText, HTMLStencilElement {
-    }
-    var HTMLScUpsellTextElement: {
-        prototype: HTMLScUpsellTextElement;
-        new (): HTMLScUpsellTextElement;
-    };
     interface HTMLScUpsellTotalsElement extends Components.ScUpsellTotals, HTMLStencilElement {
     }
     var HTMLScUpsellTotalsElement: {
@@ -5915,7 +5906,6 @@ declare global {
         "sc-upsell-countdown-timer": HTMLScUpsellCountdownTimerElement;
         "sc-upsell-no-thanks-button": HTMLScUpsellNoThanksButtonElement;
         "sc-upsell-submit-button": HTMLScUpsellSubmitButtonElement;
-        "sc-upsell-text": HTMLScUpsellTextElement;
         "sc-upsell-totals": HTMLScUpsellTotalsElement;
         "sc-visually-hidden": HTMLScVisuallyHiddenElement;
         "sc-wordpress-password-edit": HTMLScWordpressPasswordEditElement;
@@ -10356,9 +10346,6 @@ declare namespace LocalJSX {
     }
     interface ScUpsellSubmitButton {
     }
-    interface ScUpsellText {
-        "text"?: 'title' | 'description';
-    }
     interface ScUpsellTotals {
     }
     interface ScVisuallyHidden {
@@ -10594,7 +10581,6 @@ declare namespace LocalJSX {
         "sc-upsell-countdown-timer": ScUpsellCountdownTimer;
         "sc-upsell-no-thanks-button": ScUpsellNoThanksButton;
         "sc-upsell-submit-button": ScUpsellSubmitButton;
-        "sc-upsell-text": ScUpsellText;
         "sc-upsell-totals": ScUpsellTotals;
         "sc-visually-hidden": ScVisuallyHidden;
         "sc-wordpress-password-edit": ScWordpressPasswordEdit;
@@ -10838,7 +10824,6 @@ declare module "@stencil/core" {
             "sc-upsell-countdown-timer": LocalJSX.ScUpsellCountdownTimer & JSXBase.HTMLAttributes<HTMLScUpsellCountdownTimerElement>;
             "sc-upsell-no-thanks-button": LocalJSX.ScUpsellNoThanksButton & JSXBase.HTMLAttributes<HTMLScUpsellNoThanksButtonElement>;
             "sc-upsell-submit-button": LocalJSX.ScUpsellSubmitButton & JSXBase.HTMLAttributes<HTMLScUpsellSubmitButtonElement>;
-            "sc-upsell-text": LocalJSX.ScUpsellText & JSXBase.HTMLAttributes<HTMLScUpsellTextElement>;
             "sc-upsell-totals": LocalJSX.ScUpsellTotals & JSXBase.HTMLAttributes<HTMLScUpsellTotalsElement>;
             "sc-visually-hidden": LocalJSX.ScVisuallyHidden & JSXBase.HTMLAttributes<HTMLScVisuallyHiddenElement>;
             "sc-wordpress-password-edit": LocalJSX.ScWordpressPasswordEdit & JSXBase.HTMLAttributes<HTMLScWordpressPasswordEditElement>;
