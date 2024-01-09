@@ -103,21 +103,16 @@ class Block extends BaseBlock {
 
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 
-		ob_start();
-		?>
-		<sc-upsell-no-thanks-button
-			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
-		>
-			<a
-				class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
-				type="<?php echo esc_attr( $attributes['type'] ?? 'default' ); ?>"
-				size="<?php echo esc_attr( $attributes['size'] ?? 'small' ); ?>"
-			>
-				<?php echo wp_kses_post( $attributes['text'] ?? '' ); ?>
-			</a>
-		</sc-upsell-no-thanks-button>
-
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<sc-upsell-no-thanks-button class="%s">
+				<a %s>%s</a>
+			</sc-upsell-no-thanks-button>',
+			'wp-block-button sc-block-button ' . esc_attr( $width_class ),
+			get_block_wrapper_attributes( [
+				'class' => esc_attr( $this->getClasses( $attributes ) ) . ' wp-block-button__link sc-block-button__link wp-element-button',
+				'style' => esc_attr( $this->getStyles( $attributes ) ),
+			] ),
+			wp_kses_post( $attributes['text'] ?? __( 'No Thanks', 'surecart' ) )
+		);
 	}
 }
