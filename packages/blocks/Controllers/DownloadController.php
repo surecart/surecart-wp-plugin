@@ -41,8 +41,9 @@ class DownloadController extends BaseController {
 						'page'         => 1,
 						'per_page'     => 10,
 					],
+					'heading'      => $attributes['title'] ?? __( 'Downloads', 'surecart' ),
 				]
-			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
+			)->render()
 		);
 	}
 
@@ -71,6 +72,7 @@ class DownloadController extends BaseController {
 				->id( 'customer-downloads-preview' )
 				->with(
 					[
+						'heading'      => $attributes['title'] ?? __( 'Downloads', 'surecart' ),
 						'requestNonce' => wp_create_nonce( 'customer-download' ),
 						'isCustomer'   => User::current()->isCustomer(),
 						'query'        => [
@@ -79,7 +81,7 @@ class DownloadController extends BaseController {
 							'per_page'     => 10,
 						],
 					]
-				)->render( ! empty( $attributes['title'] ) ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
+				)->render()
 			);
 			?>
 		</sc-spacing>
