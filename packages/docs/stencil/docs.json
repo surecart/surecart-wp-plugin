@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-01-07T03:07:05",
+  "timestamp": "2024-01-09T14:13:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -699,7 +699,8 @@
         "sc-stripe-payment-request",
         "sc-subscription-reactivate",
         "sc-subscription-switch",
-        "sc-upcoming-invoice"
+        "sc-upcoming-invoice",
+        "sc-upsell"
       ],
       "dependencies": [
         "sc-icon"
@@ -787,6 +788,9 @@
           "sc-alert"
         ],
         "sc-upcoming-invoice": [
+          "sc-alert"
+        ],
+        "sc-upsell": [
           "sc-alert"
         ]
       }
@@ -1497,6 +1501,22 @@
       "usage": {},
       "props": [
         {
+          "name": "autofocus",
+          "type": "boolean",
+          "mutable": false,
+          "attr": "autofocus",
+          "reflectToAttr": false,
+          "docs": "Tells the browser to autofocus.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "busy",
           "type": "boolean",
           "mutable": false,
@@ -1910,6 +1930,7 @@
         "sc-tax-id-input",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
+        "sc-upsell",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -2051,6 +2072,9 @@
           "sc-button"
         ],
         "sc-upgrade-required": [
+          "sc-button"
+        ],
+        "sc-upsell": [
           "sc-button"
         ],
         "sc-wordpress-password-edit": [
@@ -9577,6 +9601,7 @@
         "sc-subscription-variation-confirm",
         "sc-subscriptions-list",
         "sc-upcoming-invoice",
+        "sc-upsell",
         "sc-wordpress-password-edit",
         "sc-wordpress-user",
         "sc-wordpress-user-edit"
@@ -9670,6 +9695,9 @@
           "sc-dashboard-module"
         ],
         "sc-upcoming-invoice": [
+          "sc-dashboard-module"
+        ],
+        "sc-upsell": [
           "sc-dashboard-module"
         ],
         "sc-wordpress-password-edit": [
@@ -9847,7 +9875,8 @@
         "sc-product-price-modal",
         "sc-subscription-details",
         "sc-subscription-reactivate",
-        "sc-upgrade-required"
+        "sc-upgrade-required",
+        "sc-upsell"
       ],
       "dependencies": [
         "sc-button",
@@ -9886,6 +9915,9 @@
           "sc-dialog"
         ],
         "sc-upgrade-required": [
+          "sc-dialog"
+        ],
+        "sc-upsell": [
           "sc-dialog"
         ]
       }
@@ -13658,6 +13690,7 @@
         "sc-toggle",
         "sc-upcoming-invoice",
         "sc-upgrade-required",
+        "sc-upsell",
         "sc-upsell-countdown-timer",
         "sc-wordpress-user"
       ],
@@ -13814,6 +13847,9 @@
           "sc-icon"
         ],
         "sc-upgrade-required": [
+          "sc-icon"
+        ],
+        "sc-upsell": [
           "sc-icon"
         ],
         "sc-upsell-countdown-timer": [
@@ -34769,14 +34805,37 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "sc-block-ui"
+        "sc-block-ui",
+        "sc-dialog",
+        "sc-icon",
+        "sc-dashboard-module",
+        "sc-alert",
+        "sc-button"
       ],
       "dependencyGraph": {
         "sc-upsell": [
-          "sc-block-ui"
+          "sc-block-ui",
+          "sc-dialog",
+          "sc-icon",
+          "sc-dashboard-module",
+          "sc-alert",
+          "sc-button"
         ],
         "sc-block-ui": [
           "sc-spinner"
+        ],
+        "sc-dialog": [
+          "sc-button",
+          "sc-icon"
+        ],
+        "sc-button": [
+          "sc-spinner"
+        ],
+        "sc-dashboard-module": [
+          "sc-alert"
+        ],
+        "sc-alert": [
+          "sc-icon"
         ]
       }
     },
