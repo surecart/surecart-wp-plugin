@@ -3,9 +3,10 @@ import { css, jsx } from '@emotion/core';
 import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
+import { getQueryArg } from '@wordpress/url';
 
 import Error from '../components/Error';
 import useEntity from '../hooks/useEntity';
@@ -30,7 +31,8 @@ import Collections from './modules/Collections';
 import Shipping from './modules/Shipping';
 import Inventory from './modules/Inventory';
 
-export default ({ id }) => {
+export default ({ id, setBrowserURL }) => {
+	const publishStatus = getQueryArg(window.location.href, 'status');
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
 	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
@@ -45,6 +47,12 @@ export default ({ id }) => {
 		savingProduct,
 		productError,
 	} = useEntity('product', id);
+
+	useEffect(() => {
+		if (publishStatus === 'publish' && hasLoadedProduct) {
+			editProduct({ status: 'published' });
+		}
+	}, [publishStatus, hasLoadedProduct]);
 
 	/**
 	 * Handle the form submission
@@ -88,6 +96,10 @@ export default ({ id }) => {
 				throw new Error('Saving failed.');
 			}
 
+			// remove the status arg from the url.
+			if (!!publishStatus) {
+				setBrowserURL({ id });
+			}
 			// save success.
 			createSuccessNotice(__('Product updated.', 'surecart'), {
 				type: 'snackbar',
@@ -220,7 +232,9 @@ export default ({ id }) => {
 							!hasLoadedProduct
 						}
 					>
-						{__('Save Product', 'surecart')}
+						{publishStatus === 'publish'
+							? __('Save & Publish', 'surecart')
+							: __('Save Product', 'surecart')}
 					</SaveButton>
 				</div>
 			}
