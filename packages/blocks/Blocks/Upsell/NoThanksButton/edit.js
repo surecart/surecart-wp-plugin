@@ -82,43 +82,6 @@ export default ({ className, attributes, setAttributes }) => {
 	return (
 		<div className={className}>
 			<InspectorControls>
-				<PanelBody title={__('Attributes', 'surecart')}>
-					<PanelRow>
-						<TextControl
-							label={__('Button Text', 'surecart')}
-							value={text}
-							onChange={(text) => setAttributes({ text })}
-						/>
-					</PanelRow>
-					<PanelRow>
-						<SelectControl
-							label={__('Size', 'surecart')}
-							value={size}
-							onChange={(size) => {
-								setAttributes({ size });
-							}}
-							options={[
-								{
-									value: null,
-									label: 'Select a Size',
-									disabled: true,
-								},
-								{
-									value: 'small',
-									label: __('Small', 'surecart'),
-								},
-								{
-									value: 'medium',
-									label: __('Medium', 'surecart'),
-								},
-								{
-									value: 'large',
-									label: __('Large', 'surecart'),
-								},
-							]}
-						/>
-					</PanelRow>
-				</PanelBody>
 				<WidthPanel
 					selectedWidth={width}
 					setAttributes={setAttributes}
