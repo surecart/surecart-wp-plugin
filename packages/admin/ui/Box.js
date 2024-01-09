@@ -70,7 +70,7 @@ export default ({
 				<CardBody
 					css={css`
 						display: grid;
-						gap: 10px;
+						gap: 18px;
 						> * {
 							width: 100%;
 						}
