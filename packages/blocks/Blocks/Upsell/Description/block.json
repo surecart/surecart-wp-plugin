@@ -2,7 +2,7 @@
 	"apiVersion": 2,
 	"name": "surecart/upsell-description",
 	"title": "Upsell Description",
-	"description": "Display the Upsell description",
+	"description": "Display the upsell description.",
 	"category": "surecart",
 	"attributes": {
 		"textAlign": {
