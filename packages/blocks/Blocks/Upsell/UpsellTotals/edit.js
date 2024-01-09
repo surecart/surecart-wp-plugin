@@ -1,8 +1,8 @@
 export default () => {
 	return (
 		<sc-summary
-			open-text="Totals"
-			closed-text="Total"
+			open-text={__('Totals', 'surecart')}
+			closed-text={__('Total', 'surecart')}
 			collapsible={true}
 			collapsed={true}
 		>
@@ -16,7 +16,7 @@ export default () => {
 			<sc-divider></sc-divider>
 
 			<sc-line-item>
-				<span slot="description">Subtotal</span>
+				<span slot="description">{__('Subtotal', 'surecart')}</span>
 				<sc-format-number
 					slot="price"
 					type="currency"
@@ -26,7 +26,7 @@ export default () => {
 			</sc-line-item>
 
 			<sc-line-item>
-				<span slot="description">Tax</span>
+				<span slot="description">{__('Tax', 'surecart')}</span>
 				<sc-format-number
 					slot="price"
 					type="currency"
@@ -40,7 +40,7 @@ export default () => {
 			<sc-line-item
 				style={{ '--price-size': 'var(--sc-font-size-x-large)' }}
 			>
-				<span slot="title">Total</span>
+				<span slot="title">{__('Total', 'surecart')}</span>
 				<sc-format-number
 					slot="price"
 					type="currency"
