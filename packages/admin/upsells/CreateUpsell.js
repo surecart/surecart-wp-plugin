@@ -63,7 +63,7 @@ export default ({ id, setId }) => {
 							required
 							label={__('Upsell Name', 'surecart')}
 							help={__(
-								'A name for this upsell that will be visible to customers.',
+								'A name for this upsell. This is visible to customers.',
 								'surecart'
 							)}
 							onScInput={(e) => setName(e.target.value)}

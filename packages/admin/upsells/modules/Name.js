@@ -16,7 +16,7 @@ export default ({ loading, upsell, updateUpsell }) => {
 				label={__('Upsell Name', 'surecart')}
 				required
 				help={__(
-					'A name for this upsell that will be visible to customers.',
+					'A name for this upsell. This is visible to customers.',
 					'surecart'
 				)}
 				onScInput={(e) => updateUpsell({ name: e.target.value })}
