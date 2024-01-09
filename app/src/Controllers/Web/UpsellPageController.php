@@ -28,12 +28,12 @@ class UpsellPageController extends BasePageController {
 	}
 
 	/**
-	 * Add meta title and description.
+	 * We don't want to add seo meta data for upsell page.
 	 *
 	 * @return void
 	 */
 	public function addSeoMetaData(): void {
-		// TODO: Add meta title and description.
+		// do nothing.
 	}
 
 	/**
@@ -78,8 +78,10 @@ class UpsellPageController extends BasePageController {
 			return $this->notFound();
 		}
 
+		// we need the checkout since it cannot be fetched through the upsell if it's expired.
 		$checkout = \SureCart\Models\Checkout::with(['recommended_upsells', 'upsell.price'])->find( $request->query( 'sc_checkout_id' ) );
 
+		// this is typically cached.
 		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $this->model->price->product );
 
 		// Stop if the product is not found.
@@ -97,6 +99,7 @@ class UpsellPageController extends BasePageController {
 		sc_initial_state(
 			[
 				'product' => [
+					// we need to force the selected price.
 					$this->product->id => $this->product->getInitialPageState([ 'selectedPrice' => $this->model->price ]),
 				],
 				'upsell'  => [
