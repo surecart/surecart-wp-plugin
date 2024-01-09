@@ -18,8 +18,11 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$upsell = get_query_var( 'surecart_current_upsell' );
+		if ( empty( $upsell ) ) {
+			return '';
+		}
 
-		return sprintf(
+		return wp_sprintf(
 			'<%1$s class="%2$s" style="%3$s">
 				%4$s
 			</%1$s>',
@@ -28,6 +31,5 @@ class Block extends BaseBlock {
 			esc_attr( $this->getStyles( $attributes ) ),
 			wp_kses_post( $upsell->metadata->cta ?? __("Wait! Here's an exclusive offer for you.", 'surecart') )
 		);
-		return '';
 	}
 }
