@@ -84,17 +84,17 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			return new PermalinkSettingService(
 				[
 					'slug'        => 'upsell',
-					'label'       => __( 'SureCart Upsell Page Permalinks', 'surecart' ),
+					'label'       => __( 'SureCart Upsell Permalinks', 'surecart' ),
 					/* translators: %s: Home URL */
-					'description' => sprintf( __( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>upsells</code> would make your upsell\'s links like <code>%supsells/upsell-id/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>offers</code> would make your upsell\'s links like <code>%soffers/upsell-id/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
 					'options'     => [
 						[
-							'value' => 'upsells',
+							'value' => 'offer',
 							'label' => __( 'Default', 'surecart' ),
 						],
 						[
-							'value' => 'product-upsell',
-							'label' => __( 'Product Upsell', 'surecart' ),
+							'value' => 'special-offer',
+							'label' => __( 'Special Offer', 'surecart' ),
 						],
 					],
 				]
