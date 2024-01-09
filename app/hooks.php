@@ -59,20 +59,3 @@ add_filter(
 		return $url;
 	}
 );
-
-add_filter(
-	'wp_theme_json_data_blocks',
-	function( $theme_json ) {
-		$new_data = [
-			'styles' => [
-				'blocks' => [
-					'core/group' => [
-						'shadow' => 'var( --wp--preset--shadow--primary )',
-					],
-				],
-			],
-		];
-		return $theme_json->update_with( $new_data );
-	}
-);
-
