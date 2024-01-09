@@ -35,7 +35,7 @@ export default function PostTemplateForm({
 			).filter((template) => {
 				return (
 					template.id === 'surecart/surecart//upsell-info' ||
-					template.slug.includes('sc-part-bumps-info')
+					template.slug.includes('sc-part-upsell-info')
 				);
 			});
 			return {
