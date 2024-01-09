@@ -222,16 +222,16 @@ class BlockTemplatesService {
 			}
 		}
 
-		if ( preg_match( '/(sc-bump)-(.+)/', $template->slug, $matches ) ) {
+		if ( preg_match( '/(sc-upsell)-(.+)/', $template->slug, $matches ) ) {
 			$type = $matches[1];
 
-			if ( 'sc-bump' === $type ) {
+			if ( 'sc-upsell' === $type ) {
 				$template->title = sprintf(
 					// translators: Represents the title of a user's custom template in the Site Editor, where %s is the author's name, e.g. "Author: Jane Doe".
-					__( 'Bump: %s', 'surecart' ),
+					__( 'Upsell: %s', 'surecart' ),
 					$template->title
 				);
-				$template->description = __( 'Template used for specific single SureCart bump pages.', 'surecart' );
+				$template->description = __( 'Template used for specific single SureCart upsell pages.', 'surecart' );
 			}
 		}
 		return $template;
