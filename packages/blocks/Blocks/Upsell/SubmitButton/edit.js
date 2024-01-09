@@ -101,13 +101,6 @@ export default ({ className, attributes, setAttributes }) => {
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					<PanelRow>
-						<TextControl
-							label={__('Button Text', 'surecart')}
-							value={text}
-							onChange={(text) => setAttributes({ text })}
-						/>
-					</PanelRow>
-					<PanelRow>
 						<ToggleControl
 							label={__('Show a secure lock icon.', 'surecart')}
 							checked={show_icon}
