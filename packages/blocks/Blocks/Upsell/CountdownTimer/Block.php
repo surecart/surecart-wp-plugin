@@ -104,23 +104,18 @@ class Block extends BaseBlock {
 
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-countdown-timer__width-' . $attributes['width'] : '';
 
-		ob_start(); ?>
-
-		<div
-			class="sc-countdown-timer <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
-		>
-			<sc-upsell-countdown-timer
-				showIcon="<?php echo esc_attr( $attributes['show_icon'] ); ?>"
-				class="<?php echo esc_attr( $this->getClasses( $attributes ) ); ?>"
-				style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>"
-			>
-				<span slot="offer-expire-text">
-					<?php echo esc_attr( $attributes['offer_expire_text'] ?? '' ); ?>
-				</span>
-			</sc-upsell-countdown-timer>
-		</div>
-
-		<?php
-		return ob_get_clean();
+		return wp_sprintf(
+			'<div %s>%s</div>',
+			get_block_wrapper_attributes( [ 'class' => $width_class . ' ' . ($attributes['className'] ?? '') . ' ' . 'sc-countdown-timer' ] ),
+			wp_sprintf(
+				'<sc-upsell-countdown-timer showIcon="%s" class="%s" style="%s">
+					<span slot="offer-expire-text">%s</span>
+				</sc-upsell-countdown-timer>',
+				esc_attr( $attributes['show_icon'] ),
+				esc_attr( $this->getClasses( $attributes ) ),
+				esc_attr( $this->getStyles( $attributes ) ),
+				esc_attr( $attributes['offer_expire_text'] ?? '' )
+			)
+		);
 	}
 }
