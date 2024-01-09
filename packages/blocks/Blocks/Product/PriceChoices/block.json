@@ -17,6 +17,9 @@
 		"show_price": {
 			"type": "boolean",
 			"default": true
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {

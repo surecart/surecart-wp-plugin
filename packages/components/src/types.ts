@@ -22,6 +22,7 @@ declare global {
     sc?: {
       store?: {
         product?: any;
+        products?: any;
       };
     };
     scStore: any;
@@ -1120,6 +1121,28 @@ export interface GoogleAnalyticsItem {
   discount?: number;
 }
 
+
+export interface ProductState {
+  formId: number;
+  mode: 'live' | 'test';
+  product: Product;
+  prices: Price[];
+  variants: Variant[];
+  variant_options: VariantOption[];
+  quantity: number;
+  selectedPrice: Price;
+  total: number;
+  busy: boolean;
+  disabled: boolean;
+  checkoutUrl: string;
+  adHocAmount: number;
+  dialog: string;
+  line_item: LineItemData;
+  error: string;
+  selectedVariant?: Variant;
+  variantValues: { option_1?: string; option_2?: string; option_3?: string };
+  isProductPage?: boolean;
+}
 export interface FeaturedProductMediaAttributes {
   alt: string;
   url: string;

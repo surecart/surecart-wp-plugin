@@ -100,7 +100,7 @@ class BuyPageController extends BasePageController {
 		$this->filters();
 
 		// prepare data.
-		$this->model              = $this->model->withActiveAndSortedPrices();
+		$this->model              = $this->model->withActivePrices()->withSortedPrices();
 		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
 
 		if ( ! empty( $this->model->prices->data[0]->id ) ) {
