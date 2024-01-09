@@ -18,7 +18,7 @@ class Block extends BaseBlock {
 	 */
 	public function render( $attributes, $content ) {
 		$upsell = get_query_var( 'surecart_current_upsell' );
-		if ( empty( $upsell ) ) {
+		if ( empty( $upsell->metadata->cta ) ) {
 			return '';
 		}
 
