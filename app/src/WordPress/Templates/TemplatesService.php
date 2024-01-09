@@ -264,6 +264,11 @@ class TemplatesService {
 		global $post;
 		$id = $post->ID ?? null;
 
+		// if block theme, short circuit and return template-canvas probably.
+		if ( wp_is_block_theme() ) {
+			return $template;
+		}
+
 		// check for product and use the template id.
 		$product = get_query_var( 'surecart_current_product' );
 
