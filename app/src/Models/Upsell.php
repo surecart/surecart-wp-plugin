@@ -63,7 +63,11 @@ class Upsell extends Model implements PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplateAttribute() {
-		return get_block_template( $this->getTemplateIdAttribute() );
+		$template = get_block_template( $this->getTemplateIdAttribute() );
+		if ( ! empty( $template->content ) ) {
+			return $template;
+		}
+		return get_block_template( 'surecart/surecart//single-upsell' );
 	}
 
 	/**
@@ -84,7 +88,11 @@ class Upsell extends Model implements PageModel {
 	 * @return \WP_Template
 	 */
 	public function getTemplatePartAttribute() {
-		return get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
+		$template = get_block_template( $this->getTemplatePartIdAttribute(), 'wp_template_part' );
+		if ( ! empty( $template->content ) ) {
+			return $template;
+		}
+		return get_block_template( 'surecart/surecart//upsell-info' );
 	}
 
 	/**
