@@ -16,7 +16,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ScUpsellText } from '@surecart/components-react';
 import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes: { textAlign }, setAttributes }) => {
@@ -42,11 +41,7 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 				/>
 			</BlockControls>
 
-			<div {...blockProps}>
-				<ScUpsellText text="description">
-					{__('Upsell Description', 'surecart')}
-				</ScUpsellText>
-			</div>
+			<div {...blockProps}>{__('Upsell Description', 'surecart')}</div>
 		</>
 	);
 };

@@ -11,7 +11,6 @@ import {
 	BlockControls,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { ScUpsellText } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -50,9 +49,7 @@ export default ({ attributes: { level, textAlign }, setAttributes }) => {
 			</BlockControls>
 
 			<TagName {...blockProps}>
-				<ScUpsellText text="title">
-					{__('Upsell Call to Action Title', 'surecart')}
-				</ScUpsellText>
+				{__('Upsell Call to Action Title', 'surecart')}
 			</TagName>
 		</>
 	);
