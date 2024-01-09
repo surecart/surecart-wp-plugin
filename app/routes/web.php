@@ -15,6 +15,7 @@ use SureCart\Middleware\PathRedirectMiddleware;
 use SureCart\Middleware\PaymentFailureRedirectMiddleware;
 use SureCart\Middleware\PurchaseRedirectMiddleware;
 use SureCart\Middleware\SubscriptionRedirectMiddleware;
+use SureCart\Middleware\UpsellMiddleware;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -48,6 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 ->get()
 ->where( 'query_var', 'sc_upsell_id' )
+->middleware( UpsellMiddleware::class )
 ->handle( 'UpsellPageController@show' );
 
 /*
