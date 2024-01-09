@@ -33,7 +33,7 @@ class LineItemsRestServiceProviderTest extends SureCartUnitTestCase {
 		return [
 			'List: Unauthenticated' => [null, 'GET', '/surecart/v1/line_items', 401],
 			'List: Missing Capability' => [[], 'GET', '/surecart/v1/line_items', 403],
-			'List: Has Capability' =>  [['read_sc_checkouts'], 'GET', '/surecart/v1/line_items', 403],
+			'List: Has Capability' =>  [['read_sc_prices'], 'GET', '/surecart/v1/line_items', 200],
 
 			// Every other request is 200 because anynonymous users can add/edit/delete/upsell line items.
 			'Find: Without Capability' => [null, 'GET', '/surecart/v1/line_items/test', 200],
