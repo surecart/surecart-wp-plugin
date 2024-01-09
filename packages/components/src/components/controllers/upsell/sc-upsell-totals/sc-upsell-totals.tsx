@@ -33,10 +33,9 @@ export class ScUpsellTotals {
         </sc-line-item>
 
         {(state?.line_item?.fees?.data || []).map(fee => {
-          const description = 'upsell' == fee.fee_type ? __('Discount', 'surecart') : fee.description;
           return (
             <sc-line-item>
-              <span slot="description">{description}</span>
+              <span slot="description">{fee.description}</span>
               <sc-format-number slot="price" type="currency" value={fee.amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
             </sc-line-item>
           );
