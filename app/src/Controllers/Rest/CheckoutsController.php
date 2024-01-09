@@ -205,28 +205,9 @@ class CheckoutsController extends RestController {
 				'purchases', // Important: we need to make sure we expand the purchase to provide access.
 				'customer', // Important: we need to use this to create the WP User with the same info.
 				'manual_payment_method', // Important: we need to use this to display manual payment instructions.
+				'recommended_upsells'
 			]
 		)->find( $request['id'] );
-
-		// Check if recommended_upsells is there.
-		if ( ! empty( $checkout->recommended_upsells ) ) {
-			error_log(print_r( $checkout, true ));
-
-			$upsells = [];
-			// Get the upsells so that it could fetch the permalink.
-			foreach ($checkout->recommended_upsells->data ?? [] as $upsell) {
-				$upsell = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $upsell->id );
-				if ( is_wp_error( $upsell ) ) {
-					return $upsell;
-				}
-
-				// Set the permalink.
-				$upsell->permalink = $upsell->getPermalinkAttribute() ?? '';
-				$upsells[] = $upsell;
-			}
-
-			$checkout->recommended_upsells->data = $upsells;
-		}
 
 		// bail if error.
 		if ( is_wp_error( $checkout ) ) {
