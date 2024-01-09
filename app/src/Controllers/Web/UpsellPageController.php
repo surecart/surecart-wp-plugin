@@ -28,13 +28,13 @@ class UpsellPageController extends BasePageController {
 	}
 
 	/**
-	 * We don't want to add seo meta data for upsell page.
+	 * We don't wamt to index the upsell page.
 	 *
 	 * @return void
 	 */
-	public function addSeoMetaData(): void {
-		// do nothing.
-	}
+	public function addSeoMetaData(): void { ?>
+		<meta name="robots" content="noindex" />
+	<?php }
 
 	/**
 	 * Add edit links
