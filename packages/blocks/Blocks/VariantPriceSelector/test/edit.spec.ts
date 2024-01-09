@@ -3,11 +3,12 @@
  */
 import { test, expect } from '@wordpress/e2e-test-utils-playwright';
 
-test.describe('surecart/price-variant-selector block editor', () => {
+test.describe('surecart/variant-price-selector block editor', () => {
 	let product: any = null;
 
 	test.beforeAll(async ({ requestUtils }) => {
 		product = await createVariantProduct(requestUtils);
+		await createProductPrice(requestUtils, product?.id);
 	});
 
 	test('Should allow adding of the variant selector block', async ({
@@ -19,13 +20,12 @@ test.describe('surecart/price-variant-selector block editor', () => {
 
 		const serializedBlockHTML = `
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
-				<!-- wp:surecart/price-variant-selector /-->
+				<!-- wp:surecart/variant-price-selector /-->
 			<!-- /wp:surecart/form -->
 		`;
 
 		await editor.setContent(serializedBlockHTML);
 		await page.locator('sc-button:has-text("Select Product")').click();
-		await page.locator('sc-select[placeholder="Choose product"]').click();
 		const menuItem = page
 			.locator('.hydrated > sc-dropdown > sc-menu > sc-menu-item')
 			.first();
@@ -45,38 +45,25 @@ test.describe('surecart/price-variant-selector block editor', () => {
 
 		const serializedBlockHTML = `
 			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
-				<!-- wp:surecart/price-variant-selector {"product_id":"${product?.id}"} /-->
+				<!-- wp:surecart/variant-price-selector {"product_id":"${product?.id}"} /-->
 			<!-- /wp:surecart/form -->
 		`;
 
 		await editor.setContent(serializedBlockHTML);
-		await page.locator('div[aria-label="Block: Price Variant Selector"]').click()
-		await page
-			.locator('.components-base-control__field input')
-			.fill('Test Label');
-		await page.locator('.components-panel__row sc-select').click();
-		await page
-			.locator('.hydrated > sc-dropdown > sc-menu > sc-menu-item')
-			.first()
-			.click();
 
-		await expect(
-			page.locator('sc-pill-option:has-text("Small")')
-		).not.toBeVisible();
-
-		// check the menu item in the select again and see if product appears
-		await page.locator('.components-panel__row sc-select').click();
 		await page
-			.locator('.hydrated > sc-dropdown > sc-menu > sc-menu-item')
-			.first()
+			.locator('[data-type="surecart/variant-price-selector"]')
 			.click();
-		await expect(
-			page.locator('sc-pill-option:has-text("Small")')
-		).toBeVisible();
+		await page.getByLabel('Selector title').fill('Test Label');
+		expect(await editor.getEditedPostContent()).toContain('Test Label');
+		await page.getByLabel('Price Selector Label').fill('Test Price Label');
+		expect(await editor.getEditedPostContent()).toContain(
+			'Test Price Label'
+		);
 	});
 });
 
-test.describe('surecart/price-variant-selector block frontend', () => {
+test.describe('surecart/variant-price-selector block frontend', () => {
 	let product: any = null;
 
 	test.beforeAll(async ({ requestUtils }) => {
@@ -84,63 +71,63 @@ test.describe('surecart/price-variant-selector block frontend', () => {
 		await createProductPrice(requestUtils, product?.id);
 	});
 
-	test.beforeEach(async ({ page, admin, editor }) => {
-		await admin.createNewPost();
-
+	test.beforeEach(async ({ page, requestUtils }) => {
 		const serializedBlockHTML = `
-			<!-- wp:surecart/checkout-form {\"title\":\"Test Form\"} /-->
-				<!-- wp:surecart/form {"mode":"test","success_url":""} -->
-					<!-- wp:surecart/price-variant-selector {"product_id":"${product?.id}"}  /-->
-					<!-- wp:surecart/totals -->
-						<sc-order-summary closed-text="Show Summary" open-text="Summary" class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
-							<sc-divider></sc-divider>
-							<!-- /wp:surecart/divider -->
+		<!-- wp:surecart/checkout-form {\"title\":\"Test Form\"} /-->
+			<!-- wp:surecart/form {"mode":"test","success_url":""} -->
+				<!-- wp:surecart/variant-price-selector {"product_id":"${product?.id}"}  /-->
+				<!-- wp:surecart/totals -->
+					<sc-order-summary closed-text="Show Summary" open-text="Summary" class="wp-block-surecart-totals"><!-- wp:surecart/divider -->
+						<sc-divider></sc-divider>
+						<!-- /wp:surecart/divider -->
 
-							<!-- wp:surecart/line-items -->
-							<sc-line-items removable="1" editable="1" class="wp-block-surecart-line-items"></sc-line-items>
-							<!-- /wp:surecart/line-items -->
+						<!-- wp:surecart/line-items -->
+						<sc-line-items removable="1" editable="1" class="wp-block-surecart-line-items"></sc-line-items>
+						<!-- /wp:surecart/line-items -->
 
-							<!-- wp:surecart/divider -->
-							<sc-divider></sc-divider>
-							<!-- /wp:surecart/divider -->
+						<!-- wp:surecart/divider -->
+						<sc-divider></sc-divider>
+						<!-- /wp:surecart/divider -->
 
-							<!-- wp:surecart/subtotal -->
-							<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
-							<!-- /wp:surecart/subtotal -->
+						<!-- wp:surecart/subtotal -->
+						<sc-line-item-total total="subtotal" class="wp-block-surecart-subtotal"><span slot="description">Subtotal</span></sc-line-item-total>
+						<!-- /wp:surecart/subtotal -->
 
-							<!-- wp:surecart/coupon {"button_text":"Apply Coupon"} /-->
+						<!-- wp:surecart/coupon {"button_text":"Apply Coupon"} /-->
 
-							<!-- wp:surecart/line-item-shipping -->
-							<sc-line-item-shipping label="Shipping" class="wp-block-surecart-line-item-shipping"></sc-line-item-shipping>
-							<!-- /wp:surecart/line-item-shipping -->
+						<!-- wp:surecart/line-item-shipping -->
+						<sc-line-item-shipping label="Shipping" class="wp-block-surecart-line-item-shipping"></sc-line-item-shipping>
+						<!-- /wp:surecart/line-item-shipping -->
 
-							<!-- wp:surecart/tax-line-item -->
-							<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
-							<!-- /wp:surecart/tax-line-item -->
+						<!-- wp:surecart/tax-line-item -->
+						<sc-line-item-tax class="wp-block-surecart-tax-line-item"></sc-line-item-tax>
+						<!-- /wp:surecart/tax-line-item -->
 
-							<!-- wp:surecart/divider -->
-							<sc-divider></sc-divider>
-							<!-- /wp:surecart/divider -->
+						<!-- wp:surecart/divider -->
+						<sc-divider></sc-divider>
+						<!-- /wp:surecart/divider -->
 
-							<!-- wp:surecart/total -->
-							<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="title">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
-							<!-- /wp:surecart/total -->
-						</sc-order-summary>
-					<!-- /wp:surecart/totals -->
-					<!-- wp:surecart/submit -->
-						<sc-order-submit type="primary" size="large" icon="lock" secure-notice="true" secure-notice-text="This is a secure, encrypted payment." class="wp-block-surecart-submit">Purchase</sc-order-submit>
-					<!-- /wp:surecart/submit -->
-				<!-- /wp:surecart/form -->
-			<!-- /wp:surecart/checkout-form /-->
-		`;
+						<!-- wp:surecart/total -->
+						<sc-line-item-total total="total" size="large" show-currency="1" class="wp-block-surecart-total"><span slot="title">Total</span><span slot="subscription-title">Total Due Today</span></sc-line-item-total>
+						<!-- /wp:surecart/total -->
+					</sc-order-summary>
+				<!-- /wp:surecart/totals -->
+				<!-- wp:surecart/submit -->
+					<sc-order-submit type="primary" size="large" icon="lock" secure-notice="true" secure-notice-text="This is a secure, encrypted payment." class="wp-block-surecart-submit">Purchase</sc-order-submit>
+				<!-- /wp:surecart/submit -->
+			<!-- /wp:surecart/form -->
+		<!-- /wp:surecart/checkout-form /-->
+	`;
 
-		await editor.setContent(serializedBlockHTML);
-		await editor.publishPost();
+		const post = await requestUtils.rest({
+			method: 'POST',
+			path: '/wp/v2/pages',
+			data: {
+				content: serializedBlockHTML,
+			},
+		});
 
-		await page
-			.locator('.components-button.is-primary', { hasText: 'View Post' })
-			.click();
-		await page.waitForLoadState('networkidle');
+		await page.goto(post.link);
 	});
 
 	test('Should show the variant selector', async ({ page }) => {
@@ -211,15 +198,24 @@ test.describe('surecart/price-variant-selector block frontend', () => {
 		const purchaseButton = page.locator('sc-button:has-text("Purchase")');
 		await purchaseButton.click();
 
-		const variantSelector = page.locator('sc-checkout-product-price-variant-selector')
-		expect(await variantSelector.evaluate((node:any)=>  node?.reportValidity())).toBe(false);
+		const variantSelector = page.locator(
+			'sc-checkout-product-price-variant-selector'
+		);
+		expect(
+			await variantSelector.evaluate((node: any) =>
+				node?.reportValidity()
+			)
+		).toBe(false);
 	});
 
-	test('Should prevent adding a product to cart if the variant is deleted', async ({page, requestUtils }) => {
+	test('Should prevent adding a product to cart if the variant is deleted', async ({
+		page,
+		requestUtils,
+	}) => {
 		await expect(
 			page.locator('sc-pill-option:has-text("Black") button')
 		).not.toHaveClass('sc-pill-option__button--disabled');
-		let updatedVariants = (product?.variants||[]);
+		let updatedVariants = product?.variants || [];
 		updatedVariants.shift();
 
 		await deleteProductVariant(requestUtils, product?.id, updatedVariants);
@@ -227,20 +223,26 @@ test.describe('surecart/price-variant-selector block frontend', () => {
 		await page.waitForLoadState('networkidle');
 
 		await expect(
-			page.locator('sc-pill-option:has-text("Black") button.sc-pill-option__button--disabled')
+			page.locator(
+				'sc-pill-option:has-text("Black") button.sc-pill-option__button--disabled'
+			)
 		).toBeVisible();
-	 })
+	});
 });
 
-export const deleteProductVariant = async (requestUtils, productId: string, variants) => {
+export const deleteProductVariant = async (
+	requestUtils,
+	productId: string,
+	variants
+) => {
 	return requestUtils.rest({
 		method: 'PATCH',
 		path: `/surecart/v1/products/${productId}`,
 		data: {
-			variants: variants
+			variants: variants,
 		},
-	})
-}
+	});
+};
 
 export const createProductPrice = async (requestUtils, productId: string) => {
 	return requestUtils.rest({
