@@ -1,8 +1,8 @@
 {
 	"apiVersion": 2,
 	"name": "surecart/upsell-countdown-timer",
-	"title": "Upsell Countdown Timer",
-	"description": "Display Countdown timer for Upsell",
+	"title": "Countdown Timer",
+	"description": "Display a countdown timer for upsell, encouraging customers to take action before the offer expires.",
 	"category": "surecart",
 	"ancestor": ["surecart/upsell"],
 	"attributes": {
