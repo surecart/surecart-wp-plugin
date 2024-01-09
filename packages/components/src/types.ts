@@ -21,7 +21,6 @@ declare global {
     sc?: {
       store?: {
         product?: any;
-        upsell?: any;
         products?: any;
       };
     };
@@ -46,9 +45,6 @@ declare global {
           ID: number;
         };
         product: Product;
-      };
-      upsell_data: {
-        upsell: Upsell;
       };
       pages: {
         dashboard: string;
