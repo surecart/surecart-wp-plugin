@@ -28,7 +28,8 @@ export class ScUpsell {
     return (
       <Host>
         <slot />
-        {isBusy() && <sc-block-ui style={{ 'z-index': '30' }}></sc-block-ui>}
+
+        {isBusy() && <sc-block-ui style={{ 'z-index': '30', '--sc-block-ui-position': 'fixed' }}></sc-block-ui>}
 
         <sc-dialog open={state.loading === 'complete'} style={{ '--body-spacing': 'var(--sc-spacing-xxx-large)' }} noHeader onScRequestClose={e => e.preventDefault()}>
           <div class="confirm__icon">

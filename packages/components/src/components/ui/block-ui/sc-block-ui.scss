@@ -1,11 +1,11 @@
 :host {
   display: block;
-  position: absolute;
+  position: var(--sc-block-ui-position, absolute);
   top: -5px;
   left: -5px;
   right: -5px;
   bottom: -5px;
-  overflow:hidden;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@
 
   &:after {
     content: '';
-    position: absolute;
+    position: var(--sc-block-ui-position, absolute);
     top: 0;
     left: 0;
     right: 0;
