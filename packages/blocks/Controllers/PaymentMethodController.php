@@ -5,6 +5,7 @@ use SureCart\Models\Component;
 use SureCart\Models\Customer;
 use SureCart\Models\Processor;
 use SureCart\Models\User;
+use SureCart\Models\Subscription;
 
 /**
  * Payment method block controller class.
@@ -120,6 +121,42 @@ class PaymentMethodController extends BaseController {
 		$success_url = esc_url( $_GET['success_url'] ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$subscription_id = sanitize_text_field( $_GET['subscription_id'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		
+		$update_payment_method = rest_sanitize_boolean( $_GET['update_payment_method'] ?? false ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( $update_payment_method ) {
+			$customer = Customer::with( [ 'shipping_address' ] )->find( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) );
+	
+			$payment_intent_id = sanitize_text_field( $_GET['payment_intent'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	
+			$payment_intent = $payment_intent_id ? \SureCart::request( 'payment_intents/' . $payment_intent_id ) : null;
+			
+			$subscription = Subscription::find( $subscription_id );
+			$subscription = $subscription->update( [ 'payment_method' => $payment_intent->payment_method ] );
+			
+			ob_start();
+			?>
+
+			<sc-dialog open={true} style="--body-spacing: var(--sc-spacing-xxx-large)" no-header>
+			<div class="confirm__icon" style="margin-bottom: var(--sc-spacing-medium); display: flex;justify-content: center;">
+				<div class="confirm__icon-container" style="background: var(--sc-color-primary-500); width: 55px; height: 55px; border-radius: 999999px; display: flex; align-items: center; justify-content: center; font-size: 26px; line-height: 1; color: white;">
+				<sc-icon name="check" />
+				</div>
+			</div>
+			<sc-dashboard-module
+				heading="<?php echo esc_attr_e( "Payment Method Added", 'surecart' ); ?>"
+				style="--sc-dashboard-module-spacing: var(--sc-spacing-x-large); text-align: center;"
+			>
+				<span slot="description"><?php echo esc_html_e( 'Your payment method was added succesfully.', surecart ); ?></span>
+				<sc-button href=<?php echo $success_url; ?> size="large" type="primary">
+					<?php echo esc_attr_e( 'Continue', surecart ); ?>
+				<sc-icon name="arrow-right" slot="suffix" />
+				</sc-button>
+			</sc-dashboard-module>
+			</sc-dialog>
+			<?php 
+			return ob_get_clean();
+		}
 
 		ob_start();
 		?>

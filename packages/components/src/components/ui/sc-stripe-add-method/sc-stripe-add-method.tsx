@@ -126,7 +126,10 @@ export class ScStripeAddMethod {
       const confirmed = await this.stripe.confirmSetup({
         elements: this.elements,
         confirmParams: {
-          return_url: this.successUrl,
+          return_url: addQueryArgs(window.location.href, {
+            payment_intent: this.paymentIntent?.id,
+            update_payment_method: true,
+          }),
         },
         redirect: 'always',
       });
