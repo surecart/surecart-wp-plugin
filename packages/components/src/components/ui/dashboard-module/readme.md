@@ -61,6 +61,7 @@
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -101,6 +102,7 @@ graph TD;
   sc-subscription-variation-confirm --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module
   sc-upcoming-invoice --> sc-dashboard-module
+  sc-upsell --> sc-dashboard-module
   sc-wordpress-password-edit --> sc-dashboard-module
   sc-wordpress-user --> sc-dashboard-module
   sc-wordpress-user-edit --> sc-dashboard-module

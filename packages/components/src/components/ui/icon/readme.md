@@ -84,6 +84,7 @@
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-upsell-countdown-timer](../../controllers/upsell/sc-upsell-countdown-timer)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
@@ -141,6 +142,7 @@ graph TD;
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
   sc-upgrade-required --> sc-icon
+  sc-upsell --> sc-icon
   sc-upsell-countdown-timer --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px

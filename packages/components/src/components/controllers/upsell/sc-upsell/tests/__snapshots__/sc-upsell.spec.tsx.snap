@@ -38,6 +38,14 @@ exports[`sc-upsell renders with manual payment method 1`] = `
         <span slot="description">
           Your purchase was successful. A receipt is on its way to your inbox.
         </span>
+        <sc-alert open="" type="info" style="text-align: left;">
+          <span slot="title">
+            Manual Payment Method
+          </span>
+          <p>
+            Manual Payment Method Instructions
+          </p>
+        </sc-alert>
         <sc-button autofocus="" size="large" type="primary">
           Continue
           <sc-icon name="arrow-right" slot="suffix"></sc-icon>

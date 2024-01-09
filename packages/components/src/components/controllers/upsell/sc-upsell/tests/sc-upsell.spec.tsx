@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { h } from '@stencil/core';
 import { ScUpsell } from '../sc-upsell';
-import { state as checkoutState, dispose } from '@store/checkout';
+import { state, dispose } from '@store/upsell';
 import { Checkout, ManualPaymentMethod } from 'src/types';
 
 describe('sc-upsell', () => {
@@ -19,7 +19,7 @@ describe('sc-upsell', () => {
   });
 
   it('renders with manual payment method', async () => {
-    checkoutState.checkout = {
+    state.checkout = {
       manual_payment_method: {
         name: 'Manual Payment Method',
         instructions: 'Manual Payment Method Instructions',

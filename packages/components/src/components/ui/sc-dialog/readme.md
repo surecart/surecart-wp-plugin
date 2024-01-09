@@ -53,6 +53,7 @@
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
 
 ### Depends on
 
@@ -74,6 +75,7 @@ graph TD;
   sc-subscription-details --> sc-dialog
   sc-subscription-reactivate --> sc-dialog
   sc-upgrade-required --> sc-dialog
+  sc-upsell --> sc-dialog
   style sc-dialog fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

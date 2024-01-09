@@ -75,6 +75,7 @@
     "slot": true
   },
   "sc-button": {
+    "autofocus": true,
     "busy": true,
     "caret": true,
     "circle": true,
