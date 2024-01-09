@@ -1,9 +1,9 @@
 {
 	"name": "surecart/upsell-no-thanks",
-	"title": "Upsell No Thanks Button",
-	"description": "Display a no thanks button for Upsell.",
+	"title": "Decline Upsell Button",
+	"description": "Display a upsell decline button.",
 	"category": "surecart",
-	"keywords": ["no", "thanks", "button", "order", "upsell"],
+	"keywords": ["no", "thanks", "button", "decline", "upsell"],
 	"ancestor": ["surecart/upsell"],
 	"textdomain": "surecart",
 	"attributes": {
