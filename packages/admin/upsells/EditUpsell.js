@@ -25,11 +25,9 @@ import UpdateModel from '../templates/UpdateModel';
 
 import Discount from './modules/Discount';
 import Conditions from './modules/Conditions';
-import Name from './modules/Name';
+import Details from './modules/Details';
 import Price from './modules/Price';
 import Priority from './modules/Priority';
-import Description from './modules/Description';
-import CTA from './modules/CTA';
 import Template from './modules/Template';
 
 export default () => {
@@ -184,7 +182,7 @@ export default () => {
 		>
 			<>
 				<Error error={saveUpsellError || upsellError} margin="80px" />
-				<Name
+				<Details
 					upsell={upsell}
 					updateUpsell={editUpsell}
 					loading={!hasLoadedUpsell}
@@ -200,16 +198,6 @@ export default () => {
 					loading={!hasLoadedUpsell}
 				/>
 				<Discount
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
-				/>
-				<Description
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
-				/>
-				<CTA
 					upsell={upsell}
 					updateUpsell={editUpsell}
 					loading={!hasLoadedUpsell}
