@@ -1,7 +1,7 @@
 {
 	"name": "surecart/upsell-submit",
 	"title": "Upsell Submit Button",
-	"description": "Display a submit button for Upsell.",
+	"description": "Display an upsell submit button.",
 	"category": "surecart",
 	"keywords": ["submit", "button", "order", "upsell"],
 	"ancestor": ["surecart/upsell"],
@@ -102,6 +102,5 @@
 		{ "name": "fill", "label": "Fill", "isDefault": true },
 		{ "name": "outline", "label": "Outline" }
 	],
-	"editorStyle": ["file:./editor.css"],
-	"style": ["file:./style.css", "surecart-themes-default", "wp-block-button"]
+	"style": ["file:./style.css", "surecart-themes-default"]
 }
