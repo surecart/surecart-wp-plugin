@@ -28,7 +28,7 @@
 	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 
 	<sc-flex justify-content="center" class="container">
-		<sc-card >
+		<sc-card>
 			<form action="" method="post">
 				<?php wp_nonce_field( 'restore_missing_page', 'nonce' ); ?>
 				<input type="hidden" name="restore" value="<?php echo esc_attr( $restore ?? '' ); ?>" />
@@ -39,8 +39,8 @@
 						<?php esc_html_e( 'This page is necessary for some SureCart eCommerce functions. Restoring this page will ensure there are no issues with the functionality of SureCart.', 'surecart' ); ?>
 					</sc-text>
 					<sc-flex class="button-container" justify-content="flex-start">
-						<sc-button size="large" type="primary" submit>Restore</sc-button>
-						<sc-button size="large" type="link" onclick="window.history.back()" >Cancel</sc-button>
+						<sc-button size="large" type="primary" submit><?php esc_html_e( 'Restore', 'surecart' ); ?></sc-button>
+						<sc-button size="large" type="link" onclick="window.history.back()"><?php esc_html_e( 'Cancel', 'surecart' ); ?></sc-button>
 					</sc-flex>
 				</sc-flex>
 			</form>
