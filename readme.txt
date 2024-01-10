@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.2
 Tested up to: 6.4
-Stable tag: 2.15.0
+Stable tag: 2.15.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -226,7 +226,12 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.15.0 - January 4th, 2023 =
+= 2.15.1 - January 10th, 2024 =
+- Fix: Issue with switching Products to show from Handpicked to All/Featured.
+- Fix: Incorrect price display on merchant admin for donation subscriptions.
+- Fix: Show full address if shipping address is required.
+
+= 2.15.0 - January 4th, 2024 =
 - New: Use product shortcodes outside of product pages.
 - New: Checkout form product price/variant selector block.
 - Improvement: Allow integrations to work for specific prices and variants.
