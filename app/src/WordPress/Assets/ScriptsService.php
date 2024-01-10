@@ -112,7 +112,6 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
-					'do_not_persist_cart'  => is_admin(),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
@@ -392,12 +391,12 @@ class ScriptsService {
 					'plugin_url'           => \SureCart::core()->assets()->getUrl(),
 					'api_url'              => \SureCart::requests()->getBaseUrl(),
 					'currency'             => \SureCart::account()->currency,
-					'do_not_persist_cart'  => is_admin(),
 					'theme'                => get_option( 'surecart_theme', 'light' ),
 					'pages'                => [
 						'dashboard' => \SureCart::pages()->url( 'dashboard' ),
 						'checkout'  => \SureCart::pages()->url( 'checkout' ),
 					],
+					'default_checkout_id'  => (int) \SureCart::forms()->getDefaultId(),
 					'page_id'              => get_the_ID(),
 					'nonce'                => ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ),
 					'nonce_endpoint'       => admin_url( 'admin-ajax.php?action=sc-rest-nonce' ),

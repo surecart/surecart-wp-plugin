@@ -14,8 +14,6 @@ class BuyPageController extends BasePageController {
 		parent::filters();
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
-		// do not persist the cart for this page.
-		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
@@ -203,17 +201,5 @@ class BuyPageController extends BasePageController {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Do not persist the cart on the buy page.
-	 *
-	 * @param array $data ScData array.
-	 *
-	 * @return array
-	 */
-	public function doNotPersistCart( $data ) {
-		$data['do_not_persist_cart'] = true;
-		return $data;
 	}
 }
