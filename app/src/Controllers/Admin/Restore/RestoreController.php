@@ -62,7 +62,7 @@ class RestoreController  extends AdminController {
 				wp_die( esc_html__( 'Unable to restore page. Please try again.', 'surecart' ) );
 			}
 
-			return \SureCart::redirect()->to( admin_url( 'post.php?post=' . (int) $page_id . '&action=edit' ) );
+			return \SureCart::redirect()->to( admin_url( 'post.php?post=' . $page_id . '&action=edit' ) );
 		}
 
 		$restore_functions = [
@@ -78,7 +78,7 @@ class RestoreController  extends AdminController {
 			wp_die( esc_html__( 'Unable to restore page. Please try again.', 'surecart' ) );
 		}
 
-		$page_id = \SureCart::pages()->getId( $page, 'page' );
-		return \SureCart::redirect()->to( admin_url( 'post.php?post=' . (int) $page_id . '&action=edit' ) );
+		$page_id = (int) \SureCart::pages()->getId( $page, 'page' );
+		return \SureCart::redirect()->to( admin_url( 'post.php?post=' . $page_id . '&action=edit' ) );
 	}
 }
