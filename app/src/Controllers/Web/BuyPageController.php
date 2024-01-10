@@ -136,6 +136,7 @@ class BuyPageController extends BasePageController {
 				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
+				'success_url'      => $this->model->buyLink()->getSuccessUrl(),
 			]
 		);
 	}

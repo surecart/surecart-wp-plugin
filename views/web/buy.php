@@ -75,6 +75,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 			[
 				'product' => $product,
 				'mode'    => $mode,
+				'success_url' => $success_url,
 			],
 			do_blocks( $content )
 		),
