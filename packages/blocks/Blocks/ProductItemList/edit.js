@@ -369,6 +369,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 								setAttributes({
 									type: e.target.value,
 								});
+								if (
+									ids?.length &&
+									('all' === e.target.value ||
+										'featured' === e.target.value)
+								) {
+									setAttributes({ ids: [] });
+								}
 							}}
 							choices={[
 								{

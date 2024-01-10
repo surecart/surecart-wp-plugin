@@ -23,3 +23,14 @@ export const getLineItemByProductId = (productId: string) => (state.checkout?.li
  * Get the first upsell from the checkout.
  */
 export const getUpsell = () => (state?.checkout?.recommended_upsells?.data || []).sort((a, b) => a?.priority - b?.priority).find(u => (u.price as Price)?.ad_hoc === false);
+
+/**
+ * Is the shipping address required?
+ */
+export const fullShippingAddressRequired = () => state.checkout?.shipping_enabled || state?.checkout?.shipping_address_required;
+
+/**
+ * Is the address required?
+ */
+export const shippingAddressRequired = () =>
+  state.checkout?.tax_status === 'address_invalid' || state.checkout?.shipping_enabled || state.checkout?.shipping_address_required || state?.checkout?.tax_enabled;
