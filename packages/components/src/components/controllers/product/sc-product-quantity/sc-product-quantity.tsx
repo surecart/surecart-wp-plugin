@@ -2,6 +2,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
+import { removeEmptyKeys } from '../../../../functions/util';
 let id = 0;
 
 @Component({
@@ -60,7 +61,7 @@ export class ScProductQuantity {
             quantity={Math.max(state[this.productId].selectedPrice?.ad_hoc ? 1 : state[this.productId].quantity, 1)}
             disabled={state[this.productId]?.selectedPrice?.ad_hoc}
             onScInput={e => setProduct(this.productId, { quantity: e.detail })}
-            {...(!!maxStockQuantity ? { max: maxStockQuantity } : {})}
+            {...removeEmptyKeys({ max: maxStockQuantity })}
           ></sc-quantity-select>
         </sc-form-control>
       </Host>

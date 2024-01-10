@@ -9,6 +9,7 @@ import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
+import { removeEmptyKeys } from '../../../../functions/util';
 
 /**
  * @part base - The component base
@@ -87,7 +88,9 @@ export class ScLineItems {
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
-                max={getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant)}
+                {...removeEmptyKeys({
+                  max: getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant),
+                })}
                 editable={this.isEditable(item)}
                 removable={this.removable}
                 quantity={item.quantity}
