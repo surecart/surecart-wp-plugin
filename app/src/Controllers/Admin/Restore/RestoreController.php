@@ -12,7 +12,7 @@ class RestoreController  extends AdminController {
 	 * Index.
 	 */
 	public function index() {
-		$restore = $_GET['restore'] ?? '';
+		$restore = isset( $_GET['restore'] ) ? sanitize_text_field( wp_unslash( $_GET['restore'] ) ) : '';
 		if ( empty( $restore ) ) {
 			wp_die( esc_html__( 'Invalid page selected. Please choose the correct page to restore.', 'surecart' ) );
 		}
