@@ -1745,7 +1745,6 @@ export namespace Components {
     interface ScLineItemBump {
         "label": string;
         "loading": boolean;
-        "order": Checkout;
     }
     interface ScLineItemShipping {
         /**
@@ -7699,7 +7698,6 @@ declare namespace LocalJSX {
     interface ScLineItemBump {
         "label"?: string;
         "loading"?: boolean;
-        "order"?: Checkout;
     }
     interface ScLineItemShipping {
         /**
