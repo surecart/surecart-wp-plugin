@@ -224,6 +224,9 @@ class AdminMenuPageService {
 
 	/**
 	 * Get the page menu slug.
+	 *
+	 * @param string $slug The slug.
+	 * @param int    $page_id The page id.
 	 */
 	public function getSubMenuPageSlug( $slug, $page_id ) {
 		// check if it is not an essential page.
