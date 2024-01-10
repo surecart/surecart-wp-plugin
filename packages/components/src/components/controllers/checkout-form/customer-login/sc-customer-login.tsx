@@ -116,6 +116,7 @@ export class ScCustomerLogin {
     try {
       this.error = '';
       this.codeResending = true;
+      speak(__('Sending code...', 'surecart'), 'assertive');
       await apiFetch({
         method: 'POST',
         path: 'surecart/v1/verification_codes',
@@ -125,6 +126,7 @@ export class ScCustomerLogin {
       });
 
       this.codeSentLabel = __('Code sent', 'surecart');
+      speak(this.codeSentLabel, 'assertive');
       this.codeSentIcon = 'check';
 
       setTimeout(() => {
@@ -224,7 +226,7 @@ export class ScCustomerLogin {
           <sc-button type="link" onClick={() => this.resendCode()} disabled={this.codeResending} loading={this.codeResending}>
             {!!this.codeSentIcon ? (
               <span style={{ color: 'var(--sc-color-success-900)' }}>
-                <sc-icon name={this.codeSentIcon} />
+                <sc-icon name={this.codeSentIcon} aria-hidden="true" />
               </span>
             ) : (
               <span>{this.codeSentLabel || __('Resend Code', 'surecart')}</span>
@@ -246,7 +248,7 @@ export class ScCustomerLogin {
             </div>
             <div class="customer-login__back">
               <sc-button type="text" size="small" onClick={() => resetUser()}>
-                <sc-icon name="x" class="customer-login__back-icon" />
+                <sc-icon name="x" class="customer-login__back-icon" aria-label={__('Reset User', 'surecart')} />
               </sc-button>
             </div>
           </div>
@@ -257,12 +259,12 @@ export class ScCustomerLogin {
         <div class="customer-login__mode">
           {this.mode === 'code' ? (
             <sc-button type="text" size="small" onClick={() => (this.mode = 'password')}>
-              <sc-icon name="lock" slot="prefix" />
+              <sc-icon name="lock" slot="prefix" aria-hidden="true" />
               {__('Use Password', 'surecart')}
             </sc-button>
           ) : (
             <sc-button type="text" size="small" onClick={() => (this.mode = 'code')}>
-              <sc-icon name="key" slot="prefix" />
+              <sc-icon name="key" slot="prefix" aria-hidden="true" />
               {__('Use Login Code', 'surecart')}
             </sc-button>
           )}
