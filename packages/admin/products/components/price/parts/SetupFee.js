@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 import {
 	ScButton,
@@ -22,13 +21,7 @@ const SETUP_AMOUNT_TYPES = {
 };
 
 export default ({ price, updatePrice }) => {
-	const [amountType, setAmountType] = useState(() => {
-		if (price.setup_fee_amount < 0) {
-			return 'discount';
-		}
-
-		return 'fee';
-	});
+	const amountType = price.setup_fee_amount < 0 ? 'discount' : 'fee';
 
 	return (
 		<ScUpgradeRequired
@@ -70,11 +63,11 @@ export default ({ price, updatePrice }) => {
 							SETUP_AMOUNT_TYPES[amountType]
 						)}
 						value={price?.setup_fee_name}
-						onScInput={(e) => {
+						onScInput={(e) =>
 							updatePrice({
 								setup_fee_name: e.target.value,
-							});
-						}}
+							})
+						}
 						name="name"
 						required
 					/>
@@ -82,14 +75,15 @@ export default ({ price, updatePrice }) => {
 						label={SETUP_AMOUNT_TYPES[amountType]}
 						currencyCode={price?.currency || scData.currency_code}
 						value={Math.abs(price?.setup_fee_amount)}
-						onScInput={(e) =>
+						max={amountType === 'fee' ? null : price?.amount}
+						onScInput={(e) => {
 							updatePrice({
 								setup_fee_amount:
 									amountType === 'fee'
-										? e.target.value
-										: -e.target.value,
-							})
-						}
+										? Math.abs(e.target.value)
+										: -Math.abs(e.target.value),
+							});
+						}}
 						required
 					>
 						<ScDropdown slot="suffix" placement="bottom-end">
@@ -111,26 +105,24 @@ export default ({ price, updatePrice }) => {
 							</ScButton>
 							<ScMenu>
 								<ScMenuItem
-									onClick={() => {
-										setAmountType('fee');
+									onClick={() =>
 										updatePrice({
 											setup_fee_amount: Math.abs(
 												price.setup_fee_amount
 											),
-										});
-									}}
+										})
+									}
 								>
 									{__('Fee', 'surecart')}
 								</ScMenuItem>
 								<ScMenuItem
-									onClick={() => {
-										setAmountType('discount');
+									onClick={() =>
 										updatePrice({
 											setup_fee_amount: -Math.abs(
 												price.setup_fee_amount
 											),
-										});
-									}}
+										})
+									}
 								>
 									{__('Discount', 'surecart')}
 								</ScMenuItem>
