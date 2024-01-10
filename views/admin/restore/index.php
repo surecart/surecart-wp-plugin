@@ -20,7 +20,7 @@
 	}
 
 	.wrap .container .button-container {
-		gap:1em;
+		gap: 1em;
 	}
 
 </style>
