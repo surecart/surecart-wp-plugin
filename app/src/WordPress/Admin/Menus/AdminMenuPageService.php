@@ -231,14 +231,14 @@ class AdminMenuPageService {
 	public function getSubMenuPageSlug( $slug, $page_id ) {
 		// check if it is not an essential page.
 		if ( ! in_array( $slug, self::ESSENTIAL_PAGES, true ) ) {
-			return 'post.php?post=' . (int) $page_id . '&action=edit';
+			return 'post.php?post=' . $page_id . '&action=edit';
 		}
 
 		$post_status = get_post_status( $page_id );
 
 		// check if the page is published.
 		if ( 'publish' === $post_status ) {
-			return 'post.php?post=' . (int) $page_id . '&action=edit';
+			return 'post.php?post=' . $page_id . '&action=edit';
 		}
 
 		return 'admin.php?page=sc-restore&restore=' . $slug;
