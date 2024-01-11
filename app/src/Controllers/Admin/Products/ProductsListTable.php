@@ -521,9 +521,9 @@ class ProductsListTable extends ListTable {
 			<?php esc_html_e( 'Filter by Product Collection', 'surecart' ); ?>
 		</label>
 		<select name="sc_collection" id="filter-by-collection">
-			<option<?php selected( $displayed_collection, '' ); ?> value=""><?php esc_html_e( 'All Product Collections', 'surecart' ); ?></option>
+			<option <?php selected( $displayed_collection, '' ); ?> value=""><?php esc_html_e( 'All Product Collections', 'surecart' ); ?></option>
 			<?php foreach ( $product_collections as $collection ) : ?>
-				<option<?php selected( $displayed_collection, $collection->id ); ?> value="<?php echo esc_attr( $collection->id ); ?>"><?php echo esc_html( $collection->name ); ?></option>
+				<option <?php selected( $displayed_collection, $collection->id ); ?> value="<?php echo esc_attr( $collection->id ); ?>"><?php echo esc_html( $collection->name ); ?></option>
 			<?php endforeach; ?>
 		</select>
 		<?php
