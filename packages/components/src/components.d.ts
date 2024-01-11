@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, TaxStatus, WordPressUser } from "./types";
+export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -2068,10 +2068,6 @@ export namespace Components {
         "line1Placeholder": string;
         "line2Placeholder": string;
         /**
-          * Is this loading.
-         */
-        "loading": boolean;
-        /**
           * Show the placeholder fields.
          */
         "namePlaceholder": string;
@@ -2090,26 +2086,10 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Holds the customer's billing address
-         */
-        "shippingAddress": Address;
-        /**
-          * Is shipping enabled for this order?
-         */
-        "shippingEnabled": boolean;
-        /**
           * Show the name field.
          */
         "showName": boolean;
         "statePlaceholder": string;
-        /**
-          * Tax enabled status of the order
-         */
-        "taxEnabled": boolean;
-        /**
-          * Tax status of the order
-         */
-        "taxStatus": TaxStatus;
     }
     interface ScOrderStatusBadge {
         /**
@@ -2811,7 +2791,7 @@ export namespace Components {
         "checkoutLink": string;
         "formId": number;
         "mode": 'live' | 'test';
-        "product": Product;
+        "productId": string;
     }
     interface ScProductDonationAmountChoice {
         /**
@@ -4159,10 +4139,6 @@ export interface ScOrderConfirmProviderCustomEvent<T> extends CustomEvent<T> {
 export interface ScOrderCouponFormCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScOrderCouponFormElement;
-}
-export interface ScOrderShippingAddressCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScOrderShippingAddressElement;
 }
 export interface ScOrderSummaryCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -8032,20 +8008,9 @@ declare namespace LocalJSX {
         "line1Placeholder"?: string;
         "line2Placeholder"?: string;
         /**
-          * Is this loading.
-         */
-        "loading"?: boolean;
-        /**
           * Show the placeholder fields.
          */
         "namePlaceholder"?: string;
-        /**
-          * Make a request to update the order.
-         */
-        "onScUpdateOrder"?: (event: ScOrderShippingAddressCustomEvent<{
-    data: Partial<Checkout>;
-    options?: { silent?: boolean };
-  }>) => void;
         /**
           * Placeholder values.
          */
@@ -8060,26 +8025,10 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * Holds the customer's billing address
-         */
-        "shippingAddress"?: Address;
-        /**
-          * Is shipping enabled for this order?
-         */
-        "shippingEnabled"?: boolean;
-        /**
           * Show the name field.
          */
         "showName"?: boolean;
         "statePlaceholder"?: string;
-        /**
-          * Tax enabled status of the order
-         */
-        "taxEnabled"?: boolean;
-        /**
-          * Tax status of the order
-         */
-        "taxStatus"?: TaxStatus;
     }
     interface ScOrderStatusBadge {
         /**
@@ -8821,7 +8770,7 @@ declare namespace LocalJSX {
         "checkoutLink"?: string;
         "formId"?: number;
         "mode"?: 'live' | 'test';
-        "product"?: Product;
+        "productId"?: string;
     }
     interface ScProductDonationAmountChoice {
         /**
