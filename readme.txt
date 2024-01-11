@@ -231,6 +231,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 - New: Add a custom thank you page link to instant checkout.
 - Improvement: Removing storing carts on custom forms and use url for cart persistance.
 - Improvement: Update slide out cart template to template part to prevent accidental deletion.
+- Fix: Issue with order bump sometimes not appearing on slide out cart.
 
 = 2.15.1 - January 10th, 2024 =
 - Fix: Issue with switching Products to show from Handpicked to All/Featured.
