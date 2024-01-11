@@ -2,7 +2,7 @@
 
 namespace SureCart\WordPress\Assets;
 
-use SureCartVendors\Required\Traduttore_Registry\add_project;
+use function SureCartVendors\Required\Traduttore_Registry\add_project;
 
 /**
  * Our assets service.
