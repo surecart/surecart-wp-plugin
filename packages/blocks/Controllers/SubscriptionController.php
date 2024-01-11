@@ -7,11 +7,25 @@ use SureCart\Models\Product;
 use SureCart\Models\Subscription;
 use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
+use SureCartBlocks\Controllers\PaymentMethodController;
 
 /**
  * The subscription controller.
  */
 class SubscriptionController extends BaseController {
+
+	/**
+	 * Add Payment Method view.
+	 *
+	 * @return function
+	 */
+	public function add_payment_method() {
+		$currentUrl = home_url( add_query_arg( [ 'tab' => $this->getTab() ] ) );
+		return ( new PaymentMethodController() )->create([
+			'success_url' => $currentUrl,
+		]);
+	}
+
 	/**
 	 * Render the block
 	 *
@@ -318,6 +332,22 @@ class SubscriptionController extends BaseController {
 	 * @return void
 	 */
 	public function confirm_amount() {
+
+		$subscription = Subscription::find( $this->getId() );
+		
+		$payment_intent_id = sanitize_text_field( $_GET['payment_intent'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( $payment_intent_id ) {
+			$payment_intent = $payment_intent_id ? \SureCart::request( 'payment_intents/' . $payment_intent_id ) : null;
+
+			$subscription = $subscription->update( [ 'payment_method' => $payment_intent->payment_method ] );
+		}
+
+		// if we don't have a payment method, we need to add one.
+		if ( empty ( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+			return $this->add_payment_method();
+		}
+
 		$price = Price::find( $this->getParam( 'price_id' ) );
 		ob_start();
 		?>
@@ -395,6 +425,19 @@ class SubscriptionController extends BaseController {
 			return $this->notFound();
 		}
 
+		$payment_intent_id = sanitize_text_field( $_GET['payment_intent'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( $payment_intent_id ) {
+			$payment_intent = $payment_intent_id ? \SureCart::request( 'payment_intents/' . $payment_intent_id ) : null;
+
+			$subscription = $subscription->update( [ 'payment_method' => $payment_intent->payment_method ] );
+		}
+
+		// if we don't have a payment method, we need to add one.
+		if ( empty ( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+			return $this->add_payment_method();
+		}
+
 		// fetch subscription product.
 		$product = Product::with(
 			[
@@ -462,6 +505,22 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function confirm() {
+
+		$subscription = Subscription::find( $this->getId() );
+		
+		$payment_intent_id = sanitize_text_field( $_GET['payment_intent'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( $payment_intent_id ) {
+			$payment_intent = $payment_intent_id ? \SureCart::request( 'payment_intents/' . $payment_intent_id ) : null;
+
+			$subscription = $subscription->update( [ 'payment_method' => $payment_intent->payment_method ] );
+		}
+
+		// if we don't have a payment method, we need to add one.
+		if ( empty ( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+			return $this->add_payment_method();
+		}
+
 		$back = add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		ob_start();
 		?>

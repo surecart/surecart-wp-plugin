@@ -133,19 +133,6 @@ export class ScSubscriptionSwitch {
     const currentPlan = this.subscription?.price as Price;
     if (price?.id === currentPlan.id && !price?.ad_hoc && !this.subscription?.variant_options?.length) return;
 
-    // create payment method.
-    if(!this.subscription?.payment_method) {
-      return window.location.assign(
-        addQueryArgs(window.location.href, {
-          action: 'create',
-              model: 'payment_method',
-              ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
-              success_url: window.location.href,
-              subscription_id: this.subscription?.id,
-        }),
-      );
-    }
-
     // confirm product variation.
     if (this.subscription?.variant_options?.length) {
       this.busy = true;
@@ -153,6 +140,7 @@ export class ScSubscriptionSwitch {
         addQueryArgs(window.location.href, {
           action: 'confirm_variation',
           price_id: plan,
+          ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
         }),
       );
     }
@@ -164,6 +152,7 @@ export class ScSubscriptionSwitch {
         addQueryArgs(window.location.href, {
           action: 'confirm_amount',
           price_id: plan,
+          ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
         }),
       );
     }
@@ -174,6 +163,7 @@ export class ScSubscriptionSwitch {
       addQueryArgs(window.location.href, {
         action: 'confirm',
         price_id: plan,
+        ...(this.subscription?.live_mode === false ? { live_mode: false } : {}),
       }),
     );
   }
@@ -301,10 +291,6 @@ export class ScSubscriptionSwitch {
   }
 
   buttonText() {
-    if (!this.subscription.payment_method) {
-      return __('Add Payment Method', 'surecart');
-    }
-
     if (this.subscription?.variant_options?.length) {
       if (this.selectedPrice?.id === (this.subscription?.price as Price)?.id) {
         return __('Update Options', 'surecart');
@@ -320,7 +306,6 @@ export class ScSubscriptionSwitch {
         return __('Choose Amount', 'surecart');
       }
     }
-
     return __('Next', 'surecart');
   }
 
