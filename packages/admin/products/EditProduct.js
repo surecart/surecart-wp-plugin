@@ -50,27 +50,10 @@ export default ({ id, setBrowserURL }) => {
 	/**
 	 * Whether the product should be published.
 	 */
-	const shouldPublish = () => {
-		if (getQueryArg(window.location.href, 'status') === 'publish') {
-			return true;
-		}
+	const willPublish = () =>
+		select(coreStore).getEntityRecordEdits('surecart', 'product', id)
+			?.status === 'published';
 
-		const existingStatus = select(coreStore).getEntityRecord(
-			'surecart',
-			'product',
-			id
-		)?.status;
-
-		if (existingStatus === 'published') return false;
-
-		const editedStatus = select(coreStore).getEditedEntityRecord(
-			'surecart',
-			'product',
-			id
-		)?.status;
-
-		return editedStatus === 'published';
-	};
 	useEffect(() => {
 		if (
 			getQueryArg(window.location.href, 'status') === 'publish' &&
@@ -258,7 +241,7 @@ export default ({ id, setBrowserURL }) => {
 							!hasLoadedProduct
 						}
 					>
-						{shouldPublish()
+						{willPublish()
 							? __('Save & Publish', 'surecart')
 							: __('Save Product', 'surecart')}
 					</SaveButton>
