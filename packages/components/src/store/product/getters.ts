@@ -26,7 +26,7 @@ export const getProduct = (productId?: string): ProductState => state[productId]
  *
  * @returns {boolean} - Returns stock needs to be checked or not
  */
-export const isStockNeedsToBeChecked = (productId: string) => !!(state[productId].product?.stock_enabled && !state[productId].product?.allow_out_of_stock_purchases);
+export const isStockNeedsToBeChecked = (productId: string) => !!(state[productId]?.product?.stock_enabled && !state[productId]?.product?.allow_out_of_stock_purchases);
 
 /**
  * Check if this option is out of stock base on the selected variant.
@@ -62,7 +62,7 @@ export const isProductOutOfStock = (productId: string) => {
  * Is the selected variant missing.
  */
 export const isSelectedVariantMissing = (productId: string) =>
-  !!state[productId].variants?.length && getVariantFromValues({ variants: state[productId].variants, values: state[productId].variantValues })?.id === undefined;
+  !!state[productId]?.variants?.length && getVariantFromValues({ variants: state[productId]?.variants, values: state[productId]?.variantValues })?.id === undefined;
 
 /**
  * Get product default state
