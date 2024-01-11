@@ -38,15 +38,17 @@ export default ({ attributes, setAttributes }) => {
 				</PanelBody>
 			</InspectorControls>
 
-			<ScLineItem {...blockProps}>
-				<span slot="description">{label}</span>
-				<ScFormatNumber
-					slot="price"
-					type="currency"
-					value={-123}
-					currency={scData?.currency || 'usd'}
-				></ScFormatNumber>
-			</ScLineItem>
+			<div {...blockProps}>
+				<ScLineItem>
+					<span slot="description">{label}</span>
+					<ScFormatNumber
+						slot="price"
+						type="currency"
+						value={-123}
+						currency={scData?.currency || 'usd'}
+					></ScFormatNumber>
+				</ScLineItem>
+			</div>
 		</Fragment>
 	);
 };

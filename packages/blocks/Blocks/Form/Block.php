@@ -40,6 +40,11 @@ class Block extends BaseBlock {
 		$post = get_post( $sc_form_id );
 		$user = wp_get_current_user();
 
+		// we don't have a form post.
+		if ( empty( $post->ID ) ) {
+			return;
+		}
+
 		$processors = Processor::get();
 		if ( is_wp_error( $processors ) ) {
 			$processors = [];
@@ -50,7 +55,7 @@ class Block extends BaseBlock {
 			array_filter(
 				[
 					'checkout'   => [
-						'formId'                   => $attributes['form_id'] ?? $sc_form_id,
+						'formId'                   => $post->ID,
 						'mode'                     => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
 						'product'                  => $attributes['product'] ?? [],
 						'currencyCode'             => $attributes['currency'] ?? \SureCart::account()->currency,
@@ -59,6 +64,7 @@ class Block extends BaseBlock {
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
 						'isCheckoutPage'           => true,
 						'validateStock'            => ! is_admin(),
+						'persist'                  => $this->getPeristance( $attributes, $post->ID ),
 					],
 					'processors' => [
 						'processors'           => array_values(
@@ -119,6 +125,27 @@ class Block extends BaseBlock {
 				'success_url'      => ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : \SureCart::pages()->url( 'order-confirmation' ),
 			]
 		);
+	}
+
+	/**
+	 * Get persistent mode.
+	 *
+	 * @param  array $attributes Block attributes.
+	 * @return string|false
+	 */
+	public function getPeristance( $attributes, $id ) {
+		// don't persist in the admin.
+		if ( is_admin() ) {
+			return false;
+		}
+
+		// default checkout form should persist in the browser.
+		if ( \SureCart::forms()->getDefaultId() === $id ) {
+			return 'browser';
+		}
+
+		// otherwise, use the attributes with url as the fallback.
+		return $attributes['persist_cart'] ?? 'url';
 	}
 
 	/**
