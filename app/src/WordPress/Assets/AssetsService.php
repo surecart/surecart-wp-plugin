@@ -2,6 +2,8 @@
 
 namespace SureCart\WordPress\Assets;
 
+use SureCartVendors\Required\Traduttore_Registry\add_project;
+
 /**
  * Our assets service.
  */
@@ -47,6 +49,11 @@ class AssetsService {
 	 * @param Object $loader The loader.
 	 */
 	public function __construct( $loader, $scripts, $styles, $container ) {
+		add_project(
+			'plugin',
+			'surecart-wp',
+			'https://translate.surecart.com/glotpress/api/translations/surecart/'
+		);
 		$this->loader    = $loader;
 		$this->scripts   = $scripts;
 		$this->styles    = $styles;
