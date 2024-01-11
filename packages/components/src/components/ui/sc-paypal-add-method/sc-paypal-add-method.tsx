@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 import apiFetch from '../../../functions/fetch';
 import { PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from '../paypal-buttons/functions';
+
 @Component({
   tag: 'sc-paypal-add-method',
   styleUrl: 'sc-paypal-add-method.scss',
