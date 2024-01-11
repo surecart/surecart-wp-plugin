@@ -100,3 +100,8 @@
 .sc-block-button .sc-block-button__link:where([style*='border-left-style']) {
 	border-left-width: initial;
 }
+.wp-block-surecart-upsell-no-thanks.is-style-outline,
+.wp-block-surecart-upsell-no-thanks.is-style-outline:hover {
+	background-color: transparent;
+	background-image: none;
+}
