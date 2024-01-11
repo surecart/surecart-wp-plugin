@@ -28,7 +28,7 @@
 	<?php \SureCart::render( 'layouts/partials/admin-index-styles' ); ?>
 
 	<sc-flex justify-content="center" class="container">
-		<sc-card>
+		<sc-card style="--sc-card-padding: var(--sc-spacing-xxx-large)">
 			<form action="" method="post">
 				<?php wp_nonce_field( 'restore_missing_page', 'nonce' ); ?>
 				<input type="hidden" name="restore" value="<?php echo esc_attr( $restore ?? '' ); ?>" />
