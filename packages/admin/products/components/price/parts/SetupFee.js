@@ -121,6 +121,7 @@ export default ({ price, updatePrice }) => {
 											setup_fee_amount: -Math.abs(
 												price.setup_fee_amount
 											),
+											setup_fee_trial_enabled: true,
 										})
 									}
 								>
