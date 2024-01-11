@@ -224,11 +224,10 @@ class SubscriptionsListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_plan( $subscription ) {
-		$amount       = $subscription->price->ad_hoc_amount ?? $subscription->price->amount ?? 0;
+		$amount       = $subscription->ad_hoc_amount ?? $subscription->price->amount ?? 0;
 		$interval     = $subscription->price->recurring_interval ?? '';
 		$count        = $subscription->price->recurring_interval_count ?? 1;
 		$period_count = $subscription->price->recurring_period_count ?? null;
-
 
 		ob_start();
 		echo '<sc-format-number type="currency" currency="' . esc_html( strtoupper( $subscription->currency ?? 'usd' ) ) . '" value="' . (float) $amount . '"></sc-format-number>';
@@ -240,22 +239,22 @@ class SubscriptionsListTable extends ListTable {
 				echo esc_html( $this->getInterval( $interval, $period_count, __( 'for', 'surecart' ) ) );
 			}
 		}
-		echo  $this->getProductDisplay( $subscription ) ;
+		echo $this->getProductDisplay( $subscription );
 		if ( ! empty( $subscription->variant_options ) ) {
 			echo '<div>' . esc_html( implode( ' / ', $subscription->variant_options ) ) . '</div>';
-        }
+		}
 
 		return ob_get_clean();
 	}
 
-	private function getProductDisplay($subscription){
-		if(empty($subscription->price->product->name)){
+	private function getProductDisplay( $subscription ) {
+		if ( empty( $subscription->price->product->name ) ) {
 			return $subscription->price->name ?? __( 'No Product', 'surecart' );
 		}
 
-		$price_name = !empty($subscription->price->name) ? ' - '.$subscription->price->name : '';
+		$price_name = ! empty( $subscription->price->name ) ? ' - ' . $subscription->price->name : '';
 
-		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>'.$price_name;
+		return '<br/><a href="' . esc_url( \SureCart::getUrl()->edit( 'product', $subscription->price->product->id ) ) . '">' . $subscription->price->product->name . '</a>' . $price_name;
 	}
 
 	public function getInterval( $interval, $count, $separator = '/', $show_single = false ) {
