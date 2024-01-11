@@ -79,8 +79,8 @@ class ErrorsTranslationService {
 		}
 
 		if ( 'coupon' === $attribute && 'less_than_min_subtotal_amount' === $type ) {
-			$currency = \SureCart::account()->currency ?? 'usd';
-			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $currency ) );
+			$store_currency = \SureCart::account()->currency ?? 'usd';
+			return sprintf( __( 'You must spend at least %1$s to use this coupon.', 'surecart' ), Currency::format( $options['coupon_min_subtotal_amount'], $options['currency'] ?? $store_currency ) );
 		}
 
 		return false;
