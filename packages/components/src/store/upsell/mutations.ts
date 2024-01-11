@@ -10,7 +10,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { Checkout, LineItem, Price } from 'src/types';
 import { state } from './store';
 import { state as productState } from '../product';
-import { createErrorNotice } from '@store/notices/mutations';
+import { createErrorNotice, removeNotice } from '@store/notices/mutations';
 import { getNextLink } from './getters';
 
 /**
@@ -55,6 +55,7 @@ export const update = async ({ preview } = { preview: true }) => {
     }
 
     state.loading = 'busy';
+    removeNotice();
 
     // Add Upsell to line item.
     const { checkout, ...lineItem } = (await apiFetch({
