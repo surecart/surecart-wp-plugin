@@ -13,9 +13,10 @@
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id( 'p-' );
 
-// Enqueue the view file.
+// Enqueue the view file. (remove once this is fixed in gutenberg).
 if ( function_exists( 'gutenberg_enqueue_module' ) ) {
-	gutenberg_enqueue_module( 'surecart-view' );
+	$folder_name = basename( dirname( __FILE__ ) );
+	gutenberg_enqueue_module( 'surecart-' . $folder_name );
 }
 
 $product = get_query_var( 'surecart_current_product' );
