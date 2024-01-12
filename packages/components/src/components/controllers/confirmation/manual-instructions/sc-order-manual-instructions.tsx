@@ -18,7 +18,7 @@ export class ScOrderManualInstructions {
     return (
       <sc-alert type="info" open>
         <span slot="title">{this.manualPaymentTitle}</span>
-        <p innerHTML={this.manualPaymentInstructions}></p>
+        <div innerHTML={this.manualPaymentInstructions}></div>
       </sc-alert>
     );
   }
