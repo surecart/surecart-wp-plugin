@@ -14,31 +14,68 @@
 $unique_id = wp_unique_id( 'p-' );
 
 // Enqueue the view file.
-if (function_exists('gutenberg_enqueue_module')) {
-	gutenberg_enqueue_module( 'create-block-view' );
+if ( function_exists( 'gutenberg_enqueue_module' ) ) {
+	gutenberg_enqueue_module( 'surecart-view' );
 }
+
+$product = get_query_var( 'surecart_current_product' );
+
 ?>
 
 <div
 	<?php echo get_block_wrapper_attributes(); ?>
-	data-wp-interactive='{ "namespace": "create-block" }'
-	data-wp-context='{ "isOpen": false }'
-	data-wp-watch="callbacks.logIsOpen"
+	data-wp-interactive='{ "namespace": "surecart/product" }'
 >
-	<button
-		data-wp-on--click="actions.toggle"
-		data-wp-bind--aria-expanded="context.isOpen"
-		aria-controls="<?php echo esc_attr( $unique_id ); ?>"
-	>
-		<?php esc_html_e( 'Toggle', 'my-first-interactive-block' ); ?>
-	</button>
 
-	<p
-		id="<?php echo esc_attr( $unique_id ); ?>"
-		data-wp-bind--hidden="!context.isOpen"
-	>
-		<?php
-			esc_html_e( 'My First Interactive Block - hello from an interactive block!', 'my-first-interactive-block' );
-		?>
-	</p>
+<div class="surecart-block"
+	data-wp-interactive='{ "namespace": "surecart/product" }'
+	data-wp-context='{ "productId": "<?php echo esc_attr( get_query_var( 'sc_product_page_id' ) ); ?>" }'
+	data-wp-init="callbacks.init"
+	data-wp-watch--is-open="callbacks.logState">
+
+	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
+		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
+			<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
+				<label>
+					<?php echo wp_kses_post( $option->name ); ?>
+				</label>
+
+				<br />
+
+				<select data-wp-on--change="surecart/product::callbacks.setOption" data-wp-bind--value="state.getSelectedOption">
+				<?php foreach ( $option->values as $name ) : ?>
+					<option value="<?php echo esc_attr( $name ); ?>" data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }' data-wp-class--unavailable="surecart/product::state.isOptionUnavailable">
+						<?php echo wp_kses_post( $name ); ?>
+					</option>
+				<?php endforeach; ?>
+				</select>
+			</div>
+		<?php endforeach; ?>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
+		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
+			<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
+				<label>
+					<?php echo wp_kses_post( $option->name ); ?>
+				</label>
+
+				<br />
+
+				<?php foreach ( $option->values as $name ) : ?>
+					<sc-pill-option
+					value="<?php echo esc_attr( $name ); ?>"
+					data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
+					data-wp-bind--is-selected="state.isOptionSelected"
+					data-wp-bind--is-unavailable="state.isOptionUnavailable"
+					data-wp-on--click="surecart/product::callbacks.setOption">
+					<?php echo wp_kses_post( $name ); ?>
+				</sc-pill-option>
+				<?php endforeach; ?>
+			</div>
+		<?php endforeach; ?>
+	<?php endif; ?>
+
+	<div data-wp-text="surecart/product::state.selectedVariantId"></div>
+</div>
 </div>

@@ -91,6 +91,12 @@ class ProductPageController extends BasePageController {
 	public function setInitialProductState() {
 		$product_state[ $this->model->id ] = $this->model->getInitialPageState();
 
+		wp_store(
+			[
+				'surecart/product' => $product_state,
+			]
+		);
+
 		sc_initial_state(
 			[
 				'product' => $product_state,

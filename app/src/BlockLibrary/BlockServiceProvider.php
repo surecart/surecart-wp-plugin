@@ -152,5 +152,13 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		foreach ( $files as $file ) {
 			register_block_type( dirname( $file ) );
 		}
+		if ( function_exists( 'gutenberg_register_module' ) ) {
+			gutenberg_register_module(
+				'surecart-view',
+				plugin_dir_url( SURECART_PLUGIN_FILE ) . 'packages/blocks-next/src/test/view.js',
+				array( '@wordpress/interactivity' ),
+				'0.1.0'
+			);
+		}
 	}
 }
