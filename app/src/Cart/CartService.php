@@ -36,8 +36,9 @@ class CartService {
 					array_filter(
 						[
 							'checkout' => [
-								'formId' => $form->ID,
-								'mode'   => Form::getMode( $form->ID ),
+								'formId'  => $form->ID,
+								'mode'    => Form::getMode( $form->ID ),
+								'persist' => 'browser',
 							],
 						]
 					)
@@ -181,22 +182,20 @@ class CartService {
 	 */
 	public function cartTemplate() {
 		$form = $this->getForm();
-
 		if ( empty( $form->ID ) ) {
 			return '';
 		}
 
-		$cart = \SureCart::cartPost()->get();
-
-		if ( empty( $cart->post_content ) ) {
-			return '';
-		}
-
 		// get cart block.
-		$blocks = parse_blocks( $cart->post_content );
-		if ( ! empty( $blocks[0] ) ) {
-			$attributes = $blocks[0]['attrs'];
+		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
+		if ( empty( $template->content ) ) {
+			return;
 		}
+
+		// get first block attributes.
+		$template_blocks    = parse_blocks( $template->content );
+		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart' );
+		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : [];
 
 		ob_start();
 		?>
@@ -207,7 +206,9 @@ class CartService {
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
-			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
+			<?php
+			echo wp_kses_post( do_blocks( $template->content ) );
+			?>
 		</sc-cart>
 
 		<?php if ( $this->isFloatingIconEnabled() ) : ?>
@@ -284,5 +285,23 @@ class CartService {
 			return;
 		}
 		return in_array( $term_id, $cart_menu_ids );
+	}
+
+	/**
+	 * Remove deprecated cart content.
+	 *
+	 * @param string $content Cart content.
+	 *
+	 * @return string
+	 */
+	public static function removeDeprecatedCartContent( $content ) {
+		$review_cart_present = strpos( $content, 'wp:surecart/cart-header {"text":"Review Your Cart"' );
+		$my_cart_present     = strpos( $content, '<sc-cart-header><span>My Cart</span></sc-cart-header>' );
+
+		if ( false !== $review_cart_present && false !== $my_cart_present ) {
+			$content = str_replace( '<sc-cart-header><span>My Cart</span></sc-cart-header>', '<sc-cart-header><span>Review Your Cart</span></sc-cart-header>', $content );
+		}
+
+		return $content;
 	}
 }

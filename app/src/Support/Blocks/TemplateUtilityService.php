@@ -53,6 +53,7 @@ class TemplateUtilityService {
 			'product-info'            => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Products', 'Template name', 'surecart' ) : _x( 'Products', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
+				'site-editor' => false,
 			],
 			'product-collection'      => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
@@ -61,6 +62,11 @@ class TemplateUtilityService {
 			'product-collection-part' => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual product collections content unless a custom template has been applied.', 'surecart' ),
+				'site-editor' => false,
+			],
+			'cart'                    => [
+				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Cart', 'Template name', 'surecart' ) : _x( 'Cart', 'Template name', 'surecart' ),
+				'description' => __( 'The slide-out cart template.', 'surecart' ),
 			],
 		];
 	}
@@ -368,6 +374,20 @@ class TemplateUtilityService {
 			return $this->plugin_template_types[ $template_slug ]['description'];
 		}
 		return '';
+	}
+
+	/**
+	 * Returns whether a block template is available in the site editor.
+	 *
+	 * @param string $template_slug The templates slug (e.g. single-product).
+	 *
+	 * @return boolean
+	 */
+	public function isBlockAvailableInSiteEditor( $template_slug ) {
+		if ( isset( $this->plugin_template_types[ $template_slug ] ) ) {
+			return ! isset( $this->plugin_template_types[ $template_slug ]['site-editor'] ) || $this->plugin_template_types[ $template_slug ]['site-editor'];
+		}
+		return true;
 	}
 
 	/**

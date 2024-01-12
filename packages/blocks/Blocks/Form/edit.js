@@ -51,6 +51,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		gap,
 		color,
 		success_url,
+		persist_cart,
 	} = attributes;
 
 	const [showClaimNotice, setShowClaimNotice] = useState(false);
@@ -255,6 +256,10 @@ export default function edit({ clientId, attributes, setAttributes }) {
 		setShowClaimNotice(false);
 	};
 
+	const isDefaultCheckout =
+		parseInt(window?.scData?.default_checkout_id || '') ===
+		parseInt(formId);
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -338,6 +343,32 @@ export default function edit({ clientId, attributes, setAttributes }) {
 						</PanelRow>
 					)}
 				</PanelBody>
+
+				{!isDefaultCheckout && (
+					<PanelBody
+						title={__('Form Cart Settings', 'surecart')}
+						initialOpen={false}
+					>
+						<PanelRow>
+							<ToggleControl
+								label={__('Persist Across Pages', 'surecart')}
+								help={__(
+									'Allow the cart for this form to persist across page views instead using the chosen products each page view.',
+									'surecart'
+								)}
+								checked={persist_cart === 'browser'}
+								onChange={(nextValue) => {
+									setAttributes({
+										persist_cart: nextValue
+											? 'browser'
+											: 'url',
+									});
+								}}
+							/>
+						</PanelRow>
+					</PanelBody>
+				)}
+
 				<PanelBody
 					title={__('Loading Text', 'surecart')}
 					initialOpen={false}

@@ -8,6 +8,7 @@ import * as cartBumpLineItem from '@blocks/CartBumpLineItem';
 import * as cartMessage from '@blocks/CartMessage';
 import * as cartHeader from '@blocks/CartHeader';
 import * as cartSubmit from '@blocks/CartSubmit';
+import { registerBlocksForTemplates } from './conditional-block-registration';
 
 registerBlocks([
 	cart,
@@ -19,3 +20,17 @@ registerBlocks([
 	cartHeader,
 	cartSubmit,
 ]);
+
+registerBlocksForTemplates({
+	blocks: [
+		cart,
+		cartItems,
+		cartCoupon,
+		cartSubtotal,
+		cartBumpLineItem,
+		cartMessage,
+		cartHeader,
+		cartSubmit,
+	],
+	include: ['surecart/surecart//cart'],
+});

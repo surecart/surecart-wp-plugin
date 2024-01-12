@@ -171,6 +171,7 @@ return [
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
+		\SureCartBlocks\Blocks\Cart\Block::class,
 		\SureCartBlocks\Blocks\VariantPriceSelector\Block::class,
 		\SureCartBlocks\Blocks\ProductDonation\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
