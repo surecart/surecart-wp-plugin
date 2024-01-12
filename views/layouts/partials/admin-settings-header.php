@@ -17,7 +17,7 @@
 		.sc-settings-header-container {
 			position: sticky;
 			top: 32px;
-			z-index: 2;
+			z-index: 9989;
 		}
 	}
 
