@@ -48,6 +48,11 @@ class RestoreController  extends AdminController {
 		}
 
 		$page_id     = \SureCart::pages()->getId( $page, 'page' );
+
+		if(empty($page_id)){
+			wp_die( esc_html__( 'Invalid page selected. Please choose the correct page to restore.', 'surecart' ) );
+		}
+
 		$post_status = get_post_status( $page_id );
 
 		if ( ! empty( get_post_status_object( $post_status )->label ) ) {
