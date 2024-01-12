@@ -10,9 +10,11 @@ use SureCart\Controllers\Admin\AdminController;
 class RestoreController  extends AdminController {
 	/**
 	 * Index.
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
-	public function index() {
-		$restore = sanitize_text_field( wp_unsplash( $request->query( 'restore' ) ) );
+	public function index( \SureCartCore\Requests\RequestInterface $request ) {
+		$restore = sanitize_text_field( wp_unslash( $request->query( 'restore' ) ) );
 		if ( empty( $restore ) ) {
 			wp_die( esc_html__( 'Invalid page selected. Please choose the correct page to restore.', 'surecart' ) );
 		}
@@ -47,9 +49,9 @@ class RestoreController  extends AdminController {
 			wp_die( esc_html__( 'Invalid page selected. Please choose the correct page to restore.', 'surecart' ) );
 		}
 
-		$page_id     = \SureCart::pages()->getId( $page, 'page' );
+		$page_id = \SureCart::pages()->getId( $page, 'page' );
 
-		if(empty($page_id)){
+		if ( empty( $page_id ) ) {
 			wp_die( esc_html__( 'Invalid page selected. Please choose the correct page to restore.', 'surecart' ) );
 		}
 
