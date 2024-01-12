@@ -40,11 +40,6 @@ class Block extends BaseBlock {
 		$post = get_post( $sc_form_id );
 		$user = wp_get_current_user();
 
-		// we don't have a form post.
-		if ( empty( $post->ID ) ) {
-			return;
-		}
-
 		$processors = Processor::get();
 		if ( is_wp_error( $processors ) ) {
 			$processors = [];
@@ -55,7 +50,7 @@ class Block extends BaseBlock {
 			array_filter(
 				[
 					'checkout'   => [
-						'formId'                   => $post->ID,
+						'formId'                   => $attributes['form_id'] ?? $sc_form_id,
 						'mode'                     => apply_filters( 'surecart/payments/mode', $attributes['mode'] ?? 'live' ),
 						'product'                  => $attributes['product'] ?? [],
 						'currencyCode'             => $attributes['currency'] ?? \SureCart::account()->currency,
@@ -64,7 +59,7 @@ class Block extends BaseBlock {
 						'taxProtocol'              => \SureCart::account()->tax_protocol,
 						'isCheckoutPage'           => true,
 						'validateStock'            => ! is_admin(),
-						'persist'                  => $this->getPeristance( $attributes, $post->ID ),
+						'persist'                  => $this->getPeristance( $attributes, $attributes['form_id'] ?? $sc_form_id ),
 					],
 					'processors' => [
 						'processors'           => array_values(
@@ -133,7 +128,7 @@ class Block extends BaseBlock {
 	 * @param  array $attributes Block attributes.
 	 * @return string|false
 	 */
-	public function getPeristance( $attributes, $id ) {
+	public function getPeristance( $attributes, $id = null ) {
 		// don't persist in the admin.
 		if ( is_admin() ) {
 			return false;
