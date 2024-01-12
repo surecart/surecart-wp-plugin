@@ -174,8 +174,8 @@ class AdminMenuPageService {
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
 			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
-			'cart'                => $this->getPage( 'cart', __( 'Cart', 'surecart' ), 'sc_cart' ),
 			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
+			'cart'                => $this->addTemplateSubMenuPage( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
 			'dashboard'           => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
 			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'            => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
@@ -207,5 +207,36 @@ class AdminMenuPageService {
 		}
 
 		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', 'post.php?post=' . (int) $page_id . '&action=edit', '' );
+	}
+
+	/**
+	 * Add a submenu page for a template.
+	 *
+	 * @param string $slug The slug.
+	 * @param string $name The name.
+	 * @param string $template_slug The template slug.
+	 *
+	 * @return null|string|false
+	 */
+	public function addTemplateSubMenuPage( $slug, $name, $template_slug ) {
+		// add filter to disable shop page menu item.
+		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
+			return;
+		}
+
+		return \add_submenu_page(
+			$this->slug,
+			$name,
+			$name,
+			'manage_options',
+			add_query_arg(
+				[
+					'postId'   => rawurlencode( $template_slug ),
+					'postType' => 'wp_template_part',
+				],
+				'site-editor.php'
+			),
+			''
+		);
 	}
 }
