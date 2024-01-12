@@ -111,7 +111,7 @@ export class ScOrderConfirmProvider {
             {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
                 <span slot="title">{manualPaymentMethod?.name}</span>
-                <p innerHTML={manualPaymentMethod?.instructions}></p>
+                <div innerHTML={manualPaymentMethod?.instructions}></div>
               </sc-alert>
             )}
             <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>

@@ -98,7 +98,7 @@ export class ScOrderConfirmation {
     return (
       <sc-alert type="info" open>
         <span slot="title">{paymentMethod?.name}</span>
-        <span innerHTML={paymentMethod?.instructions}></span>
+        <div innerHTML={paymentMethod?.instructions}></div>
       </sc-alert>
     );
   }
