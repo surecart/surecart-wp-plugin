@@ -193,7 +193,7 @@ class PaymentMethodController extends BaseController {
 							<sc-icon name="paypal" style="width: 80px; font-size: 24px"></sc-icon>
 						</span>
 						<sc-paypal-add-method
-							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							success-url="<?php echo esc_url( $success_url ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
@@ -210,7 +210,7 @@ class PaymentMethodController extends BaseController {
 							</sc-flex>
 						</span>
 						<sc-paystack-add-method
-							success-url="<?php echo esc_url( home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ) );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>"
+							success-url="<?php echo esc_url( $success_url ); ?>"
 							live-mode="<?php echo esc_attr( $this->isLiveMode() ? 'true' : 'false' ); ?>"
 							currency="<?php echo esc_attr( \SureCart::account()->currency ); ?>"
 							customer-id="<?php echo esc_attr( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ); ?>">
