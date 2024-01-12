@@ -29,7 +29,6 @@ class RestoreController  extends AdminController {
 			->with(
 				[
 					'restore' => $restore,
-					'error'   => $error ?? '',
 				]
 			);
 	}
