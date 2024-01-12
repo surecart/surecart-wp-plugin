@@ -76,7 +76,6 @@ export class ScOrder {
           'checkout',
           'checkout.line_items',
           'line_item.price',
-          'line_item.fees',
           'price.product',
           'checkout.manual_payment_method',
           'checkout.payment_method',
@@ -134,7 +133,6 @@ export class ScOrder {
               currency={item?.price?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
               interval={intervalString(item?.price)}
-              fees={item?.fees?.data}
               scratchAmount={item?.scratch_amount}
             ></sc-product-line-item>
           );
