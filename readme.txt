@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
-Requires at least: 6.2
+Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.15.0-beta1
+Stable tag: 2.16.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -226,13 +226,30 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.15.0 - December 21st, 2023 =
+= 2.16.0 - January 11th, 2024 =
+- New: Add initial discount to price.
+- New: Add a custom thank you page link to instant checkout.
+- Improvement: Removing storing carts on custom forms and use url for cart persistance.
+- Improvement: Update slide out cart template to template part to prevent accidental deletion.
+- Fix: Issue with order bump sometimes not appearing on slide out cart.
+
+= 2.15.1 - January 10th, 2024 =
+- Fix: Issue with switching Products to show from Handpicked to All/Featured.
+- Fix: Incorrect price display on merchant admin for donation subscriptions.
+- Fix: Show full address if shipping address is required.
+
+= 2.15.0 - January 4th, 2024 =
 - New: Use product shortcodes outside of product pages.
 - New: Checkout form product price/variant selector block.
 - Improvement: Allow integrations to work for specific prices and variants.
 - Improvement: Ability to turn off tax for specific customers.
 - Improvement: Buy now and add to cart button placeholder improvements.
 - Fix: Issue with product media taking up too much space on product template edit page.
+- Fix: 2FA conflicts with SureCart sign-in.
+- Fix: Issue with php notice showing when account is not connected on certain pages.
+- Fix: Issue with Stripe showing "Your Card Nubmer Is Incomplete" after some free purchases are made.
+- Fix: Quantity selector styling issue on iOS.
+- Fix: UI bug when adding product restrictions to coupon where product price and image were not loading.
 
 = 2.14.1 - December 21st, 2023 =
 - Improvement: Allow customers to add payment methods on subscriptions without payment methods on customer dashboard.
