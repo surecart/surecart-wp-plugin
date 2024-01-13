@@ -1,0 +1,12 @@
+// Label
+.sc-form-label {
+	font-family: var(--sc-font-sans);
+	font-size: var(--sc-font-size-medium);
+	font-weight: var(--sc-font-weight-normal);
+	gap: var(--sc-input-label-margin);
+	display: inline-block;
+	color: var(--sc-input-label-color);
+	font-weight: var(--sc-input-label-font-weight);
+	text-transform: var(--sc-input-label-text-transform, none);
+	letter-spacing: var(--sc-input-label-letter-spacing, 0);
+}

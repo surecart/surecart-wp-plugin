@@ -4,7 +4,7 @@
 import { store, getContext } from '@wordpress/interactivity';
 
 // controls the product page.
-const { state, callbacks } = store('surecart/product', {
+const { state } = store('surecart/product', {
 	state: {
 		/**
 		 * Product contextual state.
@@ -95,7 +95,7 @@ const { state, callbacks } = store('surecart/product', {
 				},
 			});
 		},
-		updateVariantAndValues: () => {
+		logState: () => {
 			// if we have variant values, update the selected variant.
 			const selectedVariant = getVariantFromValues({
 				variants: state?.product?.variants?.data,
