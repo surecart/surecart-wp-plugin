@@ -105,10 +105,8 @@ export default ({ id, setBrowserURL }) => {
 				throw new Error('Saving failed.');
 			}
 
-			// remove the status arg from the url.
-			if (!!getQueryArg(window.location.href, 'status')) {
-				setBrowserURL({ id });
-			}
+			// remove all args from the url.
+			setBrowserURL({ id });
 			// save success.
 			createSuccessNotice(__('Product updated.', 'surecart'), {
 				type: 'snackbar',
