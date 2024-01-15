@@ -1,7 +1,7 @@
 import { store } from '@surecart/data';
 import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
-import { addQueryArgs, getQueryArg, removeQueryArgs } from '@wordpress/url';
+import { addQueryArgs, removeQueryArgs } from '@wordpress/url';
 
 import CreateProduct from './CreateProduct';
 import EditProduct from './EditProduct';
@@ -14,16 +14,15 @@ import EditProduct from './EditProduct';
  *
  * @return {string} Product edit URL.
  */
-export function getEditURL({ id, status }) {
+export function getEditURL({ id, ...query }) {
 	return addQueryArgs(removeQueryArgs(window.location.href, 'status'), {
 		id,
-		...(!!status ? { status } : {}),
+		...(!!query ? query : {}),
 	});
 }
 
 export default () => {
-	const [historyId, setHistoryId] = useState(null);
-	const historyStatus = getQueryArg(window.location.href, 'status');
+	const [history, setHistory] = useState(null);
 
 	/**
 	 * Replaces the browser URL with a edit link for a given id ID.
@@ -36,19 +35,18 @@ export default () => {
 	 * @param {string} status Product status.
 	 */
 	const setBrowserURL = (args) => {
-		if (!args?.id) return;
-
-		const historyArgs = {
-			id: historyId,
-			status: historyStatus,
-		};
-
-		if (JSON.stringify(args) === JSON.stringify(historyArgs)) return;
-
+		const { id, ...query } = args;
+		// we need an id.
+		if (!id) return;
+		// history didn't change.
+		if (JSON.stringify(args) === JSON.stringify(history)) return;
+		// replace the state
 		window.history.replaceState({ id }, 'Post ' + id, getEditURL(args));
-		setHistoryId(id);
+		// set history for next time.
+		setHistory(args);
 	};
 
+	// get the id from the store.
 	const id = useSelect((select) => select(store).selectPageId());
 
 	return id ? (
