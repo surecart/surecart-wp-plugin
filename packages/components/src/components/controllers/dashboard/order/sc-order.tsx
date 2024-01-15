@@ -134,6 +134,7 @@ export class ScOrder {
               currency={item?.price?.currency}
               trialDurationDays={item?.price?.trial_duration_days}
               interval={intervalString(item?.price)}
+              scratchAmount={item?.scratch_amount}
               setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
               fees={item?.fees?.data}
             ></sc-product-line-item>
