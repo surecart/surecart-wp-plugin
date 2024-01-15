@@ -29,7 +29,6 @@ class AdminMenuPageService {
 	 */
 	const ESSENTIAL_PAGES = [
 		'shop',
-		'cart',
 		'checkout',
 		'dashboard',
 	];
