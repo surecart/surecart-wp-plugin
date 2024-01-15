@@ -63,6 +63,8 @@ class RolesService {
 				'publish_posts'          => true,
 				'read_private_pages'     => true,
 				'read_private_posts'     => true,
+				'list_users'             => true,
+				'edit_user'              => true,
 			]
 		);
 

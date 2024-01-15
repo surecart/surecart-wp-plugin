@@ -420,7 +420,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Success Text', 'surecart')}
+							label={__('Success', 'surecart')}
 							value={loading_text?.confirmed}
 							placeholder={__(
 								'Success! Redirecting...',
@@ -439,7 +439,7 @@ export default function edit({ clientId, attributes, setAttributes }) {
 					{custom_success_url && (
 						<PanelRow>
 							<TextControl
-								label={__('Success & Redirecting Text', 'surecart')}
+								label={__('Success & Redirecting', 'surecart')}
 								value={loading_text?.redirecting}
 								placeholder={__(
 									'Success! Redirecting...',
