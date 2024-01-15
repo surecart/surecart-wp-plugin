@@ -20,10 +20,12 @@ class SubscriptionController extends BaseController {
 	 * @return function
 	 */
 	public function add_payment_method() {
-		$currentUrl = home_url( add_query_arg( [ 'tab' => $this->getTab() ] ) );
-		return ( new PaymentMethodController() )->create([
-			'success_url' => $currentUrl,
-		]);
+		$current_url = home_url( add_query_arg( [ 'tab' => $this->getTab() ] ) );
+		return ( new PaymentMethodController() )->create(
+			[
+				'success_url' => $current_url,
+			]
+		);
 	}
 
 	/**
@@ -334,7 +336,7 @@ class SubscriptionController extends BaseController {
 	public function confirm_amount() {
 
 		$subscription = Subscription::find( $this->getId() );
-		
+
 		$payment_intent_id = sanitize_text_field( $_GET['payment_intent'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( $payment_intent_id ) {
@@ -344,7 +346,7 @@ class SubscriptionController extends BaseController {
 		}
 
 		// if we don't have a payment method, we need to add one.
-		if ( empty ( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+		if ( empty( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
 			return $this->add_payment_method();
 		}
 
@@ -434,7 +436,7 @@ class SubscriptionController extends BaseController {
 		}
 
 		// if we don't have a payment method, we need to add one.
-		if ( empty ( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+		if ( empty( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
 			return $this->add_payment_method();
 		}
 
@@ -507,7 +509,7 @@ class SubscriptionController extends BaseController {
 	public function confirm() {
 
 		$subscription = Subscription::find( $this->getId() );
-		
+
 		$payment_intent_id = sanitize_text_field( $_GET['payment_intent'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( $payment_intent_id ) {
@@ -517,7 +519,7 @@ class SubscriptionController extends BaseController {
 		}
 
 		// if we don't have a payment method, we need to add one.
-		if ( empty ( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
+		if ( empty( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
 			return $this->add_payment_method();
 		}
 
