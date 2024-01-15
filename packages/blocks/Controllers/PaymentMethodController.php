@@ -77,7 +77,13 @@ class PaymentMethodController extends BaseController {
 	 * @return string
 	 */
 	public function create( $attributes = [] ) {
-		$success_url = ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : esc_url( $_GET['success_url'] ) ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// use the success url if provided, otherwise use the current url.
+		if ( ! empty( $attributes['success_url'] ) ) {
+			$success_url = $attributes['success_url'];
+		} else {
+			$default     = home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$success_url = esc_url( $_GET['success_url'] ?? $default ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
 
 		if ( empty( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ) ) {
 			ob_start(); ?>
