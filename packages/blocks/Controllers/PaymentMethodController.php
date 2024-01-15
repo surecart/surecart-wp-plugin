@@ -5,7 +5,6 @@ use SureCart\Models\Component;
 use SureCart\Models\Customer;
 use SureCart\Models\Processor;
 use SureCart\Models\User;
-use SureCart\Models\Subscription;
 
 /**
  * Payment method block controller class.
@@ -78,7 +77,7 @@ class PaymentMethodController extends BaseController {
 	 * @return string
 	 */
 	public function create( $attributes = [] ) {
-		$success_url = ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : esc_url( $_GET['success_url']) ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$success_url = ! empty( $attributes['success_url'] ) ? $attributes['success_url'] : esc_url( $_GET['success_url'] ) ?? home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( empty( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ) ) {
 			ob_start(); ?>
