@@ -12,7 +12,7 @@ abstract class BaseController {
 	 *
 	 * @var array
 	 */
-	protected $middleware = [];
+	protected $middleware = array();
 
 	/**
 	 * Block controller middleware.
@@ -24,9 +24,8 @@ abstract class BaseController {
 	 * @return function
 	 */
 	public function executeMiddleware( $middleware, $action = null, $next = null ) {
-		if ( null === $middleware ) {
-			$middleware = $this->middleware[ $action ] ?? [];
-		}
+		$middleware = null === $middleware ? $this->middleware[ $action ] : $middleware;
+		$next       = null === $next ? $action : $next;
 
 		$top_middleware = array_shift( $middleware );
 
@@ -40,7 +39,18 @@ abstract class BaseController {
 
 		$instance = new $top_middleware();
 
-		return call_user_func_array( [ $instance, 'handle' ], [ $action, $top_middleware_next ] );
+		return call_user_func_array( array( $instance, 'handle' ), array( $action, $top_middleware_next ) );
+	}
+
+	/**
+	 * Handle the request.
+	 *
+	 * @param string $action The action.
+	 *
+	 * @return $this
+	 */
+	public function handle( $action ) {
+		return $this->executeMiddleware( null, $action );
 	}
 
 	/**
