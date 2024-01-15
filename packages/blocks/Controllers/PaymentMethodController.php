@@ -72,18 +72,32 @@ class PaymentMethodController extends BaseController {
 	}
 
 	/**
+	 * Get the success url.
+	 *
+	 * @param array $attributes The block attributes.
+	 *
+	 * @return string
+	 */
+	public function getSuccessUrl( $attributes = [] ) {
+		if ( ! empty( $attributes['success_url'] ) ) {
+			return esc_url( $attributes['success_url'] );
+		}
+
+		$default = home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		return esc_url( $_GET['success_url'] ?? $default ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	}
+
+	/**
 	 * Show a view to add a payment method.
+	 *
+	 * @param array $attributes The block attributes.
 	 *
 	 * @return string
 	 */
 	public function create( $attributes = [] ) {
-		// use the success url if provided, otherwise use the current url.
-		if ( ! empty( $attributes['success_url'] ) ) {
-			$success_url = $attributes['success_url'];
-		} else {
-			$default     = home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$success_url = esc_url( $_GET['success_url'] ?? $default ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		}
+		// get the success url.
+		$success_url = $this->getSuccessUrl( $attributes );
 
 		if ( empty( User::current()->customerId( $this->isLiveMode() ? 'live' : 'test' ) ) ) {
 			ob_start(); ?>
