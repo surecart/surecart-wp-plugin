@@ -4,7 +4,7 @@ import { getProductBuyLink, submitCartForm } from '@store/product/mutations';
 import { state } from '@store/product';
 import { setProduct } from '@store/product/setters';
 import { onChange } from '@store/product';
-import { Product, ScNoticeStore } from '../../../../types';
+import { ScNoticeStore } from '../../../../types';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { getTopLevelError, getAdditionalErrorMessages } from '../../../../functions/error';
 
@@ -19,8 +19,8 @@ export class ScProductBuyButton {
   // Is add to cart enabled
   @Prop() addToCart: boolean;
 
-  // The product
-  @Prop() product: Product;
+  // The product id.
+  @Prop() productId: string;
 
   // The form id
   @Prop() formId: number;
@@ -37,12 +37,14 @@ export class ScProductBuyButton {
   async handleCartClick(e) {
     e.preventDefault();
 
+    console.log(e);
+
     // already busy, do nothing.
-    if (state[this.product?.id]?.busy) return;
+    if (state[this.productId]?.busy) return;
 
     // ad hoc price, use the dialog.
-    if (state[this.product?.id]?.selectedPrice?.ad_hoc) {
-      setProduct(this.product?.id, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
+    if (state[this.productId]?.selectedPrice?.ad_hoc) {
+      setProduct(this.productId, { dialog: this.addToCart ? 'ad_hoc_cart' : 'ad_hoc_buy' });
       return;
     }
 
@@ -50,12 +52,13 @@ export class ScProductBuyButton {
     if (!this.addToCart) {
       const checkoutUrl = window?.scData?.pages?.checkout;
       if (!checkoutUrl) return;
-      return window.location.assign(getProductBuyLink(this.product?.id, checkoutUrl, { no_cart: !this.addToCart }));
+      return window.location.assign(getProductBuyLink(this.productId, checkoutUrl, { no_cart: !this.addToCart }));
     }
 
     // submit the cart form.
     try {
-      await submitCartForm(this.product?.id);
+      console.log('submit');
+      await submitCartForm(this.productId);
     } catch (e) {
       console.error(e);
       this.error = e;
@@ -65,7 +68,7 @@ export class ScProductBuyButton {
   componentDidLoad() {
     this.link = this.el.querySelector('a');
     this.updateProductLink();
-    onChange(this.product?.id, () => this.updateProductLink());
+    onChange(this.productId, () => this.updateProductLink());
   }
 
   private link: HTMLAnchorElement;
@@ -73,17 +76,17 @@ export class ScProductBuyButton {
   updateProductLink() {
     const checkoutUrl = window?.scData?.pages?.checkout;
     if (!checkoutUrl || !this.link) return;
-    this.link.href = getProductBuyLink(this.product?.id, checkoutUrl, !this.addToCart ? { no_cart: true } : {});
+    this.link.href = getProductBuyLink(this.productId, checkoutUrl, !this.addToCart ? { no_cart: true } : {});
   }
 
   render() {
     return (
       <Host
         class={{
-          'is-busy': state[this.product?.id]?.busy && !!this.addToCart,
-          'is-disabled': state[this.product?.id]?.disabled,
-          'is-sold-out': isProductOutOfStock(this.product?.id) && !isSelectedVariantMissing(this.product?.id),
-          'is-unavailable': isSelectedVariantMissing(this.product?.id),
+          'is-busy': state[this.productId]?.busy && !!this.addToCart,
+          'is-disabled': state[this.productId]?.disabled,
+          'is-sold-out': isProductOutOfStock(this.productId) && !isSelectedVariantMissing(this.productId),
+          'is-unavailable': isSelectedVariantMissing(this.productId),
         }}
         onClick={e => this.handleCartClick(e)}
       >

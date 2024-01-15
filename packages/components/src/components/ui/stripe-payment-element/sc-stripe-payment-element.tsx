@@ -114,6 +114,7 @@ export class ScStripePaymentElement {
 
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
+      if (!checkoutState?.checkout?.payment_method_required) return;
       if ('finalizing' === currentFormState()) {
         this.submit();
       }

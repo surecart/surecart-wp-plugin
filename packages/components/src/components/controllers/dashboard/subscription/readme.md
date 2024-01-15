@@ -78,6 +78,7 @@ graph TD;
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
+  sc-subscription-details --> sc-icon
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
