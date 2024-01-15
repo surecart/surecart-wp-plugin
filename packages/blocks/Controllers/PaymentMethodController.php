@@ -79,13 +79,18 @@ class PaymentMethodController extends BaseController {
 	 * @return string
 	 */
 	public function getSuccessUrl( $attributes = [] ) {
+		// attribute.
 		if ( ! empty( $attributes['success_url'] ) ) {
 			return esc_url( $attributes['success_url'] );
 		}
 
-		$default = home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// url parameter.
+		if ( ! empty( $_GET['success_url'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return esc_url( $_GET['success_url'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
 
-		return esc_url( $_GET['success_url'] ?? $default ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// default.
+		return home_url( add_query_arg( [ 'tab' => $this->getTab() ], remove_query_arg( array_keys( $_GET ) ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
