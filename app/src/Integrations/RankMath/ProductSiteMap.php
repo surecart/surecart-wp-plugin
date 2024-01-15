@@ -8,13 +8,16 @@ defined( 'ABSPATH' ) || exit;
  * Controls the Product Sitemap integration.
  */
 class ProductSiteMap implements \RankMath\Sitemap\Providers\Provider {
+
 	/**
 	 * What type of content this provider handles.
 	 *
 	 * @param string $type Type of content.
 	 */
 	public function handles_type( $type ) {
-		return 'sc_product' === $type;
+		return ! empty(
+			\RankMath\Helper::get_settings( 'sitemap.pt_' . $type . '_sitemap' )
+		) && 'sc_product' === $type;
 	}
 
 	/**

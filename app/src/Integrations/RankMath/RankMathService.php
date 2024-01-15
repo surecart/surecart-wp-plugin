@@ -16,6 +16,23 @@ class RankMathService {
 	}
 
 	/**
+	 * Append the provider if enabled.
+	 *
+	 * @param array                                $external_providers External providers.
+	 * @param \RankMath\Sitemap\Providers\Provider $provider Provider.
+	 * @param string                               $type Type.
+	 *
+	 * @return array
+	 */
+	private function appendIfEnabled( $external_providers, $provider, $type ) {
+		if ( $provider->handles_type( 'sc_' . $type ) ) {
+			$external_providers[ $type ] = $provider;
+		}
+
+		return $external_providers;
+	}
+
+	/**
 	 * Add the providers.
 	 *
 	 * @param array $external_providers External providers.
@@ -23,8 +40,8 @@ class RankMathService {
 	 * @return array
 	 */
 	public function addProviders( $external_providers ) {
-		$external_providers['products']    = new ProductSiteMap();
-		$external_providers['collections'] = new CollectionSiteMap();
+		$external_providers = $this->appendIfEnabled( $external_providers, new ProductSiteMap(), 'product' );
+		$external_providers = $this->appendIfEnabled( $external_providers, new CollectionSiteMap(), 'collection' );
 		return $external_providers;
 	}
 }
