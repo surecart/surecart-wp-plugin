@@ -436,6 +436,26 @@ export default function edit({ clientId, attributes, setAttributes }) {
 							}
 						/>
 					</PanelRow>
+					{custom_success_url && (
+						<PanelRow>
+							<TextControl
+								label={__('Success & Redirecting Text', 'surecart')}
+								value={loading_text?.redirecting}
+								placeholder={__(
+									'Success! Redirecting...',
+									'surecart'
+								)}
+								onChange={(redirecting) =>
+									setAttributes({
+										loading_text: {
+											...loading_text,
+											redirecting,
+										},
+									})
+								}
+							/>
+						</PanelRow>
+					)}
 				</PanelBody>
 				<PanelBody
 					title={__('Success Text', 'surecart')}
