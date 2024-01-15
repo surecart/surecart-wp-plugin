@@ -8,6 +8,42 @@ use SureCart\Models\User;
  */
 abstract class BaseController {
 	/**
+	 * The middleware for this controller.
+	 *
+	 * @var array
+	 */
+	protected $middleware = [];
+
+	/**
+	 * Block controller middleware.
+	 *
+	 * @param  string[] $middleware Middleware.
+	 * @param  string   $action Action.
+	 * @param  Closure  $next Next.
+	 *
+	 * @return function
+	 */
+	public function executeMiddleware( $middleware, $action = null, $next = null ) {
+		if ( null === $middleware ) {
+			$middleware = $this->middleware[ $action ] ?? [];
+		}
+
+		$top_middleware = array_shift( $middleware );
+
+		if ( null === $top_middleware ) {
+			return $this->$next();
+		}
+
+		$top_middleware_next = function () use ( $middleware, $action, $next ) {
+			return $this->executeMiddleware( $middleware, $action, $next );
+		};
+
+		$instance = new $top_middleware();
+
+		return call_user_func_array( [ $instance, 'handle' ], [ $action, $top_middleware_next ] );
+	}
+
+	/**
 	 * Get a query param.
 	 *
 	 * @param string $name The query param name.
@@ -18,6 +54,7 @@ abstract class BaseController {
 	protected function getParam( $name, $fallback = false ) {
 		return isset( $_GET[ $name ] ) ? sanitize_text_field( wp_unslash( $_GET[ $name ] ) ) : $fallback;
 	}
+
 	/**
 	 * Get the current tab.
 	 *
@@ -72,6 +109,11 @@ abstract class BaseController {
 		return '<sc-alert type="danger" open>' . esc_html__( 'You do not have permission to do this.', 'surecart' ) . '</sc-alert>';
 	}
 
+	/**
+	 * Check if this is in live mode.
+	 *
+	 * @return boolean
+	 */
 	protected function isLiveMode() {
 		if ( 'false' === sanitize_text_field( wp_unslash( $_GET['live_mode'] ?? '' ) ) ) {
 			return false;

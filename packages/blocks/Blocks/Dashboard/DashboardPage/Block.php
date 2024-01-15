@@ -2,7 +2,6 @@
 
 namespace SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
-use SureCart\Models\User;
 use SureCartBlocks\Blocks\Dashboard\DashboardPage;
 
 /**
@@ -74,7 +73,7 @@ class Block extends DashboardPage {
 		$model = isset( $_GET['model'] ) ? sanitize_text_field( wp_unslash( $_GET['model'] ) ) : false;
 
 		/**
-	 * Filters content to display before the block.
+		 * Filters content to display before the block.
 		 *
 		 * @since 1.1.12
 		 *
@@ -99,8 +98,7 @@ class Block extends DashboardPage {
 
 			if ( method_exists( $this->blocks[ $model ], $action ) ) {
 				$block = new $this->blocks[ $model ]();
-
-				return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->$action() . $after . '</sc-spacing>';
+				return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . $block->executeMiddleware( null, $action, $action ) . $after . '</sc-spacing>';
 			}
 		}
 		return $this->passwordNag() . '<sc-spacing class="sc-customer-dashboard" style="--spacing: var(--sc-spacing-xx-large); font-size: 15px;">' . $before . filter_block_content( $content ) . $after . '</sc-spacing>';
