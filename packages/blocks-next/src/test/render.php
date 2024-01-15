@@ -43,14 +43,14 @@ $product = get_query_var( 'surecart_current_product' );
 				<div class="sc-pill-option__wrapper">
 					<?php foreach ( $option->values as $name ) : ?>
 						<button
+							class="sc-pill-option__button"
 							value="<?php echo esc_attr( $name ); ?>"
 							data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
-							class="sc-pill-option__button"
+							data-wp-on--click="callbacks.setOption"
 							data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
 							data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
 							data-wp-bind--aria-checked="state.isOptionSelected"
 							data-wp-bind--aria-disabled="state.isOptionUnavailable"
-							data-wp-on--click="callbacks.setOption"
 							tabindex="0"
 							role="radio"
 						>
