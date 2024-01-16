@@ -15,9 +15,7 @@ class ProductSiteMap implements \RankMath\Sitemap\Providers\Provider {
 	 * @param string $type Type of content.
 	 */
 	public function handles_type( $type ) {
-		return ! empty(
-			\RankMath\Helper::get_settings( 'sitemap.pt_' . $type . '_sitemap' )
-		) && 'sc_product' === $type;
+		return 'sc_product' === $type;
 	}
 
 	/**

@@ -14,9 +14,7 @@ class CollectionSiteMap implements \RankMath\Sitemap\Providers\Provider {
 	 * @param string $type Type of content.
 	 */
 	public function handles_type( $type ) {
-		return ! empty(
-			\RankMath\Helper::get_settings( 'sitemap.pt_' . $type . '_sitemap' )
-		) && 'sc_collection' === $type;
+		return 'sc_collection' === $type;
 	}
 
 	/**
