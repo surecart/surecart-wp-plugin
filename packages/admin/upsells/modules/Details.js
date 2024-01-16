@@ -24,7 +24,7 @@ export default ({ loading, upsell, updateUpsell }) => {
 				value={upsell?.name}
 				name="name"
 			/>
-			<ScInput
+			{/* <ScInput
 				label={__('Heading', 'surecart')}
 				help={__(
 					'This typically appears on the top of your upsell page.',
@@ -64,7 +64,7 @@ export default ({ loading, upsell, updateUpsell }) => {
 					})
 				}
 				name="description"
-			/>
+			/> */}
 		</Box>
 	);
 };

@@ -29,6 +29,7 @@ import Details from './modules/Details';
 import Price from './modules/Price';
 import Priority from './modules/Priority';
 import Template from './modules/Template';
+import Funnel from './modules/Funnel';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -44,7 +45,14 @@ export default () => {
 		deleteUpsell,
 		saveUpsellError,
 		upsellError,
-	} = useEntity('upsell', id);
+	} = useEntity('upsell', id, {
+		expand: [
+			'price',
+			'price.product',
+			'product.featured_product_media',
+			'product_media.media',
+		],
+	});
 
 	/**
 	 * Handle the form submission
@@ -164,21 +172,21 @@ export default () => {
 					</ScBreadcrumbs>
 				</div>
 			}
-			sidebar={
-				<>
-					<Priority
-						upsell={upsell}
-						updateUpsell={editUpsell}
-						loading={!hasLoadedUpsell}
-					/>
+			// sidebar={
+			// 	<>
+			// 		<Priority
+			// 			upsell={upsell}
+			// 			updateUpsell={editUpsell}
+			// 			loading={!hasLoadedUpsell}
+			// 		/>
 
-					<Template
-						upsell={upsell}
-						updateUpsell={editUpsell}
-						loading={!hasLoadedUpsell}
-					/>
-				</>
-			}
+			// 		<Template
+			// 			upsell={upsell}
+			// 			updateUpsell={editUpsell}
+			// 			loading={!hasLoadedUpsell}
+			// 		/>
+			// 	</>
+			// }
 		>
 			<>
 				<Error error={saveUpsellError || upsellError} margin="80px" />
@@ -187,21 +195,26 @@ export default () => {
 					updateUpsell={editUpsell}
 					loading={!hasLoadedUpsell}
 				/>
-				<Price
+				{/* <Price
 					upsell={upsell}
 					updateUpsell={editUpsell}
 					loading={!hasLoadedUpsell}
-				/>
+				/> */}
 				<Conditions
 					upsell={upsell}
 					updateUpsell={editUpsell}
 					loading={!hasLoadedUpsell}
 				/>
-				<Discount
+				<Funnel
 					upsell={upsell}
 					updateUpsell={editUpsell}
 					loading={!hasLoadedUpsell}
 				/>
+				{/* <Discount
+					upsell={upsell}
+					updateUpsell={editUpsell}
+					loading={!hasLoadedUpsell}
+				/> */}
 			</>
 		</UpdateModel>
 	);

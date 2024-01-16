@@ -16,6 +16,7 @@ import {
 	ScSelect,
 } from '@surecart/components-react';
 import useEntity from '../../hooks/useEntity';
+import { CardBody } from '@wordpress/components';
 
 export default ({ upsell, updateUpsell, loading }) => {
 	const [type, setType] = useState('percentage');
@@ -36,15 +37,12 @@ export default ({ upsell, updateUpsell, loading }) => {
 	}, [upsell?.amount_off]);
 
 	return (
-		<Box
-			title={__('Discount', 'surecart')}
-			loading={loading || !hasLoadedPrice}
-		>
+		<CardBody>
 			<ScFlex
 				flexDirection="column"
 				style={{ '--sc-flex-column-gap': '1.5em' }}
 			>
-				<ScFormControl label={__('Discount Amount', 'surecart')}>
+				<ScFormControl label={__('Discount', 'surecart')}>
 					<ScFlex>
 						<ScSelect
 							unselect={false}
@@ -103,6 +101,6 @@ export default ({ upsell, updateUpsell, loading }) => {
 					</ScFlex>
 				</ScFormControl>
 			</ScFlex>
-		</Box>
+		</CardBody>
 	);
 };
