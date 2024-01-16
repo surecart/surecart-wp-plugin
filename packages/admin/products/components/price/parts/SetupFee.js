@@ -37,7 +37,8 @@ export default ({ price, updatePrice }) => {
 					updatePrice({
 						setup_fee_enabled: e.target.checked,
 						...(!e.target.checked && {
-							setup_fee_amount: Math.abs(price?.setup_fee_amount)
+							setup_fee_name: null,
+							setup_fee_amount: 0,
 						}),
 					})
 				}
