@@ -36,7 +36,7 @@
 					<sc-icon name="repeat"></sc-icon>
 					<sc-heading size="large"><?php esc_html_e( 'Restore', 'surecart' ); ?></sc-heading>
 					<sc-text>
-						<?php esc_html_e( 'This page is necessary for some SureCart eCommerce functions. Restoring this page will ensure there are no issues with the functionality of SureCart.', 'surecart' ); ?>
+						<?php esc_html_e( 'This page is important for certain SureCart eCommerce features. Bringing back this page will make sure SureCart works as expected.', 'surecart' ); ?>
 					</sc-text>
 					<sc-flex class="button-container" justify-content="flex-start">
 						<sc-button size="large" type="primary" submit><?php esc_html_e( 'Restore', 'surecart' ); ?></sc-button>
