@@ -9,7 +9,6 @@ import { getFeaturedProductMediaAttributes } from '../../../../functions/media';
 import { removeCheckoutLineItem, updateCheckoutLineItem } from '@store/checkout/mutations';
 import { formBusy } from '@store/form/getters';
 import { getMaxStockQuantity } from '../../../../functions/quantity';
-import { removeEmptyKeys } from '../../../../functions/util';
 
 /**
  * @part base - The component base
@@ -61,6 +60,19 @@ export class ScLineItems {
     return this.editable;
   }
 
+  /**
+   * Get the max quantity for a line item.
+   *
+   * @param item The line item
+   *
+   * @return The max quantity object
+   */
+  getLineItemMaxQuantity(item: LineItem) {
+    const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
+
+    return max ? { max } : {};
+  }
+
   render() {
     if (!!formBusy() && !checkoutState?.checkout?.line_items?.data?.length) {
       return (
@@ -88,9 +100,7 @@ export class ScLineItems {
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
-                {...removeEmptyKeys({
-                  max: getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant),
-                })}
+                {...this.getLineItemMaxQuantity(item)}
                 editable={this.isEditable(item)}
                 removable={this.removable}
                 quantity={item.quantity}

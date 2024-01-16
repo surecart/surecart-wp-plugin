@@ -74,8 +74,3 @@ export const isInRange = (value, price) => {
   if (price?.ad_hoc_min_amount && valueInt < price?.ad_hoc_min_amount) return false;
   return true;
 };
-
-export const removeEmptyKeys = obj => {
-  Object.keys(obj).forEach(key => !obj[key] && delete obj[key]);
-  return obj;
-};
