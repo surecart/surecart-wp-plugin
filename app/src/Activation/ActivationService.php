@@ -127,6 +127,7 @@ class ActivationService {
 		delete_option( 'surecart_use_esm_loader' );
 		delete_option( 'surecart_checkout_page_id' );
 		delete_option( 'sc_api_token' );
+		delete_option( 'sc_previous_account' );
 		delete_option( 'sc_uninstall' );
 	}
 }

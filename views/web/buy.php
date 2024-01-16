@@ -73,8 +73,9 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	echo filter_block_content(
 		( new FormBlock() )->render(
 			[
-				'product' => $product,
-				'mode'    => $mode,
+				'product'     => $product,
+				'mode'        => $mode,
+				'success_url' => $success_url,
 			],
 			do_blocks( $content )
 		),
