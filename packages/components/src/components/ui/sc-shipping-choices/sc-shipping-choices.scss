@@ -33,6 +33,7 @@
     color: var(--sc-input-label-color);
     font-weight: var(--sc-price-choice-price-font-weight, var(--sc-font-weight-normal));
     white-space: nowrap;
+    display: var(--sc-price-choice-price-display, inherit);
   }
 
   &__name {
