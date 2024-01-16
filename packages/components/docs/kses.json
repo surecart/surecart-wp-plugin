@@ -2048,6 +2048,7 @@
     "product-id": true,
     "query": true,
     "subscription": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

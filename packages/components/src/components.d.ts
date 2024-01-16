@@ -3582,6 +3582,7 @@ export namespace Components {
          */
         "query": object;
         "subscription": Subscription;
+        "successUrl": string;
     }
     interface ScSubscriptionVariationConfirm {
         "heading": string;
@@ -9663,6 +9664,7 @@ declare namespace LocalJSX {
          */
         "query"?: object;
         "subscription"?: Subscription;
+        "successUrl"?: string;
     }
     interface ScSubscriptionVariationConfirm {
         "heading"?: string;

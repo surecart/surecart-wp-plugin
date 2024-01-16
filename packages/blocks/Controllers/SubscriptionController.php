@@ -10,7 +10,8 @@ use SureCart\Models\SubscriptionProtocol;
 use SureCart\Models\User;
 use SureCartBlocks\Controllers\Middleware\MissingPaymentMethodMiddleware;
 use SureCartBlocks\Controllers\Middleware\UpdateSubscriptionMiddleware;
-
+use SureCartBlocks\Controllers\Middleware\SubscriptionPermissionsControllerMiddleware;
+use SureCartBlocks\Controllers\Middleware\SubscriptionNonceVerificationMiddleware;
 /**
  * The subscription controller.
  */
@@ -22,14 +23,20 @@ class SubscriptionController extends BaseController {
 	 */
 	protected $middleware = [
 		'confirm'           => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
 		'confirm_amount'    => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
 		'confirm_variation' => [
+			SubscriptionNonceVerificationMiddleware::class,
+			SubscriptionPermissionsControllerMiddleware::class,
 			UpdateSubscriptionMiddleware::class,
 			MissingPaymentMethodMiddleware::class,
 		],
@@ -196,6 +203,7 @@ class SubscriptionController extends BaseController {
 						'productId'      => $subscription->price->product->id,
 						'productGroupId' => $subscription->price->product->product_group->archived ? null : $subscription->price->product->product_group->id,
 						'subscription'   => $subscription,
+						'successUrl'     => home_url( add_query_arg( [ 'tab' => $this->getTab(), 'nonce' => wp_create_nonce( 'subscription-switch' ) ], remove_query_arg( array_keys( $_GET ) ) ) ),
 					]
 				)->render()
 			);
