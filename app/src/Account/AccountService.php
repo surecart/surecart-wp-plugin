@@ -75,19 +75,37 @@ class AccountService {
 	 */
 	public function fetchCachedAccount() {
 		$this->account = get_transient( $this->cache_key );
+
+		// we don't have a cached account.
 		if ( false === $this->account ) {
-			// fetch account.
+			// fetch the account.
 			$this->account = $this->fetchAccount();
 
 			// there was an error or the account could not be fetched by other means.
 			if ( is_wp_error( $this->account ) || empty( $this->account->id ) ) {
-				delete_transient( $this->cache_key );
-				return $this->account;
+				// get the previously working account.
+				$previously_working_account = get_option( 'sc_previous_account' );
+
+				// if there was no previously working account, return the error.
+				if ( empty( $previously_working_account ) || empty( $previously_working_account->id ) ) {
+					// return the error.
+					return $this->account;
+				}
+
+				// set previously working account and don't try for 5 minutes.
+				set_transient( $this->cache_key, $previously_working_account, 5 * MINUTE_IN_SECONDS );
+
+				// return the account.
+				return $previously_working_account;
 			}
+
+			// store the previously working account in case we need a fallback.
+			update_option( 'sc_previous_account', $this->account );
 
 			// set the transient.
 			set_transient( $this->cache_key, $this->account, 15 * MINUTE_IN_SECONDS );
 		}
+
 		return $this->account;
 	}
 

@@ -51,6 +51,10 @@
 				"description": "Your payment was successful. A receipt is on its way to your inbox.",
 				"button": "Continue"
 			}
+		},
+		"persist_cart": {
+			"type": "string",
+			"default": "url"
 		}
 	},
 	"providesContext": {

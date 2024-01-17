@@ -45,6 +45,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
     ...(checkoutState?.product?.id && { buy_page_product_id: checkoutState?.product?.id }),
     page_url: window.location.href,
   },
+  ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
   ...data,
 });
 
