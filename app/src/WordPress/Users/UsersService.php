@@ -19,10 +19,21 @@ class UsersService {
 		add_filter( 'rest_user_collection_params', [ $this, 'collectionParams' ] );
 		add_filter( 'show_admin_bar', [ $this, 'disableAdminBar' ], 10, 1 );
 		add_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
+		add_action( 'surecart/customer_updated', [ $this, 'syncCustomerProfile' ] );
 
 		$this->registerMeta();
 	}
 
+	/**
+	 * Fires immediately after an existing customer is updated.
+	 *
+	 * @param object $customer Customer Data.
+	 */
+	public function syncCustomerProfile( $customer ) {
+		error_log( 'syncCustomerProfile' );
+		error_log( print_r( $customer, true ) );
+	}
+	
 	/**
 	 * Fires immediately after an existing user is updated.
 	 *
