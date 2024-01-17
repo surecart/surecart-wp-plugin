@@ -1598,6 +1598,7 @@
     "ids": true,
     "layout-config": true,
     "limit": true,
+    "pagination": true,
     "pagination-alignment": true,
     "pagination-auto-scroll": true,
     "pagination-enabled": true,

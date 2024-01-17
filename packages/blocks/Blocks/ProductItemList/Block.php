@@ -2,6 +2,8 @@
 
 namespace SureCartBlocks\Blocks\ProductItemList;
 
+use SureCart\Models\Collection;
+use SureCart\Models\Product;
 use SureCartBlocks\Blocks\BaseBlock;
 /**
  * ProductItemList block
@@ -254,6 +256,8 @@ class Block extends BaseBlock {
 			$attributes['type'] = '';
 		}
 
+		$products = $this->getProducts( $attributes );
+
 		\SureCart::assets()->addComponentData(
 			'sc-product-item-list',
 			'#selector-' . self::$instance,
@@ -262,6 +266,10 @@ class Block extends BaseBlock {
 				'paginationAlignment'  => $attributes['pagination_alignment'],
 				'limit'                => $attributes['limit'],
 				'style'                => $style,
+				'pagination'           => [
+					'total'       => $products->total(),
+					'total_pages' => $products->totalPages(),
+				],
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
 				'paginationEnabled'    => \SureCart::account()->isConnected() ? $attributes['pagination_enabled'] : false,
 				'ajaxPagination'       => $attributes['ajax_pagination'],
@@ -269,11 +277,69 @@ class Block extends BaseBlock {
 				'searchEnabled'        => \SureCart::account()->isConnected() ? $attributes['search_enabled'] : false,
 				'sortEnabled'          => \SureCart::account()->isConnected() ? $attributes['sort_enabled'] : false,
 				'featured'             => 'featured' === $attributes['type'],
-				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : [],
+				'products'             => ! \SureCart::account()->isConnected() ? $this->getDummyProducts( $attributes['limit'] ) : $products->data,
 				'collectionEnabled'    => \SureCart::account()->isConnected() ? ! ! $attributes['collection_enabled'] : false,
 			]
 		);
 
 		return '<sc-product-item-list id="selector-' . esc_attr( self::$instance ) . '"></sc-product-item-list>';
+	}
+
+	/**
+	 * Get the query for the products.
+	 *
+	 * @param  array $attributes Block attributes.
+	 *
+	 * @return array
+	 */
+	public function getQuery( $attributes ) {
+		$query = [
+			'expand'   => [ 'prices', 'featured_product_media', 'product_medias', 'product_media.media', 'variants' ],
+			'archived' => false,
+			'status'   => [ 'published' ],
+			'sort'     => 'created_at:desc',
+		];
+
+		if ( 'featured' === ( $attributes['type'] ?? '' ) ) {
+			$query['featured'] = true;
+		}
+
+		if ( 'custom' === ( $attributes['type'] ?? '' ) ) {
+			$query['ids'] = array_values( array_filter( $attributes['ids'] ?? [] ) );
+		}
+
+		return $query;
+	}
+
+	/**
+	 * Get the products.
+	 *
+	 * @param  array $attributes Block attributes.
+	 *
+	 * @return \SureCart\Models\Product
+	 */
+	public function getProducts( $attributes ) {
+		$products = Product::where( $this->getQuery( $attributes ) )->paginate(
+			[
+				'per_page' => $attributes['limit'] ?? 30,
+				'page'     => (int) ( $_GET['product-page'] ?? 1 ),
+			]
+		);
+
+		// there is an error or no products.
+		if ( is_wp_error( $products ) || empty( $products->pagination->count ) ) {
+			return new Collection(
+				(object) [
+					'pagination' => [
+						'count' => 0,
+						'limit' => 0,
+						'page'  => 0,
+					],
+					'data'       => [],
+				]
+			);
+		}
+
+		return $products;
 	}
 }

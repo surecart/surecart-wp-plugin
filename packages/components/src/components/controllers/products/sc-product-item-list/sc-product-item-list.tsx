@@ -86,7 +86,7 @@ export class ScProductItemList {
 
   @State() currentQuery: string;
 
-  @State() pagination: {
+  @Prop({ mutable: true }) pagination: {
     total: number;
     total_pages: number;
   } = {
