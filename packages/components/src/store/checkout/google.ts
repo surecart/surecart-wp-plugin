@@ -86,3 +86,43 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
     });
   }
 });
+
+/**
+ * Handle payment info added event.
+ */
+window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
+  if (!window?.dataLayer && !window?.gtag) return;
+
+  const checkout = e.detail;
+
+  const data = {
+    currency: (checkout.currency || '').toUpperCase(),
+    value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
+    ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
+    items: (checkout?.line_items?.data || []).map(item => ({
+      item_id: (item?.price?.product as Product)?.id,
+      item_name: (item?.price?.product as Product)?.name || '',
+      currency: (checkout.currency || '').toUpperCase(),
+      discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item?.price?.currency || 'USD') : 0,
+      price: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
+      quantity: item?.quantity || 1,
+      item_variant: (item.variant_options || []).join(' / '),
+    })),
+  };
+
+  // handle gtag (analytics script.)
+  if (window?.gtag) {
+    window.gtag('event', 'add_payment_info', data);
+  }
+
+  // handle dataLayer (google tag manager).
+  if (window?.dataLayer) {
+    window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+    window.dataLayer.push({
+      event: 'add_payment_info',
+      ecommerce: data,
+    });
+  }
+});
+
+

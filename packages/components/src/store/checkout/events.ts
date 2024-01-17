@@ -1,6 +1,6 @@
 import '../checkouts/events';
 import state, { on } from './store';
-import { Checkout, CheckoutInitiatedParams, LineItem, Product } from 'src/types';
+import { Checkout, CheckoutInitiatedParams, LineItem, Product, ShippingMethod } from 'src/types';
 import { maybeConvertAmount } from '../../functions/currency';
 
 /**
@@ -30,6 +30,37 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
     bubbles: true,
   });
 
+  document.dispatchEvent(event);
+});
+
+/**
+ * Add shipping info event.
+ */
+on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
+  if (!checkout?.selected_shipping_choice) return; // we only care about shipping info.
+  if (oldCheckout?.selected_shipping_choice === checkout?.selected_shipping_choice) return; // we only care about new shipping info.
+
+  const selectedShippingChoice = checkout?.shipping_choices?.data?.find(method => method.id === checkout?.selected_shipping_choice);
+
+  const event = new CustomEvent('scShippingInfoAdded', {
+    detail: {
+      currency: (checkout.currency || '').toUpperCase(),
+      value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
+      ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
+      ...((selectedShippingChoice?.shipping_method as ShippingMethod)?.name? { shipping_tier: (selectedShippingChoice?.shipping_method as ShippingMethod)?.name } : {}),
+      items: (checkout?.line_items?.data || []).map(item => ({
+        item_id: (item?.price?.product as Product)?.id,
+        item_name: (item?.price?.product as Product)?.name || '',
+        currency: (checkout.currency || '').toUpperCase(),
+        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
+        price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
+        quantity: item?.quantity || 1,
+        item_variant: (item.variant_options || []).join(' / '),
+      })),
+    },
+    bubbles: true,
+  });
   document.dispatchEvent(event);
 });
 
