@@ -1,7 +1,6 @@
 import '../checkouts/events';
 import state, { on } from './store';
-import { Checkout, CheckoutInitiatedParams, LineItem, Product, ShippingMethod } from 'src/types';
-import { maybeConvertAmount } from '../../functions/currency';
+import { Checkout, LineItem, Product, ShippingMethod } from 'src/types';
 
 /**
  * Checkout initiated event.
@@ -12,21 +11,8 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (!checkout?.id) return; // we don't have a saved checkout.
   if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
 
-  const event = new CustomEvent<CheckoutInitiatedParams>('scCheckoutInitiated', {
-    detail: {
-      transaction_id: checkout.id,
-      value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
-      currency: (checkout.currency || '').toUpperCase(),
-      ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
-      ...(checkout?.tax_amount ? { tax: maybeConvertAmount(checkout?.tax_amount, checkout?.currency || 'USD') } : {}),
-      items: (checkout?.line_items?.data || []).map(item => ({
-        item_name: (item?.price?.product as Product)?.name || '',
-        item_id: (item?.price?.product as Product)?.id,
-        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
-        price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
-        quantity: item?.quantity || 1,
-      })),
-    },
+  const event = new CustomEvent<Checkout>('scCheckoutInitiated', {
+    detail:checkout,
     bubbles: true,
   });
 
@@ -46,15 +32,15 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   const event = new CustomEvent('scShippingInfoAdded', {
     detail: {
       currency: (checkout.currency || '').toUpperCase(),
-      value: maybeConvertAmount(checkout?.total_amount, checkout?.currency || 'USD'),
+      value: checkout?.total_amount,
       ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
-      ...((selectedShippingChoice?.shipping_method as ShippingMethod)?.name? { shipping_tier: (selectedShippingChoice?.shipping_method as ShippingMethod)?.name } : {}),
+      ...((selectedShippingChoice?.shipping_method as ShippingMethod)?.name ? { shipping_tier: (selectedShippingChoice?.shipping_method as ShippingMethod)?.name } : {}),
       items: (checkout?.line_items?.data || []).map(item => ({
         item_id: (item?.price?.product as Product)?.id,
         item_name: (item?.price?.product as Product)?.name || '',
         currency: (checkout.currency || '').toUpperCase(),
-        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
-        price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
+        discount: item?.discount_amount || 0,
+        price: item?.price?.amount || 0,
         quantity: item?.quantity || 1,
         item_variant: (item.variant_options || []).join(' / '),
       })),
