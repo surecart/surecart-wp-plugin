@@ -148,22 +148,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 				( new $block() )->register();
 			}
 		}
-		$files = glob( dirname( SURECART_PLUGIN_FILE ) . '/packages/blocks-next/build/**/block.json' );
+		$files = glob( dirname( SURECART_PLUGIN_FILE ) . '/packages/blocks-next/build/blocks/**/block.json' );
 		foreach ( $files as $file ) {
-			register_block_type( dirname( $file ) );
-		}
-
-		if ( function_exists( 'gutenberg_register_module' ) ) {
-			$views = glob( dirname( SURECART_PLUGIN_FILE ) . '/packages/blocks-next/src/**/view.js' );
-			foreach ( $views as $view ) {
-				$folder_name = basename( dirname( $view ) );
-				gutenberg_register_module(
-					'surecart-' . $folder_name,
-					plugin_dir_url( SURECART_PLUGIN_FILE ) . 'packages/blocks-next/src/test/view.js',
-					array( '@wordpress/interactivity' ),
-					'0.1.0'
-				);
-			}
+			register_block_type_from_metadata( dirname( $file ) );
 		}
 	}
 }

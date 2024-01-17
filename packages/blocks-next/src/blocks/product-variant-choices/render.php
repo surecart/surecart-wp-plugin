@@ -13,12 +13,7 @@
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id( 'p-' );
 
-// Enqueue the view file. (remove once this is fixed in gutenberg).
-if ( function_exists( 'gutenberg_enqueue_module' ) ) {
-	$folder_name = basename( dirname( __FILE__ ) );
-	gutenberg_enqueue_module( 'surecart-' . $folder_name );
-}
-
+// TODO: get from controller.
 $product = get_query_var( 'surecart_current_product' );
 
 ?>
@@ -26,13 +21,9 @@ $product = get_query_var( 'surecart_current_product' );
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product" }'
->
-
-<div class="surecart-block"
-	data-wp-interactive='{ "namespace": "surecart/product" }'
 	data-wp-context='{ "productId": "<?php echo esc_attr( get_query_var( 'sc_product_page_id' ) ); ?>" }'
-	data-wp-watch--variant-values="callbacks.updateVariantAndValues">
-
+	data-wp-watch--variant-values="callbacks.updateVariantAndValues"
+>
 	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
 		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
 			<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
@@ -63,5 +54,4 @@ $product = get_query_var( 'surecart_current_product' );
 	<?php endif; ?>
 
 	<div data-wp-text="surecart/product::state.selectedVariantId"></div>
-</div>
 </div>

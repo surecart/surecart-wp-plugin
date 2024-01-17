@@ -1,12 +1,12 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "surecart/my-first-interactive-block",
-	"version": "0.1.0",
-	"title": "SureCart My First Interactive Block",
+	"name": "surecart/product-variant-choices-v2",
+	"title": "Product Variants",
+	"description": "Displays possible choices for product variants.",
+	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"description": "An interactive block with the Interactivity API",
 	"example": {},
 	"supports": {
 		"interactivity": true
@@ -14,10 +14,11 @@
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
+	"viewModule": "file:../../scripts/product-page/index.js",
 	"style": [
 		"file:./style-index.css",
-		"file:../styles/pill.css",
-		"file:../styles/label.css"
+		"file:../../styles/pill.css",
+		"file:../../styles/label.css"
 	],
 	"render": "file:./render.php"
 }
