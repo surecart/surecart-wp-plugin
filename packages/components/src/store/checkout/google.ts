@@ -125,4 +125,41 @@ window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
   }
 });
 
+/**
+ * Handle shipping info added event.
+ */
+window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
+  if (!window?.dataLayer && !window?.gtag) return;
 
+  const eventDetail = e.detail;
+
+  const data = {
+    currency: eventDetail.currency,
+    value: eventDetail.value,
+    ...(eventDetail?.coupon ? { coupon: eventDetail?.coupon } : {}),
+    ...((eventDetail?.shipping_tier) ? { shipping_tier: eventDetail?.shipping_tier } : {}),
+    items: eventDetail.items.map(item => ({
+      item_id: item.item_id,
+      item_name: item.item_name,
+      currency: item.currency,
+      discount: item.discount,
+      price: item.price,
+      quantity: item.quantity,
+      item_variant: item.item_variant,
+    })),
+  };
+
+  // handle gtag (analytics script.)
+  if (window?.gtag) {
+    window.gtag('event', 'add_shipping_info', data);
+  }
+
+  // handle dataLayer (google tag manager).
+  if (window?.dataLayer) {
+    window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+    window.dataLayer.push({
+      event: 'add_shipping_info',
+      ecommerce: data,
+    });
+  }
+});
