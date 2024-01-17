@@ -8,7 +8,6 @@ defined( 'ABSPATH' ) || exit;
  * Controls the Product Sitemap integration.
  */
 class ProductSiteMap implements \RankMath\Sitemap\Providers\Provider {
-
 	/**
 	 * What type of content this provider handles.
 	 *
