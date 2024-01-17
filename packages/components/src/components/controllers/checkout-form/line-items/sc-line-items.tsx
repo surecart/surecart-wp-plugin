@@ -60,19 +60,6 @@ export class ScLineItems {
     return this.editable;
   }
 
-  /**
-   * Get the max quantity for a line item.
-   *
-   * @param item The line item
-   *
-   * @return The max quantity object
-   */
-  getLineItemMaxQuantity(item: LineItem) {
-    const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
-
-    return max ? { max } : {};
-  }
-
   render() {
     if (!!formBusy() && !checkoutState?.checkout?.line_items?.data?.length) {
       return (
@@ -90,6 +77,8 @@ export class ScLineItems {
       <div class="line-items" part="base" tabindex="0">
         {(checkoutState?.checkout?.line_items?.data || []).map(item => {
           const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
+          const max = getMaxStockQuantity(item?.price?.product as Product, item?.variant as Variant);
+
           return (
             <div class="line-item">
               <sc-product-line-item
@@ -100,7 +89,7 @@ export class ScLineItems {
                 name={(item?.price?.product as Product)?.name}
                 priceName={item?.price?.name}
                 variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
-                {...this.getLineItemMaxQuantity(item)}
+                {...(max ? { max } : {})}
                 editable={this.isEditable(item)}
                 removable={this.removable}
                 quantity={item.quantity}
