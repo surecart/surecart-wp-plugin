@@ -158,7 +158,7 @@
 		"@wordpress/e2e-test-utils": "^5.4.1",
 		"@wordpress/env": "^4.8.0",
 		"@wordpress/prettier-config": "^1.4.0",
-		"@wordpress/scripts": "^26",
+		"@wordpress/scripts": "^27",
 		"adm-zip": "^0.5.9",
 		"archiver": "^4.0.1",
 		"chalk": "^4.0.0",
