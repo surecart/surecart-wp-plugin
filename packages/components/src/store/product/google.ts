@@ -1,6 +1,6 @@
 import { maybeConvertAmount } from 'src/functions/currency';
-import { ProductsSearchedParams } from 'src/types';
-
+import { ProductsSearchedParams, ProductsViewedParams } from 'src/types';
+import { __ } from '@wordpress/i18n';
 /**
  * Handle the search event.
  */
@@ -62,6 +62,41 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
     window.dataLayer.push({ ecommerce: null });
     window.dataLayer.push({
       event: 'view_item',
+      ecommerce: data,
+    });
+  }
+});
+
+/**
+ * Handle view items event.
+ */
+window.addEventListener('scProductsViewed', function (e: CustomEvent) {
+  if (!window?.dataLayer && !window?.gtag) return;
+
+  const eventDetail: ProductsViewedParams = e.detail;
+
+  const data = {
+    ...(eventDetail?.collection?.id ? { item_list_id: [eventDetail?.collection?.id] } : {}),
+    item_list_name: eventDetail?.collection?.name || __('Shop', 'surecart'),
+    items: eventDetail?.products?.map(product => ({
+      item_id: product?.id,
+      item_name: product?.name,
+      ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
+      item_list_name: eventDetail?.collection?.name || __('Shop', 'surecart'),
+      ...(eventDetail?.collection?.id ? { item_list_id: [eventDetail?.collection?.id] } : {}),
+    })),
+  };
+
+  // handle google analytics script
+  if (window?.gtag) {
+    window.gtag('event', 'view_item_list', data);
+  }
+
+  // handle datalayer
+  if (window?.dataLayer) {
+    window.dataLayer.push({ ecommerce: null });
+    window.dataLayer.push({
+      event: 'view_item_list',
       ecommerce: data,
     });
   }

@@ -1,6 +1,6 @@
 import '../checkouts/events';
 import state, { on } from './store';
-import { Checkout, LineItem, Product, ShippingMethod } from 'src/types';
+import { Checkout, LineItem } from 'src/types';
 
 /**
  * Checkout initiated event.

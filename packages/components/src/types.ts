@@ -1181,6 +1181,11 @@ export interface ProductsSearchedParams {
   searchResultIds: string[];
 }
 
+export interface ProductsViewedParams {
+  products: Product[];
+  collection?: ProductCollection;
+}
+
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
 
 interface AdditionalError {

@@ -242,7 +242,7 @@ class Block extends BaseBlock {
 				'searchEnabled'        => ! ! $attributes['search_enabled'],
 				'sortEnabled'          => ! ! $attributes['sort_enabled'],
 				'collectionEnabled'    => false,
-				'collectionId'         => $collection_id,
+				'collection'           => get_query_var( 'surecart_current_collection' ),
 			]
 		);
 

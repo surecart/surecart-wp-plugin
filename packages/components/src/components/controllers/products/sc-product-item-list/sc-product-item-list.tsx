@@ -9,9 +9,10 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product, ProductsSearchedParams } from '../../../../types';
+import { Collection, Product, ProductCollection, ProductsSearchedParams, ProductsViewedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 import '@store/product/facebook';
+import '@store/product/google';
 
 export type LayoutConfig = {
   blockName: string;
@@ -44,7 +45,7 @@ export class ScProductItemList {
   @Prop() collectionEnabled: boolean = true;
 
   /** Show for a specific collection */
-  @Prop() collectionId: string | null = null;
+  @Prop() collection: ProductCollection;
 
   /** Show only featured products. */
   @Prop() featured: boolean = false;
@@ -82,6 +83,9 @@ export class ScProductItemList {
   /** Product was searched */
   @Event() scSearched: EventEmitter<ProductsSearchedParams>;
 
+  /** Products viewed */
+  @Event() scProductsViewed: EventEmitter<ProductsViewedParams>;
+
   /* Current page */
   @State() currentPage: number = 1;
 
@@ -103,11 +107,18 @@ export class ScProductItemList {
 
   componentWillLoad() {
     if (!this?.products?.length) {
-      this.getProducts();
+      this.getProducts().then(() => {
+        this.scProductsViewed.emit({
+          products: this.products,
+          collection: this.collection,
+        });
+      });
     }
 
     if (this.collectionEnabled) {
-      this.getCollections();
+      this.getCollections().then(() => {
+        console.log('first load', this.collections);
+      });
     }
   }
 
@@ -203,8 +214,8 @@ export class ScProductItemList {
     let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
 
     // If we have a collectionId, we should only fetch products from that collection.
-    if (this.collectionId) {
-      collectionIds = [this.collectionId];
+    if (this.collection?.id) {
+      collectionIds = [this.collection.id];
     }
 
     try {
