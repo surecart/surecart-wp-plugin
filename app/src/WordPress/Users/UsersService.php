@@ -20,7 +20,6 @@ class UsersService {
 		add_filter( 'show_admin_bar', [ $this, 'disableAdminBar' ], 10, 1 );
 		add_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
 		add_action( 'surecart/customer_updated', [ $this, 'syncCustomerProfile' ] );
-
 		$this->registerMeta();
 	}
 
@@ -30,10 +29,23 @@ class UsersService {
 	 * @param object $customer Customer Data.
 	 */
 	public function syncCustomerProfile( $customer ) {
-		error_log( 'syncCustomerProfile' );
-		error_log( print_r( $customer, true ) );
+		$wp_user = \SureCart\Models\User::findByCustomerId( $customer->id );
+
+		if ( ! empty( $wp_user->ID ) ) {
+			wp_update_user(
+				[
+					'ID'         => $wp_user->ID,
+					'user_email' => ! empty( $customer->email ) ? $customer->email : $wp_user->user_email,
+					'first_name' => ! empty( $customer->first_name ) ? $customer->first_name : $wp_user->first_name,
+					'last_name'  => ! empty( $customer->last_name ) ? $customer->last_name : $wp_user->last_name,
+					'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,
+				]
+			);
+		}
+
+		return $wp_user;
 	}
-	
+
 	/**
 	 * Fires immediately after an existing user is updated.
 	 *
