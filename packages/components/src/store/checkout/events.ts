@@ -27,24 +27,8 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (!checkout?.selected_shipping_choice) return; // we only care about shipping info.
   if (oldCheckout?.selected_shipping_choice === checkout?.selected_shipping_choice) return; // we only care about new shipping info.
 
-  const selectedShippingChoice = checkout?.shipping_choices?.data?.find(method => method.id === checkout?.selected_shipping_choice);
-
   const event = new CustomEvent('scShippingInfoAdded', {
-    detail: {
-      currency: (checkout.currency || '').toUpperCase(),
-      value: checkout?.total_amount,
-      ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
-      ...((selectedShippingChoice?.shipping_method as ShippingMethod)?.name ? { shipping_tier: (selectedShippingChoice?.shipping_method as ShippingMethod)?.name } : {}),
-      items: (checkout?.line_items?.data || []).map(item => ({
-        item_id: (item?.price?.product as Product)?.id,
-        item_name: (item?.price?.product as Product)?.name || '',
-        currency: (checkout.currency || '').toUpperCase(),
-        discount: item?.discount_amount || 0,
-        price: item?.price?.amount || 0,
-        quantity: item?.quantity || 1,
-        item_variant: (item.variant_options || []).join(' / '),
-      })),
-    },
+    detail:checkout,
     bubbles: true,
   });
   document.dispatchEvent(event);

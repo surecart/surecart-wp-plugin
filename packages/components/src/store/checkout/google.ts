@@ -1,5 +1,5 @@
 import { maybeConvertAmount } from '../../functions/currency';
-import { LineItem, Product } from 'src/types';
+import { Checkout, LineItem, Product, ShippingMethod } from 'src/types';
 
 /**
  * Handle add to cart event.
@@ -131,21 +131,23 @@ window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
 window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
   if (!window?.dataLayer && !window?.gtag) return;
 
-  const eventDetail = e.detail;
+  const checkout: Checkout = e.detail;
+  const selectedShippingChoice = checkout?.shipping_choices?.data?.find(method => method.id === checkout?.selected_shipping_choice);
+  const selectedShippingTier = (selectedShippingChoice?.shipping_method as ShippingMethod)?.name || '';
 
   const data = {
-    currency: eventDetail.currency,
-    value: eventDetail.value,
-    ...(eventDetail?.coupon ? { coupon: eventDetail?.coupon } : {}),
-    ...((eventDetail?.shipping_tier) ? { shipping_tier: eventDetail?.shipping_tier } : {}),
-    items: eventDetail.items.map(item => ({
-      item_id: item.item_id,
-      item_name: item.item_name,
-      currency: item.currency,
-      discount: item.discount,
-      price: item.price,
+    currency: checkout.currency,
+    value: maybeConvertAmount(checkout.total_amount, checkout.currency),
+    ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
+    ...(!!selectedShippingTier ? { shipping_tier: selectedShippingTier } : {}),
+    items: (checkout.line_items?.data || []).map(item => ({
+      item_id: item.id,
+      item_name: item.name,
+      currency: item.price?.currency,
+      discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
+      price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
       quantity: item.quantity,
-      item_variant: item.item_variant,
+      item_variant: (item.variant_options || []).join(' / '),
     })),
   };
 
@@ -159,6 +161,44 @@ window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
     window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
     window.dataLayer.push({
       event: 'add_shipping_info',
+      ecommerce: data,
+    });
+  }
+});
+
+/**
+ * Handle checkout initiated event.
+ */
+window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
+  if (!window?.dataLayer && !window?.gtag) return;
+
+  const checkout: Checkout = e.detail;
+
+  const data = {
+    currency: checkout.currency,
+    value: maybeConvertAmount(checkout.total_amount, checkout.currency),
+    ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
+    items: (checkout.line_items?.data || []).map(item => ({
+      item_id: item.id,
+      item_name: item.name,
+      currency: item.price?.currency,
+      discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
+      price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
+      quantity: item.quantity,
+      item_variant: (item.variant_options || []).join(' / '),
+    })),
+  };
+
+  // handle gtag (analytics script.)
+  if (window?.gtag) {
+    window.gtag('event', 'begin_checkout', data);
+  }
+
+  // handle dataLayer (google tag manager).
+  if (window?.dataLayer) {
+    window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+    window.dataLayer.push({
+      event: 'begin_checkout',
       ecommerce: data,
     });
   }
