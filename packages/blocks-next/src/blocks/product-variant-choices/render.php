@@ -12,16 +12,18 @@
 
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id( 'p-' );
-
-// TODO: get from controller.
-$product = get_query_var( 'surecart_current_product' );
-
+// get product page id.
+$product_id = get_query_var( 'sc_product_page_id' ) ?? $attributes['productId'] ?? null;
+// get initial state.
+$products = wp_initial_state( 'surecart/product' );
+// get product from initial state.
+$product = $products[ $product_id ]['product'] ?? null;
 ?>
 
 <div
 	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product" }'
-	data-wp-context='{ "productId": "<?php echo esc_attr( get_query_var( 'sc_product_page_id' ) ); ?>" }'
+	data-wp-context='{ "productId": "<?php echo esc_attr( $product_id ); ?>" }'
 	data-wp-watch--variant-values="callbacks.updateVariantAndValues"
 >
 	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
