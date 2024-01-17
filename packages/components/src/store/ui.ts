@@ -26,5 +26,8 @@ on('set', (key, newState) => {
   } else {
     speak(__('Cart Closed', 'surecart'), 'assertive');
   }
+
+  const event = new CustomEvent('scCartToggled', { detail: newState, bubbles: true });
+  document.dispatchEvent(event);
 });
 export default store;
