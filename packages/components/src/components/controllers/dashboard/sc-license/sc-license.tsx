@@ -135,13 +135,6 @@ export class ScLicense {
             )}
           </div>
         </span>
-        <div slot="end">
-          <sc-input value={this.license?.key} readonly>
-            <sc-button type="default" size="small" slot="suffix" onClick={() => this.copyKey(this.license?.key)}>
-              {this.copied ? __('Copied!', 'surecart') : __('Copy', 'surecart')}
-            </sc-button>
-          </sc-input>
-        </div>
       </Fragment>
     );
   }
@@ -164,6 +157,16 @@ export class ScLicense {
               <sc-stacked-list-row style={{ '--columns': '2', '--sc-stacked-list-row-align-items': 'center' }}>
                 <div>{__('License Status', 'surecart')}</div>
                 {this.renderStatus()}
+              </sc-stacked-list-row>
+              <sc-stacked-list-row style={{ '--columns': '2' }}>
+                <div>{__('License Key', 'surecart')}</div>
+                <div class="license__key">
+                  <sc-input value={this.license?.key} readonly>
+                    <sc-button class="license__copy" type="default" size="small" slot="suffix" onClick={() => this.copyKey(this.license?.key)}>
+                      {this.copied ? __('Copied!', 'surecart') : __('Copy', 'surecart')}
+                    </sc-button>
+                  </sc-input>
+                </div>
               </sc-stacked-list-row>
               <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('Date', 'surecart')}</div>

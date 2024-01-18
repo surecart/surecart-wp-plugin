@@ -11,6 +11,9 @@
     align-items: center;
     gap: 1rem;
   }
+  &__key {
+    display: block;
+  }
 }
 
 .close__button {
