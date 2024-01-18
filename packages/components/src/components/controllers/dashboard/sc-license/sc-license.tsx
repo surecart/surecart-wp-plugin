@@ -181,6 +181,7 @@ export class ScLicense {
             </sc-stacked-list>
           </sc-card>
         </sc-dashboard-module>
+
         <sc-dashboard-module>
           <span slot="heading">
             <slot name="heading">{__('Activations', 'surecart')}</slot>
