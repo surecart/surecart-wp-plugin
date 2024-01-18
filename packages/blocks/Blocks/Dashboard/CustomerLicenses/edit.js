@@ -1,11 +1,13 @@
-import { __, _n, sprintf } from '@wordpress/i18n';
+/** @jsx jsx  */
+import { css, jsx } from '@emotion/core';
+import { __, _n } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
 import { PanelBody, PanelRow, TextControl } from '@wordpress/components';
-import { ScDashboardModule } from '@surecart/components-react';
+import { ScDashboardModule, ScTag } from '@surecart/components-react';
 import { Fragment } from '@wordpress/element';
 import OverlayLabel from '../../../components/OverlayLabel';
 
@@ -60,11 +62,25 @@ export default ({ attributes, setAttributes }) => {
 										)}
 									</strong>
 								</div>
-								<div>
-									4 files &bull;{' '}
-									<sc-format-bytes
-										value={1235}
-									></sc-format-bytes>
+								<div
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: 0.25em;
+										color: var(--sc-input-label-color);
+									`}
+								>
+									<div>
+										<ScTag type="success">
+											{__('Active', 'surecart')}
+										</ScTag>
+									</div>
+									<div>
+										{__(
+											'1 of 2 Activations Used',
+											'surecart'
+										)}
+									</div>
 								</div>
 							</sc-spacing>
 							<sc-icon
@@ -86,11 +102,25 @@ export default ({ attributes, setAttributes }) => {
 										)}
 									</strong>
 								</div>
-								<div>
-									4 files &bull;{' '}
-									<sc-format-bytes
-										value={2345}
-									></sc-format-bytes>
+								<div
+									css={css`
+										display: flex;
+										align-items: center;
+										gap: 0.25em;
+										color: var(--sc-input-label-color);
+									`}
+								>
+									<div>
+										<ScTag type="info">
+											{__('Not Activated', 'surecart')}
+										</ScTag>
+									</div>
+									<div>
+										{__(
+											'0 of 2 Activations Used',
+											'surecart'
+										)}
+									</div>
 								</div>
 							</sc-spacing>
 							<sc-icon
