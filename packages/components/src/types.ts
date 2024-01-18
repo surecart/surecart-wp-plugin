@@ -1151,6 +1151,8 @@ export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
   currency: string;
+  total_amount: number;
+  line_items?: lineItems;
   payment_method: {
     billing_details: {
       name: string;

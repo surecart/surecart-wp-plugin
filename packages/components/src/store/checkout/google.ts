@@ -13,37 +13,34 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
   // sanity check.
   if (!item?.price?.product) return;
 
-  // create the items array.
-  const items = [
-    {
-      item_id: (item.price?.product as Product)?.id,
-      item_name: (item.price?.product as Product)?.name,
-      item_variant: (item.variant_options || []).join(' / '),
-      price: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'),
-      currency: item.price?.currency,
-      quantity: item.quantity,
-      discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item.price?.currency || 'USD') : 0,
-    },
-  ];
+  const data = {
+    currency: item.price?.currency,
+    value: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'),
+    items: [
+      {
+        item_id: (item.price?.product as Product)?.id,
+        item_name: (item.price?.product as Product)?.name,
+        item_variant: (item.variant_options || []).join(' / '),
+        price: maybeConvertAmount(item?.price?.amount || 0, item.price?.currency || 'USD'),
+        currency: item.price?.currency,
+        quantity: item.quantity,
+        discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item.price?.currency || 'USD') : 0,
+      },
+    ],
+  };
 
   // handle datalayer
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
     window.dataLayer.push({
       event: 'add_to_cart',
-      ecommerce: {
-        data: {
-          items,
-        },
-      },
+      ecommerce: data,
     });
     return;
   }
 
   // handle google analytics script
-  window.gtag('event', 'add_to_cart', {
-    items,
-  });
+  window.gtag('event', 'add_to_cart', data);
 });
 
 /**
@@ -79,9 +76,7 @@ window.addEventListener('scRemovedFromCart', function (e: CustomEvent) {
     window.dataLayer.push({ ecommerce: null });
     window.dataLayer.push({
       event: 'remove_from_cart',
-      ecommerce: {
-        data,
-      },
+      ecommerce: data,
     });
     return;
   }
@@ -146,7 +141,7 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
       discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
       price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
       quantity: item.quantity,
-      item_variant: (item.variant_options || []).join(' / '),
+      ...(item?.variant_options?.length ? { item_variant: (item.variant_options || []).join(' / ') } : {}),
     })),
   };
 
@@ -185,7 +180,7 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
       discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item?.price?.currency || 'USD') : 0,
       price: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
       quantity: item?.quantity || 1,
-      item_variant: (item.variant_options || []).join(' / '),
+      ...(item?.variant_options?.length ? { item_variant: (item.variant_options || []).join(' / ') } : {}),
     })),
   };
 
@@ -222,7 +217,7 @@ window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
       discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, item?.price?.currency || 'USD') : 0,
       price: maybeConvertAmount(item?.price?.amount || 0, item?.price?.currency || 'USD'),
       quantity: item?.quantity || 1,
-      item_variant: (item.variant_options || []).join(' / '),
+      ...(item?.variant_options?.length ? { item_variant: (item.variant_options || []).join(' / ') } : {}),
     })),
   };
 
@@ -262,7 +257,7 @@ window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
       discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
       price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
       quantity: item.quantity,
-      item_variant: (item.variant_options || []).join(' / '),
+      ...(item?.variant_options?.length ? { item_variant: (item.variant_options || []).join(' / ') } : {}),
     })),
   };
 

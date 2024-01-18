@@ -45,7 +45,7 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
         discount: product?.discount_amount ? maybeConvertAmount(product?.discount_amount, product?.price?.currency) : 0,
         price: maybeConvertAmount(product?.price?.amount, product?.price?.currency),
         quantity: product?.quantity || 1,
-        item_variant: (product?.variant_options || []).map(option => option.name).join(' / '),
+        ...(product?.variant_options?.length ? { item_variant: product?.variant_options.map(option => option.name).join(' / ') } : {}),
         ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
       },
     ],

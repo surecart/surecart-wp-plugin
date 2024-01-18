@@ -202,6 +202,8 @@ export class ScStripePaymentElement {
             checkout_id: checkoutState.checkout?.id,
             currency: checkoutState.checkout?.currency,
             processor_type: 'stripe',
+            total_amount: checkoutState.checkout?.total_amount,
+            line_items: checkoutState.checkout?.line_items,
             payment_method: {
               billing_details: {
                 email: checkoutState.checkout?.email,
