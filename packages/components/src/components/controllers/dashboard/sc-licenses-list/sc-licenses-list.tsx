@@ -137,7 +137,9 @@ export class ScLicensesList {
   renderContent() {
     if (this.loading) {
       return this.renderLoading();
-    } else if (this.licenses?.length === 0) {
+    }
+
+    if (this.licenses?.length === 0) {
       return this.renderEmpty();
     }
 
