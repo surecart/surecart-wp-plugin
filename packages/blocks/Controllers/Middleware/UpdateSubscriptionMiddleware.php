@@ -47,7 +47,7 @@ class UpdateSubscriptionMiddleware {
 			]
 		)->update(
 			[
-				'id'             => sanitize_text_field( wp_unslash( $_GET['id'] ) ),
+				'id'             => sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) ),
 				'payment_method' => $intent->payment_method,
 			]
 		);
