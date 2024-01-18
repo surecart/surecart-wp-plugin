@@ -203,7 +203,7 @@ class SubscriptionController extends BaseController {
 						'productId'      => $subscription->price->product->id,
 						'productGroupId' => $subscription->price->product->product_group->archived ? null : $subscription->price->product->product_group->id,
 						'subscription'   => $subscription,
-						'successUrl'     => home_url( add_query_arg( [ 'tab' => $this->getTab(), 'nonce' => wp_create_nonce( 'subscription-switch' ) ], remove_query_arg( array_keys( $_GET ) ) ) ),
+						'successUrl'     => home_url( add_query_arg( [ 'tab' => $this->getTab(), 'nonce' => wp_create_nonce( 'subscription-switch' ) ] ) ),
 					]
 				)->render()
 			);
