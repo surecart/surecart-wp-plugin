@@ -23,13 +23,10 @@ on('set', (key, newState) => {
 
   if (newState?.open) {
     speak(__('Cart Opened', 'surecart'), 'assertive');
-    const event = new CustomEvent('scCartOpened', { bubbles: true });
-    document.dispatchEvent(event);
   } else {
     speak(__('Cart Closed', 'surecart'), 'assertive');
-    const event = new CustomEvent('scCartClosed', { bubbles: true });
-    document.dispatchEvent(event);
   }
 });
 
+export { on };
 export default store;

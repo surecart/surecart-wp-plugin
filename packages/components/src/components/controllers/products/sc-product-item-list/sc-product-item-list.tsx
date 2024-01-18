@@ -116,9 +116,7 @@ export class ScProductItemList {
     }
 
     if (this.collectionEnabled) {
-      this.getCollections().then(() => {
-        console.log('first load', this.collections);
-      });
+      this.getCollections();
     }
   }
 

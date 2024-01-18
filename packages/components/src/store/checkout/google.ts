@@ -79,15 +79,51 @@ window.addEventListener('scRemovedFromCart', function (e: CustomEvent) {
   if (window?.gtag) {
     window.gtag('event', 'remove_from_cart', data);
   }
-
-  // handle datalayer
-  if (window?.dataLayer) {
+  else if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
     window.dataLayer.push({
       event: 'remove_from_cart',
       ecommerce: {
         data,
       },
+    });
+  }
+});
+
+/**
+ * Handle view cart event.
+ */
+window.addEventListener('scViewedCart', function (e: CustomEvent) {
+  if (!window?.dataLayer && !window?.gtag) return;
+
+  const checkout: Checkout = e.detail;
+
+  const data = {
+    currency: checkout.currency,
+    value: maybeConvertAmount(checkout.total_amount, checkout.currency),
+    ...(checkout.discount?.promotion?.code ? { coupon: checkout.discount?.promotion?.code } : {}),
+    items: (checkout.line_items?.data || []).map(item => ({
+      item_id: item.id,
+      item_name: item.name,
+      currency: item.price?.currency,
+      discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
+      price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
+      quantity: item.quantity,
+      item_variant: (item.variant_options || []).join(' / '),
+    })),
+  };
+
+  // handle gtag (analytics script.)
+  if (window?.gtag) {
+    window.gtag('event', 'view_cart', data);
+  }
+
+  // handle dataLayer (google tag manager).
+  if (window?.dataLayer) {
+    window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
+    window.dataLayer.push({
+      event: 'view_cart',
+      ecommerce: data,
     });
   }
 });
@@ -105,8 +141,8 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
     value: maybeConvertAmount(checkout.total_amount, checkout.currency),
     ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
     items: (checkout.line_items?.data || []).map(item => ({
-      item_id: item.id,
-      item_name: item.name,
+      item_id: (item?.price?.product as Product)?.id,
+      item_name: (item?.price?.product as Product)?.name,
       currency: item.price?.currency,
       discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
       price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
@@ -224,8 +260,8 @@ window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
     ...(checkout?.discount?.promotion?.code ? { coupon: checkout?.discount?.promotion?.code } : {}),
     ...(!!selectedShippingTier ? { shipping_tier: selectedShippingTier } : {}),
     items: (checkout.line_items?.data || []).map(item => ({
-      item_id: item.id,
-      item_name: item.name,
+      item_id: (item?.price?.product as Product)?.id,
+      item_name: (item?.price?.product as Product)?.name || '',
       currency: item.price?.currency,
       discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
       price: maybeConvertAmount(item?.price?.amount, item.price?.currency),

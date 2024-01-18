@@ -46,7 +46,7 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
         discount: product?.discount_amount ? maybeConvertAmount(product?.discount_amount, product?.price?.currency) : 0,
         price: maybeConvertAmount(product?.price?.amount, product?.price?.currency),
         quantity: product?.quantity,
-        item_variant: (product?.variant_options || []).join(' / '),
+        item_variant: (product?.variant_options || []).map(option => option.name).join(' / '),
         ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
       },
     ],
@@ -76,14 +76,14 @@ window.addEventListener('scProductsViewed', function (e: CustomEvent) {
   const eventDetail: ProductsViewedParams = e.detail;
 
   const data = {
-    ...(eventDetail?.collection?.id ? { item_list_id: [eventDetail?.collection?.id] } : {}),
+    ...(eventDetail?.collection?.id ? { item_list_id: eventDetail?.collection?.id } : {}),
     item_list_name: eventDetail?.collection?.name || __('Shop', 'surecart'),
     items: eventDetail?.products?.map(product => ({
       item_id: product?.id,
       item_name: product?.name,
       ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
       item_list_name: eventDetail?.collection?.name || __('Shop', 'surecart'),
-      ...(eventDetail?.collection?.id ? { item_list_id: [eventDetail?.collection?.id] } : {}),
+      ...(eventDetail?.collection?.id ? { item_list_id: eventDetail?.collection?.id } : {}),
     })),
   };
 

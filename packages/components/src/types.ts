@@ -1121,7 +1121,6 @@ export interface GoogleAnalyticsItem {
   discount?: number;
 }
 
-
 export interface ProductState {
   formId: number;
   mode: 'live' | 'test';
@@ -1211,4 +1210,10 @@ export interface ScNoticeStore {
   };
   additional_errors?: AdditionalError[] | null;
   dismissible?: boolean;
+}
+
+export interface ScUIStore {
+  cart: {
+    open: boolean;
+  };
 }

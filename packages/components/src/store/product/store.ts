@@ -2,6 +2,7 @@ import { createStore } from '@stencil/store';
 import { ProductState } from 'src/types';
 import { productViewed } from './events';
 import './facebook';
+import './google';
 import { getDefaultState } from './getters';
 
 interface Store {
