@@ -9,13 +9,6 @@ window.addEventListener('scSearched', function (e: CustomEvent) {
 
   const eventDetail: ProductsSearchedParams = e.detail;
 
-  // handle google analytics script
-  if (window?.gtag) {
-    window.gtag('event', 'search', {
-      search_term: eventDetail?.searchString,
-    });
-  }
-
   // handle datalayer
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
@@ -25,7 +18,13 @@ window.addEventListener('scSearched', function (e: CustomEvent) {
         search_term: eventDetail?.searchString,
       },
     });
+    return;
   }
+
+  // handle google analytics script
+  window.gtag('event', 'search', {
+    search_term: eventDetail?.searchString,
+  });
 });
 
 /**
@@ -52,11 +51,6 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
     ],
   };
 
-  // handle google analytics script
-  if (window?.gtag) {
-    window.gtag('event', 'view_item', data);
-  }
-
   // handle datalayer
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
@@ -64,7 +58,11 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
       event: 'view_item',
       ecommerce: data,
     });
+    return;
   }
+
+  // handle google analytics script
+  window.gtag('event', 'view_item', data);
 });
 
 /**
@@ -87,11 +85,6 @@ window.addEventListener('scProductsViewed', function (e: CustomEvent) {
     })),
   };
 
-  // handle google analytics script
-  if (window?.gtag) {
-    window.gtag('event', 'view_item_list', data);
-  }
-
   // handle datalayer
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
@@ -100,4 +93,7 @@ window.addEventListener('scProductsViewed', function (e: CustomEvent) {
       ecommerce: data,
     });
   }
+
+  // handle google analytics script
+  window.gtag('event', 'view_item_list', data);
 });

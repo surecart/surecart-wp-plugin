@@ -26,13 +26,6 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
     },
   ];
 
-  // handle google analytics script
-  if (window?.gtag) {
-    window.gtag('event', 'add_to_cart', {
-      items,
-    });
-  }
-
   // handle datalayer
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
@@ -45,6 +38,11 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
       },
     });
   }
+
+  // handle google analytics script
+  window.gtag('event', 'add_to_cart', {
+    items,
+  });
 });
 
 /**
@@ -75,11 +73,8 @@ window.addEventListener('scRemovedFromCart', function (e: CustomEvent) {
     ],
   };
 
-  // handle google analytics script
-  if (window?.gtag) {
-    window.gtag('event', 'remove_from_cart', data);
-  }
-  else if (window?.dataLayer) {
+  // handle datalayer
+  if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null });
     window.dataLayer.push({
       event: 'remove_from_cart',
@@ -88,6 +83,9 @@ window.addEventListener('scRemovedFromCart', function (e: CustomEvent) {
       },
     });
   }
+
+  // handle google analytics script
+  window.gtag('event', 'remove_from_cart', data);
 });
 
 /**
@@ -113,11 +111,6 @@ window.addEventListener('scViewedCart', function (e: CustomEvent) {
     })),
   };
 
-  // handle gtag (analytics script.)
-  if (window?.gtag) {
-    window.gtag('event', 'view_cart', data);
-  }
-
   // handle dataLayer (google tag manager).
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
@@ -126,6 +119,9 @@ window.addEventListener('scViewedCart', function (e: CustomEvent) {
       ecommerce: data,
     });
   }
+
+  // handle gtag (analytics script.)
+  window.gtag('event', 'view_cart', data);
 });
 
 /**
@@ -151,11 +147,6 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
     })),
   };
 
-  // handle gtag (analytics script.)
-  if (window?.gtag) {
-    window.gtag('event', 'begin_checkout', data);
-  }
-
   // handle dataLayer (google tag manager).
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
@@ -164,6 +155,9 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
       ecommerce: data,
     });
   }
+
+  // handle gtag (analytics script.)
+  window.gtag('event', 'begin_checkout', data);
 });
 
 /**
@@ -191,11 +185,6 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
     })),
   };
 
-  // handle gtag (analytics script.)
-  if (window?.gtag) {
-    window.gtag('event', 'purchase', data);
-  }
-
   // handle dataLayer (google tag manager).
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
@@ -204,6 +193,9 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
       ecommerce: data,
     });
   }
+
+  // handle gtag (analytics script.)
+  window.gtag('event', 'purchase', data);
 });
 
 /**
@@ -229,11 +221,6 @@ window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
     })),
   };
 
-  // handle gtag (analytics script.)
-  if (window?.gtag) {
-    window.gtag('event', 'add_payment_info', data);
-  }
-
   // handle dataLayer (google tag manager).
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
@@ -242,6 +229,9 @@ window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
       ecommerce: data,
     });
   }
+
+  // handle gtag (analytics script.)
+  window.gtag('event', 'add_payment_info', data);
 });
 
 /**
@@ -270,11 +260,6 @@ window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
     })),
   };
 
-  // handle gtag (analytics script.)
-  if (window?.gtag) {
-    window.gtag('event', 'add_shipping_info', data);
-  }
-
   // handle dataLayer (google tag manager).
   if (window?.dataLayer) {
     window.dataLayer.push({ ecommerce: null }); // Clear the previous ecommerce object.
@@ -283,4 +268,7 @@ window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
       ecommerce: data,
     });
   }
+
+  // handle gtag (analytics script.)
+  window.gtag('event', 'add_shipping_info', data);
 });
