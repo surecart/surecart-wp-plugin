@@ -27,6 +27,7 @@ class MissingPaymentMethodMiddleware {
 		// no payment method, show the payment method form.
 		if ( empty( $subscription->payment_method ) && empty( $subscription->manual_payment_method ) ) {
 			$current_url = home_url( add_query_arg( [ 'tab' => esc_attr( $tab ) ] ) );
+
 			return ( new PaymentMethodController() )->create(
 				[
 					'success_url' => $current_url,
