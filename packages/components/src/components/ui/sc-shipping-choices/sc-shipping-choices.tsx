@@ -1,6 +1,6 @@
-import { Component, Prop, h, Host } from '@stencil/core';
+import { Component, Prop, h, Host, Event, EventEmitter } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { state as checkoutState } from '@store/checkout';
+import { state as checkoutState, on as onCheckoutChange } from '@store/checkout';
 import { Address, Checkout, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
@@ -30,6 +30,9 @@ export class ScShippingChoices {
   /** Whether to show the shipping choice description */
   @Prop() showDescription: boolean = true;
 
+  /** When shipping info is added */
+  @Event() scShippingInfoAdded: EventEmitter<Checkout>;
+
   /** Maybe update the order. */
   async updateCheckout(selectedShippingChoiceId: string) {
     if (!selectedShippingChoiceId) return;
@@ -55,6 +58,20 @@ export class ScShippingChoices {
     }
   }
 
+  componentDidLoad() {
+    if (!!checkoutState?.checkout?.selected_shipping_choice) {
+      this.scShippingInfoAdded.emit(checkoutState.checkout);
+    }
+
+    onCheckoutChange('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
+      if (key !== 'checkout') return; // we only care about checkout
+      if (!checkout?.selected_shipping_choice) return; // we only care about shipping info.
+      if (oldCheckout?.selected_shipping_choice === checkout?.selected_shipping_choice) return; // we only care about new shipping info.
+
+      this.scShippingInfoAdded.emit(checkout);
+    });
+  }
+
   render() {
     // shipping choice is not rewquired.
     if (!checkoutState?.checkout?.selected_shipping_choice_required) {
@@ -73,7 +90,7 @@ export class ScShippingChoices {
     // no shipping choices yet.
     if (!checkoutState?.checkout?.shipping_choices?.data?.length) {
       return (
-        <sc-form-control part='empty' label={this.label || __('Shipping', 'surecart')}>
+        <sc-form-control part="empty" label={this.label || __('Shipping', 'surecart')}>
           <div class="shipping-choice__empty">{__('Sorry, we are not able to ship to your address.', 'surecart')}</div>
         </sc-form-control>
       );
@@ -81,9 +98,15 @@ export class ScShippingChoices {
 
     return (
       <Host>
-        <sc-radio-group part='base' label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
+        <sc-radio-group part="base" label={this.label || __('Shipping', 'surecart')} class="shipping-choices" onScChange={e => this.updateCheckout(e.detail)}>
           {(checkoutState?.checkout?.shipping_choices?.data || []).map(({ id, amount, currency, shipping_method }) => (
-            <sc-radio key={id} checked={checkoutState?.checkout?.selected_shipping_choice === id} exportparts='base:radio__base,label:radio__label,control:radio__control,checked-icon:radio__checked-icon' class="shipping-choice" value={id}>
+            <sc-radio
+              key={id}
+              checked={checkoutState?.checkout?.selected_shipping_choice === id}
+              exportparts="base:radio__base,label:radio__label,control:radio__control,checked-icon:radio__checked-icon"
+              class="shipping-choice"
+              value={id}
+            >
               <div class="shipping-choice__text">
                 <div class="shipping-choice__name">{(shipping_method as ShippingMethod)?.name || __('Standard Shipping', 'surecart')}</div>
                 {this.showDescription && !!(shipping_method as ShippingMethod)?.description && (

@@ -12,25 +12,10 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
 
   const event = new CustomEvent<Checkout>('scCheckoutInitiated', {
-    detail:checkout,
+    detail: checkout,
     bubbles: true,
   });
 
-  document.dispatchEvent(event);
-});
-
-/**
- * Add shipping info event.
- */
-on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
-  if (key !== 'checkout') return; // we only care about checkout
-  if (!checkout?.selected_shipping_choice) return; // we only care about shipping info.
-  if (oldCheckout?.selected_shipping_choice === checkout?.selected_shipping_choice) return; // we only care about new shipping info.
-
-  const event = new CustomEvent('scShippingInfoAdded', {
-    detail:checkout,
-    bubbles: true,
-  });
   document.dispatchEvent(event);
 });
 

@@ -15,7 +15,7 @@ Object.values(defaultState)
   .filter((stateProduct: ProductState) => stateProduct?.isProductPage)
   .forEach((stateProduct: ProductState) => {
     if (stateProduct?.product?.id) {
-      productViewed(stateProduct?.product,stateProduct?.selectedPrice );
+      productViewed(stateProduct?.product, stateProduct?.selectedPrice, stateProduct?.quantity);
     }
   });
 

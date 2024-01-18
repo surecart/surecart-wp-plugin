@@ -3,7 +3,7 @@ import { Price, Product } from 'src/types';
 /**
  * Product viewed event.
  */
-export const productViewed = (product: Product,selectedPrice: Price) => {
+export const productViewed = (product: Product, selectedPrice: Price, quantity = 1) => {
   const event = new CustomEvent('scProductViewed', {
     detail: {
       id: product?.id,
@@ -13,6 +13,7 @@ export const productViewed = (product: Product,selectedPrice: Price) => {
       prices: product?.prices,
       variant_options: product?.variant_options?.data,
       product_collections: product?.product_collections,
+      quantity,
     },
     bubbles: true,
   });

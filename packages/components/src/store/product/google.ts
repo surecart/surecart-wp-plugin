@@ -44,7 +44,7 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
         currency: product?.price?.currency,
         discount: product?.discount_amount ? maybeConvertAmount(product?.discount_amount, product?.price?.currency) : 0,
         price: maybeConvertAmount(product?.price?.amount, product?.price?.currency),
-        quantity: product?.quantity,
+        quantity: product?.quantity || 1,
         item_variant: (product?.variant_options || []).map(option => option.name).join(' / '),
         ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
       },
@@ -92,6 +92,7 @@ window.addEventListener('scProductsViewed', function (e: CustomEvent) {
       event: 'view_item_list',
       ecommerce: data,
     });
+    return;
   }
 
   // handle google analytics script

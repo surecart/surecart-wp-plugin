@@ -37,6 +37,7 @@ window.addEventListener('scAddedToCart', function (e: CustomEvent) {
         },
       },
     });
+    return;
   }
 
   // handle google analytics script
@@ -82,6 +83,7 @@ window.addEventListener('scRemovedFromCart', function (e: CustomEvent) {
         data,
       },
     });
+    return;
   }
 
   // handle google analytics script
@@ -101,13 +103,13 @@ window.addEventListener('scViewedCart', function (e: CustomEvent) {
     value: maybeConvertAmount(checkout.total_amount, checkout.currency),
     ...(checkout.discount?.promotion?.code ? { coupon: checkout.discount?.promotion?.code } : {}),
     items: (checkout.line_items?.data || []).map(item => ({
-      item_id: item.id,
-      item_name: item.name,
+      item_id: (item?.price?.product as Product)?.id,
+      item_name: (item?.price?.product as Product)?.name,
       currency: item.price?.currency,
       discount: item.discount_amount ? maybeConvertAmount(item.discount_amount, item.price?.currency) : 0,
       price: maybeConvertAmount(item?.price?.amount, item.price?.currency),
       quantity: item.quantity,
-      item_variant: (item.variant_options || []).join(' / '),
+      ...(item?.variant_options?.length ? { item_variant: (item.variant_options || []).join(' / ') } : {}),
     })),
   };
 
@@ -118,6 +120,7 @@ window.addEventListener('scViewedCart', function (e: CustomEvent) {
       event: 'view_cart',
       ecommerce: data,
     });
+    return;
   }
 
   // handle gtag (analytics script.)
@@ -154,6 +157,7 @@ window.addEventListener('scCheckoutInitiated', function (e: CustomEvent) {
       event: 'begin_checkout',
       ecommerce: data,
     });
+    return;
   }
 
   // handle gtag (analytics script.)
@@ -192,6 +196,7 @@ window.addEventListener('scCheckoutCompleted', function (e: CustomEvent) {
       event: 'purchase',
       ecommerce: data,
     });
+    return;
   }
 
   // handle gtag (analytics script.)
@@ -228,6 +233,7 @@ window.addEventListener('scPaymentInfoAdded', function (e: CustomEvent) {
       event: 'add_payment_info',
       ecommerce: data,
     });
+    return;
   }
 
   // handle gtag (analytics script.)
@@ -267,6 +273,7 @@ window.addEventListener('scShippingInfoAdded', function (e: CustomEvent) {
       event: 'add_shipping_info',
       ecommerce: data,
     });
+    return;
   }
 
   // handle gtag (analytics script.)
