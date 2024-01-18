@@ -15,16 +15,8 @@ class SubscriptionNonceVerificationMiddleware {
 	 * @return function
 	 */
 	public function handle( string $action, Closure $next ) {
-		// get nonce from URL.
-		$nonce = $_REQUEST['nonce'] ?? '';
-
-		if ( empty( $nonce ) ) {
-			wp_die( esc_html__( 'Something is wrong with the provided link.', 'surecart' ) );
-			exit;
-		}
-
 		// check nonce.
-		if ( ! wp_verify_nonce( $nonce, 'subscription-switch' ) ) {
+		if ( ! wp_verify_nonce( $_REQUEST['nonce'] ?? '', 'subscription-switch' ) ) {
 			wp_die( esc_html__( 'Your session expired - please try again.', 'surecart' ) );
 			exit;
 		}
