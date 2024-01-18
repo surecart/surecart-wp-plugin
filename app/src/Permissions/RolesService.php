@@ -127,7 +127,7 @@ class RolesService {
 			$wp_roles->add_cap( 'administrator', 'manage_sc_shop_settings' );
 			$wp_roles->add_cap( 'administrator', 'manage_sc_account_settings' );
 
-			// Add the main model capabilities
+			// Add the main model capabilities.
 			$capabilities = $this->getModelCaps();
 			foreach ( $capabilities as $cap_group ) {
 				foreach ( $cap_group as $cap ) {
