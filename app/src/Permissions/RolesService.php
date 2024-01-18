@@ -63,12 +63,6 @@ class RolesService {
 				'publish_posts'          => true,
 				'read_private_pages'     => true,
 				'read_private_posts'     => true,
-				'list_users' 		     => true,
-				'edit_user' 		     => true,
-				'promote_user' 		     => true,
-				'delete_user' 		     => true,
-				'manage_sites' 		     => true,
-				'create_users'		     => true,
 			]
 		);
 
@@ -124,6 +118,8 @@ class RolesService {
 			$wp_roles->add_cap( 'sc_shop_manager', 'view_sc_shop_sensitive_data' );
 			$wp_roles->add_cap( 'sc_shop_manager', 'export_sc_shop_reports' );
 			$wp_roles->add_cap( 'sc_shop_manager', 'manage_sc_shop_settings' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'list_users' );
+			$wp_roles->add_cap( 'sc_shop_manager', 'edit_user' );
 
 			$wp_roles->add_cap( 'administrator', 'view_sc_shop_reports' );
 			$wp_roles->add_cap( 'administrator', 'view_sc_shop_sensitive_data' );
