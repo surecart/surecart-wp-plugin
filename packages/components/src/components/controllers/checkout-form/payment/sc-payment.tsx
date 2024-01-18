@@ -4,7 +4,14 @@ import { state as checkoutState } from '@store/checkout';
 import { state as processorsState } from '@store/processors';
 import { state as selectedProcessor } from '@store/selected-processor';
 import { ManualPaymentMethods } from './ManualPaymentMethods';
-import { getAvailableProcessor, hasMultipleProcessorChoices, availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
+import {
+  getAvailableProcessor,
+  hasMultipleProcessorChoices,
+  availableManualPaymentMethods,
+  availableProcessors,
+  hasOtherAvailableCreditCardProcessor,
+} from '@store/processors/getters';
+import { addQueryArgs } from '@wordpress/url';
 
 /**
  * @part base - The elements base wrapper.
@@ -41,11 +48,12 @@ export class ScPayment {
   }
 
   renderStripe(processor) {
+    const title = hasOtherAvailableCreditCardProcessor('stripe') ? __('Credit Card (Stripe)', 'surecart') : __('Credit Card', 'surecart');
     return (
       <sc-payment-method-choice key={processor?.id} processor-id="stripe" card={this.stripePaymentElement}>
         <span slot="summary" class="sc-payment-toggle-summary">
-          <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
-          <span>{__('Credit Card', 'surecart')}</span>
+          <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
+          <span>{title}</span>
         </span>
 
         <div class="sc-payment__stripe-card-element">
@@ -56,38 +64,63 @@ export class ScPayment {
   }
 
   renderPayPal(processor) {
-    const stripe = getAvailableProcessor('stripe');
     return (
       <Fragment>
         <sc-payment-method-choice key={processor?.id} processor-id="paypal">
           <span slot="summary" class="sc-payment-toggle-summary">
-            <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }}></sc-icon>
+            <sc-icon name="paypal" style={{ width: '80px', fontSize: '24px' }} aria-hidden="true"></sc-icon>
+            <sc-visually-hidden>{__('PayPal', 'surecart')}</sc-visually-hidden>
           </span>
 
           <sc-card>
             <sc-payment-selected label={__('PayPal selected for check out.', 'surecart')}>
-              <sc-icon slot="icon" name="paypal" style={{ width: '80px' }}></sc-icon>
+              <sc-icon slot="icon" name="paypal" style={{ width: '80px' }} aria-hidden="true"></sc-icon>
               {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
             </sc-payment-selected>
           </sc-card>
         </sc-payment-method-choice>
-
-        {!stripe && (
+        {!hasOtherAvailableCreditCardProcessor('paypal') && (
           <sc-payment-method-choice key={processor?.id} processor-id="paypal" method-id="card">
             <span slot="summary" class="sc-payment-toggle-summary">
-              <sc-icon name="credit-card" style={{ fontSize: '24px' }}></sc-icon>
+              <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
               <span>{__('Credit Card', 'surecart')}</span>
             </span>
 
             <sc-card>
               <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
-                <sc-icon name="credit-card" slot="icon" style={{ fontSize: '24px' }}></sc-icon>
+                <sc-icon name="credit-card" slot="icon" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
                 {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
               </sc-payment-selected>
             </sc-card>
           </sc-payment-method-choice>
         )}
       </Fragment>
+    );
+  }
+
+  renderPaystack(processor) {
+    const title = hasOtherAvailableCreditCardProcessor('paystack') ? __('Credit Card (Paystack)', 'surecart') : __('Credit Card', 'surecart');
+
+    // if system currency is not in the supported currency list, then stop.
+    if (!(processor?.supported_currencies ?? []).includes(window?.scData?.currency)) {
+      return;
+    }
+
+    return (
+      <sc-payment-method-choice key={processor?.id} processor-id="paystack">
+        <span slot="summary" class="sc-payment-toggle-summary">
+          <sc-icon name="credit-card" style={{ fontSize: '24px' }} aria-hidden="true"></sc-icon>
+          <span>{title}</span>
+        </span>
+
+        <sc-card>
+          <sc-payment-selected label={__('Credit Card selected for check out.', 'surecart')}>
+            <sc-icon slot="icon" name="credit-card" aria-hidden="true"></sc-icon>
+            {__('Another step will appear after submitting your order to complete your purchase details.', 'surecart')}
+          </sc-payment-selected>
+        </sc-card>
+        <sc-checkout-paystack-payment-provider />
+      </sc-payment-method-choice>
     );
   }
 
@@ -116,9 +149,25 @@ export class ScPayment {
             <sc-checkout-mollie-payment processor-id={mollie?.id}></sc-checkout-mollie-payment>
           ) : (
             <Tag collapsible={false} theme="container">
-              {!availableProcessors()?.length && (
+              {!availableProcessors()?.length && !availableManualPaymentMethods()?.length && (
                 <sc-alert type="info" open>
-                  {__('You do not have any processors enabled for this mode and cart. Please configure your processors.', 'surecart')}
+                  {window?.scData?.user_permissions?.manage_sc_shop_settings ? (
+                    <Fragment>
+                      {__('You do not have any processors enabled for this mode and cart. ', 'surecart')}
+                      <a
+                        href={addQueryArgs(`${window?.scData?.admin_url}admin.php`, {
+                          page: 'sc-settings',
+                          tab: 'processors',
+                        })}
+                        style={{ color: 'var(--sc-color-gray-700)' }}
+                      >
+                        {__('Please configure your processors', 'surecart')}
+                      </a>
+                      .
+                    </Fragment>
+                  ) : (
+                    __('Please contact us for payment.', 'surecart')
+                  )}
                 </sc-alert>
               )}
               {(availableProcessors() || []).map(processor => {
@@ -127,6 +176,8 @@ export class ScPayment {
                     return this.renderStripe(processor);
                   case 'paypal':
                     return this.renderPayPal(processor);
+                  case 'paystack':
+                    return this.renderPaystack(processor);
                 }
               })}
               <ManualPaymentMethods methods={availableManualPaymentMethods()} />

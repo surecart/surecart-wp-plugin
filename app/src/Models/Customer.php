@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasPurchases;
+
 /**
  * Price model
  */
 class Customer extends Model {
+	use HasPurchases;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -29,16 +33,26 @@ class Customer extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function create( $attributes = [], $create_user = true ) {
-		parent::create( $attributes );
+		/** @var Customer|\WP_Error $customer */
+		$customer = parent::create( $attributes );
+		if ( $this->isError( $customer ) ) {
+			return $customer;
+		}
 
 		// maybe create a WordPress user.
 		if ( $create_user ) {
-			$user = User::create(
-				[
-					'user_name'  => $this->attributes['name'] ?? null,
-					'user_email' => $this->attributes['email'],
-				]
-			);
+			// Find the user by email.
+			$user = User::getUserBy( 'email', $this->attributes['email'] );
+
+			// if no user, create one.
+			if ( empty( $user ) ) {
+				$user = User::create(
+					[
+						'user_name'  => $this->attributes['name'] ?? null,
+						'user_email' => $this->attributes['email'],
+					]
+				);
+			}
 
 			// handle error creating user.
 			if ( is_wp_error( $user ) ) {
@@ -131,10 +145,40 @@ class Customer extends Model {
 	/**
 	 * Get the customer's user.
 	 *
-	 * @return string|null
+	 * @return \SureCart\Models\User|false
 	 */
 	public function getUser() {
 		return User::findByCustomerId( $this->id );
+	}
+
+	/**
+	 * Create the user from the customer.
+	 *
+	 * @return \SureCart\Models\User|\WP_Error
+	 */
+	public function createUser() {
+		if ( empty( $this->id ) && empty( $this->email ) ) {
+			return new \WP_Error( 'no_customer_id_or_email', __( 'No customer ID or email provided.', 'surecart' ) );
+		}
+
+		// if no user, create one with a password if provided.
+		$created = User::create(
+			[
+				'user_name'  => $this->name ?? $this->checkout->name ?? null,
+				'user_email' => $this->email,
+				'first_name' => $this->first_name ?? null,
+				'last_name'  => $this->last_name ?? null,
+				'phone'      => $this->phone ?? null,
+			]
+		);
+
+		if ( is_wp_error( $created ) ) {
+			return $created;
+		}
+
+		$created->setCustomerId( $this->id, ! empty( $this->live_mode ) ? 'live' : 'test' );
+
+		return $created;
 	}
 
 	/**

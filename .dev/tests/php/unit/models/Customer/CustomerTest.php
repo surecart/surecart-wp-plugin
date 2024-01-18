@@ -13,7 +13,7 @@ class CustomerTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -49,7 +49,7 @@ class CustomerTest extends SureCartUnitTestCase
 				"id" => "48ecc3b6-b20c-4ac5-b62e-976ad68cdb85",
 				"object" => "customer",
 				"email" => "test@test.com",
-				"name"=> "NewTest",
+				"name" => "NewTest",
 				"live_mode" => true
 			]);
 
@@ -65,5 +65,12 @@ class CustomerTest extends SureCartUnitTestCase
 
 		// make sure we can get the user's customer id.
 		$this->assertSame(User::find($user->ID)->customerId(), '48ecc3b6-b20c-4ac5-b62e-976ad68cdb85');
+	}
+
+
+	public function test_doesNotCreateUserByDefault()
+	{
+		$customer = new Customer(['id' => 'test', 'email' => 'test@test.com', 'live_mode' => true]);
+		$this->assertEmpty($customer->getUser());
 	}
 }

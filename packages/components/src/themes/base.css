@@ -276,7 +276,7 @@ sc-button-group > sc-tooltip > sc-button.sc-focus {
   --sc-input-error-text-color: var(--sc-color-danger-500);
   --sc-toggle-size: 1em;
   --sc-toggle-shady-color: var(--sc-color-gray-50);
-  --sc-radio-size: 1em;
+  --sc-radio-size:  0.85em;
   --sc-toggle-radio-size: 0.85em;
   --sc-checkbox-size: 1em;
   --sc-overlay-background-color: #37415180;
@@ -310,9 +310,11 @@ sc-checkout [hidden] {
 .sc-scroll-lock {
   overflow: hidden !important;
 }
+.surecart-theme-dark sc-checkout {
+  color: var(--sc-color-white);
+}
 
 .surecart-theme-dark {
-  color: var(--sc-color-white);
   /** Let's make these less blue for basic dark mode **/
   --sc-color-gray-50: var(--sc-color-neutral-50);
   --sc-color-gray-100: var(--sc-color-neutral-100);

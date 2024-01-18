@@ -3,11 +3,13 @@ namespace SureCart\Models;
 
 use ArrayAccess;
 use JsonSerializable;
+use SureCart\Models\Traits\SyncsCustomer;
 
 /**
  * User class.
  */
 class User implements ArrayAccess, JsonSerializable {
+	use SyncsCustomer;
 	/**
 	 * Holds the user.
 	 *
@@ -41,11 +43,13 @@ class User implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get the user's customer id.
 	 *
+	 * @param string $mode Customer mode.
+	 *
 	 * @return int|null
 	 */
 	protected function customerId( $mode = 'live' ) {
 		if ( empty( $this->user->ID ) ) {
-			return '';
+			return null;
 		}
 		$meta = (array) get_user_meta( $this->user->ID, $this->customer_id_key, true );
 		if ( isset( $meta[ $mode ] ) ) {
@@ -55,6 +59,81 @@ class User implements ArrayAccess, JsonSerializable {
 			return $meta[0];
 		}
 		return null;
+	}
+
+	/**
+	 * Sync the customer ids.
+	 *
+	 * @return array Array of synced items.
+	 */
+	protected function syncCustomerIds() {
+		// syncing disabled.
+		if ( ! $this->shouldSyncCustomer() ) {
+			return false;
+		}
+
+		// get all customers by email address (live and test).
+		$customers = Customer::where(
+			[
+				'email' => strtolower( $this->user->user_email ),
+			]
+		)->get();
+
+		if ( is_wp_error( $customers ) ) {
+			return $customers;
+		}
+
+		// we have customers.
+		$live_customer = current(
+			array_filter(
+				$customers,
+				function( $customer ) {
+					return $customer->live_mode;
+				}
+			)
+		);
+
+		$test_customer = current(
+			array_filter(
+				$customers,
+				function( $customer ) {
+					return ! $customer->live_mode;
+				}
+			)
+		);
+
+		if ( empty( $live_customer->id ) ) {
+			$live_customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => true,
+				],
+				false // don't create a user.
+			);
+		}
+		if ( empty( $test_customer->id ) ) {
+			$test_customer = Customer::create(
+				[
+					'name'      => $this->user->display_name,
+					'email'     => strtolower( $this->user->user_email ),
+					'live_mode' => false,
+				],
+				false // don't create a user.
+			);
+		}
+
+		if ( ! empty( $live_customer->id ) ) {
+			$this->setCustomerId( $live_customer->id, 'live' );
+		}
+		if ( ! empty( $test_customer->id ) ) {
+			$this->setCustomerId( $test_customer->id, 'test' );
+		}
+
+		return [
+			'live' => $this->customerId( 'live' ),
+			'test' => $this->customerId( 'test' ),
+		];
 	}
 
 	/**
@@ -178,9 +257,11 @@ class User implements ArrayAccess, JsonSerializable {
 			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
+		clean_user_cache( $this->user->ID );
 		wp_clear_auth_cookie();
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
+		update_user_caches( $this->user );
 
 		return true;
 	}
@@ -268,7 +349,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return this|false This object on success, false on failure.
 	 */
 	protected function getUserBy( $field, $value ) {
-		$this->user = get_user_by( $field, $value );
+		$this->user = get_user_by( $field, $value ?? '' );
 		return $this->user ? $this : false;
 	}
 
@@ -313,7 +394,6 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return $this
 	 */
 	protected function findByCustomerId( $id ) {
-
 		if ( ! is_string( $id ) || empty( $id ) ) {
 			return false;
 		}
@@ -393,6 +473,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return Array
 	 */
+	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return $this->user->to_array();
 	}
@@ -426,7 +507,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return bool
 	 */
-	public function offsetExists( $offset ) {
+	public function offsetExists( $offset ): bool {
 		return ! is_null( $this->getAttribute( $offset ) );
 	}
 
@@ -436,6 +517,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return $this->getAttribute( $offset );
 	}
@@ -447,7 +529,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $value Value.
 	 * @return void
 	 */
-	public function offsetSet( $offset, $value ) {
+	public function offsetSet( $offset, $value ): void {
 		$this->setAttribute( $offset, $value );
 	}
 
@@ -457,10 +539,15 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @param  mixed $offset Name.
 	 * @return void
 	 */
-	public function offsetUnset( $offset ) {
+	public function offsetUnset( $offset ) : void {
 		$this->user->$offset = null;
 	}
 
+	/**
+	 * Get the user object.
+	 *
+	 * @return \WP_User|null
+	 */
 	public function getUser() {
 		return $this->user;
 	}

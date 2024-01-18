@@ -8,84 +8,112 @@ import { addQueryArgs } from '@wordpress/url';
 import SelectModel from './SelectModel';
 
 export default (props) => {
-	const { name, requestQuery = {}, display, exclude = [] } = props;
+	const {
+		name,
+		requestQuery = {},
+		display,
+		exclude = [],
+		onChangeQuery = () => {},
+		renderChoices,
+	} = props;
 	const [query, setQuery] = useState(null);
-	const [choices, setChoices] = useState([]);
+	const [models, setModels] = useState([]);
+	const [totalPages, setTotalPages] = useState();
+	const [page, setPage] = useState(1);
+	const [perPage, setPerPage] = useState(10);
 	const [isLoading, setIsLoading] = useState(false);
-	const [pagination, setPagination] = useState({
-		enabled: true,
-		page: 1,
-		per_page: 10,
-	});
 	const { receiveEntityRecords } = useDispatch(coreStore);
 
+	const handleOnChangeQuery = (queryValue) => {
+		setQuery(queryValue);
+		onChangeQuery(queryValue);
+	};
+
 	const handleOnScrollEnd = () => {
-		if (!pagination.enabled || isLoading) return;
-		setPagination((state) => ({ ...state, page: (state.page += 1) }));
+		if (page >= totalPages || isLoading) return;
+		setPage(page + 1);
 	};
 
-	const mapData = (data) => {
-		return (data || []).map((item) => ({
-			label: !!display ? display(item) : item.name,
-			value: item.id,
-			disabled: exclude.includes(item.id),
-		}));
-	};
-
-	const fetchData = async (pagination) => {
+	const fetchData = async () => {
 		const { baseURL } = select(coreStore).getEntityConfig('surecart', name);
 		if (!baseURL) return;
-		if (pagination.page === 1) {
-			setChoices([]);
-			setPagination((state) => ({ ...state, enabled: true }));
-		}
 
 		const queryArgs = {
 			query,
-			page: pagination.page,
-			per_page: pagination.per_page,
+			page,
+			per_page: perPage,
 			...requestQuery,
 		};
 
-		const data = select(coreStore).getEntityRecords('surecart', name, {
-			...queryArgs,
-		});
-
-		if (data && data.length) {
-			setChoices((state) => [...state, ...mapData(data)]);
-			return;
-		}
-
 		try {
 			setIsLoading(true);
-			const data = await apiFetch({
+
+			// fetch.
+			const response = await apiFetch({
 				path: addQueryArgs(baseURL, queryArgs),
+				parse: false,
 			});
-			setChoices((state) => [...state, ...mapData(data)]);
-			receiveEntityRecords('surecart', name, data, queryArgs);
+
+			// set pagination.
+			setTotalPages(parseInt(response.headers.get('X-WP-TotalPages')));
+
+			// get response.
+			const data = await response.json();
+
+			// append new data to choices.
+			for (let i = 0; i < data.length; i++) {
+				if (!models.some((item) => item.id === data[i].id)) {
+					setModels((state) => [...state, data[i]]);
+				}
+			}
+
+			// add to redux for other page items
+			receiveEntityRecords('surecart', name, models, queryArgs);
 		} catch (error) {
-			setPagination((state) => ({ ...state, enabled: false }));
 			console.error(error);
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
+	// if the query changes, reset the page to 1.
 	useEffect(() => {
 		if (query === null) return;
-		setPagination((state) => ({ ...state, page: 1 }));
+		setPage(1);
 	}, [query]);
 
+	// if the page, perPage changes, fetch data.
 	useEffect(() => {
 		if (query === null || isLoading) return;
-		fetchData(pagination);
-	}, [pagination]);
+		fetchData();
+	}, [page, perPage, query]);
+
+	// if the query changes, reset the page to 1.
+	useEffect(() => {
+		if (page === 1) {
+			setModels([]);
+		}
+	}, [page]);
+
+	const getChoices = () => {
+		let choices = [...(models || [])];
+
+		if (renderChoices) {
+			return renderChoices(choices);
+		}
+
+		return choices.map((item) => ({
+			label: !!display ? display(item) : item.name,
+			value: item.id,
+			disabled: exclude.includes(item.id),
+		}));
+	};
 
 	return (
 		<SelectModel
-			choices={choices}
-			onQuery={setQuery}
-			onFetch={() => setQuery('')}
+			choices={getChoices()}
+			onQuery={handleOnChangeQuery}
+			onFetch={fetchData}
 			loading={isLoading}
 			onScrollEnd={handleOnScrollEnd}
 			{...props}

@@ -5,25 +5,13 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-| Property              | Attribute               | Description                   | Type                                                                                                                                                           | Default     |
-| --------------------- | ----------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `address`             | `address`               | Should we collect an address? | `boolean`                                                                                                                                                      | `undefined` |
-| `formState`           | `form-state`            | The current form state.       | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating"` | `undefined` |
-| `order`               | --                      | Order to watch                | `Checkout`                                                                                                                                                     | `undefined` |
-| `selectedProcessorId` | `selected-processor-id` | The selected processor name.  | `"paypal" \| "paypal-card" \| "stripe"`                                                                                                                        | `undefined` |
-| `stripePaymentIntent` | --                      | The Payment Intent            | `PaymentIntent`                                                                                                                                                | `undefined` |
-| `successUrl`          | `success-url`           | Success url to redirect.      | `string`                                                                                                                                                       | `undefined` |
-
-
 ## Events
 
-| Event        | Description                     | Type                                                                                            |
-| ------------ | ------------------------------- | ----------------------------------------------------------------------------------------------- |
-| `scPaid`     | The order/invoice was paid for. | `CustomEvent<void>`                                                                             |
-| `scPayError` | There was a payment error.      | `CustomEvent<any>`                                                                              |
-| `scSetState` | Set the state                   | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
+| Event                | Description                     | Type                                                                                            |
+| -------------------- | ------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `scPaid`             | The order/invoice was paid for. | `CustomEvent<void>`                                                                             |
+| `scPaymentInfoAdded` | Payment information was added   | `CustomEvent<PaymentInfoAddedParams>`                                                           |
+| `scSetState`         | Set the state                   | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
 
 
 ## Methods

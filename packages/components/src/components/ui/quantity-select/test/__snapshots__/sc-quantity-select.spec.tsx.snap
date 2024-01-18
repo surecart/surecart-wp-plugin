@@ -1,48 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`sc-quantity-select renders 1`] = `
-<sc-quantity-select quantity="1">
+<sc-quantity-select quantity="0" size="medium">
   <mock:shadow-root>
     <div class="quantity" part="base">
-      <span aria-label="decrease number" class="button__decrease" part="minus" role="button">
+      <button aria-label="Decrease quantity by one." class="button__decrease" part="minus">
         <sc-icon exportparts="base:minus__icon" name="minus"></sc-icon>
-      </span>
-      <input aria-valuemax="Infinity" aria-valuemin="1" aria-valuenow="1" autocomplete="off" class="input__control" max="Infinity" min="1" part="input" role="spinbutton" step="1" tabindex="0" type="number" value="1">
-      <span aria-label="increase number" class="button__increase" part="plus" role="button">
+      </button>
+      <input aria-valuemax="Infinity" aria-valuemin="1" aria-valuenow="0" autocomplete="off" class="input__control" max="Infinity" min="1" part="input" role="spinbutton" step="1" type="number" value="0">
+      <button aria-label="Increase quantity by one." class="button__increase" part="plus">
         <sc-icon exportparts="base:plus__icon" name="plus"></sc-icon>
-      </span>
+      </button>
     </div>
   </mock:shadow-root>
 </sc-quantity-select>
 `;
 
 exports[`sc-quantity-select renders disabled decrement if min is greater than 1 1`] = `
-<sc-quantity-select max="3" min="2" quantity="2">
+<sc-quantity-select max="3" min="2" quantity="2" size="medium">
   <mock:shadow-root>
     <div class="quantity" part="base">
-      <span aria-label="decrease number" class="button--disabled button__decrease" part="minus" role="button">
+      <button aria-disabled="" aria-label="Decrease quantity by one." class="button--disabled button__decrease" disabled="" part="minus">
         <sc-icon exportparts="base:minus__icon" name="minus"></sc-icon>
-      </span>
-      <input aria-valuemax="3" aria-valuemin="2" aria-valuenow="2" autocomplete="off" class="input__control" max="3" min="2" part="input" role="spinbutton" step="1" tabindex="0" type="number" value="2">
-      <span aria-label="increase number" class="button__increase" part="plus" role="button">
+      </button>
+      <input aria-valuemax="3" aria-valuemin="2" aria-valuenow="2" autocomplete="off" class="input__control" max="3" min="2" part="input" role="spinbutton" step="1" type="number" value="2">
+      <button aria-label="Increase quantity by one." class="button__increase" part="plus">
         <sc-icon exportparts="base:plus__icon" name="plus"></sc-icon>
-      </span>
+      </button>
     </div>
   </mock:shadow-root>
 </sc-quantity-select>
 `;
 
 exports[`sc-quantity-select renders disabled increment if max matches quantity 1`] = `
-<sc-quantity-select max="2" quantity="2">
+<sc-quantity-select max="2" quantity="2" size="medium">
   <mock:shadow-root>
     <div class="quantity" part="base">
-      <span aria-label="decrease number" class="button__decrease" part="minus" role="button">
+      <button aria-label="Decrease quantity by one." class="button__decrease" part="minus">
         <sc-icon exportparts="base:minus__icon" name="minus"></sc-icon>
-      </span>
-      <input aria-valuemax="2" aria-valuemin="1" aria-valuenow="2" autocomplete="off" class="input__control" max="2" min="1" part="input" role="spinbutton" step="1" tabindex="0" type="number" value="2">
-      <span aria-label="increase number" class="button--disabled button__increase" part="plus" role="button">
+      </button>
+      <input aria-valuemax="2" aria-valuemin="1" aria-valuenow="2" autocomplete="off" class="input__control" max="2" min="1" part="input" role="spinbutton" step="1" type="number" value="2">
+      <button aria-disabled="" aria-label="Increase quantity by one." class="button--disabled button__increase" disabled="" part="plus">
         <sc-icon exportparts="base:plus__icon" name="plus"></sc-icon>
-      </span>
+      </button>
     </div>
   </mock:shadow-root>
 </sc-quantity-select>

@@ -9,14 +9,14 @@
   font-family: var(--sc-font-sans);
   font-size: var(--sc-font-size-medium);
   font-weight: var(--sc-font-weight-normal);
-  line-height: var(--sc-line-height-normal);
+  line-height: var(--sc-menu-item-line-height, var(--sc-line-height-normal));
   letter-spacing: var(--sc-letter-spacing-normal);
   text-align: left;
   color: var(--sc-menu-item-color, var(--sc-color-gray-700));
   padding: var(--sc-spacing-xx-small) var(--sc-spacing-x-large);
   transition: var(--sc-input-transition, var(--sc-transition-medium)) fill, var(--sc-input-transition, var(--sc-transition-medium)) background-color;
   user-select: none;
-  white-space: nowrap;
+  white-space: var(--sc-menu-item-white-space, nowrap);
   cursor: pointer;
   text-decoration: none;
 
@@ -54,6 +54,7 @@
 
     ::slotted(*) {
       margin-left: var(--sc-spacing-x-small);
+      text-align: right;
     }
   }
 }
@@ -62,7 +63,7 @@
   display: flex;
   position: absolute;
   left: 0.5em;
-  top: calc(50% - 0.5em);
+  top: 0.6em;
   visibility: hidden;
   align-items: center;
   font-size: inherit;
@@ -72,11 +73,11 @@
   visibility: visible;
 }
 
-.menu-item--is-rtl{
-  &.menu-item{
+.menu-item--is-rtl {
+  &.menu-item {
     text-align: right;
 
-    .menu-item__check{
+    .menu-item__check {
       left: auto;
       right: 0.5em;
     }

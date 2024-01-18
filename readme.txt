@@ -2,9 +2,9 @@
 Contributors: 2winfactor, wpcrafter
 Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
-Requires at least: 5.9
-Tested up to: 6.2
-Stable tag: 1.10.0
+Requires at least: 6.3
+Tested up to: 6.4
+Stable tag: 2.16.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,9 +39,7 @@ The plugin connects to the platform in real-time taking all the load away from y
 This way you get everything you want with none of the stuff you don’t want. SureCart will not slow down your website, it won’t bloat your database, it’s less likely to have plugin conflicts, and it’s made to work with your caching setup. But the real benefit here is you get assurance and peace of mind because you don’t have to worry about security, storage, or backups.
 
 ## Who Is SureCart For? ##
-Currently SureCart is ideally suited for selling non-physical goods. This would be selling online courses, memberships, subscriptions, selling services, selling event tickets, accepting donations, selling digital downloads, etc. These are no non-physical goods.
-
-However you can still sell physical products with SureCart and we have merchants selling physical goods currently, but we have yet to launch some essential features for selling physical goods. These are inventory control, shipping calculations, and country buying restrictions. These are planned by the end of the year.
+SureCart is designed for entrepreneurs and businesses of all sizes who need a versatile and efficient platform to sell both digital and physical products. It caters to those seeking a reliable solution for managing shipping and fulfillment, enforcing country-specific restrictions, and handling inventory effectively. Additionally, SureCart is ideal for businesses requiring secure file delivery, robust licensing capabilities, and other advanced digital e-commerce functionalities. Whether you're a small startup or a large enterprise, SureCart offers the tools and flexibility needed to streamline your online sales processes.
 `
 ## Now let me tell you what SureCart can do, then why you could consider using it. ##
 
@@ -49,16 +47,19 @@ However you can still sell physical products with SureCart and we have merchants
 These are just some of the features that make SureCart the perfect ecommerce platform for everyone.
 
 * **Multiple Payment Processors, Express Checkout ApplePay & GooglePay:**
-Easily connect to Stripe, PayPal or Mollie to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (PayStack, RazorPay, Mercado Pago) in the future.
+Easily connect to Stripe, PayPal, Mollie or PayStack(Premium) to collect payments. You can use multiple processors on a single checkout form. Also you can optionally accept ApplePay or GooglePay express checkout options. We are working on adding additional gateways (RazorPay, Mercado Pago) in the future.
 
 * **Powerful Payment Options:**
-One-time payments, subscriptions, subscriptions with free trials, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
+One-time payments, subscriptions, subscriptions with free trials, setup fees, payment plans (installments), pay what you want, donations. SureCart covers most ways you may want to be paid, all included for free.
 
 * **Most Complete Subscription Payments System:**
 There is a lot more to subscriptions than simply rebilling on an interval. SureCart’s subscription engine is second to none. With our extensive subscription payments options you can sell your subscriptions how you want. But SureCart goes beyond other ecommerce platforms by offering prorated upgrades or downgrades. So if you are offering a monthly subscription or an annual subscription and your buyer wants to upgrade, SureCart can prorate the upgrade.
 
 * **Self Service Customer Area (Subscription Upgrades / Downgrades):**
 With our highly customizable customer area, you can have full control on what a customer sees and is able to do. For example, you can let your customers change their personal details, password, access secure digital downloads, update credit cards on file, upgrade a subscription, downgrade a subscription. All with a beautiful and modern user experience.
+
+* **Customizable Shopping Experience:**
+Customize product pages, shop pages, cart, and customer dashboard using a intuitive and powerful drag and drop editor that utilitzes the WordPress block editor.
 
 * **Flexible Checkout Form Builder:**
 Create a completely custom checkout form. In fact, create as many as you like. There is no other ecommerce platform with this much customizability. Simply drag and drop fields, price choosers, donation choosers, check boxes, and other parts to create the perfect checkout form.
@@ -100,26 +101,11 @@ SureCart also solves all the technician challenges that you run into with other 
 ## Our why in one word: CARE ##
 * **Connected:** Our platform must connect to everything inside of WordPress and outside
 
-* **Accessible:** Everyone should be welcome to use our platform. It must be accessible to everyone. Level the playing field.
+* **Accessible:** Everyone should be welcome to use our platform. It must be accessible to everyone. We want to level the playing field.
 
 * **Reliable:** You should feel SURE that everything is going to work.
 
 * **Easy:** Anyone should be able to start taking payment in under 10 minutes. It must be an elegant experience requiring no code.
-
-## Why Is SureCart Free? ##
-This is the magic question. When you look at the list of features we offer for free, those same features would cost you hundreds of dollars per year with any other ecommerce plugin for WordPress.
-
-But one of our why’s is that ecommerce should be accessible to all. That means we need to have a free version that has no caps, no hidden charges, no catches. It must be full featured and fully capable, so that is what we are doing.
-
-To us, this is the WordPress way!
-
-Nothing currently on the market even comes close to this.
-
-Just like how WordPress itself is free with a mission to democratize publishing, and the effect is that because it is free it's now powering 45% of the internet.
-
-We also want SureCart to become the standard way all Ecommerce is done in WordPress, and the only way to accomplish that is to make it free.
-
-Of course we have to keep the lights on, so at some point in the future we will have a very affordable pro plan with advanced features such as an affiliate platform, subscription saver, multi-currency, and other revenue boosters.
 
 ## SureCart Integrations ##
 
@@ -155,10 +141,13 @@ SureCart works with any theme, including:
 ### WordPress Plugins ###
 SureCart has 2 types of integrations. The first is available directly in the plugin, we call these purchase syncing integrations and they currently include:
 
+* AffiliateWP
+* BuddyBoss
 * SureMembers
 * LearnDash
 * AffiliateWP
 * MemberPress
+* Thrive Automator
 * And more are coming
 
 The second type of integrations are done with SureTriggers, which is like Zapier for WordPress. These will require you to add the SureTriggers plugin to your website to integrate with:
@@ -202,8 +191,6 @@ The second type of integrations are done with SureTriggers, which is like Zapier
 * Zoom
 * And more being added each week
 
-There are also some special features for site to site connections. So you can sell products on one site with SureCart then add the user to another site where your content may be. This is great for online courses or membership setups.
-
 ## Join The SureCart Facebook Group ##
 Join our [Facebook group community](https://www.facebook.com/groups/surecrafted): Learn the tricks and techniques that other SureCart users are using to grow their business. Also, get exciting insider information on upcoming feature releases.
 
@@ -217,17 +204,13 @@ Join our [Facebook group community](https://www.facebook.com/groups/surecrafted)
 
 == Frequently Asked Questions ==
 
-= Is SureCart Free? =
-
-Yes, SureCart is free. In the future we will have a Pro plan with advanced features.
-
 = Why do I need a SureCart.com account? =
 
 There are 2 parts to SureCart, the platform and the plugin. In order for the plugin to function, it needs to be linked to your account on the platform.
 
 = What payment processors can I use? =
 
-SureCart currently supports Stripe and PayPal. We will be working to add payment gateways for each major region. This includes Mollie, Mercado Pago, PayStack, RazorPay, and more.
+SureCart currently supports Stripe, PayPal, Mollie and PayStack(Premium). We will be working to add payment gateways for each major region. This includes Mercado Pago, RazorPay, and more.
 
 = What technology powers SureCart? =
 
@@ -243,9 +226,390 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 1.10.0 - April 27, 2023 =
+= 2.16.3 - January 16th, 2024 =
+- Fix: Issue with carts sometimes getting cleared on checkout page if default checkout is used with a shortcode.
+
+= 2.16.2 - January 15th, 2024 =
+- Fix: Prevent issue with sites having timeout requests and potential downtime in case of degraded platform performance.
+- Fix: Scratch amount missing on admin order details page.
+
+= 2.16.1 - January 12th, 2024 =
+- Fix: Issue with instant checkout not loading for some users.
+- Fix: Z-index issue with drawer and sticky top bar on some admin screens.
+
+= 2.16.0 - January 11th, 2024 =
+- New: Add initial discount to price.
+- New: Add a custom thank you page link to instant checkout.
+- Improvement: Removing storing carts on custom forms and use url for cart persistance.
+- Improvement: Update slide out cart template to template part to prevent accidental deletion.
+- Fix: Issue with order bump sometimes not appearing on slide out cart.
+
+= 2.15.1 - January 10th, 2024 =
+- Fix: Issue with switching Products to show from Handpicked to All/Featured.
+- Fix: Incorrect price display on merchant admin for donation subscriptions.
+- Fix: Show full address if shipping address is required.
+
+= 2.15.0 - January 4th, 2024 =
+- New: Use product shortcodes outside of product pages.
+- New: Checkout form product price/variant selector block.
+- Improvement: Allow integrations to work for specific prices and variants.
+- Improvement: Ability to turn off tax for specific customers.
+- Improvement: Buy now and add to cart button placeholder improvements.
+- Fix: Issue with product media taking up too much space on product template edit page.
+- Fix: 2FA conflicts with SureCart sign-in.
+- Fix: Issue with php notice showing when account is not connected on certain pages.
+- Fix: Issue with Stripe showing "Your Card Nubmer Is Incomplete" after some free purchases are made.
+- Fix: Quantity selector styling issue on iOS.
+- Fix: UI bug when adding product restrictions to coupon where product price and image were not loading.
+
+= 2.14.1 - December 21st, 2023 =
+- Improvement: Allow customers to add payment methods on subscriptions without payment methods on customer dashboard.
+- Fix: Issue with canceled orders not able to be filtered on merchant admin.
+- Fix: Issue with recurring prices being combined in price selector showing wrong label.
+
+= 2.14.0 - December 14th, 2023 =
+- New: Donations block to accept one-time and recurring donations.
+- New: Added user option to reactivate canceled subscriptions on customer dashboard.
+- Improvement: Display price and variant name on subscription index page.
+- Improvement: Updated address fields to not inherit the store's country.
+- Improvement: Improved error handling for 'Add to Cart' on product pages.
+- Improvement: Updated checkout totals for installments and trial periods to be more clear.
+- Improvement: Make default loading text less specific to account for different payment options.
+- Fix: Fixed currency symbol issue in dropdowns not appearing properly for some users in the admin.
+- Fix: Corrected a typo in the Order Bump feature.
+
+= 2.13.0 - December 11th, 2023 =
+* Fix: Issue with upgrade group cache not clearing on merchant admin when updating status.
+* Fix: Issue with upgrade group incorrectly showing in customer dashboard when archived.
+
+= 2.12.0 - December 5th, 2023 =
+* New: Returns - create and manage return requests on the admin order screen.
+* Improvement: List the variant and price with the purchase in the customer's purchase list on the admin.
+* Improvement: Add shortcode for product variant choices to be used in custom page builder product page templates.
+* Improvement: Handle out-of-stock errors better when the item is added to the cart.
+* Fix: Draft orders having the wrong status on the admin orders screen.
+* Fix: Admin order pages showing the product image on line items instead of the variant image.
+* Fix: CSS conflict with some themes causing password field inspector controls to be pushed offscreen.
+* Fix: Customers not syncing with users when "Create New Users" is unchecked in the manual customer sync button.
+* Fix: Duplication of labels on the price selector.
+
+= 2.11.4 - December 2nd, 2023 =
+* Fix: Issue with donation sometimes prices not properly updating on instant checkout.
+* Fix: Better error handling with customer link middleware.
+
+= 2.11.3 - November 28th, 2023 =
+* Improvement: Update SureCart menu to include shop, checkout, dashboard pages.
+* Improvement: Automatic integration with RankMath Sitemaps.
+* Fix: Issue with Spectra saving when inline CSS setting is used.
+* Fix: Responsive issue with plan actions on customer dashboard.
+* Fix: Properly handle error if WordPress user exists when creating customer on admin.
+* Fix: Issue with HUF currency.
+
+= 2.11.2 - November 22nd, 2023 =
+* Fix: Instant checkout errors for new checkouts due to duplicate line item fix.
+
+= 2.11.1 - November 22nd, 2023 =
+* Improvement: Show product and price name on customer dashboard subscription switch page.
+* Fix: Issue with duplicate line items on some forms due to plugin conflict.
+* Fix: Permissions issue with coupon not being allowed in customer dashboard subscription update.
+
+= 2.11.0 - November 21st, 2023 =
+* New: SureCart affiliate platform!
+* Improvement: Use deferred payment intent method for Stripe Payment element to prevent incomplete payment log on Stripe dashboard.
+
+= 2.10.1 - November 20th, 2023 =
+* Improvement: Show a notice if Gutenberg plugin is active as this plugin is experimental.
+* Fix: Ensure SureCart column block does not get top margin in editor.
+* Fix: Dark theme not applying to shipping choices on checkout page.
+* Fix: Apostrophe being displayed as HTML entity instead of plain text on State/Province selector.
+* Fix: Setting a password did not consider a "-" as a special character.
+
+= 2.10.0 - November 14th, 2023 =
+* Improvement: Keyboard and screen reader accessibility of customer-facing UI.
+* Improvement: Make Stripe Payment Element the new default for the Stripe processor.
+* Update: Remove unnecessary express pay blocks from new form templates.
+
+= 2.9.0 - November 10th, 2023 =
+* New: Delay self-service cancellations - prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.
+* New: Enable or disalbe fulfillment notifications on admin order screen.
+* New: Ability to add coupon to subscription on admin subscription screen.
+* Improvement: Show recurring details of a coupon at checkout.
+* Improvement: Show line items on customer dashboard order details page.
+* Fix: Price selector hide label, price, control not working as expected.
+* Fix: Show required symbol on tax input if it’s required.
+* Fix: Incorrect test mode notice on coupons page.
+* Fix: Subscription merchant admin columns getting squished.
+* Fix: Product email settings description for licensing is incorrect.
+* Fix: Admin console notice for duplicate store registration.
+
+= 2.8.4 - November 5th, 2023 =
+* Fix: Issue where shop page images would sometimes overflow on mobile in some instances.
+
+= 2.8.3 - November 3rd, 2023 =
+* Fix: Issue with price selectors without price names not showing product name as fallback.
+
+= 2.8.2 - November 3rd, 2023 =
+* Fix: Google analytics not automatically tracking purchase events for some users.
+* Fix: Duplicate scOrderPaid analytics event was firing on some orders.
+* Fix: Currency conversion issue on google add to cart analytics events.
+* Fix: Checkout form with set products are not able to increment quantity in the admin.
+* Fix: PHP notice when no attributes are passed to a shortcode.
+* Fix: Issue with stock correction notice appearing in form admin when item is out of stock.
+
+= 2.8.1 - November 2nd, 2023 =
+* Fix: Theme conflict with GeneratePress causing product page out of stock buttons to appear.
+* Fix: Issue with images using special characters breaking product page slideshow.
+* Fix: Prevent name/company name fields from being emptied when address country changes.
+* Fix: Add theme support for block border settings missing if they are not set by the theme.
+* Fix: Issue where customer could enter a blank password when setting one for the first time on the customer dashboard.
+* Fix: Featured product list filter not working on product list blocks.
+
+= 2.8.0 - November 1st, 2023 =
+New: Product variants.
+New: Stock management.
+New: Product SKU.
+Improvement: Redesign of the line item quantity selector.
+Improvement: Display of price name on line items in addition to the variant.
+Improvement: Preloading of price choices to speed up checkout form loading.
+Improvement: Faster loading of checkout forms with preset prices.
+Fix: Issue with forms not loading properly when editing in admin.
+Fix: Typo in the deletion of webhook processes that prevented clearing of process logs older than 90 days.
+Fix: Z-index issue on the checkout page during the loading state.
+Fix: Improved handling of price version mismatches on the checkout form.
+Fix: Issue with customers not being able to add non-credit card Mollie payment methods on the customer dashboard.
+Fix: Use of hashed strings for transient caching to prevent excessively long transient names.
+
+= 2.7.5 - October 6th, 2023 =
+* Fix: Issue with some merchant admins not loading if using javascript browser caching.
+* Fix: Rankmath conflict outputting duplicate open graph tags.
+
+= 2.7.4 - October 5th, 2023 =
+* Improvement: Ability to turn off/on individual abandoned checkout flows for a customer.
+* Improvement: Add support for mandatory address field for Indian merchants using Stripe.
+* Improvement: Improve error message for when a customer reaches a purchase limit on checkout.
+* Improvement: Add php filter to filter "Back to home" and logo url on customer dashboard template.
+* Improvement: Don't allow quantity larger than purchase limit on product page.
+* Improvement: Fix location of purchase error message on default checkout.
+* Change: Deprecate tabbed customer dashboard.
+* Change: Remove "Draft/Published" tag in header for product page to avoid confusion.
+* Fix: Alignment of product page price not working on the front end for left and center alignment.
+* Fix: Discount duration default not being correct when creating a coupon.
+
+= 2.7.3 - September 26th, 2023 =
+* Fix: Performance issue with collections in menus using Full Site Editing themes.
+
+= 2.7.2 - September 25th, 2023 =
+* Improvement: Add "Back Home" url filter on customer dashboard template.
+* Fix: Issue with some servers not capitalizing headers causing webhook invalid signature errors.
+
+= 2.7.1 - Septembner 21st, 2023 =
+Improvement: Add shipping and tax address to edit customer page.
+Improvement: Better error messaging on checkout forms.
+Improvement: Accessibility improvements to tax id input and line item removal.
+Improvement: Remove deprecated customer link endpoint.
+Update: Changed “Void” orders to “Canceled” for better naming.
+Fix: PHP 8.0 notices on User model.
+Fix: Keyboard accessibility issue with buy and add to cart buttons.
+Fix: Keyboard accessibility issue with coupon field on checkout page and cart.
+Fix: Hide non-reusable payment methods on subscription pages.
+Fix: Title/heading block overflowing container on some screen sizes.
+
+= 2.7.0 - September 18th, 2023 =
+* New: Product collections - group your products into collections and create collection pages.
+
+= 2.6.2 - September 15th, 2023 =
+* Improvement: Force update WordPress users when doing manual customer sync.
+* Fix: Issue with purchase.updated webhook erroring for subscription changes.
+
+= 2.6.1 - September 12th, 2023 =
+* Fix: Compatibility with Elementor 3.6+
+
+= 2.6.0 - September 11th, 2023 =
+* New: Subscription metrics on merchant dashboard.
+* New: Ability to revoke access when installments are completed.
+* Improvement: Webhooks reliability, performance and failure visibility improvements.
+* Improvement: Performance improvement with columns implementations.
+* Improvement: Rework how processors are handled on the form when multiple credit card processors are enabled.
+* Improvement: Loading speed improvement for admin dashboard pages..
+
+= 2.5.2 - August 31th, 2023 =
+* Improvement: Summary collapse now has "collapse on mobile" and "collapse on desktop" options.
+* Fix: Recaptcha failing on instant checkout pages.
+* Fix: Issue with line items sometimes reordering during quantity change.
+* Fix: Sometimes PayPal errors not being very descriptive.
+* Fix: PHP notices logged when debug mode is turned on in REST Controllers.
+* Fix: Better error handling when default payment method is trying to be deleted.
+* Fix: Removing payment method is now immediately reflected without page reload.
+* Fix: "Update All Subscriptions" button on default payment method was sometimes having permission issues for some users.
+* Fix: Stacking issue of customer dashboard form fields on some pages.
+* Fix: Compatibility with Spectra blocks not loading assets when using form shortcode.
+
+= 2.5.1 - August 21th, 2023 =
+* Fix: Issue with some checkout icons inheriting a stroke.
+* Security Fix: Hardened the security of the plugin. Props: Patchstack
+
+= 2.5.0 - August 18th, 2023 =
+* New: Buy now button on product pages.
+* New: Featured products. Mark products as featured and optionally show them on product lists.
+* New: Automatic Google Analytics "Add To Cart" event.
+* Improvement: improve line items exported parts.
+* Fix: Instant checkout pages mode changing should recreate a new checkout.
+* Fix: Link in switch element was not clickable on front-end.
+* Fix: Missing "Back to Home" translation not appearing in .pot file.
+* Fix: Change wording of installment price when there is only 1 installment on the subscription.
+
+= 2.4.4 - August 11th, 2023 =
+* Fix: Issue with shop page not fetching products under certain website caching conditions.
+
+= 2.4.3 - August 10th, 2023 =
+* Fix: Issue with custom thank you page link issue with WordPresss 6.3.
+* Fix: Add missing "Back to Home" translation on customer dashboard page.
+
+= 2.4.2 - August 8th, 2023 =
+* Improvement: Add link to migration contact form.
+* Fix: Conflict with Thrive Automator dynamic data not loading.
+
+= 2.4.1 - August 3rd, 2023 =
+* Improvement: Prevent admin notices on SureCart pages.
+* Improvement: Update library dependencies.
+* Improvement: Added additional security enhancements.
+* Fix: PHP notice with form shortcodes and Divi.
+* Fix: Issue with some Spectra blocks not loading inside forms.
+* Fix: Make sure checkout line items are sorted by added at date.
+
+= 2.4.0 - July 19th, 2023 =
+* New: Manual Orders - create orders on behalf of customers from the admin.
+* New: Strong password option. Enforce the creation of strong passwords for customers.
+* Improvement: Product page selected price now shows interval, fees and trials.
+* Improvement: Ability to disable change the secure notice text below the submit button on forms.
+* Fix: Order bump mobile fixes.
+* Fix: Issue with php8 REMOTE_ADDR notice.
+* Fix: Issue with product modified_date_gmt for use in SEO plugin metadata.
+* Fix: Issue with $0 price amount not being added to cart on product page.
+* Fix: Issue with slide out cart z-index not being high enough for some themes.
+
+= 2.3.1 - July 19th, 2023 =
+* Fix: Stripe Payment Element (beta) not loading under certain conditions during free trial with payment required.
+* Fix: Issue with post_modified_gmt and post_date_gmt not accurate for product pages.
+* Fix: PHP notice for PHP 8 if REMOTE_ADDR is not set.
+
+= 2.3.0 - July 17th, 2023 =
+* New: Paystack processor support for African merchants.
+* Improvement: Better notice for how to conntect processors on checkout form.
+* Improvement: Hide admin notices during onboarding.
+* Fix: Issue with dashboard date being in UTC time.
+* Fix: Mobile stacking of order bump.
+* Fix: Stripe Payment Element (beta) showing a notice when the amount on the checkout form is 0.
+
+= 2.2.1 - July 6th, 2023 =
+* Improvement: Improve loading performance of Stripe Payment Element (beta) by using deferred payment intents.
+* Fix: Thank you pages that redirect to the homepage being redirected to the blog page instead.
+* Fix: Change button text for media library to account for non-image files.
+* Fix: Validation issue with price input not allowing refunds to be fully refunded.
+
+= 2.2.0 - July 5th, 2023 =
+* New: Shipping and fulfillment support! Add custom shipping rates, location restrictions, tracking and fulfillment.
+* Improvement: Rearrange SureCart settings and combine some sections.
+
+= 2.1.4 - June 28, 2023 =
+* Improvement: Add filter to skip page and form seeding.
+* Fix: Compare at price cannot be cleared due to firefox fix in previous version.
+* Fix: Fix conflict with Bricks Builder shop page dropdown width.
+* Fix: Disallow SureCart Products to be selected as menu items as this is not currently supported.
+
+= 2.1.3 - June 21, 2023 =
+* Improvement: Make subscription saver description text darker to better comply with accessiblity.
+* Fix: Coupon redemption dates incorrect on admin.
+* Fix: Conflict with WooCommerce permalinks and SureCart permalinks.
+* Fix: Quantity selector missing from line items on instant checkout page.
+* Fix: Display of some zero decimal currencies.
+
+= 2.1.2 - June 15, 2023 =
+* Improvement: Update wording in order bump condition selector.
+* Improvement: Updated translations.
+* Fix: Product pages not showing up in WordPress sitemap.
+* Fix: Firstname, Lastname always being required by default.
+* Fix: Floating cart not enabled by default.
+* Fix: Issue with incomplete store setups not able to make test checkouts.
+* Fix: Decimal point issue on adding prices in newest version of Firefox.
+
+
+= 2.1.1 - June 14, 2023 =
+* HotFix: Processors not showing for some users on instant checkout pages.
+
+= 2.1.0 - June 13, 2023 =
+* New: Better, quicker onboarding for new stores.
+* New: Visit Store link in WordPress admin bar.
+* Improvement: Settings page sticky header.
+* Fix: Rename magic sign-in.
+* Fix: Change "Pro" to "Premium".
+* Fix: Issue with product pages not loading for some servers that don't have support for NumberFormatter.
+* Fix: Z-index issue with product page header and WordPress menu.
+
+= 2.0.1 - June 7, 2023 =
+* New: Archive and delete option on upgrade groups.
+* New: Ability to disable purchase/download emails.
+* New: Cancel orders and manually mark orders as paid.
+* Improvement: Improved UI when updating subscription price on admin subscription page.
+* Improvement: Rename "Status" to "Product Page" to clarify product status.
+* Improvement: Truncate mobile line items to max of 3 lines.
+* Improvement: Hide product image on line items below certain widths to prevent squishing text.
+* Improvement: Update roles to allow multisite installations to manage their own stores.
+* Fix: Show notice if subscription payoff is not available for store.
+* Fix: Product description bullet points css issue on admin screen.
+* Fix: Coupon overflow issue on mobile when coupon field is expanded by default.
+
+= 2.0.0 - June 1, 2023 =
+* New: Customizable product pages.
+* New: Customizable shop page.
+* New: Elementor product page customization.
+* New: Customer background sync for imported customers.
+* New: SEO metadata and product schema integration.
+* Improvement: Don't show price decimal places if price is whole number.
+* Improvement: Update component dependencies.
+
+= 1.11.2 - May 23, 2023 =
+* New: Add setting to automaticaly sync WP users with SureCart customers upon dashboard login.
+* Fix: Showing dollar as currency in recovered revenue section.
+* Fix: Customer dashboard logout link not redirecting back to customer dashboard on mobile.
+* Fix: Update subscription menu item showing on admin dashboard for finite subscriptions.
+
+= 1.11.1 - May 19, 2023 =
+* Fix: Update Merchant UI to account for imported subscriptions.
+* Fix: TutorLMS index pages sometimes allowing access to restricted content without purchase.
+* Fix: PHP debug notice in CartService.php.
+
+= 1.11.0 - May 11, 2023 =
+* New: Cart icon in menu for classic and FSE themes.
+* New: Automatic Google Analytics purchase events.
+* Improvement: Responsive image sizes for instant checkout and line items.
+
+= 1.10.4 - May 10, 2023 =
+* Fix: Issue with email and name fields being disabled and blank if a user has created a checkout, then logs in and visits the same page.
+
+= 1.10.3 - May 9, 2023 =
+* Improvement: Remove US commonwealth countries from the country selector to avoid confusion, as they already exist as states.
+* Improvement: Added clarification text indicating that coupon redemption limits are not applied in test mode.
+* Fix: Resolved issue with updating prices not immediately reflecting changes in existing carts.
+* Fix: Addressed issue with PayPal checkout not succeeding if the status of the charge is "processing."
+* Fix: Corrected the problem of checkout line items not being passed with the scOrderPaid event.
+
+= 1.10.2 - May 4, 2023 =
+* Fix: Pricing line breaking awkwardness in checkout for larger numbers.
+* Fix: Sometimes showing dashboard error after activation if API token was replaced or was previously incorrect.
+* Fix: Add missing translation string for "one or more line items are referencing prices that are not purchasable".
+* Fix: Issue with needing to select the product twice on buy and add to cart buttons.
+* Fix: Admin menu permissions denied on dashboard for SureCart Store Manager roles.
+* Fix: Issue with blank dashboard page that occurred intermittently on first connection.
+* Fix: Processor block blank in admin for Stripe.
+
+= 1.10.1 - May 2, 2023 =
+* Fix: Issue with expanded coupon form not showing apply text.
+* Fix: Issue with payment block when all processors are disabled and manual processors are enabled.
+
+= 1.10.0 - May 1, 2023 =
 * New: Multiple product images.
-* New: Instanct checkout product images slideshow.
+* New: Instant checkout product images slideshow.
 * New: Phone number block for checkout.
 * New: Pre-populate name and email fields from url parameters.
 * Improvement: Subscription pausing UX in merchant admin.
@@ -349,7 +713,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Update payment plan wording to be more clear about number of payments.
 * Improvement: RTL improvements.
 * Improvement: Tax ID Input field - allow labels to be editable.
-* Improvement: Stripe Payment Element now will inherit name, address, email fields for payment types that require it.
+* Improvement: Stripe Payment Element (beta) now will inherit name, address, email fields for payment types that require it.
 * Improvement: Product/Price/Customer select dropdowns now paginate.
 * Improvement: Prevent cart posts from being misconfigured.
 * Improvement: Prevent "Store Checkout" forms and pages from being misconfigured.
@@ -548,7 +912,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 * Improvement: Add Dutch notifications and invoice language.
 * Fix: Issue with default country selection in address block not initializing with new checkout.
 * Fix: Prevent false positive notice from Sucuri for our honeypot field.
-* Fix: Issue with Stripe Payment Element redirect processors not working on iOS devices.
+* Fix: Issue with Stripe Payment Element (beta) redirect processors not working on iOS devices.
 
 = 1.1.19  - Novermber 2, 2022 =
 * Improvement: WordPress 6.1 Compatibility.
@@ -748,5 +1112,3 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 = 1.0.0 - July 20, 2022 =
 * Initial release
-
-

@@ -14,6 +14,16 @@ body.sc-buy-page {
 
   &.surecart-theme-dark {
     background: var(--sc-color-gray-950);
+
+    sc-prose {
+      h1, h2, h3, h4, h5, h6, p {
+        color: var(--sc-color-white);
+      }
+    }
+  }
+
+  sc-prose ul li {
+    line-height: 1.5em;
   }
 
   @media screen and (min-width: 782px) {

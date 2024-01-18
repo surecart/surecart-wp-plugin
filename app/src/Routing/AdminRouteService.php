@@ -19,6 +19,7 @@ class AdminRouteService {
 		'products'            => 'sc-products',
 		'order'               => 'sc-orders',
 		'orders'              => 'sc-orders',
+		'checkout'            => 'sc-checkouts',
 		'bump'                => 'sc-bumps',
 		'bumps'               => 'sc-bumps',
 		'invoice'             => 'sc-invoices',
@@ -37,6 +38,8 @@ class AdminRouteService {
 		'product_group'       => 'sc-product-groups',
 		'product_groups'      => 'sc-product-groups',
 		'cancellations'       => 'sc-cancellation-insights',
+		'product_collection'  => 'sc-product-collections',
+		'product_collections' => 'sc-product-collections',
 	];
 
 	/**

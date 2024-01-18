@@ -8,7 +8,16 @@ import { addQueryArgs } from '@wordpress/url';
 
 import SelectPrice from './SelectPrice';
 
-export default ({ onSelect, ad_hoc, value, open = false }) => {
+export default ({
+	onSelect,
+	ad_hoc,
+	variable,
+	value,
+	open = false,
+	requestQuery,
+	required,
+	...props
+}) => {
 	const [query, setQuery] = useState(null);
 	const [products, setProducts] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
@@ -37,9 +46,10 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 
 		const queryArgs = {
 			query,
-			expand: ['prices'],
+			expand: ['prices', 'variants'],
 			page: pagination.page,
 			per_page: pagination.per_page,
+			...requestQuery,
 		};
 
 		const data = select(coreStore).getEntityRecords('surecart', 'product', {
@@ -78,12 +88,13 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 
 	return (
 		<SelectPrice
-			required
+			required={required}
 			css={css`
 				flex: 0 1 50%;
 			`}
 			value={value}
 			ad_hoc={ad_hoc}
+			variable={variable}
 			open={open}
 			products={products}
 			onQuery={setQuery}
@@ -91,6 +102,7 @@ export default ({ onSelect, ad_hoc, value, open = false }) => {
 			loading={isLoading}
 			onSelect={onSelect}
 			onScrollEnd={handleOnScrollEnd}
+			{...props}
 		/>
 	);
 };

@@ -30,8 +30,9 @@
 
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
- - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
@@ -42,6 +43,7 @@
  - [sc-subscription-details](../../controllers/dashboard/subscription-details)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
@@ -50,8 +52,9 @@
 graph TD;
   sc-cancel-discount --> sc-flex
   sc-cancel-survey --> sc-flex
+  sc-checkout-stock-alert --> sc-flex
   sc-downloads-list --> sc-flex
-  sc-license --> sc-flex
+  sc-fulfillments --> sc-flex
   sc-login-form --> sc-flex
   sc-order --> sc-flex
   sc-pagination --> sc-flex
@@ -62,6 +65,7 @@ graph TD;
   sc-subscription-details --> sc-flex
   sc-subscription-next-payment --> sc-flex
   sc-subscription-payment-method --> sc-flex
+  sc-subscription-reactivate --> sc-flex
   sc-subscription-switch --> sc-flex
   sc-upcoming-invoice --> sc-flex
   style sc-flex fill:#f9f,stroke:#333,stroke-width:4px

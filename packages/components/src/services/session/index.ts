@@ -1,9 +1,9 @@
 import { state as checkoutState } from '@store/checkout';
-import { state as processorsState } from '@store/processors';
 import { addQueryArgs, getQueryArg } from '@wordpress/url';
 
 import apiFetch from '../../functions/fetch';
-import { Checkout } from '../../types';
+import { Checkout, DeletedItem, LineItem } from '../../types';
+import { __ } from '@wordpress/i18n';
 
 /** The base url for this service. */
 export const baseUrl = 'surecart/v1/checkouts/';
@@ -13,7 +13,11 @@ export const expand = [
   'line_items',
   'line_item.price',
   'line_item.fees',
+  'line_item.variant',
+  'variant.image',
   'price.product',
+  'product.featured_product_media',
+  'product_media.media',
   'customer',
   'customer.shipping_address',
   'payment_intent',
@@ -21,25 +25,27 @@ export const expand = [
   'discount.promotion',
   'recommended_bumps',
   'bump.price',
+  'product.variants',
   'discount.coupon',
   'shipping_address',
-  'staged_payment_intents',
   'tax_identifier',
   'manual_payment_method',
+  'shipping_choices',
+  'shipping_choice.shipping_method',
 ];
 
 /** Default data we send with every request. */
 export const withDefaultData = (data: { metadata?: any } = {}) => ({
   live_mode: checkoutState.mode !== 'test',
   group_key: checkoutState.groupId,
-  abandoned_checkout_return_url: checkoutState.abandonedCheckoutReturnUrl || null,
-  abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled && !!checkoutState.abandonedCheckoutReturnUrl,
+  abandoned_checkout_enabled: checkoutState.abandonedCheckoutEnabled,
   metadata: {
     ...(data?.metadata || {}),
     ...(window?.scData?.page_id && { page_id: window?.scData?.page_id }),
     ...(checkoutState?.product?.id && { buy_page_product_id: checkoutState?.product?.id }),
     page_url: window.location.href,
   },
+  ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
   ...data,
 });
 
@@ -47,7 +53,6 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
 export const withDefaultQuery = (query = {}) => ({
   ...(!!checkoutState?.formId && { form_id: checkoutState?.formId }),
   ...(!!checkoutState?.product?.id && { product_id: checkoutState?.product?.id }),
-  ...(!!processorsState.config.stripe.paymentElement && { stage_processor_type: 'stripe' }),
   ...query,
 });
 
@@ -116,4 +121,88 @@ export const finalizeCheckout = async ({ id, data = {}, query = {}, processor }:
     ),
     data: withDefaultData(data),
   })) as Checkout;
+};
+
+/**
+ * Add a line item.
+ */
+export const addLineItem = async ({ checkout, data, live_mode = false }) => {
+  const existingLineItem = (checkout?.line_items?.data || []).find(item => {
+    if (!item?.variant?.id) {
+      return item.price.id === data.price;
+    }
+    return item.variant.id === data.variant && item.price.id === data.price;
+  });
+
+  // create the checkout with the line item.
+  if (!checkout?.id) {
+    return (await apiFetch({
+      method: 'POST', // create
+      path: addQueryArgs(parsePath(null)),
+      data: {
+        line_items: [data],
+        live_mode,
+      },
+    })) as Checkout;
+  }
+
+  // handle existing line item.
+  if (!!existingLineItem) {
+    return await updateLineItem({ id: existingLineItem?.id, data: { ...data, quantity: existingLineItem?.quantity + data?.quantity } });
+  }
+
+  const item = (await apiFetch({
+    path: addQueryArgs(`surecart/v1/line_items/${existingLineItem?.id ? existingLineItem?.id : ''}`, {
+      consolidate: true,
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'POST',
+    data: {
+      ...data,
+      checkout: checkout.id,
+    },
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
+};
+
+/**
+ * Remove a line item.
+ */
+export const removeLineItem = async ({ checkoutId, itemId }) => {
+  const { deleted } = (await apiFetch({
+    path: `surecart/v1/line_items/${itemId}`,
+    method: 'DELETE',
+  })) as DeletedItem;
+
+  if (!deleted) {
+    throw { code: 'error', message: __('Failed to delete', 'surecart') };
+  }
+
+  return await fetchCheckout({ id: checkoutId });
+};
+
+/**
+ * Update a line item.
+ */
+export const updateLineItem = async ({ id, data }) => {
+  const item = (await apiFetch({
+    path: addQueryArgs(`surecart/v1/line_items/${id}`, {
+      expand: [
+        ...(expand || []).map(item => {
+          return item.includes('.') ? item : `checkout.${item}`;
+        }),
+        'checkout',
+      ],
+    }),
+    method: 'PATCH',
+    data,
+  })) as LineItem;
+
+  return item?.checkout as Checkout;
 };

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { dropRight, get, times } from 'lodash';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
@@ -13,13 +13,10 @@ import {
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { store as editorStore } from '@wordpress/editor';
-import { store as preferencesStore } from '@wordpress/preferences';
 
 import {
 	InspectorControls,
-	useInnerBlocksProps as __stableUseInnerBlocksProps,
-	__experimentalUseInnerBlocksProps,
+	useInnerBlocksProps,
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
 	__experimentalBlockVariationPicker,
@@ -32,7 +29,6 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	store as blocksStore,
 } from '@wordpress/blocks';
-import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
@@ -44,20 +40,16 @@ import {
 	toWidthPrecision,
 } from './utils';
 
-import { ScColumns } from '@surecart/components-react';
-import { useEffect } from 'react';
-import { select } from '@wordpress/data';
-
 /**
  * Allowed blocks constant is passed to InnerBlocks precisely as specified here.
  * The contents of the array should never change.
  * The array should contain the name of each block that is allowed.
- * In columns block, the only block we allow is 'surecart/column'.
+ * In columns block, the only block we allow is 'core/column'.
  *
  * @constant
  * @type {string[]}
  */
-const ALLOWED_BLOCKS = ['surecart/column'];
+const ALLOWED_BLOCKS = ['core/column'];
 
 function ColumnsEditContainer({
 	attributes,
@@ -66,89 +58,63 @@ function ColumnsEditContainer({
 	updateColumns,
 	clientId,
 }) {
-	const useInnerBlocksProps = __stableUseInnerBlocksProps
-		? __stableUseInnerBlocksProps
-		: __experimentalUseInnerBlocksProps;
-	const { editPost } = useDispatch(editorStore);
-	const { createInfoNotice, removeNotice } = useDispatch(noticesStore);
-	const { set, setDefaults } = useDispatch(preferencesStore);
-
 	const {
 		isStackedOnMobile,
 		verticalAlignment,
+		templateLock,
 		isFullHeight,
 		isReversedOnMobile,
 	} = attributes;
 
-	const { template, postType, id } = useSelect((select) => {
-		return {
-			template: select(editorStore).getEditedPostAttribute('template'),
-			postType: select(editorStore).getCurrentPostType(),
-			id: select(editorStore).getCurrentPostId(),
-		};
-	});
-
-	setDefaults('surecart/templates', {
-		'full-columns-page-tempalte-dismissedd': [],
-	});
-
-	const dismissed = useSelect((select) =>
-		select(preferencesStore).get(
-			'surecart/templates',
-			'full-columns-page-tempalte-dismissedd'
-		)
-	);
-	const removeTemplateNotice = () => {
-		set('surecart/templates', 'full-columns-page-tempalte-dismissedd', [
-			...dismissed,
-			id,
-		]);
-	};
-
-	useEffect(() => {
-		if (postType !== 'page') return;
-		if (!isFullHeight) return;
-		if (template === 'pages/template-surecart-blank.php') return;
-		if (dismissed.includes(id)) return;
-
-		createInfoNotice(
-			__(
-				'It looks like you are using full height columns. Did you want to change your page template to the SureCart full height template?'
-			),
-			{
-				onDismiss: removeTemplateNotice,
-				actions: [
-					{
-						label: __('Change Template to Full Height', 'surecart'),
-						onClick: (e) => {
-							editPost({
-								template: 'pages/template-surecart-blank.php',
-							});
-							const notices = select(noticesStore).getNotices();
-							notices.forEach((notice) =>
-								removeNotice(notice.id)
-							);
-						},
-					},
-				],
-			}
-		);
-	}, [isFullHeight, template, postType]);
-
-	const { count } = useSelect(
+	const { count, canInsertColumnBlock, minCount } = useSelect(
 		(select) => {
+			const {
+				canInsertBlockType,
+				canRemoveBlock,
+				getBlocks,
+				getBlockCount,
+			} = select(blockEditorStore);
+			const innerBlocks = getBlocks(clientId);
+
+			// Get the indexes of columns for which removal is prevented.
+			// The highest index will be used to determine the minimum column count.
+			const preventRemovalBlockIndexes = innerBlocks.reduce(
+				(acc, block, index) => {
+					if (!canRemoveBlock(block.clientId)) {
+						acc.push(index);
+					}
+					return acc;
+				},
+				[]
+			);
+
 			return {
-				count: select(blockEditorStore).getBlockCount(clientId),
+				count: getBlockCount(clientId),
+				canInsertColumnBlock: canInsertBlockType(
+					'core/column',
+					clientId
+				),
+				minCount: Math.max(...preventRemovalBlockIndexes) + 1,
 			};
 		},
 		[clientId]
 	);
 
-	const blockProps = useBlockProps();
+	const classes = classnames({
+		[`are-vertically-aligned-${verticalAlignment}`]: verticalAlignment,
+		[`is-not-stacked-on-mobile`]: !isStackedOnMobile,
+		[`is-full-height`]: isFullHeight,
+		[`is-reversed-on-mobile`]: isReversedOnMobile,
+	});
+
+	const blockProps = useBlockProps({
+		className: classes,
+	});
 	const innerBlocksProps = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		orientation: 'horizontal',
 		renderAppender: false,
+		templateLock,
 	});
 
 	return (
@@ -161,21 +127,32 @@ function ColumnsEditContainer({
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody>
-					<RangeControl
-						label={__('Columns')}
-						value={count}
-						onChange={(value) => updateColumns(count, value)}
-						min={1}
-						max={Math.max(6, count)}
-					/>
-					{count > 6 && (
-						<Notice status="warning" isDismissible={false}>
-							{__(
-								'This column count exceeds the recommended amount and may cause visual breakage.'
+					{canInsertColumnBlock && (
+						<>
+							<RangeControl
+								__nextHasNoMarginBottom
+								label={__('Columns')}
+								value={count}
+								onChange={(value) =>
+									updateColumns(
+										count,
+										Math.max(minCount, value)
+									)
+								}
+								min={Math.max(1, minCount)}
+								max={Math.max(6, count)}
+							/>
+							{count > 6 && (
+								<Notice status="warning" isDismissible={false}>
+									{__(
+										'This column count exceeds the recommended amount and may cause visual breakage.'
+									)}
+								</Notice>
 							)}
-						</Notice>
+						</>
 					)}
 					<ToggleControl
+						__nextHasNoMarginBottom
 						label={__('Stack on mobile')}
 						checked={isStackedOnMobile}
 						onChange={() =>
@@ -204,13 +181,7 @@ function ColumnsEditContainer({
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<ScColumns
-				vertical-alignment={verticalAlignment}
-				is-stacked-on-mobile={isStackedOnMobile}
-				is-full-height={isFullHeight}
-				is-reversed-on-mobile={isReversedOnMobile}
-				{...innerBlocksProps}
-			/>
+			<div {...innerBlocksProps} />
 		</>
 	);
 }
@@ -232,7 +203,7 @@ const ColumnsEditContainerWrapper = withDispatch(
 			// Update own alignment.
 			setAttributes({ verticalAlignment });
 
-			// Update all child Column Blocks to match
+			// Update all child Column Blocks to match.
 			const innerBlockClientIds = getBlockOrder(clientId);
 			innerBlockClientIds.forEach((innerBlockClientId) => {
 				updateBlockAttributes(innerBlockClientId, {
@@ -274,8 +245,10 @@ const ColumnsEditContainerWrapper = withDispatch(
 
 				innerBlocks = [
 					...getMappedColumnWidths(innerBlocks, widths),
-					...times(newColumns - previousColumns, () => {
-						return createBlock('surecart/column', {
+					...Array.from({
+						length: newColumns - previousColumns,
+					}).map(() => {
+						return createBlock('core/column', {
 							width: `${newColumnWidth}%`,
 						});
 					}),
@@ -283,17 +256,18 @@ const ColumnsEditContainerWrapper = withDispatch(
 			} else if (isAddingColumn) {
 				innerBlocks = [
 					...innerBlocks,
-					...times(newColumns - previousColumns, () => {
-						return createBlock('surecart/column');
+					...Array.from({
+						length: newColumns - previousColumns,
+					}).map(() => {
+						return createBlock('core/column');
 					}),
 				];
-			} else {
+			} else if (newColumns < previousColumns) {
 				// The removed column will be the last of the inner blocks.
-				innerBlocks = dropRight(
-					innerBlocks,
-					previousColumns - newColumns
+				innerBlocks = innerBlocks.slice(
+					0,
+					-(previousColumns - newColumns)
 				);
-
 				if (hasExplicitWidths) {
 					// Redistribute as if block is already removed.
 					const widths = getRedistributedColumnWidths(
@@ -333,8 +307,8 @@ function Placeholder({ clientId, name, setAttributes }) {
 	return (
 		<div {...blockProps}>
 			<__experimentalBlockVariationPicker
-				icon={get(blockType, ['icon', 'src'])}
-				label={get(blockType, ['title'])}
+				icon={blockType?.icon?.src}
+				label={blockType?.title}
 				variations={variations}
 				onSelect={(nextVariation = defaultVariation) => {
 					if (nextVariation.attributes) {

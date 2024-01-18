@@ -71,6 +71,10 @@ export default ({ open, onRequestClose, productId }) => {
 						type="url"
 						label={__('Image URL', 'surecart')}
 						placeholder={__('https://', 'surecart')}
+						help={__(
+							'We recommend that you optimize your images before linking them to your products.',
+							'surecart'
+						)}
 						value={imageUrl}
 						onScInput={(e) => setImageUrl(e.target.value)}
 						required

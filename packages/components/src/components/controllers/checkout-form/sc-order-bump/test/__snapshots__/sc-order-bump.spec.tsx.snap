@@ -27,16 +27,30 @@ exports[`sc-order-bump renders bump with amount off 1`] = `
     <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
       <div class="bump" part="base-content">
         <div class="bump__text">
-          <div class="bump__title"></div>
+          <div aria-label="Product: undefined." class="bump__title">
+            <span aria-hidden="true"></span>
+          </div>
           <div class="bump__amount">
-            <div class="bump__price bump__price--has-discount" part="price" slot="description">
-              <sc-format-number class="bump__original-price" currency="usd" type="currency" value="1000"></sc-format-number>
-              <sc-format-number class="bump__new-price" currency="usd" type="currency" value="1500"></sc-format-number>
-            </div>
-            <div class="bump__tag">
-              Save
-              <sc-format-number currency="usd" type="currency" value="500"></sc-format-number>
-            </div>
+            <span>
+              <div class="bump__price bump__price--has-discount" part="price" slot="description">
+                <span aria-label="Originally priced at $10.00.">
+                  <sc-format-number class="bump__original-price" currency="usd" type="currency" value="1000"></sc-format-number>
+                </span>
+                <span>
+                  <span aria-hidden="true">
+                    <sc-format-number class="bump__new-price" currency="usd" type="currency" value="1500"></sc-format-number>
+                  </span>
+                </span>
+              </div>
+            </span>
+            <span>
+              <div aria-label="You save -500usd." class="bump__tag">
+                <span aria-hidden="true">
+                  Save
+                  <sc-format-number currency="usd" type="currency" value="500"></sc-format-number>
+                </span>
+              </div>
+            </span>
           </div>
         </div>
       </div>
@@ -61,7 +75,7 @@ exports[`sc-order-bump renders bump with description, cta and image 1`] = `
           </div>
         </div>
       </div>
-      <div slot="footer">
+      <div class="bump__product--wrapper" slot="footer">
         <sc-divider style="--spacing: var(--sc-spacing-medium);"></sc-divider>
         <div class="bump__product">
           <img class="bump__image" src="https://test.com/image.jpg">
@@ -105,15 +119,29 @@ exports[`sc-order-bump renders bump with percent off 1`] = `
     <sc-choice exportparts="base, control, checked-icon, title" type="checkbox">
       <div class="bump" part="base-content">
         <div class="bump__text">
-          <div class="bump__title"></div>
+          <div aria-label="Product: undefined." class="bump__title">
+            <span aria-hidden="true"></span>
+          </div>
           <div class="bump__amount">
-            <div class="bump__price bump__price--has-discount" part="price" slot="description">
-              <sc-format-number class="bump__original-price" currency="usd" type="currency" value="1000"></sc-format-number>
-              <sc-format-number class="bump__new-price" currency="usd" type="currency" value="500"></sc-format-number>
-            </div>
-            <div class="bump__tag">
-              Save 50%
-            </div>
+            <span>
+              <div class="bump__price bump__price--has-discount" part="price" slot="description">
+                <span aria-label="Originally priced at $10.00.">
+                  <sc-format-number class="bump__original-price" currency="usd" type="currency" value="1000"></sc-format-number>
+                </span>
+                <span>
+                  <span aria-hidden="true">
+                    <sc-format-number class="bump__new-price" currency="usd" type="currency" value="500"></sc-format-number>
+                  </span>
+                </span>
+              </div>
+            </span>
+            <span>
+              <div aria-label="You save 50%." class="bump__tag">
+                <span aria-hidden="true">
+                  Save 50%
+                </span>
+              </div>
+            </span>
           </div>
         </div>
       </div>

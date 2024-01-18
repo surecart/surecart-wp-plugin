@@ -27,14 +27,16 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 
 	<header class="sc-buy-header">
 		<div class="sc-buy-logo">
-			<?php if ( $show_logo ) : ?>
-				<img src="<?php echo esc_url( $logo_url ); ?>"
-					style="max-width: <?php echo esc_attr( $logo_width ?? '180px' ); ?>; width: 100%; height: auto;"
-					alt="<?php echo esc_attr( get_bloginfo() ); ?>"
-				/>
-			<?php else : ?>
-				<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
-			<?php endif; ?>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<?php if ( $show_logo ) : ?>
+					<img src="<?php echo esc_url( $logo_url ?? ''); ?>"
+						style="max-width: <?php echo esc_attr( $logo_width ?? '180px' ); ?>; width: 100%; height: auto;"
+						alt="<?php echo esc_attr( get_bloginfo() ); ?>"
+					/>
+				<?php else : ?>
+					<sc-text style="--font-size: var(--sc-font-size-xx-large); --font-weight: var(--sc-font-weight-bold)"><?php echo esc_html( get_bloginfo() ); ?></sc-text>
+				<?php endif; ?>
+			</a>
 			<?php if ( empty( $enabled ) ) : ?>
 				<sc-tag type="warning" size="small">
 					<?php esc_html_e( 'Not Published', 'surecart' ); ?>
@@ -44,7 +46,7 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 
 		<?php if ( ! empty( $user->ID ) ) : ?>
 			<sc-dropdown position="bottom-right" style="font-size: 15px;">
-				<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px" slot="trigger" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
+				<sc-avatar image="<?php echo esc_url( get_avatar_url( $user->user_email, [ 'default' => '404' ] ) ); ?>" style="--sc-avatar-size: 34px"  role="button" tabindex="0" initials="<?php echo esc_attr( substr( $user->display_name, 0, 1 ) ); ?>"></sc-avatar>
 				<sc-menu>
 					<?php if ( ! empty( $dashboard_link ) ) : ?>
 						<sc-menu-item href="<?php echo esc_url( $dashboard_link ); ?>">
@@ -71,15 +73,9 @@ use SureCartBlocks\Blocks\Form\Block as FormBlock;
 	echo filter_block_content(
 		( new FormBlock() )->render(
 			[
-				'prices'  => [
-					[
-						'id'         => $selected_price->id,
-						'product_id' => $product->id,
-						'quantity'   => 1,
-					],
-				],
 				'product' => $product,
 				'mode'    => $mode,
+				'success_url' => $success_url,
 			],
 			do_blocks( $content )
 		),

@@ -9,14 +9,14 @@
 
 ### Used by
 
- - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-license --> sc-spacing
+  sc-fulfillments --> sc-spacing
   sc-order --> sc-spacing
   sc-purchase-downloads-list --> sc-spacing
   style sc-spacing fill:#f9f,stroke:#333,stroke-width:4px

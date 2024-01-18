@@ -13,9 +13,20 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ checkout, loading, abandoned }) => {
 	const line_items = checkout?.line_items?.data;
+
+	const getImageAttributes = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
 
 	return (
 		<Box
@@ -41,8 +52,9 @@ export default ({ checkout, loading, abandoned }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.product?.image_url}
+							{...getImageAttributes(item?.price?.product)}
 							name={item?.price?.product?.name}
+							priceName={item?.price?.name}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
@@ -102,6 +114,14 @@ export default ({ checkout, loading, abandoned }) => {
 						}
 						currency={checkout?.currency}
 						value={checkout?.discount_amount}
+					/>
+				)}
+
+				{!!checkout?.shipping_amount && (
+					<LineItem
+						label={__('Shipping', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.shipping_amount}
 					/>
 				)}
 

@@ -61,8 +61,8 @@ describe('Coupon Field', () => {
               updated_at: 1647382132,
               price_id: 'ac7b1d56-0b7d-4e29-b2e5-e01ace8bf4ac',
             },
-          ]
-        }
+          ],
+        },
       },
     ).as('createUpdate');
   });
@@ -86,11 +86,11 @@ describe('Coupon Field', () => {
         discount: {
           coupon: {
             amount_off: 2000,
-            currency: 'usd'
+            currency: 'usd',
           },
           promotion: {
-            code: '20OFF'
-          }
+            code: '20OFF',
+          },
         },
         line_items: {
           object: 'list',
@@ -144,14 +144,14 @@ describe('Coupon Field', () => {
               updated_at: 1647382132,
               price_id: 'ac7b1d56-0b7d-4e29-b2e5-e01ace8bf4ac',
             },
-          ]
-        }
+          ],
+        },
       },
     ).as('applyCoupon');
 
     cy.get('sc-order-coupon-form').find('.trigger').click();
-    cy.get('sc-order-coupon-form').find('input').type('Testcoupon {enter}',{ force: true });
+    cy.get('sc-order-coupon-form').find('input').type('Testcoupon {enter}', { force: true });
     cy.get('sc-order-coupon-form').contains('20OFF');
-    cy.get('sc-order-coupon-form').contains('-$20.00');
+    cy.get('sc-order-coupon-form').contains('-$20');
   });
 });

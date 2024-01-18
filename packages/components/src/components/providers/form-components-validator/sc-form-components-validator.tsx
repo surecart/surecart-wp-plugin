@@ -1,7 +1,8 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-
-import { Checkout, TaxProtocol } from '../../../types';
+import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
+import { TaxProtocol } from '../../../types';
+import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -10,11 +11,10 @@ import { Checkout, TaxProtocol } from '../../../types';
 export class ScFormComponentsValidator {
   @Element() el: HTMLScFormComponentsValidatorElement;
 
+  private removeCheckoutListener: () => void;
+
   /** Disable validation? */
   @Prop() disabled: boolean;
-
-  /** The order */
-  @Prop() order: Checkout;
 
   /** The tax protocol */
   @Prop() taxProtocol: TaxProtocol;
@@ -34,21 +34,42 @@ export class ScFormComponentsValidator {
   /** Is there a bump line? */
   @State() hasBumpLine: boolean;
 
-  @Watch('order')
+  /** Is there shipping choices */
+  @State() hasShippingChoices: boolean;
+  /** Is there a shipping amount */
+  @State() hasShippingAmount: boolean;
+
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
+
     // make sure to add the address field if it's not there.
-    if (this?.order?.tax_status === 'address_invalid' || this?.order?.shipping_enabled) {
+    if (shippingAddressRequired()) {
       this.addAddressField();
     }
+
     // add order bumps.
-    if (this?.order?.recommended_bumps?.data?.length) {
+    if (checkoutState.checkout?.recommended_bumps?.data?.length) {
       this.addBumps();
     }
-    if (!!this.order?.tax_amount) {
+    if (!!checkoutState.checkout?.tax_amount) {
       this.addTaxLine();
     }
+
+    // add shipping choices.
+    if (checkoutState.checkout?.shipping_enabled && checkoutState.checkout?.selected_shipping_choice_required) {
+      this.addShippingChoices();
+    }
+
+    if (!!checkoutState.checkout?.shipping_amount) {
+      this.addShippingAmount();
+    }
+  }
+
+  @Watch('hasAddress')
+  handleHasAddressChange() {
+    if (!this.hasAddress) return;
+    this.handleShippingAddressRequired();
   }
 
   componentWillLoad() {
@@ -56,6 +77,8 @@ export class ScFormComponentsValidator {
     this.hasTaxIDField = !!this.el.querySelector('sc-order-tax-id-input');
     this.hasBumpsField = !!this.el.querySelector('sc-order-bumps');
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
+    this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
+    this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -67,12 +90,40 @@ export class ScFormComponentsValidator {
       }
     }
 
-    // make sure to check order on load.
-    this.handleOrderChange();
+    this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
+  }
+
+  disconnectedCallback() {
+    this.removeCheckoutListener();
+  }
+
+  handleShippingAddressRequired() {
+    if (!checkoutState.checkout?.shipping_address_required) return;
+
+    // get the address
+    const address = this.el.querySelector('sc-order-shipping-address');
+    if (!address) return;
+
+    // require the address.
+    address.required = true;
+
+    // if we have a customer name field, require that.
+    const customerName = this.el.querySelector('sc-customer-name');
+    if (!!customerName) {
+      customerName.required = true;
+      return;
+    }
+
+    // require the name and show the name input.
+    address.requireName = true;
+    address.showName = true;
   }
 
   addAddressField() {
-    if (this.hasAddress) return;
+    if (this.hasAddress) {
+      return;
+    }
+
     const payment = this.el.querySelector('sc-payment');
     const address = document.createElement('sc-order-shipping-address');
     address.label = __('Address', 'surecart');
@@ -84,7 +135,6 @@ export class ScFormComponentsValidator {
     if (this.hasTaxIDField) return;
     const payment = this.el.querySelector('sc-payment');
     const taxInput = document.createElement('sc-order-tax-id-input');
-    taxInput.taxIdentifier?.number_type === 'eu_vat';
     payment.parentNode.insertBefore(taxInput, payment);
     this.hasTaxIDField = true;
   }
@@ -93,7 +143,6 @@ export class ScFormComponentsValidator {
     if (this.hasBumpsField) return;
     const payment = this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    bumps.bumps === this.order?.recommended_bumps?.data;
     payment.parentNode.insertBefore(bumps, payment.nextSibling);
     this.hasBumpsField = true;
   }
@@ -108,6 +157,30 @@ export class ScFormComponentsValidator {
       total.parentNode.insertBefore(tax, total);
     }
     this.hasTaxLine = true;
+  }
+
+  addShippingChoices() {
+    if (this.hasShippingChoices) return;
+
+    const payment = this.el.querySelector('sc-payment');
+    const shippingChoices = document.createElement('sc-shipping-choices');
+    payment.parentNode.insertBefore(shippingChoices, payment);
+    this.hasShippingChoices = true;
+  }
+
+  addShippingAmount() {
+    if (this.hasShippingAmount) return;
+
+    let insertBeforeElement: Element = this.el.querySelector('sc-line-item-tax');
+    const total = this.el.querySelector('sc-line-item-total[total=total]');
+
+    if (!insertBeforeElement) {
+      insertBeforeElement = total?.previousElementSibling?.tagName === 'SC-DIVIDER' ? total.previousElementSibling : total;
+    }
+
+    const shippingAmount = document.createElement('sc-line-item-shipping');
+    insertBeforeElement.parentNode.insertBefore(shippingAmount, insertBeforeElement);
+    this.hasShippingAmount = true;
   }
 
   render() {

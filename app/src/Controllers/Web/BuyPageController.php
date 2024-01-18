@@ -4,49 +4,16 @@ namespace SureCart\Controllers\Web;
 /**
  * Handles webhooks
  */
-class BuyPageController {
-	/**
-	 * Product.
-	 *
-	 * @var \SureCart\Models\Product
-	 */
-	protected $product;
-
-	/**
-	 * Preload these blocks.
-	 *
-	 * @var array
-	 */
-	protected $preload = [
-		'surecart/column',
-		'surecart/columns',
-		'surecart/coupon',
-		'surecart/name',
-		'surecart/email',
-		'surecart/address',
-		'surecart/totals',
-		'surecart/total',
-		'surecart/submit',
-		'surecart/price-selector',
-		'surecart/price-choice',
-		'surecart/payment',
-	];
-
-
+class BuyPageController extends BasePageController {
 	/**
 	 * Handle filters.
 	 *
 	 * @return void
 	 */
-	public function filters() {
-		// set the document title.
-		add_filter( 'document_title_parts', [ $this, 'documentTitle' ] );
-		// disallow pre title filter.
-		add_filter( 'pre_get_document_title', [ $this, 'disallowPreTitle' ], 214748364 );
-		// add edit product link.
+	public function filters(): void {
+		parent::filters();
+		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
-		// do not persist the cart for this page.
-		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
@@ -54,15 +21,18 @@ class BuyPageController {
 	}
 
 	/**
-	 * Preload components.
+	 * Preload the image above the fold.
 	 *
 	 * @return void
 	 */
-	public function preloadComponents() {
-		$config = \SureCart::resolve( SURECART_CONFIG_KEY );
-		foreach ( $this->preload as $name ) {
-			\SureCart::preload()->add( $config['preload'][ $name ] );
+	public function preloadImage(): void {
+		if ( empty( $this->model->product_medias->data ) || is_wp_error( $this->model->product_medias->data ) ) {
+			return;
 		}
+		$product_media = $this->model->product_medias->data[0];
+		?>
+		<link rel="preload" fetchpriority="high" as="image" href="<?php echo esc_url( $product_media->getUrl( 450 ) ); ?>">
+		<?php
 	}
 
 	/**
@@ -73,14 +43,14 @@ class BuyPageController {
 	 * @return void
 	 */
 	public function addEditProductLink( $wp_admin_bar ) {
-		if ( empty( $this->product->id ) ) {
+		if ( empty( $this->model->id ) ) {
 			return;
 		}
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit',
 				'title' => __( 'Edit Product', 'surecart' ),
-				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->product->id ) ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->model->id ) ),
 			]
 		);
 	}
@@ -97,23 +67,24 @@ class BuyPageController {
 		$id = get_query_var( 'sc_checkout_product_id' );
 
 		// fetch the product by id/slug.
-		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media' ] )->find( $id );
-		if ( is_wp_error( $this->product ) ) {
-			return $this->handleError( $this->product );
+		$this->model = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $id );
+
+		if ( is_wp_error( $this->model ) ) {
+			return $this->handleError( $this->model );
 		}
 
 		// if this buy page is not enabled, check read permissions.
-		if ( ! $this->product->buyLink()->isEnabled() && ! current_user_can( 'read_sc_products' ) ) {
+		if ( ! $this->model->buyLink()->isEnabled() && ! current_user_can( 'read_sc_products' ) ) {
 			return $this->notFound();
 		}
 
 		// slug changed or we are using the id, redirect.
-		if ( $this->product->slug !== $id ) {
-			return \SureCart::redirect()->to( esc_url_raw( \SureCart::routeUrl( 'product', [ 'id' => $this->product->slug ] ) ) );
+		if ( $this->model->slug !== $id ) {
+			return \SureCart::redirect()->to( esc_url_raw( \SureCart::routeUrl( 'product', [ 'id' => $this->model->slug ] ) ) );
 		}
 
 		// get active prices.
-		$active_prices = $this->product->activePrices();
+		$active_prices = $this->model->activePrices();
 
 		// must have at least one active price.
 		if ( empty( $active_prices[0] ) ) {
@@ -126,29 +97,46 @@ class BuyPageController {
 		// add the filters.
 		$this->filters();
 
-		// preload the components.
-		$this->preloadComponents();
+		// prepare data.
+		$this->model              = $this->model->withActivePrices()->withSortedPrices();
+		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
+
+		if ( ! empty( $this->model->prices->data[0]->id ) ) {
+			$line_item = array_merge(
+				[
+					'price_id' => $this->model->prices->data[0]->id,
+					'quantity' => 1,
+				],
+				! empty( $first_variant_with_stock->id ) ? [ 'variant_id' => $first_variant_with_stock->id ] : []
+			);
+			sc_initial_state(
+				[
+					'checkout' => [
+						'initialLineItems' => sc_initial_line_items( [ $line_item ] ),
+					],
+				]
+			);
+		}
 
 		// render the view.
 		return \SureCart::view( 'web/buy' )->with(
 			[
-				'product'          => $this->product,
-				'prices'           => $active_prices,
-				'selected_price'   => $active_prices[0] ?? null,
+				'product'          => $this->model,
 				'terms_text'       => $this->termsText(),
-				'mode'             => $this->product->buyLink()->getMode(),
+				'mode'             => $this->model->buyLink()->getMode(),
 				'store_name'       => \SureCart::account()->name ?? get_bloginfo(),
 				'logo_url'         => \SureCart::account()->brand->logo_url,
 				'logo_width'       => \SureCart::settings()->get( 'buy_link_logo_width', '180px' ),
 				'user'             => wp_get_current_user(),
 				'logout_link'      => wp_logout_url( $request->getUrl() ),
 				'dashboard_link'   => \SureCart::pages()->url( 'dashboard' ),
-				'enabled'          => $this->product->buyLink()->isEnabled(),
-				'show_logo'        => $this->product->buyLink()->templatePartEnabled( 'logo' ),
-				'show_terms'       => $this->product->buyLink()->templatePartEnabled( 'terms' ),
-				'show_image'       => $this->product->buyLink()->templatePartEnabled( 'image' ),
-				'show_description' => $this->product->buyLink()->templatePartEnabled( 'description' ),
-				'show_coupon'      => $this->product->buyLink()->templatePartEnabled( 'coupon' ),
+				'enabled'          => $this->model->buyLink()->isEnabled(),
+				'show_logo'        => $this->model->buyLink()->templatePartEnabled( 'logo' ),
+				'show_terms'       => $this->model->buyLink()->templatePartEnabled( 'terms' ),
+				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
+				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
+				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
+				'success_url'      => $this->model->buyLink()->getSuccessUrl(),
 			]
 		);
 	}
@@ -165,16 +153,11 @@ class BuyPageController {
 			[],
 			filemtime( trailingslashit( plugin_dir_path( SURECART_PLUGIN_FILE ) ) . 'dist/templates/instant-checkout.css' ),
 		);
-	}
 
-
-	/**
-	 * Enqueue scripts.
-	 *
-	 * @return void
-	 */
-	public function scripts() {
-		\SureCart::assets()->enqueueComponents();
+		// add recaptcha if enabled.
+		if ( \SureCart::settings()->recaptcha()->isEnabled() ) {
+			wp_enqueue_script( 'surecart-google-recaptcha' );
+		}
 	}
 
 	/**
@@ -219,83 +202,5 @@ class BuyPageController {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Do not persist the cart on the buy page.
-	 *
-	 * @param array $data ScData array.
-	 *
-	 * @return array
-	 */
-	public function doNotPersistCart( $data ) {
-		$data['do_not_persist_cart'] = true;
-		return $data;
-	}
-
-	/**
-	 * Maybe set the url if needed.
-	 *
-	 * @param string $url The url.
-	 *
-	 * @return string
-	 */
-	public function maybeSetUrl( $url ) {
-		if ( empty( $this->product->id ) ) {
-			return $url;
-		}
-		return \SureCart::routeUrl( 'buy', [ 'id' => $this->product->id ] );
-	}
-
-	/**
-	 * Update the document title name to match the product name.
-	 *
-	 * @param array $parts The parts of the document title.
-	 */
-	public function documentTitle( $parts ) {
-		$parts['title'] = $this->product->name ?? $parts['title'];
-		return $parts;
-	}
-
-	/**
-	 * Disallow the pre title.
-	 *
-	 * @param string $title The title.
-	 *
-	 * @return string
-	 */
-	public function disallowPreTitle( $title ) {
-		if ( ! empty( $this->product->id ) ) {
-			return '';
-		}
-		return $title;
-	}
-
-	/**
-	 * Handle fetching error.
-	 *
-	 * @param \WP_Error $wp_error The error.
-	 *
-	 * @return void|function
-	 */
-	public function handleError( \WP_Error $wp_error ) {
-		$data = (array) $wp_error->get_error_data();
-		if ( 404 === ( $data['status'] ?? null ) ) {
-			return $this->notFound();
-		}
-		wp_die( esc_html( implode( ' ', $wp_error->get_error_messages() ) ) );
-	}
-
-	/**
-	 * Handle not found error.
-	 *
-	 * @return void
-	 */
-	public function notFound() {
-		global $wp_query;
-		$wp_query->set_404();
-		status_header( 404 );
-		get_template_part( 404 );
-		exit();
 	}
 }

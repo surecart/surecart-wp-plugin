@@ -29,9 +29,11 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
+ - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
  - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
@@ -51,6 +53,7 @@
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
@@ -62,9 +65,11 @@
 graph TD;
   sc-charges-list --> sc-card
   sc-checkout-mollie-payment --> sc-card
+  sc-checkout-stock-alert --> sc-card
   sc-customer-details --> sc-card
   sc-customer-edit --> sc-card
   sc-downloads-list --> sc-card
+  sc-fulfillments --> sc-card
   sc-invoices-list --> sc-card
   sc-license --> sc-card
   sc-licenses-list --> sc-card
@@ -84,6 +89,7 @@ graph TD;
   sc-subscription-next-payment --> sc-card
   sc-subscription-payment --> sc-card
   sc-subscription-payment-method --> sc-card
+  sc-subscription-variation-confirm --> sc-card
   sc-subscriptions-list --> sc-card
   sc-upcoming-invoice --> sc-card
   sc-wordpress-password-edit --> sc-card

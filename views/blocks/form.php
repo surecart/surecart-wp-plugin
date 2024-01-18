@@ -3,6 +3,9 @@
 	id="<?php echo esc_attr( $id ); ?>"
 	class="<?php echo esc_attr( $classes ); ?>"
 	style="<?php echo esc_attr( $style ); ?>"
+	modified="<?php echo esc_attr( $modified ?? '' ); ?>"
+	alignment="<?php echo esc_attr( $align ?? '' ); ?>"
+	success-url="<?php echo esc_url_raw( $success_url ?? null ); ?>"
 >
 	<sc-form>
 		<?php if ( (bool) $honeypot_enabled ?? false ) : ?>
@@ -11,32 +14,3 @@
 		<?php echo filter_block_content( $content, 'post' ); ?>
 	</sc-form>
 </sc-checkout>
-<sc-register-icon-library></sc-register-icon-library>
-
-
-<?php
-// This dynamically adds prop data to a component since we cannot pass objects data as a prop.
-\SureCart::assets()->addComponentData(
-	'sc-checkout',
-	'#' . $id,
-	[
-		'prices'                     => $prices,
-		'product'                    => $product,
-		'customer'                   => $customer ?? '',
-		'formId'                     => $form_id ?? '',
-		'currencyCode'               => $currency_code ?? null,
-		'modified'                   => $modified ?? null,
-		'loggedIn'                   => is_user_logged_in(),
-		'mode'                       => $mode ?? 'live',
-		'alignment'                  => $align ?? '',
-		'taxProtocol'                => $tax_protocol ?? [],
-		'loadingText'                => $loading_text ?? [],
-		'successText'                => $success_text ?? [],
-		'stripePaymentElement'       => $stripe_payment_element ?? false,
-		'successUrl'                 => esc_url_raw( $success_url ?? null ),
-		'processors'                 => $processors,
-		'manualPaymentMethods'       => $manual_payment_methods,
-		'abandonedCheckoutReturnUrl' => $abandoned_checkout_return_url,
-	]
-);
-?>

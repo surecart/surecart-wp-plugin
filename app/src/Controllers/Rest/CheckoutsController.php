@@ -29,6 +29,9 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function middleware( $class, \WP_REST_Request $request ) {
+		// if abandoned checkout is enabled, set the return url.
+		$request->set_param( 'abandoned_checkout_return_url', ! empty( $request->get_param( 'abandoned_checkout_enabled' ) ) ? esc_url_raw( get_home_url( null, 'surecart/redirect' ) ) : null );
+
 		return $this->maybeSetUser( $class, $request );
 	}
 
@@ -68,11 +71,6 @@ class CheckoutsController extends RestController {
 	 * @return \SureCart\Models\Model|\WP_Error
 	 */
 	protected function maybeSetUser( \SureCart\Models\Model $class, \WP_REST_Request $request ) {
-		// we only care about new sessions for now.
-		if ( $request->get_method() !== 'POST' ) {
-			return $class;
-		}
-
 		// get current user.
 		$user = User::current();
 
@@ -81,16 +79,22 @@ class CheckoutsController extends RestController {
 			return $class;
 		}
 
-		// fetch the user's customer object.
-		$customer = $user->customer( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		// set the email.
+		$class['email'] = $user->user_email;
 
-		if ( ! empty( $customer->id ) ) {
-			$class['customer'] = $customer;
-			$class['phone']    = isset( $customer->phone ) ? $customer->phone : '';
+		// force the customer id, if it exists.
+		$customer_id = $user->customerId( ! empty( $request['live_mode'] ) ? 'live' : 'test' );
+		if ( ! empty( $customer_id ) ) {
+			$class['customer'] = $customer_id;
 		}
 
-		$class['email'] = $customer->email ?? $user->user_email;
-		$class['name']  = $customer->name ?? $user->display_name;
+		// if this is a new session, populate the name and phone from the user data.
+		if ( $request->get_method() === 'POST' ) {
+			$class['name']       = $user->display_name;
+			$class['first_name'] = $user->first_name;
+			$class['last_name']  = $user->last_name;
+			$class['phone']      = $user->phone;
+		}
 
 		return $class;
 	}
@@ -259,15 +263,15 @@ class CheckoutsController extends RestController {
 		$errors = new \WP_Error();
 
 		// check if they are trying to sign in.
-		$valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
-		if ( is_wp_error( $valid_login ) ) {
-			$errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
-		}
+		// $valid_login = $this->maybeValidateLoginCreds( $request->get_param( 'email' ), $request->get_param( 'password' ) );
+		// if ( is_wp_error( $valid_login ) ) {
+		// $errors->add( $valid_login->get_error_code(), $valid_login->get_error_message() );
+		// }
 
 		// Check if honeypot checkbox checked or not.
 		$metadata = $request->get_param( 'metadata' );
 		if ( $metadata && ! empty( $metadata['get_feedback'] ) ) {
-			$errors->add( 'invalid', __( 'Invalid request. Please try again.', 'surecart' ) );
+			$errors->add( 'invalid', __( 'Spam check failed. Please try again.', 'surecart' ) );
 		}
 
 		// check recaptcha.

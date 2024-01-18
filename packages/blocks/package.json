@@ -39,13 +39,13 @@
 		"test:unit": "wp-scripts test-unit-js"
 	},
 	"dependencies": {
-		"@surecart/components": "^1.0.0",
+		"@surecart/components": "^2",
 		"@surecart/components-react": "^1.0.1",
 		"react-select": "^5.7.0"
 	},
 	"devDependencies": {
 		"@wordpress/prettier-config": "^1.1.1",
-		"@wordpress/scripts": "^21.0.2",
+		"@wordpress/scripts": "^26.2.0",
 		"prettier": "^2.5.1",
 		"webpack-cli": "^4.9.2"
 	},

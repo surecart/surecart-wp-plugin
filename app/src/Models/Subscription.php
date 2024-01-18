@@ -340,20 +340,20 @@ class Subscription extends Model {
 	 * @param string $id Model id.
 	 * @return $this|\WP_Error
 	 */
-	protected function payOff ($id = null){
-		if($id){
-			$this->setAttribute('id',$id);
+	protected function payOff( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
 		}
 
-		if($this->fireModelEvent('payingOff') === false){
+		if ( $this->fireModelEvent( 'payingOff' ) === false ) {
 			return false;
 		}
 
-		if(empty($this->attributes['id'])){
-			return new \WP_Error('not_saved','Please create the subscription');
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the subscription' );
 		}
 
-		$paid_off =  $this->makeRequest(
+		$paid_off = $this->makeRequest(
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
@@ -427,6 +427,28 @@ class Subscription extends Model {
 	}
 
 	/**
+	 * Should delay subscription cancellation?
+	 *
+	 * @return boolean
+	 */
+	public function shouldDelayCancellation(): bool {
+		$protocol = \SureCart::account()->subscription_protocol;
+
+		if ( ! $protocol->cancel_window_enabled || empty( $protocol->cancel_window_days ) || empty( $this->attributes['current_period_end_at'] ) ) {
+			return false;
+		}
+
+		$cancel_window_days = $protocol->cancel_window_days;
+		$now                = (new \DateTime())->format('Y-m-d');
+		$end                = new \DateTime();
+		$end->setTimestamp( $this->attributes['current_period_end_at'] );
+		$end = $end->modify( "-{$cancel_window_days} days" );
+		$end = $end->format('Y-m-d');
+
+		return $now < $end;
+	}
+
+	/**
 	 * Can the subscription be canceled?
 	 *
 	 * @return boolean
@@ -465,6 +487,18 @@ class Subscription extends Model {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Get stats for the subscription
+	 *
+	 * @param array $args Array of arguments for the statistics.
+	 *
+	 * @return \SureCart\Models\Statistic;
+	 */
+	protected function stats( $args = [] ) {
+		$stat = new Statistic();
+		return $stat->where( $args )->find( 'subscriptions' );
 	}
 }
 

@@ -14,14 +14,23 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-product-item-price](../../controllers/products/sc-product-item-price)
+ - [sc-product-price](../../controllers/product/sc-product-price)
+
 ### Depends on
 
 - [sc-format-number](../../util/format-number)
+- [sc-visually-hidden](../../util/visually-hidden)
 
 ### Graph
 ```mermaid
 graph TD;
   sc-price-range --> sc-format-number
+  sc-price-range --> sc-visually-hidden
+  sc-product-item-price --> sc-price-range
+  sc-product-price --> sc-price-range
   style sc-price-range fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

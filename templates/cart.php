@@ -1,13 +1,13 @@
 <?php
 /**
- * Donation form block pattern
+ * Cart page block template.
  */
 return [
 	'title'      => __( 'Cart', 'surecart' ),
 	'categories' => [],
 	'blockTypes' => [],
 	'content'    => '<!-- wp:surecart/cart {"lock":{"move":true,"remove":true}} -->
-	<!-- wp:surecart/cart-header {"text":"My Cart","padding":{"top":"1.25em","right":"1.25em","bottom":"1.25em","left":"1.25em"},"lock":{"move":false,"remove":true}} -->
+	<!-- wp:surecart/cart-header {"text":"Review Your Cart","padding":{"top":"1.25em","right":"1.25em","bottom":"1.25em","left":"1.25em"},"lock":{"move":false,"remove":true}} -->
 	<div style="border-bottom:var(--sc-drawer-border);padding-top:1.25em;padding-bottom:1.25em;padding-left:1.25em;padding-right:1.25em"><sc-cart-header><span>My Cart</span></sc-cart-header></div>
 	<!-- /wp:surecart/cart-header -->
 

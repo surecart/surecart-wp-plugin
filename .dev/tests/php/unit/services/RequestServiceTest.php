@@ -2,6 +2,7 @@
 
 namespace SureCart\Tests\Services;
 
+use SureCart\Models\ApiToken;
 use SureCart\Request\RequestService;
 use SureCart\Tests\SureCartUnitTestCase;
 
@@ -14,12 +15,13 @@ class RequestServiceTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
 			'providers' => [
 				\SureCart\Request\RequestServiceProvider::class,
+				\SureCart\WordPress\PluginServiceProvider::class
 			]
 		], false);
 
@@ -38,7 +40,7 @@ class RequestServiceTest extends SureCartUnitTestCase
 	/**
 	 * @dataProvider cacheProvider
 	 */
-	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args =[], bool $expected) {
+	public function test_shouldFindCache(bool $cachable, string $cache_key, array $args, bool $expected) {
 		$service = new RequestService();
 		$this->assertSame($service->shouldFindCache($cachable, $cache_key, $args), $expected);
 	}
@@ -51,5 +53,15 @@ class RequestServiceTest extends SureCartUnitTestCase
 			[true, 'string', ['method' => 'GET', 'query' => ['cached' => false]], false],
 			[true, 'string', ['method' => 'POST'], false],
 		];
+	}
+
+	/**
+	 * Should clear the token if a 401 issue.
+	 */
+	public function test_shouldNotMakeRequestIfNoToken() {
+		$service = new RequestService( null );
+		$this->assertWPError( $service->makeRequest( 'test') );
+		$error = $service->makeRequest( 'test' );
+		$this->assertSame( 'missing_token', $error->get_error_code() );
 	}
 }

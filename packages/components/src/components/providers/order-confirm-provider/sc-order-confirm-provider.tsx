@@ -1,13 +1,15 @@
-import { Component, Element, Event, EventEmitter, h, Host, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Host, Watch, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { speak } from '@wordpress/a11y';
 
 import apiFetch from '../../../functions/fetch';
 import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
+import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
 import { clearCheckout } from '@store/checkout/mutations';
-
+import { createErrorNotice } from '@store/notices/mutations';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -18,60 +20,57 @@ import { clearCheckout } from '@store/checkout/mutations';
   shadow: true,
 })
 export class ScOrderConfirmProvider {
+  private continueButton: HTMLScButtonElement;
   /** The order confirm provider element */
   @Element() el: HTMLScOrderConfirmProviderElement;
 
   /** Whether to show success modal */
   @State() showSuccessModal: boolean = false;
 
-  @State() confirmedCheckout: Checkout;
+  /** Checkout status to listen and do payment related stuff. */
+  @Prop() checkoutStatus: string;
 
   /** Success url. */
   @Prop() successUrl: string;
-
-  /** Success text for the form. */
-  @Prop() successText: {
-    title: string;
-    description: string;
-    button: string;
-  };
 
   /** The order is paid event. */
   @Event() scOrderPaid: EventEmitter<Checkout>;
 
   @Event() scSetState: EventEmitter<string>;
 
-  /** Error event. */
-  @Event() scError: EventEmitter<{ message: string; code?: string; data?: any; additional_errors?: any } | {}>;
-
-  /** Listen for paid event. This is triggered by Stripe or Paypal elements when payment succeeds. */
-  @Listen('scPaid')
-  handlePaidEvent() {
-    this.confirmOrder();
+  /**
+   * Watch for paid checkout machine state.
+   * This is triggered by Stripe, Paypal or Paystack when payment succeeds.
+   */
+  @Watch('checkoutStatus')
+  handleConfirmOrderEvent() {
+    if (this.checkoutStatus === 'confirming') {
+      this.confirmOrder();
+    } else if (this.checkoutStatus === 'confirmed') {
+      speak(__('Order has been confirmed. Please select continue to go to the next step.', 'surecart'));
+    }
   }
 
   /** Confirm the order. */
   async confirmOrder() {
     try {
-      this.confirmedCheckout = (await apiFetch({
+      checkoutState.checkout = (await apiFetch({
         method: 'PATCH',
-        path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, [expand]),
+        path: addQueryArgs(`surecart/v1/checkouts/${checkoutState?.checkout?.id}/confirm`, { expand }),
       })) as Checkout;
       this.scSetState.emit('CONFIRMED');
-      // emit the order paid event for tracking scripts.
-      this.scOrderPaid.emit(this.confirmedCheckout);
     } catch (e) {
       console.error(e);
-      this.scError.emit(e);
+      createErrorNotice(e);
     } finally {
       // always clear the checkout.
       clearCheckout();
       // get success url.
-      const successUrl = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
+      const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
       if (successUrl) {
         // set state to redirecting.
         this.scSetState.emit('REDIRECT');
-        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { order: this.confirmedCheckout?.id })), 50);
+        setTimeout(() => window.location.assign(addQueryArgs(successUrl, { sc_order: checkoutState.checkout?.id })), 50);
       } else {
         this.showSuccessModal = true;
       }
@@ -79,12 +78,21 @@ export class ScOrderConfirmProvider {
   }
 
   getSuccessUrl() {
-    const url = this.confirmedCheckout?.metadata?.success_url || this.successUrl;
-    return url ? addQueryArgs(url, { order: this.confirmedCheckout?.id }) : window?.scData?.pages?.dashboard;
+    const url = checkoutState.checkout?.metadata?.success_url || this.successUrl;
+    return url ? addQueryArgs(url, { sc_order: checkoutState.checkout?.id }) : window?.scData?.pages?.dashboard;
+  }
+
+  @Watch('showSuccessModal')
+  handleSuccessModal() {
+    if (this.showSuccessModal) {
+      setTimeout(() => {
+        this.continueButton?.focus();
+      }, 50);
+    }
   }
 
   render() {
-    const manualPaymentMethod = this.confirmedCheckout?.manual_payment_method as ManualPaymentMethod;
+    const manualPaymentMethod = checkoutState.checkout?.manual_payment_method as ManualPaymentMethod;
 
     return (
       <Host>
@@ -96,12 +104,10 @@ export class ScOrderConfirmProvider {
             </div>
           </div>
           <sc-dashboard-module
-            heading={this.successText?.title || __('Thanks for your order!', 'surecart')}
+            heading={formState?.text?.success?.title || __('Thanks for your order!', 'surecart')}
             style={{ '--sc-dashboard-module-spacing': 'var(--sc-spacing-x-large)', 'textAlign': 'center' }}
           >
-            <span slot="description">
-              {this.successText?.description || __('Your payment was successful, and your order is complete. A receipt is on its way to your inbox.', 'surecart')}
-            </span>
+            <span slot="description">{formState?.text?.success?.description || __('Your payment was successful. A receipt is on its way to your inbox.', 'surecart')}</span>
             {!!manualPaymentMethod?.name && !!manualPaymentMethod?.instructions && (
               <sc-alert type="info" open style={{ 'text-align': 'left' }}>
                 <span slot="title">{manualPaymentMethod?.name}</span>
@@ -110,8 +116,8 @@ export class ScOrderConfirmProvider {
                 })}
               </sc-alert>
             )}
-            <sc-button href={this.getSuccessUrl()} size="large" type="primary">
-              {this.successText?.button || __('Continue', 'surecart')}
+            <sc-button href={this.getSuccessUrl()} size="large" type="primary" ref={el => (this.continueButton = el as HTMLScButtonElement)}>
+              {formState?.text?.success?.button || __('Continue', 'surecart')}
               <sc-icon name="arrow-right" slot="suffix" />
             </sc-button>
           </sc-dashboard-module>

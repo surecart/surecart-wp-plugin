@@ -11,10 +11,22 @@ import {
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { formatTaxDisplay } from '../../../../util/tax';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import { getVariantLabel } from '../../../../util/variation';
 
 export default ({ period, loading }) => {
 	const checkout = period?.checkout;
 	const line_items = period?.checkout?.line_items?.data;
+
+	const getImageAttributes = (product) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(product);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
 
 	return (
 		<Box
@@ -41,8 +53,9 @@ export default ({ period, loading }) => {
 						<>
 							<ScProductLineItem
 								key={item.id}
-								imageUrl={item?.price?.product?.image_url}
+								{...getImageAttributes(item?.price?.product)}
 								name={item?.price?.product?.name}
+								priceName={item?.price?.name}
 								editable={false}
 								removable={false}
 								fees={item?.fees?.data}
@@ -52,6 +65,9 @@ export default ({ period, loading }) => {
 								trialDurationDays={
 									item?.price?.trial_duration_days
 								}
+								variantLabel={getVariantLabel(
+									item?.variant_options || []
+								)}
 								interval={intervalString(item?.price)}
 							></ScProductLineItem>
 						</>
@@ -97,6 +113,14 @@ export default ({ period, loading }) => {
 						label={__('Discounts', 'surecart')}
 						currency={checkout?.currency}
 						value={checkout?.discount_amount}
+					/>
+				)}
+
+				{!!checkout?.shipping_amount && (
+					<LineItem
+						label={__('Shipping', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.shipping_amount}
 					/>
 				)}
 

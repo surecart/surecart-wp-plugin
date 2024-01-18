@@ -31,9 +31,11 @@ drone.json
 ehthumbs.db
 Thumbs.db
 .idea
+.phpunit.result.cache
 
 artifacts
 dist
+build
 
 # Yarn
 .yarn/*
@@ -47,3 +49,9 @@ dist
 
 @surecart
 cypress.env.json
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+undefinedadminState.json

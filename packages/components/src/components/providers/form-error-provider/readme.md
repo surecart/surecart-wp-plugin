@@ -5,20 +5,10 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Overview
 
-| Property        | Attribute        | Description        | Type                                                                                                                                                           | Default     |
-| --------------- | ---------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `checkoutState` | `checkout-state` | The current order. | `"confirmed" \| "confirming" \| "draft" \| "expired" \| "failure" \| "finalizing" \| "idle" \| "loading" \| "paid" \| "paying" \| "redirecting" \| "updating"` | `undefined` |
-
-
-## Events
-
-| Event           | Description       | Type                                                                                            |
-| --------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
-| `scSetState`    | Form state event. | `CustomEvent<"EXPIRE" \| "FETCH" \| "FINALIZE" \| "PAID" \| "PAYING" \| "REJECT" \| "RESOLVE">` |
-| `scUpdateError` | Set the state.    | `CustomEvent<ResponseError>`                                                                    |
-
+This component checks to make sure there is an error component
+and adds one if it's missing.
 
 ## Dependencies
 

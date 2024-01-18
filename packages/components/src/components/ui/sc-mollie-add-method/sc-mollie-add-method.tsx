@@ -43,7 +43,6 @@ export class ScMollieAddMethod {
           currency: this.currency,
         },
       });
-      console.log(this.paymentIntent);
       if (this.paymentIntent.processor_data?.mollie?.checkout_url) {
         window.location.assign(this.paymentIntent.processor_data?.mollie?.checkout_url);
       }
@@ -59,7 +58,7 @@ export class ScMollieAddMethod {
       this.loading = true;
       const response = (await apiFetch({
         path: addQueryArgs(`surecart/v1/processors/${this.processorId}/payment_method_types`, {
-          amount: 0,
+          amount: 2500,
           country: this.country,
           currency: this.currency,
           reusable: true,

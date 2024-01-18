@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Fragment, h, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Prop, State } from '@stencil/core';
 import { Address, Pagination, PaymentMethodType, ResponseError } from '../../../../types';
 import { sprintf, __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -14,6 +14,7 @@ import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import apiFetch from '../../../../functions/fetch';
 
 import { ManualPaymentMethods } from '../payment/ManualPaymentMethods';
+import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
   tag: 'sc-checkout-mollie-payment',
@@ -26,9 +27,6 @@ export class ScCheckoutMolliePayment {
 
   @State() error: ResponseError;
   @State() methods: PaymentMethodType[];
-
-  /** Error event */
-  @Event() scError: EventEmitter<ResponseError>;
 
   componentWillLoad() {
     selectedProcessor.id = 'mollie';
@@ -56,7 +54,7 @@ export class ScCheckoutMolliePayment {
       };
       processorsState.methods = response?.data || [];
     } catch (e) {
-      this.scError.emit(e);
+      createErrorNotice(e);
       console.error(e);
     } finally {
       unLockCheckout('methods');
@@ -98,7 +96,7 @@ export class ScCheckoutMolliePayment {
           {(availableMethodTypes() || []).map(method => (
             <sc-payment-method-choice processor-id="mollie" method-id={method?.id} key={method?.id}>
               <span slot="summary" class="sc-payment-toggle-summary">
-                {!!method?.image && <img src={method?.image} />}
+                {!!method?.image && <img src={method?.image} aria-hidden="true" />}
                 <span>{method?.description}</span>
               </span>
 

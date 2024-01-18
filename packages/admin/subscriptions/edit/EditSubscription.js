@@ -46,7 +46,12 @@ export default () => {
 				'subscription',
 				id,
 				{
-					expand: ['current_period', 'current_period.checkout'],
+					expand: [
+						'current_period',
+						'current_period.checkout',
+						'discount',
+						'discount.coupon',
+					],
 				},
 			];
 
@@ -70,14 +75,15 @@ export default () => {
 
 	useEffect(() => {
 		if (subscription?.id) {
-			console.log('fetching');
 			fetchUpcomingPeriod();
 		}
 	}, [
 		subscription?.id,
 		subscription?.quantity,
 		subscription?.price,
+		subscription?.ad_hoc_amount,
 		subscription?.trial_end_at,
+		subscription?.discount,
 		skipProration,
 		updateBehavior,
 	]);
@@ -141,6 +147,7 @@ export default () => {
 			quantity,
 			discount,
 			price,
+			variant,
 			payment_method,
 		} = subscription;
 
@@ -159,6 +166,8 @@ export default () => {
 						'checkout.line_items',
 						'line_item.price',
 						'price.product',
+						'checkout.discount',
+						'discount.coupon',
 						'period.subscription',
 					],
 				}
@@ -172,6 +181,7 @@ export default () => {
 				quantity,
 				purge_pending_update: true,
 				price,
+				variant,
 			},
 		});
 	};
@@ -238,7 +248,9 @@ export default () => {
 								checked={updateBehavior === 'immediate'}
 								onScChange={(e) =>
 									setUpdateBehavior(
-										e.target.checked ? 'immediate' : 'pending'
+										e.target.checked
+											? 'immediate'
+											: 'pending'
 									)
 								}
 							>

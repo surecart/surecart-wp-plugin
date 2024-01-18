@@ -34,8 +34,10 @@
 
 - [sc-payment-method-choice](../../../processors/sc-payment-method-choice)
 - [sc-icon](../../../ui/icon)
+- [sc-visually-hidden](../../../util/visually-hidden)
 - [sc-card](../../../ui/card)
 - [sc-payment-selected](../../../ui/payment-selected)
+- [sc-checkout-paystack-payment-provider](../sc-checkout-paystack-payment-provider)
 - [sc-form-control](../../../ui/form-control)
 - [sc-tag](../../../ui/tag)
 - [sc-checkout-mollie-payment](../sc-checkout-mollie-payment)
@@ -46,15 +48,17 @@
 graph TD;
   sc-payment --> sc-payment-method-choice
   sc-payment --> sc-icon
+  sc-payment --> sc-visually-hidden
   sc-payment --> sc-card
   sc-payment --> sc-payment-selected
+  sc-payment --> sc-checkout-paystack-payment-provider
   sc-payment --> sc-form-control
   sc-payment --> sc-tag
   sc-payment --> sc-checkout-mollie-payment
   sc-payment --> sc-alert
   sc-payment-method-choice --> sc-card
   sc-payment-selected --> sc-divider
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-checkout-mollie-payment --> sc-card
   sc-checkout-mollie-payment --> sc-skeleton
   sc-checkout-mollie-payment --> sc-alert

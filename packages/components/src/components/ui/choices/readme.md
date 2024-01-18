@@ -49,8 +49,10 @@ Type: `Promise<void>`
 ### Used by
 
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
+ - [sc-checkout-product-price-variant-selector](../../controllers/checkout-form/sc-checkout-product-price-variant-selector)
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-price-choices](../../controllers/checkout-form/price-choices)
+ - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
@@ -63,10 +65,12 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-cancel-survey --> sc-choices
+  sc-checkout-product-price-variant-selector --> sc-choices
   sc-donation-choices --> sc-choices
   sc-price-choices --> sc-choices
+  sc-product-price-choices --> sc-choices
   sc-subscription-payment --> sc-choices
   sc-subscription-payment-method --> sc-choices
   sc-subscription-switch --> sc-choices

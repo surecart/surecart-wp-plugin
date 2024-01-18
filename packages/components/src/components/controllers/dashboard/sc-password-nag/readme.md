@@ -25,7 +25,7 @@
 - [sc-icon](../../../ui/icon)
 - [sc-card](../../../ui/card)
 - [sc-form](../../../ui/form)
-- [sc-input](../../../ui/input)
+- [sc-password](../../../ui/sc-password)
 - [sc-flex](../../../ui/flex)
 - [sc-block-ui](../../../ui/block-ui)
 
@@ -38,14 +38,15 @@ graph TD;
   sc-password-nag --> sc-icon
   sc-password-nag --> sc-card
   sc-password-nag --> sc-form
-  sc-password-nag --> sc-input
+  sc-password-nag --> sc-password
   sc-password-nag --> sc-flex
   sc-password-nag --> sc-block-ui
   sc-alert --> sc-icon
   sc-dashboard-module --> sc-alert
   sc-button --> sc-spinner
+  sc-password --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-block-ui --> sc-spinner
   style sc-password-nag fill:#f9f,stroke:#333,stroke-width:4px
 ```

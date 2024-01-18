@@ -1,5 +1,6 @@
 :host {
   --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+  --border-radius: var(--sc-quantity-border-radius, var(--sc-input-border-radius-small));
   display: inline-block;
 }
 
@@ -8,11 +9,10 @@
   line-height: 1;
   border: none;
   flex: 1;
-  max-width: 35px;
+  max-width: var(--sc-quantity-input-max-width, 35px);
   background-color: var(--sc-input-control-background-color, var(--sc-color-white));
   color: var(--sc-input-control-color, var(--sc-color-black));
-  -moz-appearance:textfield;
-
+  -moz-appearance: textfield;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -52,7 +52,7 @@
 .quantity {
   position: relative;
   display: inline-block;
-  width: 100px;
+  width: var(--sc-quantity-select-width, 100px);
   height: var(--sc-quantity-control-height, var(--sc-input-height-small));
   display: flex;
   align-items: stretch;
@@ -61,10 +61,11 @@
   letter-spacing: var(--sc-input-letter-spacing);
   background-color: var(--sc-input-background-color);
   border: var(--sc-input-border);
-  border-radius: var(--sc-input-border-radius-small);
+  border-radius: var(--border-radius);
   vertical-align: middle;
   box-shadow: var(--sc-input-box-shadow);
-  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border, var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
+  transition: var(--sc-input-transition, var(--sc-transition-medium)) color, var(--sc-input-transition, var(--sc-transition-medium)) border,
+    var(--sc-input-transition, var(--sc-transition-medium)) box-shadow;
 
   &:hover:not(.quantity--disabled) {
     background-color: var(--sc-input-background-color-hover);
@@ -103,18 +104,21 @@
 
 .button__decrease,
 .button__increase {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 0;
   height: auto;
   top: 1px;
   bottom: 1px;
   width: 32px;
   background: var(--sc-input-background-color);
-  color: var(--sc-input-color);
+  color: var(--sc-input-help-text-color);
   cursor: pointer;
   font-size: 13px;
   user-select: none;
+  border-width: 0;
+  padding: 0;
 
   &:hover:not(.button--disabled) {
     .quantity__control {
@@ -130,14 +134,31 @@
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Small
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+.quantity--small {
+  width: var(--sc-quantity-select-width-small, 76px);
+  height: var(--sc-quantity-control-height-small, 26px);
+
+  .button__decrease,
+  .button__increase {
+    width: 24px;
+    border: none;
+  }
+  .input__control {
+    max-width: 24px;
+  }
+}
+
 .button__decrease {
   left: 1px;
-  border-radius: var(--sc-input-border-radius-small) 0 0 var(--sc-input-border-radius-small);
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
   border-right: var(--sc-input-border);
 }
 .button__increase {
   right: 1px;
-  border-radius: 0 var(--sc-input-border-radius-small) var(--sc-input-border-radius-small) 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
   border-left: var(--sc-input-border);
 }
 

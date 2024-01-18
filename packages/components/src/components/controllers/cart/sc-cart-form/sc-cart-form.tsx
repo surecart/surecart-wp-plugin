@@ -1,13 +1,12 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { Creator, Universe } from 'stencil-wormhole';
 
 import { convertLineItemsToLineItemData } from '../../../../functions/line-items';
 import { createOrUpdateCheckout } from '../../../../services/session';
-import { getOrder, setOrder } from '@store/checkouts';
+import { state as checkoutState } from '@store/checkout';
 import uiStore from '@store/ui';
 import { Checkout, LineItemData } from '../../../../types';
-
+import { updateFormState } from '@store/form/mutations';
 const query = {
   expand: [
     'line_items',
@@ -38,13 +37,14 @@ export class ScCartForm {
   /** The price id to add. */
   @Prop() priceId: string;
 
+  /** The variant id to add. */
+  @Prop() variantId: string;
+
   /** Are we in test or live mode. */
   @Prop() mode: 'test' | 'live' = 'live';
 
   /** The form id to use for the cart. */
   @Prop({ reflect: true }) formId: string;
-
-  @State() order: Checkout;
 
   /** Is it busy */
   @State() busy: boolean;
@@ -52,12 +52,15 @@ export class ScCartForm {
 
   /** Find a line item with this price. */
   getLineItem() {
-    const order = this.getOrder();
-    const lineItem = (order?.line_items?.data || []).find(item => item.price?.id === this.priceId);
+    const lineItem = (checkoutState?.checkout?.line_items?.data || []).find(item => {
+      if (this.variantId) {
+        return item.variant?.id === this.variantId && item.price?.id === this.priceId;
+      }
+      return item.price?.id === this.priceId;
+    });
     if (!lineItem?.id) {
       return false;
     }
-
     return {
       id: lineItem?.id,
       price_id: lineItem?.price?.id,
@@ -65,25 +68,23 @@ export class ScCartForm {
     } as LineItemData;
   }
 
-  getOrder() {
-    return getOrder(this?.formId, this.mode);
-  }
-
   /** Add the item to cart. */
   async addToCart() {
     const { price } = await this.form.getFormJson();
     try {
-      this.busy = true;
+      updateFormState('FETCH');
       // if it's ad_hoc, update the amount. Otherwise increment the quantity.
-      const order = await this.addOrUpdateLineItem({ ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}) });
+      checkoutState.checkout = await this.addOrUpdateLineItem({
+        ...(!!price ? { ad_hoc_amount: parseInt(price as string) || null } : {}),
+        ...(!!this.variantId ? { variant_id: (this.variantId as string) || null } : {}),
+      });
+      updateFormState('RESOLVE');
       // store the checkout in localstorage and open the cart
-      setOrder(order, this.formId);
       uiStore.set('cart', { ...uiStore.state.cart, ...{ open: true } });
     } catch (e) {
+      updateFormState('REJECT');
       console.error(e);
       this.error = e?.message || __('Something went wrong', 'surecart');
-    } finally {
-      this.busy = false;
     }
   }
 
@@ -92,11 +93,11 @@ export class ScCartForm {
     let lineItem = this.getLineItem() as LineItemData;
 
     // convert line items response to line items post.
-    let existingData = convertLineItemsToLineItemData(this.getOrder()?.line_items || []);
+    let existingData = convertLineItemsToLineItemData(checkoutState?.checkout?.line_items || []);
 
     // Line item does not exist. Add it.
     return (await createOrUpdateCheckout({
-      id: this.getOrder()?.id,
+      id: checkoutState?.checkout?.id,
       data: {
         live_mode: this.mode === 'live',
         line_items: [
@@ -106,6 +107,7 @@ export class ScCartForm {
               return {
                 ...item,
                 ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
+                ...(!!data?.variant_id ? { variant_id: data?.variant_id } : {}),
                 quantity: !item?.ad_hoc_amount ? item?.quantity + 1 : 1, // only increase quantity if not ad_hoc.
               };
             }
@@ -117,6 +119,7 @@ export class ScCartForm {
             ? [
                 {
                   price_id: this.priceId,
+                  variant_id: this.variantId,
                   ...(!!data?.ad_hoc_amount ? { ad_hoc_amount: data?.ad_hoc_amount } : {}),
                   quantity: 1,
                 },
@@ -129,18 +132,6 @@ export class ScCartForm {
         form_id: this.formId,
       },
     })) as Checkout;
-  }
-
-  componentWillLoad() {
-    Universe.create(this as Creator, this.state());
-  }
-
-  state() {
-    return {
-      busy: this.busy,
-      error: this.error,
-      order: this.getOrder(),
-    };
   }
 
   render() {
@@ -157,9 +148,7 @@ export class ScCartForm {
             {this.error}
           </sc-alert>
         )}
-        <Universe.Provider state={this.state()}>
-          <slot />
-        </Universe.Provider>
+        <slot />
       </sc-form>
     );
   }

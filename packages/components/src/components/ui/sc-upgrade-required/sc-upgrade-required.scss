@@ -4,10 +4,11 @@
   cursor: pointer;
 }
 
-p {
-  font-size: var(--sc-font-size-medium);
+p,
+::slotted(p) {
+  font-size: var(--sc-font-size-medium) !important;
   font-weight: var(--sc-font-weight-normal);
-  margin: 0 0 var(--sc-spacing-medium) 0;
+  margin: 0 0 var(--sc-spacing-medium) 0 !important;
   line-height: var(--sc-line-height-dense);
   white-space: normal;
 }

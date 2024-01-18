@@ -1,11 +1,51 @@
-import { __ } from '@wordpress/i18n';
+import { sprintf, __ } from '@wordpress/i18n';
 
 export const maybeConvertAmount = (amount, currency) => {
-	return ['BIF', 'CLP', 'DJF', 'GNF', 'JPY', 'KMF', 'KRW', 'XAF'].includes(
-		currency.toUpperCase()
-	)
+	return [
+		'BIF',
+		'BYR',
+		'CLP',
+		'DJF',
+		'GNF',
+		'ISK',
+		'JPY',
+		'KMF',
+		'KRW',
+		'PYG',
+		'RWF',
+		'UGX',
+		'VND',
+		'VUV',
+		'XAF',
+		'XAG',
+		'XAU',
+		'XBA',
+		'XBB',
+		'XBC',
+		'XBD',
+		'XDR',
+		'XOF',
+		'XPD',
+		'XPF',
+		'XPT',
+		'XTS',
+	].includes(currency.toUpperCase())
 		? amount
 		: amount / 100;
+};
+
+export const getHumanDiscount = (coupon) => {
+	if (coupon?.amount_off && coupon?.currency) {
+		return getFormattedPrice({
+			amount: coupon.amount_off,
+		});
+	}
+
+	if (coupon?.percent_off) {
+		return sprintf(__('%1d%% off', 'surecart'), coupon.percent_off || 0);
+	}
+
+	return '';
 };
 
 export const getFormattedPrice = ({ amount, currency = 'usd' }) => {
@@ -26,11 +66,11 @@ export const formatNumber = (value, currency = '') =>
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = (code = 'usd') => {
-	const [currency] = new Intl.NumberFormat(undefined, {
+	const formattedParts = new Intl.NumberFormat(undefined, {
 		style: 'currency',
 		currency: code,
 	}).formatToParts();
-	return currency?.value;
+	return formattedParts.find((part) => part.type === 'currency')?.value;
 };
 
 export const translate = (key) => {

@@ -52,3 +52,25 @@ export const sortByArray = (item, key, orderArray) =>
     if (orderArray.indexOf(b?.[key]) === -1) return -1;
     return orderArray.indexOf(a?.[key]) - orderArray.indexOf(b?.[key]);
   });
+
+export const getVariantFromValues = ({ variants, values }) => {
+  const variantValueKeys = Object.keys(values);
+
+  for (const variant of variants) {
+    const variantValues = ['option_1', 'option_2', 'option_3'].map(option => variant[option]).filter(value => value !== null && value !== undefined);
+
+    if (variantValues?.length === variantValueKeys?.length && variantValueKeys.every(key => variantValues.includes(values[key]))) {
+      return variant;
+    }
+  }
+  return null;
+};
+
+export const isInRange = (value, price) => {
+  const valueInt = parseInt(value);
+  if (!price) return true;
+  if (!price?.ad_hoc_max_amount && !price?.ad_hoc_min_amount) return true;
+  if (price?.ad_hoc_max_amount && valueInt > price?.ad_hoc_max_amount) return false;
+  if (price?.ad_hoc_min_amount && valueInt < price?.ad_hoc_min_amount) return false;
+  return true;
+};

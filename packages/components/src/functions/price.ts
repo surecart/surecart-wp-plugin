@@ -1,9 +1,10 @@
 import { __, _n, sprintf } from '@wordpress/i18n';
 
 import { Coupon, Price } from '../types';
+import { zeroDecimalCurrencies } from './currency';
 
 export const convertAmount = (amount: number, currency: string) => {
-  return ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'xaf'].includes(currency) ? amount : amount / 100;
+  return zeroDecimalCurrencies.includes(currency) ? amount : amount / 100;
 };
 
 export const getHumanDiscount = (coupon: Coupon) => {
@@ -38,11 +39,11 @@ export const getFormattedPrice = ({ amount, currency }: { amount: number; curren
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = (code: string = 'usd') => {
-  const [currency] = new Intl.NumberFormat(undefined, {
+  const formattedParts = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: code,
-  }).formatToParts(0);
-  return currency?.value;
+  }).formatToParts();
+  return formattedParts.find(part => part.type === 'currency')?.value;
 };
 
 export const translateInterval = (
@@ -87,6 +88,7 @@ interface IntervalOptions {
   labels?: {
     interval?: string;
     period?: string;
+    once?: string;
   };
 }
 export const intervalString = (price: Price, options: IntervalOptions = {}) => {
@@ -100,7 +102,7 @@ export const intervalString = (price: Price, options: IntervalOptions = {}) => {
 };
 
 export const intervalCountString = (price: Price, prefix, fallback = __('once', 'surecart'), abbreviate = false) => {
-  if (!price.recurring_interval_count || !price.recurring_interval) {
+  if (!price.recurring_interval_count || !price.recurring_interval || 1 === price?.recurring_period_count) {
     return '';
   }
   if (abbreviate) {
@@ -110,7 +112,7 @@ export const intervalCountString = (price: Price, prefix, fallback = __('once', 
 };
 
 export const periodCountString = (price: Price, abbreviate = false) => {
-  if (!price?.recurring_period_count) {
+  if (!price?.recurring_period_count || 1 === price?.recurring_period_count) {
     return '';
   }
   if (abbreviate) {
@@ -122,4 +124,11 @@ export const periodCountString = (price: Price, abbreviate = false) => {
 
 export const translateRemainingPayments = payments => {
   return sprintf(_n('%d payment remaining', '%d payments remaining', payments, 'surecart'), payments);
+};
+
+export const productNameWithPrice = price => {
+  if (!price) {
+    return '';
+  }
+  return `${price?.product?.name} ${price?.name ? `— ${price.name}` : ''}`;
 };

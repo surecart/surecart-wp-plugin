@@ -70,6 +70,9 @@ export class ScCustomerName {
   /** Don't allow a blank space as an input here. */
   @Method()
   async reportValidity() {
+    if (!this.required) {
+      return await this.input?.reportValidity?.();
+    }
     this.input?.setCustomValidity?.('');
 
     if (!this.input?.value.trim().length) {
@@ -127,7 +130,6 @@ export class ScCustomerName {
         name="name"
         ref={el => (this.input = el as HTMLScInputElement)}
         value={this.value}
-        disabled={!!userState.loggedIn}
         label={this.label}
         help={this.help}
         autocomplete="name"

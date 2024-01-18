@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sc-feature-demo-banner renders 1`] = `
+<sc-feature-demo-banner>
+  <mock:shadow-root>
+    <div class="sc-banner">
+      <p>
+        <slot>
+          This is a feature demo. In order to use it, you must upgrade your plan.
+        </slot>
+        <a href="https://app.surecart.com/billing" target="_blank">
+          <slot name="link">
+            Upgrade Your Plan
+            <sc-icon name="arrow-right"></sc-icon>
+          </slot>
+        </a>
+      </p>
+    </div>
+  </mock:shadow-root>
+</sc-feature-demo-banner>
+`;

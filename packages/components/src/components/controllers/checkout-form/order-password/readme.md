@@ -46,14 +46,15 @@ Type: `Promise<boolean>`
 
 ### Depends on
 
-- [sc-input](../../../ui/input)
+- [sc-password](../../../ui/sc-password)
 
 ### Graph
 ```mermaid
 graph TD;
-  sc-order-password --> sc-input
+  sc-order-password --> sc-password
+  sc-password --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   style sc-order-password fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

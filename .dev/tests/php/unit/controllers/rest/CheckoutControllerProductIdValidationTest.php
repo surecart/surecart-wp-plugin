@@ -14,7 +14,7 @@ class CheckoutsControllerProductIdValidationTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -28,9 +28,6 @@ class CheckoutsControllerProductIdValidationTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 */
 	public function test_requires_product_id()
 	{
 		$controller = \Mockery::mock(CheckoutsController::class)->shouldAllowMockingProtectedMethods()->makePartial();

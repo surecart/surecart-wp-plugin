@@ -15,6 +15,7 @@ export default ({
 	empty = '',
 	loading,
 	updating,
+	className,
 }) => {
 	if ((items || []).length === 0 && !loading && !updating) {
 		return (
@@ -26,6 +27,7 @@ export default ({
 
 	return (
 		<div
+			className={className}
 			css={
 				!loading &&
 				!updating &&
@@ -69,7 +71,7 @@ export default ({
 						))}
 
 					{(items || []).map((item) => (
-						<ScTableRow key={item.id}>
+						<ScTableRow key={item?.key || item?.id}>
 							{Object.keys(columns).map((key) => (
 								<ScTableCell key={key}>{item[key]}</ScTableCell>
 							))}

@@ -153,6 +153,7 @@ class CartPostTypeService {
 						'title' => __( 'Forms', 'surecart' ),
 					],
 				],
+				'claim_url'   => ! \SureCart::account()->claimed ? \SureCart::routeUrl( 'account.claim' ) : '',
 			]
 		);
 	}
@@ -188,10 +189,10 @@ class CartPostTypeService {
 		);
 
 		if ( empty( $posts ) ) {
-			$post = $this->createPost();
-		} else {
-			$post = $posts[0];
+			return;
 		}
+
+		$post = $posts[0];
 
 		if ( 'publish' !== $post->post_status ) {
 			$post_id = wp_update_post(

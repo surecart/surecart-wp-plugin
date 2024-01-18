@@ -2,23 +2,28 @@ import { Component, h, Prop, Event, EventEmitter, Element, Fragment } from '@ste
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
 import { Fee } from '../../../types';
+import { sizeImage } from '../../../functions/media';
 
 /**
- * @part base - The elements base wrapper.
- * @part text - The text wrapper.
- * @part title - The product title.
- * @part static-quantity - The statically displayed quantity.
- * @part quantity__base - The quantity base wrapper.
- * @part input - The input control.
- * @part minus - The minus control.
- * @part minus-icon - The minus icon.
- * @part plus - The plus control.
- * @part plus-icon - The plus icon.
- * @part remove-icon__base - The remove icon base wrapper.
- * @part price - The price wrapper.
- * @part price__amount - The price amount.
- * @part price__description - The price description.
- * @part suffix - The suffix items.
+ * @part base - The component base
+ * @part product-line-item - The product line item
+ * @part image - The product image
+ * @part text - The product text
+ * @part title - The product title
+ * @part suffix - The product suffix
+ * @part price - The product price
+ * @part price__amount - The product price amount
+ * @part price__description - The product price description
+ * @part price__scratch - The product price scratch
+ * @part static-quantity - The product static quantity
+ * @part remove-icon__base - The product remove icon
+ * @part quantity - The product quantity
+ * @part quantity__minus - The product quantity minus
+ * @part quantity__minus-icon - The product quantity minus icon
+ * @part quantity__plus - The product quantity plus
+ * @part quantity__plus-icon - The product quantity plus icon
+ * @part quantity__input - The product quantity input
+ * @part line-item__price-description - The line item price description
  */
 @Component({
   tag: 'sc-product-line-item',
@@ -31,8 +36,20 @@ export class ScProductLineItem {
   /** Url for the product image */
   @Prop() imageUrl: string;
 
+  /** Title for the product image */
+  @Prop() imageTitle: string;
+
+  /** Alternative description for the product image */
+  @Prop() imageAlt: string;
+
   /** Product name */
   @Prop() name: string;
+
+  /** Price name */
+  @Prop() priceName?: string;
+
+  /** Product variant label */
+  @Prop() variantLabel: string = '';
 
   /** Quantity */
   @Prop() quantity: number;
@@ -66,6 +83,9 @@ export class ScProductLineItem {
 
   /** The max allowed. */
   @Prop() max: number = 100;
+
+  /** The SKU. */
+  @Prop() sku: string = '';
 
   /** Emitted when the quantity changes. */
   @Event({ bubbles: false }) scUpdateQuantity: EventEmitter<number>;
@@ -126,36 +146,77 @@ export class ScProductLineItem {
   render() {
     return (
       <div class="base" part="base">
-        <div part="product-line-item" class={{ 'item': true, 'item--has-image': !!this.imageUrl, 'item--is-rtl': isRtl() }}>
-          {!!this.imageUrl && <img part="image" src={this.imageUrl} class="item__image" />}
+        <div
+          part="product-line-item"
+          class={{
+            'item': true,
+            'item--has-image': !!this.imageUrl,
+            'item--is-rtl': isRtl(),
+            'product-line-item__editable': this.editable,
+            'product-line-item__removable': this.removable,
+          }}
+        >
+          {!!this.imageUrl && (
+            <img part="image" src={sizeImage(this.imageUrl, 130)} class="item__image" alt={this.imageAlt} {...(this.imageTitle ? { title: this.imageTitle } : {})} />
+          )}
           <div class="item__text" part="text">
-            <div class="item__title" part="title">
-              <slot name="title">{this.name}</slot>
+            <div class="item__text-details">
+              <div class="item__title" part="title">
+                <slot name="title">{this.name}</slot>
+              </div>
+              <div class="item__description item__price-variant" part="description">
+                <div>{this.variantLabel}</div>
+                <div>{this.priceName}</div>
+                {!!this.sku && (
+                  <div>
+                    {__('SKU:', 'surecart')} {this.sku}
+                  </div>
+                )}
+              </div>
+              {!this.editable && this.quantity > 1 && (
+                <span class="item__description" part="static-quantity">
+                  {__('Qty:', 'surecart')} {this.quantity}
+                </span>
+              )}
             </div>
+
             {this.editable && (
               <sc-quantity-select
                 max={this.max || Infinity}
-                exportparts="base:quantity__base, minus, minus-icon, plus, plus-icon, input"
+                exportparts="base:quantity, minus:quantity__minus, minus-icon:quantity__minus-icon, plus:quantity__plus, plus-icon:quantity__plus-icon, input:quantity__input"
                 clickEl={this.el}
                 quantity={this.quantity}
+                size="small"
                 onScChange={e => e.detail && this.scUpdateQuantity.emit(e.detail)}
+                aria-label={sprintf(__('Change Quantity - %s %s', 'surecart'), this.name, this.priceName)}
               ></sc-quantity-select>
-            )}
-            {!this.editable && this.quantity > 1 && (
-              <span class="item__description" part="static-quantity">
-                {__('Qty:', 'surecart')} {this.quantity}
-              </span>
             )}
           </div>
           <div class="item__suffix" part="suffix">
-            {this.removable ? <sc-icon exportparts="base:remove-icon__base" class="item__remove" name="x" onClick={() => this.scRemove.emit()}></sc-icon> : <div></div>}
+            {this.removable ? (
+              <sc-icon
+                exportparts="base:remove-icon__base"
+                class="item__remove"
+                name="x"
+                onClick={() => this.scRemove.emit()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    this.scRemove.emit();
+                  }
+                }}
+                tabindex="0"
+                aria-label={sprintf(__('Remove Item - %s %s', 'surecart'), this.name, this.priceName)}
+              ></sc-icon>
+            ) : (
+              <div></div>
+            )}
             {this.renderPriceAndInterval()}
           </div>
         </div>
         {(this.fees || []).map(fee => {
           if (this.trialDurationDays && !this.setupFeeTrialEnabled && fee.fee_type === 'setup') return null;
           return (
-            <sc-line-item>
+            <sc-line-item exportparts="price-description:line-item__price-description">
               <sc-format-number slot="price-description" type="currency" value={fee?.amount} currency={this.currency || 'usd'} />
               <span slot="price-description" class="fee__description">
                 {fee?.description}

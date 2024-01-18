@@ -1,5 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
+import { speak } from '@wordpress/a11y';
+
 import { state as checkoutState } from '@store/checkout';
 import { formBusy, formLoading } from '@store/form/getters';
 import { animateTo, shimKeyframesHeightAuto, stopAnimations } from '../../../../functions/animate';
@@ -20,7 +22,9 @@ export class ScOrderSummary {
   @Prop() openText: string = __('Summary', 'surecart');
   @Prop() collapsible: boolean = false;
   @Prop() collapsedOnMobile: boolean = false;
-  @Prop({ mutable: true }) collapsed: boolean;
+  @Prop() collapsedOnDesktop: boolean;
+
+  @Prop({ mutable: true }) collapsed: boolean = false;
 
   /** Show the toggle */
   @Event() scShow: EventEmitter<void>;
@@ -28,11 +32,18 @@ export class ScOrderSummary {
   /** Show the toggle */
   @Event() scHide: EventEmitter<void>;
 
+  isMobileScreen(): boolean {
+    const bodyRect = document.body?.getClientRects();
+    return bodyRect?.length && bodyRect[0]?.width < 781;
+  }
+
   componentWillLoad() {
-    if (this.collapsedOnMobile) {
-      const bodyRect = document.body.getClientRects();
-      if (bodyRect.length) this.collapsed = bodyRect[0]?.width < 781;
+    if (this.isMobileScreen()) {
+      this.collapsed = this.collapsed || this.collapsedOnMobile;
+    } else {
+      this.collapsed = this.collapsed || this.collapsedOnDesktop;
     }
+
     this.handleOpenChange();
   }
 
@@ -61,7 +72,19 @@ export class ScOrderSummary {
 
     return (
       <sc-line-item style={{ '--price-size': 'var(--sc-font-size-x-large)' }}>
-        <span class="collapse-link" slot="title" onClick={e => this.handleClick(e)}>
+        <span
+          class="collapse-link"
+          slot="title"
+          onClick={e => this.handleClick(e)}
+          tabIndex={0}
+          aria-label={sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart'))}
+          onKeyDown={e => {
+            if (e.key === ' ') {
+              this.handleClick(e);
+              speak(sprintf(__('Order Summary %2$s', 'surecart'), this.collapsed ? __('collapsed', 'surecart') : __('expanded', 'surecart')), 'assertive');
+            }
+          }}
+        >
           {this.collapsed ? this.closedText || __('Order Summary', 'surecart') : this.openText || __('Order Summary', 'surecart')}
           <svg xmlns="http://www.w3.org/2000/svg" class="collapse-link__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -74,19 +97,19 @@ export class ScOrderSummary {
         {/* We have a trial, do not show total_savings_amount since it's based on the total_amount */}
         {checkoutState.checkout?.total_amount !== checkoutState.checkout?.amount_due ? (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
-            <sc-format-number type="currency" currency={checkoutState.checkout?.currency} value={checkoutState.checkout?.amount_due}></sc-format-number>
+            <sc-format-number class="total-price" type="currency" currency={checkoutState.checkout?.currency} value={checkoutState.checkout?.amount_due}></sc-format-number>
           </span>
         ) : (
           <span slot="price" class={{ 'price': true, 'price--collapsed': this.collapsed }}>
             {!!checkoutState.checkout?.total_savings_amount && (
               <sc-format-number
-                class="scratch-price"
+                class="total-price scratch-price"
                 type="currency"
                 value={-checkoutState.checkout?.total_savings_amount + checkoutState.checkout?.total_amount}
                 currency={checkoutState.checkout?.currency || 'usd'}
               />
             )}
-            <sc-total total={'total'} order={checkoutState.checkout}></sc-total>
+            <sc-total class="total-price" total={'total'} order={checkoutState.checkout}></sc-total>
           </span>
         )}
       </sc-line-item>

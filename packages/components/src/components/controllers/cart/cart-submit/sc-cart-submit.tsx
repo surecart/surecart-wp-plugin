@@ -1,5 +1,5 @@
-import { Component, h, Prop } from '@stencil/core';
-import { openWormhole } from 'stencil-wormhole';
+import { Component, h, Host, Prop } from '@stencil/core';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-cart-submit',
@@ -10,38 +10,17 @@ export class ScCartSubmit {
   /** Is the cart busy */
   @Prop() busy: boolean;
 
-  /** The button type. */
-  @Prop({ reflect: true }) type: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'text' | 'link' = 'primary';
-
-  /** The button's size. */
-  @Prop({ reflect: true }) size: 'small' | 'medium' | 'large' = 'medium';
-
-  /** Show a full-width button. */
-  @Prop() full: boolean = true;
-
-  @Prop() checkoutLink: string;
-
-  /** Icon to show. */
-  @Prop() icon: string;
-
   render() {
     return (
-      <sc-button
-        href={this.checkoutLink}
-        type={this.type}
-        size={this.size}
-        full={this.full}
-        loading={this.busy}
-        disabled={this.busy}
+      <Host
+        class={{ 'is-busy': formBusy() || this.busy, 'is-disabled': formBusy() || this.busy }}
         onClick={() => {
           this.busy = true;
           return true;
         }}
       >
-        {!!this.icon && <sc-icon name={this.icon} slot="prefix"></sc-icon>}
         <slot />
-      </sc-button>
+      </Host>
     );
   }
 }
-openWormhole(ScCartSubmit, ['busy', 'checkoutLink'], false);

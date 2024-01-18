@@ -13,7 +13,7 @@ exports[`sc-payment does not render non-recurring if recurring is required 1`] =
       <div theme="container">
         <sc-payment-method-choice processor-id="stripe">
           <span class="sc-payment-toggle-summary" slot="summary">
-            <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+            <sc-icon aria-hidden="true" name="credit-card" style="font-size: 24px;"></sc-icon>
             <span>
               Credit Card
             </span>
@@ -54,25 +54,28 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
       <sc-toggles theme="container">
         <sc-payment-method-choice processor-id="paypal">
           <span class="sc-payment-toggle-summary" slot="summary">
-            <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+            <sc-icon aria-hidden="true" name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+            <sc-visually-hidden>
+              PayPal
+            </sc-visually-hidden>
           </span>
           <sc-card>
             <sc-payment-selected label="PayPal selected for check out.">
-              <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
+              <sc-icon aria-hidden="true" name="paypal" slot="icon" style="width: 80px;"></sc-icon>
               Another step will appear after submitting your order to complete your purchase details.
             </sc-payment-selected>
           </sc-card>
         </sc-payment-method-choice>
         <sc-payment-method-choice method-id="card" processor-id="paypal">
           <span class="sc-payment-toggle-summary" slot="summary">
-            <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+            <sc-icon aria-hidden="true" name="credit-card" style="font-size: 24px;"></sc-icon>
             <span>
               Credit Card
             </span>
           </span>
           <sc-card>
             <sc-payment-selected label="Credit Card selected for check out.">
-              <sc-icon name="credit-card" slot="icon" style="font-size: 24px;"></sc-icon>
+              <sc-icon aria-hidden="true" name="credit-card" slot="icon" style="font-size: 24px;"></sc-icon>
               Another step will appear after submitting your order to complete your purchase details.
             </sc-payment-selected>
           </sc-card>
@@ -83,7 +86,7 @@ exports[`sc-payment only renders processors with the right mode 1`] = `
 </sc-payment>
 `;
 
-exports[`sc-payment renders no processors 1`] = `
+exports[`sc-payment renders no processors & user does not have \`manage_sc_shop_settings\` capability 1`] = `
 <sc-payment>
   <mock:shadow-root>
     <sc-form-control exportparts="label, help-text, form-control">
@@ -92,7 +95,28 @@ exports[`sc-payment renders no processors 1`] = `
       </div>
       <div theme="container">
         <sc-alert open="" type="info">
-          You do not have any processors enabled for this mode and cart. Please configure your processors.
+          Please contact us for payment.
+        </sc-alert>
+      </div>
+    </sc-form-control>
+  </mock:shadow-root>
+</sc-payment>
+`;
+
+exports[`sc-payment renders no processors & user has \`manage_sc_shop_settings\` capability 1`] = `
+<sc-payment>
+  <mock:shadow-root>
+    <sc-form-control exportparts="label, help-text, form-control">
+      <div class="sc-payment-label" slot="label">
+        <div></div>
+      </div>
+      <div theme="container">
+        <sc-alert open="" type="info">
+          You do not have any processors enabled for this mode and cart.
+          <a href="https://test.com/admin.php?page=sc-settings&amp;tab=processors" style="color: var(--sc-color-gray-700);">
+            Please configure your processors
+          </a>
+          .
         </sc-alert>
       </div>
     </sc-form-control>
@@ -110,7 +134,7 @@ exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
       <sc-toggles theme="container">
         <sc-payment-method-choice processor-id="stripe">
           <span class="sc-payment-toggle-summary" slot="summary">
-            <sc-icon name="credit-card" style="font-size: 24px;"></sc-icon>
+            <sc-icon aria-hidden="true" name="credit-card" style="font-size: 24px;"></sc-icon>
             <span>
               Credit Card
             </span>
@@ -121,11 +145,14 @@ exports[`sc-payment renders stripe and paypal with no checkout 1`] = `
         </sc-payment-method-choice>
         <sc-payment-method-choice processor-id="paypal">
           <span class="sc-payment-toggle-summary" slot="summary">
-            <sc-icon name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+            <sc-icon aria-hidden="true" name="paypal" style="width: 80px; font-size: 24px;"></sc-icon>
+            <sc-visually-hidden>
+              PayPal
+            </sc-visually-hidden>
           </span>
           <sc-card>
             <sc-payment-selected label="PayPal selected for check out.">
-              <sc-icon name="paypal" slot="icon" style="width: 80px;"></sc-icon>
+              <sc-icon aria-hidden="true" name="paypal" slot="icon" style="width: 80px;"></sc-icon>
               Another step will appear after submitting your order to complete your purchase details.
             </sc-payment-selected>
           </sc-card>

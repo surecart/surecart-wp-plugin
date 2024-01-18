@@ -40,6 +40,8 @@
 ### Used by
 
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
 
@@ -47,6 +49,8 @@
 ```mermaid
 graph TD;
   sc-payment-methods-list --> sc-dropdown
+  sc-product-item-list --> sc-dropdown
+  sc-recurring-price-choice-container --> sc-dropdown
   sc-select --> sc-dropdown
   sc-tax-id-input --> sc-dropdown
   style sc-dropdown fill:#f9f,stroke:#333,stroke-width:4px

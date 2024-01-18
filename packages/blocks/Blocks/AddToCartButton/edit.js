@@ -7,24 +7,26 @@ import {
 	PanelColorSettings,
 	useBlockProps,
 	RichText,
-	__experimentalUseColorProps as useColorProps,
-	__experimentalUseBorderProps as useBorderProps,
+	BlockControls,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	PanelRow,
 	SelectControl,
 	TextControl,
+	ToolbarButton,
+	ToolbarGroup,
 } from '@wordpress/components';
+import { edit } from '@wordpress/icons';
 
 /**
  * Component Dependencies
  */
 import { ScButton, ScForm, ScPriceInput } from '@surecart/components-react';
-import PriceSelector from '@scripts/blocks/components/PriceSelector';
 import PriceInfo from '@scripts/blocks/components/PriceInfo';
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
+import Placeholder from './Placeholder';
 
 export default ({ className, attributes, setAttributes }) => {
 	const {
@@ -32,28 +34,28 @@ export default ({ className, attributes, setAttributes }) => {
 		button_text,
 		size,
 		price_id,
+		variant_id,
 		ad_hoc_label,
 		placeholder,
 		help,
 		backgroundColor,
 		textColor,
 	} = attributes;
-	const borderProps = useBorderProps(attributes);
-	const { style: borderStyle } = borderProps;
-	const colorProps = useColorProps(attributes);
-	const { style: colorStyle } = colorProps;
 	const blockProps = useBlockProps();
 	const price = useSelect(
 		(select) =>
-			select(coreStore).getEntityRecord('root', 'price', price_id),
-		[price_id]
+			select(coreStore).getEntityRecord('root', 'price', price_id, {
+				expand: ['product'],
+			}),
+		[price_id, variant_id]
 	);
 
 	if (!price_id) {
 		return (
 			<div {...blockProps}>
-				<PriceSelector
-					onSelect={(price_id) => setAttributes({ price_id })}
+				<Placeholder
+					selectedPriceId={price_id}
+					setAttributes={setAttributes}
 				/>
 			</div>
 		);
@@ -61,6 +63,17 @@ export default ({ className, attributes, setAttributes }) => {
 
 	return (
 		<div className={className}>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						icon={edit}
+						label={__('Change selected product', 'surecart')}
+						onClick={() =>
+							setAttributes({ price_id: null, variant_id: null })
+						}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={__('Attributes', 'surecart')}>
 					{price?.ad_hoc && (
@@ -172,7 +185,10 @@ export default ({ className, attributes, setAttributes }) => {
 				></PanelColorSettings>
 				<PanelBody title={__('Product Info', 'surecart')}>
 					<PanelRow>
-						<PriceInfo price_id={price_id} />
+						<PriceInfo
+							price_id={price_id}
+							variant_id={variant_id}
+						/>
 					</PanelRow>
 				</PanelBody>
 			</InspectorControls>

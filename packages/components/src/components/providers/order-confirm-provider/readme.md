@@ -5,21 +5,25 @@
 <!-- Auto Generated Below -->
 
 
+## Overview
+
+This component listens to the order status
+and confirms the order when payment is successful.
+
 ## Properties
 
-| Property      | Attribute     | Description                | Type                                                      | Default     |
-| ------------- | ------------- | -------------------------- | --------------------------------------------------------- | ----------- |
-| `successText` | --            | Success text for the form. | `{ title: string; description: string; button: string; }` | `undefined` |
-| `successUrl`  | `success-url` | Success url.               | `string`                                                  | `undefined` |
+| Property         | Attribute         | Description                                             | Type     | Default     |
+| ---------------- | ----------------- | ------------------------------------------------------- | -------- | ----------- |
+| `checkoutStatus` | `checkout-status` | Checkout status to listen and do payment related stuff. | `string` | `undefined` |
+| `successUrl`     | `success-url`     | Success url.                                            | `string` | `undefined` |
 
 
 ## Events
 
-| Event         | Description              | Type                                                                                          |
-| ------------- | ------------------------ | --------------------------------------------------------------------------------------------- |
-| `scError`     | Error event.             | `CustomEvent<{ message: string; code?: string; data?: any; additional_errors?: any; } \| {}>` |
-| `scOrderPaid` | The order is paid event. | `CustomEvent<Checkout>`                                                                       |
-| `scSetState`  |                          | `CustomEvent<string>`                                                                         |
+| Event         | Description              | Type                    |
+| ------------- | ------------------------ | ----------------------- |
+| `scOrderPaid` | The order is paid event. | `CustomEvent<Checkout>` |
+| `scSetState`  |                          | `CustomEvent<string>`   |
 
 
 ## Dependencies

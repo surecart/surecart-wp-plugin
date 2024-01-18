@@ -32,7 +32,7 @@ export class ScOrderStatusBadge {
       case 'canceled':
         return 'danger';
       case 'void':
-        return 'default';
+        return 'danger';
       case 'canceled':
         return 'danger';
     }
@@ -49,8 +49,6 @@ export class ScOrderStatusBadge {
       case 'canceled':
         return __('Canceled', 'surecart');
       case 'void':
-        return __('Void', 'surecart');
-      case 'canceled':
         return __('Canceled', 'surecart');
       default:
         return this.status;
@@ -58,6 +56,10 @@ export class ScOrderStatusBadge {
   }
 
   render() {
-    return <sc-tag type={this.getType()}>{this.getText()}</sc-tag>;
+    return (
+      <sc-tag type={this.getType()} pill={this.pill}>
+        {this.getText()}
+      </sc-tag>
+    );
   }
 }

@@ -5,7 +5,7 @@
 	"title": "Cart",
 	"description": "The cart",
 	"category": "surecart",
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"supports": {
 		"reusable": false,
 		"html": false,
@@ -15,6 +15,11 @@
 		"title": {
 			"type": "string",
 			"default": "Cart"
+		},
+		"width": {
+			"type": "string",
+			"default": "500px"
 		}
-	}
+	},
+	"editorStyle": "file:./editor.css"
 }

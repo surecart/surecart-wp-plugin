@@ -4,7 +4,7 @@
 	"description": "Display a submit button.",
 	"category": "surecart",
 	"keywords": ["submit", "button"],
-  "textdomain": "surecart",
+	"textdomain": "surecart",
 	"ancestor": ["surecart/form"],
 	"supports": {
 		"reusable": false,
@@ -15,6 +15,14 @@
 		"text": {
 			"type": "string",
 			"default": "Purchase"
+		},
+		"show_secure_notice": {
+			"type": "boolean",
+			"default": true
+		},
+		"secure_notice_text": {
+			"type": "string",
+			"default": "This is a secure, encrypted payment."
 		},
 		"type": {
 			"type": "string",

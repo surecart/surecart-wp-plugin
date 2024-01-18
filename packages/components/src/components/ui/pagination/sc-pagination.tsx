@@ -3,7 +3,7 @@ import { sprintf, __ } from '@wordpress/i18n';
 
 @Component({
   tag: 'sc-pagination',
-  styleUrl: 'sc-pagination.css',
+  styleUrl: 'sc-pagination.scss',
   shadow: true,
 })
 export class ScPagination {
@@ -44,13 +44,17 @@ export class ScPagination {
     if (!this.hasNextPage && !this.hasPreviousPage) return null;
     return (
       <sc-flex>
-        <div>{sprintf(__('Displaying %1d to %2d of %3d items', 'surecart'), this.from, this.to, this.total)}</div>
+        <div class="pagination-display">{sprintf(__('Displaying %1d to %2d of %3d items', 'surecart'), this.from, this.to, this.total)}</div>
         <sc-flex>
-          <sc-button onClick={() => this.scPrevPage.emit()} disabled={!this.hasPreviousPage} size="small">
-            {__('Previous', 'surecart')}
+          <sc-button onClick={() => this.scPrevPage.emit()} type="text" disabled={!this.hasPreviousPage}>
+            <sc-visually-hidden>{__('Display previous page of items', 'surecart')}</sc-visually-hidden>
+            <span aria-hidden="true">{__('Previous', 'surecart')}</span>
+            <sc-icon aria-hidden="true" name="arrow-left" slot="prefix" />
           </sc-button>
-          <sc-button onClick={() => this.scNextPage.emit()} disabled={!this.hasNextPage} size="small">
-            {__('Next', 'surecart')}
+          <sc-button onClick={() => this.scNextPage.emit()} type="text" disabled={!this.hasNextPage}>
+            <sc-visually-hidden>{__('Display next page of items', 'surecart')}</sc-visually-hidden>
+            <span aria-hidden="true">{__('Next', 'surecart')}</span>
+            <sc-icon aria-hidden="true" name="arrow-right" slot="suffix" />
           </sc-button>
         </sc-flex>
       </sc-flex>

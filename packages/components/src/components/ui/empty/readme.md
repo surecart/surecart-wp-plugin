@@ -31,6 +31,7 @@
  - [sc-order](../../controllers/dashboard/order)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
  - [sc-purchase-downloads-list](../purchase-downloads-list)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
@@ -51,6 +52,7 @@ graph TD;
   sc-order --> sc-empty
   sc-orders-list --> sc-empty
   sc-payment-methods-list --> sc-empty
+  sc-product-item-list --> sc-empty
   sc-purchase-downloads-list --> sc-empty
   sc-subscription-payment --> sc-empty
   sc-subscription-payment-method --> sc-empty

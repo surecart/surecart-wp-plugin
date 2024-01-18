@@ -3,6 +3,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property    | Attribute    | Description | Type     | Default     |
+| ----------- | ------------ | ----------- | -------- | ----------- |
+| `ariaLabel` | `aria-label` |             | `string` | `undefined` |
+
+
 ## Events
 
 | Event      | Description | Type                                            |
@@ -22,6 +29,8 @@
 ### Used by
 
  - [sc-payment-methods-list](../../controllers/dashboard/payment-methods-list)
+ - [sc-product-item-list](../../controllers/products/sc-product-item-list)
+ - [sc-recurring-price-choice-container](../sc-recurring-price-choice-container)
  - [sc-select](../select)
  - [sc-tax-id-input](../tax-id-input)
 
@@ -29,6 +38,8 @@
 ```mermaid
 graph TD;
   sc-payment-methods-list --> sc-menu
+  sc-product-item-list --> sc-menu
+  sc-recurring-price-choice-container --> sc-menu
   sc-select --> sc-menu
   sc-tax-id-input --> sc-menu
   style sc-menu fill:#f9f,stroke:#333,stroke-width:4px

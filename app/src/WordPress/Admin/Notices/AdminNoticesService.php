@@ -47,7 +47,7 @@ class AdminNoticesService {
 	 */
 	public function dismiss() {
 		// permissions check.
-		if ( ! current_user_can( 'install_plugins' ) ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
@@ -102,9 +102,25 @@ class AdminNoticesService {
 							'name'  => 'update_notice_' . \SureCart::plugin()->version(),
 							'type'  => sanitize_text_field( $notice_data->type ),
 							'title' => esc_html__( 'SureCart', 'surecart' ),
-							'text'  => esc_html( $notice_data->message ),
+							'text'  => wp_kses_post( $notice_data->message ),
 						]
 					)
+				);
+			}
+		);
+	}
+
+	/**
+	 * Add the notice.
+	 *
+	 * @return void
+	 */
+	public function add( $notice_data ) {
+		add_action(
+			'admin_notices',
+			function() use ( $notice_data ) {
+				echo wp_kses_post(
+					$this->render( $notice_data )
 				);
 			}
 		);
@@ -132,7 +148,7 @@ class AdminNoticesService {
 
 		ob_start(); ?>
 
-		<div class="notice notice-<?php echo sanitize_html_class( $args['type'] ); ?>">
+		<div class="notice notice-<?php echo sanitize_html_class( $args['type'] ); ?>" style="position:relative">
 			<p>
 				<strong>
 					<?php echo esc_html( $args['title'] ); ?>
@@ -142,23 +158,20 @@ class AdminNoticesService {
 			<?php echo wp_kses_post( $args['text'] ); ?>
 
 			<?php if ( ! empty( $args['name'] ) ) : ?>
-				<p>
-					<a href="
-						<?php
-						echo esc_url(
-							add_query_arg(
-								[
-									'surecart_action' => 'dismiss_notices',
-									'surecart_notice' => sanitize_text_field( $args['name'] ),
-									'surecart_nonce'  => wp_create_nonce( 'surecart_notice_nonce' ),
-								]
-							)
-						);
-						?>
-					">
-						<?php esc_html_e( 'Dismiss Notice', 'surecart' ); ?>
-					</a>
-				</p>
+				<a href="
+				<?php
+					echo esc_url(
+						add_query_arg(
+							[
+								'surecart_action' => 'dismiss_notices',
+								'surecart_notice' => sanitize_text_field( $args['name'] ),
+								'surecart_nonce'  => \wp_create_nonce( 'surecart_notice_nonce' ),
+							]
+						)
+					);
+				?>
+				" type="button" class="notice-dismiss" style="text-decoration:none;"><span class="screen-reader-text">Dismiss this notice.</span></a>
+
 			<?php endif; ?>
 		</div>
 

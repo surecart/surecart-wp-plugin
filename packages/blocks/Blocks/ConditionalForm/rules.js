@@ -148,6 +148,7 @@ const Rules = ({ attributes, setAttributes, closeModal }) => {
 						'var(--wp-admin-theme-color)',
 					'--sc-input-border-color-focus':
 						'var(--wp-admin-theme-color)',
+            '--sc-color-primary-text': '#fff',
 				}}
 			>
 				{draftRuleGroups.map(({ group_id, rules }, groupIndex) => {

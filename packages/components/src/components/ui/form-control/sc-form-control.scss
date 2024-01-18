@@ -46,8 +46,7 @@
   float: right;
 }
 
-.form-control--is-required slot[name='label']:after {
-  content: ' *';
+.form-control--is-required .required {
   color: var(--sc-color-danger-500);
 }
 

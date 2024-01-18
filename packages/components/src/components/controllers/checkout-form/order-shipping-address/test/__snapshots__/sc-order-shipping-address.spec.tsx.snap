@@ -1,73 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sc-order-shipping-address is required if required is false but shipping enabled is true 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" required=""></sc-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address is required if required is false but shipping is later enabled 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" required=""></sc-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address is required if required is false but tax enabled is true 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-compact-address required=""></sc-compact-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address is required if required is false but tax is later enabled 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-compact-address required=""></sc-compact-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
 exports[`sc-order-shipping-address renders 1`] = `
 <sc-order-shipping-address>
   <mock:shadow-root>
     <sc-compact-address></sc-compact-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address renders compact fields if shipping is not enabled 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-compact-address></sc-compact-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address renders compact fields loading if shipping is not enabled 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-compact-address loading=""></sc-compact-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address renders full fields if shipping is enabled 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" required=""></sc-address>
-  </mock:shadow-root>
-</sc-order-shipping-address>
-`;
-
-exports[`sc-order-shipping-address renders full fields loading if shipping is enabled 1`] = `
-<sc-order-shipping-address>
-  <mock:shadow-root>
-    <sc-address exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base" label="Shipping Address" loading="" required=""></sc-address>
   </mock:shadow-root>
 </sc-order-shipping-address>
 `;

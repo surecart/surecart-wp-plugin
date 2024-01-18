@@ -24,7 +24,6 @@
 
 | Event        | Description           | Type                  |
 | ------------ | --------------------- | --------------------- |
-| `scError`    | Emit an error         | `CustomEvent<object>` |
 | `scPaid`     |                       | `CustomEvent<void>`   |
 | `scSetState` | Set the state machine | `CustomEvent<string>` |
 

@@ -6,6 +6,8 @@ import {
 	ScSwitch,
 	ScUpgradeRequired,
 	ScFormControl,
+	ScInput,
+	ScDivider,
 } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -23,6 +25,13 @@ export default () => {
 		'store',
 		'subscription_protocol'
 	);
+
+	const {
+		item: portalItem,
+		itemError: portalItemError,
+		editItem: portalEditItem,
+		hasLoadedItem: portalHasLoadedItem,
+	} = useEntity('store', 'portal_protocol');
 
 	/**
 	 * Form is submitted.
@@ -57,7 +66,7 @@ export default () => {
 			onSubmit={onSubmit}
 		>
 			<Error
-				error={itemError || error}
+				error={itemError || portalItemError || error}
 				setError={setError}
 				margin="80px"
 			/>
@@ -135,6 +144,56 @@ export default () => {
 						'surecart'
 					)}
 				</sc-text>
+
+				<ScDivider />
+
+				<ScUpgradeRequired
+					required={!scData?.entitlements?.subscription_cancel_window}
+				>
+					<ScSwitch
+						checked={item.cancel_window_enabled}
+						onScChange={(e) => {
+							e.preventDefault();
+							editItem({
+								cancel_window_enabled:
+									!item.cancel_window_enabled,
+							});
+						}}
+					>
+						{__('Delay Self-Service Cancellations', 'surecart')}
+						{!scData?.entitlements?.subscription_cancel_window && (
+							<ScPremiumTag />
+						)}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'When enabled, this feature prevents customers from cancelling their subscription on the customer dashboard until a set number of days before renewal.',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+				</ScUpgradeRequired>
+				{!!item.cancel_window_enabled && (
+					<ScInput
+						value={item?.cancel_window_days}
+						label={__(
+							'Allow Self-Service Cancellations',
+							'surecart'
+						)}
+						type="number"
+						onScInput={(e) =>
+							editItem({ cancel_window_days: e.target.value })
+						}
+						help={__(
+							'Choose how many days before the subscription renewal customers can cancel their plan through the customer dashboard. For example, if you set this to 7 days, customers will only be able to cancel their subscription during the week it renews. Please check for the legality of this setting in your region before enabling.',
+							'surecart'
+						)}
+						required
+					>
+						<span slot="suffix" style={{ opacity: '0.65' }}>
+							{__('Days Before Renewal', 'surecart')}
+						</span>
+					</ScInput>
+				)}
 			</SettingsBox>
 
 			<SettingsBox
@@ -188,7 +247,7 @@ export default () => {
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Behavior', 'surecart')}
+				title={__('Purchase Behavior', 'surecart')}
 				description={__(
 					'Manage your subscription purchase behavior.',
 					'surecart'
@@ -282,6 +341,71 @@ export default () => {
 						/>
 					</ScFormControl>
 				</div>
+			</SettingsBox>
+			<SettingsBox
+				title={__('Customer Portal', 'surecart')}
+				description={__(
+					'Manage what your customers are able to see and do from the customer portal.',
+					'surecart'
+				)}
+				loading={!portalHasLoadedItem}
+			>
+				<ScSwitch
+					checked={portalItem?.subscription_updates_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						portalEditItem({
+							subscription_updates_enabled:
+								!portalItem?.subscription_updates_enabled,
+						});
+					}}
+				>
+					{__('Allow Subscription Changes', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to switch pricing plans from the customer portal. You can configure what happens when a subscription change happens from the Subscriptions settings page.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={portalItem?.subscription_quantity_updates_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						portalEditItem({
+							subscription_quantity_updates_enabled:
+								!portalItem?.subscription_quantity_updates_enabled,
+						});
+					}}
+				>
+					{__('Allow Subscription Quantity Changes', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to change subscription quantities from the customer portal.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
+					checked={portalItem?.subscription_cancellations_enabled}
+					onClick={(e) => {
+						e.preventDefault();
+						portalEditItem({
+							subscription_cancellations_enabled:
+								!portalItem?.subscription_cancellations_enabled,
+						});
+					}}
+				>
+					{__('Allow Subscription Cancellations', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

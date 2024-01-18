@@ -22,6 +22,9 @@ export class ScPriceChoice {
   /** Stores the price */
   @Prop({ mutable: true }) price: Price;
 
+  /** Stores the price */
+  @Prop({ mutable: true }) product: Product;
+
   /** Is this loading */
   @Prop({ mutable: true }) loading: boolean = false;
 
@@ -81,8 +84,6 @@ export class ScPriceChoice {
 
   /** Stores the error message */
   @State() adHocErrorMessage: string;
-
-  @State() product: Product;
 
   /** Refetch if price changes */
   @Watch('priceId')
@@ -269,8 +270,8 @@ export class ScPriceChoice {
 
               {!!this.price.setup_fee_enabled && this.price?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
-                  <sc-format-number type="currency" value={this.price.setup_fee_amount} currency={this.price.currency}></sc-format-number>{' '}
-                  {this.price.setup_fee_name || __('Setup Fee', 'surecart')}
+                  <sc-format-number type="currency" value={Math.abs(this.price.setup_fee_amount)} currency={this.price.currency}></sc-format-number>{' '}
+                  {this.price.setup_fee_name || (this.price?.setup_fee_amount < 0 ? __('Discount', 'surecart') : __('Setup Fee', 'surecart'))}
                 </div>
               )}
             </div>

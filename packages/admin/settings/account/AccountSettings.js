@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScAlert, ScButton, ScIcon, ScInput, ScSelect, ScSwitch } from '@surecart/components-react';
-import { useEntityProp } from '@wordpress/core-data';
+import { ScInput, ScSelect, ScAddress } from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -10,50 +9,56 @@ import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { getCurrencySymbol } from '../../util';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const { save } = useSave();
-	const [showNotice, setShowNotice] = useState(false);
-	const { item, itemError, editItem, hasLoadedItem } = useEntity(
-		'store',
-		'account'
-	);
+	const { editEntityRecord } = useDispatch(coreStore);
+	const {
+		item: accountItem,
+		itemError: accountItemError,
+		editItem: editAccountItem,
+		hasLoadedItem: hasLoadedAccountItem,
+	} = useEntity('store', 'account');
 
-	// honeypot.
-	const [honeypotEnabled, setHoneypotEnabled] = useEntityProp(
-		'root',
-		'site',
-		'surecart_honeypot_enabled'
-	);
-	// recapcha.
-	const [recaptchaEnabled, setRecaptchaEnabled] = useEntityProp(
-		'root',
-		'site',
-		'surecart_recaptcha_enabled'
-	);
-	const [recaptchaSiteKey, setRecaptchaSiteKey] = useEntityProp(
-		'root',
-		'site',
-		'surecart_recaptcha_site_key'
-	);
-	const [recaptchaSecretKey, setRecapchaSecretKey] = useEntityProp(
-		'root',
-		'site',
-		'surecart_recaptcha_secret_key'
-	);
-	// enable stripe script.
-	const [stripeScriptEnabled, setStripeScriptEnabled] = useEntityProp(
-		'root',
-		'site',
-		'surecart_load_stripe_js'
-	);
-	// password validation.
-	const [passwordValidation, setPasswordValidation] = useEntityProp(
-		'root',
-		'site',
-		'surecart_password_validation_enabled'
-	);
+	const {
+		item: portalItem,
+		itemError: portalItemError,
+		editItem: portalEditItem,
+		hasLoadedItem: portalHasLoadedItem,
+	} = useEntity('store', 'portal_protocol');
+	const {
+		item: notificationItem,
+		itemError: notificationItemError,
+		editItem: notificationEditItem,
+		hasLoadedItem: notificationHasLoadedItem,
+	} = useEntity('store', 'customer_notification_protocol');
+	/** Edit Item */
+	const brandEditItem = (data) =>
+		editEntityRecord('surecart', 'store', 'brand', data);
+
+	/** Load Item */
+	const {
+		item: brandItem,
+		itemError: brandItemError,
+		hasLoadedItem: brandHasLoadedItem,
+	} = useSelect((select) => {
+		const entityData = ['surecart', 'store', 'brand'];
+		return {
+			item: select(coreStore).getEditedEntityRecord(...entityData),
+			itemError: select(coreStore)?.getResolutionError?.(
+				'getEditedEntityRecord',
+				...entityData
+			),
+			hasLoadedItem: select(coreStore)?.hasFinishedResolution?.(
+				'getEditedEntityRecord',
+				[...entityData]
+			),
+		};
+	});
 
 	/**
 	 * Form is submitted.
@@ -70,26 +75,21 @@ export default () => {
 		}
 	};
 
-	/**
-	 * Get the symbol for the currency.
-	 */
-	const getCurrencySymbol = (code) => {
-		const [currency] = new Intl.NumberFormat(undefined, {
-			style: 'currency',
-			currency: code,
-		}).formatToParts();
-		return currency?.value;
-	};
-
 	return (
 		<SettingsTemplate
 			title={__('Store Settings', 'surecart')}
 			icon={<sc-icon name="sliders"></sc-icon>}
 			onSubmit={onSubmit}
-			loading={!hasLoadedItem}
+			loading={!hasLoadedAccountItem || !portalHasLoadedItem}
 		>
 			<Error
-				error={itemError || error}
+				error={
+					accountItemError ||
+					portalItemError ||
+					brandItemError ||
+					notificationItemError ||
+					error
+				}
 				setError={setError}
 				margin="80px"
 			/>
@@ -100,7 +100,7 @@ export default () => {
 					'The name of your store will be visible to customers, so you should use a name that is recognizable and identifies your store to your customers.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!hasLoadedAccountItem}
 			>
 				<div
 					css={css`
@@ -110,10 +110,12 @@ export default () => {
 					`}
 				>
 					<ScInput
-						value={item?.name}
+						value={accountItem?.name}
 						label={__('Store Name', 'surecart')}
 						placeholder={__('Store Name', 'surecart')}
-						onScInput={(e) => editItem({ name: e.target.value })}
+						onScInput={(e) =>
+							editAccountItem({ name: e.target.value })
+						}
 						help={__(
 							'This is displayed in the UI and in notifications.',
 							'surecart'
@@ -122,10 +124,12 @@ export default () => {
 					></ScInput>
 
 					<ScInput
-						value={item?.url}
+						value={accountItem?.url}
 						label={__('Store URL', 'surecart')}
 						placeholder={__('https://example.com', 'surecart')}
-						onScInput={(e) => editItem({ url: e.target.value })}
+						onScInput={(e) =>
+							editAccountItem({ url: e.target.value })
+						}
 						help={__(
 							'This should be your live storefront URL.',
 							'surecart'
@@ -134,10 +138,13 @@ export default () => {
 					></ScInput>
 
 					<ScSelect
+						css={css`
+							grid-column: 1 / 3;
+						`}
 						search
-						value={item?.currency}
+						value={accountItem?.currency}
 						onScChange={(e) =>
-							editItem({ currency: e.target.value })
+							editAccountItem({ currency: e.target.value })
 						}
 						choices={Object.keys(
 							scData?.supported_currencies || {}
@@ -154,13 +161,13 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
+					/>
 
 					<ScSelect
 						search
-						value={item?.time_zone}
+						value={accountItem?.time_zone}
 						onScChange={(e) =>
-							editItem({ time_zone: e.target.value })
+							editAccountItem({ time_zone: e.target.value })
 						}
 						choices={Object.keys(scData?.time_zones || {}).map(
 							(value) => {
@@ -177,11 +184,13 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
+					/>
 
 					<ScSelect
-						value={item?.locale}
-						onScChange={(e) => editItem({ locale: e.target.value })}
+						value={accountItem?.locale}
+						onScChange={(e) =>
+							editAccountItem({ locale: e.target.value })
+						}
 						choices={[
 							{
 								value: 'en',
@@ -234,167 +243,133 @@ export default () => {
 							'surecart'
 						)}
 						required
-					></ScSelect>
+					/>
+
+					<ScInput
+						label={__('Terms Page', 'surecart')}
+						type="url"
+						value={portalItem?.terms_url}
+						onScInput={(e) => {
+							portalEditItem({
+								terms_url: e.target.value || null,
+							});
+						}}
+						help={__(
+							'A link to your store terms page.',
+							'surecart'
+						)}
+					/>
+					<ScInput
+						label={__('Privacy Policy Page', 'surecart')}
+						type="url"
+						value={portalItem?.privacy_url}
+						onScInput={(e) => {
+							portalEditItem({
+								privacy_url: e.target.value || null,
+							});
+						}}
+						help={__(
+							'A link to your privacy policy page.',
+							'surecart'
+						)}
+					/>
 				</div>
 			</SettingsBox>
 
 			<SettingsBox
-				title={__('Spam Protection & Security', 'surecart')}
+				title={__('Notification Settings', 'surecart')}
 				description={__(
-					'Change your checkout spam protection and security settings.',
+					'Use these settings to configure how notifications are sent to your customers.',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
+				loading={!notificationHasLoadedItem}
 			>
-				<ScSwitch
-					checked={honeypotEnabled}
-					onScChange={(e) => setHoneypotEnabled(e.target.checked)}
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
 				>
-					{__('Honeypot', 'surecart')}
-					<span slot="description">
-						{__(
-							'This adds a field that is invisible to users, but visible to bots in an attempt to trick them into filling it out.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-
-				<ScSwitch
-					checked={recaptchaEnabled}
-					onScChange={(e) => {
-						setRecaptchaEnabled(e.target.checked);
-						setShowNotice(true);
-					}}
-				>
-					{__('Recaptcha v3', 'surecart')}
-					<span slot="description">
-						{__(
-							'Enable Recaptcha spam protection on checkout forms.',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-
-				{showNotice && recaptchaSiteKey && (
-					<ScAlert open>
-						<span slot="title">{__('Important', 'surecart')}</span>
-						{__(
-							'Please clear checkout page cache after changing this setting.',
-							'surecart'
-						)}
-					</ScAlert>
-				)}
-
-				{recaptchaEnabled && (
-					<>
-						<div
-							css={css`
-								gap: var(--sc-form-row-spacing);
-								display: grid;
-								grid-template-columns: repeat(
-									2,
-									minmax(0, 1fr)
-								);
-							`}
-						>
-							<ScInput
-								value={recaptchaSiteKey}
-								label={__('reCaptcha Site Key', 'surecart')}
-								placeholder={__(
-									'reCaptcha Site Key',
-									'surecart'
-								)}
-								onScInput={(e) =>
-									setRecaptchaSiteKey(e.target.value)
-								}
-								type="password"
-								help={__(
-									'You can find this on your google Recaptcha dashboard.',
-									'surecart'
-								)}
-							></ScInput>
-							<ScInput
-								value={recaptchaSecretKey}
-								label={__('reCaptcha Secret Key', 'surecart')}
-								placeholder={__(
-									'reCaptcha Secret Key',
-									'surecart'
-								)}
-								onScInput={(e) =>
-									setRecapchaSecretKey(e.target.value)
-								}
-								type="password"
-								help={__(
-									'You can find this on your google Recaptcha dashboard.',
-									'surecart'
-								)}
-							></ScInput>
-						</div>
-						{!recaptchaSiteKey && (
-							<ScAlert open>
-								{__('To get your Recaptcha keys', 'surecart')}{' '}
-								<a
-									href="https://www.google.com/recaptcha/admin/create"
-									target="_blank"
-								>
-									{__(
-										'register a new site and choose v3.',
-										'surecart'
-									)}
-								</a>
-							</ScAlert>
-						)}
-					</>
-				)}
-				{(scData.processors || []).some(
-					(processor) => processor.processor_type === 'stripe'
-				) && (
-					<ScSwitch
-						checked={stripeScriptEnabled}
-						onScChange={(e) =>
-							setStripeScriptEnabled(e.target.checked)
+					<ScInput
+						label={__('Sender Name', 'surecart')}
+						placeholder={__('Enter the sender name', 'surecart')}
+						value={notificationItem.from_name}
+						onScInput={(e) =>
+							notificationEditItem({ from_name: e.target.value })
 						}
-					>
-						{__('Stripe Fraud Monitoring', 'surecart')}
-						<span slot="description" style={{ lineHeight: '1.4' }}>
-							{__(
-								'This will load stripe.js on every page to help with Fraud monitoring.',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-				)}
-				{/* <ScSwitch
-					checked={passwordValidation}
-					onScChange={(e) => setPasswordValidation(e.target.checked)}
-				>
-					{__('Password Validation', 'surecart')}
-					<span slot="description">
-						{__(
-							'This ensures all the password fields have a stronger validation for user password input i.e. at least 6 characters and one special character.',
+					/>
+					<ScInput
+						label={__('Reply To Email', 'surecart')}
+						placeholder={__(
+							'notifications@surecart.com',
 							'surecart'
 						)}
-					</span>
-				</ScSwitch> */}
+						value={notificationItem.reply_to_email}
+						onScInput={(e) =>
+							notificationEditItem({
+								reply_to_email: e.target.value,
+							})
+						}
+						type="tel"
+					/>
+				</div>
 			</SettingsBox>
 			<SettingsBox
-				title={__('Clear Test Data', 'surecart')}
+				title={__('Contact Information', 'surecart')}
 				description={__(
-					'Clear out all of your test data with one-click.',
+					'This information helps customers recognize your business and contact you when necessary. It will be visible on invoices/receipts and any emails that need to be CAN-SPAM compliant (i.e. abandoned order emails).',
 					'surecart'
 				)}
-				loading={!hasLoadedItem}
-				noButton={true}
+				loading={!brandHasLoadedItem}
 			>
-				<ScButton
-					type="danger"
-					href={'https://app.surecart.com/account/edit'}
-					target="_blank"
-					outline
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(3, minmax(0, 1fr));
+					`}
 				>
-					{__('Clear Test Data', 'surecart')}
-					<ScIcon name="external-link" slot="suffix" />
-				</ScButton>
+					<ScInput
+						label={__('Email', 'surecart')}
+						value={brandItem.email}
+						placeholder={__('Enter an email', 'surecart')}
+						onScInput={(e) =>
+							brandEditItem({ email: e.target.value })
+						}
+						type="email"
+					/>
+					<ScInput
+						label={__('Phone', 'surecart')}
+						value={brandItem.phone}
+						placeholder={__('Enter an phone number', 'surecart')}
+						onScInput={(e) =>
+							brandEditItem({ phone: e.target.value })
+						}
+						type="tel"
+					/>
+					<ScInput
+						label={__('Website', 'surecart')}
+						value={brandItem.website}
+						placeholder={__('Enter a website URL', 'surecart')}
+						onScInput={(e) =>
+							brandEditItem({ website: e.target.value })
+						}
+						type="url"
+					/>
+				</div>
+
+				<ScAddress
+					label={__('Address', 'surecart')}
+					required={false}
+					showName={true}
+					showLine2={true}
+					address={brandItem.address}
+					names={{}}
+					onScInputAddress={(e) =>
+						brandEditItem({ address: e.detail })
+					}
+				/>
 			</SettingsBox>
 		</SettingsTemplate>
 	);

@@ -34,6 +34,17 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			return new BlockPatternsService( $app );
 		};
 
+		$container['blocks.validations'] = function () {
+			return new BlockValidationService(
+				apply_filters(
+					'surecart_block_validators',
+					[
+						new \SureCart\BlockValidator\VariantChoice(),
+					]
+				)
+			);
+		};
+
 		$app->alias( 'blocks', 'blocks' );
 
 		$app->alias(
@@ -55,6 +66,8 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	 */
 	public function bootstrap( $container ) {
 		$container['blocks.patterns']->bootstrap();
+		$container['blocks.validations']->bootstrap();
+
 		// allow design tokens in css.
 		add_filter(
 			'safe_style_css',
@@ -116,8 +129,9 @@ class BlockServiceProvider implements ServiceProviderInterface {
 		$components = json_decode( file_get_contents( plugin_dir_path( SURECART_PLUGIN_FILE ) . 'app/src/Support/kses.json' ), true );
 
 		// add slot to defaults.
-		$tags['span']['slot'] = true;
-		$tags['div']['slot']  = true;
+		$tags['span']['slot']         = true;
+		$tags['div']['slot']          = true;
+		$tags['sc-spinner']['data-*'] = true;
 
 		return array_merge( $components, $tags );
 	}
@@ -125,9 +139,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	/**
 	 * Register blocks from config
 	 *
-	 * @param  \Pimple\Container $container Service Container.
-	 *
-	 * @return  void
+	 * @return void
 	 */
 	public function registerBlocks() {
 		$service = \SureCart::resolve( SURECART_CONFIG_KEY );

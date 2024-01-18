@@ -2,10 +2,11 @@
 
 namespace SureCart\Tests\Unit\Services;
 
-use SureCart\Models\Webhook;
+use SureCart\Models\RegisteredWebhook;
+use SureCart\Models\WebhookRegistration;
 use SureCart\Tests\SureCartUnitTestCase;
-use SureCart\Webhooks\WebhooksHistoryService;
 use SureCart\Webhooks\WebhooksService;
+use SureCart\WordPress\Admin\Notices\AdminNoticeService;
 
 /**
  * @group webhooks
@@ -13,37 +14,107 @@ use SureCart\Webhooks\WebhooksService;
 class WebhookServiceTest extends SureCartUnitTestCase {
 	use \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
-	public function test_does_not_create_webhooks_if_already_registered()
+	/**
+	 * Set up a new app instance to use for tests.
+	 */
+	public function setUp() : void
 	{
-		$domain_service = new WebhooksHistoryService();
-		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
-		$service->shouldReceive('hasToken')->once()->andReturn(true);
-		$service->shouldReceive('domainMatches')->once()->andReturn(true);
-		$service->shouldReceive('hasSigningSecret')->once()->andReturn(true);
+		// Set up an app instance with whatever stubs and mocks we need before every test.
+		\SureCart::make()->bootstrap([
+			'providers' => [
+				\SureCart\WordPress\PluginServiceProvider::class,
+				\SureCart\Webhooks\WebhooksServiceProvider::class,
+			]
+		], false);
 
-		$this->assertNull($service->maybeCreateWebooks());
+		parent::setUp();
 	}
 
-	public function test_registers_webhooks_if_doesnt_have_signing_secret() {
-		$domain_service = new WebhooksHistoryService();
-		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
-		$service->shouldReceive('hasToken')->once()->andReturn(true);
-		$service->shouldReceive('domainMatches')->once()->andReturn(true);
-		$service->shouldReceive('hasSigningSecret')->once()->andReturn(false);
-		$service->shouldReceive('register')->once()->andReturn(new Webhook(['signing_secret' => 'secret']));
+	public function test_does_not_create_if_no_token()
+	{
+		$webhook = \Mockery::mock(RegisteredWebhook::class)->shouldAllowMockingProtectedMethods();
+		$service = \Mockery::mock(WebhooksService::class, [$webhook])->makePartial();
 
-		$this->assertTrue($service->maybeCreateWebooks()); // created.
-		$this->assertSame($service->getSigningSecret(), 'secret'); // stored signing secret.
+		// does not have a token.
+		$service->shouldReceive('hasToken')->once()->andReturn(false);
+
+		// should not get or create.
+		$webhook->shouldNotReceive('get');
+		$webhook->shouldNotReceive('create');
+
+		$service->maybeCreate();
 	}
 
-	public function test_registers_webhooks_if_domain_does_not_match() {
-		$domain_service = new WebhooksHistoryService();
-		$service = \Mockery::mock(WebhooksService::class, [$domain_service])->makePartial();
-		$service->shouldReceive('hasToken')->once()->andReturn(true);
-		$service->shouldReceive('domainMatches')->once()->andReturn(false);
-		$service->shouldReceive('register')->once()->andReturn(new Webhook(['signing_secret' => 'secret1']));
+	public function test_does_not_create_if_already_registered()
+	{
+		$webhook = \Mockery::mock(RegisteredWebhook::class)->shouldAllowMockingProtectedMethods();
+		$service = \Mockery::mock(WebhooksService::class, [$webhook])->makePartial();
 
-		$this->assertTrue($service->maybeCreateWebooks()); // created.
-		$this->assertSame($service->getSigningSecret(), 'secret1'); // stored signing secret.
+		// has a token.
+		$service->shouldReceive('hasToken')->once()->andReturn(true);
+
+		// has a webhook.
+		$webhook->shouldReceive('get')->once()->andReturn((object)['id' => 'test']);
+		$webhook->shouldNotReceive('create');
+
+		$service->maybeCreate();
+	}
+
+	public function test_handles_registration_error()
+	{
+		$webhook = \Mockery::mock(RegisteredWebhook::class)->shouldAllowMockingProtectedMethods();
+		$service = \Mockery::mock(WebhooksService::class, [$webhook])->makePartial();
+		// mock the notices in the container
+		$notices =  \Mockery::mock(AdminNoticeService::class);
+		\SureCart::alias('notices', function () use ($notices) {
+			return $notices;
+		});
+
+		// has a token.
+		$service->shouldReceive('hasToken')->once()->andReturn(true);
+
+		// has not registered
+		$webhook->shouldReceive('get')->once()->andReturn((object)[]);
+
+		// shou
+		$webhook->shouldReceive('create')->once()->andReturn(new \WP_Error('test', 'Test Error.'));
+
+		// should add error.
+		$notices->shouldReceive('add')->with([
+			'name'  => 'webhooks_registration_error',
+			'type'  => 'warning',
+			'title' => esc_html__( 'SureCart Webhook Registration Error', 'surecart' ),
+			'text'  => '<p>Test Error.</p>',
+		])->once();
+
+		// should not test.
+		$webhook->shouldNotReceive('test');
+
+		$service->maybeCreate();
+	}
+
+	public function test_registers_webhook_and_sends_test() {
+		$webhook = \Mockery::mock(RegisteredWebhook::class)->shouldAllowMockingProtectedMethods();
+		$service = \Mockery::mock(WebhooksService::class, [$webhook])->makePartial();
+		// mock the notices in the container
+		$notices =  \Mockery::mock(AdminNoticeService::class);
+		\SureCart::alias('notices', function () use ($notices) {
+			return $notices;
+		});
+
+		// has a token.
+		$service->shouldReceive('hasToken')->once()->andReturn(true);
+
+		// has not registered
+		$webhook->shouldReceive('get')->once()->andReturn((object)[]);
+
+		// shou
+		$webhook->shouldReceive('create')->once()->andReturn($webhook);
+
+		// should test.
+		$webhook->shouldReceive('test')->once()->andReturn((object)['id' => 'test']);
+
+		// create.
+		$service->maybeCreate();
 	}
 }

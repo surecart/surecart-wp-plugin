@@ -47,7 +47,7 @@ class Server {
 	 * @return boolean
 	 */
 	public function isLocalDomain() {
-		$parsed = explode( '.', wp_parse_url( $this->url, PHP_URL_HOST ) );
+		$parsed = explode( '.', wp_parse_url( $this->url, PHP_URL_HOST ) ?? '' );
 		return in_array( end( $parsed ), array( 'local', 'test' ), true );
 	}
 
@@ -57,6 +57,7 @@ class Server {
 	 * @return boolean
 	 */
 	public function isLocalIP() {
-		return in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ), true );
+		$ip_address = $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+		return in_array( $ip_address, array( '127.0.0.1', '::1' ), true );
 	}
 }

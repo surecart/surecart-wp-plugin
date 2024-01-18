@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property         | Attribute         | Description                        | Type                   | Default     |
-| ---------------- | ----------------- | ---------------------------------- | ---------------------- | ----------- |
-| `heading`        | `heading`         |                                    | `string`               | `undefined` |
-| `protocol`       | --                |                                    | `SubscriptionProtocol` | `undefined` |
-| `query`          | --                |                                    | `object`               | `undefined` |
-| `showCancel`     | `show-cancel`     |                                    | `boolean`              | `undefined` |
-| `subscription`   | --                |                                    | `Subscription`         | `undefined` |
-| `subscriptionId` | `subscription-id` | Customer id to fetch subscriptions | `string`               | `undefined` |
+| Property         | Attribute         | Description                       | Type                   | Default     |
+| ---------------- | ----------------- | --------------------------------- | ---------------------- | ----------- |
+| `heading`        | `heading`         | Heading to display                | `string`               | `undefined` |
+| `protocol`       | --                | The subscription protocol         | `SubscriptionProtocol` | `undefined` |
+| `query`          | --                | Query to pass to the API          | `object`               | `undefined` |
+| `showCancel`     | `show-cancel`     | Whether to show the cancel button | `boolean`              | `undefined` |
+| `subscription`   | --                | The subscription                  | `Subscription`         | `undefined` |
+| `subscriptionId` | `subscription-id` | The subscription ID               | `string`               | `undefined` |
 
 
 ## Dependencies
@@ -34,6 +34,7 @@
 - [sc-card](../../../ui/card)
 - [sc-block-ui](../../../ui/block-ui)
 - [sc-cancel-dialog](../sc-cancel-dialog)
+- [sc-subscription-reactivate](../subscription-reactivate)
 
 ### Graph
 ```mermaid
@@ -51,6 +52,7 @@ graph TD;
   sc-subscription --> sc-card
   sc-subscription --> sc-block-ui
   sc-subscription --> sc-cancel-dialog
+  sc-subscription --> sc-subscription-reactivate
   sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-subscription-next-payment --> sc-toggle
@@ -76,6 +78,7 @@ graph TD;
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
+  sc-subscription-details --> sc-icon
   sc-dialog --> sc-button
   sc-dialog --> sc-icon
   sc-button --> sc-spinner
@@ -116,12 +119,22 @@ graph TD;
   sc-cancel-survey --> sc-button
   sc-cancel-survey --> sc-icon
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-textarea --> sc-form-control
   sc-cancel-discount --> sc-dashboard-module
   sc-cancel-discount --> sc-flex
   sc-cancel-discount --> sc-button
   sc-cancel-discount --> sc-block-ui
+  sc-subscription-reactivate --> sc-flex
+  sc-subscription-reactivate --> sc-skeleton
+  sc-subscription-reactivate --> sc-dialog
+  sc-subscription-reactivate --> sc-dashboard-module
+  sc-subscription-reactivate --> sc-alert
+  sc-subscription-reactivate --> sc-format-number
+  sc-subscription-reactivate --> sc-text
+  sc-subscription-reactivate --> sc-format-date
+  sc-subscription-reactivate --> sc-button
+  sc-subscription-reactivate --> sc-block-ui
   style sc-subscription fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

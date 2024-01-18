@@ -173,7 +173,10 @@ export class ScOrdersList {
               {sprintf(_n('%s item', '%s items', line_items?.pagination?.count || 0, 'surecart'), line_items?.pagination?.count || 0)}
             </sc-text>
           </div>
-          <div>{this.renderStatusBadge(order)}</div>
+          <div class="orders-list__status">
+            {this.renderStatusBadge(order)}
+            <sc-order-shipment-badge status={order?.shipment_status}></sc-order-shipment-badge>
+          </div>
           <div>
             <sc-format-number type="currency" currency={currency} value={amount_due}></sc-format-number>
           </div>
@@ -206,9 +209,9 @@ export class ScOrdersList {
         </span>
 
         {!!this.allLink && !!this.orders?.length && (
-          <sc-button type="link" href={this.allLink} slot="end">
+          <sc-button type="link" href={this.allLink} slot="end" aria-label={sprintf(__('View all %s', 'surecart'), this.heading || __('Order History', 'surecart'))}>
             {__('View all', 'surecart')}
-            <sc-icon name="chevron-right" slot="suffix"></sc-icon>
+            <sc-icon aria-hidden="true" name="chevron-right" slot="suffix"></sc-icon>
           </sc-button>
         )}
 

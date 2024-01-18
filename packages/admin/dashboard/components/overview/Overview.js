@@ -1,63 +1,62 @@
 /** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { ScDivider, ScFlex } from '@surecart/components-react';
+import apiFetch from '@wordpress/api-fetch';
+import { Fragment, useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
 import Error from '../../../components/Error';
 import DatePicker from '../../DatePicker';
 import AverageOrderValue from './charts/AverageOrderValue';
 import Orders from './charts/Orders';
 import Revenue from './charts/Revenue';
 import ReportByDropdown from './parts/ReportByDropdown';
-import { css, jsx } from '@emotion/core';
-import { ScDivider, ScFlex } from '@surecart/components-react';
-import apiFetch from '@wordpress/api-fetch';
-import { Fragment, useState, useEffect } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
+
+dayjs.extend(duration);
+dayjs.extend(utc);
 
 export default ({ liveMode }) => {
-	const [startDate, setStartDate] = useState(
-		new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-	);
+	const currency = scData?.currency_code;
+	const [endDate, setEndDate] = useState(dayjs());
+	const [startDate, setStartDate] = useState(dayjs().add(-1, 'month'));
 	const [data, setData] = useState([]);
-	const [currency, setCurrency] = useState(scData?.currency_code);
 	const [previousData, setPreviousData] = useState([]);
-	const [endDate, setEndDate] = useState(new Date());
 	const [reportBy, setReportBy] = useState('day');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 
 	useEffect(() => {
-		let startDateObj = new Date(startDate);
-		let endDateObj = new Date(endDate);
-		let diffDays =
-			(endDateObj.getTime() - startDateObj.getTime()) /
-				(1000 * 3600 * 24) +
-			1;
+		let diffDays = endDate.diff(startDate, 'day');
 
 		if (diffDays < 366 && 'year' === reportBy) {
-			setStartDate(startDateObj.getTime() - 365 * 24 * 60 * 60 * 1000);
+			setStartDate(dayjs(startDate).subtract(1, 'year'));
 		} else if (diffDays < 32 && 'month' === reportBy) {
-			setStartDate(startDateObj.getTime() - 60 * 24 * 60 * 60 * 1000);
+			setStartDate(dayjs(startDate).subtract(2, 'month'));
 		} else if (diffDays > 200 && 'day' === reportBy) {
-			setStartDate(new Date(Date.now() - 199 * 24 * 60 * 60 * 1000));
+			setStartDate(dayjs(endDate).subtract(199, 'day'));
 		} else {
-			getOrderStats();
-			getPreviousOrderStats();
+			getOrderStats(startDate.format(), endDate.format());
+			getPreviousOrderStats(
+				dayjs(startDate).subtract(diffDays, 'day').format(),
+				startDate.format()
+			);
 		}
 	}, [startDate, endDate, reportBy, liveMode]);
 
 	/**
 	 * Get order stats for the range.
 	 */
-	const getOrderStats = async () => {
-		let startDateObj = new Date(startDate);
-		let endDateObj = new Date(endDate);
-
+	const getOrderStats = async (startAt, endAt) => {
 		try {
 			setError(false);
 			setLoading(true);
 			const { data } = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
-					start_at: new Date(startDateObj).toISOString(),
-					end_at: new Date(endDateObj).toISOString(),
+					start_at: startAt,
+					end_at: endAt,
 					interval: reportBy,
 					live_mode: liveMode,
 					currency,
@@ -75,23 +74,14 @@ export default ({ liveMode }) => {
 	/**
 	 * Get order stats for the previous range
 	 */
-	const getPreviousOrderStats = async () => {
-		let startDateObj = new Date(startDate);
-		let lastStartDateObj = new Date(startDate);
-		let endDateObj = new Date(endDate);
-		let diffDays =
-			(endDateObj.getTime() - startDateObj.getTime()) /
-				(1000 * 3600 * 24) +
-			1;
-		lastStartDateObj.setDate(startDateObj.getDate() - diffDays);
-
+	const getPreviousOrderStats = async (startAt, endAt) => {
 		try {
 			setError(false);
 			setLoading(true);
 			const { data } = await apiFetch({
 				path: addQueryArgs(`surecart/v1/stats/orders/`, {
-					start_at: new Date(lastStartDateObj).toISOString(),
-					end_at: new Date(startDateObj).toISOString(),
+					start_at: startAt,
+					end_at: endAt,
 					live_mode: liveMode,
 					interval: reportBy,
 				}),
@@ -130,9 +120,9 @@ export default ({ liveMode }) => {
 				<ScFlex>
 					<DatePicker
 						startDate={startDate}
-						setStartDate={setStartDate}
 						endDate={endDate}
-						setEndDate={setEndDate}
+						setStartDate={(date) => setStartDate(dayjs(date))}
+						setEndDate={(date) => setEndDate(dayjs(date))}
 					/>
 
 					<ScFlex alignItems={'center'}>

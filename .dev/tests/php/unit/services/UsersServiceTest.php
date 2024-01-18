@@ -13,7 +13,7 @@ class UsersServiceTest extends SureCartUnitTestCase
 	/**
 	 * Set up a new app instance to use for tests.
 	 */
-	public function setUp()
+	public function setUp() : void
 	{
 		// Set up an app instance with whatever stubs and mocks we need before every test.
 		\SureCart::make()->bootstrap([
@@ -27,11 +27,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		parent::setUp();
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_profile_update_syncs_customer_model() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',
@@ -82,11 +77,6 @@ class UsersServiceTest extends SureCartUnitTestCase
 		]);
 	}
 
-	/**
-	 * @group failing
-	 *
-	 * @return void
-	 */
 	public function test_profile_update_syncs_doesnt_send_phone_if_empty() {
 		$user = User::find(self::factory()->user->create([
 			'user_email' => 'testemail@test.com',

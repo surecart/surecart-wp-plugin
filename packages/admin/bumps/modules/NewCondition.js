@@ -76,7 +76,7 @@ export default ({ onRequestClose, bump, updateBump }) => {
 					unselect={false}
 					choices={[
 						{
-							label: __('Price', 'surecart'),
+							label: __('Product Price', 'surecart'),
 							value: 'price_ids',
 						},
 						{
@@ -96,9 +96,9 @@ export default ({ onRequestClose, bump, updateBump }) => {
 									archived: false,
 									ad_hoc: false,
 								}}
-								onSelect={(price) => {
+								onSelect={({price_id}) => {
 									setType('price_ids');
-									setId(price);
+									setId(price_id);
 								}}
 							/>
 						</ScFormControl>

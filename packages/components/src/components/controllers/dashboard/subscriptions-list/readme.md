@@ -60,6 +60,7 @@ graph TD;
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
+  sc-subscription-details --> sc-icon
   sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-dialog --> sc-button
@@ -69,6 +70,8 @@ graph TD;
   sc-alert --> sc-icon
   sc-pagination --> sc-flex
   sc-pagination --> sc-button
+  sc-pagination --> sc-visually-hidden
+  sc-pagination --> sc-icon
   sc-block-ui --> sc-spinner
   style sc-subscriptions-list fill:#f9f,stroke:#333,stroke-width:4px
 ```

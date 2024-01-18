@@ -101,6 +101,15 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			]
 		);
 
+		$container['surecart.shortcodes']->registerBlockShortcode(
+			'sc_cart_menu_icon',
+			\SureCartBlocks\Blocks\CartMenuButton\Block::class,
+			[
+				'cart_icon'              => 'shopping-bag',
+				'cart_menu_always_shown' => true,
+			]
+		);
+
 		// confirmation.
 		$container['surecart.shortcodes']->registerBlockShortcode(
 			'sc_order_confirmation',
@@ -111,6 +120,102 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			\SureCartBlocks\Blocks\OrderConfirmationLineItems\Block::class,
 		);
 
+		// product page.
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_list',
+			'surecart/product-item-list',
+			[
+				'ids'                => [],
+				'columns'            => 4,
+				'sort_enabled'       => true,
+				'search_enabled'     => true,
+				'pagination_enabled' => true,
+				'ajax_pagination'    => true,
+				'collection_enabled' => true,
+				'type'               => 'all',
+				'limit'              => 10,
+			]
+		);
+
+		// Product collection page.
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_collection',
+			'surecart/product-collection',
+			[
+				'collection_id'      => '', // mandatory.
+				'columns'            => 4,
+				'sort_enabled'       => true,
+				'search_enabled'     => true,
+				'pagination_enabled' => true,
+				'ajax_pagination'    => true,
+				'limit'              => 10,
+			]
+		);
+
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_description',
+			'surecart/product-description',
+			[
+				'id' => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_title',
+			'surecart/product-title',
+			[
+				'id'    => null,
+				'level' => 1,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_price',
+			'surecart/product-price',
+			[
+				'id' => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_price_choices',
+			'surecart/product-price-choices',
+			[
+				'label'      => __( 'Pricing', 'surecart' ),
+				'columns'    => 2,
+				'show_price' => true,
+				'id'         => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_media',
+			'surecart/product-media',
+			[
+				'auto_height' => true,
+				'id'          => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_quantity',
+			'surecart/product-quantity',
+			[
+				'id' => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_cart_button',
+			'surecart/product-buy-button',
+			[
+				'add_to_cart' => true,
+				'text'        => __( 'Add To Cart', 'surecart' ),
+				'width'       => 100,
+				'id'          => null,
+			]
+		);
+		$container['surecart.shortcodes']->registerBlockShortcodeByName(
+			'sc_product_variant_choices',
+			'surecart/product-variant-choices',
+			[
+				'id' => null,
+			]
+		);
 	}
 
 	/**
@@ -135,9 +240,11 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 *
 	 * @param  array  $atts Shortcode attributes.
 	 * @param  string $content Shortcode content.
+	 * @param  string $name Shortcode tag.
+	 *
 	 * @return string Shortcode output.
 	 */
-	public function formShortcode( $atts ) {
+	public function formShortcode( $atts, $content, $name ) {
 		$atts = shortcode_atts(
 			[
 				'id' => null,
@@ -163,7 +270,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 			return __( 'This form is not available or has been deleted.', 'surecart' );
 		}
 
-		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $form );
+		return apply_filters( 'surecart/shortcode/render', do_blocks( $form->post_content ), $atts, $name, $form );
 	}
 
 	/**
@@ -178,6 +285,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		$atts = shortcode_atts(
 			[
 				'price_id'    => null,
+				'variant_id'  => null,
 				'type'        => 'primary',
 				'size'        => 'medium',
 				'button_text' => $content,
@@ -198,7 +306,7 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function buyButtonShortcode( $atts, $content ) {
-		// Remove inner shortcode from buy button label
+		// Remove inner shortcode from buy button label.
 		$label = strip_shortcodes( $content );
 		$atts  = shortcode_atts(
 			[
@@ -231,9 +339,9 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 	/**
 	 * Get specific shortcode atts from content
 	 *
-	 * @param string $name Name of shortcode
-	 * @param string $content Page content
-	 * @param array  $defaults Defaults for each
+	 * @param string $name Name of shortcode.
+	 * @param string $content Page content.
+	 * @param array  $defaults Defaults for each.
 	 * @return array
 	 */
 	public function getShortcodesAtts( $name, $content, $defaults = [] ) {
@@ -258,6 +366,17 @@ class ShortcodesServiceProvider implements ServiceProviderInterface {
 		return $items;
 	}
 
+	/**
+	 * Convert to block.
+	 *
+	 * @param string   $name The name.
+	 * @param stdClass $block The block.
+	 * @param array    $defaults The defaults.
+	 * @param array    $atts The atts.
+	 * @param string   $content The content.
+	 *
+	 * @return string
+	 */
 	protected function convertToBlock( $name, $block, $defaults = [], $atts = [], $content = '' ) {
 		return( new $block() )->render(
 			shortcode_atts(

@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                 | Type       | Default     |
-| ------------- | -------------- | --------------------------- | ---------- | ----------- |
-| `bump`        | --             | The bump                    | `Bump`     | `undefined` |
-| `checkout`    | --             | The checkout                | `Checkout` | `undefined` |
-| `showControl` | `show-control` | Should we show the controls | `boolean`  | `undefined` |
+| Property      | Attribute      | Description                 | Type      | Default                   |
+| ------------- | -------------- | --------------------------- | --------- | ------------------------- |
+| `bump`        | --             | The bump                    | `Bump`    | `undefined`               |
+| `cdnRoot`     | `cdn-root`     |                             | `string`  | `window.scData?.cdn_root` |
+| `showControl` | `show-control` | Should we show the controls | `boolean` | `undefined`               |
 
 
 ## Events

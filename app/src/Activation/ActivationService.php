@@ -1,6 +1,8 @@
 <?php
 namespace SureCart\Activation;
 
+use SureCart\Models\RegisteredWebhook;
+
 /**
  * Service for plugin activation.
  */
@@ -37,6 +39,7 @@ class ActivationService {
 	 */
 	public function bootstrap() {
 		register_activation_hook( SURECART_PLUGIN_FILE, [ $this, 'activate' ] );
+		register_deactivation_hook( SURECART_PLUGIN_FILE, [ $this, 'deactivate' ] );
 	}
 
 	/**
@@ -45,10 +48,21 @@ class ActivationService {
 	 * @return void
 	 */
 	public function activate() {
-		// create roles.
+		// Create roles.
 		$this->roles->create();
-		// seed pages and forms.
+
+		// Seed pages and forms.
 		$this->seeder->seed();
+	}
+
+	/**
+	 * On deactivation logic.
+	 *
+	 * @return void
+	 */
+	public function deactivate() {
+		// clear webhooks.
+		RegisteredWebhook::delete();
 	}
 
 	/**
@@ -65,7 +79,7 @@ class ActivationService {
 		$this->removeFormPosts();
 		// remove all options from the options table.
 		$this->removeOptions();
-		// remove all tables
+		// remove all tables.
 		$this->removeTables();
 	}
 
@@ -105,14 +119,15 @@ class ActivationService {
 	 * @return void
 	 */
 	public function removeOptions() {
-		delete_option( 'ce_registered_webhook' );
+		delete_option( 'surecart_registered_webhook' );
+		delete_option( 'surecart_previous_webhook' );
 		delete_option( 'surecart_order-confirmation_page_id' );
 		delete_option( 'surecart_dashboard_page_id' );
 		delete_option( 'surecart_checkout_sc_form_id' );
 		delete_option( 'surecart_use_esm_loader' );
 		delete_option( 'surecart_checkout_page_id' );
-		delete_option( 'sc_webhook_signing_secret' );
 		delete_option( 'sc_api_token' );
+		delete_option( 'sc_previous_account' );
 		delete_option( 'sc_uninstall' );
 	}
 }

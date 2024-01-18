@@ -22,7 +22,7 @@
 - [sc-dashboard-module](../../../ui/dashboard-module)
 - [sc-card](../../../ui/card)
 - [sc-form](../../../ui/form)
-- [sc-input](../../../ui/input)
+- [sc-password](../../../ui/sc-password)
 - [sc-button](../../../ui/button)
 - [sc-block-ui](../../../ui/block-ui)
 
@@ -32,13 +32,14 @@ graph TD;
   sc-wordpress-password-edit --> sc-dashboard-module
   sc-wordpress-password-edit --> sc-card
   sc-wordpress-password-edit --> sc-form
-  sc-wordpress-password-edit --> sc-input
+  sc-wordpress-password-edit --> sc-password
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-password-edit --> sc-block-ui
   sc-dashboard-module --> sc-alert
   sc-alert --> sc-icon
+  sc-password --> sc-input
   sc-input --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-button --> sc-spinner
   sc-block-ui --> sc-spinner
   style sc-wordpress-password-edit fill:#f9f,stroke:#333,stroke-width:4px

@@ -18,6 +18,9 @@ class CartServiceProvider implements ServiceProviderInterface {
 		$container['surecart.cart'] = function () {
 			return new CartService();
 		};
+
+		$app = $container[ SURECART_APPLICATION_KEY ];
+		$app->alias( 'cart', 'surecart.cart' );
 	}
 
 	/**

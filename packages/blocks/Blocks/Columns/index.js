@@ -6,6 +6,7 @@ import { columns as icon } from '@wordpress/icons';
 
 import metadata from './block.json';
 import deprecated from './deprecated';
+
 /**
  * Internal dependencies
  */
@@ -22,5 +23,5 @@ export const settings = {
 	variations,
 	edit,
 	save,
-  deprecated
+	deprecated,
 };

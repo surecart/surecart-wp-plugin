@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScTag } from '@surecart/components-react';
 import { store as coreStore } from '@wordpress/core-data';
 import { select, useDispatch } from '@wordpress/data';
 import { Fragment, useState } from '@wordpress/element';
@@ -14,18 +14,26 @@ import UpdateModel from '../templates/UpdateModel';
 import ActionsDropdown from './components/product/ActionsDropdown';
 import SaveButton from './components/product/SaveButton';
 import BuyLink from './modules/BuyLink';
+
+import Advanced from './modules/Advanced';
 import Details from './modules/Details';
 import Downloads from './modules/Downloads';
+import Image from './modules/Image';
 import Integrations from './modules/integrations/Integrations';
 import Licensing from './modules/Licensing';
 import Prices from './modules/Prices';
-import Sidebar from './Sidebar';
-import Image from './modules/Image';
+import Publishing from './modules/Publishing';
+import SearchEngine from './modules/SearchEngine';
+import Tax from './modules/Tax';
+import Variations from './modules/Variations';
+import Collections from './modules/Collections';
+import Shipping from './modules/Shipping';
+import Inventory from './modules/Inventory';
 
 export default ({ id }) => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice } = useDispatch(noticesStore);
-	const { saveEditedEntityRecord } = useDispatch(coreStore);
+	const { saveEditedEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const {
 		product,
 		saveProduct,
@@ -41,9 +49,28 @@ export default ({ id }) => {
 	/**
 	 * Handle the form submission
 	 */
-	const onSubmit = async () => {
+	const onSubmit = async (e) => {
 		try {
 			setError(null);
+
+			// get draft prices.
+			const { prices } = select(coreStore).getEditedEntityRecord(
+				'surecart',
+				'product',
+				id
+			);
+
+			// save pending prices.
+			const pendingPrices = [];
+			(Array.isArray(prices) ? prices : []).forEach((price) => {
+				pendingPrices.push(
+					saveEntityRecord('surecart', 'price', {
+						product: id,
+						...price,
+					})
+				);
+			});
+			await Promise.all(pendingPrices);
 
 			// build up pending records to save.
 			const dirtyRecords =
@@ -124,6 +151,14 @@ export default ({ id }) => {
 		}
 	};
 
+	const renderStatusBadge = () => {
+		if (!product?.id) return null;
+		if (product?.archived) {
+			return <ScTag type="warning">{__('Archived', 'surecart')}</ScTag>;
+		}
+		return null;
+	};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -152,14 +187,7 @@ export default ({ id }) => {
 						<sc-breadcrumb>
 							<sc-flex style={{ gap: '1em' }}>
 								{__('Edit Product', 'surecart')}
-								{product?.archived && (
-									<>
-										{' '}
-										<sc-tag type="warning">
-											{__('Archived', 'surecart')}
-										</sc-tag>
-									</>
-								)}
+								{renderStatusBadge()}
 							</sc-flex>
 						</sc-breadcrumb>
 					</sc-breadcrumbs>
@@ -197,14 +225,35 @@ export default ({ id }) => {
 				</div>
 			}
 			sidebar={
-				<Sidebar
-					id={id}
-					onToggleArchiveProduct={onToggleArchiveProduct}
-					loading={!hasLoadedProduct}
-					product={product}
-					updateProduct={editProduct}
-					isSaving={savingProduct}
-				/>
+				<>
+					<Publishing
+						id={id}
+						product={product}
+						onToggleArchiveProduct={onToggleArchiveProduct}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Shipping
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Tax
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Collections
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+					<Advanced
+						product={product}
+						updateProduct={editProduct}
+						loading={!hasLoadedProduct}
+					/>
+				</>
 			}
 		>
 			<Fragment>
@@ -233,7 +282,20 @@ export default ({ id }) => {
 					loading={!hasLoadedProduct}
 				/>
 
-				<Integrations id={id} />
+				<Inventory
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Variations
+					productId={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+
+				<Integrations id={id} product={product} />
 
 				<Downloads
 					id={id}
@@ -244,6 +306,11 @@ export default ({ id }) => {
 
 				<Licensing
 					id={id}
+					product={product}
+					updateProduct={editProduct}
+					loading={!hasLoadedProduct}
+				/>
+				<SearchEngine
 					product={product}
 					updateProduct={editProduct}
 					loading={!hasLoadedProduct}

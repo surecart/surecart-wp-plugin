@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import {
 	ScButton,
@@ -19,9 +20,59 @@ import Box from '../../../ui/Box';
 import { formatTaxDisplay } from '../../../util/tax';
 import { intervalString } from '../../../util/translations';
 import LineItem from './LineItem';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import { getSKUText } from '../../../util/products';
+
+const status = {
+	processing: __('Processing', 'surecart'),
+	payment_failed: __('Payment Failed', 'surecart'),
+	paid: __('Paid', 'surecart'),
+	canceled: __('Canceled', 'surecart'),
+	void: __('Canceled', 'surecart'),
+};
 
 export default ({ order, checkout, loading }) => {
 	const line_items = checkout?.line_items?.data;
+
+	const statusBadge = () => {
+		if (!order?.status) {
+			return null;
+		}
+
+		if (order?.status === 'paid') {
+			return (
+				<ScIcon
+					css={css`
+						font-size: 22px;
+						color: var(--sc-color-success-500);
+					`}
+					name="check-circle"
+				/>
+			);
+		}
+
+		if (order?.status === 'void' || order?.status === 'payment_failed') {
+			return (
+				<ScIcon
+					css={css`
+						font-size: 22px;
+						color: var(--sc-color-danger-500);
+					`}
+					name="x-circle"
+				/>
+			);
+		}
+
+		return (
+			<ScIcon
+				css={css`
+					font-size: 22px;
+					color: var(--sc-color-warning-500);
+				`}
+				name="circle"
+			/>
+		);
+	};
 
 	const { charge, loadedCharge } = useSelect(
 		(select) => {
@@ -58,9 +109,33 @@ export default ({ order, checkout, loading }) => {
 		[checkout?.id]
 	);
 
+	const getImageAttributes = (item) => {
+		const featuredMedia = getFeaturedProductMediaAttributes(
+			item?.price?.product,
+			item?.variant
+		);
+
+		return {
+			imageUrl: featuredMedia?.url,
+			imageAlt: featuredMedia?.alt,
+			imageTitle: featuredMedia?.title,
+		};
+	};
+
 	return (
 		<Box
-			title={__('Order Details', 'surecart')}
+			title={
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.5em;
+					`}
+				>
+					{statusBadge()}
+					{status[order?.status] || order?.status}
+				</div>
+			}
 			loading={loading}
 			header_action={
 				order?.statement_url && (
@@ -77,7 +152,7 @@ export default ({ order, checkout, loading }) => {
 							href={addQueryArgs(order?.statement_url, {
 								receipt: true,
 							})}
-							type="primary"
+							type="default"
 							size="small"
 						>
 							{__('Download Receipt / Invoice', 'surecart')}
@@ -132,8 +207,14 @@ export default ({ order, checkout, loading }) => {
 					return (
 						<ScProductLineItem
 							key={item.id}
-							imageUrl={item?.price?.product?.image_url}
+							{...getImageAttributes(item)}
 							name={item?.price?.product?.name}
+							priceName={item?.price?.name}
+							variantLabel={
+								(item?.variant_options || [])
+									.filter(Boolean)
+									.join(' / ') || null
+							}
 							editable={false}
 							removable={false}
 							fees={item?.fees?.data}
@@ -142,6 +223,7 @@ export default ({ order, checkout, loading }) => {
 							currency={item?.price?.currency}
 							trialDurationDays={item?.price?.trial_duration_days}
 							interval={intervalString(item?.price)}
+							sku={getSKUText(item)}
 						></ScProductLineItem>
 					);
 				})}
@@ -193,6 +275,14 @@ export default ({ order, checkout, loading }) => {
 						}
 						currency={checkout?.currency}
 						value={checkout?.discount_amount}
+					/>
+				)}
+
+				{!!checkout?.shipping_amount && (
+					<LineItem
+						label={__('Shipping', 'surecart')}
+						currency={checkout?.currency}
+						value={checkout?.shipping_amount}
 					/>
 				)}
 

@@ -1,7 +1,7 @@
 const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const path = require('path');
-const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	...defaultConfig,
@@ -21,6 +21,10 @@ module.exports = {
 		},
 	},
 	entry: {
+		['admin/onboarding']: path.resolve(
+			__dirname,
+			'packages/admin/onboarding/index.js'
+		),
 		['admin/dashboard']: path.resolve(
 			__dirname,
 			'packages/admin/dashboard/index.js'
@@ -36,6 +40,10 @@ module.exports = {
 		['admin/customers']: path.resolve(
 			__dirname,
 			'packages/admin/customers/index.js'
+		),
+		['admin/checkouts']: path.resolve(
+			__dirname,
+			'packages/admin/checkouts/index.js'
 		),
 		['admin/orders']: path.resolve(
 			__dirname,
@@ -61,6 +69,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/product-groups/index.js'
 		),
+		['admin/product-collections']: path.resolve(
+			__dirname,
+			'packages/admin/product-collections/index.js'
+		),
 		['admin/bumps']: path.resolve(
 			__dirname,
 			'packages/admin/bumps/index.js'
@@ -81,6 +93,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/cancellation-insights/index.js'
 		),
+		['admin/subscription-insights']: path.resolve(
+			__dirname,
+			'packages/admin/subscription-insights/index.js'
+		),
 
 		/**
 		 * Settings.
@@ -100,10 +116,6 @@ module.exports = {
 		['admin/settings/subscription-preservation']: path.resolve(
 			__dirname,
 			'packages/admin/settings/subscription-preservation/index.js'
-		),
-		['admin/settings/portal']: path.resolve(
-			__dirname,
-			'packages/admin/settings/portal/index.js'
 		),
 		['admin/settings/processors']: path.resolve(
 			__dirname,
@@ -145,6 +157,14 @@ module.exports = {
 			__dirname,
 			'packages/admin/settings/upgrade/index.js'
 		),
+		['admin/settings/shipping']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/index.js'
+		),
+		['admin/settings/shipping/profile']: path.resolve(
+			__dirname,
+			'packages/admin/settings/shipping/profile/index.js'
+		),
 
 		/**
 		 * Data.
@@ -177,17 +197,44 @@ module.exports = {
 			__dirname,
 			'packages/pages/customer-dashboard/index.js'
 		),
+
+		/**
+		 * Styles.
+		 */
+		['styles/webhook-notice']: path.resolve(
+			__dirname,
+			'packages/admin/styles/webhook-notice.js'
+		),
 	},
 	output: {
 		filename: '[name].js',
+		chunkFilename: `[name].js?v=[chunkhash]`,
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 	},
+	optimization: {
+		...defaultConfig.optimization,
+		minimizer: [
+			new TerserPlugin({
+				parallel: true,
+				exclude: /\.entry\.js$/,
+				terserOptions: {
+					output: {
+						comments: /translators:/i,
+					},
+					compress: {
+						passes: 2,
+					},
+					mangle: {
+						reserved: ['__', '_n', '_nx', '_x'],
+					},
+				},
+				extractComments: false,
+			}),
+		],
+	},
 	plugins: [
 		...defaultConfig.plugins,
-		new webpack.optimize.LimitChunkCountPlugin({
-			maxChunks: 1,
-		}),
 		new CopyPlugin({
 			patterns: [
 				{

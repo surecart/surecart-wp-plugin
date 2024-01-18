@@ -1,5 +1,10 @@
 :host {
   display: block;
+  --focus-ring: 0 0 0 var(--sc-focus-ring-width) var(--sc-focus-ring-color-primary);
+}
+
+:host:focus-visible .cart {
+  box-shadow: var(--focus-ring);
 }
 
 .cart {
@@ -12,7 +17,7 @@
   border-radius: var(--sc-cart-icon-border-radius, var(--sc-input-border-radius-medium));
   width: var(--sc-cart-icon-width, 60px);
   height: var(--sc-cart-icon-height, 60px);
-  color: var(--sc-cart-icon-color, var(--sc-color-white));
+  color: var(--sc-cart-icon-color, var(--sc-color-primary-text, var(--sc-color-white)));
   font-family: var(--sc-cart-font-family, var(--sc-input-font-family));
   font-weight: var(--sc-font-weight-semibold);
   transition: opacity var(--sc-transition-medium) ease;

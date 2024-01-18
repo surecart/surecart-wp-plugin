@@ -1,10 +1,13 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSwitch } from '@surecart/components-react';
 import { BaseControl, DateTimePicker } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies.
+ */
 import Box from '../../ui/Box';
+import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -58,6 +61,25 @@ export default ({ coupon, loading, updateCoupon }) => {
 							type="number"
 						/>
 					</BaseControl>
+					<BaseControl>
+						<ScPriceInput
+							className="sc-coupon-minimum-subtotal-amount"
+							help={__(
+								'The minimum order subtotal amount required to apply this coupon.',
+								'surecart'
+							)}
+							currencyCode={coupon?.currency}
+							placeholder={__('No Minimum', 'surecart')}
+							attribute="min_subtotal_amount"
+							label={__('Minimum order subtotal', 'surecart')}
+							value={coupon?.min_subtotal_amount || null}
+							onScInput={(e) =>
+								updateCoupon({
+									min_subtotal_amount: e.target.value,
+								})
+							}
+						/>
+					</BaseControl>
 				</div>
 				<div>
 					<ScSwitch
@@ -65,7 +87,9 @@ export default ({ coupon, loading, updateCoupon }) => {
 						checked={!!coupon?.redeem_by}
 						onScChange={(e) => {
 							updateCoupon({
-								redeem_by: e.target.checked ? Date.now() : null,
+								redeem_by: e.target.checked
+									? Date.now() / 1000
+									: null,
 							});
 						}}
 					>
@@ -92,14 +116,14 @@ export default ({ coupon, loading, updateCoupon }) => {
 								)}
 							</BaseControl.VisualLabel>
 							<DateTimePicker
-								currentDate={new Date(coupon?.redeem_by)}
-								onChange={(redeem_by) => {
+								currentDate={new Date(coupon?.redeem_by * 1000)}
+								onChange={(redeem_by) =>
 									updateCoupon({
-										redeem_by: new Date(
-											redeem_by
-										).getTime(),
-									});
-								}}
+										redeem_by:
+											Date.parse(new Date(redeem_by)) /
+											1000,
+									})
+								}
 							/>
 						</div>
 					)}

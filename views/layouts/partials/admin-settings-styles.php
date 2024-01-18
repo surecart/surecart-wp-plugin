@@ -5,8 +5,14 @@
 		color: var(--sc-color-brand-body);
 	}
 	.sc-item-stick-bottom {
-		margin-top: auto;
 		padding-top: var(--sc-spacing-large);
+	}
+
+	@media screen and (min-width: 600px) {
+		.sc-item-stick-bottom {
+			position: sticky;
+			top: 135px;
+		}
 	}
 
 	a.surecart-help {
@@ -43,12 +49,6 @@
 		left: 0;
 		display: flex;
 		flex-direction: column;
-		overflow: hidden;
-	}
-	@media screen and (max-width: 600px) {
-		#sc-settings-container {
-   			margin-top: 46px;
-		}
 	}
 
 	#sc-settings-content {
@@ -79,9 +79,9 @@
 		flex-direction: column;
 		gap: 2px;
 		width: 100%;
-		max-width: 255px;
-		overflow: auto;
+		max-width: 290px;
 		position: relative;
+		box-sizing: border-box;
 	}
 
 	@media screen and (max-width:960px) {

@@ -8,7 +8,7 @@ import PaymentMethodCheckbox from './PaymentMethodCheckbox';
 import { ScPremiumTag, ScUpgradeRequired } from '@surecart/components-react';
 
 export default ({ attributes, setAttributes }) => {
-	const { label, secure_notice, disabled_methods } = attributes;
+	const { label, disabled_methods } = attributes;
 
 	const hasProcessor = (name) =>
 		scBlockData?.processors?.some((p) => p.processor_type === name);
@@ -32,10 +32,10 @@ export default ({ attributes, setAttributes }) => {
 						{__('Enabled Processors', 'surecart')}{' '}
 						{!scBlockData?.entitlements
 							?.form_specific_payment_methods && (
-							<ScUpgradeRequired>
-								<ScPremiumTag />
-							</ScUpgradeRequired>
-						)}
+								<ScUpgradeRequired>
+									<ScPremiumTag />
+								</ScUpgradeRequired>
+							)}
 					</Flex>
 				}
 				initialOpen={
@@ -90,6 +90,23 @@ export default ({ attributes, setAttributes }) => {
 							name={__('PayPal', 'surecart')}
 							help={__('Enable PayPal payment', 'surecart')}
 							id={'paypal'}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							disabled={
+								!scBlockData?.entitlements
+									?.form_specific_payment_methods ||
+								isMollieEnabled
+							}
+						/>
+					</PanelRow>
+				)}
+
+				{hasProcessor('paystack') && (
+					<PanelRow>
+						<PaymentMethodCheckbox
+							name={__('Paystack', 'surecart')}
+							help={__('Enable Paystack payment', 'surecart')}
+							id={'paystack'}
 							attributes={attributes}
 							setAttributes={setAttributes}
 							disabled={

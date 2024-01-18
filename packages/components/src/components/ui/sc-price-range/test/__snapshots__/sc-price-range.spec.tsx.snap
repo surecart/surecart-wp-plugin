@@ -3,7 +3,7 @@
 exports[`sc-price-range It should render one price if only one is passed 1`] = `
 <sc-price-range>
   <mock:shadow-root>
-    <span class="price-range-display">
+    <span>
       <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
     </span>
   </mock:shadow-root>
@@ -13,9 +13,17 @@ exports[`sc-price-range It should render one price if only one is passed 1`] = `
 exports[`sc-price-range It should render the correct minimum and maximum price in a range 1`] = `
 <sc-price-range>
   <mock:shadow-root>
-    <span class="price-range-display">
+    <span>
+      <sc-visually-hidden>
+        Price range from
+      </sc-visually-hidden>
       <sc-format-number currency="usd" type="currency" value="120"></sc-format-number>
-      -
+      <span aria-hidden="">
+        —
+      </span>
+      <sc-visually-hidden>
+        to
+      </sc-visually-hidden>
       <sc-format-number currency="usd" type="currency" value="2900"></sc-format-number>
     </span>
   </mock:shadow-root>
