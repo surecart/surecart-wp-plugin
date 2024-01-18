@@ -32,6 +32,10 @@ class UsersService {
 		$wp_user = \SureCart\Models\User::findByCustomerId( $customer->id );
 
 		if ( ! empty( $wp_user->ID ) ) {
+			// prevent potential infinite loop of catching a webhook and updating again.
+			remove_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
+
+			// update user.
 			wp_update_user(
 				[
 					'ID'         => $wp_user->ID,
@@ -41,6 +45,9 @@ class UsersService {
 					'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,
 				]
 			);
+
+			// re-add profile_update in case it is done in the same request somewhere.
+			add_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
 		}
 
 		return $wp_user;
