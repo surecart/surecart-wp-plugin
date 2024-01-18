@@ -63,6 +63,12 @@ class RolesService {
 				'publish_posts'          => true,
 				'read_private_pages'     => true,
 				'read_private_posts'     => true,
+				'list_users' 		     => true,
+				'edit_user' 		     => true,
+				'promote_user' 		     => true,
+				'delete_user' 		     => true,
+				'manage_sites' 		     => true,
+				'create_users'		     => true,
 			]
 		);
 
