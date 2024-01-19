@@ -9,7 +9,7 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product, ProductCollection, ProductsSearchedParams, ProductsViewedParams } from '../../../../types';
+import { Collection, Product, ProductsSearchedParams, ProductsViewedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
 import '@store/product/facebook';
 import '@store/product/google';
@@ -45,7 +45,10 @@ export class ScProductItemList {
   @Prop() collectionEnabled: boolean = true;
 
   /** Show for a specific collection */
-  @Prop() collection: ProductCollection;
+  @Prop() collectionId: string;
+
+  /** The page title */
+  @Prop() pageTitle: string;
 
   /** Show only featured products. */
   @Prop() featured: boolean = false;
@@ -110,7 +113,8 @@ export class ScProductItemList {
       this.getProducts().then(() => {
         this.scProductsViewed.emit({
           products: this.products,
-          collection: this.collection,
+          pageTitle: this.pageTitle,
+          collectionId: this.collectionId,
         });
       });
     }
@@ -212,8 +216,8 @@ export class ScProductItemList {
     let collectionIds = this.selectedCollections?.map(collection => collection.id) || [];
 
     // If we have a collectionId, we should only fetch products from that collection.
-    if (this.collection?.id) {
-      collectionIds = [this.collection.id];
+    if (this.collectionId) {
+      collectionIds = [this.collectionId];
     }
 
     try {

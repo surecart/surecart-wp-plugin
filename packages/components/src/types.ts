@@ -1184,7 +1184,8 @@ export interface ProductsSearchedParams {
 
 export interface ProductsViewedParams {
   products: Product[];
-  collection?: ProductCollection;
+  pageTitle: string;
+  collectionId?: string;
 }
 
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
