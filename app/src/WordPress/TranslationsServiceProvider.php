@@ -58,7 +58,7 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 	 * @return string
 	 */
 	public function loadSingleTranslationFile( $file, $handle, $domain ) {
-		if ( 'surecart' === $domain ) {
+		if ( 'surecart' === $domain && ! file_exists( $file ) ) {
 			if ( is_string( $file ) ) {
 				if ( false !== strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) ) {
 					$first_part = substr( $file, 0, strpos( $file, SURECART_PLUGIN_DIR_NAME . '/languages/' ) );
