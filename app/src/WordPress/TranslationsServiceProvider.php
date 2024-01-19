@@ -3,6 +3,7 @@
 namespace SureCart\WordPress;
 
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
+use function SureCartVendors\Required\Traduttore_Registry\add_project;
 
 /**
  * Register translations.
@@ -126,5 +127,11 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 			// Load the default language files.
 			load_plugin_textdomain( 'surecart', false, $lang_dir );
 		}
+		// add translations from translate.surecart.com.
+		add_project(
+			'plugin',
+			'surecart-wp',
+			'https://translate.surecart.com/glotpress/api/translations/surecart/'
+		);
 	}
 }

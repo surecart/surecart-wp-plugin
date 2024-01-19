@@ -2,8 +2,6 @@
 
 namespace SureCart\WordPress\Assets;
 
-use function SureCartVendors\Required\Traduttore_Registry\add_project;
-
 /**
  * Our assets service.
  */
@@ -62,9 +60,6 @@ class AssetsService {
 	 * @return void
 	 */
 	public function bootstrap() {
-		// add translations from translate.surecart.com.
-		add_action( 'init', [ $this, 'addTranslations' ] );
-
 		// register assets we will reuse.
 		add_action( 'init', [ $this->scripts, 'register' ] );
 		add_action( 'init', [ $this->styles, 'register' ] );
@@ -86,19 +81,6 @@ class AssetsService {
 		$this->loader->whenRendered( 'surecart/customer-dashboard', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/checkout-form', [ $this, 'enqueueComponents' ] );
 		$this->loader->whenRendered( 'surecart/order-confirmation', [ $this, 'enqueueComponents' ] );
-	}
-
-	/**
-	 * Add translations.
-	 *
-	 * @return void
-	 */
-	public function addTranslations() {
-		add_project(
-			'plugin',
-			'surecart-wp',
-			'https://translate.surecart.com/glotpress/api/translations/surecart/'
-		);
 	}
 
 	public function preloadBlockAssets() {
