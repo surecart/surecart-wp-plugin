@@ -981,6 +981,13 @@
     "class": true,
     "slot": true
   },
+  "sc-manual-payment-method": {
+    "payment-method": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-menu": {
     "aria-label": true,
     "style": true,

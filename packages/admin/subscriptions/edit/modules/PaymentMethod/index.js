@@ -11,6 +11,7 @@ import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
+import ManualPaymentMethod from './ManualPaymentMethod';
 
 export default ({ subscription, updateSubscription, loading }) => {
 	const id = subscription?.payment_method?.id || subscription?.payment_method;
@@ -51,30 +52,41 @@ export default ({ subscription, updateSubscription, loading }) => {
 		<Box
 			title={__('Payment Method', 'surecart')}
 			loading={loading || !hasLoadedPaymentmethod}
-		>
-			<ScCard>
-				<ScFlex
-					alignItems="center"
-					justifyContent="flex-start"
-					style={{ gap: '0.5em' }}
-				>
-					<ScPaymentMethod paymentMethod={payment_method} />
-					<div>
-						{!!payment_method?.card?.exp_month && (
-							<span>
-								{__('Exp.', 'surecart')}
-								{payment_method?.card?.exp_month}/
-								{payment_method?.card?.exp_year}
-							</span>
-						)}
-						{!!payment_method?.paypal_account?.email &&
-							payment_method?.paypal_account?.email}
-					</div>
-					<ScButton type="text" circle onClick={() => setEdit(true)}>
-						<ScIcon name="edit-2" />
-					</ScButton>
-				</ScFlex>
-			</ScCard>
+		>	
+		<>
+			{subscription?.payment_method && (
+				<ScCard>
+					<ScFlex
+						alignItems="center"
+						justifyContent="flex-start"
+						style={{ gap: '0.5em' }}
+					>
+						<ScPaymentMethod paymentMethod={payment_method} />
+						<div>
+							{!!payment_method?.card?.exp_month && (
+								<span>
+									{__('Exp.', 'surecart')}
+									{payment_method?.card?.exp_month}/
+									{payment_method?.card?.exp_year}
+								</span>
+							)}
+							{!!payment_method?.paypal_account?.email &&
+								payment_method?.paypal_account?.email}
+						</div>
+						<ScButton type="text" circle onClick={() => setEdit(true)}>
+							<ScIcon name="edit-2" />
+						</ScButton>
+					</ScFlex>
+				</ScCard>
+			)}
+			{subscription?.manual_payment && (
+				<ManualPaymentMethod
+					subscription={subscription}
+					updateSubscription={updateSubscription}
+					loading={loading}
+					setEdit={setEdit}
+				/>
+			)}
 			<EditPaymentMethod
 				open={edit}
 				setOpen={setEdit}
@@ -83,15 +95,23 @@ export default ({ subscription, updateSubscription, loading }) => {
 				}
 				paymentMethodId={
 					subscription?.payment_method?.id ||
-					subscription?.payment_method
+					subscription?.payment_method ||
+					subscription?.manual_payment_method
 				}
-				updatePaymentMethod={(payment_method) => {
-					updateSubscription({
-						payment_method,
-					});
+				updatePaymentMethod={(payment_method, manual = false) => {
+					if (manual) {
+						updateSubscription({
+							manual_payment_method: payment_method,
+						});
+					} else {
+						updateSubscription({
+							payment_method,
+						});
+					}
 					setEdit(false);
 				}}
 			/>
+		</>
 		</Box>
 	);
 };

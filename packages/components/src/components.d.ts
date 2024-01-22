@@ -1786,6 +1786,9 @@ export namespace Components {
         "loggedIn": boolean;
         "order": Checkout;
     }
+    interface ScManualPaymentMethod {
+        "paymentMethod": ManualPaymentMethod;
+    }
     interface ScMenu {
         "ariaLabel": string;
         "setCurrentItem": (item: HTMLScMenuItemElement) => Promise<void>;
@@ -4818,6 +4821,12 @@ declare global {
         prototype: HTMLScLoginProviderElement;
         new (): HTMLScLoginProviderElement;
     };
+    interface HTMLScManualPaymentMethodElement extends Components.ScManualPaymentMethod, HTMLStencilElement {
+    }
+    var HTMLScManualPaymentMethodElement: {
+        prototype: HTMLScManualPaymentMethodElement;
+        new (): HTMLScManualPaymentMethodElement;
+    };
     interface HTMLScMenuElement extends Components.ScMenu, HTMLStencilElement {
     }
     var HTMLScMenuElement: {
@@ -5633,6 +5642,7 @@ declare global {
         "sc-line-items-provider": HTMLScLineItemsProviderElement;
         "sc-login-form": HTMLScLoginFormElement;
         "sc-login-provider": HTMLScLoginProviderElement;
+        "sc-manual-payment-method": HTMLScManualPaymentMethodElement;
         "sc-menu": HTMLScMenuElement;
         "sc-menu-divider": HTMLScMenuDividerElement;
         "sc-menu-item": HTMLScMenuItemElement;
@@ -7720,6 +7730,9 @@ declare namespace LocalJSX {
         "onScSetCustomer"?: (event: ScLoginProviderCustomEvent<{ email: string; name?: string }>) => void;
         "onScSetLoggedIn"?: (event: ScLoginProviderCustomEvent<boolean>) => void;
         "order"?: Checkout;
+    }
+    interface ScManualPaymentMethod {
+        "paymentMethod"?: ManualPaymentMethod;
     }
     interface ScMenu {
         "ariaLabel"?: string;
@@ -10188,6 +10201,7 @@ declare namespace LocalJSX {
         "sc-line-items-provider": ScLineItemsProvider;
         "sc-login-form": ScLoginForm;
         "sc-login-provider": ScLoginProvider;
+        "sc-manual-payment-method": ScManualPaymentMethod;
         "sc-menu": ScMenu;
         "sc-menu-divider": ScMenuDivider;
         "sc-menu-item": ScMenuItem;
@@ -10417,6 +10431,7 @@ declare module "@stencil/core" {
             "sc-line-items-provider": LocalJSX.ScLineItemsProvider & JSXBase.HTMLAttributes<HTMLScLineItemsProviderElement>;
             "sc-login-form": LocalJSX.ScLoginForm & JSXBase.HTMLAttributes<HTMLScLoginFormElement>;
             "sc-login-provider": LocalJSX.ScLoginProvider & JSXBase.HTMLAttributes<HTMLScLoginProviderElement>;
+            "sc-manual-payment-method": LocalJSX.ScManualPaymentMethod & JSXBase.HTMLAttributes<HTMLScManualPaymentMethodElement>;
             "sc-menu": LocalJSX.ScMenu & JSXBase.HTMLAttributes<HTMLScMenuElement>;
             "sc-menu-divider": LocalJSX.ScMenuDivider & JSXBase.HTMLAttributes<HTMLScMenuDividerElement>;
             "sc-menu-item": LocalJSX.ScMenuItem & JSXBase.HTMLAttributes<HTMLScMenuItemElement>;

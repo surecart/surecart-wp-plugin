@@ -6,6 +6,7 @@ import {
 	ScChoices,
 	ScDialog,
 	ScPaymentMethod,
+	ScManualPaymentMethod,
 	ScTag,
 } from '@surecart/components-react';
 import { useSelect } from '@wordpress/data';
@@ -20,6 +21,7 @@ export default ({
 	updatePaymentMethod,
 }) => {
 	const [paymentMethod, setPaymentMethod] = useState(paymentMethodId);
+	const [manual, setManual] = useState(false);
 
 	const { payment_methods, loading } = useSelect(
 		(select) => {
@@ -44,6 +46,31 @@ export default ({
 					...queryArgs
 				),
 				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[customerId, open]
+	);
+	
+	const { manual_payment_methods, manualLoading } = useSelect(
+		(select) => {
+			if (!open) return {};
+			const queryArgs = [
+				'surecart',
+				'manual_payment_method',
+				{
+					context: 'edit',
+					customer_ids: [customerId],
+					per_page: 100,
+				},
+			];
+			return {
+				manual_payment_methods: select(coreStore).getEntityRecords(
+					...queryArgs
+				),
+				manualLoading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
 				),
@@ -85,11 +112,27 @@ export default ({
 						</ScChoice>
 					);
 				})}
+				{(manual_payment_methods || []).map((payment_method) => {
+					return (
+						<ScChoice
+							value={payment_method?.id}
+							checked={payment_method?.id === paymentMethod}
+							onClick={() => setManual(true)}
+						>
+							<ScManualPaymentMethod paymentMethod={payment_method} />
+							{payment_method?.id === paymentMethodId && (
+								<ScTag type="info" slot="price">
+									{__('Current', 'surecart')}
+								</ScTag>
+							)}
+						</ScChoice>
+					);
+				})}
 			</ScChoices>
-			{loading && <ScBlockUi spinner />}
+			{loading || manualLoading && <ScBlockUi spinner />}
 			<ScButton
 				type="primary"
-				onClick={() => updatePaymentMethod(paymentMethod)}
+				onClick={() => updatePaymentMethod(paymentMethod, manual)}
 				slot="footer"
 			>
 				{__('Update', 'surecart')}
