@@ -96,7 +96,8 @@ export default ({ onRequestClose, bump, updateBump }) => {
 									archived: false,
 									ad_hoc: false,
 								}}
-								onSelect={({price_id}) => {
+								variable={false}
+								onSelect={({ price_id }) => {
 									setType('price_ids');
 									setId(price_id);
 								}}
