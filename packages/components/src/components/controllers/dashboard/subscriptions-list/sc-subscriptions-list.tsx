@@ -133,7 +133,7 @@ export class ScSubscriptionsList {
   getSubscriptionLink(subscription: Subscription) {
     // If subscription has no payment_method,
     // then, we'll redirect to add payment method page.
-    if (!subscription.payment_method) {
+    if (!subscription.payment_method && !subscription.manual_payment) {
       return addQueryArgs(window.location.href, {
         action: 'create',
         model: 'payment_method',

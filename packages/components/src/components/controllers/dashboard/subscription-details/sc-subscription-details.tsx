@@ -203,7 +203,7 @@ export class ScSubscriptionDetails {
           </sc-card>
         </sc-dialog>
 
-        {!this.subscription.payment_method && (
+        {!this.subscription.payment_method && !this.subscription.manual_payment && (
           <div>
             <sc-tag type="warning">
               <div class="subscription-details__missing-method">
