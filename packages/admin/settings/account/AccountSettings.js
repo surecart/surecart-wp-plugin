@@ -1,6 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { ScInput, ScSelect, ScAddress } from '@surecart/components-react';
+import {
+	ScInput,
+	ScSelect,
+	ScAddress,
+	ScIcon,
+} from '@surecart/components-react';
 import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -23,6 +28,17 @@ export default () => {
 		editItem: editAccountItem,
 		hasLoadedItem: hasLoadedAccountItem,
 	} = useEntity('store', 'account');
+	const { hasLiveOrders } = useSelect((select) => {
+		const liveOrderCount =
+			select(coreStore).getEntityRecords('surecart', 'order', {
+				status: 'live',
+				per_page: 1,
+			})?.length || 0;
+
+		return {
+			hasLiveOrders: liveOrderCount > 0,
+		};
+	});
 
 	const {
 		item: portalItem,
@@ -137,31 +153,76 @@ export default () => {
 						type="url"
 					></ScInput>
 
-					<ScSelect
+					<div
 						css={css`
 							grid-column: 1 / 3;
 						`}
-						search
-						value={accountItem?.currency}
-						onScChange={(e) =>
-							editAccountItem({ currency: e.target.value })
-						}
-						choices={Object.keys(
-							scData?.supported_currencies || {}
-						).map((value) => {
-							const label = scData?.supported_currencies[value];
-							return {
-								label: `${label} (${getCurrencySymbol(value)})`,
-								value,
-							};
-						})}
-						label={__('Default Currency', 'surecart')}
-						help={__(
-							'The default currency for new products.',
-							'surecart'
+					>
+						<ScSelect
+							search
+							value={accountItem?.currency}
+							onScChange={(e) =>
+								editAccountItem({ currency: e.target.value })
+							}
+							choices={Object.keys(
+								scData?.supported_currencies || {}
+							).map((value) => {
+								const label =
+									scData?.supported_currencies[value];
+								return {
+									label: `${label} (${getCurrencySymbol(
+										value
+									)})`,
+									value,
+								};
+							})}
+							label={__('Default Currency', 'surecart')}
+							required
+							disabled={hasLiveOrders}
+							{...(hasLiveOrders
+								? {}
+								: {
+										help: __(
+											'The default currency for new products.',
+											'surecart'
+										),
+								  })}
+						/>
+						{hasLiveOrders && (
+							<div
+								css={css`
+									padding: var(--sc-spacing-small);
+									margin: 0;
+									margin-top: var(--sc-spacing-small);
+									background: var(
+										--sc-color-brand-main-background
+									);
+									border-bottom: 1px solid
+										var(--sc-color-brand-stroke);
+									display: flex;
+									align-items: center;
+									gap: var(--sc-spacing-small);
+									border-radius: var(
+										--sc-border-radius-small
+									);
+								`}
+							>
+								<ScIcon name="alert-circle" />
+								{__(
+									'This option is locked after the first live order. Please',
+									'surecart'
+								)}
+								<a
+									href="https://surecart.com/support/"
+									target="_blank"
+									rel="noreferrer"
+								>
+									{__('contact support', 'surecart')}
+								</a>
+								{__('to change currency.', 'surecart')}
+							</div>
 						)}
-						required
-					/>
+					</div>
 
 					<ScSelect
 						search

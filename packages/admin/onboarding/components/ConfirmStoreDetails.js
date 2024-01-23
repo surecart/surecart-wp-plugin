@@ -68,7 +68,13 @@ export default ({
 						</ScInput>
 					</div>
 				</ScFormControl>
-				<ScFormControl label={__('Default Currency', 'surecart')}>
+				<ScFormControl
+					label={__('Default Currency', 'surecart')}
+					help={__(
+						'Currency can be modified before the first live order is processed. Afterward, the currency option is locked.',
+						'surecart'
+					)}
+				>
 					<ScSelect
 						required
 						search
@@ -87,7 +93,7 @@ export default ({
 						style={{
 							fontSize: 'var(--sc-input-font-size-large)',
 						}}
-					></ScSelect>
+					/>
 				</ScFormControl>
 			</Step>
 
