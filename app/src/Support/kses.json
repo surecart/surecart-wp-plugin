@@ -669,12 +669,9 @@
     "slot": true
   },
   "sc-express-payment": {
-    "busy": true,
     "debug": true,
     "divider-text": true,
-    "form-id": true,
     "has-payment-options": true,
-    "order": true,
     "processor": true,
     "style": true,
     "id": true,
@@ -1936,14 +1933,9 @@
   "sc-stripe-payment-request": {
     "amount": true,
     "country": true,
-    "currency-code": true,
     "debug": true,
     "error": true,
-    "form-id": true,
     "label": true,
-    "order": true,
-    "payment-method": true,
-    "prices": true,
     "publishable-key": true,
     "stripe-account-id": true,
     "theme": true,

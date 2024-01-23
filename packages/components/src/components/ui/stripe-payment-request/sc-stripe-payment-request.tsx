@@ -2,10 +2,10 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 import { PaymentRequestOptions, Stripe } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
+import { state as checkoutState, onChange as onCheckoutChange  } from '@store/checkout';
 
 import { createOrUpdateCheckout, finalizeCheckout } from '../../../services/session';
-import { Checkout, LineItem, Prices, Product, ResponseError } from '../../../types';
+import { Checkout, LineItem, Product, ResponseError } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 
 @Component({
@@ -19,6 +19,7 @@ export class ScStripePaymentRequest {
   private stripe: Stripe;
   private paymentRequest: any;
   private elements: any;
+  private removeCheckoutListener: () => void;
 
   /** Your stripe connected account id. */
   @Prop() stripeAccountId: string;
@@ -28,14 +29,6 @@ export class ScStripePaymentRequest {
 
   /** Country */
   @Prop() country: string = 'US';
-
-  /** Currency */
-  @Prop() currencyCode: string = 'usd';
-
-  /** Checkout Session */
-  @Prop() order: Checkout;
-
-  @Prop() prices: Prices;
 
   /** Label */
   @Prop() label: string = 'total';
@@ -48,13 +41,8 @@ export class ScStripePaymentRequest {
 
   @Prop() error: ResponseError | null;
 
-  @Prop() paymentMethod: string;
-
   /** Is this in debug mode. */
   @Prop() debug: boolean = false;
-
-  /** This is required to validate the form on the server */
-  @Prop() formId: number | string;
 
   /** Has this loaded */
   @State() loaded: boolean = false;
@@ -91,18 +79,17 @@ export class ScStripePaymentRequest {
             amount: 0,
           },
         ],
-        ...(this.getRequestObject(this.order) as PaymentRequestOptions),
+        ...(this.getRequestObject(checkoutState?.checkout) as PaymentRequestOptions),
       });
     } catch (e) {
       console.log(e?.message || __('Stripe could not be loaded', 'surecart'));
     }
   }
 
-  @Watch('order')
   handleOrderChange() {
     if (!this.paymentRequest) return;
     if (this.pendingEvent) return;
-    this.paymentRequest.update(this.getRequestObject(this.order));
+    this.paymentRequest.update(this.getRequestObject(checkoutState?.checkout));
   }
 
   @Watch('loaded')
@@ -121,7 +108,7 @@ export class ScStripePaymentRequest {
     const { shippingAddress, updateWith } = ev;
     try {
       const order = (await createOrUpdateCheckout({
-        id: this.order?.id,
+        id: checkoutState?.checkout?.id,
         data: {
           shipping_address: {
             ...(shippingAddress?.name ? { name: shippingAddress?.name } : {}),
@@ -149,8 +136,8 @@ export class ScStripePaymentRequest {
 
   /** Only append price name if there's more than one product price in the session. */
   getName(item: LineItem) {
-    const otherPrices = Object.keys(this.prices || {}).filter(key => {
-      const price = this.prices[key];
+    const otherPrices = Object.keys(checkoutState?.pricesEntities || {}).filter(key => {
+      const price = checkoutState?.pricesEntities[key];
       // @ts-ignore
       return price.product === item.price.product.id;
     });
@@ -173,7 +160,7 @@ export class ScStripePaymentRequest {
     });
 
     return {
-      currency: this.currencyCode,
+      currency: checkoutState.currencyCode,
       total: {
         amount: order?.amount_due || 0,
         label: __('Total', 'surecart'),
@@ -184,6 +171,8 @@ export class ScStripePaymentRequest {
   }
 
   componentDidLoad() {
+    this.handleOrderChange();
+    this.removeCheckoutListener = onCheckoutChange('checkout', () => this.handleOrderChange());
     if (!this.elements) {
       return;
     }
@@ -236,7 +225,7 @@ export class ScStripePaymentRequest {
       this.scSetState.emit('FINALIZE');
       // update session with shipping/billing
       (await createOrUpdateCheckout({
-        id: this.order?.id,
+        id: checkoutState?.checkout?.id,
         data: {
           email: billing_details?.email,
           name: billing_details?.name,
@@ -254,9 +243,9 @@ export class ScStripePaymentRequest {
 
       // finalize
       const session = (await finalizeCheckout({
-        id: this.order.id,
+        id: checkoutState?.checkout.id,
         query: {
-          form_id: this.formId,
+          form_id: checkoutState.formId,
         },
         processor: { id: 'stripe', manual: false },
       })) as Checkout;
@@ -328,6 +317,10 @@ export class ScStripePaymentRequest {
     return this.stripe.confirmCardSetup(secret, { payment_method: ev.paymentMethod.id }, { handleActions: false });
   }
 
+  disconnectedCallback() {
+    this.removeCheckoutListener();
+  }
+
   render() {
     return (
       <div class={{ 'request': true, 'request--loaded': this.loaded }}>
@@ -346,4 +339,3 @@ export class ScStripePaymentRequest {
   }
 }
 
-openWormhole(ScStripePaymentRequest, ['currencyCode', 'country', 'prices', 'paymentMethod'], false);

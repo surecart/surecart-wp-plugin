@@ -14,6 +14,24 @@ export const availableProcessors = () =>
     .filter((processor, _, filtered) => (filtered.some(p => p.processor_type === 'mollie') ? processor.processor_type === 'mollie' : true)); // only allow mollie if preset.
 
 /**
+ * Gets the stripe processor data.
+ *
+ * @returns {Object} The stripe processor data.
+ */
+export const getStripeProcessorData = () => {
+  const processor = availableProcessors().find(({ processor_type }) => processor_type === 'stripe');
+
+  if (!processor?.processor_data?.account_id || !processor?.processor_data?.publishable_key) {
+    return;
+  }
+
+  return {
+    publishableKey: processor.processor_data.publishable_key,
+    accountId: processor.processor_data.account_id,
+  };
+};
+
+/**
  * Gets an available processor type.
  */
 export const getAvailableProcessor = (type: string) => availableProcessors().find(({ processor_type }) => processor_type === type);

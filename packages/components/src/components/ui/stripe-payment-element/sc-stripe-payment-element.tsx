@@ -6,7 +6,7 @@ import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
 import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
-import { availableProcessors } from '@store/processors/getters';
+import {  getStripeProcessorData } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
@@ -89,14 +89,14 @@ export class ScStripePaymentElement {
 
   /** Maybe load the stripe element on load. */
   async componentDidLoad() {
-    const processor = (availableProcessors() || []).find(processor => processor.processor_type === 'stripe');
-    if (!processor) {
+    const processorData = getStripeProcessorData();
+    if (!processorData) {
       return;
     }
-    const { account_id, publishable_key } = processor?.processor_data || {};
+
 
     try {
-      this.stripe = await loadStripe(publishable_key, { stripeAccount: account_id });
+      this.stripe = await loadStripe(processorData.publishableKey, { stripeAccount: processorData.accountId });
     } catch (e) {
       this.error = e?.message || __('Stripe could not be loaded', 'surecart');
       // don't continue.
