@@ -1,9 +1,9 @@
 import { __ } from '@wordpress/i18n';
 import AdHoc from './parts/AdHoc';
 import Amount from './parts/Amount';
-import { ScFlex } from '@surecart/components-react';
 import ScratchAmount from './parts/ScratchAmount';
 import { Flex, FlexBlock } from '@wordpress/components';
+import RevokeAfterDays from './parts/RevokeAfterDays';
 
 export default ({ price, updatePrice }) => {
 	return (
@@ -16,6 +16,7 @@ export default ({ price, updatePrice }) => {
 					<ScratchAmount price={price} updatePrice={updatePrice} />
 				</FlexBlock>
 			</Flex>
+			<RevokeAfterDays price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
 		</>
 	);
