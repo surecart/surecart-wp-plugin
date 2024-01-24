@@ -6,7 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, PaymentMethod, Period, Price, Product } from '../../../../types';
+import { Checkout, PaymentMethod, Period, Price, Product, Subscription } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -73,6 +73,12 @@ export class ScUpcomingInvoice {
 
   async getInvoice() {
     if (!this.subscriptionId) return;
+    const subscription = (await apiFetch({
+      path: addQueryArgs(`/surecart/v1/subscriptions/${this.subscriptionId}`, {
+        expand: ['price', 'price.product', 'current_period', 'product'],
+      }),
+    })) as Subscription;
+
     this.invoice = (await apiFetch({
       method: 'PATCH',
       path: addQueryArgs(`surecart/v1/subscriptions/${this.subscriptionId}/upcoming_period/`, {
@@ -97,6 +103,7 @@ export class ScUpcomingInvoice {
         quantity: this.quantity,
         ...(this.adHocAmount ? { ad_hoc_amount: this.adHocAmount } : {}),
         ...(this.discount ? { discount: this.discount } : {}),
+        ...(!subscription?.manual_payment ? {payment_method:subscription?.payment_method, manual_payment: false} : {manual_payment_method: subscription?.manual_payment_method, manual_payment: true}),
       },
     })) as Period;
     return this.invoice;
@@ -223,11 +230,11 @@ export class ScUpcomingInvoice {
     if (this.loading) {
       return this.renderLoading();
     }
-
+    
     if (!this.invoice) {
       return this.renderEmpty();
     }
-
+    
     const checkout = this.invoice?.checkout as Checkout;
     return (
       <Fragment>

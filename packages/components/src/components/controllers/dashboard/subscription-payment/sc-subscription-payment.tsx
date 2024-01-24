@@ -2,7 +2,7 @@ import { Component, h, Prop, State, Fragment } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
-import { PaymentMethod, Subscription } from '../../../../types';
+import { PaymentMethod, Subscription, ManualPaymentMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-subscription-payment',
@@ -16,6 +16,8 @@ export class ScSubscriptionPayment {
   @Prop({ mutable: true }) subscription: Subscription;
   @Prop() paymentMethods: Array<PaymentMethod> = [];
   @Prop() customerIds: Array<string> = [];
+  @State() manualPaymentMethods: ManualPaymentMethod[];
+  @State() manualSelected: boolean = false;
   @State() loading: boolean;
   @State() busy: boolean;
   @State() error: string;
@@ -54,6 +56,13 @@ export class ScSubscriptionPayment {
         ...(this.subscription?.live_mode !== null ? { live_mode: this.subscription.live_mode } : {}),
       }),
     })) as PaymentMethod[];
+
+    this.manualPaymentMethods = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/manual_payment_methods`, {
+        customer_ids: this.customerIds,
+        live_mode: this.subscription?.live_mode,
+      }),
+    })) as ManualPaymentMethod[];
   }
 
   async handleSubmit(e) {
@@ -66,7 +75,7 @@ export class ScSubscriptionPayment {
         path: `/surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          payment_method: method,
+          ...(!this.manualSelected ? {method, manual_payment: false} : {manual_payment_method: method, manual_payment: true}),
         },
       });
       if (this.successUrl) {
@@ -101,7 +110,7 @@ export class ScSubscriptionPayment {
 
     const modeMethods = this.paymentMethods.filter(method => method?.live_mode === this.subscription?.live_mode);
 
-    if (!modeMethods?.length) {
+    if (!modeMethods?.length && !this.manualPaymentMethods?.length) {
       return (
         <Fragment>
           <sc-empty icon="credit-card">{__('You have no saved payment methods.', 'surecart')}</sc-empty>
@@ -123,6 +132,13 @@ export class ScSubscriptionPayment {
               return (
                 <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id}>
                   <sc-payment-method paymentMethod={method} full={true} />
+                </sc-choice>
+              );
+            })}
+            {(this.manualPaymentMethods || []).map(method => {
+              return (
+                <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id} onClick={() => this.manualSelected = true}>
+                  <sc-manual-payment-method paymentMethod={method} />
                 </sc-choice>
               );
             })}

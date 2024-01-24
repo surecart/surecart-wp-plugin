@@ -135,7 +135,7 @@ export class ScSubscriptionPaymentMethod {
         path: `surecart/v1/subscriptions/${this.subscription?.id}`,
         method: 'PATCH',
         data: {
-          ...(!this.manualSelected ? {payment_method} : {manual_payment_method: payment_method}),
+          ...(!this.manualSelected ? {payment_method, manual_payment: false} : {manual_payment_method: payment_method, manual_payment: true}),
         },
       })) as Subscription;
       // remove from view.

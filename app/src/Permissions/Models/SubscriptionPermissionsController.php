@@ -216,7 +216,7 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 		$params = $args[3];
 		
 		// request has blacklisted keys.
-		if ( ! $this->requestOnlyHasKeys( $params, array( 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'manual_payment_method', 'cancellation_act', 'ad_hoc_amount', 'variant', 'discount' ) ) ) {
+		if ( ! $this->requestOnlyHasKeys( $params, array( 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'manual_payment_method', 'manual_payment', 'cancellation_act', 'ad_hoc_amount', 'variant', 'discount' ) ) ) {
 			return false;
 		}
 
