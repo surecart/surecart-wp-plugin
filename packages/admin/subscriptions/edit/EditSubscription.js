@@ -34,6 +34,7 @@ export default () => {
 	const [loadingUpcoming, setLoadingUpcoming] = useState(false);
 	const [skipProration, setSkipProration] = useState(false);
 	const [savingSubscription, setSavingSubscription] = useState(false);
+	const [refreshPriceVersion, setRefreshPriceVersion] = useState(false);
 	const [updateBehavior, setUpdateBehavior] = useState('pending');
 	const { editEntityRecord } = useDispatch(coreStore);
 
@@ -86,6 +87,7 @@ export default () => {
 		subscription?.discount,
 		skipProration,
 		updateBehavior,
+		refreshPriceVersion,
 	]);
 
 	const fetchUpcomingPeriod = async () => {
@@ -154,13 +156,13 @@ export default () => {
 		return apiFetch({
 			method: 'PATCH',
 			path: addQueryArgs(
-				`surecart/v1/subscriptions/${id}/${
-					preview ? 'upcoming_period' : ''
+				`surecart/v1/subscriptions/${id}/${preview ? 'upcoming_period' : ''
 				}`,
 				{
 					skip_proration: skipProration,
 					update_behavior: updateBehavior,
 					skip_product_group_validation: true,
+					refresh_price_version: refreshPriceVersion,
 					expand: [
 						'period.checkout',
 						'checkout.line_items',
@@ -241,7 +243,24 @@ export default () => {
 				</div>
 			}
 			button={
-				<ScFlex alignItems="center">
+				<div
+					css={css`
+						display: flex;
+						gap: var(--sc-flex-column-gap, var(--sc-spacing-x-small));
+						align-items: center;
+
+						// small mobile screens.
+						@media screen and (max-width: 600px) {
+							flex-direction: column;
+						}
+					`}
+				>
+					<ScSwitch
+						checked={refreshPriceVersion}
+						onScChange={(e) => setRefreshPriceVersion(e.target.checked)}
+					>
+						{__('Refresh Price', 'surecart')}
+					</ScSwitch>
 					{!subscription?.finite && (
 						<>
 							<ScSwitch
@@ -267,7 +286,7 @@ export default () => {
 							</SaveButton>
 						</>
 					)}
-				</ScFlex>
+				</div>
 			}
 			sidebar={
 				<>
