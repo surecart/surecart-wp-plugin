@@ -76,6 +76,17 @@ export default () => {
 		};
 	});
 
+	const supportedCurrencyOptions = Object.keys(
+		scData?.supported_currencies || {}
+	).map((value) => {
+		return {
+			label: `${scData?.supported_currencies[value]} (${getCurrencySymbol(
+				value
+			)})`,
+			value,
+		};
+	});
+
 	/**
 	 * Form is submitted.
 	 */
@@ -164,29 +175,18 @@ export default () => {
 							onScChange={(e) =>
 								editAccountItem({ currency: e.target.value })
 							}
-							choices={Object.keys(
-								scData?.supported_currencies || {}
-							).map((value) => {
-								const label =
-									scData?.supported_currencies[value];
-								return {
-									label: `${label} (${getCurrencySymbol(
-										value
-									)})`,
-									value,
-								};
-							})}
+							choices={supportedCurrencyOptions}
 							label={__('Default Currency', 'surecart')}
 							required
 							disabled={hasLiveOrders}
 							{...(hasLiveOrders
 								? {}
 								: {
-										help: __(
-											'The default currency for new products.',
-											'surecart'
-										),
-								  })}
+									help: __(
+										'The default currency for new products.',
+										'surecart'
+									),
+								})}
 						/>
 						{hasLiveOrders && (
 							<div
