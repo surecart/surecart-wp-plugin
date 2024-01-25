@@ -209,7 +209,7 @@ export default () => {
 							>
 								<ScIcon name="alert-circle" />
 								{__(
-									'This option is locked after the first live order. Please',
+									'This option is locked after the first live order. Please contact support to change currency.',
 									'surecart'
 								)}
 								<a
@@ -217,9 +217,8 @@ export default () => {
 									target="_blank"
 									rel="noreferrer"
 								>
-									{__('contact support', 'surecart')}
+									{__('(Support Link)', 'surecart')}
 								</a>
-								{__('to change currency.', 'surecart')}
 							</div>
 						)}
 					</div>
