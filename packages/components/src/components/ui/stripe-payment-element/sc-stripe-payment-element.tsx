@@ -169,6 +169,20 @@ export class ScStripePaymentElement {
       this.elements = this.stripe.elements(this.getElementsConfig() as any);
 
       const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
+      let addressObj: { address?: { [key: string]: string | number } } = {
+        address: {
+          line1,
+          line2,
+          city,
+          state,
+          country,
+          postal_code,
+        },
+      };
+
+      if (!line1 || !city || !state || !country || !postal_code) {
+        addressObj = {};
+      }
 
       // create the payment element.
       this.elements
@@ -177,14 +191,7 @@ export class ScStripePaymentElement {
             billingDetails: {
               name: checkoutState.checkout?.name,
               email: checkoutState.checkout?.email,
-              address: {
-                line1,
-                line2,
-                city,
-                state,
-                country,
-                postal_code,
-              },
+              ...addressObj,
             },
           },
           fields: {
