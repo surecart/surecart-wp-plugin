@@ -31,7 +31,7 @@ export default () => {
 	const { hasLiveOrders } = useSelect((select) => {
 		const liveOrderCount =
 			select(coreStore).getEntityRecords('surecart', 'order', {
-				status: 'live',
+				live_mode: true,
 				per_page: 1,
 			})?.length || 0;
 
