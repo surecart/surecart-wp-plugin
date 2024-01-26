@@ -182,11 +182,11 @@ export default () => {
 							{...(hasLiveOrders
 								? {}
 								: {
-									help: __(
-										'The default currency for new products.',
-										'surecart'
-									),
-								})}
+										help: __(
+											'The default currency for new products.',
+											'surecart'
+										),
+								  })}
 						/>
 						{hasLiveOrders && (
 							<div
@@ -208,17 +208,19 @@ export default () => {
 								`}
 							>
 								<ScIcon name="alert-circle" />
-								{__(
-									'This option is locked after the first live order. Please contact support to change currency.',
-									'surecart'
-								)}
-								<a
-									href="https://surecart.com/support/"
-									target="_blank"
-									rel="noreferrer"
-								>
-									{__('(Support Link)', 'surecart')}
-								</a>
+								<div>
+									{__(
+										'This option is locked after the first live order. To change currency, please',
+										'surecart'
+									)}{' '}
+									<a
+										href="https://surecart.com/support/"
+										target="_blank"
+										rel="noreferrer"
+									>
+										{__('contact support.', 'surecart')}
+									</a>
+								</div>
 							</div>
 						)}
 					</div>
