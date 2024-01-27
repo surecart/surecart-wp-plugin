@@ -68,13 +68,7 @@ export default ({
 						</ScInput>
 					</div>
 				</ScFormControl>
-				<ScFormControl
-					label={__('Default Currency', 'surecart')}
-					help={__(
-						'Currency can be modified before the first live order is processed. Afterward, the currency option will be locked.',
-						'surecart'
-					)}
-				>
+				<ScFormControl label={__('Store Currency', 'surecart')}>
 					<ScSelect
 						required
 						search
