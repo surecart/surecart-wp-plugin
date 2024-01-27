@@ -213,7 +213,7 @@ export default () => {
 										'surecart'
 									)}{' '}
 									<a
-										href="https://surecart.com/support/"
+										href="https://surecart.com/support/open-a-ticket/"
 										target="_blank"
 										rel="noreferrer"
 									>
