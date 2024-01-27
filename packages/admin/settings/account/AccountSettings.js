@@ -28,6 +28,7 @@ export default () => {
 		editItem: editAccountItem,
 		hasLoadedItem: hasLoadedAccountItem,
 	} = useEntity('store', 'account');
+
 	const { hasLiveOrders } = useSelect((select) => {
 		const liveOrderCount =
 			select(coreStore).getEntityRecords('surecart', 'order', {
@@ -176,7 +177,7 @@ export default () => {
 								editAccountItem({ currency: e.target.value })
 							}
 							choices={supportedCurrencyOptions}
-							label={__('Default Currency', 'surecart')}
+							label={__('Store Currency', 'surecart')}
 							required
 							disabled={hasLiveOrders}
 							{...(hasLiveOrders
@@ -197,8 +198,6 @@ export default () => {
 									background: var(
 										--sc-color-brand-main-background
 									);
-									border-bottom: 1px solid
-										var(--sc-color-brand-stroke);
 									display: flex;
 									align-items: center;
 									gap: var(--sc-spacing-small);
@@ -210,7 +209,7 @@ export default () => {
 								<ScIcon name="alert-circle" />
 								<div>
 									{__(
-										'This option is locked after the first live order. To change currency, please',
+										'This option is locked after live orders are placed. To change your store currency, please',
 										'surecart'
 									)}{' '}
 									<a
