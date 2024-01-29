@@ -26,7 +26,7 @@ export default ({ price, updatePrice }) => {
 			</ScSwitch>
 			{!!price?.revoke_after_days && (
 				<ScInput
-					label={__('Limit purchase to', 'surecart')}
+					label={__('Revoke purchase after', 'surecart')}
 					className="sc-revoke-after-days"
 					css={css`
 						flex: 1 1 50%;
