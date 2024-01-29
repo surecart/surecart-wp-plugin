@@ -2,7 +2,6 @@ import { checkoutMachine } from '../../../src/components/providers/form-state-pr
 import { interpret } from '@xstate/fsm';
 import { speak } from '@wordpress/a11y';
 import state, { onChange } from './store';
-import {state as checkoutState} from '@store/checkout';
 
 // Start state machine.
 const service = interpret(checkoutMachine);
@@ -16,7 +15,6 @@ onChange('formState', () => {
   if (state.text.loading[value] === undefined) return;
 
   speak(state.text.loading[value], 'assertive');
-  checkoutState.busy = ['updating', 'finalizing', 'paying', 'confirming'].includes(value)
 });
 
 export default service;

@@ -1,7 +1,7 @@
 import { ProcessorName } from '../../../../types';
 import { Component, Host, h, Listen, Prop } from '@stencil/core';
 import { getStripeProcessorData } from '@store/processors/getters';
-import { state as checkoutState } from '@store/checkout';
+import { formBusy } from '@store/form/getters';
 
 @Component({
   tag: 'sc-express-payment',
@@ -33,7 +33,7 @@ export class ScExpressPayment {
       <Host class={{ 'is-empty': !this.hasPaymentOptions && !this.debug }}>
         {this.renderStripePaymentRequest()}
         {(this.hasPaymentOptions || this.debug) && <sc-divider style={{ '--spacing': 'calc(var(--sc-form-row-spacing)/2)' }}>{this.dividerText}</sc-divider>}
-        {checkoutState.busy && <sc-block-ui></sc-block-ui>}
+        {!!formBusy && <sc-block-ui></sc-block-ui>}
       </Host>
     );
   }

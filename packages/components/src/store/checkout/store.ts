@@ -1,6 +1,6 @@
 import { createStore } from '@stencil/store';
 
-import { Checkout, LineItemData, Prices, Product, Products, TaxProtocol } from '../../types';
+import { Checkout, LineItemData, Product, TaxProtocol } from '../../types';
 import { getSerializedState } from '@store/utils';
 const { checkout } = getSerializedState();
 
@@ -18,9 +18,6 @@ interface Store {
   isCheckoutPage: boolean;
   validateStock: boolean;
   persist: 'browser' | 'url' | false;
-  busy: boolean;
-  pricesEntities?: Prices,
-  productsEntities?: Products,
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(
@@ -37,7 +34,6 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     isCheckoutPage: false,
     validateStock: false,
     persist: 'browser',
-    busy: false,
     ...checkout,
   },
   (newValue, oldValue) => {

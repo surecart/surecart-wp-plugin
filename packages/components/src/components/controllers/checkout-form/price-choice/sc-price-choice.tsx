@@ -6,7 +6,6 @@ import { isPriceInOrder } from '../../../../functions/line-items';
 import { intervalString } from '../../../../functions/price';
 import { getPricesAndProducts } from '../../../../services/fetch';
 import { LineItemData, Checkout, Price, Prices, Product, Products, ResponseError } from '../../../../types';
-import {state as checkoutState} from '@store/checkout'
 @Component({
   tag: 'sc-price-choice',
   styleUrl: 'sc-price-choice.scss',
@@ -139,15 +138,7 @@ export class ScPriceChoice {
         ids: [this.priceId],
       });
       // add to central store.
-      this.scAddEntities.emit({ prices, products }); // TODO: Remove this and update other areas to use from store- 23/01/2024
-      checkoutState.pricesEntities = {
-        ...checkoutState.pricesEntities,
-        ...prices,
-      };
-      checkoutState.productsEntities = {
-        ...checkoutState.productsEntities,
-        ...products,
-      };
+      this.scAddEntities.emit({ prices, products });
     } catch (err) {
     } finally {
       this.loading = false;

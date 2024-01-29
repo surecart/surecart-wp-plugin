@@ -5,8 +5,9 @@ import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange  } from '@store/checkout';
 
 import { createOrUpdateCheckout, finalizeCheckout } from '../../../services/session';
-import { Checkout, LineItem, Product, ResponseError } from '../../../types';
+import { Checkout, LineItem, Prices, Product, ResponseError } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
+import { openWormhole } from 'stencil-wormhole';
 
 @Component({
   tag: 'sc-stripe-payment-request',
@@ -29,6 +30,9 @@ export class ScStripePaymentRequest {
 
   /** Country */
   @Prop() country: string = 'US';
+
+  /** Prices */
+  @Prop() prices: Prices;
 
   /** Label */
   @Prop() label: string = 'total';
@@ -136,8 +140,8 @@ export class ScStripePaymentRequest {
 
   /** Only append price name if there's more than one product price in the session. */
   getName(item: LineItem) {
-    const otherPrices = Object.keys(checkoutState?.pricesEntities || {}).filter(key => {
-      const price = checkoutState?.pricesEntities[key];
+    const otherPrices = Object.keys(this.prices || {}).filter(key => {
+      const price = this.prices[key];
       // @ts-ignore
       return price.product === item.price.product.id;
     });
@@ -339,3 +343,5 @@ export class ScStripePaymentRequest {
   }
 }
 
+
+openWormhole(ScStripePaymentRequest, [ 'prices'], false);

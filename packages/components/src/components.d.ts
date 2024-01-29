@@ -3445,6 +3445,10 @@ export namespace Components {
          */
         "label": string;
         /**
+          * Prices
+         */
+        "prices": Prices;
+        /**
           * Stripe publishable key
          */
         "publishableKey": string;
@@ -9497,6 +9501,10 @@ declare namespace LocalJSX {
         "onScPaymentRequestLoaded"?: (event: ScStripePaymentRequestCustomEvent<boolean>) => void;
         "onScSetState"?: (event: ScStripePaymentRequestCustomEvent<string>) => void;
         "onScUpdateOrderState"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
+        /**
+          * Prices
+         */
+        "prices"?: Prices;
         /**
           * Stripe publishable key
          */
