@@ -171,6 +171,14 @@ return [
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
+		\SureCartBlocks\Blocks\Cart\Block::class,
+		\SureCartBlocks\Blocks\VariantPriceSelector\Block::class,
+		\SureCartBlocks\Blocks\ProductDonation\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationRecurringPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
@@ -229,6 +237,7 @@ return [
 		'surecart/payment'                   => [ 'sc-payment', 'sc-toggles', 'sc-toggle', 'sc-tag' ],
 		'surecart/price-choice'              => [ 'sc-price-choice', 'sc-choice', 'sc-skeleton' ],
 		'surecart/price-selector'            => [ 'sc-price-choices' ],
+		'surecart/variant-price-selector'    => [ 'sc-checkout-product-price-variant-selector' ],
 		'surecart/submit'                    => [ 'sc-order-submit', 'sc-button', 'sc-total', 'sc-paypal-buttons', 'sc-format-number', 'sc-spinner' ],
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],

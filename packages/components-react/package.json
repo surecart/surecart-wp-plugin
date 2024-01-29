@@ -24,7 +24,7 @@
 		"src/"
 	],
 	"dependencies": {
-		"@surecart/components": "^1.0.0"
+		"@surecart/components": "^2"
 	},
 	"devDependencies": {
 		"@types/node": "^20.2.1",

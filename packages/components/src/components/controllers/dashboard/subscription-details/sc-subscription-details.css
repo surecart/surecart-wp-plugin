@@ -7,3 +7,9 @@
   gap: 0.25em;
   color: var(--sc-input-label-color);
 }
+
+.subscription-details__missing-method {
+  display: flex;
+  align-items: center;
+  gap: var(--sc-spacing-x-small);
+}

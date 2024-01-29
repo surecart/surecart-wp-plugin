@@ -37,9 +37,9 @@
 		"loading_text": {
 			"type": "object",
 			"default": {
-				"finalizing": "Submitting order...",
-				"paying": "Processing payment...",
-				"confirming": "Finalizing order...",
+				"finalizing": "Submitting...",
+				"paying": "Processing...",
+				"confirming": "Finalizing...",
 				"confirmed": "Success!",
 				"redirecting": "Success! Redirecting..."
 			}
@@ -47,10 +47,14 @@
 		"success_text": {
 			"type": "object",
 			"default": {
-				"title": "Thanks for your order!",
-				"description": "Your payment was successful, and your order is complete. A receipt is on its way to your inbox.",
+				"title": "Thank you!",
+				"description": "Your payment was successful. A receipt is on its way to your inbox.",
 				"button": "Continue"
 			}
+		},
+		"persist_cart": {
+			"type": "string",
+			"default": "url"
 		}
 	},
 	"providesContext": {

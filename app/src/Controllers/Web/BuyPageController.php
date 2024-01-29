@@ -14,8 +14,6 @@ class BuyPageController extends BasePageController {
 		parent::filters();
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
-		// do not persist the cart for this page.
-		add_filter( 'surecart-components/scData', [ $this, 'doNotPersistCart' ], 10, 2 );
 		// add styles.
 		add_action( 'wp_enqueue_scripts', [ $this, 'styles' ] );
 		// add scripts.
@@ -100,7 +98,7 @@ class BuyPageController extends BasePageController {
 		$this->filters();
 
 		// prepare data.
-		$this->model              = $this->model->withActiveAndSortedPrices();
+		$this->model              = $this->model->withActivePrices()->withSortedPrices();
 		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
 
 		if ( ! empty( $this->model->prices->data[0]->id ) ) {
@@ -138,6 +136,7 @@ class BuyPageController extends BasePageController {
 				'show_image'       => $this->model->buyLink()->templatePartEnabled( 'image' ),
 				'show_description' => $this->model->buyLink()->templatePartEnabled( 'description' ),
 				'show_coupon'      => $this->model->buyLink()->templatePartEnabled( 'coupon' ),
+				'success_url'      => $this->model->buyLink()->getSuccessUrl(),
 			]
 		);
 	}
@@ -203,17 +202,5 @@ class BuyPageController extends BasePageController {
 		}
 
 		return '';
-	}
-
-	/**
-	 * Do not persist the cart on the buy page.
-	 *
-	 * @param array $data ScData array.
-	 *
-	 * @return array
-	 */
-	public function doNotPersistCart( $data ) {
-		$data['do_not_persist_cart'] = true;
-		return $data;
 	}
 }

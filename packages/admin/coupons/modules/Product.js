@@ -7,41 +7,54 @@ import {
 	ScIcon,
 	ScSkeleton,
 } from '@surecart/components-react';
-import { useSelect } from '@wordpress/data';
+import { select } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import ModelSelector from '../../components/ModelSelector';
 import { intervalString } from '../../util/translations';
 import { _n, sprintf, __ } from '@wordpress/i18n';
 import { getFeaturedProductMediaAttributes } from '@surecart/components';
+import apiFetch from '@wordpress/api-fetch';
+import { useState, useEffect } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
+import Error from '../../components/Error';
 
 export default ({ id, onSelect }) => {
-	const { product, loading } = useSelect(
-		(select) => {
-			if (!id) return { product: null, loading: false };
-			const entityData = [
+	const [product, setProduct] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
+
+	useEffect(() => {
+		if (!id) return;
+		if (product?.id === id) return;
+		fetchProduct();
+	}, [id]);
+
+	const fetchProduct = async () => {
+		try {
+			setError(false);
+			setLoading(true);
+			const { baseURL } = select(coreStore).getEntityConfig(
 				'surecart',
-				'product',
-				id,
-				{
+				'product'
+			);
+			if (!baseURL) return;
+			const data = await apiFetch({
+				path: addQueryArgs(`${baseURL}/${id}`, {
 					expand: [
 						'prices',
 						'featured_product_media',
 						'product_media.media',
 					],
-				},
-			];
-			return {
-				product: select(coreStore)?.getEditedEntityRecord?.(
-					...entityData
-				),
-				loading: select(coreStore)?.isResolving?.(
-					'getEditedEntityRecord',
-					[...entityData]
-				),
-			};
-		},
-		[id]
-	);
+				}),
+			});
+			setProduct(data);
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	if (!id) {
 		return (
@@ -57,6 +70,10 @@ export default ({ id, onSelect }) => {
 
 	if (loading) {
 		return <ScSkeleton />;
+	}
+
+	if (error) {
+		return <Error error={error} setError={setError} />;
 	}
 
 	const activePrices = product?.prices?.data?.filter(

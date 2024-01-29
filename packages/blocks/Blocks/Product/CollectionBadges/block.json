@@ -9,6 +9,9 @@
 		"count": {
 			"type": "number",
 			"default": 1
+		},
+		"id": {
+			"type": "string"
 		}
 	},
 	"supports": {
