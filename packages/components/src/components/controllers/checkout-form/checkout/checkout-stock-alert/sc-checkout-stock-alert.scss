@@ -14,8 +14,8 @@ h4 {
 }
 
 .stock-alert {
-  --sc-panel-min-width: 500px;
   --body-spacing: var(--sc-spacing-x-large);
+  --width: 500px;
 
   &__image {
     width: 50px;
