@@ -1,7 +1,9 @@
 /** @jsx jsx */
-import DataTable from '../../../components/DataTable';
-import { intervalString } from '../../../util/translations';
 import { css, jsx } from '@emotion/core';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useEffect, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import {
 	ScBlockUi,
 	ScInput,
@@ -12,15 +14,23 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScTag,
+	ScSwitch,
 } from '@surecart/components-react';
-import { useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+import LineItemLabel from '../../components/LineItemLabel';
+import DataTable from '../../../components/DataTable';
 import UpdateAmount from './Modals/UpdateAmount';
 import UpdatePrice from './Modals/UpdatePrice';
 import { getHumanDiscount } from '../../../util';
-import LineItemLabel from '../../components/LineItemLabel';
+import { intervalString } from '../../../util/translations';
 
-export default ({ subscription, updateSubscription, upcoming, loading }) => {
+export default ({
+	subscription,
+	updateSubscription,
+	refresh,
+	setRefresh,
+	upcoming,
+	loading,
+}) => {
 	const [price, setPrice] = useState(null);
 	const [dialog, setDialog] = useState(null);
 	const lineItem = upcoming?.checkout?.line_items?.data?.[0];
@@ -34,6 +44,14 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 	const coupon =
 		upcoming?.checkout?.discount?.coupon || subscription?.discount?.coupon;
 
+	const edits = useSelect((select) =>
+		select(coreStore).getEntityRecordEdits(
+			'surecart',
+			'subscription',
+			subscription?.id
+		)
+	);
+
 	return (
 		<div
 			css={css`
@@ -41,6 +59,19 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 			`}
 		>
 			<DataTable
+				footer={
+					!edits?.price && (
+						<ScSwitch
+							checked={refresh}
+							onScChange={(e) => setRefresh(e.target.checked)}
+						>
+							{__(
+								'Use the most recent version of this price',
+								'surecart'
+							)}
+						</ScSwitch>
+					)
+				}
 				loading={price === null}
 				title={__('Pricing', 'surecart')}
 				columns={{

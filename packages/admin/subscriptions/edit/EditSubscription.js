@@ -1,5 +1,4 @@
 /** @jsx jsx */
-import useEntity from '../../hooks/useEntity';
 import Logo from '../../templates/Logo';
 import SaveButton from '../../templates/SaveButton';
 import UpdateModel from '../../templates/UpdateModel';
@@ -156,7 +155,8 @@ export default () => {
 		return apiFetch({
 			method: 'PATCH',
 			path: addQueryArgs(
-				`surecart/v1/subscriptions/${id}/${preview ? 'upcoming_period' : ''
+				`surecart/v1/subscriptions/${id}/${
+					preview ? 'upcoming_period' : ''
 				}`,
 				{
 					skip_proration: skipProration,
@@ -246,7 +246,10 @@ export default () => {
 				<div
 					css={css`
 						display: flex;
-						gap: var(--sc-flex-column-gap, var(--sc-spacing-x-small));
+						gap: var(
+							--sc-flex-column-gap,
+							var(--sc-spacing-x-small)
+						);
 						align-items: center;
 
 						// small mobile screens.
@@ -255,12 +258,6 @@ export default () => {
 						}
 					`}
 				>
-					<ScSwitch
-						checked={refreshPriceVersion}
-						onScChange={(e) => setRefreshPriceVersion(e.target.checked)}
-					>
-						{__('Refresh Price', 'surecart')}
-					</ScSwitch>
 					{!subscription?.finite && (
 						<>
 							<ScSwitch
@@ -307,6 +304,8 @@ export default () => {
 					upcoming={upcoming}
 					loading={loadingUpcoming}
 					priceId={subscription?.price?.id || subscription?.price}
+					refresh={refreshPriceVersion}
+					setRefresh={setRefreshPriceVersion}
 				/>
 				<Trial
 					subscription={subscription}
