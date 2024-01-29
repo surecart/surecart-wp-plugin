@@ -234,6 +234,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 - Improvement: 1-click restore deleted SureCart pages.
 - Improvement: Allow HTML in manual payment description.
 - Improvement: Sort subscription update options by price.
+- Improvement: Show notice if currency needs to be changed by support.
 - Fix: The placeholder for search country in the address component is not translated.
 - Fix: When fix saving issue when setup fee is toggled off with value entered.
 - Fix: Loading text translation on forms is not working for Japanese characters.
