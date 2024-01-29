@@ -22,11 +22,15 @@ export default ({ price, updatePrice }) => {
 					})
 				}
 			>
-				{__('Limited time purchase', 'surecart')}
+				{__('Expire access', 'surecart')}
 			</ScSwitch>
 			{!!price?.revoke_after_days && (
 				<ScInput
-					label={__('Revoke purchase after', 'surecart')}
+					label={__('Expire access after', 'surecart')}
+					help={__(
+						'Expiring access will revoke integrations and licenses.',
+						'surecart'
+					)}
 					className="sc-revoke-after-days"
 					css={css`
 						flex: 1 1 50%;
@@ -40,7 +44,7 @@ export default ({ price, updatePrice }) => {
 						})
 					}
 				>
-					<span slot="suffix">{__('Days', 'surecart')}</span>
+					<span slot="suffix">{__('days', 'surecart')}</span>
 				</ScInput>
 			)}
 		</>
