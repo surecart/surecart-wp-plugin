@@ -17,7 +17,7 @@ import {
 
 const SETUP_AMOUNT_TYPES = {
 	fee: __('Setup Fee', 'surecart'),
-	discount: __('Initial Discount', 'surecart'),
+	discount: __('Setup Discount', 'surecart'),
 };
 
 export default ({ price, updatePrice }) => {
