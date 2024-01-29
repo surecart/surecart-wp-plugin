@@ -275,11 +275,11 @@ export class ScUpcomingInvoice {
 
         <sc-coupon-form
           discount={checkout?.discount}
-          label={__('Add Coupon Code')}
+          label={__('Add Coupon Code','surecart')}
           onScApplyCoupon={e => this.applyCoupon(e)}
           error={this.couponError}
           collapsed
-          buttonText={__('Add Coupon Code')}
+          buttonText={__('Add Coupon Code','surecart')}
         ></sc-coupon-form>
 
         {!!checkout.tax_amount && (
