@@ -9,12 +9,9 @@
 
 | Property            | Attribute             | Description | Type                                    | Default     |
 | ------------------- | --------------------- | ----------- | --------------------------------------- | ----------- |
-| `busy`              | `busy`                |             | `boolean`                               | `undefined` |
 | `debug`             | `debug`               |             | `boolean`                               | `undefined` |
 | `dividerText`       | `divider-text`        |             | `string`                                | `undefined` |
-| `formId`            | `form-id`             |             | `number \| string`                      | `undefined` |
 | `hasPaymentOptions` | `has-payment-options` |             | `boolean`                               | `undefined` |
-| `order`             | --                    |             | `Checkout`                              | `undefined` |
 | `processor`         | `processor`           |             | `"paypal" \| "paypal-card" \| "stripe"` | `undefined` |
 
 

@@ -1936,6 +1936,7 @@
     "debug": true,
     "error": true,
     "label": true,
+    "prices": true,
     "publishable-key": true,
     "stripe-account-id": true,
     "theme": true,
