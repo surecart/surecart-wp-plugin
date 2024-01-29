@@ -9,8 +9,9 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product } from '../../../../types';
+import { Collection, Product, ProductsSearchedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
+import '@store/product/facebook';
 
 export type LayoutConfig = {
   blockName: string;
@@ -79,7 +80,7 @@ export class ScProductItemList {
   @State() error: string;
 
   /** Product was searched */
-  @Event() scSearched: EventEmitter<string>;
+  @Event() scSearched: EventEmitter<ProductsSearchedParams>;
 
   /* Current page */
   @State() currentPage: number = 1;
@@ -161,10 +162,17 @@ export class ScProductItemList {
     this.updateProducts();
   }
 
-  async updateProducts() {
+  async updateProducts(emitSearchEvent: boolean = false) {
     try {
       this.busy = true;
       await this.fetchProducts();
+      if (!!this.query && emitSearchEvent) {
+        this.scSearched.emit({
+          searchString: this.query,
+          searchResultCount: this.products?.length,
+          searchResultIds: this.products.map(product => product.id),
+        });
+      }
     } catch (error) {
       console.log('error');
       console.error(error);
@@ -356,8 +364,7 @@ export class ScProductItemList {
                       size="small"
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
-                          this.updateProducts();
-                          this.scSearched.emit(this.query);
+                          this.updateProducts(true);
                         }
                       }}
                       value={this.query}
@@ -381,8 +388,7 @@ export class ScProductItemList {
                         slot="suffix"
                         busy={this.busy}
                         onClick={() => {
-                          this.updateProducts();
-                          this.scSearched.emit(this.query);
+                          this.updateProducts(true);
                         }}
                       >
                         {__('Search', 'surecart')}
