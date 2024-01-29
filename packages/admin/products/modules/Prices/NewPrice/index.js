@@ -141,7 +141,7 @@ export default ({ onRequestClose, product }) => {
 				<PriceName price={price} updatePrice={updatePrice} />
 
 				<ScSelect
-					label={__('Payment Type', 'surecart')}
+					label={__('Payment type', 'surecart')}
 					required
 					unselect={false}
 					value={type}
