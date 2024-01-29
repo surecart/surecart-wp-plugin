@@ -16,8 +16,8 @@ export default ({ price, updatePrice }) => {
 					<ScratchAmount price={price} updatePrice={updatePrice} />
 				</FlexBlock>
 			</Flex>
-			<RevokeAfterDays price={price} updatePrice={updatePrice} />
 			<AdHoc price={price} updatePrice={updatePrice} />
+			<RevokeAfterDays price={price} updatePrice={updatePrice} />
 		</>
 	);
 };
