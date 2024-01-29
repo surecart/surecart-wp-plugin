@@ -41,23 +41,10 @@ export default ({ attributes: { width }, setAttributes }) => {
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
-			css: css`
-				flex: 1 1 auto;
-				overflow: auto;
-				max-width: ${width};
-				width: 100%;
-				margin: auto;
-				border: var(--sc-drawer-border);
-				box-shadow: 0 1px 2px #0d131e1a;
-
-				.block-list-appender {
-					position: relative;
-				}
-
-				> .wp-block:not(:last-child) {
-					margin: 0 !important;
-				}
-			`,
+			className: 'sc-cart__editor-container',
+			style: {
+				maxWidth: width,
+			},
 		},
 		{
 			renderAppender: InnerBlocks.ButtonBlockAppender,

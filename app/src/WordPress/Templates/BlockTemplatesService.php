@@ -110,11 +110,6 @@ class BlockTemplatesService {
 			return $query_result;
 		}
 
-		// supports block templates, don't use parts.
-		if ( 'wp_template_part' === $template_type && $this->utility->supportsBlockTemplates() ) {
-			return $query_result;
-		}
-
 		$post_type = $query['post_type'] ?? '';
 		$slugs     = $query['slug__in'] ?? [];
 
@@ -128,6 +123,11 @@ class BlockTemplatesService {
 				isset( $template_file->post_types ) &&
 				! in_array( $post_type, $template_file->post_types, true )
 			) {
+				continue;
+			}
+
+			// this supports block templates and the template is not available in the site editor.
+			if ( $this->utility->supportsBlockTemplates() && ! $this->utility->isBlockAvailableInSiteEditor( $template_file->slug ) ) {
 				continue;
 			}
 
