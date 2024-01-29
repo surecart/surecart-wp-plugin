@@ -291,7 +291,7 @@ export class ScProductItemList {
                       <sc-menu-item aria-label={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
                         {__('Latest', 'surecart')}
                       </sc-menu-item>
-                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} disabled={this.sort === 'created_at:asc'}>
+                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} onClick={() => (this.sort = 'created_at:asc')}>
                         {__('Oldest', 'surecart')}
                       </sc-menu-item>
                       <sc-menu-item aria-label={__('Sort by name, A to Z', 'surecart')} onClick={() => (this.sort = 'name:asc')}>
