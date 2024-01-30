@@ -17,7 +17,7 @@ import {
 
 const SETUP_AMOUNT_TYPES = {
 	fee: __('Setup Fee', 'surecart'),
-	discount: __('Initial Discount', 'surecart'),
+	discount: __('Setup Discount', 'surecart'),
 };
 
 export default ({ price, updatePrice }) => {
@@ -34,7 +34,13 @@ export default ({ price, updatePrice }) => {
 			<ScSwitch
 				checked={price.setup_fee_enabled}
 				onScChange={(e) =>
-					updatePrice({ setup_fee_enabled: e.target.checked })
+					updatePrice({
+						setup_fee_enabled: e.target.checked,
+						...(!e.target.checked && {
+							setup_fee_name: null,
+							setup_fee_amount: 0,
+						}),
+					})
 				}
 			>
 				{__('Setup fee or discount', 'surecart')}
