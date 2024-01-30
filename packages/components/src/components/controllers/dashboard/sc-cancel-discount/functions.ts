@@ -6,14 +6,14 @@ export const replaceAmount = (string, replace, name = 'amount') => {
   return string.replaceAll('{{' + name + '}}', replace).replaceAll('{{ ' + name + ' }}', replace);
 };
 
-const replaceAmountFromString = (string, protocol) => {
+const replaceAmountFromString = (amountStr, protocol) => {
   if (!protocol?.preservation_coupon) {
-    return string;
+    return amountStr;
   }
-  return replaceAmount(string, getHumanDiscount(protocol?.preservation_coupon as Coupon));
+  return replaceAmount(amountStr, getHumanDiscount(protocol?.preservation_coupon as Coupon));
 }
 
-export const getCurrentBehaviourTitle = (subscription, protocol, type) => {
+export const getCurrentBehaviourContent = (subscription, protocol) => {
   const { preserve_title, preserve_description, preserve_button, cancel_link } = protocol?.preservation_locales || {};
 
   if (subscription?.discount?.id) {
@@ -23,7 +23,7 @@ export const getCurrentBehaviourTitle = (subscription, protocol, type) => {
       button: __('Keep My Discount & Stay', 'surecart'),
       cancel_link: __('Proceed with Cancellation', 'surecart'),
     };
-    return discountLocales[type];
+    return discountLocales;
   }
 
   const defaultLocales = {
@@ -32,5 +32,5 @@ export const getCurrentBehaviourTitle = (subscription, protocol, type) => {
     button: preserve_button,
     cancel_link: cancel_link,
   };
-  return defaultLocales[type];
+  return defaultLocales;
 }; 

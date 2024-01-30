@@ -4,7 +4,7 @@ import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
 import { CancellationReason, ResponseError, Subscription, SubscriptionProtocol } from '../../../../types';
-import { getCurrentBehaviourTitle } from './functions';
+import { getCurrentBehaviourContent } from './functions';
 
 @Component({
   tag: 'sc-cancel-discount',
@@ -43,16 +43,17 @@ export class ScCancelDiscount {
   }
 
   render() {
+    const behaviourContent = getCurrentBehaviourContent(this.subscription, this.protocol);
     return (
       <div class="cancel-discount">
-        <sc-dashboard-module heading={getCurrentBehaviourTitle(this.subscription, this.protocol, 'title')} style={{ '--sc-dashboard-module-spacing': '2em' }}>
-          <span slot="description">{getCurrentBehaviourTitle(this.subscription, this.protocol, 'description')}</span>
+        <sc-dashboard-module heading={behaviourContent?.title} style={{ '--sc-dashboard-module-spacing': '2em' }}>
+          <span slot="description">{behaviourContent?.description}</span>
           <sc-flex justifyContent="flex-start">
             <sc-button type="primary" onClick={() => this.addDiscount()}>
-              {getCurrentBehaviourTitle(this.subscription, this.protocol, 'button')}
+              {behaviourContent?.button}
             </sc-button>
             <sc-button class="cancel-discount__abort-link" type="text" onClick={() => this.scCancel.emit()}>
-              {getCurrentBehaviourTitle(this.subscription, this.protocol, 'cancel_link')}
+              {behaviourContent?.cancel_link}
             </sc-button>
           </sc-flex>
           {!!this.loading && <sc-block-ui spinner />}
