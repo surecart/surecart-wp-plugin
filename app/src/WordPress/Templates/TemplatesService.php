@@ -264,7 +264,6 @@ class TemplatesService {
 		global $post;
 		$id = $post->ID ?? null;
 
-		// if block theme, short circuit and return template-canvas probably.
 		if ( wp_is_block_theme() ) {
 			return $template;
 		}

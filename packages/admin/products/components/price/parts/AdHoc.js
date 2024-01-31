@@ -31,7 +31,7 @@ export default ({ price, updatePrice }) => {
 						`}
 					>
 						<ScPriceInput
-							label={__('Minimum Price', 'surecart')}
+							label={__('Minimum price', 'surecart')}
 							className="sc-ad-hoc-min-amount"
 							currencyCode={
 								price?.currency || scData.currency_code
@@ -44,7 +44,7 @@ export default ({ price, updatePrice }) => {
 							}
 						/>
 						<ScPriceInput
-							label={__('Maximum Price', 'surecart')}
+							label={__('Maximum price', 'surecart')}
 							className="sc-ad-hoc-max-amount"
 							currencyCode={
 								price?.currency || scData.currency_code

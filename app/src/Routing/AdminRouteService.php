@@ -42,6 +42,7 @@ class AdminRouteService {
 		'cancellations'       => 'sc-cancellation-insights',
 		'product_collection'  => 'sc-product-collections',
 		'product_collections' => 'sc-product-collections',
+		'restore'             => 'sc-restore',
 	];
 
 	/**

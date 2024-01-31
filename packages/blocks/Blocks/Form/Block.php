@@ -135,7 +135,7 @@ class Block extends BaseBlock {
 		}
 
 		// default checkout form should persist in the browser.
-		if ( \SureCart::forms()->getDefaultId() === $id ) {
+		if ( \SureCart::forms()->getDefaultId() === (int) $id ) {
 			return 'browser';
 		}
 

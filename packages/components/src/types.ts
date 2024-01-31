@@ -18,6 +18,7 @@ declare global {
     };
     dataLayer: any;
     gtag: any;
+    fbq: any;
     sc?: {
       store?: {
         product?: any;
@@ -92,6 +93,7 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
+  full_amount: number;
   currency: string;
   recurring: boolean;
   recurring_interval?: 'week' | 'month' | 'year' | 'never';
@@ -332,6 +334,11 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Download>;
+  };
+  product_collections: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Collection>;
   };
   stock_enabled: boolean;
   allow_out_of_stock_purchases: boolean;
@@ -1172,6 +1179,7 @@ export interface FeaturedProductMediaAttributes {
 export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
+  currency: string;
   payment_method: {
     billing_details: {
       name: string;
@@ -1192,6 +1200,13 @@ export interface CheckoutInitiatedParams {
     price: number;
     quantity: number;
   }>;
+}
+
+export interface ProductsSearchedParams {
+  searchString: string;
+  searchCollections?: string[];
+  searchResultCount: number;
+  searchResultIds: string[];
 }
 
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';

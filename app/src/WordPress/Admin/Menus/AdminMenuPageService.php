@@ -23,6 +23,17 @@ class AdminMenuPageService {
 	protected $pages = [];
 
 	/**
+	 * Essential SureCart Pages
+	 *
+	 * @var array
+	 */
+	const ESSENTIAL_PAGES = [
+		'shop',
+		'checkout',
+		'dashboard',
+	];
+
+	/**
 	 * Add menu items.
 	 */
 	public function bootstrap() {
@@ -174,6 +185,7 @@ class AdminMenuPageService {
 			'subscriptions'       => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
+			'restore'             => 'sc-restore' === ( $_GET['page'] ?? '' ) ? \add_submenu_page( null, __( 'Restore', 'surecart' ), __( 'Restore', 'surecart' ), 'manage_options', 'sc-restore', '__return_false' ) : null,
 			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
 			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
 			'cart'                => $this->addTemplateSubMenuPage( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
@@ -207,7 +219,29 @@ class AdminMenuPageService {
 			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
 		}
 
-		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', 'post.php?post=' . (int) $page_id . '&action=edit', '' );
+		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', $this->getSubMenuPageSlug( $slug, $page_id ), '' );
+	}
+
+	/**
+	 * Get the page menu slug.
+	 *
+	 * @param string $slug The slug.
+	 * @param int    $page_id The page id.
+	 */
+	public function getSubMenuPageSlug( $slug, $page_id ) {
+		// check if it is not an essential page.
+		if ( ! in_array( $slug, self::ESSENTIAL_PAGES, true ) ) {
+			return 'post.php?post=' . $page_id . '&action=edit';
+		}
+
+		$post_status = get_post_status( $page_id );
+
+		// check if the page is published.
+		if ( 'publish' === $post_status ) {
+			return 'post.php?post=' . $page_id . '&action=edit';
+		}
+
+		return 'admin.php?page=sc-restore&restore=' . $slug;
 	}
 
 	/**
