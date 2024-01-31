@@ -18,8 +18,8 @@ class MissingPaymentMethodMiddleware {
 	 * @return function
 	 */
 	public function handle( string $action, Closure $next ) {
-		$id  = sanitize_text_field( wp_unslash( $_GET['id'] ) );
-		$tab = sanitize_text_field( wp_unslash( $_GET['tab'] ) );
+		$id  = sanitize_text_field( wp_unslash( $_GET['id'] ?? '' ) );
+		$tab = sanitize_text_field( wp_unslash( $_GET['tab'] ?? '' ) );
 
 		// get the subscription.
 		$subscription = Subscription::find( $id );

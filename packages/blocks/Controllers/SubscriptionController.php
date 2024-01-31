@@ -144,7 +144,7 @@ class SubscriptionController extends BaseController {
 				'license.activations',
 			]
 		)->find( $id );
-
+		
 		$should_delay_cancellation = $subscription->shouldDelayCancellation();
 		ob_start();
 		?>
@@ -200,7 +200,11 @@ class SubscriptionController extends BaseController {
 					[
 						'heading'        => __( 'Update Plan', 'surecart' ),
 						'productId'      => $subscription->price->product->id,
-						'productGroupId' => $subscription->price->product->product_group->archived ? null : $subscription->price->product->product_group->id,
+						'productGroupId' =>($subscription->price->product->product_group 
+						? ($subscription->price->product->product_group->archived 
+						   ? null 
+						   : $subscription->price->product->product_group->id) 
+						: null),
 						'subscription'   => $subscription,
 						'successUrl'     => home_url(
 							add_query_arg(

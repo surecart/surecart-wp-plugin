@@ -24,8 +24,13 @@ abstract class BaseController {
 	 * @return function
 	 */
 	public function executeMiddleware( $middleware, $action = null, $next = null ) {
-		$middleware = null === $middleware ? $this->middleware[ $action ] : $middleware;
 		$next       = null === $next ? $action : $next;
+		
+		if ( empty( $this->middleware[ $action ] ) && null === $middleware ) {
+			return $this->$next();
+		}
+
+		$middleware = null === $middleware ? $this->middleware[ $action ] : $middleware;
 
 		$top_middleware = array_shift( $middleware );
 
