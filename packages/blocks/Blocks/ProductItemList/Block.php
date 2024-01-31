@@ -270,6 +270,7 @@ class Block extends BaseBlock {
 					'total'       => $products->total(),
 					'total_pages' => $products->totalPages(),
 				],
+				'page'                 => (int) ( $_GET['product-page'] ?? 1 ),
 				'ids'                  => 'custom' === $attributes['type'] ? array_values( array_filter( $attributes['ids'] ) ) : [],
 				'paginationEnabled'    => \SureCart::account()->isConnected() ? $attributes['pagination_enabled'] : false,
 				'ajaxPagination'       => $attributes['ajax_pagination'],
