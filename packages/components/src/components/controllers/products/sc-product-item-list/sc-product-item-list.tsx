@@ -157,6 +157,7 @@ export class ScProductItemList {
 
   @Watch('sort')
   @Watch('selectedCollections')
+  @Watch('query')
   async handleSortChange() {
     this.page = 1;
     this.updateProducts();
