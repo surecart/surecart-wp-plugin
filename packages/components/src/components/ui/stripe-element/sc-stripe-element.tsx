@@ -188,6 +188,7 @@ export class ScStripeElement {
         this.scPaymentInfoAdded.emit({
           processor_type: 'stripe',
           checkout_id: this.order.id,
+          currency: this.order.currency,
           payment_method: {
             billing_details: {
               name: this?.order?.name ? this.order.name : '',
