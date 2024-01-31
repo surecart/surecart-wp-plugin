@@ -22,7 +22,8 @@ on('get', prop => {
 
 on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
-  if (checkout.total_amount === oldCheckout.total_amount && checkout.amount_due === oldCheckout.total_amount) return; // we only care about total_amount and amount_due
+  if (!checkout) return; // we only care about checkout
+  if (checkout?.total_amount === oldCheckout?.total_amount && checkout?.amount_due === oldCheckout?.total_amount) return; // we only care about total_amount and amount_due
 
   const amountDue = getFormattedPrice({ amount: checkout.amount_due, currency: checkout.currency });
   const totalAmount = getFormattedPrice({ amount: checkout.total_amount, currency: checkout.currency });
