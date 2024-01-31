@@ -23,8 +23,14 @@ class RankMathService {
 	 * @return array
 	 */
 	public function addProviders( $external_providers ) {
-		$external_providers['products']    = new ProductSiteMap();
-		$external_providers['collections'] = new CollectionSiteMap();
+		if ( ! empty( \RankMath\Helper::get_settings( 'sitemap.pt_sc_product_sitemap' ) ) ) {
+			$external_providers['product'] = new ProductSiteMap();
+		}
+
+		if ( ! empty( \RankMath\Helper::get_settings( 'sitemap.pt_sc_collection_sitemap' ) ) ) {
+			$external_providers['collection'] = new CollectionSiteMap();
+		}
+
 		return $external_providers;
 	}
 }

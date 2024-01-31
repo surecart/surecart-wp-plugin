@@ -19,8 +19,38 @@ class UsersService {
 		add_filter( 'rest_user_collection_params', [ $this, 'collectionParams' ] );
 		add_filter( 'show_admin_bar', [ $this, 'disableAdminBar' ], 10, 1 );
 		add_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
-
+		add_action( 'surecart/customer_updated', [ $this, 'syncCustomerProfile' ] );
 		$this->registerMeta();
+	}
+
+	/**
+	 * Fires immediately after an existing customer is updated.
+	 *
+	 * @param object $customer Customer Data.
+	 */
+	public function syncCustomerProfile( $customer ) {
+		$wp_user = \SureCart\Models\User::findByCustomerId( $customer->id );
+
+		if ( ! empty( $wp_user->ID ) ) {
+			// prevent potential infinite loop of catching a webhook and updating again.
+			remove_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
+
+			// update user.
+			wp_update_user(
+				[
+					'ID'         => $wp_user->ID,
+					'user_email' => ! empty( $customer->email ) ? $customer->email : $wp_user->user_email,
+					'first_name' => ! empty( $customer->first_name ) ? $customer->first_name : $wp_user->first_name,
+					'last_name'  => ! empty( $customer->last_name ) ? $customer->last_name : $wp_user->last_name,
+					'phone'      => ! empty( $customer->phone ) ? $customer->phone : $wp_user->phone,
+				]
+			);
+
+			// re-add profile_update in case it is done in the same request somewhere.
+			add_action( 'profile_update', [ $this, 'syncUserProfile' ], 10, 3 );
+		}
+
+		return $wp_user;
 	}
 
 	/**
