@@ -301,6 +301,7 @@ export class ScInput {
                 // onInvalid={this.handleInvalid}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
+                onKeyDown={(e) => e.stopPropagation()}
               />
             </slot>
 
