@@ -326,7 +326,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->where( 'admin', 'sc-upsells' )
+->where( 'admin', 'sc-upsell-funnels' )
 ->middleware( 'user.can:edit_sc_products' )
 ->middleware( 'assets.components' )
 ->setNamespace( '\\SureCart\\Controllers\\Admin\\Upsells\\' )

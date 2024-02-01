@@ -2,26 +2,26 @@
 
 namespace SureCart\Rest;
 
+use SureCart\Controllers\Rest\UpsellFunnelsController;
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\UpsellsController;
 
 /**
  * Service provider for Price Rest Requests
  */
-class UpsellRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
+class UpsellFunnelRestServiceProvider extends RestServiceProvider implements RestServiceInterface {
 	/**
 	 * Endpoint.
 	 *
 	 * @var string
 	 */
-	protected $endpoint = 'upsells';
+	protected $endpoint = 'upsell_funnels';
 
 	/**
 	 * Rest Controller
 	 *
 	 * @var string
 	 */
-	protected $controller = UpsellsController::class;
+	protected $controller = UpsellFunnelsController::class;
 
 	/**
 	 * Methods allowed for the model.
@@ -49,58 +49,64 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
-				'id'                          => [
+				'id'                 => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'object'                      => [
-					'description' => esc_html__( 'Type of object (upsell)', 'surecart' ),
+				'object'             => [
+					'description' => esc_html__( 'Type of object (upsell_funnel)', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 					'readonly'    => true,
 				],
-				'created_at'                  => [
+				'created_at'         => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'updated_at'                  => [
+				'updated_at'         => [
 					'description' => esc_html__( 'Created at timestamp', 'surecart' ),
 					'type'        => 'integer',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
 				],
-				'amount_off'                  => [
-					'description' => esc_html__( 'Amount (in the currency of the price) that will be taken off line items associated with this upsell.', 'surecart' ),
+				'filter_match_type'  => [
+					'description' => esc_html__( 'The matching strategy to use when filtering upsell funnels – can be null or one of all, any, none. If null, the upsell funnel will not be filtered and will be applicable to all checkouts.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'filter_price_ids'   => [
+					'description' => esc_html__( 'The prices to filter this upsell funnel by.', 'surecart' ),
+					'type'        => 'array',
+					'items'       => [
+						'type' => 'string',
+					],
+					'context'     => [ 'view', 'edit' ],
+				],
+				'filter_product_ids' => [
+					'description' => esc_html__( 'The products to filter this upsell funnel by.', 'surecart' ),
+					'type'        => 'array',
+					'items'       => [
+						'type' => 'string',
+					],
+					'context'     => [ 'view', 'edit' ],
+				],
+				'enabled'            => [
+					'description' => esc_html__( 'Whether or not this upsell is currently enabled and being shown to customers.', 'surecart' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'name'               => [
+					'description' => esc_html__( 'A name for this upsell that will be visible to customers. If empty, the product name will be used.', 'surecart' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit' ],
+				],
+				'priority'           => [
+					'description' => esc_html__( 'The priority of this upsell in relation to other upsells. Must be in the range of 1 - 5.', 'surecart' ),
 					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'duplicate_purchase_behavior' => [
-					'description' => esc_html__( 'How to handle duplicate purchases of the product – can be one of allow, block_within_checkout, or block.', 'surecart' ),
-					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'fee_description'             => [
-					'description' => esc_html__( 'The description for this upsell which will be visible to customers.', 'surecart' ),
-					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'percent_off'                 => [
-					'description' => esc_html__( 'Percent that will be taken off line items associated with this upsell.', 'surecart' ),
-					'type'        => 'integer',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'step'                        => [
-					'description' => esc_html__( 'Where this upsell falls in position within the upsell funnel – can be one of initial, accepted, or declined.', 'surecart' ),
-					'type'        => 'string',
-					'context'     => [ 'view', 'edit' ],
-				],
-				'price'                       => [
-					'description' => esc_html__( 'The UUID of the price.', 'surecart' ),
-					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
 				],
 			],
@@ -110,7 +116,7 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	}
 
 	/**
-	 * Anyone can get a specific price.
+	 * Anyone can get an upsell funnel.
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
@@ -120,16 +126,13 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	}
 
 	/**
-	 * Who can list prices
+	 * Who can list funnels
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		if ( empty( $request['upsell_funnel_ids'] ) || count( $request['upsell_funnel_ids'] ) > 1 ) {
-			return current_user_can( 'edit_sc_prices' );
-		}
-		return true;
+		return current_user_can( 'edit_sc_prices' );
 	}
 
 	/**

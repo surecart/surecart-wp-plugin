@@ -27,7 +27,7 @@ export default function PostTemplateForm({ onClose, upsell, updateUpsell }) {
 				(template) => {
 					return (
 						template.id === 'surecart/surecart//single-upsell' ||
-						template.slug.includes('sc-upsells')
+						template.slug.includes('sc-upsell-funnels')
 					);
 				}
 			);

@@ -43,7 +43,7 @@ export default function PostTemplateCreateModal({
 		const newTemplateContent = template?.content?.raw;
 
 		const { id } = await saveEntityRecord('postType', 'wp_template', {
-			slug: `sc-upsells-${cleanForSlug(title || DEFAULT_TITLE)}`,
+			slug: `sc-upsell-funnels-${cleanForSlug(title || DEFAULT_TITLE)}`,
 			content: newTemplateContent,
 			title: title || DEFAULT_TITLE,
 		});

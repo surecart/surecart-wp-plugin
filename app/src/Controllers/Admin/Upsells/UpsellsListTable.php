@@ -54,7 +54,7 @@ class UpsellsListTable extends ListTable {
 			'all'      => __( 'All', 'surecart' ),
 		];
 
-		$link = admin_url( 'admin.php?page=sc-upsells' );
+		$link = admin_url( 'admin.php?page=sc-upsell-funnels' );
 
 		foreach ( $stati as $status => $label ) {
 			$current_link_attributes = '';
@@ -88,10 +88,10 @@ class UpsellsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return [
-			'name'  => __( 'Name', 'surecart' ),
-			'price' => __( 'Price', 'surecart' ),
+			'name'     => __( 'Name', 'surecart' ),
+			'price'    => __( 'Price', 'surecart' ),
 			'priority' => __( 'Priority', 'surecart' ),
-			'date'  => __( 'Date', 'surecart' ),
+			'date'     => __( 'Date', 'surecart' ),
 		];
 	}
 

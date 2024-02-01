@@ -80,7 +80,7 @@ export default () => {
 		try {
 			await deleteUpsell({ throwOnError: true });
 			createSuccessNotice(__('Upsell deleted.', 'surecart'));
-			window.location.assign('admin.php?page=sc-upsells');
+			window.location.assign('admin.php?page=sc-upsell-funnels');
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
@@ -155,7 +155,7 @@ export default () => {
 					<ScButton
 						circle
 						size="small"
-						href="admin.php?page=sc-upsells"
+						href="admin.php?page=sc-upsell-funnels"
 					>
 						<sc-icon name="arrow-left"></sc-icon>
 					</ScButton>
@@ -163,7 +163,7 @@ export default () => {
 						<ScBreadcrumb>
 							<Logo display="block" />
 						</ScBreadcrumb>
-						<ScBreadcrumb href="admin.php?page=sc-upsells">
+						<ScBreadcrumb href="admin.php?page=sc-upsell-funnels">
 							{__('Upsells', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>

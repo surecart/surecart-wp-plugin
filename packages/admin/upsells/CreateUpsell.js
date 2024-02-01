@@ -99,7 +99,7 @@ export default ({ id, setId }) => {
 								{__('Create', 'surecart')}
 							</ScButton>
 							<ScButton
-								href={'admin.php?page=sc-upsells'}
+								href={'admin.php?page=sc-upsell-funnels'}
 								type="text"
 							>
 								{__('Cancel', 'surecart')}
