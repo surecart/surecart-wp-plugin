@@ -1,5 +1,5 @@
 import '../checkouts/events';
-import state, { on, onChange } from './store';
+import state, { on } from './store';
 import { Checkout, CheckoutInitiatedParams, LineItem, Product } from 'src/types';
 import { maybeConvertAmount } from '../../functions/currency';
 
@@ -59,12 +59,16 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
 /**
  * Checkout updated event.
  */
-onChange('checkout', (checkout: Checkout) => {
+on("set", (key: string, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
   if (!checkout?.id) return; // we don't have a saved checkout.
-  if (!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
+  if(JSON.stringify(checkout) === JSON.stringify(oldCheckout)) return; // we only care about changes.
 
   const event = new CustomEvent('scCheckoutUpdated', {
-    detail: checkout,
+    detail: {
+      currentCheckout: checkout,
+      previousCheckout: oldCheckout
+    },
     bubbles: true,
   });
   document.dispatchEvent(event);
