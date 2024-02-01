@@ -318,6 +318,7 @@ export class ScTextarea {
                 onInput={() => this.handleInput()}
                 onFocus={() => this.handleFocus()}
                 onBlur={() => this.handleBlur()}
+                onKeyDown={(e) => e.stopPropagation()}
               ></textarea>
             </div>
             {this.showCharLimit && (
