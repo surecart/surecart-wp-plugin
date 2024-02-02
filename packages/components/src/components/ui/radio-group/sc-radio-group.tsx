@@ -1,4 +1,4 @@
-import { Component, Prop, h, Method, Listen, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, Method, Listen, Event, EventEmitter, Element } from '@stencil/core';
 import { isRtl } from '../../../functions/page-align';
 
 @Component({
@@ -7,6 +7,9 @@ import { isRtl } from '../../../functions/page-align';
   shadow: true,
 })
 export class ScRadioGroup {
+  /** The radio group element */
+  @Element() el: HTMLScRadioGroupElement;
+
   /** The input for validation */
   private input: HTMLInputElement;
 
@@ -46,6 +49,15 @@ export class ScRadioGroup {
       this.value = target.value;
       this.scChange.emit(target.value);
     }
+  }
+
+  componentDidLoad() {
+    const choices = [...this.el.querySelectorAll('sc-radio')] as Array<HTMLScRadioElement>;
+    choices.forEach(choice => {
+      if (choice.checked) {
+        this.value = choice.value;
+      }
+    });
   }
 
   render() {
