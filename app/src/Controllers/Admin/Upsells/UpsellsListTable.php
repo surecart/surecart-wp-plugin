@@ -2,7 +2,7 @@
 
 namespace SureCart\Controllers\Admin\Upsells;
 
-use SureCart\Models\Upsell;
+use SureCart\Models\UpsellFunnel;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 
@@ -89,7 +89,6 @@ class UpsellsListTable extends ListTable {
 	public function get_columns() {
 		return [
 			'name'     => __( 'Name', 'surecart' ),
-			'price'    => __( 'Price', 'surecart' ),
 			'priority' => __( 'Priority', 'surecart' ),
 			'date'     => __( 'Date', 'surecart' ),
 		];
@@ -98,12 +97,12 @@ class UpsellsListTable extends ListTable {
 	/**
 	 * Displays the checkbox column.
 	 *
-	 * @param Upsell $upsell The upsell model.
+	 * @param Upsell $upsell_funnel The upsell model.
 	 */
-	public function column_cb( $upsell ) {
+	public function column_cb( $upsell_funnel ) {
 		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $upsell['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $upsell['id'] ); ?>" />
+		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $upsell_funnel['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
+		<input id="cb-select-<?php echo esc_attr( $upsell_funnel['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $upsell_funnel['id'] ); ?>" />
 		<?php
 	}
 
@@ -112,8 +111,8 @@ class UpsellsListTable extends ListTable {
 	 *
 	 * @return bool
 	 */
-	public function column_priority( $upsell ) {
-		echo (int) $upsell->priority;
+	public function column_priority( $upsell_funnel ) {
+		echo (int) $upsell_funnel->priority;
 	}
 
 	/**
@@ -140,13 +139,12 @@ class UpsellsListTable extends ListTable {
 	 * @return array
 	 */
 	private function table_data() {
-		return Upsell::where(
+		return UpsellFunnel::where(
 			[
 				'archived' => $this->getArchiveStatus(),
 				'query'    => $this->get_search_query(),
 			]
 		)
-		->with( [ 'price', 'price.product' ] )
 		->where( [ 'sort' => 'priority:desc' ] )
 		->paginate(
 			[
@@ -166,18 +164,18 @@ class UpsellsListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No upsells found.', 'surecart' );
+		echo esc_html_e( 'No upsell funnels found.', 'surecart' );
 	}
 
 	/**
 	 * Handle the type column output.
 	 *
-	 * @param \SureCart\Models\Upsell $upsell Upsell model.
+	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_type( $upsell ) {
-		if ( $upsell->recurring ) {
+	public function column_type( $upsell_funnel ) {
+		if ( $upsell_funnel->recurring ) {
 			return '<sc-tag type="success">
 			<div
 				style="
@@ -207,74 +205,48 @@ class UpsellsListTable extends ListTable {
 	/**
 	 * Handle the status
 	 *
-	 * @param \SureCart\Models\Upsell $upsell Upsell model.
+	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_date( $upsell ) {
+	public function column_date( $upsell_funnel ) {
 		$created = sprintf(
 			'<time datetime="%1$s" title="%2$s">%3$s</time>',
-			esc_attr( $upsell->created_at ),
-			esc_html( TimeDate::formatDateAndTime( $upsell->created_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $upsell->created_at ) )
+			esc_attr( $upsell_funnel->created_at ),
+			esc_html( TimeDate::formatDateAndTime( $upsell_funnel->created_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $upsell_funnel->created_at ) )
 		);
 		$updated = sprintf(
 			'%1$s <time datetime="%2$s" title="%3$s">%4$s</time>',
 			__( 'Updated', 'surecart' ),
-			esc_attr( $upsell->updated_at ),
-			esc_html( TimeDate::formatDateAndTime( $upsell->updated_at ) ),
-			esc_html( TimeDate::humanTimeDiff( $upsell->updated_at ) )
+			esc_attr( $upsell_funnel->updated_at ),
+			esc_html( TimeDate::formatDateAndTime( $upsell_funnel->updated_at ) ),
+			esc_html( TimeDate::humanTimeDiff( $upsell_funnel->updated_at ) )
 		);
 		return $created . '<br /><small style="opacity: 0.75">' . $updated . '</small>';
 	}
 
 	/**
-	 * Price
-	 *
-	 * @param \SureCart\Models\Upsell $upsell Upsell model.
-	 *
-	 * @return string
-	 */
-	public function column_price( $upsell ) {
-		if ( empty( $upsell->price->id ) ) {
-			return;
-		}
-
-		$price = $upsell->price ?? null;
-
-		ob_start();
-		?>
-			<strong><?php echo esc_html( $price->product->name ); ?></strong><br/>
-			<sc-format-number type="currency" currency="<?php echo esc_attr( $price->currency ); ?>" value="<?php echo (float) $price->amount; ?>"></sc-format-number>
-			<sc-format-interval value="<?php echo (int) $price->recurring_interval_count; ?>" interval="<?php echo esc_attr( $price->recurring_interval ); ?>"></sc-format-interval>
-		<?php
-		return ob_get_clean();
-
-		return '<sc-format-number type="currency" currency="' . esc_attr( $price->currency ) . '" value="' . (float) $price->amount . '"></sc-format-number>';
-	}
-
-	/**
 	 * Name column
 	 *
-	 * @param \SureCart\Models\Upsell $upsell Upsell model.
+	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_name( $upsell ) {
+	public function column_name( $upsell_funnel ) {
 		ob_start();
 		?>
 
 	  <div>
-		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell->id ) ); ?>">
-			<?php echo esc_html( $upsell->name ? $upsell->name : $upsell->price->product->name ); ?>
+		<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
+			<?php echo esc_html( $upsell_funnel->name ); ?>
 		</a>
 
 
 		<?php
 		echo $this->row_actions(
 			[
-				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
-				'view' => '<a href="' . esc_url( $upsell->permalink ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+				'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . __( 'Edit', 'surecart' ) . '</a>',
 			],
 		);
 		?>
@@ -288,19 +260,19 @@ class UpsellsListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \SureCart\Models\Upsell $upsell Upsell model.
-	 * @param string                  $column_name - Current column name.
+	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
+	 * @param string                        $column_name - Current column name.
 	 *
 	 * @return mixed
 	 */
-	public function column_default( $upsell, $column_name ) {
+	public function column_default( $upsell_funnel, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return ' < a href     = "' . \SureCart::getUrl()->edit( 'upsell', $upsell->id ) . '" > ' . $upsell->name . ' < / a > ';
+				return ' < a href     = "' . \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) . '" > ' . $upsell_funnel->name . ' < / a > ';
 
 			case 'name':
 			case 'description':
-				return $upsell->$column_name ?? '';
+				return $upsell_funnel->$column_name ?? '';
 		}
 	}
 }

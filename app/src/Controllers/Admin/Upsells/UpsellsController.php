@@ -3,7 +3,7 @@
 namespace SureCart\Controllers\Admin\Upsells;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Models\Upsell;
+use SureCart\Models\UpsellFunnel;
 
 /**
  * Handles upsell admin requests.
@@ -19,11 +19,11 @@ class UpsellsController extends AdminController {
 		$this->withHeader(
 			[
 				'upsells' => [
-					'title' => __( 'Upsells', 'surecart' ),
+					'title' => __( 'Upsell Funnels', 'surecart' ),
 				],
 			]
 		);
-		return \SureCart::view( 'admin/upsells/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( 'admin/upsell-funnels/index' )->with( [ 'table' => $table ] );
 	}
 
 	/**
@@ -36,7 +36,7 @@ class UpsellsController extends AdminController {
 		$upsell = null;
 
 		if ( $request->query( 'id' ) ) {
-			$upsell = Upsell::with( [ 'price' ] )->find( $request->query( 'id' ) );
+			$upsell = UpsellFunnel::with()->find( $request->query( 'id' ) );
 
 			if ( is_wp_error( $upsell ) ) {
 				wp_die( implode( ' ', array_map( 'esc_html', $upsell->get_error_messages() ) ) );
@@ -48,7 +48,7 @@ class UpsellsController extends AdminController {
 				'/wp/v2/users/me',
 				'/wp/v2/types?context=view',
 				'/wp/v2/types?context=edit',
-				'/surecart/v1/upsells/' . $request->query( 'id' ) . '?context=edit',
+				// '/surecart/v1/upsell_funnels/' . $request->query( 'id' ) . '?context=edit',
 			]
 		);
 

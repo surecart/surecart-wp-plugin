@@ -13,7 +13,7 @@ import { __ } from '@wordpress/i18n';
 import PriceSelector from '../../components/PriceSelector';
 import ModelSelector from '../../components/ModelSelector';
 
-export default ({ onRequestClose, upsell, updateUpsell }) => {
+export default ({ onRequestClose, funnel, updateFunnel }) => {
 	const [type, setType] = useState('price_ids');
 	const [id, setId] = useState();
 
@@ -31,8 +31,8 @@ export default ({ onRequestClose, upsell, updateUpsell }) => {
 	};
 
 	const onSubmit = (e) => {
-		updateUpsell({
-			[`filter_${type}`]: [...(upsell?.[`filter_${type}`] || []), id],
+		updateFunnel({
+			[`filter_${type}`]: [...(funnel?.[`filter_${type}`] || []), id],
 		});
 		onRequestClose();
 	};
@@ -96,7 +96,7 @@ export default ({ onRequestClose, upsell, updateUpsell }) => {
 									archived: false,
 									ad_hoc: false,
 								}}
-								onSelect={({price_id}) => {
+								onSelect={({ price_id }) => {
 									setType('price_ids');
 									setId(price_id);
 								}}

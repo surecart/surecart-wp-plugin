@@ -20,14 +20,14 @@ class UpsellScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/upsell';
+	protected $handle = 'surecart/scripts/admin/upsell-funnels';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'admin/upsells';
+	protected $path = 'admin/upsell-funnels';
 
 
 	/**

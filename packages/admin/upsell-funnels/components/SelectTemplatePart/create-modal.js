@@ -1,6 +1,7 @@
 /**
  * WordPress dependencies
  */
+import { Global } from '@emotion/react';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -14,7 +15,7 @@ import {
 import { cleanForSlug } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
-const DEFAULT_TITLE = __('Custom Single One Click Upsell Page', 'surecart');
+const DEFAULT_TITLE = __('Upsell Page Title', 'surecart');
 
 export default function PostTemplateCreateModal({
 	onClose,
@@ -62,43 +63,48 @@ export default function PostTemplateCreateModal({
 	};
 
 	return (
-		<Modal
-			title={__('Create Template', 'surecart')}
-			onRequestClose={cancel}
-			className="edit-post-post-template__create-modal"
-		>
-			<form
-				className="edit-post-post-template__create-form"
-				onSubmit={submit}
+		<>
+			<Global
+				styles={`
+        .components-popover {
+          z-index: 99;
+        }
+    `}
+			/>
+			<Modal
+				title={__('Create Template', 'surecart')}
+				onRequestClose={cancel}
 			>
-				<VStack spacing="3">
-					<TextControl
-						__nextHasNoMarginBottom
-						label={__('Name')}
-						value={title}
-						onChange={setTitle}
-						placeholder={DEFAULT_TITLE}
-						disabled={isBusy}
-						help={__(
-							'Describe the template, e.g. "T-Shirt Template". A custom template can be manually applied to any upsell.'
-						)}
-					/>
-					<HStack justify="right">
-						<Button variant="tertiary" onClick={cancel}>
-							{__('Cancel')}
-						</Button>
+				<form onSubmit={submit}>
+					<VStack spacing="3">
+						<TextControl
+							__nextHasNoMarginBottom
+							label={__('Name')}
+							value={title}
+							onChange={setTitle}
+							placeholder={DEFAULT_TITLE}
+							disabled={isBusy}
+							help={__(
+								'Describe the template, e.g. "T-Shirt Template". A custom template can be manually applied to any upsell.'
+							)}
+						/>
+						<HStack justify="right">
+							<Button variant="tertiary" onClick={cancel}>
+								{__('Cancel')}
+							</Button>
 
-						<Button
-							variant="primary"
-							type="submit"
-							isBusy={isBusy}
-							aria-disabled={isBusy}
-						>
-							{__('Create')}
-						</Button>
-					</HStack>
-				</VStack>
-			</form>
-		</Modal>
+							<Button
+								variant="primary"
+								type="submit"
+								isBusy={isBusy}
+								aria-disabled={isBusy}
+							>
+								{__('Create')}
+							</Button>
+						</HStack>
+					</VStack>
+				</form>
+			</Modal>
+		</>
 	);
 }

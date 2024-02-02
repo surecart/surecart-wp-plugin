@@ -4,7 +4,7 @@
 	\SureCart::render(
 		'layouts/partials/admin-index-header',
 		[
-			'title'    => __( 'Upsells', 'surecart' ),
+			'title'    => __( 'Upsell Funnels', 'surecart' ),
 			'new_link' => \SureCart::getUrl()->edit( 'upsell' ),
 		]
 	);

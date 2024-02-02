@@ -10,13 +10,13 @@ import Filters from '../../components/filters/Filters';
 import Box from '../../ui/Box';
 import NewCondition from './NewCondition';
 
-export default ({ loading, upsell, updateUpsell }) => {
+export default ({ loading, funnel, updateFunnel }) => {
 	const [newDialog, setNewDialog] = useState(false);
 
 	const hasConditions =
-		upsell?.filter_price_ids?.length ||
-		upsell?.filter_product_ids?.length ||
-		upsell?.filter_product_group_ids?.length;
+		funnel?.filter_price_ids?.length ||
+		funnel?.filter_product_ids?.length ||
+		funnel?.filter_product_group_ids?.length;
 
 	return (
 		<Box
@@ -33,7 +33,7 @@ export default ({ loading, upsell, updateUpsell }) => {
 				<>
 					<ScSelect
 						label={__('Show Upsell Offer If', 'surecart')}
-						value={upsell?.filter_match_type}
+						value={funnel?.filter_match_type}
 						choices={[
 							{
 								label: __(
@@ -58,34 +58,34 @@ export default ({ loading, upsell, updateUpsell }) => {
 							},
 						]}
 						onScChange={(e) =>
-							updateUpsell({ filter_match_type: e.target.value })
+							updateFunnel({ filter_match_type: e.target.value })
 						}
 					/>
 					<Filters
 						label={__('Prices', 'surecart')}
 						type="filter_price_ids"
-						item={upsell}
-						updateItem={updateUpsell}
+						item={funnel}
+						updateItem={updateFunnel}
 					/>
 
 					<Filters
 						label={__('Products', 'surecart')}
 						type="filter_product_ids"
-						item={upsell}
-						updateItem={updateUpsell}
+						item={funnel}
+						updateItem={updateFunnel}
 					/>
 
 					<Filters
 						label={__('Customers', 'surecart')}
 						type="filter_customer_ids"
-						item={upsell}
-						updateItem={updateUpsell}
+						item={funnel}
+						updateItem={updateFunnel}
 					/>
 				</>
 			) : (
 				<ScEmpty icon="zap">
 					{__(
-						'Add some conditions to display this upsell.',
+						'Add some conditions to display this funnel.',
 						'surecart'
 					)}
 				</ScEmpty>
@@ -93,8 +93,8 @@ export default ({ loading, upsell, updateUpsell }) => {
 
 			{newDialog && (
 				<NewCondition
-					upsell={upsell}
-					updateUpsell={updateUpsell}
+					funnel={funnel}
+					updateFunnel={updateFunnel}
 					onRequestClose={() => setNewDialog(false)}
 				/>
 			)}

@@ -18,6 +18,7 @@ export default ({ loading, media, onRemove, icon, children, suffix }) => {
 			style={{
 				'--columns': '1',
 			}}
+			mobileSize={320}
 		>
 			{loading ? (
 				<ScFlex alignItems="center" justifyContent="flex-start">

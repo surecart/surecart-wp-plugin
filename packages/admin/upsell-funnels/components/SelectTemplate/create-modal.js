@@ -14,7 +14,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { cleanForSlug } from '@wordpress/url';
 
-const DEFAULT_TITLE = __('Custom Single Upsell Page', 'surecart');
+const DEFAULT_TITLE = __('Upsell Page Title', 'surecart');
 
 export default function PostTemplateCreateModal({
 	onClose,
@@ -64,6 +64,7 @@ export default function PostTemplateCreateModal({
 			title={__('Create Template', 'surecart')}
 			onRequestClose={cancel}
 			className="edit-post-post-template__create-modal"
+			style={{ zIndex: 99999999999 }}
 		>
 			<form
 				className="edit-post-post-template__create-form"

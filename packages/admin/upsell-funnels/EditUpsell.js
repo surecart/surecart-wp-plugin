@@ -11,58 +11,112 @@ import {
 } from '@surecart/components-react';
 import { store } from '@surecart/data';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 
 import Error from '../components/Error';
-// hocs
-import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import SaveButton from '../templates/SaveButton';
 
 // template
 import UpdateModel from '../templates/UpdateModel';
 
-import Discount from './modules/Discount';
 import Conditions from './modules/Conditions';
 import Details from './modules/Details';
-import Price from './modules/Price';
-import Priority from './modules/Priority';
-import Template from './modules/Template';
 import Funnel from './modules/Funnel';
+import useSave from '../settings/UseSave';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const id = useSelect((select) => select(store).selectPageId());
-	const {
-		upsell,
-		editUpsell,
-		hasLoadedUpsell,
-		saveEditedUpsell,
-		savingUpsell,
-		saveUpsell,
-		deleteUpsell,
-		saveUpsellError,
-		upsellError,
-	} = useEntity('upsell', id, {
-		expand: [
-			'price',
-			'price.product',
-			'product.featured_product_media',
-			'product_media.media',
-		],
-	});
+	const { save } = useSave();
+	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
+
+	const editFunnel = (data) => {
+		editEntityRecord('surecart', 'upsell-funnel', id, data);
+	};
+
+	const { upsells, loadingUpsells } = useSelect(
+		(select) => {
+			const entityData = [
+				'surecart',
+				'upsell',
+				{
+					upsell_funnel_ids: [id],
+					expand: [
+						'price',
+						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
+					],
+				},
+			];
+			const upsells = select(coreStore).getEntityRecords(...entityData);
+
+			const editedUpsells = (upsells || []).map((upsell) => {
+				return {
+					...upsell,
+					...select(coreStore).getRawEntityRecord(
+						'surecart',
+						'upsell',
+						upsell?.id
+					),
+					...select(coreStore).getEntityRecordEdits(
+						'surecart',
+						'upsell',
+						upsell?.id
+					),
+				};
+			});
+
+			return {
+				upsells: editedUpsells,
+				loadingUpsells: !select(coreStore).hasFinishedResolution(
+					'getEntityRecords',
+					[...entityData]
+				),
+			};
+		},
+		[id]
+	);
+
+	const { funnel, loading, error } = useSelect(
+		(select) => {
+			if (!id) {
+				return {};
+			}
+			const entityData = [
+				'surecart',
+				'upsell-funnel',
+				id,
+				{ expand: ['upsells'] },
+			];
+			return {
+				funnel: select(coreStore).getEditedEntityRecord(...entityData),
+				error: select(coreStore)?.getLastEntitySaveError?.(
+					...entityData
+				),
+				loading: !select(coreStore)?.hasFinishedResolution?.(
+					'getEditedEntityRecord',
+					[...entityData]
+				),
+			};
+		},
+		[id]
+	);
 
 	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
-		const upsell = await saveEditedUpsell();
-		if (!upsell) return;
-		createSuccessNotice(__('Upsell updated.', 'surecart'), {
-			type: 'snackbar',
-		});
+		try {
+			save({ successMessage: __('Upsell funnel updated.', 'surecart') });
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(e?.message, { type: 'snackbar' });
+		}
 	};
 
 	/**
@@ -78,7 +132,9 @@ export default () => {
 		if (!r) return;
 
 		try {
-			await deleteUpsell({ throwOnError: true });
+			await deleteEntityRecord('surecart', 'upsell-funnel', id, {
+				throwOnError: true,
+			});
 			createSuccessNotice(__('Upsell deleted.', 'surecart'));
 			window.location.assign('admin.php?page=sc-upsell-funnels');
 		} catch (e) {
@@ -92,7 +148,7 @@ export default () => {
 	 */
 	const toggleArchive = async () => {
 		const r = confirm(
-			upsell?.archived
+			funnel?.archived
 				? __(
 						'Un-Archive this upsell? This will make the product purchaseable again.',
 						'surecart'
@@ -106,11 +162,19 @@ export default () => {
 		if (!r) return;
 
 		try {
-			await saveUpsell({ archived: !upsell?.archived });
+			const funnel = await saveEntityRecord(
+				'surecart',
+				'upsell-funnel',
+				{
+					id,
+					archived: !funnel?.archived,
+				},
+				{ throwOnError: true }
+			);
 			createSuccessNotice(
-				!upsell?.archived
-					? __('Upsell archived.', 'surecart')
-					: __('Upsell un-archived.', 'surecart'),
+				!funnel?.archived
+					? __('Upsell funnel archived.', 'surecart')
+					: __('Upsell funnel un-archived.', 'surecart'),
 				{ type: 'snackbar' }
 			);
 		} catch (e) {
@@ -130,7 +194,7 @@ export default () => {
 						</ScButton>
 						<ScMenu>
 							<ScMenuItem onClick={toggleArchive}>
-								{upsell?.archived
+								{funnel?.archived
 									? __('Un-Archive', 'surecart')
 									: __('Archive', 'surecart')}
 							</ScMenuItem>
@@ -139,8 +203,8 @@ export default () => {
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
-					<SaveButton busy={!hasLoadedUpsell || savingUpsell}>
-						{__('Save Upsell', 'surecart')}
+					<SaveButton busy={loading}>
+						{__('Save Upsell Funnel', 'surecart')}
 					</SaveButton>
 				</div>
 			}
@@ -164,51 +228,32 @@ export default () => {
 							<Logo display="block" />
 						</ScBreadcrumb>
 						<ScBreadcrumb href="admin.php?page=sc-upsell-funnels">
-							{__('Upsells', 'surecart')}
+							{__('Upsell Funnels', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
-							{__('Edit Upsell', 'surecart')}
+							{__('Edit Upsell Funnel', 'surecart')}
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
 				</div>
 			}
-			// sidebar={
-			// 	<>
-			// 		<Priority
-			// 			upsell={upsell}
-			// 			updateUpsell={editUpsell}
-			// 			loading={!hasLoadedUpsell}
-			// 		/>
-
-			// 		<Template
-			// 			upsell={upsell}
-			// 			updateUpsell={editUpsell}
-			// 			loading={!hasLoadedUpsell}
-			// 		/>
-			// 	</>
-			// }
 		>
 			<>
-				<Error error={saveUpsellError || upsellError} margin="80px" />
+				<Error error={error} margin="80px" />
 				<Details
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
+					funnel={funnel}
+					updateFunnel={editFunnel}
+					loading={loading}
 				/>
-				{/* <Price
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
-				/> */}
 				<Conditions
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
+					funnel={funnel}
+					updateFunnel={editFunnel}
+					loading={loading}
 				/>
 				<Funnel
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
+					funnelId={id}
+					upsells={upsells}
+					updateFunnel={editFunnel}
+					loading={loading || loadingUpsells}
 				/>
 				{/* <Discount
 					upsell={upsell}

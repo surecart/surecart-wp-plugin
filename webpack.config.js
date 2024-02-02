@@ -77,9 +77,9 @@ module.exports = {
 			__dirname,
 			'packages/admin/bumps/index.js'
 		),
-		['admin/upsells']: path.resolve(
+		['admin/upsell-funnels']: path.resolve(
 			__dirname,
-			'packages/admin/upsells/index.js'
+			'packages/admin/upsell-funnels/index.js'
 		),
 		['admin/subscriptions/show']: path.resolve(
 			__dirname,

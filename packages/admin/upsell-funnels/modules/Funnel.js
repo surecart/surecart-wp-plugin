@@ -1,24 +1,54 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
-import {
-	ScButton,
-	ScCard,
-	ScDropdown,
-	ScFormatNumber,
-	ScIcon,
-	ScMenu,
-	ScMenuItem,
-} from '@surecart/components-react';
 import Box from '../../ui/Box';
-import EditUpsell from './EditUpsell';
 import { useState } from '@wordpress/element';
-import FilterItem from '../../components/filters/FilterItem';
-import LineItemLabel from '../../ui/LineItemLabel';
-import { intervalString } from '../../util/translations';
+import Upsell from './Upsell';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+import EditUpsell from './Upsell/EditUpsell';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
+import { createErrorString } from '../../util';
+import { ScBlockUi } from '@surecart/components-react';
 
-export default ({ upsell, loading }) => {
+export default ({ funnelId, upsells, loading }) => {
+	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
 	const [editUpsell, setEditUpsell] = useState(false);
+	const [deleteUpsell, setDeleteUpsell] = useState(false);
+	const [busy, setBusy] = useState(false);
+
+	const onDelete = async (upsell) => {
+		try {
+			setBusy(true);
+			await deleteEntityRecord('surecart', 'upsell', upsell.id, {
+				throwOnError: true,
+			});
+			setDeleteUpsell(false);
+		} catch (e) {
+			console.error(e);
+			createErrorNotice(createErrorString(e), {
+				type: 'snackbar',
+			});
+		} finally {
+			setBusy(false);
+		}
+	};
+
+	const onCreate = (data) => {
+		saveEntityRecord('surecart', 'upsell', {
+			...data,
+			fee_description: __('Offer', 'surecart'),
+			upsell_funnel: funnelId,
+		});
+	};
+
+	const { initial, accepted, declined } = (upsells || []).reduce(
+		(acc, upsell) => {
+			acc[upsell?.step] = upsell;
+			return acc;
+		},
+		{}
+	);
 
 	return (
 		<>
@@ -26,65 +56,16 @@ export default ({ upsell, loading }) => {
 				title={__('Post Purchase Offer', 'surecart')}
 				loading={loading}
 			>
-				<ScCard
+				<Upsell
+					upsell={initial}
+					onEdit={() =>
+						setEditUpsell({ ...initial, step: 'initial' })
+					}
+					onDelete={() => setDeleteUpsell(initial)}
 					css={css`
 						z-index: 2;
 					`}
-					noPadding
-				>
-					<FilterItem
-						loading={loading}
-						media={
-							upsell?.price?.product?.featured_product_media
-								?.media
-						}
-						icon={'image'}
-						onRemove={() => {}}
-						suffix={
-							<div
-								css={css`
-									align-self: center;
-								`}
-							>
-								<ScButton onClick={() => setEditUpsell(true)}>
-									<ScIcon name="edit-3" slot="prefix" />
-									{__('Edit Offer', 'surecart')}
-								</ScButton>
-								<ScDropdown
-									slot="suffix"
-									placement="bottom-end"
-								>
-									<ScButton type="text" slot="trigger" circle>
-										<ScIcon name="more-horizontal" />
-									</ScButton>
-									<ScMenu>
-										<ScMenuItem>
-											<ScIcon
-												slot="prefix"
-												name="trash"
-											/>
-											{__('Remove', 'surecart')}
-										</ScMenuItem>
-									</ScMenu>
-								</ScDropdown>
-							</div>
-						}
-					>
-						<div>
-							<div>
-								<strong>{upsell?.price?.product?.name}</strong>
-							</div>
-							<LineItemLabel lineItem={{ price: upsell?.price }}>
-								<ScFormatNumber
-									type="currency"
-									currency={upsell?.price?.currency || 'usd'}
-									value={upsell?.price?.amount}
-								/>
-								{intervalString(upsell?.price)}
-							</LineItemLabel>
-						</div>
-					</FilterItem>
-				</ScCard>
+				/>
 				<div
 					css={css`
 						display: flex;
@@ -92,7 +73,12 @@ export default ({ upsell, loading }) => {
 						gap: 1em;
 					`}
 				>
-					<ScCard
+					<Upsell
+						upsell={accepted}
+						onEdit={() =>
+							setEditUpsell({ ...accepted, step: 'accepted' })
+						}
+						onDelete={() => setDeleteUpsell(accepted)}
 						css={css`
 							flex: 1;
 							position: relative;
@@ -131,13 +117,13 @@ export default ({ upsell, loading }) => {
 								border-radius: 6px;
 							}
 						`}
-					>
-						<ScButton onClick={() => setEditUpsell(true)}>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Product', 'surecart')}
-						</ScButton>
-					</ScCard>
-					<ScCard
+					/>
+					<Upsell
+						upsell={declined}
+						onEdit={() =>
+							setEditUpsell({ ...declined, step: 'declined' })
+						}
+						onDelete={() => setDeleteUpsell(declined)}
 						css={css`
 							flex: 1;
 							position: relative;
@@ -175,19 +161,30 @@ export default ({ upsell, loading }) => {
 								border-radius: 6px;
 							}
 						`}
-					>
-						<ScButton onClick={() => setEditUpsell(true)}>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Product', 'surecart')}
-						</ScButton>
-					</ScCard>
+					/>
 				</div>
+				{busy && <ScBlockUi spinner />}
 			</Box>
-			<EditUpsell
-				open={editUpsell}
-				upsell={editUpsell}
-				onRequestClose={() => setEditUpsell(false)}
-			/>
+			{!!editUpsell && (
+				<EditUpsell
+					open={!!editUpsell}
+					upsell={{ ...editUpsell, upsell_funnel: funnelId }}
+					onCreate={onCreate}
+					onRequestClose={() => setEditUpsell(false)}
+				/>
+			)}
+			<ConfirmDialog
+				isOpen={deleteUpsell}
+				onConfirm={() => onDelete(deleteUpsell)}
+				onCancel={() => setDeleteUpsell(false)}
+			>
+				{sprintf(
+					__(
+						'Are you sure? This action cannot be undone.',
+						'surecart'
+					)
+				)}
+			</ConfirmDialog>
 		</>
 	);
 };
