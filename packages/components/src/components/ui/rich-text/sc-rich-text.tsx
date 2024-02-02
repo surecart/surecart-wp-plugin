@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, h, Host, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Host, Prop, State, Listen } from '@stencil/core';
 import { Editor } from '@tiptap/core';
 import CharacterCount from '@tiptap/extension-character-count';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -138,6 +138,14 @@ export class ScRichText {
   remainingCharacters() {
     if (!this.maxlength) return 1000;
     return this.maxlength - (this?.editor?.storage?.characterCount.characters() || 0);
+  }
+
+  @Listen('keydown')
+  handleKeyDown(event: KeyboardEvent) {
+    // Prevent keyboard propagation for Jetpack's notification shortcut, which is 'n'.
+    if (event.key === 'n') {
+      event.stopPropagation();
+    }
   }
 
   render() {
