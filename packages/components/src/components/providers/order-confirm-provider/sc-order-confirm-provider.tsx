@@ -64,8 +64,9 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
-      const upsell = getUpsell();
-      // If there is pos, redirect to first upsell.
+      const upsell = getUpsell('initial');
+
+      // If there is an initial upsell redirect to it.
       if (!!upsell?.permalink) {
         setTimeout(
           () =>

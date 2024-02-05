@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
 import { addQueryArgs } from '@wordpress/url';
 
-import CreateUpsell from './CreateUpsell';
-import EditUpsell from './EditUpsell';
+import CreateFunnel from './CreateFunnel';
+import EditFunnel from './EditFunnel';
 
 /**
  * Returns the Model Edit URL.
@@ -43,5 +43,5 @@ export default () => {
 	// get the id from the url.
 	const id = useSelect((select) => select(store).selectPageId());
 
-	return id ? <EditUpsell id={id} /> : <CreateUpsell setId={setId} />;
+	return id ? <EditFunnel id={id} /> : <CreateFunnel setId={setId} />;
 };

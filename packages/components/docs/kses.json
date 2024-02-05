@@ -999,6 +999,7 @@
     "checked": true,
     "disabled": true,
     "href": true,
+    "target": true,
     "value": true,
     "style": true,
     "id": true,

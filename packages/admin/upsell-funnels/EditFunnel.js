@@ -8,9 +8,11 @@ import {
 	ScIcon,
 	ScMenu,
 	ScMenuItem,
+	ScSwitch,
+	ScTag,
 } from '@surecart/components-react';
 import { store } from '@surecart/data';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -26,6 +28,8 @@ import Conditions from './modules/Conditions';
 import Details from './modules/Details';
 import Funnel from './modules/Funnel';
 import useSave from '../settings/UseSave';
+import Box from '../ui/Box';
+import Priority from './modules/Priority';
 
 export default () => {
 	const { createSuccessNotice, createErrorNotice } =
@@ -82,7 +86,7 @@ export default () => {
 		[id]
 	);
 
-	const { funnel, loading, error } = useSelect(
+	const { funnel, savedFunnel, willPublish, loading, error } = useSelect(
 		(select) => {
 			if (!id) {
 				return {};
@@ -95,6 +99,10 @@ export default () => {
 			];
 			return {
 				funnel: select(coreStore).getEditedEntityRecord(...entityData),
+				savedFunnel: select(coreStore).getEntityRecord(...entityData),
+				willPublish: select(coreStore).getEntityRecordEdits(
+					...entityData
+				)?.enabled,
 				error: select(coreStore)?.getLastEntitySaveError?.(
 					...entityData
 				),
@@ -112,7 +120,7 @@ export default () => {
 	 */
 	const onSubmit = async () => {
 		try {
-			save({ successMessage: __('Upsell funnel updated.', 'surecart') });
+			save({ successMessage: __('Upsell funnel saved.', 'surecart') });
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });
@@ -186,28 +194,6 @@ export default () => {
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
-			button={
-				<div>
-					<ScDropdown placement="bottom-end">
-						<ScButton type="text" slot="trigger">
-							<ScIcon name="more-horizontal" />
-						</ScButton>
-						<ScMenu>
-							<ScMenuItem onClick={toggleArchive}>
-								{funnel?.archived
-									? __('Un-Archive', 'surecart')
-									: __('Archive', 'surecart')}
-							</ScMenuItem>
-							<ScMenuItem onClick={onDelete}>
-								{__('Delete', 'surecart')}
-							</ScMenuItem>
-						</ScMenu>
-					</ScDropdown>
-					<SaveButton busy={loading}>
-						{__('Save Upsell Funnel', 'surecart')}
-					</SaveButton>
-				</div>
-			}
 			title={
 				<div
 					css={css`
@@ -234,6 +220,63 @@ export default () => {
 							{__('Edit Upsell Funnel', 'surecart')}
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
+					<ScTag
+						type={savedFunnel?.enabled ? 'success' : 'default'}
+						size="small"
+						pill
+					>
+						{savedFunnel?.enabled
+							? __('Published', 'surecart')
+							: __('Draft', 'surecart')}
+					</ScTag>
+				</div>
+			}
+			sidebar={
+				<>
+					<Box title={__('Status', 'surecart')}>
+						<ScSwitch
+							checked={funnel?.enabled}
+							onScChange={(e) =>
+								editFunnel({ enabled: e.target.checked })
+							}
+						>
+							{__('Enabled', 'surecart')}
+						</ScSwitch>
+					</Box>
+
+					<Priority funnel={funnel} updateFunnel={editFunnel} />
+				</>
+			}
+			button={
+				<div
+					css={css`
+						display: flex;
+						gap: 1em;
+						align-items: center;
+					`}
+				>
+					<ScDropdown placement="bottom-end">
+						<ScButton type="text" slot="trigger">
+							<ScIcon name="more-horizontal" />
+						</ScButton>
+						<ScMenu>
+							<ScMenuItem onClick={toggleArchive}>
+								{funnel?.archived
+									? __('Un-Archive', 'surecart')
+									: __('Archive', 'surecart')}
+							</ScMenuItem>
+							<ScMenuItem onClick={onDelete}>
+								{__('Delete', 'surecart')}
+							</ScMenuItem>
+						</ScMenu>
+					</ScDropdown>
+					<SaveButton busy={loading}>
+						{willPublish
+							? __('Save & Publish', 'surecart')
+							: funnel?.enabled
+							? __('Save Funnel', 'surecart')
+							: __('Save Draft', 'surecart')}
+					</SaveButton>
 				</div>
 			}
 		>

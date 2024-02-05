@@ -19,4 +19,14 @@ class UpsellFunnel extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'upsell_funnel';
+
+	/**
+	 * Set the upsells attribute.
+	 *
+	 * @param  object $value Array of upsell objects.
+	 * @return void
+	 */
+	public function setUpsellsAttribute( $value ) {
+		$this->setCollection( 'upsells', $value, Upsell::class );
+	}
 }

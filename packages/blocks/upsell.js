@@ -1,6 +1,8 @@
 /**
  * Internal dependencies.
  */
+import { registerPlugin } from '@wordpress/plugins';
+import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 import * as Upsell from './Blocks/Upsell/Upsell';
 import * as UpsellTotals from './Blocks/Upsell/UpsellTotals';
 import * as CountdownTimer from './Blocks/Upsell/CountdownTimer';

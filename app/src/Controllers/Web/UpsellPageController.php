@@ -34,7 +34,8 @@ class UpsellPageController extends BasePageController {
 	 */
 	public function addSeoMetaData(): void { ?>
 		<meta name="robots" content="noindex" />
-	<?php }
+		<?php
+	}
 
 	/**
 	 * Add edit links
@@ -50,8 +51,8 @@ class UpsellPageController extends BasePageController {
 		$wp_admin_bar->add_node(
 			[
 				'id'    => 'edit',
-				'title' => __( 'Edit Upsell', 'surecart' ),
-				'href'  => esc_url( \SureCart::getUrl()->edit( 'upsell', $this->model->id ) ),
+				'title' => __( 'Edit Upsell Funnel', 'surecart' ),
+				'href'  => esc_url( \SureCart::getUrl()->edit( 'upsell', $this->model->upsell_funnel ) ),
 			]
 		);
 	}
@@ -79,7 +80,7 @@ class UpsellPageController extends BasePageController {
 		}
 
 		// we need the checkout since it cannot be fetched through the upsell if it's expired.
-		$checkout = \SureCart\Models\Checkout::with(['recommended_upsells', 'upsell.price'])->find( $request->query( 'sc_checkout_id' ) );
+		$checkout = \SureCart\Models\Checkout::with( [ 'recommended_upsells', 'upsell.price' ] )->find( $request->query( 'sc_checkout_id' ) );
 
 		// this is typically cached.
 		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $this->model->price->product );
@@ -100,15 +101,15 @@ class UpsellPageController extends BasePageController {
 			[
 				'product' => [
 					// we need to force the selected price.
-					$this->product->id => $this->product->getInitialPageState([ 'selectedPrice' => $this->model->price ]),
+					$this->product->id => $this->product->getInitialPageState( [ 'selectedPrice' => $this->model->price ] ),
 				],
 				'upsell'  => [
 					'product'     => $this->product,
 					'upsell'      => $this->model,
 					'form_id'     => (int) $request->query( 'sc_form_id' ) ?? null,
 					'checkout_id' => esc_attr( $request->query( 'sc_checkout_id' ) ?? null ),
-					'checkout' 	  => $checkout,
-					'text' 		  => $this->getCheckoutText( (int) $request->query( 'sc_form_id' ) ?? '' ),
+					'checkout'    => $checkout,
+					'text'        => $this->getCheckoutText( (int) $request->query( 'sc_form_id' ) ?? '' ),
 					'success_url' => esc_url( $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ) ),
 				],
 			]
@@ -138,7 +139,7 @@ class UpsellPageController extends BasePageController {
 			return '';
 		}
 
-		$block = wp_get_first_block( parse_blocks( $form->post_content), 'surecart/form' );
+		$block      = wp_get_first_block( parse_blocks( $form->post_content ), 'surecart/form' );
 		$attributes = $block['attrs'] ?? [];
 
 		return array_filter(
@@ -161,7 +162,7 @@ class UpsellPageController extends BasePageController {
 			return '';
 		}
 
-		$block = wp_get_first_block( parse_blocks( $form->post_content), 'surecart/form' );
+		$block = wp_get_first_block( parse_blocks( $form->post_content ), 'surecart/form' );
 
 		if ( empty( $block ) || empty( $block['attrs']['success_url'] ) ) {
 			return '';

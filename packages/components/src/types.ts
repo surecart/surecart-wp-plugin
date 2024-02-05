@@ -147,21 +147,41 @@ export interface Bump {
   updated_at: number;
 }
 
+export interface UpsellFunnel {
+  id: string;
+  object: 'upsell_funnel';
+  archived: boolean;
+  enabled: boolean;
+  filter_match_type: 'all' | 'any' | 'none';
+  filter_price_ids: string[];
+  filter_product_ids: string[];
+  metadata: any;
+  name: string;
+  priority: number;
+  upsells: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Upsell>;
+  };
+  archived_at: number;
+  discarded_at: number;
+  created_at: number;
+  updated_at: number;
+}
+
 export interface Upsell {
   id: string;
   object: 'upsell';
   amount_off: number;
-  archived: boolean;
-  archived_at: number;
-  filter_match_type: 'all' | 'any' | 'none';
-  filters: any;
   metadata: any;
-  name: string;
+  fee_description: string;
+  duplicate_purchase_behavior: 'allow' | 'block' | 'block_within_checkout';
   percent_off: number;
   price: string | Price;
-  priority: 1 | 2 | 3 | 4 | 5;
-  times_remaining?: number;
+  step: 'initial' | 'accepted' | 'declined';
+  upsell_funnel: string | UpsellFunnel;
   permalink: string;
+  discarded_at: number;
   created_at: number;
   updated_at: number;
 }
@@ -642,6 +662,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Bump>;
   };
+  upsell_funnel?: string | UpsellFunnel;
   recommended_upsells?: {
     object: 'list';
     pagination: Pagination;

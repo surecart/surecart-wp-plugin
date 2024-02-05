@@ -65,13 +65,13 @@ class Checkout extends Model {
 	}
 
 	/**
-	 * Set the recommended upsells attribute
+	 * Set the upsell funnel attribute
 	 *
-	 * @param  object $value Subscription data array.
+	 * @param  object $value The data array.
 	 * @return void
 	 */
-	public function setRecommendedUpsellsAttribute( $value ) {
-		$this->setCollection( 'recommended_upsells', $value, Upsell::class );
+	public function setUpsellFunnelAttribute( $value ) {
+		$this->setRelation( 'upsell_funnel', $value, UpsellFunnel::class );
 	}
 
 	/**

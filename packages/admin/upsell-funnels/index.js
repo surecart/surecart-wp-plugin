@@ -3,7 +3,7 @@ import { render } from '@wordpress/element';
 /**
  * App
  */
-import Upsells from './Upsells';
+import Funnels from './Funnels';
 
 /**
  * register store and entities.
@@ -13,4 +13,4 @@ import '../store/add-entities';
 /**
  * Render
  */
-render(<Upsells />, document.getElementById('app'));
+render(<Funnels />, document.getElementById('app'));

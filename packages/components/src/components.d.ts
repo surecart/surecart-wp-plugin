@@ -1818,6 +1818,10 @@ export namespace Components {
          */
         "setFocus": (options?: FocusOptions) => Promise<void>;
         /**
+          * The target of the link.
+         */
+        "target": string;
+        /**
           * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
          */
         "value": string;
@@ -7877,6 +7881,10 @@ declare namespace LocalJSX {
           * Optional link to follow.
          */
         "href"?: string;
+        /**
+          * The target of the link.
+         */
+        "target"?: string;
         /**
           * A unique value to store in the menu item. This can be used as a way to identify menu items when selected.
          */

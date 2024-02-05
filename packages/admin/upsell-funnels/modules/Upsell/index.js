@@ -4,8 +4,12 @@ import { __ } from '@wordpress/i18n';
 import {
 	ScButton,
 	ScCard,
+	ScDropdown,
 	ScFormatNumber,
 	ScIcon,
+	ScMenu,
+	ScMenuDivider,
+	ScMenuItem,
 } from '@surecart/components-react';
 import SelectTemplate from '../../components/SelectTemplate';
 import SelectTemplatePart from '../../components/SelectTemplatePart';
@@ -35,34 +39,77 @@ export default ({ upsell, onEdit, onDelete, className }) => {
 		: SelectTemplatePart;
 
 	return (
-		<ScCard className={className} noPadding>
+		<ScCard
+			css={css`
+				::part(base) {
+					height: 100%;
+				}
+			`}
+			className={className}
+			noPadding
+		>
 			<FilterItem
 				media={upsell?.price?.product?.featured_product_media?.media}
 				icon={'image'}
 				onDelete={onDelete}
 				suffix={
 					<div
+						slot="suffix"
 						css={css`
 							align-self: center;
 						`}
 					>
-						<ScButton type="text" circle onClick={onEdit}>
-							<ScIcon name="edit-3" />
-						</ScButton>
+						<ScDropdown placement="bottom-end">
+							<ScButton type="text" circle slot="trigger">
+								<ScIcon name="more-horizontal" />
+							</ScButton>
 
-						<SelectUpsellTemplate
-							upsell={upsell}
-							updateUpsell={onEdit}
-							renderToggle={({ onToggle }) => (
-								<ScButton type="text" circle onClick={onToggle}>
-									<ScIcon name="layout" />
-								</ScButton>
-							)}
-						/>
+							<ScMenu>
+								<ScMenuItem onClick={onEdit}>
+									<ScIcon name="edit-3" slot="prefix" />
+									{__('Edit offer', 'surecart')}
+								</ScMenuItem>
 
-						<ScButton type="text" circle onClick={onDelete}>
-							<ScIcon name="trash" />
-						</ScButton>
+								<SelectUpsellTemplate
+									upsell={upsell}
+									updateUpsell={onEdit}
+									renderToggle={({ onToggle }) => (
+										<ScMenuItem
+											onClick={onToggle}
+											slot="prefix"
+										>
+											<ScIcon
+												name="layout"
+												slot="prefix"
+											/>
+											{__('Edit template', 'surecart')}
+										</ScMenuItem>
+									)}
+								/>
+
+								<ScMenuItem
+									href={upsell?.permalink}
+									target="_blank"
+								>
+									<ScIcon
+										name="external-link"
+										slot="prefix"
+									/>
+									{__('Preview upsell', 'surecart')}
+								</ScMenuItem>
+
+								<ScMenuDivider />
+
+								<ScMenuItem
+									type="text"
+									circle
+									onClick={onDelete}
+								>
+									<ScIcon name="trash" slot="prefix" />
+									{__('Delete offer', 'surecart')}
+								</ScMenuItem>
+							</ScMenu>
+						</ScDropdown>
 					</div>
 				}
 			>
