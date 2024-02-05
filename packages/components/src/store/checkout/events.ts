@@ -21,6 +21,7 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
       ...(checkout?.tax_amount ? { tax: maybeConvertAmount(checkout?.tax_amount, checkout?.currency || 'USD') } : {}),
       items: (checkout?.line_items?.data || []).map(item => ({
         item_name: (item?.price?.product as Product)?.name || '',
+        item_id: (item?.price?.product as Product)?.id,
         discount: item?.discount_amount ? maybeConvertAmount(item?.discount_amount || 0, checkout?.currency || 'USD') : 0,
         price: maybeConvertAmount(item?.price?.amount || 0, checkout?.currency || 'USD'),
         quantity: item?.quantity || 1,
@@ -52,6 +53,13 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
   const trialLineItems: LineItem[] = (checkout?.line_items?.data || []).filter(item => item?.price?.trial_duration_days > 0);
   if (trialLineItems.length > 0) {
     const event = new CustomEvent('scTrialStarted', { detail: trialLineItems, bubbles: true });
+    document.dispatchEvent(event);
+  }
+
+  // get subscription line items and emit subscription event if there are any.
+  const subscriptionLineItems: LineItem[] = (checkout?.line_items?.data || []).filter(item => item?.price?.recurring_interval_count > 0);
+  if (subscriptionLineItems.length > 0) {
+    const event = new CustomEvent('scSubscriptionStarted', { detail: subscriptionLineItems, bubbles: true });
     document.dispatchEvent(event);
   }
 });

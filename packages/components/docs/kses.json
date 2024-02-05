@@ -923,7 +923,6 @@
   "sc-line-item-bump": {
     "label": true,
     "loading": true,
-    "order": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1543,7 +1542,7 @@
     "checkout-link": true,
     "form-id": true,
     "mode": true,
-    "product": true,
+    "product-id": true,
     "style": true,
     "id": true,
     "class": true,

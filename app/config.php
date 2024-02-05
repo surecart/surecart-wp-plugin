@@ -171,6 +171,7 @@ return [
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
+		\SureCartBlocks\Blocks\Cart\Block::class,
 		\SureCartBlocks\Blocks\VariantPriceSelector\Block::class,
 		\SureCartBlocks\Blocks\ProductDonation\Block::class,
 		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
@@ -392,7 +393,7 @@ return [
 	'webhook_events'         => [
 		// 'cancellation_act.updated',
 		// 'customer.created',
-		// 'customer.updated',
+		'customer.updated',
 		// 'order.created',
 		// 'order.made_processing',
 		// 'order.paid', // In doc

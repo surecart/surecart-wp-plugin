@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-01-12T10:09:12",
+  "timestamp": "2024-02-05T09:43:31",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -15325,21 +15325,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -23721,15 +23706,16 @@
           "required": false
         },
         {
-          "name": "product",
-          "type": "Product",
+          "name": "productId",
+          "type": "string",
           "mutable": false,
+          "attr": "product-id",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "Product"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -24394,7 +24380,7 @@
       "events": [
         {
           "event": "scSearched",
-          "detail": "string",
+          "detail": "ProductsSearchedParams",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
@@ -30933,6 +30919,23 @@
           "values": [
             {
               "type": "Subscription"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "successUrl",
+          "type": "string",
+          "mutable": false,
+          "attr": "success-url",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "window.location.href",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

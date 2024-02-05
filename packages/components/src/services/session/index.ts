@@ -17,6 +17,7 @@ export const expand = [
   'variant.image',
   'price.product',
   'product.featured_product_media',
+  'product.product_collections',
   'product_media.media',
   'customer',
   'customer.shipping_address',
@@ -45,6 +46,7 @@ export const withDefaultData = (data: { metadata?: any } = {}) => ({
     ...(checkoutState?.product?.id && { buy_page_product_id: checkoutState?.product?.id }),
     page_url: window.location.href,
   },
+  ...(checkoutState?.checkout?.email && { email: checkoutState?.checkout?.email }),
   ...data,
 });
 
