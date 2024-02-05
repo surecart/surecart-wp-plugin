@@ -25,8 +25,6 @@ interface Store {
   busy: boolean;
   disabled: boolean;
   success_url: string;
-  accept_action: 'continue' | 'exit';
-  decline_action: 'continue' | 'exit';
   loading: 'loading' | 'busy' | 'idle' | 'accepted' | 'declined' | 'complete' | 'redirecting';
   text: {
     success: {

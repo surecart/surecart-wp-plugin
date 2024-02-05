@@ -11,23 +11,49 @@ import { Checkout, LineItem, Price } from 'src/types';
 import { state } from './store';
 import { state as productState } from '../product';
 import { createErrorNotice, removeNotice } from '@store/notices/mutations';
-import { getNextLink } from './getters';
+import { getExitUrl, getUpsell } from './getters';
 
 /**
  * Handle accepted
  */
-export const handleAccepted = () => (state.accept_action === 'exit' ? (state.loading = 'complete') : maybeRedirect());
+export const handleAccepted = () => {
+  const upsell = getUpsell('accepted');
+  // TODO: Analytics
+  if (!upsell?.permalink) {
+    return (state.loading = 'complete');
+  }
+  state.loading = 'redirecting';
+  window.location.assign(
+    addQueryArgs(upsell?.permalink, {
+      sc_checkout_id: state.checkout?.id,
+      sc_form_id: state.form_id,
+    }),
+  );
+};
 
 /**
- * Handle declined
+ * Handle declined.
  */
-export const handleDeclined = () => (state.decline_action === 'exit' ? (state.loading = 'complete') : maybeRedirect());
+export const handleDeclined = () => {
+  const upsell = getUpsell('accepted');
+  // TODO: Analytics
+  if (!upsell?.permalink) {
+    return (state.loading = 'complete');
+  }
+  state.loading = 'redirecting';
+  window.location.assign(
+    addQueryArgs(upsell?.permalink, {
+      sc_checkout_id: state.checkout?.id,
+      sc_form_id: state.form_id,
+    }),
+  );
+};
 
 /**
  * Redirect to next link.
  */
-export const maybeRedirect = () => {
-  const nextLink = getNextLink();
+export const handleComplete = () => {
+  const nextLink = getExitUrl();
   if (!nextLink) {
     return (state.loading = 'complete');
   }
@@ -61,7 +87,7 @@ export const update = async ({ preview } = { preview: true }) => {
     const { checkout, ...lineItem } = (await apiFetch({
       path: addQueryArgs('surecart/v1/line_items/upsell', {
         preview,
-        expand: ['checkout', 'checkout.recommended_upsells', 'fees', 'upsell.price'],
+        expand: ['checkout', 'checkout.upsell_funnel', 'upsell_funnel.upsells', 'fees', 'upsell.price'],
       }),
       method: 'POST',
       data: {

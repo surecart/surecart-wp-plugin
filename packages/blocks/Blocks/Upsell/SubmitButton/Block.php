@@ -107,12 +107,6 @@ class Block extends BaseBlock {
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 		$icon        = ! empty( $attributes['show_icon'] ) ? 'lock' : false;
 
-		sc_initial_state( [
-			'upsell' => [
-				'accept_action' => $attributes['next_action'] ?? 'continue'
-			]
-		] );
-
 		ob_start();
 		?>
 

@@ -1,6 +1,5 @@
-// import { Price } from 'src/types';
+import { UpsellFunnel } from 'src/types';
 import { state } from './store';
-// import { addQueryArgs } from '@wordpress/url';
 
 /**
  * Is it busy
@@ -8,49 +7,24 @@ import { state } from './store';
 export const isBusy = () => ['loading', 'busy', 'redirecting'].includes(state.loading);
 
 /**
- * Get the next upsell.
+ * Get the upsell by step name.
  */
-export const getNextUpsell = () => false;
-// (state?.checkout?.recommended_upsells?.data || [])
-//   .sort((a, b) => a?.priority - b?.priority) // sort by priority.
-//   .filter(u => (u.price as Price)?.ad_hoc === false) // filter out ad_hoc
-//   .find(item => item.priority > state.upsell.priority); // get the first upsell with priority greater than current upsell.
+export const getUpsell = step => ((state?.checkout?.upsell_funnel as UpsellFunnel)?.upsells?.data || []).filter(u => u.step !== state.upsell.step)?.find(u => u?.step === step);
 
 /**
- * Get the next link.
+ * Get the exit url.
  */
-export const getNextLink = () => {
-  // const nextUpsell = getNextUpsell();
-  // if (nextUpsell?.permalink) {
-  //   return addQueryArgs(nextUpsell.permalink, {
-  //     sc_checkout_id: state?.checkout?.id,
-  //     sc_form_id: state.form_id,
-  //   });
-  // }
-  return state?.checkout?.metadata?.success_url || state.success_url || null;
-};
-
-/**
- * Check if there is a next link.
- */
-export const hasNextLink = () => !!getNextLink();
+export const getExitUrl = () => state?.checkout?.metadata?.success_url || state.success_url || null;
 
 /**
  * Get the discounted amount.
  */
-export const getDiscountedAmount = amount => {
-  return state?.line_item?.total_amount ?? amount;
-};
+export const getDiscountedAmount = amount => state?.line_item?.total_amount ?? amount;
 
 /**
  * Get the scratch amount.
  */
-export const getScratchAmount = amount => {
-  if (!state?.line_item?.total_savings_amount) {
-    return amount;
-  }
-  return -state?.line_item?.total_savings_amount + state?.line_item?.total_amount;
-};
+export const getScratchAmount = amount => (!state?.line_item?.total_savings_amount ? amount : -state?.line_item?.total_savings_amount + state?.line_item?.total_amount);
 
 /**
  * Get upsell remaining time.
@@ -113,9 +87,5 @@ export const isUpsellExpired = () => {
   const remaining = getUpsellRemainingTime();
 
   // Make sure we wait until it's set.
-  if (remaining === null) {
-    return false;
-  }
-
-  return remaining <= 0;
+  return getUpsellRemainingTime() === null ? false : remaining <= 0;
 };

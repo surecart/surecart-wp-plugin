@@ -103,21 +103,17 @@ class Block extends BaseBlock {
 
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
 
-		sc_initial_state( [
-			'upsell' => [
-				'decline_action' => $attributes['next_action'] ?? 'continue'
-			]
-		] );
-
 		return wp_sprintf(
 			'<sc-upsell-no-thanks-button class="%s">
 				<a %s>%s</a>
 			</sc-upsell-no-thanks-button>',
 			'wp-block-button sc-block-button ' . esc_attr( $width_class ),
-			get_block_wrapper_attributes( [
-				'class' => esc_attr( $this->getClasses( $attributes ) ) . ' wp-block-button__link sc-block-button__link wp-element-button',
-				'style' => esc_attr( $this->getStyles( $attributes ) ),
-			] ),
+			get_block_wrapper_attributes(
+				[
+					'class' => esc_attr( $this->getClasses( $attributes ) ) . ' wp-block-button__link sc-block-button__link wp-element-button',
+					'style' => esc_attr( $this->getStyles( $attributes ) ),
+				]
+			),
 			wp_kses_post( $attributes['text'] ?? __( 'No Thanks', 'surecart' ) )
 		);
 	}

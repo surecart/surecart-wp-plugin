@@ -3,11 +3,11 @@
  */
 import { on } from '../product';
 import { isUpsellExpired } from './getters';
-import { update, handleDeclined, handleAccepted } from './mutations';
+import { update, handleDeclined, handleAccepted, handleComplete } from './mutations';
 import state, { onChange } from './store';
 
 /**
- * When line itme changes, update totals.
+ * When line item changes, update totals.
  */
 on('set', (_, newValue, oldValue) => {
   if (JSON.stringify(newValue?.line_item) !== JSON.stringify(oldValue?.line_item)) {
@@ -16,16 +16,13 @@ on('set', (_, newValue, oldValue) => {
 });
 
 /**
- * Watch for upsell to expire.
+ * Watch for upsell to expire every second.
  */
 setInterval(() => {
-  maybeRedirectUpsell();
-}, 1000);
-export const maybeRedirectUpsell = () => {
   if (isUpsellExpired()) {
     state.loading = 'complete';
   }
-};
+}, 1000);
 
 /**
  * Dynamically update amount_due when line_item changes.
@@ -39,9 +36,12 @@ onChange('line_item', () => {
  */
 onChange('loading', val => {
   if (val === 'accepted') {
-    handleAccepted();
+    return handleAccepted();
   }
   if (val === 'declined') {
-    handleDeclined();
+    return handleDeclined();
+  }
+  if (val === 'complete') {
+    return handleComplete();
   }
 });
