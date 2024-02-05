@@ -108,7 +108,7 @@ export class ScProductPrice {
                 <Fragment>
                   <sc-visually-hidden>{sprintf(__('You have a %d-day trial before payment becomes necessary.', 'surecart'), price.trial_duration_days)}</sc-visually-hidden>
                   <span class="price__trial" aria-hidden="true">
-                    {sprintf(_n('Starting in %s day.', 'Starting in %s days.', price.trial_duration_days, 'surecart'), price.trial_duration_days)}
+                    {sprintf(_n('Starting in %s day', 'Starting in %s days', price.trial_duration_days, 'surecart'), price.trial_duration_days)}
                   </span>
                 </Fragment>
               )}
