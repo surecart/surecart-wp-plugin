@@ -62,9 +62,6 @@ export default ({ funnelId, upsells, loading }) => {
 						setEditUpsell({ ...initial, step: 'initial' })
 					}
 					onDelete={() => setDeleteUpsell(initial)}
-					css={css`
-						z-index: 2;
-					`}
 				/>
 				<div
 					css={css`
@@ -89,8 +86,8 @@ export default ({ funnelId, upsells, loading }) => {
 								content: ' ';
 								position: absolute;
 								left: 50%;
-								top: -120px; /* Adjust this value to position the line above the div */
-								height: 120px; /* Height of the vertical line */
+								top: -75px; /* Adjust this value to position the line above the div */
+								height: 75px; /* Height of the vertical line */
 								width: 1px; /* Width of the vertical line */
 								background-color: rgba(
 									0,
@@ -133,8 +130,8 @@ export default ({ funnelId, upsells, loading }) => {
 								content: ' ';
 								position: absolute;
 								left: 50%;
-								top: -120px; /* Adjust this value to position the line above the div */
-								height: 120px; /* Height of the vertical line */
+								top: -75px; /* Adjust this value to position the line above the div */
+								height: 75px; /* Height of the vertical line */
 								width: 1px; /* Width of the vertical line */
 								background-color: rgba(
 									0,
