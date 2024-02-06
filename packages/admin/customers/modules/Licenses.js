@@ -16,7 +16,7 @@ export default ({ customerId }) => {
 			if (!customerId) {
 				return {
 					licenses: [],
-					loading: true,
+					loading: false,
 				};
 			}
 			const entityData = [
