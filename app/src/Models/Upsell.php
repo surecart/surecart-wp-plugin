@@ -23,6 +23,28 @@ class Upsell extends Model implements PageModel {
 	protected $object_name = 'upsell';
 
 	/**
+	 * Set the template id attribute.
+	 *
+	 * @param string $value The template id.
+	 *
+	 * @return void
+	 */
+	protected function setTemplateIdAttribute( $value ) {
+		$this->attributes['metadata']['wp_template_id'] = $value;
+	}
+
+	/**
+	 * Set the template id attribute.
+	 *
+	 * @param string $value The template id.
+	 *
+	 * @return void
+	 */
+	protected function setTemplatePartIdAttribute( $value ) {
+		$this->attributes['metadata']['wp_template_id'] = $value;
+	}
+
+	/**
 	 * Get the upsell template id.
 	 *
 	 * @return string
