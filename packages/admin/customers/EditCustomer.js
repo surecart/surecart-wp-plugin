@@ -34,6 +34,7 @@ import ShippingAddress from './modules/ShippingAddress';
 import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
 import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
 import TaxSettings from './modules/TaxSettings';
+import Licenses from './modules/Licenses';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -91,8 +92,8 @@ export default () => {
 					'surecart'
 				),
 				customer?.name ||
-					customer?.email ||
-					__('this customer', 'surecart')
+				customer?.email ||
+				__('this customer', 'surecart')
 			)
 		);
 		if (!r) return;
@@ -157,6 +158,7 @@ export default () => {
 				<>
 					<Balance customer={customer} loading={!hasLoadedCustomer} />
 					<Purchases customerId={id} />
+					<Licenses customerId={id} />
 					<ShippingAddress
 						shippingAddress={customer?.shipping_address}
 						loading={!hasLoadedCustomer}
