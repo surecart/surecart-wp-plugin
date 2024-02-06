@@ -130,7 +130,7 @@ export default function PostTemplateForm({
 				}}
 			/>
 
-			{canCreate && (
+			{/* {canCreate && (
 				<p>
 					<Button
 						variant="link"
@@ -142,10 +142,10 @@ export default function PostTemplateForm({
 							canvas: 'edit',
 						})}
 					>
-						{__('Edit template')}
+						{__('Manage All Template Parts')}
 					</Button>
 				</p>
-			)}
+			)} */}
 
 			{isCreateModalOpen && (
 				<PostTemplateCreateModal

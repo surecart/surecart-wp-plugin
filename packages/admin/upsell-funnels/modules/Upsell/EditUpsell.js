@@ -15,6 +15,7 @@ import { store as noticesStore } from '@wordpress/notices';
 import DisplayConditions from './DisplayConditions';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { createErrorString } from '../../../util';
+import Template from './Template';
 
 const OFFER_TITLE = {
 	initial: __('Initial Offer', 'surecart'),
@@ -29,6 +30,10 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 
 	const [upsell, setUpsell] = useState({
 		duplicate_purchase_behavior: 'allow',
+		metadata: {
+			wp_template_part_id: 'surecart/surecart//upsell-info',
+			wp_template_id: 'pages/template-surecart-blank.php',
+		},
 		...initialUpsell,
 	});
 
@@ -109,6 +114,8 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 					<Discount upsell={upsell} onUpdate={editUpsell} />
 
 					<DisplayConditions upsell={upsell} onUpdate={editUpsell} />
+
+					<Template upsell={upsell} onUpdate={editUpsell} />
 				</div>
 
 				<ScButton type="primary" slot="footer" submit busy={isSaving}>

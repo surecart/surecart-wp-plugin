@@ -20,8 +20,6 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 
 export default ({ upsell, onEdit, onDelete, className }) => {
-	const { editEntityRecord } = useDispatch(coreStore);
-
 	if (!upsell) {
 		return (
 			<>
@@ -70,30 +68,6 @@ export default ({ upsell, onEdit, onDelete, className }) => {
 									<ScIcon name="edit-3" slot="prefix" />
 									{__('Edit offer', 'surecart')}
 								</ScMenuItem>
-
-								<SelectUpsellTemplate
-									upsell={upsell}
-									updateUpsell={(data) =>
-										editEntityRecord(
-											'surecart',
-											'upsell',
-											upsell.id,
-											data
-										)
-									}
-									renderToggle={({ onToggle }) => (
-										<ScMenuItem
-											onClick={onToggle}
-											slot="prefix"
-										>
-											<ScIcon
-												name="layout"
-												slot="prefix"
-											/>
-											{__('Edit template', 'surecart')}
-										</ScMenuItem>
-									)}
-								/>
 
 								<ScMenuItem
 									href={upsell?.permalink}

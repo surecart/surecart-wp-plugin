@@ -3,16 +3,13 @@ import { __ } from '@wordpress/i18n';
 import SelectTemplate from '../../components/SelectTemplate';
 import SelectTemplatePart from '../../components/SelectTemplatePart';
 
-export default ({ upsell, updateUpsell, loading }) => {
+export default (props) => {
 	return (
 		<>
 			{scData?.is_block_theme ? (
-				<SelectTemplate upsell={upsell} updateUpsell={updateUpsell} />
+				<SelectTemplate {...props} />
 			) : (
-				<SelectTemplatePart
-					upsell={upsell}
-					updateUpsell={updateUpsell}
-				/>
+				<SelectTemplatePart {...props} />
 			)}
 		</>
 	);

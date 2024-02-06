@@ -54,7 +54,7 @@ export default ({ funnelId, upsells, loading }) => {
 		<>
 			<Box
 				title={__('Post Purchase Offer', 'surecart')}
-				loading={loading}
+				loading={loading && !upsells?.length}
 			>
 				<Upsell
 					upsell={initial}
@@ -160,7 +160,9 @@ export default ({ funnelId, upsells, loading }) => {
 						`}
 					/>
 				</div>
-				{busy && <ScBlockUi spinner />}
+				{(busy || (loading && upsells?.length)) && (
+					<ScBlockUi spinner />
+				)}
 			</Box>
 			{!!editUpsell && (
 				<EditUpsell
@@ -170,6 +172,7 @@ export default ({ funnelId, upsells, loading }) => {
 					onRequestClose={() => setEditUpsell(false)}
 				/>
 			)}
+
 			<ConfirmDialog
 				isOpen={deleteUpsell}
 				onConfirm={() => onDelete(deleteUpsell)}

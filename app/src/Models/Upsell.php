@@ -23,24 +23,6 @@ class Upsell extends Model implements PageModel {
 	protected $object_name = 'upsell';
 
 	/**
-	 * Create a new model
-	 *
-	 * @param array $attributes Attributes to create.
-	 *
-	 * @return $this|false
-	 */
-	protected function create( $attributes = [] ) {
-		if ( ! wp_is_block_theme() ) {
-			$attributes['metadata'] = [
-				...$attributes['metadata'] ?? [],
-				'wp_template_id' => apply_filters( 'surecart/templates/upsells/default', 'pages/template-surecart-blank.php' ),
-			];
-		}
-
-		return parent::create( $attributes );
-	}
-
-	/**
 	 * Get the upsell template id.
 	 *
 	 * @return string
