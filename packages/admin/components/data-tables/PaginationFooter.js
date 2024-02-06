@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { Flex } from '@wordpress/components';
 import InfinitePaginationButton from '@admin/ui/InfinitePaginationButton';
 
-export default ({ showing, page, setPage, isFetching }) => {
+export default ({ showing, page, setPage, isFetching, total_pages }) => {
 	if (!showing) {
 		return null;
 	}
