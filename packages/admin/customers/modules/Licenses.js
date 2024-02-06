@@ -1,16 +1,22 @@
 /**
  * External dependencies.
  */
-import { __, _n } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 import { store as coreStore } from '@wordpress/core-data';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import LicensesDataTable from '../../components/data-tables/licenses-data-table';
+import usePagination from '../../hooks/usePagination';
+import PrevNextButtons from '../../ui/PrevNextButtons';
 
 export default ({ customerId }) => {
+	const [page, setPage] = useState(1);
+	const [perPage, setPerPage] = useState(3);
+
 	const { licenses, loading } = useSelect(
 		(select) => {
 			if (!customerId) {
@@ -24,7 +30,8 @@ export default ({ customerId }) => {
 				'license',
 				{
 					customer_ids: customerId ? [customerId] : null,
-					per_page: 3,
+					page,
+					per_page: perPage,
 					expand: [
 						'purchase',
 						'purchase.price',
@@ -42,13 +49,19 @@ export default ({ customerId }) => {
 				),
 			};
 		},
-		[customerId]
+		[customerId, page, perPage]
 	);
 
 	// We won't render anything if there are no licenses.
-	if (!licenses?.length) {
+	if (!licenses?.length && !loading) {
 		return null;
 	}
+
+	const { hasPagination } = usePagination({
+		data: licenses,
+		page,
+		perPage,
+	});
 
 	return (
 		<LicensesDataTable
@@ -62,6 +75,17 @@ export default ({ customerId }) => {
 			}}
 			data={licenses}
 			isLoading={loading}
+			footer={
+				hasPagination && (
+					<PrevNextButtons
+						data={licenses}
+						page={page}
+						setPage={setPage}
+						perPage={perPage}
+						loading={loading}
+					/>
+				)
+			}
 		/>
 	);
 };
