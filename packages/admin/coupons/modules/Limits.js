@@ -68,7 +68,10 @@ export default ({ coupon, loading, updateCoupon }) => {
 								'The minimum order subtotal amount required to apply this coupon.',
 								'surecart'
 							)}
-							currencyCode={coupon?.currency}
+							currencyCode={
+								coupon?.currency ||
+								window?.scData?.currency_code
+							}
 							placeholder={__('No Minimum', 'surecart')}
 							attribute="min_subtotal_amount"
 							label={__('Minimum order subtotal', 'surecart')}

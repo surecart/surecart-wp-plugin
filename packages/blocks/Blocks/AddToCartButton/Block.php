@@ -94,7 +94,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
 				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>"
 			>
-				<?php echo wp_kses_post( $attributes['button_text'] ) ?? esc_html__( 'Add To Cart', 'surecart' ); ?>
+				<?php echo ! empty( $attributes['button_text'] ) ? wp_kses_post( $attributes['button_text'] ) : esc_html__( 'Add To Cart', 'surecart' ); ?>
 			</sc-cart-form-submit>
 		</sc-cart-form>
 
