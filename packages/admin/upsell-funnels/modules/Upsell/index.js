@@ -16,10 +16,11 @@ import SelectTemplatePart from '../../components/SelectTemplatePart';
 import FilterItem from '../../../components/filters/FilterItem';
 import LineItemLabel from '../../../ui/LineItemLabel';
 import { intervalString } from '../../../util/translations';
-import { useState } from '@wordpress/element';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 
 export default ({ upsell, onEdit, onDelete, className }) => {
-	const [modal, setModal] = useState(false);
+	const { editEntityRecord } = useDispatch(coreStore);
 
 	if (!upsell) {
 		return (
@@ -72,7 +73,14 @@ export default ({ upsell, onEdit, onDelete, className }) => {
 
 								<SelectUpsellTemplate
 									upsell={upsell}
-									updateUpsell={onEdit}
+									updateUpsell={(data) =>
+										editEntityRecord(
+											'surecart',
+											'upsell',
+											upsell.id,
+											data
+										)
+									}
 									renderToggle={({ onToggle }) => (
 										<ScMenuItem
 											onClick={onToggle}
