@@ -16,8 +16,6 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
-
 export default ({ attributes, setAttributes, context }) => {
 	const { label, columns, show_price } = attributes;
 	const blockProps = useBlockProps({
@@ -28,11 +26,6 @@ export default ({ attributes, setAttributes, context }) => {
 	const borderProps = useBorderProps(attributes);
 	const colorProps = useColorProps(attributes);
 	const spacingProps = useSpacingProps(attributes);
-
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
 
 	return (
 		<>

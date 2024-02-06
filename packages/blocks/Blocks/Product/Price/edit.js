@@ -7,7 +7,6 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
 import classNames from 'classnames';
 
 export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
@@ -16,11 +15,6 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 			[`has-text-align-${alignment}`]: alignment,
 		}),
 	});
-
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
 
 	return (
 		<>
