@@ -29,6 +29,7 @@ export const expand = [
   'product.variants',
   'discount.coupon',
   'shipping_address',
+  'billing_address',
   'tax_identifier',
   'manual_payment_method',
   'shipping_choices',

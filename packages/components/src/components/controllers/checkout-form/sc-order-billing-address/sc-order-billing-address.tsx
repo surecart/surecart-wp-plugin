@@ -1,10 +1,11 @@
-import { Component, h, Method, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Checkout } from '../../../../types';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
+import { ScSwitchCustomEvent } from 'src/components';
 
 @Component({
   tag: 'sc-order-billing-address',
@@ -57,6 +58,9 @@ export class ScOrderBillingAddress {
     state: null,
   };
 
+  /** Whether billing address is same as shipping address */
+  @State() sameAsShipping = true;
+
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
@@ -70,6 +74,7 @@ export class ScOrderBillingAddress {
     onChange('checkout', () => {
       const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
       const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
+      this.sameAsShipping = JSON.stringify(checkoutState.checkout?.billing_address) === JSON.stringify(checkoutState.checkout?.shipping_address);
 
       if (emptyAddressKeys.length === addressKeys.length) {
         this.address = {
@@ -98,29 +103,50 @@ export class ScOrderBillingAddress {
     }
   }
 
+  onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
+    this.sameAsShipping = e.target.checked;
+
+    if (this.sameAsShipping) {
+      checkoutState.checkout.billing_address = checkoutState.checkout.shipping_address;
+      return;
+    }
+
+    checkoutState.checkout.billing_address = {
+      ...(checkoutState?.checkout?.billing_address as Address),
+      ...this.address,
+    };
+  }
+
   render() {
     return (
-      <sc-address
-       exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
-        ref={el => {
-          this.input = el;
-        }}
-        label={this.label || __('Billing Address', 'surecart')}
-        placeholders={{
-          name: this.namePlaceholder,
-          country: this.countryPlaceholder,
-          city: this.cityPlaceholder,
-          line_1: this.line1Placeholder,
-          line_2: this.line2Placeholder,
-          postal_code: this.postalCodePlaceholder,
-          state: this.statePlaceholder,
-        }}
-        required={this.required}
-        loading={formLoading()}
-        address={this.address}
-        show-name={this.showName}
-        onScChangeAddress={e => this.updateAddressState(e.detail)}
-      />
+      <Fragment>
+        <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={this.sameAsShipping}>
+          {__('Billing address same as shipping address. ', 'surecart')}
+        </sc-switch>
+        {!this.sameAsShipping && (
+          <sc-address
+            exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
+            ref={el => {
+              this.input = el;
+            }}
+            label={this.label || __('Billing Address', 'surecart')}
+            placeholders={{
+              name: this.namePlaceholder,
+              country: this.countryPlaceholder,
+              city: this.cityPlaceholder,
+              line_1: this.line1Placeholder,
+              line_2: this.line2Placeholder,
+              postal_code: this.postalCodePlaceholder,
+              state: this.statePlaceholder,
+            }}
+            required={this.required}
+            loading={formLoading()}
+            address={this.address}
+            show-name={this.showName}
+            onScChangeAddress={e => this.updateAddressState(e.detail)}
+          />
+        )}
+      </Fragment>
     );
   }
 }

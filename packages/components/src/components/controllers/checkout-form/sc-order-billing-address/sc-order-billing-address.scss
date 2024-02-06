@@ -2,10 +2,8 @@
   display: block;
 }
 
-.sc-order-shipping {
-  &__loading {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+.order-billing-address {
+  &__toggle {
+    margin-bottom: var(--sc-spacing-medium);
   }
 }
