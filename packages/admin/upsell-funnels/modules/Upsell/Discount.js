@@ -14,7 +14,7 @@ import {
 	ScRadio,
 } from '@surecart/components-react';
 
-export default ({ upsell, onUpdate, loading }) => {
+export default ({ upsell, onUpdate }) => {
 	const [type, setType] = useState('percentage');
 
 	useEffect(() => {
