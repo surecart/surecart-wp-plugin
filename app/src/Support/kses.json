@@ -1031,6 +1031,23 @@
     "class": true,
     "slot": true
   },
+  "sc-order-billing-address": {
+    "city-placeholder": true,
+    "country-placeholder": true,
+    "default-country": true,
+    "label": true,
+    "line1-placeholder": true,
+    "line2-placeholder": true,
+    "name-placeholder": true,
+    "postal-code-placeholder": true,
+    "required": true,
+    "show-name": true,
+    "state-placeholder": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-bump": {
     "bump": true,
     "cdn-root": true,

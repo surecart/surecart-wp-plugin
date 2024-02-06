@@ -1833,6 +1833,53 @@ export namespace Components {
         "heading": string;
         "orderId": string;
     }
+    interface ScOrderBillingAddress {
+        /**
+          * City placeholder
+         */
+        "cityPlaceholder": string;
+        /**
+          * Country placeholder
+         */
+        "countryPlaceholder": string;
+        /**
+          * Default country for address
+         */
+        "defaultCountry": string;
+        /**
+          * Label for the field
+         */
+        "label": string;
+        /**
+          * Address placeholder
+         */
+        "line1Placeholder": string;
+        /**
+          * Address Line 2 placeholder
+         */
+        "line2Placeholder": string;
+        /**
+          * Name placeholder
+         */
+        "namePlaceholder": string;
+        /**
+          * Postal Code placeholder
+         */
+        "postalCodePlaceholder": string;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Is this required (defaults to false)
+         */
+        "required": boolean;
+        /**
+          * Show the name field
+         */
+        "showName": boolean;
+        /**
+          * State placeholder
+         */
+        "statePlaceholder": string;
+    }
     interface ScOrderBump {
         /**
           * The bump
@@ -4854,6 +4901,12 @@ declare global {
         prototype: HTMLScOrderElement;
         new (): HTMLScOrderElement;
     };
+    interface HTMLScOrderBillingAddressElement extends Components.ScOrderBillingAddress, HTMLStencilElement {
+    }
+    var HTMLScOrderBillingAddressElement: {
+        prototype: HTMLScOrderBillingAddressElement;
+        new (): HTMLScOrderBillingAddressElement;
+    };
     interface HTMLScOrderBumpElement extends Components.ScOrderBump, HTMLStencilElement {
     }
     var HTMLScOrderBumpElement: {
@@ -5639,6 +5692,7 @@ declare global {
         "sc-menu-label": HTMLScMenuLabelElement;
         "sc-mollie-add-method": HTMLScMollieAddMethodElement;
         "sc-order": HTMLScOrderElement;
+        "sc-order-billing-address": HTMLScOrderBillingAddressElement;
         "sc-order-bump": HTMLScOrderBumpElement;
         "sc-order-bumps": HTMLScOrderBumpsElement;
         "sc-order-confirm-components-validator": HTMLScOrderConfirmComponentsValidatorElement;
@@ -7759,6 +7813,52 @@ declare namespace LocalJSX {
         "customerIds"?: string[];
         "heading"?: string;
         "orderId"?: string;
+    }
+    interface ScOrderBillingAddress {
+        /**
+          * City placeholder
+         */
+        "cityPlaceholder"?: string;
+        /**
+          * Country placeholder
+         */
+        "countryPlaceholder"?: string;
+        /**
+          * Default country for address
+         */
+        "defaultCountry"?: string;
+        /**
+          * Label for the field
+         */
+        "label"?: string;
+        /**
+          * Address placeholder
+         */
+        "line1Placeholder"?: string;
+        /**
+          * Address Line 2 placeholder
+         */
+        "line2Placeholder"?: string;
+        /**
+          * Name placeholder
+         */
+        "namePlaceholder"?: string;
+        /**
+          * Postal Code placeholder
+         */
+        "postalCodePlaceholder"?: string;
+        /**
+          * Is this required (defaults to false)
+         */
+        "required"?: boolean;
+        /**
+          * Show the name field
+         */
+        "showName"?: boolean;
+        /**
+          * State placeholder
+         */
+        "statePlaceholder"?: string;
     }
     interface ScOrderBump {
         /**
@@ -10194,6 +10294,7 @@ declare namespace LocalJSX {
         "sc-menu-label": ScMenuLabel;
         "sc-mollie-add-method": ScMollieAddMethod;
         "sc-order": ScOrder;
+        "sc-order-billing-address": ScOrderBillingAddress;
         "sc-order-bump": ScOrderBump;
         "sc-order-bumps": ScOrderBumps;
         "sc-order-confirm-components-validator": ScOrderConfirmComponentsValidator;
@@ -10423,6 +10524,7 @@ declare module "@stencil/core" {
             "sc-menu-label": LocalJSX.ScMenuLabel & JSXBase.HTMLAttributes<HTMLScMenuLabelElement>;
             "sc-mollie-add-method": LocalJSX.ScMollieAddMethod & JSXBase.HTMLAttributes<HTMLScMollieAddMethodElement>;
             "sc-order": LocalJSX.ScOrder & JSXBase.HTMLAttributes<HTMLScOrderElement>;
+            "sc-order-billing-address": LocalJSX.ScOrderBillingAddress & JSXBase.HTMLAttributes<HTMLScOrderBillingAddressElement>;
             "sc-order-bump": LocalJSX.ScOrderBump & JSXBase.HTMLAttributes<HTMLScOrderBumpElement>;
             "sc-order-bumps": LocalJSX.ScOrderBumps & JSXBase.HTMLAttributes<HTMLScOrderBumpsElement>;
             "sc-order-confirm-components-validator": LocalJSX.ScOrderConfirmComponentsValidator & JSXBase.HTMLAttributes<HTMLScOrderConfirmComponentsValidatorElement>;

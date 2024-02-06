@@ -104,6 +104,7 @@ export const ScMenuItem = /*@__PURE__*/createReactComponent<JSX.ScMenuItem, HTML
 export const ScMenuLabel = /*@__PURE__*/createReactComponent<JSX.ScMenuLabel, HTMLScMenuLabelElement>('sc-menu-label');
 export const ScMollieAddMethod = /*@__PURE__*/createReactComponent<JSX.ScMollieAddMethod, HTMLScMollieAddMethodElement>('sc-mollie-add-method');
 export const ScOrder = /*@__PURE__*/createReactComponent<JSX.ScOrder, HTMLScOrderElement>('sc-order');
+export const ScOrderBillingAddress = /*@__PURE__*/createReactComponent<JSX.ScOrderBillingAddress, HTMLScOrderBillingAddressElement>('sc-order-billing-address');
 export const ScOrderBump = /*@__PURE__*/createReactComponent<JSX.ScOrderBump, HTMLScOrderBumpElement>('sc-order-bump');
 export const ScOrderBumps = /*@__PURE__*/createReactComponent<JSX.ScOrderBumps, HTMLScOrderBumpsElement>('sc-order-bumps');
 export const ScOrderConfirmComponentsValidator = /*@__PURE__*/createReactComponent<JSX.ScOrderConfirmComponentsValidator, HTMLScOrderConfirmComponentsValidatorElement>('sc-order-confirm-components-validator');
