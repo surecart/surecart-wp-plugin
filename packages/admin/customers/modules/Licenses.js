@@ -24,6 +24,7 @@ export default ({ customerId }) => {
 				'license',
 				{
 					customer_ids: customerId ? [customerId] : null,
+					per_page: 3,
 					expand: [
 						'purchase',
 						'purchase.price',
@@ -31,7 +32,6 @@ export default ({ customerId }) => {
 						'product.featured_product_media',
 						'product_media.media',
 					],
-					limit: 3,
 				},
 			];
 			return {
