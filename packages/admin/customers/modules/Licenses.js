@@ -46,7 +46,7 @@ export default ({ customerId }) => {
 	);
 
 	// We won't render anything if there are no licenses.
-	if (!(licenses || []).length) {
+	if (!licenses?.length) {
 		return null;
 	}
 
