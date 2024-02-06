@@ -46,6 +46,7 @@ import * as totals from '@blocks/Totals';
 import * as shippingLineItem from '@blocks/LineItemShipping';
 import * as conditionalForm from '@blocks/ConditionalForm';
 import * as shippingChoices from '@blocks/ShippingChoices';
+import * as billingAddress from '@blocks/BillingAddress';
 
 import { registerBlocks } from './register-block';
 
@@ -95,6 +96,7 @@ registerBlocks([
 	totals,
 	shippingChoices,
 	shippingLineItem,
+	billingAddress,
 	...(!!window?.scBlockData?.entitlements?.bumps ? [orderBumps] : []),
 	...(!!window?.scBlockData?.entitlements?.conditional_forms
 		? [conditionalForm]
