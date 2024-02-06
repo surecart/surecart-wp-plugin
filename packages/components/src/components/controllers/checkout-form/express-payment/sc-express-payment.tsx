@@ -1,6 +1,6 @@
 import { ProcessorName } from '../../../../types';
 import { Component, Host, h, Listen, Prop } from '@stencil/core';
-import { getStripeProcessorData } from '@store/processors/getters';
+import { getProcessorByType } from '@store/processors/getters';
 import { formBusy } from '@store/form/getters';
 
 @Component({
@@ -20,12 +20,9 @@ export class ScExpressPayment {
   }
 
   renderStripePaymentRequest() {
-    const processorData = getStripeProcessorData();
-    if (!processorData) {
-      return;
-    }
+    const { processor_data } = getProcessorByType('stripe') || {};
 
-    return <sc-stripe-payment-request debug={this.debug} stripeAccountId={processorData.accountId} publishableKey={processorData.publishableKey}></sc-stripe-payment-request>;
+    return <sc-stripe-payment-request debug={this.debug} stripeAccountId={processor_data?.account_id} publishableKey={processor_data?.publishable_key} />;
   }
 
   render() {
