@@ -35,7 +35,7 @@ export const handleAccepted = () => {
  * Handle declined.
  */
 export const handleDeclined = () => {
-  const upsell = getUpsell('accepted');
+  const upsell = getUpsell('declined');
   // TODO: Analytics
   if (!upsell?.permalink) {
     return (state.loading = 'complete');
