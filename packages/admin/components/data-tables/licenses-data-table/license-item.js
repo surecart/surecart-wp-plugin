@@ -5,7 +5,7 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __, sprintf } from '@wordpress/i18n';
-import EditLicenseButton from './EditLicenseButton';
+import { ScButton } from '@surecart/components-react';
 
 /**
  * Internal dependencies.
@@ -73,6 +73,10 @@ export default (license) => {
 				</span>
 			</sc-line-item>
 		),
-		actions: <EditLicenseButton license={license} />,
+		actions: (
+			<ScButton onClick={() => window.location.href = `admin.php?page=sc-licenses&action=edit&id=${license?.id}`} size="small">
+				{__('View more', 'surecart')}
+			</ScButton>
+		),
 	};
 };
