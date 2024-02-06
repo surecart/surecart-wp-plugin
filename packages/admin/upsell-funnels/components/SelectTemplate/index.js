@@ -1,27 +1,23 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
-import { Button, Dropdown, PanelRow } from '@wordpress/components';
+import {
+	ScButton,
+	ScFormControl,
+	ScIcon,
+	ScSelect,
+	ScMenuItem,
+	ScDivider,
+} from '@surecart/components-react';
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import { store as coreStore } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
-import { useMemo, useState } from '@wordpress/element';
-import { __, sprintf } from '@wordpress/i18n';
-import { addQueryArgs } from '@wordpress/url';
-
-/**
- * Internal dependencies
- */
-import PostTemplateForm from './form';
 import { getTemplateTitle } from '../../../util/templates';
+import PostTemplateCreateModal from './create-modal';
+import { useState } from '@wordpress/element';
 
-export default function PostTemplate({ upsell, updateUpsell, renderToggle }) {
-	// Use internal state instead of a ref to make sure that the component
-	// re-renders when the popover's anchor updates.
-	const [popoverAnchor, setPopoverAnchor] = useState(null);
-	// Memoize popoverProps to avoid returning a new object every time.
-	const popoverProps = useMemo(
-		() => ({ anchor: popoverAnchor, placement: 'bottom-end' }),
-		[popoverAnchor]
-	);
+export default ({ upsell, onUpdate }) => {
+	const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
 	const template = useSelect(
 		(select) => {
@@ -30,67 +26,104 @@ export default function PostTemplate({ upsell, updateUpsell, renderToggle }) {
 				select(coreStore).getEntityRecord(
 					'postType',
 					'wp_template',
-					upsell?.metadata?.wp_template_id ||
-						'surecart/surecart//single-upsell'
+					upsell?.template_id || 'surecart/surecart//single-upsell'
 				)
 			);
 		},
-		[upsell?.metadata?.wp_template_id]
+		[upsell?.template_id]
+	);
+
+	// templates.
+	const { templates, defaultPart, canCreate } = useSelect(
+		(select) => {
+			const { canUser, getEntityRecords } = select(coreStore);
+			const selectorArgs = ['postType', 'wp_template', { per_page: -1 }];
+			const templates = (getEntityRecords(...selectorArgs) || []).filter(
+				(template) => {
+					return (
+						template.id === 'surecart/surecart//single-upsell' ||
+						template.slug.includes('sc-upsell-funnels')
+					);
+				}
+			);
+			return {
+				templates,
+				defaultPart: templates.find(
+					(part) => part.theme === 'surecart/surecart'
+				),
+				canCreate: canUser('create', 'templates'),
+			};
+		},
+		[template]
 	);
 
 	return (
-		<Dropdown
-			popoverProps={popoverProps}
-			className="edit-post-post-template__dropdown"
-			contentClassName="edit-post-post-template__dialog"
-			focusOnMount
-			css={css`
-				.components-dropdown__content .components-popover__content {
-					min-width: 240px;
-					padding: 0;
-				}
-			`}
-			renderToggle={renderToggle}
-			renderContent={({ onClose }) => (
-				<>
-					<div
+		<>
+			<ScFormControl label={__('Template', 'surecart')}>
+				<div
+					css={css`
+						display: flex;
+						gap: 1em;
+					`}
+				>
+					<ScSelect
 						css={css`
-							margin: 0;
-							padding: 8px;
+							flex: 1;
 						`}
-					>
-						<PostTemplateForm
-							onClose={onClose}
-							template={template}
-							upsell={upsell}
-							updateUpsell={updateUpsell}
-						/>
-					</div>
-					<a
-						href={addQueryArgs('site-editor.php', {
-							path: '/wp_template/all',
+						value={template?.id || 'surecart/surecart//upsell-info'}
+						choices={(templates ?? []).map((template) => {
+							return {
+								value: template?.id,
+								label: getTemplateTitle(template),
+							};
 						})}
-						className="components-button"
-						css={css`
-							background: #1e1e1e;
-							border-radius: 0;
-							color: #fff;
-							display: flex;
-							height: 44px;
-							justify-content: center;
-							width: 100%;
-
-							&:hover,
-							&:active,
-							&:focus {
-								color: #fff !important;
-							}
-						`}
+						onScChange={(e) => {
+							onUpdate({
+								template_id: e.target.value,
+							});
+						}}
+						required
+						unselect={false}
 					>
-						{__('Manage all templates', 'surecart')}
-					</a>
-				</>
+						<span slot="prefix">
+							<ScMenuItem
+								onClick={() => setIsCreateModalOpen(true)}
+							>
+								<span slot="prefix">+</span>
+								{__('Add New', 'surecart')}
+							</ScMenuItem>
+							<ScDivider
+								style={{
+									'--spacing': 'var(--sc-spacing-x-small)',
+								}}
+							></ScDivider>
+						</span>
+					</ScSelect>
+
+					<ScButton
+						href={addQueryArgs('site-editor.php', {
+							postType: 'wp_template',
+							postId:
+								upsell?.template_id ||
+								'surecart/surecart//single-upsell',
+							canvas: 'edit',
+						})}
+						target="_blank"
+					>
+						{__('Edit', 'surecart')}
+						<ScIcon name="external-link" slot="suffix" />
+					</ScButton>
+				</div>
+			</ScFormControl>
+
+			{isCreateModalOpen && (
+				<PostTemplateCreateModal
+					template={defaultPart}
+					upsell={upsell}
+					updateUpsell={onUpdate}
+					onClose={() => setIsCreateModalOpen(false)}
+				/>
 			)}
-		/>
+		</>
 	);
-}
+};
