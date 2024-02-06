@@ -27,7 +27,7 @@ class UpdateSubscriptionMiddleware {
 		if ( is_wp_error( $intent ) ) {
 			return wp_die( wp_kses_post( $intent->get_error_message() ) );
 		}
-		if ( ! empty( $intent->payment_method ) ) {
+		if ( empty( $intent->payment_method ) ) {
 			return wp_die( esc_html__( 'Payment method not found.', 'surecart' ) );
 		}
 
