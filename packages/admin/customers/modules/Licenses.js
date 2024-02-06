@@ -31,6 +31,7 @@ export default ({ customerId }) => {
 						'product.featured_product_media',
 						'product_media.media',
 					],
+					limit: 3,
 				},
 			];
 			return {
