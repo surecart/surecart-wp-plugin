@@ -159,6 +159,23 @@ export class ScSubscriptionDetails {
     );
   }
 
+  showWarning() {
+    // no payment method.
+    if (this.subscription?.payment_method) {
+      return false;
+    }
+    // don't show if not looking for payment.
+    if (!['active', 'past_due', 'unpaid', 'incomplete'].includes(this.subscription?.status)) {
+      return false;
+    }
+    // handle ad_hoc.
+    if (this.subscription?.price?.ad_hoc) {
+      return this.subscription?.ad_hoc_amount !== 0;
+    }
+    // show the warning if the subscription is not free.
+    return this.subscription?.price?.amount !== 0;
+  }
+
   render() {
     return (
       <div class="subscription-details">
@@ -203,7 +220,7 @@ export class ScSubscriptionDetails {
           </sc-card>
         </sc-dialog>
 
-        {!this.subscription.payment_method && ((this.subscription?.price?.ad_hoc && 0 !== this.subscription?.ad_hoc_amount) || (!this.subscription?.price?.ad_hoc && 0 !== this.subscription?.price?.amount)) && (
+        {this.showWarning() && (
           <div>
             <sc-tag type="warning">
               <div class="subscription-details__missing-method">

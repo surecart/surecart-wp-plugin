@@ -131,17 +131,6 @@ export class ScSubscriptionsList {
   }
 
   getSubscriptionLink(subscription: Subscription) {
-    // If subscription has no payment_method,
-    // then, we'll redirect to add payment method page.
-    if (!subscription.payment_method && ((subscription?.price?.ad_hoc && subscription.ad_hoc_amount !== 0) || (subscription?.price?.amount !== 0 && !subscription?.price?.ad_hoc))) {
-      return addQueryArgs(window.location.href, {
-        action: 'create',
-        model: 'payment_method',
-        id: subscription.id,
-        ...(subscription?.live_mode === false ? { live_mode: false } : {}),
-      });
-    }
-
     return addQueryArgs(window.location.href, {
       action: 'edit',
       model: 'subscription',
