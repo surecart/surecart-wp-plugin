@@ -15,6 +15,15 @@
 		width: 25px;
 	}
 
+
+	:root:root {
+	--wp-admin-theme-color: #2271b1;
+	--sc-color-primary-500: var(--wp-admin-theme-color);
+	--sc-focus-ring-color-primary: var(--wp-admin-theme-color);
+	--sc-input-border-color-focus: var(--wp-admin-theme-color);
+	--sc-color-primary-text: #fff;
+	}
+
 	/* on mobile screens less than 1024px */
 	@media (max-width: 1024px) {
 		 .column-status {
