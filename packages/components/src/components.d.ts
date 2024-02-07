@@ -1879,6 +1879,10 @@ export namespace Components {
           * State placeholder
          */
         "statePlaceholder": string;
+        /**
+          * Toggle label
+         */
+        "toggleLabel": string;
     }
     interface ScOrderBump {
         /**
@@ -7859,6 +7863,10 @@ declare namespace LocalJSX {
           * State placeholder
          */
         "statePlaceholder"?: string;
+        /**
+          * Toggle label
+         */
+        "toggleLabel"?: string;
     }
     interface ScOrderBump {
         /**

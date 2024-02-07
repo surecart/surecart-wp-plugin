@@ -1,4 +1,4 @@
-import { Fragment } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import {
@@ -7,7 +7,7 @@ import {
 	PanelRow,
 	ToggleControl,
 } from '@wordpress/components';
-import { ScAddress, ScSelect } from '@surecart/components-react';
+import { ScAddress, ScSelect, ScSwitch } from '@surecart/components-react';
 import { countryChoices } from '@surecart/components';
 
 export default ({ attributes, setAttributes }) => {
@@ -22,8 +22,10 @@ export default ({ attributes, setAttributes }) => {
 		line_1_placeholder,
 		postal_code_placeholder,
 		state_placeholder,
+		toggle_label,
 	} = attributes;
 
+	const [sameAsShipping, setSameAsShipping] = useState(false);
 	const blockProps = useBlockProps();
 
 	return (
@@ -39,7 +41,16 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 					<PanelRow>
 						<TextControl
-							label={__('Label', 'surecart')}
+							label={__('Switch Label', 'surecart')}
+							value={toggle_label}
+							onChange={(toggle_label) =>
+								setAttributes({ toggle_label })
+							}
+						/>
+					</PanelRow>
+					<PanelRow>
+						<TextControl
+							label={__('Address Label', 'surecart')}
 							value={label}
 							onChange={(label) => setAttributes({ label })}
 						/>
@@ -57,15 +68,17 @@ export default ({ attributes, setAttributes }) => {
 							}
 						/>
 					</PanelRow>
-					<PanelRow>
-						<TextControl
-							label={__('Name Placeholder', 'surecart')}
-							value={name_placeholder}
-							onChange={(name_placeholder) =>
-								setAttributes({ name_placeholder })
-							}
-						/>
-					</PanelRow>
+					{show_name && (
+						<PanelRow>
+							<TextControl
+								label={__('Name Placeholder', 'surecart')}
+								value={name_placeholder}
+								onChange={(name_placeholder) =>
+									setAttributes({ name_placeholder })
+								}
+							/>
+						</PanelRow>
+					)}
 					<PanelRow>
 						<TextControl
 							label={__('Country Placeholder', 'surecart')}
@@ -130,22 +143,31 @@ export default ({ attributes, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScAddress
-					label={label}
-					showName={show_name}
-					required={required}
-					placeholders={{
-						name: name_placeholder,
-						country: country_placeholder,
-						city: city_placeholder,
-						line_1: line_1_placeholder,
-						postal_code: postal_code_placeholder,
-						state: state_placeholder,
-					}}
-					address={{
-						country: default_country,
-					}}
-				/>
+				<ScSwitch
+					checked={sameAsShipping}
+					onScChange={(e) => setSameAsShipping(e.target.checked)}
+					style={{ marginBottom: 'var(--sc-spacing-medium)' }}
+				>
+					{toggle_label}
+				</ScSwitch>
+				{!sameAsShipping && (
+					<ScAddress
+						label={label}
+						showName={show_name}
+						required={required}
+						placeholders={{
+							name: name_placeholder,
+							country: country_placeholder,
+							city: city_placeholder,
+							line_1: line_1_placeholder,
+							postal_code: postal_code_placeholder,
+							state: state_placeholder,
+						}}
+						address={{
+							country: default_country,
+						}}
+					/>
+				)}
 			</div>
 		</Fragment>
 	);

@@ -32,6 +32,7 @@ class Block extends BaseBlock {
 			line-2-placeholder="<?php echo esc_attr( $attributes['line_2_placeholder'] ); ?>"
 			postal-code-placeholder="<?php echo esc_attr( $attributes['postal_code_placeholder'] ); ?>"
 			state-placeholder="<?php echo esc_attr( $attributes['state_placeholder'] ); ?>"
+			toggle-label="<?php echo esc_attr( $attributes['toggle_label'] ); ?>"
 		></sc-order-billing-address>
 
 		<?php

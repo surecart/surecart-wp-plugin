@@ -13,6 +13,10 @@
 		"className": false
 	},
 	"attributes": {
+		"toggle_label": {
+			"type": "string",
+			"default": "Billing address same as shipping address."
+		},
 		"label": {
 			"type": "string",
 			"default": "Billing Address"

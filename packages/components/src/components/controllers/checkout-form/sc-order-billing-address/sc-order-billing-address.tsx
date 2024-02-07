@@ -48,6 +48,9 @@ export class ScOrderBillingAddress {
   /** Default country for address */
   @Prop() defaultCountry: string;
 
+  /** Toggle label */
+  @Prop() toggleLabel: string = __('Billing address same as shipping address.', 'surecart');
+
   /** Address to pass to the component */
   @State() address: Partial<Address> = {
     country: null,
@@ -121,7 +124,7 @@ export class ScOrderBillingAddress {
     return (
       <Fragment>
         <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={this.sameAsShipping}>
-          {__('Billing address same as shipping address. ', 'surecart')}
+         {this.toggleLabel}
         </sc-switch>
         {!this.sameAsShipping && (
           <sc-address
