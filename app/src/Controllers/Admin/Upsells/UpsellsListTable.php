@@ -245,27 +245,25 @@ class UpsellsListTable extends ListTable {
 		);
 		?>
 
-	  <div>
+		<div>
+			<div style="display:flex; gap: 0.5em;">
+				<sc-switch checked="<?php echo esc_attr( $upsell_funnel->enabled ) ? 'true' : 'false'; ?>"
+					onClick="event.target.disabled = true; window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>');"></sc-switch>
 
-		<div style="display:flex; gap: 0.5em;">
-			<sc-switch checked="<?php echo esc_attr( $upsell_funnel->enabled ) ? 'true' : 'false'; ?>"
-				onClick="event.target.disabled = true; window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>');"></sc-switch>
-			<div>
-			<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
-				<?php echo esc_html( $upsell_funnel->name ); ?>
-			</a>
-			<?php
-			echo $this->row_actions(
-				[
-					'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-				],
-			);
-			?>
+				<div>
+					<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
+						<?php echo esc_html( $upsell_funnel->name ); ?>
+					</a>
+
+					<?php
+					echo $this->row_actions(
+						[
+							'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+						],
+					);
+					?>
+				</div>
 			</div>
-		</div>
-
-		</div>
-
 		</div>
 		<?php
 		return ob_get_clean();
