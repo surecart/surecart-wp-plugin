@@ -38,9 +38,8 @@ export default () => {
 	const { save } = useSave();
 	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
 
-	const editFunnel = (data) => {
+	const editFunnel = (data) =>
 		editEntityRecord('surecart', 'upsell-funnel', id, data);
-	};
 
 	const { upsells, loadingUpsells } = useSelect(
 		(select) => {
