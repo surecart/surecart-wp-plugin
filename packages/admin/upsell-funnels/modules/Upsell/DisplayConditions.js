@@ -43,10 +43,10 @@ export default ({ upsell, onUpdate }) => {
 						})
 					}
 				>
-					{__('Block in checkout', 'surecart')}
+					{__('Skip if in current order', 'surecart')}
 					<span slot="description">
 						{__(
-							'Show if it was not purchased in the current checkout.',
+							'Show if it was not purchased in the current order.',
 							'surecart'
 						)}
 					</span>
@@ -60,7 +60,7 @@ export default ({ upsell, onUpdate }) => {
 						})
 					}
 				>
-					{__('Block if purchased', 'surecart')}
+					{__('Skip if purchased', 'surecart')}
 					<span slot="description">
 						{__(
 							"Don't show if they have already purchased this product.",
