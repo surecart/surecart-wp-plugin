@@ -33,7 +33,7 @@ class Customer extends Model {
 	 * @return $this|\WP_Error|false
 	 */
 	protected function create( $attributes = [], $create_user = true ) {
-		/** @var Customer|\WP_Error $customer */
+		/** @var Customer|\WP_Error $customer Customer Data. */
 		$customer = parent::create( $attributes );
 		if ( $this->isError( $customer ) ) {
 			return $customer;
@@ -49,7 +49,7 @@ class Customer extends Model {
 				$user = User::create(
 					[
 						'user_name'  => $this->attributes['name'] ?? null,
-						'first_name'  => $this->attributes['name'] ?? null,
+						'first_name' => $this->attributes['name'] ?? null,
 						'user_email' => $this->attributes['email'],
 					]
 				);
