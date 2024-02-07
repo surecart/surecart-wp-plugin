@@ -66,21 +66,28 @@ class UpsellPageController extends BasePageController {
 	 * @return function
 	 */
 	public function show( $request, $view, $id ) {
-		$id = get_query_var( 'sc_upsell_id' );
+		// we need the checkout since it cannot be fetched through the upsell if it's expired.
+		$checkout = \SureCart\Models\Checkout::with( [ 'upsell_funnel', 'upsell_funnel.upsells', 'upsell.price' ] )->find( $request->query( 'sc_checkout_id' ) );
 
-		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Upsell::with( [ 'price' ] )->find( $id );
-
-		if ( is_wp_error( $this->model ) ) {
-			return $this->handleError( $this->model );
+		if ( is_wp_error( $checkout ) ) {
+			return $this->handleError( $checkout );
 		}
 
-		if ( empty( $this->model->price->product ) ) {
+		// get upsell from checkout.
+		$id = get_query_var( 'sc_upsell_id' );
+		// get upsells that match the id.
+		$upsells = array_filter( $checkout->upsell_funnel->upsells->data ?? [], fn( $upsell ) => $upsell->id === $id );
+
+		if ( empty( $upsells ) ) {
 			return $this->notFound();
 		}
 
-		// we need the checkout since it cannot be fetched through the upsell if it's expired.
-		$checkout = \SureCart\Models\Checkout::with( [ 'recommended_upsells', 'upsell.price' ] )->find( $request->query( 'sc_checkout_id' ) );
+		$this->model = array_shift( $upsells );
+
+		// does not exist on checkout.
+		if ( empty( $this->model->price->product ) ) {
+			return $this->notFound();
+		}
 
 		// this is typically cached.
 		$this->product = \SureCart\Models\Product::with( [ 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ] )->find( $this->model->price->product );
