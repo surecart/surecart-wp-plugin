@@ -48,8 +48,11 @@ export const handleCheckoutLineItemChange = (checkout: Checkout, oldCheckout: Ch
   // check if line items have changed.
   if (JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
     // emit an event here with the checkout state updates.
-    const event = new CustomEvent<[Checkout, Checkout]>('scCartUpdated', {
-      detail: [checkout, oldCheckout],
+    const event = new CustomEvent<{ currentCart: Checkout; previousCart: Checkout }>('scCartUpdated', {
+      detail: {
+        currentCart: checkout,
+        previousCart: oldCheckout,
+      },
       bubbles: true,
     });
     document.dispatchEvent(event);
