@@ -30,7 +30,8 @@ export default ({ loading, funnel, updateFunnel }) => {
 			title={__('Display Conditions', 'surecart')}
 			loading={loading}
 			footer={
-				shouldMatch && (
+				shouldMatch &&
+				!empty && (
 					<ScButton onClick={() => setNewDialog(true)}>
 						<ScIcon name="plus" slot="prefix" />
 						{__('Add A Condition', 'surecart')}
@@ -147,6 +148,10 @@ export default ({ loading, funnel, updateFunnel }) => {
 								'Add some conditions to display this upsell funnel.',
 								'surecart'
 							)}
+							<ScButton onClick={() => setNewDialog(true)}>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add A Condition', 'surecart')}
+							</ScButton>
 						</ScEmpty>
 					)}
 				</>
