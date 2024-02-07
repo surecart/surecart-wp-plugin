@@ -190,7 +190,16 @@ export default ({ lineItem, loading, subscription }) => {
 											{coupon?.name}
 										</ScTag>
 									),
-									total: <>({getHumanDiscount(coupon)})</>,
+									total: (
+										<>
+											(
+											{getHumanDiscount(
+												coupon,
+												coupon?.currency
+											)}
+											)
+										</>
+									),
 								},
 						  ]
 						: []),

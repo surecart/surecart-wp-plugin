@@ -34,11 +34,15 @@ export const maybeConvertAmount = (amount, currency) => {
 		: amount / 100;
 };
 
-export const getHumanDiscount = (coupon) => {
-	if (coupon?.amount_off && coupon?.currency) {
-		return getFormattedPrice({
-			amount: coupon.amount_off,
-		});
+export const getHumanDiscount = (coupon, currency = 'usd') => {
+	if (coupon?.amount_off && currency) {
+		return sprintf(
+			__('%s off', 'surecart'),
+			getFormattedPrice({
+				amount: coupon.amount_off,
+				currency,
+			})
+		);
 	}
 
 	if (coupon?.percent_off) {
