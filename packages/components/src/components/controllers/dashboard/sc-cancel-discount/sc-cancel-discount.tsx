@@ -42,18 +42,22 @@ export class ScCancelDiscount {
     }
   }
 
+  hasDiscount() {
+    return !!this.subscription?.discount?.id;
+  }
+
   render() {
-    const behaviourContent = getCurrentBehaviourContent(this.subscription, this.protocol);
+    const { title, description, button, cancel_link } = getCurrentBehaviourContent(this.protocol, this.subscription?.discount?.id);
     return (
       <div class="cancel-discount">
-        <sc-dashboard-module heading={behaviourContent?.title} style={{ '--sc-dashboard-module-spacing': '2em' }}>
-          <span slot="description">{behaviourContent?.description}</span>
+        <sc-dashboard-module heading={title} style={{ '--sc-dashboard-module-spacing': '2em' }}>
+          <span slot="description">{description}</span>
           <sc-flex justifyContent="flex-start">
             <sc-button type="primary" onClick={() => this.addDiscount()}>
-              {behaviourContent?.button}
+              {button}
             </sc-button>
             <sc-button class="cancel-discount__abort-link" type="text" onClick={() => this.scCancel.emit()}>
-              {behaviourContent?.cancel_link}
+              {cancel_link}
             </sc-button>
           </sc-flex>
           {!!this.loading && <sc-block-ui spinner />}
