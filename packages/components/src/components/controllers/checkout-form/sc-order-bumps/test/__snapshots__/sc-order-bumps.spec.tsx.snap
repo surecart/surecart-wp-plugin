@@ -2,21 +2,13 @@
 
 exports[`sc-order-bump renders custom label 1`] = `
 <sc-order-bumps>
-  <mock:shadow-root>
-    <sc-form-control label="custom">
-      <div aria-label="Order bump summary" class="bumps__list"></div>
-    </sc-form-control>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-order-bumps>
 `;
 
 exports[`sc-order-bump renders default label 1`] = `
 <sc-order-bumps>
-  <mock:shadow-root>
-    <sc-form-control label="Recommended">
-      <div aria-label="Order bump summary" class="bumps__list"></div>
-    </sc-form-control>
-  </mock:shadow-root>
+  <mock:shadow-root></mock:shadow-root>
 </sc-order-bumps>
 `;
 
