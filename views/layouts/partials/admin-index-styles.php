@@ -11,6 +11,9 @@
 	.column-fulfillment_status, .column-shipment_status {
 		width: 120px;
 	}
+	.column-enabled {
+		width: 25px;
+	}
 
 	/* on mobile screens less than 1024px */
 	@media (max-width: 1024px) {

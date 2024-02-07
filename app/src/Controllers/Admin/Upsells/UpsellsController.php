@@ -4,6 +4,7 @@ namespace SureCart\Controllers\Admin\Upsells;
 
 use SureCart\Controllers\Admin\AdminController;
 use SureCart\Models\UpsellFunnel;
+use SureCartCore\Responses\RedirectResponse;
 
 /**
  * Handles upsell admin requests.
@@ -72,5 +73,37 @@ class UpsellsController extends AdminController {
 
 		// return view.
 		return '<div id="app"></div>';
+	}
+
+	/**
+	 * Change the archived attribute in the model
+	 *
+	 * @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function toggleEnabled( $request ) {
+		$funnel = UpsellFunnel::find( $request->query( 'id' ) );
+
+		if ( is_wp_error( $funnel ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $funnel->get_error_messages() ) ) );
+		}
+
+		$updated = $funnel->update(
+			[
+				'enabled' => ! (bool) $funnel->enabled,
+			]
+		);
+
+		if ( is_wp_error( $updated ) ) {
+			wp_die( implode( ' ', array_map( 'esc_html', $updated->get_error_messages() ) ) );
+		}
+
+		\SureCart::flash()->add(
+			'success',
+			$updated->enabled ? __( 'Funnel enabled.', 'surecart' ) : __( 'Funnel disabled.', 'surecart' )
+		);
+
+		return ( new RedirectResponse( $request ) )->back();
 	}
 }

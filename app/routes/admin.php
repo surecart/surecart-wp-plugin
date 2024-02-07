@@ -334,6 +334,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function() {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'UpsellsController@index' );
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'UpsellsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'toggle_enabled', 'action' )->middleware( 'archive_model:product' )->handle( 'UpsellsController@toggleEnabled' );
 	}
 );
 
