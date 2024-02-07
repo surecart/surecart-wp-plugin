@@ -41,7 +41,7 @@ class Upsell extends Model implements PageModel {
 	 * @return void
 	 */
 	protected function setTemplatePartIdAttribute( $value ) {
-		$this->attributes['metadata']['wp_template_id'] = $value;
+		$this->attributes['metadata']['wp_template_part_id'] = $value;
 	}
 
 	/**
