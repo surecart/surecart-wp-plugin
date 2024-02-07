@@ -129,9 +129,10 @@ return array(
 	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
-	'line_item.price.currency_mismatch'					   => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'line_item.price.currency_mismatch'                    => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
 	'return_request.return_items.quantity.over_returned'   => __( 'The quantity returned is greater than the quantity fulfilled.', 'surecart' ),
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
 	'line_item.upsell.already_applied'                     => __( 'This upsell has already been applied.', 'surecart' ),
 	'line_item.upsell.expired'                             => __( 'This upsell has expired.', 'surecart' ),
+	'upsell_funnel.enabled.initial_upsell_blank'           => __( 'Please select an initial upsell offer.', 'surecart' ),
 );
