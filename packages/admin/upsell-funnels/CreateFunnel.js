@@ -65,6 +65,12 @@ export default ({ id, setId }) => {
 							onScInput={(e) =>
 								updateFunnel({ name: e.target.value })
 							}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter') {
+									e.preventDefault();
+									onSubmit(e);
+								}
+							}}
 							value={funnel?.name}
 							name="name"
 						/>
