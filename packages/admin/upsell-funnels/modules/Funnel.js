@@ -57,7 +57,10 @@ export default ({ funnelId, upsells, loading }) => {
 				loading={loading && !upsells?.length}
 			>
 				<Upsell
+					label={__('Upsell Offer #1', 'surecart')}
+					icon="gift"
 					upsell={initial}
+					loading={loading}
 					onEdit={() =>
 						setEditUpsell({ ...initial, step: 'initial' })
 					}
@@ -68,9 +71,13 @@ export default ({ funnelId, upsells, loading }) => {
 						display: flex;
 						flex-wrap: wrap;
 						gap: 1em;
+						align-items: flex-start;
 					`}
 				>
 					<Upsell
+						label={__('Upsell Offer #2', 'surecart')}
+						help={__('Optional', 'surecart')}
+						icon="trending-up"
 						upsell={accepted}
 						onEdit={() =>
 							setEditUpsell({ ...accepted, step: 'accepted' })
@@ -116,6 +123,9 @@ export default ({ funnelId, upsells, loading }) => {
 						`}
 					/>
 					<Upsell
+						label={__('Downsell Offer', 'surecart')}
+						help={__('(Optional)', 'surecart')}
+						icon="trending-down"
 						upsell={declined}
 						onEdit={() =>
 							setEditUpsell({ ...declined, step: 'declined' })

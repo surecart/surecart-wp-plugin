@@ -16,20 +16,25 @@ export default ({ loading, media, onRemove, icon, children, suffix }) => {
 	return (
 		<ScStackedListRow mobileSize={320}>
 			{loading ? (
-				<ScFlex alignItems="center" justifyContent="flex-start">
+				<ScFlex
+					alignItems="center"
+					justifyContent="flex-start"
+					style={{ width: '100%' }}
+				>
 					{(!!media?.url || !!icon) && (
 						<ScSkeleton
 							css={css`
-								width: 40px;
-								height: 40px;
+								width: 60px;
+								height: 60px;
 							`}
 							style={{
 								'--border-radius':
 									' var(--sc-border-radius-small)',
+								flex: '0 0 60px',
 							}}
 						/>
 					)}
-					<ScSkeleton style={{ width: '25%' }} />
+					<ScSkeleton style={{ width: '25%', minWidth: '100px' }} />
 				</ScFlex>
 			) : (
 				<>

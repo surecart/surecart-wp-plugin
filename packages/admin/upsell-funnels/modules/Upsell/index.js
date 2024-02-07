@@ -5,37 +5,53 @@ import {
 	ScButton,
 	ScCard,
 	ScDropdown,
+	ScEmpty,
 	ScFormatNumber,
 	ScIcon,
 	ScMenu,
 	ScMenuDivider,
 	ScMenuItem,
+	ScTag,
 } from '@surecart/components-react';
-import SelectTemplate from '../../components/SelectTemplate';
-import SelectTemplatePart from '../../components/SelectTemplatePart';
 import FilterItem from '../../../components/filters/FilterItem';
 import LineItemLabel from '../../../ui/LineItemLabel';
 import { intervalString } from '../../../util/translations';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDispatch } from '@wordpress/data';
+import { getHumanDiscount } from '../../../util';
 
-export default ({ upsell, onEdit, onDelete, className }) => {
+const OFFER_TITLE = {
+	initial: __('Initial Offer', 'surecart'),
+	accepted: __('Accept Offer', 'surecart'),
+	declined: __('Decline Offer', 'surecart'),
+};
+
+export default ({
+	upsell,
+	label,
+	icon,
+	loading,
+	onEdit,
+	onDelete,
+	className,
+}) => {
+	const discount = getHumanDiscount(upsell, upsell?.price?.currency);
+
 	if (!upsell) {
 		return (
 			<>
 				<ScCard className={className}>
-					<ScButton onClick={onEdit}>
-						<ScIcon name="plus" slot="prefix" />
-						{__('Add Product', 'surecart')}
-					</ScButton>
+					<ScEmpty icon={icon}>
+						{label}
+						<div>
+							<ScButton onClick={onEdit}>
+								<ScIcon name="plus" slot="prefix" />
+								{__('Add Product', 'surecart')}
+							</ScButton>
+						</div>
+					</ScEmpty>
 				</ScCard>
 			</>
 		);
 	}
-
-	const SelectUpsellTemplate = scData?.is_block_theme
-		? SelectTemplate
-		: SelectTemplatePart;
 
 	return (
 		<ScCard
@@ -51,6 +67,7 @@ export default ({ upsell, onEdit, onDelete, className }) => {
 				media={upsell?.price?.product?.featured_product_media?.media}
 				icon={'image'}
 				onDelete={onDelete}
+				loading={loading}
 				suffix={
 					<div
 						slot="suffix"
@@ -95,7 +112,20 @@ export default ({ upsell, onEdit, onDelete, className }) => {
 					</div>
 				}
 			>
-				<div>
+				<div
+					css={css`
+						display: grid;
+						gap: 0.25em;
+						margin-right: 0.5em;
+					`}
+				>
+					{!!discount && (
+						<div>
+							<ScTag size="small" type="success" pill>
+								{discount}
+							</ScTag>
+						</div>
+					)}
 					<div>
 						<strong>{upsell?.price?.product?.name}</strong>
 					</div>
