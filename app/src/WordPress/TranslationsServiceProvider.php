@@ -131,10 +131,12 @@ class TranslationsServiceProvider implements ServiceProviderInterface {
 			load_plugin_textdomain( 'surecart', false, $lang_dir );
 		}
 		// add translations from translate.surecart.com.
-		add_project(
-			'plugin',
-			'surecart-wp',
-			'https://translate.surecart.com/glotpress/api/translations/surecart/'
-		);
+		if ( defined( 'SURECART_TRANSLATIONS_URL' ) ) {
+			add_project(
+				'plugin',
+				'surecart-wp',
+				SURECART_TRANSLATIONS_URL
+			);
+		}
 	}
 }
