@@ -36,8 +36,12 @@ export class ScFormComponentsValidator {
 
   /** Is there shipping choices */
   @State() hasShippingChoices: boolean;
+
   /** Is there a shipping amount */
   @State() hasShippingAmount: boolean;
+
+  /** Is there billing address */
+  @State() hasBillingAddress: boolean;
 
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
@@ -46,6 +50,11 @@ export class ScFormComponentsValidator {
     // make sure to add the address field if it's not there.
     if (shippingAddressRequired()) {
       this.addAddressField();
+    }
+
+    // add the billing address if it's not there.
+    if (!this.hasBillingAddress) {
+      this.addBillingAddress();
     }
 
     // add order bumps.
@@ -79,6 +88,7 @@ export class ScFormComponentsValidator {
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
     this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
     this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
+    this.hasBillingAddress = !!this.el.querySelector('sc-order-billing-address');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -119,6 +129,14 @@ export class ScFormComponentsValidator {
     address.showName = true;
   }
 
+  addBillingAddress() {
+    if (this.hasBillingAddress) return;
+    const payment = this.el.querySelector('sc-payment');
+    const billingAddress = document.createElement('sc-order-billing-address');
+    payment.parentNode.insertBefore(billingAddress, payment.nextSibling);
+    this.hasBillingAddress = true;
+  }
+
   addAddressField() {
     if (this.hasAddress) {
       return;
@@ -141,9 +159,9 @@ export class ScFormComponentsValidator {
 
   addBumps() {
     if (this.hasBumpsField) return;
-    const payment = this.el.querySelector('sc-payment');
+    const billingAddress = this.el.querySelector('sc-order-billing-address');
     const bumps = document.createElement('sc-order-bumps');
-    payment.parentNode.insertBefore(bumps, payment.nextSibling);
+    billingAddress.parentNode.insertBefore(bumps, billingAddress.nextSibling);
     this.hasBumpsField = true;
   }
 
