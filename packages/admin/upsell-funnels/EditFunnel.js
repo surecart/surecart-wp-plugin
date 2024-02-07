@@ -12,7 +12,8 @@ import {
 	ScTag,
 } from '@surecart/components-react';
 import { store } from '@surecart/data';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { getQueryArg } from '@wordpress/url';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
@@ -30,8 +31,9 @@ import Funnel from './modules/Funnel';
 import useSave from '../settings/UseSave';
 import Box from '../ui/Box';
 import Priority from './modules/Priority';
+import { useEffect } from '@wordpress/element';
 
-export default () => {
+export default ({ setBrowserURL }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const id = useSelect((select) => select(store).selectPageId());
@@ -114,12 +116,22 @@ export default () => {
 		[id]
 	);
 
+	useEffect(() => {
+		if (loading) return;
+		const initialState = getQueryArg(window.location.href, 'initial_state');
+		if (initialState) {
+			editEntityRecord('surecart', 'upsell-funnel', id, initialState);
+		}
+	}, [loading]);
+
 	/**
 	 * Handle the form submission
 	 */
 	const onSubmit = async () => {
 		try {
 			save({ successMessage: __('Upsell funnel saved.', 'surecart') });
+			// remove all args from the url.
+			setBrowserURL({ id });
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(e?.message, { type: 'snackbar' });

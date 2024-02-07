@@ -35,7 +35,7 @@ export default () => {
 	 * @param {string} status Product status.
 	 */
 	const setBrowserURL = (args) => {
-		const { id, ...query } = args;
+		const { id } = args;
 		// we need an id.
 		if (!id) return;
 		// history didn't change.
