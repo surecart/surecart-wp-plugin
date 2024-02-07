@@ -70,7 +70,9 @@ export default ({ upsell, onUpdate }) => {
 						css={css`
 							flex: 1;
 						`}
-						value={template?.id || 'surecart/surecart//upsell-info'}
+						value={
+							template?.id || 'surecart/surecart//single-upsell'
+						}
 						choices={(templates ?? []).map((template) => {
 							return {
 								value: template?.id,
