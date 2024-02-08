@@ -1,4 +1,4 @@
-import { Product, UpsellFunnel } from 'src/types';
+import { Product } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 
@@ -18,11 +18,6 @@ export const checkoutIsLocked = (lockName = ''): boolean => (lockName ? state.lo
  * Get a line item by product id.
  */
 export const getLineItemByProductId = (productId: string) => (state.checkout?.line_items?.data || []).find(line_item => (line_item?.price?.product as Product)?.id === productId);
-
-/**
- * Get the first upsell from the checkout.
- */
-export const getUpsell = (step = 'initial') => ((state?.checkout?.upsell_funnel as UpsellFunnel)?.upsells?.data || []).find(u => u?.step === step);
 
 /**
  * Is the shipping address required?

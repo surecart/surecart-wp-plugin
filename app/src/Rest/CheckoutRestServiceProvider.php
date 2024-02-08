@@ -97,7 +97,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'offerBump' ),
-					'permission_callback' => [ $this, 'edit_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -110,7 +110,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'offerUpsell' ),
-					'permission_callback' => [ $this, 'edit_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -123,7 +123,7 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'declineUpsell' ),
-					'permission_callback' => [ $this, 'edit_item_permissions_check' ],
+					'permission_callback' => [ $this, 'update_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],

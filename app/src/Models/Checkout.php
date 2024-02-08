@@ -81,7 +81,7 @@ class Checkout extends Model {
 	 * @return void
 	 */
 	public function setCurrentUpsellAttribute( $value ) {
-		$this->setRelation( 'upsell', $value, Upsell::class );
+		$this->setRelation( 'current_upsell', $value, Upsell::class );
 	}
 
 	/**
@@ -302,7 +302,7 @@ class Checkout extends Model {
 	 *
 	 * @return $this|\WP_Error
 	 */
-	protected function decline_upsell( $upsell ) {
+	protected function declineUpsell( $upsell ) {
 		if ( $this->fireModelEvent( 'declining_upsell' ) === false ) {
 			return false;
 		}
