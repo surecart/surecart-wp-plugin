@@ -94,7 +94,6 @@ export default ({ onRequestClose, funnel, updateFunnel }) => {
 								value={id}
 								requestQuery={{
 									archived: false,
-									ad_hoc: false,
 								}}
 								includeVariants={false}
 								onSelect={({ price_id }) => {
