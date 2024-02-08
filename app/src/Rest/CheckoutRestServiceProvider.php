@@ -5,8 +5,6 @@ namespace SureCart\Rest;
 use SureCart\Rest\RestServiceInterface;
 use SureCart\Controllers\Rest\CheckoutsController;
 use SureCart\Form\FormValidationService;
-use SureCart\Models\Form;
-use SureCart\Models\Product;
 use SureCart\Models\User;
 
 /**
@@ -87,6 +85,45 @@ class CheckoutRestServiceProvider extends RestServiceProvider implements RestSer
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => $this->callback( $this->controller, 'cancel' ),
 					'permission_callback' => [ $this, 'cancel_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/offer_bump/(?P<bump_id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'offerBump' ),
+					'permission_callback' => [ $this, 'edit_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/offer_upsell/(?P<upsell_id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'offerUpsell' ),
+					'permission_callback' => [ $this, 'edit_item_permissions_check' ],
+				],
+				// Register our schema callback.
+				'schema' => [ $this, 'get_item_schema' ],
+			]
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>\S+)/decline_upsell/(?P<upsell_id>\S+)',
+			[
+				[
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => $this->callback( $this->controller, 'declineUpsell' ),
+					'permission_callback' => [ $this, 'edit_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],

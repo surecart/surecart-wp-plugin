@@ -204,4 +204,130 @@ class Checkout extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Offer a bump.
+	 *
+	 * @param  string|\SureCart\Models\Bump $bump The bump object.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function offerBump( $bump ) {
+		if ( $this->fireModelEvent( 'offering_bump' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the checkout.' );
+		}
+
+		$id = is_a( $bump, Bump::class ) ? $bump->id : $bump;
+
+		if ( empty( $id ) ) {
+			return new \WP_Error( 'not_saved', 'Please pass an upsell.' );
+		}
+
+		$offered = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/offer_bump/' . $id
+		);
+
+		if ( is_wp_error( $offered ) ) {
+			return $offered;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Offer an upsell.
+	 *
+	 * @param  string|\SureCart\Models\Upsell $upsell The upsell object.
+	 *
+	 * @return true|\WP_Error
+	 */
+	protected function offerUpsell( $upsell ) {
+		if ( $this->fireModelEvent( 'offering_upsell' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the checkout.' );
+		}
+
+		$id = is_a( $upsell, Upsell::class ) ? $upsell->id : $upsell;
+
+		if ( empty( $id ) ) {
+			return new \WP_Error( 'not_saved', 'Please pass an upsell.' );
+		}
+
+		$offered = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/offer_upsell/' . $id
+		);
+
+		if ( is_wp_error( $offered ) ) {
+			return $offered;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Decline an upsell.
+	 *
+	 * @param  string|\SureCart\Models\Upsell $upsell The upsell object.
+	 *
+	 * @return $this|\WP_Error
+	 */
+	protected function decline_upsell( $upsell ) {
+		if ( $this->fireModelEvent( 'declining_upsell' ) === false ) {
+			return false;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the checkout.' );
+		}
+
+		$id = is_a( $upsell, Upsell::class ) ? $upsell->id : $upsell;
+
+		if ( empty( $id ) ) {
+			return new \WP_Error( 'not_saved', 'Please pass an upsell.' );
+		}
+
+		$declined = $this->makeRequest(
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			],
+			$this->endpoint . '/' . $this->attributes['id'] . '/decline_upsell/' . $id
+		);
+
+		if ( is_wp_error( $declined ) ) {
+			return $declined;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $declined );
+
+		$this->fireModelEvent( 'declined' );
+
+		return $this;
+	}
 }
