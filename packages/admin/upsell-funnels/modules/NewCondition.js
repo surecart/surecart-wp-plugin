@@ -96,6 +96,7 @@ export default ({ onRequestClose, funnel, updateFunnel }) => {
 									archived: false,
 									ad_hoc: false,
 								}}
+								includeVariants={false}
 								onSelect={({ price_id }) => {
 									setType('price_ids');
 									setId(price_id);
