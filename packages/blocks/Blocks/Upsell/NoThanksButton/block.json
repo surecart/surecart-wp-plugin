@@ -22,10 +22,6 @@
 		"width": {
 			"type": "number",
 			"default": 100
-		},
-		"next_action": {
-			"type": "string",
-			"default": "continue"
 		}
 	},
 	"supports": {
