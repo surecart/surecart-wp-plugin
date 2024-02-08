@@ -32,6 +32,7 @@ declare global {
     scData: {
       cdn_root: string;
       root_url: string;
+      plugin_url: string;
       page_id: string;
       persist_cart: 'browser' | 'url' | false;
       nonce: string;
