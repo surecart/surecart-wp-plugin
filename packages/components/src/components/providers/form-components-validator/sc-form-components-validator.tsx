@@ -52,11 +52,6 @@ export class ScFormComponentsValidator {
       this.addAddressField();
     }
 
-    // add the billing address if it's not there.
-    if (!this.hasBillingAddress) {
-      this.addBillingAddress();
-    }
-
     // add order bumps.
     if (checkoutState.checkout?.recommended_bumps?.data?.length) {
       this.addBumps();
@@ -160,8 +155,9 @@ export class ScFormComponentsValidator {
   addBumps() {
     if (this.hasBumpsField) return;
     const billingAddress = this.el.querySelector('sc-order-billing-address');
+    const payment = this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    billingAddress.parentNode.insertBefore(bumps, billingAddress.nextSibling);
+    billingAddress.parentNode.insertBefore(bumps, (billingAddress || payment).nextSibling);
     this.hasBumpsField = true;
   }
 

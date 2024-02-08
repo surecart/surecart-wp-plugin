@@ -5,7 +5,6 @@ exports[`sc-form-components-validator appends missing address field if required 
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-billing-address></sc-order-billing-address>
   <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
 </sc-form-components-validator>
@@ -16,17 +15,7 @@ exports[`sc-form-components-validator appends missing address field with shippin
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-billing-address></sc-order-billing-address>
   <sc-order-shipping-address></sc-order-shipping-address>
-  <sc-payment></sc-payment>
-</sc-form-components-validator>
-`;
-
-exports[`sc-form-components-validator appends missing billing address field if missing 1`] = `
-<sc-form-components-validator>
-  <mock:shadow-root>
-    <slot></slot>
-  </mock:shadow-root>
   <sc-payment></sc-payment>
 </sc-form-components-validator>
 `;
@@ -55,7 +44,6 @@ exports[`sc-form-components-validator requires the customer name on sc-customer-
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-billing-address></sc-order-billing-address>
   <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
   <sc-customer-name></sc-customer-name>
@@ -67,7 +55,6 @@ exports[`sc-form-components-validator requires the customer name on sc-order-shi
   <mock:shadow-root>
     <slot></slot>
   </mock:shadow-root>
-  <sc-order-billing-address></sc-order-billing-address>
   <sc-order-shipping-address></sc-order-shipping-address>
   <sc-payment></sc-payment>
 </sc-form-components-validator>

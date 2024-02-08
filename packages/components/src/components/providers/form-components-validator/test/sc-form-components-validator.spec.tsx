@@ -109,19 +109,4 @@ describe('sc-form-components-validator', () => {
     expect(page.root).toMatchSnapshot();
     page.rootInstance.disconnectedCallback();
   });
-
-  it('appends missing billing address field if missing', async () => {
-    const page = await newSpecPage({
-      components: [ScFormComponentsValidator],
-      template: () => (
-        <sc-form-components-validator>
-          <sc-payment></sc-payment>
-        </sc-form-components-validator>
-      ),
-    });
-    await page.waitForChanges();
-
-    expect(page.root).toMatchSnapshot();
-    page.rootInstance.disconnectedCallback();
-  });
 });
