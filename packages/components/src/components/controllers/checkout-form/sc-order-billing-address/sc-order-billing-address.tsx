@@ -86,6 +86,8 @@ export class ScOrderBillingAddress {
         };
       }
     });
+
+    this.sameAsShipping = this.shippingAddressFieldExists();
   }
 
   async updateAddressState(address: Partial<Address>) {
@@ -120,12 +122,19 @@ export class ScOrderBillingAddress {
     };
   }
 
+  shippingAddressFieldExists() {
+    return !!document.querySelector('sc-order-shipping-address');
+  }
+
   render() {
     return (
       <Fragment>
-        <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={this.sameAsShipping}>
-         {this.toggleLabel}
-        </sc-switch>
+        {this.shippingAddressFieldExists() && (
+          <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={this.sameAsShipping}>
+            {this.toggleLabel}
+          </sc-switch>
+        )}
+
         {!this.sameAsShipping && (
           <sc-address
             exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
