@@ -662,7 +662,7 @@ export interface Checkout extends Object {
     pagination: Pagination;
     data: Array<Bump>;
   };
-  upsell_funnel?: string | UpsellFunnel;
+  current_upsell: Upsell;
   recommended_upsells?: {
     object: 'list';
     pagination: Pagination;

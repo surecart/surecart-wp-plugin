@@ -1,5 +1,5 @@
 import { Component, Host, h } from '@stencil/core';
-import { cancel } from '@store/upsell/mutations';
+import { decline } from '@store/upsell/mutations';
 
 @Component({
   tag: 'sc-upsell-no-thanks-button',
@@ -8,7 +8,7 @@ import { cancel } from '@store/upsell/mutations';
 export class ScUpsellNoThanksButton {
   render() {
     return (
-      <Host onClick={() => cancel()}>
+      <Host onClick={() => decline()}>
         <slot />
       </Host>
     );

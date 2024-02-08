@@ -8,7 +8,7 @@ import { Component, Element, h, Host } from '@stencil/core';
  */
 import { state as upsellState } from '@store/upsell';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
-import { purchase } from '@store/upsell/mutations';
+import { accept } from '@store/upsell/mutations';
 import { isBusy } from '@store/upsell/getters';
 
 @Component({
@@ -24,7 +24,7 @@ export class ScUpsellSubmitButton {
 
   async handleAddToOrderClick(e) {
     e.preventDefault();
-    purchase();
+    accept();
   }
 
   render() {

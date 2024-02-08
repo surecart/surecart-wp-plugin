@@ -11,70 +11,44 @@ import { Checkout, LineItem, Price } from 'src/types';
 import { state } from './store';
 import { state as productState } from '../product';
 import { createErrorNotice, removeNotice } from '@store/notices/mutations';
-import { getExitUrl, getUpsell } from './getters';
-
-/**
- * Handle accepted
- */
-export const handleAccepted = () => {
-  const upsell = getUpsell('accepted');
-  // TODO: Analytics
-  if (!upsell?.permalink) {
-    return (state.loading = 'complete');
-  }
-  state.loading = 'redirecting';
-  window.location.assign(
-    addQueryArgs(upsell?.permalink, {
-      sc_checkout_id: state.checkout?.id,
-      sc_form_id: state.form_id,
-    }),
-  );
-};
-
-/**
- * Handle declined.
- */
-export const handleDeclined = () => {
-  const upsell = getUpsell('declined');
-  // TODO: Analytics
-  if (!upsell?.permalink) {
-    return (state.loading = 'complete');
-  }
-  state.loading = 'redirecting';
-  window.location.assign(
-    addQueryArgs(upsell?.permalink, {
-      sc_checkout_id: state.checkout?.id,
-      sc_form_id: state.form_id,
-    }),
-  );
-};
-
-/**
- * Redirect to next link.
- */
-export const handleComplete = () => {
-  const nextLink = getExitUrl();
-  if (!nextLink) {
-    return (state.loading = 'complete');
-  }
-  state.loading = 'redirecting';
-  window.location.assign(nextLink);
-};
-
-/**
- * Cancel the upsell.
- */
-export const cancel = () => (state.loading = 'declined');
 
 /**
  * Purchase the upsell
  */
-export const purchase = () => update({ preview: false });
+export const accept = () => update({ preview: false });
+
+/**
+ * Decline the upsell.
+ */
+export const decline = async () => {
+  try {
+    if (!state.checkout_id || state.loading !== 'idle') {
+      return;
+    }
+    // Add Upsell to line item.
+    const { checkout, ...lineItem } = (await apiFetch({
+      path: addQueryArgs(`surecart/v1/checkouts/${state.checkout_id}/decline_upsell`, {
+        preview,
+        expand: ['checkout', 'checkout.upsell_funnel', 'upsell_funnel.upsells', 'fees', 'upsell.price'],
+      }),
+      method: 'POST',
+      data: {
+        ...productState[state.product?.id]?.line_item,
+        price_id: (state.upsell?.price as Price)?.id,
+        upsell: state.upsell?.id,
+        checkout: state.checkout_id,
+      },
+    })) as LineItem;
+  } catch (error) {
+    state.loading = 'idle';
+    createErrorNotice(error);
+  }
+};
 
 /**
  * Update the upsell.
  */
-export const update = async ({ preview } = { preview: true }) => {
+export const preview = async ({ preview } = { preview: true }) => {
   try {
     if (!state.checkout_id || state.busy) {
       return;

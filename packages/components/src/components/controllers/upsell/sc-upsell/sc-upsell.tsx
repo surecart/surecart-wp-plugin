@@ -8,7 +8,7 @@ import { Component, Host, h } from '@stencil/core';
  */
 import { state } from '@store/upsell';
 import { isBusy } from '@store/upsell/getters';
-import { update } from '@store/upsell/mutations';
+import { preview } from '@store/upsell/mutations';
 import { __ } from '@wordpress/i18n';
 import { ManualPaymentMethod } from 'src/types';
 
@@ -19,7 +19,7 @@ import { ManualPaymentMethod } from 'src/types';
 })
 export class ScUpsell {
   componentWillLoad() {
-    update();
+    preview();
   }
 
   render() {

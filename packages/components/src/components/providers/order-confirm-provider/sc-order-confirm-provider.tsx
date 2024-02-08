@@ -10,7 +10,6 @@ import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
 import { createErrorNotice } from '@store/notices/mutations';
 import { clearCheckout } from '@store/checkout/mutations';
-import { getUpsell } from '@store/checkout/getters';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -64,14 +63,12 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
-      const upsell = getUpsell('initial');
-
       // If there is an initial upsell redirect to it.
-      if (!!upsell?.permalink) {
+      if (!!checkoutState?.checkout?.current_upsell?.permalink) {
         setTimeout(
           () =>
             window.location.assign(
-              addQueryArgs(upsell?.permalink, {
+              addQueryArgs(checkoutState?.checkout?.current_upsell?.permalink, {
                 sc_checkout_id: checkoutState.checkout?.id,
                 sc_form_id: checkoutState.formId,
               }),

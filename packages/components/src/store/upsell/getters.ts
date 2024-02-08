@@ -1,21 +1,9 @@
-import { UpsellFunnel } from 'src/types';
 import { state } from './store';
 
 /**
  * Is it busy
  */
 export const isBusy = () => ['loading', 'busy', 'redirecting'].includes(state.loading);
-
-/**
- * Get the upsell by step name.
- */
-export const getUpsell = step => {
-  // we only want to do this on the initial step.
-  if (state?.upsell?.step !== 'initial') {
-    return null;
-  }
-  return ((state?.checkout?.upsell_funnel as UpsellFunnel)?.upsells?.data || []).filter(u => u.step !== state.upsell.step)?.find(u => u?.step === step);
-};
 
 /**
  * Get the exit url.
