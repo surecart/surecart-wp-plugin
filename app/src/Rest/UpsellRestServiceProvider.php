@@ -24,59 +24,11 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	protected $controller = UpsellsController::class;
 
 	/**
-	 * Register the service provider
+	 * Methods allowed for the model.
 	 *
-	 * @param \Pimple\Container $container Service Container.
+	 * @var array
 	 */
-	public function registerRoutes() {
-		register_rest_route(
-			"$this->name/v$this->version",
-			"$this->endpoint",
-			array_filter(
-				[
-					[
-						'methods'             => \WP_REST_Server::READABLE,
-						'callback'            => $this->callback( $this->controller, 'index' ),
-						'permission_callback' => [ $this, 'get_items_permissions_check' ],
-						'args'                => $this->get_collection_params(),
-					],
-					[
-						'methods'             => \WP_REST_Server::CREATABLE,
-						'callback'            => $this->callback( $this->controller, 'create' ),
-						'permission_callback' => [ $this, 'create_item_permissions_check' ],
-						'args'                => $this->get_endpoint_args_for_item_schema(),
-					],
-					'schema' => [ $this, 'get_item_schema' ],
-				]
-			)
-		);
-		register_rest_route(
-			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>[^/]+)',
-			array_filter(
-				[
-					[
-						'methods'             => \WP_REST_Server::READABLE,
-						'callback'            => $this->callback( $this->controller, 'find' ),
-						'permission_callback' => [ $this, 'get_item_permissions_check' ],
-					],
-					[
-						'methods'             => \WP_REST_Server::EDITABLE,
-						'callback'            => $this->callback( $this->controller, 'edit' ),
-						'permission_callback' => [ $this, 'update_item_permissions_check' ],
-						'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::EDITABLE ),
-					],
-					[
-						'methods'             => \WP_REST_Server::DELETABLE,
-						'callback'            => $this->callback( $this->controller, 'delete' ),
-						'permission_callback' => [ $this, 'delete_item_permissions_check' ],
-					],
-					// Register our schema callback.
-					'schema' => [ $this, 'get_item_schema' ],
-				]
-			)
-		);
-	}
+	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
 
 	/**
 	 * Get our sample schema for a post.
@@ -91,13 +43,12 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 
 		$this->schema = [
 			// This tells the spec of JSON Schema we are using which is draft 4.
-			'$schema'              => 'http://json-schema.org/draft-04/schema#',
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			// The title property marks the identity of the resource.
-			'title'                => $this->endpoint,
-			'type'                 => 'object',
-			'additionalProperties' => false,
+			'title'      => $this->endpoint,
+			'type'       => 'object',
 			// In JSON Schema you can specify object properties in the properties attribute.
-			'properties'           => [
+			'properties' => [
 				'id'                          => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
