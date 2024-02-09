@@ -32,8 +32,11 @@ export default ({ onRequestClose, funnel, updateFunnel }) => {
 
 	const onSubmit = (e) => {
 		updateFunnel({
-			[`filter_${type}`]: [...(funnel?.[`filter_${type}`] || []), id],
+			[`filter_${type}`]: [
+				...new Set([...(funnel?.[`filter_${type}`] || []), id]),
+			],
 		});
+		``;
 		onRequestClose();
 	};
 
