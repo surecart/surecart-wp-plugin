@@ -35,6 +35,11 @@ export default ({
 }) => {
 	const discount = getHumanDiscount(upsell, upsell?.price?.currency);
 
+	const outOfStock =
+		upsell?.price?.product?.stock_enabled &&
+		upsell?.price?.product?.available_stock <= 0 &&
+		!upsell?.price?.product?.allow_out_of_stock_purchases;
+
 	if (!upsell) {
 		return (
 			<>
@@ -123,6 +128,13 @@ export default ({
 						<div>
 							<ScTag size="small" type="success" pill>
 								{discount}
+							</ScTag>
+						</div>
+					)}
+					{outOfStock && (
+						<div>
+							<ScTag size="small" type="warning" pill>
+								{__('Out Of Stock', 'surecart')}
 							</ScTag>
 						</div>
 					)}

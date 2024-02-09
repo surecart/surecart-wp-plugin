@@ -63,6 +63,7 @@ export default ({ priceId, onSelect, ...props }) => {
 			value={priceId}
 			onSelect={({ price_id }) => onSelect(price_id)}
 			includeVariants={false}
+			showOutOfStock={true}
 			requestQuery={{
 				archived: false,
 				ad_hoc: false,
