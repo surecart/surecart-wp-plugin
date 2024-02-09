@@ -83,7 +83,7 @@ export default () => {
 				{
 					account_currency: accountCurrency,
 					email,
-					source_account_id: selectedTemplate,
+					seed: !!selectedTemplate,
 				},
 				{
 					throwOnError: true,
