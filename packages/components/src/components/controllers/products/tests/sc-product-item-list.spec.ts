@@ -8,7 +8,7 @@ const API_PRICE_PATH = '/surecart/v1/prices';
 const API_PRODUCT_COLLECTION_BASE_PATH = '/surecart/v1/product_collections';
 
 test.describe('Product List Page', () => {
-  let products = [];
+  const products = [];
   let product1 = null;
   let product2 = null;
 
@@ -20,12 +20,15 @@ test.describe('Product List Page', () => {
       amount: 1000,
     });
 
-    product2 = createProduct(requestUtils, {
-      name: 'Product 2',
-      status: 'published',
-      amount: 2000,
-      scratch_amount: 3000,
-    });
+    // Wait for 1 second, so that sorting will be different.
+    setTimeout(() => {
+      product2 = createProduct(requestUtils, {
+        name: 'Product 2',
+        status: 'published',
+        amount: 2000,
+        scratch_amount: 3000,
+      });
+    }, 1000);
 
     products.push(product1, product2);
   });
@@ -35,6 +38,7 @@ test.describe('Product List Page', () => {
 
     // Test: Products is showing in List.
     await expect(page.locator('h1')).toHaveText('Shop');
+    await page.waitForLoadState('networkidle')
 
     // Check if Product 1 and Product 2 are showing in the list.
     const productTitles = await page.locator('sc-product-item-title');
@@ -44,18 +48,29 @@ test.describe('Product List Page', () => {
     const secondProductText = await productTitles.nth(1).innerText();
 
     // Check if Product 1 and Product 2 are showing in the list
-    await expect(firstProductText).toBe('Product 1');
-    await expect(secondProductText).toBe('Product 2');
+    await expect(firstProductText).toBe('Product 2'); // It should be descending order - Latest first.
+    await expect(secondProductText).toBe('Product 1');
 
     // Test: searching product.
     await page.getByPlaceholder('Search').fill('Product 2');
     await page.click('.search-button');
-    await page.waitForTimeout(1000);
+    // await page.waitForLoadState('networkidle')
+    await page.waitForTimeout(3000);
 
     // Check if Product 2 is showing in the list.
     const productTitlesAfterSearch = await page.locator('sc-product-item-title');
     const firstProductTextAfterSearch = await productTitlesAfterSearch.innerText();
     await expect(firstProductTextAfterSearch).toBe('Product 2');
+
+    // Test: Clearing Search product.
+    await page.click('.tag--clearable');
+    await page.waitForLoadState('networkidle')
+    await page.getByPlaceholder('Search').fill('Other');
+    await page.click('.search-button');
+    // await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(3000);
+
+
   });
 });
 
