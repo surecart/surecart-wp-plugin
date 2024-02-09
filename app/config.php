@@ -401,7 +401,7 @@ return [
 	'webhook_events'         => [
 		// 'cancellation_act.updated',
 		// 'customer.created',
-		// 'customer.updated',
+		'customer.updated',
 		// 'order.created',
 		// 'order.made_processing',
 		// 'order.paid', // In doc
