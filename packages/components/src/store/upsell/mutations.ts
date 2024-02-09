@@ -27,7 +27,7 @@ export const trackOffer = () =>
  */
 export const preview = async () => {
   try {
-    if (state.loading === 'busy') {
+    if (!state.checkout_id || state.loading === 'busy') {
       return;
     }
 
@@ -69,7 +69,7 @@ export const accept = async () => {
  */
 export const decline = async () => {
   try {
-    if (state.loading === 'busy') {
+    if (!state.checkout_id || state.loading === 'busy') {
       return;
     }
 
@@ -90,8 +90,6 @@ export const decline = async () => {
       },
     })) as Checkout;
 
-    console.log({ checkout });
-
     handleCompletion(checkout);
   } catch (error) {
     state.loading = 'idle';
@@ -102,8 +100,8 @@ export const decline = async () => {
 /**
  * Make the request to the upsell endpoing
  */
-export const upsellRequest = async args =>
-  (await apiFetch({
+export const upsellRequest = args =>
+  apiFetch({
     path: addQueryArgs('surecart/v1/line_items/upsell', {
       ...args,
       expand: ['checkout', 'checkout.current_upsell'],
@@ -115,7 +113,7 @@ export const upsellRequest = async args =>
       upsell: state.upsell?.id,
       checkout: state.checkout_id,
     },
-  })) as LineItem;
+  }) as Promise<LineItem>;
 
 /**
  * Handle what to do on completion.
