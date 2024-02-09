@@ -24,11 +24,59 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 	protected $controller = UpsellsController::class;
 
 	/**
-	 * Methods allowed for the model.
+	 * Register the service provider
 	 *
-	 * @var array
+	 * @param \Pimple\Container $container Service Container.
 	 */
-	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
+	public function registerRoutes() {
+		register_rest_route(
+			"$this->name/v$this->version",
+			"$this->endpoint",
+			array_filter(
+				[
+					[
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => $this->callback( $this->controller, 'index' ),
+						'permission_callback' => [ $this, 'get_items_permissions_check' ],
+						'args'                => $this->get_collection_params(),
+					],
+					[
+						'methods'             => \WP_REST_Server::CREATABLE,
+						'callback'            => $this->callback( $this->controller, 'create' ),
+						'permission_callback' => [ $this, 'create_item_permissions_check' ],
+						'args'                => $this->get_endpoint_args_for_item_schema(),
+					],
+					'schema' => [ $this, 'get_item_schema' ],
+				]
+			)
+		);
+		register_rest_route(
+			"$this->name/v$this->version",
+			$this->endpoint . '/(?P<id>[^/]+)',
+			array_filter(
+				[
+					[
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => $this->callback( $this->controller, 'find' ),
+						'permission_callback' => [ $this, 'get_item_permissions_check' ],
+					],
+					[
+						'methods'             => \WP_REST_Server::EDITABLE,
+						'callback'            => $this->callback( $this->controller, 'edit' ),
+						'permission_callback' => [ $this, 'update_item_permissions_check' ],
+						'args'                => $this->get_endpoint_args_for_item_schema( \WP_REST_Server::EDITABLE ),
+					],
+					[
+						'methods'             => \WP_REST_Server::DELETABLE,
+						'callback'            => $this->callback( $this->controller, 'delete' ),
+						'permission_callback' => [ $this, 'delete_item_permissions_check' ],
+					],
+					// Register our schema callback.
+					'schema' => [ $this, 'get_item_schema' ],
+				]
+			)
+		);
+	}
 
 	/**
 	 * Get our sample schema for a post.
@@ -43,12 +91,13 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 
 		$this->schema = [
 			// This tells the spec of JSON Schema we are using which is draft 4.
-			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'$schema'              => 'http://json-schema.org/draft-04/schema#',
 			// The title property marks the identity of the resource.
-			'title'      => $this->endpoint,
-			'type'       => 'object',
+			'title'                => $this->endpoint,
+			'type'                 => 'object',
+			'additionalProperties' => false,
 			// In JSON Schema you can specify object properties in the properties attribute.
-			'properties' => [
+			'properties'           => [
 				'id'                          => [
 					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
 					'type'        => 'string',
@@ -75,7 +124,7 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 				],
 				'amount_off'                  => [
 					'description' => esc_html__( 'Amount (in the currency of the price) that will be taken off line items associated with this upsell.', 'surecart' ),
-					'type'        => 'integer',
+					'type'        => [ 'integer', 'null' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 				'duplicate_purchase_behavior' => [
@@ -90,7 +139,7 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 				],
 				'percent_off'                 => [
 					'description' => esc_html__( 'Percent that will be taken off line items associated with this upsell.', 'surecart' ),
-					'type'        => 'integer',
+					'type'        => [ 'integer', 'null' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 				'step'                        => [
@@ -100,7 +149,7 @@ class UpsellRestServiceProvider extends RestServiceProvider implements RestServi
 				],
 				'price'                       => [
 					'description' => esc_html__( 'The UUID of the price.', 'surecart' ),
-					'type'        => 'string',
+					'type'        => [ 'string', 'object' ],
 					'context'     => [ 'view', 'edit' ],
 				],
 			],

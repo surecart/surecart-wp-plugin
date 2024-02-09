@@ -90,6 +90,7 @@ class UpsellsListTable extends ListTable {
 		return [
 			'name'     => __( 'Name', 'surecart' ),
 			'priority' => __( 'Priority', 'surecart' ),
+			'enabled'  => __( 'Status', 'surecart' ),
 			'date'     => __( 'Date', 'surecart' ),
 		];
 	}
@@ -227,15 +228,13 @@ class UpsellsListTable extends ListTable {
 	}
 
 	/**
-	 * Name column
+	 * Enabled column
 	 *
 	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
 	 *
 	 * @return string
 	 */
-	public function column_name( $upsell_funnel ) {
-		ob_start();
-
+	public function column_enabled( $upsell_funnel ) {
 		$toggle_url = add_query_arg(
 			[
 				'action' => 'toggle_enabled',
@@ -244,26 +243,32 @@ class UpsellsListTable extends ListTable {
 			]
 		);
 		?>
+		<sc-switch checked="<?php echo esc_attr( $upsell_funnel->enabled ) ? 'true' : 'false'; ?>"
+			onClick="event.target.disabled = true; window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>');"></sc-switch>
+		<?php
+	}
 
+	/**
+	 * Name column
+	 *
+	 * @param \SureCart\Models\UpsellFunnel $upsell_funnel Upsell model.
+	 *
+	 * @return string
+	 */
+	public function column_name( $upsell_funnel ) {
+		ob_start();
+		?>
 		<div>
-			<div style="display:flex; gap: 0.5em;">
-				<sc-switch checked="<?php echo esc_attr( $upsell_funnel->enabled ) ? 'true' : 'false'; ?>"
-					onClick="event.target.disabled = true; window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>');"></sc-switch>
-
-				<div>
-					<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
-						<?php echo esc_html( $upsell_funnel->name ); ?>
-					</a>
-
-					<?php
-					echo $this->row_actions(
-						[
-							'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
-						],
-					);
-					?>
-				</div>
-			</div>
+			<a class="row-title" aria-label="<?php echo esc_attr( 'Edit Upsell', 'surecart' ); ?>" href="<?php echo esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ); ?>">
+				<?php echo esc_html( $upsell_funnel->name ); ?>
+			</a>
+			<?php
+			echo $this->row_actions(
+				[
+					'edit' => ' <a href="' . esc_url( \SureCart::getUrl()->edit( 'upsell', $upsell_funnel->id ) ) . '" aria-label="' . esc_attr( 'Edit Upsell Funnel', 'surecart' ) . '">' . esc_html__( 'Edit', 'surecart' ) . '</a>',
+				],
+			);
+			?>
 		</div>
 		<?php
 		return ob_get_clean();

@@ -65,24 +65,12 @@ class UpsellPageController extends BasePageController {
 	 * @param string                                  $id The id of the product.
 	 * @return function
 	 */
-	public function show( $request, $view, $id ) {
-		// we need the checkout since it cannot be fetched through the upsell if it's expired.
-		$checkout = \SureCart\Models\Checkout::with( [ 'upsell_funnel', 'upsell_funnel.upsells', 'upsell.price' ] )->find( $request->query( 'sc_checkout_id' ) );
-
-		if ( is_wp_error( $checkout ) ) {
-			return $this->handleError( $checkout );
+	public function show( $request, $view ) {
+		// fetch the upsell.
+		$this->model = \SureCart\Models\Upsell::with( [ 'price' ] )->find( get_query_var( 'sc_upsell_id' ) );
+		if ( is_wp_error( $this->model ) ) {
+			return $this->handleError( $this->model );
 		}
-
-		// get upsell from checkout.
-		$id = get_query_var( 'sc_upsell_id' );
-		// get upsells that match the id.
-		$upsells = array_filter( $checkout->upsell_funnel->upsells->data ?? [], fn( $upsell ) => $upsell->id === $id );
-
-		if ( empty( $upsells ) ) {
-			return $this->notFound();
-		}
-
-		$this->model = array_shift( $upsells );
 
 		// does not exist on checkout.
 		if ( empty( $this->model->price->product ) ) {
@@ -115,7 +103,6 @@ class UpsellPageController extends BasePageController {
 					'upsell'      => $this->model,
 					'form_id'     => (int) $request->query( 'sc_form_id' ) ?? null,
 					'checkout_id' => esc_attr( $request->query( 'sc_checkout_id' ) ?? null ),
-					'checkout'    => $checkout,
 					'text'        => $this->getCheckoutText( (int) $request->query( 'sc_form_id' ) ?? '' ),
 					'success_url' => esc_url( $this->getCheckoutSuccessUrl( (int) $request->query( 'sc_form_id' ) ?? '' ) ),
 				],

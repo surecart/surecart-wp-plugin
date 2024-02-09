@@ -23,55 +23,30 @@ class Upsell extends Model implements PageModel {
 	protected $object_name = 'upsell';
 
 	/**
-	 * Set the template id attribute.
-	 *
-	 * @param string $value The template id.
-	 *
-	 * @return void
-	 */
-	protected function setTemplateIdAttribute( $value ) {
-		$this->attributes['metadata']['wp_template_id'] = $value;
-	}
-
-	/**
-	 * Set the template id attribute.
-	 *
-	 * @param string $value The template id.
-	 *
-	 * @return void
-	 */
-	protected function setTemplatePartIdAttribute( $value ) {
-		$this->attributes['metadata']['wp_template_part_id'] = $value;
-	}
-
-	/**
 	 * Get the upsell template id.
 	 *
 	 * @return string
 	 */
 	public function getTemplateIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_id ) ) {
-			// we have a php file, switch to default.
-			if ( wp_is_block_theme() && false !== strpos( $this->attributes['metadata']->wp_template_id, '.php' ) ) {
+		$template_id = $this->attributes['metadata']->wp_template_id ?? '';
+		// use a fallback for FSE.
+		if ( wp_is_block_theme() ) {
+			// if one is not set, or it's a php file, use the fallback.
+			if ( empty( $template_id ) || false !== strpos( $template_id, '.php' ) ) {
 				return 'surecart/surecart//single-upsell';
 			}
-
-			// this is acceptable.
-			return $this->attributes['metadata']->wp_template_id;
 		}
-		return 'surecart/surecart//single-upsell';
+		return $template_id;
 	}
+
 	/**
 	 * Get the bump template
 	 *
-	 * @return \WP_Template
+	 * @return \WP_Template|false
 	 */
 	public function getTemplateAttribute() {
 		$template = get_block_template( $this->getTemplateIdAttribute() );
-		if ( ! empty( $template->content ) ) {
-			return $template;
-		}
-		return get_block_template( 'surecart/surecart//single-upsell' );
+		return ! empty( $template->content ) ? $template : get_block_template( 'surecart/surecart//single-upsell' );
 	}
 
 	/**
@@ -80,10 +55,7 @@ class Upsell extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getTemplatePartIdAttribute(): string {
-		if ( ! empty( $this->attributes['metadata']->wp_template_part_id ) ) {
-			return $this->attributes['metadata']->wp_template_part_id;
-		}
-		return 'surecart/surecart//upsell-info';
+		return $this->attributes['metadata']->wp_template_part_id ?? 'surecart/surecart//upsell-info';
 	}
 
 	/**
