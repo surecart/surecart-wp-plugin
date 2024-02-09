@@ -22,6 +22,7 @@ export default defineConfig({
 	/* Test file match extension. Currently only supporting `.spec.ts` extension */
 	testMatch: [
 		'packages/blocks/Blocks/**/*.spec.ts',
+		'packages/components/src/components/controllers/products/**/*.spec.ts',
 		'packages/admin/**/*.spec.ts',
 		'packages/admin/**/**/*.spec.ts',
 	],
