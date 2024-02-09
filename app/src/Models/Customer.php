@@ -38,6 +38,7 @@ class Customer extends Model {
 		if ( $this->isError( $customer ) ) {
 			return $customer;
 		}
+
 		// maybe create a WordPress user.
 		if ( $create_user ) {
 			// Find the user by email.
