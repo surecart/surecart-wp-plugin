@@ -152,8 +152,8 @@ export class ScPriceChoiceContainer {
               {!!this.priceData?.setup_fee_enabled && this.priceData?.setup_fee_amount && (
                 <div class="price-choice__setup-fee">
                   <sc-visually-hidden>{__('This payment plan has', 'surecart')} </sc-visually-hidden>
-                  <sc-format-number type="currency" value={this.priceData.setup_fee_amount} currency={this.priceData?.currency}></sc-format-number>{' '}
-                  {this.priceData?.setup_fee_name || __('Setup Fee', 'surecart')}
+                  <sc-format-number type="currency" value={Math.abs(this.priceData.setup_fee_amount)} currency={this.priceData?.currency}></sc-format-number>{' '}
+                  {this.priceData?.setup_fee_name || (this.priceData?.setup_fee_amount < 0 ? __('Discount', 'surecart') : __('Setup Fee', 'surecart'))}
                 </div>
               )}
             </div>

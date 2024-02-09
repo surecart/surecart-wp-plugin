@@ -63,15 +63,15 @@ export default ({
 
 	return (
 		<Fragment>
-			<p>
-				{__(
-					'A product purchase will be automatically synced with this item.',
-					'surecart'
-				)}
-			</p>
-
 			<div>
-				<ScFormControl label={__('Integration', 'surecart')} required>
+				<ScFormControl
+					label={__('Integration', 'surecart')}
+					help={__(
+						'Select an integration to sync with this product.',
+						'surecart'
+					)}
+					required
+				>
 					<SelectModel
 						placeholder={__('Select An Integration', 'surecart')}
 						position={position || 'bottom-left'}

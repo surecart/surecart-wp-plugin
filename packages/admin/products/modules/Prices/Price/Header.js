@@ -55,7 +55,9 @@ export default ({
 					<>
 						{' '}
 						<sc-tag type="default" size="small">
-							{__('Setup Fee', 'surecart')}
+							{price?.setup_fee_amount < 0
+								? __('Discount', 'surecart')
+								: __('Setup Fee', 'surecart')}
 						</sc-tag>
 					</>
 				)}

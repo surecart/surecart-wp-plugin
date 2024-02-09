@@ -298,6 +298,7 @@
   "sc-checkout-product-price-variant-selector": {
     "label": true,
     "product": true,
+    "selector-title": true,
     "style": true,
     "id": true,
     "class": true,
@@ -339,6 +340,7 @@
     "invalid": true,
     "name": true,
     "required": true,
+    "role": true,
     "show-control": true,
     "size": true,
     "type": true,
@@ -631,6 +633,7 @@
     "no-header": true,
     "open": true,
     "placement": true,
+    "sticky-header": true,
     "style": true,
     "id": true,
     "class": true,
@@ -920,7 +923,6 @@
   "sc-line-item-bump": {
     "label": true,
     "loading": true,
-    "order": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1168,6 +1170,16 @@
     "class": true,
     "slot": true
   },
+  "sc-order-return-badge": {
+    "clearable": true,
+    "pill": true,
+    "size": true,
+    "status": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-order-shipment-badge": {
     "clearable": true,
     "pill": true,
@@ -1186,18 +1198,13 @@
     "label": true,
     "line1-placeholder": true,
     "line2-placeholder": true,
-    "loading": true,
     "name-placeholder": true,
     "placeholders": true,
     "postal-code-placeholder": true,
     "require-name": true,
     "required": true,
-    "shipping-address": true,
-    "shipping-enabled": true,
     "show-name": true,
     "state-placeholder": true,
-    "tax-enabled": true,
-    "tax-status": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1532,6 +1539,36 @@
   },
   "sc-product-buy-button": {
     "add-to-cart": true,
+    "checkout-link": true,
+    "form-id": true,
+    "mode": true,
+    "product-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-donation-amount-choice": {
+    "label": true,
+    "product-id": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-donation-choices": {
+    "label": true,
+    "product-id": true,
+    "recurring": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-product-donation-custom-amount": {
+    "product-id": true,
+    "value": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1616,6 +1653,7 @@
   "sc-product-pills-variant-option": {
     "label": true,
     "option-number": true,
+    "product-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1623,6 +1661,7 @@
   },
   "sc-product-price": {
     "prices": true,
+    "product-id": true,
     "sale-text": true,
     "style": true,
     "id": true,
@@ -1631,6 +1670,7 @@
   },
   "sc-product-price-choices": {
     "label": true,
+    "product-id": true,
     "show-price": true,
     "style": true,
     "id": true,
@@ -1640,6 +1680,7 @@
   "sc-product-price-modal": {
     "add-to-cart": true,
     "button-text": true,
+    "product-id": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1650,6 +1691,7 @@
     "help": true,
     "label": true,
     "name": true,
+    "product-id": true,
     "required": true,
     "show-label": true,
     "size": true,
@@ -1666,6 +1708,7 @@
     "slot": true
   },
   "sc-product-text": {
+    "product-id": true,
     "text": true,
     "style": true,
     "id": true,
@@ -1736,6 +1779,19 @@
     "label": true,
     "required": true,
     "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-recurring-price-choice-container": {
+    "label": true,
+    "prices": true,
+    "product": true,
+    "selected-price": true,
+    "show-amount": true,
+    "show-control": true,
+    "show-details": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1959,6 +2015,14 @@
   },
   "sc-subscription-payment-method": {
     "heading": true,
+    "subscription": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-subscription-reactivate": {
+    "open": true,
     "subscription": true,
     "style": true,
     "id": true,

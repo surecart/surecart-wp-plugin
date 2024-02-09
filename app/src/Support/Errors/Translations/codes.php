@@ -5,7 +5,7 @@
  * @package SureCart
  */
 
-return [
+return array(
 	'http_request_failed'                                  => __( 'Could not complete the request. Please try again.', 'surecart' ),
 	'coupon.invalid'                                       => __( 'Failed to save coupon.', 'surecart' ),
 	'checkout.discount.coupon.currency_mismatch'           => __( 'This coupon is for a different currency and cannot be applied.', 'surecart' ),
@@ -123,10 +123,13 @@ return [
 	'customer.default_payment_method.invalid'              => __( 'This payment method is not valid or reusable.', 'surecart' ),
 	'payment_method.not_detachable'                        => __( 'This payment method cannot be deleted because there are no other valid or reusable saved payment methods available.', 'surecart' ),
 	'line_item.price.exceeds_purchase_limit'               => __( 'You have exceeded the purchase limit for this product.', 'surecart' ),
+	'line_item.ad_hoc_amount.outside_range'                => __( 'This amount is outside the allowed amount.', 'surecart' ),
 	'checkout.price.exceeds_purchase_limit'                => __( 'You have exceeded the purchase limit for this product.', 'surecart' ),
 	'checkout.product.out_of_stock'                        => __( 'This product is out of stock.', 'surecart' ),
 	'checkout.price.unpurchasable'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'order.line_items.price.blank'                         => __( 'This product is no longer available for purchase.', 'surecart' ),
 	'checkout.line_items.price.currency_mismatch'          => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'line_item.price.currency_mismatch'					   => __( "The currency of this product's price is different from the store currency.", 'surecart' ),
+	'return_request.return_items.quantity.over_returned'   => __( 'The quantity returned is greater than the quantity fulfilled.', 'surecart' ),
 	'customer.email.taken'                                 => __( 'This email is already in use.', 'surecart' ),
-];
+);

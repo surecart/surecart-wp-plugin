@@ -18,9 +18,11 @@ declare global {
     };
     dataLayer: any;
     gtag: any;
+    fbq: any;
     sc?: {
       store?: {
         product?: any;
+        products?: any;
       };
     };
     scStore: any;
@@ -31,7 +33,7 @@ declare global {
       cdn_root: string;
       root_url: string;
       page_id: string;
-      do_not_persist_cart: boolean;
+      persist_cart: 'browser' | 'url' | false;
       nonce: string;
       base_url: string;
       nonce_endpoint: string;
@@ -91,6 +93,7 @@ export interface Price {
   name: string;
   description?: string;
   amount: number;
+  full_amount: number;
   currency: string;
   recurring: boolean;
   recurring_interval?: 'week' | 'month' | 'year' | 'never';
@@ -312,6 +315,11 @@ export interface Product extends Object {
     object: 'list';
     pagination: Pagination;
     data: Array<Download>;
+  };
+  product_collections: {
+    object: 'list';
+    pagination: Pagination;
+    data: Array<Collection>;
   };
   stock_enabled: boolean;
   allow_out_of_stock_purchases: boolean;
@@ -842,6 +850,7 @@ export type OrderStatus = 'paid' | 'payment_failed' | 'processing' | 'void' | 'c
 export type OrderFulFillmentStatus = 'fulfilled' | 'unfulfilled' | 'partially_fulfilled' | 'scheduled' | 'on_hold';
 export type OrderShipmentStatus = 'unshipped' | 'shipped' | 'partially_shipped' | 'delivered' | 'unshippable';
 export type FulfillmentStatus = 'unshipped' | 'shipped' | 'delivered' | 'unshippable';
+export type ReturnRequestStatus = 'open' | 'completed';
 
 export interface PaymentMethod extends Object {
   id: string;
@@ -1112,6 +1121,28 @@ export interface GoogleAnalyticsItem {
   discount?: number;
 }
 
+
+export interface ProductState {
+  formId: number;
+  mode: 'live' | 'test';
+  product: Product;
+  prices: Price[];
+  variants: Variant[];
+  variant_options: VariantOption[];
+  quantity: number;
+  selectedPrice: Price;
+  total: number;
+  busy: boolean;
+  disabled: boolean;
+  checkoutUrl: string;
+  adHocAmount: number;
+  dialog: string;
+  line_item: LineItemData;
+  error: string;
+  selectedVariant?: Variant;
+  variantValues: { option_1?: string; option_2?: string; option_3?: string };
+  isProductPage?: boolean;
+}
 export interface FeaturedProductMediaAttributes {
   alt: string;
   url: string;
@@ -1120,6 +1151,7 @@ export interface FeaturedProductMediaAttributes {
 export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
+  currency: string;
   payment_method: {
     billing_details: {
       name: string;
@@ -1140,4 +1172,38 @@ export interface CheckoutInitiatedParams {
     price: number;
     quantity: number;
   }>;
+}
+
+export interface ProductsSearchedParams {
+  searchString: string;
+  searchCollections?: string[];
+  searchResultCount: number;
+  searchResultIds: string[];
+}
+
+export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
+
+interface AdditionalError {
+  code: string;
+  message: string;
+  data: {
+    attribute: string;
+    type: string;
+    options: {
+      if: string[];
+      value: string;
+    };
+  };
+}
+export interface ScNoticeStore {
+  type: NoticeType | 'default';
+  code: string;
+  message: string;
+  data?: {
+    status: number;
+    type: string;
+    http_status: string;
+  };
+  additional_errors?: AdditionalError[] | null;
+  dismissible?: boolean;
 }

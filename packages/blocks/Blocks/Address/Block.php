@@ -17,7 +17,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content = '' ) {
-		$default_country = $attributes['default_country'] ?? \SureCart::account()->tax_protocol->address->country ?? \SureCart::account()->brand->address->country ?? null;
+		$default_country = $attributes['default_country'] ?? null;
 		ob_start(); ?>
 
 		<sc-order-shipping-address

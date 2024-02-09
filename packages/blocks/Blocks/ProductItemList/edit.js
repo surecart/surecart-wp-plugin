@@ -369,6 +369,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 								setAttributes({
 									type: e.target.value,
 								});
+								if (
+									ids?.length &&
+									('all' === e.target.value ||
+										'featured' === e.target.value)
+								) {
+									setAttributes({ ids: [] });
+								}
 							}}
 							choices={[
 								{
@@ -530,11 +537,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 										? pagination_enabled
 										: false
 								}
-								products={
-									!apiTokenConnected
-										? getDummyProducts(limit)
-										: []
-								}
+								{...(!apiTokenConnected ? { products: getDummyProducts(limit) } : {})}
 								collectionEnabled={collection_enabled}
 							/>
 						)}

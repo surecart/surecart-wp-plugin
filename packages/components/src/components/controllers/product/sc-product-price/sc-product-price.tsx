@@ -10,22 +10,25 @@ import { intervalString } from '../../../../functions/price';
   shadow: true,
 })
 export class ScProductPrice {
-  /** The prices list */
+  /** The product's prices. */
   @Prop() prices: Price[];
 
   /** The sale text */
   @Prop() saleText: string;
 
+  /** The product id */
+  @Prop() productId: string;
+
   renderRange() {
-    if (state.prices.length === 1) {
-      return this.renderPrice(state.prices[0]);
+    if (state[this.productId]?.prices?.length === 1) {
+      return this.renderPrice(state[this.productId]?.prices[0]);
     }
-    return <sc-price-range prices={state.prices} />;
+    return <sc-price-range prices={state[this.productId]?.prices} />;
   }
 
   renderVariantPrice(selectedVariant: Variant) {
-    const variant = state?.variants?.find(variant => variant?.id === selectedVariant?.id);
-    return this.renderPrice(state.selectedPrice, variant?.amount);
+    const variant = state[this.productId]?.variants?.find(variant => variant?.id === selectedVariant?.id);
+    return this.renderPrice(state[this.productId].selectedPrice, variant?.amount);
   }
 
   renderPrice(price: Price, variantAmount?: number) {
@@ -113,8 +116,8 @@ export class ScProductPrice {
               {!!price?.setup_fee_enabled && price?.setup_fee_amount && (
                 <span class="price__setup-fee">
                   <sc-visually-hidden>{__('This product has', 'surecart')} </sc-visually-hidden>
-                  <sc-format-number type="currency" value={price.setup_fee_amount} currency={price?.currency}></sc-format-number>{' '}
-                  {price?.setup_fee_name || __('Setup Fee', 'surecart')}.
+                  <sc-format-number type="currency" value={Math.abs(price.setup_fee_amount)} currency={price?.currency}></sc-format-number>{' '}
+                  {price?.setup_fee_name || (price?.setup_fee_amount < 0 ? __('Discount', 'surecart') : __('Setup Fee', 'surecart'))}.
                 </span>
               )}
             </div>
@@ -128,15 +131,15 @@ export class ScProductPrice {
     return (
       <Host role="paragraph">
         {(() => {
-          if (state?.selectedVariant) {
-            return this.renderVariantPrice(state?.selectedVariant);
+          if (state[this.productId]?.selectedVariant) {
+            return this.renderVariantPrice(state[this.productId]?.selectedVariant);
           }
 
-          if (state.selectedPrice) {
-            return this.renderPrice(state.selectedPrice);
+          if (state[this.productId].selectedPrice) {
+            return this.renderPrice(state[this.productId].selectedPrice);
           }
 
-          if (state.prices.length) {
+          if (state[this.productId].prices.length) {
             return this.renderRange();
           }
 
