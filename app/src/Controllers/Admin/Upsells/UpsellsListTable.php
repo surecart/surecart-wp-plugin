@@ -244,7 +244,8 @@ class UpsellsListTable extends ListTable {
 		);
 		?>
 		<sc-switch checked="<?php echo esc_attr( $upsell_funnel->enabled ) ? 'true' : 'false'; ?>"
-			onClick="event.target.disabled = true; window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>');"></sc-switch>
+			onClick="window.location.assign('<?php echo esc_url_raw( $toggle_url ); ?>'); document.querySelector('#loading-<?php echo esc_attr( $upsell_funnel->id ); ?>').style.display = '';"></sc-switch>
+		<sc-block-ui id="loading-<?php echo esc_attr( $upsell_funnel->id ); ?>" spinner style="display: none;"></sc-block-ui>
 		<?php
 	}
 
