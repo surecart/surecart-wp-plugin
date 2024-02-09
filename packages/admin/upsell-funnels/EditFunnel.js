@@ -289,7 +289,7 @@ export default ({ setBrowserURL }) => {
 							? __('Save & Publish', 'surecart')
 							: funnel?.enabled
 							? __('Save Funnel', 'surecart')
-							: __('Save Draft', 'surecart')}
+							: __('Save As Draft', 'surecart')}
 					</SaveButton>
 				</div>
 			}
