@@ -110,22 +110,20 @@ export class ScProductItemList {
   /** Selected collections */
   @State() selectedCollections: Collection[] = [];
 
+  triggerProductsViewed() {
+    this.scProductsViewed.emit({
+      products: this.products,
+      pageTitle: this.pageTitle,
+      collectionId: this.collectionId,
+      currentPage: this.currentPage,
+    });
+  }
+
   componentWillLoad() {
     if (!this?.products?.length) {
-      this.getProducts().then(() => {
-        this.scProductsViewed.emit({
-          products: this.products,
-          pageTitle: this.pageTitle,
-          collectionId: this.collectionId,
-        });
-      });
-    }
-    else {
-      this.scProductsViewed.emit({
-        products: this.products,
-        pageTitle: this.pageTitle,
-        collectionId: this.collectionId,
-      });
+      this.getProducts().then(() => this.triggerProductsViewed());
+    } else {
+      this.triggerProductsViewed();
     }
 
     if (this.collectionEnabled) {
@@ -138,7 +136,7 @@ export class ScProductItemList {
     // handle ajax pagination
     if (this.ajaxPagination) {
       this.currentPage = page;
-      this.updateProducts();
+      this.updateProducts().then(() => this.triggerProductsViewed());
       this.paginationAutoScroll && this.el.scrollIntoView({ behavior: 'smooth' });
       return;
     }

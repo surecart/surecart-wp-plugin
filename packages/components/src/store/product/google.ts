@@ -74,14 +74,15 @@ window.addEventListener('scProductsViewed', function (e: CustomEvent) {
   const eventDetail: ProductsViewedParams = e.detail;
 
   const data = {
-    ...(eventDetail?.collectionId ? { item_list_id: eventDetail?.collectionId } : {}),
-    item_list_name: eventDetail?.pageTitle,
+    item_list_id: `${eventDetail?.collectionId}-page-${eventDetail?.currentPage}`,
+    item_list_name: `${eventDetail?.pageTitle} - Page ${eventDetail?.currentPage}`,
+    page_number: eventDetail?.currentPage,
     items: eventDetail?.products?.map(product => ({
       item_id: product?.id,
       item_name: product?.name,
       ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
-      item_list_name: eventDetail?.pageTitle,
-      ...(eventDetail?.collectionId ? { item_list_id: eventDetail?.collectionId } : {}),
+      item_list_id: `${eventDetail?.collectionId}-page-${eventDetail?.currentPage}`,
+      item_list_name: `${eventDetail?.pageTitle} - Page ${eventDetail?.currentPage}`,
     })),
   };
 
