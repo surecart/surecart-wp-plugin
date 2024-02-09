@@ -115,6 +115,7 @@ export default ({ attributes, setAttributes }) => {
 										display: flex;
 										flex-wrap: wrap;
 										gap: 0.5em;
+										margin-top: 0.5em;
 									`}
 								>
 									{(tax_id_types || []).map((type) => (
