@@ -290,10 +290,10 @@ class OrdersListTable extends ListTable {
 		<?php if ( 'unshippable' === $order->shipment_status ) : ?>
 			-
 		<?php else : ?>
-			<?php if ( $shipping_method_name ) : ?>
-				<sc-tag style="margin-bottom: 5px;"><?php echo esc_attr( $shipping_method_name ); ?></sc-tag>
-			<?php endif; ?>
 			<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
+			<?php if ( $shipping_method_name ) : ?>
+				<div><small>(<?php echo esc_attr( $shipping_method_name ); ?>)</small></div>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 		return ob_get_clean();
