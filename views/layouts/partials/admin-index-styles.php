@@ -11,10 +11,6 @@
 	.column-fulfillment_status, .column-shipment_status {
 		width: 120px;
 	}
-	.column-enabled {
-		width: 25px;
-	}
-
 
 	:root:root {
 	--wp-admin-theme-color: #2271b1;
