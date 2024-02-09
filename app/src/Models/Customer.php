@@ -42,14 +42,18 @@ class Customer extends Model {
 		// maybe create a WordPress user.
 		if ( $create_user ) {
 			// Find the user by email.
-			$user = User::getUserBy( 'email', $this->attributes['email'] );
+			$user       = User::getUserBy( 'email', $this->attributes['email'] );
+			$name_parts = explode( ' ', $this->attributes['name'], 2 );
+			$first_name = ! empty( $name_parts[0] ) ? $name_parts[0] : null;
+			$last_name  = ! empty( $name_parts[1] ) ? $name_parts[1] : null;
 
 			// if no user, create one.
 			if ( empty( $user ) ) {
 				$user = User::create(
 					[
 						'user_name'  => $this->attributes['name'] ?? null,
-						'first_name' => $this->attributes['name'] ?? null,
+						'first_name' => $first_name ?? null,
+						'last_name'  => $last_name ?? null,
 						'user_email' => $this->attributes['email'],
 					]
 				);
