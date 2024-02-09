@@ -1215,9 +1215,3 @@ export interface ScNoticeStore {
   additional_errors?: AdditionalError[] | null;
   dismissible?: boolean;
 }
-
-export interface ScUIStore {
-  cart: {
-    open: boolean;
-  };
-}
