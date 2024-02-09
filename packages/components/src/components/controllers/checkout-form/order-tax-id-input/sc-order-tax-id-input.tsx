@@ -80,9 +80,7 @@ export class ScOrderTaxIdInput {
   }
 
   componentWillLoad() {
-    if (this.taxIdTypes) {
-      this.taxIdTypesData = typeof this.taxIdTypes === 'string' ? JSON.parse(this.taxIdTypes) : this.taxIdTypes;
-    }
+    this.handleTaxIdTypesChange();
   }
 
   required() {
