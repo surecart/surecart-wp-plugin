@@ -1,6 +1,6 @@
-import { Component, Prop, h, Host, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, h, Host } from '@stencil/core';
 import { __, sprintf } from '@wordpress/i18n';
-import { state as checkoutState, on as onCheckoutChange } from '@store/checkout';
+import { state as checkoutState } from '@store/checkout';
 import { Address, Checkout, ShippingMethod } from '../../../types';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
@@ -30,9 +30,6 @@ export class ScShippingChoices {
   /** Whether to show the shipping choice description */
   @Prop() showDescription: boolean = true;
 
-  /** When shipping info is added */
-  @Event() scShippingInfoAdded: EventEmitter<Checkout>;
-
   /** Maybe update the order. */
   async updateCheckout(selectedShippingChoiceId: string) {
     if (!selectedShippingChoiceId) return;
@@ -56,20 +53,6 @@ export class ScShippingChoices {
     } finally {
       unLockCheckout('selected_shipping_choice');
     }
-  }
-
-  componentDidLoad() {
-    if (!!checkoutState?.checkout?.selected_shipping_choice) {
-      this.scShippingInfoAdded.emit(checkoutState.checkout);
-    }
-
-    onCheckoutChange('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
-      if (key !== 'checkout') return; // we only care about checkout
-      if (!checkout?.selected_shipping_choice) return; // we only care about shipping info.
-      if (oldCheckout?.selected_shipping_choice === checkout?.selected_shipping_choice) return; // we only care about new shipping info.
-
-      this.scShippingInfoAdded.emit(checkout);
-    });
   }
 
   render() {

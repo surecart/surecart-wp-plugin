@@ -4220,10 +4220,6 @@ export interface ScSessionProviderCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScSessionProviderElement;
 }
-export interface ScShippingChoicesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLScShippingChoicesElement;
-}
 export interface ScStripeElementCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLScStripeElementElement;
@@ -9414,10 +9410,6 @@ declare namespace LocalJSX {
           * The shipping section label
          */
         "label"?: string;
-        /**
-          * When shipping info is added
-         */
-        "onScShippingInfoAdded"?: (event: ScShippingChoicesCustomEvent<Checkout>) => void;
         /**
           * Whether to show the shipping choice description
          */
