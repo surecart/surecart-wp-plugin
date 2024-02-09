@@ -23,7 +23,7 @@ export class ScUpsellTotals {
   render() {
     return (
       <sc-summary open-text="Total" closed-text="Total" collapsible={true} collapsed={true}>
-        {!!state.line_item?.total_amount && <span slot="price">{this.renderAmountDue()}</span>}
+        {!!state.line_item?.id && <span slot="price">{this.renderAmountDue()}</span>}
 
         <sc-divider></sc-divider>
 
