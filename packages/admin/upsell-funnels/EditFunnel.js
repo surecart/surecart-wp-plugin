@@ -31,14 +31,17 @@ import Funnel from './modules/Funnel';
 import useSave from '../settings/UseSave';
 import Box from '../ui/Box';
 import Priority from './modules/Priority';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
+import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
 
 export default ({ setBrowserURL }) => {
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
 	const id = useSelect((select) => select(store).selectPageId());
 	const { save } = useSave();
-	const { deleteEntityRecord, editEntityRecord } = useDispatch(coreStore);
+	const [dialog, setDialog] = useState(null);
+	const { deleteEntityRecord, editEntityRecord, saveEditedEntityRecord } =
+		useDispatch(coreStore);
 
 	const editFunnel = (data) =>
 		editEntityRecord('surecart', 'upsell-funnel', id, data);
@@ -166,34 +169,24 @@ export default ({ setBrowserURL }) => {
 	 * Toggle Archive
 	 */
 	const toggleArchive = async () => {
-		const r = confirm(
-			funnel?.archived
-				? __(
-						'Un-Archive this upsell? This will make the product purchaseable again.',
-						'surecart'
-				  )
-				: __(
-						'Archive this upsell? This upsell will not be purchaseable and all unsaved changes will be lost.',
-						'surecart'
-				  )
-		);
-
-		if (!r) return;
-
 		try {
-			const funnel = await saveEntityRecord(
+			setDialog(false);
+			// we do this in 2 phases so that the UI shows a saving state.
+			await editEntityRecord('surecart', 'upsell-funnel', id, {
+				archived: !funnel?.archived,
+			});
+			const response = await saveEditedEntityRecord(
 				'surecart',
 				'upsell-funnel',
+				id,
 				{
-					id,
-					archived: !funnel?.archived,
-				},
-				{ throwOnError: true }
+					throwOnError: true,
+				}
 			);
 			createSuccessNotice(
-				!funnel?.archived
+				response?.archived
 					? __('Upsell funnel archived.', 'surecart')
-					: __('Upsell funnel un-archived.', 'surecart'),
+					: __('Upsell funnel restored.', 'surecart'),
 				{ type: 'snackbar' }
 			);
 		} catch (e) {
@@ -231,15 +224,25 @@ export default ({ setBrowserURL }) => {
 							{__('Edit Upsell Funnel', 'surecart')}
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
-					<ScTag
-						type={savedFunnel?.enabled ? 'success' : 'default'}
-						size="small"
-						pill
-					>
-						{savedFunnel?.enabled
-							? __('Published', 'surecart')
-							: __('Draft', 'surecart')}
-					</ScTag>
+					{!loading && (
+						<ScTag
+							type={
+								savedFunnel?.archived
+									? 'warning'
+									: savedFunnel?.enabled
+									? 'success'
+									: 'default'
+							}
+							size="small"
+							pill
+						>
+							{savedFunnel?.archived
+								? __('Archived', 'surecart')
+								: savedFunnel?.enabled
+								? __('Published', 'surecart')
+								: __('Draft', 'surecart')}
+						</ScTag>
+					)}
 				</div>
 			}
 			sidebar={
@@ -271,12 +274,12 @@ export default ({ setBrowserURL }) => {
 							<ScIcon name="more-horizontal" />
 						</ScButton>
 						<ScMenu>
-							<ScMenuItem onClick={toggleArchive}>
+							<ScMenuItem onClick={() => setDialog('archive')}>
 								{funnel?.archived
 									? __('Un-Archive', 'surecart')
 									: __('Archive', 'surecart')}
 							</ScMenuItem>
-							<ScMenuItem onClick={onDelete}>
+							<ScMenuItem onClick={() => setDialog('delete')}>
 								{__('Delete', 'surecart')}
 							</ScMenuItem>
 						</ScMenu>
@@ -309,12 +312,31 @@ export default ({ setBrowserURL }) => {
 					updateFunnel={editFunnel}
 					loading={loading || loadingUpsells}
 				/>
-				{/* <Discount
-					upsell={upsell}
-					updateUpsell={editUpsell}
-					loading={!hasLoadedUpsell}
-				/> */}
 			</>
+
+			<ConfirmDialog
+				isOpen={dialog === 'archive'}
+				onConfirm={toggleArchive}
+				onCancel={() => setDialog(null)}
+			>
+				{funnel?.archived
+					? __('Un-Archive this upsell?', 'surecart')
+					: __(
+							'Archive this upsell? All unsaved changes will be lost.',
+							'surecart'
+					  )}
+			</ConfirmDialog>
+
+			<ConfirmDialog
+				isOpen={dialog === 'delete'}
+				onConfirm={onDelete}
+				onCancel={() => setDialog(null)}
+			>
+				{__(
+					'Permanently delete this upsell? You cannot undo this action.',
+					'surecart'
+				)}
+			</ConfirmDialog>
 		</UpdateModel>
 	);
 };
