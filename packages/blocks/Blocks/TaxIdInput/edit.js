@@ -99,7 +99,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 
-				<PanelBody title={__('Tax ID Types', 'surecart')}>
+				<PanelBody title={__('Tax types', 'surecart')}>
 					<div
 						css={css`
 							display: grid;
@@ -107,9 +107,7 @@ export default ({ attributes, setAttributes }) => {
 						`}
 					>
 						<ScFormControl
-							css={css`
-								margin-bottom: 0.5em;
-							`}
+							label={__('Limit tax types', 'surecart')}
 						>
 							{!!(tax_id_types || [])?.length && (
 								<div
