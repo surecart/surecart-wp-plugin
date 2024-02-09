@@ -26,11 +26,12 @@ export default ({ upsell, onUpdate }) => {
 				select(coreStore).getEntityRecord(
 					'postType',
 					'wp_template',
-					upsell?.template_id || 'surecart/surecart//single-upsell'
+					upsell?.metadata?.wp_template_id ||
+						'surecart/surecart//single-upsell'
 				)
 			);
 		},
-		[upsell?.template_id]
+		[upsell?.metadata?.wp_template_id]
 	);
 
 	// templates.
@@ -70,9 +71,7 @@ export default ({ upsell, onUpdate }) => {
 						css={css`
 							flex: 1;
 						`}
-						value={
-							template?.id || 'surecart/surecart//single-upsell'
-						}
+						value={upsell?.metadata?.wp_template_id || ''}
 						choices={(templates ?? []).map((template) => {
 							return {
 								value: template?.id,
@@ -81,7 +80,10 @@ export default ({ upsell, onUpdate }) => {
 						})}
 						onScChange={(e) => {
 							onUpdate({
-								template_id: e.target.value,
+								metadata: {
+									...upsell?.metadata,
+									wp_template_id: e.target.value,
+								},
 							});
 						}}
 						required
@@ -106,7 +108,7 @@ export default ({ upsell, onUpdate }) => {
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template',
 							postId:
-								upsell?.template_id ||
+								upsell?.metadata?.template_id ||
 								'surecart/surecart//single-upsell',
 							canvas: 'edit',
 						})}
