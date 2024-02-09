@@ -99,7 +99,7 @@ export default ({ attributes, setAttributes }) => {
 					</PanelRow>
 				</PanelBody>
 
-				<PanelBody title={__('Filter By Tax ID Types', 'surecart')}>
+				<PanelBody title={__('Tax ID Types', 'surecart')}>
 					<div
 						css={css`
 							display: grid;
