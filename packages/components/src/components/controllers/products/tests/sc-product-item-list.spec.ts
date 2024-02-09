@@ -33,12 +33,29 @@ test.describe('Product List Page', () => {
   test('Should render product list page', async ({ page }) => {
     await page.goto('/shop');
 
-    // Test Products is showing in List.
+    // Test: Products is showing in List.
     await expect(page.locator('h1')).toHaveText('Shop');
 
     // Check if Product 1 and Product 2 are showing in the list.
-    await expect(page.locator('sc-product-item-title').getByText('Product 1')).toBeVisible();
-    await expect(page.locator('sc-product-item-title').getByText('Product 2')).toBeVisible();
+    const productTitles = await page.locator('sc-product-item-title');
+
+    // Get the text content of each element
+    const firstProductText = await productTitles.nth(0).innerText();
+    const secondProductText = await productTitles.nth(1).innerText();
+
+    // Check if Product 1 and Product 2 are showing in the list
+    await expect(firstProductText).toBe('Product 1');
+    await expect(secondProductText).toBe('Product 2');
+
+    // Test: searching product.
+    await page.getByPlaceholder('Search').fill('Product 2');
+    await page.click('.search-button');
+    await page.waitForTimeout(1000);
+
+    // Check if Product 2 is showing in the list.
+    const productTitlesAfterSearch = await page.locator('sc-product-item-title');
+    const firstProductTextAfterSearch = await productTitlesAfterSearch.innerText();
+    await expect(firstProductTextAfterSearch).toBe('Product 2');
   });
 });
 
