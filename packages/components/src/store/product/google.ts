@@ -1,40 +1,23 @@
 import { maybeConvertAmount } from 'src/functions/currency';
 import { ProductsSearchedParams, ProductsViewedParams } from 'src/types';
 import { __ } from '@wordpress/i18n';
+import { listenAndTrack } from 'src/functions/google';
 /**
  * Handle the search event.
  */
-window.addEventListener('scSearched', function (e: CustomEvent) {
-  if (!window?.dataLayer && !window?.gtag) return;
-
-  const eventDetail: ProductsSearchedParams = e.detail;
-
-  // handle datalayer
-  if (window?.dataLayer) {
-    window.dataLayer.push({ ecommerce: null });
-    window.dataLayer.push({
-      event: 'search',
-      ecommerce: {
-        search_term: eventDetail?.searchString,
-      },
-    });
-    return;
-  }
-
-  // handle google analytics script
-  window.gtag('event', 'search', {
-    search_term: eventDetail?.searchString,
-  });
+listenAndTrack("scSearched", "search", (e: CustomEvent) => {
+	const eventDetail: ProductsSearchedParams = e.detail;
+	return {
+		search_term: eventDetail?.searchString,
+	};
 });
 
 /**
  * Handle view item event.
  */
-window.addEventListener('scProductViewed', function (e: CustomEvent) {
-  if (!window?.dataLayer && !window?.gtag) return;
-
+listenAndTrack("scProductViewed", "view_item", (e: CustomEvent) => {
   const product = e.detail;
-  const data = {
+  return {
     value: maybeConvertAmount(product.price?.amount || 0, product.price?.currency || 'USD'),
     currency: product.price?.currency,
     items: [
@@ -50,30 +33,15 @@ window.addEventListener('scProductViewed', function (e: CustomEvent) {
       },
     ],
   };
-
-  // handle datalayer
-  if (window?.dataLayer) {
-    window.dataLayer.push({ ecommerce: null });
-    window.dataLayer.push({
-      event: 'view_item',
-      ecommerce: data,
-    });
-    return;
-  }
-
-  // handle google analytics script
-  window.gtag('event', 'view_item', data);
 });
 
 /**
  * Handle view items event.
  */
-window.addEventListener('scProductsViewed', function (e: CustomEvent) {
-  if (!window?.dataLayer && !window?.gtag) return;
-
+listenAndTrack("scProductsViewed", "view_item_list", (e: CustomEvent) => {
   const eventDetail: ProductsViewedParams = e.detail;
 
-  const data = {
+  return {
     item_list_id: `${eventDetail?.collectionId}-page-${eventDetail?.currentPage}`,
     item_list_name: `${eventDetail?.pageTitle} - Page ${eventDetail?.currentPage}`,
     page_number: eventDetail?.currentPage,
@@ -85,17 +53,5 @@ window.addEventListener('scProductsViewed', function (e: CustomEvent) {
       item_list_name: `${eventDetail?.pageTitle} - Page ${eventDetail?.currentPage}`,
     })),
   };
-
-  // handle datalayer
-  if (window?.dataLayer) {
-    window.dataLayer.push({ ecommerce: null });
-    window.dataLayer.push({
-      event: 'view_item_list',
-      ecommerce: data,
-    });
-    return;
-  }
-
-  // handle google analytics script
-  window.gtag('event', 'view_item_list', data);
 });
+
