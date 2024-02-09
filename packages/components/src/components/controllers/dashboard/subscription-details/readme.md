@@ -58,6 +58,7 @@ graph TD;
   sc-subscription-details --> sc-card
   sc-subscription-details --> sc-stacked-list
   sc-subscription-details --> sc-stacked-list-row
+  sc-subscription-details --> sc-icon
   sc-subscription-status-badge --> sc-format-date
   sc-subscription-status-badge --> sc-tag
   sc-dialog --> sc-button

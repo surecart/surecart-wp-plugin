@@ -17,6 +17,7 @@ interface Store {
   taxProtocol: TaxProtocol;
   isCheckoutPage: boolean;
   validateStock: boolean;
+  persist: 'browser' | 'url' | false;
 }
 
 const { state, onChange, on, set, get, dispose } = createStore<Store>(
@@ -32,6 +33,7 @@ const { state, onChange, on, set, get, dispose } = createStore<Store>(
     initialLineItems: [],
     isCheckoutPage: false,
     validateStock: false,
+    persist: 'browser',
     ...checkout,
   },
   (newValue, oldValue) => {

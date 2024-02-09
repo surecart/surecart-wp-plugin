@@ -1,5 +1,5 @@
 {
-  "timestamp": "2023-12-20T13:25:29",
+  "timestamp": "2024-01-04T15:55:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -4730,6 +4730,22 @@
           "values": [
             {
               "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "selectorTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "selector-title",
+          "reflectToAttr": false,
+          "docs": "The title for price and variant selections",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -13620,6 +13636,7 @@
         "sc-select",
         "sc-subscription",
         "sc-subscription-ad-hoc-confirm",
+        "sc-subscription-details",
         "sc-subscription-next-payment",
         "sc-subscription-payment-method",
         "sc-subscription-switch",
@@ -13754,6 +13771,9 @@
           "sc-icon"
         ],
         "sc-subscription-ad-hoc-confirm": [
+          "sc-icon"
+        ],
+        "sc-subscription-details": [
           "sc-icon"
         ],
         "sc-subscription-next-payment": [
@@ -23759,6 +23779,75 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "checkoutLink",
+          "type": "string",
+          "mutable": false,
+          "attr": "checkout-link",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "formId",
+          "type": "number",
+          "mutable": false,
+          "attr": "form-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "mode",
+          "type": "\"live\" | \"test\"",
+          "mutable": false,
+          "attr": "mode",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "'live'",
+          "values": [
+            {
+              "value": "live",
+              "type": "string"
+            },
+            {
+              "value": "test",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "product",
+          "type": "Product",
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "Product"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -25193,6 +25282,22 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "The product id",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [],
@@ -25232,11 +25337,27 @@
           "type": "Price[]",
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "The prices list",
+          "docs": "The product's prices.",
           "docsTags": [],
           "values": [
             {
               "type": "Price[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "The product id",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -25305,7 +25426,23 @@
           "mutable": false,
           "attr": "label",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The product price choice label",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "The product id",
           "docsTags": [],
           "values": [
             {
@@ -25321,7 +25458,7 @@
           "mutable": false,
           "attr": "show-price",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Whether to show the price",
           "docsTags": [],
           "values": [
             {
@@ -25342,15 +25479,13 @@
       "dependencies": [
         "sc-format-number",
         "sc-choices",
-        "sc-price-choice-container",
-        "sc-recurring-price-choice-container"
+        "sc-price-choice-container"
       ],
       "dependencyGraph": {
         "sc-product-price-choices": [
           "sc-format-number",
           "sc-choices",
-          "sc-price-choice-container",
-          "sc-recurring-price-choice-container"
+          "sc-price-choice-container"
         ],
         "sc-choices": [
           "sc-form-control"
@@ -25363,14 +25498,6 @@
           "sc-choice-container",
           "sc-skeleton",
           "sc-visually-hidden"
-        ],
-        "sc-recurring-price-choice-container": [
-          "sc-format-number",
-          "sc-choice-container",
-          "sc-dropdown",
-          "sc-icon",
-          "sc-menu",
-          "sc-menu-item"
         ]
       }
     },
@@ -25389,7 +25516,7 @@
           "mutable": false,
           "attr": "add-to-cart",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Whether to add to cart",
           "docsTags": [],
           "values": [
             {
@@ -25405,7 +25532,23 @@
           "mutable": false,
           "attr": "button-text",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The button text",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "The product id",
           "docsTags": [],
           "values": [
             {
@@ -25523,6 +25666,22 @@
           "attr": "name",
           "reflectToAttr": false,
           "docs": "Name for the input. Used for validation errors.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "The product id",
           "docsTags": [],
           "values": [
             {
@@ -25703,6 +25862,22 @@
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "productId",
+          "type": "string",
+          "mutable": false,
+          "attr": "product-id",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "text",
           "type": "\"description\" | \"name\"",
@@ -26778,8 +26953,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
-        "sc-product-donation-choices",
-        "sc-product-price-choices"
+        "sc-product-donation-choices"
       ],
       "dependencies": [
         "sc-format-number",
@@ -26799,9 +26973,6 @@
           "sc-menu-item"
         ],
         "sc-product-donation-choices": [
-          "sc-recurring-price-choice-container"
-        ],
-        "sc-product-price-choices": [
           "sc-recurring-price-choice-container"
         ]
       }
@@ -29624,7 +29795,8 @@
           "sc-dialog",
           "sc-card",
           "sc-stacked-list",
-          "sc-stacked-list-row"
+          "sc-stacked-list-row",
+          "sc-icon"
         ],
         "sc-dialog": [
           "sc-button",
@@ -30067,7 +30239,8 @@
         "sc-dialog",
         "sc-card",
         "sc-stacked-list",
-        "sc-stacked-list-row"
+        "sc-stacked-list-row",
+        "sc-icon"
       ],
       "dependencyGraph": {
         "sc-subscription-details": [
@@ -30081,7 +30254,8 @@
           "sc-dialog",
           "sc-card",
           "sc-stacked-list",
-          "sc-stacked-list-row"
+          "sc-stacked-list-row",
+          "sc-icon"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -30180,7 +30354,8 @@
           "sc-dialog",
           "sc-card",
           "sc-stacked-list",
-          "sc-stacked-list-row"
+          "sc-stacked-list-row",
+          "sc-icon"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",
@@ -31212,7 +31387,8 @@
           "sc-dialog",
           "sc-card",
           "sc-stacked-list",
-          "sc-stacked-list-row"
+          "sc-stacked-list-row",
+          "sc-icon"
         ],
         "sc-subscription-status-badge": [
           "sc-format-date",

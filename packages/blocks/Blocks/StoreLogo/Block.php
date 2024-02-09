@@ -17,7 +17,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$logo = \SureCart::account()->brand->logo_url;
+		$logo = \SureCart::account()->brand->logo_url ?? '';
 
 		if ( empty( $logo ) ) {
 			return;
