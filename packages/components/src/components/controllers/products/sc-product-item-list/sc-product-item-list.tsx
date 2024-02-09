@@ -89,11 +89,13 @@ export class ScProductItemList {
   /** Products viewed */
   @Event() scProductsViewed: EventEmitter<ProductsViewedParams>;
 
-  /* Current page */
-  @State() currentPage: number = 1;
+  /** Current page */
+  @State() currentPage = 1;
 
+  /** Current query */
   @State() currentQuery: string;
 
+  /** Pagination */
   @State() pagination: {
     total: number;
     total_pages: number;
@@ -116,6 +118,13 @@ export class ScProductItemList {
           pageTitle: this.pageTitle,
           collectionId: this.collectionId,
         });
+      });
+    }
+    else {
+      this.scProductsViewed.emit({
+        products: this.products,
+        pageTitle: this.pageTitle,
+        collectionId: this.collectionId,
       });
     }
 
