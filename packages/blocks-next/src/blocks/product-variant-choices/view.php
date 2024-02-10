@@ -9,16 +9,6 @@
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
-
-// Generate unique id for aria-controls.
-$unique_id = wp_unique_id( 'p-' );
-// TODO: In the future, we can just get the current $post object and sc_get_product.
-// get product page id.
-$product_id = get_query_var( 'sc_product_page_id' ) ?? $attributes['productId'] ?? null;
-// get initial state.
-$products = wp_initial_state( 'surecart/product' );
-// get product from initial state.
-$product = $products[ $product_id ]['product'] ?? null;
 ?>
 
 <div

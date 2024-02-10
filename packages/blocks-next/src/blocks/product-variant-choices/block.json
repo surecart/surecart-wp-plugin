@@ -19,6 +19,5 @@
 		"file:./style-index.css",
 		"file:../../styles/pill.css",
 		"file:../../styles/label.css"
-	],
-	"render": "file:./render.php"
+	]
 }
