@@ -29,7 +29,6 @@ import Conditions from './modules/Conditions';
 import Details from './modules/Details';
 import Funnel from './modules/Funnel';
 import useSave from '../settings/UseSave';
-import Box from '../ui/Box';
 import Priority from './modules/Priority';
 import { useEffect, useState } from '@wordpress/element';
 import { __experimentalConfirmDialog as ConfirmDialog } from '@wordpress/components';
