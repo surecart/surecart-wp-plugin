@@ -27,7 +27,7 @@
 				<div class="sc-pill-option__wrapper">
 					<?php foreach ( $option->values as $name ) : ?>
 						<button
-							class="sc-pill-option__button"
+							class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
 							value="<?php echo esc_attr( $name ); ?>"
 							data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
 							data-wp-on--click="callbacks.setOption"
@@ -37,6 +37,7 @@
 							data-wp-bind--aria-disabled="state.isOptionUnavailable"
 							tabindex="0"
 							role="radio"
+							style="<?php echo esc_attr( $styles['css'] ?? '' ); ?>"
 						>
 							<?php echo wp_kses_post( $name ); ?>
 						</button>
@@ -46,5 +47,5 @@
 		<?php endforeach; ?>
 	<?php endif; ?>
 
-	<div data-wp-text="surecart/product::state.selectedVariantId"></div>
+	<!-- <div data-wp-text="surecart/product::state.selectedVariantId"></div> -->
 </div>

@@ -9,11 +9,49 @@
 	"icon": "media-interactive",
 	"example": {},
 	"supports": {
-		"interactivity": true
+		"interactivity": true,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"width": true
+			}
+		},
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": false,
+			"link": false,
+			"background": true,
+			"text": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"link": true
+			}
+		},
+		"typography": {
+			"__experimentalSkipSerialization": true,
+			"fontSize": true
+		},
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"margin": true,
+			"padding": true
+		},
+		"shadow": {
+			"__experimentalSkipSerialization": true
+		}
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
+	"selectors": {
+		"root": ".sc-pill-option__button"
+	},
 	"viewModule": "file:../../scripts/product-page/index.js",
 	"style": [
 		"file:./style-index.css",

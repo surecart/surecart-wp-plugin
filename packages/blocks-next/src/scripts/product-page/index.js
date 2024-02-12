@@ -4,38 +4,31 @@
 import { store, getContext } from '@wordpress/interactivity';
 
 // controls the product page.
-const { state } = store('surecart/product', {
+const { state, callbacks } = store('surecart/product', {
 	state: {
 		/**
 		 * Product contextual state.
 		 */
 		get product() {
-			const { productId } = getContext();
-			return state[productId]?.product;
+			return callbacks.getState('product');
 		},
 		get selectedPrice() {
-			const { productId } = getContext();
-			return state[productId]?.selectedPrice;
+			return callbacks.getState('selectedPrice');
 		},
 		get selectedVariant() {
-			const { productId } = getContext();
-			return state[productId]?.selectedVariant;
+			return callbacks.getState('selectedVariant');
 		},
 		get variantValues() {
-			const { productId } = getContext();
-			return state[productId].variantValues || {};
+			return callbacks.getState('variantValues');
 		},
 		get quantity() {
-			const { productId } = getContext();
-			return state[productId].quantity || 1;
+			return callbacks.getState('quantity');
 		},
 		get busy() {
-			const { productId } = getContext();
-			return state[productId].busy || false;
+			return callbacks.getState('busy');
 		},
 		get error() {
-			const { productId } = getContext();
-			return state[productId].error || null;
+			return callbacks.getState('error');
 		},
 
 		/**
@@ -51,17 +44,18 @@ const { state } = store('surecart/product', {
 				state.product
 			);
 		},
+		/** Is the option selected? */
 		get isOptionSelected() {
 			const { optionNumber, optionValue } = getContext();
 			return (
 				state.variantValues[`option_${optionNumber}`] === optionValue
 			);
 		},
+		/** Get the selected option. */
 		get getSelectedOption() {
 			const { optionNumber } = getContext();
 			return state.variantValues[`option_${optionNumber}`];
 		},
-
 		/** Line item to add to cart. */
 		get lineItem() {
 			return {
@@ -80,12 +74,19 @@ const { state } = store('surecart/product', {
 		get adHocAmount() {
 			return state?.selectedPrice?.amount || null;
 		},
+		/** Get the selected variant id. */
 		get selectedVariantId() {
 			return state.selectedVariant?.id;
 		},
 	},
 
 	callbacks: {
+		/** Get the contextual state. */
+		getState(prop) {
+			const { productId } = getContext();
+			return state[productId]?.[prop] || false;
+		},
+		/** Set the option. */
 		setOption: (e) => {
 			const { optionNumber, optionValue } = getContext();
 			update({
@@ -95,6 +96,7 @@ const { state } = store('surecart/product', {
 				},
 			});
 		},
+		/** Update variant and values. */
 		updateVariantAndValues: () => {
 			// if we have variant values, update the selected variant.
 			const selectedVariant = getVariantFromValues({
@@ -125,6 +127,9 @@ const { state } = store('surecart/product', {
 	},
 });
 
+/**
+ * Update state.
+ */
 export const update = (data) => {
 	const { productId } = getContext();
 	state[productId] = {
@@ -133,6 +138,9 @@ export const update = (data) => {
 	};
 };
 
+/**
+ * Get the variant from provided values.
+ */
 export const getVariantFromValues = ({ variants, values }) => {
 	const variantValueKeys = Object.keys(values || {});
 
