@@ -8,6 +8,7 @@ import { ScTable, ScTableRow, ScTableCell } from '@surecart/components-react';
 export default ({
 	title = '',
 	footer = '',
+	after = '',
 	items = [],
 	hideHeader = false,
 	columns = {},
@@ -19,9 +20,12 @@ export default ({
 }) => {
 	if ((items || []).length === 0 && !loading && !updating) {
 		return (
-			<Box title={title} loading={loading} footer={footer}>
-				{empty}
-			</Box>
+			<>
+				<Box title={title} loading={loading} footer={footer}>
+					{empty}
+				</Box>
+				{after}
+			</>
 		);
 	}
 
@@ -81,6 +85,16 @@ export default ({
 
 				{children}
 			</Box>
+			{!!after && (
+				<div
+					css={css`
+						margin-top: var(--sc-spacing-medium);
+						margin-bottom: var(--sc-spacing-xxx-large);
+					`}
+				>
+					{after}
+				</div>
+			)}
 		</div>
 	);
 };

@@ -31,18 +31,6 @@ export default ({
 				.sort((a, b) => b.created_at - a.created_at)
 				.map((data) => licenseItem(data))}
 			loading={isLoading}
-			footer={
-				pagination ? (
-					<PaginationFooter
-						showing={data?.length}
-						total={pagination?.total}
-						total_pages={pagination?.total_pages}
-						page={page}
-						isFetching={isFetching}
-						setPage={setPage}
-					/>
-				) : null
-			}
 			{...props}
 		/>
 	);

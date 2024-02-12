@@ -1,9 +1,11 @@
+/** @jsx jsx */
 /**
  * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { css, jsx } from '@emotion/core';
+import { __, _n } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { ScButton } from '@surecart/components-react';
+import { ScButton, ScTag } from '@surecart/components-react';
 
 /**
  * Internal dependencies.
@@ -31,7 +33,30 @@ export default (license) => {
 						variant?.option_3,
 					],
 				}}
-			/>
+			>
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						gap: 0.25em;
+					`}
+				>
+					<span>{__('Usage', 'surecart')}</span>
+					<span>{'∙'}</span>
+					<ScTag
+						type="info"
+						style={{
+							minWidth: 'max-content',
+							'font-size': '1.1em',
+						}}
+						size="small"
+					>
+						{parseInt(license?.activations_count || 0)}
+						{' / '}
+						{parseInt(license?.activation_limit) || '∞'}
+					</ScTag>
+				</div>
+			</ProductLineItem>
 		),
 		actions: (
 			<ScButton

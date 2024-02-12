@@ -11,13 +11,14 @@ import { __ } from '@wordpress/i18n';
  */
 import LicensesDataTable from '../../components/data-tables/licenses-data-table';
 import usePagination from '../../hooks/usePagination';
-import PrevNextButtons from '../../ui/PrevNextButtons';
+import { paginate } from '../../util/arrays';
+import SimplePagination from '../../ui/SimplePagination';
 
 export default ({ customerId }) => {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(3);
 
-	const { licenses, loading } = useSelect(
+	const { licenses, hasNext, loading } = useSelect(
 		(select) => {
 			if (!customerId) {
 				return {
@@ -30,8 +31,7 @@ export default ({ customerId }) => {
 				'license',
 				{
 					customer_ids: customerId ? [customerId] : null,
-					page,
-					per_page: perPage,
+					per_page: 100,
 					expand: [
 						'purchase',
 						'purchase.price',
@@ -42,19 +42,25 @@ export default ({ customerId }) => {
 					],
 				},
 			];
+			const licenses =
+				select(coreStore)?.getEntityRecords?.(...entityData) || [];
+			const { data, totalPages } = paginate(licenses, perPage, page);
+			const hasNext = totalPages > page;
 			return {
-				licenses: select(coreStore)?.getEntityRecords?.(...entityData),
-				loading: !select(coreStore)?.hasFinishedResolution?.(
-					'getEntityRecords',
-					[...entityData]
-				),
+				licenses: data,
+				hasNext,
+				loading:
+					!select(coreStore)?.hasFinishedResolution?.(
+						'getEntityRecords',
+						[...entityData]
+					) && !licenses?.length,
 			};
 		},
 		[customerId, page, perPage]
 	);
 
 	// We won't render anything if there are no licenses.
-	if (!licenses?.length && !loading) {
+	if (!licenses?.length && page === 1 && !loading) {
 		return null;
 	}
 
@@ -76,14 +82,12 @@ export default ({ customerId }) => {
 			}}
 			data={licenses}
 			isLoading={loading}
-			footer={
+			after={
 				hasPagination && (
-					<PrevNextButtons
-						data={licenses}
+					<SimplePagination
 						page={page}
 						setPage={setPage}
-						perPage={perPage}
-						loading={loading}
+						hasNext={hasNext}
 					/>
 				)
 			}
