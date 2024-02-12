@@ -26,6 +26,7 @@ const OFFER_TITLE = {
 export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
+	const inputRef = useRef(null);
 
 	const [upsell, setUpsell] = useState({
 		duplicate_purchase_behavior: 'allow',
@@ -79,6 +80,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 				style={{ '--sc-drawer-size': '28rem' }}
 				stickyHeader
 				open={open}
+				onScAfterShow={() => inputRef.current.triggerFocus()}
 				onScAfterHide={onRequestClose}
 			>
 				<div
@@ -88,6 +90,48 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 						gap: 2em;
 					`}
 				>
+					<ScInput
+						label={__('Title', 'surecart')}
+						ref={inputRef}
+						help={__(
+							'This is shown on the upsell page.',
+							'surecart'
+						)}
+						placeholder={__(
+							'i.e. An exclusive offer, just for you.',
+							'surecart'
+						)}
+						onScInput={(e) =>
+							editUpsell({
+								metadata: {
+									...upsell.metadata,
+									upsell_title: e.target.value,
+								},
+							})
+						}
+						required
+					/>
+
+					<ScInput
+						label={__('Description', 'surecart')}
+						help={__(
+							'This is shown on the upsell page.',
+							'surecart'
+						)}
+						placeholder={__(
+							'i.e. Its not too late to add to your order',
+							'surecart'
+						)}
+						onScInput={(e) =>
+							editUpsell({
+								metadata: {
+									...upsell.metadata,
+									upsell_description: e.target.value,
+								},
+							})
+						}
+					/>
+
 					<Product
 						label={__('Product price', 'surecart')}
 						priceId={upsell?.price?.id || upsell?.price}
