@@ -30,7 +30,7 @@ export class ScExpressPayment {
       <Host class={{ 'is-empty': !this.hasPaymentOptions && !this.debug }}>
         {this.renderStripePaymentRequest()}
         {(this.hasPaymentOptions || this.debug) && <sc-divider style={{ '--spacing': 'calc(var(--sc-form-row-spacing)/2)' }}>{this.dividerText}</sc-divider>}
-        {!!formBusy && <sc-block-ui></sc-block-ui>}
+        {!!formBusy() && <sc-block-ui></sc-block-ui>}
       </Host>
     );
   }
