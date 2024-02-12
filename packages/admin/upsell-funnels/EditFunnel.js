@@ -89,7 +89,7 @@ export default ({ setBrowserURL }) => {
 		[id]
 	);
 
-	const { funnel, savedFunnel, willPublish, loading, error } = useSelect(
+	const { funnel, loading, error } = useSelect(
 		(select) => {
 			if (!id) {
 				return {};
@@ -102,10 +102,6 @@ export default ({ setBrowserURL }) => {
 			];
 			return {
 				funnel: select(coreStore).getEditedEntityRecord(...entityData),
-				savedFunnel: select(coreStore).getEntityRecord(...entityData),
-				willPublish: select(coreStore).getEntityRecordEdits(
-					...entityData
-				)?.enabled,
 				error: select(coreStore)?.getLastEntitySaveError?.(
 					...entityData
 				),
