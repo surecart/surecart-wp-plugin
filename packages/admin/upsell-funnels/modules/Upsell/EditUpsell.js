@@ -114,27 +114,6 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 						required
 					/>
 
-					<ScInput
-						label={__('Description', 'surecart')}
-						help={__(
-							'This is shown on the upsell page.',
-							'surecart'
-						)}
-						placeholder={__(
-							'i.e. Its not too late to add to your order',
-							'surecart'
-						)}
-						value={upsell?.metadata?.upsell_description}
-						onScInput={(e) =>
-							editUpsell({
-								metadata: {
-									...upsell.metadata,
-									upsell_description: e.target.value,
-								},
-							})
-						}
-					/>
-
 					<Product
 						label={__('Product price', 'surecart')}
 						priceId={upsell?.price?.id || upsell?.price}
