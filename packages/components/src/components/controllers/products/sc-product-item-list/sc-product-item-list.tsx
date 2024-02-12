@@ -110,6 +110,28 @@ export class ScProductItemList {
   /** Selected collections */
   @State() selectedCollections: Collection[] = [];
 
+  @Watch('products')
+  handleProductsChanged() {
+    if (!this.products?.length) {
+      return;
+    }
+
+    const title = [
+      this.pageTitle,
+      this.paginationEnabled ? sprintf(__('Page %d', 'surecart'), this.currentPage) : undefined,
+      this.query || this.selectedCollections?.length ? __('Search results', 'surecart') : undefined,
+      this.sort ? this.renderSortName() : undefined,
+    ]
+      .filter(item => !!item)
+      .join('-');
+
+    this.scProductsViewed.emit({
+      products: this.products,
+      pageTitle: title,
+      collectionId: this.collectionId,
+    });
+  }
+
   triggerProductsViewed() {
     this.scProductsViewed.emit({
       products: this.products,
@@ -121,9 +143,7 @@ export class ScProductItemList {
 
   componentWillLoad() {
     if (!this?.products?.length) {
-      this.getProducts().then(() => this.triggerProductsViewed());
-    } else {
-      this.triggerProductsViewed();
+      this.getProducts();
     }
 
     if (this.collectionEnabled) {
@@ -136,7 +156,7 @@ export class ScProductItemList {
     // handle ajax pagination
     if (this.ajaxPagination) {
       this.currentPage = page;
-      this.updateProducts().then(() => this.triggerProductsViewed());
+      this.updateProducts();
       this.paginationAutoScroll && this.el.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -148,7 +168,9 @@ export class ScProductItemList {
 
   // Fetch all products
   async getProducts() {
-    const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
+    const { 'product-page': page } = getQueryArgs(window.location.href) as {
+      'product-page': string;
+    };
 
     this.currentPage = this.paginationEnabled && page ? parseInt(page) : 1;
 
@@ -298,7 +320,12 @@ export class ScProductItemList {
 
   render() {
     return (
-      <div class={{ 'product-item-list__wrapper': true, 'product-item-list__has-search': !!this.query }}>
+      <div
+        class={{
+          'product-item-list__wrapper': true,
+          'product-item-list__has-search': !!this.query,
+        }}
+      >
         {this.error && (
           <sc-alert type="danger" open>
             {this.error}
@@ -449,8 +476,17 @@ export class ScProductItemList {
                     switch (layout.blockName) {
                       case 'surecart/product-item-title':
                         return (
-                          <div style={{ textAlign: 'var(--sc-product-title-align)' }}>
-                            <sc-skeleton style={{ width: '80%', display: 'inline-block' }}></sc-skeleton>
+                          <div
+                            style={{
+                              textAlign: 'var(--sc-product-title-align)',
+                            }}
+                          >
+                            <sc-skeleton
+                              style={{
+                                width: '80%',
+                                display: 'inline-block',
+                              }}
+                            ></sc-skeleton>
                           </div>
                         );
                       case 'surecart/product-item-image':
@@ -467,8 +503,17 @@ export class ScProductItemList {
                         );
                       case 'surecart/product-item-price':
                         return (
-                          <div style={{ textAlign: 'var(--sc-product-price-align)' }}>
-                            <sc-skeleton style={{ width: '40%', display: 'inline-block' }}></sc-skeleton>
+                          <div
+                            style={{
+                              textAlign: 'var(--sc-product-price-align)',
+                            }}
+                          >
+                            <sc-skeleton
+                              style={{
+                                width: '40%',
+                                display: 'inline-block',
+                              }}
+                            ></sc-skeleton>
                           </div>
                         );
                       default:

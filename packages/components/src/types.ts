@@ -1185,7 +1185,6 @@ export interface ProductsSearchedParams {
 export interface ProductsViewedParams {
   products: Product[];
   pageTitle: string;
-  currentPage?: number;
   collectionId?: string;
 }
 
