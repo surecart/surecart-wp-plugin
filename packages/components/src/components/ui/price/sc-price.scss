@@ -3,7 +3,7 @@
 }
 
 .price {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   gap: var(--sc-spacing-xxx-small);
   text-align: var(--sc-product-price-alignment, left);
