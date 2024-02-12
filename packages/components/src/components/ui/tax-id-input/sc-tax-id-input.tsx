@@ -159,27 +159,18 @@ export class ScTaxIdInput {
         >
           {this.loading && this.type === 'eu_vat' ? <sc-spinner slot="prefix" style={{ '--spinner-size': '10px' }}></sc-spinner> : this.renderStatus()}
 
-          <sc-dropdown slot="suffix" position="bottom-right" role="select" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
-            <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
-              {this.filteredZones()?.[this?.type || 'other']?.label_small}
-            </sc-button>
-            <sc-menu>
-              {Object.keys(this.filteredZones() || {}).map(name => (
-                <sc-menu-item
-                  role="option"
-                  onClick={() => {
-                    this.scInput.emit({
-                      number: this.number,
-                      number_type: name,
-                    });
-                    this.scChange.emit({
-                      number: this.number,
-                      number_type: name,
-                    });
-                    this.type = name;
-                  }}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
+          {Object.keys(this.filteredZones() || {})?.length === 1 ? (
+            <span slot="suffix">{Object.values(this.filteredZones() || {})?.[0]?.['label_small']}</span>
+          ) : (
+            <sc-dropdown slot="suffix" position="bottom-right" role="select" aria-multiselectable="false" aria-label={__('Select number type', 'surecart')}>
+              <sc-button type="text" slot="trigger" caret loading={false} style={{ color: 'var(--sc-input-label-color)' }} tabindex="0">
+                {this.filteredZones()?.[this?.type || 'other']?.label_small}
+              </sc-button>
+              <sc-menu>
+                {Object.keys(this.filteredZones() || {}).map(name => (
+                  <sc-menu-item
+                    role="option"
+                    onClick={() => {
                       this.scInput.emit({
                         number: this.number,
                         number_type: name,
@@ -189,19 +180,32 @@ export class ScTaxIdInput {
                         number_type: name,
                       });
                       this.type = name;
-                      this.input?.triggerFocus();
-                      speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
-                    }
-                  }}
-                  checked={this.type === name}
-                  aria-selected={this.type === name ? 'true' : 'false'}
-                  aria-label={zones[name].label_small}
-                >
-                  {zones[name].label_small}
-                </sc-menu-item>
-              ))}
-            </sc-menu>
-          </sc-dropdown>
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        this.scInput.emit({
+                          number: this.number,
+                          number_type: name,
+                        });
+                        this.scChange.emit({
+                          number: this.number,
+                          number_type: name,
+                        });
+                        this.type = name;
+                        this.input?.triggerFocus();
+                        speak(sprintf(__('%s selected', 'surecart'), zones[name].label_small, 'assertive'));
+                      }
+                    }}
+                    checked={this.type === name}
+                    aria-selected={this.type === name ? 'true' : 'false'}
+                    aria-label={zones[name].label_small}
+                  >
+                    {zones[name].label_small}
+                  </sc-menu-item>
+                ))}
+              </sc-menu>
+            </sc-dropdown>
+          )}
         </sc-input>
       </Fragment>
     );
