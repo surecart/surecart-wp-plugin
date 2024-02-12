@@ -1,4 +1,4 @@
-import { Address, Product, ShippingAddress } from 'src/types';
+import { Product, ShippingAddress } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 
