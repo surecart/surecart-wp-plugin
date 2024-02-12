@@ -21,7 +21,7 @@ class SettingsController {
 				'object'                     => 'settings',
 				'api_token'                  => ApiToken::get(),
 				'uninstall'                  => (bool) get_option( 'sc_uninstall', false ),
-				'stripe_payment_element'     => (bool) get_option( 'sc_stripe_payment_element', false ),
+				'stripe_payment_element'     => (bool) get_option( 'sc_stripe_payment_element', true ),
 				'auto_sync_user_to_customer' => (bool) get_option( 'surecart_auto_sync_user_to_customer', false ),
 				'use_esm_loader'             => (bool) get_option( 'surecart_use_esm_loader', false ),
 				'slide_out_cart_disabled'    => (bool) get_option( 'sc_slide_out_cart_disabled', false ),
@@ -53,9 +53,9 @@ class SettingsController {
 			update_option( 'sc_uninstall', $request->get_param( 'uninstall' ) );
 		}
 
-		// update uninstall option.
+		// update stripe payment_element option - used to enable the stripe's legacy card element.
 		if ( isset( $request['stripe_payment_element'] ) ) {
-			update_option( 'sc_stripe_payment_element', $request->get_param( 'stripe_payment_element' ) );
+			update_option( 'sc_stripe_payment_element', $request->get_param( 'stripe_payment_element' ) === false ? 0 : 1 );
 		}
 
 		// update performance option.

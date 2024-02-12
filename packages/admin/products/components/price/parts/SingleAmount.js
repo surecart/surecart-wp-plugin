@@ -7,7 +7,7 @@ export default ({ className, price, updatePrice, suffix }) => {
 			className={className}
 			label={
 				price?.ad_hoc
-					? __('Default Price', 'surecart')
+					? __('Default price', 'surecart')
 					: __('Price', 'surecart')
 			}
 			currencyCode={price?.currency || scData.currency_code}
@@ -16,7 +16,6 @@ export default ({ className, price, updatePrice, suffix }) => {
 			onScInput={(e) => {
 				updatePrice({ amount: e.target.value });
 			}}
-			autofocus
 			required
 		>
 			{!!suffix && <span slot="suffix">{suffix}</span>}

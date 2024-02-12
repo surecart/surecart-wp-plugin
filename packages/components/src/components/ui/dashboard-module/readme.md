@@ -37,6 +37,7 @@
  - [sc-cancel-discount](../../controllers/dashboard/sc-cancel-discount)
  - [sc-cancel-survey](../../controllers/dashboard/sc-cancel-survey)
  - [sc-charges-list](../../controllers/dashboard/charges-list)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-customer-details](../customer-details)
  - [sc-customer-edit](../../controllers/dashboard/customer-edit)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
@@ -55,7 +56,9 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
@@ -74,6 +77,7 @@ graph TD;
   sc-cancel-discount --> sc-dashboard-module
   sc-cancel-survey --> sc-dashboard-module
   sc-charges-list --> sc-dashboard-module
+  sc-checkout-stock-alert --> sc-dashboard-module
   sc-customer-details --> sc-dashboard-module
   sc-customer-edit --> sc-dashboard-module
   sc-downloads-list --> sc-dashboard-module
@@ -92,7 +96,9 @@ graph TD;
   sc-subscription-cancel --> sc-dashboard-module
   sc-subscription-payment --> sc-dashboard-module
   sc-subscription-payment-method --> sc-dashboard-module
+  sc-subscription-reactivate --> sc-dashboard-module
   sc-subscription-switch --> sc-dashboard-module
+  sc-subscription-variation-confirm --> sc-dashboard-module
   sc-subscriptions-list --> sc-dashboard-module
   sc-upcoming-invoice --> sc-dashboard-module
   sc-wordpress-password-edit --> sc-dashboard-module

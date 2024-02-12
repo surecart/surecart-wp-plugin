@@ -19,7 +19,7 @@ class AdminRouteService {
 		'products'            => 'sc-products',
 		'order'               => 'sc-orders',
 		'orders'              => 'sc-orders',
-		'checkout'              => 'sc-checkouts',
+		'checkout'            => 'sc-checkouts',
 		'bump'                => 'sc-bumps',
 		'bumps'               => 'sc-bumps',
 		'invoice'             => 'sc-invoices',
@@ -40,6 +40,7 @@ class AdminRouteService {
 		'cancellations'       => 'sc-cancellation-insights',
 		'product_collection'  => 'sc-product-collections',
 		'product_collections' => 'sc-product-collections',
+		'restore'             => 'sc-restore',
 	];
 
 	/**

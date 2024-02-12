@@ -83,7 +83,7 @@ sc-dropdown {
 }
 
 .select--placeholder .trigger {
-  color: var(--sc-color-gray-400);
+  color: var(--sc-input-placeholder-color);
 }
 
 .select {
@@ -94,6 +94,11 @@ sc-dropdown {
     margin: 0px;
     pointer-events: none;
     width: 0;
+  }
+  &__suffix-description,
+  &__description {
+    font-size: var(--sc-input-help-text-font-size-medium);
+    opacity: 0.65;
   }
 }
 
@@ -131,4 +136,8 @@ sc-dropdown {
   width: 18px;
   height: 18px;
   object-fit: contain;
+}
+
+sc-menu-item.is-unavailable {
+  --sc-menu-item-color: var(--sc-color-gray-500);
 }

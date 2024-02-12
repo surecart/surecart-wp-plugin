@@ -57,6 +57,9 @@
 		"border": {
 			"type": "boolean"
 		},
+		"sectionBackgroundColor": {
+			"type": "string"
+		},
 		"padding": {
 			"type": "object",
 			"default": {

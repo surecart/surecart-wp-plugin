@@ -96,9 +96,11 @@ export default ({ onRequestClose, bump, updateBump }) => {
 									archived: false,
 									ad_hoc: false,
 								}}
-								onSelect={(price) => {
+								includeVariants={false}
+								showOutOfStock={true}
+								onSelect={({ price_id }) => {
 									setType('price_ids');
-									setId(price);
+									setId(price_id);
 								}}
 							/>
 						</ScFormControl>

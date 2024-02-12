@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property    | Attribute    | Description | Type      | Default     |
-| ----------- | ------------ | ----------- | --------- | ----------- |
-| `label`     | `label`      |             | `string`  | `undefined` |
-| `showPrice` | `show-price` |             | `boolean` | `undefined` |
+| Property    | Attribute    | Description                    | Type      | Default     |
+| ----------- | ------------ | ------------------------------ | --------- | ----------- |
+| `label`     | `label`      | The product price choice label | `string`  | `undefined` |
+| `productId` | `product-id` | The product id                 | `string`  | `undefined` |
+| `showPrice` | `show-price` | Whether to show the price      | `boolean` | `undefined` |
 
 
 ## Dependencies
@@ -28,10 +29,11 @@ graph TD;
   sc-product-price-choices --> sc-choices
   sc-product-price-choices --> sc-price-choice-container
   sc-choices --> sc-form-control
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-price-choice-container --> sc-format-number
   sc-price-choice-container --> sc-choice-container
   sc-price-choice-container --> sc-skeleton
+  sc-price-choice-container --> sc-visually-hidden
   style sc-product-price-choices fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

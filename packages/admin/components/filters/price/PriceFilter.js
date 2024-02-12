@@ -4,6 +4,8 @@ import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { intervalString } from '../../../../admin/util/translations';
 import FilterItem from '../FilterItem';
+import LineItemLabel from '../../../ui/LineItemLabel';
+import { getFeaturedProductMediaAttributes } from '@surecart/components';
 
 export default ({ id, onRemove }) => {
 	const { price, hasLoadedPrice } = useSelect(
@@ -13,7 +15,11 @@ export default ({ id, onRemove }) => {
 				'price',
 				id,
 				{
-					expand: ['product'],
+					expand: [
+						'product',
+						'product.featured_product_media',
+						'product_media.media',
+					],
 					t: '1', // clear any cache to fetch fresh.
 				},
 			];
@@ -33,7 +39,7 @@ export default ({ id, onRemove }) => {
 	return (
 		<FilterItem
 			loading={!hasLoadedPrice}
-			imageUrl={price?.product?.image_url}
+			media={getFeaturedProductMediaAttributes(price?.product)}
 			icon={'image'}
 			onRemove={onRemove}
 		>
@@ -41,12 +47,14 @@ export default ({ id, onRemove }) => {
 				<div>
 					<strong>{price?.product?.name}</strong>
 				</div>
-				<ScFormatNumber
-					type="currency"
-					currency={price?.currency || 'usd'}
-					value={price?.amount}
-				/>
-				{intervalString(price)}
+				<LineItemLabel lineItem={{ price: price }}>
+					<ScFormatNumber
+						type="currency"
+						currency={price?.currency || 'usd'}
+						value={price?.amount}
+					/>
+					{intervalString(price)}
+				</LineItemLabel>
 			</div>
 		</FilterItem>
 	);

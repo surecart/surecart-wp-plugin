@@ -8,31 +8,31 @@ import {
 	ScMenu,
 	ScMenuItem,
 	ScIcon,
-	ScDialog,
-	ScForm,
-	ScDivider,
 	ScSkeleton,
 	ScFlex,
 } from '@surecart/components-react';
-import { addQueryArgs } from '@wordpress/url';
 
 import ToggleHeader from '../../../../components/ToggleHeader';
 import { intervalString } from '../../../../util/translations';
 import { useState } from 'react';
-import CopyInput from './CopyInput';
 import { getFormattedPrice } from '../../../../util';
+import BuyLink from './BuyLink';
 
 export default ({
 	isOpen,
 	setIsOpen,
 	className,
 	price,
+	variants,
+	variantOptions,
+	stockEnabled,
 	onArchive,
 	collapsible,
 	onDelete,
 	loading,
 }) => {
 	const [copyDialog, setCopyDialog] = useState(false);
+
 	const trial = () => {
 		return (
 			<>
@@ -55,7 +55,9 @@ export default ({
 					<>
 						{' '}
 						<sc-tag type="default" size="small">
-							{__('Setup Fee', 'surecart')}
+							{price?.setup_fee_amount < 0
+								? __('Discount', 'surecart')
+								: __('Setup Fee', 'surecart')}
 						</sc-tag>
 					</>
 				)}
@@ -266,46 +268,14 @@ export default ({
 			>
 				{headerName()}
 			</ToggleHeader>
-			<ScDialog
-				label={__('Links and Shortcodes', 'surecart')}
+			<BuyLink
 				open={copyDialog}
-				onScRequestClose={() => setCopyDialog(false)}
-			>
-				<ScForm style={{ '--sc-form-row-spacing': '1.25em' }}>
-					<CopyInput
-						label={__('Buy Link', 'surecart')}
-						text={addQueryArgs(scData?.checkout_page_url, {
-							line_items: [{ price_id: price?.id, quantity: 1 }],
-						})}
-					/>
-
-					<ScDivider>{__('Shortcodes', 'surecart')}</ScDivider>
-
-					<CopyInput
-						label={__('Add To Cart Button Shortcode', 'surecart')}
-						text={`[sc_add_to_cart_button price_id=${price?.id}]Add To Cart[/sc_add_to_cart_button]`}
-					/>
-					<CopyInput
-						label={__('Buy Button Shortcode', 'surecart')}
-						text={`[sc_buy_button]Buy Now [sc_line_item price_id=${price?.id} quantity=1][/sc_buy_button]`}
-					/>
-
-					<ScDivider>{__('Miscellaneous', 'surecart')}</ScDivider>
-
-					<CopyInput
-						label={__('Price ID', 'surecart')}
-						text={price?.id}
-					/>
-				</ScForm>
-
-				<ScButton
-					onClick={() => setCopyDialog(false)}
-					type="primary"
-					slot="footer"
-				>
-					{__('Done', 'surecart')}
-				</ScButton>
-			</ScDialog>
+				price={price}
+				variants={variants}
+				variantOptions={variantOptions}
+				stockEnabled={stockEnabled}
+				onRequestClose={() => setCopyDialog(false)}
+			/>
 		</>
 	);
 };

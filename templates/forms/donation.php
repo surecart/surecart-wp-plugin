@@ -2,17 +2,21 @@
 /**
  * Donation form block pattern
  */
+
+// get account currency.
+$currency = \SureCart::account()->currency ?? 'usd';
+
 return [
 	'title'      => __( 'Donation', 'surecart' ),
 	'categories' => [ 'surecart_form' ],
 	'blockTypes' => [ 'surecart/form' ],
-	'content'    => '<!-- wp:surecart/donation -->
-					<sc-donation-choices label="Donation Amount" currency="USD"><sc-choice show-control="false" size="small" value="ad_hoc">Other</sc-choice></sc-donation-choices>
-					<!-- /wp:surecart/donation -->
-
-					<!-- wp:surecart/express-payment -->
-					<sc-express-payment divider-text="or" class="wp-block-surecart-express-payment"></sc-express-payment>
-					<!-- /wp:surecart/express-payment -->
+	'content'    => '
+				<!-- wp:surecart/product-donation -->
+				<!-- wp:surecart/product-donation-amounts -->
+				<!-- /wp:surecart/product-donation-amounts -->
+				<!-- wp:surecart/product-donation-prices -->
+				<!-- /wp:surecart/product-donation-prices -->
+				<!-- /wp:surecart/product-donation -->
 
 					<!-- wp:surecart/columns -->
 					<sc-columns class="wp-block-surecart-columns"><!-- wp:surecart/column -->

@@ -13,6 +13,7 @@
 | `help`      | `help`       | Help text                                       | `string`                         | `undefined` |
 | `label`     | `label`      | Input label.                                    | `string`                         | `undefined` |
 | `name`      | `name`       | Name for the input. Used for validation errors. | `string`                         | `undefined` |
+| `productId` | `product-id` | The product id                                  | `string`                         | `undefined` |
 | `required`  | `required`   | Whether the input is required.                  | `boolean`                        | `false`     |
 | `showLabel` | `show-label` | Show the label.                                 | `boolean`                        | `true`      |
 | `size`      | `size`       | Size of the control                             | `"large" \| "medium" \| "small"` | `'medium'`  |
@@ -30,7 +31,7 @@
 graph TD;
   sc-product-quantity --> sc-form-control
   sc-product-quantity --> sc-quantity-select
-  sc-form-control --> sc-tooltip
+  sc-form-control --> sc-visually-hidden
   sc-quantity-select --> sc-icon
   style sc-product-quantity fill:#f9f,stroke:#333,stroke-width:4px
 ```

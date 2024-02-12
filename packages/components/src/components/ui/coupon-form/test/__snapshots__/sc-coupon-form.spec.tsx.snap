@@ -8,12 +8,81 @@ exports[`sc-coupon-form handles applied coupons 1`] = `
         <div part="discount-label">
           Discount
         </div>
-        <sc-tag class="coupon-tag" clearable="" exportparts="base:coupon-tag" type="success">
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
           TESTCODE
         </sc-tag>
       </span>
       <span class="coupon-human-discount" slot="price-description">
-        (25% off)
+        25% off
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form handles recurring coupons with forever duration 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+      <span slot="description">
+        <div part="discount-label">
+          Discount
+        </div>
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        25% off
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form handles recurring coupons with once duration 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+      <span slot="description">
+        <div part="discount-label">
+          Discount
+        </div>
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        25% off once
+      </span>
+      <span slot="price">
+        <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
+      </span>
+    </sc-line-item>
+  </mock:shadow-root>
+</sc-coupon-form>
+`;
+
+exports[`sc-coupon-form handles recurring coupons with repeating duration 1`] = `
+<sc-coupon-form>
+  <mock:shadow-root>
+    <sc-line-item exportparts="description:info, price-description:discount, price:amount">
+      <span slot="description">
+        <div part="discount-label">
+          Discount
+        </div>
+        <sc-tag aria-label="Press enter to remove coupon code TESTCODE." class="coupon-tag" clearable="" exportparts="base:coupon-tag" role="button" type="success">
+          TESTCODE
+        </sc-tag>
+      </span>
+      <span class="coupon-human-discount" slot="price-description">
+        25% off for 3 months
       </span>
       <span slot="price">
         <sc-format-number currency="usd" type="currency" value="725"></sc-format-number>
@@ -44,11 +113,11 @@ exports[`sc-coupon-form renders collapsed 1`] = `
 <sc-coupon-form collapsed="">
   <mock:shadow-root>
     <div class="coupon-form" part="base">
-      <div class="trigger" part="label">
+      <div class="trigger" part="label" role="button" tabindex="0">
         <slot name="label"></slot>
       </div>
       <div class="form" part="form">
-        <sc-input exportparts="base:input__base, input, form-control:input__form-control">
+        <sc-input aria-label="Add coupon code." exportparts="base:input__base, input, form-control:input__form-control">
           <sc-button class="coupon-button" exportparts="base:button__base, label:button_label" size="medium" slot="suffix" type="text">
             <slot></slot>
           </sc-button>

@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
-import { openWormhole } from 'stencil-wormhole';
-import { Bump, Checkout } from '../../../../types';
+import { state as checkoutState } from '@store/checkout';
+import { Price, Product } from '../../../../types';
 
 @Component({
   tag: 'sc-order-bumps',
@@ -12,24 +12,22 @@ export class ScOrderBumps {
   @Prop() label: string;
   @Prop() showControl: boolean;
   @Prop() help: string;
-  @Prop() bumps: Bump[];
-  @Prop() checkout: Checkout;
 
   render() {
-    if (!this?.bumps?.length) {
+    const bumps = (checkoutState?.checkout?.recommended_bumps?.data || []).filter(bump => ((bump?.price as Price)?.product as Product)?.variants?.pagination?.count === 0); // exclude variants for now.;
+
+    if (!bumps?.length) {
       return null;
     }
 
     return (
       <sc-form-control label={this.label || __('Recommended', 'surecart')} help={this.help}>
-        <div class="bumps__list">
-          {(this.bumps || []).map(bump => (
-            <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} checkout={this.checkout}></sc-order-bump>
+        <div class="bumps__list" aria-label={__('Order bump summary', 'surecart')}>
+          {bumps.map(bump => (
+            <sc-order-bump key={bump?.id} showControl={this.showControl} bump={bump} />
           ))}
         </div>
       </sc-form-control>
     );
   }
 }
-
-openWormhole(ScOrderBumps, ['bumps', 'checkout'], false);

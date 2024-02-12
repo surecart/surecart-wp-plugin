@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute   | Description                                | Type                                                                     | Default     |
-| ----------- | ----------- | ------------------------------------------ | ------------------------------------------------------------------------ | ----------- |
-| `clearable` | `clearable` | Makes the tag clearable.                   | `boolean`                                                                | `false`     |
-| `pill`      | `pill`      | Draws a pill-style tag with rounded edges. | `boolean`                                                                | `false`     |
-| `size`      | `size`      | The tag's size.                            | `"large" \| "medium" \| "small"`                                         | `'medium'`  |
-| `type`      | `type`      | The tag's type.                            | `"danger" \| "default" \| "info" \| "primary" \| "success" \| "warning"` | `'default'` |
+| Property    | Attribute    | Description                                | Type                                                                     | Default     |
+| ----------- | ------------ | ------------------------------------------ | ------------------------------------------------------------------------ | ----------- |
+| `ariaLabel` | `aria-label` | Aria label                                 | `string`                                                                 | `undefined` |
+| `clearable` | `clearable`  | Makes the tag clearable.                   | `boolean`                                                                | `false`     |
+| `pill`      | `pill`       | Draws a pill-style tag with rounded edges. | `boolean`                                                                | `false`     |
+| `size`      | `size`       | The tag's size.                            | `"large" \| "medium" \| "small"`                                         | `'medium'`  |
+| `type`      | `type`       | The tag's type.                            | `"danger" \| "default" \| "info" \| "primary" \| "success" \| "warning"` | `'default'` |
 
 
 ## Events
@@ -48,6 +49,7 @@
  - [sc-order-confirmation-details](../../controllers/confirmation/order-confirmation-details)
  - [sc-order-confirmation-totals](../../controllers/confirmation/order-confirmation-totals)
  - [sc-order-fulfillment-badge](../order-fulfillment-badge)
+ - [sc-order-return-badge](../order-return-badge)
  - [sc-order-shipment-badge](../order-shipment-badge)
  - [sc-order-status-badge](../order-status-badge)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -79,6 +81,7 @@ graph TD;
   sc-order-confirmation-details --> sc-tag
   sc-order-confirmation-totals --> sc-tag
   sc-order-fulfillment-badge --> sc-tag
+  sc-order-return-badge --> sc-tag
   sc-order-shipment-badge --> sc-tag
   sc-order-status-badge --> sc-tag
   sc-orders-list --> sc-tag

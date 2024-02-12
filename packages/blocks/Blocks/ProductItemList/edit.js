@@ -28,6 +28,7 @@ import {
 	ScFormControl,
 	ScProductItemList,
 	ScSelect,
+	ScButton,
 } from '@surecart/components-react';
 
 import {
@@ -61,6 +62,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 		pagination_size,
 		ids,
 	} = attributes;
+
+	const apiTokenConnected = scData?.is_account_connected;
+
 	const blockProps = useBlockProps();
 
 	function togglePreview() {
@@ -159,6 +163,30 @@ export default ({ attributes, setAttributes, clientId }) => {
 			}
 		}
 		return styles;
+	};
+
+	const getDummyProducts = (limit = 15) => {
+		const dummyProducts = [];
+
+		for (let i = 1; i <= limit; i++) {
+			const product = {
+				permalink: '#',
+				name: __('Example Product Title', 'surecart'),
+				created_at: Math.floor(Math.random() * 40) + 1,
+				prices: {
+					data: [
+						{
+							amount: 1900,
+							currency: 'USD',
+						},
+					],
+				},
+			};
+
+			dummyProducts.push(product);
+		}
+
+		return dummyProducts;
 	};
 
 	useEffect(() => {
@@ -341,6 +369,13 @@ export default ({ attributes, setAttributes, clientId }) => {
 								setAttributes({
 									type: e.target.value,
 								});
+								if (
+									ids?.length &&
+									('all' === e.target.value ||
+										'featured' === e.target.value)
+								) {
+									setAttributes({ ids: [] });
+								}
 							}}
 							choices={[
 								{
@@ -417,6 +452,39 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</PanelBody>
 			</InspectorControls>
 			<div {...blockProps}>
+				{!apiTokenConnected && (
+					<Notice
+						status="warning"
+						isDismissible={false}
+						css={css`
+							margin-bottom: 20px;
+						`}
+					>
+						<div
+							css={css`
+								display: ${!apiTokenConnected
+									? 'flex'
+									: 'none'};
+								flex-direction: column;
+								gap: 1em;
+							`}
+						>
+							{__(
+								'These are sample products. Setup a new store / Connect existing to have real items.',
+								'surecart'
+							)}
+							<ScButton
+								type="primary"
+								href={window.scData?.getting_started_url}
+								css={css`
+									width: fit-content;
+								`}
+							>
+								{__('Setup Store', 'surecart')}
+							</ScButton>
+						</div>
+					</Notice>
+				)}
 				<div
 					css={css`
 						display: ${isEditing ? 'block' : 'none'};
@@ -457,11 +525,20 @@ export default ({ attributes, setAttributes, clientId }) => {
 								limit={limit}
 								layoutConfig={layoutConfig}
 								paginationAlignment={pagination_alignment}
-								sortEnabled={sort_enabled}
+								sortEnabled={
+									apiTokenConnected ? sort_enabled : false
+								}
 								featured={type === 'featured'}
-								searchEnabled={search_enabled}
+								searchEnabled={
+									apiTokenConnected ? search_enabled : false
+								}
+								paginationEnabled={
+									apiTokenConnected
+										? pagination_enabled
+										: false
+								}
+								{...(!apiTokenConnected ? { products: getDummyProducts(limit) } : {})}
 								collectionEnabled={collection_enabled}
-								paginationEnabled={pagination_enabled}
 							/>
 						)}
 					</Disabled>

@@ -39,11 +39,11 @@ export const getFormattedPrice = ({ amount, currency }: { amount: number; curren
 
 // get the currency symbol for a currency code.
 export const getCurrencySymbol = (code: string = 'usd') => {
-  const [currency] = new Intl.NumberFormat(undefined, {
+  const formattedParts = new Intl.NumberFormat(undefined, {
     style: 'currency',
     currency: code,
-  }).formatToParts(0);
-  return currency?.value;
+  }).formatToParts();
+  return formattedParts.find(part => part.type === 'currency')?.value;
 };
 
 export const translateInterval = (
@@ -124,4 +124,11 @@ export const periodCountString = (price: Price, abbreviate = false) => {
 
 export const translateRemainingPayments = payments => {
   return sprintf(_n('%d payment remaining', '%d payments remaining', payments, 'surecart'), payments);
+};
+
+export const productNameWithPrice = price => {
+  if (!price) {
+    return '';
+  }
+  return `${price?.product?.name} ${price?.name ? `— ${price.name}` : ''}`;
 };

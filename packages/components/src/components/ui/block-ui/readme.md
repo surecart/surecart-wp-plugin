@@ -32,6 +32,7 @@
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-checkout](../../controllers/checkout-form/checkout)
  - [sc-checkout-mollie-payment](../../controllers/checkout-form/sc-checkout-mollie-payment)
+ - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-compact-address](../sc-compact-address)
  - [sc-coupon-form](../coupon-form)
  - [sc-custom-order-price-input](../../controllers/checkout-form/custom-order-price-input)
@@ -53,7 +54,9 @@
  - [sc-subscription-cancel](../../controllers/dashboard/subscription-cancel)
  - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
  - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+ - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
+ - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
@@ -73,6 +76,7 @@ graph TD;
   sc-charges-list --> sc-block-ui
   sc-checkout --> sc-block-ui
   sc-checkout-mollie-payment --> sc-block-ui
+  sc-checkout-stock-alert --> sc-block-ui
   sc-compact-address --> sc-block-ui
   sc-coupon-form --> sc-block-ui
   sc-custom-order-price-input --> sc-block-ui
@@ -94,7 +98,9 @@ graph TD;
   sc-subscription-cancel --> sc-block-ui
   sc-subscription-payment --> sc-block-ui
   sc-subscription-payment-method --> sc-block-ui
+  sc-subscription-reactivate --> sc-block-ui
   sc-subscription-switch --> sc-block-ui
+  sc-subscription-variation-confirm --> sc-block-ui
   sc-subscriptions-list --> sc-block-ui
   sc-upcoming-invoice --> sc-block-ui
   sc-wordpress-password-edit --> sc-block-ui

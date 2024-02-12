@@ -52,12 +52,6 @@ export default () => {
 	const { createErrorNotice, createSuccessNotice } =
 		useDispatch(noticesStore);
 
-	useEffect(() => {
-		if (id) {
-			fetchUpcomingPeriod();
-		}
-	}, [id]);
-
 	const fetchUpcomingPeriod = async () => {
 		setLoadingUpcoming(true);
 		try {
@@ -73,6 +67,8 @@ export default () => {
 							'line_item.price',
 							'price.product',
 							'period.subscription',
+							'product.featured_product_media',
+							'product_media.media',
 						],
 					}
 				),
@@ -129,8 +125,11 @@ export default () => {
 						'checkout.line_items',
 						'line_item.price',
 						'line_item.fees',
+						'line_item.variant',
 						'price',
 						'price.product',
+						'product.featured_product_media',
+						'product_media.media',
 						'customer',
 						'customer.balances',
 						'purchase',
@@ -164,6 +163,12 @@ export default () => {
 		},
 		[id]
 	);
+
+	useEffect(() => {
+		if (id) {
+			fetchUpcomingPeriod();
+		}
+	}, [id, subscription?.discount?.id]);
 
 	/** Render the cancel button */
 	const renderCancelButton = () => {

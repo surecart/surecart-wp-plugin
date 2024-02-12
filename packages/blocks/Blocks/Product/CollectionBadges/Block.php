@@ -2,13 +2,13 @@
 
 namespace SureCartBlocks\Blocks\Product\CollectionBadges;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 use SureCartBlocks\Util\BlockStyleAttributes;
 
 /**
  * Product Collection Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Render the block
 	 *
@@ -18,7 +18,7 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
 		if ( empty( $product ) ) {
 			return '';
 		}
@@ -53,7 +53,10 @@ class Block extends BaseBlock {
 					class="sc-product-collection-badge <?php echo esc_attr( $classes ); ?>"
 					style="<?php echo esc_attr( $styles ); ?>"
 					>
-					<?php echo wp_kses_post( $collection->name ); ?></a>
+					<span aria-hidden="true"><?php echo wp_kses_post( $collection->name ); ?></span>
+					<?php // translators: %s: collection name. ?>
+					<sc-visually-hidden><?php echo esc_html( sprintf( __( 'Link to %s product collection.', 'surecart' ), $collection->name ) ); ?> </sc-visually-hidden>
+				</a>
 				<?php endforeach; ?>
 			</div>
 		</div>

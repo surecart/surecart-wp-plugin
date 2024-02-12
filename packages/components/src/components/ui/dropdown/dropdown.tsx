@@ -1,6 +1,8 @@
 import { Component, Element, Prop, Event, EventEmitter, Watch, State, h, Listen } from '@stencil/core';
 import { autoUpdate, computePosition, flip, offset, shift, size } from '@floating-ui/dom';
 import { ScMenu } from '../menu/sc-menu';
+import { speak } from '@wordpress/a11y';
+import { __ } from '@wordpress/i18n';
 
 let itemIndex = 0;
 let arrowFlag = '';
@@ -139,6 +141,7 @@ export class ScDropdown {
   }
 
   show() {
+    speak(__('Menu Selection Dropdown opened. Press Up/Down arrow to toggle between menu items.', 'surecart'), 'assertive');
     this.scShow.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (this.isVisible) {
@@ -151,6 +154,7 @@ export class ScDropdown {
   }
 
   hide() {
+    speak(__('Menu Selection Dropdown closed.', 'surecart'), 'assertive');
     this.scHide.emit();
     // Prevent subsequent calls to the method, whether manually or triggered by the `open` watcher
     if (!this.isVisible) {
@@ -159,6 +163,9 @@ export class ScDropdown {
     this.stopPositioner();
     this.isVisible = false;
     this.open = false;
+    const slotted = this.el.shadowRoot.querySelector('slot[name="trigger"]') as HTMLSlotElement;
+    const trigger = slotted.assignedElements({ flatten: true })[0] as HTMLElement;
+    trigger.focus();
   }
 
   handleClick(e) {
@@ -193,6 +200,7 @@ export class ScDropdown {
   handleHide() {
     this.open = false;
     itemIndex = 0;
+    this.trigger.focus();
   }
 
   @Listen('keydown')
@@ -211,6 +219,7 @@ export class ScDropdown {
     // Up/down opens the menu
     if (['ArrowDown', 'ArrowUp'].includes(event.key)) {
       event.preventDefault();
+      event.stopImmediatePropagation();
 
       // Show the menu if it's not already open
       if (!this.open) {
@@ -262,6 +271,8 @@ export class ScDropdown {
       if (this.open) {
         this.handleHide();
       } else {
+        event.stopImmediatePropagation();
+        event.preventDefault();
         this.open = true;
       }
     }
@@ -296,7 +307,7 @@ export class ScDropdown {
               }, 0);
             }
           }}
-          aria-expanded="true"
+          aria-expanded={this.open ? 'true' : 'false'}
           aria-haspopup="true"
         >
           <slot name="trigger"></slot>
@@ -314,9 +325,7 @@ export class ScDropdown {
               'position--bottom-left': this.position === 'bottom-left',
               'position--bottom-right': this.position === 'bottom-right',
             }}
-            role="menu"
             aria-orientation="vertical"
-            aria-labelledby="menu-button"
             tabindex="-1"
             onClick={e => this.handleClick(e)}
             ref={el => (this.panel = el as HTMLElement)}

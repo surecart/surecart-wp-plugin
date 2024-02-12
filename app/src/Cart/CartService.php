@@ -24,6 +24,26 @@ class CartService {
 					\SureCart::assets()->enqueueComponents();
 				}
 			);
+
+			$form = $this->getForm();
+			if ( empty( $form->ID ) ) {
+				return;
+			}
+			$state = sc_initial_state();
+
+			if ( empty( $state['checkout']['formId'] ) ) {
+				sc_initial_state(
+					array_filter(
+						[
+							'checkout' => [
+								'formId'  => $form->ID,
+								'mode'    => Form::getMode( $form->ID ),
+								'persist' => 'browser',
+							],
+						]
+					)
+				);
+			}
 			add_action( 'wp_footer', [ $this, 'renderCartComponent' ] );
 		}
 	}
@@ -142,7 +162,7 @@ class CartService {
 
 		ob_start(); ?>
 			<li class='menu-item'>
-				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link">
+				<a href="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>" class="menu-link" tabindex="-1">
 					<sc-cart-button
 						cart-menu-always-shown='<?php echo esc_attr( $this->isAlwaysShown() ? 'true' : 'false' ); ?>'
 						form-id='<?php echo esc_attr( $form->ID ); ?>'
@@ -162,22 +182,20 @@ class CartService {
 	 */
 	public function cartTemplate() {
 		$form = $this->getForm();
-
 		if ( empty( $form->ID ) ) {
 			return '';
 		}
 
-		$cart = \SureCart::cartPost()->get();
-
-		if ( empty( $cart->post_content ) ) {
-			return '';
-		}
-
 		// get cart block.
-		$blocks = parse_blocks( $cart->post_content );
-		if ( ! empty( $blocks[0] ) ) {
-			$attributes = $blocks[0]['attrs'];
+		$template = get_block_template( 'surecart/surecart//cart', 'wp_template_part' );
+		if ( empty( $template->content ) ) {
+			return;
 		}
+
+		// get first block attributes.
+		$template_blocks    = parse_blocks( $template->content );
+		$post_content_block = wp_get_first_block( $template_blocks, 'surecart/cart' );
+		$attributes         = isset( $post_content_block['attrs'] ) ? $post_content_block['attrs'] : [];
 
 		ob_start();
 		?>
@@ -185,19 +203,16 @@ class CartService {
 		<sc-cart
 			id="sc-cart"
 			header="<?php esc_attr_e( 'Cart', 'surecart' ); ?>"
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
 			style="font-size: 16px; --sc-z-index-drawer: 999999; --sc-drawer-size: <?php echo esc_attr( $attributes['width'] ?? '500px' ); ?>"
 		>
-			<?php echo wp_kses_post( do_blocks( $cart->post_content ) ); ?>
+			<?php
+			echo wp_kses_post( do_blocks( $template->content ) );
+			?>
 		</sc-cart>
 
 		<?php if ( $this->isFloatingIconEnabled() ) : ?>
-			<sc-cart-icon
-				form-id="<?php echo esc_attr( $form->ID ); ?>"
-				style="font-size: 16px"
-				mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>">
+			<sc-cart-icon style="font-size: 16px">
 				<?php echo wp_kses_post( $this->getIcon( 'floating' ) ); ?>
 			</sc-cart-icon>
 		<?php endif; ?>
@@ -217,10 +232,22 @@ class CartService {
 			return;
 		}
 		$template = $this->cartTemplate();
+		$state    = sc_initial_state();
+
+		if ( empty( $state['checkout']['formId'] ) ) {
+			sc_initial_state(
+				array_filter(
+					[
+						'checkout' => [
+							'formId' => $form->ID,
+						],
+					]
+				)
+			);
+		}
 		?>
+
 		<sc-cart-loader
-			form-id="<?php echo esc_attr( $form->ID ); ?>"
-			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			template='<?php echo esc_attr( $template ); ?>'>
 		</sc-cart-loader>
 		<?php
@@ -258,5 +285,23 @@ class CartService {
 			return;
 		}
 		return in_array( $term_id, $cart_menu_ids );
+	}
+
+	/**
+	 * Remove deprecated cart content.
+	 *
+	 * @param string $content Cart content.
+	 *
+	 * @return string
+	 */
+	public static function removeDeprecatedCartContent( $content ) {
+		$review_cart_present = strpos( $content, 'wp:surecart/cart-header {"text":"Review Your Cart"' );
+		$my_cart_present     = strpos( $content, '<sc-cart-header><span>My Cart</span></sc-cart-header>' );
+
+		if ( false !== $review_cart_present && false !== $my_cart_present ) {
+			$content = str_replace( '<sc-cart-header><span>My Cart</span></sc-cart-header>', '<sc-cart-header><span>Review Your Cart</span></sc-cart-header>', $content );
+		}
+
+		return $content;
 	}
 }

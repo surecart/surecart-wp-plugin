@@ -7,12 +7,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import Box from '../../ui/Box';
-import {
-	ScAlert,
-	ScInput,
-	ScPriceInput,
-	ScSwitch,
-} from '@surecart/components-react';
+import { ScInput, ScPriceInput, ScSwitch } from '@surecart/components-react';
 
 export default ({ coupon, loading, updateCoupon }) => {
 	return (
@@ -73,7 +68,10 @@ export default ({ coupon, loading, updateCoupon }) => {
 								'The minimum order subtotal amount required to apply this coupon.',
 								'surecart'
 							)}
-							currencyCode={coupon?.currency}
+							currencyCode={
+								coupon?.currency ||
+								window?.scData?.currency_code
+							}
 							placeholder={__('No Minimum', 'surecart')}
 							attribute="min_subtotal_amount"
 							label={__('Minimum order subtotal', 'surecart')}
@@ -133,13 +131,6 @@ export default ({ coupon, loading, updateCoupon }) => {
 						</div>
 					)}
 				</div>
-
-				<ScAlert open type="info">
-					{__(
-						'Note: Redemption limits are not applied in test mode.',
-						'surecart'
-					)}
-				</ScAlert>
 			</div>
 		</Box>
 	);

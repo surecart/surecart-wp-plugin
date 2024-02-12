@@ -113,6 +113,18 @@ class AssetsService {
 				$asset_file['version'],
 			);
 		}
+
+		$account = \SureCart::account();
+		if ( ! $account->isConnected() ) {
+			return;
+		}
+
+		$tracking_enabled         = $account->affiliation_protocol->wordpress_plugin_tracking_enabled ?? false;
+		$affiliate_script_defined = defined( 'SURECART_ENABLE_AFFILIATE_SCRIPT' ) && ! empty( SURECART_ENABLE_AFFILIATE_SCRIPT );
+
+		if ( ( $tracking_enabled || $affiliate_script_defined ) && $account->entitlements->affiliates ) {
+			wp_enqueue_script( 'surecart-affiliate-tracking' );
+		}
 	}
 
 	/**

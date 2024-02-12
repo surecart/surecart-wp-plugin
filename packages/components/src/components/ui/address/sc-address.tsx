@@ -111,6 +111,10 @@ export class ScAddress {
     }
   }
 
+  decodeHtmlEntities(html: string) {
+    return new DOMParser().parseFromString(html, 'text/html')?.body.textContent || html;
+  }
+
   updateAddress(address: Partial<Address>) {
     this.address = { ...this.address, ...address };
   }
@@ -121,6 +125,7 @@ export class ScAddress {
 
   clearAddress() {
     this.address = {
+      name: this.address?.name,
       country: null,
       city: null,
       line_1: null,
@@ -134,7 +139,12 @@ export class ScAddress {
   setRegions() {
     if (hasState(this.address.country)) {
       import('./countries.json').then(module => {
-        this.regions = module?.[this.address.country] as Array<{ value: string; label: string }>;
+        const countryRegions = module?.[this.address.country] as Array<{ value: string; label: string }>;
+
+        this.regions = (countryRegions || []).map(region => ({
+          ...region,
+          label: this.decodeHtmlEntities(region.label),
+        }));
       });
     } else {
       this.regions = [];
@@ -143,7 +153,7 @@ export class ScAddress {
 
   componentWillLoad() {
     this.handleAddressChange();
-    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || 'US';
+    const country = this.countryChoices.find(country => country.value === this.address.country)?.value || null;
     this.updateAddress({ country });
     this.handleNameChange();
   }
@@ -169,6 +179,7 @@ export class ScAddress {
               squared-bottom
               disabled={this.disabled}
               required={this.requireName}
+              aria-label={this.placeholders.name || __('Name or Company Name', 'surecart')}
             />
           )}
 
@@ -190,6 +201,7 @@ export class ScAddress {
             squared={this.showName}
             disabled={this.disabled}
             required={this.required}
+            aria-label={this.placeholders.country || __('Country', 'surecart')}
           />
 
           <sc-input
@@ -203,6 +215,7 @@ export class ScAddress {
             squared
             disabled={this.disabled}
             required={this.required}
+            aria-label={this.placeholders.line_1 || __('Address', 'surecart')}
           />
 
           {this.showLine2 && (
@@ -216,6 +229,7 @@ export class ScAddress {
               name={this.names?.line_2}
               squared
               disabled={this.disabled}
+              aria-label={this.placeholders.line_2 || __('Address Line 2', 'surecart')}
             />
           )}
 
@@ -234,6 +248,7 @@ export class ScAddress {
                 squared-top
                 disabled={this.disabled}
                 squared-right={this.showPostal}
+                aria-label={this.placeholders.city || __('City', 'surecart')}
               />
             )}
 
@@ -252,6 +267,7 @@ export class ScAddress {
                 disabled={this.disabled}
                 maxlength={this.address?.country === 'US' ? 5 : null}
                 squared-left={this.showCity}
+                aria-label={this.placeholders.postal_code || __('Postal Code/Zip', 'surecart')}
               />
             )}
           </div>
@@ -263,12 +279,13 @@ export class ScAddress {
               name={this.names?.state}
               autocomplete={'address-level1'}
               value={this?.address?.state}
-              onScChange={(e: any) => this.updateAddress({ state: e.target.value || null })}
+              onScChange={(e: any) => this.updateAddress({ state: e.target.value || e.detail?.value || null })}
               choices={this.regions}
               required={this.required}
               disabled={this.disabled}
               search
               squared-top
+              aria-label={this.placeholders.state || __('State/Province/Region', 'surecart')}
             />
           )}
         </sc-form-control>

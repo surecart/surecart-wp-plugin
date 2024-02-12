@@ -257,9 +257,11 @@ class User implements ArrayAccess, JsonSerializable {
 			return new \Error( 'not_found', esc_html__( 'This user could not be found.', 'surecart' ) );
 		}
 
+		clean_user_cache( $this->user->ID );
 		wp_clear_auth_cookie();
 		wp_set_current_user( $this->user->ID );
 		wp_set_auth_cookie( $this->user->ID );
+		update_user_caches( $this->user );
 
 		return true;
 	}
@@ -347,7 +349,7 @@ class User implements ArrayAccess, JsonSerializable {
 	 * @return this|false This object on success, false on failure.
 	 */
 	protected function getUserBy( $field, $value ) {
-		$this->user = get_user_by( $field, $value );
+		$this->user = get_user_by( $field, $value ?? '' );
 		return $this->user ? $this : false;
 	}
 

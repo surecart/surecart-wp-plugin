@@ -2,12 +2,12 @@
 
 namespace SureCartBlocks\Blocks\Product\BuyButton;
 
-use SureCartBlocks\Blocks\BaseBlock;
+use SureCartBlocks\Blocks\Product\ProductBlock;
 
 /**
  * Product Title Block
  */
-class Block extends BaseBlock {
+class Block extends ProductBlock {
 	/**
 	 * Keep track of the instance number of this block.
 	 *
@@ -16,9 +16,10 @@ class Block extends BaseBlock {
 	public static $instance;
 
 	/**
-	 * Get the style for the block
+	 * Get the style for the block.
 	 *
-	 * @param  array $attributes Style variables.
+	 * @param array  $attr Style variables.
+	 * @param string $prefix Prefix.
 	 * @return string
 	 */
 	public function getVars( $attr, $prefix ) {
@@ -96,25 +97,39 @@ class Block extends BaseBlock {
 	 * @return string
 	 */
 	public function render( $attributes, $content ) {
+		self::$instance++;
 
-		$product = get_query_var( 'surecart_current_product' );
+		$product = $this->getProductAndSetInitialState( $attributes['id'] ?? '' );
+
 		if ( empty( $product ) ) {
 			return '';
 		}
 
 		// set width class.
 		$width_class = ! empty( $attributes['width'] ) ? 'has-custom-width sc-block-button__width-' . $attributes['width'] : '';
+		$form        = \SureCart::forms()->getDefault();
 
 		ob_start();
 		?>
 		<sc-product-buy-button
 			<?php echo $attributes['add_to_cart'] ? 'add-to-cart' : ''; ?>
 			class="wp-block-button sc-block-button <?php echo esc_attr( $width_class ); ?> <?php echo esc_attr( $attributes['className'] ?? '' ); ?>"
-			button-text="<?php echo esc_attr( $attributes['text'] ); ?>">
+			button-text="<?php echo esc_attr( $attributes['text'] ); ?>"
+			product-id="<?php echo esc_attr( $product->id ); ?>"
+			form-id="<?php echo (int) $form->ID; ?>"
+			checkout-link="<?php echo esc_attr( \SureCart::pages()->url( 'checkout' ) ); ?>"
+			id="sc-product-buy-button-<?php echo esc_attr( (int) self::$instance ); ?>"
+			>
 			<a href="#" class="wp-block-button__link sc-block-button__link wp-element-button <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
 				<span data-text><?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?></span>
 				<?php echo $attributes['add_to_cart'] ? '<sc-spinner data-loader></sc-spinner>' : ''; ?>
 			</a>
+			<button disabled class="wp-block-button__link sc-block-button__link wp-element-button sc-block-button--sold-out <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<span data-text><?php echo esc_html( $attributes['out_of_stock_text'] ?? __( 'Sold Out', 'surecart' ) ); ?></span>
+			</button>
+			<button disabled class="wp-block-button__link sc-block-button__link wp-element-button sc-block-button--unavailable <?php echo esc_attr( $this->getClasses( $attributes ) ); ?>" style="<?php echo esc_attr( $this->getStyles( $attributes ) ); ?>">
+				<span data-text><?php echo esc_html( $attributes['unavailable_text'] ?? __( 'Unavailable', 'surecart' ) ); ?></span>
+			</button>
 		</sc-product-buy-button>
 
 		<?php
@@ -125,7 +140,7 @@ class Block extends BaseBlock {
 			'wp_footer',
 			function() use ( $attributes, $product ) {
 				?>
-		<sc-product-price-modal <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
+		<sc-product-price-modal product-id="<?php echo esc_attr( $product->id ); ?>" <?php echo esc_attr( $attributes['add_to_cart'] ? 'add-to-cart' : '' ); ?>>
 				<?php echo wp_kses_post( $product->archived || empty( $product->prices->data ) ? __( 'Unavailable For Purchase', 'surecart' ) : $attributes['text'] ); ?>
 		</sc-product-price-modal>
 				<?php

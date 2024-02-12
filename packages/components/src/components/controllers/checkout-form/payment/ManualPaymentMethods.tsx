@@ -14,7 +14,7 @@ export const ManualPaymentMethods: FunctionalComponent<{ methods: ManualPaymentM
             method?.name,
           )}
         >
-          {method?.description}
+          <div innerHTML={method?.description}></div>
         </sc-payment-selected>
       </sc-card>
     </sc-payment-method-choice>

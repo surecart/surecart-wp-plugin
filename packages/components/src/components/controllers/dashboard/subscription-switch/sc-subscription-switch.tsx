@@ -91,9 +91,9 @@ export class ScSubscriptionSwitch {
 
     this.hasFilters = {
       ...this.hasFilters,
-      split: this.prices.some(price => price.recurring_interval === 'month' && price?.recurring_period_count && !price?.archived),
+      split: this.prices.some(price => !!price?.recurring_period_count && !price?.archived),
       month: this.prices.some(price => price.recurring_interval === 'month' && !price?.recurring_period_count && !price?.archived),
-      year: this.prices.some(price => price.recurring_interval === 'year' && !price?.archived),
+      year: this.prices.some(price => price.recurring_interval === 'year' && !price?.recurring_period_count && !price?.archived),
       never: this.prices.some(price => (price.recurring_interval === 'never' || !price.recurring_interval) && !price?.archived),
     };
   }
@@ -131,7 +131,18 @@ export class ScSubscriptionSwitch {
     const { plan } = await e.target.getFormJson();
     const price = this.prices.find(p => p.id === plan);
     const currentPlan = this.subscription?.price as Price;
-    if (price?.id === currentPlan.id && !price?.ad_hoc) return;
+    if (price?.id === currentPlan.id && !price?.ad_hoc && !this.subscription?.variant_options?.length) return;
+
+    // confirm product variation.
+    if (this.subscription?.variant_options?.length) {
+      this.busy = true;
+      return window.location.assign(
+        addQueryArgs(window.location.href, {
+          action: 'confirm_variation',
+          price_id: plan,
+        }),
+      );
+    }
 
     // confirm ad_hoc amount.
     if (price?.ad_hoc) {
@@ -232,6 +243,7 @@ export class ScSubscriptionSwitch {
           {(this.prices || [])
             .filter(price => !price.archived)
             .filter(price => price?.currency === this.subscription?.currency)
+            .sort((a, b) => a.amount - b.amount)
             .map(price => {
               const currentPlan = (this.subscription?.price as Price)?.id === price?.id;
               const product = this.products.find(product => product.id === price?.product);
@@ -250,7 +262,9 @@ export class ScSubscriptionSwitch {
                   }}
                 >
                   <div>
-                    <strong>{price?.name || product?.name}</strong>
+                    <strong>
+                      {product?.name} {price?.name && <Fragment> — {price?.name}</Fragment>}
+                    </strong>
                   </div>
                   <div slot="description">
                     {price?.ad_hoc ? (
@@ -275,6 +289,14 @@ export class ScSubscriptionSwitch {
   }
 
   buttonText() {
+    if (this.subscription?.variant_options?.length) {
+      if (this.selectedPrice?.id === (this.subscription?.price as Price)?.id) {
+        return __('Update Options', 'surecart');
+      } else {
+        return __('Choose Options', 'surecart');
+      }
+    }
+
     if (this.selectedPrice?.ad_hoc) {
       if (this.selectedPrice?.id === (this.subscription?.price as Price)?.id) {
         return __('Update Amount', 'surecart');
@@ -285,10 +307,17 @@ export class ScSubscriptionSwitch {
     return __('Next', 'surecart');
   }
 
+  buttonDisabled() {
+    if (this.subscription?.variant_options) {
+      return false;
+    }
+    return (this.subscription?.price as Price)?.id === this.selectedPrice?.id && !this.selectedPrice?.ad_hoc;
+  }
+
   render() {
     // we are not loading and we don't have enough prices to switch.
     if (!this.loading && this.prices?.length < 2) {
-      if (!this.prices?.[0]?.ad_hoc) {
+      if (!this.prices?.[0]?.ad_hoc && !this.subscription?.variant_options?.length) {
         return null;
       }
     }
@@ -308,13 +337,7 @@ export class ScSubscriptionSwitch {
         <sc-form class="subscriptions-switch" onScFormSubmit={e => this.handleSubmit(e)}>
           {this.renderContent()}
 
-          <sc-button
-            type="primary"
-            full
-            submit
-            loading={this.loading || this.busy}
-            disabled={(this.subscription?.price as Price)?.id === this.selectedPrice?.id && !this.selectedPrice?.ad_hoc}
-          >
+          <sc-button type="primary" full submit loading={this.loading || this.busy} disabled={this.buttonDisabled()}>
             {this.buttonText()} <sc-icon name="arrow-right" slot="suffix"></sc-icon>
           </sc-button>
 

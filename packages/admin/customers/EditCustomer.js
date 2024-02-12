@@ -33,6 +33,7 @@ import ActionsDropdown from './components/ActionsDropdown';
 import ShippingAddress from './modules/ShippingAddress';
 import EditAddressModal from './modules/ShippingAddress/EditAddressModal';
 import ConfirmDeleteAddressModal from './modules/ShippingAddress/ConfirmDeleteAddressModal';
+import TaxSettings from './modules/TaxSettings';
 
 const modals = {
 	EDIT_SHIPPING_ADDRESS: 'EDIT_SHIPPING_ADDRESS',
@@ -165,6 +166,11 @@ export default () => {
 						onDeleteAddress={() =>
 							setCurrentModal(modals.CONFIRM_DELETE_ADDRESS)
 						}
+					/>
+					<TaxSettings
+						customer={customer}
+						loading={!hasLoadedCustomer}
+						updateCustomer={editCustomer}
 					/>
 					<User customer={customer} customerId={id} />
 					<Notifications

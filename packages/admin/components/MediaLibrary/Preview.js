@@ -11,26 +11,29 @@ import {
 	ScBlockUi,
 	ScFormatBytes,
 	ScFormatDate,
+	ScInput,
 	ScLineItem,
 	ScSkeleton,
+	ScTextarea,
 } from '@surecart/components-react';
 import Error from '../Error';
 import DownloadMedia from './DownloadMedia';
 import { ScCard } from '@surecart/components-react';
 
-export default ({ media, onDeleted }) => {
-	const { deleteEntityRecord } = useDispatch(coreStore);
+export default ({ media: initialMedia, onDeleted }) => {
+	const { deleteEntityRecord, saveEntityRecord } = useDispatch(coreStore);
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+	const [busy, setBusy] = useState(false);
 	const [fetching, setFetching] = useState(false);
-	const [url, setUrl] = useState(null);
+	const [media, setMedia] = useState(initialMedia);
+	const isImage = media?.content_type?.startsWith('image/');
 
 	useEffect(() => {
-		setUrl(null);
-		if (!media?.content_type.startsWith('image/')) return; // do not fetch if no image.
-		if (!media?.id || media?.url) return; // media not loaded or we have a url.
-		fetchMedia(media?.id);
-	}, [media]);
+		if (!initialMedia?.content_type?.startsWith('image/')) return; // do not fetch if no image.
+		if (!initialMedia?.id || initialMedia?.url) return; // initialMedia not loaded or we have a url.
+		fetchMedia(initialMedia?.id);
+	}, [initialMedia]);
 
 	const fetchMedia = async (id) => {
 		try {
@@ -38,11 +41,40 @@ export default ({ media, onDeleted }) => {
 			const media = await apiFetch({
 				path: `surecart/v1/medias/${id}?expose_for=60`,
 			});
-			setUrl(media?.url);
+			setMedia(media);
 		} catch (e) {
 			console.error(e);
 		} finally {
 			setFetching(false);
+		}
+	};
+
+	const updateMedia = async ({ alt, title }) => {
+		setMedia({ ...media, alt, title });
+		try {
+			setBusy(true);
+			setError(null);
+			const saved = await saveEntityRecord(
+				'surecart',
+				'media',
+				{
+					id: media?.id,
+					alt,
+					title,
+				},
+				{ throwOnError: true }
+			);
+			if (!saved?.url) {
+				const exposed = await apiFetch({
+					path: `surecart/v1/medias/${saved?.id}?expose_for=60`,
+				});
+				return setMedia(exposed);
+			}
+			setMedia(saved);
+		} catch (e) {
+			setError(e);
+		} finally {
+			setBusy(false);
 		}
 	};
 
@@ -78,11 +110,12 @@ export default ({ media, onDeleted }) => {
 				css={css`
 					display: grid;
 					gap: 1em;
+					position: relative;
 				`}
 			>
 				<Error error={error} setError={setError} margin="80px" />
 
-				{media?.content_type.startsWith('image/') &&
+				{isImage &&
 					(fetching ? (
 						<ScSkeleton
 							style={{
@@ -93,11 +126,13 @@ export default ({ media, onDeleted }) => {
 						></ScSkeleton>
 					) : (
 						<img
-							src={url || media?.url}
+							src={media?.url}
 							css={css`
 								max-width: 100%;
 								height: auto;
 							`}
+							alt={media?.alt}
+							{...(media.title ? { title: media.title } : {})}
 						/>
 					))}
 
@@ -133,6 +168,28 @@ export default ({ media, onDeleted }) => {
 					</span>
 				</ScLineItem>
 
+				{isImage && (
+					<ScTextarea
+						label={__('Alternative Text', 'surecart')}
+						help={__(
+							'Leave empty if the image is purely decorative.',
+							'surecart'
+						)}
+						onScChange={(e) =>
+							updateMedia({ ...media, alt: e.target.value })
+						}
+						value={media?.alt}
+						name="alternative-text"
+					/>
+				)}
+				<ScInput
+					label={__('Title', 'surecart')}
+					onScChange={(e) =>
+						updateMedia({ ...media, title: e.target.value })
+					}
+					value={media?.title}
+					name="title"
+				/>
 				<hr
 					css={css`
 						width: 100%;
@@ -167,7 +224,7 @@ export default ({ media, onDeleted }) => {
 						{__('Delete', 'surecart')}
 					</Button>
 				</ScLineItem>
-				{loading && <ScBlockUi spinner />}
+				{(loading || busy) && <ScBlockUi spinner />}
 			</div>
 		</ScCard>
 	);

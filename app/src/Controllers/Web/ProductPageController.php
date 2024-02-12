@@ -20,7 +20,7 @@ class ProductPageController extends BasePageController {
 		$id = get_query_var( 'sc_product_page_id' );
 
 		// fetch the product by id/slug.
-		$this->model = \SureCart\Models\Product::with( [ 'prices', 'image' ] )->find( $id );
+		$this->model = \SureCart\Models\Product::with( [ 'prices', 'image', 'variants', 'variant_options' ] )->find( $id );
 
 		if ( is_wp_error( $this->model ) ) {
 			return $this->handleError( $this->model );
@@ -40,10 +40,11 @@ class ProductPageController extends BasePageController {
 
 		// add the filters.
 		$this->filters();
+		$this->setInitialProductState();
 
 		// handle block theme.
 		if ( wp_is_block_theme() ) {
-			global  $_wp_current_template_content;
+			global $_wp_current_template_content;
 			$_wp_current_template_content = $this->model->template->content ?? '';
 		}
 
@@ -63,23 +64,6 @@ class ProductPageController extends BasePageController {
 
 		// Add edit product link to admin bar.
 		add_action( 'admin_bar_menu', [ $this, 'addEditProductLink' ], 99 );
-
-		// add data needed for product to load.
-		add_filter(
-			'surecart-components/scData',
-			function( $data ) {
-				$form = \SureCart::forms()->getDefault();
-
-				$data['product_data'] = [
-					'product'       => $this->model,
-					'form'          => $form,
-					'mode'          => Form::getMode( $form->ID ),
-					'checkout_link' => \SureCart::pages()->url( 'checkout' ),
-				];
-
-				return $data;
-			}
-		);
 	}
 
 	/**
@@ -95,6 +79,21 @@ class ProductPageController extends BasePageController {
 				'id'    => 'edit-product',
 				'title' => __( 'Edit Product', 'surecart' ),
 				'href'  => esc_url( \SureCart::getUrl()->edit( 'product', $this->model->id ) ),
+			]
+		);
+	}
+
+	/**
+	 * Set initial product state
+	 *
+	 * @return void
+	 */
+	public function setInitialProductState() {
+		$product_state[ $this->model->id ] = $this->model->getInitialPageState();
+
+		sc_initial_state(
+			[
+				'product' => $product_state,
 			]
 		);
 	}

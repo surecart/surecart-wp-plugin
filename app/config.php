@@ -100,6 +100,9 @@ return [
 		\SureCart\Rest\WebhooksRestServiceProvider::class,
 		\SureCart\Rest\VerificationCodeRestServiceProvider::class,
 		\SureCart\Rest\CheckEmailRestServiceProvider::class,
+		\SureCart\Rest\ReturnItemsRestServiceProvider::class,
+		\SureCart\Rest\ReturnReasonsRestServiceProvider::class,
+		\SureCart\Rest\ReturnRequestsRestServiceProvider::class,
 		\SureCart\Rest\ShippingProfileRestServiceProvider::class,
 		\SureCart\Rest\ShippingMethodRestServiceProvider::class,
 		\SureCart\Rest\ShippingRateRestServiceProvider::class,
@@ -107,6 +110,9 @@ return [
 		\SureCart\Rest\ShippingProtocolRestServiceProvider::class,
 		\SureCart\Rest\ProvisionalAccountRestServiceProvider::class,
 		\SureCart\Rest\ProductMediaRestServiceProvider::class,
+		\SureCart\Rest\VariantsRestServiceProvider::class,
+		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
+		\SureCart\Rest\VariantValuesRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
@@ -121,6 +127,7 @@ return [
 		\SureCart\Integrations\MemberPress\MemberPressServiceProvider::class,
 		\SureCart\Integrations\Elementor\ElementorServiceProvider::class,
 		\SureCart\Integrations\Beaver\BeaverServiceProvider::class,
+		\SureCart\Integrations\RankMath\RankMathServiceProvider::class,
 	],
 
 	/**
@@ -147,6 +154,8 @@ return [
 		\SureCartBlocks\Blocks\LogoutButton\Block::class,
 		\SureCartBlocks\Blocks\ProductItemList\Block::class,
 		\SureCartBlocks\Blocks\ProductCollection\Block::class,
+		\SureCartBlocks\Blocks\PriceSelector\Block::class,
+		\SureCartBlocks\Blocks\PriceChoice\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\WordPressAccount\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboard\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerOrders\Block::class,
@@ -162,6 +171,14 @@ return [
 		\SureCartBlocks\Blocks\Password\Block::class,
 		\SureCartBlocks\Blocks\CartMenuButton\Block::class,
 		\SureCartBlocks\Blocks\CartSubmit\Block::class,
+		\SureCartBlocks\Blocks\Cart\Block::class,
+		\SureCartBlocks\Blocks\VariantPriceSelector\Block::class,
+		\SureCartBlocks\Blocks\ProductDonation\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmounts\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationRecurringPrices\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationAmount\Block::class,
+		\SureCartBlocks\Blocks\ProductDonationCustomAmount\Block::class,
 
 		// Deprecated.
 		\SureCartBlocks\Blocks\Dashboard\Deprecated\CustomerInvoices\Block::class,
@@ -171,6 +188,7 @@ return [
 		\SureCartBlocks\Blocks\Product\Title\Block::class,
 		\SureCartBlocks\Blocks\Product\Price\Block::class,
 		\SureCartBlocks\Blocks\Product\PriceChoices\Block::class,
+		\SureCartBlocks\Blocks\Product\VariantChoices\Block::class,
 		\SureCartBlocks\Blocks\Product\Media\Block::class,
 		\SureCartBlocks\Blocks\Product\Quantity\Block::class,
 		\SureCartBlocks\Blocks\Product\BuyButton\Block::class,
@@ -219,6 +237,7 @@ return [
 		'surecart/payment'                   => [ 'sc-payment', 'sc-toggles', 'sc-toggle', 'sc-tag' ],
 		'surecart/price-choice'              => [ 'sc-price-choice', 'sc-choice', 'sc-skeleton' ],
 		'surecart/price-selector'            => [ 'sc-price-choices' ],
+		'surecart/variant-price-selector'    => [ 'sc-checkout-product-price-variant-selector' ],
 		'surecart/submit'                    => [ 'sc-order-submit', 'sc-button', 'sc-total', 'sc-paypal-buttons', 'sc-format-number', 'sc-spinner' ],
 		'surecart/subtotal'                  => [ 'sc-line-item-total', 'sc-format-number' ],
 		'surecart/total'                     => [ 'sc-line-item-total', 'sc-format-number' ],
@@ -228,6 +247,7 @@ return [
 		'surecart/product-media'             => [],
 		'surecart/product-buy-buttons'       => [ 'sc-product-buy-button', 'sc-button' ],
 		'surecart/product-price-choices'     => [ 'sc-product-price-choices', 'sc-choices', 'sc-price-choice-container', 'sc-choice-container', 'sc-format-number', 'sc-skeleton' ],
+		'surecart/product-variant-choices'   => [ 'sc-product-variation-choices' ],
 		'surecart/product-quantity'          => [ 'sc-product-quantity', 'sc-form-control', 'sc-icon', 'sc-quantity-select' ],
 		'surecart/product-collection-badges' => [],
 	],
@@ -373,7 +393,7 @@ return [
 	'webhook_events'         => [
 		// 'cancellation_act.updated',
 		// 'customer.created',
-		// 'customer.updated',
+		'customer.updated',
 		// 'order.created',
 		// 'order.made_processing',
 		// 'order.paid', // In doc

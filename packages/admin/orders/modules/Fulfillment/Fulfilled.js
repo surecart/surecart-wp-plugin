@@ -19,8 +19,7 @@ import { useState } from 'react';
 import { useDispatch } from '@wordpress/data';
 import { ScBlockUi } from '@surecart/components-react';
 import AddTracking from './components/AddTracking';
-import LineItem from './components/LineItem';
-import { addQueryArgs } from '@wordpress/url';
+import ProductLineItem from '../../../ui/ProductLineItem';
 
 export default ({ fulfillment, onDeleteSuccess }) => {
 	const [busy, setBusy] = useState(false);
@@ -273,45 +272,17 @@ export default ({ fulfillment, onDeleteSuccess }) => {
 						`}
 					>
 						{(fulfillment?.fulfillment_items?.data || []).map(
-							({ id, line_item, quantity }) => {
-								return (
-									<LineItem
-										key={id}
-										imageUrl={
-											line_item?.price?.product?.image_url
-										}
-										suffix={sprintf(
-											__('Qty: %d', 'surecart'),
-											quantity || 0
-										)}
-									>
-										<a
-											href={addQueryArgs('admin.php', {
-												page: 'sc-products',
-												action: 'edit',
-												id: line_item?.price?.product
-													?.id,
-											})}
-										>
-											{line_item?.price?.product?.name}
-										</a>
-										{!!line_item?.price?.product
-											?.weight && (
-											<ScFormatNumber
-												type="unit"
-												value={
-													line_item?.price?.product
-														?.weight
-												}
-												unit={
-													line_item?.price?.product
-														?.weight_unit
-												}
-											/>
-										)}
-									</LineItem>
-								);
-							}
+							({ id, line_item, quantity }) => (
+								<ProductLineItem
+									key={id}
+									lineItem={line_item}
+									showWeight={true}
+									suffix={sprintf(
+										__('Qty: %d', 'surecart'),
+										quantity || 0
+									)}
+								/>
+							)
 						)}
 					</div>
 				</div>

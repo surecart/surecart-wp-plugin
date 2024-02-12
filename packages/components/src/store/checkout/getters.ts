@@ -1,5 +1,5 @@
 import { Product } from 'src/types';
-import { getCheckout } from '../checkouts';
+import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 
 /**
@@ -18,3 +18,14 @@ export const checkoutIsLocked = (lockName = ''): boolean => (lockName ? state.lo
  * Get a line item by product id.
  */
 export const getLineItemByProductId = (productId: string) => (state.checkout?.line_items?.data || []).find(line_item => (line_item?.price?.product as Product)?.id === productId);
+
+/**
+ * Is the shipping address required?
+ */
+export const fullShippingAddressRequired = () => state.checkout?.shipping_enabled || state?.checkout?.shipping_address_required;
+
+/**
+ * Is the address required?
+ */
+export const shippingAddressRequired = () =>
+  state.checkout?.tax_status === 'address_invalid' || state.checkout?.shipping_enabled || state.checkout?.shipping_address_required || state?.checkout?.tax_enabled;

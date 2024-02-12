@@ -55,8 +55,9 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 					'href'  => $this->href(
 						[
 							[
-								'id'       => $price->id,
-								'quantity' => 1,
+								'id'         => $price->id,
+								'variant_id' => $attributes['variant_id'] ?? null,
+								'quantity'   => 1,
 							],
 						]
 					),
@@ -69,6 +70,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 
 		<sc-cart-form
 			price-id="<?php echo esc_attr( $attributes['price_id'] ); ?>"
+			variant-id="<?php echo esc_attr( $attributes['variant_id'] ?? '' ); ?>"
 			form-id="<?php echo esc_attr( $form->ID ); ?>"
 			mode="<?php echo esc_attr( Form::getMode( $form->ID ) ); ?>"
 			<?php if ( ! empty( $styles ) ) { ?>
@@ -92,7 +94,7 @@ class Block extends \SureCartBlocks\Blocks\BuyButton\Block {
 				type="<?php echo esc_attr( ! empty( $attributes['type'] ) ? $attributes['type'] : 'primary' ); ?>"
 				size="<?php echo esc_attr( ! empty( $attributes['size'] ) ? $attributes['size'] : 'medium' ); ?>"
 			>
-				<?php echo wp_kses_post( $attributes['button_text'] ) ?? esc_html__( 'Add To Cart', 'surecart' ); ?>
+				<?php echo ! empty( $attributes['button_text'] ) ? wp_kses_post( $attributes['button_text'] ) : esc_html__( 'Add To Cart', 'surecart' ); ?>
 			</sc-cart-form-submit>
 		</sc-cart-form>
 

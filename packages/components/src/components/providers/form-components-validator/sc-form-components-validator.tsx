@@ -2,6 +2,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { state as checkoutState, onChange as onCheckoutChange } from '@store/checkout';
 import { TaxProtocol } from '../../../types';
+import { shippingAddressRequired } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-form-components-validator',
@@ -43,7 +44,7 @@ export class ScFormComponentsValidator {
     if (this.disabled) return;
 
     // make sure to add the address field if it's not there.
-    if (checkoutState.checkout?.tax_status === 'address_invalid' || checkoutState.checkout?.shipping_enabled || checkoutState.checkout?.shipping_address_required) {
+    if (shippingAddressRequired()) {
       this.addAddressField();
     }
 
@@ -134,7 +135,6 @@ export class ScFormComponentsValidator {
     if (this.hasTaxIDField) return;
     const payment = this.el.querySelector('sc-payment');
     const taxInput = document.createElement('sc-order-tax-id-input');
-    taxInput.taxIdentifier?.number_type === 'eu_vat';
     payment.parentNode.insertBefore(taxInput, payment);
     this.hasTaxIDField = true;
   }
@@ -143,7 +143,6 @@ export class ScFormComponentsValidator {
     if (this.hasBumpsField) return;
     const payment = this.el.querySelector('sc-payment');
     const bumps = document.createElement('sc-order-bumps');
-    bumps.bumps === checkoutState.checkout?.recommended_bumps?.data;
     payment.parentNode.insertBefore(bumps, payment.nextSibling);
     this.hasBumpsField = true;
   }

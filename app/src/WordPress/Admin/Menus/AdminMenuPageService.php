@@ -23,6 +23,17 @@ class AdminMenuPageService {
 	protected $pages = [];
 
 	/**
+	 * Essential SureCart Pages
+	 *
+	 * @var array
+	 */
+	const ESSENTIAL_PAGES = [
+		'shop',
+		'checkout',
+		'dashboard',
+	];
+
+	/**
 	 * Add menu items.
 	 */
 	public function bootstrap() {
@@ -77,17 +88,20 @@ class AdminMenuPageService {
 	 */
 	public function forceSelect( $file ) {
 		global $submenu_file;
-		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
+		global $post;
 
-		if ( 'edit.php?post_type=sc_cart' === $submenu_file ) {
+		if ( ! empty( $post->ID ) && in_array(
+			$post->ID,
+			[
+				\SureCart::pages()->getId( 'cart', 'sc_cart' ),
+				\SureCart::pages()->getId( 'checkout' ),
+				\SureCart::pages()->getId( 'shop' ),
+				\SureCart::pages()->getId( 'dashboard' ),
+			]
+		) ) {
 			$file = 'sc-dashboard';
 			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$submenu_file = 'post.php?post=' . (int) $cart_page_id . '&action=edit';
-		}
-		if ( 'edit.php?post_type=sc_form' === $submenu_file ) {
-			$file = 'sc-dashboard';
-			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-			$submenu_file = 'edit.php?post_type=sc_form';
+			$submenu_file = 'post.php?post=' . (int) $post->ID . '&action=edit';
 		}
 
 		return $file;
@@ -148,18 +162,16 @@ class AdminMenuPageService {
 		if ( ! ApiToken::get() ) {
 			$this->pages = [
 				'get-started'     => \add_submenu_page( $this->slug, __( 'Get Started', 'surecart' ), __( 'Get Started', 'surecart' ), 'manage_options', $this->slug, '__return_false' ),
-				'complete-signup' => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
+				'complete-signup' => \add_submenu_page( '', __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
 				'settings'        => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 			];
 			return;
 		}
 
-		$cart_page_id = \SureCart::pages()->getId( 'cart', 'sc_cart' );
-
 		$this->pages = [
 			'get-started'         => \add_submenu_page( $this->slug, __( 'Dashboard', 'surecart' ), __( 'Dashboard', 'surecart' ), 'manage_sc_shop_settings', $this->slug, '__return_false' ),
-			'complete-signup'     => \add_submenu_page( null, __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
-			'claim-account'       => \add_submenu_page( null, __( 'Claim Account', 'surecart' ), __( 'Claim Account', 'surecart' ), 'manage_options', 'sc-claim-account', '__return_false' ),
+			'complete-signup'     => \add_submenu_page( '', __( 'Complete Signup', 'surecart' ), __( 'Complete Signup', 'surecart' ), 'manage_options', 'sc-complete-signup', '__return_false' ),
+			'claim-account'       => \add_submenu_page( '', __( 'Claim Account', 'surecart' ), __( 'Claim Account', 'surecart' ), 'manage_options', 'sc-claim-account', '__return_false' ),
 			'orders'              => \add_submenu_page( $this->slug, __( 'Orders', 'surecart' ), __( 'Orders', 'surecart' ), 'edit_sc_orders', 'sc-orders', '__return_false' ),
 			'checkouts'           => in_array( $_GET['page'] ?? '', [ 'sc-checkouts' ] ) ? \add_submenu_page( $this->slug, __( 'Checkouts', 'surecart' ), '↳ ' . __( 'Add New', 'surecart' ), 'edit_sc_orders', 'sc-checkouts', '__return_false' ) : null,
 			'abandoned'           => in_array( $_GET['page'] ?? '', [ 'sc-orders', 'sc-abandoned-checkouts', 'sc-checkouts' ], true ) ? \add_submenu_page( $this->slug, __( 'Abandoned', 'surecart' ), '↳ ' . __( 'Abandoned', 'surecart' ), 'edit_sc_orders', 'sc-abandoned-checkouts', '__return_false' ) : null,
@@ -172,10 +184,93 @@ class AdminMenuPageService {
 			'subscriptions'       => \add_submenu_page( $this->slug, __( 'Subscriptions', 'surecart' ), __( 'Subscriptions', 'surecart' ), 'edit_sc_subscriptions', 'sc-subscriptions', '__return_false' ),
 			'cancellations'       => in_array( $_GET['page'] ?? '', [ 'sc-subscriptions', 'sc-cancellation-insights' ] ) ? \add_submenu_page( $this->slug, __( 'Cancellation Insights', 'surecart' ), '↳ ' . __( 'Cancellations', 'surecart' ), 'edit_sc_subscriptions', 'sc-cancellation-insights', '__return_false' ) : null,
 			'customers'           => \add_submenu_page( $this->slug, __( 'Customers', 'surecart' ), __( 'Customers', 'surecart' ), 'edit_sc_customers', 'sc-customers', '__return_false' ),
-			'cart'                => get_edit_post_link( $cart_page_id ) ? \add_submenu_page( $this->slug, __( 'Cart', 'surecart' ), __( 'Cart', 'surecart' ), 'manage_options', 'post.php?post=' . (int) $cart_page_id . '&action=edit', '' ) : null,
-			// 'upgrade-paths'   => \add_submenu_page( $this->slug, __( 'Upgrade Groups', 'surecart' ), __( 'Upgrade Groups', 'surecart' ), 'edit_sc_products', 'sc-product-groups', '__return_false' ),
-			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
+			'restore'             => 'sc-restore' === ( $_GET['page'] ?? '' ) ? \add_submenu_page( null, __( 'Restore', 'surecart' ), __( 'Restore', 'surecart' ), 'manage_options', 'sc-restore', '__return_false' ) : null,
+			'shop'                => $this->getPage( 'shop', __( 'Shop', 'surecart' ) ),
+			'checkout'            => $this->getPage( 'checkout', __( 'Checkout', 'surecart' ) ),
+			'cart'                => $this->addTemplateSubMenuPage( 'cart', __( 'Cart', 'surecart' ), 'surecart/surecart//cart' ),
+			'dashboard'           => $this->getPage( 'dashboard', __( 'Customer Area', 'surecart' ) ),
+			'forms'               => \add_submenu_page( $this->slug, __( 'Forms', 'surecart' ), __( 'Custom Forms', 'surecart' ), 'edit_posts', 'edit.php?post_type=sc_form', '' ),
 			'settings'            => \add_submenu_page( $this->slug, __( 'Settings', 'surecart' ), __( 'Settings', 'surecart' ), 'manage_options', 'sc-settings', '__return_false' ),
 		];
+	}
+
+	/**
+	 * Get the page link.
+	 *
+	 * @param string $slug The slug.
+	 * @param string $name The name.
+	 * @param string $post_type The post type.
+	 *
+	 * @return void
+	 */
+	public function getPage( $slug, $name, $post_type = 'page' ) {
+		// add filter to disable shop page menu item.
+		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
+			return;
+		}
+
+		$page_id = \SureCart::pages()->getId( $slug, $post_type );
+
+		$status = '';
+
+		$post_status = get_post_status( $page_id );
+		if ( 'publish' !== $post_status ) {
+			$status = '<span class="awaiting-mod">' . ( get_post_status_object( $post_status )->label ?? esc_html__( 'Deleted', 'surecart' ) ) . '</span>';
+		}
+
+		return \add_submenu_page( $this->slug, $name, $name . $status, 'manage_options', $this->getSubMenuPageSlug( $slug, $page_id ), '' );
+	}
+
+	/**
+	 * Get the page menu slug.
+	 *
+	 * @param string $slug The slug.
+	 * @param int    $page_id The page id.
+	 */
+	public function getSubMenuPageSlug( $slug, $page_id ) {
+		// check if it is not an essential page.
+		if ( ! in_array( $slug, self::ESSENTIAL_PAGES, true ) ) {
+			return 'post.php?post=' . $page_id . '&action=edit';
+		}
+
+		$post_status = get_post_status( $page_id );
+
+		// check if the page is published.
+		if ( 'publish' === $post_status ) {
+			return 'post.php?post=' . $page_id . '&action=edit';
+		}
+
+		return 'admin.php?page=sc-restore&restore=' . $slug;
+	}
+
+	/**
+	 * Add a submenu page for a template.
+	 *
+	 * @param string $slug The slug.
+	 * @param string $name The name.
+	 * @param string $template_slug The template slug.
+	 *
+	 * @return null|string|false
+	 */
+	public function addTemplateSubMenuPage( $slug, $name, $template_slug ) {
+		// add filter to disable shop page menu item.
+		if ( ! get_option( 'surecart_' . $slug . '_admin_menu', true ) ) {
+			return;
+		}
+
+		return \add_submenu_page(
+			$this->slug,
+			$name,
+			$name,
+			'manage_options',
+			add_query_arg(
+				[
+					'postId'   => rawurlencode( $template_slug ),
+					'postType' => 'wp_template_part',
+				],
+				'site-editor.php'
+			),
+			''
+		);
 	}
 }

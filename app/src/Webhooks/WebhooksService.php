@@ -35,7 +35,7 @@ class WebhooksService {
 	 */
 	public function bootstrap() {
 		// delete any old webhook processes.
-		add_action( 'delete_expired_transients', [ $this, 'deleteOldWebhhookProcesses' ] );
+		add_action( 'delete_expired_transients', [ $this, 'deleteOldWebhookProcesses' ] );
 		// we can skip this for localhost or non-secure connections.
 		if ( apply_filters( 'surecart/webhooks/localhost/register', $this->isLocalHost() ) || ! is_ssl() ) {
 			return;

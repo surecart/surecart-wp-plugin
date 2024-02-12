@@ -61,7 +61,7 @@ export class ScChoices {
 
   @Watch('required')
   handleRequiredChange() {
-    const choices = this.el.querySelectorAll('sc-choice');
+    const choices = [...this.el.querySelectorAll('sc-choice, sc-choice-container')] as Array<HTMLScChoiceElement | HTMLScChoiceContainerElement>;
     if (choices.length) {
       choices.forEach(choice => {
         choice.required = this.required;

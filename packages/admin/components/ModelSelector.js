@@ -13,8 +13,8 @@ export default (props) => {
 		requestQuery = {},
 		display,
 		exclude = [],
-		fetchOnLoad = false,
 		onChangeQuery = () => {},
+		renderChoices,
 	} = props;
 	const [query, setQuery] = useState(null);
 	const [models, setModels] = useState([]);
@@ -95,13 +95,23 @@ export default (props) => {
 		}
 	}, [page]);
 
+	const getChoices = () => {
+		let choices = [...(models || [])];
+
+		if (renderChoices) {
+			return renderChoices(choices);
+		}
+
+		return choices.map((item) => ({
+			label: !!display ? display(item) : item.name,
+			value: item.id,
+			disabled: exclude.includes(item.id),
+		}));
+	};
+
 	return (
 		<SelectModel
-			choices={(models || []).map((item) => ({
-				label: !!display ? display(item) : item.name,
-				value: item.id,
-				disabled: exclude.includes(item.id),
-			}))}
+			choices={getChoices()}
 			onQuery={handleOnChangeQuery}
 			onFetch={fetchData}
 			loading={isLoading}

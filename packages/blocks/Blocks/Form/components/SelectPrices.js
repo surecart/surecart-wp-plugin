@@ -1,11 +1,14 @@
-/** @jsx jsx */
 import { __ } from '@wordpress/i18n';
-import { css, jsx } from '@emotion/core';
 
 import { ScRadioGroup, ScRadio } from '@surecart/components-react';
 import PriceChoices from '@scripts/blocks/components/PriceChoices';
 import PriceSelector from '../../../components/PriceSelector';
 import { Fragment } from '@wordpress/element';
+import { updateCartLineItem } from '../../../util';
+import { useSelect } from '@wordpress/data';
+import { useState } from '@wordpress/element';
+import SelectModel from '../../../../admin/components/SelectModel';
+import { store as coreStore } from '@wordpress/core-data';
 
 export default ({
 	template,
@@ -14,60 +17,84 @@ export default ({
 	choice_type,
 	setChoiceType,
 }) => {
+	const [query, setQuery] = useState(null);
+	const { products, loading } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'product',
+				{
+					query,
+					archived: false,
+					ad_hoc: true,
+					expand: ['prices'],
+				},
+			];
+			return {
+				products: select(coreStore).getEntityRecords(...queryArgs),
+				loading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[query]
+	);
+
 	const removeChoice = (index) => {
 		setChoices(choices.filter((_, i) => i !== index));
 	};
 
-	const updateChoice = (data, index) => {
-		setChoices(
-			choices.map((item, i) => {
-				if (i !== index) return item;
-				return {
-					...item,
-					...data,
-				};
-			})
-		);
-	};
-
-	const addProduct = () => {
-		setChoices([
-			...(choices || []),
-			{
-				quantity: 1,
-			},
-		]);
-	};
+	const updateChoice = (data) =>
+		setChoices(updateCartLineItem(data, choices));
 
 	const hasValidChoices = () => {
 		return !!(choices || []).find((choice) => !!choice.id);
 	};
 
-	if (['donation', 'invoice'].includes(template)) {
+	if (['donation'].includes(template)) {
 		setChoiceType('any');
-		let heading;
-		switch (template) {
-			case 'donation':
-				heading = __('Choose A Donation Product', 'surecart');
-				break;
-			case 'invoice':
-				heading = __('Choose An Invoice Product', 'surecart');
-				break;
-			default:
-				heading = __('Choose A  Product', 'surecart');
-				break;
-		}
+		let heading = __('Choose A Donation Product', 'surecart');
+		return (
+			<Fragment>
+				<sc-dashboard-module heading={heading}>
+					<SelectModel
+						choices={(products || []).map((product) => ({
+							label: product.name,
+							value: product.id,
+						}))}
+						value={choices[0]?.id}
+						onQuery={setQuery}
+						onFetch={() => setQuery('')}
+						loading={loading}
+						onSelect={(product_id) => {
+							if (product_id) {
+								setChoices([{ id: product_id, quantity: 1 }]);
+							} else {
+								setChoices([]);
+							}
+						}}
+						style={{ width: '100%' }}
+						required
+					/>
+				</sc-dashboard-module>
+			</Fragment>
+		);
+	}
+	if (['invoice'].includes(template)) {
+		setChoiceType('any');
+		let heading = __('Choose An Invoice Product', 'surecart');
 
 		return (
 			<Fragment>
 				<sc-dashboard-module heading={heading}>
 					<PriceSelector
 						ad_hoc={true}
-						open={false}
 						value={choices[0]?.id}
-						onSelect={(id) => {
-							if (id) {
-								setChoices([{ id, quantity: 1 }]);
+						variable={false}
+						onSelect={({ price_id }) => {
+							if (price_id) {
+								setChoices([{ id: price_id, quantity: 1 }]);
 							} else {
 								setChoices([]);
 							}
@@ -84,9 +111,9 @@ export default ({
 			<sc-dashboard-module heading={__('Products', 'surecart')}>
 				<PriceChoices
 					choices={choices}
-					onAddProduct={addProduct}
 					onUpdate={updateChoice}
 					onRemove={removeChoice}
+					variable={false}
 				/>
 			</sc-dashboard-module>
 

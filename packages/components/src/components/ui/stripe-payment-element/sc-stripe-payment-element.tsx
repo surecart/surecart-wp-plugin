@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, h, Method, State, Watch } from '@stencil/core';
-import { Stripe } from '@stripe/stripe-js';
+import { Stripe, StripeElementChangeEvent } from '@stripe/stripe-js';
 import { loadStripe } from '@stripe/stripe-js/pure';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { state as selectedProcessor } from '@store/selected-processor';
 
-import { FormStateSetter, ShippingAddress } from '../../../types';
+import { FormStateSetter, PaymentInfoAddedParams, ShippingAddress } from '../../../types';
 import { availableProcessors } from '@store/processors/getters';
 import { state as checkoutState, onChange } from '@store/checkout';
 import { onChange as onChangeFormState } from '@store/form';
@@ -51,6 +51,9 @@ export class ScStripePaymentElement {
 
   /** Set the state */
   @Event() scSetState: EventEmitter<FormStateSetter>;
+
+  /** Payment information was added */
+  @Event() scPaymentInfoAdded: EventEmitter<PaymentInfoAddedParams>;
 
   @State() styles: CSSStyleDeclaration;
 
@@ -111,6 +114,7 @@ export class ScStripePaymentElement {
 
     // we need to listen to the form state and pay when the form state enters the paying state.
     this.unlistenToFormState = onChangeFormState('formState', () => {
+      if (!checkoutState?.checkout?.payment_method_required) return;
       if ('finalizing' === currentFormState()) {
         this.submit();
       }
@@ -157,6 +161,7 @@ export class ScStripePaymentElement {
   createOrUpdateElements() {
     // need an order amount, etc.
     if (!checkoutState?.checkout?.payment_method_required) return;
+    if (!this.stripe) return;
 
     // create the elements if they have not yet been created.
     if (!this.elements) {
@@ -192,6 +197,21 @@ export class ScStripePaymentElement {
 
       this.element = this.elements.getElement('payment');
       this.element.on('ready', () => (this.loaded = true));
+      this.element.on('change', (event: StripeElementChangeEvent) => {
+        if (event.complete) {
+          this.scPaymentInfoAdded.emit({
+            checkout_id: checkoutState.checkout?.id,
+            currency: checkoutState.checkout?.currency,
+            processor_type: 'stripe',
+            payment_method: {
+              billing_details: {
+                email: checkoutState.checkout?.email,
+                name: checkoutState.checkout?.name,
+              },
+            },
+          });
+        }
+      });
       return;
     }
     this.elements.update(this.getElementsConfig());

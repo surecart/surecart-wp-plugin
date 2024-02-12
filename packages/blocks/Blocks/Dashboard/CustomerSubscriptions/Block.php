@@ -50,7 +50,7 @@ class Block extends DashboardPage {
 	public function edit() {
 		$id           = isset( $_GET['id'] ) ? sanitize_text_field( wp_unslash( $_GET['id'] ) ) : false;
 		$tab          = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : false;
-		$subscription = Subscription::with( [ 'price', 'price.product', 'current_period', 'product.product_group' ] )->find( $id );
+		$subscription = Subscription::with( [ 'price', 'price.product', 'current_period', 'product.product_group', 'variant_options' ] )->find( $id );
 
 		\SureCart::assets()->addComponentData(
 			'sc-subscription',
@@ -103,9 +103,9 @@ class Block extends DashboardPage {
 			'sc-subscriptions-list',
 			'#customer-subscriptions-index',
 			[
-				'heading' => $attributes['title'] ?? __( 'Plans', 'surecart' ),
+				'heading'    => $attributes['title'] ?? __( 'Plans', 'surecart' ),
 				'isCustomer' => User::current()->isCustomer(),
-				'query'   => [
+				'query'      => [
 					'customer_ids' => array_values( User::current()->customerIds() ),
 					'status'       => [ 'active', 'trialing' ],
 					'page'         => 1,
