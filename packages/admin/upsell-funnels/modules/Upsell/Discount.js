@@ -15,7 +15,7 @@ import {
 } from '@surecart/components-react';
 
 export default ({ upsell, onUpdate }) => {
-	const [type, setType] = useState('percentage');
+	const [type, setType] = useState('none');
 
 	useEffect(() => {
 		if (upsell?.amount_off) {
@@ -23,9 +23,30 @@ export default ({ upsell, onUpdate }) => {
 		}
 	}, [upsell?.amount_off]);
 
+	useEffect(() => {
+		if (upsell?.percent_off) {
+			setType('percentage');
+		}
+	}, [upsell?.percent_off]);
+
+	useEffect(() => {
+		if ('none' === type) {
+			onUpdate({
+				amount_off: null,
+				percent_off: null,
+			});
+		}
+	}, [type]);
+
 	return (
 		<>
-			<ScRadioGroup label={__('Type', 'surecart')}>
+			<ScRadioGroup label={__('Discount', 'surecart')}>
+				<ScRadio
+					checked={type === 'none'}
+					onClick={() => setType('none')}
+				>
+					{__('No discount', 'surecart')}
+				</ScRadio>
 				<ScRadio
 					checked={type === 'percentage'}
 					onClick={() => setType('percentage')}
@@ -39,8 +60,7 @@ export default ({ upsell, onUpdate }) => {
 					{__('Fixed amount discount', 'surecart')}
 				</ScRadio>
 			</ScRadioGroup>
-
-			{type === 'percentage' ? (
+			{type === 'percentage' && (
 				<ScInput
 					label={__('Percentage off', 'surecart')}
 					className="sc-percent-off"
@@ -60,7 +80,8 @@ export default ({ upsell, onUpdate }) => {
 				>
 					<span slot="suffix">%</span>
 				</ScInput>
-			) : (
+			)}
+			{type === 'fixed' && (
 				<ScPriceInput
 					label={__('Discount amount', 'surecart')}
 					className="sc-amount-off"
