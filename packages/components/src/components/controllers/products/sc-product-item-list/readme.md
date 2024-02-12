@@ -28,9 +28,9 @@
 
 ## Events
 
-| Event        | Description          | Type                  |
-| ------------ | -------------------- | --------------------- |
-| `scSearched` | Product was searched | `CustomEvent<string>` |
+| Event        | Description          | Type                                  |
+| ------------ | -------------------- | ------------------------------------- |
+| `scSearched` | Product was searched | `CustomEvent<ProductsSearchedParams>` |
 
 
 ## Dependencies
