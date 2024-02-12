@@ -78,7 +78,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 						: __('Create', 'surecart'),
 					OFFER_TITLE[upsell?.step] || __('Offer', 'surecart')
 				)}
-				style={{ '--sc-drawer-size': '28rem' }}
+				style={{ '--sc-drawer-size': '32rem' }}
 				stickyHeader
 				open={open}
 				onScAfterShow={() => inputRef.current.triggerFocus()}
@@ -124,6 +124,8 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 
 					<DisplayConditions upsell={upsell} onUpdate={editUpsell} />
 
+					<Template upsell={upsell} onUpdate={editUpsell} />
+
 					<ScInput
 						label={__('Statement label', 'surecart')}
 						help={__(
@@ -137,8 +139,6 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 						}
 						required
 					/>
-
-					<Template upsell={upsell} onUpdate={editUpsell} />
 				</div>
 
 				<ScButton type="primary" slot="footer" submit busy={isSaving}>
