@@ -12,6 +12,7 @@ import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
+import { getBillingAddress } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -167,22 +168,7 @@ export class ScStripePaymentElement {
     if (!this.elements) {
       // we have what we need, load elements.
       this.elements = this.stripe.elements(this.getElementsConfig() as any);
-
-      const { line_1: line1, line_2: line2, city, state, country, postal_code } = (checkoutState.checkout?.shipping_address as ShippingAddress) || {};
-      let addressObj: { address?: { [key: string]: string | number } } = {
-        address: {
-          line1,
-          line2,
-          city,
-          state,
-          country,
-          postal_code,
-        },
-      };
-
-      if (!line1 || !city || !state || !country || !postal_code) {
-        addressObj = {};
-      }
+      const address = getBillingAddress();
 
       // create the payment element.
       this.elements
@@ -191,7 +177,7 @@ export class ScStripePaymentElement {
             billingDetails: {
               name: checkoutState.checkout?.name,
               email: checkoutState.checkout?.email,
-              ...addressObj,
+              ...(!!address ? { address } : {}),
             },
           },
           fields: {
