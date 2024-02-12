@@ -26,7 +26,6 @@ const OFFER_TITLE = {
 export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
-	const inputRef = useRef(null);
 
 	const [upsell, setUpsell] = useState({
 		duplicate_purchase_behavior: 'allow',
@@ -80,7 +79,6 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 				style={{ '--sc-drawer-size': '28rem' }}
 				stickyHeader
 				open={open}
-				onScAfterShow={() => inputRef.current.triggerFocus()}
 				onScAfterHide={onRequestClose}
 			>
 				<div
@@ -90,23 +88,8 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 						gap: 2em;
 					`}
 				>
-					<ScInput
-						ref={inputRef}
-						label={__('Offer Name', 'surecart')}
-						help={__(
-							'This is shown to the customer on invoices and line items.',
-							'surecart'
-						)}
-						placeholder={__('I.E. Bundle Discount', 'surecart')}
-						value={upsell?.fee_description}
-						onScInput={(e) =>
-							editUpsell({ fee_description: e.target.value })
-						}
-						required
-					/>
-
 					<Product
-						label={__('Product Price', 'surecart')}
+						label={__('Product price', 'surecart')}
 						priceId={upsell?.price?.id || upsell?.price}
 						onSelect={(price) => editUpsell({ price })}
 					/>
@@ -114,6 +97,23 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 					<Discount upsell={upsell} onUpdate={editUpsell} />
 
 					<DisplayConditions upsell={upsell} onUpdate={editUpsell} />
+
+					<ScInput
+						label={__('Statement label', 'surecart')}
+						help={__(
+							'This is shown to the customer on invoices and line items.',
+							'surecart'
+						)}
+						placeholder={__('I.E. Bundle Discount', 'surecart')}
+						value={
+							upsell?.fee_description ||
+							__('Bundle Discount', 'surecart')
+						}
+						onScInput={(e) =>
+							editUpsell({ fee_description: e.target.value })
+						}
+						required
+					/>
 
 					<Template upsell={upsell} onUpdate={editUpsell} />
 				</div>
