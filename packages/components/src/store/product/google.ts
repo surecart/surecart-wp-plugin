@@ -1,23 +1,23 @@
 import { maybeConvertAmount } from 'src/functions/currency';
-import { ProductsSearchedParams, ProductsViewedParams } from 'src/types';
+import { ProductsViewedParams } from 'src/types';
 import { __ } from '@wordpress/i18n';
-import { listenAndTrack } from 'src/functions/google';
+import { trackEvent } from 'src/functions/google';
 /**
  * Handle the search event.
  */
-listenAndTrack("scSearched", "search", (e: CustomEvent) => {
-	const eventDetail: ProductsSearchedParams = e.detail;
-	return {
-		search_term: eventDetail?.searchString,
-	};
+
+window.addEventListener('scSearched', (e: CustomEvent) => {
+  trackEvent('search', {
+    search_term: e.detail?.searchString,
+  });
 });
 
 /**
  * Handle view item event.
  */
-listenAndTrack("scProductViewed", "view_item", (e: CustomEvent) => {
+window.addEventListener('scProductViewed', (e: CustomEvent) => {
   const product = e.detail;
-  return {
+  trackEvent('view_item', {
     value: maybeConvertAmount(product.price?.amount || 0, product.price?.currency || 'USD'),
     currency: product.price?.currency,
     items: [
@@ -32,16 +32,15 @@ listenAndTrack("scProductViewed", "view_item", (e: CustomEvent) => {
         ...(product?.product_collections?.data?.length ? { item_category: product?.product_collections?.data?.map(collection => collection.name).join(', ') } : {}),
       },
     ],
-  };
+  });
 });
 
 /**
  * Handle view items event.
  */
-listenAndTrack("scProductsViewed", "view_item_list", (e: CustomEvent) => {
+window.addEventListener('scProductsViewed', (e: CustomEvent) => {
   const eventDetail: ProductsViewedParams = e.detail;
-
-  return {
+  trackEvent('view_item_list', {
     item_list_id: `${eventDetail?.collectionId}-page-${eventDetail?.currentPage}`,
     item_list_name: `${eventDetail?.pageTitle} - Page ${eventDetail?.currentPage}`,
     page_number: eventDetail?.currentPage,
@@ -52,6 +51,5 @@ listenAndTrack("scProductsViewed", "view_item_list", (e: CustomEvent) => {
       item_list_id: `${eventDetail?.collectionId}-page-${eventDetail?.currentPage}`,
       item_list_name: `${eventDetail?.pageTitle} - Page ${eventDetail?.currentPage}`,
     })),
-  };
+  });
 });
-
