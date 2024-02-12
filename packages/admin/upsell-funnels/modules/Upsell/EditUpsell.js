@@ -30,6 +30,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 
 	const [upsell, setUpsell] = useState({
 		duplicate_purchase_behavior: 'allow',
+		fee_description: __('Bundle Discount', 'surecart'),
 		metadata: {
 			wp_template_part_id: 'surecart/surecart//upsell-info',
 			wp_template_id: 'pages/template-surecart-blank.php',
@@ -101,6 +102,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 							'i.e. An exclusive offer, just for you.',
 							'surecart'
 						)}
+						value={upsell?.metadata?.upsell_title}
 						onScInput={(e) =>
 							editUpsell({
 								metadata: {
@@ -122,6 +124,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 							'i.e. Its not too late to add to your order',
 							'surecart'
 						)}
+						value={upsell?.metadata?.upsell_description}
 						onScInput={(e) =>
 							editUpsell({
 								metadata: {
@@ -149,10 +152,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 							'surecart'
 						)}
 						placeholder={__('I.E. Bundle Discount', 'surecart')}
-						value={
-							upsell?.fee_description ||
-							__('Bundle Discount', 'surecart')
-						}
+						value={upsell?.fee_description}
 						onScInput={(e) =>
 							editUpsell({ fee_description: e.target.value })
 						}
