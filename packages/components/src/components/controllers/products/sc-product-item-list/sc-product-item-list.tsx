@@ -132,15 +132,6 @@ export class ScProductItemList {
     });
   }
 
-  triggerProductsViewed() {
-    this.scProductsViewed.emit({
-      products: this.products,
-      pageTitle: this.pageTitle,
-      collectionId: this.collectionId,
-      currentPage: this.currentPage,
-    });
-  }
-
   componentWillLoad() {
     if (!this?.products?.length) {
       this.getProducts();
