@@ -119,11 +119,11 @@ export class ScProductItemList {
     const title = [
       this.pageTitle,
       this.paginationEnabled ? sprintf(__('Page %d', 'surecart'), this.currentPage) : undefined,
-      this.query || this.selectedCollections?.length ? __('Search results', 'surecart') : undefined,
       this.sort ? this.renderSortName() : undefined,
+      this.query || this.selectedCollections?.length ? __('Search results', 'surecart') : undefined,
     ]
       .filter(item => !!item)
-      .join('-');
+      .join(' - ');
 
     this.scProductsViewed.emit({
       products: this.products,

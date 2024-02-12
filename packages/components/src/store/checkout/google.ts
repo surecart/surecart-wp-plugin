@@ -31,7 +31,7 @@ window.addEventListener('scAddedToCart', (e: CustomEvent) => {
 /**
  * Handle remove from cart event.
  */
-window.addEventListener('scProductRemoved', (e: CustomEvent) => {
+window.addEventListener('scRemovedFromCart', (e: CustomEvent) => {
   const item: LineItem = e.detail;
 
   // sanity check.
