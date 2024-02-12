@@ -1,4 +1,4 @@
-import { ScFormatNumber, ScProductPrice } from '@surecart/components-react';
+import { ScPrice } from '@surecart/components-react';
 import {
 	AlignmentControl,
 	BlockControls,
@@ -41,13 +41,12 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 			</InspectorControls>
 
 			<div {...blockProps}>
-				<ScProductPrice>
-					<ScFormatNumber
-						type="currency"
-						currency={scBlockData?.currency}
-						value={8900}
-					/>
-				</ScProductPrice>
+				<ScPrice
+					currency={scBlockData?.currency}
+					amount={7900}
+					scratchAmount={9900}
+					saleText={sale_text}
+				/>
 			</div>
 		</>
 	);
