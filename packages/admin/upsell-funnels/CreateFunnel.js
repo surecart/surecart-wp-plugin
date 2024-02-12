@@ -11,7 +11,7 @@ import Box from '../ui/Box';
 
 export default ({ id, setId }) => {
 	const [isSaving, setIsSaving] = useState(false);
-	const [funnel, setFunnel] = useState(null);
+	const [funnel, setFunnel] = useState({ enabled: true });
 	const [error, setError] = useState('');
 	const { saveEntityRecord } = useDispatch(coreStore);
 

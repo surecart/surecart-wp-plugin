@@ -224,42 +224,7 @@ export default ({ setBrowserURL }) => {
 							{__('Edit Upsell Funnel', 'surecart')}
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
-					{!loading && (
-						<ScTag
-							type={
-								savedFunnel?.archived
-									? 'warning'
-									: savedFunnel?.enabled
-									? 'success'
-									: 'default'
-							}
-							size="small"
-							pill
-						>
-							{savedFunnel?.archived
-								? __('Archived', 'surecart')
-								: savedFunnel?.enabled
-								? __('Published', 'surecart')
-								: __('Draft', 'surecart')}
-						</ScTag>
-					)}
 				</div>
-			}
-			sidebar={
-				<>
-					<Box title={__('Status', 'surecart')}>
-						<ScSwitch
-							checked={funnel?.enabled}
-							onScChange={(e) =>
-								editFunnel({ enabled: e.target.checked })
-							}
-						>
-							{__('Enabled', 'surecart')}
-						</ScSwitch>
-					</Box>
-
-					<Priority funnel={funnel} updateFunnel={editFunnel} />
-				</>
 			}
 			button={
 				<div
@@ -284,12 +249,37 @@ export default ({ setBrowserURL }) => {
 							</ScMenuItem>
 						</ScMenu>
 					</ScDropdown>
+
+					{!loading && (
+						<ScTag
+							type={
+								funnel?.archived
+									? 'warning'
+									: funnel?.enabled
+									? 'success'
+									: 'default'
+							}
+							size="small"
+							pill
+						>
+							{funnel?.archived
+								? __('Archived', 'surecart')
+								: funnel?.enabled
+								? __('Funnel Active', 'surecart')
+								: __('Funnel Inactive', 'surecart')}
+						</ScTag>
+					)}
+
+					{!funnel?.archived && (
+						<ScSwitch
+							checked={funnel?.enabled}
+							onScChange={(e) =>
+								editFunnel({ enabled: e.target.checked })
+							}
+						/>
+					)}
 					<SaveButton busy={loading}>
-						{willPublish
-							? __('Save & Publish', 'surecart')
-							: funnel?.enabled
-							? __('Save Funnel', 'surecart')
-							: __('Save As Draft', 'surecart')}
+						{__('Save Funnel', 'surecart')}
 					</SaveButton>
 				</div>
 			}
@@ -312,6 +302,7 @@ export default ({ setBrowserURL }) => {
 					updateFunnel={editFunnel}
 					loading={loading || loadingUpsells}
 				/>
+				<Priority funnel={funnel} updateFunnel={editFunnel} />
 			</>
 
 			<ConfirmDialog

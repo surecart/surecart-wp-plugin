@@ -44,11 +44,8 @@ export default () => {
 		// set history for next time.
 		setHistory(args);
 	};
-
-	const setId = (id) => {
-		setBrowserURL({ id, initial_state: { enabled: true } });
-	};
-
+	// set the id in the url.
+	const setId = (id) => setBrowserURL({ id });
 	// get the id from the url.
 	const id = useSelect((select) => select(store).selectPageId());
 
