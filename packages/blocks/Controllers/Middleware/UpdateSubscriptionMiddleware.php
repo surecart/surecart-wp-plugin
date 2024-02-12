@@ -23,7 +23,7 @@ class UpdateSubscriptionMiddleware {
 			return $next();
 		}
 
-		$intent = PaymentIntent::find( $payment_intent );
+		$intent = PaymentIntent::where( [ 'refresh_status' => true ] )->find( $payment_intent );
 		if ( is_wp_error( $intent ) ) {
 			return wp_die( wp_kses_post( $intent->get_error_message() ) );
 		}
