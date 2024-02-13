@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import PriceSelector from '../../../components/PriceSelector';
 import {
@@ -64,9 +66,9 @@ export default ({ priceId, onSelect, ...props }) => {
 			onSelect={({ price_id }) => onSelect(price_id)}
 			includeVariants={false}
 			showOutOfStock={true}
+			ad_hoc={false}
 			requestQuery={{
 				archived: false,
-				ad_hoc: false,
 			}}
 			{...props}
 		>
@@ -79,7 +81,11 @@ export default ({ priceId, onSelect, ...props }) => {
 						)}
 						loading={loading}
 						suffix={
-							<div>
+							<div
+								css={css`
+									align-self: center;
+								`}
+							>
 								<ScButton onClick={() => onSelect(null)}>
 									{__('Change', 'surecart')}
 								</ScButton>
