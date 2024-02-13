@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-01-04T15:55:00",
+  "timestamp": "2024-02-13T18:23:30",
   "compiler": {
     "name": "@stencil/core",
     "version": "3.2.1",
@@ -15325,21 +15325,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "order",
-          "type": "Checkout",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Checkout"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [],
@@ -18613,22 +18598,6 @@
           "required": false
         },
         {
-          "name": "loading",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "loading",
-          "reflectToAttr": false,
-          "docs": "Is this loading.",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "namePlaceholder",
           "type": "string",
           "mutable": false,
@@ -18713,37 +18682,6 @@
           "required": false
         },
         {
-          "name": "shippingAddress",
-          "type": "Address",
-          "mutable": false,
-          "reflectToAttr": false,
-          "docs": "Holds the customer's billing address",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "Address"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "shippingEnabled",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "shipping-enabled",
-          "reflectToAttr": false,
-          "docs": "Is shipping enabled for this order?",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
           "name": "showName",
           "type": "boolean",
           "mutable": false,
@@ -18775,63 +18713,6 @@
           ],
           "optional": false,
           "required": false
-        },
-        {
-          "name": "taxEnabled",
-          "type": "boolean",
-          "mutable": false,
-          "attr": "tax-enabled",
-          "reflectToAttr": false,
-          "docs": "Tax enabled status of the order",
-          "docsTags": [],
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "taxStatus",
-          "type": "\"address_invalid\" | \"calculated\" | \"disabled\" | \"estimated\" | \"reverse_charged\" | \"tax_registration_not_found\" | \"tax_zone_not_found\"",
-          "mutable": false,
-          "attr": "tax-status",
-          "reflectToAttr": false,
-          "docs": "Tax status of the order",
-          "docsTags": [],
-          "values": [
-            {
-              "value": "address_invalid",
-              "type": "string"
-            },
-            {
-              "value": "calculated",
-              "type": "string"
-            },
-            {
-              "value": "disabled",
-              "type": "string"
-            },
-            {
-              "value": "estimated",
-              "type": "string"
-            },
-            {
-              "value": "reverse_charged",
-              "type": "string"
-            },
-            {
-              "value": "tax_registration_not_found",
-              "type": "string"
-            },
-            {
-              "value": "tax_zone_not_found",
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
         }
       ],
       "methods": [
@@ -18847,17 +18728,7 @@
           "docsTags": []
         }
       ],
-      "events": [
-        {
-          "event": "scUpdateOrder",
-          "detail": "{ data: Partial<Checkout>; options?: { silent?: boolean; }; }",
-          "bubbles": true,
-          "cancelable": true,
-          "composed": true,
-          "docs": "Make a request to update the order.",
-          "docsTags": []
-        }
-      ],
+      "events": [],
       "listeners": [],
       "styles": [],
       "slots": [],
@@ -23835,15 +23706,16 @@
           "required": false
         },
         {
-          "name": "product",
-          "type": "Product",
+          "name": "productId",
+          "type": "string",
           "mutable": false,
+          "attr": "product-id",
           "reflectToAttr": false,
           "docs": "",
           "docsTags": [],
           "values": [
             {
-              "type": "Product"
+              "type": "string"
             }
           ],
           "optional": false,
@@ -24371,6 +24243,39 @@
           "required": false
         },
         {
+          "name": "page",
+          "type": "number",
+          "mutable": true,
+          "attr": "page",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "1",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pagination",
+          "type": "{ total: number; total_pages: number; }",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    total: 0,\n    total_pages: 0,\n  }",
+          "values": [
+            {
+              "type": "{ total: number; total_pages: number; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "paginationAlignment",
           "type": "string",
           "mutable": false,
@@ -24508,7 +24413,7 @@
       "events": [
         {
           "event": "scSearched",
-          "detail": "string",
+          "detail": "ProductsSearchedParams",
           "bubbles": true,
           "cancelable": true,
           "composed": true,
