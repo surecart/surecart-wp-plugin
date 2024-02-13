@@ -32,14 +32,16 @@ export class ScUpsellTotals {
           <sc-format-number slot="price" type="currency" value={state.line_item?.subtotal_amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
         </sc-line-item>
 
-        {(state?.line_item?.fees?.data || []).map(fee => {
-          return (
-            <sc-line-item>
-              <span slot="description">{fee.description}</span>
-              <sc-format-number slot="price" type="currency" value={fee.amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
-            </sc-line-item>
-          );
-        })}
+        {(state?.line_item?.fees?.data || [])
+          .filter(fee => fee.fee_type === 'upsell') // only upsell fees.
+          .map(fee => {
+            return (
+              <sc-line-item>
+                <span slot="description">{fee.description}</span>
+                <sc-format-number slot="price" type="currency" value={fee.amount} currency={state?.line_item?.price?.currency || 'usd'}></sc-format-number>
+              </sc-line-item>
+            );
+          })}
 
         {!!state.line_item?.tax_amount && (
           <sc-line-item>
