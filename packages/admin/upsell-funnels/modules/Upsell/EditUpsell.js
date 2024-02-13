@@ -102,12 +102,12 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 							'i.e. An exclusive offer, just for you.',
 							'surecart'
 						)}
-						value={upsell?.metadata?.upsell_title}
+						value={upsell?.metadata?.title}
 						onScInput={(e) =>
 							editUpsell({
 								metadata: {
 									...upsell.metadata,
-									upsell_title: e.target.value,
+									title: e.target.value,
 								},
 							})
 						}
