@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
+import apiFetch from '../../functions/fetch';
 
 /**
  * Internal dependencies.
@@ -79,7 +79,7 @@ export const decline = async () => {
     // Add Upsell to line item.
     const checkout = (await apiFetch({
       path: addQueryArgs(`surecart/v1/checkouts/${state.checkout_id}/decline_upsell/${state.upsell?.id}`, {
-        expand: ['checkout', 'checkout.current_upsell'],
+        expand: ['checkout', 'checkout.current_upsell', 'fees'],
       }),
       method: 'POST',
       data: {
@@ -104,7 +104,7 @@ export const upsellRequest = args =>
   apiFetch({
     path: addQueryArgs('surecart/v1/line_items/upsell', {
       ...args,
-      expand: ['checkout', 'checkout.current_upsell'],
+      expand: ['checkout', 'checkout.current_upsell', 'fees'],
     }),
     method: 'POST',
     data: {
