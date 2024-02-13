@@ -158,7 +158,7 @@ class OrdersListTable extends ListTable {
 				'shipment_status'    => ! empty( $_GET['shipment_status'] ) ? [ $_GET['shipment_status'] ] : [],
 				'query'              => $this->get_search_query(),
 			]
-		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
+		)->with( [ 'checkout', 'checkout.charge', 'checkout.customer', 'checkout.payment_method', 'checkout.manual_payment_method', 'checkout.purchases', 'checkout.selected_shipping_choice', 'shipping_choice.shipping_method', 'payment_method.card', 'payment_method.payment_instrument', 'payment_method.paypal_account', 'payment_method.bank_account' ] )
 		->paginate(
 			[
 				'per_page' => $this->get_items_per_page( 'orders' ),
@@ -283,12 +283,17 @@ class OrdersListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_shipment_status( $order ) {
+		$shipping_method_name = ! empty( $order->checkout->selected_shipping_choice->shipping_method->name ) ? $order->checkout->selected_shipping_choice->shipping_method->name : false;
+
 		ob_start();
 		?>
 		<?php if ( 'unshippable' === $order->shipment_status ) : ?>
 			-
 		<?php else : ?>
 			<sc-order-shipment-badge status="<?php echo esc_attr( $order->shipment_status ); ?>"></sc-order-shipment-badge>
+			<?php if ( $shipping_method_name ) : ?>
+				<div><small>(<?php echo esc_attr( $shipping_method_name ); ?>)</small></div>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php
 		return ob_get_clean();

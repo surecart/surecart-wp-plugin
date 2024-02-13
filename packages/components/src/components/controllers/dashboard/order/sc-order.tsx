@@ -6,7 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase } from '../../../../types';
+import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
 
 @Component({
   tag: 'sc-order',
@@ -80,6 +80,8 @@ export class ScOrder {
           'price.product',
           'checkout.manual_payment_method',
           'checkout.payment_method',
+          'checkout.selected_shipping_choice',
+          'shipping_choice.shipping_method',
           'payment_method.card',
           'payment_method.payment_instrument',
           'payment_method.paypal_account',
@@ -116,6 +118,8 @@ export class ScOrder {
     }
 
     const checkout = this.order?.checkout as Checkout;
+    const shippingMethod = (checkout?.selected_shipping_choice as ShippingChoice)?.shipping_method as ShippingMethod;
+    const shippingMethodName = shippingMethod?.name;
 
     return (
       <Fragment>
@@ -230,7 +234,7 @@ export class ScOrder {
 
         {!!checkout?.shipping_amount && (
           <sc-line-item>
-            <span slot="description">{__('Shipping', 'surecart')}</span>
+            <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
             <sc-format-number
               slot="price"
               style={{
