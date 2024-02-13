@@ -15,9 +15,9 @@ export default () => {
 		set('surecart/dashboard', 'hideGetStarted', true);
 	};
 
-	if (hideGetStarted) {
-		return null;
-	}
+	// if (hideGetStarted) {
+	// 	return null;
+	// }
 
 	return (
 		<ScCard
@@ -59,37 +59,35 @@ export default () => {
 					<GetStartedBox
 						infoType="info"
 						infoText={__('Setup', 'surecart')}
-						title={__('Create products', 'surecart')}
+						title={__('Connect payments', 'surecart')}
 						description={__(
-							'Create products to start selling.',
+							'Connect payments to start taking orders.',
 							'surecart'
 						)}
-						buttonLabel={__('Create A Product', 'surecart')}
-						buttonUrl={'admin.php?page=sc-products&action=edit'}
+						buttonLabel={__('Connect payment', 'surecart')}
+						buttonUrl={'admin.php?page=sc-settings&tab=processors'}
 					/>
 					<GetStartedBox
 						infoType="success"
-						infoText={__('Tutorial', 'surecart')}
-						title={__('Add buy and cart buttons', 'surecart')}
+						infoText={__('Create', 'surecart')}
+						title={__('Create products', 'surecart')}
 						description={__(
-							'Add cart and buy buttons to your site.',
+							'Create product to start selling to buyers.',
 							'surecart'
 						)}
-						buttonLabel={__('How To Add Buttons', 'surecart')}
-						buttonUrl={
-							'https://www.youtube.com/channel/UCeD_xj7F6bmSaHqu35gVO-A/featured'
-						}
+						buttonLabel={__('Create a product', 'surecart')}
+						buttonUrl={'admin.php?page=sc-products&action=edit'}
 					/>
 					<GetStartedBox
 						infoType="primary"
-						infoText={__('Customize', 'surecart')}
-						title={__('Customize forms', 'surecart')}
+						infoText={__('Profit', 'surecart')}
+						title={__('Place a test order', 'surecart')}
 						description={__(
-							'Customize your checkout forms with a no-code experience.',
+							'Create product to start selling to buyers.',
 							'surecart'
 						)}
 						buttonLabel={__('Customize', 'surecart')}
-						buttonUrl={'edit.php?post_type=sc_form'}
+						buttonUrl={'edit.php?post_type=sc_form'} // TODO: get this link when we merge with funnels.
 					/>
 				</ScFlex>
 			</div>
