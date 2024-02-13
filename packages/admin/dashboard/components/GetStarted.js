@@ -15,9 +15,9 @@ export default () => {
 		set('surecart/dashboard', 'hideGetStarted', true);
 	};
 
-	// if (hideGetStarted) {
-	// 	return null;
-	// }
+	if (hideGetStarted) {
+		return null;
+	}
 
 	return (
 		<ScCard
