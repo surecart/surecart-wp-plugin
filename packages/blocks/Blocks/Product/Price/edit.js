@@ -31,7 +31,7 @@ export default ({ attributes: { alignment, sale_text }, setAttributes }) => {
 					<TextControl
 						label={__('Sale Text', 'surecart')}
 						help={__(
-							'This text will be displayed if there is a compare at price selected.',
+							'This will be displayed if there is a compare at price, or an upsell discount.',
 							'surecart'
 						)}
 						value={sale_text}
