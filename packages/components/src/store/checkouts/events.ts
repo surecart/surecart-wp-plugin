@@ -1,4 +1,6 @@
 import { on } from './store';
+import {state as checkoutState} from '@store/checkout';
+
 import { Checkout, LineItem } from 'src/types';
 // import { maybeConvertAmount } from '../../functions/currency';
 
@@ -46,10 +48,13 @@ export const handleCheckoutLineItemChange = (checkout: Checkout, oldCheckout: Ch
   });
 
   // check if line items have changed.
-  if (JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
+  if (!checkoutState?.isCheckoutPage && JSON.stringify(newLineItems) !== JSON.stringify(oldLineItems)) {
     // emit an event here with the checkout state updates.
-    const event = new CustomEvent<[Checkout, Checkout]>('scCartUpdated', {
-      detail: [checkout, oldCheckout],
+    const event = new CustomEvent<{ currentCart: Checkout; previousCart: Checkout }>('scCartUpdated', {
+      detail: {
+        currentCart: checkout,
+        previousCart: oldCheckout,
+      },
       bubbles: true,
     });
     document.dispatchEvent(event);
