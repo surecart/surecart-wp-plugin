@@ -101,15 +101,13 @@ class VerificationCodeController extends RestController {
 		}
 
 		// Modify the verify object to include the customer data based on the user and checkout mode.
-		$mode = $request->get_param( 'checkout_mode' ) ?? 'live';
-
-		/** @var \SureCart\Models\Customer $customer */
-		$customer = $user->customer( $mode, [ 'shipping_address' ] );
+		$mode             = $request->get_param( 'checkout_mode' ) ?? 'live';
+		$customer         = $user->customer( $mode, [ 'shipping_address' ] );
 		$verify->customer = [
-			'first_name'         => $customer->first_name ?? $user->display_name ?? $user->user_login,
-			'last_name'          => $customer->last_name ?? '',
-			'phone'              => $customer->phone ?? '',
-			'shipping_address'   => $customer->shipping_address ?? [], // skjjkdshdkjshdkjs
+			'first_name'       => $customer->first_name ?? $user->display_name ?? $user->user_login,
+			'last_name'        => $customer->last_name ?? '',
+			'phone'            => $customer->phone ?? '',
+			'shipping_address' => $customer->shipping_address ?? [],
 		];
 
 		// return the data.
