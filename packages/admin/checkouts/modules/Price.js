@@ -142,10 +142,11 @@ export default ({
 									margin-top: var(--sc-spacing-small);
 								`}
 							>
-								{sprintf(
-									__('Available: %d', 'surecart'),
-									maxStockQuantity
-								)}
+								{maxStockQuantity &&
+									sprintf(
+										__('Available: %d', 'surecart'),
+										maxStockQuantity
+									)}
 							</div>
 						</>
 					)}

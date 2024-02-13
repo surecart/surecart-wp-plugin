@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.16.3
+Stable tag: 2.17.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,35 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.17.1 - January 31st, 2024 =
+- Improvement: Add confirmation modal when deleting customer.
+- Fix: Ensure the out of stock modal does not get too narrow on some themes.
+- Fix: Shop manager role was not able to update customers and WordPress users.
+- Fix: Honor Rankmath's sitemap exclusions for products and collections.
+- Fix: Coupon price restriction should not exclude variant product prices.
+
+= 2.17.0 - January 30th, 2024 =
+- New: Add automatic facebook tracking for eCommerce events.
+- New: Add Expire access setting to prices.
+- New: Add Ghanian Cedi to supported currencies.
+- Improvement: Make publishing product pages easier when creating new products.
+- Improvement: 1-click restore deleted SureCart pages.
+- Improvement: Allow HTML in manual payment description.
+- Improvement: Sort subscription update options by price.
+- Improvement: Show notice if currency needs to be changed by support.
+- Improvement: Renamed "Initial Discount" to "Setup Discount".
+- Fix: The placeholder for search country in the address component is not translated.
+- Fix: When fix saving issue when setup fee is toggled off with value entered.
+- Fix: Loading text translation on forms is not working for Japanese characters.
+- Fix: Product availability sometimes showing NaN in New Order create page.
+- Fix: Donation custom amount input does not let us add value on some mobile devices.
+- Fix: You must spend at least x to use this coupon sometimes does not use correct currency.
+- Fix: Translation issue for billing details and downloads strings in customer dashboard.
+- Fix: The order by oldest in the product list block (shop page) was not working.
+- Fix: Template issue with switching from hybrid/classic theme to full site editing theme.
+- Fix: Ensure product page image is responsive in case theme does not make images responsive by default.
+- Fix: Issue with product list block sometimes showing blank in admin.
 
 = 2.16.3 - January 16th, 2024 =
 - Fix: Issue with carts sometimes getting cleared on checkout page if default checkout is used with a shortcode.

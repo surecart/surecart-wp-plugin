@@ -9,8 +9,9 @@ import { speak } from '@wordpress/a11y';
 /**
  * Internal dependencies.
  */
-import { Collection, Product } from '../../../../types';
+import { Collection, Product, ProductsSearchedParams } from '../../../../types';
 import apiFetch, { handleNonceError } from '../../../../functions/fetch';
+import '@store/product/facebook';
 
 export type LayoutConfig = {
   blockName: string;
@@ -66,6 +67,9 @@ export class ScProductItemList {
   /* Limit per page */
   @Prop() limit: number = 15;
 
+  /* Current page */
+  @Prop({ mutable: true }) page: number = 1;
+
   /* Product list */
   @Prop({ mutable: true }) products?: Product[];
 
@@ -79,14 +83,11 @@ export class ScProductItemList {
   @State() error: string;
 
   /** Product was searched */
-  @Event() scSearched: EventEmitter<string>;
-
-  /* Current page */
-  @State() currentPage: number = 1;
+  @Event() scSearched: EventEmitter<ProductsSearchedParams>;
 
   @State() currentQuery: string;
 
-  @State() pagination: {
+  @Prop({ mutable: true }) pagination: {
     total: number;
     total_pages: number;
   } = {
@@ -114,7 +115,7 @@ export class ScProductItemList {
   doPagination(page: number) {
     // handle ajax pagination
     if (this.ajaxPagination) {
-      this.currentPage = page;
+      this.page = page;
       this.updateProducts();
       this.paginationAutoScroll && this.el.scrollIntoView({ behavior: 'smooth' });
       return;
@@ -129,7 +130,7 @@ export class ScProductItemList {
   async getProducts() {
     const { 'product-page': page } = getQueryArgs(window.location.href) as { 'product-page': string };
 
-    this.currentPage = this.paginationEnabled && page ? parseInt(page) : 1;
+    this.page = this.paginationEnabled && page ? parseInt(page) : 1;
 
     try {
       this.loading = true;
@@ -156,15 +157,23 @@ export class ScProductItemList {
 
   @Watch('sort')
   @Watch('selectedCollections')
+  @Watch('query')
   async handleSortChange() {
-    this.currentPage = 1;
+    this.page = 1;
     this.updateProducts();
   }
 
-  async updateProducts() {
+  async updateProducts(emitSearchEvent: boolean = false) {
     try {
       this.busy = true;
       await this.fetchProducts();
+      if (!!this.query && emitSearchEvent) {
+        this.scSearched.emit({
+          searchString: this.query,
+          searchResultCount: this.products?.length,
+          searchResultIds: this.products.map(product => product.id),
+        });
+      }
     } catch (error) {
       console.log('error');
       console.error(error);
@@ -206,7 +215,7 @@ export class ScProductItemList {
           archived: false,
           status: ['published'],
           per_page: this.limit,
-          page: this.currentPage,
+          page: this.page,
           sort: this.sort,
           product_collection_ids: collectionIds,
           ...(this.featured ? { featured: true } : {}),
@@ -291,7 +300,7 @@ export class ScProductItemList {
                       <sc-menu-item aria-label={__('Sort by latest', 'surecart')} onClick={() => (this.sort = 'created_at:desc')}>
                         {__('Latest', 'surecart')}
                       </sc-menu-item>
-                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} disabled={this.sort === 'created_at:asc'}>
+                      <sc-menu-item aria-label={__('Sort by oldest', 'surecart')} onClick={() => (this.sort = 'created_at:asc')}>
                         {__('Oldest', 'surecart')}
                       </sc-menu-item>
                       <sc-menu-item aria-label={__('Sort by name, A to Z', 'surecart')} onClick={() => (this.sort = 'name:asc')}>
@@ -356,8 +365,7 @@ export class ScProductItemList {
                       size="small"
                       onKeyDown={e => {
                         if (e.key === 'Enter') {
-                          this.updateProducts();
-                          this.scSearched.emit(this.query);
+                          this.updateProducts(true);
                         }
                       }}
                       value={this.query}
@@ -381,8 +389,7 @@ export class ScProductItemList {
                         slot="suffix"
                         busy={this.busy}
                         onClick={() => {
-                          this.updateProducts();
-                          this.scSearched.emit(this.query);
+                          this.updateProducts(true);
                         }}
                       >
                         {__('Search', 'surecart')}
@@ -480,13 +487,13 @@ export class ScProductItemList {
             }}
           >
             <sc-pagination
-              page={this.currentPage}
+              page={this.page}
               perPage={this.limit}
               total={this.pagination.total}
               totalPages={this.pagination.total_pages}
               totalShowing={this.limit}
-              onScNextPage={() => this.doPagination(this.currentPage + 1)}
-              onScPrevPage={() => this.doPagination(this.currentPage - 1)}
+              onScNextPage={() => this.doPagination(this.page + 1)}
+              onScPrevPage={() => this.doPagination(this.page - 1)}
             ></sc-pagination>
           </div>
         )}
