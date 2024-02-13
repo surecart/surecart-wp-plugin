@@ -1,6 +1,6 @@
 <?php
 
-namespace SureCartBlocks\Blocks\Upsell\Cta;
+namespace SureCartBlocks\Blocks\Upsell\Title;
 
 use SureCartBlocks\Blocks\BaseBlock;
 
