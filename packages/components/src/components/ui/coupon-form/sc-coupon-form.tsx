@@ -1,8 +1,8 @@
-import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch, Fragment } from '@stencil/core';
 import { speak } from '@wordpress/a11y';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import { isRtl } from '../../../functions/page-align';
-import { getHumanDiscount } from '../../../functions/price';
+import { getHumanDiscount, getHumanDiscountRedeemableStatus } from '../../../functions/price';
 import { DiscountResponse } from '../../../types';
 
 /**
@@ -163,6 +163,7 @@ export class ScCouponForm {
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
     }
+    console.log(this?.discount);
 
     if (this?.discount?.promotion?.code) {
       let humanDiscount = this.getHumanReadableDiscount();
@@ -196,15 +197,23 @@ export class ScCouponForm {
             </sc-tag>
           </span>
 
-          {humanDiscount && (
+          {'redeemable' === this.discount?.redeemable_status && (
+            <Fragment>
+              {humanDiscount && (
+                <span class="coupon-human-discount" slot="price-description">
+                  {this.translateHumanDiscountWithDuration(humanDiscount)}
+                </span>
+              )}
+              <span slot="price">
+                <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
+              </span>
+            </Fragment>
+          )}
+          {'redeemable' !== this.discount?.redeemable_status && (
             <span class="coupon-human-discount" slot="price-description">
-              {this.translateHumanDiscountWithDuration(humanDiscount)}
+              {getHumanDiscountRedeemableStatus(this.discount?.redeemable_status)}
             </span>
           )}
-
-          <span slot="price">
-            <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
-          </span>
         </sc-line-item>
       );
     }

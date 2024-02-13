@@ -931,6 +931,7 @@ export interface DiscountResponse {
   id: string;
   object: 'discount';
   promotion: Promotion;
+  redeemable_status: string;
 }
 
 export interface ResponseError {
@@ -1120,7 +1121,6 @@ export interface GoogleAnalyticsItem {
   currency: string;
   discount?: number;
 }
-
 
 export interface ProductState {
   formId: number;

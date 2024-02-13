@@ -47,6 +47,7 @@ const Template = ({ couponState, label, button, loading }) => {
           times_redeemed: 3,
           created_at: 12345,
         },
+        redeemable_status: 'redeemable',
       };
     }
     if (couponState === 'invalid') {
