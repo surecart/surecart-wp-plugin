@@ -22,12 +22,9 @@ export default ({ upsell, onUpdate }) => {
 						})
 					}
 				>
-					{__('Always allow', 'surecart')}
+					{__('Always show', 'surecart')}
 					<span slot="description">
-						{__(
-							'Show even if they have already purchased.',
-							'surecart'
-						)}
+						{__('Show regardless of past purchases.', 'surecart')}
 					</span>
 				</ScRadio>
 				<ScRadio
@@ -43,10 +40,10 @@ export default ({ upsell, onUpdate }) => {
 						})
 					}
 				>
-					{__('Skip if in current order', 'surecart')}
+					{__('Skip if in order', 'surecart')}
 					<span slot="description">
 						{__(
-							'Show if it was not purchased in the current order.',
+							"Don't show if already in the current order.",
 							'surecart'
 						)}
 					</span>
