@@ -6,7 +6,8 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
+import { Charge, Checkout, FeaturedProductMediaAttributes, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
+import { getFeaturedProductMediaAttributes } from 'src/functions/media';
 
 @Component({
   tag: 'sc-order',
@@ -77,6 +78,8 @@ export class ScOrder {
           'checkout.line_items',
           'line_item.price',
           'line_item.fees',
+          'line_item.variant',
+          'variant.image',
           'price.product',
           'checkout.manual_payment_method',
           'checkout.payment_method',
@@ -124,10 +127,13 @@ export class ScOrder {
     return (
       <Fragment>
         {(checkout?.line_items?.data || []).map(item => {
+          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           return (
             <sc-product-line-item
               key={item.id}
-              imageUrl={(item?.price?.product as Product)?.image_url}
+              imageUrl={url}
+              imageAlt={alt}
+              imageTitle={title}
               name={(item?.price?.product as Product)?.name}
               priceName={item?.price?.name}
               variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
@@ -141,7 +147,7 @@ export class ScOrder {
               scratchAmount={item?.scratch_amount}
               setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
               fees={item?.fees?.data}
-            ></sc-product-line-item>
+            />
           );
         })}
 
