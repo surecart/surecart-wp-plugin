@@ -202,6 +202,7 @@ return [
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
 
 		\SureCartBlocks\Blocks\Upsell\Upsell\Block::class,
+		\SureCartBlocks\Blocks\Upsell\Title\Block::class,
 		\SureCartBlocks\Blocks\Upsell\UpsellTotals\Block::class,
 		\SureCartBlocks\Blocks\Upsell\CountdownTimer\Block::class,
 		\SureCartBlocks\Blocks\Upsell\SubmitButton\Block::class,
