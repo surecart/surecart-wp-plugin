@@ -111,6 +111,20 @@ test.describe('Product List Page', () => {
     await expect(firstProductTextAfterAlphaDescendingSort).toBe('Product 2');
     await expect(secondProductTextAfterAlphaDescendingSort).toBe('Product 1');
   });
+
+  test('Should see product price', async ({ page }) => {
+    await page.goto('/shop');
+
+    // Check if Product 1 and Product 2 are showing in the list.
+    const productPrices = await page.locator('sc-format-number');
+
+    // Get the text content of each element
+    const firstProductPrice = await productPrices.nth(0).innerText();
+    const secondProductPrice = await productPrices.nth(1).innerText();
+
+    await expect(firstProductPrice).toBe('$10');
+    await expect(secondProductPrice).toBe('$20');
+  });
 });
 
 export const createProduct = (requestUtils, data) => {
