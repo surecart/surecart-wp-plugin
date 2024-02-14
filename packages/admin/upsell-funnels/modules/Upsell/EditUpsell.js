@@ -26,6 +26,7 @@ const OFFER_TITLE = {
 export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 	const { saveEntityRecord } = useDispatch(coreStore);
 	const { createErrorNotice } = useDispatch(noticesStore);
+	const [hasEdits, setHasEdits] = useState(false);
 	const inputRef = useRef(null);
 
 	const [upsell, setUpsell] = useState({
@@ -38,7 +39,10 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 		...initialUpsell,
 	});
 
-	const editUpsell = (data) => setUpsell({ ...upsell, ...data });
+	const editUpsell = (data) => {
+		setHasEdits(true);
+		setUpsell({ ...upsell, ...data });
+	};
 
 	const isSaving = useSelect((select) =>
 		select(coreStore).isSavingEntityRecord('surecart', 'upsell', upsell?.id)
@@ -51,10 +55,25 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 			await saveEntityRecord('surecart', 'upsell', upsell, {
 				throwOnError: true,
 			});
+			setHasEdits(false);
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
 			createErrorNotice(createErrorString(e), { type: 'snackbar' });
+		}
+	};
+
+	const checkForChanges = (e) => {
+		if (
+			hasEdits &&
+			!window.confirm(
+				__(
+					'You have unsaved changes. If you proceed, they will be lost.',
+					'surecart'
+				)
+			)
+		) {
+			e.preventDefault();
 		}
 	};
 
@@ -82,6 +101,7 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 				stickyHeader
 				open={open}
 				onScAfterShow={() => inputRef.current.triggerFocus()}
+				onScRequestClose={checkForChanges}
 				onScAfterHide={onRequestClose}
 			>
 				<div
@@ -141,7 +161,13 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 					/>
 				</div>
 
-				<ScButton type="primary" slot="footer" submit busy={isSaving}>
+				<ScButton
+					type="primary"
+					slot="footer"
+					submit
+					busy={isSaving}
+					disabled={!hasEdits}
+				>
 					{upsell?.id
 						? __('Update Offer', 'surecart')
 						: __('Create Offer', 'surecart')}
@@ -149,7 +175,9 @@ export default ({ upsell: initialUpsell, open, onRequestClose }) => {
 				<ScButton
 					type="text"
 					slot="footer"
-					onClick={() => onRequestClose()}
+					onClick={(e) =>
+						e.target.closest('sc-drawer').requestClose()
+					}
 				>
 					{__('Cancel', 'surecart')}
 				</ScButton>
