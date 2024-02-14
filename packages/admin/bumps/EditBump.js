@@ -165,16 +165,6 @@ export default () => {
 					</ScBreadcrumbs>
 				</div>
 			}
-			sidebar={
-				<>
-					{/* <Preview bump={bump} loading={!hasLoadedBump} /> */}
-					<Priority
-						bump={bump}
-						updateBump={editBump}
-						loading={!hasLoadedBump}
-					/>
-				</>
-			}
 		>
 			<>
 				<Error error={saveBumpError || bumpError} margin="80px" />
@@ -204,6 +194,11 @@ export default () => {
 					loading={!hasLoadedBump}
 				/>
 				<CTA
+					bump={bump}
+					updateBump={editBump}
+					loading={!hasLoadedBump}
+				/>
+				<Priority
 					bump={bump}
 					updateBump={editBump}
 					loading={!hasLoadedBump}
