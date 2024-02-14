@@ -25,7 +25,7 @@ export const getCurrentBehaviourContent = (protocol: SubscriptionProtocol, hasDi
     const discountLocales = {
       title: replaceAmountFromString(__('Your {{ amount }} discount is still active.', 'surecart'), protocol),
       description: replaceAmountFromString(
-        __('You have a {{ amount }} discount on your next payment. Cancelling now will forfiet this discount forever. Are you sure you wish to cancel?', 'surecart'),
+        __('You have a {{ amount }} discount active. Cancelling now will forfeit this discount forever. Are you sure you wish to cancel?', 'surecart'),
         protocol,
       ),
       button: __('Keep My Discount', 'surecart'),
