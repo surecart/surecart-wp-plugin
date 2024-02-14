@@ -21,7 +21,6 @@ test.describe('Product List Page', () => {
     // collection1 = createProductCollection(requestUtils, 'Collection 1');
     // collection2 = createProductCollection(requestUtils, 'Collection 2');
     // collections = [collection1, collection2];
-
     // Insert some products.
     // product1 = createProduct(requestUtils, {
     //   name: 'Product 1',
@@ -30,7 +29,6 @@ test.describe('Product List Page', () => {
     //   image_url: 'https://placehold.co/600x400/EEE/31343C',
     //   product_collection_ids: [collection1.id],
     // });
-
     // Wait for 1 second, so that sorting will be different.
     // setTimeout(() => {
     //   product2 = createProduct(requestUtils, {
@@ -41,7 +39,6 @@ test.describe('Product List Page', () => {
     //     product_collection_ids: [collection2.id],
     //   });
     // }, 1000);
-
     //   products.push(product1, product2);
   });
 
@@ -171,6 +168,35 @@ test.describe('Product List Page', () => {
     const productTitlesAfterClearFilter = await page.locator('sc-product-item-title');
     const firstProductTextAfterClearFilter = await productTitlesAfterClearFilter.innerText();
     await expect(firstProductTextAfterClearFilter).toBe('Product 1');
+  });
+});
+
+test.describe('Product Detail Page', () => {
+  test('Should visible all default block fields', async ({ page }) => {
+    await page.goto('/shop/product-1');
+
+    // Product 1 heading text.
+    await expect(page.locator('h1')).toHaveText('Product 1');
+
+    // Product 1 price.
+    await expect(page.locator('sc-format-number')).toHaveText('$10');
+
+    // Product 1 image.
+    await expect(page.locator('.wp-block-surecart-product-media img')).toHaveAttribute('src', 'https://placehold.co/600x400/EEE/31343C');
+
+    // Product 1 Collection badge.
+    // await expect(page.locator('.sc-product-collection-badge')).toHaveText('Collection 1');
+
+    // Quantity Selection is Present there.
+    await expect(page.locator('sc-quantity-select')).toBeVisible();
+
+    const addToCartButtons = await page.locator('sc-product-buy-button a span');
+
+    const addToCartButtonText = (await addToCartButtons.nth(0).innerText()).trim();
+    const buyButtonText = (await addToCartButtons.nth(1).innerText()).trim();
+
+    await expect(addToCartButtonText).toBe('Add To Cart');
+    await expect(buyButtonText).toBe('Buy Now');
   });
 });
 
