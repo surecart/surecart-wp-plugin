@@ -1243,6 +1243,7 @@ export namespace Components {
           * The direction from which the drawer will open.
          */
         "placement": 'top' | 'end' | 'bottom' | 'start';
+        "requestClose": (source?: 'close-button' | 'keyboard' | 'overlay' | 'method') => Promise<void>;
         /**
           * Sticky drawer header
          */
@@ -7272,7 +7273,7 @@ declare namespace LocalJSX {
         "onScAfterShow"?: (event: ScDrawerCustomEvent<void>) => void;
         "onScHide"?: (event: ScDrawerCustomEvent<void>) => void;
         "onScInitialFocus"?: (event: ScDrawerCustomEvent<void>) => void;
-        "onScRequestClose"?: (event: ScDrawerCustomEvent<'close-button' | 'keyboard' | 'overlay'>) => void;
+        "onScRequestClose"?: (event: ScDrawerCustomEvent<'close-button' | 'keyboard' | 'overlay' | 'method'>) => void;
         "onScShow"?: (event: ScDrawerCustomEvent<void>) => void;
         /**
           * Indicates whether or not the drawer is open. You can use this in lieu of the show/hide methods.
