@@ -136,18 +136,20 @@ export const productNameWithPrice = price => {
 export const getHumanDiscountRedeemableStatus = status => {
   switch (status) {
     case 'invalid':
-      return __('This coupon is not valid. Please double-check it and try again.', 'surecart');
+      return __('Not valid', 'surecart');
     case 'expired':
-      return __('This coupon has expired and cannot be used.', 'surecart');
+      return __('Expired', 'surecart');
     case 'gone':
-      return __('This coupon has been removed and is no longer available.', 'surecart');
+      return __('Not available', 'surecart');
     case 'less_than_min_subtotal_amount':
-      return __('Your order does not meet the minimum subtotal amount required for the discount.', 'surecart');
+      return __('Minimum subtotal not met', 'surecart');
     case 'not_applicable':
-      return __('This coupon cannot be applied to the selected products.', 'surecart');
+      return __('Not applicable to selected products', 'surecart');
     case 'not_applicable_to_customer':
-      return __('This coupon is not valid for your account.', 'surecart');
+      return __('Not valid for your account', 'surecart');
+    case '':
+      return '';
     default:
-      return __('This coupon is not redeemable. Please double-check it and try again.', 'surecart');
+      return __('Not redeemable', 'surecart');
   }
 };
