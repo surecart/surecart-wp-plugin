@@ -87,17 +87,6 @@ export class ScOrderTaxIdInput {
     return checkoutState.taxProtocol?.eu_vat_required && checkoutState.checkout?.tax_identifier?.number_type === 'eu_vat';
   }
 
-  maybeGetEuVatAppendedTaxIdTypesData() {
-    // If EU Vat is required but not in taxIdTypesData, then append it to the list.
-    if (checkoutState.taxProtocol?.eu_vat_required) {
-      if (!this.taxIdTypesData.includes('eu_vat')) {
-        this.taxIdTypesData.push('eu_vat');
-      }
-    }
-
-    return this.taxIdTypesData;
-  }
-
   render() {
     return (
       <sc-tax-id-input
@@ -118,7 +107,7 @@ export class ScOrderTaxIdInput {
         gbVatLabel={this.gbVatLabel}
         euVatLabel={this.euVatLabel}
         help={this.helpText}
-        taxIdTypes={this.maybeGetEuVatAppendedTaxIdTypesData()}
+        taxIdTypes={this.taxIdTypesData}
         required={this.required()}
       ></sc-tax-id-input>
     );
