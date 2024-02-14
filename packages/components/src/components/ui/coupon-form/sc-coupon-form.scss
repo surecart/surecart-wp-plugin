@@ -13,7 +13,7 @@ sc-button {
   .coupon-button {
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.90);
+    transform: scale(0.9);
     transition: all var(--sc-transition-fast) ease;
   }
 
@@ -78,8 +78,15 @@ sc-button {
   }
 }
 
-.coupon-form--is-rtl{
-  .trigger{
+.coupon-form--is-rtl {
+  .trigger {
     text-align: right;
   }
+}
+
+.coupon-human-status {
+  background-color: var(--sc-color-warning-100);
+  border: 1px solid var(--sc-color-warning-200);
+  padding: var(--sc-spacing-medium);
+  text-align: center;
 }

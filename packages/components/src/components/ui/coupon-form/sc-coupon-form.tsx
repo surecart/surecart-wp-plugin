@@ -210,7 +210,7 @@ export class ScCouponForm {
             </Fragment>
           )}
           {'redeemable' !== this.discount?.redeemable_status && (
-            <span class="coupon-human-discount" slot="price-description">
+            <span class="coupon-human-status" slot="price-description">
               {getHumanDiscountRedeemableStatus(this.discount?.redeemable_status)}
             </span>
           )}
