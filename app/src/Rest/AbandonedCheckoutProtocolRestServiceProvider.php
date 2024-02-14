@@ -78,7 +78,7 @@ class AbandonedCheckoutProtocolRestServiceProvider extends RestServiceProvider i
 			// In JSON Schema you can specify object properties in the properties attribute.
 			'properties' => [
 				'id'         => [
-					'description' => esc_html__( 'Unique identifier for the object.', 'surecart' ),
+					'description' => esc_html__( 'Unique identifier for the object', 'surecart' ),
 					'type'        => 'string',
 					'context'     => [ 'edit' ],
 					'readonly'    => true,
