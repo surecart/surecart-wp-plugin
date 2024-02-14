@@ -26,12 +26,12 @@ export default ({ upsell, onUpdate }) => {
 				select(coreStore).getEntityRecord(
 					'postType',
 					'wp_template_part',
-					upsell?.metadata?.template_part_id ||
+					upsell?.metadata?.wp_template_part_id ||
 						'surecart/surecart//upsell-info'
 				)
 			);
 		},
-		[upsell?.metadata?.template_part_id]
+		[upsell?.metadata?.wp_template_part_id]
 	);
 
 	// template parts.
@@ -83,7 +83,7 @@ export default ({ upsell, onUpdate }) => {
 							onUpdate({
 								metadata: {
 									...upsell?.metadata,
-									template_part_id: e.target.value,
+									wp_template_part_id: e.target.value,
 								},
 							});
 						}}
@@ -108,7 +108,7 @@ export default ({ upsell, onUpdate }) => {
 						href={addQueryArgs('site-editor.php', {
 							postType: 'wp_template_part',
 							postId:
-								upsell?.metadata?.template_part_id ||
+								upsell?.metadata?.wp_template_part_id ||
 								'surecart/surecart//upsell-info',
 							canvas: 'edit',
 						})}
