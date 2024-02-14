@@ -12,27 +12,36 @@ test.describe('Product List Page', () => {
   let product1 = null;
   let product2 = null;
 
-  // Insert some products
-  // test.beforeAll(async ({ requestUtils }) => {
-  //   product1 = createProduct(requestUtils, {
-  //     name: 'Product 1',
-  //     status: 'published',
-  //     amount: 1000,
-  //     image_url: 'https://placehold.co/600x400/EEE/31343C',
-  //   });
+  let collection1 = null;
+  let collection2 = null;
+  let collections = [];
 
-  //   // Wait for 1 second, so that sorting will be different.
-  //   setTimeout(() => {
-  //     product2 = createProduct(requestUtils, {
-  //       name: 'Product 2',
-  //       status: 'published',
-  //       amount: 2000,
-  //       scratch_amount: 3000,
-  //     });
-  //   }, 1000);
+  test.beforeAll(async ({ requestUtils }) => {
+    // Insert some product collections.
+    // collection1 = createProductCollection(requestUtils, 'Collection 1');
+    // collection2 = createProductCollection(requestUtils, 'Collection 2');
+    // collections = [collection1, collection2];
 
-  //   products.push(product1, product2);
-  // });
+    // Insert some products.
+    //   product1 = createProduct(requestUtils, {
+    //     name: 'Product 1',
+    //     status: 'published',
+    //     amount: 1000,
+    //     image_url: 'https://placehold.co/600x400/EEE/31343C',
+    //   });
+
+    //   // Wait for 1 second, so that sorting will be different.
+    //   setTimeout(() => {
+    //     product2 = createProduct(requestUtils, {
+    //       name: 'Product 2',
+    //       status: 'published',
+    //       amount: 2000,
+    //       scratch_amount: 3000,
+    //     });
+    //   }, 1000);
+
+    //   products.push(product1, product2);
+  });
 
   // Fetch the shop page ID.
   // ?p=
@@ -137,6 +146,16 @@ test.describe('Product List Page', () => {
     await expect(firstProductImage).toBe('https://placehold.co/600x400/EEE/31343C');
   });
 });
+
+export const createProductCollection = (requestUtils, collectionName) => {
+  return requestUtils.rest({
+    method: 'POST',
+    path: API_PRODUCT_COLLECTION_BASE_PATH,
+    data: {
+      name: collectionName,
+    },
+  });
+};
 
 export const createProduct = (requestUtils, data) => {
   const product = requestUtils.rest({
