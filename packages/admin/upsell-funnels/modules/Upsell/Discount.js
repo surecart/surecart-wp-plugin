@@ -77,6 +77,7 @@ export default ({ upsell, onUpdate }) => {
 							percent_off: e.target.value,
 						});
 					}}
+					required
 				>
 					<span slot="suffix">%</span>
 				</ScInput>
@@ -95,6 +96,7 @@ export default ({ upsell, onUpdate }) => {
 							amount_off: e.target.value,
 						});
 					}}
+					required
 				/>
 			)}
 		</>
