@@ -196,7 +196,7 @@ export class ScCouponForm {
             </sc-tag>
           </span>
 
-          {'redeemable' === this.discount?.redeemable_status && (
+          {'redeemable' === this.discount?.redeemable_status ? (
             <Fragment>
               {humanDiscount && (
                 <span class="coupon-human-discount" slot="price-description">
@@ -207,8 +207,7 @@ export class ScCouponForm {
                 <sc-format-number type="currency" currency={this?.currency} value={this?.discountAmount}></sc-format-number>
               </span>
             </Fragment>
-          )}
-          {'redeemable' !== this.discount?.redeemable_status && (
+          ) : (
             <sc-tag class="coupon__status" type="warning" slot="price-description">
               {getHumanDiscountRedeemableStatus(this.discount?.redeemable_status)}
             </sc-tag>
