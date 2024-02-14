@@ -12,7 +12,7 @@ import { onChange as onChangeFormState } from '@store/form';
 import { currentFormState } from '@store/form/getters';
 import { createErrorNotice } from '@store/notices/mutations';
 import { updateFormState } from '@store/form/mutations';
-import { getBillingAddress } from '@store/checkout/getters';
+import { getCompleteAddress } from '@store/checkout/getters';
 
 @Component({
   tag: 'sc-stripe-payment-element',
@@ -168,7 +168,7 @@ export class ScStripePaymentElement {
     if (!this.elements) {
       // we have what we need, load elements.
       this.elements = this.stripe.elements(this.getElementsConfig() as any);
-      const address = getBillingAddress();
+      const address = getCompleteAddress('shipping');
 
       // create the payment element.
       this.elements

@@ -1,4 +1,4 @@
-import { Product, ShippingAddress } from 'src/types';
+import { Product, Address } from 'src/types';
 import { getCheckout } from '../checkouts/mutations';
 import state from './store';
 import { isAddressComplete } from 'src/functions/address';
@@ -34,12 +34,11 @@ export const shippingAddressRequired = () =>
 /**
  * Get Billing address
  */
-export const getBillingAddress = () => {
-  const isComplete = isAddressComplete(state.checkout?.shipping_address as ShippingAddress);
-
+export const getCompleteAddress = (type = 'shipping') => {
+  const isComplete = isAddressComplete(state.checkout?.[`${type}_address`] as Address);
   if (!isComplete) return;
 
-  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.shipping_address as ShippingAddress) || {};
+  const { line_1: line1, line_2: line2, ...otherProps } = (state.checkout?.shipping_address as Address) || {};
 
   return {
     line1,
