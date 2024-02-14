@@ -6,7 +6,8 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Charge, Checkout, ManualPaymentMethod, Order, Product, Purchase } from '../../../../types';
+import { Charge, Checkout, FeaturedProductMediaAttributes, ManualPaymentMethod, Order, Product, Purchase, ShippingChoice, ShippingMethod } from '../../../../types';
+import { getFeaturedProductMediaAttributes } from 'src/functions/media';
 
 @Component({
   tag: 'sc-order',
@@ -77,9 +78,13 @@ export class ScOrder {
           'checkout.line_items',
           'line_item.price',
           'line_item.fees',
+          'line_item.variant',
+          'variant.image',
           'price.product',
           'checkout.manual_payment_method',
           'checkout.payment_method',
+          'checkout.selected_shipping_choice',
+          'shipping_choice.shipping_method',
           'payment_method.card',
           'payment_method.payment_instrument',
           'payment_method.paypal_account',
@@ -116,14 +121,19 @@ export class ScOrder {
     }
 
     const checkout = this.order?.checkout as Checkout;
+    const shippingMethod = (checkout?.selected_shipping_choice as ShippingChoice)?.shipping_method as ShippingMethod;
+    const shippingMethodName = shippingMethod?.name;
 
     return (
       <Fragment>
         {(checkout?.line_items?.data || []).map(item => {
+          const { url, title, alt }: FeaturedProductMediaAttributes = getFeaturedProductMediaAttributes(item?.price?.product as Product, item?.variant);
           return (
             <sc-product-line-item
               key={item.id}
-              imageUrl={(item?.price?.product as Product)?.image_url}
+              imageUrl={url}
+              imageAlt={alt}
+              imageTitle={title}
               name={(item?.price?.product as Product)?.name}
               priceName={item?.price?.name}
               variantLabel={(item?.variant_options || []).filter(Boolean).join(' / ') || null}
@@ -137,7 +147,7 @@ export class ScOrder {
               scratchAmount={item?.scratch_amount}
               setupFeeTrialEnabled={item?.price?.setup_fee_trial_enabled}
               fees={item?.fees?.data}
-            ></sc-product-line-item>
+            />
           );
         })}
 
@@ -230,7 +240,7 @@ export class ScOrder {
 
         {!!checkout?.shipping_amount && (
           <sc-line-item>
-            <span slot="description">{__('Shipping', 'surecart')}</span>
+            <span slot="description">{`${__('Shipping', 'surecart')} ${shippingMethodName ? `(${shippingMethodName})` : ''}`}</span>
             <sc-format-number
               slot="price"
               style={{

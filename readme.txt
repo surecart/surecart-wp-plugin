@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.17.1
+Stable tag: 2.17.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,18 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.17.2 - February 13th, 2024 =
+- Improvement: Improve product list page loading performance.
+- Improvement: Better fallback image for products without images.
+- Improvement: Add javascript event that triggers whenever a checkout or cart changes.
+- Improvement: Display shipping method information on order details and order list page.
+- Improvement: Add css variable to change shipping price display (--sc-shipping-choice-price-display).
+- Change: Deprecate Stripe express payment button in favor of Stripe payment element.
+- Fix: Archived prices not showing on admin product page.
+- Fix: Variant thumbnails were not being used on customer order summary in customer dashboard.
+- Fix: Some strings not translatable.
+- Fix: Edge case where disconnecting a WP user from a customer caused first and last name to be removed.
 
 = 2.17.1 - January 31st, 2024 =
 - Improvement: Add confirmation modal when deleting customer.

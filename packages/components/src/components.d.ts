@@ -2867,6 +2867,11 @@ export namespace Components {
         "ids": string[];
         "layoutConfig": LayoutConfig1;
         "limit": number;
+        "page": number;
+        "pagination": {
+    total: number;
+    total_pages: number;
+  };
         "paginationAlignment": string;
         /**
           * Should we auto-scroll to the top when paginating via ajax
@@ -8862,6 +8867,11 @@ declare namespace LocalJSX {
           * Product was searched
          */
         "onScSearched"?: (event: ScProductItemListCustomEvent<ProductsSearchedParams>) => void;
+        "page"?: number;
+        "pagination"?: {
+    total: number;
+    total_pages: number;
+  };
         "paginationAlignment"?: string;
         /**
           * Should we auto-scroll to the top when paginating via ajax

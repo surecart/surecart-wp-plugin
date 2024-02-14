@@ -25,7 +25,7 @@ export class ScProductItemImage {
       return sizeImage(((this.product?.featured_product_media as ProductMedia)?.media as Media)?.url, applyFilters('surecart/product-list/media/size', 900));
     }
 
-    return '';
+    return `${window.scData?.plugin_url}/images/placeholder.jpg`;
   }
 
   render() {
