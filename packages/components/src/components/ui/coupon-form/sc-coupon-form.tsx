@@ -163,7 +163,6 @@ export class ScCouponForm {
     if (this.loading) {
       return <sc-skeleton style={{ width: '120px', display: 'inline-block' }}></sc-skeleton>;
     }
-    console.log(this?.discount);
 
     if (this?.discount?.promotion?.code) {
       let humanDiscount = this.getHumanReadableDiscount();
@@ -174,7 +173,7 @@ export class ScCouponForm {
             <div part="discount-label">{__('Discount', 'surecart')}</div>
             <sc-tag
               exportparts="base:coupon-tag"
-              type="success"
+              type={'redeemable' === this.discount?.redeemable_status ? 'success' : 'warning'}
               class="coupon-tag"
               clearable
               onScClear={() => {
@@ -210,9 +209,9 @@ export class ScCouponForm {
             </Fragment>
           )}
           {'redeemable' !== this.discount?.redeemable_status && (
-            <span class="coupon-human-status" slot="price-description">
+            <sc-tag class="coupon__status" type="warning" slot="price-description">
               {getHumanDiscountRedeemableStatus(this.discount?.redeemable_status)}
-            </span>
+            </sc-tag>
           )}
         </sc-line-item>
       );
