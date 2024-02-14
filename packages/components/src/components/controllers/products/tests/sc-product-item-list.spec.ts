@@ -39,7 +39,7 @@ test.describe('Product List Page', () => {
   // Pagename key wise option table fetch.
 
   test('Should render product list page', async ({ page }) => {
-    await page.goto('/shop'); // window.scData.
+    await page.goto('/shop');
 
     await expect(page.locator('h1')).toHaveText('Shop');
     await page.waitForLoadState('networkidle');
@@ -124,6 +124,17 @@ test.describe('Product List Page', () => {
 
     await expect(firstProductPrice).toBe('$10');
     await expect(secondProductPrice).toBe('$20');
+  });
+
+  test('Should see product image', async ({ page }) => {
+    await page.goto('/shop');
+
+    // Check if Product 1 and Product 2 are showing in the list.
+    const productImages = await page.locator('sc-product-item-image .product-img img');
+
+    // Get the text content of each element
+    const firstProductImage = await productImages.nth(0).getAttribute('src');
+    await expect(firstProductImage).toBe('https://placehold.co/600x400/EEE/31343C');
   });
 });
 
