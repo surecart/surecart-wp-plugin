@@ -23,22 +23,24 @@ test.describe('Product List Page', () => {
     // collections = [collection1, collection2];
 
     // Insert some products.
-    //   product1 = createProduct(requestUtils, {
-    //     name: 'Product 1',
-    //     status: 'published',
-    //     amount: 1000,
-    //     image_url: 'https://placehold.co/600x400/EEE/31343C',
-    //   });
+    // product1 = createProduct(requestUtils, {
+    //   name: 'Product 1',
+    //   status: 'published',
+    //   amount: 1000,
+    //   image_url: 'https://placehold.co/600x400/EEE/31343C',
+    //   product_collection_ids: [collection1.id],
+    // });
 
-    //   // Wait for 1 second, so that sorting will be different.
-    //   setTimeout(() => {
-    //     product2 = createProduct(requestUtils, {
-    //       name: 'Product 2',
-    //       status: 'published',
-    //       amount: 2000,
-    //       scratch_amount: 3000,
-    //     });
-    //   }, 1000);
+    // Wait for 1 second, so that sorting will be different.
+    // setTimeout(() => {
+    //   product2 = createProduct(requestUtils, {
+    //     name: 'Product 2',
+    //     status: 'published',
+    //     amount: 2000,
+    //     scratch_amount: 3000,
+    //     product_collection_ids: [collection2.id],
+    //   });
+    // }, 1000);
 
     //   products.push(product1, product2);
   });
@@ -145,6 +147,31 @@ test.describe('Product List Page', () => {
     const firstProductImage = await productImages.nth(0).getAttribute('src');
     await expect(firstProductImage).toBe('https://placehold.co/600x400/EEE/31343C');
   });
+
+  test('Should filter by product collection', async ({ page }) => {
+    await page.goto('/shop');
+
+    const collectionFilters = await page.locator('.product-item-list__sort sc-dropdown');
+
+    // Get the text content of each element
+    await collectionFilters.nth(1).click();
+
+    // Click on Collection 1.
+    await page.click('text=Collection 1');
+    await page.waitForLoadState('networkidle');
+
+    // Check if Product 1 is showing in the list.
+    const productTitles = await page.locator('sc-product-item-title');
+    const firstProductText = await productTitles.innerText();
+    await expect(firstProductText).toBe('Product 1');
+
+    // Clear Collection filter.
+    await page.locator('sc-tag').getByText('Collection 1', { exact: true }).click();
+    await page.waitForLoadState('networkidle');
+    const productTitlesAfterClearFilter = await page.locator('sc-product-item-title');
+    const firstProductTextAfterClearFilter = await productTitlesAfterClearFilter.innerText();
+    await expect(firstProductTextAfterClearFilter).toBe('Product 1');
+  });
 });
 
 export const createProductCollection = (requestUtils, collectionName) => {
@@ -164,6 +191,7 @@ export const createProduct = (requestUtils, data) => {
     data: {
       name: data.name,
       status: data.status,
+      product_collection_ids: data?.product_collection_ids || [],
     },
   });
 
