@@ -82,6 +82,7 @@ return [
 		\SureCart\Rest\LicenseRestServiceProvider::class,
 		\SureCart\Rest\LineItemsRestServiceProvider::class,
 		\SureCart\Rest\ActivationRestServiceProvider::class,
+		\SureCart\Rest\AffiliationProtocolRestServiceProvider::class,
 		\SureCart\Rest\MediaRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,

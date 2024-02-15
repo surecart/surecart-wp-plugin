@@ -85,6 +85,11 @@
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
+	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'affiliation_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'affiliation_protocol' === $tab ? 'active' : ''; ?> >
+		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
+		<?php esc_html_e( 'Affiliates', 'surecart' ); ?>
+	</sc-tab>
+
 	<?php if ( $is_free ) : ?>
 		<div class="sc-item-stick-bottom">
 			<sc-card href="<?php echo esc_url( $upgrade_url ); ?>" class="surecart-cta">
