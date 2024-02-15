@@ -157,7 +157,7 @@ class ProductsListTable extends ListTable {
 	 * Show any integrations.
 	 */
 	public function column_integrations( $product ) {
-		$list = $this->productIntegrationsList( $product->id );
+		$list = $this->productIntegrationsList( [ 'product_id' => $product->id ] );
 		return $list ? $list : '-';
 	}
 

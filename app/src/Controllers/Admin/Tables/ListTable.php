@@ -113,17 +113,40 @@ abstract class ListTable extends \WP_List_Table {
 	/**
 	 * Show an integrations list based on a product id.
 	 *
-	 * @param string $id Product id.
-	 * @param string $name Model name.
+	 * @param string $args The args.
 	 *
 	 * @return string
 	 */
-	public function productIntegrationsList( $id = '', $name = 'product' ) {
+	public function productIntegrationsList( $args ) {
+		// parse the args.
+		$args = wp_parse_args(
+			$args,
+			[
+				'product_id' => '',
+				'price_id'   => '',
+				'variant_id' => '',
+			]
+		);
+
+		// get the integration first by product id.
+		$integrations = Integration::where( 'model_id', $args['product_id'] );
+
+		// maybe by price id.
+		if ( ! empty( $args['price_id'] ) ) {
+			$integrations = $integrations->andWhere( 'price_id', $args['price_id'] );
+		}
+
+		// maybe by variant id.
+		if ( ! empty( $args['variant_id'] ) ) {
+			$integrations = $integrations->andWhere( 'variant_id', $args['variant_id'] );
+		}
+
 		$output       = '';
-		$integrations = Integration::where( 'model_id', $id )->andWhere( 'model_name', $name )->get();
-		if ( empty( $integrations ) ) {
+		$integrations = $integrations->group_by( 'integration_id' )->get();
+		if ( empty( $integrations ) || is_wp_error( $integrations ) ) {
 			return $output;
 		}
+
 		foreach ( $integrations as $integration ) {
 			$provider = (object) apply_filters( "surecart/integrations/providers/find/{$integration->provider}", [] );
 			$item     = (object) apply_filters( "surecart/integrations/providers/{$integration->provider}/item", $integration->integration_id );

@@ -48,7 +48,13 @@ class OrdersListTable extends ListTable {
 		// loop through each purchase.
 		if ( ! empty( $order->checkout->purchases->data ) ) {
 			foreach ( $order->checkout->purchases->data as $purchase ) {
-				$output .= $this->productIntegrationsList( $purchase->product );
+				$output .= $this->productIntegrationsList(
+					[
+						'product_id' => $purchase->product,
+						'price_id'   => $purchase->price->id ?? $purchase->price ?? null,
+						'variant_id' => $purchase->variant->id ?? $purchase->variant ?? null,
+					]
+				);
 			}
 		}
 
