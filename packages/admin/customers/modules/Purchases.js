@@ -16,7 +16,7 @@ import { paginate } from '../../util/arrays';
 
 export default ({ customerId }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(5);
+	const [perPage, setPerPage] = useState(3);
 
 	const { purchases, hasNext, loading } = useSelect(
 		(select) => {
