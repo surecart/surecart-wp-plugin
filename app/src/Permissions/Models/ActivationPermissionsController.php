@@ -67,7 +67,7 @@ class ActivationPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_activation( $user, $args, $allcaps ) {
-		if ( ! empty( $allcaps['read_sc_products'] ) ) {
+		if ( ! empty( $allcaps['edit_sc_products'] ) ) {
 			return true;
 		}
 
