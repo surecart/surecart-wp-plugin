@@ -26,22 +26,6 @@ class ScriptsService {
 
 		// add module to components tag.
 		add_filter( 'script_loader_tag', [ $this, 'componentsTag' ], 10, 3 );
-
-		// Add wp_get_global_stylesheet CSS to head inline.
-		add_action( 'wp_head', [ $this, 'addGlobalStyles' ], 100 );
-	}
-
-	/**
-	 * Add global styles to the head.
-	 *
-	 * @return void
-	 */
-	public function addGlobalStyles() {
-		if ( ! function_exists( 'wp_get_global_stylesheet' ) ) {
-			return;
-		}
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<style id="sc-global-styles">' . wp_get_global_stylesheet() . '</style>';
 	}
 
 	/**
@@ -217,8 +201,6 @@ class ScriptsService {
 			};',
 			'before'
 		);
-
-		wp_enqueue_style('global-styles');
 	}
 
 	/**
