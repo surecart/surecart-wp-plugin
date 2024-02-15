@@ -19,4 +19,14 @@ class Activation extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'activation';
+
+	/**
+	 * Set the product attribute
+	 *
+	 * @param  string $value Product properties.
+	 * @return void
+	 */
+	public function setLicenseAttribute( $value ) {
+		$this->setRelation( 'license', $value, License::class );
+	}
 }
