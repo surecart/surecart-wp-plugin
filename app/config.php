@@ -264,6 +264,7 @@ return [
 	* Permission Controllers
 	*/
 	'permission_controllers' => [
+		\SureCart\Permissions\Models\ActivationPermissionsController::class,
 		\SureCart\Permissions\Models\BalanceTransactionPermissionsController::class,
 		\SureCart\Permissions\Models\ChargePermissionsController::class,
 		\SureCart\Permissions\Models\LicensePermissionsController::class,
