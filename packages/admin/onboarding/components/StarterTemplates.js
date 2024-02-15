@@ -12,7 +12,7 @@ const templates = [
 	},
 	{
 		id: 'seed',
-		name: __('Start with Demo Products', 'surecart'),
+		name: __('Start With Demo Products', 'surecart'),
 		imgUrl: `${scData?.plugin_url}/images/starter-templates/seed.jpg`,
 	},
 ];
