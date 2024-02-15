@@ -234,16 +234,10 @@ export class ScLicense {
         <sc-dashboard-module heading={__('Delete Activation', 'surecart')} class="license-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
           <span slot="description">{__('Are you sure you want to delete activation?', 'surecart')}</span>
           <sc-flex justifyContent="flex-start">
-            <sc-button type="primary" loading={this.loading || this.busy} disabled={this.loading || this.busy} onClick={this.deleteActivation}>
+            <sc-button type="primary" disabled={this.loading || this.busy} onClick={this.deleteActivation}>
               {__('Delete Activation', 'surecart')}
             </sc-button>
-            <sc-button
-              style={{ color: 'var(--sc-color-gray-500' }}
-              type="text"
-              onClick={this.onCloseDeleteModal}
-              loading={this.loading || this.busy}
-              disabled={this.loading || this.busy}
-            >
+            <sc-button style={{ color: 'var(--sc-color-gray-500' }} type="text" onClick={this.onCloseDeleteModal} disabled={this.loading || this.busy}>
               {__('Cancel', 'surecart')}
             </sc-button>
           </sc-flex>
