@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasLicense;
+
 /**
  * Price model
  */
 class Activation extends Model {
+	use HasLicense;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -19,14 +23,4 @@ class Activation extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'activation';
-
-	/**
-	 * Set the product attribute
-	 *
-	 * @param  string $value Product properties.
-	 * @return void
-	 */
-	public function setLicenseAttribute( $value ) {
-		$this->setRelation( 'license', $value, License::class );
-	}
 }
