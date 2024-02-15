@@ -13,7 +13,7 @@ const templates = [
 	{
 		id: 'seed',
 		name: __('Start with Demo Products', 'surecart'),
-		imgUrl: `${scData?.plugin_url}/images/placeholder.png`,
+		imgUrl: `${scData?.plugin_url}/images/starter-templates/seed.jpg`,
 	},
 ];
 
@@ -48,15 +48,10 @@ export default ({
 					gap: 20px;
 					padding: 20px 0 0;
 					margin: 0 auto;
-					@media (min-width: 480px) {
-						padding: 30px 20px;
-						max-width: 780px;
-						grid-template-columns: repeat(2, 1fr);
-					}
 					@media (min-width: 680px) {
 						padding: 30px 20px;
 						max-width: 780px;
-						grid-template-columns: repeat(3, 1fr);
+						grid-template-columns: repeat(2, 1fr);
 					}
 					@media (min-width: 1024px) {
 						max-width: 760px;
