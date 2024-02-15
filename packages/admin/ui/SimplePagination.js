@@ -21,7 +21,10 @@ export default ({ page, setPage, hasNext }) => {
 						setPage(page - 1);
 					}}
 				>
-					<ScIcon name="chevron-left" />
+					<ScIcon name="chevron-left" aria-hidden="true" />
+					<span class="screen-reader-text">
+						{__('Previous page', 'surecart')}
+					</span>
 				</ScButton>
 				<ScButton
 					disabled={!hasNext}
@@ -30,7 +33,10 @@ export default ({ page, setPage, hasNext }) => {
 						setPage(page + 1);
 					}}
 				>
-					<ScIcon name="chevron-right" />
+					<ScIcon name="chevron-right" aria-hidden="true" />
+					<span class="screen-reader-text">
+						{__('Previous page', 'surecart')}
+					</span>
 				</ScButton>
 			</ScButtonGroup>
 		</div>
