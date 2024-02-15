@@ -28,7 +28,7 @@ export class ScLicensesList {
   /**View all link */
   @Prop() allLink: string;
 
-  @State() licenses: License[] = [];
+  @Prop({ mutable: true }) licenses: License[] = [];
   @State() copied: boolean = false;
   @State() loading: boolean = false;
   @State() error: string = '';
