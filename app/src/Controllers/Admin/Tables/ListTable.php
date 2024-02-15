@@ -131,16 +131,6 @@ abstract class ListTable extends \WP_List_Table {
 		// get the integration first by product id.
 		$integrations = Integration::where( 'model_id', $args['product_id'] );
 
-		// maybe by price id.
-		if ( ! empty( $args['price_id'] ) ) {
-			$integrations = $integrations->andWhere( 'price_id', $args['price_id'] );
-		}
-
-		// maybe by variant id.
-		if ( ! empty( $args['variant_id'] ) ) {
-			$integrations = $integrations->andWhere( 'variant_id', $args['variant_id'] );
-		}
-
 		$output       = '';
 		$integrations = $integrations->group_by( 'integration_id' )->get();
 		if ( empty( $integrations ) || is_wp_error( $integrations ) ) {
@@ -150,6 +140,12 @@ abstract class ListTable extends \WP_List_Table {
 		foreach ( $integrations as $integration ) {
 			$provider = (object) apply_filters( "surecart/integrations/providers/find/{$integration->provider}", [] );
 			$item     = (object) apply_filters( "surecart/integrations/providers/{$integration->provider}/item", $integration->integration_id );
+			if ( $integration->price_id && $args['price_id'] && $integration->price_id !== $args['price_id'] ) {
+				continue;
+			}
+			if ( $integration->variant_id && $args['variant_id'] && $integration->variant_id !== $args['variant_id'] ) {
+				continue;
+			}
 			if ( ! empty( $item->label ) ) {
 				ob_start();
 				?>

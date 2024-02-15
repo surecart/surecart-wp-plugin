@@ -48,6 +48,7 @@ class OrdersListTable extends ListTable {
 		// loop through each purchase.
 		if ( ! empty( $order->checkout->purchases->data ) ) {
 			foreach ( $order->checkout->purchases->data as $purchase ) {
+				// TODO: eager load this to prevent n+1 queries.
 				$output .= $this->productIntegrationsList(
 					[
 						'product_id' => $purchase->product,
