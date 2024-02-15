@@ -7,7 +7,6 @@ import { __, _n } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import PaginationFooter from '../PaginationFooter';
 import licenseItem from './license-item';
 
 export default ({
