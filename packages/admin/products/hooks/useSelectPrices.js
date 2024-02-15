@@ -59,6 +59,7 @@ export default ({ productId }) => {
 
 			return {
 				active: (editedPrices || []).filter((price) => !price.archived),
+				archived: (editedPrices || []).filter((price) => price.archived),
 				loading: loading && !prices?.length,
 				deleting,
 				saving,

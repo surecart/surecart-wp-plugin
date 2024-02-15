@@ -428,3 +428,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	->middleware( 'nonce:resync_webhook' )
 	->middleware( 'user.can:edit_sc_webhooks' )
 	->handle( '\\SureCart\\Controllers\\Web\\WebhookController@resync' );
+
+/*
+|--------------------------------------------------------------------------
+| Restore
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-restore' )
+->middleware( 'user.can:manage_options' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\Restore\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'RestoreController@index' );
+		\SureCart::route()->post()->middleware( 'nonce:restore_missing_page' )->handle( 'RestoreController@restore' );
+	}
+);
