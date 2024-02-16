@@ -4,31 +4,21 @@
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="sliders"></sc-icon>
 			<?php esc_html_e( 'Store Settings', 'surecart' ); ?>
 		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'brand' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'brand' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="pen-tool"></sc-icon>
 			<?php esc_html_e( 'Design & Branding', 'surecart' ); ?>
 		</sc-tab>
+
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'order' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'order' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-bag"></sc-icon>
 			<?php esc_html_e( 'Orders & Receipts', 'surecart' ); ?>
 		</sc-tab>
-		<sc-upgrade-required required="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false'; ?>">
-			<sc-tab
-			disabled="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false'; ?>"
-			href="
-			<?php
-			echo empty( $entitlements->abandoned_checkouts ) ?
-				'#' :
-				esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) );
-			?>
-			" <?php echo 'abandoned_checkout' === $tab ? 'active' : ''; ?>>
-				<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-cart"></sc-icon>
-				<?php esc_html_e( 'Abandoned Checkout', 'surecart' ); ?>
-				<?php if ( empty( $entitlements->abandoned_checkouts ) ) : ?>
-					<sc-premium-tag></sc-premium-tag>
-				<?php endif; ?>
-			</sc-tab>
-		</sc-upgrade-required>
+
+		<sc-tab href="<?php esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'abandoned_checkout' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-cart"></sc-icon>
+			<?php esc_html_e( 'Abandoned Checkout', 'surecart' ); ?>
+		</sc-tab>
 
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'customer_notification_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'customer_notification_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="bell"></sc-icon>
