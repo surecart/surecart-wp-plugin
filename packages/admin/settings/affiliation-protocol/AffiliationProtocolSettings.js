@@ -16,9 +16,15 @@ import {
 	ScRadioGroup,
 	ScRadio,
 	ScPriceInput,
+	ScButton,
+	ScIcon,
 } from '@surecart/components-react';
+import { useCopyToClipboard } from '@wordpress/compose';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 export default () => {
+	const { createSuccessNotice } = useDispatch(noticesStore);
 	const [error, setError] = useState(null);
 	const [trackingScriptDialog, setTrackingScriptDialog] = useState(false);
 	const { save } = useSave();
@@ -35,6 +41,19 @@ export default () => {
 
 	const [commisionType, setCommisionType] = useState(null);
 
+	const signupsUrl = 'https://affiliates.surecart.com/join/new-test-store';
+	const successFunction = () => {
+		setTrackingScriptDialog(false);
+		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
+			type: 'snackbar',
+		});
+	};
+	const signupsUrlRef = useCopyToClipboard(signupsUrl, successFunction);
+	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"pt_vihbRpGvy8e5BprY2ukthxgM"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
+	const trackingScriptRef = useCopyToClipboard(
+		trackingScript,
+		successFunction
+	);
 	useEffect(() => {
 		setCommisionType(type);
 	}, [type]);
@@ -182,8 +201,18 @@ export default () => {
 					)}
 					type="url"
 					readonly
-					value="https://affiliates.surecart.com/join/new-test-store"
-				/>
+					value={signupsUrl}
+				>
+					<ScButton
+						type="link"
+						circle
+						slot="suffix"
+						size="small"
+						ref={signupsUrlRef}
+					>
+						<ScIcon name="clipboard" />
+					</ScButton>
+				</ScInput>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Referral Tracking', 'surecart')}
@@ -273,64 +302,63 @@ export default () => {
 					}}
 					value={affiliationProtocolItem?.referral_url}
 				/>
-				<div
-					css={css`
-						gap: var(--sc-form-row-spacing);
-						display: grid;
-						grid-template-columns: repeat(2, minmax(0, 1fr));
-					`}
+				<ScSwitch
+					checked={
+						affiliationProtocolItem?.wordpress_plugin_tracking_enabled
+					}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							wordpress_plugin_tracking_enabled:
+								!affiliationProtocolItem?.wordpress_plugin_tracking_enabled,
+						});
+					}}
 				>
-					<ScSwitch
-						checked={
-							affiliationProtocolItem?.wordpress_plugin_tracking_enabled
-						}
-						onClick={(e) => {
-							e.preventDefault();
-							editAffiliationProtocolItem({
-								wordpress_plugin_tracking_enabled:
-									!affiliationProtocolItem?.wordpress_plugin_tracking_enabled,
-							});
-						}}
-					>
-						{__('Tracking', 'surecart')}
-						<span slot="description" style={{ lineHeight: '1.4' }}>
-							{__(
-								'Should the plugin add the tracking script to your site?',
-								'surecart'
-							)}
-						</span>
-					</ScSwitch>
-					<span
-						css={css`
-							text-decoration: underline;
-							cursor: pointer;
-							display: flex;
-							justify-content: flex-end;
-						`}
-						onClick={() => {
-							setTrackingScriptDialog(true);
-						}}
-					>
+					{__('Tracking', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
-							'Add Tracking Script to a different site?',
+							'Should the plugin add the tracking script to your site?',
 							'surecart'
 						)}
 					</span>
-					<ScDialog
-						open={trackingScriptDialog}
-						onScRequestClose={() => setTrackingScriptDialog(false)}
-						label={__('Tracking Script', 'surecart')}
+				</ScSwitch>
+				<span
+					css={css`
+						text-decoration: underline;
+						cursor: pointer;
+						font-size: var(--sc-font-size-small);
+					`}
+					onClick={() => {
+						setTrackingScriptDialog(true);
+					}}
+				>
+					{__('Add Tracking to a different site?', 'surecart')}
+				</span>
+				<ScDialog
+					open={trackingScriptDialog}
+					onScRequestClose={() => setTrackingScriptDialog(false)}
+					label={__('Tracking Script', 'surecart')}
+				>
+					<ScTextarea
+						help={__(
+							"Copy and paste the tracking code into the <head> or before the closing </body> tag of your website. This should only be added to sites that don't have the script added by the WordPress plugin.",
+							'surecart'
+						)}
+						readonly
+						value={trackingScript}
+					/>
+					<div
+						css={css`
+							display: flex;
+							justify-content: flex-end;
+						`}
 					>
-						<ScTextarea
-							help={__(
-								"Copy and paste the tracking code into the <head> or before the closing </body> tag of your website. This should only be added to sites that don't have the script added by the WordPress plugin.",
-								'surecart'
-							)}
-							readonly
-							value={`<script>window.SureCartAffiliatesConfig = {"publicToken":"pt_vihbRpGvy8e5BprY2ukthxgM"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`}
-						/>
-					</ScDialog>
-				</div>
+						<ScButton ref={trackingScriptRef}>
+							<ScIcon name="clipboard" slot="prefix" />
+							{__('Copy', 'surecart')}
+						</ScButton>
+					</div>
+				</ScDialog>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Commissions & Payouts', 'surecart')}
@@ -415,6 +443,28 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				{affiliationProtocolItem?.recurring_commissions_enabled && (
+					<ScInput
+						label={__(
+							'Subscription Commission Duration',
+							'surecart'
+						)}
+						help={__(
+							'For how long should subscription commissions be awarded? (Leave empty if you want to award commissions forever.)',
+							'surecart'
+						)}
+						type="number"
+						onScInput={(e) => {
+							e.preventDefault();
+							editAffiliationProtocolItem({
+								recurring_commission_days: e.target.value,
+							});
+						}}
+						value={
+							affiliationProtocolItem?.recurring_commission_days
+						}
+					/>
+				)}
 				<ScSwitch
 					checked={
 						affiliationProtocolItem?.repeat_customer_commissions_enabled
@@ -435,6 +485,25 @@ export default () => {
 						)}
 					</span>
 				</ScSwitch>
+				{affiliationProtocolItem?.repeat_customer_commissions_enabled && (
+					<ScInput
+						label={__('Lifetime Commission Duration', 'surecart')}
+						help={__(
+							'For how long should future purchase commissions be awarded? (Leave empty if you want to award commission forever.))',
+							'surecart'
+						)}
+						type="number"
+						onScInput={(e) => {
+							e.preventDefault();
+							editAffiliationProtocolItem({
+								repeat_customer_commission_days: e.target.value,
+							});
+						}}
+						value={
+							affiliationProtocolItem?.repeat_customer_commission_days
+						}
+					/>
+				)}
 				<ScTextarea
 					label={__('Payout Instructions', 'surecart')}
 					help={__(
