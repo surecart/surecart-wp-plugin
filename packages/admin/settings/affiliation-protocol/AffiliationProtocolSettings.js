@@ -353,7 +353,7 @@ export default () => {
 							justify-content: flex-end;
 						`}
 					>
-						<ScButton ref={trackingScriptRef}>
+						<ScButton type="primary" ref={trackingScriptRef}>
 							<ScIcon name="clipboard" slot="prefix" />
 							{__('Copy', 'surecart')}
 						</ScButton>
