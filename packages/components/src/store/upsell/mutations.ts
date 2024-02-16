@@ -11,6 +11,7 @@ import { Checkout, LineItem, Price } from 'src/types';
 import { state } from './store';
 import { state as productState } from '../product';
 import { createErrorNotice, removeNotice } from '@store/notices/mutations';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Update the upsell.
@@ -40,7 +41,10 @@ export const preview = async () => {
     state.checkout = checkout as Checkout;
     state.line_item = lineItem as LineItem;
   } catch (error) {
-    createErrorNotice(error);
+    // TODO: Handle this "shotgun" style.
+    // In the future, if out of stock, maybe we decline it. But for now, just show an error.
+    createErrorNotice(__('Apologies, this offer is no longer available.', 'surecart'));
+    // createErrorNotice(error);
   } finally {
     state.loading = 'idle';
   }

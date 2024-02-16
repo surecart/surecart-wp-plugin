@@ -7,6 +7,7 @@ import { Component, Element, h, Host } from '@stencil/core';
  * Internal dependencies.
  */
 import { state as upsellState } from '@store/upsell';
+import { state as noticesState } from '@store/notices';
 import { isProductOutOfStock, isSelectedVariantMissing } from '@store/product/getters';
 import { accept } from '@store/upsell/mutations';
 import { isBusy } from '@store/upsell/getters';
@@ -33,7 +34,8 @@ export class ScUpsellSubmitButton {
         class={{
           'is-busy': isBusy(),
           'is-disabled': upsellState.disabled,
-          'is-sold-out': isProductOutOfStock(this.getUpsellProductId()) && !isSelectedVariantMissing(this.getUpsellProductId()),
+          // TODO: change this to out of stock error message.
+          'is-sold-out': (isProductOutOfStock(this.getUpsellProductId()) && !isSelectedVariantMissing(this.getUpsellProductId())) || !!noticesState?.message,
           'is-unavailable': isSelectedVariantMissing(this.getUpsellProductId()),
         }}
         onClick={e => this.handleAddToOrderClick(e)}
