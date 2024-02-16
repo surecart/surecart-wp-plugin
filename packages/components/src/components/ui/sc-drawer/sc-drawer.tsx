@@ -88,7 +88,7 @@ export class ScDrawer {
   }
 
   @Method()
-  requestClose(source: 'close-button' | 'keyboard' | 'overlay' | 'method' = 'method') {
+  async requestClose(source: 'close-button' | 'keyboard' | 'overlay' | 'method' = 'method') {
     const slRequestClose = this.scRequestClose.emit(source);
 
     if (slRequestClose.defaultPrevented) {
