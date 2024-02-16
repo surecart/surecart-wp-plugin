@@ -67,23 +67,6 @@
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
 	</sc-tab>
 
-	<?php if ( $is_free ) : ?>
-		<div class="sc-item-stick-bottom">
-			<sc-card href="<?php echo esc_url( $upgrade_url ); ?>" class="surecart-cta">
-				<sc-flex flex-direction="column" flex-direction="column" style="--spacing: var(--sc-spacing-medium)">
-					<sc-flex justify-content="flex-start">
-						<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; color: var(--sc-color-primary-500)" name="zap"></sc-icon>
-						<sc-text style="--font-size: var(--sc-font-size-large); --font-weight: var(--sc-font-weight-bold)"><?php esc_html_e( 'Boost Your Revenue', 'surecart' ); ?></sc-text>
-					</sc-flex>
-					<sc-text><?php esc_html_e( 'Unlock revenue boosting features when you upgrade to Pro!', 'surecart' ); ?></sc-text>
-					<sc-button type="primary" href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank">
-						<?php esc_html_e( 'Upgrade To Premium', 'surecart' ); ?>
-					</sc-button>
-				</sc-flex>
-			</sc-card>
-		</div>
-	<?php endif; ?>
-
 	<a href="https://surecart.com/support/" target="_blank" class="surecart-help">
 		<sc-icon style="font-size: 18px; width: 22px; stroke-width: 4;" name="life-buoy"></sc-icon>
 		<?php esc_html_e( 'Help', 'surecart' ); ?>
