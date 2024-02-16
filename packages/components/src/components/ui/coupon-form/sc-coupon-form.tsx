@@ -208,9 +208,10 @@ export class ScCouponForm {
               </span>
             </Fragment>
           ) : (
-            <sc-tag class="coupon__status" type="warning" slot="price-description">
+            <div class="coupon__status" slot="price-description">
+              <sc-icon name="alert-triangle" />
               {getHumanDiscountRedeemableStatus(this.discount?.redeemable_status)}
-            </sc-tag>
+            </div>
           )}
         </sc-line-item>
       );
