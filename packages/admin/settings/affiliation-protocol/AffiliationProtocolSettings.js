@@ -304,13 +304,15 @@ export default () => {
 						css={css`
 							text-decoration: underline;
 							cursor: pointer;
+							display: flex;
+							justify-content: flex-end;
 						`}
 						onClick={() => {
 							setTrackingScriptDialog(true);
 						}}
 					>
 						{__(
-							'Add Tracking Script to a different site.',
+							'Add Tracking Script to a different site?',
 							'surecart'
 						)}
 					</span>
