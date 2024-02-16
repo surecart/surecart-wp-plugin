@@ -43,11 +43,11 @@ export const preview = async () => {
   } catch (error) {
     console.error(error);
 
-    if (error.additional_errors.find(error => error?.options?.purchasable_statuses?.includes('out_of_stock'))) {
+    if ((error?.additional_errors || []).find(error => error?.data?.options?.purchasable_statuses?.includes('out_of_stock'))) {
       return createErrorNotice({ code: 'out_of_stock', message: __('Apologies, this is currently out of stock.', 'surecart') });
     }
 
-    if (error.additional_errors.find(error => error?.code === 'line_item.upsell.expired')) {
+    if ((error?.additional_errors || []).find(error => error?.code === 'line_item.upsell.expired')) {
       state.loading = 'idle';
       createErrorNotice({ code: 'expired', message: __('This offer has expired.', 'surecart') });
       return decline();
