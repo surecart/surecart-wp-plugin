@@ -3,38 +3,41 @@ import { css, jsx } from '@emotion/core';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import useEntity from '../../hooks/useEntity';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import Error from '../../components/Error';
 import SettingsBox from '../SettingsBox';
 import {
-	ScButton,
-	ScFormControl,
-	ScIcon,
 	ScSwitch,
-	ScAlert,
 	ScTextarea,
 	ScInput,
 	ScSelect,
 	ScDialog,
 	ScRadioGroup,
 	ScRadio,
+	ScPriceInput,
 } from '@surecart/components-react';
 
 export default () => {
 	const [error, setError] = useState(null);
 	const [trackingScriptDialog, setTrackingScriptDialog] = useState(false);
-	const [commisionType, setCommisionType] = useState(false);
 	const { save } = useSave();
-	const { editEntityRecord } = useDispatch(coreStore);
 	const {
 		item: affiliationProtocolItem,
 		itemError: affiliationProtocolItemError,
 		editItem: editAffiliationProtocolItem,
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
+
+	const type = affiliationProtocolItem?.amount_commission
+		? 'fixed'
+		: 'percentage';
+
+	const [commisionType, setCommisionType] = useState(null);
+
+	useEffect(() => {
+		setCommisionType(type);
+	}, [type]);
 
 	/**
 	 * Form is submitted.
@@ -335,6 +338,61 @@ export default () => {
 				)}
 				loading={!hasLoadedAffiliationProtocolItem}
 			>
+				<ScRadioGroup
+					label={__('Choose a Commission type', 'surecart')}
+					onScChange={(e) => setCommisionType(e.target.value)}
+				>
+					<ScRadio
+						value="percentage"
+						checked={commisionType === 'percentage'}
+					>
+						{__('Percentage', 'surecart')}
+					</ScRadio>
+					<ScRadio value="fixed" checked={commisionType === 'fixed'}>
+						{__('Flat Rate', 'surecart')}
+					</ScRadio>
+				</ScRadioGroup>
+				{commisionType === 'percentage' ? (
+					<ScInput
+						type="number"
+						min="0"
+						disabled={commisionType !== 'percentage'}
+						max="100"
+						attribute="percent_commission"
+						label={__('Percent Commission', 'surecart')}
+						value={
+							affiliationProtocolItem?.percent_commission || null
+						}
+						onScInput={(e) => {
+							editAffiliationProtocolItem({
+								percent_commission: e.target.value,
+								amount_commission: null,
+							});
+						}}
+						required={commisionType === 'percentage'}
+					>
+						<span slot="suffix">%</span>
+					</ScInput>
+				) : (
+					<ScPriceInput
+						currencyCode={scData?.currency}
+						disabled={commisionType === 'percentage'}
+						attribute="amount_commission"
+						label={__('Amount Commission', 'surecart')}
+						value={
+							affiliationProtocolItem?.amount_commission ||
+							null ||
+							null
+						}
+						required={commisionType === 'fixed'}
+						onScInput={(e) => {
+							editAffiliationProtocolItem({
+								amount_commission: e.target.value,
+								percent_commission: null,
+							});
+						}}
+					/>
+				)}
 				<ScSwitch
 					checked={
 						affiliationProtocolItem?.recurring_commissions_enabled
