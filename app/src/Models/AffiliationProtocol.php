@@ -19,5 +19,4 @@ class AffiliationProtocol extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'affiliation_protocol';
-
 }
