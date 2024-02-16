@@ -41,10 +41,19 @@ export const preview = async () => {
     state.checkout = checkout as Checkout;
     state.line_item = lineItem as LineItem;
   } catch (error) {
-    // TODO: Handle this "shotgun" style.
-    // In the future, if out of stock, maybe we decline it. But for now, just show an error.
-    createErrorNotice(__('Apologies, this offer is no longer available.', 'surecart'));
-    // createErrorNotice(error);
+    console.error(error);
+
+    if (error.additional_errors.find(error => error?.options?.purchasable_statuses?.includes('out_of_stock'))) {
+      return createErrorNotice({ code: 'out_of_stock', message: __('Apologies, this is currently out of stock.', 'surecart') });
+    }
+
+    if (error.additional_errors.find(error => error?.code === 'line_item.upsell.expired')) {
+      state.loading = 'idle';
+      createErrorNotice({ code: 'expired', message: __('This offer has expired.', 'surecart') });
+      return decline();
+    }
+
+    createErrorNotice(error);
   } finally {
     state.loading = 'idle';
   }

@@ -35,8 +35,8 @@ export class ScUpsellSubmitButton {
           'is-busy': isBusy(),
           'is-disabled': upsellState.disabled,
           // TODO: change this to out of stock error message.
-          'is-sold-out': (isProductOutOfStock(this.getUpsellProductId()) && !isSelectedVariantMissing(this.getUpsellProductId())) || !!noticesState?.message,
-          'is-unavailable': isSelectedVariantMissing(this.getUpsellProductId()),
+          'is-sold-out': (isProductOutOfStock(this.getUpsellProductId()) && !isSelectedVariantMissing(this.getUpsellProductId())) || noticesState?.code === 'out_of_stock',
+          'is-unavailable': isSelectedVariantMissing(this.getUpsellProductId()) || noticesState?.code === 'expired',
         }}
         onClick={e => this.handleAddToOrderClick(e)}
       >
