@@ -40,23 +40,15 @@
 			<?php esc_html_e( 'Subscriptions', 'surecart' ); ?>
 		</sc-tab>
 
-		<sc-upgrade-required required="<?php echo empty( $entitlements->abandoned_checkouts ) ? 'true' : 'false'; ?>">
-			<sc-tab
-			disabled="<?php echo empty( $entitlements->subscription_preservation ) ? 'true' : 'false'; ?>"
-			href="
-			<?php
-			echo empty( $entitlements->subscription_preservation ) ?
-				'#' :
-				esc_url( add_query_arg( [ 'tab' => 'subscription_preservation' ], menu_page_url( 'sc-settings', false ) ) );
-			?>
-			" <?php echo 'subscription_preservation' === $tab ? 'active' : ''; ?>>
-				<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="bar-chart-2"></sc-icon>
-				<?php esc_html_e( 'Subscription Saver', 'surecart' ); ?>
-				<?php if ( empty( $entitlements->subscription_preservation ) ) : ?>
-					<sc-premium-tag></sc-premium-tag>
-				<?php endif; ?>
-			</sc-tab>
-		</sc-upgrade-required>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'subscription_preservation' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'subscription_preservation' === $tab ? 'active' : ''; ?>>
+			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="bar-chart-2"></sc-icon>
+			<?php esc_html_e( 'Subscription Saver', 'surecart' ); ?>
+		</sc-tab>
+
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'affiliation_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'affiliation_protocol' === $tab ? 'active' : ''; ?> >
+			<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="mouse-pointer" slot="prefix"></sc-icon>
+			<?php esc_html_e( 'Affiliates', 'surecart' ); ?>
+		</sc-tab>
 		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'tax_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'tax_protocol' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="tag"></sc-icon>
 			<?php esc_html_e( 'Taxes', 'surecart' ); ?>
@@ -83,11 +75,6 @@
 	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'advanced' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'advanced' === $tab ? 'active' : ''; ?> >
 		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
 		<?php esc_html_e( 'Advanced', 'surecart' ); ?>
-	</sc-tab>
-
-	<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'affiliation_protocol' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'affiliation_protocol' === $tab ? 'active' : ''; ?> >
-		<sc-icon style="font-size: 18px; width: 18px; stroke-width: 4; opacity: 0.7" name="sliders" slot="prefix"></sc-icon>
-		<?php esc_html_e( 'Affiliates', 'surecart' ); ?>
 	</sc-tab>
 
 	<?php if ( $is_free ) : ?>
