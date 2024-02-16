@@ -39,10 +39,10 @@ export const preview = async () => {
 
     state.checkout = checkout as Checkout;
     state.line_item = lineItem as LineItem;
-
-    state.loading = 'idle';
   } catch (error) {
     createErrorNotice(error);
+  } finally {
+    state.loading = 'idle';
   }
 };
 
@@ -60,6 +60,7 @@ export const accept = async () => {
 
     handleCompletion(checkout);
   } catch (error) {
+    state.loading = 'idle';
     createErrorNotice(error);
   }
 };
