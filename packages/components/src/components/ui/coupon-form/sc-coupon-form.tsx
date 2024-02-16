@@ -91,19 +91,7 @@ export class ScCouponForm {
   @Watch('discount')
   handleDiscountChange(newValue: DiscountResponse, oldValue: DiscountResponse) {
     if (newValue?.promotion?.code === oldValue?.promotion?.code) return;
-    if (this?.discount?.promotion?.code) {
-      const message = sprintf(
-        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
-        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
-        newValue?.promotion?.code || this.input.value || '',
-        getHumanDiscount(this?.discount?.coupon),
-      );
-      speak(message, 'assertive');
-    } else {
-      // Translators: %s is the coupon code.
-      const message = __('Coupon code removed.', 'sc-coupon-form');
-      speak(message, 'assertive');
-    }
+
     setTimeout(() => {
       if (this?.discount?.promotion?.code) {
         (this.couponTag.shadowRoot.querySelector('*') as any).focus();
