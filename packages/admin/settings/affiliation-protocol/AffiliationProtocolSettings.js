@@ -127,7 +127,11 @@ export default () => {
 				<ScInput
 					label={__('Signup Question', 'surecart')}
 					help={__(
-						'What question do you want to ask affiliates on the signup form? If blank, the default question "How will you promote this store?" will be used.',
+						'What question do you want to ask affiliates on the signup form.',
+						'surecart'
+					)}
+					placeholder={__(
+						'How will you promote this store?',
 						'surecart'
 					)}
 					onScInput={(e) => {
@@ -204,7 +208,7 @@ export default () => {
 					value={signupsUrl}
 				>
 					<ScButton
-						type="link"
+						type="text"
 						circle
 						slot="suffix"
 						size="small"
@@ -222,6 +226,75 @@ export default () => {
 				)}
 				loading={!hasLoadedAffiliationProtocolItem}
 			>
+				<ScSwitch
+					checked={
+						affiliationProtocolItem?.wordpress_plugin_tracking_enabled
+					}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							wordpress_plugin_tracking_enabled:
+								!affiliationProtocolItem?.wordpress_plugin_tracking_enabled,
+						});
+					}}
+				>
+					{__('Tracking', 'surecart')}
+					<span
+						slot="description"
+						css={css`
+							display: inline-flex;
+							gap: var(--sc-spacing-x-small);
+							margin: 0;
+						`}
+						style={{ lineHeight: '1.4' }}
+					>
+						{__(
+							'Track affiliate referrals on this site.',
+							'surecart'
+						)}
+						<span
+							css={css`
+								text-decoration: underline;
+								cursor: pointer;
+							`}
+							onClick={(e) => {
+								e.stopPropagation();
+								e.preventDefault();
+								setTrackingScriptDialog(true);
+							}}
+						>
+							{__(
+								'Want to add tracking to a different site?',
+								'surecart'
+							)}
+						</span>
+					</span>
+				</ScSwitch>
+				<ScDialog
+					open={trackingScriptDialog}
+					onScRequestClose={() => setTrackingScriptDialog(false)}
+					label={__('Tracking Script', 'surecart')}
+				>
+					<ScTextarea
+						help={__(
+							"Copy and paste the tracking code into the <head> or before the closing </body> tag of your website. This should only be added to sites that don't have the script added by the WordPress plugin.",
+							'surecart'
+						)}
+						readonly
+						value={trackingScript}
+					/>
+					<div
+						css={css`
+							display: flex;
+							justify-content: flex-end;
+						`}
+					>
+						<ScButton type="primary" ref={trackingScriptRef}>
+							<ScIcon name="clipboard" slot="prefix" />
+							{__('Copy', 'surecart')}
+						</ScButton>
+					</div>
+				</ScDialog>
 				<div
 					css={css`
 						gap: var(--sc-form-row-spacing);
@@ -267,7 +340,9 @@ export default () => {
 							});
 						}}
 						value={affiliationProtocolItem?.tracking_length_days}
-					/>
+					>
+						<span slot="suffix">{__('days', 'surecart')}</span>
+					</ScInput>
 				</div>
 				<ScSwitch
 					checked={affiliationProtocolItem?.auto_approve_referrals}
@@ -302,63 +377,6 @@ export default () => {
 					}}
 					value={affiliationProtocolItem?.referral_url}
 				/>
-				<ScSwitch
-					checked={
-						affiliationProtocolItem?.wordpress_plugin_tracking_enabled
-					}
-					onClick={(e) => {
-						e.preventDefault();
-						editAffiliationProtocolItem({
-							wordpress_plugin_tracking_enabled:
-								!affiliationProtocolItem?.wordpress_plugin_tracking_enabled,
-						});
-					}}
-				>
-					{__('Tracking', 'surecart')}
-					<span slot="description" style={{ lineHeight: '1.4' }}>
-						{__(
-							'Should the plugin add the tracking script to your site?',
-							'surecart'
-						)}
-					</span>
-				</ScSwitch>
-				<span
-					css={css`
-						text-decoration: underline;
-						cursor: pointer;
-						font-size: var(--sc-font-size-small);
-					`}
-					onClick={() => {
-						setTrackingScriptDialog(true);
-					}}
-				>
-					{__('Add Tracking to a different site?', 'surecart')}
-				</span>
-				<ScDialog
-					open={trackingScriptDialog}
-					onScRequestClose={() => setTrackingScriptDialog(false)}
-					label={__('Tracking Script', 'surecart')}
-				>
-					<ScTextarea
-						help={__(
-							"Copy and paste the tracking code into the <head> or before the closing </body> tag of your website. This should only be added to sites that don't have the script added by the WordPress plugin.",
-							'surecart'
-						)}
-						readonly
-						value={trackingScript}
-					/>
-					<div
-						css={css`
-							display: flex;
-							justify-content: flex-end;
-						`}
-					>
-						<ScButton type="primary" ref={trackingScriptRef}>
-							<ScIcon name="clipboard" slot="prefix" />
-							{__('Copy', 'surecart')}
-						</ScButton>
-					</div>
-				</ScDialog>
 			</SettingsBox>
 			<SettingsBox
 				title={__('Commissions & Payouts', 'surecart')}
