@@ -63,3 +63,23 @@ on('set', (key, checkout: Checkout, oldCheckout: Checkout) => {
     document.dispatchEvent(event);
   }
 });
+
+/**
+ * Checkout updated event.
+ */
+on("set", (key: string, checkout: Checkout, oldCheckout: Checkout) => {
+  if (key !== 'checkout') return; // we only care about checkout
+  if(!state.isCheckoutPage) return; // we don't want to fire this if we are not on the checkout page.
+  if (!oldCheckout?.id) return; // we don't have a saved checkout.
+  if(JSON.stringify(checkout) === JSON.stringify(oldCheckout)) return; // we only care about changes.
+
+
+  const event = new CustomEvent('scCheckoutUpdated', {
+    detail: {
+      currentCheckout: checkout,
+      previousCheckout: oldCheckout
+    },
+    bubbles: true,
+  });
+  document.dispatchEvent(event);
+});

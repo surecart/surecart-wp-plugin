@@ -7,23 +7,25 @@
 
 ## Properties
 
-| Property               | Attribute                | Description                                               | Type                                        | Default             |
-| ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ------------------- |
-| `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`              |
-| `collectionEnabled`    | `collection-enabled`     | Should allow collection filter                            | `boolean`                                   | `true`              |
-| `collectionId`         | `collection-id`          | Show for a specific collection                            | `string`                                    | `null`              |
-| `featured`             | `featured`               | Show only featured products.                              | `boolean`                                   | `false`             |
-| `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`         |
-| `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`         |
-| `limit`                | `limit`                  |                                                           | `number`                                    | `15`                |
-| `paginationAlignment`  | `pagination-alignment`   |                                                           | `string`                                    | `'center'`          |
-| `paginationAutoScroll` | `pagination-auto-scroll` | Should we auto-scroll to the top when paginating via ajax | `boolean`                                   | `true`              |
-| `paginationEnabled`    | `pagination-enabled`     | Should we paginate?                                       | `boolean`                                   | `true`              |
-| `products`             | --                       |                                                           | `Product[]`                                 | `undefined`         |
-| `query`                | `query`                  | Query to search for                                       | `string`                                    | `undefined`         |
-| `searchEnabled`        | `search-enabled`         | Should allow search                                       | `boolean`                                   | `true`              |
-| `sort`                 | `sort`                   | Sort                                                      | `string`                                    | `'created_at:desc'` |
-| `sortEnabled`          | `sort-enabled`           | Should allow search                                       | `boolean`                                   | `true`              |
+| Property               | Attribute                | Description                                               | Type                                        | Default                                   |
+| ---------------------- | ------------------------ | --------------------------------------------------------- | ------------------------------------------- | ----------------------------------------- |
+| `ajaxPagination`       | `ajax-pagination`        | Should we paginate?                                       | `boolean`                                   | `true`                                    |
+| `collectionEnabled`    | `collection-enabled`     | Should allow collection filter                            | `boolean`                                   | `true`                                    |
+| `collectionId`         | `collection-id`          | Show for a specific collection                            | `string`                                    | `null`                                    |
+| `featured`             | `featured`               | Show only featured products.                              | `boolean`                                   | `false`                                   |
+| `ids`                  | --                       | Limit to a set of ids.                                    | `string[]`                                  | `undefined`                               |
+| `layoutConfig`         | --                       |                                                           | `{ blockName: string; attributes: any; }[]` | `undefined`                               |
+| `limit`                | `limit`                  |                                                           | `number`                                    | `15`                                      |
+| `page`                 | `page`                   |                                                           | `number`                                    | `1`                                       |
+| `pagination`           | --                       |                                                           | `{ total: number; total_pages: number; }`   | `{     total: 0,     total_pages: 0,   }` |
+| `paginationAlignment`  | `pagination-alignment`   |                                                           | `string`                                    | `'center'`                                |
+| `paginationAutoScroll` | `pagination-auto-scroll` | Should we auto-scroll to the top when paginating via ajax | `boolean`                                   | `true`                                    |
+| `paginationEnabled`    | `pagination-enabled`     | Should we paginate?                                       | `boolean`                                   | `true`                                    |
+| `products`             | --                       |                                                           | `Product[]`                                 | `undefined`                               |
+| `query`                | `query`                  | Query to search for                                       | `string`                                    | `undefined`                               |
+| `searchEnabled`        | `search-enabled`         | Should allow search                                       | `boolean`                                   | `true`                                    |
+| `sort`                 | `sort`                   | Sort                                                      | `string`                                    | `'created_at:desc'`                       |
+| `sortEnabled`          | `sort-enabled`           | Should allow search                                       | `boolean`                                   | `true`                                    |
 
 
 ## Events

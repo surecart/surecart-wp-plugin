@@ -24243,6 +24243,39 @@
           "required": false
         },
         {
+          "name": "page",
+          "type": "number",
+          "mutable": true,
+          "attr": "page",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "1",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "pagination",
+          "type": "{ total: number; total_pages: number; }",
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "default": "{\n    total: 0,\n    total_pages: 0,\n  }",
+          "values": [
+            {
+              "type": "{ total: number; total_pages: number; }"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "paginationAlignment",
           "type": "string",
           "mutable": false,
