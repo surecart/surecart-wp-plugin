@@ -8,7 +8,6 @@ use SureCart\Request\RequestServiceProvider;
 use SureCart\Rest\AffiliationProtocolRestServiceProvider;
 use SureCart\Support\Errors\ErrorsServiceProvider;
 use SureCart\Tests\SureCartUnitTestCase;
-use SureCart\WordPress\PluginServiceProvider;
 
 class AffiliationProtocolRestServiceProviderTest extends SureCartUnitTestCase
 {
@@ -35,16 +34,13 @@ class AffiliationProtocolRestServiceProviderTest extends SureCartUnitTestCase
 
     public function requestProvider()
     {
-        $has_permissions = self::factory()->user->create_and_get();
-        $has_permissions->add_cap('manage_options');
-
         return [
             'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/affiliation_protocol', 401],
             'Find: Missing Capability' => [[], 'GET', '/surecart/v1/affiliation_protocol', 403],
-            'Find: Has Capability' => [['manage_options'], 'GET', '/surecart/v1/affiliation_protocol', 200],
+            'Find: Has Capability' => [['manage_sc_shop_settings'], 'GET', '/surecart/v1/affiliation_protocol', 200],
 			'Edit: Unauthenticated' => [null, 'PATCH', '/surecart/v1/affiliation_protocol', 401],
             'Edit: Missing Capability' => [[], 'PATCH', '/surecart/v1/affiliation_protocol', 403],
-            'Edit: Has Capability' => [['manage_options'], 'PATCH', '/surecart/v1/affiliation_protocol', 200],
+            'Edit: Has Capability' => [['manage_sc_shop_settings'], 'PATCH', '/surecart/v1/affiliation_protocol', 200],
         ];
     }
 

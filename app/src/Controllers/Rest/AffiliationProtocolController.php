@@ -16,7 +16,6 @@ class AffiliationProtocolController {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function find( \WP_REST_Request $request ) {
-		error_log( 'AffiliationProtocolController::find' );
 		return AffiliationProtocol::find();
 	}
 
