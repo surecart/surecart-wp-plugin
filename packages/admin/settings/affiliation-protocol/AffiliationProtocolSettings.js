@@ -18,10 +18,15 @@ import {
 	ScTextarea,
 	ScInput,
 	ScSelect,
+	ScDialog,
+	ScRadioGroup,
+	ScRadio,
 } from '@surecart/components-react';
 
 export default () => {
 	const [error, setError] = useState(null);
+	const [trackingScriptDialog, setTrackingScriptDialog] = useState(false);
+	const [commisionType, setCommisionType] = useState(false);
 	const { save } = useSave();
 	const { editEntityRecord } = useDispatch(coreStore);
 	const {
@@ -30,6 +35,7 @@ export default () => {
 		editItem: editAffiliationProtocolItem,
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
+
 	/**
 	 * Form is submitted.
 	 */
@@ -231,6 +237,159 @@ export default () => {
 						value={affiliationProtocolItem?.tracking_length_days}
 					/>
 				</div>
+				<ScSwitch
+					checked={affiliationProtocolItem?.auto_approve_referrals}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							auto_approve_referrals:
+								!affiliationProtocolItem?.auto_approve_referrals,
+						});
+					}}
+				>
+					{__('Auto Approve New Referrals', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Do you want to automatically approve new referrals? If disabled, you will need to manually approve each referral.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScInput
+					label={__('Affiliate Referral URL', 'surecart')}
+					help={__(
+						'Where should affiliates send their traffic? This URL will be used to generate the affiliate referral link for each affiliate with their unique affiliate code.',
+						'surecart'
+					)}
+					type="url"
+					onScInput={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							referral_url: e.target.value,
+						});
+					}}
+					value={affiliationProtocolItem?.referral_url}
+				/>
+				<div
+					css={css`
+						gap: var(--sc-form-row-spacing);
+						display: grid;
+						grid-template-columns: repeat(2, minmax(0, 1fr));
+					`}
+				>
+					<ScSwitch
+						checked={
+							affiliationProtocolItem?.wordpress_plugin_tracking_enabled
+						}
+						onClick={(e) => {
+							e.preventDefault();
+							editAffiliationProtocolItem({
+								wordpress_plugin_tracking_enabled:
+									!affiliationProtocolItem?.wordpress_plugin_tracking_enabled,
+							});
+						}}
+					>
+						{__('Tracking', 'surecart')}
+						<span slot="description" style={{ lineHeight: '1.4' }}>
+							{__(
+								'Should the plugin add the tracking script to your site?',
+								'surecart'
+							)}
+						</span>
+					</ScSwitch>
+					<span
+						css={css`
+							text-decoration: underline;
+							cursor: pointer;
+						`}
+						onClick={() => {
+							setTrackingScriptDialog(true);
+						}}
+					>
+						{__(
+							'Add Tracking Script to a different site.',
+							'surecart'
+						)}
+					</span>
+					<ScDialog
+						open={trackingScriptDialog}
+						onScRequestClose={() => setTrackingScriptDialog(false)}
+						label={__('Tracking Script', 'surecart')}
+					>
+						<ScTextarea
+							help={__(
+								"Copy and paste the tracking code into the <head> or before the closing </body> tag of your website. This should only be added to sites that don't have the script added by the WordPress plugin.",
+								'surecart'
+							)}
+							readonly
+							value={`<script>window.SureCartAffiliatesConfig = {"publicToken":"pt_vihbRpGvy8e5BprY2ukthxgM"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`}
+						/>
+					</ScDialog>
+				</div>
+			</SettingsBox>
+			<SettingsBox
+				title={__('Commissions & Payouts', 'surecart')}
+				description={__(
+					'Configure how affiliates earn commissions and how they get paid.',
+					'surecart'
+				)}
+				loading={!hasLoadedAffiliationProtocolItem}
+			>
+				<ScSwitch
+					checked={
+						affiliationProtocolItem?.recurring_commissions_enabled
+					}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							recurring_commissions_enabled:
+								!affiliationProtocolItem?.recurring_commissions_enabled,
+						});
+					}}
+				>
+					{__('Subscription Commissions', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Do you want to award commissions on subscription renewal payments?',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={
+						affiliationProtocolItem?.repeat_customer_commissions_enabled
+					}
+					onClick={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							repeat_customer_commissions_enabled:
+								!affiliationProtocolItem?.repeat_customer_commissions_enabled,
+						});
+					}}
+				>
+					{__('Lifetime Commissions', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Do you want to award commissions on future purchases?',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScTextarea
+					label={__('Payout Instructions', 'surecart')}
+					help={__(
+						'Let affiliates know how they will be paid, how often, and any terms or conditions for payment. These details will be shown to affiliates so they know what to expect.',
+						'surecart'
+					)}
+					onScInput={(e) => {
+						e.preventDefault();
+						editAffiliationProtocolItem({
+							payout_description: e.target.value,
+						});
+					}}
+					value={affiliationProtocolItem?.payout_description}
+					name="payout_description"
+				/>
 			</SettingsBox>
 		</SettingsTemplate>
 	);
