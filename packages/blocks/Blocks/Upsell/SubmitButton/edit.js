@@ -30,7 +30,7 @@ import { useRef } from '@wordpress/element';
 /**
  * Component Dependencies
  */
-import { ScIcon, ScUpsellSubmitButton } from '@surecart/components-react';
+import { ScIcon } from '@surecart/components-react';
 
 function WidthPanel({ selectedWidth, setAttributes }) {
 	function handleChange(newWidth) {
@@ -134,7 +134,7 @@ export default ({ className, attributes, setAttributes }) => {
 				/>
 			</InspectorControls>
 
-			<ScUpsellSubmitButton
+			<div
 				{...blockProps}
 				className={classnames(blockProps.className, {
 					'wp-block-button': true,
@@ -170,7 +170,14 @@ export default ({ className, attributes, setAttributes }) => {
 				>
 					<span>
 						{show_icon && (
-							<ScIcon name="lock" size="small"></ScIcon>
+							<ScIcon
+								name="lock"
+								size="small"
+								style={{
+									paddingRight: 'var(--sc-spacing-small)',
+									verticalAlign: 'middle',
+								}}
+							></ScIcon>
 						)}
 						<RichText
 							tagName="span"
@@ -180,7 +187,7 @@ export default ({ className, attributes, setAttributes }) => {
 						/>
 					</span>
 				</a>
-			</ScUpsellSubmitButton>
+			</div>
 		</div>
 	);
 };
