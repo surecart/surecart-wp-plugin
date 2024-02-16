@@ -175,7 +175,7 @@ export class ScLicense {
               <sc-stacked-list-row style={{ '--columns': '2' }}>
                 <div>{__('Activations Count', 'surecart')}</div>
                 <span>
-                  {this.license?.activations?.pagination?.count} / {this.license?.activation_limit || <span>&infin;</span>}
+                  {this.license?.activation_count} / {this.license?.activation_limit || <span>&infin;</span>}
                 </span>
               </sc-stacked-list-row>
             </sc-stacked-list>
