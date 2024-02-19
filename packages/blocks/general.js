@@ -81,5 +81,10 @@ registerBlocksForTemplates({
 		'sc-part-products-info',
 		'sc-product-collection',
 		'sc-part-product-collection',
+
+		'surecart/surecart//upsell-info',
+		'surecart/surecart//single-upsell',
+		'sc-upsell',
+		'sc-part-upsell-info',
 	],
 });

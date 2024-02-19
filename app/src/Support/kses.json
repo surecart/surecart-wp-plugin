@@ -75,6 +75,7 @@
     "slot": true
   },
   "sc-button": {
+    "autofocus": true,
     "busy": true,
     "caret": true,
     "circle": true,
@@ -998,6 +999,7 @@
     "checked": true,
     "disabled": true,
     "href": true,
+    "target": true,
     "value": true,
     "style": true,
     "id": true,
@@ -1449,6 +1451,23 @@
   },
   "sc-premium-tag": {
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-price": {
+    "ad-hoc": true,
+    "amount": true,
+    "currency": true,
+    "recurring-interval": true,
+    "recurring-interval-count": true,
+    "recurring-period-count": true,
+    "sale-text": true,
+    "scratch-amount": true,
+    "setup-fee-amount": true,
+    "setup-fee-name": true,
+    "trial-duration-days": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2075,6 +2094,20 @@
     "class": true,
     "slot": true
   },
+  "sc-summary": {
+    "busy": true,
+    "closed-text": true,
+    "collapsed": true,
+    "collapsed-on-desktop": true,
+    "collapsed-on-mobile": true,
+    "collapsible": true,
+    "loading": true,
+    "open-text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-switch": {
     "checked": true,
     "disabled": true,
@@ -2269,6 +2302,37 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-countdown-timer": {
+    "show-icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-no-thanks-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-submit-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-totals": {
     "style": true,
     "id": true,
     "class": true,

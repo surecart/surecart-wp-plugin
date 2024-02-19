@@ -196,7 +196,7 @@ export class ScSelectDropdown {
     if (checked) {
       return true;
     }
-    return value && this.value === value;
+    return !!value && this.value === value;
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
