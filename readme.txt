@@ -226,7 +226,20 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
-= 2.18.0 - February 15th, 2024 =
+= 2.19.0 - February 20th, 2024 =
+- Improvement: Add ability for customers to manage license activations on the customer dashboard
+- Improvement: Add licenses and edit license links on admin customer page.
+- Improvement: Manage affiliate settings from plugin settings page.
+- Improvement:  Update onboarding flow to use new seeding option.
+- Improvement: Add a different message to the Subscription Saver when user tries to cancel Subscription after applying the Subscription Saver discount before
+- Improvement: Add TND currency to currency list.
+- Improvement: Update getting started links on customer dashboard.
+- Improvement: Show coupon validation issues inline.
+- Fix: Product variant purchase integrations not working in some cases.
+- Fix: Issue with free subscriptions not able to upgrade with no payment method.
+- Fix: Jetpack compatibility with hotkeys in some instances.
+
+= 2.18.0 - February 19th, 2024 =
 - New: 1-click upsells - add post-purchase funnels to your checkout flows.
 
 = 2.17.2 - February 13th, 2024 =
