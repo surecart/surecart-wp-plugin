@@ -127,7 +127,7 @@ export default () => {
 				<ScInput
 					label={__('Signup Question', 'surecart')}
 					help={__(
-						'What question do you want to ask affiliates on the signup form.',
+						'What question do you want to ask affiliates on the signup form? If blank, the default question "How will you promote this store?" will be used.',
 						'surecart'
 					)}
 					placeholder={__(
