@@ -75,6 +75,7 @@
     "slot": true
   },
   "sc-button": {
+    "autofocus": true,
     "busy": true,
     "caret": true,
     "circle": true,
@@ -561,6 +562,26 @@
     "class": true,
     "slot": true
   },
+  "sc-customer-phone": {
+    "autofocus": true,
+    "disabled": true,
+    "error": true,
+    "has-focus": true,
+    "help": true,
+    "invalid": true,
+    "label": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-dashboard-customer-details": {
     "customer-id": true,
     "heading": true,
@@ -902,11 +923,24 @@
     "class": true,
     "slot": true
   },
+  "sc-license": {
+    "license-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-license-activations": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-licenses-list": {
-    "activations": true,
-    "copied": true,
+    "all-link": true,
     "heading": true,
-    "licenses": true,
+    "is-customer": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -998,6 +1032,7 @@
     "checked": true,
     "disabled": true,
     "href": true,
+    "target": true,
     "value": true,
     "style": true,
     "id": true,
@@ -1449,6 +1484,23 @@
   },
   "sc-premium-tag": {
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-price": {
+    "ad-hoc": true,
+    "amount": true,
+    "currency": true,
+    "recurring-interval": true,
+    "recurring-interval-count": true,
+    "recurring-period-count": true,
+    "sale-text": true,
+    "scratch-amount": true,
+    "setup-fee-amount": true,
+    "setup-fee-name": true,
+    "trial-duration-days": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2076,6 +2128,20 @@
     "class": true,
     "slot": true
   },
+  "sc-summary": {
+    "busy": true,
+    "closed-text": true,
+    "collapsed": true,
+    "collapsed-on-desktop": true,
+    "collapsed-on-mobile": true,
+    "collapsible": true,
+    "loading": true,
+    "open-text": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-switch": {
     "checked": true,
     "disabled": true,
@@ -2270,6 +2336,37 @@
     "open": true,
     "required": true,
     "size": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-countdown-timer": {
+    "show-icon": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-no-thanks-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-submit-button": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-upsell-totals": {
     "style": true,
     "id": true,
     "class": true,

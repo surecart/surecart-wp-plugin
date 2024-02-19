@@ -16,6 +16,9 @@ export class ScMenuItem {
   /** Optional link to follow. */
   @Prop() href: string;
 
+  /** The target of the link. */
+  @Prop() target: string;
+
   /** Draws the item in a checked state. */
   @Prop({ reflect: true }) checked: boolean = false;
 
@@ -73,6 +76,7 @@ export class ScMenuItem {
           }
         }}
         aria-label={this.el.innerText}
+        target={this.target}
       >
         <span part="checked-icon" class="menu-item__check">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">

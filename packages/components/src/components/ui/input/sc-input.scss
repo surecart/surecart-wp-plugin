@@ -178,11 +178,13 @@
     margin-left: var(--sc-input-spacing-medium) !important;
   }
 
-  .input__suffix ::slotted(:not(sc-button[size='medium'])) {
+  .input__suffix ::slotted(:not(sc-button[size='medium']):not(sc-button[size='small'])) {
     margin-right: var(--sc-input-spacing-medium) !important;
   }
 
-  .input__suffix ::slotted(sc-tag) {
+  .input__suffix ::slotted(sc-tag),
+  .input__suffix ::slotted(sc-button[size='small']) {
+    line-height: 1;
     margin-right: var(--sc-input-spacing-small) !important;
   }
 

@@ -34,6 +34,20 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'upsell',
+		kind: 'surecart',
+		label: __('Upsell', 'surecart'),
+		baseURL: '/surecart/v1/upsells',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'upsell-funnel',
+		kind: 'surecart',
+		label: __('Upsell Funnel', 'surecart'),
+		baseURL: '/surecart/v1/upsell_funnels',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'cancellation_act',
 		kind: 'surecart',
 		label: __('Cancellation Acts', 'surecart'),
@@ -129,7 +143,7 @@ dispatch(coreStore).addEntities([
 		name: 'license',
 		kind: 'surecart',
 		label: __('License', 'surecart'),
-		baseURL: '/surecart/v1/licences',
+		baseURL: '/surecart/v1/licenses',
 		baseURLParams: { context: 'edit' },
 	},
 	{
