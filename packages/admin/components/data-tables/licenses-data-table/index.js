@@ -1,6 +1,13 @@
+/**
+ * External dependencies.
+ */
 import { __, _n } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies.
+ */
 import DataTable from '../../DataTable';
-import purchaseItem from './purchase-item';
+import licenseItem from './license-item';
 
 export default ({
 	data,
@@ -16,12 +23,12 @@ export default ({
 }) => {
 	return (
 		<DataTable
-			title={__('Purchases', 'surecart')}
+			title={__('Licenses', 'surecart')}
 			columns={columns}
 			empty={empty || __('None found.', 'surecart')}
 			items={(data || [])
 				.sort((a, b) => b.created_at - a.created_at)
-				.map((purchase) => purchaseItem(purchase))}
+				.map((data) => licenseItem(data))}
 			loading={isLoading}
 			{...props}
 		/>
