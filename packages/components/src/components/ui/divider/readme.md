@@ -35,6 +35,7 @@
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell-totals](../../controllers/upsell/sc-upsell-totals)
 
 ### Graph
 ```mermaid
@@ -54,6 +55,7 @@ graph TD;
   sc-subscription-next-payment --> sc-divider
   sc-subscriptions-list --> sc-divider
   sc-upcoming-invoice --> sc-divider
+  sc-upsell-totals --> sc-divider
   style sc-divider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

@@ -53,6 +53,8 @@ return [
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\BumpRestServiceProvider::class,
+		\SureCart\Rest\UpsellFunnelRestServiceProvider::class,
+		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
@@ -199,6 +201,13 @@ return [
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
+
+		\SureCartBlocks\Blocks\Upsell\Upsell\Block::class,
+		\SureCartBlocks\Blocks\Upsell\Title\Block::class,
+		\SureCartBlocks\Blocks\Upsell\UpsellTotals\Block::class,
+		\SureCartBlocks\Blocks\Upsell\CountdownTimer\Block::class,
+		\SureCartBlocks\Blocks\Upsell\SubmitButton\Block::class,
+		\SureCartBlocks\Blocks\Upsell\NoThanksButton\Block::class,
 	],
 
 	/** Which components to preload for each block. */

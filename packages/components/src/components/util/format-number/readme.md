@@ -42,13 +42,13 @@
  - [sc-order-detail](../../controllers/confirmation/order-detail)
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
+ - [sc-price](../../ui/price)
  - [sc-price-choice](../../controllers/checkout-form/price-choice)
  - [sc-price-choice-container](../../ui/sc-price-choice-container)
  - [sc-price-range](../../ui/sc-price-range)
  - [sc-product-donation-amount-choice](../../controllers/checkout-form/product-donation-amount-choice)
  - [sc-product-item-price](../../controllers/products/sc-product-item-price)
  - [sc-product-line-item](../../ui/product-line-item)
- - [sc-product-price](../../controllers/product/sc-product-price)
  - [sc-product-price-choices](../../controllers/product/sc-product-price-choices)
  - [sc-product-selected-price](../../controllers/checkout-form/sc-product-selected-price)
  - [sc-recurring-price-choice-container](../../ui/sc-recurring-price-choice-container)
@@ -59,6 +59,7 @@
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-total](../../controllers/checkout-form/total)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell-totals](../../controllers/upsell/sc-upsell-totals)
 
 ### Graph
 ```mermaid
@@ -77,13 +78,13 @@ graph TD;
   sc-order-detail --> sc-format-number
   sc-order-summary --> sc-format-number
   sc-orders-list --> sc-format-number
+  sc-price --> sc-format-number
   sc-price-choice --> sc-format-number
   sc-price-choice-container --> sc-format-number
   sc-price-range --> sc-format-number
   sc-product-donation-amount-choice --> sc-format-number
   sc-product-item-price --> sc-format-number
   sc-product-line-item --> sc-format-number
-  sc-product-price --> sc-format-number
   sc-product-price-choices --> sc-format-number
   sc-product-selected-price --> sc-format-number
   sc-recurring-price-choice-container --> sc-format-number
@@ -94,6 +95,7 @@ graph TD;
   sc-subscription-switch --> sc-format-number
   sc-total --> sc-format-number
   sc-upcoming-invoice --> sc-format-number
+  sc-upsell-totals --> sc-format-number
   style sc-format-number fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

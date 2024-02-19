@@ -79,6 +79,27 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 				]
 			);
 		};
+
+		$container['surecart.settings.permalinks.upsell'] = function() {
+			return new PermalinkSettingService(
+				[
+					'slug'        => 'upsell',
+					'label'       => __( 'SureCart Upsell Permalinks', 'surecart' ),
+					/* translators: %s: Home URL */
+					'description' => sprintf( __( 'If you like, you may enter custom structures for your upsell URLs here. For example, using <code>offers</code> would make your upsell\'s links like <code>%soffers/upsell-id/</code>.', 'surecart' ), esc_url( home_url( '/' ) ) ),
+					'options'     => [
+						[
+							'value' => 'offer',
+							'label' => __( 'Default', 'surecart' ),
+						],
+						[
+							'value' => 'special-offer',
+							'label' => __( 'Special Offer', 'surecart' ),
+						],
+					],
+				]
+			);
+		};
 	}
 
 	/**
@@ -108,6 +129,14 @@ class PermalinkServiceProvider implements ServiceProviderInterface {
 			->params( [ 'sc_collection_page_id' ] )
 			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'collection_page' ) ) . '/([a-z0-9-]+)[/]?$' )
 			->query( 'index.php?sc_collection_page_id=$matches[1]' )
+			->create();
+
+		// Upsell.
+		$container['surecart.settings.permalinks.upsell']->bootstrap();
+		( new PermalinkService() )
+			->params( [ 'sc_upsell_id' ] )
+			->url( untrailingslashit( \SureCart::settings()->permalinks()->getBase( 'upsell_page' ) ) . '/([a-z0-9-]+)[/]?$' )
+			->query( 'index.php?sc_upsell_id=$matches[1]' )
 			->create();
 
 		// Redirect.
