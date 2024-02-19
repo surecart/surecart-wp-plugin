@@ -481,7 +481,9 @@ export default () => {
 						value={
 							affiliationProtocolItem?.recurring_commission_days
 						}
-					/>
+					>
+						<span slot="suffix">{__('Days', 'surecart')}</span>
+					</ScInput>
 				)}
 				<ScSwitch
 					checked={
@@ -507,7 +509,7 @@ export default () => {
 					<ScInput
 						label={__('Lifetime Commission Duration', 'surecart')}
 						help={__(
-							'For how long should future purchase commissions be awarded? (Leave empty if you want to award commission forever.))',
+							'For how long should future purchase commissions be awarded? (Leave empty if you want to award commission forever.)',
 							'surecart'
 						)}
 						type="number"
@@ -520,7 +522,9 @@ export default () => {
 						value={
 							affiliationProtocolItem?.repeat_customer_commission_days
 						}
-					/>
+					>
+						<span slot="suffix">{__('Days', 'surecart')}</span>
+					</ScInput>
 				)}
 				<ScTextarea
 					label={__('Payout Instructions', 'surecart')}
