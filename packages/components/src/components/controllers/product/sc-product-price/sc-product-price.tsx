@@ -135,11 +135,11 @@ export class ScProductPrice {
             return this.renderVariantPrice(state[this.productId]?.selectedVariant);
           }
 
-          if (state[this.productId].selectedPrice) {
+          if (state[this.productId]?.selectedPrice) {
             return this.renderPrice(state[this.productId].selectedPrice);
           }
 
-          if (state[this.productId].prices.length) {
+          if (state[this.productId]?.prices?.length) {
             return this.renderRange();
           }
 
