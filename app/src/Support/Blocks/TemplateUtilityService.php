@@ -59,7 +59,7 @@ class TemplateUtilityService {
 				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
 			],
-			'product-info'            => [
+			'upsell-info'             => [
 				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
