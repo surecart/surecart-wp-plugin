@@ -1153,6 +1153,65 @@ export namespace Components {
          */
         "value": string;
     }
+    interface ScCustomerPhone {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus": boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled": boolean;
+        /**
+          * Error focus
+         */
+        "error": boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus": boolean;
+        /**
+          * The input's help text.
+         */
+        "help": string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid": boolean;
+        /**
+          * The input's label.
+         */
+        "label": string;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill": boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder": string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly": boolean;
+        "reportValidity": () => Promise<boolean>;
+        /**
+          * Makes the input a required field.
+         */
+        "required": boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel": boolean;
+        /**
+          * The input's size.
+         */
+        "size": 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value": string;
+    }
     interface ScDashboardCustomerDetails {
         "customerId": string;
         "heading": string;
@@ -1731,11 +1790,34 @@ export namespace Components {
     per_page: number;
   };
     }
+    interface ScLicense {
+        /**
+          * The license id
+         */
+        "licenseId": string;
+    }
+    interface ScLicenseActivations {
+    }
     interface ScLicensesList {
-        "activations": Activation[];
-        "copied": boolean;
+        /**
+          * View all link
+         */
+        "allLink": string;
+        /**
+          * The heading of the licenses
+         */
         "heading": string;
-        "licenses": License[];
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer": boolean;
+        /**
+          * Query to fetch licenses
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -4849,6 +4931,18 @@ declare global {
         prototype: HTMLScInvoicesListElement;
         new (): HTMLScInvoicesListElement;
     };
+    interface HTMLScLicenseElement extends Components.ScLicense, HTMLStencilElement {
+    }
+    var HTMLScLicenseElement: {
+        prototype: HTMLScLicenseElement;
+        new (): HTMLScLicenseElement;
+    };
+    interface HTMLScLicenseActivationsElement extends Components.ScLicenseActivations, HTMLStencilElement {
+    }
+    var HTMLScLicenseActivationsElement: {
+        prototype: HTMLScLicenseActivationsElement;
+        new (): HTMLScLicenseActivationsElement;
+    };
     interface HTMLScLicensesListElement extends Components.ScLicensesList, HTMLStencilElement {
     }
     var HTMLScLicensesListElement: {
@@ -5759,6 +5853,8 @@ declare global {
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
+        "sc-license": HTMLScLicenseElement;
+        "sc-license-activations": HTMLScLicenseActivationsElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
@@ -7167,6 +7263,84 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface ScCustomerPhone {
+        /**
+          * The input's autofocus attribute.
+         */
+        "autofocus"?: boolean;
+        /**
+          * Disables the input.
+         */
+        "disabled"?: boolean;
+        /**
+          * Error focus
+         */
+        "error"?: boolean;
+        /**
+          * Inputs focus
+         */
+        "hasFocus"?: boolean;
+        /**
+          * The input's help text.
+         */
+        "help"?: string;
+        /**
+          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
+         */
+        "invalid"?: boolean;
+        /**
+          * The input's label.
+         */
+        "label"?: string;
+        /**
+          * Emitted when the control loses focus.
+         */
+        "onScBlur"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control's value changes.
+         */
+        "onScChange"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the clear button is activated.
+         */
+        "onScClear"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control gains focus.
+         */
+        "onScFocus"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Emitted when the control receives input.
+         */
+        "onScInput"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
+        /**
+          * Draws a pill-style input with rounded edges.
+         */
+        "pill"?: boolean;
+        /**
+          * The input's placeholder text.
+         */
+        "placeholder"?: string;
+        /**
+          * Makes the input readonly.
+         */
+        "readonly"?: boolean;
+        /**
+          * Makes the input a required field.
+         */
+        "required"?: boolean;
+        /**
+          * Should we show the label
+         */
+        "showLabel"?: boolean;
+        /**
+          * The input's size.
+         */
+        "size"?: 'small' | 'medium' | 'large';
+        /**
+          * The input's value attribute.
+         */
+        "value"?: string;
+    }
     interface ScDashboardCustomerDetails {
         "customerId"?: string;
         "heading"?: string;
@@ -7802,11 +7976,34 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
+    interface ScLicense {
+        /**
+          * The license id
+         */
+        "licenseId"?: string;
+    }
+    interface ScLicenseActivations {
+    }
     interface ScLicensesList {
-        "activations"?: Activation[];
-        "copied"?: boolean;
+        /**
+          * View all link
+         */
+        "allLink"?: string;
+        /**
+          * The heading of the licenses
+         */
         "heading"?: string;
-        "licenses"?: License[];
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer"?: boolean;
+        /**
+          * Query to fetch licenses
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -10415,6 +10612,8 @@ declare namespace LocalJSX {
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
+        "sc-license": ScLicense;
+        "sc-license-activations": ScLicenseActivations;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
@@ -10651,6 +10850,8 @@ declare module "@stencil/core" {
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
+            "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;
+            "sc-license-activations": LocalJSX.ScLicenseActivations & JSXBase.HTMLAttributes<HTMLScLicenseActivationsElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;

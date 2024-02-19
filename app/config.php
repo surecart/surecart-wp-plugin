@@ -165,6 +165,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerLicenses\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboardArea\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
@@ -272,6 +273,7 @@ return [
 	* Permission Controllers
 	*/
 	'permission_controllers' => [
+		\SureCart\Permissions\Models\ActivationPermissionsController::class,
 		\SureCart\Permissions\Models\BalanceTransactionPermissionsController::class,
 		\SureCart\Permissions\Models\ChargePermissionsController::class,
 		\SureCart\Permissions\Models\LicensePermissionsController::class,

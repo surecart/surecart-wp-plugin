@@ -562,6 +562,26 @@
     "class": true,
     "slot": true
   },
+  "sc-customer-phone": {
+    "autofocus": true,
+    "disabled": true,
+    "error": true,
+    "has-focus": true,
+    "help": true,
+    "invalid": true,
+    "label": true,
+    "pill": true,
+    "placeholder": true,
+    "readonly": true,
+    "required": true,
+    "show-label": true,
+    "size": true,
+    "value": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-dashboard-customer-details": {
     "customer-id": true,
     "heading": true,
@@ -903,11 +923,24 @@
     "class": true,
     "slot": true
   },
+  "sc-license": {
+    "license-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
+  "sc-license-activations": {
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-licenses-list": {
-    "activations": true,
-    "copied": true,
+    "all-link": true,
     "heading": true,
-    "licenses": true,
+    "is-customer": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,

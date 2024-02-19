@@ -23,6 +23,7 @@ class Block extends DashboardPage {
 		'customer'       => \SureCartBlocks\Controllers\CustomerController::class,
 		'download'       => \SureCartBlocks\Controllers\DownloadController::class,
 		'invoice'        => \SureCartBlocks\Controllers\InvoiceController::class,
+		'license'		 => \SureCartBlocks\Controllers\LicenseController::class,
 	];
 
 	public function getTestModeToggleHTML() {
