@@ -227,7 +227,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 == Changelog ==
 
 = 2.18.0 - February 15th, 2024 =
-- New: 1-click upsells.
+- New: 1-click upsells - add post-purchase funnels to your checkout flows.
 
 = 2.17.2 - February 13th, 2024 =
 - Improvement: Improve product list page loading performance.
