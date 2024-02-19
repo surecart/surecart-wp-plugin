@@ -50,12 +50,19 @@ on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
     amount: checkout.total_amount,
     currency: checkout.currency,
   });
-  const shouldDelay = checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code;
-  const message = sprintf(__('Checkout updated. The total amount for the checkout is %1$s and the amount due is %1$s.', 'surecart'), totalAmount, amountDue);
 
-  if (shouldDelay) {
-    setTimeout(() => speak(message), 1000);
-  } else {
-    speak(message);
-  }
+  const messages = [
+    checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code &&
+      checkout?.discount?.promotion?.code &&
+      sprintf(
+        // Translators: %1$s is the coupon code, %2$s is the human readable discount.
+        __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
+        checkout?.discount?.promotion?.code,
+        getHumanDiscount(checkout?.discount?.coupon),
+      ),
+    checkout?.discount?.promotion?.code !== oldCheckout?.discount?.promotion?.code && !checkout?.discount?.promotion?.code && __('Coupon code removed.', 'sc-coupon-form'),
+    sprintf(__('Checkout updated. The total amount for the checkout is %1$s and the amount due is %1$s.', 'surecart'), totalAmount, amountDue),
+  ];
+
+  speak(messages.filter(message => !!message).join(' '));
 });
