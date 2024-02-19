@@ -22,7 +22,6 @@ export default () => {
 			'product',
 			{
 				ad_hoc: false,
-				status: ['published'],
 				archived: false,
 				per_page: 1,
 			},
