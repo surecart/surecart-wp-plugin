@@ -3,6 +3,7 @@ import GetStartedBox from '../GetStartedBox';
 import { css, jsx } from '@emotion/core';
 import { ScCard, ScIcon, ScFlex } from '@surecart/components-react';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
 import { store as preferencesStore } from '@wordpress/preferences';
 
@@ -14,6 +15,25 @@ export default () => {
 	const removeGetStarted = () => {
 		set('surecart/dashboard', 'hideGetStarted', true);
 	};
+
+	const { product, loading } = useSelect((select) => {
+		const queryArgs = [
+			'surecart',
+			'product',
+			{
+				ad_hoc: false,
+				archived: false,
+				per_page: 1,
+			},
+		];
+		return {
+			product: select(coreStore).getEntityRecords(...queryArgs)?.[0],
+			loading: select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			),
+		};
+	});
 
 	if (hideGetStarted) {
 		return null;
@@ -58,38 +78,38 @@ export default () => {
 				<ScFlex>
 					<GetStartedBox
 						infoType="info"
-						infoText={__('Setup', 'surecart')}
-						title={__('Create products', 'surecart')}
+						infoText={__('Connect', 'surecart')}
+						title={__('Connect payments', 'surecart')}
 						description={__(
-							'Create products to start selling.',
+							'Connect payments to start taking orders.',
 							'surecart'
 						)}
-						buttonLabel={__('Create A Product', 'surecart')}
-						buttonUrl={'admin.php?page=sc-products&action=edit'}
+						buttonLabel={__('Connect payment', 'surecart')}
+						buttonUrl={'admin.php?page=sc-settings&tab=processors'}
 					/>
 					<GetStartedBox
 						infoType="success"
-						infoText={__('Tutorial', 'surecart')}
-						title={__('Add buy and cart buttons', 'surecart')}
+						infoText={__('Create', 'surecart')}
+						title={__('Create products', 'surecart')}
 						description={__(
-							'Add cart and buy buttons to your site.',
+							'Create product to start selling to buyers.',
 							'surecart'
 						)}
-						buttonLabel={__('How To Add Buttons', 'surecart')}
-						buttonUrl={
-							'https://www.youtube.com/channel/UCeD_xj7F6bmSaHqu35gVO-A/featured'
-						}
+						buttonLabel={__('Create a product', 'surecart')}
+						buttonUrl={'admin.php?page=sc-products&action=edit'}
 					/>
 					<GetStartedBox
 						infoType="primary"
-						infoText={__('Customize', 'surecart')}
-						title={__('Customize forms', 'surecart')}
+						infoText={__('Experience', 'surecart')}
+						title={__('Place a test order', 'surecart')}
 						description={__(
-							'Customize your checkout forms with a no-code experience.',
+							'Create a test order to see the payment flow.',
 							'surecart'
 						)}
-						buttonLabel={__('Customize', 'surecart')}
-						buttonUrl={'edit.php?post_type=sc_form'}
+						busy={loading}
+						disabled={!product?.permalink}
+						buttonLabel={__('Test your checkout', 'surecart')}
+						buttonUrl={product?.permalink}
 					/>
 				</ScFlex>
 			</div>
