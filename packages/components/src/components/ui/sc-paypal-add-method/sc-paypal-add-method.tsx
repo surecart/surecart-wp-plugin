@@ -101,6 +101,7 @@ export class ScPaypalAddMethod {
           live_mode: this.liveMode,
           customer_id: this.customerId,
           currency: this.currency,
+          refresh_status: true,
         },
       });
     } catch (e) {
