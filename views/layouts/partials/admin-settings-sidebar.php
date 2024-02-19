@@ -15,7 +15,7 @@
 			<?php esc_html_e( 'Orders & Receipts', 'surecart' ); ?>
 		</sc-tab>
 
-		<sc-tab href="<?php esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'abandoned_checkout' === $tab ? 'active' : ''; ?>>
+		<sc-tab href="<?php echo esc_url( add_query_arg( [ 'tab' => 'abandoned_checkout' ], menu_page_url( 'sc-settings', false ) ) ); ?>" <?php echo 'abandoned_checkout' === $tab ? 'active' : ''; ?>>
 			<sc-icon slot="prefix" style="width: 18px; height: 18px; opacity: 0.7;" name="shopping-cart"></sc-icon>
 			<?php esc_html_e( 'Abandoned Checkout', 'surecart' ); ?>
 		</sc-tab>
