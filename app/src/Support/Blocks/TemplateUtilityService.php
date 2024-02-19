@@ -55,6 +55,15 @@ class TemplateUtilityService {
 				'description' => __( 'Display all individual products content unless a custom template has been applied.', 'surecart' ),
 				'site-editor' => false,
 			],
+			'single-upsell'           => [
+				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual upsells unless a custom template has been applied.', 'surecart' ),
+			],
+			'product-info'            => [
+				'title'       => _x( 'Upsells', 'Template name', 'surecart' ),
+				'description' => __( 'Display all individual upsells content unless a custom template has been applied.', 'surecart' ),
+				'site-editor' => false,
+			],
 			'product-collection'      => [
 				'title'       => class_exists( 'WooCommerce' ) ? _x( 'SureCart Product Collections', 'Template name', 'surecart' ) : _x( 'Product Collections', 'Template name', 'surecart' ),
 				'description' => __( 'Display all individual product collections unless a custom template has been applied.', 'surecart' ),
