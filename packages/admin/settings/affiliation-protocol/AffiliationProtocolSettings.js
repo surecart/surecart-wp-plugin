@@ -277,7 +277,7 @@ export default () => {
 				>
 					<ScTextarea
 						help={__(
-							"Copy and paste the tracking code into the <head> or before the closing </body> tag of your website. This should only be added to sites that don't have the script added by the WordPress plugin.",
+							"Copy and paste the tracking code into the <head> section or just before the closing </body> tag of your website. Ensure this is only added to sites that don't already have the script included via the WordPress plugin.",
 							'surecart'
 						)}
 						readonly
@@ -387,7 +387,7 @@ export default () => {
 				loading={!hasLoadedAffiliationProtocolItem}
 			>
 				<ScRadioGroup
-					label={__('Choose a Commission type', 'surecart')}
+					label={__('Select a commission type', 'surecart')}
 					onScChange={(e) => setCommisionType(e.target.value)}
 				>
 					<ScRadio
