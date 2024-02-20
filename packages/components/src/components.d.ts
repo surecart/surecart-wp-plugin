@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1153,65 +1153,6 @@ export namespace Components {
          */
         "value": string;
     }
-    interface ScCustomerPhone {
-        /**
-          * The input's autofocus attribute.
-         */
-        "autofocus": boolean;
-        /**
-          * Disables the input.
-         */
-        "disabled": boolean;
-        /**
-          * Error focus
-         */
-        "error": boolean;
-        /**
-          * Inputs focus
-         */
-        "hasFocus": boolean;
-        /**
-          * The input's help text.
-         */
-        "help": string;
-        /**
-          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
-         */
-        "invalid": boolean;
-        /**
-          * The input's label.
-         */
-        "label": string;
-        /**
-          * Draws a pill-style input with rounded edges.
-         */
-        "pill": boolean;
-        /**
-          * The input's placeholder text.
-         */
-        "placeholder": string;
-        /**
-          * Makes the input readonly.
-         */
-        "readonly": boolean;
-        "reportValidity": () => Promise<boolean>;
-        /**
-          * Makes the input a required field.
-         */
-        "required": boolean;
-        /**
-          * Should we show the label
-         */
-        "showLabel": boolean;
-        /**
-          * The input's size.
-         */
-        "size": 'small' | 'medium' | 'large';
-        /**
-          * The input's value attribute.
-         */
-        "value": string;
-    }
     interface ScDashboardCustomerDetails {
         "customerId": string;
         "heading": string;
@@ -1796,8 +1737,6 @@ export namespace Components {
          */
         "licenseId": string;
     }
-    interface ScLicenseActivations {
-    }
     interface ScLicensesList {
         /**
           * View all link
@@ -1811,6 +1750,7 @@ export namespace Components {
           * Whether the current user is customer
          */
         "isCustomer": boolean;
+        "licenses": License[];
         /**
           * Query to fetch licenses
          */
@@ -3644,6 +3584,10 @@ export namespace Components {
           * The subscription ID
          */
         "subscriptionId": string;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionAdHocConfirm {
         "heading": string;
@@ -4938,12 +4882,6 @@ declare global {
         prototype: HTMLScLicenseElement;
         new (): HTMLScLicenseElement;
     };
-    interface HTMLScLicenseActivationsElement extends Components.ScLicenseActivations, HTMLStencilElement {
-    }
-    var HTMLScLicenseActivationsElement: {
-        prototype: HTMLScLicenseActivationsElement;
-        new (): HTMLScLicenseActivationsElement;
-    };
     interface HTMLScLicensesListElement extends Components.ScLicensesList, HTMLStencilElement {
     }
     var HTMLScLicensesListElement: {
@@ -5855,7 +5793,6 @@ declare global {
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
         "sc-license": HTMLScLicenseElement;
-        "sc-license-activations": HTMLScLicenseActivationsElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
@@ -7264,84 +7201,6 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
-    interface ScCustomerPhone {
-        /**
-          * The input's autofocus attribute.
-         */
-        "autofocus"?: boolean;
-        /**
-          * Disables the input.
-         */
-        "disabled"?: boolean;
-        /**
-          * Error focus
-         */
-        "error"?: boolean;
-        /**
-          * Inputs focus
-         */
-        "hasFocus"?: boolean;
-        /**
-          * The input's help text.
-         */
-        "help"?: string;
-        /**
-          * This will be true when the control is in an invalid state. Validity is determined by props such as `type`, `required`, `minlength`, `maxlength`, and `pattern` using the browser's constraint validation API.
-         */
-        "invalid"?: boolean;
-        /**
-          * The input's label.
-         */
-        "label"?: string;
-        /**
-          * Emitted when the control loses focus.
-         */
-        "onScBlur"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
-        /**
-          * Emitted when the control's value changes.
-         */
-        "onScChange"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
-        /**
-          * Emitted when the clear button is activated.
-         */
-        "onScClear"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
-        /**
-          * Emitted when the control gains focus.
-         */
-        "onScFocus"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
-        /**
-          * Emitted when the control receives input.
-         */
-        "onScInput"?: (event: ScCustomerPhoneCustomEvent<void>) => void;
-        /**
-          * Draws a pill-style input with rounded edges.
-         */
-        "pill"?: boolean;
-        /**
-          * The input's placeholder text.
-         */
-        "placeholder"?: string;
-        /**
-          * Makes the input readonly.
-         */
-        "readonly"?: boolean;
-        /**
-          * Makes the input a required field.
-         */
-        "required"?: boolean;
-        /**
-          * Should we show the label
-         */
-        "showLabel"?: boolean;
-        /**
-          * The input's size.
-         */
-        "size"?: 'small' | 'medium' | 'large';
-        /**
-          * The input's value attribute.
-         */
-        "value"?: string;
-    }
     interface ScDashboardCustomerDetails {
         "customerId"?: string;
         "heading"?: string;
@@ -7983,8 +7842,6 @@ declare namespace LocalJSX {
          */
         "licenseId"?: string;
     }
-    interface ScLicenseActivations {
-    }
     interface ScLicensesList {
         /**
           * View all link
@@ -7998,6 +7855,7 @@ declare namespace LocalJSX {
           * Whether the current user is customer
          */
         "isCustomer"?: boolean;
+        "licenses"?: License[];
         /**
           * Query to fetch licenses
          */
@@ -9972,6 +9830,10 @@ declare namespace LocalJSX {
           * The subscription ID
          */
         "subscriptionId"?: string;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionAdHocConfirm {
         "heading"?: string;
@@ -10615,7 +10477,6 @@ declare namespace LocalJSX {
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
         "sc-license": ScLicense;
-        "sc-license-activations": ScLicenseActivations;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
@@ -10853,7 +10714,6 @@ declare module "@stencil/core" {
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
             "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;
-            "sc-license-activations": LocalJSX.ScLicenseActivations & JSXBase.HTMLAttributes<HTMLScLicenseActivationsElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;
