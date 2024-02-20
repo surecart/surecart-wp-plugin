@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.18.0
+Stable tag: 2.19.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -235,6 +235,7 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 - Improvement: Add TND currency to currency list.
 - Improvement: Update getting started links on customer dashboard.
 - Improvement: Show coupon validation issues inline.
+- Improvement: Use FSE theme spacing product page.
 - Fix: Product variant purchase integrations not working in some cases.
 - Fix: Issue with free subscriptions not able to upgrade with no payment method.
 - Fix: Jetpack compatibility with hotkeys in some instances.
