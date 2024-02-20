@@ -5,11 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+import { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 import { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 import { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 import { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
-export { Activation, Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
+export { Address, Bump, CancellationReason, Checkout, ChoiceItem, Customer, DiscountResponse, Download, Fee, FormState, FormStateSetter, FulfillmentStatus, License, LineItem, LineItemData as LineItemData1, ManualPaymentMethod, Order, OrderFulFillmentStatus, OrderShipmentStatus, OrderStatus, PaymentInfoAddedParams, PaymentMethod, Price, PriceChoice, Prices, Processor, ProcessorName, Product, ProductGroup, Products, ProductsSearchedParams, Purchase, ResponseError, ReturnRequestStatus, RuleGroup, Subscription, SubscriptionProtocol, SubscriptionStatus, TaxProtocol, WordPressUser } from "./types";
 export { LineItemData, Price as Price1, Product as Product1, ProductMetrics, Subscription as Subscription1 } from "src/types";
 export { LayoutConfig } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
 export { LayoutConfig as LayoutConfig1 } from "./components/controllers/products/sc-product-item-list/sc-product-item-list";
@@ -1731,11 +1731,33 @@ export namespace Components {
     per_page: number;
   };
     }
+    interface ScLicense {
+        /**
+          * The license id
+         */
+        "licenseId": string;
+    }
     interface ScLicensesList {
-        "activations": Activation[];
-        "copied": boolean;
+        /**
+          * View all link
+         */
+        "allLink": string;
+        /**
+          * The heading of the licenses
+         */
         "heading": string;
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer": boolean;
         "licenses": License[];
+        /**
+          * Query to fetch licenses
+         */
+        "query": {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -3562,6 +3584,10 @@ export namespace Components {
           * The subscription ID
          */
         "subscriptionId": string;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl": string;
     }
     interface ScSubscriptionAdHocConfirm {
         "heading": string;
@@ -3644,6 +3670,7 @@ export namespace Components {
          */
         "query": object;
         "subscription": Subscription;
+        "successUrl": string;
     }
     interface ScSubscriptionVariationConfirm {
         "heading": string;
@@ -4849,6 +4876,12 @@ declare global {
         prototype: HTMLScInvoicesListElement;
         new (): HTMLScInvoicesListElement;
     };
+    interface HTMLScLicenseElement extends Components.ScLicense, HTMLStencilElement {
+    }
+    var HTMLScLicenseElement: {
+        prototype: HTMLScLicenseElement;
+        new (): HTMLScLicenseElement;
+    };
     interface HTMLScLicensesListElement extends Components.ScLicensesList, HTMLStencilElement {
     }
     var HTMLScLicensesListElement: {
@@ -5759,6 +5792,7 @@ declare global {
         "sc-image-slider": HTMLScImageSliderElement;
         "sc-input": HTMLScInputElement;
         "sc-invoices-list": HTMLScInvoicesListElement;
+        "sc-license": HTMLScLicenseElement;
         "sc-licenses-list": HTMLScLicensesListElement;
         "sc-line-item": HTMLScLineItemElement;
         "sc-line-item-bump": HTMLScLineItemBumpElement;
@@ -7802,11 +7836,33 @@ declare namespace LocalJSX {
     per_page: number;
   };
     }
+    interface ScLicense {
+        /**
+          * The license id
+         */
+        "licenseId"?: string;
+    }
     interface ScLicensesList {
-        "activations"?: Activation[];
-        "copied"?: boolean;
+        /**
+          * View all link
+         */
+        "allLink"?: string;
+        /**
+          * The heading of the licenses
+         */
         "heading"?: string;
+        /**
+          * Whether the current user is customer
+         */
+        "isCustomer"?: boolean;
         "licenses"?: License[];
+        /**
+          * Query to fetch licenses
+         */
+        "query"?: {
+    page: number;
+    per_page: number;
+  };
     }
     interface ScLineItem {
         /**
@@ -9774,6 +9830,10 @@ declare namespace LocalJSX {
           * The subscription ID
          */
         "subscriptionId"?: string;
+        /**
+          * Update the payment method url
+         */
+        "updatePaymentMethodUrl"?: string;
     }
     interface ScSubscriptionAdHocConfirm {
         "heading"?: string;
@@ -9866,6 +9926,7 @@ declare namespace LocalJSX {
          */
         "query"?: object;
         "subscription"?: Subscription;
+        "successUrl"?: string;
     }
     interface ScSubscriptionVariationConfirm {
         "heading"?: string;
@@ -10415,6 +10476,7 @@ declare namespace LocalJSX {
         "sc-image-slider": ScImageSlider;
         "sc-input": ScInput;
         "sc-invoices-list": ScInvoicesList;
+        "sc-license": ScLicense;
         "sc-licenses-list": ScLicensesList;
         "sc-line-item": ScLineItem;
         "sc-line-item-bump": ScLineItemBump;
@@ -10651,6 +10713,7 @@ declare module "@stencil/core" {
             "sc-image-slider": LocalJSX.ScImageSlider & JSXBase.HTMLAttributes<HTMLScImageSliderElement>;
             "sc-input": LocalJSX.ScInput & JSXBase.HTMLAttributes<HTMLScInputElement>;
             "sc-invoices-list": LocalJSX.ScInvoicesList & JSXBase.HTMLAttributes<HTMLScInvoicesListElement>;
+            "sc-license": LocalJSX.ScLicense & JSXBase.HTMLAttributes<HTMLScLicenseElement>;
             "sc-licenses-list": LocalJSX.ScLicensesList & JSXBase.HTMLAttributes<HTMLScLicensesListElement>;
             "sc-line-item": LocalJSX.ScLineItem & JSXBase.HTMLAttributes<HTMLScLineItemElement>;
             "sc-line-item-bump": LocalJSX.ScLineItemBump & JSXBase.HTMLAttributes<HTMLScLineItemBumpElement>;

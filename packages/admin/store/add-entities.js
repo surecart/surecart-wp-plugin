@@ -143,7 +143,7 @@ dispatch(coreStore).addEntities([
 		name: 'license',
 		kind: 'surecart',
 		label: __('License', 'surecart'),
-		baseURL: '/surecart/v1/licences',
+		baseURL: '/surecart/v1/licenses',
 		baseURLParams: { context: 'edit' },
 	},
 	{
@@ -277,6 +277,13 @@ dispatch(coreStore).addEntities([
 		kind: 'surecart',
 		label: __('Shipping Protocol', 'surecart'),
 		baseURL: '/surecart/v1/shipping_protocol',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'affiliation-protocol',
+		kind: 'surecart',
+		label: __('Affiliation Protocol', 'surecart'),
+		baseURL: '/surecart/v1/affiliation_protocol',
 		baseURLParams: { context: 'edit' },
 	},
 	{

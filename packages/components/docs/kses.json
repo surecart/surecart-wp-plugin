@@ -903,11 +903,19 @@
     "class": true,
     "slot": true
   },
+  "sc-license": {
+    "license-id": true,
+    "style": true,
+    "id": true,
+    "class": true,
+    "slot": true
+  },
   "sc-licenses-list": {
-    "activations": true,
-    "copied": true,
+    "all-link": true,
     "heading": true,
+    "is-customer": true,
     "licenses": true,
+    "query": true,
     "style": true,
     "id": true,
     "class": true,
@@ -1980,6 +1988,7 @@
     "show-cancel": true,
     "subscription": true,
     "subscription-id": true,
+    "update-payment-method-url": true,
     "style": true,
     "id": true,
     "class": true,
@@ -2068,6 +2077,7 @@
     "product-id": true,
     "query": true,
     "subscription": true,
+    "success-url": true,
     "style": true,
     "id": true,
     "class": true,

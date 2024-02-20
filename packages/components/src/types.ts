@@ -227,6 +227,7 @@ export interface License {
   id: string;
   object: 'license';
   activation_limit: number;
+  activation_count: number;
   key: string;
   activations?: {
     object: 'list';
@@ -982,6 +983,7 @@ export interface DiscountResponse {
   id: string;
   object: 'discount';
   promotion: Promotion;
+  redeemable_status: string;
 }
 
 export interface ResponseError {
@@ -1028,6 +1030,7 @@ export interface PaymentIntent extends Object {
   customer: Customer | string;
   created_at: number;
   updated_at: number;
+  payment_method: PaymentMethod | string;
 }
 
 export interface PaymentIntents {
