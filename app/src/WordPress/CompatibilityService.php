@@ -35,7 +35,7 @@ class CompatibilityService {
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
 	}
 
-	/** Prevent Yoast SEO from outputing og:tags on out custom pages.
+	/** Prevent Yoast SEO from outputing SEO meta tags on our custom pages.
 	 *
 	 * @param array $presenters Presenters.
 	 * @return array Empty Array.
