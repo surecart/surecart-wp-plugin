@@ -38,19 +38,12 @@ class CompatibilityService {
 	/** Prevent Yoast SEO from outputing og:tags on out custom pages.
 	 *
 	 * @param array $presenters Presenters.
-	 * @return array $presenters Presenters.
+	 * @return array Empty Array.
 	 */
 	public function yoastSEOFix( $presenters ) {
 		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
-			$presenters = array_filter(
-				$presenters,
-				function( $item ) {
-					return strpos( get_class( $item ), 'Open_Graph' ) === false;
-				}
-			);
+			return [];
 		}
-
-		return $presenters;
 	}
 
 	/**
