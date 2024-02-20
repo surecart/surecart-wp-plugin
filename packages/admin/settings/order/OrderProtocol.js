@@ -140,6 +140,32 @@ export default () => {
 					)}
 				></ScTextarea>
 			</SettingsBox>
+
+			<SettingsBox
+				title={__('Upsells', 'surecart')}
+				description={__('Upsell behavior settings.', 'surecart')}
+				loading={!hasLoadedItem}
+			>
+				<ScInput
+					label={__('Time Limit', 'surecart')}
+					value={item?.upsells_expire_after_minutes}
+					onScInput={(e) =>
+						editItem({
+							upsells_expire_after_minutes: e.target.value,
+						})
+					}
+					help={__(
+						'The number of minutes that the upsell offer will be available for after the initial purchase.',
+						'surecart'
+					)}
+					type="number"
+					step="1"
+					min="0"
+					max="1440"
+				>
+					<span slot="suffix">{__('Minutes', 'surecart')}</span>
+				</ScInput>
+			</SettingsBox>
 		</SettingsTemplate>
 	);
 };

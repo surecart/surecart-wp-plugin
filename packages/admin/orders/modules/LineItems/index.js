@@ -122,6 +122,9 @@ export default ({ order, checkout, loading }) => {
 		};
 	};
 
+	const shippingMethodName =
+		checkout?.selected_shipping_choice?.shipping_method?.name;
+
 	return (
 		<Box
 			title={
@@ -280,7 +283,9 @@ export default ({ order, checkout, loading }) => {
 
 				{!!checkout?.shipping_amount && (
 					<LineItem
-						label={__('Shipping', 'surecart')}
+						label={`${__('Shipping', 'surecart')} ${
+							shippingMethodName ? `(${shippingMethodName})` : ''
+						}`}
 						currency={checkout?.currency}
 						value={checkout?.shipping_amount}
 					/>
