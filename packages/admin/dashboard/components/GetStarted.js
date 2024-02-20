@@ -81,7 +81,7 @@ export default () => {
 						infoText={__('Connect', 'surecart')}
 						title={__('Connect payments', 'surecart')}
 						description={__(
-							'Connect payments to start taking orders.',
+							'Connect to a payment gateway to start taking orders.',
 							'surecart'
 						)}
 						buttonLabel={__('Connect payment', 'surecart')}
@@ -92,7 +92,7 @@ export default () => {
 						infoText={__('Create', 'surecart')}
 						title={__('Create products', 'surecart')}
 						description={__(
-							'Create product to start selling to buyers.',
+							'Create your first product to start selling to buyers.',
 							'surecart'
 						)}
 						buttonLabel={__('Create a product', 'surecart')}
@@ -101,9 +101,9 @@ export default () => {
 					<GetStartedBox
 						infoType="primary"
 						infoText={__('Experience', 'surecart')}
-						title={__('Place a test order', 'surecart')}
+						title={__('Complete Setup', 'surecart')}
 						description={__(
-							'Create a test order to see the payment flow.',
+							'Place a test order to experience the payment flow.',
 							'surecart'
 						)}
 						busy={loading}
