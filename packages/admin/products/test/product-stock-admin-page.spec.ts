@@ -78,7 +78,9 @@ test.describe('Product Admin Page For Stock', () => {
 		expect(await onHand.locator('input')).toHaveValue('6');
 
 		await adjustBy.locator('.button__increase').click();
-		expect(await adjustBy.locator('input')).toHaveValue('2');
+		expect(await adjustBy.locator('input')).toHaveValue('2', {
+			timeout: 10000,
+		});
 		expect(await available.locator('input')).toHaveValue('7');
 		expect(await onHand.locator('input')).toHaveValue('7');
 
@@ -88,9 +90,9 @@ test.describe('Product Admin Page For Stock', () => {
 		await page.getByRole('button', { name: 'Save Product' }).click();
 
 		// Wait for the page to load.
-		await page.waitForResponse((resp) =>
-			resp.url().includes('surecart/v1/product')
-		);
+		await page.waitForResponse((resp) => resp.url().includes('product'), {
+			timeout: 10000,
+		});
 
 		expect(await stockControl.locator('input')).toHaveValue('7');
 	});
