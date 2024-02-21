@@ -65,7 +65,7 @@ class BlockModeSwitcherService {
 				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) .'; font-weight: bold; font-size: 25px; line-height: 1;">•</span> '
 					. '<span style="color: ' . ( 'test' === $mode ? '#fef3c7' : '#fff' ) .';">'
 					. __( 'Checkout Form', 'surecart' )
-					. ' (' . ( $mode === 'test' ? __( 'Test', 'surecart' ) : __( 'Live', 'surecart' ) ) . ')'
+					. ' (' . ( 'test' === $mode ? __( 'Test', 'surecart' ) : __( 'Live', 'surecart' ) ) . ')'
 					. '</span>',
 			]
 		);
@@ -155,11 +155,11 @@ class BlockModeSwitcherService {
 			return null;
 		}
 
-		$checkoutFormInnerBlock = parse_blocks( $checkout_form_post->post_content );
+		$checkout_form_inner_block = parse_blocks( $checkout_form_post->post_content );
 
 		// Find the block with surecart/form.
 		return array_filter(
-			$checkoutFormInnerBlock,
+			$checkout_form_inner_block,
 			function ( $block ) {
 				return 'surecart/form' === $block['blockName'];
 			}
