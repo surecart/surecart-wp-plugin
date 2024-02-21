@@ -59,23 +59,25 @@ class BlockModeSwitcherService {
 		}
 
 		$mode = $checkout_form_post['attrs']['mode'] ?? 'live';
-		// $mode_label = $mode === 'test' ? __( 'Test Mode', 'surecart' ) : __( 'Live Mode', 'surecart' );
 		$wp_admin_bar->add_menu(
 			[
 				'id'    => 'sc_change_checkout_mode',
 				'title' => '<span style="color: ' . ( 'live' === $mode ? '#49de80' : '#fbbf24' ) .'; font-weight: bold; font-size: 25px; line-height: 1;">•</span> '
 					. '<span style="color: ' . ( 'test' === $mode ? '#fef3c7' : '#fff' ) .';">'
-					. __( 'Checkout Page', 'surecart' )
+					. __( 'Checkout Form', 'surecart' )
 					. ' (' . ( $mode === 'test' ? __( 'Test', 'surecart' ) : __( 'Live', 'surecart' ) ) . ')'
 					. '</span>',
 			]
 		);
 
-		$url = add_query_arg( [
-			'sc_checkout_change_mode' => $post->ID,
-			'nonce' => wp_create_nonce( 'update_checkout_mode' ),
-			'sc_redirect_url' => remove_query_arg( 'sc_checkout_change_mode' ),
-		], get_home_url( null, 'surecart/change-checkout-mode' ) ) ;
+		$url = add_query_arg(
+			[
+				'sc_checkout_change_mode' => $post->ID,
+				'nonce'                   => wp_create_nonce( 'update_checkout_mode' ),
+				'sc_redirect_url'         => remove_query_arg( 'sc_checkout_change_mode' ),
+			],
+			get_home_url( null, 'surecart/change-checkout-mode' )
+		);
 
 		$sub_items = [
 			[
