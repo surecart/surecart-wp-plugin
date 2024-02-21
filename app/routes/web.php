@@ -47,10 +47,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
-->get()
-->where( 'query_var', 'sc_upsell_id' )
-->middleware( UpsellMiddleware::class )
-->handle( 'UpsellPageController@show' );
+	->get()
+	->where( 'query_var', 'sc_upsell_id' )
+	->middleware( UpsellMiddleware::class )
+	->handle( 'UpsellPageController@show' );
+
+/*
+|--------------------------------------------------------------------------
+| Checkout Change Mode
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+	->get()
+	->where( 'query_var', 'sc_checkout_change_mode' )
+	->middleware( 'nonce:update_checkout_mode' )
+	->handle( 'CheckoutsController@changeMode' );
 
 /*
 |--------------------------------------------------------------------------
