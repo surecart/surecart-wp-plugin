@@ -69,6 +69,13 @@ export default () => {
 		'site',
 		'surecart_shop_admin_menu'
 	);
+
+	const [themeStyleSupport, setThemeStyleSupport] = useEntityProp(
+		'root',
+		'site',
+		'surecart_theme_style_support'
+	);
+
 	const [cartMenu, setCartMenu] = useEntityProp(
 		'root',
 		'site',
@@ -356,6 +363,31 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							"Use Stripe's Card Element instead of the Payment Element in all forms.",
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+			</SettingsBox>
+
+			<SettingsBox
+				title={__('Theme Style Support', 'surecart')}
+				description={__(
+					'This will enable the theme to support SureCart block styles.',
+					'surecart'
+				)}
+				loading={!hasLoadedItem}
+			>
+				<ScSwitch
+					checked={themeStyleSupport}
+					onClick={(e) => {
+						e.preventDefault();
+						setThemeStyleSupport(!themeStyleSupport);
+					}}
+				>
+					{__('Load Block Styles from SureCart', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							"Load SureCart's block styles on your theme.",
 							'surecart'
 						)}
 					</span>

@@ -198,6 +198,16 @@ class SettingService {
 		);
 		$this->register(
 			'surecart',
+			'theme_style_support',
+			[
+				'type'              => 'boolean',
+				'show_in_rest'      => true,
+				'sanitize_callback' => 'boolval',
+				'default'           => true,
+			]
+		);
+		$this->register(
+			'surecart',
 			'cart_admin_menu',
 			[
 				'type'              => 'boolean',
