@@ -361,7 +361,7 @@ export class ScProductItemList {
                   ) : (
                     <sc-input
                       type="text"
-                      placeholder="Search"
+                      placeholder={__('Search', 'surecart')}
                       size="small"
                       onKeyUp={e => {
                         if (e.key === 'Enter') {
