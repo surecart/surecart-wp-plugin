@@ -43,6 +43,9 @@ if ( ! defined( 'SURECART_JS_URL' ) ) {
 if ( ! defined( 'SURECART_CDN_IMAGE_BASE' ) ) {
 	define( 'SURECART_CDN_IMAGE_BASE', 'https://surecart.com/cdn-cgi/image' );
 }
+if ( ! defined( 'SURECART_TRANSLATIONS_URL' ) ) {
+	define( 'SURECART_TRANSLATIONS_URL', 'https://translate.surecart.com/glotpress/api/translations/surecart/' );
+}
 
 // Load composer dependencies.
 if ( file_exists( SURECART_VENDOR_DIR . DIRECTORY_SEPARATOR . 'autoload.php' ) ) {
