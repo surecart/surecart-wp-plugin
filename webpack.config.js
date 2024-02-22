@@ -77,6 +77,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/bumps/index.js'
 		),
+		['admin/upsell-funnels']: path.resolve(
+			__dirname,
+			'packages/admin/upsell-funnels/index.js'
+		),
 		['admin/subscriptions/show']: path.resolve(
 			__dirname,
 			'packages/admin/subscriptions/show/index.js'
@@ -104,6 +108,10 @@ module.exports = {
 		['admin/settings/account']: path.resolve(
 			__dirname,
 			'packages/admin/settings/account/index.js'
+		),
+		['admin/settings/affiliation-protocol']: path.resolve(
+			__dirname,
+			'packages/admin/settings/affiliation-protocol/index.js'
 		),
 		['admin/settings/abandoned']: path.resolve(
 			__dirname,

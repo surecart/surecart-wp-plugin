@@ -1,9 +1,7 @@
 <?php
 namespace SureCartBlocks\Controllers;
 
-use SureCart\Models\Activation;
 use SureCart\Models\Component;
-use SureCart\Models\PortalSession;
 use SureCart\Models\Purchase;
 use SureCart\Models\User;
 
@@ -42,14 +40,14 @@ class DownloadController extends BaseController {
 						'per_page'     => 10,
 					],
 				]
-			)->render( $attributes['title'] ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
+			)->render( "<span slot='heading'>" . ( $attributes['title'] ?? __( 'Downloads', 'surecart' ) ) . '</span>' )
 		);
 	}
 
 	/**
 	 * Index.
 	 */
-	public function index() {
+	public function index( $attributes = [] ) {
 		if ( ! is_user_logged_in() ) {
 			return;
 		}
@@ -79,7 +77,7 @@ class DownloadController extends BaseController {
 							'per_page'     => 10,
 						],
 					]
-				)->render( ! empty( $attributes['title'] ) ? "<span slot='heading'>" . $attributes['title'] . '</span>' : '' )
+				)->render( "<span slot='heading'>" . ( $attributes['title'] ?? __( 'Downloads', 'surecart' ) ) . '</span>' )
 			);
 			?>
 		</sc-spacing>
@@ -161,7 +159,7 @@ class DownloadController extends BaseController {
 						]
 					)->render()
 				);
-				 endif;
+			endif;
 			?>
 
 		</sc-spacing>

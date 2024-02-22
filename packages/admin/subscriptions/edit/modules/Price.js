@@ -164,7 +164,14 @@ export default ({ subscription, updateSubscription, upcoming, loading }) => {
 											{coupon?.name}
 										</ScTag>
 									),
-									total: <>{getHumanDiscount(coupon)}</>,
+									total: (
+										<>
+											{getHumanDiscount(
+												coupon,
+												coupon?.currency
+											)}
+										</>
+									),
 								},
 						  ]
 						: []),

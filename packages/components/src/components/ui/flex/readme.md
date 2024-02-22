@@ -33,6 +33,7 @@
  - [sc-checkout-stock-alert](../../controllers/checkout-form/checkout/checkout-stock-alert)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-pagination](../pagination)
@@ -55,6 +56,7 @@ graph TD;
   sc-checkout-stock-alert --> sc-flex
   sc-downloads-list --> sc-flex
   sc-fulfillments --> sc-flex
+  sc-license --> sc-flex
   sc-login-form --> sc-flex
   sc-order --> sc-flex
   sc-pagination --> sc-flex

@@ -42,6 +42,8 @@
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-line-item-shipping](../../controllers/checkout-form/sc-line-item-shipping)
  - [sc-line-item-total](../../controllers/checkout-form/line-item-total)
  - [sc-line-items](../../controllers/checkout-form/line-items)
@@ -69,6 +71,7 @@
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
+ - [sc-summary](../sc-summary)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
 
 ### Graph
@@ -83,6 +86,8 @@ graph TD;
   sc-donation-choices --> sc-skeleton
   sc-fulfillments --> sc-skeleton
   sc-invoices-list --> sc-skeleton
+  sc-license --> sc-skeleton
+  sc-licenses-list --> sc-skeleton
   sc-line-item-shipping --> sc-skeleton
   sc-line-item-total --> sc-skeleton
   sc-line-items --> sc-skeleton
@@ -110,6 +115,7 @@ graph TD;
   sc-subscription-reactivate --> sc-skeleton
   sc-subscription-switch --> sc-skeleton
   sc-subscriptions-list --> sc-skeleton
+  sc-summary --> sc-skeleton
   sc-upcoming-invoice --> sc-skeleton
   style sc-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```

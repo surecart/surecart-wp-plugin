@@ -3,9 +3,8 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 
 import apiFetch from '../../../../functions/fetch';
-import { getHumanDiscount } from '../../../../functions/price';
-import { CancellationReason, Coupon, ResponseError, Subscription, SubscriptionProtocol } from '../../../../types';
-import { replaceAmount } from './functions';
+import { CancellationReason, ResponseError, Subscription, SubscriptionProtocol } from '../../../../types';
+import { getCurrentBehaviourContent } from './functions';
 
 @Component({
   tag: 'sc-cancel-discount',
@@ -21,13 +20,6 @@ export class ScCancelDiscount {
   @Event() scPreserved: EventEmitter<void>;
   @State() loading: boolean;
   @State() error: ResponseError;
-
-  replaceAmount(string) {
-    if (!this.protocol?.preservation_coupon) {
-      return string;
-    }
-    return replaceAmount(string, getHumanDiscount(this.protocol?.preservation_coupon as Coupon));
-  }
 
   async addDiscount() {
     try {
@@ -50,16 +42,19 @@ export class ScCancelDiscount {
     }
   }
 
-  render() {
-    const { preserve_title, preserve_description, preserve_button, cancel_link } = this.protocol?.preservation_locales || {};
+  hasDiscount() {
+    return !!this.subscription?.discount?.id;
+  }
 
+  render() {
+    const { title, description, button, cancel_link } = getCurrentBehaviourContent(this.protocol, this.subscription?.discount?.id);
     return (
       <div class="cancel-discount">
-        <sc-dashboard-module heading={this.replaceAmount(preserve_title)} style={{ '--sc-dashboard-module-spacing': '2em' }}>
-          <span slot="description">{this.replaceAmount(preserve_description)}</span>
+        <sc-dashboard-module heading={title} style={{ '--sc-dashboard-module-spacing': '2em' }}>
+          <span slot="description">{description}</span>
           <sc-flex justifyContent="flex-start">
             <sc-button type="primary" onClick={() => this.addDiscount()}>
-              {preserve_button}
+              {button}
             </sc-button>
             <sc-button class="cancel-discount__abort-link" type="text" onClick={() => this.scCancel.emit()}>
               {cancel_link}

@@ -196,7 +196,7 @@ export class ScSelectDropdown {
     if (checked) {
       return true;
     }
-    return value && this.value === value;
+    return !!value && this.value === value;
   }
 
   /** Sets a custom validation message. If `message` is not empty, the field will be considered invalid. */
@@ -496,7 +496,7 @@ export class ScSelectDropdown {
             {this.search && (
               <sc-input
                 exportparts="base:search__base, input:search__input, form-control:search__form-control"
-                placeholder={this.searchPlaceholder || 'Search...'}
+                placeholder={this.searchPlaceholder || __('Search...', 'surecart')}
                 onScInput={e => this.handleQuery(e)}
                 class="search"
                 clearable
@@ -504,6 +504,7 @@ export class ScSelectDropdown {
                 value={this.searchTerm}
                 ref={el => (this.searchInput = el as HTMLScInputElement)}
                 aria-label={__('Type to search', 'surecart')}
+                onKeyDown={e => e.stopPropagation()}
               >
                 {this.loading && <sc-spinner exportparts="base:spinner__base" style={{ '--spinner-size': '0.5em' }} slot="suffix"></sc-spinner>}
               </sc-input>
