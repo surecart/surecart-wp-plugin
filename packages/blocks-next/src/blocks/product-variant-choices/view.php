@@ -12,7 +12,7 @@
 ?>
 
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'style' => $test ] ) ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product" }'
 	data-wp-context='{ "productId": "<?php echo esc_attr( $product_id ); ?>" }'
 	data-wp-watch--variant-values="callbacks.updateVariantAndValues"
@@ -23,6 +23,8 @@
 				<label class="sc-form-label">
 					<?php echo wp_kses_post( $option->name ); ?>
 				</label>
+
+				<?php echo wp_kses_post( do_blocks( get_block_template('surecart/surecart//color-variant-options', 'wp_template_part')->content ) ); ?>
 
 				<div class="sc-pill-option__wrapper">
 					<?php foreach ( $option->values as $name ) : ?>

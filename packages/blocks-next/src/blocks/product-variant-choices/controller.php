@@ -16,8 +16,8 @@ $product = $products[ $product_id ]['product'] ?? null;
 
 // get all the block styles.
 $raw_styles = sc_get_block_styles();
-var_dump($raw_styles);
+// var_dump($raw_styles);
 
-$test = '--sc-pill-option-background-color: ' . $raw_styles['declarations']['background-color'];
+// $test = '--sc-pill-option-background-color: ' . $raw_styles['declarations']['background-color'];
 // Or we can return a view file.
 return 'file:./view.php';
