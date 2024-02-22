@@ -363,13 +363,14 @@ export class ScProductItemList {
                       type="text"
                       placeholder="Search"
                       size="small"
-                      onKeyDown={e => {
+                      onKeyUp={e => {
                         if (e.key === 'Enter') {
+                          this.query = (e.target as any).value;
                           this.updateProducts(true);
                         }
                       }}
                       value={this.query}
-                      onScInput={e => (this.query = e.target.value)}
+                      clearable
                     >
                       {this.query ? (
                         <sc-icon
