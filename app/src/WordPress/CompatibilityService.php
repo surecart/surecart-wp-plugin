@@ -27,8 +27,23 @@ class CompatibilityService {
 		add_filter( 'surecart/shortcode/render', [ $this, 'maybeEnqueueUAGBAssetsForShortcode' ], 5, 3 );
 		// rankmath fix.
 		add_action( 'rank_math/head', [ $this, 'rankMathFix' ] );
+
+		// Yoast SEO fix.
+		add_action( 'wpseo_frontend_presenters', [ $this, 'yoastSEOFix' ] );
+
 		// Show gutenberg active notice.
 		add_action( 'admin_init', [ $this, 'gutenbergActiveNotice' ] );
+	}
+
+	/** Prevent Yoast SEO from outputing SEO meta tags on our custom pages.
+	 *
+	 * @param array $presenters Presenters.
+	 * @return array Empty Array.
+	 */
+	public function yoastSEOFix( $presenters ) {
+		if ( is_singular( 'sc_product' ) || is_singular( 'sc_collection' ) || is_singular( 'sc_upsell' ) ) {
+			return [];
+		}
 	}
 
 	/**
