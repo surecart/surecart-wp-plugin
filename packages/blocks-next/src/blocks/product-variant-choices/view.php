@@ -24,8 +24,6 @@
 					<?php echo wp_kses_post( $option->name ); ?>
 				</label>
 
-				<?php echo wp_kses_post( do_blocks( get_block_template('surecart/surecart//color-variant-options', 'wp_template_part')->content ) ); ?>
-
 				<div class="sc-pill-option__wrapper">
 					<?php foreach ( $option->values as $name ) : ?>
 						<button
