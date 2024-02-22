@@ -53,6 +53,8 @@
  - [sc-fulfillments](../../controllers/dashboard/fulfillments)
  - [sc-image-slider](../sc-image-slider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
+ - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-order-confirm-provider](../../providers/order-confirm-provider)
@@ -84,6 +86,8 @@
  - [sc-toggle](../sc-toggle)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
+ - [sc-upsell-countdown-timer](../../controllers/upsell/sc-upsell-countdown-timer)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
 
 ### Graph
@@ -109,6 +113,8 @@ graph TD;
   sc-fulfillments --> sc-icon
   sc-image-slider --> sc-icon
   sc-invoices-list --> sc-icon
+  sc-license --> sc-icon
+  sc-licenses-list --> sc-icon
   sc-login-form --> sc-icon
   sc-order --> sc-icon
   sc-order-confirm-provider --> sc-icon
@@ -140,6 +146,8 @@ graph TD;
   sc-toggle --> sc-icon
   sc-upcoming-invoice --> sc-icon
   sc-upgrade-required --> sc-icon
+  sc-upsell --> sc-icon
+  sc-upsell-countdown-timer --> sc-icon
   sc-wordpress-user --> sc-icon
   style sc-icon fill:#f9f,stroke:#333,stroke-width:4px
 ```

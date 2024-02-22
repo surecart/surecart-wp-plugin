@@ -3,7 +3,7 @@
 namespace SureCart\Models;
 
 /**
- * Holds the data of the current account.
+ * Holds the data of the order bump.
  */
 class Bump extends Model {
 	/**

@@ -41,6 +41,7 @@
  - [sc-express-payment](../../controllers/checkout-form/express-payment)
  - [sc-form-state-provider](../../providers/form-state-provider)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-login-form](../../controllers/login)
  - [sc-mollie-add-method](../sc-mollie-add-method)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
@@ -59,6 +60,7 @@
  - [sc-subscription-variation-confirm](../../controllers/dashboard/subscription-variation-confirm)
  - [sc-subscriptions-list](../../controllers/dashboard/subscriptions-list)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
 
@@ -85,6 +87,7 @@ graph TD;
   sc-express-payment --> sc-block-ui
   sc-form-state-provider --> sc-block-ui
   sc-invoices-list --> sc-block-ui
+  sc-license --> sc-block-ui
   sc-login-form --> sc-block-ui
   sc-mollie-add-method --> sc-block-ui
   sc-orders-list --> sc-block-ui
@@ -103,6 +106,7 @@ graph TD;
   sc-subscription-variation-confirm --> sc-block-ui
   sc-subscriptions-list --> sc-block-ui
   sc-upcoming-invoice --> sc-block-ui
+  sc-upsell --> sc-block-ui
   sc-wordpress-password-edit --> sc-block-ui
   sc-wordpress-user-edit --> sc-block-ui
   style sc-block-ui fill:#f9f,stroke:#333,stroke-width:4px

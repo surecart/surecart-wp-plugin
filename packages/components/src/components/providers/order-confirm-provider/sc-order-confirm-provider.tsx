@@ -8,8 +8,8 @@ import { expand } from '../../../services/session';
 import { state as checkoutState } from '@store/checkout';
 import { state as formState } from '@store/form';
 import { Checkout, ManualPaymentMethod } from '../../../types';
-import { clearCheckout } from '@store/checkout/mutations';
 import { createErrorNotice } from '@store/notices/mutations';
+import { clearCheckout } from '@store/checkout/mutations';
 /**
  * This component listens to the order status
  * and confirms the order when payment is successful.
@@ -63,8 +63,22 @@ export class ScOrderConfirmProvider {
       console.error(e);
       createErrorNotice(e);
     } finally {
-      // always clear the checkout.
-      clearCheckout();
+      // If there is an initial upsell redirect to it.
+      if (!!checkoutState?.checkout?.current_upsell?.permalink) {
+        setTimeout(
+          () =>
+            window.location.assign(
+              addQueryArgs(checkoutState?.checkout?.current_upsell?.permalink, {
+                sc_checkout_id: checkoutState.checkout?.id,
+                sc_form_id: checkoutState.formId,
+              }),
+            ),
+          50,
+        );
+        clearCheckout();
+        return;
+      }
+
       // get success url.
       const successUrl = checkoutState.checkout?.metadata?.success_url || this.successUrl;
       if (successUrl) {
@@ -74,6 +88,7 @@ export class ScOrderConfirmProvider {
       } else {
         this.showSuccessModal = true;
       }
+      clearCheckout();
     }
   }
 

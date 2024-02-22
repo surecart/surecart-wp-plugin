@@ -71,6 +71,9 @@ export class ScProductItemList {
   /* Limit per page */
   @Prop() limit: number = 15;
 
+  /* Current page */
+  @Prop({ mutable: true }) page: number = 1;
+
   /* Product list */
   @Prop({ mutable: true }) products?: Product[];
 
@@ -96,7 +99,7 @@ export class ScProductItemList {
   @State() currentQuery: string;
 
   /** Pagination */
-  @State() pagination: {
+  @Prop({ mutable: true }) pagination: {
     total: number;
     total_pages: number;
   } = {
@@ -146,7 +149,7 @@ export class ScProductItemList {
   doPagination(page: number) {
     // handle ajax pagination
     if (this.ajaxPagination) {
-      this.currentPage = page;
+      this.page = page;
       this.updateProducts();
       this.paginationAutoScroll && this.el.scrollIntoView({ behavior: 'smooth' });
       return;
@@ -163,7 +166,7 @@ export class ScProductItemList {
       'product-page': string;
     };
 
-    this.currentPage = this.paginationEnabled && page ? parseInt(page) : 1;
+    this.page = this.paginationEnabled && page ? parseInt(page) : 1;
 
     try {
       this.loading = true;
@@ -179,7 +182,7 @@ export class ScProductItemList {
   async getCollections() {
     try {
       this.collections = (await apiFetch({
-        path: addQueryArgs(`surecart/v1/product_collections/`, {
+        path: addQueryArgs('surecart/v1/product_collections/', {
           per_page: 100,
         }),
       })) as Collection[];
@@ -190,8 +193,9 @@ export class ScProductItemList {
 
   @Watch('sort')
   @Watch('selectedCollections')
+  @Watch('query')
   async handleSortChange() {
-    this.currentPage = 1;
+    this.page = 1;
     this.updateProducts();
   }
 
@@ -247,7 +251,7 @@ export class ScProductItemList {
           archived: false,
           status: ['published'],
           per_page: this.limit,
-          page: this.currentPage,
+          page: this.page,
           sort: this.sort,
           product_collection_ids: collectionIds,
           ...(this.featured ? { featured: true } : {}),
@@ -542,13 +546,13 @@ export class ScProductItemList {
             }}
           >
             <sc-pagination
-              page={this.currentPage}
+              page={this.page}
               perPage={this.limit}
               total={this.pagination.total}
               totalPages={this.pagination.total_pages}
               totalShowing={this.limit}
-              onScNextPage={() => this.doPagination(this.currentPage + 1)}
-              onScPrevPage={() => this.doPagination(this.currentPage - 1)}
+              onScNextPage={() => this.doPagination(this.page + 1)}
+              onScPrevPage={() => this.doPagination(this.page - 1)}
             ></sc-pagination>
           </div>
         )}

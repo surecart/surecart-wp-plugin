@@ -417,6 +417,7 @@ class Currency {
 			'xof' => __( 'West African Cfa Franc', 'surecart' ),
 			'yer' => __( 'Yemeni Rial', 'surecart' ),
 			'zmw' => __( 'Zambian Kwacha', 'surecart' ),
+			'tnd' => __( 'Tunisian Dinar', 'surecart' ),
 		];
 	}
 

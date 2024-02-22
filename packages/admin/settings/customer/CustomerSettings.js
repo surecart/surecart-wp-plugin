@@ -160,6 +160,20 @@ export default () => {
 				)}
 
 				<ScSwitch
+					checked={item?.upsell_accepted_enabled}
+					name="upsell_accepted_enabled"
+					onScChange={toggleNotificationSetting}
+				>
+					{__('Post Purchase Offer Accepted Emails', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Sent when a post purchase offer is accepted and the order is updated.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+
+				<ScSwitch
 					checked={item?.refund_enabled}
 					name="refund_enabled"
 					onScChange={toggleNotificationSetting}
@@ -302,6 +316,27 @@ export default () => {
 							}
 							model="abandoned_checkout"
 							action="notification3"
+						/>
+						<EmailRow
+							title={__('Order Confirmation', 'surecart')}
+							description={__(
+								'Sent after an order is placed.',
+								'surecart'
+							)}
+							model="order"
+							action="notification"
+						/>
+						<EmailRow
+							title={__(
+								'Post Purchase Offer Accepted',
+								'surecart'
+							)}
+							description={__(
+								'Sent when a post purchase offer is accepted and the order is updated.',
+								'surecart'
+							)}
+							model="order"
+							action="upsell_accepted_notification"
 						/>
 						<EmailRow
 							title={__('Email Verification Code', 'surecart')}

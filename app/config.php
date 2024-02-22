@@ -53,6 +53,8 @@ return [
 		\SureCart\Rest\AccountRestServiceProvider::class,
 		\SureCart\Rest\BrandRestServiceProvider::class,
 		\SureCart\Rest\BumpRestServiceProvider::class,
+		\SureCart\Rest\UpsellFunnelRestServiceProvider::class,
+		\SureCart\Rest\UpsellRestServiceProvider::class,
 		\SureCart\Rest\FulfillmentRestServiceProvider::class,
 		\SureCart\Rest\LoginRestServiceProvider::class,
 		\SureCart\Rest\PurchasesRestServiceProvider::class,
@@ -82,6 +84,7 @@ return [
 		\SureCart\Rest\LicenseRestServiceProvider::class,
 		\SureCart\Rest\LineItemsRestServiceProvider::class,
 		\SureCart\Rest\ActivationRestServiceProvider::class,
+		\SureCart\Rest\AffiliationProtocolRestServiceProvider::class,
 		\SureCart\Rest\MediaRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionRestServiceProvider::class,
 		\SureCart\Rest\SubscriptionProtocolRestServiceProvider::class,
@@ -163,6 +166,7 @@ return [
 		\SureCartBlocks\Blocks\Dashboard\CustomerBillingDetails\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerPaymentMethods\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerSubscriptions\Block::class,
+		\SureCartBlocks\Blocks\Dashboard\CustomerLicenses\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\CustomerDashboardArea\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardPage\Block::class,
 		\SureCartBlocks\Blocks\Dashboard\DashboardTab\Block::class,
@@ -198,6 +202,13 @@ return [
 		\SureCartBlocks\Blocks\ProductCollectionTitle\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionDescription\Block::class,
 		\SureCartBlocks\Blocks\ProductCollectionImage\Block::class,
+
+		\SureCartBlocks\Blocks\Upsell\Upsell\Block::class,
+		\SureCartBlocks\Blocks\Upsell\Title\Block::class,
+		\SureCartBlocks\Blocks\Upsell\UpsellTotals\Block::class,
+		\SureCartBlocks\Blocks\Upsell\CountdownTimer\Block::class,
+		\SureCartBlocks\Blocks\Upsell\SubmitButton\Block::class,
+		\SureCartBlocks\Blocks\Upsell\NoThanksButton\Block::class,
 	],
 
 	/** Which components to preload for each block. */
@@ -263,6 +274,7 @@ return [
 	* Permission Controllers
 	*/
 	'permission_controllers' => [
+		\SureCart\Permissions\Models\ActivationPermissionsController::class,
 		\SureCart\Permissions\Models\BalanceTransactionPermissionsController::class,
 		\SureCart\Permissions\Models\ChargePermissionsController::class,
 		\SureCart\Permissions\Models\LicensePermissionsController::class,

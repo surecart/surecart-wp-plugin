@@ -10,6 +10,7 @@
 | `checked`  | `checked`  | Draws the item in a checked state.                                                                        | `boolean` | `false`     |
 | `disabled` | `disabled` | Draws the menu item in a disabled state.                                                                  | `boolean` | `false`     |
 | `href`     | `href`     | Optional link to follow.                                                                                  | `string`  | `undefined` |
+| `target`   | `target`   | The target of the link.                                                                                   | `string`  | `undefined` |
 | `value`    | `value`    | A unique value to store in the menu item. This can be used as a way to identify menu items when selected. | `string`  | `''`        |
 
 
