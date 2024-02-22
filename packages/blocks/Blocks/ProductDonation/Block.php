@@ -60,7 +60,9 @@ class Block extends BaseBlock {
 
 		[ 'styles' => $styles, 'classes' => $classes ] = BlockStyleAttributes::getClassesAndStylesFromAttributes( $attributes );
 
-		$styles .= '--sc-input-label-color: ' . $attributes['textColor'] . '; ';
+		if ( ! empty( $attributes['textColor'] ) ) {
+			$styles .= '--sc-input-label-color: ' . $attributes['textColor'] . '; ';
+		}
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(

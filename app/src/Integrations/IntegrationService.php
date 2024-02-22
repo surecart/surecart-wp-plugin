@@ -322,6 +322,11 @@ abstract class IntegrationService extends AbstractIntegration implements Integra
 				continue;
 			}
 
+			// If the integration has a price_id or variant_id, then we need to match with specific price or variant.
+			if ( $this->purchaseIsNotMatchedWithPriceOrVariant( $integration, $purchase ) ) {
+				continue;
+			}
+
 			$user = $purchase->getWPUser();
 			if ( ! $user ) {
 				// throw new \Exception( 'No WordPress user is linked to this customer. This means any integrations will not run. Please link this customer to a WordPress user.' );

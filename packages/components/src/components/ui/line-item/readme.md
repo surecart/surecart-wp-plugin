@@ -57,7 +57,9 @@
  - [sc-order-summary](../../controllers/checkout-form/order-summary)
  - [sc-product-line-item](../product-line-item)
  - [sc-subscription-next-payment](../../controllers/dashboard/subscription-details)
+ - [sc-summary](../sc-summary)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell-totals](../../controllers/upsell/sc-upsell-totals)
 
 ### Graph
 ```mermaid
@@ -75,7 +77,9 @@ graph TD;
   sc-order-summary --> sc-line-item
   sc-product-line-item --> sc-line-item
   sc-subscription-next-payment --> sc-line-item
+  sc-summary --> sc-line-item
   sc-upcoming-invoice --> sc-line-item
+  sc-upsell-totals --> sc-line-item
   style sc-line-item fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

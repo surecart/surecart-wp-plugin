@@ -22,6 +22,7 @@ import * as customerOrders from '@blocks/Dashboard/CustomerOrders';
 import * as customerSubscriptions from '@blocks/Dashboard/CustomerSubscriptions';
 import * as customerPaymentMethods from '@blocks/Dashboard/CustomerPaymentMethods';
 import * as customerBillingDetails from '@blocks/Dashboard/CustomerBillingDetails';
+import * as customerLicenses from '@blocks/Dashboard/CustomerLicenses';
 import * as WordPressAccount from '@blocks/Dashboard/WordPressAccount';
 import * as dashboardArea from '@blocks/Dashboard/CustomerDashboardArea';
 import * as dashboardPage from '@blocks/Dashboard/DashboardPage';
@@ -63,6 +64,7 @@ registerBlocksForTemplates({
 		customerInvoices,
 		customerSubscriptions,
 		customerPaymentMethods,
+		customerLicenses,
 		customerBillingDetails,
 		WordPressAccount,
 		dashboardArea,
@@ -81,5 +83,10 @@ registerBlocksForTemplates({
 		'sc-part-products-info',
 		'sc-product-collection',
 		'sc-part-product-collection',
+
+		'surecart/surecart//upsell-info',
+		'surecart/surecart//single-upsell',
+		'sc-upsell',
+		'sc-part-upsell-info',
 	],
 });

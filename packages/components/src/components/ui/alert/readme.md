@@ -93,6 +93,7 @@ Type: `Promise<void>`
  - [sc-subscription-reactivate](../../controllers/dashboard/subscription-reactivate)
  - [sc-subscription-switch](../../controllers/dashboard/subscription-switch)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
 
 ### Depends on
 
@@ -129,6 +130,7 @@ graph TD;
   sc-subscription-reactivate --> sc-alert
   sc-subscription-switch --> sc-alert
   sc-upcoming-invoice --> sc-alert
+  sc-upsell --> sc-alert
   style sc-alert fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
