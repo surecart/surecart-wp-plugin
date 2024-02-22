@@ -56,4 +56,13 @@ class BlockService {
 		}
 		return $found_blocks;
 	}
+
+	/**
+	 * Get the block styles service.
+	 *
+	 * @return BlockStylesService
+	 */
+	public function styles() {
+		return new BlockStylesService();
+	}
 }

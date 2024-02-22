@@ -1,0 +1,77 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Register all blocks.
+ */
+add_action(
+	'init',
+	function() {
+		foreach ( glob( __DIR__ . '/build/blocks/**/block.json' ) as $file ) {
+			register_block_type( dirname( $file ) );
+		}
+	}
+);
+
+/**
+ * Use our controller view pattern.
+ */
+add_filter(
+	'block_type_metadata_settings',
+	function( $settings, $metadata ) {
+		// if there is a controller file, use it.
+		$controller_path = wp_normalize_path(
+			realpath(
+				dirname( $metadata['file'] ) . '/' .
+				remove_block_asset_path_prefix( 'file:./controller.php' )
+			)
+		);
+
+		if ( ! file_exists( $controller_path ) ) {
+			return $settings;
+		}
+
+		/**
+		 * Renders the block on the server.
+		 *
+		 * @since 6.1.0
+		 *
+		 * @param array    $attributes Block attributes.
+		 * @param string   $content    Block default content.
+		 * @param WP_Block $block      Block instance.
+		 *
+		 * @return string Returns the block content.
+		 */
+		$settings['render_callback'] = static function ( $attributes, $content, $block ) use ( $controller_path, $metadata ) {
+			$view = require $controller_path;
+
+			// if not using 'file:', then it's content output.
+			$view_path = remove_block_asset_path_prefix( $view );
+			if ( $view_path === $view ) {
+				return $view;
+			}
+
+			$template_path = wp_normalize_path(
+				realpath(
+					dirname( $metadata['file'] ) . '/' .
+					remove_block_asset_path_prefix( $view )
+				)
+			);
+
+			ob_start();
+			require $template_path;
+			return ob_get_clean();
+		};
+
+		return $settings;
+	},
+	11,
+	2
+);
+
+add_action( 'wp_enqueue_scripts', function() {
+
+}, 9 );

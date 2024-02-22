@@ -12,7 +12,7 @@
 ?>
 
 <div
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
+	<?php echo wp_kses_data( get_block_wrapper_attributes( [ 'style' => $test ] ) ); ?>
 	data-wp-interactive='{ "namespace": "surecart/product" }'
 	data-wp-context='{ "productId": "<?php echo esc_attr( $product_id ); ?>" }'
 	data-wp-watch--variant-values="callbacks.updateVariantAndValues"
@@ -37,7 +37,7 @@
 							data-wp-bind--aria-disabled="state.isOptionUnavailable"
 							tabindex="0"
 							role="radio"
-							style="<?php echo esc_attr( $styles['css'] ?? '' ); ?>"
+							style="<?php echo esc_attr( $styles['color']['css'] ?? '' ); ?>"
 						>
 							<?php echo wp_kses_post( $name ); ?>
 						</button>
@@ -47,5 +47,5 @@
 		<?php endforeach; ?>
 	<?php endif; ?>
 
-	<!-- <div data-wp-text="surecart/product::state.selectedVariantId"></div> -->
+	<div data-wp-text="surecart/product::state.selectedVariantId"></div>
 </div>

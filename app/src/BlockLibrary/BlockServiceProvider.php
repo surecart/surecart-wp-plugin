@@ -6,7 +6,7 @@
 
 namespace SureCart\BlockLibrary;
 
-use SureCartBlocks\Blocks\BlockService;
+use SureCart\BlockLibrary\BlockService;
 use SureCartCore\ServiceProviders\ServiceProviderInterface;
 
 /**
@@ -26,7 +26,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 	public function register( $container ) {
 		$app = $container[ SURECART_APPLICATION_KEY ];
 
-		$container['blocks'] = function () use ( $app ) {
+		$container['block'] = function () use ( $app ) {
 			return new BlockService( $app );
 		};
 
@@ -45,14 +45,7 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			);
 		};
 
-		$app->alias( 'blocks', 'blocks' );
-
-		$app->alias(
-			'block',
-			function () use ( $app ) {
-				return call_user_func_array( [ $app->blocks(), 'render' ], func_get_args() );
-			}
-		);
+		$app->alias( 'block', 'block' );
 	}
 
 	/**
@@ -147,10 +140,6 @@ class BlockServiceProvider implements ServiceProviderInterface {
 			foreach ( $service['blocks'] as $block ) {
 				( new $block() )->register();
 			}
-		}
-		$files = glob( dirname( SURECART_PLUGIN_FILE ) . '/packages/blocks-next/build/blocks/**/block.json' );
-		foreach ( $files as $file ) {
-			register_block_type_from_metadata( dirname( $file ) );
 		}
 	}
 }
