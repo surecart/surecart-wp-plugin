@@ -17,6 +17,7 @@ import Error from '../../components/Error';
 import useSave from '../UseSave';
 import RegistrationDialog from './RegistrationDialog';
 import RegionSettings from './RegionSettings';
+import TaxOverrides from '../tax-override';
 
 const zoneIconName = {
 	au: 'australia-flag',
@@ -279,6 +280,12 @@ export default () => {
 						{fetching && <sc-block-ui spinner></sc-block-ui>}
 					</ScCard>
 				</SettingsBox>
+
+				<TaxOverrides
+					region={region}
+					registrations={registrations}
+					hasLoadedItem={hasLoadedItem}
+				/>
 			</SettingsTemplate>
 			<RegistrationDialog
 				region={region}

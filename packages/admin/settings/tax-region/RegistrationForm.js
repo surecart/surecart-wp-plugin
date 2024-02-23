@@ -18,7 +18,7 @@ const types = {
 	eu: 'eu_vat',
 	uk: 'gb_vat',
 };
-const zoneName = {
+export const zoneName = {
 	au: __('Country', 'surecart'),
 	eu: __('Country', 'surecart'),
 	uk: __('Country', 'surecart'),

@@ -17,4 +17,11 @@ dispatch(coreStore).addEntities([
 		baseURL: 'surecart/v1/tax_zones',
 		baseURLParams: { context: 'edit' },
 	},
+	{
+		name: 'tax_override',
+		kind: 'surecart',
+		label: __('Tax Override', 'surecart'),
+		baseURL: 'surecart/v1/tax_overrides',
+		baseURLParams: { context: 'edit' },
+	},
 ]);
