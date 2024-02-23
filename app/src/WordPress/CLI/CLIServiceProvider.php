@@ -16,7 +16,7 @@ class CLIServiceProvider implements ServiceProviderInterface {
 	protected $container;
 
 	/**
-	 * {@inheritDoc}
+	 * Register all dependencies in the container.
 	 *
 	 * @param  \Pimple\Container $container Service Container.
 	 */
@@ -31,7 +31,7 @@ class CLIServiceProvider implements ServiceProviderInterface {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Bootstrap any services if needed.
 	 *
 	 * @param  \Pimple\Container $container Service Container.
 	 */
