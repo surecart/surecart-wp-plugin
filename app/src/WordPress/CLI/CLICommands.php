@@ -16,7 +16,7 @@ class CLICommands {
 	 */
 	public function seed( $args, $assoc_args ) {
 		if ( ! $assoc_args['email'] ) {
-			WP_CLI::error( 'Email is required to seed an account.' );
+			WP_CLI::error( __( 'Email is required to seed an account.', 'surecart' ) );
 		}
 		$account = ProvisionalAccount::create(
 			[
@@ -27,6 +27,6 @@ class CLICommands {
 		if ( is_wp_error( $account ) ) {
 			WP_CLI::error( $account->get_error_message() );
 		}
-		WP_CLI::success( 'Account seeded successfully.' );
+		WP_CLI::success( __( 'Account seeded successfully.', 'surecart' ) );
 	}
 }
