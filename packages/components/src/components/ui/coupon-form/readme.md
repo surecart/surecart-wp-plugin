@@ -70,6 +70,7 @@
 - [sc-line-item](../line-item)
 - [sc-tag](../tag)
 - [sc-format-number](../../util/format-number)
+- [sc-icon](../icon)
 - [sc-input](../input)
 - [sc-button](../button)
 - [sc-alert](../alert)
@@ -82,6 +83,7 @@ graph TD;
   sc-coupon-form --> sc-line-item
   sc-coupon-form --> sc-tag
   sc-coupon-form --> sc-format-number
+  sc-coupon-form --> sc-icon
   sc-coupon-form --> sc-input
   sc-coupon-form --> sc-button
   sc-coupon-form --> sc-alert

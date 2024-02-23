@@ -25,7 +25,7 @@ class Collection {
 	 * @param object $collection Optional attributes.
 	 */
 	public function __construct( $collection ) {
-		$this->attributes = $collection;
+		$this->attributes = (object) $collection;
 	}
 
 	/**
@@ -35,6 +35,24 @@ class Collection {
 	 */
 	public static function getCalledClassName() {
 		return str_replace( '\\', '_', get_called_class() );
+	}
+
+	/**
+	 * Get the total.
+	 *
+	 * @return string
+	 */
+	public function total() {
+		return $this->pagination->count ?? 0;
+	}
+
+	/**
+	 * Get the total pages.
+	 *
+	 * @return string
+	 */
+	public function totalPages() {
+		return ceil( ( $this->pagination->count ?? 0 ) / ( $this->pagination->limit ?? 1 ) );
 	}
 
 	/**

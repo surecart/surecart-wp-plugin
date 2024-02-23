@@ -60,7 +60,7 @@ export class ScSubscriptionCancel {
             . {__('If you change your mind, you can renew your subscription.', 'surecart')}
           </div>
         ) : (
-          <div slot="description">{__('Your plan will be canceled immediately. You cannot change your mind.', 'surecart')}</div>
+          <div slot="description">{__('Your plan will be canceled immediately and cannot be modified later.', 'surecart')}</div>
         )}
       </Fragment>
     );

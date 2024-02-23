@@ -108,18 +108,12 @@ export class ScCheckoutStockAlert {
 
     return (
       <Host>
-        <sc-dialog
-          style={{ '--body-spacing': 'var(--sc-spacing-x-large)' }}
-          open={!!stockErrors.length && currentFormState() === 'draft'}
-          noHeader={true}
-          onScRequestClose={e => e.preventDefault()}
-        >
+        <sc-dialog open={!!stockErrors.length && currentFormState() === 'draft'} noHeader={true} onScRequestClose={e => e.preventDefault()} class="stock-alert">
           <sc-dashboard-module class="subscription-cancel" error={this.error} style={{ '--sc-dashboard-module-spacing': '1em' }}>
             <sc-flex slot="heading" align-items="center" justify-content="flex-start">
               <sc-icon name="alert-circle" style={{ color: 'var(--sc-color-primary-500' }}></sc-icon>
               {hasOutOfStockItems ? __('Out of Stock', 'surecart') : __('Quantity Update', 'surecart')}
             </sc-flex>
-
             <span slot="description">
               {hasOutOfStockItems
                 ? __('Some items are no longer available. Your cart will be updated.', 'surecart')
@@ -136,7 +130,12 @@ export class ScCheckoutStockAlert {
                 {stockErrors.map((item, index) => {
                   const isLastChild = index === stockErrors.length - 1;
                   return (
-                    <sc-table-row style={{ '--columns': '2', ...(isLastChild ? { border: 'none' } : {}) }}>
+                    <sc-table-row
+                      style={{
+                        '--columns': '2',
+                        ...(isLastChild ? { border: 'none' } : {}),
+                      }}
+                    >
                       <sc-table-cell>
                         <sc-flex justifyContent="flex-start" alignItems="center">
                           <img class="stock-alert__image" src={`https://surecart.com/cdn-cgi/image/fit=scale-down,format=auto,width=100/${item?.image_url}`} />

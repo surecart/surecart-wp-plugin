@@ -63,7 +63,7 @@ export default ({ id, setId }) => {
 							required
 							label={__('Bump Name', 'surecart')}
 							help={__(
-								'A name for this bump that will be visible to customers.',
+								'This is shown to the customer on invoices and line items.',
 								'surecart'
 							)}
 							onScInput={(e) => setName(e.target.value)}
@@ -81,7 +81,7 @@ export default ({ id, setId }) => {
 								required
 								value={price}
 								ad_hoc={false}
-								variable={false}
+								includeVariants={false}
 								onSelect={({ price_id }) => setPrice(price_id)}
 								requestQuery={{
 									archived: false,

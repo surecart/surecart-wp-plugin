@@ -59,4 +59,3 @@ add_filter(
 		return $url;
 	}
 );
-

@@ -7,6 +7,9 @@ import { getCheckout, setCheckout } from '../checkouts/mutations';
  */
 onChange('checkout', val => setCheckout(val, state.formId));
 
+/**
+ * When checkout is get, get the checkout from the checkouts state.
+ */
 on('get', prop => {
   if (prop === 'checkout') {
     const checkout = getCheckout(state.formId, state.mode);

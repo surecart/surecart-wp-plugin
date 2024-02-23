@@ -21,6 +21,11 @@
 
 ## Dependencies
 
+### Used by
+
+ - [sc-subscription-payment](../../controllers/dashboard/subscription-payment)
+ - [sc-subscription-payment-method](../../controllers/dashboard/sc-subscription-payment-method)
+
 ### Depends on
 
 - [sc-text](../text)
@@ -29,6 +34,8 @@
 ```mermaid
 graph TD;
   sc-manual-payment-method --> sc-text
+  sc-subscription-payment --> sc-manual-payment-method
+  sc-subscription-payment-method --> sc-manual-payment-method
   style sc-manual-payment-method fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
