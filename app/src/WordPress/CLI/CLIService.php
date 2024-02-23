@@ -2,32 +2,21 @@
 
 namespace SureCart\WordPress\CLI;
 
+use \WP_CLI;
+
 /**
- * Our assets service.
+ * Our CLI service.
  */
 class CLIService {
-	/**
-	 * The service container.
-	 *
-	 * @var \Pimple\Container $container Service Container.
-	 */
-	protected $container;
-
-	/**
-	 * Get the loader.
-	 *
-	 * @param Object $container The Container.
-	 */
-	public function __construct( $container ) {
-		$this->container = $container;
-	}
-
 	/**
 	 * Bootstrap the service.
 	 *
 	 * @return void
 	 */
 	public function bootstrap() {
+		if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
+			return;
+		}
 		add_action( 'cli_init', [ $this, 'registerCLICommands' ] );
 	}
 
@@ -37,5 +26,7 @@ class CLIService {
 	 * @return void
 	 */
 	public function registerCLICommands() {
+		$surecart = new CLICommands();
+		WP_CLI::add_command( 'surecart', $surecart );
 	}
 }
