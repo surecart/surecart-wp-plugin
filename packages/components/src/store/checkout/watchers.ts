@@ -20,22 +20,6 @@ on('get', prop => {
   }
 });
 
-on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
-  if (key !== 'checkout') return; // we only care about checkout
-  if (!checkout) return; // we only care about checkout
-  if (checkout?.discount?.promotion?.code === oldCheckout?.discount?.promotion?.code) return; // we only care about promotion code
-
-  let message = __('Coupon code removed.', 'sc-coupon-form');
-  if (checkout.discount?.promotion?.code) {
-    message = sprintf(
-      // Translators: %1$s is the coupon code, %2$s is the human readable discount.
-      __('Coupon code %1$s added. %2$s applied.', 'sc-coupon-form'),
-      checkout?.discount?.promotion?.code,
-      getHumanDiscount(checkout?.discount?.coupon),
-    );
-  }
-  speak(message);
-});
 
 on('set', (key: string, checkout: Checkout, oldCheckout: Checkout) => {
   if (key !== 'checkout') return; // we only care about checkout
