@@ -13,7 +13,7 @@ class TaxOverrideController extends RestController {
 	 *
 	 * @var array
 	 */
-	protected $with = [ 'tax_zone' ];
+	protected $with = [ 'tax_zone', 'product_collection' ];
 
 	/**
 	 * Class to make the requests.
