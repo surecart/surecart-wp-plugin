@@ -3,6 +3,8 @@
  */
 import { store, getContext } from '@wordpress/interactivity';
 
+const { actions: currencyActions } = store('surecart/currency');
+
 // controls the product page.
 const { state, callbacks } = store('surecart/product', {
 	state: {
@@ -34,6 +36,36 @@ const { state, callbacks } = store('surecart/product', {
 		/**
 		 * Derived state
 		 */
+		get selectedPriceAmount() {
+			return (
+				state?.selectedVariant?.amount ||
+				state?.selectedPrice?.amount ||
+				0
+			);
+		},
+		get selectedScratchPriceAmount() {
+			// no scratch amount.
+			if (!state?.selectedPrice?.scratch_amount) {
+				return null;
+			}
+			// if the scratch amount is the same as the selected price amount, return null.
+			if (
+				state?.selectedPrice?.scratch_amount ===
+				state?.selectedPriceAmount
+			) {
+				return null;
+			}
+			return state?.selectedPrice?.scratch_amount;
+		},
+		get selectedPriceDisplayAmount() {
+			return currencyActions.format(state.selectedPriceAmount);
+		},
+		get selectedScratchPriceDisplayAmount() {
+			return currencyActions.format(state.selectedScratchPriceAmount);
+		},
+		get isOnSale() {
+			return !!state.selectedScratchPriceAmount;
+		},
 		/** Is the option unavailable */
 		get isOptionUnavailable() {
 			const { optionNumber, optionValue } = getContext();

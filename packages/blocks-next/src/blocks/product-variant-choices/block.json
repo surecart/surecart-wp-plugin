@@ -7,7 +7,52 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"example": {},
+	"ancestor": ["surecart/product-page"],
+	"example": {
+		"attributes": {}
+	},
+	"attributes": {
+		"label": {
+			"type": "rich-text",
+			"default": "Select An Option",
+			"selector": ".wp-block-form-input__label-content",
+			"source": "rich-text",
+			"__experimentalRole": "content"
+		},
+		"lightbox": {
+			"type": "object",
+			"enabled": {
+				"type": "boolean"
+			}
+		},
+		"highlight_text": {
+			"type": "string"
+		},
+		"highlight_background": {
+			"type": "string"
+		},
+		"highlight_border": {
+			"type": "object",
+			"default": {
+				"top": {
+					"width": 0,
+					"color": null
+				},
+				"right": {
+					"width": 0,
+					"color": null
+				},
+				"bottom": {
+					"width": 0,
+					"color": null
+				},
+				"left": {
+					"width": 0,
+					"color": null
+				}
+			}
+		}
+	},
 	"supports": {
 		"interactivity": true,
 		"__experimentalBorder": {
@@ -23,24 +68,19 @@
 		},
 		"color": {
 			"__experimentalSkipSerialization": true,
-			"gradients": false,
-			"link": false,
-			"background": true,
+			"gradients": true,
 			"text": true,
+			"background": false,
+			"button": true,
 			"__experimentalDefaultControls": {
-				"background": true,
 				"text": true,
-				"link": true
+				"button": true
 			}
 		},
 		"typography": {
 			"__experimentalSkipSerialization": true,
-			"fontSize": true
-		},
-		"spacing": {
-			"__experimentalSkipSerialization": true,
-			"margin": true,
-			"padding": true
+			"fontSize": true,
+			"lineHeight": true
 		},
 		"shadow": {
 			"__experimentalSkipSerialization": true
@@ -52,7 +92,7 @@
 	"selectors": {
 		"root": ".sc-pill-option__button"
 	},
-	"viewModule": "file:../../scripts/product-page/index.js",
+	"viewModule": "@surecart/product-page",
 	"style": [
 		"file:./style-index.css",
 		"file:../../styles/pill.css",

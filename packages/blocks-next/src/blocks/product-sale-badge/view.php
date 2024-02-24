@@ -1,0 +1,3 @@
+<div <?php echo get_block_wrapper_attributes( ['class' => 'sc-tag sc-tag--primary' ] )?> data-wp-bind--hidden="!state.isOnSale" hidden>
+	<?php echo wp_kses_post( $attributes['text'] ); ?>
+</div>

@@ -11,12 +11,7 @@
  */
 ?>
 
-<div
-	<?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>
-	data-wp-interactive='{ "namespace": "surecart/product" }'
-	data-wp-context='{ "productId": "<?php echo esc_attr( $product_id ); ?>" }'
-	data-wp-watch--variant-values="callbacks.updateVariantAndValues"
->
+<div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
 		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
 			<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
@@ -46,6 +41,4 @@
 			</div>
 		<?php endforeach; ?>
 	<?php endif; ?>
-
-	<div data-wp-text="surecart/product::state.selectedVariantId"></div>
 </div>
