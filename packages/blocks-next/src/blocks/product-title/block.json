@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-title-v2",
+	"title": "Product Title",
+	"description": "Display the product title.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"example": {
+		"textAlign": {
+			"type": "string",
+			"default": "left"
+		}
+	},
+	"supports": {
+		"interactivity": true
+	},
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"viewModule": ["@surecart/product-page"]
+}
