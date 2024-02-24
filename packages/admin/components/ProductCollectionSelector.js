@@ -9,7 +9,8 @@ import { useSelect } from '@wordpress/data';
 /**
  * Internal dependencies.
  */
-import SelectModel from './SelectModel';
+// import SelectModel from './SelectModel';
+import ModelSelector from './ModelSelector';
 
 export default (props) => {
 	const [query, setQuery] = useState(null);
@@ -36,16 +37,18 @@ export default (props) => {
 
 	console.log('collections', collections);
 
+	const toggleCollection = (collectionId) => {
+		console.log('toggleCollection', collectionId);
+	}
+
 	return (
-		<SelectModel
-			choices={(collections || []).map((collection) => ({
-				label: collection.name,
-				value: collection.id,
-			}))}
-			onQuery={setQuery}
-			onFetch={() => setQuery('')}
-			loading={loading}
+		<ModelSelector
+			placeholder={__('Add this product to a collection...', 'surecart')}
+			name="product-collection"
+			onSelect={(collectionId) => toggleCollection(collectionId)}
+			onChangeQuery={(value) => setSuggestion(value)}
+			style={{ width: '100%' }}
 			{...props}
-		/>
+		></ModelSelector>
 	);
 };
