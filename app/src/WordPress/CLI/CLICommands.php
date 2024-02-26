@@ -15,7 +15,7 @@ class CLICommands {
 	 * @param Array $assoc_args Key value arguments stored in associated array format.
 	 */
 	public function seed( $args, $assoc_args ) {
-		if ( ! $assoc_args['email'] ) {
+		if ( empty( $assoc_args['email'] ) ) {
 			WP_CLI::error( __( 'Email is required to seed an account.', 'surecart' ) );
 		}
 		$account = ProvisionalAccount::create(
