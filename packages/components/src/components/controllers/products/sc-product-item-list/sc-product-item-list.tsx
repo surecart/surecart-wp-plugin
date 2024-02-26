@@ -143,6 +143,8 @@ export class ScProductItemList {
     if (this.collectionEnabled) {
       this.getCollections();
     }
+
+    this.handleProductsChanged();
   }
 
   // Append URL if no 'product-page' found
