@@ -138,13 +138,13 @@ export class ScProductItemList {
   componentWillLoad() {
     if (!this?.products?.length) {
       this.getProducts();
+    } else {
+      this.handleProductsChanged();
     }
 
     if (this.collectionEnabled) {
       this.getCollections();
     }
-
-    this.handleProductsChanged();
   }
 
   // Append URL if no 'product-page' found
