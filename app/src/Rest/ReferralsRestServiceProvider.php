@@ -185,6 +185,6 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to make a referral reviewing, WP_Error object otherwise.
 	 */
 	public function make_reviewing_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 }
