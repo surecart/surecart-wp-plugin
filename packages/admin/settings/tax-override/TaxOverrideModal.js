@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -13,6 +13,7 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import {
+	ScAlert,
 	ScButton,
 	ScDialog,
 	ScForm,
@@ -21,31 +22,27 @@ import {
 	ScText,
 } from '@surecart/components-react';
 import { zoneName } from '../tax-region/RegistrationForm';
-// import ProductCollectionSelector from '../../components/ProductCollectionSelector';
+import Error from '../../components/Error';
 
 export default ({
 	type,
 	region,
-	registration,
 	modal,
+	taxOverrides,
 	taxOverride,
 	onRequestClose,
-	onDelete,
+	registrations,
 }) => {
 	const open = !!modal;
 	if (!open) return null;
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	// const [type, setType] = useState('other');
-	const [additionalErrors, setAdditionalErrors] = useState([]);
-	const { saveEntityRecord, deleteEntityRecord } = useDispatch(coreStore);
-	const [rate, setRate] = useState(null);
-	const { tax_zone, tax_identifier, ...registrationData } = registration;
+	const { saveEntityRecord } = useDispatch(coreStore);
 	const [productCollection, setProductCollection] = useState(null);
 
 	const [data, setData] = useState({
-		rate: rate || taxOverride?.rate || '',
+		rate: taxOverride?.rate || '',
 		...(taxOverride?.id ? { id: taxOverride.id } : {}),
 		...(taxOverride?.tax_zone ? { tax_zone: taxOverride.tax_zone.id } : {}),
 		...(type === 'shipping' ? { shipping: true } : {}),
@@ -65,7 +62,11 @@ export default ({
 			const queryArgs = [
 				'surecart',
 				'tax_zone',
-				{ context: 'edit', regions: [region], per_page: 100 },
+				{
+					context: 'edit',
+					regions: [region],
+					per_page: 100,
+				},
 			];
 			return {
 				zones: select(coreStore).getEntityRecords(...queryArgs),
@@ -109,30 +110,37 @@ export default ({
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	const getDialogLabel = () => {
-		const labels = {
-			shipping: {
-				new: __('Add shipping tax override', 'surecart'),
-				edit: __('Edit shipping tax override', 'surecart'),
-				delete: __('Delete shipping tax override', 'surecart'),
-			},
-			product: {
-				new: __('Add product tax override', 'surecart'),
-				edit: __('Edit product tax override', 'surecart'),
-				delete: __('Delete product tax override', 'surecart'),
-			},
-		};
-
-		return labels[type]?.[modal] || '';
+		if (type === 'shipping') {
+			return taxOverride?.id
+				? sprintf(
+						/* translators: %s: tax zone country name */
+						__('Edit shipping override for %s', 'surecart'),
+						taxOverride?.tax_zone?.country_name || ''
+				  )
+				: __('Add shipping tax override', 'surecart');
+		} else {
+			return taxOverride?.id
+				? sprintf(
+						/* translators: %1$s: product collection name, %2$s: tax zone country name */
+						__(
+							'Edit override for %1$s collection in %2$s',
+							'surecart'
+						),
+						taxOverride?.product_collection?.name || '',
+						taxOverride?.tax_zone?.country_name || ''
+				  )
+				: __('Add product tax override', 'surecart');
+		}
 	};
+
+	const isRegionTaxCollected = () =>
+		registrations.some((r) => r.tax_zone?.region === region);
 
 	return (
 		<div
@@ -154,6 +162,28 @@ export default ({
 							'--sc-form-row-spacing': 'var(--sc-spacing-large)',
 						}}
 					>
+						<Error error={error} setError={setError} />
+
+						{!isRegionTaxCollected() && (
+							<ScAlert
+								type="warning"
+								open
+								css={css`
+									padding: var(--sc-spacing-large);
+								`}
+							>
+								{sprintf(
+									/* translators: %1$s: tax zone country name, %2$s: tax zone country name */
+									__(
+										'No Tax Collection found for this %1$s. Please add a Tax Collection for this %2$s.',
+										'surecart'
+									),
+									zoneName[region],
+									zoneName[region]
+								)}
+							</ScAlert>
+						)}
+
 						{!taxOverride?.id && (
 							<ScText
 								css={css`
@@ -187,14 +217,13 @@ export default ({
 								)}
 							</ScText>
 						)}
-						{/* <Error error={error} setError={setError} /> */}
 
 						{type === 'product' && (
 							<div>
 								{!taxOverride?.id && (
 									<ScSelect
 										search
-										loading={fetching}
+										loading={fetchingProductCollections}
 										disabled={taxOverride?.id}
 										value={data?.product_collection}
 										unselect={false}
@@ -240,6 +269,9 @@ export default ({
 										return {
 											label: state_name || country_name,
 											value: id,
+											disabled: !registrations.some(
+												(r) => r.tax_zone?.id === id
+											),
 										};
 									})}
 								required
@@ -276,7 +308,8 @@ export default ({
 									!data?.tax_zone ||
 									data?.rate === undefined ||
 									data?.rate === null ||
-									data?.rate === ''
+									data?.rate === '' ||
+									!isRegionTaxCollected()
 								}
 							>
 								{taxOverride?.id

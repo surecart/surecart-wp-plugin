@@ -6,15 +6,12 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
  */
 import {
 	ScAlert,
-	ScBlockUi,
 	ScButton,
 	ScCard,
 	ScDropdown,
@@ -28,41 +25,22 @@ import {
 } from '@surecart/components-react';
 import TaxOverrideModal from './TaxOverrideModal';
 import TaxOverrideDeleteModal from './TaxOverrideDeleteModal';
+import PrevNextButtons from '../../ui/PrevNextButtons';
+import usePagination from '../../hooks/usePagination';
+import { TAX_OVERRIDE_PER_PAGE } from './useTaxOverrides';
 
-export default ({ region, type, registrations }) => {
+export default ({
+	region,
+	type,
+	registrations,
+	taxOverrides,
+	fetching,
+	currentPage,
+	setCurrentPage,
+}) => {
+	// const [currentPage, setCurrentPage] = useState(1);
 	const [modal, setModal] = useState(false);
 	const [selectedTaxOverride, setSelectedTaxOverride] = useState(null);
-
-	// Get all tax overrides for the region.
-	const { shippingOverrides, productOverrides, fetching } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'tax_override',
-				{
-					context: 'edit',
-					per_page: 100,
-					tax_region: [region],
-				},
-			];
-			const taxOverrides = select(coreStore).getEntityRecords(
-				...queryArgs
-			);
-			return {
-				shippingOverrides: (taxOverrides || []).filter(
-					(taxOverride) => taxOverride?.shipping
-				),
-				productOverrides: (taxOverrides || []).filter(
-					(taxOverride) => taxOverride?.product_collection
-				),
-				fetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[]
-	);
 
 	const onEdit = (taxOverride) => {
 		setModal('edit');
@@ -74,8 +52,16 @@ export default ({ region, type, registrations }) => {
 		setSelectedTaxOverride(taxOverride);
 	};
 
-	const taxOverridesData =
-		type === 'shipping' ? shippingOverrides : productOverrides;
+	const onRequestClose = () => {
+		setModal(null);
+		setSelectedTaxOverride(null);
+	};
+
+	const { hasPagination } = usePagination({
+		data: taxOverrides,
+		page: currentPage,
+		perPage: TAX_OVERRIDE_PER_PAGE,
+	});
 
 	return (
 		<>
@@ -93,7 +79,7 @@ export default ({ region, type, registrations }) => {
 
 				<ScCard noPadding loading={fetching}>
 					<ScStackedList>
-						{taxOverridesData.length === 0 && !fetching && (
+						{taxOverrides.length === 0 && !fetching && (
 							<ScAlert
 								type="warning"
 								open
@@ -111,7 +97,7 @@ export default ({ region, type, registrations }) => {
 								)}
 							</ScAlert>
 						)}
-						{taxOverridesData.map((taxOverride) => {
+						{taxOverrides.map((taxOverride) => {
 							if (!taxOverride) return null;
 							return (
 								<>
@@ -209,6 +195,25 @@ export default ({ region, type, registrations }) => {
 							</ScButton>
 						</ScStackedListRow>
 					</ScStackedList>
+
+					{hasPagination && (
+						<div
+							css={css`
+								padding: var(--sc-spacing-x-large);
+								border-top: 1px solid
+									var(--sc-color-brand-stroke);
+								margin: 0;
+							`}
+						>
+							<PrevNextButtons
+								data={taxOverrides}
+								page={currentPage}
+								setPage={setCurrentPage}
+								perPage={TAX_OVERRIDE_PER_PAGE}
+								loading={fetching}
+							/>
+						</div>
+					)}
 				</ScCard>
 			</ScCard>
 
@@ -216,20 +221,17 @@ export default ({ region, type, registrations }) => {
 				region={region}
 				modal={modal !== 'delete' ? modal : false}
 				type={type}
+				taxOverrides={taxOverrides}
 				taxOverride={selectedTaxOverride}
-				onDelete={() => {
-					setModal(null);
-					setSelectedTaxOverride(null);
-				}}
-				registration={registrations?.[0] || {}}
-				onRequestClose={() => setModal(null)}
+				registrations={registrations}
+				onRequestClose={onRequestClose}
 			/>
 
 			<TaxOverrideDeleteModal
 				type={type}
 				open={modal === 'delete'}
 				taxOverride={selectedTaxOverride}
-				onRequestClose={() => setModal(null)}
+				onRequestClose={onRequestClose}
 			/>
 
 			{fetching && <sc-block-ui spinner></sc-block-ui>}
