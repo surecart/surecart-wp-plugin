@@ -13,7 +13,14 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-export default ({ attributes: { textAlign }, setAttributes }) => {
+/**
+ * Internal dependencies
+ */
+import HeadingLevelDropdown from '../../components/HeadingLebelDropdown';
+
+export default ({ attributes: { level, textAlign }, setAttributes }) => {
+	const TagName = 0 === level ? 'p' : 'h' + level;
+
 	const blockProps = useBlockProps({
 		className: classnames({
 			[`has-text-align-${textAlign}`]: textAlign,
@@ -23,6 +30,10 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 	return (
 		<>
 			<BlockControls group="block">
+				<HeadingLevelDropdown
+					selectedLevel={level}
+					onChange={(level) => setAttributes({ level })}
+				/>
 				<AlignmentControl
 					value={textAlign}
 					onChange={(nextAlign) => {
@@ -31,12 +42,7 @@ export default ({ attributes: { textAlign }, setAttributes }) => {
 				/>
 			</BlockControls>
 
-			<div {...blockProps}>
-				{__(
-					'Experience the next level of convenience with our innovative widget. Melding cutting-edge technology with user-friendly design, this product provides unparalleled functionality that caters to your lifestyle.',
-					'surecart'
-				)}
-			</div>
+			<TagName {...blockProps}>{__('Product Title', 'surecart')}</TagName>
 		</>
 	);
 };

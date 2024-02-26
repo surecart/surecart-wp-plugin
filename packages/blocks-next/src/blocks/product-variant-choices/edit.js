@@ -49,7 +49,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				panelId={clientId}
 			/>
 			{/* Additional color inspector control. */}
-			{/* <ColorInspectorControl
+			<ColorInspectorControl
 				settings={[
 					{
 						colorValue: label_text,
@@ -81,7 +81,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					},
 				]}
 				panelId={clientId}
-			/> */}
+			/>
 			<div {...blockProps}>
 				<div>
 					<label className="sc-form-label">

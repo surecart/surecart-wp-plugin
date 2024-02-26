@@ -2,6 +2,8 @@
  * WordPress dependencies
  */
 import { store, getContext } from '@wordpress/interactivity';
+// TODO: switch to @wordpress/i18n once it's supported in modules.
+const { __, sprintf } = wp.i18n;
 
 const { actions: currencyActions } = store('surecart/currency');
 
@@ -65,6 +67,21 @@ const { state, callbacks } = store('surecart/product', {
 		},
 		get isOnSale() {
 			return !!state.selectedScratchPriceAmount;
+		},
+		get setupFeeDisplayAmount() {
+			return state.selectedPrice?.setup_fee_enabled
+				? currencyActions.format(state.selectedPrice?.setup_fee_amount)
+				: null;
+		},
+		get setupFeeDisplayText() {
+			return state.setupFeeDisplayAmount
+				? sprintf(
+						__('%1s %2s', 'surecart'),
+						state?.setupFeeDisplayAmount,
+						state?.selectedPrice?.setup_fee_name ||
+							__('Setup Fee', 'surecart')
+				  )
+				: null;
 		},
 		/** Is the option unavailable */
 		get isOptionUnavailable() {

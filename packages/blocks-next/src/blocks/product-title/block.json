@@ -7,14 +7,46 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"example": {
+	"example": {},
+	"attributes": {
 		"textAlign": {
 			"type": "string",
 			"default": "left"
+		},
+		"level": {
+			"type": "number",
+			"default": 1
 		}
 	},
 	"supports": {
-		"interactivity": true
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
 	},
 	"textdomain": "surecart",
 	"render": "file:./view.php",
