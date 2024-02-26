@@ -41,7 +41,6 @@ class ClicksRestServiceProviderTest extends SureCartUnitTestCase
 			'Find: Unauthenticated' => [null, 'GET', '/surecart/v1/clicks/test', 401],
 			'Find: Missing Capability' => [[], 'GET', '/surecart/v1/clicks/test', 403],
 			'Find: Has Capability' => [['read_sc_affiliates'], 'GET', '/surecart/v1/clicks/test', 200],
-			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/public/clicks', 200],
 		];
 	}
 

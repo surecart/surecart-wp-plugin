@@ -27,7 +27,7 @@ class AffiliationRequestsRestServiceProvider extends RestServiceProvider impleme
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'create', 'show', 'edit', 'delete' ];
+	protected $methods = [ 'index', 'create', 'find', 'edit', 'delete' ];
 
 	/**
 	 * Get our sample schema for a post.

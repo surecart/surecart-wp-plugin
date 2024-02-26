@@ -27,7 +27,7 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	 *
 	 * @var array
 	 */
-	protected $methods = [ 'index', 'show' ];
+	protected $methods = [ 'index', 'find' ];
 
 	/**
 	 * Register REST Routes
@@ -37,12 +37,12 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	public function registerRoutes() {
 		register_rest_route(
 			"$this->name/v$this->version",
-			$this->endpoint . '/(?P<id>\S+)/approve/',
+			$this->endpoint . '/(?P<id>\S+)/activate/',
 			[
 				[
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => $this->callback( $this->controller, 'approve' ),
-					'permission_callback' => [ $this, 'approve_item_permissions_check' ],
+					'callback'            => $this->callback( $this->controller, 'activate' ),
+					'permission_callback' => [ $this, 'activate_item_permissions_check' ],
 				],
 				// Register our schema callback.
 				'schema' => [ $this, 'get_item_schema' ],
@@ -102,7 +102,7 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return current_user_can( 'read_sc_affiliations' );
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
@@ -112,17 +112,17 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'read_sc_affiliations' );
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
-	 * Who can approve an affiliation?
+	 * Who can activate an affiliation?
 	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
-	public function approve_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_affiliations' );
+	public function activate_item_permissions_check( $request ) {
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**
@@ -132,6 +132,6 @@ class AffiliationsRestServiceProvider extends RestServiceProvider implements Res
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function deactivate_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_affiliations' );
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 }

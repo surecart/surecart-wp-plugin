@@ -86,6 +86,6 @@ class PayoutGroupsRestServiceProvider extends RestServiceProvider  implements Re
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'create_sc_affiliates' );
+		return current_user_can( 'publish_sc_affiliates' );
 	}
 }

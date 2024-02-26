@@ -46,7 +46,7 @@ class AffiliationRequestsRestServiceProviderTest extends SureCartUnitTestCase {
 			'Delete: Has Capability' => [['delete_sc_affiliates'], 'DELETE', '/surecart/v1/affiliation_requests/test', 200],
 			'Create: Unauthenticated' => [null, 'POST', '/surecart/v1/affiliation_requests', 401],
 			'Create: Missing Capability' => [[], 'POST', '/surecart/v1/affiliation_requests', 403],
-			'Create: Has Capability' => [['create_sc_affiliates'], 'POST', '/surecart/v1/affiliation_requests', 200],
+			'Create: Has Capability' => [['publish_sc_affiliates'], 'POST', '/surecart/v1/affiliation_requests', 200],
 		];
 	}
 
