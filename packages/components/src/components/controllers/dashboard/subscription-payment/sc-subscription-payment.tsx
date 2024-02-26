@@ -35,6 +35,7 @@ export class ScSubscriptionPayment {
       this.error = e?.message || __('Something went wrong', 'surecart');
     } finally {
       this.loading = false;
+      this.manualSelected = !!this.subscription?.manual_payment;
     }
   }
 
@@ -130,14 +131,14 @@ export class ScSubscriptionPayment {
             {(this.paymentMethods || []).map(method => {
               if (method?.live_mode !== this?.subscription?.live_mode) return null;
               return (
-                <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id}>
+                <sc-choice checked={!this.manualSelected && this.subscription?.payment_method === method?.id} name="method" value={method?.id}>
                   <sc-payment-method paymentMethod={method} full={true} />
                 </sc-choice>
               );
             })}
             {(this.manualPaymentMethods || []).map(method => {
               return (
-                <sc-choice checked={this.subscription?.payment_method === method?.id} name="method" value={method?.id} onClick={() => this.manualSelected = true}>
+                <sc-choice checked={this.manualSelected && this.subscription?.manual_payment_method === method?.id} name="method" value={method?.id} onClick={() => this.manualSelected = true}>
                   <sc-manual-payment-method paymentMethod={method} />
                 </sc-choice>
               );

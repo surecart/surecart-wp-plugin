@@ -6,7 +6,7 @@ import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
 import { intervalString } from '../../../../functions/price';
 import { formatTaxDisplay } from '../../../../functions/tax';
-import { Checkout, PaymentMethod, Period, Price, Product, Subscription } from '../../../../types';
+import { Checkout, PaymentMethod, Period, Price, Product, Subscription, ManualPaymentMethod } from '../../../../types';
 import { productNameWithPrice } from '../../../../functions/price';
 @Component({
   tag: 'sc-upcoming-invoice',
@@ -88,6 +88,7 @@ export class ScUpcomingInvoice {
           'line_item.price',
           'price.product',
           'checkout.payment_method',
+          'checkout.manual_payment_method',
           'checkout.discount',
           'discount.promotion',
           'discount.coupon',
@@ -236,6 +237,8 @@ export class ScUpcomingInvoice {
     }
     
     const checkout = this.invoice?.checkout as Checkout;
+    const manualPaymentMethod = checkout?.manual_payment ? checkout?.manual_payment_method as ManualPaymentMethod : null;
+
     return (
       <Fragment>
         {checkout?.line_items?.data.map(item => (
@@ -307,7 +310,12 @@ export class ScUpcomingInvoice {
             slot="price-description"
           >
             <sc-flex justify-content="flex-start" align-items="center" style={{ '--spacing': '0.5em' }}>
-              <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+              {!!manualPaymentMethod &&
+                <sc-manual-payment-method paymentMethod={manualPaymentMethod} />
+              }
+              { !manualPaymentMethod &&
+                <sc-payment-method paymentMethod={checkout?.payment_method}></sc-payment-method>
+              }
               <sc-icon name="edit-3"></sc-icon>
             </sc-flex>
           </a>

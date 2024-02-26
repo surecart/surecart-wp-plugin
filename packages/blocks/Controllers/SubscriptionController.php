@@ -660,6 +660,7 @@ class SubscriptionController extends BaseController {
 				'ad_hoc_amount' => $this->getParam( 'ad_hoc_amount' ),
 				'id'            => $this->getId(),
 				'price_id'      => $this->getParam( 'price_id' ),
+				'nonce'  => wp_create_nonce( 'subscription-switch' ),
 			],
 			remove_query_arg( array_keys( $_GET ) ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		);
