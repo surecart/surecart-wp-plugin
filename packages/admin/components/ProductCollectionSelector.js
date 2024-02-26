@@ -9,7 +9,6 @@ import { useSelect } from '@wordpress/data';
 /**
  * Internal dependencies.
  */
-// import SelectModel from './SelectModel';
 import ModelSelector from './ModelSelector';
 
 export default (props) => {
@@ -39,7 +38,7 @@ export default (props) => {
 
 	const toggleCollection = (collectionId) => {
 		console.log('toggleCollection', collectionId);
-	}
+	};
 
 	return (
 		<ModelSelector
