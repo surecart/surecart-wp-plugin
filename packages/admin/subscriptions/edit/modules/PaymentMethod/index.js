@@ -90,6 +90,8 @@ export default ({ subscription, updateSubscription, loading }) => {
 			<EditPaymentMethod
 				open={edit}
 				setOpen={setEdit}
+				isManualPaymentSelected={subscription?.manual_payment}
+				manualPaymentMethodId={subscription?.manual_payment_method}
 				customerId={
 					subscription?.customer?.id || subscription?.customer
 				}

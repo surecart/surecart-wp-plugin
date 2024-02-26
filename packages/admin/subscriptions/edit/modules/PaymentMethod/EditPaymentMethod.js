@@ -18,7 +18,9 @@ export default ({
 	setOpen,
 	customerId,
 	paymentMethodId,
+	manualPaymentMethodId,
 	updatePaymentMethod,
+	isManualPaymentSelected
 }) => {
 	const [paymentMethod, setPaymentMethod] = useState(paymentMethodId);
 	const [manual, setManual] = useState(false);
@@ -90,7 +92,7 @@ export default ({
 					return (
 						<ScChoice
 							value={payment_method?.id}
-							checked={payment_method?.id === paymentMethod}
+							checked={!isManualPaymentSelected && payment_method?.id === paymentMethod}
 						>
 							<ScPaymentMethod paymentMethod={payment_method} />
 							<div slot="description">
@@ -116,7 +118,7 @@ export default ({
 					return (
 						<ScChoice
 							value={payment_method?.id}
-							checked={payment_method?.id === paymentMethod}
+							checked={isManualPaymentSelected && payment_method?.id === manualPaymentMethodId}
 							onClick={() => setManual(true)}
 						>
 							<ScManualPaymentMethod paymentMethod={payment_method} />
