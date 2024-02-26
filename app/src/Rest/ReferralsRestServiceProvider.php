@@ -115,7 +115,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to list items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
@@ -125,7 +125,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to get an item, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
@@ -135,7 +135,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'create_sc_affiliates' );
 	}
 
 	/**
@@ -145,7 +145,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to update an item, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**
@@ -155,7 +155,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to delete an item, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'delete_sc_affiliates' );
 	}
 
 	/**
@@ -165,7 +165,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to approve an item, WP_Error object otherwise.
 	 */
 	public function approve_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**
@@ -175,7 +175,7 @@ class ReferralsRestServiceProvider extends RestServiceProvider implements RestSe
 	 * @return true|\WP_Error True if the request has access to deny an item, WP_Error object otherwise.
 	 */
 	public function deny_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**

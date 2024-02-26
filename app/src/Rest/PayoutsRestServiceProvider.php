@@ -102,7 +102,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to list items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
@@ -112,7 +112,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to get an item, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
@@ -122,7 +122,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function create_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'publish_sc_affiliates' );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to update an item, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'edit_sc_affiliates' );
 	}
 
 	/**
@@ -142,7 +142,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to delete an item, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'delete_sc_affiliates' );
 	}
 
 	/**
@@ -152,7 +152,7 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to complete an item, WP_Error object otherwise.
 	 */
 	public function complete_permissions_check( $request ) {
-		return true;
+		return get_current_user( 'edit_sc_affiliates' );
 	}
 
 	/**
@@ -162,6 +162,6 @@ class PayoutsRestServiceProvider extends RestServiceProvider implements RestServ
 	 * @return true|\WP_Error True if the request has access to make a payout processing, WP_Error object otherwise.
 	 */
 	public function make_processing_permissions_check( $request ) {
-		return true;
+		return get_current_user( 'edit_sc_affiliates' );
 	}
 }

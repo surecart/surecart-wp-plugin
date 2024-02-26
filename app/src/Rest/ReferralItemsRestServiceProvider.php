@@ -66,7 +66,7 @@ class ReferralItemsRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error True if the request has access to list items, WP_Error object otherwise.
 	 */
 	public function get_items_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_affiliates' );
 	}
 
 	/**
@@ -76,6 +76,6 @@ class ReferralItemsRestServiceProvider extends RestServiceProvider implements Re
 	 * @return true|\WP_Error True if the request has access to get an item, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return true;
+		return current_user_can( 'read_sc_affiliates' );
 	}
 }
