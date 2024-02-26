@@ -33,7 +33,10 @@ export default ({ region, registrations, hasLoadedItem }) => {
 		<>
 			<SettingsBox
 				title={__('Tax Rates and Exemptions', 'surecart')}
-				description={''}
+				description={__(
+					'You can specify unique tax rates for a collection of products or on shipping charges.',
+					'surecart'
+				)}
 				noButton
 				loading={!hasLoadedItem}
 				wrapperTag="div"
