@@ -28,7 +28,6 @@ export default ({
 	type,
 	region,
 	modal,
-	taxOverrides,
 	taxOverride,
 	onRequestClose,
 	registrations,
