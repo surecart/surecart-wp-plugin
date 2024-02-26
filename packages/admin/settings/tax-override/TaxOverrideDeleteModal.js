@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
@@ -13,17 +13,11 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import { ScButton, ScDialog, ScForm, ScText } from '@surecart/components-react';
+import Error from '../../components/Error';
 
-export default ({
-	type,
-	open,
-	taxOverride,
-	onRequestClose,
-}) => {
+export default ({ type, open, taxOverride, onRequestClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
-	// const [type, setType] = useState('other');
-	const [additionalErrors, setAdditionalErrors] = useState([]);
 	const { deleteEntityRecord } = useDispatch(coreStore);
 
 	const onSubmit = async (e) => {
@@ -43,29 +37,48 @@ export default ({
 		} catch (e) {
 			console.error(e);
 			setError(e?.message || __('Something went wrong.', 'surecart'));
-			if (e?.additional_errors) {
-				setAdditionalErrors(e.additional_errors);
-			}
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	const getDialogLabel = () => {
-		return type === 'shipping'
-			? __(
-					'Remove shipping override for ' +
-						taxOverride?.tax_zone?.country_name || '',
+		if (type === 'shipping') {
+			return sprintf(
+				/* translators: %s: tax zone country name */
+				__('Remove shipping override for %s', 'surecart'),
+				taxOverride?.tax_zone?.country_name || ''
+			);
+		} else {
+			return sprintf(
+				/* translators: %1$s: product collection name, %2$s: tax zone country name */
+				__('Remove override for %1$s collection in %2$s', 'surecart'),
+				taxOverride?.product_collection?.name || '',
+				taxOverride?.tax_zone?.country_name || ''
+			);
+		}
+	};
+
+	const getDialogDescription = () => {
+		if (type === 'shipping') {
+			return sprintf(
+				/* translators: %s: tax zone country name */
+				__(
+					"If you remove this override, then you'll charge the standard tax rate for shipping in %s.",
 					'surecart'
-			  )
-			: __(
-					'Remove override for ' +
-						taxOverride?.product_collection?.name ||
-						'' +
-							' collection in ' +
-							taxOverride?.tax_zone?.country_name,
+				),
+				taxOverride?.tax_zone?.country_name || ''
+			);
+		} else {
+			return sprintf(
+				/* translators: %s: tax zone country name */
+				__(
+					"If you remove this override, then you'll charge the standard tax rate for this collection in %s.",
 					'surecart'
-			  );
+				),
+				taxOverride?.tax_zone?.country_name || ''
+			);
+		}
 	};
 
 	return (
@@ -88,28 +101,9 @@ export default ({
 							'--sc-form-row-spacing': 'var(--sc-spacing-large)',
 						}}
 					>
-						{/* <Error error={error} setError={setError} /> */}
+						<Error error={error} setError={setError} />
 
-						{type === 'shipping' && (
-							<ScText>
-								{__(
-									"If you remove this override, then you'll charge the standard tax rate for shipping in " +
-										taxOverride?.tax_zone?.country_name +
-										'.'
-								)}
-							</ScText>
-						)}
-
-						{type === 'product' && (
-							<ScText>
-								{__(
-									"If you remove this override, then you'll charge the standard tax rate for this collection in " +
-										taxOverride?.tax_zone?.country_name +
-										'.',
-									'surecart'
-								)}
-							</ScText>
-						)}
+						<ScText>{getDialogDescription()}</ScText>
 
 						<sc-flex justify-content="flex-end">
 							<div>
