@@ -114,8 +114,10 @@ export class ScProductItemList {
   @State() selectedCollections: Collection[] = [];
 
   @Watch('products')
-  handleProductsChanged() {
-    if (!this.products?.length) {
+  handleProductsChanged(newProducts?: Product[], oldProducts?: Product[]) {
+    const productIds = new Set([...(oldProducts || []).map(product => product.id), ...(newProducts || []).map(product => product.id)]);
+
+    if (newProducts?.length === oldProducts?.length && productIds.size === newProducts.length) {
       return;
     }
 
@@ -139,7 +141,7 @@ export class ScProductItemList {
     if (!this?.products?.length) {
       this.getProducts();
     } else {
-      this.handleProductsChanged();
+      this.handleProductsChanged(this.products);
     }
 
     if (this.collectionEnabled) {
