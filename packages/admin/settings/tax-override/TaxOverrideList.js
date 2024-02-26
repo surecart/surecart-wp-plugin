@@ -112,9 +112,6 @@ export default ({
 												<ScFlex flexDirection="column">
 													<ScText
 														css={css`
-															color: var(
-																--sc-color-primary-500
-															);
 															--font-weight: bold;
 														`}
 													>
@@ -129,12 +126,24 @@ export default ({
 										)}
 
 										<ScStackedListRow>
-											<ScFlex flexDirection="column">
-												<ScText>
-													{
+											<div
+												css={css`
+													display: flex;
+													flex-direction: column;
+													gap: var(
+														--sc-spacing-xx-small
+													);
+												`}
+											>
+												<ScText
+													css={css`
+														--font-weight: bold;
+													`}
+												>
+													{taxOverride?.tax_zone
+														?.state_name ||
 														taxOverride?.tax_zone
-															?.country_name
-													}
+															?.country_name}
 												</ScText>
 												<ScText>
 													{taxOverride?.rate ||
@@ -142,7 +151,7 @@ export default ({
 															?.default_rate}
 													%
 												</ScText>
-											</ScFlex>
+											</div>
 
 											<ScDropdown
 												slot="suffix"
