@@ -1,5 +1,3 @@
-import Box from '../../../../ui/Box';
-import EditPaymentMethod from './EditPaymentMethod';
 import {
 	ScButton,
 	ScFlex,
@@ -9,12 +7,11 @@ import {
 } from '@surecart/components-react';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from 'react';
 import { useSelect } from '@wordpress/data';
 
 export default ({ subscription, loading, setEdit }) => {
 	const id = subscription?.manual_payment_method;
-	
+
 	const { payment_method, hasLoadedPaymentmethod } = useSelect(
 		(select) => {
 			const entityData = [
@@ -32,28 +29,24 @@ export default ({ subscription, loading, setEdit }) => {
 				),
 				hasLoadedPaymentmethod: select(
 					coreStore
-				)?.hasFinishedResolution?.('getEntityRecord', [
-					...entityData,
-				]),
+				)?.hasFinishedResolution?.('getEntityRecord', [...entityData]),
 			};
 		},
 		[id]
 	);
-    
+
 	return (
-        <ScCard
-            loading={loading || !hasLoadedPaymentmethod}
-        >
-            <ScFlex
-                alignItems="center"
-                justifyContent="flex-start"
-                style={{ gap: '0.5em' }}
-            >
-                <ScManualPaymentMethod paymentMethod={payment_method} />
-                <ScButton type="text" circle onClick={() => setEdit(true)}>
-                    <ScIcon name="edit-2" />
-                </ScButton>
-            </ScFlex>
-        </ScCard>
+		<ScCard loading={loading || !hasLoadedPaymentmethod}>
+			<ScFlex
+				alignItems="center"
+				justifyContent="flex-start"
+				style={{ gap: '0.5em' }}
+			>
+				<ScManualPaymentMethod paymentMethod={payment_method} />
+				<ScButton type="text" circle onClick={() => setEdit(true)}>
+					<ScIcon name="edit-2" />
+				</ScButton>
+			</ScFlex>
+		</ScCard>
 	);
 };

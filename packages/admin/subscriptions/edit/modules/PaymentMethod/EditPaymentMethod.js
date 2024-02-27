@@ -20,7 +20,7 @@ export default ({
 	paymentMethodId,
 	manualPaymentMethodId,
 	updatePaymentMethod,
-	isManualPaymentSelected
+	isManualPaymentSelected,
 }) => {
 	const [paymentMethod, setPaymentMethod] = useState(paymentMethodId);
 	const [manual, setManual] = useState(false);
@@ -55,7 +55,7 @@ export default ({
 		},
 		[customerId, open]
 	);
-	
+
 	const { manual_payment_methods, manualLoading } = useSelect(
 		(select) => {
 			if (!open) return {};
@@ -92,7 +92,10 @@ export default ({
 					return (
 						<ScChoice
 							value={payment_method?.id}
-							checked={!isManualPaymentSelected && payment_method?.id === paymentMethod}
+							checked={
+								!isManualPaymentSelected &&
+								payment_method?.id === paymentMethod
+							}
 						>
 							<ScPaymentMethod paymentMethod={payment_method} />
 							<div slot="description">
@@ -118,10 +121,16 @@ export default ({
 					return (
 						<ScChoice
 							value={payment_method?.id}
-							checked={isManualPaymentSelected && payment_method?.id === manualPaymentMethodId}
+							checked={
+								isManualPaymentSelected &&
+								payment_method?.id === manualPaymentMethodId
+							}
 							onClick={() => setManual(true)}
 						>
-							<ScManualPaymentMethod paymentMethod={payment_method} />
+							<ScManualPaymentMethod
+								paymentMethod={payment_method}
+								showDescription
+							/>
 							{payment_method?.id === paymentMethodId && (
 								<ScTag type="info" slot="price">
 									{__('Current', 'surecart')}
@@ -131,7 +140,7 @@ export default ({
 					);
 				})}
 			</ScChoices>
-			{loading || manualLoading && <ScBlockUi spinner />}
+			{loading || (manualLoading && <ScBlockUi spinner />)}
 			<ScButton
 				type="primary"
 				onClick={() => updatePaymentMethod(paymentMethod, manual)}
