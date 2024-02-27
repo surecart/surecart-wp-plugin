@@ -97,4 +97,37 @@ class Affiliation extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Set the clicks attribute
+	 *
+	 * @param object $value Array of click objects
+	 *
+	 * @return void
+	 */
+	public function setClicksAttribute( $value ) {
+		$this->setCollection( 'clicks', $value, Click::class );
+	}
+
+	/**
+	 * Set the referrals attribute
+	 *
+	 * @param object $value Array of referral objects
+	 *
+	 * @return void
+	 */
+	public function setReferralsAttribute( $value ) {
+		$this->setCollection( 'referrals', $value, Referral::class );
+	}
+
+	/**
+	 * Set the payouts attribute
+	 *
+	 * @param object $value Array of payout objects
+	 *
+	 * @return void
+	 */
+	public function setPayoutsAttribute( $value ) {
+		$this->setCollection( 'payouts', $value, Payout::class );
+	}
 }

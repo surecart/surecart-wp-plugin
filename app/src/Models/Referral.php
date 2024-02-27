@@ -136,4 +136,15 @@ class Referral extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Set the referral items attribute.
+	 *
+	 * @param  object $value Array of referral item objects.
+	 *
+	 * @return void
+	 */
+	public function setReferralItemsAttribute( $value ) {
+		$this->setCollection( 'referral_items', $value, ReferralItem::class );
+	}
 }

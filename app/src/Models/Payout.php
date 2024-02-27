@@ -97,4 +97,15 @@ class Payout extends Model {
 
 		return $this;
 	}
+
+	/**
+	 * Set the referrals attribute.
+	 *
+	 * @param  object $value Array of referral objects.
+	 *
+	 * @return void
+	 */
+	public function setReferralsAttribute( $value ) {
+		$this->setCollection( 'referrals', $value, Referral::class );
+	}
 }

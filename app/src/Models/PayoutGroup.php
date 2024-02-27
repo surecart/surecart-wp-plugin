@@ -19,4 +19,15 @@ class PayoutGroup extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'payout_group';
+
+	/**
+	 * Set the payouts attribute.
+	 *
+	 * @param  object $value Array of payout objects.
+	 *
+	 * @return void
+	 */
+	public function setPayoutsAttribute( $value ) {
+		$this->setCollection( 'payouts', $value, Payout::class );
+	}
 }
