@@ -4,7 +4,7 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 /**
@@ -26,7 +26,6 @@ import TaxOverrideRows from './TaxOverrideRows';
 import PrevNextButtons from '../../ui/PrevNextButtons';
 import usePagination from '../../hooks/usePagination';
 import { TAX_OVERRIDE_PER_PAGE } from './useTaxOverrides';
-import { zoneName } from '../tax-region/RegistrationForm';
 
 export default ({
 	region,
@@ -80,15 +79,10 @@ export default ({
 				</ScText>
 
 				{!isRegionTaxCollected() ? (
-					<ScAlert type="warning" open>
-						{sprintf(
-							/* translators: %1$s: tax zone country name, %2$s: tax zone country name */
-							__(
-								'No Tax Collection found for this %1$s. Please add a Tax Collection for this %2$s.',
-								'surecart'
-							),
-							zoneName[region],
-							zoneName[region]
+					<ScAlert type="primary" open>
+						{__(
+							'Please enable tax collection to add tax overrides.',
+							'surecart'
 						)}
 					</ScAlert>
 				) : (
@@ -104,7 +98,7 @@ export default ({
 											'Specify a unique tax rate for a collection of products.',
 											'surecart'
 									  )}
-								<ScButton onClick={() => setModal('new')}>
+								<ScButton onClick={() => setModal('edit')}>
 									<ScIcon name="plus" slot="prefix" />
 									{__('Add Override', 'surecart')}
 								</ScButton>
@@ -122,7 +116,7 @@ export default ({
 									<ScStackedListRow>
 										<ScButton
 											type="default"
-											onClick={() => setModal('new')}
+											onClick={() => setModal('edit')}
 										>
 											<ScIcon name="plus" slot="prefix" />
 											{__('Add Override', 'surecart')}
@@ -156,7 +150,7 @@ export default ({
 			<TaxOverrideModal
 				region={region}
 				taxProtocol={taxProtocol}
-				modal={modal !== 'delete' ? modal : false}
+				open={modal === 'edit'}
 				type={type}
 				taxOverrides={taxOverrides}
 				taxOverride={selectedTaxOverride}
