@@ -28,6 +28,7 @@ export default ({
 	region,
 	modal,
 	taxOverride,
+	taxOverrides,
 	onRequestClose,
 	registrations,
 }) => {
@@ -137,6 +138,23 @@ export default ({
 		}
 	};
 
+	const isTaxZoneIsRegistered = (taxZoneId) =>
+		registrations.some((r) => r.tax_zone?.id === taxZoneId);
+
+	const hasTaxOverrideForCountry = (country) => {
+		return (taxOverrides || []).some((t) => {
+			if (type === 'shipping') {
+				return t.tax_zone?.country === country;
+			} else if (type === 'product') {
+				return (
+					t.tax_zone?.country === country &&
+					t?.product_collection?.id === data.product_collection
+				);
+			}
+			return false;
+		});
+	};
+
 	return (
 		<div
 			css={css`
@@ -240,15 +258,27 @@ export default ({
 								}
 								choices={(zones || [])
 									.reverse()
-									.map(({ state_name, country_name, id }) => {
-										return {
-											label: state_name || country_name,
-											value: id,
-											disabled: !registrations.some(
-												(r) => r.tax_zone?.id === id
-											),
-										};
-									})}
+									.map(
+										({
+											state_name,
+											country_name,
+											country,
+											id,
+										}) => {
+											return {
+												label:
+													state_name || country_name,
+												value: id,
+												disabled:
+													!isTaxZoneIsRegistered(
+														id
+													) ||
+													hasTaxOverrideForCountry(
+														country
+													),
+											};
+										}
+									)}
 								required
 							/>
 						)}
