@@ -175,7 +175,7 @@ export default ({
 							'--sc-form-row-spacing': 'var(--sc-spacing-large)',
 						}}
 					>
-						<Error error={error} setError={setError} />
+						{error && <Error error={error} setError={setError} />}
 
 						{!taxOverride?.id && (
 							<ScText
@@ -211,36 +211,30 @@ export default ({
 							</ScText>
 						)}
 
-						{type === 'product' && (
+						{type === 'product' && !taxOverride?.id && (
 							<div>
-								{!taxOverride?.id && (
-									<ScSelect
-										search
-										loading={fetchingProductCollections}
-										disabled={taxOverride?.id}
-										value={data?.product_collection}
-										unselect={false}
-										label={__(
-											'Product Collection',
-											'surecart'
-										)}
-										onScChange={(e) =>
-											updateData({
-												product_collection:
-													e.target.value,
-											})
-										}
-										choices={(productCollections || [])
-											.reverse()
-											.map(({ name, id }) => {
-												return {
-													label: name,
-													value: id,
-												};
-											})}
-										required
-									/>
-								)}
+								<ScSelect
+									search
+									loading={fetchingProductCollections}
+									disabled={taxOverride?.id}
+									value={data?.product_collection}
+									unselect={false}
+									label={__('Product Collection', 'surecart')}
+									onScChange={(e) =>
+										updateData({
+											product_collection: e.target.value,
+										})
+									}
+									choices={(productCollections || [])
+										.reverse()
+										.map(({ name, id }) => {
+											return {
+												label: name,
+												value: id,
+											};
+										})}
+									required
+								/>
 							</div>
 						)}
 
