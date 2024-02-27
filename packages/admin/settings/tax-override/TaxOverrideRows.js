@@ -20,21 +20,20 @@ import {
 	ScText,
 } from '@surecart/components-react';
 
+// this controls the grouping of tax overrides by product collection.
 export default ({ type, taxOverrides, onRemove, onEdit }) => {
 	// Return if no tax overrides exist.
 	if (!taxOverrides?.length) {
 		return null;
 	}
 
-	const getTaxOverridesGroupByProductCollection = () =>
-		taxOverrides.reduce((acc, taxOverride) => {
-			const productCollectionId = taxOverride?.product_collection?.id;
-			acc[productCollectionId] = acc[productCollectionId] || [];
-			acc[productCollectionId].push(taxOverride);
-			return acc;
-		}, {});
-
-	const groupedTaxOverrides = getTaxOverridesGroupByProductCollection();
+	// Group tax overrides by product collection.
+	const groupedTaxOverrides = taxOverrides.reduce((acc, taxOverride) => {
+		const productCollectionId = taxOverride?.product_collection?.id;
+		acc[productCollectionId] = acc[productCollectionId] || [];
+		acc[productCollectionId].push(taxOverride);
+		return acc;
+	}, {});
 
 	const renderTaxOverride = (taxOverride) => (
 		<ScStackedListRow key={taxOverride.id}>
