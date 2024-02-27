@@ -26,7 +26,7 @@ export default ({ type, open, taxOverride, onRequestClose }) => {
 			setLoading(true);
 			await deleteEntityRecord(
 				'surecart',
-				'tax_override',
+				'tax-override',
 				taxOverride?.id,
 				undefined,
 				{
@@ -36,7 +36,7 @@ export default ({ type, open, taxOverride, onRequestClose }) => {
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 		} finally {
 			setLoading(false);
 		}

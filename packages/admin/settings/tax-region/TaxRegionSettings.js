@@ -106,7 +106,7 @@ export default () => {
 	const { registrations, fetching } = useSelect((select) => {
 		const queryArgs = [
 			'surecart',
-			'tax_registration',
+			'tax-registration',
 			{ context: 'edit', per_page: 100 },
 		];
 		const registrations = select(coreStore).getEntityRecords(...queryArgs);

@@ -55,7 +55,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'tax_zone',
+				'tax-zone',
 				{ context: 'edit', regions: [region], per_page: 100 },
 			];
 			return {
@@ -97,7 +97,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			setLoading(true);
 			await saveEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				{
 					...(registration?.id ? { id: registration?.id } : {}),
 					...data,
@@ -124,7 +124,7 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 			setLoading(true);
 			await deleteEntityRecord(
 				'surecart',
-				'tax_registration',
+				'tax-registration',
 				registration?.id,
 				{},
 				{ throwOnError: true }
@@ -155,14 +155,14 @@ export default ({ region, registration, onSubmitted, onDeleted }) => {
 				unselect={false}
 				label={zoneName[region] || __('Region', 'surecart')}
 				onScChange={(e) => updateData({ tax_zone: e.target.value })}
-				choices={(zones || [])
-					.reverse()
-					.map(({ state_name, country_name, id }) => {
+				choices={(zones || []).map(
+					({ state_name, country_name, id }) => {
 						return {
 							label: state_name || country_name,
 							value: id,
 						};
-					})}
+					}
+				)}
 				required
 			/>
 

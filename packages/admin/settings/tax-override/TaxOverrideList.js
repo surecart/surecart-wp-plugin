@@ -6,6 +6,8 @@ import { css, jsx } from '@emotion/core';
  */
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
@@ -61,11 +63,43 @@ export default ({
 		perPage: TAX_OVERRIDE_PER_PAGE,
 	});
 
-	// it's tax collected if there are registrations, or if it's EU or CA automatic tax is enabled.
-	const isRegionTaxCollected = () =>
-		registrations.some((r) => r.tax_zone?.region === region) ||
-		(region === 'eu' && taxProtocol?.eu_tax_enabled) ||
-		(region === 'ca' && taxProtocol?.ca_tax_enabled);
+	const { zones, zonesLoading } = useSelect(
+		(select) => {
+			if (!['eu', 'ca'].includes(region)) {
+				return [];
+			}
+			if (region === 'eu' && !taxProtocol?.eu_tax_enabled) {
+				return [];
+			}
+			if (region === 'ca' && !taxProtocol?.ca_tax_enabled) {
+				return [];
+			}
+
+			const queryArgs = [
+				'surecart',
+				'tax-zone',
+				{
+					tax_region: [region],
+					per_page: 100,
+				},
+			];
+			return {
+				zones: (
+					select(coreStore).getEntityRecords(...queryArgs) || []
+				).reverse(),
+				zonesLoading: select(coreStore).isResolving(
+					'getEntityRecords',
+					queryArgs
+				),
+			};
+		},
+		[region, taxProtocol]
+	);
+
+	const loading = fetching || zonesLoading;
+	const availableZones = zones?.length
+		? zones
+		: (registrations || []).map(({ tax_zone }) => tax_zone);
 
 	return (
 		<>
@@ -81,7 +115,7 @@ export default ({
 						: __('Product Overrides', 'surecart')}
 				</ScText>
 
-				{!isRegionTaxCollected() ? (
+				{!availableZones?.length && !loading ? (
 					<ScAlert type="primary" open>
 						{__(
 							'Please enable tax collection to add tax overrides.',
@@ -90,7 +124,7 @@ export default ({
 					</ScAlert>
 				) : (
 					<>
-						{!taxOverrides?.length && !fetching ? (
+						{!taxOverrides?.length && !loading ? (
 							<ScEmpty icon="percent">
 								{type === 'shipping'
 									? __(
@@ -107,7 +141,7 @@ export default ({
 								</ScButton>
 							</ScEmpty>
 						) : (
-							<ScCard noPadding loading={fetching}>
+							<ScCard noPadding loading={loading}>
 								<ScStackedList>
 									<TaxOverrideRows
 										type={type}
@@ -144,7 +178,7 @@ export default ({
 							page={currentPage}
 							setPage={setCurrentPage}
 							perPage={TAX_OVERRIDE_PER_PAGE}
-							loading={fetching}
+							loading={loading}
 						/>
 					</div>
 				)}
@@ -157,7 +191,7 @@ export default ({
 				type={type}
 				taxOverrides={taxOverrides}
 				taxOverride={selectedTaxOverride}
-				registrations={registrations}
+				zones={availableZones}
 				onRequestClose={onRequestClose}
 			/>
 
@@ -168,7 +202,7 @@ export default ({
 				onRequestClose={onRequestClose}
 			/>
 
-			{fetching && <sc-block-ui spinner></sc-block-ui>}
+			{loading && <sc-block-ui spinner></sc-block-ui>}
 		</>
 	);
 };

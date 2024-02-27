@@ -41,22 +41,23 @@ export default ({ region, taxProtocol, registrations, hasLoadedItem }) => {
 				loading={!hasLoadedItem}
 				wrapperTag="div"
 			>
-				<TaxOverrideList
-					type="shipping"
-					region={region}
-					taxProtocol={taxProtocol}
-					registrations={registrations}
-					taxOverrides={shippingOverrides}
-					fetching={shippingOverridesFetching}
-					currentPage={shippingOverrideCurrentPage}
-					setCurrentPage={setShippingOverrideCurrentPage}
-				/>
-
 				<div
 					css={css`
-						margin-top: var(--sc-spacing-large);
+						display: grid;
+						gap: var(--sc-spacing-small);
 					`}
 				>
+					<TaxOverrideList
+						type="shipping"
+						region={region}
+						taxProtocol={taxProtocol}
+						registrations={registrations}
+						taxOverrides={shippingOverrides}
+						fetching={shippingOverridesFetching}
+						currentPage={shippingOverrideCurrentPage}
+						setCurrentPage={setShippingOverrideCurrentPage}
+					/>
+
 					<TaxOverrideList
 						type="product"
 						region={region}

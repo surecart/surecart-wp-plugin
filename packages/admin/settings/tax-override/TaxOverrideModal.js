@@ -5,14 +5,15 @@ import { css, jsx } from '@emotion/core';
  * External dependencies.
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import {
+	ScAlert,
 	ScButton,
 	ScDialog,
 	ScForm,
@@ -20,96 +21,75 @@ import {
 	ScSelect,
 	ScText,
 } from '@surecart/components-react';
+import ModelSelector from '../../components/ModelSelector';
 import { zoneName } from '../tax-region/RegistrationForm';
 import Error from '../../components/Error';
 
 export default ({
 	type,
 	region,
-	modal,
-	taxProtocol,
+	open,
 	taxOverride,
 	taxOverrides,
 	onRequestClose,
-	registrations,
+	zones,
 }) => {
-	const open = !!modal;
-	if (!open) return null;
-
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { saveEntityRecord } = useDispatch(coreStore);
-	const [productCollection, setProductCollection] = useState(null);
-
-	const [data, setData] = useState({
-		rate: taxOverride?.rate || '',
-		...(taxOverride?.id ? { id: taxOverride.id } : {}),
-		...(taxOverride?.tax_zone ? { tax_zone: taxOverride.tax_zone.id } : {}),
-		...(type === 'shipping' ? { shipping: true } : {}),
-		...(type === 'product'
-			? {
-					product_collection:
-						productCollection ||
-						taxOverride?.product_collection?.id,
-			  }
-			: {}),
-	});
-
+	const [data, setData] = useState();
 	const updateData = (updated) => setData({ ...data, ...updated });
 
-	const { zones, fetching } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'tax_zone',
-				{
-					context: 'edit',
-					regions: [region],
-					per_page: 100,
-				},
-			];
-			return {
-				zones: select(coreStore).getEntityRecords(...queryArgs),
-				fetching: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[region]
+	useEffect(() => {
+		if (!open) {
+			setData({});
+		} else {
+			setData({
+				rate: taxOverride?.rate || '',
+				...(taxOverride?.id ? { id: taxOverride.id } : {}),
+				...(taxOverride?.tax_zone
+					? { tax_zone: taxOverride.tax_zone.id }
+					: { tax_zone: defaultZone }),
+				...(type === 'shipping' ? { shipping: true } : {}),
+				...(type === 'product'
+					? {
+							product_collection:
+								taxOverride?.product_collection?.id,
+					  }
+					: {}),
+			});
+		}
+	}, [open]);
+
+	// get the available zones based on the registrations and taxOverrides
+	const availableZones = (zones || []).filter(
+		(zone) =>
+			!taxOverrides.some((o) => {
+				if (type === 'product') {
+					return (
+						o.tax_zone?.id === zone.id &&
+						o.product_collection?.id === data?.product_collection
+					);
+				}
+				return o.tax_zone?.id === zone.id;
+			})
 	);
 
-	const { productCollections, fetchingProductCollections } = useSelect(
-		(select) => {
-			const queryArgs = [
-				'surecart',
-				'product-collection',
-				{ context: 'edit', per_page: 100 },
-			];
-			return {
-				productCollections: select(coreStore).getEntityRecords(
-					...queryArgs
-				),
-				fetchingProductCollections: select(coreStore).isResolving(
-					'getEntityRecords',
-					queryArgs
-				),
-			};
-		},
-		[]
-	);
+	// get the default zone.
+	const defaultZone = availableZones[0]?.id || '';
+	const hasNoAvailableZones = !availableZones.length && !taxOverride?.id;
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			await saveEntityRecord('surecart', 'tax_override', data, {
+			await saveEntityRecord('surecart', 'tax-override', data, {
 				throwOnError: true,
 			});
 			onRequestClose();
 		} catch (e) {
 			console.error(e);
-			setError(e?.message || __('Something went wrong.', 'surecart'));
+			setError(e);
 		} finally {
 			setLoading(false);
 		}
@@ -139,41 +119,6 @@ export default ({
 		}
 	};
 
-	const isTaxZoneRegistered = (taxZoneId) =>
-		registrations.some((r) => r.tax_zone?.id === taxZoneId);
-
-	const hasTaxOverrideForCountry = (country) => {
-		return (taxOverrides || []).some((t) => {
-			if (type === 'shipping') {
-				return t.tax_zone?.country === country;
-			} else if (type === 'product') {
-				return (
-					t.tax_zone?.country === country &&
-					t?.product_collection?.id === data.product_collection
-				);
-			}
-			return false;
-		});
-	};
-
-	const isTaxZoneEnabled = (id, country) => {
-		// If EU tax is enabled, all EU countries should have a tax override.
-		if (
-			region === 'eu' &&
-			taxProtocol?.eu_tax_enabled &&
-			!hasTaxOverrideForCountry(country)
-		) {
-			return true;
-		}
-
-		// If the tax zone is registered and there is no tax override for the country, it should be enabled.
-		if (isTaxZoneRegistered(id) && !hasTaxOverrideForCountry(country)) {
-			return true;
-		}
-
-		return false;
-	};
-
 	return (
 		<div
 			css={css`
@@ -182,19 +127,28 @@ export default ({
 				}
 			`}
 		>
-			<ScDialog
-				label={getDialogLabel()}
-				onScRequestClose={onRequestClose}
-				open={open}
-			>
-				{open && (
-					<ScForm
-						onScSubmit={onSubmit}
-						style={{
-							'--sc-form-row-spacing': 'var(--sc-spacing-large)',
-						}}
+			<ScForm onScSubmit={onSubmit}>
+				<ScDialog
+					label={getDialogLabel()}
+					onScRequestClose={onRequestClose}
+					open={open}
+				>
+					<div
+						css={css`
+							display: grid;
+							gap: var(--sc-spacing-medium);
+						`}
 					>
 						{error && <Error error={error} setError={setError} />}
+
+						{hasNoAvailableZones && (
+							<ScAlert type="primary" open>
+								{__(
+									"You've already added an override for each region where you collect sales tax. You can edit or delete an existing override.",
+									'surecart'
+								)}
+							</ScAlert>
+						)}
 
 						{!taxOverride?.id && (
 							<ScText
@@ -231,121 +185,105 @@ export default ({
 						)}
 
 						{type === 'product' && !taxOverride?.id && (
-							<div>
-								<ScSelect
-									search
-									loading={fetchingProductCollections}
-									disabled={taxOverride?.id}
-									value={data?.product_collection}
-									unselect={false}
-									label={__('Product Collection', 'surecart')}
-									onScChange={(e) =>
-										updateData({
-											product_collection: e.target.value,
-											tax_zone: null,
-										})
-									}
-									choices={(productCollections || [])
-										.reverse()
-										.map(({ name, id }) => {
-											return {
-												label: name,
-												value: id,
-											};
-										})}
-									required
-								/>
-							</div>
-						)}
-
-						{!taxOverride?.id && (
-							<ScSelect
-								search
-								loading={fetching}
-								value={data?.tax_zone}
-								unselect={false}
-								label={
-									zoneName[region] || __('Region', 'surecart')
+							<ModelSelector
+								label={__('Product Collection', 'surecart')}
+								name="product-collection"
+								value={data?.product_collection}
+								onSelect={(product_collection) =>
+									updateData({
+										product_collection,
+									})
 								}
-								onScChange={(e) =>
-									updateData({ tax_zone: e.target.value })
-								}
-								choices={(zones || [])
-									.reverse()
-									.map(
-										({
-											state_name,
-											country_name,
-											country,
-											id,
-										}) => {
-											return {
-												label:
-													state_name || country_name,
-												value: id,
-												disabled: !isTaxZoneEnabled(
-													id,
-													country
-												),
-											};
-										}
-									)}
 								required
 							/>
 						)}
 
-						<ScInput
-							type="number"
-							min="0"
-							max="100"
-							step="0.01"
-							required
-							label={__('Tax Rate', 'surecart')}
-							value={data?.rate ?? ''}
-							onScInput={(e) => {
-								updateData({
-									rate: parseFloat(e.target.value),
-								});
-							}}
-						>
-							<span slot="suffix">%</span>
-						</ScInput>
+						{(type !== 'product' || data?.product_collection) && (
+							<>
+								{!taxOverride?.id && (
+									<ScSelect
+										search
+										value={data?.tax_zone}
+										unselect={false}
+										disabled={hasNoAvailableZones}
+										label={
+											zoneName[region] ||
+											__('Region', 'surecart')
+										}
+										onScChange={(e) =>
+											updateData({
+												tax_zone: e.target.value,
+											})
+										}
+										choices={(availableZones || []).map(
+											({
+												state_name,
+												country_name,
+												id,
+											}) => {
+												return {
+													label:
+														state_name ||
+														country_name,
+													value: id,
+												};
+											}
+										)}
+										required
+									/>
+								)}
 
-						<sc-flex justify-content="flex-end">
-							<ScButton onClick={onRequestClose}>
-								{__('Cancel', 'surecart')}
-							</ScButton>
-							<ScButton
-								type="primary"
-								submit
-								disabled={
-									loading ||
-									fetching ||
-									!data?.tax_zone ||
-									data?.rate === undefined ||
-									data?.rate === null ||
-									data?.rate === ''
-								}
-							>
-								{taxOverride?.id
-									? __('Save', 'surecart')
-									: __('Add Override', 'surecart')}
-							</ScButton>
-						</sc-flex>
-
-						{(loading || fetching) && (
-							<sc-block-ui
-								spinner
-								style={{
-									zIndex: 9,
-									'--sc-block-ui-opacity': '0.5',
-									inset: 0,
-								}}
-							></sc-block-ui>
+								<ScInput
+									type="number"
+									min="0"
+									max="100"
+									step="0.01"
+									disabled={hasNoAvailableZones}
+									required
+									label={__('Tax Rate', 'surecart')}
+									value={data?.rate ?? ''}
+									onScInput={(e) => {
+										updateData({
+											rate: parseFloat(e.target.value),
+										});
+									}}
+								>
+									<span slot="suffix">%</span>
+								</ScInput>
+							</>
 						)}
-					</ScForm>
-				)}
-			</ScDialog>
+					</div>
+
+					<ScButton
+						onClick={onRequestClose}
+						slot="footer"
+						type="text"
+					>
+						{__('Cancel', 'surecart')}
+					</ScButton>
+					<ScButton
+						type="primary"
+						submit
+						disabled={loading || hasNoAvailableZones}
+						slot="footer"
+					>
+						{taxOverride?.id
+							? __('Save', 'surecart')
+							: __('Add Override', 'surecart')}
+					</ScButton>
+
+					{loading && (
+						<sc-block-ui
+							spinner
+							style={{
+								zIndex: 9,
+								'--sc-block-ui-opacity': '0.5',
+								inset: 0,
+							}}
+						></sc-block-ui>
+					)}
+				</ScDialog>
+			</ScForm>
 		</div>
 	);
 };

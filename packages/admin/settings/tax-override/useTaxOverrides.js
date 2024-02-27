@@ -11,7 +11,7 @@ export default function useTaxOverrides(type, region, currentPage) {
 		(select) => {
 			const queryArgs = [
 				'surecart',
-				'tax_override',
+				'tax-override',
 				{
 					context: 'edit',
 					per_page: TAX_OVERRIDE_PER_PAGE,
