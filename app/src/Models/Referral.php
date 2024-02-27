@@ -2,10 +2,17 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasAffiliation;
+use SureCart\Models\Traits\HasCheckout;
+use SureCart\Models\Traits\HasPayout;
+use SureCart\Models\Traits\HasReferralItems;
+
 /**
  * Referral model
  */
 class Referral extends Model {
+	use HasAffiliation, HasCheckout, HasPayout, HasReferralItems;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -146,5 +153,16 @@ class Referral extends Model {
 	 */
 	public function setReferralItemsAttribute( $value ) {
 		$this->setCollection( 'referral_items', $value, ReferralItem::class );
+	}
+
+	/**
+	 * Set the affiliation attribute
+	 *
+	 * @param object $value Array of payout objects.
+	 *
+	 * @return void
+	 */
+	public function setAttributedClickAttribute( $value ) {
+		$this->setRelation( 'attributed_click', $value, Click::class );
 	}
 }

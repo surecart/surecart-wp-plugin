@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasReferrals;
+
 /**
  * Payout model
  */
 class Payout extends Model {
+	use HasReferrals;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -19,6 +23,17 @@ class Payout extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'payout';
+
+	/**
+	 * Set the payout group attribute.
+	 *
+	 * @param object $value Array of payout objects.
+	 *
+	 * @return void
+	 */
+	public function setPayoutGroupAttribute( $value ) {
+		$this->setRelation( 'payout_group', $value, PayoutGroup::class );
+	}
 
 	/**
 	 * Complete a payout
@@ -96,16 +111,5 @@ class Payout extends Model {
 		$this->fireModelEvent( 'processed' );
 
 		return $this;
-	}
-
-	/**
-	 * Set the referrals attribute.
-	 *
-	 * @param  object $value Array of referral objects.
-	 *
-	 * @return void
-	 */
-	public function setReferralsAttribute( $value ) {
-		$this->setCollection( 'referrals', $value, Referral::class );
 	}
 }

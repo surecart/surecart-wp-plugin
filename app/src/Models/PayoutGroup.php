@@ -2,10 +2,14 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasPayouts;
+
 /**
  * Payout Group model
  */
 class PayoutGroup extends Model {
+	use HasPayouts;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -19,15 +23,4 @@ class PayoutGroup extends Model {
 	 * @var string
 	 */
 	protected $object_name = 'payout_group';
-
-	/**
-	 * Set the payouts attribute.
-	 *
-	 * @param  object $value Array of payout objects.
-	 *
-	 * @return void
-	 */
-	public function setPayoutsAttribute( $value ) {
-		$this->setCollection( 'payouts', $value, Payout::class );
-	}
 }

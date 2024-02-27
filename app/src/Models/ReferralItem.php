@@ -2,10 +2,15 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasLineItem;
+use SureCart\Models\Traits\HasReferral;
+
 /**
  * Referral Item model
  */
 class ReferralItem extends Model {
+	use HasLineItem, HasReferral;
+
 	/**
 	 * Rest API endpoint
 	 *
