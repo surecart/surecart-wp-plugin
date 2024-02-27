@@ -242,6 +242,7 @@ export default ({
 									onScChange={(e) =>
 										updateData({
 											product_collection: e.target.value,
+											tax_zone: null,
 										})
 									}
 									choices={(productCollections || [])
