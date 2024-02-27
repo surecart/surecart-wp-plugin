@@ -4,7 +4,7 @@
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-export const TAX_OVERRIDE_PER_PAGE = 5;
+export const TAX_OVERRIDE_PER_PAGE = 100;
 
 export default function useTaxOverrides(type, region, currentPage) {
 	return useSelect(
