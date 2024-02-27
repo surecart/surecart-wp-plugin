@@ -581,6 +581,7 @@ export interface Checkout extends Object {
     data: Array<PaymentIntent>;
   };
   abandoned_checkout_enabled: boolean;
+  billing_matches_shipping: boolean;
   bump_amount: number;
   payment_method_required?: boolean;
   manual_payment: boolean;

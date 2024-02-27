@@ -1,7 +1,7 @@
 import { Component, Fragment, h, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Checkout } from '../../../../types';
-import { state as checkoutState, onChange } from '@store/checkout';
+import { state as checkoutState } from '@store/checkout';
 import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
@@ -61,9 +61,6 @@ export class ScOrderBillingAddress {
     state: null,
   };
 
-  /** Whether billing address is same as shipping address */
-  @State() sameAsShipping = true;
-
   @Method()
   async reportValidity() {
     return this.input.reportValidity();
@@ -74,20 +71,9 @@ export class ScOrderBillingAddress {
       this.address.country = this.defaultCountry;
     }
 
-    onChange('checkout', () => {
-      const addressKeys = Object.keys(this.address).filter(key => key !== 'country');
-      const emptyAddressKeys = addressKeys.filter(key => !this.address[key]);
-      this.sameAsShipping = JSON.stringify(checkoutState.checkout?.billing_address) === JSON.stringify(checkoutState.checkout?.shipping_address);
-
-      if (emptyAddressKeys.length === addressKeys.length) {
-        this.address = {
-          ...this.address,
-          ...(checkoutState.checkout?.billing_address as Address),
-        };
-      }
-    });
-
-    this.sameAsShipping = this.shippingAddressFieldExists();
+    if (checkoutState.checkout.billing_matches_shipping && checkoutState.checkout?.billing_address) {
+      this.address = checkoutState.checkout.billing_address;
+    }
   }
 
   async updateAddressState(address: Partial<Address>) {
@@ -108,18 +94,32 @@ export class ScOrderBillingAddress {
     }
   }
 
-  onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
-    this.sameAsShipping = e.target.checked;
+  async onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
+    try {
+      lockCheckout('billing-address');
+      checkoutState.checkout = (await createOrUpdateCheckout({
+        id: checkoutState.checkout.id,
+        data: {
+          billing_matches_shipping: e.target.checked,
+        },
+      })) as Checkout;
 
-    if (this.sameAsShipping) {
-      checkoutState.checkout.billing_address = checkoutState.checkout.shipping_address;
-      return;
+      if (!e.target.checked) {
+        this.address = {
+          country: null,
+          city: null,
+          line_1: null,
+          line_2: null,
+          postal_code: null,
+          state: null,
+          ...((checkoutState.checkout?.billing_address || {}) as Address),
+        };
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      unLockCheckout('billing-address');
     }
-
-    checkoutState.checkout.billing_address = {
-      ...(checkoutState?.checkout?.billing_address as Address),
-      ...this.address,
-    };
   }
 
   shippingAddressFieldExists() {
@@ -130,12 +130,12 @@ export class ScOrderBillingAddress {
     return (
       <Fragment>
         {this.shippingAddressFieldExists() && (
-          <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={this.sameAsShipping}>
+          <sc-switch class="order-billing-address__toggle" onScChange={e => this.onToggleSameAsShipping(e)} checked={checkoutState.checkout?.billing_matches_shipping}>
             {this.toggleLabel}
           </sc-switch>
         )}
 
-        {!this.sameAsShipping && (
+        {!checkoutState.checkout.billing_matches_shipping && (
           <sc-address
             exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
             ref={el => {
