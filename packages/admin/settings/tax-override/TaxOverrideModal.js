@@ -17,6 +17,7 @@ import {
 	ScButton,
 	ScDialog,
 	ScForm,
+	ScIcon,
 	ScInput,
 	ScSelect,
 	ScText,
@@ -40,6 +41,7 @@ export default ({
 	const [data, setData] = useState();
 	const updateData = (updated) => setData({ ...data, ...updated });
 
+	// set default data when opened.
 	useEffect(() => {
 		if (!open) {
 			setData({});
@@ -64,19 +66,18 @@ export default ({
 	// get the available zones based on the registrations and taxOverrides
 	const availableZones = (zones || []).filter(
 		(zone) =>
-			!taxOverrides.some((o) => {
-				if (type === 'product') {
-					return (
-						o.tax_zone?.id === zone.id &&
-						o.product_collection?.id === data?.product_collection
-					);
-				}
-				return o.tax_zone?.id === zone.id;
-			})
+			!taxOverrides.some((o) =>
+				type === 'product'
+					? o.tax_zone?.id === zone.id &&
+					  o.product_collection?.id === data?.product_collection
+					: o.tax_zone?.id === zone.id
+			)
 	);
 
 	// get the default zone.
 	const defaultZone = availableZones[0]?.id || '';
+
+	// There are no available zones if it is a new override and there are no available zones.
 	const hasNoAvailableZones = !availableZones.length && !taxOverride?.id;
 
 	const onSubmit = async (e) => {
@@ -177,7 +178,7 @@ export default ({
 											target="_blank"
 										>
 											{__('create a new one', 'surecart')}{' '}
-											<sc-icon name="external-link" />
+											<ScIcon name="external-link" />
 										</a>
 									</div>
 								)}
