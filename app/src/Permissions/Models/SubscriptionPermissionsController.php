@@ -194,6 +194,11 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 	 * @return boolean Does user have permission.
 	 */
 	public function edit_sc_subscription( $user, $args, $allcaps ) {
+		// user has full access.
+		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
+			return true;
+		}
+
 		// no user to check.
 		if ( empty( $user->ID ) ) {
 			return false;
@@ -204,17 +209,13 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 			return false;
 		}
 
-		if ( ! empty( $allcaps['edit_sc_subscriptions'] ) ) {
-			return true;
-		}
-
 		// no data provided to update. Make sure to at least pass an empty array.
 		if ( is_null( $args[3] ?? null ) ) {
 			return false;
 		}
 
 		$params = $args[3];
-		
+
 		// request has blacklisted keys.
 		if ( ! $this->requestOnlyHasKeys( $params, array( 'cancel_at_period_end', 'quantity', 'price', 'purge_pending_update', 'payment_method', 'manual_payment_method', 'manual_payment', 'cancellation_act', 'ad_hoc_amount', 'variant', 'discount' ) ) ) {
 			return false;
@@ -222,6 +223,10 @@ class SubscriptionPermissionsController extends ModelPermissionsController {
 
 		// check if they can modify price.
 		if ( ! empty( $params['price'] ) && ! $this->switch_sc_subscription( $user, $args, $allcaps ) ) {
+			return false;
+		}
+
+		if ( ! empty( $params['variant'] ) && ! $this->switch_sc_subscription( $user, $args, $allcaps ) ) {
 			return false;
 		}
 
