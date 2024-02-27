@@ -1,4 +1,4 @@
-import { Component, Fragment, h, Method, Prop, State } from '@stencil/core';
+import { Component, Fragment, h, Host, Method, Prop, State } from '@stencil/core';
 import { __ } from '@wordpress/i18n';
 import { Address, Checkout } from '../../../../types';
 import { state as checkoutState } from '@store/checkout';
@@ -6,6 +6,7 @@ import { formLoading } from '@store/form/getters';
 import { lockCheckout, unLockCheckout } from '@store/checkout/mutations';
 import { createOrUpdateCheckout } from '@services/session';
 import { ScSwitchCustomEvent } from 'src/components';
+import { availableManualPaymentMethods, availableProcessors } from '@store/processors/getters';
 
 @Component({
   tag: 'sc-order-billing-address',
@@ -127,6 +128,10 @@ export class ScOrderBillingAddress {
   }
 
   render() {
+    if (!availableProcessors()?.length && !availableManualPaymentMethods()?.length) {
+      return <Host style={{ display: 'none' }} />;
+    }
+
     return (
       <Fragment>
         {this.shippingAddressFieldExists() && (
