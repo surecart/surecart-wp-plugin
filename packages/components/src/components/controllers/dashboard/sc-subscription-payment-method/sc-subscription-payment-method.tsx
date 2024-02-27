@@ -230,7 +230,7 @@ export class ScSubscriptionPaymentMethod {
       return (
         <sc-choice checked={currentPaymentMethodId === id} name="payment_method" value={id} required onClick={() => this.manualSelected = true}>
           <sc-flex justifyContent="flex-start" align-items="center">
-            <sc-manual-payment-method paymentMethod={paymentMethod} />
+            <sc-manual-payment-method paymentMethod={paymentMethod} showDescription />
           </sc-flex>
           {currentPaymentMethodId === id && (
             <sc-tag type="info" slot="price">

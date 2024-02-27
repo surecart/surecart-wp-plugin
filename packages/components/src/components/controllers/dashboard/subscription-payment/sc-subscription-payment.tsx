@@ -140,7 +140,7 @@ export class ScSubscriptionPayment {
             {allowManualPayment && (this.manualPaymentMethods || []).map(method => {
               return (
                 <sc-choice checked={this.manualSelected && this.subscription?.manual_payment_method === method?.id} name="method" value={method?.id} onClick={() => this.manualSelected = true}>
-                  <sc-manual-payment-method paymentMethod={method} />
+                  <sc-manual-payment-method paymentMethod={method} showDescription />
                 </sc-choice>
               );
             })}

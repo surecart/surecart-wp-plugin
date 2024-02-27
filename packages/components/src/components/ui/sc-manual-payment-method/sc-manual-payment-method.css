@@ -7,4 +7,5 @@
   align-items: center;
   justify-content: flex-start;
   gap: var(--sc-spacing-x-small);
+  flex-wrap: wrap;
 }
