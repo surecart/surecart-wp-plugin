@@ -13,7 +13,6 @@ import { useState } from '@wordpress/element';
  * Internal dependencies.
  */
 import {
-	ScAlert,
 	ScButton,
 	ScDialog,
 	ScForm,
@@ -138,9 +137,6 @@ export default ({
 		}
 	};
 
-	const isRegionTaxCollected = () =>
-		registrations.some((r) => r.tax_zone?.region === region);
-
 	return (
 		<div
 			css={css`
@@ -162,26 +158,6 @@ export default ({
 						}}
 					>
 						<Error error={error} setError={setError} />
-
-						{!isRegionTaxCollected() && (
-							<ScAlert
-								type="warning"
-								open
-								css={css`
-									padding: var(--sc-spacing-large);
-								`}
-							>
-								{sprintf(
-									/* translators: %1$s: tax zone country name, %2$s: tax zone country name */
-									__(
-										'No Tax Collection found for this %1$s. Please add a Tax Collection for this %2$s.',
-										'surecart'
-									),
-									zoneName[region],
-									zoneName[region]
-								)}
-							</ScAlert>
-						)}
 
 						{!taxOverride?.id && (
 							<ScText
@@ -307,8 +283,7 @@ export default ({
 									!data?.tax_zone ||
 									data?.rate === undefined ||
 									data?.rate === null ||
-									data?.rate === '' ||
-									!isRegionTaxCollected()
+									data?.rate === ''
 								}
 							>
 								{taxOverride?.id

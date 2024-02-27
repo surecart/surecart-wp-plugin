@@ -4,13 +4,14 @@ import { css, jsx } from '@emotion/core';
 /**
  * External dependencies.
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies.
  */
 import {
+	ScAlert,
 	ScButton,
 	ScCard,
 	ScDropdown,
@@ -28,6 +29,7 @@ import TaxOverrideDeleteModal from './TaxOverrideDeleteModal';
 import PrevNextButtons from '../../ui/PrevNextButtons';
 import usePagination from '../../hooks/usePagination';
 import { TAX_OVERRIDE_PER_PAGE } from './useTaxOverrides';
+import { zoneName } from '../tax-region/RegistrationForm';
 
 export default ({
 	region,
@@ -62,6 +64,9 @@ export default ({
 		perPage: TAX_OVERRIDE_PER_PAGE,
 	});
 
+	const isRegionTaxCollected = () =>
+		registrations.some((r) => r.tax_zone?.region === region);
+
 	return (
 		<>
 			<ScCard style={{ position: 'relative' }}>
@@ -76,139 +81,163 @@ export default ({
 						: __('Product Overrides', 'surecart')}
 				</ScText>
 
-				{!taxOverrides?.length && !fetching ? (
-					<ScEmpty icon="percent">
-						{type === 'shipping'
-							? __(
-									'Specify a unique tax rate for shipping charges.',
-									'surecart'
-							  )
-							: __(
-									'Specify a unique tax rate for a collection of products.',
-									'surecart'
-							  )}
-						<ScButton onClick={() => setModal('new')}>
-							<ScIcon name="plus" slot="prefix" />
-							{__('Add Override', 'surecart')}
-						</ScButton>
-					</ScEmpty>
+				{!isRegionTaxCollected() ? (
+					<ScAlert type="warning" open>
+						{sprintf(
+							/* translators: %1$s: tax zone country name, %2$s: tax zone country name */
+							__(
+								'No Tax Collection found for this %1$s. Please add a Tax Collection for this %2$s.',
+								'surecart'
+							),
+							zoneName[region],
+							zoneName[region]
+						)}
+					</ScAlert>
 				) : (
-					<ScCard noPadding loading={fetching}>
-						<ScStackedList>
-							{taxOverrides.map((taxOverride) => {
-								if (!taxOverride) return null;
-								return (
-									<>
-										{/* Add a product collection name, if it's for product collection */}
-										{taxOverride?.product_collection
-											?.id && (
-											<ScStackedListRow
-												css={css`
-													--sc-list-row-background-color: var(
-														--sc-color-gray-50
-													);
-												`}
-											>
-												<ScFlex flexDirection="column">
-													<ScText
-														css={css`
-															--font-weight: bold;
-														`}
-													>
-														{
-															taxOverride
-																?.product_collection
-																.name
-														}
-													</ScText>
-												</ScFlex>
-											</ScStackedListRow>
-										)}
-
-										<ScStackedListRow>
-											<div
-												css={css`
-													display: flex;
-													flex-direction: column;
-													gap: var(
-														--sc-spacing-xx-small
-													);
-												`}
-											>
-												<ScText
-													css={css`
-														--font-weight: bold;
-													`}
-												>
-													{taxOverride?.tax_zone
-														?.state_name ||
-														taxOverride?.tax_zone
-															?.country_name}
-												</ScText>
-												<ScText>
-													{taxOverride?.rate ||
-														taxOverride?.tax_zone
-															?.default_rate}
-													%
-												</ScText>
-											</div>
-
-											<ScDropdown
-												slot="suffix"
-												placement="bottom-end"
-											>
-												<ScButton
-													type="text"
-													slot="trigger"
-													circle
-												>
-													<ScIcon name="more-horizontal" />
-												</ScButton>
-												<ScMenu>
-													<ScMenuItem
-														onClick={() =>
-															onEdit(taxOverride)
-														}
-													>
-														<ScIcon
-															slot="prefix"
-															name="edit"
-														/>
-														{__('Edit', 'surecart')}
-													</ScMenuItem>
-													<ScMenuItem
-														onClick={() =>
-															onRemove(
-																taxOverride
-															)
-														}
-													>
-														<ScIcon
-															slot="prefix"
-															name="trash"
-														/>
-														{__(
-															'Delete',
-															'surecart'
-														)}
-													</ScMenuItem>
-												</ScMenu>
-											</ScDropdown>
-										</ScStackedListRow>
-									</>
-								);
-							})}
-							<ScStackedListRow>
-								<ScButton
-									type="default"
-									onClick={() => setModal('new')}
-								>
+					<>
+						{!taxOverrides?.length && !fetching ? (
+							<ScEmpty icon="percent">
+								{type === 'shipping'
+									? __(
+											'Specify a unique tax rate for shipping charges.',
+											'surecart'
+									  )
+									: __(
+											'Specify a unique tax rate for a collection of products.',
+											'surecart'
+									  )}
+								<ScButton onClick={() => setModal('new')}>
 									<ScIcon name="plus" slot="prefix" />
 									{__('Add Override', 'surecart')}
 								</ScButton>
-							</ScStackedListRow>
-						</ScStackedList>
-					</ScCard>
+							</ScEmpty>
+						) : (
+							<ScCard noPadding loading={fetching}>
+								<ScStackedList>
+									{taxOverrides.map((taxOverride) => {
+										if (!taxOverride) return null;
+										return (
+											<>
+												{/* Add a product collection name, if it's for product collection */}
+												{taxOverride?.product_collection
+													?.id && (
+													<ScStackedListRow
+														css={css`
+															--sc-list-row-background-color: var(
+																--sc-color-gray-50
+															);
+														`}
+													>
+														<ScFlex flexDirection="column">
+															<ScText
+																css={css`
+																	--font-weight: bold;
+																`}
+															>
+																{
+																	taxOverride
+																		?.product_collection
+																		.name
+																}
+															</ScText>
+														</ScFlex>
+													</ScStackedListRow>
+												)}
+
+												<ScStackedListRow>
+													<div
+														css={css`
+															display: flex;
+															flex-direction: column;
+															gap: var(
+																--sc-spacing-xx-small
+															);
+														`}
+													>
+														<ScText
+															css={css`
+																--font-weight: bold;
+															`}
+														>
+															{taxOverride
+																?.tax_zone
+																?.state_name ||
+																taxOverride
+																	?.tax_zone
+																	?.country_name}
+														</ScText>
+														<ScText>
+															{taxOverride?.rate ||
+																taxOverride
+																	?.tax_zone
+																	?.default_rate}
+															%
+														</ScText>
+													</div>
+
+													<ScDropdown
+														slot="suffix"
+														placement="bottom-end"
+													>
+														<ScButton
+															type="text"
+															slot="trigger"
+															circle
+														>
+															<ScIcon name="more-horizontal" />
+														</ScButton>
+														<ScMenu>
+															<ScMenuItem
+																onClick={() =>
+																	onEdit(
+																		taxOverride
+																	)
+																}
+															>
+																<ScIcon
+																	slot="prefix"
+																	name="edit"
+																/>
+																{__(
+																	'Edit',
+																	'surecart'
+																)}
+															</ScMenuItem>
+															<ScMenuItem
+																onClick={() =>
+																	onRemove(
+																		taxOverride
+																	)
+																}
+															>
+																<ScIcon
+																	slot="prefix"
+																	name="trash"
+																/>
+																{__(
+																	'Delete',
+																	'surecart'
+																)}
+															</ScMenuItem>
+														</ScMenu>
+													</ScDropdown>
+												</ScStackedListRow>
+											</>
+										);
+									})}
+									<ScStackedListRow>
+										<ScButton
+											type="default"
+											onClick={() => setModal('new')}
+										>
+											<ScIcon name="plus" slot="prefix" />
+											{__('Add Override', 'surecart')}
+										</ScButton>
+									</ScStackedListRow>
+								</ScStackedList>
+							</ScCard>
+						)}
+					</>
 				)}
 
 				{hasPagination && (
