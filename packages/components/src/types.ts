@@ -31,6 +31,7 @@ declare global {
     scIcons: { path: string };
     scData: {
       cdn_root: string;
+      allow_switching_to_manual_payment_for_subscription: boolean;
       root_url: string;
       plugin_url: string;
       page_id: string;

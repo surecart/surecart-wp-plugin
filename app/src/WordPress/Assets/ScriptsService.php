@@ -128,6 +128,7 @@ class ScriptsService {
 						'manage_sc_shop_settings' => current_user_can( 'manage_sc_shop_settings' ),
 					),
 					'is_account_connected' => \SureCart::account()->isConnected(),
+					'allow_switching_to_manual_payment_for_subscription' => (bool) get_option( 'surecart_allow_switching_to_manual_payment_for_subscription', false ),
 				]
 			)
 		);

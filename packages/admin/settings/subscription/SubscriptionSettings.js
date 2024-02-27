@@ -17,6 +17,7 @@ import useEntity from '../../hooks/useEntity';
 import SettingsBox from '../SettingsBox';
 import SettingsTemplate from '../SettingsTemplate';
 import useSave from '../UseSave';
+import { useEntityProp } from '@wordpress/core-data';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -32,6 +33,12 @@ export default () => {
 		editItem: portalEditItem,
 		hasLoadedItem: portalHasLoadedItem,
 	} = useEntity('store', 'portal_protocol');
+
+	const [allowSwitchingToManualPayment, setAllowSwitchingToManualPayment] = useEntityProp(
+		'root',
+		'site',
+		'surecart_allow_switching_to_manual_payment_for_subscription'
+	);
 
 	/**
 	 * Form is submitted.
@@ -402,6 +409,21 @@ export default () => {
 					<span slot="description" style={{ lineHeight: '1.4' }}>
 						{__(
 							'Customers will be able to cancel their subscriptions from the customer portal. You can configure what happens when a subscription cancellation happens from the Subscriptions settings page.',
+							'surecart'
+						)}
+					</span>
+				</ScSwitch>
+				<ScSwitch
+					checked={allowSwitchingToManualPayment}
+					onClick={(e) => {
+						e.preventDefault();
+						setAllowSwitchingToManualPayment(!allowSwitchingToManualPayment);
+					}}
+				>
+					{__('Allow Switching to Manual Payment', 'surecart')}
+					<span slot="description" style={{ lineHeight: '1.4' }}>
+						{__(
+							'Customers will be able to switch to Manual Payment Method from the customer portal.',
 							'surecart'
 						)}
 					</span>

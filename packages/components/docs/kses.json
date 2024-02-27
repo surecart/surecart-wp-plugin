@@ -992,6 +992,7 @@
   },
   "sc-manual-payment-method": {
     "payment-method": true,
+    "show-description": true,
     "style": true,
     "id": true,
     "class": true,

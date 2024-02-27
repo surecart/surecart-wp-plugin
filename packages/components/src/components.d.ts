@@ -1815,6 +1815,7 @@ export namespace Components {
     }
     interface ScManualPaymentMethod {
         "paymentMethod": ManualPaymentMethod;
+        "showDescription": boolean;
     }
     interface ScMenu {
         "ariaLabel": string;
@@ -7936,6 +7937,7 @@ declare namespace LocalJSX {
     }
     interface ScManualPaymentMethod {
         "paymentMethod"?: ManualPaymentMethod;
+        "showDescription"?: boolean;
     }
     interface ScMenu {
         "ariaLabel"?: string;

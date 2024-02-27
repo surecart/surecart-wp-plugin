@@ -74,3 +74,7 @@ export const isInRange = (value, price) => {
   if (price?.ad_hoc_min_amount && valueInt < price?.ad_hoc_min_amount) return false;
   return true;
 };
+
+export const allowSwitchingToManualPayment = (subscription) => {
+  return subscription?.manual_payment || window.scData?.allow_switching_to_manual_payment_for_subscription;
+}

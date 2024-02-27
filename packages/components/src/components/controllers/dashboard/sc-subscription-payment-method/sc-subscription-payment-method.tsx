@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import apiFetch from '../../../../functions/fetch';
 import { onFirstVisible } from '../../../../functions/lazy';
+import { allowSwitchingToManualPayment } from '../../../../functions/util';
 import { ManualPaymentMethod, PaymentMethod, Subscription } from '../../../../types';
 
 @Component({
@@ -219,6 +220,10 @@ export class ScSubscriptionPaymentMethod {
       );
     });
 
+    if (!allowSwitchingToManualPayment(this.subscription)) {
+      return regularPaymentMethods;
+    }
+    
     const manualPaymentMethods = this.manualPaymentMethods.map(paymentMethod => {
       const { id } = paymentMethod;
 

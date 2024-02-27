@@ -10,12 +10,15 @@ import { ManualPaymentMethod } from '../../../types';
 })
 export class ScManualPaymentMethod {
   @Prop() paymentMethod: ManualPaymentMethod;
+  @Prop() showDescription: boolean = false;
 
   render() {
       return (
         <div class="payment-method" part="card">
           <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px', fontStyle: 'bold' }}>{this.paymentMethod?.name}</sc-text>
-          <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px', fontStyle: 'italic' }}>{this.paymentMethod?.description}</sc-text>
+          {this.showDescription &&
+            <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px', fontStyle: 'italic' }}>{this.paymentMethod?.description}</sc-text>
+          }
         </div>
       );
   }
