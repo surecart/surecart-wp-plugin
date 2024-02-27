@@ -138,7 +138,7 @@ export default ({
 		}
 	};
 
-	const isTaxZoneIsRegistered = (taxZoneId) =>
+	const isTaxZoneRegistered = (taxZoneId) =>
 		registrations.some((r) => r.tax_zone?.id === taxZoneId);
 
 	const hasTaxOverrideForCountry = (country) => {
@@ -270,9 +270,7 @@ export default ({
 													state_name || country_name,
 												value: id,
 												disabled:
-													!isTaxZoneIsRegistered(
-														id
-													) ||
+													!isTaxZoneRegistered(id) ||
 													hasTaxOverrideForCountry(
 														country
 													),
