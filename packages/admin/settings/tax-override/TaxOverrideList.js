@@ -65,12 +65,15 @@ export default ({
 
 	const { zones, zonesLoading } = useSelect(
 		(select) => {
+			// If the region is not 'eu' or 'ca', we want to use registrations instead.
 			if (!['eu', 'ca'].includes(region)) {
 				return [];
 			}
+			// If the region is 'eu' and the taxProtocol does not have the eu_tax_enabled property, we want to use registrations instead.
 			if (region === 'eu' && !taxProtocol?.eu_tax_enabled) {
 				return [];
 			}
+			// If the region is 'ca' and the taxProtocol does not have the ca_tax_enabled property, we want to use registrations instead.
 			if (region === 'ca' && !taxProtocol?.ca_tax_enabled) {
 				return [];
 			}
@@ -94,7 +97,10 @@ export default ({
 		[region, taxProtocol]
 	);
 
+	// get the available zones based on the registrations and taxOverrides
 	const loading = fetching || zonesLoading;
+
+	// get the available zones based on the registrations and taxOverrides
 	const availableZones = zones?.length
 		? zones.reverse()
 		: (registrations || []).map(({ tax_zone }) => tax_zone);
