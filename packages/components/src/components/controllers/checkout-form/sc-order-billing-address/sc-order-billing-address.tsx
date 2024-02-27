@@ -85,6 +85,7 @@ export class ScOrderBillingAddress {
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
         data: {
+          billing_matches_shipping: false,
           billing_address: this.address as Address,
         },
       })) as Checkout;
@@ -139,7 +140,7 @@ export class ScOrderBillingAddress {
           </sc-switch>
         )}
 
-        {!checkoutState.checkout.billing_matches_shipping && (
+        {(!this.shippingAddressFieldExists() || !checkoutState.checkout.billing_matches_shipping) && (
           <sc-address
             exportparts="label, help-text, form-control, input__base, select__base, columns, search__base, menu__base"
             ref={el => {
