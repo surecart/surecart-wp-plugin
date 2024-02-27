@@ -84,9 +84,7 @@ export default ({
 				},
 			];
 			return {
-				zones: (
-					select(coreStore).getEntityRecords(...queryArgs) || []
-				).reverse(),
+				zones: select(coreStore).getEntityRecords(...queryArgs) || [],
 				zonesLoading: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
@@ -98,7 +96,7 @@ export default ({
 
 	const loading = fetching || zonesLoading;
 	const availableZones = zones?.length
-		? zones
+		? zones.reverse()
 		: (registrations || []).map(({ tax_zone }) => tax_zone);
 
 	return (
