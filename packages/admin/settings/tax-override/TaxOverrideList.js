@@ -61,8 +61,11 @@ export default ({
 		perPage: TAX_OVERRIDE_PER_PAGE,
 	});
 
+	// it's tax collected if there are registrations, or if it's EU or CA automatic tax is enabled.
 	const isRegionTaxCollected = () =>
-		registrations.some((r) => r.tax_zone?.region === region);
+		registrations.some((r) => r.tax_zone?.region === region) ||
+		(region === 'eu' && taxProtocol?.eu_tax_enabled) ||
+		(region === 'ca' && taxProtocol?.ca_tax_enabled);
 
 	return (
 		<>
