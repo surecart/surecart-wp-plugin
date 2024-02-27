@@ -113,7 +113,6 @@ export class ScOrderBillingAddress {
           line_2: null,
           postal_code: null,
           state: null,
-          ...((checkoutState.checkout?.billing_address || {}) as Address),
         };
       }
     } catch (e) {
