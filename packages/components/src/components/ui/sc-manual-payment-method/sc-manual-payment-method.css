@@ -2,10 +2,19 @@
   display: block;
 }
 
-.payment-method {
+.manual-payment-method {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: var(--sc-spacing-x-small);
   flex-wrap: wrap;
+
+  &__title {
+    font-weight: var(--sc-font-weight-bold);
+    color: var(--sc-primary-color-900);
+  }
+
+  &__description {
+    color: var(--sc-primary-color-600);
+  }
 }

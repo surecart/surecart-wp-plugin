@@ -13,13 +13,11 @@ export class ScManualPaymentMethod {
   @Prop() showDescription: boolean = false;
 
   render() {
-      return (
-        <div class="payment-method" part="card">
-          <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px', fontStyle: 'bold', width: '100%' }}>{this.paymentMethod?.name}</sc-text>
-          {this.showDescription &&
-            <sc-text style={{ whiteSpace: 'nowrap', paddingRight: '6px', fontStyle: 'italic', width: '100%' }}>{this.paymentMethod?.description}</sc-text>
-          }
-        </div>
-      );
+    return (
+      <div class="manual-payment-method" part="card">
+        <div class="payment-method__title">{this.paymentMethod?.name}</div>
+        {this.showDescription && <sc-prose class="payment-method__description" innerHTML={this.paymentMethod?.description} />}
+      </div>
+    );
   }
 }
