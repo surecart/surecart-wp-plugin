@@ -19,6 +19,11 @@ export default ({ type, open, taxOverride, onRequestClose }) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { deleteEntityRecord } = useDispatch(coreStore);
+	const zoneName =
+		taxOverride?.tax_zone?.state_name ||
+		taxOverride?.tax_zone?.country_name ||
+		'';
+	const collectionName = taxOverride?.product_collection?.name || '';
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
@@ -47,14 +52,14 @@ export default ({ type, open, taxOverride, onRequestClose }) => {
 			return sprintf(
 				/* translators: %s: tax zone country name */
 				__('Remove shipping override for %s', 'surecart'),
-				taxOverride?.tax_zone?.country_name || ''
+				zoneName
 			);
 		} else {
 			return sprintf(
 				/* translators: %1$s: product collection name, %2$s: tax zone country name */
 				__('Remove override for %1$s collection in %2$s', 'surecart'),
-				taxOverride?.product_collection?.name || '',
-				taxOverride?.tax_zone?.country_name || ''
+				collectionName,
+				zoneName
 			);
 		}
 	};
@@ -67,7 +72,7 @@ export default ({ type, open, taxOverride, onRequestClose }) => {
 					"If you remove this override, then you'll charge the standard tax rate for shipping in %s.",
 					'surecart'
 				),
-				taxOverride?.tax_zone?.country_name || ''
+				zoneName
 			);
 		} else {
 			return sprintf(
@@ -76,7 +81,7 @@ export default ({ type, open, taxOverride, onRequestClose }) => {
 					"If you remove this override, then you'll charge the standard tax rate for this collection in %s.",
 					'surecart'
 				),
-				taxOverride?.tax_zone?.country_name || ''
+				zoneName
 			);
 		}
 	};
