@@ -40,9 +40,6 @@ export class ScFormComponentsValidator {
   /** Is there a shipping amount */
   @State() hasShippingAmount: boolean;
 
-  /** Is there billing address */
-  @State() hasBillingAddress: boolean;
-
   handleOrderChange() {
     // bail if we don't have address invalid error or disabled.
     if (this.disabled) return;
@@ -83,7 +80,6 @@ export class ScFormComponentsValidator {
     this.hasTaxLine = !!this.el.querySelector('sc-line-item-tax');
     this.hasShippingChoices = !!this.el.querySelector('sc-shipping-choices');
     this.hasShippingAmount = !!this.el.querySelector('sc-line-item-shipping');
-    this.hasBillingAddress = !!this.el.querySelector('sc-order-billing-address');
 
     // automatically add address field if tax is enabled.
     if (this.taxProtocol?.tax_enabled) {
@@ -122,14 +118,6 @@ export class ScFormComponentsValidator {
     // require the name and show the name input.
     address.requireName = true;
     address.showName = true;
-  }
-
-  addBillingAddress() {
-    if (this.hasBillingAddress) return;
-    const payment = this.el.querySelector('sc-payment');
-    const billingAddress = document.createElement('sc-order-billing-address');
-    payment.parentNode.insertBefore(billingAddress, payment.nextSibling);
-    this.hasBillingAddress = true;
   }
 
   addAddressField() {
