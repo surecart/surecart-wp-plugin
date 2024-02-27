@@ -107,7 +107,7 @@ export class ScOrderBillingAddress {
 
       if (!e.target.checked) {
         this.address = {
-          country: null,
+          country: this.defaultCountry || null,
           city: null,
           line_1: null,
           line_2: null,
