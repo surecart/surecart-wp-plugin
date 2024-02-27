@@ -27,6 +27,7 @@ export default ({
 	type,
 	region,
 	modal,
+	taxProtocol,
 	taxOverride,
 	taxOverrides,
 	onRequestClose,
@@ -155,6 +156,24 @@ export default ({
 		});
 	};
 
+	const isTaxZoneEnabled = (id, country) => {
+		// If EU tax is enabled, all EU countries should have a tax override.
+		if (
+			region === 'eu' &&
+			taxProtocol?.eu_tax_enabled &&
+			!hasTaxOverrideForCountry(country)
+		) {
+			return true;
+		}
+
+		// If the tax zone is registered and there is no tax override for the country, it should be enabled.
+		if (isTaxZoneRegistered(id) && !hasTaxOverrideForCountry(country)) {
+			return true;
+		}
+
+		return false;
+	};
+
 	return (
 		<div
 			css={css`
@@ -263,11 +282,10 @@ export default ({
 												label:
 													state_name || country_name,
 												value: id,
-												disabled:
-													!isTaxZoneRegistered(id) ||
-													hasTaxOverrideForCountry(
-														country
-													),
+												disabled: !isTaxZoneEnabled(
+													id,
+													country
+												),
 											};
 										}
 									)}

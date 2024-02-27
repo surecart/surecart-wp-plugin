@@ -283,6 +283,7 @@ export default () => {
 
 				<TaxOverrides
 					region={region}
+					taxProtocol={item}
 					registrations={registrations}
 					hasLoadedItem={hasLoadedItem}
 				/>

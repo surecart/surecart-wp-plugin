@@ -14,7 +14,7 @@ import SettingsBox from '../SettingsBox';
 import TaxOverrideList from './TaxOverrideList';
 import useTaxOverrides from './useTaxOverrides';
 
-export default ({ region, registrations, hasLoadedItem }) => {
+export default ({ region, taxProtocol, registrations, hasLoadedItem }) => {
 	const [shippingOverrideCurrentPage, setShippingOverrideCurrentPage] =
 		useState(1);
 	const {
@@ -44,6 +44,7 @@ export default ({ region, registrations, hasLoadedItem }) => {
 				<TaxOverrideList
 					type="shipping"
 					region={region}
+					taxProtocol={taxProtocol}
 					registrations={registrations}
 					taxOverrides={shippingOverrides}
 					fetching={shippingOverridesFetching}
@@ -59,6 +60,7 @@ export default ({ region, registrations, hasLoadedItem }) => {
 					<TaxOverrideList
 						type="product"
 						region={region}
+						taxProtocol={taxProtocol}
 						registrations={registrations}
 						taxOverrides={productOverrides}
 						fetching={productOverridesFetching}

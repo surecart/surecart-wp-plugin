@@ -31,6 +31,7 @@ import { zoneName } from '../tax-region/RegistrationForm';
 export default ({
 	region,
 	type,
+	taxProtocol,
 	registrations,
 	taxOverrides,
 	fetching,
@@ -154,6 +155,7 @@ export default ({
 
 			<TaxOverrideModal
 				region={region}
+				taxProtocol={taxProtocol}
 				modal={modal !== 'delete' ? modal : false}
 				type={type}
 				taxOverrides={taxOverrides}
