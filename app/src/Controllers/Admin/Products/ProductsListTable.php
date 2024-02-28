@@ -97,7 +97,7 @@ class ProductsListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
+			'cb'          => '<input type="checkbox" />',
 			'name'                => __( 'Name', 'surecart' ),
 			'price'               => __( 'Price', 'surecart' ),
 			'quantity'            => __( 'Quantity', 'surecart' ),
@@ -498,6 +498,15 @@ class ProductsListTable extends ListTable {
 		do_action( 'manage_products_extra_tablenav', $which );
 	}
 
+	/**
+	 * @return array
+	 */
+	protected function get_bulk_actions() {
+		$actions       = array();
+		$actions['delete'] = __( 'Delete permanently' );	
+		return $actions;
+	}
+	
 	/**
 	 * Displays a a dropdown to filter by product collection.
 	 *
