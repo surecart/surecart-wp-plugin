@@ -20,24 +20,10 @@ export default function useTaxOverrides(type, region, currentPage) {
 					shipping: type === 'shipping',
 				},
 			];
-			const taxOverridesData = select(coreStore).getEntityRecords(
-				...queryArgs
-			);
-
-			// TODO: If API supports the shipping filtering, remove the filtering from JavaScript.
-			let taxOverrides = [];
-			if (type === 'shipping') {
-				taxOverrides = (taxOverridesData || []).filter(
-					(taxOverride) => !!taxOverride?.shipping
-				);
-			} else {
-				taxOverrides = (taxOverridesData || []).filter(
-					(taxOverride) => !!taxOverride?.product_collection?.id
-				);
-			}
 
 			return {
-				taxOverrides,
+				taxOverrides:
+					select(coreStore).getEntityRecords(...queryArgs) || [],
 				fetching: select(coreStore).isResolving(
 					'getEntityRecords',
 					queryArgs
