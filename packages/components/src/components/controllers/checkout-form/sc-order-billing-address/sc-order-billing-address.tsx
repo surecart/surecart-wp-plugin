@@ -64,7 +64,8 @@ export class ScOrderBillingAddress {
 
   @Method()
   async reportValidity() {
-    return this.input.reportValidity();
+    if (!this.input) return true;
+    return this.input?.reportValidity?.();
   }
 
   componentWillLoad() {
@@ -99,6 +100,7 @@ export class ScOrderBillingAddress {
   async onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
     try {
       lockCheckout('billing-address');
+      checkoutState.checkout.billing_matches_shipping = true;
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
         data: {
