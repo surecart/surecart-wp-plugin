@@ -1,7 +1,6 @@
 <?php
 namespace SureCart\Tests\Feature\Rest;
 
-use SureCart\Account\AccountService;
 use SureCart\Models\User;
 use SureCart\Request\RequestService;
 use SureCart\Request\RequestServiceProvider;
