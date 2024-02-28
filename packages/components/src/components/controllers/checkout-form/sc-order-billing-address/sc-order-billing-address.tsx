@@ -133,7 +133,6 @@ export class ScOrderBillingAddress {
   }
 
   render() {
-    console.log(checkoutState.checkout.billing_matches_shipping, 'billing matches shipping');
     if (!availableProcessors()?.length && !availableManualPaymentMethods()?.length) {
       return <Host style={{ display: 'none' }} />;
     }
