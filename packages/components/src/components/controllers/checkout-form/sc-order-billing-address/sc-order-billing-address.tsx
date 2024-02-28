@@ -99,8 +99,11 @@ export class ScOrderBillingAddress {
 
   async onToggleSameAsShipping(e: ScSwitchCustomEvent<void>) {
     try {
+      checkoutState.checkout = {
+        ...checkoutState.checkout,
+        billing_matches_shipping: e.target.checked,
+      };
       lockCheckout('billing-address');
-      checkoutState.checkout.billing_matches_shipping = true;
       checkoutState.checkout = (await createOrUpdateCheckout({
         id: checkoutState.checkout.id,
         data: {
@@ -130,6 +133,7 @@ export class ScOrderBillingAddress {
   }
 
   render() {
+    console.log(checkoutState.checkout.billing_matches_shipping, 'billing matches shipping');
     if (!availableProcessors()?.length && !availableManualPaymentMethods()?.length) {
       return <Host style={{ display: 'none' }} />;
     }
