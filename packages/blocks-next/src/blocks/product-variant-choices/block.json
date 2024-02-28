@@ -88,14 +88,9 @@
 	},
 	"textdomain": "surecart",
 	"editorScript": "file:./index.js",
-	"editorStyle": "file:./index.css",
 	"selectors": {
 		"root": ".sc-pill-option__button"
 	},
 	"viewModule": "@surecart/product-page",
-	"style": [
-		"file:./style-index.css",
-		"file:../../styles/pill.css",
-		"file:../../styles/label.css"
-	]
+	"style": ["file:../../styles/pill.css", "file:../../styles/label.css"]
 }

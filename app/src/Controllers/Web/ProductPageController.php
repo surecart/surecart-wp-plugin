@@ -1,8 +1,6 @@
 <?php
 namespace SureCart\Controllers\Web;
 
-use SureCart\Models\Form;
-
 /**
  * Handles Product page requests for frontend.
  */
@@ -90,8 +88,6 @@ class ProductPageController extends BasePageController {
 	 */
 	public function setInitialProductState() {
 		$product_state[ $this->model->id ] = $this->model->getInitialPageState();
-
-		wp_interactivity_state( 'surecart/product', $product_state );
 
 		sc_initial_state(
 			[

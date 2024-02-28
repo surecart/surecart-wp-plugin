@@ -1,21 +1,32 @@
 <?php
+// get product.
+$product = ! empty( $attributes['product_id'] )
+	? \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ) )->find( $attributes['productId'] )
+	: get_query_var( 'surecart_current_product' );
 
-// TODO: In the future, we can just get the context passed from the wrapper block.
-// get product page id.
-$product_id = get_query_var( 'sc_product_page_id' ) ?? $attributes['productId'] ?? null;
 // if no product id, return.
-if ( empty( $product_id ) ) {
+if ( empty( $product ) ) {
 	return;
 }
 
-// set store currency.
-wp_interactivity_state( 'surecart/currency', [
-	'currency' => \SureCart::account()->currency,
-]);
+$active_prices  = $product->activePrices();
+$selected_price = $active_prices[0] ?? '';
 
-// get initial state.
-$products = wp_interactivity_state( 'surecart/product' );
-// get product from initial state.
-$product = $products[ $product_id ]['product'] ?? null;
+$product_state[ $product->id ] = array(
+	'formId'          => \SureCart::forms()->getDefaultId(),
+	'mode'            => \SureCart\Models\Form::getMode( \SureCart::forms()->getDefaultId() ),
+	'product'         => $product,
+	'prices'          => $active_prices,
+	'selectedPrice'   => $selected_price,
+	'isOnSale'        => $selected_price ? $selected_price->is_on_sale : false,
+	'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
+	'variant_options' => $product->variant_options->data ?? array(),
+	'variants'        => $product->variants->data ?? array(),
+	'selectedVariant' => $product->first_variant_with_stock ?? null,
+	'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' ) ),
+);
+
+$state = wp_interactivity_state( 'surecart/product' );
+wp_interactivity_state( 'surecart/product', array_merge( $state, $product_state ) );
 
 return 'file:./view.php';

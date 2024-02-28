@@ -346,7 +346,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return \SureCart\Models\Variant;
 	 */
-	public function getFirstVariantWithStock() {
+	public function getFirstVariantWithStockAttribute() {
 		$first_variant_with_stock = $this->variants->data[0] ?? null;
 
 		// stock is enabled.
@@ -403,6 +403,26 @@ class Product extends Model implements PageModel {
 	}
 
 	/**
+	 * Get the price display amount.
+	 *
+	 * @param array $args Array of arguments.
+	 *
+	 * @return array
+	 */
+	public function getDisplayAmountAttribute() {
+		$initial_variant = $this->first_variant_with_stock;
+		if (!empty( $initial_variant->amount ) ) {
+			return Currency::format( $initial_variant->amount, $initial_variant->currency );
+		}
+		$prices = $this->activePrices() ?? [];
+		$initial_price =  $prices[0] ?? null;
+		if ( empty( $initial_price ) ) {
+			return '';
+		}
+		return Currency::format( $initial_price->amount, $initial_price->currency );
+	}
+
+	/**
 	 * Get the product page initial state
 	 *
 	 * @param array $args Array of arguments.
@@ -412,6 +432,9 @@ class Product extends Model implements PageModel {
 	public function getInitialPageState( $args = [] ) {
 		$form = \SureCart::forms()->getDefault();
 
+		$prices = $this->activePrices() ?? [];
+		$selected_price =  $prices[0] ?? null;
+
 		return wp_parse_args(
 			$args,
 			[
@@ -419,11 +442,11 @@ class Product extends Model implements PageModel {
 				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
 				'product'         => $this,
 				'prices'          => $this->activePrices(),
-				'selectedPrice'   => ( $this->activePrices() ?? [] )[0] ?? null,
+				'isOnSale' 		  => $selected_price ? $selected_price->is_on_sale : false,
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'variant_options' => $this->variant_options->data ?? [],
 				'variants'        => $this->variants->data ?? [],
-				'selectedVariant' => $this->getFirstVariantWithStock() ?? null,
+				'selectedVariant' => $this->first_variant_with_stock ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' )->id ),
 			]
 		);

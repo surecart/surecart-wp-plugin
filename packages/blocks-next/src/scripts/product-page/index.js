@@ -49,11 +49,11 @@ const { state, callbacks } = store('surecart/product', {
 		get selectedScratchPriceAmount() {
 			// no scratch amount.
 			if (!state?.selectedPrice?.scratch_amount) {
-				return null;
+				return false;
 			}
-			// if the scratch amount is the same as the selected price amount, return null.
+			// if the scratch amount is the same as the selected price amount, return false.
 			if (
-				state?.selectedPrice?.scratch_amount ===
+				state?.selectedPrice?.scratch_amount <=
 				state?.selectedPriceAmount
 			) {
 				return null;
@@ -189,31 +189,35 @@ const { state, callbacks } = store('surecart/product', {
 				},
 			});
 		},
+		setVariantValues: () => {
+			update({
+				variantValues: {
+					...(state?.selectedVariant?.option_1
+						? { option_1: state?.selectedVariant?.option_1 }
+						: {}),
+					...(state?.selectedVariant?.option_2
+						? { option_2: state?.selectedVariant?.option_2 }
+						: {}),
+					...(state?.selectedVariant?.option_3
+						? { option_3: state?.selectedVariant?.option_3 }
+						: {}),
+				},
+			});
+		},
 		/** Update variant and values. */
-		updateVariantAndValues: () => {
+		updateSelectedVariant: () => {
+			if (!state?.variantValues) {
+				return;
+			}
 			// if we have variant values, update the selected variant.
 			const selectedVariant = getVariantFromValues({
 				variants: state?.product?.variants?.data,
 				values: state?.variantValues || {},
 			});
-			if (selectedVariant) {
-				update({ selectedVariant });
-			}
 
-			// if we have a selected variant, update the variant values.
-			if (state.selectedVariant) {
-				update({
-					variantValues: {
-						...(state?.selectedVariant?.option_1
-							? { option_1: state?.selectedVariant?.option_1 }
-							: {}),
-						...(state?.selectedVariant?.option_2
-							? { option_2: state?.selectedVariant?.option_2 }
-							: {}),
-						...(state?.selectedVariant?.option_3
-							? { option_3: state?.selectedVariant?.option_3 }
-							: {}),
-					},
+			if (selectedVariant?.id !== state.selectedVariant?.id) {
+				return update({
+					selectedVariant,
 				});
 			}
 		},

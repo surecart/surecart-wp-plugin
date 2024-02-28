@@ -1,18 +1,23 @@
 <?php
-// Generate unique id for aria-controls.
-$unique_id = wp_unique_id( 'p-' );
+/**
+ * PHP controller to use when rendering the block type on the server to show on the front end.
+ *
+ * The following variables are exposed to the file:
+ *     $attributes (array): The block attributes.
+ *     $content (string): The block default content.
+ *     $block (WP_Block): The block instance.
+ */
 
-// TODO: In the future, we can just get the context passed from the wrapper block.
-// get product page id.
-$product_id = get_query_var( 'sc_product_page_id' ) ?? $attributes['productId'] ?? null;
-// if no product id, return.
-if ( empty( $product_id ) ) {
-	return;
-}
 // get initial state.
 $products = wp_interactivity_state( 'surecart/product' );
-// get product from initial state.
-$product = $products[ $product_id ]['product'] ?? null;
 
-// Or we can return a view file.
+// get product from initial state.
+$product = $block->context['surecart/product'];
+
+// make sure we have a product.
+if ( empty( $product->id ) ) {
+	return;
+}
+
+// return the view.
 return 'file:./view.php';

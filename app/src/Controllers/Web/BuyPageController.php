@@ -99,7 +99,7 @@ class BuyPageController extends BasePageController {
 
 		// prepare data.
 		$this->model              = $this->model->withActivePrices()->withSortedPrices();
-		$first_variant_with_stock = $this->model->getFirstVariantWithStock();
+		$first_variant_with_stock = $this->model->first_variant_with_stock;
 
 		if ( ! empty( $this->model->prices->data[0]->id ) ) {
 			$line_item = array_merge(

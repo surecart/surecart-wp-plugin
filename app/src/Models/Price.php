@@ -3,6 +3,7 @@
 namespace SureCart\Models;
 
 use SureCart\Models\Product;
+use SureCart\Support\Currency;
 
 /**
  * Price model
@@ -64,5 +65,31 @@ class Price extends Model {
 	 */
 	public function setProductAttribute( $value ) {
 		$this->setRelation( 'product', $value, Product::class );
+	}
+
+	/**
+	 * Get the display amount attribute
+	 *
+	 * @return string
+	 */
+	public function getDisplayAmountAttribute() {
+		$amount = $this->getAttribute( 'amount' );
+		if ( empty( $amount ) ) {
+			return '';
+		}
+		return Currency::format( $amount, $this->getAttribute( 'currency' ) );
+	}
+
+	/**
+	 * Get the display price attribute
+	 *
+	 * @return string
+	 */
+	public function getIsOnSaleAttribute() {
+		$amount = $this->getAttribute( 'scratch_amount' );
+		if ( empty( $amount ) ) {
+			return false;
+		}
+		return $amount > $this->getAttribute( 'amount' );
 	}
 }
