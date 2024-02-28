@@ -38,6 +38,7 @@ module.exports = [
 		externals: {
 			...defaultConfig[1]?.externals,
 			'@surecart/currency': '@surecart/currency',
+			'@surecart/price': '@surecart/price',
 		},
 	},
 ];

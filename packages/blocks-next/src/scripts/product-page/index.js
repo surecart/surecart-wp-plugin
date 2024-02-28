@@ -3,9 +3,10 @@
  */
 import { store, getContext } from '@wordpress/interactivity';
 import { formatCurrency } from '@surecart/currency';
+import { intervalString } from '@surecart/price';
 
 // TODO: switch to @wordpress/i18n once it's supported in modules.
-const { __, sprintf } = wp.i18n;
+const { __, sprintf, _n } = wp.i18n;
 
 // controls the product page.
 const { state, callbacks } = store('surecart/product', {
@@ -85,12 +86,46 @@ const { state, callbacks } = store('surecart/product', {
 		get setupFeeDisplayText() {
 			return state.setupFeeDisplayAmount
 				? sprintf(
-						__('%1s %2s', 'surecart'),
+						__('%1s %2s.', 'surecart'),
 						state?.setupFeeDisplayAmount,
 						state?.selectedPrice?.setup_fee_name ||
 							__('Setup Fee', 'surecart')
 				  )
 				: null;
+		},
+		get trialDisplayText() {
+			return state.selectedPrice?.trial_duration_days
+				? sprintf(
+						_n(
+							'Starting in %s day.',
+							'Starting in %s days.',
+							state.selectedPrice?.trial_duration_days,
+							'surecart'
+						),
+						state.selectedPrice?.trial_duration_days
+				  )
+				: null;
+		},
+		get intervalDisplayText() {
+			return intervalString(
+				{
+					recurring_interval_count:
+						state.selectedPrice?.recurring_interval_count,
+					recurring_interval: state.selectedPrice?.recurring_interval,
+					recurring_period_count:
+						state.selectedPrice?.recurring_period_count,
+				},
+				{
+					showOnce: true,
+					abbreviate: false,
+					labels: {
+						interval: '/',
+						period:
+							/** translators: used as in time period: "for 3 months" */
+							__('for', 'surecart'),
+					},
+				}
+			);
 		},
 		/** Is the option unavailable */
 		get isOptionUnavailable() {

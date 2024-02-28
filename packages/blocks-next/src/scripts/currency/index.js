@@ -38,3 +38,12 @@ export const formatCurrency = (amount, currency = 'usd') => {
 		minimumFractionDigits: amount % 1 == 0 ? 0 : 2,
 	}).format(isZeroDecimal(currency) ? amount : amount / 100);
 };
+
+// get the currency symbol for a currency code.
+export const getCurrencySymbol = (currency) => {
+	const formattedParts = new Intl.NumberFormat(undefined, {
+		style: 'currency',
+		currency,
+	}).formatToParts();
+	return formattedParts.find((part) => part.type === 'currency')?.value;
+};

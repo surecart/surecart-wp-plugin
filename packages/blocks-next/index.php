@@ -82,11 +82,20 @@ add_filter( 'render_block_context', function( $context, $parsed_block, $parent_b
 
 add_action('init', function() {
 	// instead, use a static loader that injects the script at runtime.
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/price/index.asset.php';
+	wp_register_script_module(
+		'@surecart/price',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/price/index.js',
+		['wp-i18n'],
+		$static_assets['version']
+	);
+
+	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/currency/index.asset.php';
 	wp_register_script_module(
 		'@surecart/currency',
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/currency/index.js',
-		array(),
+		[],
 		$static_assets['version']
 	);
 
@@ -97,6 +106,8 @@ add_action('init', function() {
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 		[
 			'@surecart/currency',
+			'@surecart/price',
+			'wp-i18n'
 		],
 		$static_assets['version']
 	);
