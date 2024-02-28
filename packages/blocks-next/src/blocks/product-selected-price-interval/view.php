@@ -1,3 +1,5 @@
-<div <?php echo get_block_wrapper_attributes(); ?> data-wp-text="state.intervalDisplayText" data-wp-bind--hidden="!state.intervalDisplayText" hidden>
-	<?php // TODO: get setup fee from model ?>
+<div <?php echo get_block_wrapper_attributes(); ?>
+	data-wp-text="state.selectedPrice.interval_text"
+	data-wp-bind--hidden="!state.selectedPrice.interval_text"
+	hidden>
 </div>

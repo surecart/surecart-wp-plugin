@@ -73,11 +73,16 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getDisplayAmountAttribute() {
-		$amount = $this->getAttribute( 'amount' );
-		if ( empty( $amount ) ) {
-			return '';
-		}
-		return Currency::format( $amount, $this->getAttribute( 'currency' ) );
+		return empty( $this->amount ) ? '' : Currency::format( $this->amount, $this->currency );
+	}
+
+	/**
+	 * The the scratch display amount attribute.
+	 *
+	 * @return string
+	 */
+	public function getScratchDisplayAmountAttribute() {
+		return  empty( $this->scratch_amount ) ? '' : Currency::format( $this->scratch_amount, $this->currency );
 	}
 
 	/**
@@ -86,10 +91,74 @@ class Price extends Model {
 	 * @return string
 	 */
 	public function getIsOnSaleAttribute() {
-		$amount = $this->getAttribute( 'scratch_amount' );
-		if ( empty( $amount ) ) {
-			return false;
+		return empty( $this->scratch_amount ) ? false : $this->scratch_amount > $this->amount;
+	}
+
+	/**
+	 * Get the trial display text attribute
+	 *
+	 * @return string
+	 */
+	public function getTrialTextAttribute() {
+		return $this->trial_duration_days ? sprintf(
+				_n(
+					'Starting in %s day.',
+					'Starting in %s days.',
+					$this->trial_duration_days,
+					'surecart'
+				),
+				$this->trial_duration_days
+		  )
+		: null;
+	}
+
+	/**
+	 * Get the setup fee text attribute
+	 */
+	public function getSetupFeeTextAttribute() {
+		if ( empty( $this->setup_fee_enabled ) || empty( $this->setup_fee_amount ) ) {
+			return '';
 		}
-		return $amount > $this->getAttribute( 'amount' );
+		return sprintf(
+			__('%1s %2s.', 'surecart'),
+			Currency::format( $this->setup_fee_amount, $this->currency ),
+			$this->setup_fee_name ?? __('Setup Fee', 'surecart')
+		);
+	}
+
+	public function getPaymentsTextAttribute() {
+		return empty( $this->recurring_period_count ) || $this->recurring_period_count > 1 ? sprintf(
+			_n(
+				'%d payment',
+				'%d payments',
+				$this->recurring_period_count,
+				'your_text_domain'
+			),
+			$this->recurring_period_count
+		) : '';
+	}
+
+	/**
+	 * Get the interval text attribute
+	 *
+	 * @return string
+	 */
+	public function getIntervalTextAttribute() {
+		$intervals = [
+			'day'   => __('day', 'surecart'),
+			'week'  => __('week', 'surecart'),
+			'month' => __('month', 'surecart'),
+			'year'  => __('year', 'surecart'),
+		];
+
+		if ( empty($intervals[$this->recurring_interval]) ) {
+			return '';
+		}
+
+		return sprintf(
+			_n( '/ %1s', '/ %2d %1s', $this->recurring_interval_count, 'surecart' ),
+			$intervals[$this->recurring_interval],
+			(int) $this->recurring_interval_count,
+		);
 	}
 }

@@ -1,5 +1,5 @@
 <div <?php echo get_block_wrapper_attributes(); ?>
-	data-wp-text="state.selectedScratchPriceDisplayAmount"
-	data-wp-bind--hidden="!state.selectedScratchPriceAmount" hidden>
-	<?php // TODO: get product price from model ?>
+	data-wp-text="state.selectedPrice.scratch_display_amount"
+	data-wp-bind--hidden="!state.isOnSale"
+	hidden>
 </div>

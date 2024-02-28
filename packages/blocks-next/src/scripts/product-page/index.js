@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { store, getContext } from '@wordpress/interactivity';
-import { formatCurrency } from '@surecart/currency';
 import { intervalString } from '@surecart/price';
 
 // TODO: switch to @wordpress/i18n once it's supported in modules.
@@ -39,93 +38,22 @@ const { state, callbacks } = store('surecart/product', {
 		/**
 		 * Derived state
 		 */
-		get selectedPriceAmount() {
+		get selectedAmount() {
 			return (
 				state?.selectedVariant?.amount ||
 				state?.selectedPrice?.amount ||
-				0
+				''
 			);
 		},
-		get selectedScratchPriceAmount() {
-			// no scratch amount.
-			if (!state?.selectedPrice?.scratch_amount) {
-				return false;
-			}
-			// if the scratch amount is the same as the selected price amount, return false.
-			if (
-				state?.selectedPrice?.scratch_amount <=
-				state?.selectedPriceAmount
-			) {
-				return null;
-			}
-			return state?.selectedPrice?.scratch_amount;
-		},
-		get selectedPriceDisplayAmount() {
-			return formatCurrency(
-				state.selectedPriceAmount,
-				state.product.currency
-			);
-		},
-		get selectedScratchPriceDisplayAmount() {
-			return formatCurrency(
-				state.selectedScratchPriceAmount,
-				state.product.currency
+		get selectedDisplayAmount() {
+			return (
+				state?.selectedVariant?.display_amount ||
+				state?.selectedPrice?.display_amount ||
+				''
 			);
 		},
 		get isOnSale() {
-			return !!state.selectedScratchPriceAmount;
-		},
-		get setupFeeDisplayAmount() {
-			return state.selectedPrice?.setup_fee_enabled
-				? formatCurrency(
-						state.selectedPrice?.setup_fee_amount,
-						state.product.currency
-				  )
-				: null;
-		},
-		get setupFeeDisplayText() {
-			return state.setupFeeDisplayAmount
-				? sprintf(
-						__('%1s %2s.', 'surecart'),
-						state?.setupFeeDisplayAmount,
-						state?.selectedPrice?.setup_fee_name ||
-							__('Setup Fee', 'surecart')
-				  )
-				: null;
-		},
-		get trialDisplayText() {
-			return state.selectedPrice?.trial_duration_days
-				? sprintf(
-						_n(
-							'Starting in %s day.',
-							'Starting in %s days.',
-							state.selectedPrice?.trial_duration_days,
-							'surecart'
-						),
-						state.selectedPrice?.trial_duration_days
-				  )
-				: null;
-		},
-		get intervalDisplayText() {
-			return intervalString(
-				{
-					recurring_interval_count:
-						state.selectedPrice?.recurring_interval_count,
-					recurring_interval: state.selectedPrice?.recurring_interval,
-					recurring_period_count:
-						state.selectedPrice?.recurring_period_count,
-				},
-				{
-					showOnce: true,
-					abbreviate: false,
-					labels: {
-						interval: '/',
-						period:
-							/** translators: used as in time period: "for 3 months" */
-							__('for', 'surecart'),
-					},
-				}
-			);
+			return state.selectedPrice.scratch_amount > state.selectedAmount;
 		},
 		/** Is the option unavailable */
 		get isOptionUnavailable() {

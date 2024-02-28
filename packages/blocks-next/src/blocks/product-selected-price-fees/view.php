@@ -1,3 +1,5 @@
-<div <?php echo get_block_wrapper_attributes(); ?> data-wp-text="state.setupFeeDisplayText" data-wp-bind--hidden="!state.setupFeeDisplayText" hidden>
-	<?php // TODO: get setup fee from model ?>
+<div <?php echo get_block_wrapper_attributes(); ?>
+	data-wp-text="state.selectedPrice.setup_fee_text"
+	data-wp-bind--hidden="!state.selectedPrice.setup_fee_text"
+	hidden>
 </div>
