@@ -2,10 +2,6 @@
  * WordPress dependencies
  */
 import { store, getContext } from '@wordpress/interactivity';
-import { intervalString } from '@surecart/price';
-
-// TODO: switch to @wordpress/i18n once it's supported in modules.
-const { __, sprintf, _n } = wp.i18n;
 
 // controls the product page.
 const { state, callbacks } = store('surecart/product', {
