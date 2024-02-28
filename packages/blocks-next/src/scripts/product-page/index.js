@@ -2,10 +2,10 @@
  * WordPress dependencies
  */
 import { store, getContext } from '@wordpress/interactivity';
+import { formatCurrency } from '@surecart/currency';
+
 // TODO: switch to @wordpress/i18n once it's supported in modules.
 const { __, sprintf } = wp.i18n;
-
-const { actions: currencyActions } = store('surecart/currency');
 
 // controls the product page.
 const { state, callbacks } = store('surecart/product', {
@@ -60,17 +60,26 @@ const { state, callbacks } = store('surecart/product', {
 			return state?.selectedPrice?.scratch_amount;
 		},
 		get selectedPriceDisplayAmount() {
-			return currencyActions.format(state.selectedPriceAmount);
+			return formatCurrency(
+				state.selectedPriceAmount,
+				state.product.currency
+			);
 		},
 		get selectedScratchPriceDisplayAmount() {
-			return currencyActions.format(state.selectedScratchPriceAmount);
+			return formatCurrency(
+				state.selectedScratchPriceAmount,
+				state.product.currency
+			);
 		},
 		get isOnSale() {
 			return !!state.selectedScratchPriceAmount;
 		},
 		get setupFeeDisplayAmount() {
 			return state.selectedPrice?.setup_fee_enabled
-				? currencyActions.format(state.selectedPrice?.setup_fee_amount)
+				? formatCurrency(
+						state.selectedPrice?.setup_fee_amount,
+						state.product.currency
+				  )
 				: null;
 		},
 		get setupFeeDisplayText() {

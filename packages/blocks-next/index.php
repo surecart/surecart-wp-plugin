@@ -96,7 +96,7 @@ add_action('init', function() {
 		'@surecart/product-page',
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 		[
-			'@surecart/currency', // Todo, why is this not working.
+			'@surecart/currency',
 		],
 		$static_assets['version']
 	);

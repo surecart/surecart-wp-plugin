@@ -18,5 +18,5 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"viewModule": ["@surecart/product-page", "@surecart/currency"]
+	"viewModule": ["@surecart/product-page"]
 }
