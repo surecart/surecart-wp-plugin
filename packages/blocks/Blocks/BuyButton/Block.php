@@ -25,7 +25,7 @@ class Block extends BaseBlock {
 			$styles .= '--primary-color: ' . $attributes['textColor'] . '; ';
 		}
 
-		return \SureCart::blocks()->render(
+		return \SureCart::block()->render(
 			'blocks/buy-button',
 			[
 				'type'  => $attributes['type'] ?? 'primary',

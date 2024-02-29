@@ -49,7 +49,7 @@ abstract class DashboardPage extends BaseBlock {
 	protected function middleware( $attributes, $content ) {
 		// user must be logged in.
 		if ( ! is_user_logged_in() ) {
-			return \SureCart::blocks()->render( 'web/login' );
+			return \SureCart::block()->render( 'web/login' );
 		}
 
 		// cannot get user.
