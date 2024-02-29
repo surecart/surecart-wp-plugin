@@ -164,6 +164,7 @@ export class ScInput {
     return this.input.blur();
   }
 
+  /** Prevent mouse scroll wheel from modifying input value */
   @Listen('wheel')
   handleWheel() {
     if (document.activeElement?.getAttribute('type') === 'number') {
