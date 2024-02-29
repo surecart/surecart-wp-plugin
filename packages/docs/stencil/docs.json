@@ -24604,7 +24604,6 @@
           "reflectToAttr": false,
           "docs": "Show for a specific collection",
           "docsTags": [],
-          "default": "null",
           "values": [
             {
               "type": "string"
@@ -24695,11 +24694,27 @@
           "required": false
         },
         {
+          "name": "pageTitle",
+          "type": "string",
+          "mutable": false,
+          "attr": "page-title",
+          "reflectToAttr": false,
+          "docs": "The page title",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "pagination",
           "type": "{ total: number; total_pages: number; }",
           "mutable": true,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Pagination",
           "docsTags": [],
           "default": "{\n    total: 0,\n    total_pages: 0,\n  }",
           "values": [
@@ -24846,6 +24861,15 @@
       ],
       "methods": [],
       "events": [
+        {
+          "event": "scProductsViewed",
+          "detail": "ProductsViewedParams",
+          "bubbles": true,
+          "cancelable": true,
+          "composed": true,
+          "docs": "Products viewed",
+          "docsTags": []
+        },
         {
           "event": "scSearched",
           "detail": "ProductsSearchedParams",

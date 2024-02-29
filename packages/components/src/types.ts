@@ -1205,6 +1205,8 @@ export interface PaymentInfoAddedParams {
   checkout_id: string;
   processor_type: 'paypal' | 'stripe' | 'mollie' | 'paystack';
   currency: string;
+  total_amount: number;
+  line_items?: lineItems;
   payment_method: {
     billing_details: {
       name: string;
@@ -1232,6 +1234,12 @@ export interface ProductsSearchedParams {
   searchCollections?: string[];
   searchResultCount: number;
   searchResultIds: string[];
+}
+
+export interface ProductsViewedParams {
+  products: Product[];
+  pageTitle: string;
+  collectionId?: string;
 }
 
 export type NoticeType = 'default' | 'info' | 'success' | 'warning' | 'error';
