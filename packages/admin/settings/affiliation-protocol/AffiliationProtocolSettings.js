@@ -43,7 +43,8 @@ export default () => {
 
 	const [commisionType, setCommisionType] = useState(null);
 
-	const signupsUrl = 'https://affiliates.surecart.com/join/' + accountItem?.slug;
+	const signupsUrl =
+		'https://affiliates.surecart.com/join/' + accountItem?.slug;
 	const successFunction = () => {
 		setTrackingScriptDialog(false);
 		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
