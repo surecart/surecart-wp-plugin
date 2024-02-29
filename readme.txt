@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.19.2
+Stable tag: 2.19.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,15 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.19.3 - February 29th, 2024 =
+- New: WP CLI command to seed a new account.
+- Improvement: Add additional eCommerce events for Google Analytics.
+- Fix: Issue with affiliate signup link not correct on admin settings page.
+- Fix: First name and last name not showing client side validation errors with PayPal if they were required.
+- Fix: Issue with express checkout button not showing in some instances.
+- Fix: Issue with shipping showing incorrect courier name based on tracking code.
+- Fix: Remove unsupported MGA currency from plugin.
 
 = 2.19.2 - February 21st, 2024 =
 - Fix: Search not waiting for enter on shop pages.
