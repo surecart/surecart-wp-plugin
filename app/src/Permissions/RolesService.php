@@ -171,6 +171,7 @@ class RolesService {
 			'sc_media',
 			'sc_payment_method',
 			'sc_subscription',
+			'sc_affiliates',
 		];
 
 		foreach ( $capability_types as $capability_type ) {

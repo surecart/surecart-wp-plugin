@@ -43,6 +43,8 @@ class AdminRouteService {
 		'product_collection'  => 'sc-product-collections',
 		'product_collections' => 'sc-product-collections',
 		'restore'             => 'sc-restore',
+		'affiliate_requests'  => 'sc-affiliate-requests',
+		'affiliate_request'   => 'sc-affiliate-requests',
 	];
 
 	/**

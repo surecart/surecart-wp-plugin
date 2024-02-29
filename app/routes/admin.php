@@ -338,6 +338,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
+
+/*
+|--------------------------------------------------------------------------
+| Affiliate Requests
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-affiliates' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliateRequests\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliateRequestsController@index' );
+		// \SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliateRequestsController@edit' );
+	}
+);
+
 /*
 |--------------------------------------------------------------------------
 | Settings
