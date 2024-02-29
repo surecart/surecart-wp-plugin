@@ -1,14 +1,14 @@
 <?php
 
-namespace SureCart\Controllers\Admin\AffiliateRequests;
+namespace SureCart\Controllers\Admin\AffiliationRequests;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
-use SureCart\Models\AffiliateRequest;
+use SureCart\Models\AffiliationRequest;
 
 /**
  * Create a new table class that will extend the WP_List_Table
  */
-class AffiliateRequestsListTable extends ListTable {
+class AffiliationRequestsListTable extends ListTable {
 
 	public $checkbox = true;
 	public $error    = '';
@@ -100,7 +100,7 @@ class AffiliateRequestsListTable extends ListTable {
 	/**
 	 * Displays the checkbox column.
 	 *
-	 * @param AffiliateRequest $affiliate_request The current affiliate request.
+	 * @param AffiliationRequest $affiliate_request The current affiliate request.
 	 */
 	public function column_cb( $affiliate_request ) {
 		?>
@@ -124,7 +124,7 @@ class AffiliateRequestsListTable extends ListTable {
 	 * @return array
 	 */
 	private function table_data() {
-		$affiate_request_query = AffiliateRequest::where(
+		$affiate_request_query = AffiliationRequest::where(
 			array(
 				'status[]' => $this->getFilteredStatus(),
 				'query'    => $this->get_search_query()
@@ -155,7 +155,7 @@ class AffiliateRequestsListTable extends ListTable {
 	/**
 	 * Published column
 	 *
-	 * @param \SureCart\Models\AffiliateRequest $affiliate_request AffiliateRequest model.
+	 * @param \SureCart\Models\AffiliationRequest $affiliate_request AffiliationRequest model.
 	 *
 	 * @return string
 	 */
@@ -184,7 +184,7 @@ class AffiliateRequestsListTable extends ListTable {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param \SureCart\Models\AffiliateRequest $affiliate_request AffiliateRequest model.
+	 * @param \SureCart\Models\AffiliationRequest $affiliate_request AffiliationRequest model.
 	 * @param string                            $column_name - Current column name.
 	 *
 	 * @return mixed

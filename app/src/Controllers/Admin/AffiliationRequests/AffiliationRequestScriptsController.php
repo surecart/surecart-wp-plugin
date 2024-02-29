@@ -1,13 +1,13 @@
 <?php
 
-namespace SureCart\Controllers\Admin\AffiliateRequests;
+namespace SureCart\Controllers\Admin\AffiliationRequests;
 
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
  * Product Page
  */
-class AffiliateRequestScriptsController extends AdminModelEditController {
+class AffiliationRequestScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *

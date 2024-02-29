@@ -1,19 +1,19 @@
 <?php
 
-namespace SureCart\Controllers\Admin\AffiliateRequests;
+namespace SureCart\Controllers\Admin\AffiliationRequests;
 
 use SureCart\Controllers\Admin\AdminController;
-use SureCart\Controllers\Admin\AffiliateRequests\AffiliateRequestsListTable;
+use SureCart\Controllers\Admin\AffiliationRequests\AffiliationRequestsListTable;
 
 /**
  * Handles affiliate requests admin routes.
  */
-class AffiliateRequestsController extends AdminController {
+class AffiliationRequestsController extends AdminController {
 	/**
 	 * Affiliate Requests index.
 	 */
 	public function index() {
-		$table = new AffiliateRequestsListTable();
+		$table = new AffiliationRequestsListTable();
 		$table->prepare_items();
 		$this->withHeader(
 			[

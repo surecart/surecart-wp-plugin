@@ -3,9 +3,9 @@
 namespace SureCart\Models;
 
 /**
- * Affiliate Request model
+ * Affiliation Request model
  */
-class AffiliateRequest extends Model {
+class AffiliationRequest extends Model {
 	/**
 	 * Rest API endpoint
 	 *

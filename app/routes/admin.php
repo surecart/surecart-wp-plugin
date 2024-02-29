@@ -364,11 +364,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->where( 'admin', 'sc-affiliate-requests' )
 ->middleware( 'user.can:edit_sc_affiliates' )
 ->middleware( 'assets.components' )
-->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliateRequests\\' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationRequests\\' )
 ->group(
 	function() {
-		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliateRequestsController@index' );
-		// \SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliateRequestsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationRequestsController@index' );
+		// \SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationRequestsController@edit' );
 	}
 );
 
