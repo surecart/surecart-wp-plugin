@@ -52,7 +52,7 @@ export default () => {
 		});
 	};
 	const signupsUrlRef = useCopyToClipboard(signupsUrl, successFunction);
-	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"${accountItem?.public_token}","baseURL":"${window?.scData?.api_url}"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
+	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"pt_vihbRpGvy8e5BprY2ukthxgM"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
 	const trackingScriptRef = useCopyToClipboard(
 		trackingScript,
 		successFunction
