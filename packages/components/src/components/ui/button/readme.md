@@ -5,24 +5,25 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                            | Type                                                                                         | Default     |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- | ----------- |
-| `busy`     | `busy`     | Draws the button in a busy state.                                                                      | `boolean`                                                                                    | `false`     |
-| `caret`    | `caret`    | Draws the button with a caret for use with dropdowns, popovers, etc.                                   | `boolean`                                                                                    | `false`     |
-| `circle`   | `circle`   | Draws a circle button.                                                                                 | `boolean`                                                                                    | `false`     |
-| `disabled` | `disabled` | Disables the button.                                                                                   | `boolean`                                                                                    | `false`     |
-| `download` | `download` | Tells the browser to download the linked file as this filename. Only used when `href` is set.          | `string`                                                                                     | `undefined` |
-| `full`     | `full`     | Draws the button full-width.                                                                           | `boolean`                                                                                    | `false`     |
-| `href`     | `href`     | When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`. | `string`                                                                                     | `undefined` |
-| `loading`  | `loading`  | Draws the button in a loading state.                                                                   | `boolean`                                                                                    | `false`     |
-| `name`     | `name`     | An optional name for the button. Ignored when `href` is set.                                           | `string`                                                                                     | `undefined` |
-| `outline`  | `outline`  | Draws an outlined button.                                                                              | `boolean`                                                                                    | `false`     |
-| `pill`     | `pill`     | Draws a pill-style button with rounded edges.                                                          | `boolean`                                                                                    | `false`     |
-| `size`     | `size`     | The button's size.                                                                                     | `"large" \| "medium" \| "small"`                                                             | `'medium'`  |
-| `submit`   | `submit`   | Indicates if activating the button should submit the form. Ignored when `href` is set.                 | `boolean`                                                                                    | `false`     |
-| `target`   | `target`   | Tells the browser where to open the link. Only used when `href` is set.                                | `"_blank" \| "_parent" \| "_self" \| "_top"`                                                 | `undefined` |
-| `type`     | `type`     | The button's type.                                                                                     | `"danger" \| "default" \| "info" \| "link" \| "primary" \| "success" \| "text" \| "warning"` | `'default'` |
-| `value`    | `value`    | An optional value for the button. Ignored when `href` is set.                                          | `string`                                                                                     | `undefined` |
+| Property    | Attribute   | Description                                                                                            | Type                                                                                         | Default     |
+| ----------- | ----------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- | ----------- |
+| `autofocus` | `autofocus` | Tells the browser to autofocus.                                                                        | `boolean`                                                                                    | `undefined` |
+| `busy`      | `busy`      | Draws the button in a busy state.                                                                      | `boolean`                                                                                    | `false`     |
+| `caret`     | `caret`     | Draws the button with a caret for use with dropdowns, popovers, etc.                                   | `boolean`                                                                                    | `false`     |
+| `circle`    | `circle`    | Draws a circle button.                                                                                 | `boolean`                                                                                    | `false`     |
+| `disabled`  | `disabled`  | Disables the button.                                                                                   | `boolean`                                                                                    | `false`     |
+| `download`  | `download`  | Tells the browser to download the linked file as this filename. Only used when `href` is set.          | `string`                                                                                     | `undefined` |
+| `full`      | `full`      | Draws the button full-width.                                                                           | `boolean`                                                                                    | `false`     |
+| `href`      | `href`      | When set, the underlying button will be rendered as an `<a>` with this `href` instead of a `<button>`. | `string`                                                                                     | `undefined` |
+| `loading`   | `loading`   | Draws the button in a loading state.                                                                   | `boolean`                                                                                    | `false`     |
+| `name`      | `name`      | An optional name for the button. Ignored when `href` is set.                                           | `string`                                                                                     | `undefined` |
+| `outline`   | `outline`   | Draws an outlined button.                                                                              | `boolean`                                                                                    | `false`     |
+| `pill`      | `pill`      | Draws a pill-style button with rounded edges.                                                          | `boolean`                                                                                    | `false`     |
+| `size`      | `size`      | The button's size.                                                                                     | `"large" \| "medium" \| "small"`                                                             | `'medium'`  |
+| `submit`    | `submit`    | Indicates if activating the button should submit the form. Ignored when `href` is set.                 | `boolean`                                                                                    | `false`     |
+| `target`    | `target`    | Tells the browser where to open the link. Only used when `href` is set.                                | `"_blank" \| "_parent" \| "_self" \| "_top"`                                                 | `undefined` |
+| `type`      | `type`      | The button's type.                                                                                     | `"danger" \| "default" \| "info" \| "link" \| "primary" \| "success" \| "text" \| "warning"` | `'default'` |
+| `value`     | `value`     | An optional value for the button. Ignored when `href` is set.                                          | `string`                                                                                     | `undefined` |
 
 
 ## Events
@@ -62,6 +63,7 @@
  - [sc-donation-choices](../../controllers/checkout-form/donation-choices)
  - [sc-downloads-list](../../controllers/dashboard/sc-downloads-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-licenses-list](../../controllers/dashboard/sc-licenses-list)
  - [sc-login-form](../../controllers/login)
  - [sc-login-provider](../../providers/sc-login-provider)
@@ -93,6 +95,7 @@
  - [sc-tax-id-input](../tax-id-input)
  - [sc-upcoming-invoice](../../controllers/dashboard/upcoming-invoice)
  - [sc-upgrade-required](../sc-upgrade-required)
+ - [sc-upsell](../../controllers/upsell/sc-upsell)
  - [sc-wordpress-password-edit](../../controllers/dashboard/wordpress-password-edit)
  - [sc-wordpress-user](../../controllers/dashboard/wordpress-user)
  - [sc-wordpress-user-edit](../../controllers/dashboard/wordpress-user-edit)
@@ -118,6 +121,7 @@ graph TD;
   sc-donation-choices --> sc-button
   sc-downloads-list --> sc-button
   sc-invoices-list --> sc-button
+  sc-license --> sc-button
   sc-licenses-list --> sc-button
   sc-login-form --> sc-button
   sc-login-provider --> sc-button
@@ -149,6 +153,7 @@ graph TD;
   sc-tax-id-input --> sc-button
   sc-upcoming-invoice --> sc-button
   sc-upgrade-required --> sc-button
+  sc-upsell --> sc-button
   sc-wordpress-password-edit --> sc-button
   sc-wordpress-user --> sc-button
   sc-wordpress-user-edit --> sc-button

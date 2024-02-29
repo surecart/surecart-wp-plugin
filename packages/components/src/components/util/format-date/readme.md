@@ -31,6 +31,7 @@
 
  - [sc-charges-list](../../controllers/dashboard/charges-list)
  - [sc-invoices-list](../../controllers/dashboard/invoices-list)
+ - [sc-license](../../controllers/dashboard/sc-license)
  - [sc-order](../../controllers/dashboard/order)
  - [sc-orders-list](../../controllers/dashboard/orders-list)
  - [sc-subscription](../../controllers/dashboard/subscription)
@@ -45,6 +46,7 @@
 graph TD;
   sc-charges-list --> sc-format-date
   sc-invoices-list --> sc-format-date
+  sc-license --> sc-format-date
   sc-order --> sc-format-date
   sc-orders-list --> sc-format-date
   sc-subscription --> sc-format-date

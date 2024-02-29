@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.17.2
+Stable tag: 2.19.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,33 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.19.2 - February 21st, 2024 =
+- Fix: Search not waiting for enter on shop pages.
+- Fix: Search not translated.
+
+= 2.19.1 - February 21st, 2024 =
+- Improvement: Serve updated translations remotely during plugin and WordPress updates.
+- Fix: Update script loading to account for upcoming changes in WordPress 6.5.
+- Fix: Product price and product collection badges sometimes collapsing in product edit screen.
+- Fix: Conflict with Yoast SEO adding duplicate open graph and canonical tags to product and collection pages.
+
+= 2.19.0 - February 20th, 2024 =
+- Improvement: Add ability for customers to manage license activations on the customer dashboard
+- Improvement: Add licenses and edit license links on admin customer page.
+- Improvement: Manage affiliate settings from plugin settings page.
+- Improvement:  Update onboarding flow to use new seeding option.
+- Improvement: Add a different message to the Subscription Saver when user tries to cancel Subscription after applying the Subscription Saver discount before
+- Improvement: Add TND currency to currency list.
+- Improvement: Update getting started links on customer dashboard.
+- Improvement: Show coupon validation issues inline.
+- Improvement: Use FSE theme spacing product page.
+- Fix: Product variant purchase integrations not working in some cases.
+- Fix: Issue with free subscriptions not able to upgrade with no payment method.
+- Fix: Jetpack compatibility with hotkeys in some instances.
+
+= 2.18.0 - February 19th, 2024 =
+- New: 1-click upsells - add post-purchase funnels to your checkout flows.
 
 = 2.17.2 - February 13th, 2024 =
 - Improvement: Improve product list page loading performance.

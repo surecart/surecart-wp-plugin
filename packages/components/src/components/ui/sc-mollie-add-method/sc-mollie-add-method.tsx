@@ -41,6 +41,7 @@ export class ScMollieAddMethod {
           return_url: this.successUrl,
           payment_method_type: this.selectedMethodId,
           currency: this.currency,
+          refresh_status: true,
         },
       });
       if (this.paymentIntent.processor_data?.mollie?.checkout_url) {

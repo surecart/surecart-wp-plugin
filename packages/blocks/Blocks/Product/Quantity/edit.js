@@ -7,7 +7,6 @@ import {
 	__experimentalGetElementClassName,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import useProductPageWarning from '../../../hooks/useProductPageWarning';
 
 export default ({ attributes, setAttributes }) => {
 	const { label } = attributes;
@@ -26,11 +25,6 @@ export default ({ attributes, setAttributes }) => {
 				: {}),
 		},
 	});
-
-	const warning = useProductPageWarning();
-	if (warning) {
-		return <div {...blockProps}>{warning}</div>;
-	}
 
 	return (
 		<>

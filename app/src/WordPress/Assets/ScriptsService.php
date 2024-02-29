@@ -78,7 +78,7 @@ class ScriptsService {
 				trailingslashit( \SureCart::core()->assets()->getUrl() ) . 'dist/components/surecart/surecart.esm.js',
 				[ 'wp-i18n' ],
 				filemtime( trailingslashit( $this->container[ SURECART_CONFIG_KEY ]['app_core']['path'] ) . 'dist/components/surecart/surecart.esm.js' ) . '-' . \SureCart::plugin()->version(),
-				false
+				true
 			);
 		} else {
 			// instead, use a static loader that injects the script at runtime.

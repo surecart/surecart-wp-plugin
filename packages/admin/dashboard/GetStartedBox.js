@@ -9,6 +9,7 @@ export default ({
 	description,
 	buttonLabel,
 	buttonUrl,
+	...rest
 }) => {
 	return (
 		<div>
@@ -49,6 +50,7 @@ export default ({
 				style={{
 					'--primary-background': 'var(--sc-color-brand-heading)',
 				}}
+				{...rest}
 			>
 				{buttonLabel} &#8594;
 			</ScButton>
