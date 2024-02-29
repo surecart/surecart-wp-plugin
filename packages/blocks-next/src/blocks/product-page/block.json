@@ -7,9 +7,13 @@
 	"version": "1.0.0",
 	"category": "widgets",
 	"icon": "media-interactive",
-	"example": {
-		"attributes": {
-			"text": "Sale"
+	"example": {},
+	"providesContext": {
+		"surecart/product_id": "product_id"
+	},
+	"attributes": {
+		"product_id": {
+			"type": "string"
 		}
 	},
 	"supports": {

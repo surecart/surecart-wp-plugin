@@ -34,6 +34,7 @@ const { state, callbacks } = store('surecart/product', {
 		/**
 		 * Derived state
 		 */
+		/** Get the selected amount. */
 		get selectedAmount() {
 			return (
 				state?.selectedVariant?.amount ||
@@ -41,6 +42,7 @@ const { state, callbacks } = store('surecart/product', {
 				''
 			);
 		},
+		/** Get the selected display amount. */
 		get selectedDisplayAmount() {
 			return (
 				state?.selectedVariant?.display_amount ||
@@ -48,6 +50,7 @@ const { state, callbacks } = store('surecart/product', {
 				''
 			);
 		},
+		/** Is the product on sale? */
 		get isOnSale() {
 			return state.selectedPrice.scratch_amount > state.selectedAmount;
 		},
@@ -113,7 +116,9 @@ const { state, callbacks } = store('surecart/product', {
 				},
 			});
 		},
+		/** Set the variant values. */
 		setVariantValues: () => {
+			console.log(JSON.parse(JSON.stringify(state)));
 			update({
 				variantValues: {
 					...(state?.selectedVariant?.option_1

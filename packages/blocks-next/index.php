@@ -73,9 +73,17 @@ add_filter(
 );
 
 add_filter( 'render_block_context', function( $context, $parsed_block, $parent_block ) {
+	// we are passing an id.
+	if ( $parsed_block['blockName'] === 'surecart/product-page' && !empty($parsed_block['attrs']['product_id']) ) {
+		$product = \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ) )->find( $parsed_block['attrs']['product_id'] );
+		set_query_var('surecart_current_product', $product);
+	}
+
+	// we have product context.
 	if ( get_query_var('surecart_current_product') ) {
 		$context['surecart/product'] = get_query_var( 'surecart_current_product' );
 	}
+
 	return $context;
 }, 10, 3 );
 
@@ -101,7 +109,7 @@ add_action('init', function() {
 
 	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
-	wp_register_script_module(
+	wp_enqueue_script_module(
 		'@surecart/product-page',
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 		[

@@ -1,8 +1,6 @@
 <?php
 // get product.
-$product = ! empty( $attributes['product_id'] )
-	? \SureCart\Models\Product::with( array( 'image', 'prices', 'product_medias', 'product_media.media', 'variants', 'variant_options' ) )->find( $attributes['productId'] )
-	: get_query_var( 'surecart_current_product' );
+$product = get_query_var( 'surecart_current_product' );
 
 // if no product id, return.
 if ( empty( $product ) ) {
@@ -29,17 +27,18 @@ wp_interactivity_state(
 				'variants'        => $product->variants->data ?? array(),
 				'selectedVariant' => $product->first_variant_with_stock ?? null,
 				'isProductPage'   => ! empty( get_query_var( 'surecart_current_product' ) ),
+				'variantValues' => (object) array_filter([
+					'option_1' => $product->first_variant_with_stock->option_1,
+					'option_2' => $product->first_variant_with_stock->option_2,
+					'option_3' => $product->first_variant_with_stock->option_3,
+				])
 			),
+			// These are needed in order to SSR directives.
 			'selectedPrice' => $selected_price,
+			'selectedVariant' => $product->first_variant_with_stock,
 			'selectedDisplayAmount' => $product->display_amount,
 			'selectedScratchDisplayAmount' => $selected_price->scratch_display_amount,
-			'selectedVariant' => $product->first_variant_with_stock,
-			'isOnSale' => false, // hide this by default since it depends on variant selection.
-			'variantValues' => [
-				'option_1' => $product->first_variant_with_stock->option_1,
-				'option_2' => $product->first_variant_with_stock->option_2,
-				'option_3' => $product->first_variant_with_stock->option_3,
-			]
+			'isOnSale' => $product->initial_amount < $product->scratch_amount,
 		)
 	)
 );

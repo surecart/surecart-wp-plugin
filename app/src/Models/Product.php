@@ -347,18 +347,41 @@ class Product extends Model implements PageModel {
 	 * @return \SureCart\Models\Variant;
 	 */
 	public function getFirstVariantWithStockAttribute() {
-		$first_variant_with_stock = $this->variants->data[0] ?? null;
-
 		// stock is enabled.
-		if ( $this->stock_enabled ) {
+		if ( $this->stock_enabled && ! $this->allow_out_of_stock_purchases ) {
 			foreach ( $this->variants->data as $variant ) {
 				if ( $variant->available_stock > 0 ) {
-					$first_variant_with_stock = $variant;
-					break;
+					return $variant;
 				}
 			}
 		}
-		return $first_variant_with_stock;
+		return $this->variants->data[0] ?? null;
+	}
+
+	/**
+	 * Get the initial amount.
+	 *
+	 * @return string
+	 */
+	public function getInitialAmountAttribute() {
+		$initial_variant = $this->first_variant_with_stock;
+		if (!empty( $initial_variant->amount ) ) {
+			return $initial_variant->amount;
+		}
+		$prices = $this->activePrices() ?? [];
+		$initial_price =  $prices[0] ?? null;
+		return $initial_price->amount ?? null;
+	}
+
+	/**
+	 * Get the scratch amount.
+	 *
+	 * @return string
+	 */
+	public function getScratchAmountAttribute() {
+		$prices = $this->activePrices() ?? [];
+		$initial_price =  $prices[0] ?? null;
+		return $initial_price->scratch_amount ?? null;
 	}
 
 	/**

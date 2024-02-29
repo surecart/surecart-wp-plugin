@@ -4,7 +4,6 @@
 	data-wp-interactive='{ "namespace": "surecart/product" }'
 	data-wp-context='{ "productId": "<?php echo esc_attr( $product->id ); ?>" }'
 	data-wp-watch--variant-values="callbacks.updateSelectedVariant"
-	data-wp-init="callbacks.setVariantValues"
 >
 	<?php echo do_blocks( $content ); ?>
 </div>
