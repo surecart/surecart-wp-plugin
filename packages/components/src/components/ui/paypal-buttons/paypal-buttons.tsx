@@ -95,7 +95,7 @@ export class ScPaypalButtons {
 
   /** Render the buttons. */
   renderButtons(paypal) {
-    const createFunc = hasSubscription(this.order) ? 'createBillingAgreement' : 'createOrder';
+    const createFunc = this.order.reusable_payment_method_required ? 'createBillingAgreement' : 'createOrder';
 
     const config = {
       /**
