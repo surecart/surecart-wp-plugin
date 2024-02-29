@@ -3,7 +3,6 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 import { __ } from '@wordpress/i18n';
 
 import apiFetch from '../../../functions/fetch';
-import { hasSubscription } from '../../../functions/line-items';
 import { fetchCheckout } from '../../../services/session';
 import { Checkout, PaymentIntent } from '../../../types';
 import { getScriptLoadParams } from './functions';
