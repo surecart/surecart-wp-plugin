@@ -1305,12 +1305,9 @@ export namespace Components {
         "error": ResponseError | null;
     }
     interface ScExpressPayment {
-        "busy": boolean;
         "debug": boolean;
         "dividerText": string;
-        "formId": number | string;
         "hasPaymentOptions": boolean;
-        "order": Checkout;
         "processor": ProcessorName;
     }
     interface ScFeatureDemoBanner {
@@ -3531,27 +3528,17 @@ export namespace Components {
          */
         "country": string;
         /**
-          * Currency
-         */
-        "currencyCode": string;
-        /**
           * Is this in debug mode.
          */
         "debug": boolean;
         "error": ResponseError | null;
         /**
-          * This is required to validate the form on the server
-         */
-        "formId": number | string;
-        /**
           * Label
          */
         "label": string;
         /**
-          * Checkout Session
+          * Prices
          */
-        "order": Checkout;
-        "paymentMethod": string;
         "prices": Prices;
         /**
           * Stripe publishable key
@@ -7397,12 +7384,9 @@ declare namespace LocalJSX {
         "onScUpdateError"?: (event: ScErrorCustomEvent<ResponseError>) => void;
     }
     interface ScExpressPayment {
-        "busy"?: boolean;
         "debug"?: boolean;
         "dividerText"?: string;
-        "formId"?: number | string;
         "hasPaymentOptions"?: boolean;
-        "order"?: Checkout;
         "processor"?: ProcessorName;
     }
     interface ScFeatureDemoBanner {
@@ -9782,18 +9766,10 @@ declare namespace LocalJSX {
          */
         "country"?: string;
         /**
-          * Currency
-         */
-        "currencyCode"?: string;
-        /**
           * Is this in debug mode.
          */
         "debug"?: boolean;
         "error"?: ResponseError | null;
-        /**
-          * This is required to validate the form on the server
-         */
-        "formId"?: number | string;
         /**
           * Label
          */
@@ -9805,10 +9781,8 @@ declare namespace LocalJSX {
         "onScSetState"?: (event: ScStripePaymentRequestCustomEvent<string>) => void;
         "onScUpdateOrderState"?: (event: ScStripePaymentRequestCustomEvent<any>) => void;
         /**
-          * Checkout Session
+          * Prices
          */
-        "order"?: Checkout;
-        "paymentMethod"?: string;
         "prices"?: Prices;
         /**
           * Stripe publishable key
