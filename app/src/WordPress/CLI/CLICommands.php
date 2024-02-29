@@ -2,7 +2,7 @@
 
 namespace SureCart\WordPress\CLI;
 
-use \WP_CLI;
+use WP_CLI;
 use SureCart\Models\ProvisionalAccount;
 /**
  * Our All CLI Commands class.
@@ -10,6 +10,8 @@ use SureCart\Models\ProvisionalAccount;
 class CLICommands {
 	/**
 	 * Seed Account
+	 *
+	 * @alias create-account
 	 *
 	 * @param Array $args Arguments in array format.
 	 * @param Array $assoc_args Key value arguments stored in associated array format.
@@ -19,10 +21,10 @@ class CLICommands {
 			WP_CLI::error( __( 'Email is required to seed an account.', 'surecart' ) );
 		}
 		$account = ProvisionalAccount::create(
-			[
+			array(
 				'email' => $assoc_args['email'],
 				'seed'  => ! empty( $assoc_args['seed'] ) ? $assoc_args['seed'] : false,
-			]
+			)
 		);
 		if ( is_wp_error( $account ) ) {
 			WP_CLI::error( $account->get_error_message() );
