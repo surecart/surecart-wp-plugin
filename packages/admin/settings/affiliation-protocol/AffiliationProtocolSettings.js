@@ -35,13 +35,16 @@ export default () => {
 		hasLoadedItem: hasLoadedAffiliationProtocolItem,
 	} = useEntity('store', 'affiliation_protocol');
 
+	const { item: accountItem } = useEntity('store', 'account');
+
 	const type = affiliationProtocolItem?.amount_commission
 		? 'fixed'
 		: 'percentage';
 
 	const [commisionType, setCommisionType] = useState(null);
 
-	const signupsUrl = 'https://affiliates.surecart.com/join/new-test-store';
+	const signupsUrl =
+		'https://affiliates.surecart.com/join/' + accountItem?.slug;
 	const successFunction = () => {
 		setTrackingScriptDialog(false);
 		createSuccessNotice(__('Copied to clipboard.', 'surecart'), {
@@ -49,7 +52,7 @@ export default () => {
 		});
 	};
 	const signupsUrlRef = useCopyToClipboard(signupsUrl, successFunction);
-	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"pt_vihbRpGvy8e5BprY2ukthxgM"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
+	const trackingScript = `<script>window.SureCartAffiliatesConfig = {"publicToken":"${accountItem?.public_token}","baseURL":"${window?.scData?.api_url}"};</script> <script src="https://js.surecart.com/v1/affiliates" defer></script>`;
 	const trackingScriptRef = useCopyToClipboard(
 		trackingScript,
 		successFunction
