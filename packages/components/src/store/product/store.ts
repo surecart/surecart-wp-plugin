@@ -1,6 +1,7 @@
 import { createStore } from '@stencil/store';
 import { ProductState } from 'src/types';
 import { productViewed } from './events';
+import './facebook';
 import { getDefaultState } from './getters';
 
 interface Store {
@@ -13,7 +14,7 @@ Object.values(defaultState)
   .filter((stateProduct: ProductState) => stateProduct?.isProductPage)
   .forEach((stateProduct: ProductState) => {
     if (stateProduct?.product?.id) {
-      productViewed(stateProduct?.product);
+      productViewed(stateProduct?.product,stateProduct?.selectedPrice );
     }
   });
 

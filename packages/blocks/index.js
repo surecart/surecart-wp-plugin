@@ -6,3 +6,4 @@ import './general';
 import './cart';
 import './checkout';
 import './products';
+import './upsell';

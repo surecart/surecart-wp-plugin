@@ -49,6 +49,8 @@ class Customer extends Model {
 				$user = User::create(
 					[
 						'user_name'  => $this->attributes['name'] ?? null,
+						'first_name' => $this->attributes['first_name'] ?? null,
+						'last_name'  => $this->attributes['last_name'] ?? null,
 						'user_email' => $this->attributes['email'],
 					]
 				);
