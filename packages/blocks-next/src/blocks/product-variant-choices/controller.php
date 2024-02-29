@@ -19,5 +19,9 @@ if ( empty( $product->id ) ) {
 	return;
 }
 
+if ( empty( $product->variant_options->data ) ) {
+	return;
+}
+
 // return the view.
 return 'file:./view.php';

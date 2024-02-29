@@ -19,12 +19,6 @@
 			"source": "rich-text",
 			"__experimentalRole": "content"
 		},
-		"lightbox": {
-			"type": "object",
-			"enabled": {
-				"type": "boolean"
-			}
-		},
 		"highlight_text": {
 			"type": "string"
 		},

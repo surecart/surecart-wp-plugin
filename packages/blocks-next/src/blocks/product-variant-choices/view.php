@@ -12,33 +12,31 @@
 ?>
 
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
-	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
-		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-			<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
-				<label class="sc-form-label">
-					<?php echo wp_kses_post( $option->name ); ?>
-				</label>
+	<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
+		<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
+			<label class="sc-form-label">
+				<?php echo wp_kses_post( $option->name ); ?>
+			</label>
 
-				<div class="sc-pill-option__wrapper">
-					<?php foreach ( $option->values as $name ) : ?>
-						<button
-							class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
-							value="<?php echo esc_attr( $name ); ?>"
-							data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
-							data-wp-on--click="callbacks.setOption"
-							data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
-							data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
-							data-wp-bind--aria-checked="state.isOptionSelected"
-							data-wp-bind--aria-disabled="state.isOptionUnavailable"
-							tabindex="0"
-							role="radio"
-							style="<?php echo esc_attr( $styles['color']['css'] ?? '' ); ?>"
-						>
-							<?php echo wp_kses_post( $name ); ?>
-						</button>
-					<?php endforeach; ?>
-				</div>
+			<div class="sc-pill-option__wrapper">
+				<?php foreach ( $option->values as $name ) : ?>
+					<button
+						class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
+						value="<?php echo esc_attr( $name ); ?>"
+						data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
+						data-wp-on--click="callbacks.setOption"
+						data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
+						data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
+						data-wp-bind--aria-checked="state.isOptionSelected"
+						data-wp-bind--aria-disabled="state.isOptionUnavailable"
+						tabindex="0"
+						role="radio"
+						style="<?php echo esc_attr( $styles['color']['css'] ?? '' ); ?>"
+					>
+						<?php echo wp_kses_post( $name ); ?>
+					</button>
+				<?php endforeach; ?>
 			</div>
-		<?php endforeach; ?>
-	<?php endif; ?>
+		</div>
+	<?php endforeach; ?>
 </div>
