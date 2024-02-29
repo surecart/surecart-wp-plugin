@@ -1,0 +1,91 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "surecart/product-buy-button-v2",
+	"title": "Product Buy Button v2",
+	"description": "Display the product buy button.",
+	"version": "1.0.0",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"example": {},
+	"usesContext": ["surecart/product"],
+	"attributes": {
+		"add_to_cart": {
+			"type": "boolean",
+			"default": false
+		},
+		"out_of_stock_text": {
+			"type": "string",
+			"default": "Sold out"
+		},
+		"unavailable_text": {
+			"type": "string",
+			"default": "Unavailable"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"color": {
+			"gradients": true,
+			"link": false,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true,
+				"fontAppearance": true,
+				"textTransform": true
+			}
+		}
+	},
+	"variations": [
+		{
+			"name": "cart",
+			"title": "Add To Cart Button",
+			"icon": "cart",
+			"description": "Add a button to add the product to the cart.",
+			"attributes": {
+				"add_to_cart": true,
+				"text": "Add To Cart"
+			},
+			"isDefault": true,
+			"isActive": ["add_to_cart"],
+			"scope": ["inserter", "block", "transform"]
+		},
+		{
+			"name": "buy",
+			"title": "Buy Now Button",
+			"icon": "store",
+			"description": "Add a button to buy the product.",
+			"attributes": {
+				"add_to_cart": false,
+				"text": "Buy Now"
+			},
+			"isActive": ["add_to_cart"],
+			"scope": ["inserter", "block", "transform"]
+		}
+	],
+	"styles": [
+		{ "name": "fill", "label": "Fill", "isDefault": true },
+		{ "name": "outline", "label": "Outline" }
+	],
+	"textdomain": "surecart",
+	"render": "file:./view.php",
+	"editorScript": "file:./index.js",
+	"viewModule": ["@surecart/product-page"]
+}

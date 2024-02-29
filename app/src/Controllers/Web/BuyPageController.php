@@ -84,7 +84,7 @@ class BuyPageController extends BasePageController {
 		}
 
 		// get active prices.
-		$active_prices = $this->model->activePrices();
+		$active_prices = $this->model->active_prices;
 
 		// must have at least one active price.
 		if ( empty( $active_prices[0] ) ) {

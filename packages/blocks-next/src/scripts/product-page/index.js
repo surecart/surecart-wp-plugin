@@ -71,6 +71,11 @@ const { state, callbacks } = store('surecart/product', {
 				state.variantValues[`option_${optionNumber}`] === optionValue
 			);
 		},
+		/** Is the price selected? */
+		get isPriceSelected() {
+			const { priceId } = getContext();
+			return state.selectedPrice?.id === priceId;
+		},
 		/** Get the selected option. */
 		get getSelectedOption() {
 			const { optionNumber } = getContext();
@@ -116,22 +121,13 @@ const { state, callbacks } = store('surecart/product', {
 				},
 			});
 		},
-		/** Set the variant values. */
-		setVariantValues: () => {
-			console.log(JSON.parse(JSON.stringify(state)));
-			update({
-				variantValues: {
-					...(state?.selectedVariant?.option_1
-						? { option_1: state?.selectedVariant?.option_1 }
-						: {}),
-					...(state?.selectedVariant?.option_2
-						? { option_2: state?.selectedVariant?.option_2 }
-						: {}),
-					...(state?.selectedVariant?.option_3
-						? { option_3: state?.selectedVariant?.option_3 }
-						: {}),
-				},
-			});
+		/** Set the option. */
+		setPrice: () => {
+			const { priceId } = getContext();
+			const selectedPrice = state.product.prices?.data.find(
+				(price) => price.id === priceId
+			);
+			update({ selectedPrice });
 		},
 		/** Update variant and values. */
 		updateSelectedVariant: () => {

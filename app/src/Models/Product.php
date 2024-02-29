@@ -191,7 +191,7 @@ class Product extends Model implements PageModel {
 	 *
 	 * @return array
 	 */
-	public function activePrices() {
+	public function getActivePricesAttribute() {
 		$active_prices = array_values(
 			array_filter(
 				$this->prices->data ?? [],
@@ -219,7 +219,7 @@ class Product extends Model implements PageModel {
 	 */
 	public function activeAdHocPrices() {
 		return array_filter(
-			$this->activePrices() ?? [],
+			$this->active_prices ?? [],
 			function( $price ) {
 				return $price->ad_hoc;
 			}
@@ -247,7 +247,7 @@ class Product extends Model implements PageModel {
 	 * @return array
 	 */
 	public function getJsonSchemaArray(): array {
-		$active_prices = (array) $this->activePrices();
+		$active_prices = (array) $this->active_prices;
 
 		$offers = array_map(
 			function( $price ) {
@@ -368,7 +368,7 @@ class Product extends Model implements PageModel {
 		if (!empty( $initial_variant->amount ) ) {
 			return $initial_variant->amount;
 		}
-		$prices = $this->activePrices() ?? [];
+		$prices = $this->active_prices ?? [];
 		$initial_price =  $prices[0] ?? null;
 		return $initial_price->amount ?? null;
 	}
@@ -379,7 +379,7 @@ class Product extends Model implements PageModel {
 	 * @return string
 	 */
 	public function getScratchAmountAttribute() {
-		$prices = $this->activePrices() ?? [];
+		$prices = $this->active_prices ?? [];
 		$initial_price =  $prices[0] ?? null;
 		return $initial_price->scratch_amount ?? null;
 	}
@@ -437,7 +437,7 @@ class Product extends Model implements PageModel {
 		if (!empty( $initial_variant->amount ) ) {
 			return Currency::format( $initial_variant->amount, $initial_variant->currency );
 		}
-		$prices = $this->activePrices() ?? [];
+		$prices = $this->active_prices ?? [];
 		$initial_price =  $prices[0] ?? null;
 		if ( empty( $initial_price ) ) {
 			return '';
@@ -455,7 +455,7 @@ class Product extends Model implements PageModel {
 	public function getInitialPageState( $args = [] ) {
 		$form = \SureCart::forms()->getDefault();
 
-		$prices = $this->activePrices() ?? [];
+		$prices = $this->active_prices ?? [];
 		$selected_price =  $prices[0] ?? null;
 
 		return wp_parse_args(
@@ -464,7 +464,7 @@ class Product extends Model implements PageModel {
 				'formId'          => $form->ID,
 				'mode'            => \SureCart\Models\Form::getMode( $form->ID ),
 				'product'         => $this,
-				'prices'          => $this->activePrices(),
+				'prices'          => $this->active_prices,
 				'isOnSale' 		  => $selected_price ? $selected_price->is_on_sale : false,
 				'checkoutUrl'     => \SureCart::pages()->url( 'checkout' ),
 				'variant_options' => $this->variant_options->data ?? [],

@@ -1,47 +1,17 @@
-<?php
-/**
- * PHP file to use when rendering the block type on the server to show on the front end.
- *
- * The following variables are exposed to the file:
- *     $attributes (array): The block attributes.
- *     $content (string): The block default content.
- *     $block (WP_Block): The block instance.
- *
- * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
- */
-?>
-
 <div <?php echo wp_kses_data( get_block_wrapper_attributes() ); ?>>
 	<label class="sc-form-label">
 		<?php echo wp_kses_post( $attributes['label'] ?? __('Pricing', 'surecart') ); ?>
 	</label>
-	<?php if ( ! empty( $product->variant_options->data ) ) : ?>
-		<?php foreach ( $product->variant_options->data as $key => $option ) : ?>
-			<div data-wp-context='{ "optionNumber": "<?php echo (int) $key + 1; ?>" }'>
-				<label class="sc-form-label">
-					<?php echo wp_kses_post( $option->name ); ?>
-				</label>
-
-				<div class="sc-pill-option__wrapper">
-					<?php foreach ( $option->values as $name ) : ?>
-						<button
-							class="sc-pill-option__button <?php echo esc_attr( $styles['classnames'] ?? '' ); ?>"
-							value="<?php echo esc_attr( $name ); ?>"
-							data-wp-context='{ "optionValue": "<?php echo esc_attr( $name ); ?>" }'
-							data-wp-on--click="callbacks.setOption"
-							data-wp-class--sc-pill-option__button--selected="state.isOptionSelected"
-							data-wp-class--sc-pill-option__button--disabled="state.isOptionUnavailable"
-							data-wp-bind--aria-checked="state.isOptionSelected"
-							data-wp-bind--aria-disabled="state.isOptionUnavailable"
-							tabindex="0"
-							role="radio"
-							style="<?php echo esc_attr( $styles['color']['css'] ?? '' ); ?>"
-						>
-							<?php echo wp_kses_post( $name ); ?>
-						</button>
-					<?php endforeach; ?>
-				</div>
+	<div class="sc-choices">
+		<?php foreach($prices as $price) : ?>
+			<div class="sc-choice"
+				data-wp-key="<?php echo esc_attr( $price->id ); ?>"
+				data-wp-context='{ "priceId": "<?php echo esc_attr( $price->id ); ?>" }'
+				data-wp-on--click="callbacks.setPrice"
+				data-wp-class--sc-choice--checked="state.isPriceSelected">
+				<strong><?php echo !empty($price->name) ? $price->name : $product->name; ?></strong>
+				<?php echo $price->display_amount; ?>
 			</div>
 		<?php endforeach; ?>
-	<?php endif; ?>
+	</div>
 </div>

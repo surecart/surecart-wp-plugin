@@ -19,5 +19,11 @@ if ( empty( $product->id ) ) {
 	return;
 }
 
+$prices = $product->active_prices;
+
+if ( empty( $prices ) ) {
+	return;
+}
+
 // return the view.
 return 'file:./view.php';

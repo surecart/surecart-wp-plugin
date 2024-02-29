@@ -7,7 +7,7 @@ if ( empty( $product ) ) {
 	return;
 }
 
-$active_prices  = $product->activePrices();
+$active_prices  = $product->active_prices;
 $selected_price = $active_prices[0] ?? '';
 
 wp_interactivity_state(
