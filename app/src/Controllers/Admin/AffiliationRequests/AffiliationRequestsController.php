@@ -22,6 +22,26 @@ class AffiliationRequestsController extends AdminController {
 				],
 			]
 		);
-		return \SureCart::view( 'admin/affiliate-requests/index' )->with( [ 'table' => $table ] );
+		return \SureCart::view( 'admin/affiliation-requests/index' )->with( [ 'table' => $table ] );
+	}
+
+	/**
+	 * Edit
+	 */
+	public function edit( $request ) {
+		// enqueue needed script.
+		add_action( 'admin_enqueue_scripts', \SureCart::closure()->method( AffiliationRequestsScriptsController::class, 'enqueue' ) );
+
+		$this->preloadPaths(
+			[
+				'/wp/v2/users/me',
+				'/wp/v2/types?context=view',
+				'/wp/v2/types?context=edit',
+				'/surecart/v1/affiliation_requests/' . $request->query( 'id' ) . '?context=edit',
+			]
+		);
+
+		// return view.
+		return '<div id="app"></div>';
 	}
 }

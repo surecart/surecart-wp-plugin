@@ -5,9 +5,9 @@ namespace SureCart\Controllers\Rest;
 use SureCart\Models\AffiliationRequest;
 
 /**
- * Handle affiliate requests through the REST API
+ * Handle affiliation requests through the REST API
  */
-class AffiliationRequestController {
+class AffiliationRequestsController extends RestController {
 	/**
 	 * Class to make the requests.
 	 *

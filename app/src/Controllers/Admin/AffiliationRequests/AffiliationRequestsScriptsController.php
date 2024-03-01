@@ -5,9 +5,9 @@ namespace SureCart\Controllers\Admin\AffiliationRequests;
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
- * Product Page
+ * Affiliation Requests Scripts Controller
  */
-class AffiliationRequestScriptsController extends AdminModelEditController {
+class AffiliationRequestsScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
@@ -20,14 +20,14 @@ class AffiliationRequestScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/affiliate-request';
+	protected $handle = 'surecart/scripts/admin/affiliation-request';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'admin/affiliate-requests';
+	protected $path = 'admin/affiliation-requests';
 
 	/**
 	 * Add the app url to the data.

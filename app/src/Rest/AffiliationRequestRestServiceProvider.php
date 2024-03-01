@@ -3,7 +3,7 @@
 namespace SureCart\Rest;
 
 use SureCart\Rest\RestServiceInterface;
-use SureCart\Controllers\Rest\AffiliationRequestController;
+use SureCart\Controllers\Rest\AffiliationRequestsController;
 
 /**
  * Service provider for Affiliation Request Rest Requests
@@ -21,7 +21,7 @@ class AffiliationRequestRestServiceProvider extends RestServiceProvider implemen
 	 *
 	 * @var string
 	 */
-	protected $controller = AffiliationRequestController::class;
+	protected $controller = AffiliationRequestsController::class;
 
 	/**
 	 * Get our sample schema for a post.
@@ -61,7 +61,7 @@ class AffiliationRequestRestServiceProvider extends RestServiceProvider implemen
 	 * @return true|\WP_Error True if the request has access to create items, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return current_user_can( 'edit_sc_affiliates' );
+		return true;
 	}
 
 	/**
