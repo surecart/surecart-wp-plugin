@@ -120,8 +120,4 @@ class ProductsController extends AdminController {
 
 		return $this->redirectBack( $request );
 	}
-
-	public function redirectBack( $request ) {
-		return ( new RedirectResponse( $request ) )->back();
-	}
 }

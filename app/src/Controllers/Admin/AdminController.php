@@ -2,6 +2,8 @@
 
 namespace SureCart\Controllers\Admin;
 
+use SureCartCore\Responses\RedirectResponse;
+
 abstract class AdminController {
 	/**
 	 * Preload API Request Paths
@@ -45,5 +47,16 @@ abstract class AdminController {
 				);
 			}
 		);
+	}
+
+	/**
+	 * Redirect back to the previous page.
+	 *
+	 * @param @param \SureCartCore\Requests\RequestInterface $request Request.
+	 *
+	 * @return \SureCartCore\Responses\RedirectResponse
+	 */
+	public function redirectBack( $request ) {
+		return ( new RedirectResponse( $request ) )->back();
 	}
 }
