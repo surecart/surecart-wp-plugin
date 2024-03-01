@@ -1,13 +1,13 @@
 <?php
 
-namespace SureCart\Controllers\Admin\Affiliates;
+namespace SureCart\Controllers\Admin\Affiliations;
 
 use SureCart\Support\Scripts\AdminModelEditController;
 
 /**
- * Afiiates scripts controller.
+ * Afiiation scripts controller.
  */
-class AffiliatesScriptsController extends AdminModelEditController {
+class AffiliationsScriptsController extends AdminModelEditController {
 	/**
 	 * What types of data to add the the page.
 	 *
@@ -20,14 +20,14 @@ class AffiliatesScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/affiliates';
+	protected $handle = 'surecart/scripts/admin/affiliations';
 
 	/**
 	 * Script path.
 	 *
 	 * @var string
 	 */
-	protected $path = 'admin/affiliates';
+	protected $path = 'admin/affiliations';
 
 	/**
 	 * Add the app url to the data.

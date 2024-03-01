@@ -1,14 +1,14 @@
 <?php
 
-namespace SureCart\Controllers\Admin\Affiliates;
+namespace SureCart\Controllers\Admin\Affiliations;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\Affiliation;
 
 /**
- * Create a new table class that will extend the WP_List_Table
+ * Affiliations List Table
  */
-class AffiliatesListTable extends ListTable {
+class AffiliationsListTable extends ListTable {
 	public $checkbox = true;
 	public $error    = '';
 	public $pages    = array();
