@@ -4,7 +4,7 @@ Donate link: https://surecart.com
 Tags: cart, checkout, commerce, product, stripe, elementor, learndash, beaver builder, lifterlms
 Requires at least: 6.3
 Tested up to: 6.4
-Stable tag: 2.19.3
+Stable tag: 2.19.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -225,6 +225,12 @@ Because of SureCart’s innovative approach to performance, all the tasks that w
 Yes, all the strings in SureCart can be translated and over time we hope to offer many translations out of the box.
 
 == Changelog ==
+
+= 2.19.4 - March 1st, 2024 =
+- Improvement: Prevent mouse wheel scroll on percent and other number inputs.
+- Fix: Issue with SureMembers integration not working on subscription update in some instances.
+- Fix: Issue with Elementor product page template overriding the upsell template.
+- Fix: Issue with PayPal sometimes not loading on checkout when an upsell is applicable and all the checkout line items are non-recurring.
 
 = 2.19.3 - February 29th, 2024 =
 - New: WP CLI command to seed a new account.
