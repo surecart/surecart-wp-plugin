@@ -351,7 +351,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 ->group(
 	function() {
 		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationsController@index' );
-		// \SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliatesController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationsController@edit' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'activate', 'action' )->middleware( 'nonce:activate_affiliation' )->handle( 'AffiliationsController@activate' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'deactivate', 'action' )->middleware( 'nonce:deactivate_affiliation' )->handle( 'AffiliationsController@deactivate' );
 	}
 );
 

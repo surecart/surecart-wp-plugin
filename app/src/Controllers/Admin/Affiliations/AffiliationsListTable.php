@@ -89,10 +89,11 @@ class AffiliationsListTable extends ListTable {
 	public function get_columns() {
 		return array(
 			// 'cb'          => '<input type="checkbox" />',
-			'name'   => __( 'Name', 'surecart' ),
-			'email'  => __( 'Email', 'surecart' ),
-			'status' => __( 'Status', 'surecart' ),
-			'date'   => __( 'Date', 'surecart' ),
+			'name'         => __( 'Name', 'surecart' ),
+			'email'        => __( 'Email', 'surecart' ),
+			'payout_email' => __( 'Payout Email', 'surecart' ),
+			'status'       => __( 'Status', 'surecart' ),
+			'date'         => __( 'Date', 'surecart' ),
 		);
 	}
 
@@ -177,6 +178,37 @@ class AffiliationsListTable extends ListTable {
 		return ob_get_clean();
 	}
 
+
+	/**
+	 * Name column
+	 *
+	 * @param \SureCart\Models\Product $product Product model.
+	 *
+	 * @return string
+	 */
+	public function column_name( $affiliation ) {
+		ob_start();
+		?>
+
+		<div class="sc-affiliate-name">
+			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
+				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
+			</a>
+
+			<?php
+				echo $this->row_actions(
+					array_filter(
+						array(
+							'trash' => $this->action_toggle_activate( $affiliation ),
+						)
+					),
+				);
+			?>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
 	/**
 	 * Define what data to show on each column of the table
 	 *
@@ -187,13 +219,9 @@ class AffiliationsListTable extends ListTable {
 	 */
 	public function column_default( $affiliation, $column_name ) {
 		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'affiliate', $affiliation->id ) . '">'
-					. $affiliation->first_name . ' ' . $affiliation->last_name
-					. '</a>';
-
 			case 'description':
 			case 'email':
+			case 'payout_email':
 				return $affiliation->$column_name ?? '';
 		}
 	}
@@ -221,6 +249,46 @@ class AffiliationsListTable extends ListTable {
 		do_action( 'manage_affiliates_extra_tablenav', $which );
 	}
 
+	/**
+	 * Toggle archive action link and text.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return string
+	 */
+	public function action_toggle_activate( $affiliation ) {
+		$text            = $affiliation->active ? __( 'De-activate', 'surecart' ) : __( 'Activate', 'surecart' );
+		$confirm_message = $affiliation->active ? __( 'Are you sure you want to de-activate this affilate?', 'surecart' ) : __( 'Are you sure you want to activate this affiliate?', 'surecart' );
+		$link            = $this->get_toggle_activate_url( $affiliation->id, $affiliation->active ? 'deactivate' : 'activate');
+
+		return sprintf(
+			'<a class="submitdelete" onclick="return confirm(\'%1s\')" href="%2s" aria-label="%3s">%4s</a>',
+			esc_attr( $confirm_message ),
+			esc_url( $link ),
+			esc_attr__( 'Toggle Affiliate active status', 'surecart' ),
+			esc_html( $text )
+		);
+	}
+
+	/**
+	 * Get the toggle activate URL.
+	 *
+	 * @param string $id     Model id.
+	 * @param string $action Action activate or deactivate.
+	 *
+	 * @return string URL for the page.
+	 */
+	public function get_toggle_activate_url( $id, $action ) {
+		return esc_url(
+			add_query_arg(
+				[
+					'action' => $action,
+					'nonce'  => wp_create_nonce( $action . '_affiliation' ),
+					'id'     => $id,
+				],
+				esc_url_raw( admin_url( 'admin.php?page=sc-affiliates' ) )
+			)
+		);
+	}
 
 	/**
 	 * Get filtered status / default status.
@@ -241,7 +309,7 @@ class AffiliationsListTable extends ListTable {
 	}
 
 	/**
-	 * Get all statuses.
+	 * Get all affiliation statuses.
 	 *
 	 * @return array
 	 */
