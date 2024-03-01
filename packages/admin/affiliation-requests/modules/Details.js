@@ -6,21 +6,17 @@ import {
 	ScColumn,
 	ScColumns,
 	ScInput,
-	ScTag,
 	ScTextarea,
 } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
+import StatusBadge from '../../components/StatusBadge';
 
 export default ({ affiliationRequest, updateAffiliationRequest, loading }) => {
 	return (
 		<Box
 			title={__('Affiliate Request Details', 'surecart')}
 			loading={loading}
-			header_action={
-				<ScTag isPrimary isSmall>
-					{affiliationRequest.status}
-				</ScTag>
-			}
+			header_action={<StatusBadge status={affiliationRequest.status} />}
 		>
 			<div
 				css={css`
