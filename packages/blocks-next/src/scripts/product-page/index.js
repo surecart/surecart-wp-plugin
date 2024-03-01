@@ -91,7 +91,6 @@ const { state, callbacks } = store('surecart/product', {
 		},
 		get buttonText() {
 			const { text, outOfStockText } = getContext();
-			console.log({ text, outOfStockText });
 			if (state.isSoldOut) {
 				return outOfStockText;
 			}

@@ -13,7 +13,6 @@ import { getInlineStyles } from '../../utilities/style';
 import BorderInspectorControl from '../../components/BorderInspectorControl';
 import ColorInspectorControl from '../../components/ColorInspectorControl';
 import LabelInspectorControls from '../../components/LabelInspectorControls';
-import { RichText } from '@wordpress/block-editor';
 
 export default ({ attributes, setAttributes, clientId }) => {
 	const {
