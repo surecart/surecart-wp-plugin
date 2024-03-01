@@ -93,12 +93,16 @@ export default () => {
 		try {
 			setError(null);
 			await deleteAffiliationRequest({ throwOnError: true });
+			window.location.assign('admin.php?page=sc-affiliate-requests');
 		} catch (e) {
 			console.error(e);
 			setError(e);
 		}
 	};
 
+	/**
+	 * Approve the affiliation request.
+	 */
 	const onAffiliationRequestApprove = async () => {
 		try {
 			setLoading(true);
@@ -123,6 +127,43 @@ export default () => {
 				false,
 				{
 					status: 'approved',
+				}
+			);
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	/**
+	 * Deny the affiliation request.
+	 */
+	const onAffiliationRequestDeny = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+			await apiFetch({
+				path: `/surecart/v1/affiliation_requests/${id}/deny`,
+				method: 'PATCH',
+			});
+
+			createSuccessNotice(__('Affiliate request denied.', 'surecart'), {
+				type: 'snackbar',
+			});
+
+			receiveEntityRecords(
+				'surecart',
+				'affiliation-request',
+				{
+					...affiliationRequest,
+					status: 'denied',
+				},
+				undefined,
+				false,
+				{
+					status: 'denied',
 				}
 			);
 		} catch (e) {
@@ -172,6 +213,7 @@ export default () => {
 						affiliationRequest={affiliationRequest}
 						onDelete={onAffiliationRequestDelete}
 						onApprove={onAffiliationRequestApprove}
+						onDeny={onAffiliationRequestDeny}
 						loading={loading}
 					/>
 					<SaveButton

@@ -23,7 +23,7 @@ class AffiliationRequest extends Model {
 	/**
 	 * Approve the affiliate request.
 	 *
-	 * @param array $attributes The model attributes [ 'email' => email@email.com].
+	 * @param string $id Request ID.
 	 *
 	 * @return self|\WP_Error
 	 */
@@ -52,6 +52,42 @@ class AffiliationRequest extends Model {
 		$this->fill( $approved );
 
 		$this->fireModelEvent( 'approved' );
+
+		return $this;
+	}
+
+	/**
+	 * Deny the affiliate request.
+	 *
+	 * @param string $id The model id.
+	 *
+	 * @return self|\WP_Error
+	 */
+	protected function deny( $id ) {
+		if ( $this->fireModelEvent( 'denying' ) === false ) {
+			return false;
+		}
+
+		$denied = \SureCart::request(
+			$this->endpoint . '/' . $id . '/deny',
+			[
+				'method' => 'PATCH',
+				'query'  => $this->query,
+				'body'   => [
+					$this->object_name => $this->getAttributes(),
+				],
+			]
+		);
+
+		if ( is_wp_error( $denied ) ) {
+			return $denied;
+		}
+
+		$this->resetAttributes();
+
+		$this->fill( $denied );
+
+		$this->fireModelEvent( 'denied' );
 
 		return $this;
 	}

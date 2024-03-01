@@ -14,7 +14,7 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 
-export default ({ affiliationRequest, onDelete, onApprove }) => {
+export default ({ affiliationRequest, onDelete, onApprove, onDeny }) => {
 	if (!affiliationRequest?.id) {
 		return '';
 	}
@@ -25,8 +25,7 @@ export default ({ affiliationRequest, onDelete, onApprove }) => {
 				<ScIcon name="more-horizontal" />
 			</ScButton>
 			<ScMenu>
-				{(affiliationRequest.status === 'pending' ||
-					affiliationRequest.status === 'denied') && (
+				{['pending', 'denied'].includes(affiliationRequest?.status) && (
 					<ScMenuItem onClick={onApprove}>
 						<ScIcon
 							slot="prefix"
@@ -37,9 +36,10 @@ export default ({ affiliationRequest, onDelete, onApprove }) => {
 					</ScMenuItem>
 				)}
 
-				{(affiliationRequest.status === 'pending' ||
-					affiliationRequest.status === 'approved') && (
-					<ScMenuItem>
+				{['pending', 'approved'].includes(
+					affiliationRequest?.status
+				) && (
+					<ScMenuItem onClick={onDeny}>
 						<ScIcon
 							slot="prefix"
 							style={{ opacity: 0.5 }}
