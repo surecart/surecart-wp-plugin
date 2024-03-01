@@ -20,7 +20,7 @@ class AffiliationsScriptsController extends AdminModelEditController {
 	 *
 	 * @var string
 	 */
-	protected $handle = 'surecart/scripts/admin/affiliations';
+	protected $handle = 'surecart/scripts/admin/affiliation';
 
 	/**
 	 * Script path.
