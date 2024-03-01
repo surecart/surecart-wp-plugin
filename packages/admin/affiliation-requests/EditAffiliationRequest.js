@@ -28,6 +28,7 @@ import SaveButton from '../templates/SaveButton';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
 import ActionsDropdown from './components/ActionsDropdown';
+import User from './modules/User';
 
 export default () => {
 	const [error, setError] = useState(null);
@@ -43,8 +44,6 @@ export default () => {
 		deletingItem: deletingAffiliationRequest,
 		savingItem: savingAffiliationRequest,
 	} = useEntity('affiliation-request', id);
-
-	console.log('affiliationRequest', affiliationRequest);
 
 	/**
 	 * Handle the form submission
@@ -145,6 +144,13 @@ export default () => {
 						{__('Save Affiliatiate Request', 'surecart')}
 					</SaveButton>
 				</div>
+			}
+			sidebar={
+				<User
+					affiliationRequestId={id}
+					affiliationRequest={affiliationRequest}
+					loading={!hasLoadedAffiliationRequest}
+				/>
 			}
 		>
 			<Error error={error} setError={setError} margin="80px" />

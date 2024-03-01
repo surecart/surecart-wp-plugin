@@ -14,8 +14,8 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 
-export default ({ affiliateRequest, onDelete }) => {
-	if (!affiliateRequest?.id) {
+export default ({ affiliationRequest, onDelete }) => {
+	if (!affiliationRequest?.id) {
 		return '';
 	}
 
@@ -35,6 +35,7 @@ export default ({ affiliateRequest, onDelete }) => {
 						{__('Delete', 'surecart')}
 					</ScMenuItem>
 				)}
+
 			</ScMenu>
 		</ScDropdown>
 	);
