@@ -43,21 +43,23 @@ class Block extends BaseBlock {
 			]
 		);
 
-		sc_initial_state(
-			[
-				'checkout' => [
-					'initialLineItems' => sc_initial_line_items(
-						[
+		if ( $attributes['checked'] ) {
+			sc_initial_state(
+				[
+					'checkout' => [
+						'initialLineItems' => sc_initial_line_items(
 							[
-								'price_id' => $price->id,
-								'quantity' => $attributes['quantity'] ?? 1,
-								'variant' => $price->variant_id ?? null,
-							],
-						]
-					),
-				],
-			]
-		);
+								[
+									'price_id' => $price->id,
+									'quantity' => $attributes['quantity'] ?? 1,
+									'variant'  => $price->variant_id ?? null,
+								],
+							]
+						),
+					],
+				]
+			);
+		}
 
 		ob_start(); ?>
 		<sc-price-choice
