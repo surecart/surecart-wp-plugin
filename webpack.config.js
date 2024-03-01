@@ -41,6 +41,10 @@ module.exports = {
 			__dirname,
 			'packages/admin/customers/index.js'
 		),
+		['admin/affiliation-requests']: path.resolve(
+			__dirname,
+			'packages/admin/affiliation-requests/index.js'
+		),
 		['admin/checkouts']: path.resolve(
 			__dirname,
 			'packages/admin/checkouts/index.js'

@@ -287,6 +287,20 @@ dispatch(coreStore).addEntities([
 		baseURLParams: { context: 'edit' },
 	},
 	{
+		name: 'affiliation-request',
+		kind: 'surecart',
+		label: __('Affiliation Request', 'surecart'),
+		baseURL: '/surecart/v1/affiliation_requests',
+		baseURLParams: { context: 'edit' },
+	},
+	{
+		name: 'affiliation',
+		kind: 'surecart',
+		label: __('Affiliations', 'surecart'),
+		baseURL: '/surecart/v1/affiliations',
+		baseURLParams: { context: 'edit' },
+	},
+	{
 		name: 'shipping-profile',
 		kind: 'surecart',
 		label: __('Shipping Profile', 'surecart'),
