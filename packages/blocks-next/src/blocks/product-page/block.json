@@ -22,5 +22,6 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
-	"viewModule": ["@surecart/product-page"]
+	"viewScript": ["wp-url", "wp-api-fetch"],
+	"viewScriptModule": "file:./view.js"
 }
