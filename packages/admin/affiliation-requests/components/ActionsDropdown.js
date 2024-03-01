@@ -25,7 +25,8 @@ export default ({ affiliationRequest, onDelete, onApprove }) => {
 				<ScIcon name="more-horizontal" />
 			</ScButton>
 			<ScMenu>
-				{affiliationRequest.status === 'pending' && (
+				{(affiliationRequest.status === 'pending' ||
+					affiliationRequest.status === 'denied') && (
 					<ScMenuItem onClick={onApprove}>
 						<ScIcon
 							slot="prefix"
@@ -45,17 +46,6 @@ export default ({ affiliationRequest, onDelete, onApprove }) => {
 							name="x-circle"
 						/>
 						{__('Reject', 'surecart')}
-					</ScMenuItem>
-				)}
-
-				{affiliationRequest.status === 'rejected' && (
-					<ScMenuItem>
-						<ScIcon
-							slot="prefix"
-							style={{ opacity: 0.5 }}
-							name="check-circle"
-						/>
-						{__('Approve', 'surecart')}
 					</ScMenuItem>
 				)}
 

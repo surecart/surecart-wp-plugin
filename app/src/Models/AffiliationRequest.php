@@ -28,10 +28,14 @@ class AffiliationRequest extends Model {
 	 * @return self|\WP_Error
 	 */
 	protected function approve( $id ) {
+		if ( $this->fireModelEvent( 'approving' ) === false ) {
+			return false;
+		}
+
 		$approved = \SureCart::request(
 			$this->endpoint . '/' . $id . '/approve',
 			[
-				'method' => 'POST',
+				'method' => 'PATCH',
 				'query'  => $this->query,
 				'body'   => [
 					$this->object_name => $this->getAttributes(),

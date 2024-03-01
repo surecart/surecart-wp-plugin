@@ -52,7 +52,7 @@ class AffiliationRequestsListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliates' );
+		$link = admin_url( 'admin.php?page=sc-affiliate-requests' );
 
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$current_link_attributes = '';

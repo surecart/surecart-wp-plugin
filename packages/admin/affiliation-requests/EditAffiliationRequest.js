@@ -7,6 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
+import { store as coreStore } from '@wordpress/core-data';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
@@ -36,6 +37,7 @@ export default () => {
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
+	const { receiveEntityRecords } = useDispatch(coreStore);
 	const { saveDirtyRecords } = useDirty();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const {
@@ -97,19 +99,32 @@ export default () => {
 		}
 	};
 
-	// TODO: Not working from platform side.
 	const onAffiliationRequestApprove = async () => {
 		try {
 			setLoading(true);
 			setError(null);
 			await apiFetch({
 				path: `/surecart/v1/affiliation_requests/${id}/approve`,
-				method: 'POST',
+				method: 'PATCH',
 			});
 
 			createSuccessNotice(__('Affiliate request approved.', 'surecart'), {
 				type: 'snackbar',
 			});
+
+			receiveEntityRecords(
+				'surecart',
+				'affiliation-request',
+				{
+					...affiliationRequest,
+					status: 'approved',
+				},
+				undefined,
+				false,
+				{
+					status: 'approved',
+				}
+			);
 		} catch (e) {
 			console.error(e);
 			setError(e);
