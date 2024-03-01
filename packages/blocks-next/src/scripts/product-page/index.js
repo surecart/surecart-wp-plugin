@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { store, getContext } from '@wordpress/interactivity';
+const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
 const { state, callbacks } = store('surecart/product', {
@@ -81,13 +82,51 @@ const { state, callbacks } = store('surecart/product', {
 			const { optionNumber } = getContext();
 			return state.variantValues[`option_${optionNumber}`];
 		},
+		get checkoutUrl() {
+			const { checkoutUrl } = getContext();
+			return addQueryArgs(checkoutUrl, {
+				line_items: [state.lineItem],
+				no_cart: true,
+			});
+		},
+		get buttonText() {
+			const { text, outOfStockText } = getContext();
+			console.log({ text, outOfStockText });
+			if (state.isSoldOut) {
+				return outOfStockText;
+			}
+			return text;
+		},
+		get isUnavailable() {
+			return (
+				!state?.isSoldOut ||
+				(state?.variants?.length && !state?.selectedVariant?.id)
+			);
+		},
+		get isSoldOut() {
+			if (
+				!state?.product?.stock_enabled ||
+				state?.product?.allow_out_of_stock_purchases
+			) {
+				return false;
+			}
+			return state.selectedVariant?.id
+				? state.selectedVariant?.available_stock <= 0
+				: state.product?.available_stock <= 0;
+		},
 		/** Line item to add to cart. */
 		get lineItem() {
 			return {
-				price_id: state?.selectedPrice?.id,
-				quantity: state?.quantity || 1,
-				...(state?.selectedPrice?.ad_hoc
-					? { ad_hoc_amount: state?.selectedPrice?.amount }
+				price: state.selectedPrice?.id,
+				quantity: Math.max(
+					state.selectedPrice?.ad_hoc ? 1 : state.quantity,
+					1
+				),
+				...(state.selectedPrice?.ad_hoc
+					? { ad_hoc_amount: state.adHocAmount }
+					: {}),
+				...(state.selectedVariant?.id
+					? { variant: state.selectedVariant?.id }
 					: {}),
 			};
 		},

@@ -14,9 +14,12 @@
 			"type": "boolean",
 			"default": false
 		},
+		"text": {
+			"type": "string"
+		},
 		"out_of_stock_text": {
 			"type": "string",
-			"default": "Sold out"
+			"default": "Sold Out"
 		},
 		"unavailable_text": {
 			"type": "string",

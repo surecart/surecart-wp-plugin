@@ -42,7 +42,7 @@ export default ({ attributes: { level, textAlign }, setAttributes }) => {
 				/>
 			</BlockControls>
 
-			<TagName {...blockProps}>{__('Product Title', 'surecart')}</TagName>
+			<TagName {...blockProps}>{__('Buy', 'surecart')}</TagName>
 		</>
 	);
 };

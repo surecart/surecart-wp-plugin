@@ -109,13 +109,15 @@ add_action('init', function() {
 
 	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
+	wp_enqueue_script('wp-url');
 	wp_enqueue_script_module(
 		'@surecart/product-page',
 		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/product-page/index.js',
 		[
 			'@surecart/currency',
 			'@surecart/price',
-			'wp-i18n'
+			'wp-i18n',
+			'wp-url'
 		],
 		$static_assets['version']
 	);
