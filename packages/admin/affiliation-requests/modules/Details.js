@@ -10,8 +10,15 @@ import {
 } from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
 import StatusBadge from '../../components/StatusBadge';
+import SaveButton from '../../templates/SaveButton';
 
-export default ({ affiliationRequest, updateAffiliationRequest, loading }) => {
+export default ({
+	affiliationRequest,
+	updateAffiliationRequest,
+	loading,
+	saving,
+	deleting,
+}) => {
 	return (
 		<Box
 			title={__('Affiliate Request Details', 'surecart')}
@@ -116,6 +123,16 @@ export default ({ affiliationRequest, updateAffiliationRequest, loading }) => {
 						/>
 					</ScColumn>
 				</ScColumns>
+
+				<div
+					css={css`
+						margin-top: var(--sc-spacing-medium);
+					`}
+				>
+					<SaveButton loading={loading || saving || deleting}>
+						{__('Save', 'surecart')}
+					</SaveButton>
+				</div>
 			</div>
 		</Box>
 	);

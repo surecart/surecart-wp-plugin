@@ -26,11 +26,9 @@ import Error from '../components/Error';
 import useDirty from '../hooks/useDirty';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
-import SaveButton from '../templates/SaveButton';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
 import ActionsDropdown from './components/ActionsDropdown';
-import User from './modules/User';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -149,7 +147,7 @@ export default () => {
 				method: 'PATCH',
 			});
 
-			createSuccessNotice(__('Affiliate request denied.', 'surecart'), {
+			createSuccessNotice(__('Affiliate request rejected.', 'surecart'), {
 				type: 'snackbar',
 			});
 
@@ -209,31 +207,61 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
+					{['pending', 'denied'].includes(
+						affiliationRequest?.status
+					) && (
+						<ScButton
+							type="primary"
+							onClick={() =>
+								confirm(
+									__(
+										'Are you sure to approve affiliate request?',
+										'surecart'
+									)
+								) && onAffiliationRequestApprove()
+							}
+							loading={loading}
+						>
+							<ScIcon
+								slot="prefix"
+								style={{ opacity: 0.5 }}
+								name="check-circle"
+							/>
+							{__('Approve', 'surecart')}
+						</ScButton>
+					)}
+
+					{['pending', 'approved'].includes(
+						affiliationRequest?.status
+					) && (
+						<ScButton
+							type="danger"
+							onClick={() =>
+								confirm(
+									__(
+										'Are you sure to reject affiliate request?',
+										'surecart'
+									)
+								) && onAffiliationRequestDeny()
+							}
+							loading={loading}
+							outline={true}
+						>
+							<ScIcon
+								slot="prefix"
+								style={{ opacity: 0.5 }}
+								name="x-circle"
+							/>
+							{__('Reject', 'surecart')}
+						</ScButton>
+					)}
+
 					<ActionsDropdown
 						affiliationRequest={affiliationRequest}
 						onDelete={onAffiliationRequestDelete}
-						onApprove={onAffiliationRequestApprove}
-						onDeny={onAffiliationRequestDeny}
 						loading={loading}
 					/>
-					<SaveButton
-						loading={!hasLoadedAffiliationRequest}
-						busy={
-							deletingAffiliationRequest ||
-							savingAffiliationRequest ||
-							loading
-						}
-					>
-						{__('Save Affiliatiate Request', 'surecart')}
-					</SaveButton>
 				</div>
-			}
-			sidebar={
-				<User
-					affiliationRequestId={id}
-					affiliationRequest={affiliationRequest}
-					loading={!hasLoadedAffiliationRequest}
-				/>
 			}
 		>
 			<Error error={error} setError={setError} margin="80px" />
@@ -241,6 +269,8 @@ export default () => {
 				affiliationRequest={affiliationRequest}
 				updateAffiliationRequest={editAffiliationRequest}
 				loading={!hasLoadedAffiliationRequest}
+				saving={savingAffiliationRequest}
+				delete={deleteAffiliationRequest}
 			/>
 		</UpdateModel>
 	);
