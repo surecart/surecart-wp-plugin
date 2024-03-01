@@ -8,6 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies.
@@ -31,6 +32,7 @@ import ActionsDropdown from './components/ActionsDropdown';
 import User from './modules/User';
 
 export default () => {
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const { createSuccessNotice, createErrorNotice } =
 		useDispatch(noticesStore);
@@ -95,6 +97,27 @@ export default () => {
 		}
 	};
 
+	// TODO: Not working from platform side.
+	const onAffiliationRequestApprove = async () => {
+		try {
+			setLoading(true);
+			setError(null);
+			await apiFetch({
+				path: `/surecart/v1/affiliation_requests/${id}/approve`,
+				method: 'POST',
+			});
+
+			createSuccessNotice(__('Affiliate request approved.', 'surecart'), {
+				type: 'snackbar',
+			});
+		} catch (e) {
+			console.error(e);
+			setError(e);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
 		<UpdateModel
 			onSubmit={onSubmit}
@@ -133,12 +156,15 @@ export default () => {
 					<ActionsDropdown
 						affiliationRequest={affiliationRequest}
 						onDelete={onAffiliationRequestDelete}
+						onApprove={onAffiliationRequestApprove}
+						loading={loading}
 					/>
 					<SaveButton
 						loading={!hasLoadedAffiliationRequest}
 						busy={
 							deletingAffiliationRequest ||
-							savingAffiliationRequest
+							savingAffiliationRequest ||
+							loading
 						}
 					>
 						{__('Save Affiliatiate Request', 'surecart')}

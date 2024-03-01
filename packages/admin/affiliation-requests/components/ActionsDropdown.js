@@ -14,7 +14,7 @@ import {
 	ScMenuItem,
 } from '@surecart/components-react';
 
-export default ({ affiliationRequest, onDelete }) => {
+export default ({ affiliationRequest, onDelete, onApprove }) => {
 	if (!affiliationRequest?.id) {
 		return '';
 	}
@@ -25,6 +25,40 @@ export default ({ affiliationRequest, onDelete }) => {
 				<ScIcon name="more-horizontal" />
 			</ScButton>
 			<ScMenu>
+				{affiliationRequest.status === 'pending' && (
+					<ScMenuItem onClick={onApprove}>
+						<ScIcon
+							slot="prefix"
+							style={{ opacity: 0.5 }}
+							name="check-circle"
+						/>
+						{__('Approve', 'surecart')}
+					</ScMenuItem>
+				)}
+
+				{(affiliationRequest.status === 'pending' ||
+					affiliationRequest.status === 'approved') && (
+					<ScMenuItem>
+						<ScIcon
+							slot="prefix"
+							style={{ opacity: 0.5 }}
+							name="x-circle"
+						/>
+						{__('Reject', 'surecart')}
+					</ScMenuItem>
+				)}
+
+				{affiliationRequest.status === 'rejected' && (
+					<ScMenuItem>
+						<ScIcon
+							slot="prefix"
+							style={{ opacity: 0.5 }}
+							name="check-circle"
+						/>
+						{__('Approve', 'surecart')}
+					</ScMenuItem>
+				)}
+
 				{!!onDelete && (
 					<ScMenuItem onClick={onDelete}>
 						<ScIcon
@@ -35,7 +69,6 @@ export default ({ affiliationRequest, onDelete }) => {
 						{__('Delete', 'surecart')}
 					</ScMenuItem>
 				)}
-
 			</ScMenu>
 		</ScDropdown>
 	);
