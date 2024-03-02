@@ -107,14 +107,14 @@ add_action('init', function() {
 		$static_assets['version']
 	);
 
-		// instead, use a static loader that injects the script at runtime.
-		$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/services/fetch/index.asset.php';
-		wp_register_script_module(
-			'@surecart/fetch',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/services/fetch/index.js',
-			[],
-			$static_assets['version']
-		);
+	// instead, use a static loader that injects the script at runtime.
+	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/fetch/index.asset.php';
+	wp_register_script_module(
+		'@surecart/api-fetch',
+		trailingslashit( plugin_dir_url( __FILE__ ) ) . 'build/scripts/fetch/index.js',
+		[],
+		$static_assets['version']
+	);
 
 	// instead, use a static loader that injects the script at runtime.
 	$static_assets = include trailingslashit( plugin_dir_path( __FILE__ ) ) . 'build/scripts/product-page/index.asset.php';
@@ -124,7 +124,10 @@ add_action('init', function() {
 		[
 			'@surecart/currency',
 			'@surecart/price',
-			'@surecart/fetch'
+			[
+				'id' => '@surecart/api-fetch',
+				'import' => 'dynamic'
+			]
 		],
 		$static_assets['version']
 	);

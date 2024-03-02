@@ -23,5 +23,5 @@
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
 	"viewScript": ["wp-url", "wp-api-fetch"],
-	"viewScriptModule": "file:./view.js"
+	"viewScriptModule": ["@surecart/product-page"]
 }
