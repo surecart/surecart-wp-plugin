@@ -143,6 +143,19 @@ const { state, callbacks } = store('surecart/product', {
 		},
 	},
 
+	actions: {
+		*addToCart(e) {
+			e.preventDefault();
+			const { default: apiFetch } = yield import(
+				/*webpackIgnore: true*/ '@surecart/api-fetch'
+			);
+			const result = yield apiFetch({
+				path: 'surecart/v1/checkouts?per_page=1',
+			});
+			console.log(result);
+		},
+	},
+
 	callbacks: {
 		/** Get the contextual state. */
 		getState(prop) {
