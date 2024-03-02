@@ -91,8 +91,9 @@ class AffiliationsListTable extends ListTable {
 			// 'cb'          => '<input type="checkbox" />',
 			'name'         => __( 'Name', 'surecart' ),
 			'email'        => __( 'Email', 'surecart' ),
-			'payout_email' => __( 'Payout Email', 'surecart' ),
 			'status'       => __( 'Status', 'surecart' ),
+			'clicks'       => __( 'Clicks', 'surecart' ),
+			'referrals'    => __( 'Referrals', 'surecart' ),
 			'date'         => __( 'Date', 'surecart' ),
 		);
 	}
@@ -127,7 +128,11 @@ class AffiliationsListTable extends ListTable {
 		$affiates_query = Affiliation::where(
 			array(
 				'active' => $this->getFilteredStatus(),
-				'query'  => $this->get_search_query()
+				'query'  => $this->get_search_query(),
+				'expand' => [
+					'clicks',
+					'referrals',
+				]
 			)
 		);
 
@@ -178,11 +183,30 @@ class AffiliationsListTable extends ListTable {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Total clicks column.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return int
+	 */
+	public function column_clicks( $affiliation ) {
+		return esc_html( $affiliation->clicks->pagination->count ?? 0);
+	}
 
 	/**
-	 * Name column
+	 * Total referrals column.
 	 *
-	 * @param \SureCart\Models\Product $product Product model.
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
+	 * @return int
+	 */
+	public function column_referrals( $affiliation ) {
+		return esc_html( $affiliation->referrals->pagination->count ?? 0);
+	}
+
+	/**
+	 * Name column.
+	 *
+	 * @param \SureCart\Models\Affiliation $affiliation Affiliation model.
 	 *
 	 * @return string
 	 */
@@ -221,7 +245,6 @@ class AffiliationsListTable extends ListTable {
 		switch ( $column_name ) {
 			case 'description':
 			case 'email':
-			case 'payout_email':
 				return $affiliation->$column_name ?? '';
 		}
 	}
