@@ -8,7 +8,7 @@ import { useState } from '@wordpress/element';
 /**
  * Internal dependencies.
  */
-import EditAffiliation from './EditAffiliation';
+import ViewAffiliation from './ViewAffiliation';
 import { store } from '@surecart/data';
 
 /**
@@ -42,5 +42,5 @@ export default () => {
 	// get the id from the url.
 	const id = useSelect((select) => select(store).selectPageId());
 
-	return id ? <EditAffiliation id={id} /> : null;
+	return id ? <ViewAffiliation id={id} /> : null;
 };

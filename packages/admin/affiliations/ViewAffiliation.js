@@ -26,10 +26,10 @@ import Error from '../components/Error';
 import useDirty from '../hooks/useDirty';
 import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
-import SaveButton from '../templates/SaveButton';
 import UpdateModel from '../templates/UpdateModel';
+import Clicks from './modules/Clicks';
+import Actions from './components/Actions';
 import Details from './modules/Details';
-import ActionsDropdown from './components/ActionsDropdown';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -40,12 +40,12 @@ export default () => {
 	const { saveDirtyRecords } = useDirty();
 	const id = useSelect((select) => select(dataStore).selectPageId());
 	const {
-		item: affiliationRequest,
-		editItem: editAffiliationRequest,
-		deleteItem: deleteAffiliationRequest,
-		hasLoadedItem: hasLoadedAffiliationRequest,
-		deletingItem: deletingAffiliationRequest,
-		savingItem: savingAffiliationRequest,
+		item: affiliation,
+		editItem: editAffiliation,
+		deleteItem: deleteAffiliation,
+		hasLoadedItem: hasLoadedAffiliation,
+		deletingItem: deletingAffiliation,
+		savingItem: savingAffiliation,
 	} = useEntity('affiliation', id);
 
 	/**
@@ -75,15 +75,15 @@ export default () => {
 	/**
 	 * Delete the affiliation request.
 	 */
-	const onAffiliationRequestDelete = async () => {
+	const onAffiliationDelete = async () => {
 		const r = confirm(
 			sprintf(
 				__(
 					'Permanently delete %s? You cannot undo this action.',
 					'surecart'
 				),
-				affiliationRequest?.name ||
-					affiliationRequest?.email ||
+				affiliation?.name ||
+					affiliation?.email ||
 					__('this affiliate', 'surecart')
 			)
 		);
@@ -91,7 +91,7 @@ export default () => {
 
 		try {
 			setError(null);
-			await deleteAffiliationRequest({ throwOnError: true });
+			await deleteAffiliation({ throwOnError: true });
 			window.location.assign('admin.php?page=sc-affiliates');
 		} catch (e) {
 			console.error(e);
@@ -100,9 +100,9 @@ export default () => {
 	};
 
 	/**
-	 * Approve the affiliation request.
+	 * Activate the affiliation.
 	 */
-	const onAffiliationRequestApprove = async () => {
+	const onAffiliationActivate = async () => {
 		try {
 			setLoading(true);
 			setError(null);
@@ -111,21 +111,21 @@ export default () => {
 				method: 'PATCH',
 			});
 
-			createSuccessNotice(__('Affiliate request activated.', 'surecart'), {
+			createSuccessNotice(__('Affiliate user activated.', 'surecart'), {
 				type: 'snackbar',
 			});
 
 			receiveEntityRecords(
 				'surecart',
-				'affiliation-request',
+				'affiliation',
 				{
-					...affiliationRequest,
-					status: 'approved',
+					...affiliation,
+					active: true,
 				},
 				undefined,
 				false,
 				{
-					status: 'approved',
+					status: true,
 				}
 			);
 		} catch (e) {
@@ -137,32 +137,35 @@ export default () => {
 	};
 
 	/**
-	 * Deny the affiliation request.
+	 * Deactivate the affiliation.
 	 */
-	const onAffiliationRequestDeny = async () => {
+	const onAffiliationDeactivate = async () => {
 		try {
 			setLoading(true);
 			setError(null);
 			await apiFetch({
-				path: `/surecart/v1/affiliation_requests/${id}/deny`,
+				path: `/surecart/v1/affiliations/${id}/deactivate`,
 				method: 'PATCH',
 			});
 
-			createSuccessNotice(__('Affiliate request denied.', 'surecart'), {
-				type: 'snackbar',
-			});
+			createSuccessNotice(
+				__('Affiliate user de-activated.', 'surecart'),
+				{
+					type: 'snackbar',
+				}
+			);
 
 			receiveEntityRecords(
 				'surecart',
-				'affiliation-request',
+				'affiliation',
 				{
-					...affiliationRequest,
-					status: 'denied',
+					...affiliation,
+					active: false,
 				},
 				undefined,
 				false,
 				{
-					status: 'denied',
+					active: false,
 				}
 			);
 		} catch (e) {
@@ -181,7 +184,7 @@ export default () => {
 					<ScButton
 						circle
 						size="small"
-						href="admin.php?page=sc-affiliate-requests"
+						href="admin.php?page=sc-affiliates"
 					>
 						<ScIcon name="arrow-left"></ScIcon>
 					</ScButton>
@@ -189,12 +192,12 @@ export default () => {
 						<ScBreadcrumb>
 							<Logo display="block" />
 						</ScBreadcrumb>
-						<ScBreadcrumb href="admin.php?page=sc-affiliate-requests">
-							{__('Affiliate', 'surecart')}
+						<ScBreadcrumb href="admin.php?page=sc-affiliates">
+							{__('Affiliates', 'surecart')}
 						</ScBreadcrumb>
 						<ScBreadcrumb>
 							<ScFlex style={{ gap: '1em' }}>
-								{__('Edit Affiliate', 'surecart')}
+								{__('View Affiliate', 'surecart')}
 							</ScFlex>
 						</ScBreadcrumb>
 					</ScBreadcrumbs>
@@ -208,31 +211,26 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
-					<ActionsDropdown
-						affiliationRequest={affiliationRequest}
-						onDelete={onAffiliationRequestDelete}
-						onApprove={onAffiliationRequestApprove}
-						onDeny={onAffiliationRequestDeny}
+					<Actions
+						affiliation={affiliation}
+						onActivate={onAffiliationActivate}
+						onDeactivate={onAffiliationDeactivate}
 						loading={loading}
 					/>
-					<SaveButton
-						loading={!hasLoadedAffiliationRequest}
-						busy={
-							deletingAffiliationRequest ||
-							savingAffiliationRequest ||
-							loading
-						}
-					>
-						{__('Save Affiliatiate', 'surecart')}
-					</SaveButton>
 				</div>
+			}
+			sidebar={
+				<Details
+					affiliation={affiliation}
+					loading={!hasLoadedAffiliation}
+				/>
 			}
 		>
 			<Error error={error} setError={setError} margin="80px" />
-			<Details
-				affiliationRequest={affiliationRequest}
-				updateAffiliationRequest={editAffiliationRequest}
-				loading={!hasLoadedAffiliationRequest}
+			<Clicks
+				affiliation={affiliation}
+				updateAffiliation={editAffiliation}
+				loading={!hasLoadedAffiliation}
 			/>
 		</UpdateModel>
 	);

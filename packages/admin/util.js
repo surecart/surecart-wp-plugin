@@ -86,6 +86,7 @@ export const translate = (key) => {
 		archived: __('Archived', 'surecart'),
 		draft: __('Draft', 'surecart'),
 		active: __('Active', 'surecart'),
+		inactive: __('Inactive', 'surecart'),
 		pending: __('Pending', 'surecart'),
 		approved: __('Approved', 'surecart'),
 		denied: __('Denied', 'surecart'),

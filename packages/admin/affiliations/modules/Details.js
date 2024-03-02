@@ -1,119 +1,76 @@
 /** @jsx jsx */
-import { __ } from '@wordpress/i18n';
-
-import Box from '../../ui/Box';
-import {
-	ScColumn,
-	ScColumns,
-	ScInput,
-	ScTextarea,
-} from '@surecart/components-react';
 import { css, jsx } from '@emotion/core';
+
+/**
+ * External dependencies.
+ */
+import { __ } from '@wordpress/i18n';
+import { format } from '@wordpress/date';
+import { Fragment } from '@wordpress/element';
+
+/**
+ * Internal dependencies.
+ */
+import Box from '../../ui/Box';
+import Definition from '../../ui/Definition';
 import StatusBadge from '../../components/StatusBadge';
 
-export default ({ affiliationRequest, updateAffiliationRequest, loading }) => {
+export default ({ affiliation, loading }) => {
+	console.log('affiliation', affiliation);
 	return (
 		<Box
-			title={__('Affiliate Details', 'surecart')}
+			title={
+				<div
+					css={css`
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+					`}
+				>
+					{__('Affiliate Details', 'surecart')}
+				</div>
+			}
 			loading={loading}
-			header_action={<StatusBadge status={affiliationRequest.status} />}
 		>
-			<div
-				css={css`
-					display: grid;
-					gap: var(--sc-form-row-spacing);
-				`}
-			>
-				<ScColumns>
-					<ScColumn>
-						<ScInput
-							label={__('First Name', 'surecart')}
-							className="sc-affiliate-request-fname"
-							help={__(
-								"Your affiliate's first name.",
-								'surecart'
-							)}
-							attribute="first_name"
-							value={affiliationRequest?.first_name}
-							onScInput={(e) =>
-								updateAffiliationRequest({
-									first_name: e.target.value,
-								})
-							}
-						/>
-					</ScColumn>
-					<ScColumn>
-						<ScInput
-							label={__('Last Name', 'surecart')}
-							className="sc-affiliate-request-lname"
-							help={__("Your affiliate's last name.", 'surecart')}
-							attribute="last_name"
-							value={affiliationRequest?.last_name}
-							onScInput={(e) =>
-								updateAffiliationRequest({
-									last_name: e.target.value,
-								})
-							}
-						/>
-					</ScColumn>
-				</ScColumns>
-				<ScColumns>
-					<ScColumn>
-						<ScInput
-							label={__('Email', 'surecart')}
-							className="sc-affiliate-request-email"
-							help={__(
-								"Your affiliate's email address.",
-								'surecart'
-							)}
-							value={affiliationRequest?.email}
-							name="email"
-							required
-							onScInput={(e) =>
-								updateAffiliationRequest({
-									email: e.target.value,
-								})
-							}
-						/>
-					</ScColumn>
-					<ScColumn>
-						<ScInput
-							label={__('Payout Email', 'surecart')}
-							className="sc-affiliate-request-payout-email"
-							help={__(
-								"Your affiliate's payout email address.",
-								'surecart'
-							)}
-							value={affiliationRequest?.payout_email}
-							name="payout_email"
-							required
-							onScInput={(e) =>
-								updateAffiliationRequest({
-									payout_email: e.target.value,
-								})
-							}
-						/>
-					</ScColumn>
-				</ScColumns>
-				<ScColumns>
-					<ScColumn>
-						<ScTextarea
-							label={__('Bio', 'surecart')}
-							help={__(
-								'A short blurb from this affiliate describing how they will promote this store',
-								'surecart'
-							)}
-							onScChange={(e) =>
-								updateAffiliationRequest({
-									bio: e.target.value,
-								})
-							}
-							value={affiliationRequest?.bio}
-							name="bio-text"
-						/>
-					</ScColumn>
-				</ScColumns>
-			</div>
+			<Fragment>
+				<Definition title={__('Name', 'surecart')}>
+					{affiliation?.first_name + ' ' + affiliation?.last_name}
+				</Definition>
+
+				<Definition title={__('Email', 'surecart')}>
+					{affiliation?.email}
+				</Definition>
+
+				<Definition title={__('Payout Email', 'surecart')}>
+					{affiliation?.payout_email}
+				</Definition>
+
+				<Definition title={__('Status', 'surecart')}>
+					<StatusBadge
+						status={!!affiliation?.active ? 'active' : 'inactive'}
+					/>
+				</Definition>
+
+				<hr />
+
+				{!!affiliation?.updated_at && (
+					<Definition title={__('Last Updated', 'surecart')}>
+						{format(
+							'F j, Y',
+							new Date(affiliation.updated_at * 1000)
+						)}
+					</Definition>
+				)}
+
+				{!!affiliation?.created_at && (
+					<Definition title={__('Created', 'surecart')}>
+						{format(
+							'F j, Y',
+							new Date(affiliation.created_at * 1000)
+						)}
+					</Definition>
+				)}
+			</Fragment>
 		</Box>
 	);
 };

@@ -6,6 +6,7 @@ export default ({ status }) => {
 			return <sc-tag type="info">{translate(status)}</sc-tag>;
 		case 'archived':
 		case 'pending':
+		case 'inactive':
 			return <sc-tag type="warning">{translate(status)}</sc-tag>;
 		case 'denied':
 			return <sc-tag type="danger">{translate(status)}</sc-tag>;
