@@ -28,7 +28,8 @@ import useEntity from '../hooks/useEntity';
 import Logo from '../templates/Logo';
 import UpdateModel from '../templates/UpdateModel';
 import Details from './modules/Details';
-import ActionsDropdown from './components/ActionsDropdown';
+import Delete from './components/Delete';
+import Actions from './components/Actions';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -207,56 +208,16 @@ export default () => {
 						gap: 0.5em;
 					`}
 				>
-					{['pending', 'denied'].includes(
-						affiliationRequest?.status
-					) && (
-						<ScButton
-							type="primary"
-							onClick={() =>
-								confirm(
-									__(
-										'Are you sure to approve affiliate request?',
-										'surecart'
-									)
-								) && onAffiliationRequestApprove()
-							}
-							loading={loading}
-						>
-							<ScIcon
-								slot="prefix"
-								style={{ opacity: 0.5 }}
-								name="check-circle"
-							/>
-							{__('Approve', 'surecart')}
-						</ScButton>
-					)}
+					<Actions
+						affiliationRequest={affiliationRequest}
+						loading={loading}
+						onAffiliationRequestApprove={
+							onAffiliationRequestApprove
+						}
+						onAffiliationRequestDeny={onAffiliationRequestDeny}
+					/>
 
-					{['pending', 'approved'].includes(
-						affiliationRequest?.status
-					) && (
-						<ScButton
-							type="danger"
-							onClick={() =>
-								confirm(
-									__(
-										'Are you sure to reject affiliate request?',
-										'surecart'
-									)
-								) && onAffiliationRequestDeny()
-							}
-							loading={loading}
-							outline={true}
-						>
-							<ScIcon
-								slot="prefix"
-								style={{ opacity: 0.5 }}
-								name="x-circle"
-							/>
-							{__('Reject', 'surecart')}
-						</ScButton>
-					)}
-
-					<ActionsDropdown
+					<Delete
 						affiliationRequest={affiliationRequest}
 						onDelete={onAffiliationRequestDelete}
 						loading={loading}
