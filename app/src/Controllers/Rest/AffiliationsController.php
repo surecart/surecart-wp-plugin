@@ -14,4 +14,34 @@ class AffiliationsController extends RestController {
 	 * @var string
 	 */
 	protected $class = Affiliation::class;
+
+	/**
+	 * Activate the affiliate user.
+	 *
+	 * @param \WP_REST_Request $request
+	 * @return \SureCart\Models\Affiliation|\WP_Error
+	 */
+	public function activate( \WP_REST_Request $request ) {
+		$affiliation = Affiliation::find( $request['id'] );
+		if ( is_wp_error( $affiliation ) ) {
+			return $affiliation;
+		}
+
+		return $affiliation->activate( $request['id'] );
+	}
+
+	/**
+	 * Deactivate the affiliate user.
+	 *
+	 * @param \WP_REST_Request $request
+	 * @return \SureCart\Models\Affiliation|\WP_Error
+	 */
+	public function deactivate( \WP_REST_Request $request ) {
+		$affiliation = Affiliation::find( $request['id'] );
+		if ( is_wp_error( $affiliation ) ) {
+			return $affiliation;
+		}
+
+		return $affiliation->deactivate( $request['id'] );
+	}
 }
