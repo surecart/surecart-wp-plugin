@@ -73,33 +73,6 @@ export default () => {
 	};
 
 	/**
-	 * Delete the affiliation request.
-	 */
-	const onAffiliationDelete = async () => {
-		const r = confirm(
-			sprintf(
-				__(
-					'Permanently delete %s? You cannot undo this action.',
-					'surecart'
-				),
-				affiliation?.name ||
-					affiliation?.email ||
-					__('this affiliate', 'surecart')
-			)
-		);
-		if (!r) return;
-
-		try {
-			setError(null);
-			await deleteAffiliation({ throwOnError: true });
-			window.location.assign('admin.php?page=sc-affiliates');
-		} catch (e) {
-			console.error(e);
-			setError(e);
-		}
-	};
-
-	/**
 	 * Activate the affiliation.
 	 */
 	const onAffiliationActivate = async () => {
