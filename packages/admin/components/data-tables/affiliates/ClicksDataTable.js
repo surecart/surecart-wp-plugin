@@ -6,7 +6,7 @@ import { __, _n } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import DataTable from '../DataTable';
+import DataTable from '../../DataTable';
 import { ScFormatDate, ScText } from '@surecart/components-react';
 
 export default ({

@@ -6,9 +6,9 @@ import { __, _n } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import DataTable from '../DataTable';
+import DataTable from '../../DataTable';
 import { ScFormatDate, ScFormatNumber, ScText } from '@surecart/components-react';
-import StatusBadge from '../StatusBadge';
+import StatusBadge from '../../StatusBadge';
 
 export default ({
 	data,

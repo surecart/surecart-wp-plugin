@@ -3,6 +3,7 @@ import { translate } from '../util';
 export default ({ status }) => {
 	switch (status) {
 		case 'draft':
+		case 'processing':
 			return <sc-tag type="info">{translate(status)}</sc-tag>;
 		case 'archived':
 		case 'pending':

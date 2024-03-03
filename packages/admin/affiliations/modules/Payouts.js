@@ -11,36 +11,37 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies.
  */
 import PrevNextButtons from '../../ui/PrevNextButtons';
-import ReferralsDataTable from '../../components/data-tables/affiliates/ReferralsDataTable';
+import PayoutsDataTable from '../../components/data-tables/affiliates/PayoutsDataTable';
 
-export default ({ referrals, loading }) => {
+export default ({ payouts, loading }) => {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(20);
-	// TODO: After Handle the Referrals API
+	// TODO: After Handle the Payouts API
 	// Get the clicks data from the API by calling from here instead props.
 
 	return (
-		<ReferralsDataTable
-			title={__('Referrals', 'surecart')}
+		<PayoutsDataTable
+			title={__('Payouts', 'surecart')}
 			columns={{
 				status: {
 					label: __('Status', 'surecart'),
 				},
-				description: {
-					label: __('Description', 'surecart'),
+				payout_email: {
+					label: __('Payout Email', 'surecart'),
 				},
-				order: {
-					label: __('Order', 'surecart'),
-				},
-				commission_amount: {
+				total_commission_amount: {
 					label: __('Commission', 'surecart'),
+				},
+				end_date: {
+					label: __('Period End', 'surecart'),
+					width: '100px',
 				},
 				date: {
 					label: __('Date', 'surecart'),
 					width: '100px',
 				},
 			}}
-			data={referrals?.data || []}
+			data={payouts?.data || []}
 			isLoading={loading}
 			isFetching={loading}
 			perPage={perPage}
@@ -48,12 +49,12 @@ export default ({ referrals, loading }) => {
 			setPage={setPage}
 			empty={
 				page > 1
-					? __('No more referrals.', 'surecart')
+					? __('No more payouts.', 'surecart')
 					: __('None found.', 'surecart')
 			}
 			footer={
 				<PrevNextButtons
-					data={referrals?.data ?? []}
+					data={payouts?.data ?? []}
 					page={page}
 					setPage={setPage}
 					perPage={perPage}

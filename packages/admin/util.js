@@ -91,6 +91,7 @@ export const translate = (key) => {
 		approved: __('Approved', 'surecart'),
 		denied: __('Denied', 'surecart'),
 		reviewing: __('Reviewing', 'surecart'),
+		processing: __('Processing', 'surecart'),
 	};
 	return map?.[key] || key;
 };

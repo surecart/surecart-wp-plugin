@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import ClicksDataTable from '../../components/data-tables/ClicksDataTable';
+import ClicksDataTable from '../../components/data-tables/affiliates/ClicksDataTable';
 import PrevNextButtons from '../../ui/PrevNextButtons';
 
 export default ({ clicks, loading }) => {
