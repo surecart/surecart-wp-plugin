@@ -29,11 +29,7 @@ export default ({
 					}
 					loading={loading}
 				>
-					<ScIcon
-						slot="prefix"
-						style={{ opacity: 0.5 }}
-						name="check-circle"
-					/>
+					<ScIcon slot="prefix" name="check-circle" />
 					{__('Approve', 'surecart')}
 				</ScButton>
 			)}
@@ -52,11 +48,7 @@ export default ({
 					loading={loading}
 					outline={true}
 				>
-					<ScIcon
-						slot="prefix"
-						style={{ opacity: 0.5 }}
-						name="x-circle"
-					/>
+					<ScIcon slot="prefix" name="x-circle" />
 					{__('Reject', 'surecart')}
 				</ScButton>
 			)}

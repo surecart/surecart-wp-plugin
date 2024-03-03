@@ -29,11 +29,7 @@ export default ({ loading, affiliation, onActivate, onDeactivate }) => {
 						) && onActivate()
 					}
 				>
-					<ScIcon
-						slot="prefix"
-						style={{ opacity: 0.5 }}
-						name="check-circle"
-					/>
+					<ScIcon slot="prefix" name="check-circle" />
 					{__('Activate', 'surecart')}
 				</ScButton>
 			)}
@@ -52,11 +48,7 @@ export default ({ loading, affiliation, onActivate, onDeactivate }) => {
 						) && onDeactivate()
 					}
 				>
-					<ScIcon
-						slot="prefix"
-						style={{ opacity: 0.5 }}
-						name="x-circle"
-					/>
+					<ScIcon slot="prefix" name="x-circle" />
 					{__('Deactivate', 'surecart')}
 				</ScButton>
 			)}
