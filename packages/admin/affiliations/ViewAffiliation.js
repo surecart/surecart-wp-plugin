@@ -42,11 +42,10 @@ export default () => {
 	const {
 		item: affiliation,
 		editItem: editAffiliation,
-		deleteItem: deleteAffiliation,
 		hasLoadedItem: hasLoadedAffiliation,
-		deletingItem: deletingAffiliation,
-		savingItem: savingAffiliation,
-	} = useEntity('affiliation', id);
+	} = useEntity('affiliation', id, {
+		expand: ['clicks'],
+	});
 
 	/**
 	 * Handle the form submission
@@ -201,7 +200,7 @@ export default () => {
 		>
 			<Error error={error} setError={setError} margin="80px" />
 			<Clicks
-				affiliation={affiliation}
+				clicks={affiliation?.clicks || {}}
 				updateAffiliation={editAffiliation}
 				loading={!hasLoadedAffiliation}
 			/>
