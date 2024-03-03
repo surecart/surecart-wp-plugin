@@ -32,6 +32,11 @@ export default ({
 				.sort((a, b) => b.created_at - a.created_at)
 				.map(({ created_at, url, referrer }) => {
 					return {
+						url: <ScText truncate>{url}</ScText>,
+
+						// TODO: Add referrer while API is ready.
+						referrer: <ScText truncate>{referrer}</ScText>,
+
 						date: (
 							<ScFormatDate
 								type="timestamp"
@@ -41,10 +46,6 @@ export default ({
 								date={created_at}
 							></ScFormatDate>
 						),
-						url: <ScText truncate>{url}</ScText>,
-
-						// TODO: Add referrer while API is ready.
-						referrer: <ScText truncate>{referrer}</ScText>,
 					};
 				})}
 			loading={isLoading}

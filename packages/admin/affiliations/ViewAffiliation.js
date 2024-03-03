@@ -30,6 +30,7 @@ import UpdateModel from '../templates/UpdateModel';
 import Clicks from './modules/Clicks';
 import Actions from './components/Actions';
 import Details from './modules/Details';
+import Referrals from './modules/Referrals';
 
 export default () => {
 	const [loading, setLoading] = useState(false);
@@ -44,7 +45,7 @@ export default () => {
 		editItem: editAffiliation,
 		hasLoadedItem: hasLoadedAffiliation,
 	} = useEntity('affiliation', id, {
-		expand: ['clicks'],
+		expand: ['clicks', 'referrals'],
 	});
 
 	/**
@@ -201,6 +202,11 @@ export default () => {
 			<Error error={error} setError={setError} margin="80px" />
 			<Clicks
 				clicks={affiliation?.clicks || {}}
+				updateAffiliation={editAffiliation}
+				loading={!hasLoadedAffiliation}
+			/>
+			<Referrals
+				referrals={affiliation?.referrals || {}}
 				updateAffiliation={editAffiliation}
 				loading={!hasLoadedAffiliation}
 			/>

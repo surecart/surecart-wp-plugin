@@ -90,6 +90,7 @@ export const translate = (key) => {
 		pending: __('Pending', 'surecart'),
 		approved: __('Approved', 'surecart'),
 		denied: __('Denied', 'surecart'),
+		reviewing: __('Reviewing', 'surecart'),
 	};
 	return map?.[key] || key;
 };

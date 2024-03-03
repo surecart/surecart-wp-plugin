@@ -10,31 +10,37 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies.
  */
-import ClicksDataTable from '../../components/data-tables/ClicksDataTable';
 import PrevNextButtons from '../../ui/PrevNextButtons';
+import ReferralsDataTable from '../../components/data-tables/ReferralsDataTable';
 
-export default ({ clicks, loading }) => {
+export default ({ referrals, loading }) => {
 	const [page, setPage] = useState(1);
 	const [perPage, setPerPage] = useState(20);
 	// TODO: After Handle the Clicks API
 	// Get the clicks data from the API by calling from here instead props.
 
 	return (
-		<ClicksDataTable
-			title={__('Clicks', 'surecart')}
+		<ReferralsDataTable
+			title={__('Referrals', 'surecart')}
 			columns={{
-				url: {
-					label: __('Landing Url', 'surecart'),
+				status: {
+					label: __('Status', 'surecart'),
 				},
-				referrer: {
-					label: __('Referrer', 'surecart'),
+				description: {
+					label: __('Description', 'surecart'),
+				},
+				order: {
+					label: __('Order', 'surecart'),
+				},
+				commission_amount: {
+					label: __('Commission', 'surecart'),
 				},
 				date: {
 					label: __('Date', 'surecart'),
 					width: '100px',
 				},
 			}}
-			data={clicks?.data || []}
+			data={referrals?.data || []}
 			isLoading={loading}
 			isFetching={loading}
 			perPage={perPage}
@@ -42,12 +48,12 @@ export default ({ clicks, loading }) => {
 			setPage={setPage}
 			empty={
 				page > 1
-					? __('No more clicks.', 'surecart')
+					? __('No more referrals.', 'surecart')
 					: __('None found.', 'surecart')
 			}
 			footer={
 				<PrevNextButtons
-					data={clicks?.data ?? []}
+					data={referrals?.data ?? []}
 					page={page}
 					setPage={setPage}
 					perPage={perPage}
