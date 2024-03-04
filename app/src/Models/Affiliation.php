@@ -2,10 +2,15 @@
 
 namespace SureCart\Models;
 
+use SureCart\Models\Traits\HasPayouts;
+use SureCart\Models\Traits\HasReferrals;
+
 /**
- * Affiliation model
+ * Holds the data of the current Affiliation.
  */
 class Affiliation extends Model {
+	use HasReferrals, HasPayouts;
+
 	/**
 	 * Rest API endpoint
 	 *
@@ -21,25 +26,30 @@ class Affiliation extends Model {
 	protected $object_name = 'affiliation';
 
 	/**
-	 * Activate the affiliation.
+	 * Activate an affiliation
 	 *
 	 * @param string $id Affiliation ID.
 	 *
-	 * @return self|\WP_Error
+	 * @return $this|\WP_Error
 	 */
-	protected function activate( $id ) {
+	public function activate( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
 		if ( $this->fireModelEvent( 'activating' ) === false ) {
-			return false;
+			return $this;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the affiliation.' );
 		}
 
 		$activated = \SureCart::request(
-			$this->endpoint . '/' . $id . '/activate',
+			$this->endpoint . '/' . $this->attributes['id'] . '/activate',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-				'body'   => [
-					$this->object_name => $this->getAttributes(),
-				],
 			]
 		);
 
@@ -48,34 +58,37 @@ class Affiliation extends Model {
 		}
 
 		$this->resetAttributes();
-
 		$this->fill( $activated );
-
 		$this->fireModelEvent( 'activated' );
 
 		return $this;
 	}
 
 	/**
-	 * De-activate the affiliation.
+	 * Deactivate an affiliation
 	 *
 	 * @param string $id Affiliation ID.
 	 *
-	 * @return self|\WP_Error
+	 * @return $this|\WP_Error
 	 */
-	protected function deactivate( $id ) {
+	public function deactivate( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
 		if ( $this->fireModelEvent( 'deactivating' ) === false ) {
-			return false;
+			return $this;
+		}
+
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the affiliation.' );
 		}
 
 		$deactivated = \SureCart::request(
-			$this->endpoint . '/' . $id . '/deactivate',
+			$this->endpoint . '/' . $this->attributes['id'] . '/deactivate',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
-				'body'   => [
-					$this->object_name => $this->getAttributes(),
-				],
 			]
 		);
 
@@ -84,11 +97,20 @@ class Affiliation extends Model {
 		}
 
 		$this->resetAttributes();
-
 		$this->fill( $deactivated );
-
 		$this->fireModelEvent( 'deactivated' );
 
 		return $this;
+	}
+
+	/**
+	 * Set the clicks attribute
+	 *
+	 * @param object $value Array of click objects
+	 *
+	 * @return void
+	 */
+	public function setClicksAttribute( $value ) {
+		$this->setCollection( 'clicks', $value, Click::class );
 	}
 }

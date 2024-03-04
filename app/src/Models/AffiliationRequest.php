@@ -3,7 +3,7 @@
 namespace SureCart\Models;
 
 /**
- * Affiliation Request model
+ * Affiliation Request Model
  */
 class AffiliationRequest extends Model {
 	/**
@@ -23,17 +23,25 @@ class AffiliationRequest extends Model {
 	/**
 	 * Approve the affiliate request.
 	 *
-	 * @param string $id Request ID.
+	 * @param string|null $id Request ID.
 	 *
 	 * @return self|\WP_Error
 	 */
-	protected function approve( $id ) {
+	protected function approve( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
 		if ( $this->fireModelEvent( 'approving' ) === false ) {
 			return false;
 		}
 
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the affiliation request.' );
+		}
+
 		$approved = \SureCart::request(
-			$this->endpoint . '/' . $id . '/approve',
+			$this->endpoint . '/' . $this->attributes['id'] . '/approve',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
@@ -59,17 +67,25 @@ class AffiliationRequest extends Model {
 	/**
 	 * Deny the affiliate request.
 	 *
-	 * @param string $id The model id.
+	 * @param string|null $id The model id.
 	 *
 	 * @return self|\WP_Error
 	 */
-	protected function deny( $id ) {
+	protected function deny( $id = null ) {
+		if ( $id ) {
+			$this->setAttribute( 'id', $id );
+		}
+
 		if ( $this->fireModelEvent( 'denying' ) === false ) {
 			return false;
 		}
 
+		if ( empty( $this->attributes['id'] ) ) {
+			return new \WP_Error( 'not_saved', 'Please create the affiliation request.' );
+		}
+
 		$denied = \SureCart::request(
-			$this->endpoint . '/' . $id . '/deny',
+			$this->endpoint . '/' . $this->attributes['id'] . '/deny',
 			[
 				'method' => 'PATCH',
 				'query'  => $this->query,
