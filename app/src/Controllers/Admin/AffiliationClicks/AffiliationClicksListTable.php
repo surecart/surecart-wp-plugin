@@ -105,7 +105,22 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string
 	 */
 	public function column_date( $click ) {
-		return date_i18n( get_option( 'date_format' ), $click->created_at );
+		ob_start();
+		echo date_i18n( get_option( 'date_format' ), $click->created_at );
+		?>
+		<div class="row-actions">
+			<?php
+			echo $this->row_actions(
+				array_filter(
+					array(
+						'view_click' => '<a href="' . esc_url( \SureCart::getUrl()->edit( 'affiliate-clicks', $click->id ) ) . '" aria-label="' . esc_attr( 'View', 'surecart' ) . '">' . esc_html__( 'View', 'surecart' ) . '</a>',
+					)
+				),
+			);
+			?>
+		</div>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**
@@ -245,11 +260,11 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( empty( $_GET['status'] ) || $_GET['status'] === 'all' ) {
+		if ( empty( $_GET['status'] ) || 'all' === $_GET['status'] ) {
 			return null;
 		}
 
-		if ( $_GET['status'] === 'converted' ) {
+		if ( 'converted' === $_GET['status'] ) {
 			return true;
 		}
 

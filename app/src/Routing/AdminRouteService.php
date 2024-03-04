@@ -47,6 +47,8 @@ class AdminRouteService {
 		'affiliate'           => 'sc-affiliate',
 		'affiliate_requests'  => 'sc-affiliate-requests',
 		'affiliate_request'   => 'sc-affiliate-requests',
+		'affiliate-click'     => 'sc-affiliate-clicks',
+		'affiliate-clicks'    => 'sc-affiliate-clicks',
 	];
 
 	/**
