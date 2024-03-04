@@ -147,10 +147,17 @@ const { state, callbacks } = store('surecart/product', {
 	actions: {
 		*addToCart(e) {
 			e.preventDefault();
-			const result = yield apiFetch({
-				path: 'surecart/v1/checkouts?per_page=1',
-			});
-			console.log(result);
+			try {
+				update({ busy: true });
+				const result = yield apiFetch({
+					path: 'surecart/v1/checkouts?per_page=1',
+				});
+				// open cart.
+			} catch (error) {
+				update({ error });
+			} finally {
+				update({ busy: false });
+			}
 		},
 	},
 

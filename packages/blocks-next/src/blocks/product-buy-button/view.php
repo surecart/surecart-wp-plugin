@@ -13,5 +13,6 @@
 		data-wp-on--click="actions.addToCart"
 	>
 		<?php echo wp_kses_post( $attributes['text'] ?? __('Add To Cart', 'surecart') ); ?>
+		<span data-wp-bind--hidden="!state.busy">Busy</span>
 	</a>
 </div>
