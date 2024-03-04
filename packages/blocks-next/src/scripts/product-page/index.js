@@ -99,8 +99,8 @@ const { state, callbacks } = store('surecart/product', {
 		},
 		get isUnavailable() {
 			return (
-				!state?.isSoldOut ||
-				(state?.variants?.length && !state?.selectedVariant?.id)
+				state?.isSoldOut || // sold out.
+				(state?.variants?.length && !state?.selectedVariant?.id) // no selected variant.
 			);
 		},
 		get isSoldOut() {
