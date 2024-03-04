@@ -40,6 +40,7 @@ module.exports = [
 			'@surecart/currency': '@surecart/currency',
 			'@surecart/price': '@surecart/price',
 			'@surecart/api-fetch': '@surecart/api-fetch',
+			'@surecart/checkout-api': '@surecart/checkout-api',
 		},
 	},
 ];
