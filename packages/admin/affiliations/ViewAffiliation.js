@@ -45,9 +45,7 @@ export default () => {
 		item: affiliation,
 		editItem: editAffiliation,
 		hasLoadedItem: hasLoadedAffiliation,
-	} = useEntity('affiliation', id, {
-		expand: ['clicks', 'referrals', 'payouts'],
-	});
+	} = useEntity('affiliation', id);
 
 	/**
 	 * Handle the form submission
@@ -202,8 +200,7 @@ export default () => {
 		>
 			<Error error={error} setError={setError} margin="80px" />
 			<Clicks
-				clicks={affiliation?.clicks || {}}
-				updateAffiliation={editAffiliation}
+				affiliationId={affiliation?.id}
 				loading={!hasLoadedAffiliation}
 			/>
 			<Referrals
