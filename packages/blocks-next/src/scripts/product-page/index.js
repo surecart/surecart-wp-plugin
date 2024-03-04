@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { store, getContext } from '@wordpress/interactivity';
-import apiFetch from '@surecart/api-fetch';
 const { addQueryArgs } = wp.url; // TODO: replace with `@wordpress/url` when available.
 
 // controls the product page.
@@ -149,9 +148,9 @@ const { state, callbacks } = store('surecart/product', {
 			e.preventDefault();
 			try {
 				update({ busy: true });
-				const result = yield apiFetch({
-					path: 'surecart/v1/checkouts?per_page=1',
-				});
+				// TODO: replace with interactivity when available.
+				yield window.sc.checkout.addLineItem(state.lineItem);
+				window.sc.cart.toggle(true);
 				// open cart.
 			} catch (error) {
 				update({ error });
