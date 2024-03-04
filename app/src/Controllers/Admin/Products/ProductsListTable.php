@@ -6,6 +6,7 @@ use SureCart\Models\Product;
 use SureCart\Support\TimeDate;
 use SureCart\Controllers\Admin\Tables\ListTable;
 use SureCart\Models\ProductCollection;
+use SureCart\Models\BulkAction;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -16,6 +17,34 @@ class ProductsListTable extends ListTable {
 	public $error    = '';
 	public $pages    = array();
 
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+		$this->process_bulk_action();
+	}
+
+	/**
+	 * Process the bulk action.
+	 */
+	public function process_bulk_action() {
+		$action = $this->current_action();
+
+		if ( ! $action ) {
+			return;
+		}
+		
+		if ( 'delete' === $action ) {
+			$product_ids = array_map( 'sanitize_text_field', $_REQUEST['bulk_action_product_ids']); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$bulk_action = BulkAction::create([
+				'action_type' => 'delete_products',
+				'record_ids' => $product_ids
+			]);
+			var_dump($bulk_action);
+			die();
+		}
+	}
 	/**
 	 * Prepare the items for the table to process
 	 *
@@ -507,6 +536,19 @@ class ProductsListTable extends ListTable {
 		return $actions;
 	}
 	
+	/**
+	 * Gets the current action selected from the bulk actions dropdown.
+	 *
+	 * @return string|false The action name. False if no action was selected.
+	 */
+	public function current_action() {
+		if ( ! empty( $_REQUEST['delete_all'] ) ) {
+			return 'delete_all';
+		}
+
+		return parent::current_action();
+	}
+
 	/**
 	 * Displays a a dropdown to filter by product collection.
 	 *
