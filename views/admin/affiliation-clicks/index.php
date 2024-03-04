@@ -10,8 +10,6 @@
 
 	<?php $table->search_form( __( 'Search Affiliate Clicks', 'surecart' ), 'sc-search-affiliate-requests' ); ?>
 
-	<form id="affiliate-requests-filter" method="get">
-		<?php $table->views(); ?>
-		<?php $table->display(); ?>
-	</form>
+	<?php $table->views(); ?>
+	<?php $table->display(); ?>
 </div>
