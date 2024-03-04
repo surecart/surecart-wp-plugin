@@ -2,50 +2,54 @@
 
 namespace SureCart\Controllers\Rest;
 
-use SureCart\Models\Affiliation;
+use SureCart\Models\Payout;
 
 /**
- * Handle Affiliations requests through the REST API
+ * Handle payouts requests through the REST API
  */
-class AffiliationsController extends RestController {
+class PayoutsController extends RestController {
 	/**
 	 * Class to make the requests.
 	 *
 	 * @var string
 	 */
-	protected $class = Affiliation::class;
+	protected $class = Payout::class;
 
 	/**
-	 * Activate an affiliation.
+	 * Complete a payout.
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function activate( \WP_REST_Request $request ) {
+	public function complete( \WP_REST_Request $request ) {
 		$class     = new $this->class( $request->get_json_params() );
 		$class->id = $request['id'];
 		$model     = $this->middleware( $class, $request );
+
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->activate( $request['id'] );
+
+		return $model->where( $request->get_query_params() )->complete( $request['id'] );
 	}
 
 	/**
-	 * Deactivate an affiliation.
+	 * Make a payout as processing
 	 *
 	 * @param \WP_REST_Request $request Rest Request.
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function deactivate( \WP_REST_Request $request ) {
+	public function make_processing( \WP_REST_Request $request ) {
 		$class     = new $this->class( $request->get_json_params() );
 		$class->id = $request['id'];
 		$model     = $this->middleware( $class, $request );
+
 		if ( is_wp_error( $model ) ) {
 			return $model;
 		}
-		return $model->where( $request->get_query_params() )->deactivate( $request['id'] );
+
+		return $model->where( $request->get_query_params() )->make_processing( $request['id'] );
 	}
 }

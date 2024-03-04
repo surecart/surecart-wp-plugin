@@ -118,6 +118,13 @@ return [
 		\SureCart\Rest\VariantsRestServiceProvider::class,
 		\SureCart\Rest\VariantOptionsRestServiceProvider::class,
 		\SureCart\Rest\VariantValuesRestServiceProvider::class,
+		\SureCart\Rest\ClicksRestServiceProvider::class,
+		\SureCart\Rest\ReferralItemsRestServiceProvider::class,
+		\SureCart\Rest\PayoutsRestServiceProvider::class,
+		\SureCart\Rest\PayoutGroupsRestServiceProvider::class,
+		\SureCart\Rest\ReferralsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationRequestsRestServiceProvider::class,
+		\SureCart\Rest\AffiliationsRestServiceProvider::class,
 
 		// integrations.
 		\SureCart\Integrations\DiviServiceProvider::class,
