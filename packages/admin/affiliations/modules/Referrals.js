@@ -15,7 +15,7 @@ import usePagination from '../../hooks/usePagination';
 
 export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(20);
+	const [perPage, setPerPage] = useState(5);
 
 	const { referrals, loading, updating } = useSelect(
 		(select) => {

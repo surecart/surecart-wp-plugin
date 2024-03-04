@@ -201,11 +201,7 @@ export default () => {
 			<Error error={error} setError={setError} margin="80px" />
 			<Clicks affiliationId={affiliation?.id} />
 			<Referrals affiliationId={affiliation?.id} />
-			<Payouts
-				payouts={affiliation?.payouts || {}}
-				updateAffiliation={editAffiliation}
-				loading={!hasLoadedAffiliation}
-			/>
+			<Payouts affiliationId={affiliation?.id} />
 		</UpdateModel>
 	);
 };
