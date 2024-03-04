@@ -199,15 +199,8 @@ export default () => {
 			}
 		>
 			<Error error={error} setError={setError} margin="80px" />
-			<Clicks
-				affiliationId={affiliation?.id}
-				loading={!hasLoadedAffiliation}
-			/>
-			<Referrals
-				referrals={affiliation?.referrals || {}}
-				updateAffiliation={editAffiliation}
-				loading={!hasLoadedAffiliation}
-			/>
+			<Clicks affiliationId={affiliation?.id} />
+			<Referrals affiliationId={affiliation?.id} />
 			<Payouts
 				payouts={affiliation?.payouts || {}}
 				updateAffiliation={editAffiliation}

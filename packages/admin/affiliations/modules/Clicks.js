@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
@@ -28,7 +25,6 @@ export default ({ affiliationId }) => {
 				{
 					context: 'edit',
 					affiliation_ids: [affiliationId],
-					expand: ['checkout', 'checkout.line_items'],
 					page,
 					per_page: perPage,
 				},
