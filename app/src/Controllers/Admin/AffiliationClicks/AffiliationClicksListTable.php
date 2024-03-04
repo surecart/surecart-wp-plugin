@@ -198,7 +198,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return array
 	 */
 	private function table_data() {
-		$affiate_request_query = Click::where(
+		$affiliate_clicks_query = Click::where(
 			array(
 				'converted' => $this->getFilteredStatus(),
 				'query'     => $this->get_search_query(),
@@ -208,9 +208,9 @@ class AffiliationClicksListTable extends ListTable {
 			)
 		);
 
-		return $affiate_request_query->paginate(
+		return $affiliate_clicks_query->paginate(
 			array(
-				'per_page' => $this->get_items_per_page( 'affiate_requests' ),
+				'per_page' => $this->get_items_per_page( 'affiliate_clicks' ),
 				'page'     => $this->get_pagenum(),
 			)
 		);
