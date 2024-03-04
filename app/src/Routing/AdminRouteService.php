@@ -45,8 +45,8 @@ class AdminRouteService {
 		'restore'             => 'sc-restore',
 		'affiliates'          => 'sc-affiliates',
 		'affiliate'           => 'sc-affiliate',
-		'affiliate_requests'  => 'sc-affiliate-requests',
-		'affiliate_request'   => 'sc-affiliate-requests',
+		'affiliate-requests'  => 'sc-affiliate-requests',
+		'affiliate-request'   => 'sc-affiliate-requests',
 	];
 
 	/**

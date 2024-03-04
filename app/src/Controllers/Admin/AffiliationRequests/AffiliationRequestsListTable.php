@@ -37,7 +37,7 @@ class AffiliationRequestsListTable extends ListTable {
 		$this->set_pagination_args(
 			array(
 				'total_items' => $query->pagination->count,
-				'per_page'    => $this->get_items_per_page( 'affiliate_requests' ),
+				'per_page'    => $this->get_items_per_page( 'affiliate-requests' ),
 			)
 		);
 
@@ -192,7 +192,7 @@ class AffiliationRequestsListTable extends ListTable {
 	public function column_default( $affiliate_request, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'affiliate_request', $affiliate_request->id ) . '">'
+				return '<a href="' . \SureCart::getUrl()->edit( 'affiliate-request', $affiliate_request->id ) . '">'
 					. $affiliate_request->first_name . ' ' . $affiliate_request->last_name
 					. '</a>';
 
