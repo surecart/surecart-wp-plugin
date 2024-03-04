@@ -24,6 +24,12 @@ declare global {
         product?: any;
         products?: any;
       };
+      checkout?: {
+        addLineItem: (data: any) => void;
+      };
+      cart?: {
+        toggle: (open: boolean) => void;
+      };
     };
     scStore: any;
     registerSureCartIconPath: (path: string) => void;

@@ -75,3 +75,11 @@ export const addCheckoutLineItem = async data => {
     updateFormState('REJECT');
   }
 };
+
+window.sc = {
+  ...(window?.sc || {}),
+  checkout: {
+    ...(window?.sc?.checkout || {}),
+    addLineItem: addCheckoutLineItem,
+  },
+};

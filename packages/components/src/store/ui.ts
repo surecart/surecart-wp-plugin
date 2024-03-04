@@ -27,4 +27,13 @@ on('set', (key, newState) => {
     speak(__('Cart Closed', 'surecart'), 'assertive');
   }
 });
+
+window.sc = {
+  ...(window?.sc || {}),
+  cart: {
+    ...(window?.sc?.cart || {}),
+    toggle: toggleCart,
+  },
+};
+
 export default store;
