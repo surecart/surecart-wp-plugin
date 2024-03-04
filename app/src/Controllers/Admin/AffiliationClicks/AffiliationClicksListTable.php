@@ -3,6 +3,7 @@
 namespace SureCart\Controllers\Admin\AffiliationClicks;
 
 use SureCart\Controllers\Admin\Tables\ListTable;
+use SureCart\Models\Click;
 
 /**
  * Create a new table class that will extend the WP_List_Table
@@ -51,7 +52,7 @@ class AffiliationClicksListTable extends ListTable {
 	 * @global string $comment_type
 	 */
 	protected function get_views() {
-		$link = admin_url( 'admin.php?page=sc-affiliate-requests' );
+		$link = admin_url( 'admin.php?page=sc-affiliate-clicks' );
 
 		foreach ( $this->getStatuses() as $status => $label ) {
 			$current_link_attributes = '';
@@ -60,7 +61,7 @@ class AffiliationClicksListTable extends ListTable {
 				if ( $status === $_GET['status'] ) {
 					$current_link_attributes = ' class="current" aria-current="page"';
 				}
-			} elseif ( 'pending' === $status ) {
+			} elseif ( 'all' === $status ) {
 				$current_link_attributes = ' class="current" aria-current="page"';
 			}
 
@@ -88,25 +89,84 @@ class AffiliationClicksListTable extends ListTable {
 	 */
 	public function get_columns() {
 		return array(
-			// 'cb'          => '<input type="checkbox" />',
-			'name'   => __( 'Name', 'surecart' ),
-			'email'  => __( 'Email', 'surecart' ),
-			'status' => __( 'Status', 'surecart' ),
-			'date'   => __( 'Date', 'surecart' ),
+			'date'          => __( 'Date', 'surecart' ),
+			'landing_url'   => __( 'Landing URL', 'surecart' ),
+			'referring_url' => __( 'Referring URL', 'surecart' ),
+			'affiliate'     => __( 'Affiliate', 'surecart' ),
+			'converted'     => __( 'Converted', 'surecart' ),
 		);
 	}
 
 	/**
-	 * Displays the checkbox column.
+	 * Handle the date column.
 	 *
-	 * @param AffiliationRequest $affiliate_request The current affiliate request.
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
 	 */
-	public function column_cb( $affiliate_request ) {
-		?>
-		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $affiliate_request['id'] ); ?>"><?php _e( 'Select comment', 'surecart' ); ?></label>
-		<input id="cb-select-<?php echo esc_attr( $affiliate_request['id'] ); ?>" type="checkbox" name="delete_comments[]" value="<?php echo esc_attr( $affiliate_request['id'] ); ?>" />
-		<?php
+	public function column_date( $click ) {
+		return date_i18n( get_option( 'date_format' ), $click->created_at );
 	}
+
+	/**
+	 * Handle the landing_url column.
+	 *
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
+	 */
+	public function column_landing_url( $click ) {
+		return esc_html( $click->url );
+	}
+
+	/**
+	 * Handle the referring_url column.
+	 *
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
+	 */
+	public function column_referring_url( $click ) {
+		return esc_html( $click->referrer );
+	}
+
+	/**
+	 * Handle the affiliate column.
+	 *
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
+	 */
+	public function column_affiliate( $click ) {
+		$affiliation = $click->affiliation ?? null;
+		if ( empty( $affiliation->id ) ) {
+			return '';
+		}
+
+		ob_start();
+		?>
+
+		<div class="sc-affiliate-name">
+			<a href="<?php echo esc_url( \SureCart::getUrl()->edit( 'affiliates', $affiliation->id ) ); ?>">
+				<?php echo esc_html( $affiliation->first_name . ' ' . $affiliation->last_name ); ?>
+			</a>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	/**
+	 * Handle the converted column.
+	 *
+	 * @param \SureCart\Models\Click $click The Click model.
+	 *
+	 * @return string
+	 */
+	public function column_converted( $click ) {
+		// TODO: How to now if it is converted?
+		return __( 'No', 'surecart' );
+	}
+
 
 	/**
 	 * Define which columns are hidden
@@ -123,10 +183,13 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return array
 	 */
 	private function table_data() {
-		$affiate_request_query = AffiliationRequest::where(
+		$affiate_request_query = Click::where(
 			array(
-				'status[]' => $this->getFilteredStatus(),
-				'query'    => $this->get_search_query(),
+				'converted' => $this->getFilteredStatus(),
+				'query'     => $this->get_search_query(),
+				'expand'    => [
+					'affiliation',
+				],
 			)
 		);
 
@@ -148,58 +211,9 @@ class AffiliationClicksListTable extends ListTable {
 			echo esc_html( $this->error );
 			return;
 		}
-		echo esc_html_e( 'No affiliate requests found.', 'surecart' );
+		echo esc_html_e( 'No affiliate clicks found.', 'surecart' );
 	}
 
-	/**
-	 * Published column
-	 *
-	 * @param \SureCart\Models\AffiliationRequest $affiliate_request AffiliationRequest model.
-	 *
-	 * @return string
-	 */
-	public function column_status( $affiliate_request ) {
-		ob_start();
-		$status_type = '';
-		switch ( $affiliate_request->status ) {
-			case 'approved':
-				$status_type = 'success';
-				break;
-			case 'pending':
-				$status_type = 'warning';
-				break;
-			case 'denied':
-				$status_type = 'danger';
-				break;
-		}
-		?>
-		<sc-tag type="<?php echo esc_attr( $status_type ); ?>">
-			<?php echo esc_html( $this->getStatuses()[ $affiliate_request->status ] ); ?>
-		</sc-tag>
-		<?php
-		return ob_get_clean();
-	}
-
-	/**
-	 * Define what data to show on each column of the table
-	 *
-	 * @param \SureCart\Models\AffiliationRequest $affiliate_request AffiliationRequest model.
-	 * @param string                              $column_name - Current column name.
-	 *
-	 * @return mixed
-	 */
-	public function column_default( $affiliate_request, $column_name ) {
-		switch ( $column_name ) {
-			case 'name':
-				return '<a href="' . \SureCart::getUrl()->edit( 'affiliate_request', $affiliate_request->id ) . '">'
-					. $affiliate_request->first_name . ' ' . $affiliate_request->last_name
-					. '</a>';
-
-			case 'description':
-			case 'email':
-				return $affiliate_request->$column_name ?? '';
-		}
-	}
 
 	/**
 	 * Displays extra table navigation.
@@ -231,15 +245,15 @@ class AffiliationClicksListTable extends ListTable {
 	 * @return string|null
 	 */
 	private function getFilteredStatus() {
-		if ( ! empty( $_GET['status'] ) ) {
-			if ( 'all' === $_GET['status'] ) {
-				return null;
-			}
-
-			return sanitize_text_field( wp_unslash( $_GET['status'] ) );
+		if ( empty( $_GET['status'] ) || $_GET['status'] === 'all' ) {
+			return null;
 		}
 
-		return 'pending';
+		if ( $_GET['status'] === 'converted' ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -249,10 +263,9 @@ class AffiliationClicksListTable extends ListTable {
 	 */
 	private function getStatuses(): array {
 		return array(
-			'pending'  => __( 'Pending', 'surecart' ),
-			'approved' => __( 'Approved', 'surecart' ),
-			'denied'   => __( 'Denied', 'surecart' ),
-			'all'      => __( 'All', 'surecart' ),
+			'all'           => __( 'All', 'surecart' ),
+			'converted'     => __( 'Converted', 'surecart' ),
+			'not_converted' => __( 'Not Converted', 'surecart' ),
 		);
 	}
 }
