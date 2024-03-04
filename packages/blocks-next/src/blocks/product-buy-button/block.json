@@ -90,5 +90,9 @@
 	"textdomain": "surecart",
 	"render": "file:./view.php",
 	"editorScript": "file:./index.js",
+	"style": [
+		"file:../../styles/wp-button.css",
+		"file:../../styles/spinner.css"
+	],
 	"viewModule": ["@surecart/product-page"]
 }

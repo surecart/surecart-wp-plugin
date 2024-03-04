@@ -6,13 +6,15 @@
 	], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP ); ?>'
 	>
 	<a
-		class="wp-block-button__link wp-element-button"
+		class="wp-block-button__link wp-element-button sc-button__link"
 		data-wp-bind--href="state.checkoutUrl"
 		data-wp-bind--disabled="state.isUnavailable"
-		data-wp-bind--text="state.buttonText"
 		data-wp-on--click="actions.addToCart"
+		data-wp-class--sc-button__link--busy="state.busy"
 	>
-		<?php echo wp_kses_post( $attributes['text'] ?? __('Add To Cart', 'surecart') ); ?>
-		<span data-wp-bind--hidden="!state.busy">Busy</span>
+		<span class="sc-spinner" aria-hidden="true"></span>
+		<span class="sc-button__link-text" data-wp-bind--text="state.buttonText">
+			<?php echo wp_kses_post( $attributes['text'] ?? __('Add To Cart', 'surecart') ); ?>
+		</span>
 	</a>
 </div>
