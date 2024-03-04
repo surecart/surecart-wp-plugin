@@ -359,7 +359,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 |--------------------------------------------------------------------------
-| Affiliate Requests
+| Affiliates
 |--------------------------------------------------------------------------
 */
 \SureCart::route()
@@ -373,6 +373,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationRequestsController@edit' );
 	}
 );
+
+\SureCart::route()
+->where('admin','sc-affiliate-clicks')
+->middleware('user.can:edit_sc_affiliates')
+->middleware('assets.components')
+->setNamespace('\\SureCart\\Controllers\\Admin\\AffiliationClicks\\')
+->group(
+	function() {
+		\SureCart::route()->get()->where('sc_url_var', false, 'action')->handle('AffiliationClicksController@index');
+		\SureCart::route()->get()->where('sc_url_var', 'edit', 'action')->handle('AffiliationClicksController@edit');
+	}
+);
+
+
 
 /*
 |--------------------------------------------------------------------------
