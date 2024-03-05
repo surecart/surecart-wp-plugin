@@ -11,16 +11,14 @@ class CheckoutFormsController {
 
 	/**
 	 * Change the mode of the checkout form.
-	 *
-	 * @param \SureCartCore\Requests\RequestInterface $request Request.
 	 */
-	public function changeMode( $request ) {
+	public function changeMode() {
 		$form_post_id       = get_query_var( 'sc_checkout_change_mode' );
-		$checkout_post_id   = $request->query( 'sc_checkout_post' ) ?? null;
+		$checkout_post_id   = get_query_var( 'sc_checkout_post' );
 		$form_post          = get_post( $form_post_id );
 		$checkout_page_post = get_post( $checkout_post_id );
 
-		if ( empty( $form_post ) || ! empty( $checkout_page_post ) ) {
+		if ( empty( $form_post ) || empty( $checkout_page_post ) ) {
 			wp_die( esc_html__( 'Invalid request.', 'surecart' ) );
 		}
 

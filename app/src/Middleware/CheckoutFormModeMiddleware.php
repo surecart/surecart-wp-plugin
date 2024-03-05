@@ -19,7 +19,7 @@ class CheckoutFormModeMiddleware {
 	public function handle( RequestInterface $request, Closure $next ) {
 		// Check nonce.
 		if ( ! $request->query( 'nonce' ) || ! wp_verify_nonce( $request->query( 'nonce' ), 'update_checkout_mode' ) ) {
-			wp_die( __( 'Your session expired - please try again.', 'surecart' ) );
+			wp_die( esc_html__( 'Your session expired - please try again.', 'surecart' ) );
 		}
 
 		// Check permission to edit the post.
@@ -27,7 +27,7 @@ class CheckoutFormModeMiddleware {
 			! current_user_can( 'edit_post', $request->query( 'sc_checkout_post' ) ) ||
 			! current_user_can( 'edit_post', $request->query( 'sc_checkout_change_mode' ) )
 		) {
-			wp_die( __( 'You do not have permission do this.', 'surecart' ) );
+			wp_die( esc_html__( 'You do not have permission do this.', 'surecart' ) );
 		}
 
 		return $next( $request );

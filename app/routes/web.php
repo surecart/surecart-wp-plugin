@@ -61,6 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 \SureCart::route()
 	->get()
 	->where( 'query_var', 'sc_checkout_change_mode' )
+	->where( 'query_var', 'sc_checkout_post' )
 	->middleware( CheckoutFormModeMiddleware::class )
 	->handle( 'CheckoutFormsController@changeMode' );
 
