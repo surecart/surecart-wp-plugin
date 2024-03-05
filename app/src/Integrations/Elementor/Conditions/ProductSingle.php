@@ -67,6 +67,9 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 		if ( isset( $args['id'] ) ) {
 			$id = $args['id'];
 			if ( $id ) {
+				if ( ! empty( get_query_var( 'surecart_current_upsell' ) ) ) {
+					return false;
+				}
 				$product = get_query_var( 'surecart_current_product' );
 				if ( is_wp_error( $product ) || empty( $product->id ) ) {
 					return false;
@@ -85,21 +88,21 @@ class ProductSingle extends \ElementorPro\Modules\ThemeBuilder\Conditions\Condit
 	protected function register_controls() {
 		$this->add_control(
 			'surecart_product_id',
-			[
+			array(
 				'section'        => 'settings',
 				'type'           => QueryModule::QUERY_CONTROL_ID,
-				'select2options' => [
+				'select2options' => array(
 					'dropdownCssClass' => 'elementor-conditions-select2-dropdown',
-				],
-				'autocomplete'   => [
+				),
+				'autocomplete'   => array(
 					'object'      => 'surecart-product',
 					'display'     => 'minimal',
 					'filter_type' => 'surecart-product',
-					'query'       => [
+					'query'       => array(
 						'post_type' => 'sc-product',
-					],
-				],
-			]
+					),
+				),
+			)
 		);
 	}
 }

@@ -81,10 +81,9 @@ export class ScFulfillments {
                       <div class="trackings__details">
                         <div class="trackings__title">{_n('Tracking number', 'Tracking numbers', fulfillment?.trackings?.data?.length, 'surecart')}</div>
                         <div class="trackings__list">
-                          {(fulfillment?.trackings?.data || []).map(({ courier_name, number, url }) => (
+                          {(fulfillment?.trackings?.data || []).map(({ number, url }) => (
                             <a href={url} target="_blank">
                               {number}
-                              {!!courier_name && ` (${courier_name})`}
                             </a>
                           ))}
                         </div>
