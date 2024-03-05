@@ -226,6 +226,13 @@ Yes, all the strings in SureCart can be translated and over time we hope to offe
 
 == Changelog ==
 
+= 2.20.0 - March 5th, 2024 =
+- New: Add tax and shipping overrides based on product collections.
+- Improvement: Limit the tax ids shown in the tax id form input.
+- Improvement: Product collection list page loading performance.
+- Improvement: Update customer display conditions wording on upsells to be more descriptive.
+- Fix: Issue with using product collection and product list shortcodes on the same page.
+
 = 2.19.4 - March 1st, 2024 =
 - Improvement: Prevent mouse wheel scroll on percent and other number inputs.
 - Fix: Issue with SureMembers integration not working on subscription update in some instances.
