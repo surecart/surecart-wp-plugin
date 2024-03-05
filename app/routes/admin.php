@@ -391,7 +391,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	}
 );
 
-
+/*
+|--------------------------------------------------------------------------
+| Affiliate Referrals
+|--------------------------------------------------------------------------
+*/
+\SureCart::route()
+->where( 'admin', 'sc-affiliate-referrals' )
+->middleware( 'user.can:edit_sc_affiliates' )
+->middleware( 'assets.components' )
+->setNamespace( '\\SureCart\\Controllers\\Admin\\AffiliationReferrals\\' )
+->group(
+	function() {
+		\SureCart::route()->get()->where( 'sc_url_var', false, 'action' )->handle( 'AffiliationReferralsController@index' );
+		\SureCart::route()->get()->where( 'sc_url_var', 'edit', 'action' )->handle( 'AffiliationReferralsController@edit' );
+	}
+);
 
 /*
 |--------------------------------------------------------------------------
