@@ -45,9 +45,7 @@ export default () => {
 		item: affiliation,
 		editItem: editAffiliation,
 		hasLoadedItem: hasLoadedAffiliation,
-	} = useEntity('affiliation', id, {
-		expand: ['clicks', 'referrals', 'payouts'],
-	});
+	} = useEntity('affiliation', id);
 
 	/**
 	 * Handle the form submission
@@ -201,21 +199,9 @@ export default () => {
 			}
 		>
 			<Error error={error} setError={setError} margin="80px" />
-			<Clicks
-				clicks={affiliation?.clicks || {}}
-				updateAffiliation={editAffiliation}
-				loading={!hasLoadedAffiliation}
-			/>
-			<Referrals
-				referrals={affiliation?.referrals || {}}
-				updateAffiliation={editAffiliation}
-				loading={!hasLoadedAffiliation}
-			/>
-			<Payouts
-				payouts={affiliation?.payouts || {}}
-				updateAffiliation={editAffiliation}
-				loading={!hasLoadedAffiliation}
-			/>
+			<Clicks affiliationId={affiliation?.id} />
+			<Referrals affiliationId={affiliation?.id} />
+			<Payouts affiliationId={affiliation?.id} />
 		</UpdateModel>
 	);
 };

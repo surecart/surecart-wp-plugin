@@ -1,23 +1,54 @@
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-
 /**
  * External dependencies.
  */
-import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 
 /**
  * Internal dependencies.
  */
 import PrevNextButtons from '../../ui/PrevNextButtons';
 import ReferralsDataTable from '../../components/data-tables/affiliates/ReferralsDataTable';
+import usePagination from '../../hooks/usePagination';
 
-export default ({ referrals, loading }) => {
+export default ({ affiliationId }) => {
 	const [page, setPage] = useState(1);
-	const [perPage, setPerPage] = useState(20);
-	// TODO: After Handle the Referrals API
-	// Get the clicks data from the API by calling from here instead props.
+	const [perPage, setPerPage] = useState(5);
+
+	const { referrals, loading, updating } = useSelect(
+		(select) => {
+			const queryArgs = [
+				'surecart',
+				'referral',
+				{
+					context: 'edit',
+					affiliation_ids: [affiliationId],
+					expand: ['checkout', 'checkout.order'],
+					page,
+					per_page: perPage,
+				},
+			];
+			const referrals = select(coreStore).getEntityRecords(...queryArgs);
+			const loading = select(coreStore).isResolving(
+				'getEntityRecords',
+				queryArgs
+			);
+			return {
+				referrals,
+				loading: loading && page === 1,
+				updating: loading && page !== 1,
+			};
+		},
+		[affiliationId, page, perPage]
+	);
+
+	const { hasPagination } = usePagination({
+		data: referrals,
+		page,
+		perPage,
+	});
 
 	return (
 		<ReferralsDataTable
@@ -40,9 +71,9 @@ export default ({ referrals, loading }) => {
 					width: '100px',
 				},
 			}}
-			data={referrals?.data || []}
+			data={referrals}
 			isLoading={loading}
-			isFetching={loading}
+			isFetching={updating}
 			perPage={perPage}
 			page={page}
 			setPage={setPage}
@@ -52,13 +83,15 @@ export default ({ referrals, loading }) => {
 					: __('None found.', 'surecart')
 			}
 			footer={
-				<PrevNextButtons
-					data={referrals?.data ?? []}
-					page={page}
-					setPage={setPage}
-					perPage={perPage}
-					loading={loading}
-				/>
+				hasPagination && (
+					<PrevNextButtons
+						data={referrals}
+						page={page}
+						setPage={setPage}
+						perPage={perPage}
+						loading={updating}
+					/>
+				)
 			}
 		/>
 	);
