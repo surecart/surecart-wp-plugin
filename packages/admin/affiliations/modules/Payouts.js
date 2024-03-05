@@ -56,9 +56,10 @@ export default ({ affiliationId }) => {
 				status: {
 					label: __('Status', 'surecart'),
 				},
-				payout_email: {
-					label: __('Payout Email', 'surecart'),
-				},
+				// TODO: Add the column when API is ready.
+				// payout_email: {
+				// 	label: __('Payout Email', 'surecart'),
+				// },
 				total_commission_amount: {
 					label: __('Commission', 'surecart'),
 				},

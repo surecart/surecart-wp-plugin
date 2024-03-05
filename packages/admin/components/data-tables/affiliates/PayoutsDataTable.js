@@ -1,17 +1,13 @@
 /**
  * External dependencies.
  */
-import { __, _n } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies.
  */
 import DataTable from '../../DataTable';
-import {
-	ScFormatDate,
-	ScFormatNumber,
-	ScText,
-} from '@surecart/components-react';
+import { ScFormatDate, ScFormatNumber } from '@surecart/components-react';
 import StatusBadge from '../../StatusBadge';
 
 export default ({
@@ -52,8 +48,8 @@ export default ({
 									value={total_commission_amount}
 								></ScFormatNumber>
 							),
-							// TODO: Add payout email while API is ready.
-							payout_email: <ScText>-</ScText>,
+							// TODO: Add the column when API is ready.
+							// payout_email: <ScText>-</ScText>,
 							end_date: (
 								<ScFormatDate
 									type="timestamp"
