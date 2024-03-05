@@ -43,11 +43,7 @@ class CheckoutFormsController {
 			)
 		);
 
-		// Redirect to the previous page.
-		$redirect_url = get_permalink( $checkout_post_id );
-
-		if ( $redirect_url ) {
-			return \SureCart::redirect()->to( $redirect_url );
-		}
+		// Redirect to the checkout page.
+		return \SureCart::redirect()->to( get_permalink( $checkout_post_id ) );
 	}
 }
